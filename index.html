@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=3.8">
-  <link rel="stylesheet" href="css/components.css?v=3.8">
-  <link rel="stylesheet" href="css/weather-themes.css?v=3.8">
+  <link rel="stylesheet" href="css/main.css?v=3.9">
+  <link rel="stylesheet" href="css/components.css?v=3.9">
+  <link rel="stylesheet" href="css/weather-themes.css?v=3.9">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -76,7 +76,6 @@
         </div>
         <div class="nav-trigger-right">
           <span class="nav-trigger-cta">Cambiar vista ➔</span>
-          <span class="nav-trigger-kbd"><kbd>1-7</kbd></span>
         </div>
       </button>
 
@@ -364,7 +363,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.8').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.9').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -385,6 +384,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.8"></script>
+  <script type="module" src="js/app.js?v=3.9"></script>
 </body>
 </html>

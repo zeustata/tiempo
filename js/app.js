@@ -451,7 +451,6 @@ class MeteoAsturiasApp {
                 <span class="nav-module-desc">${m.desc}</span>
               </div>
             </div>
-            <span class="nav-module-key">Tecla ${m.key}</span>
           </div>
         `;
       }).join('');
