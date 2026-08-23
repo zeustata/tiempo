@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.992-beta] - 2026-08-23
+
+### 🏛️ Bandera Oficial del Principado de Asturias y Ajustes de Navegación (New & Improved)
+- **Bandera de Asturias en la Cabecera**: Sustituido el emoji de rayo por una representación vectorial en alta resolución de la bandera oficial del Principado de Asturias con la Cruz de la Victoria y las letras alfa y omega.
+- **Simplificación del Selector de Navegación**: Retirada la etiqueta "Sección activa" para mostrar directamente el nombre del módulo actual y actualizado el botón a *Menú ➔*.
+
+---
+
 ## [0.9.991-beta] - 2026-08-23
 
 ### 🏄‍♂️ Rediseño Visual de Surf, Mareas y Créditos de Propiedad (New & Improved)
