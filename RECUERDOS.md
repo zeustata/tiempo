@@ -51,12 +51,14 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
    - Dinámico y enfocado según el concejo costero seleccionado.
    - Incluye tarjetas gráficas para mareas (pleamar/bajamar con horarios y coeficientes), altura/período de oleaje, viento y temperatura del agua.
    - Créditos de propiedad y autoría integrados (*Manuel A. L. Barril / Princesa*).
-5. **Atmósfera Climática y Partículas Vivas**:
-   - Motor visual interactivo que adapta el fondo y genera partículas vivas acordes al estado del tiempo actual (lluvia, nieve, niebla, sol).
+5. **Atmósfera Climática y Partículas Vivas (Liquid Glass)**:
+   - Tarjetas con cristal translúcido puro (`rgba(15, 23, 42, 0.35)`) sin filtros gaussianos de desenfoque (`backdrop-filter: blur`) que destruyan las partículas de fondo; todas las tarjetas permiten ver las partículas atmosféricas en movimiento sin excepción.
 6. **Radar Meteorológico**:
    - Zoom panorámico alejado por defecto centrado sobre el mar Cantábrico y la cordillera.
 7. **Catálogo de Concejos Completo**:
    - Integrados los **78 concejos oficiales de Asturias** con búsqueda insensible a acentos.
+8. **Mareógrafo Astronómico Panorámico de 72 Horas**:
+   - Cálculo del ciclo semidiurno M2 (12h 25m) con oscilación sinusoidal continua a 3 días (Hoy, Mañana y Pasado Mañana), indicador en vivo con cuenta atrás, clasificación cromática de coeficientes (🔴 Vivas / 🟡 Medias / 🟢 Muertas), fases lunares y cuadro semanal de mareas a 7 días con scroll horizontal táctil de 1980px.
 
 ---
 
@@ -64,9 +66,9 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 1. **📊 Estación en Vivo (`panel-live`)**: Panel principal con métricas actuales y tarjetas por bloques.
 2. **📡 Radar en Directo (`panel-radar`)**: Mapa interactivo con capas de lluvia/nubes de RainViewer/AEMET.
 3. **📅 Previsión 14 Días (`panel-forecast`)**: Pronóstico extendido por días y horas.
-4. **📈 Gráficas Meteo (`panel-charts`)**: Evolución temporal detallada.
+4. **📈 Gráficas Meteo (`panel-charts`)**: Evolución temporal detallada con scroll táctil horizontal.
 5. **🏔️ Montaña y Puertos (`panel-mountain`)**: Datos de puertos asturianos y cotas de nieve.
-6. **🌊 Costa y Playas (`panel-marine`)**: Condiciones marítimas, surf y mareas.
+6. **🌊 Costa y Playas (`panel-marine`)**: Condiciones marítimas, surf, playas y mareógrafo en tiempo real de 72 horas.
 7. **⚖️ Comparador (`panel-compare`)**: Comparación meteorológica en paralelo entre concejos.
 
 ---
@@ -74,7 +76,8 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 ## 🔄 4. Historial Reciente de la Sesión
 - Transición completa de pestañas horizontales a selector por modal táctil.
 - Integración de badges interactivos de versiones en el pie de página.
-- Ajuste del selector de navegación (eliminación de "Sección activa" y botón "Menú").
-- Incorporación de la bandera del Principado de Asturias en la cabecera.
-- Incorporación del catálogo completo de los 78 concejos de Asturias.
+- Incorporación de la bandera del Principado de Asturias en la cabecera y catálogo de 78 concejos.
+- Transformación al diseño de cristal translúcido puro (Liquid Glass) sin desenfoques opacos en todas las tarjetas de la app.
+- Creación del Mareógrafo interactivo en tiempo real continuo de 72 horas y el Cuadro Semanal de Mareas y Coeficientes adaptado al litoral asturiano.
+- Blindaje total y aislamiento de excepciones ante respuestas nulas de modelos satelitales.
 - Subidas continuas a GitHub (`zeustata/tiempo`).
