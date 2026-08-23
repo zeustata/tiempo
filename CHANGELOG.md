@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.999h-beta] - 2026-08-23
+
+### 🌟 Cristal Translúcido Nítido y Partículas Vivas (Fixed & Visual)
+- **Eliminación del Desenfoque Opacificante**: Retirado el `backdrop-filter: blur(26px)` que difuminaba y desvanecía las partículas pequeñas al pasar tras las tarjetas; ahora todas las tarjetas actúan como cristal transparente idéntico a las tarjetas del Changelog.
+- **Refuerzo de Luminosidad y Partículas**: Incrementada la densidad y luminosidad de las estrellas, nieve y lluvia en el lienzo de partículas para un dinamismo atmosférico total.
+
+---
+
 ## [0.9.999g-beta] - 2026-08-23
 
 ### 💎 Cristal Puro Ultraligero (18% - 24% Opacidad) (New & Visual)

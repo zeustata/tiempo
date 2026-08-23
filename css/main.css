@@ -3,9 +3,9 @@
 
 :root {
   --bg-dark: #070d17;
-  --bg-surface: linear-gradient(135deg, rgba(255, 255, 255, 0.09) 0%, rgba(15, 23, 42, 0.22) 100%);
-  --bg-surface-elevated: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(30, 41, 59, 0.28) 100%);
-  --border-glass: rgba(255, 255, 255, 0.18);
+  --bg-surface: rgba(15, 23, 42, 0.35);
+  --bg-surface-elevated: rgba(30, 41, 59, 0.45);
+  --border-glass: rgba(255, 255, 255, 0.16);
   --border-glow: rgba(56, 189, 248, 0.45);
   
   --primary: #38bdf8;
@@ -24,8 +24,8 @@
   --radius-md: 14px;
   --radius-sm: 10px;
   
-  --shadow-card: 0 8px 32px 0 rgba(0, 0, 0, 0.35), inset 0 1px 1px 0 rgba(255, 255, 255, 0.22);
-  --shadow-glow: 0 0 25px rgba(56, 189, 248, 0.25), inset 0 1px 1px 0 rgba(255, 255, 255, 0.28);
+  --shadow-card: 0 8px 25px 0 rgba(0, 0, 0, 0.3), inset 0 1px 1px 0 rgba(255, 255, 255, 0.18);
+  --shadow-glow: 0 0 25px rgba(56, 189, 248, 0.25), inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
   --shadow-pop: 0 10px 25px rgba(0, 0, 0, 0.35);
 }
 
@@ -106,8 +106,6 @@ body {
   gap: 16px;
   padding: 16px 24px;
   background: var(--bg-surface);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
@@ -380,8 +378,6 @@ body {
   align-items: center;
   padding: 14px 20px;
   background: var(--bg-surface);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
   border: 1px solid rgba(56, 189, 248, 0.4);
   border-radius: var(--radius-md);
   cursor: pointer;
@@ -475,7 +471,6 @@ body {
   align-items: center;
   padding: 13px 18px;
   background: var(--bg-surface);
-  backdrop-filter: blur(16px);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
   cursor: pointer;
@@ -562,7 +557,6 @@ body {
   gap: 8px;
   padding: 13px 18px;
   background: var(--bg-surface);
-  backdrop-filter: blur(16px);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
   color: var(--text-main);

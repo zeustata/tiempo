@@ -1,8 +1,6 @@
 /* --- HERO WEATHER CARD --- */
 .hero-weather-card {
   background: var(--bg-surface);
-  backdrop-filter: blur(26px) saturate(185%);
-  -webkit-backdrop-filter: blur(26px) saturate(185%);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
   padding: 24px 28px;
@@ -174,8 +172,6 @@
 
 .sensor-card {
   background: var(--bg-surface);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
   padding: 20px 24px;
@@ -438,8 +434,6 @@
 
 .forecast-block {
   background: var(--bg-surface);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
   padding: 24px 28px;
@@ -576,8 +570,6 @@
 
 .daily-card-rich {
   background: var(--bg-surface-elevated);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
   padding: 20px 22px;

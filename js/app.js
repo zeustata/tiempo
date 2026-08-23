@@ -1,14 +1,14 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=5.4';
-import { fetchWeatherData } from './services/weatherApi.js?v=5.4';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=5.4';
-import { renderCurrentWeather } from './components/currentCard.js?v=5.4';
-import { renderMarineCard } from './components/marineCard.js?v=5.4';
-import { renderMountainCard } from './components/mountainCard.js?v=5.4';
-import { renderForecast } from './components/forecastView.js?v=5.4';
-import { renderWeatherChart } from './components/chartsView.js?v=5.4';
-import { renderCompareView } from './components/compareView.js?v=5.4';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=5.4';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=5.4';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=5.5';
+import { fetchWeatherData } from './services/weatherApi.js?v=5.5';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=5.5';
+import { renderCurrentWeather } from './components/currentCard.js?v=5.5';
+import { renderMarineCard } from './components/marineCard.js?v=5.5';
+import { renderMountainCard } from './components/mountainCard.js?v=5.5';
+import { renderForecast } from './components/forecastView.js?v=5.5';
+import { renderWeatherChart } from './components/chartsView.js?v=5.5';
+import { renderCompareView } from './components/compareView.js?v=5.5';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=5.5';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=5.5';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, alertas climáticas y calidad del aire', key: '1' },
@@ -991,74 +991,74 @@ class MeteoAsturiasApp {
           });
         }
       } else if (mode === 'stars') {
-        const count = 50;
+        const count = 75;
         for (let i = 0; i < count; i++) {
           particles.push({
             x: Math.random() * width,
-            y: Math.random() * height * 0.7,
-            radius: 0.8 + Math.random() * 1.6,
-            alpha: 0.2 + Math.random() * 0.7,
+            y: Math.random() * height * 0.85,
+            radius: 1.0 + Math.random() * 2.0,
+            alpha: 0.35 + Math.random() * 0.65,
             twinkleSpeed: 0.03 + Math.random() * 0.04,
             pulse: Math.random() * Math.PI
           });
         }
       } else if (mode === 'snow') {
-        const count = 45;
+        const count = 60;
         for (let i = 0; i < count; i++) {
           particles.push({
             x: Math.random() * width,
             y: Math.random() * height,
-            radius: 1.5 + Math.random() * 3,
-            speedY: 0.8 + Math.random() * 1.5,
+            radius: 1.8 + Math.random() * 3.5,
+            speedY: 0.8 + Math.random() * 1.6,
             sway: Math.random() * Math.PI * 2,
             swaySpeed: 0.02 + Math.random() * 0.02,
-            alpha: 0.3 + Math.random() * 0.5
+            alpha: 0.4 + Math.random() * 0.5
           });
         }
       } else if (mode === 'storm' || mode === 'heavy-rain') {
-        const count = 65;
+        const count = 80;
         for (let i = 0; i < count; i++) {
           particles.push({
             x: Math.random() * width,
             y: Math.random() * height,
-            speedY: 8 + Math.random() * 7,
-            length: 16 + Math.random() * 18,
-            alpha: 0.25 + Math.random() * 0.35
+            speedY: 9 + Math.random() * 8,
+            length: 18 + Math.random() * 20,
+            alpha: 0.35 + Math.random() * 0.45
           });
         }
       } else if (mode === 'rain') {
-        const count = 45;
+        const count = 60;
         for (let i = 0; i < count; i++) {
           particles.push({
             x: Math.random() * width,
             y: Math.random() * height,
-            speedY: 4 + Math.random() * 4,
-            length: 10 + Math.random() * 14,
-            alpha: 0.18 + Math.random() * 0.25
+            speedY: 5 + Math.random() * 5,
+            length: 12 + Math.random() * 16,
+            alpha: 0.3 + Math.random() * 0.35
           });
         }
       } else if (mode === 'fog') {
-        const count = 18;
+        const count = 22;
         for (let i = 0; i < count; i++) {
           particles.push({
             x: Math.random() * width,
             y: Math.random() * height,
-            radius: 35 + Math.random() * 60,
+            radius: 40 + Math.random() * 70,
             speedX: 0.15 + Math.random() * 0.25,
-            alpha: 0.04 + Math.random() * 0.06
+            alpha: 0.08 + Math.random() * 0.1
           });
         }
       } else {
         // clouds-day / clouds-night / ambient-drift
-        const count = 30;
+        const count = 45;
         for (let i = 0; i < count; i++) {
           particles.push({
             x: Math.random() * width,
             y: Math.random() * height,
-            radius: 1.2 + Math.random() * 2,
-            speedX: 0.2 + Math.random() * 0.4,
-            speedY: (Math.random() - 0.5) * 0.2,
-            alpha: 0.1 + Math.random() * 0.2
+            radius: 1.6 + Math.random() * 2.8,
+            speedX: 0.25 + Math.random() * 0.5,
+            speedY: (Math.random() - 0.5) * 0.25,
+            alpha: 0.25 + Math.random() * 0.35
           });
         }
       }
