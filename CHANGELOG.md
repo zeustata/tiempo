@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.995-beta] - 2026-08-23
+
+### 🏔️ Cobertura Completa de los 78 Concejos de Asturias (New & Improved)
+- **Catálogo Oficial Íntegro de los 78 Concejos**: Añadida la totalidad de los 78 municipios del Principado de Asturias (*Grado/Grau, Pravia, Carreño/Candás, Gozón/Luanco, Laviana, Lena, Salas, Nava, Allande, Vegadeo, etc.*) con sus coordenadas GPS de precisión, altitud oficial y comarcas.
+- **Búsqueda Predictiva Inteligente y Diacríticos**: El buscador ahora es insensible a tildes y mayúsculas, permitiendo encontrar rápidamente cualquier localidad con nombres en castellano o asturiano (*ej: Grado, Grau, Gijon, Uvieu, Lena, etc.*).
+
+---
+
 ## [0.9.994-beta] - 2026-08-23
 
 ### 🔍 Buscador Optimizado para Móvil y Navegación Atrás en Android (Fixed & Improved)

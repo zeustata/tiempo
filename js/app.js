@@ -382,11 +382,14 @@ class MeteoAsturiasApp {
     if (!searchModal || !searchInput || !resultsContainer) return;
 
     const renderResults = (filterText = '') => {
-      const query = filterText.toLowerCase().trim();
+      const normalize = (str) => String(str || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+      const query = normalize(filterText);
+      
       const matched = CONCEJOS_ASTURIAS.filter(c => 
-        c.name.toLowerCase().includes(query) || 
-        c.region.toLowerCase().includes(query) ||
-        c.id.toLowerCase().includes(query)
+        normalize(c.name).includes(query) || 
+        normalize(c.region).includes(query) ||
+        normalize(c.badge).includes(query) ||
+        normalize(c.id).includes(query)
       );
 
       if (matched.length === 0) {
