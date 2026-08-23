@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.993-beta] - 2026-08-23
+
+### 🔘 Reorganización de Cabecera y Feedback Táctil Instantáneo (Improved & Fixed)
+- **Reordenación de Botones de Cabecera**: Reubicado el botón de *Guardar Favoritos* en posición prioritaria, seguido de *Completa / Ventana* y *Mi Ubicación*.
+- **Retirada del Botón Atajos**: Simplificación de la cabecera retirando el botón de atajos para una interfaz uniforme y sin distracciones en Android y Windows.
+- **Feedback Táctil Limpio**: Los botones *Completa* y *Mi Ubicación* solo muestran el resalte azul al presionarse (`:active`), restaurando de inmediato su aspecto neutro sin foco azul persistente tras tocar o hacer clic.
+
+---
+
 ## [0.9.992-beta] - 2026-08-23
 
 ### 🏛️ Bandera Oficial del Principado de Asturias y Ajustes de Navegación (New & Improved)

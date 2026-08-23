@@ -228,23 +228,44 @@ body {
   font-family: inherit;
   user-select: none;
   min-height: 40px;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.btn-header:hover {
-  background: rgba(56, 189, 248, 0.15);
-  border-color: var(--primary);
-  color: var(--primary);
-  transform: translateY(-1px);
+@media (hover: hover) {
+  .btn-header:hover {
+    background: rgba(56, 189, 248, 0.15);
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-1px);
+  }
 }
 
 .btn-header:active {
-  transform: translateY(1px);
+  background: rgba(56, 189, 248, 0.28) !important;
+  border-color: var(--primary) !important;
+  color: var(--primary) !important;
+  transform: translateY(1px) scale(0.97);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+}
+
+.btn-header:focus:not(:focus-visible) {
+  outline: none;
+  background: rgba(30, 41, 59, 0.7);
+  border-color: var(--border-glass);
+  color: var(--text-main);
 }
 
 .btn-header.active {
-  background: rgba(245, 158, 11, 0.15);
-  border-color: var(--accent-gold);
-  color: var(--accent-gold);
+  background: rgba(245, 158, 11, 0.15) !important;
+  border-color: var(--accent-gold) !important;
+  color: var(--accent-gold) !important;
+}
+
+@media (hover: hover) {
+  .btn-header.active:hover {
+    background: rgba(245, 158, 11, 0.25) !important;
+  }
 }
 
 .btn-install {
