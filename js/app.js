@@ -309,7 +309,7 @@ class MeteoAsturiasApp {
     }
 
     if (targetTab === 'charts' && this.weatherData) {
-      setTimeout(() => renderWeatherChart('meteo-chart-canvas', this.weatherData.weather.hourly), 50);
+      setTimeout(() => renderWeatherChart('meteo-chart-canvas', this.weatherData.weather.hourly, 48), 50);
     }
   }
 
@@ -542,7 +542,7 @@ class MeteoAsturiasApp {
 
     // 5. Gráfico si está activo
     if (this.activeTab === 'charts') {
-      renderWeatherChart('meteo-chart-canvas', this.weatherData.weather.hourly);
+      renderWeatherChart('meteo-chart-canvas', this.weatherData.weather.hourly, 48);
     }
 
     this.updateFavButton();

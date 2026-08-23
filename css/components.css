@@ -838,7 +838,7 @@
   font-weight: 600;
 }
 
-/* --- CHARTS WRAPPER --- */
+/* --- CHARTS WRAPPER & HORIZONTAL SCROLL EN MÓVILES --- */
 .chart-card {
   background: var(--bg-surface);
   backdrop-filter: blur(16px);
@@ -848,9 +848,39 @@
   box-shadow: var(--shadow-card);
 }
 
-.chart-container-box {
-  height: 380px;
+.chart-scroll-hint-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--primary);
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 5px 14px;
+  border-radius: 20px;
+  margin-top: 6px;
+  animation: pulseHint 2.5s infinite ease-in-out;
+}
+
+@keyframes pulseHint {
+  0%, 100% { opacity: 0.9; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.02); }
+}
+
+.chart-scroll-viewport {
   width: 100%;
+  overflow-x: auto;
+  padding: 12px 0 16px;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--radius-md);
+  margin-top: 14px;
+}
+
+.chart-canvas-wrapper {
+  height: 420px;
+  min-width: 1100px;
   position: relative;
 }
 

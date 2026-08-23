@@ -1,30 +1,52 @@
 /**
- * Generador de gráficos de evolución con Chart.js
+ * Generador de gráficos de evolución horaria (48h) con scroll horizontal interactivo en móviles
  */
 let meteoChart = null;
 
-export function renderWeatherChart(canvasId, hourlyData) {
-  const ctx = document.getElementById(canvasId);
-  if (!ctx || typeof Chart === 'undefined') return;
+export function renderWeatherChart(canvasId, hourlyData, hoursCount = 48) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas || typeof Chart === 'undefined') return;
+
+  const wrapper = document.getElementById('chart-canvas-wrapper');
+  if (wrapper) {
+    // Calculamos el ancho mínimo proporcional a las horas (aprox 36px por cada hora) para que nunca se amontone en móvil
+    const targetWidth = Math.max(900, hoursCount * 34);
+    wrapper.style.minWidth = `${targetWidth}px`;
+  }
 
   if (meteoChart) {
     meteoChart.destroy();
+    meteoChart = null;
   }
 
-  const hoursToDisplay = 36;
   const currentHour = new Date().getHours();
   const labels = [];
+  const fullDates = [];
   const temps = [];
   const rains = [];
   const winds = [];
 
-  for (let i = currentHour; i < currentHour + hoursToDisplay && i < hourlyData.time.length; i++) {
+  for (let i = currentHour; i < currentHour + hoursCount && i < hourlyData.time.length; i++) {
     const d = new Date(hourlyData.time[i]);
-    labels.push(d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }));
+    const isStartOfDay = d.getHours() === 0;
+    const dayPrefix = d.toLocaleDateString('es-ES', { weekday: 'short' });
+    const hourStr = d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+    
+    // Si es medianoche o la primera hora, incluimos el día en la etiqueta
+    labels.push(isStartOfDay || i === currentHour ? `${dayPrefix} ${hourStr}` : hourStr);
+    fullDates.push(d.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }));
+    
     temps.push(hourlyData.temperature_2m[i]);
     rains.push(hourlyData.precipitation_probability[i] || 0);
     winds.push(hourlyData.wind_gusts_10m[i] || 0);
   }
+
+  const ctx = canvas.getContext('2d');
+
+  // Crear degradado para el área de temperatura
+  const tempGradient = ctx.createLinearGradient(0, 0, 0, 320);
+  tempGradient.addColorStop(0, 'rgba(56, 189, 248, 0.45)');
+  tempGradient.addColorStop(1, 'rgba(56, 189, 248, 0.02)');
 
   meteoChart = new Chart(ctx, {
     type: 'line',
@@ -35,28 +57,39 @@ export function renderWeatherChart(canvasId, hourlyData) {
           label: 'Temperatura (°C)',
           data: temps,
           borderColor: '#38bdf8',
-          backgroundColor: 'rgba(56, 189, 248, 0.15)',
+          borderWidth: 3,
+          backgroundColor: tempGradient,
           fill: true,
-          tension: 0.4,
+          tension: 0.35,
           yAxisID: 'yTemp',
-          pointRadius: 3,
-          pointHoverRadius: 6
+          pointRadius: 4,
+          pointBackgroundColor: '#0f172a',
+          pointBorderColor: '#38bdf8',
+          pointBorderWidth: 2,
+          pointHoverRadius: 7,
+          pointHoverBackgroundColor: '#38bdf8',
+          pointHoverBorderColor: '#ffffff',
+          pointHoverBorderWidth: 2
         },
         {
           label: 'Probabilidad de Lluvia (%)',
           data: rains,
           borderColor: '#60a5fa',
-          backgroundColor: 'rgba(96, 165, 250, 0.4)',
+          backgroundColor: 'rgba(96, 165, 250, 0.45)',
           type: 'bar',
           yAxisID: 'yRain',
-          borderRadius: 4
+          borderRadius: 5,
+          barPercentage: 0.55
         },
         {
           label: 'Rachas de Viento (km/h)',
           data: winds,
           borderColor: '#f59e0b',
-          borderDash: [4, 4],
+          borderWidth: 2.5,
+          borderDash: [5, 4],
           pointRadius: 0,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: '#f59e0b',
           yAxisID: 'yWind',
           tension: 0.3
         }
@@ -71,29 +104,64 @@ export function renderWeatherChart(canvasId, hourlyData) {
       },
       plugins: {
         legend: {
+          position: 'top',
           labels: {
             color: '#cbd5e1',
-            font: { family: 'Outfit, sans-serif', size: 12 }
+            font: { family: 'Outfit, sans-serif', size: 13, weight: '600' },
+            padding: 16,
+            usePointStyle: true,
+            boxWidth: 10
           }
         },
         tooltip: {
-          backgroundColor: '#0f172a',
+          backgroundColor: 'rgba(15, 23, 42, 0.95)',
           titleColor: '#38bdf8',
-          borderColor: '#334155',
-          borderWidth: 1
+          titleFont: { size: 13, weight: 'bold', family: 'Outfit, sans-serif' },
+          bodyFont: { size: 12, family: 'Outfit, sans-serif' },
+          padding: 12,
+          borderColor: 'rgba(56, 189, 248, 0.3)',
+          borderWidth: 1,
+          boxPadding: 6,
+          callbacks: {
+            title: function(items) {
+              const index = items[0].dataIndex;
+              return '🕒 ' + fullDates[index];
+            },
+            label: function(item) {
+              if (item.dataset.label.includes('Temperatura')) {
+                return ` 🌡️ Temperatura: ${item.formattedValue} °C`;
+              }
+              if (item.dataset.label.includes('Lluvia')) {
+                return ` 💧 Probabilidad lluvia: ${item.formattedValue} %`;
+              }
+              if (item.dataset.label.includes('Viento')) {
+                return ` 💨 Rachas viento: ${item.formattedValue} km/h`;
+              }
+              return item.formattedValue;
+            }
+          }
         }
       },
       scales: {
         x: {
-          grid: { color: 'rgba(255,255,255,0.05)' },
-          ticks: { color: '#94a3b8' }
+          grid: {
+            color: 'rgba(255, 255, 255, 0.06)',
+            drawTicks: true
+          },
+          ticks: {
+            color: '#94a3b8',
+            font: { family: 'Outfit, sans-serif', size: 11, weight: '600' },
+            maxRotation: 0,
+            autoSkip: false
+          }
         },
         yTemp: {
           type: 'linear',
           position: 'left',
-          grid: { color: 'rgba(255,255,255,0.05)' },
+          grid: { color: 'rgba(255, 255, 255, 0.06)' },
           ticks: {
             color: '#38bdf8',
+            font: { family: 'Outfit, sans-serif', size: 11, weight: '700' },
             callback: (v) => v + '°'
           }
         },
@@ -105,11 +173,13 @@ export function renderWeatherChart(canvasId, hourlyData) {
           grid: { drawOnChartArea: false },
           ticks: {
             color: '#60a5fa',
+            font: { family: 'Outfit, sans-serif', size: 11, weight: '600' },
             callback: (v) => v + '%'
           }
         },
         yWind: {
-          display: false
+          display: false,
+          min: 0
         }
       }
     }
