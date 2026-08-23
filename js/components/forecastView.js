@@ -10,10 +10,40 @@ export function renderForecast(data, units = 'metric') {
   const currentHour = now.getHours();
   const unitLabel = units === 'knots' ? 'kt' : 'km/h';
 
-  // 1. Horas (próximas 24 horas)
+  // 1. Horas (próximas 72 horas con separadores de días)
   let hourlyCards = '';
-  for (let i = currentHour; i < currentHour + 24 && i < hourly.time.length; i++) {
+  let lastDayDateStr = null;
+
+  for (let i = currentHour; i < currentHour + 72 && i < hourly.time.length; i++) {
     const timeDate = new Date(hourly.time[i]);
+    const dayDateStr = timeDate.toDateString();
+    
+    // Si cambia el día o al inicio del listado, insertar separador visual de día
+    if (dayDateStr !== lastDayDateStr) {
+      lastDayDateStr = dayDateStr;
+      
+      const isToday = timeDate.getDate() === now.getDate() && timeDate.getMonth() === now.getMonth();
+      const tomorrow = new Date(now);
+      tomorrow.setDate(now.getDate() + 1);
+      const isTomorrow = timeDate.getDate() === tomorrow.getDate() && timeDate.getMonth() === tomorrow.getMonth();
+      
+      let dayBadgeText = '';
+      if (isToday) {
+        dayBadgeText = 'Hoy (' + timeDate.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric' }) + ')';
+      } else if (isTomorrow) {
+        dayBadgeText = 'Mañana (' + timeDate.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric' }) + ')';
+      } else {
+        const dName = timeDate.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' });
+        dayBadgeText = dName.charAt(0).toUpperCase() + dName.slice(1);
+      }
+
+      hourlyCards += `
+        <div class="hourly-day-divider">
+          <span class="day-divider-badge">📅 ${dayBadgeText}</span>
+        </div>
+      `;
+    }
+
     const hourLabel = timeDate.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
     const weather = getWeatherInfo(hourly.weather_code[i]);
     const temp = Math.round(hourly.temperature_2m[i]);
@@ -176,12 +206,12 @@ export function renderForecast(data, units = 'metric') {
 
   return `
     <div class="forecast-section">
-      <!-- 24H HORAS -->
+      <!-- 72H HORAS CON SEPARADOR DE DÍAS -->
       <div class="forecast-block">
         <div class="section-title-wrap">
           <div>
-            <h3 class="section-heading">⏱️ Pronóstico Detallado por Horas (24h)</h3>
-            <span class="section-subtitle">Desliza horizontalmente para ver la evolución</span>
+            <h3 class="section-heading">⏱️ Pronóstico Horario Detallado (72 Horas / 3 Días)</h3>
+            <span class="section-subtitle">Desliza horizontalmente para ver la evolución hora a hora</span>
           </div>
         </div>
         <div class="hourly-scroll-container">

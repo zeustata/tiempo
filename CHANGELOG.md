@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.998-beta] - 2026-08-23
+
+### ⏱️ Pronóstico Horario Extendido a 72 Horas con Separadores de Días (New & Improved)
+- **Ampliación de 24h a 72 Horas (3 Días)**: El carrusel interactivo por horas ahora muestra las próximas 72 horas completas con sus iconos de tiempo, temperatura, probabilidad de precipitación y viento.
+- **Insignias de Separación Diaria**: Incorporados divisores visuales verticales con etiquetas estilizadas (*Hoy*, *Mañana*, *Día de la semana*) que separan de manera intuitiva cada jornada al deslizar.
+
+---
+
 ## [0.9.997-beta] - 2026-08-23
 
 ### 📅 Reorganización del Módulo 'Pronósticos' en Menú de Navegación (Improved & Changed)
