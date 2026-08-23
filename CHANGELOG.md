@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.996-beta] - 2026-08-23
+
+### 🔄 Purga de Caché Forzada y Despliegue Inmediato de Concejos (Fixed & Improved)
+- **Purga y Renovación de Service Worker**: Actualización forzada a la versión de caché `meteoasturlode-v32-live` con cache-busting `?v=4.4` para garantizar que los teléfonos móviles y navegadores descarguen la lista nueva de 78 concejos sin servir copias antiguas en caché.
+- **Sincronización Total de Datos Meteorológicos**: Verificación de consultas climáticas para Grado/Grau y todos los concejos asturianos.
+
+---
+
 ## [0.9.995-beta] - 2026-08-23
 
 ### 🏔️ Cobertura Completa de los 78 Concejos de Asturias (New & Improved)

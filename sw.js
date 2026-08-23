@@ -1,8 +1,9 @@
-const CACHE_NAME = 'meteoasturlode-v29-live';
+const CACHE_NAME = 'meteoasturlode-v32-live';
 const STATIC_ASSETS = [
   './',
   './index.html',
   './manifest.json',
+  './icons/bandera-asturias.svg',
   './icons/icon.svg',
   './icons/icon-192.png',
   './icons/icon-512.png',
