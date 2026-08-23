@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.999a-beta] - 2026-08-23
+
+### 📅 Orientación Natural y Recta de Separadores Diarios (Fixed & Improved)
+- **Corrección de Icono y Texto Vertical**: Eliminada la rotación invertida de 180° que causaba que el emoji de calendario apareciera abajo y boca abajo. Ahora el icono `📅` se sitúa en la parte superior y el texto del día se lee de arriba hacia abajo con total claridad.
+- **Mantenimiento en Fase Beta**: Continuación del ciclo beta con el sufijo `a` (`v0.9.999a-beta`).
+
+---
+
 ## [0.9.999-beta] - 2026-08-23
 
 ### 🚀 Actualización de Importaciones ES6 & Forzado de 72 Horas (Fixed & Improved)

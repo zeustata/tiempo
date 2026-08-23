@@ -39,7 +39,10 @@ export function renderForecast(data, units = 'metric') {
 
       hourlyCards += `
         <div class="hourly-day-divider">
-          <span class="day-divider-badge">📅 ${dayBadgeText}</span>
+          <div class="day-divider-badge">
+            <span class="day-divider-icon">📅</span>
+            <span class="day-divider-text">${dayBadgeText}</span>
+          </div>
         </div>
       `;
     }
