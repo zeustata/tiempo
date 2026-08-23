@@ -291,6 +291,9 @@ class MeteoAsturiasApp {
     const installBtn = document.getElementById('btn-install-app');
     if (!installBtn) return;
 
+    // Mostrar el botón siempre para permitir instalación directa o guiada
+    installBtn.style.display = 'inline-flex';
+
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       this.deferredInstallPrompt = e;
@@ -298,17 +301,29 @@ class MeteoAsturiasApp {
     });
 
     installBtn.addEventListener('click', async () => {
-      if (!this.deferredInstallPrompt) return;
-      this.deferredInstallPrompt.prompt();
-      const { outcome } = await this.deferredInstallPrompt.userChoice;
-      if (outcome === 'accepted') {
-        installBtn.style.display = 'none';
+      this.triggerHaptic();
+
+      if (this.deferredInstallPrompt) {
+        this.deferredInstallPrompt.prompt();
+        const { outcome } = await this.deferredInstallPrompt.userChoice;
+        if (outcome === 'accepted') {
+          installBtn.style.display = 'none';
+        }
+        this.deferredInstallPrompt = null;
+      } else {
+        // Modal de ayuda para instalación según el dispositivo
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        if (isIOS) {
+          alert('📱 Para instalar en tu iPhone / iPad:\n\n1. Pulsa el botón "Compartir" de Safari (icono del cuadrado con flecha hacia arriba ⬆️).\n2. Desliza hacia abajo y selecciona "Añadir a pantalla de inicio" (➕).\n3. ¡Listo! Tendrás el icono de MeteoAstur Lode.');
+        } else {
+          alert('📱 Para instalar en tu teléfono Android:\n\n1. Pulsa en los 3 puntos de Chrome (⋮) en la esquina superior derecha.\n2. Toca en "Instalar aplicación" (o "Añadir a pantalla de inicio").\n3. ¡Listo! Se creará el acceso directo como una app independiente.');
+        }
       }
-      this.deferredInstallPrompt = null;
     });
 
     window.addEventListener('appinstalled', () => {
       installBtn.style.display = 'none';
+      console.log('[PWA] MeteoAstur Lode instalada con éxito.');
     });
   }
 
