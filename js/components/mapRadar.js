@@ -11,7 +11,7 @@ let isPlaying = false;
 
 // Coordenadas óptimas para encuadrar Asturias completa y el Mar Cantábrico
 const ASTURIAS_OVERVIEW_CENTER = [43.48, -5.85];
-const ASTURIAS_DEFAULT_ZOOM = 8;
+const ASTURIAS_DEFAULT_ZOOM = window.innerWidth < 650 ? 7 : 7.5;
 
 /**
  * Inicializa el mapa interactivo del radar en Asturias con Leaflet y RainViewer
@@ -26,7 +26,7 @@ export async function initAsturiasMap(mapContainerId, onConcejoSelect) {
     asturiasMap = L.map(mapContainerId, {
       center: ASTURIAS_OVERVIEW_CENTER,
       zoom: ASTURIAS_DEFAULT_ZOOM,
-      minZoom: 6,
+      minZoom: 5,
       maxZoom: 11, // Límite para evitar errores de zoom no soportado de RainViewer
       zoomControl: true,
       fadeAnimation: true
@@ -186,8 +186,8 @@ export function resetMapCenter() {
 
 export function focusConcejoOnMap(lat, lon, concejoName) {
   if (asturiasMap) {
-    // Usamos zoom 9 para mantener el radar completamente nítido y sin cortes
-    asturiasMap.setView([lat, lon], 9, { animate: true });
+    const targetZoom = Math.min(asturiasMap.getZoom() || ASTURIAS_DEFAULT_ZOOM, 7.5);
+    asturiasMap.setView([lat, lon], targetZoom, { animate: true });
 
     // Actualizar o poner un único marcador elegante y discreto en el concejo actual
     if (activeConcejoMarker) {

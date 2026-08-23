@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.95-beta] - 2026-08-23
+
+### 🛰️ Radar Cantábrico con Zoom Panorámico Más Alejado (Changed & Improved)
+- **Apertura de Radar Panorámica**: Ajustado el nivel de zoom por defecto a una vista más amplia y alejada (`zoom: 7`), permitiendo ver toda la región de Asturias y una amplia franja del Mar Cantábrico y el Atlántico.
+- **Transición Suave entre Concejos**: Al cambiar de localidad se preserva la perspectiva global para vigilar borrascas y frentes en movimiento.
+
+---
+
 ## [0.9.94-beta] - 2026-08-23
 
 ### 🪟 Ventana Modal de Favoritos y Ajuste de Tarjetas (Fixed & Improved)

@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=3.6">
-  <link rel="stylesheet" href="css/components.css?v=3.6">
-  <link rel="stylesheet" href="css/weather-themes.css?v=3.6">
+  <link rel="stylesheet" href="css/main.css?v=3.7">
+  <link rel="stylesheet" href="css/components.css?v=3.7">
+  <link rel="stylesheet" href="css/weather-themes.css?v=3.7">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -184,7 +184,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v0.9.94-beta 📋</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v0.9.95-beta 📋</button>
         • Estación Meteorológica del Principado de Asturias
         <div id="last-updated" style="margin-top: 4px; font-size: 0.8rem; color: var(--text-dim);"></div>
       </div>
@@ -226,12 +226,21 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v0.9.94-beta</span>
+            <span class="release-version">v0.9.95-beta</span>
             <span class="release-date">23 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-fix">Corrección</span> <strong>Ventana Modal de Favoritos</strong>: solución definitiva a la superposición con pestañas en móvil, mostrando tus favoritos en una ventana centrada e interactiva.</li>
-            <li><span class="tag tag-improved">Mejora</span> Ajuste del texto de la tarjeta de búsqueda para que no se apelotone en pantallas móviles estrechas.</li>
+            <li><span class="tag tag-improved">Mejora</span> <strong>Radar con Zoom Panorámico Más Alejado</strong>: apertura con encuadre global de toda Asturias y el Mar Cantábrico para vigilar frentes y borrascas entrantes.</li>
+            <li><span class="tag tag-improved">Mejora</span> Posibilidad de alejar más el mapa para vista general del Golfo de Vizcaya.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v0.9.94-beta</span>
+            <span class="release-date">23 Ago 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-fix">Corrección</span> Ventana modal de favoritos para evitar solapes con pestañas.</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -357,7 +366,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.6').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.7').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -378,6 +387,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.6"></script>
+  <script type="module" src="js/app.js?v=3.7"></script>
 </body>
 </html>
