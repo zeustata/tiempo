@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.999b-beta] - 2026-08-23
+
+### 🎨 Jerarquía Tipográfica y Refinamiento Visual (Improved & Changed)
+- **Mayor Presencia de la Marca**: Incrementado el tamaño de la tipografía del título superior *MeteoAstur Lode* en la cabecera tanto en pantallas móviles como de escritorio.
+- **Proporciones Armónicas en la Tarjeta Principal**: Ajustado el tamaño de la temperatura a `3.5rem` y del título del concejo a `1.65rem` para un equilibrio visual idóneo.
+- **Icono del Tiempo Prominente**: Mantenido el icono climático a `3.8rem` con su iluminación y relieve para máxima expresividad visual.
+
+---
+
 ## [0.9.999a-beta] - 2026-08-23
 
 ### 📅 Orientación Natural y Recta de Separadores Diarios (Fixed & Improved)
