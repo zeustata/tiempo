@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.97-beta] - 2026-08-23
+
+### 🌦️ Clima Dinámico Atmosférico y Fondos Vivos (New & Improved)
+- **Adaptación Visual al Clima en Directo**: La interfaz y los fondos cobran vida adaptándose en tiempo real a las condiciones meteorológicas del concejo (azul cielo brillante soleado, gris orbayu/calabobos, azul tormenta eléctrico, cota de nieve glaciar o noche estrellada).
+- **Motor de Partículas Interactivas**: Animación fluida de motas doradas solares, lluvia, copos de nieve o estrellas titilantes en el fondo según la meteorología activa.
+
+---
+
 ## [0.9.96-beta] - 2026-08-23
 
 ### 📑 Ventana Modal de Navegación entre Módulos (Changed & Improved)

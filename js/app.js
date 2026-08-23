@@ -8,6 +8,7 @@ import { renderForecast } from './components/forecastView.js';
 import { renderWeatherChart } from './components/chartsView.js';
 import { renderCompareView } from './components/compareView.js';
 import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js';
+import { getWeatherInfo } from './utils/weatherIcons.js';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, alertas climáticas y calidad del aire', key: '1' },
@@ -836,7 +837,51 @@ class MeteoAsturiasApp {
       this.renderCompareSection();
     }
 
+    // 7. Aplicar Tema Atmosférico Dinámico y Partículas Ambientales
+    if (this.weatherData.weather && this.weatherData.weather.current) {
+      const cur = this.weatherData.weather.current;
+      this.applyDynamicWeatherTheme(cur.weather_code, cur.is_day !== undefined ? cur.is_day : 1);
+    }
+
     this.updateFavButton();
+  }
+
+  applyDynamicWeatherTheme(weatherCode, isDay = 1) {
+    const info = getWeatherInfo(weatherCode);
+    const bgType = info ? info.bg : 'cloudy';
+    let themeKey = bgType;
+
+    if (bgType === 'clear' || bgType === 'mostly-clear' || bgType === 'partly-cloudy') {
+      themeKey = isDay ? `${bgType}-day` : `${bgType}-night`;
+    }
+
+    document.body.setAttribute('data-weather-theme', themeKey);
+
+    // Ajustar modo de partículas interactivas
+    if (bgType === 'clear' && isDay) {
+      this.setParticleMode('sun-motes');
+    } else if (bgType === 'clear' && !isDay) {
+      this.setParticleMode('stars');
+    } else if (bgType === 'rain' || bgType === 'drizzle') {
+      this.setParticleMode('rain');
+    } else if (bgType === 'heavy-rain') {
+      this.setParticleMode('heavy-rain');
+    } else if (bgType === 'snow' || bgType === 'hail') {
+      this.setParticleMode('snow');
+    } else if (bgType === 'storm') {
+      this.setParticleMode('storm');
+    } else if (bgType === 'fog') {
+      this.setParticleMode('fog');
+    } else {
+      this.setParticleMode(isDay ? 'clouds-day' : 'clouds-night');
+    }
+  }
+
+  setParticleMode(mode) {
+    this.particleMode = mode;
+    if (this.reinitParticles) {
+      this.reinitParticles(mode);
+    }
   }
 
   initParticleCanvas() {
@@ -851,40 +896,218 @@ class MeteoAsturiasApp {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
       resizeMap();
+      if (this.reinitParticles) this.reinitParticles(this.particleMode || 'clouds-day');
     });
 
-    const particles = [];
-    const count = 45;
+    let particles = [];
+    let currentMode = 'clouds-day';
+    let lightningFlash = 0;
 
-    for (let i = 0; i < count; i++) {
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        speed: 1 + Math.random() * 2,
-        length: 8 + Math.random() * 12,
-        opacity: 0.15 + Math.random() * 0.25
-      });
-    }
+    const createParticlesForMode = (mode) => {
+      currentMode = mode;
+      particles = [];
+
+      if (mode === 'sun-motes') {
+        const count = 35;
+        for (let i = 0; i < count; i++) {
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            radius: 1.5 + Math.random() * 2.5,
+            speedY: -0.3 - Math.random() * 0.5,
+            speedX: (Math.random() - 0.5) * 0.3,
+            alpha: 0.15 + Math.random() * 0.35,
+            pulseSpeed: 0.02 + Math.random() * 0.02,
+            pulse: Math.random() * Math.PI
+          });
+        }
+      } else if (mode === 'stars') {
+        const count = 50;
+        for (let i = 0; i < count; i++) {
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height * 0.7,
+            radius: 0.8 + Math.random() * 1.6,
+            alpha: 0.2 + Math.random() * 0.7,
+            twinkleSpeed: 0.03 + Math.random() * 0.04,
+            pulse: Math.random() * Math.PI
+          });
+        }
+      } else if (mode === 'snow') {
+        const count = 45;
+        for (let i = 0; i < count; i++) {
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            radius: 1.5 + Math.random() * 3,
+            speedY: 0.8 + Math.random() * 1.5,
+            sway: Math.random() * Math.PI * 2,
+            swaySpeed: 0.02 + Math.random() * 0.02,
+            alpha: 0.3 + Math.random() * 0.5
+          });
+        }
+      } else if (mode === 'storm' || mode === 'heavy-rain') {
+        const count = 65;
+        for (let i = 0; i < count; i++) {
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            speedY: 8 + Math.random() * 7,
+            length: 16 + Math.random() * 18,
+            alpha: 0.25 + Math.random() * 0.35
+          });
+        }
+      } else if (mode === 'rain') {
+        const count = 45;
+        for (let i = 0; i < count; i++) {
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            speedY: 4 + Math.random() * 4,
+            length: 10 + Math.random() * 14,
+            alpha: 0.18 + Math.random() * 0.25
+          });
+        }
+      } else if (mode === 'fog') {
+        const count = 18;
+        for (let i = 0; i < count; i++) {
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            radius: 35 + Math.random() * 60,
+            speedX: 0.15 + Math.random() * 0.25,
+            alpha: 0.04 + Math.random() * 0.06
+          });
+        }
+      } else {
+        // clouds-day / clouds-night / ambient-drift
+        const count = 30;
+        for (let i = 0; i < count; i++) {
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            radius: 1.2 + Math.random() * 2,
+            speedX: 0.2 + Math.random() * 0.4,
+            speedY: (Math.random() - 0.5) * 0.2,
+            alpha: 0.1 + Math.random() * 0.2
+          });
+        }
+      }
+    };
+
+    this.reinitParticles = createParticlesForMode;
+    createParticlesForMode('clouds-day');
 
     function animate() {
       ctx.clearRect(0, 0, width, height);
-      ctx.strokeStyle = 'rgba(56, 189, 248, 0.4)';
-      ctx.lineWidth = 1;
 
-      particles.forEach(p => {
-        ctx.beginPath();
-        ctx.moveTo(p.x, p.y);
-        ctx.lineTo(p.x - 2, p.y + p.length);
-        ctx.stroke();
-
-        p.y += p.speed;
-        p.x -= 0.5;
-
-        if (p.y > height) {
-          p.y = -10;
-          p.x = Math.random() * width;
+      // Destello sutil de relámpago ocasional en modo tormenta
+      if (currentMode === 'storm') {
+        if (Math.random() < 0.003 && lightningFlash <= 0) {
+          lightningFlash = 0.22;
         }
-      });
+        if (lightningFlash > 0) {
+          ctx.fillStyle = `rgba(168, 85, 247, ${lightningFlash})`;
+          ctx.fillRect(0, 0, width, height);
+          lightningFlash -= 0.015;
+        }
+      }
+
+      if (currentMode === 'sun-motes') {
+        particles.forEach(p => {
+          p.pulse += p.pulseSpeed;
+          const currentAlpha = p.alpha + Math.sin(p.pulse) * 0.12;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(251, 191, 36, ${Math.max(0.05, currentAlpha)})`;
+          ctx.shadowColor = 'rgba(245, 158, 11, 0.6)';
+          ctx.shadowBlur = 8;
+          ctx.fill();
+          ctx.shadowBlur = 0;
+
+          p.y += p.speedY;
+          p.x += p.speedX;
+          if (p.y < -10) {
+            p.y = height + 10;
+            p.x = Math.random() * width;
+          }
+        });
+      } else if (currentMode === 'stars') {
+        particles.forEach(p => {
+          p.pulse += p.twinkleSpeed;
+          const currentAlpha = Math.max(0.1, p.alpha + Math.sin(p.pulse) * 0.35);
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(224, 242, 254, ${currentAlpha})`;
+          ctx.shadowColor = 'rgba(186, 230, 253, 0.8)';
+          ctx.shadowBlur = 4;
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        });
+      } else if (currentMode === 'snow') {
+        particles.forEach(p => {
+          p.sway += p.swaySpeed;
+          ctx.beginPath();
+          ctx.arc(p.x + Math.sin(p.sway) * 8, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
+          ctx.shadowColor = 'rgba(224, 242, 254, 0.7)';
+          ctx.shadowBlur = 5;
+          ctx.fill();
+          ctx.shadowBlur = 0;
+
+          p.y += p.speedY;
+          if (p.y > height + 10) {
+            p.y = -10;
+            p.x = Math.random() * width;
+          }
+        });
+      } else if (currentMode === 'rain' || currentMode === 'heavy-rain' || currentMode === 'storm') {
+        ctx.strokeStyle = currentMode === 'storm' ? 'rgba(165, 180, 252, 0.5)' : 'rgba(96, 165, 250, 0.4)';
+        ctx.lineWidth = currentMode === 'heavy-rain' ? 1.4 : 1;
+
+        particles.forEach(p => {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p.x - 2, p.y + p.length);
+          ctx.stroke();
+
+          p.y += p.speedY;
+          p.x -= 0.6;
+
+          if (p.y > height + 20) {
+            p.y = -20;
+            p.x = Math.random() * width;
+          }
+        });
+      } else if (currentMode === 'fog') {
+        particles.forEach(p => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(203, 213, 225, ${p.alpha})`;
+          ctx.fill();
+
+          p.x += p.speedX;
+          if (p.x > width + p.radius) {
+            p.x = -p.radius;
+            p.y = Math.random() * height;
+          }
+        });
+      } else {
+        // clouds ambient
+        ctx.fillStyle = currentMode === 'clouds-day' ? 'rgba(56, 189, 248, 0.25)' : 'rgba(148, 163, 184, 0.2)';
+        particles.forEach(p => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fill();
+
+          p.x += p.speedX;
+          p.y += p.speedY;
+
+          if (p.x > width + 10) p.x = -10;
+          if (p.y > height + 10) p.y = -10;
+          if (p.y < -10) p.y = height + 10;
+        });
+      }
 
       requestAnimationFrame(animate);
     }
