@@ -344,9 +344,14 @@ export function renderMarineCard(data, concejo) {
           </div>
         </div>
 
-        <!-- Curva Gráfica Sinusoidal Interactiva -->
+        <!-- Curva Gráfica Sinusoidal Interactiva con Scroll Horizontal Móvil -->
         <div class="tide-chart-container">
-          ${tideSvg}
+          <div class="tide-scroll-hint-bar">
+            <span class="tide-scroll-hint-pill">👆 Desliza horizontalmente para recorrer las 24h</span>
+          </div>
+          <div class="tide-scroll-viewport">
+            ${tideSvg}
+          </div>
         </div>
 
         <!-- 4 Nodos del Día -->

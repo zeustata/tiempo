@@ -309,7 +309,7 @@ export function renderTideSvgGraph(dayData, isLiveToday = true, currentHours = n
   }).join('');
 
   return `
-    <svg viewBox="0 0 ${svgWidth} ${svgHeight}" class="tide-svg-chart" preserveAspectRatio="none" style="width: 100%; height: 190px; overflow: visible;">
+    <svg width="780" height="210" viewBox="0 0 ${svgWidth} ${svgHeight}" class="tide-svg-chart" style="min-width: 780px; width: 780px; height: 210px; display: block; overflow: visible;">
       <defs>
         <linearGradient id="tideAreaGrad" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.32" />

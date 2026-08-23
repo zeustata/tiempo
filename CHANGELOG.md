@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.999k-beta] - 2026-08-24
+
+### 📱 Scroll Horizontal Táctil en el Mareógrafo Móvil (Improved & Mobile UX)
+- **Viewport Desplazable de 24 Horas**: Implementado un contenedor con scroll horizontal fluido idéntico al de la gráfica de 48 horas con ancho optimizado de 780px.
+- **Píldora Indicadora**: Incorporado aviso interactivo (*"👆 Desliza horizontalmente para recorrer las 24h"*) para una lectura cómoda, nítida y sin solapamiento de textos en teléfonos móviles.
+
+---
+
 ## [0.9.999j-beta] - 2026-08-24
 
 ### 🌊 Mareógrafo Dinámico en Tiempo Real & Cuadro Semanal de Mareas (New & Feature)
