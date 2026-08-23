@@ -1,14 +1,14 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=4.9';
-import { fetchWeatherData } from './services/weatherApi.js?v=4.9';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=4.9';
-import { renderCurrentWeather } from './components/currentCard.js?v=4.9';
-import { renderMarineCard } from './components/marineCard.js?v=4.9';
-import { renderMountainCard } from './components/mountainCard.js?v=4.9';
-import { renderForecast } from './components/forecastView.js?v=4.9';
-import { renderWeatherChart } from './components/chartsView.js?v=4.9';
-import { renderCompareView } from './components/compareView.js?v=4.9';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=4.9';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=4.9';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=5.0';
+import { fetchWeatherData } from './services/weatherApi.js?v=5.0';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=5.0';
+import { renderCurrentWeather } from './components/currentCard.js?v=5.0';
+import { renderMarineCard } from './components/marineCard.js?v=5.0';
+import { renderMountainCard } from './components/mountainCard.js?v=5.0';
+import { renderForecast } from './components/forecastView.js?v=5.0';
+import { renderWeatherChart } from './components/chartsView.js?v=5.0';
+import { renderCompareView } from './components/compareView.js?v=5.0';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=5.0';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=5.0';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, alertas climáticas y calidad del aire', key: '1' },
@@ -214,6 +214,27 @@ class MeteoAsturiasApp {
   }
 
   setupEventListeners() {
+    // Sistema interactivo universal de ondas táctiles (Ripple Effect)
+    document.addEventListener('pointerdown', (e) => {
+      const targetBtn = e.target.closest('.btn-header, .section-nav-trigger, .search-trigger-card, .fav-trigger-card, .btn-close, .version-badge-footer, .nav-modal-item, .hourly-card, .daily-card-rich, .fav-modal-remove-btn');
+      if (!targetBtn) return;
+      
+      const rect = targetBtn.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height) * 1.5;
+      const x = e.clientX - rect.left - size / 2;
+      const y = e.clientY - rect.top - size / 2;
+      
+      const ripple = document.createElement('span');
+      ripple.className = 'touch-ripple';
+      ripple.style.width = `${size}px`;
+      ripple.style.height = `${size}px`;
+      ripple.style.left = `${x}px`;
+      ripple.style.top = `${y}px`;
+      
+      targetBtn.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 600);
+    });
+
     // Soporte para botón o gesto "Atrás" de Android / Navegador
     window.addEventListener('popstate', () => {
       const modals = document.querySelectorAll('.modal-overlay');

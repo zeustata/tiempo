@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.999c-beta] - 2026-08-23
+
+### ⚡ Dinamismo Táctil, Ondas Ripple y Micro-Animaciones (New & Improved)
+- **Micro-rebote Elástico (Pill Spring)**: Integrada física elástica `cubic-bezier` al pulsar botones y tarjetas con respuesta táctil instantánea.
+- **Motor de Ondas Táctiles (Touch Ripples)**: Ondas de luz líquida y translúcida que nacen bajo la posición del dedo en cada pulsación y se disipan con suavidad.
+- **Iconos Vivos**: Micro-animaciones en los iconos de instalación (`📥 bounce`), favoritos (`⭐ star pop`), ubicación (`📍 pin jump`) y flechas de navegación.
+
+---
+
 ## [0.9.999b-beta] - 2026-08-23
 
 ### 🎨 Jerarquía Tipográfica y Refinamiento Visual (Improved & Changed)
