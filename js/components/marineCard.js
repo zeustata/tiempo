@@ -1,11 +1,11 @@
-import { getWindDirection } from '../utils/weatherIcons.js';
+import { getWindDirection } from '../utils/weatherIcons.js?v=6.2';
 import { 
   getMoonAndTideInfo, 
   getDailyTideEvents, 
   getRealtimeTideStatus, 
   getWeeklyTides, 
   renderTideSvgGraph 
-} from '../utils/tides.js';
+} from '../utils/tides.js?v=6.2';
 
 /**
  * Base de datos exhaustiva de playas y calas de cada concejo costero de Asturias
@@ -230,11 +230,11 @@ export function renderMarineCard(data, concejo) {
   const activePlayas = isCoasting ? coastalData.playas : PLAYAS_POR_CONCEJO[interiorRef.refId].playas;
   const activeCoastName = isCoasting ? coastalData.name : `${interiorRef.name} (más cercana a ${concejo.name} • ${interiorRef.dist})`;
 
-  const waveHeight = marine ? marine.wave_height.toFixed(1) : (isCoasting ? '1.4' : '1.3');
-  const swellHeight = marine ? (marine.swell_wave_height || marine.wave_height).toFixed(1) : '1.2';
-  const wavePeriod = marine ? Math.round(marine.wave_period) : 11;
-  const waveDir = marine ? getWindDirection(marine.wave_direction) : { name: 'Noroeste (NW)' };
-  const windWaveH = marine?.wind_wave_height ? marine.wind_wave_height.toFixed(1) : '0.6';
+  const waveHeight = (marine && typeof marine.wave_height === 'number') ? marine.wave_height.toFixed(1) : (isCoasting ? '1.4' : '1.3');
+  const swellHeight = (marine && typeof marine.swell_wave_height === 'number') ? marine.swell_wave_height.toFixed(1) : ((marine && typeof marine.wave_height === 'number') ? marine.wave_height.toFixed(1) : '1.2');
+  const wavePeriod = (marine && typeof marine.wave_period === 'number') ? Math.round(marine.wave_period) : 11;
+  const waveDir = (marine && typeof marine.wave_direction === 'number') ? getWindDirection(marine.wave_direction) : { name: 'Noroeste (NW)' };
+  const windWaveH = (marine && typeof marine.wind_wave_height === 'number') ? marine.wind_wave_height.toFixed(1) : '0.6';
 
   const h = parseFloat(waveHeight);
   let douglasDegree = 3;

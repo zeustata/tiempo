@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.999o-beta] - 2026-08-24
+
+### 🌊 Recuperación Completa de Costa & Mar & Blindaje ante Nulos (Fixed & Marine)
+- **Tolerancia a Nulos en Modelos Marinos**: Asegurada la lectura de oleaje (`wave_height`, `swell_wave_height`, `wave_period`) ante coordenadas costeras limítrofes.
+- **Sincronización de Dependencias Internas**: Actualización en cascada de imports de módulos astronómicos (`tides.js`) para garantizar la visualización instantánea del Mareógrafo de 72 horas en todos los concejos.
+
+---
+
 ## [0.9.999n-beta] - 2026-08-24
 
 ### 🛡️ Aislamiento Robusto de Módulos & Protección de Renderizado (Fixed & Stability)
