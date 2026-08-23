@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.3">
-  <link rel="stylesheet" href="css/components.css?v=2.3">
-  <link rel="stylesheet" href="css/weather-themes.css?v=2.3">
+  <link rel="stylesheet" href="css/main.css?v=2.4">
+  <link rel="stylesheet" href="css/components.css?v=2.4">
+  <link rel="stylesheet" href="css/weather-themes.css?v=2.4">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -47,7 +47,7 @@
         <div class="brand-info">
           <div class="brand-title-row">
             <h1>MeteoAstur Lode</h1>
-            <span class="version-badge" id="app-version-badge" title="Versión de la aplicación (Haz clic para ver novedades)">v0.9.2-beta</span>
+            <span class="version-badge" id="app-version-badge" title="Versión de la aplicación (Haz clic para ver novedades)">v0.9.3-beta</span>
             <div id="live-clock" class="live-clock-badge" title="Hora y fecha en tiempo real">--:--:--</div>
             <div id="network-status" class="network-badge online" title="Estado de conexión">🟢 En línea</div>
           </div>
@@ -57,7 +57,7 @@
 
       <div class="header-controls">
         <button id="btn-install-app" class="btn-header btn-install" style="display: none;" title="Instalar en Windows / Móvil">📥 Instalar App</button>
-        <button id="btn-fullscreen" class="btn-header" title="Modo Pantalla Completa / Estación Kiosko">🖥️ Kiosko</button>
+        <button id="btn-fullscreen" class="btn-header" title="Alternar Pantalla Completa / Modo Ventana (Tecla K / F11)">🖥️ Completa</button>
         <button id="btn-shortcuts-help" class="btn-header btn-desktop-only" title="Ver atajos de teclado (Windows)">⌨️ Atajos</button>
         <button id="btn-toggle-fav" class="btn-header" title="Guardar en Favoritos (Tecla F)">⭐ Guardar</button>
         <button id="btn-gps" class="btn-header" title="Buscar concejo más cercano por GPS (Tecla G)">📍 Mi Ubicación</button>
@@ -206,7 +206,7 @@
     <!-- FOOTER -->
     <footer class="app-footer">
       <div class="footer-credits">
-        <strong>MeteoAstur Lode</strong> <span class="footer-version-tag">v0.9.2-beta</span> • Estación Meteorológica del Principado de Asturias
+        <strong>MeteoAstur Lode</strong> <span class="footer-version-tag">v0.9.3-beta</span> • Estación Meteorológica del Principado de Asturias
         <div id="last-updated" style="margin-top: 4px; font-size: 0.8rem; color: var(--text-dim);"></div>
       </div>
       <div class="footer-sources">
@@ -228,7 +228,7 @@
         <div class="shortcut-row"><kbd>F</kbd><span>Añadir o quitar concejo actual de Favoritos</span></div>
         <div class="shortcut-row"><kbd>G</kbd><span>Localizar concejo más cercano por GPS</span></div>
         <div class="shortcut-row"><kbd>S</kbd> / <kbd>/</kbd><span>Abrir selector de concejos de Asturias</span></div>
-        <div class="shortcut-row"><kbd>K</kbd> / <kbd>F11</kbd><span>Activar modo Kiosko / Pantalla completa</span></div>
+        <div class="shortcut-row"><kbd>K</kbd> / <kbd>F11</kbd><span>Alternar Pantalla Completa / Ventana</span></div>
         <div class="shortcut-row"><kbd>Esc</kbd><span>Cerrar ventanas y modales</span></div>
       </div>
     </div>
@@ -247,12 +247,21 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v0.9.2-beta</span>
+            <span class="release-version">v0.9.3-beta</span>
             <span class="release-date">23 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-new">Nuevo</span> <strong>Scroll horizontal táctil en gráficas</strong>: visualización fluida de 48 horas sin cortes ni amontonamientos en móvil.</li>
-            <li><span class="tag tag-improved">Mejora</span> <strong>Eje temporal con días</strong> (`Hoy`, `Mañ`, etc.) para una lectura horaria limpia.</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Control dinámico de pantalla completa</strong>: botón `🖥️ Completa` / `🗗 Ventana` con cambio automático de estado.</li>
+            <li><span class="tag tag-improved">Mejora</span> <strong>Auto-pantalla completa al interactuar</strong> en navegador y modo PWA standalone nativo.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v0.9.2-beta</span>
+            <span class="release-date">23 Ago 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> <strong>Scroll horizontal táctil en gráficas</strong>: 48 horas continuas sin amontonamientos.</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -295,7 +304,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=2.3').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=2.4').then(reg => {
           // Comprobar actualizaciones inmediatamente
           reg.update();
 
@@ -320,6 +329,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.3"></script>
+  <script type="module" src="js/app.js?v=2.4"></script>
 </body>
 </html>

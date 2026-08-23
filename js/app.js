@@ -28,6 +28,7 @@ class MeteoAsturiasApp {
     this.setupKeyboardShortcuts();
     this.setupLiveClock();
     this.setupNetworkMonitor();
+    this.setupFullscreen();
     this.initParticleCanvas();
 
     // Comprobar si se abrió desde un acceso directo PWA (hash URL)
@@ -424,16 +425,51 @@ class MeteoAsturiasApp {
     updateStatus();
   }
 
+  setupFullscreen() {
+    const updateBtn = () => {
+      const btn = document.getElementById('btn-fullscreen');
+      if (!btn) return;
+      const isFull = !!(document.fullscreenElement || document.webkitFullscreenElement);
+      btn.innerHTML = isFull ? '🗗 Ventana' : '🖥️ Completa';
+      btn.title = isFull ? 'Volver a Modo Ventana (Tecla K / Esc)' : 'Ver en Pantalla Completa (Tecla K / F11)';
+    };
+
+    document.addEventListener('fullscreenchange', updateBtn);
+    document.addEventListener('webkitfullscreenchange', updateBtn);
+    updateBtn();
+
+    // Intentar activar pantalla completa automáticamente en la primera interacción del usuario
+    const autoFullscreenOnFirstInteraction = () => {
+      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        if (document.documentElement.requestFullscreen) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        } else if (document.documentElement.webkitRequestFullscreen) {
+          document.documentElement.webkitRequestFullscreen().catch(() => {});
+        }
+      }
+      window.removeEventListener('click', autoFullscreenOnFirstInteraction);
+      window.removeEventListener('touchstart', autoFullscreenOnFirstInteraction);
+    };
+
+    window.addEventListener('click', autoFullscreenOnFirstInteraction, { once: true });
+    window.addEventListener('touchstart', autoFullscreenOnFirstInteraction, { once: true });
+  }
+
   toggleFullscreen() {
-    const btn = document.getElementById('btn-fullscreen');
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch(() => {});
-      if (btn) btn.textContent = '🗗 Salir Kiosko';
+    this.triggerHaptic();
+    const isFull = !!(document.fullscreenElement || document.webkitFullscreenElement);
+    if (!isFull) {
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else if (document.documentElement.webkitRequestFullscreen) {
+        document.documentElement.webkitRequestFullscreen().catch(() => {});
+      }
     } else {
       if (document.exitFullscreen) {
         document.exitFullscreen().catch(() => {});
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen().catch(() => {});
       }
-      if (btn) btn.textContent = '🖥️ Kiosko';
     }
   }
 
