@@ -240,6 +240,32 @@ class MeteoAsturiasApp {
       });
     }
 
+    // Modal de Changelog / Versiones
+    const versionBadge = document.getElementById('app-version-badge');
+    const changelogModal = document.getElementById('changelog-modal');
+    const closeChangelogBtn = document.getElementById('btn-close-changelog');
+
+    if (versionBadge && changelogModal) {
+      versionBadge.addEventListener('click', () => {
+        this.triggerHaptic();
+        changelogModal.style.display = 'flex';
+      });
+    }
+
+    if (closeChangelogBtn && changelogModal) {
+      closeChangelogBtn.addEventListener('click', () => {
+        changelogModal.style.display = 'none';
+      });
+    }
+
+    if (changelogModal) {
+      changelogModal.addEventListener('click', (e) => {
+        if (e.target === changelogModal) {
+          changelogModal.style.display = 'none';
+        }
+      });
+    }
+
     // Tabs de navegación
     document.querySelectorAll('.tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -359,6 +385,8 @@ class MeteoAsturiasApp {
       } else if (e.key === 'Escape') {
         const shortcutsModal = document.getElementById('shortcuts-modal');
         if (shortcutsModal) shortcutsModal.style.display = 'none';
+        const changelogModal = document.getElementById('changelog-modal');
+        if (changelogModal) changelogModal.style.display = 'none';
       }
     });
   }

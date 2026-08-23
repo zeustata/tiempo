@@ -47,6 +47,7 @@
         <div class="brand-info">
           <div class="brand-title-row">
             <h1>MeteoAstur Lode</h1>
+            <span class="version-badge" id="app-version-badge" title="Versión de la aplicación (Haz clic para ver novedades)">v0.9.0-beta</span>
             <div id="live-clock" class="live-clock-badge" title="Hora y fecha en tiempo real">--:--:--</div>
             <div id="network-status" class="network-badge online" title="Estado de conexión">🟢 En línea</div>
           </div>
@@ -198,7 +199,7 @@
     <!-- FOOTER -->
     <footer class="app-footer">
       <div class="footer-credits">
-        <strong>MeteoAstur Lode</strong> • Estación Meteorológica del Principado de Asturias
+        <strong>MeteoAstur Lode</strong> <span class="footer-version-tag">v0.9.0-beta</span> • Estación Meteorológica del Principado de Asturias
         <div id="last-updated" style="margin-top: 4px; font-size: 0.8rem; color: var(--text-dim);"></div>
       </div>
       <div class="footer-sources">
@@ -222,6 +223,45 @@
         <div class="shortcut-row"><kbd>S</kbd> / <kbd>/</kbd><span>Abrir selector de concejos de Asturias</span></div>
         <div class="shortcut-row"><kbd>K</kbd> / <kbd>F11</kbd><span>Activar modo Kiosko / Pantalla completa</span></div>
         <div class="shortcut-row"><kbd>Esc</kbd><span>Cerrar ventanas y modales</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE CHANGELOG / HISTORIAL DE VERSIONES -->
+  <div id="changelog-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-card modal-changelog">
+      <div class="modal-header">
+        <div>
+          <h3>📋 Novedades y Versiones</h3>
+          <span class="modal-subtitle">Historial de cambios de MeteoAstur Lode</span>
+        </div>
+        <button id="btn-close-changelog" class="btn-close" aria-label="Cerrar modal">&times;</button>
+      </div>
+      <div class="modal-body changelog-scroll">
+        <div class="changelog-release current">
+          <div class="release-header">
+            <span class="release-version">v0.9.0-beta</span>
+            <span class="release-date">23 Ago 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> <strong>Instalación PWA Multiplataforma</strong> en móviles Android/iOS y Windows.</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Auto-refresco inteligente</strong> al abrir la app o volver de segundo plano.</li>
+            <li><span class="tag tag-improved">Mejora</span> <strong>Radar Cantábrico despejado</strong>: sin amontonamientos de texto y con zoom panorámico.</li>
+            <li><span class="tag tag-improved">Mejora</span> <strong>Leyenda de intensidad de lluvia</strong> y marcadores discretos.</li>
+            <li><span class="tag tag-improved">Mejora</span> <strong>Favoritos limpios</strong> por defecto.</li>
+            <li><span class="tag tag-fix">Fix</span> Compatibilidad con Google Play WebAPK y motor anti-caché.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v0.8.0-beta</span>
+            <span class="release-date">23 Ago 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> Lanzamiento inicial de la estación meteorológica para Asturias.</li>
+            <li><span class="tag tag-new">Nuevo</span> Integración con satélite RainViewer y Open-Meteo.</li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
