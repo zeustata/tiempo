@@ -86,4 +86,5 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Blindaje total y aislamiento de excepciones ante respuestas nulas de modelos satelitales.
 - Integración de la Tarjeta Oficial de Alertas AEMET por comarcas asturianas tras la tarjeta principal.
 - Armonización y ajuste compacto de las fuentes tipográficas del Hero Card.
+- Corrección de visibilidad y contraste nítido en el buscador rápido de concejos en móviles.
 - Subidas continuas a GitHub (`zeustata/tiempo`).
