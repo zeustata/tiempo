@@ -116,10 +116,15 @@ class MeteoAsturiasApp {
     if (!btn || !menu) return;
 
     const count = this.prefs.favorites ? this.prefs.favorites.length : 0;
-    btn.innerHTML = `⭐ Favoritos (${count}) ▾`;
+    const labelEl = document.getElementById('fav-btn-label');
+    if (labelEl) {
+      labelEl.textContent = `Favoritos (${count})`;
+    } else {
+      btn.innerHTML = `<span class="fav-trigger-icon">⭐</span> <span id="fav-btn-label">Favoritos (${count})</span> <span class="fav-trigger-arrow">▾</span>`;
+    }
 
     if (count === 0) {
-      menu.innerHTML = `<div class="fav-empty-menu">No tienes favoritos guardados.<br><br>Pulsa <strong>⭐ Guardar</strong> para añadir concejos aquí.</div>`;
+      menu.innerHTML = `<div class="fav-empty-menu">No tienes favoritos guardados.<br><br>Pulsa en <strong>⭐ Guardar</strong> para añadir concejos aquí.</div>`;
       return;
     }
 

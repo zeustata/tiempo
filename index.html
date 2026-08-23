@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=3.4">
-  <link rel="stylesheet" href="css/components.css?v=3.4">
-  <link rel="stylesheet" href="css/weather-themes.css?v=3.4">
+  <link rel="stylesheet" href="css/main.css?v=3.5">
+  <link rel="stylesheet" href="css/components.css?v=3.5">
+  <link rel="stylesheet" href="css/weather-themes.css?v=3.5">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -60,25 +60,34 @@
         <button id="btn-shortcuts-help" class="btn-header btn-desktop-only" title="Ver atajos de teclado (Windows)">⌨️ Atajos</button>
         <button id="btn-toggle-fav" class="btn-header" title="Guardar en Favoritos (Tecla F)">⭐ Guardar</button>
         <button id="btn-gps" class="btn-header" title="Buscar concejo más cercano por GPS (Tecla G)">📍 Mi Ubicación</button>
-        <div class="fav-dropdown-wrapper">
-          <button id="btn-favorites-menu" class="btn-header" title="Ver mis concejos favoritos">⭐ Favoritos (0) ▾</button>
-          <div id="favorites-dropdown-menu" class="fav-dropdown-menu" style="display: none;"></div>
-        </div>
       </div>
     </header>
 
-    <!-- BARRA DE BÚSQUEDA RÁPIDA DE CONCEJOS -->
+    <!-- BARRA PRINCIPAL: BÚSQUEDA Y FAVORITOS LADO A LADO -->
     <section class="concejo-selector-bar">
-      <div class="search-trigger-card" id="main-search-trigger" role="button" tabindex="0" title="Toca para buscar o cambiar entre los 78 concejos">
-        <div class="search-trigger-left">
-          <span class="search-trigger-icon">🔍</span>
-          <div class="search-trigger-text" id="search-bar-current-name">
-            <span class="active-badge">⚡</span> <strong>Gijón</strong> <span class="active-meta">(8 m • Costa Central)</span>
+      <div class="search-and-fav-row">
+        <!-- 1. Tarjeta de Búsqueda de Concejo -->
+        <div class="search-trigger-card" id="main-search-trigger" role="button" tabindex="0" title="Toca para buscar o cambiar entre los 78 concejos">
+          <div class="search-trigger-left">
+            <span class="search-trigger-icon">🔍</span>
+            <div class="search-trigger-text" id="search-bar-current-name">
+              <span class="active-badge">⚡</span> <strong>Gijón</strong> <span class="active-meta">(8 m • Costa Central)</span>
+            </div>
+          </div>
+          <div class="search-trigger-right">
+            <span class="search-trigger-cta">Buscar ➔</span>
+            <span class="search-trigger-kbd"><kbd>S</kbd> / <kbd>/</kbd></span>
           </div>
         </div>
-        <div class="search-trigger-right">
-          <span class="search-trigger-cta">Buscar concejo ➔</span>
-          <span class="search-trigger-kbd"><kbd>S</kbd> / <kbd>/</kbd></span>
+
+        <!-- 2. Tarjeta de Favoritos -->
+        <div class="fav-dropdown-wrapper">
+          <button id="btn-favorites-menu" class="fav-trigger-card" title="Ver mis concejos favoritos">
+            <span class="fav-trigger-icon">⭐</span>
+            <span id="fav-btn-label">Favoritos (0)</span>
+            <span class="fav-trigger-arrow">▾</span>
+          </button>
+          <div id="favorites-dropdown-menu" class="fav-dropdown-menu" style="display: none;"></div>
         </div>
       </div>
     </section>
@@ -181,7 +190,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v0.9.92-beta 📋</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v0.9.93-beta 📋</button>
         • Estación Meteorológica del Principado de Asturias
         <div id="last-updated" style="margin-top: 4px; font-size: 0.8rem; color: var(--text-dim);"></div>
       </div>
@@ -223,12 +232,21 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v0.9.92-beta</span>
+            <span class="release-version">v0.9.93-beta</span>
             <span class="release-date">23 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-new">Nuevo</span> <strong>Menú Desplegable de Favoritos en Cabecera</strong>: sustituido el botón de unidades por un selector directo de favoritos `⭐ Favoritos (X) ▾`.</li>
-            <li><span class="tag tag-improved">Mejora</span> Pantalla principal despejada al máximo al reubicar los favoritos en la cabecera.</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Diseño en Paralelo: Búsqueda y Favoritos</strong>: colocadas la tarjeta de búsqueda y la tarjeta de favoritos lado a lado en la misma fila.</li>
+            <li><span class="tag tag-fix">Corrección</span> <strong>Solución de Superposición</strong>: el menú de favoritos flota con `z-index: 9999` sin ocultarse ni taparse en móvil.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v0.9.92-beta</span>
+            <span class="release-date">23 Ago 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> Menú desplegable de favoritos.</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -322,7 +340,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.4').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.5').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -343,6 +361,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.4"></script>
+  <script type="module" src="js/app.js?v=3.5"></script>
 </body>
 </html>
