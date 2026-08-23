@@ -1,4 +1,3 @@
-import { CONCEJOS_ASTURIAS } from '../config/concejos.js';
 import { fetchRainViewerRadar } from '../services/radarService.js';
 
 let asturiasMap = null;
@@ -7,11 +6,11 @@ let baseLayers = {};
 let radarFrames = [];
 let currentFrameIndex = 0;
 let animationTimer = null;
-let markersLayerGroup = null;
+let activeConcejoMarker = null;
 let isPlaying = false;
 
 /**
- * Inicializa el mapa interactivo de Asturias con Leaflet y RainViewer
+ * Inicializa el mapa interactivo del radar en Asturias con Leaflet y RainViewer
  */
 export async function initAsturiasMap(mapContainerId, onConcejoSelect) {
   if (typeof L === 'undefined') return;
@@ -32,7 +31,7 @@ export async function initAsturiasMap(mapContainerId, onConcejoSelect) {
       fadeAnimation: true
     });
 
-    // Capa 1: CartoDB Voyager (Clara, muy nítida con relieve costero)
+    // Capa 1: CartoDB Voyager (Clara, muy nítida con relieve costero y nombres limpios)
     const layerVoyager = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; OpenStreetMap &copy; CARTO &copy; RainViewer',
       subdomains: 'abcd',
@@ -45,7 +44,7 @@ export async function initAsturiasMap(mapContainerId, onConcejoSelect) {
       maxZoom: 19
     });
 
-    // Capa 3: Esri World Imagery (Satélite Real)
+    // Capa 3: Esri World Imagery (Satélite Real de alta definición)
     const layerSat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
       attribution: '&copy; Esri &copy; Earthstar Geographics',
       maxZoom: 19
@@ -54,18 +53,16 @@ export async function initAsturiasMap(mapContainerId, onConcejoSelect) {
     layerVoyager.addTo(asturiasMap);
 
     baseLayers = {
-      "Mapa Topográfico": layerVoyager,
-      "OpenStreetMap": layerOSM,
-      "Satélite Real (Esri)": layerSat
+      "🗺️ Mapa Topográfico": layerVoyager,
+      "🛰️ Satélite Real (Esri)": layerSat,
+      "📍 OpenStreetMap": layerOSM
     };
 
     L.control.layers(baseLayers, null, { position: 'topright' }).addTo(asturiasMap);
 
-    markersLayerGroup = L.layerGroup().addTo(asturiasMap);
+    // Añadir leyenda de radar en la esquina inferior
+    addRadarLegend(asturiasMap);
   }
-
-  // Pintar marcadores de concejos asturianos
-  renderConcejosMarkers(onConcejoSelect);
 
   // Cargar capas de Radar RainViewer
   await loadRadarLayers();
@@ -75,62 +72,49 @@ export async function initAsturiasMap(mapContainerId, onConcejoSelect) {
 }
 
 /**
+ * Añade una leyenda visual de intensidad de precipitación
+ */
+function addRadarLegend(map) {
+  const legend = L.control({ position: 'bottomright' });
+  legend.onAdd = function () {
+    const div = L.DomUtil.create('div', 'radar-legend-card');
+    div.innerHTML = `
+      <div class="legend-title">Intensidad Lluvia</div>
+      <div class="legend-scale">
+        <span style="background: #00ecff;"></span>
+        <span style="background: #0099ff;"></span>
+        <span style="background: #00ff00;"></span>
+        <span style="background: #ffff00;"></span>
+        <span style="background: #ff7700;"></span>
+        <span style="background: #ff0000;"></span>
+        <span style="background: #cc00ff;"></span>
+      </div>
+      <div class="legend-labels">
+        <span>Débil / Orbayu</span>
+        <span>Moderada</span>
+        <span>Torrencial</span>
+      </div>
+    `;
+    return div;
+  };
+  legend.addTo(map);
+}
+
+/**
  * Corrige el tamaño de Leaflet cuando el contenedor se hace visible
  */
 export function resizeMap() {
   if (asturiasMap) {
     setTimeout(() => {
-      if (asturiasMap) {
-        asturiasMap.invalidateSize();
-      }
+      if (asturiasMap) asturiasMap.invalidateSize();
     }, 50);
     setTimeout(() => {
-      if (asturiasMap) {
-        asturiasMap.invalidateSize();
-      }
+      if (asturiasMap) asturiasMap.invalidateSize();
     }, 250);
     setTimeout(() => {
-      if (asturiasMap) {
-        asturiasMap.invalidateSize();
-      }
+      if (asturiasMap) asturiasMap.invalidateSize();
     }, 600);
   }
-}
-
-function renderConcejosMarkers(onConcejoSelect) {
-  if (!markersLayerGroup) return;
-  markersLayerGroup.clearLayers();
-
-  CONCEJOS_ASTURIAS.forEach(c => {
-    const iconHtml = c.type === 'coast' ? '🌊' : c.type === 'mountain' ? '🏔️' : '🏛️';
-    const customIcon = L.divIcon({
-      className: 'custom-map-pin',
-      html: `<div class="pin-badge ${c.type}">${iconHtml} ${c.name.split('/')[0]}</div>`,
-      iconSize: [110, 30],
-      iconAnchor: [55, 15]
-    });
-
-    const marker = L.marker([c.lat, c.lon], { icon: customIcon });
-    marker.bindPopup(`
-      <div class="map-popup-card">
-        <h4>${c.name}</h4>
-        <p>${c.badge}</p>
-        <p class="popup-desc">${c.description}</p>
-        <button class="popup-select-btn" id="btn-select-${c.id}">Ver Estación en Vivo</button>
-      </div>
-    `);
-
-    marker.on('popupopen', () => {
-      const btn = document.getElementById(`btn-select-${c.id}`);
-      if (btn) {
-        btn.onclick = () => {
-          if (onConcejoSelect) onConcejoSelect(c.id);
-        };
-      }
-    });
-
-    markersLayerGroup.addLayer(marker);
-  });
 }
 
 async function loadRadarLayers() {
@@ -155,12 +139,12 @@ function showRadarFrame(index, host = 'https://tilecache.rainviewer.com') {
   }
 
   radarTileLayer = L.tileLayer(url, {
-    opacity: 0.75,
+    opacity: 0.78,
     zIndex: 10,
     tileSize: 256
   }).addTo(asturiasMap);
 
-  // Actualizar etiqueta temporal del radar y slider si existe
+  // Actualizar etiqueta temporal del radar
   const timeEl = document.getElementById('radar-time-display');
   if (timeEl) {
     const d = new Date(frame.time * 1000);
@@ -193,9 +177,26 @@ export function resetMapCenter() {
   }
 }
 
-export function focusConcejoOnMap(lat, lon) {
+export function focusConcejoOnMap(lat, lon, concejoName) {
   if (asturiasMap) {
-    asturiasMap.setView([lat, lon], 11, { animate: true });
+    asturiasMap.setView([lat, lon], 10, { animate: true });
+
+    // Actualizar o poner un único marcador elegante y discreto en el concejo actual
+    if (activeConcejoMarker) {
+      asturiasMap.removeLayer(activeConcejoMarker);
+      activeConcejoMarker = null;
+    }
+
+    if (lat && lon && concejoName) {
+      const singlePin = L.divIcon({
+        className: 'single-active-pin',
+        html: `<div class="pulse-pin-badge">📍 ${concejoName.split('/')[0]}</div>`,
+        iconSize: [120, 30],
+        iconAnchor: [60, 15]
+      });
+      activeConcejoMarker = L.marker([lat, lon], { icon: singlePin }).addTo(asturiasMap);
+    }
+
     resizeMap();
   }
 }

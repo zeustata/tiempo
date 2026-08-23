@@ -522,42 +522,65 @@
   box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
 }
 
-.custom-map-pin .pin-badge {
-  background: rgba(15, 23, 42, 0.9);
-  color: #f8fafc;
-  border: 1px solid rgba(56, 189, 248, 0.5);
-  padding: 3px 8px;
-  border-radius: 12px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+.single-active-pin .pulse-pin-badge {
+  background: rgba(15, 23, 42, 0.92);
+  color: #38bdf8;
+  border: 1px solid #38bdf8;
+  padding: 5px 12px;
+  border-radius: 16px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.4), 0 4px 10px rgba(0,0,0,0.6);
   white-space: nowrap;
+  animation: pulsePin 2s infinite ease-in-out;
 }
 
-.custom-map-pin .pin-badge.coast { border-color: #06b6d4; }
-.custom-map-pin .pin-badge.mountain { border-color: #a855f7; }
+@keyframes pulsePin {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
 
-.map-popup-card h4 {
-  font-size: 1.1rem;
-  color: #0f172a;
+/* Radar Legend */
+.radar-legend-card {
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-glass);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-pop);
+  color: var(--text-main);
+  font-family: inherit;
+  margin-bottom: 25px;
+  margin-right: 12px;
+}
+
+.legend-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  text-transform: uppercase;
   margin-bottom: 4px;
 }
 
-.popup-desc {
-  font-size: 0.8rem;
-  color: #475569;
-  margin: 6px 0 10px;
+.legend-scale {
+  display: flex;
+  height: 8px;
+  width: 140px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 4px;
 }
 
-.popup-select-btn {
-  width: 100%;
-  padding: 6px 12px;
-  background: #0284c7;
-  color: white;
-  border: none;
-  border-radius: 6px;
+.legend-scale span {
+  flex: 1;
+}
+
+.legend-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.68rem;
+  color: var(--text-muted);
   font-weight: 600;
-  cursor: pointer;
 }
 
 /* --- CHARTS WRAPPER --- */

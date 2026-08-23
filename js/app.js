@@ -355,7 +355,7 @@ class MeteoAsturiasApp {
     this.renderFavoritePills();
     this.updateFavButton();
 
-    focusConcejoOnMap(this.currentConcejo.lat, this.currentConcejo.lon);
+    focusConcejoOnMap(this.currentConcejo.lat, this.currentConcejo.lon, this.currentConcejo.name);
     await this.loadWeather(concejoId);
   }
 
