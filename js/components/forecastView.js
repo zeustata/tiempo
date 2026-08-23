@@ -117,8 +117,8 @@ export function renderForecast(data, units = 'metric') {
               <span class="tb-val">${minT}°</span>
             </div>
             <div class="temp-badge osc">
-              <span class="tb-label">Oscilación</span>
-              <span class="tb-val osc-val">Δ ${maxT - minT}°C</span>
+              <span class="tb-label">Rango</span>
+              <span class="tb-val osc-val">Δ ${maxT - minT}°</span>
             </div>
           </div>
 

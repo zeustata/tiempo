@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.7">
-  <link rel="stylesheet" href="css/components.css?v=2.7">
-  <link rel="stylesheet" href="css/weather-themes.css?v=2.7">
+  <link rel="stylesheet" href="css/main.css?v=2.8">
+  <link rel="stylesheet" href="css/components.css?v=2.8">
+  <link rel="stylesheet" href="css/weather-themes.css?v=2.8">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -47,7 +47,7 @@
         <div class="brand-info">
           <div class="brand-title-row">
             <h1>MeteoAstur Lode</h1>
-            <span class="version-badge" id="app-version-badge" title="Versión de la aplicación (Haz clic para ver novedades)">v0.9.5-beta</span>
+            <span class="version-badge" id="app-version-badge" title="Versión de la aplicación (Haz clic para ver novedades)">v0.9.6-beta</span>
             <div id="live-clock" class="live-clock-badge" title="Hora y fecha en tiempo real">--:--:--</div>
             <div id="network-status" class="network-badge online" title="Estado de conexión">🟢 En línea</div>
           </div>
@@ -206,7 +206,7 @@
     <!-- FOOTER -->
     <footer class="app-footer">
       <div class="footer-credits">
-        <strong>MeteoAstur Lode</strong> <span class="footer-version-tag">v0.9.5-beta</span> • Estación Meteorológica del Principado de Asturias
+        <strong>MeteoAstur Lode</strong> <span class="footer-version-tag">v0.9.6-beta</span> • Estación Meteorológica del Principado de Asturias
         <div id="last-updated" style="margin-top: 4px; font-size: 0.8rem; color: var(--text-dim);"></div>
       </div>
       <div class="footer-sources">
@@ -247,21 +247,21 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v0.9.5-beta</span>
+            <span class="release-version">v0.9.6-beta</span>
             <span class="release-date">23 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-new">Nuevo</span> <strong>Alineación simétrica de sensores</strong>: 100% idénticos en bordes y ancho que la tarjeta superior.</li>
-            <li><span class="tag tag-improved">Mejora</span> <strong>Oscilación térmica organizada</strong>: colocada debajo en bloque vertical amplio para que no se corte en ningún móvil.</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Etiqueta compacta "Rango"</strong> (`Δ X°`) en el pronóstico a 10 días, asegurando ajuste 100% dentro de la tarjeta.</li>
+            <li><span class="tag tag-improved">Mejora</span> Ajuste responsivo de insignias térmicas contra desbordamientos.</li>
           </ul>
         </div>
         <div class="changelog-release">
           <div class="release-header">
-            <span class="release-version">v0.9.4-beta</span>
+            <span class="release-version">v0.9.5-beta</span>
             <span class="release-date">23 Ago 2026</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-new">Nuevo</span> Alineación y armonía visual en todas las tarjetas.</li>
+            <li><span class="tag tag-new">Nuevo</span> Alineación simétrica de sensores y bloque térmico vertical.</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -304,7 +304,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=2.7').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=2.8').then(reg => {
           // Comprobar actualizaciones inmediatamente
           reg.update();
 
@@ -329,6 +329,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.7"></script>
+  <script type="module" src="js/app.js?v=2.8"></script>
 </body>
 </html>

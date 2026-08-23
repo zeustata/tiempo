@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.6-beta] - 2026-08-23
+
+### 🏷️ Etiqueta Compacta "Rango" en Pronóstico (Changed & Improved)
+- **Sustitución de "Oscilación" por "Rango"**: Reemplazada la palabra larga por el término conciso **`Rango`** (`Δ X°`), garantizando que se mantenga 100% dentro de la tarjeta sin desbordarse ni recortarse en pantallas móviles estrechas.
+- **Auto-ajuste Flex y Prevención de Desbordamiento**: Insignias térmicas con `min-width: 0`, protección contra texto sobrante y ajuste responsivo exacto.
+
+---
+
 ## [0.9.5-beta] - 2026-08-23
 
 ### 📐 Alineación Perfecta de Sensores y Sección Térmica Despejada (Fixed & Improved)
