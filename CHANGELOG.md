@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.999e-beta] - 2026-08-23
+
+### 🔮 Estética Liquid Glass & Glassmorphism Translúcido (New & Visual)
+- **Fondos de Cristal Líquido**: Reemplazo de bloques opacos por gradientes translúcidos (`rgba(255, 255, 255, 0.08)` a `rgba(15, 23, 42, 0.62)`).
+- **Desenfoque Profundo con Saturación**: `backdrop-filter: blur(26px) saturate(185%)` que deja entrever las partículas meteorológicas activas en el fondo.
+- **Bisel de Luz Interior**: Reflejos de luz especular (`inset 0 1px 1px 0 rgba(255, 255, 255, 0.22)`) en tarjeta principal, sensores climáticos, carrusel horario y modales.
+
+---
+
 ## [0.9.999d-beta] - 2026-08-23
 
 ### 📏 Corrección de Altura y Recorte de Texto en Selector de Módulos (Fixed)
