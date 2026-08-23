@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.999n-beta] - 2026-08-24
+
+### 🛡️ Aislamiento Robusto de Módulos & Protección de Renderizado (Fixed & Stability)
+- **Blindaje Individual de Tarjetas**: Cada sección (Estación en Vivo, Costa & Mar, Cordillera & Nieve, Pronóstico, Gráfica y Comparador) cuenta con captura aislada de excepciones.
+- **Garantía de Carga Ininterrumpida**: Asegurada la inicialización del radar, el comparador y las llamadas de datos de forma resiliente en cualquier navegador móvil o de escritorio.
+
+---
+
 ## [0.9.999m-beta] - 2026-08-24
 
 ### 🌊 Mareógrafo Panorámico de 72 Horas (3 Días) (New & Visual)

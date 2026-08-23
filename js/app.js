@@ -1,14 +1,14 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=6.0';
-import { fetchWeatherData } from './services/weatherApi.js?v=6.0';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=6.0';
-import { renderCurrentWeather } from './components/currentCard.js?v=6.0';
-import { renderMarineCard } from './components/marineCard.js?v=6.0';
-import { renderMountainCard } from './components/mountainCard.js?v=6.0';
-import { renderForecast } from './components/forecastView.js?v=6.0';
-import { renderWeatherChart } from './components/chartsView.js?v=6.0';
-import { renderCompareView } from './components/compareView.js?v=6.0';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=6.0';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=6.0';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=6.1';
+import { fetchWeatherData } from './services/weatherApi.js?v=6.1';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=6.1';
+import { renderCurrentWeather } from './components/currentCard.js?v=6.1';
+import { renderMarineCard } from './components/marineCard.js?v=6.1';
+import { renderMountainCard } from './components/mountainCard.js?v=6.1';
+import { renderForecast } from './components/forecastView.js?v=6.1';
+import { renderWeatherChart } from './components/chartsView.js?v=6.1';
+import { renderCompareView } from './components/compareView.js?v=6.1';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=6.1';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=6.1';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, alertas climáticas y calidad del aire', key: '1' },
@@ -54,12 +54,20 @@ class MeteoAsturiasApp {
     await this.loadWeather(this.currentConcejo.id);
 
     // Cargar datos de comparación iniciales
-    this.loadCompareData(this.compareConcejoB.id);
+    try {
+      this.loadCompareData(this.compareConcejoB.id);
+    } catch (e) {
+      console.warn('[MeteoAstur] Error inicializando comparador:', e);
+    }
 
     // Inicializar mapa Leaflet
-    initAsturiasMap('map-container', (concejoId) => {
-      this.switchConcejo(concejoId);
-    });
+    try {
+      initAsturiasMap('map-container', (concejoId) => {
+        this.switchConcejo(concejoId);
+      });
+    } catch (e) {
+      console.warn('[MeteoAstur] Error inicializando mapa:', e);
+    }
 
     // Auto-refresco cada 10 minutos en segundo plano
     if (this.prefs.autoRefresh) {
@@ -850,21 +858,25 @@ class MeteoAsturiasApp {
     const concejo = getConcejoById(concejoId);
     if (!concejo) return;
 
-    const isCoast = concejo.type === 'coast' || concejo.region.includes('Costa');
-    const result = await fetchWeatherData(concejo.lat, concejo.lon, isCoast);
+    try {
+      const isCoast = concejo.type === 'coast' || concejo.region.includes('Costa');
+      const result = await fetchWeatherData(concejo.lat, concejo.lon, isCoast);
 
-    if (result.success) {
-      this.weatherData = result;
-      this.renderAllComponents();
-      this.updateLastUpdatedTime(result.timestamp);
-    } else {
-      console.error('Error cargando tiempo:', result.error);
+      if (result && result.success) {
+        this.weatherData = result;
+        this.renderAllComponents();
+        this.updateLastUpdatedTime(result.timestamp);
+      } else {
+        console.error('Error cargando tiempo:', result?.error);
+      }
+    } catch (err) {
+      console.error('Excepción en loadWeather:', err);
     }
   }
 
   updateLastUpdatedTime(date) {
     const el = document.getElementById('last-updated');
-    if (el) {
+    if (el && date) {
       el.textContent = `Actualizado: ${date.toLocaleTimeString('es-ES')}`;
     }
   }
@@ -873,43 +885,71 @@ class MeteoAsturiasApp {
     if (!this.weatherData) return;
 
     // 1. Dashboard en Vivo
-    const liveContainer = document.getElementById('panel-live');
-    if (liveContainer) {
-      liveContainer.innerHTML = renderCurrentWeather(this.weatherData, this.currentConcejo, this.prefs.units);
+    try {
+      const liveContainer = document.getElementById('panel-live');
+      if (liveContainer) {
+        liveContainer.innerHTML = renderCurrentWeather(this.weatherData, this.currentConcejo, this.prefs.units);
+      }
+    } catch (e) {
+      console.error('[MeteoAstur] Error renderizando Vivo:', e);
     }
 
     // 2. Módulo Marino
-    const marineContainer = document.getElementById('panel-marine');
-    if (marineContainer) {
-      marineContainer.innerHTML = renderMarineCard(this.weatherData, this.currentConcejo);
+    try {
+      const marineContainer = document.getElementById('panel-marine');
+      if (marineContainer) {
+        marineContainer.innerHTML = renderMarineCard(this.weatherData, this.currentConcejo);
+      }
+    } catch (e) {
+      console.error('[MeteoAstur] Error renderizando Costa & Mar:', e);
     }
 
     // 3. Módulo Montaña
-    const mountainContainer = document.getElementById('panel-mountain');
-    if (mountainContainer) {
-      mountainContainer.innerHTML = renderMountainCard(this.weatherData, this.currentConcejo);
+    try {
+      const mountainContainer = document.getElementById('panel-mountain');
+      if (mountainContainer) {
+        mountainContainer.innerHTML = renderMountainCard(this.weatherData, this.currentConcejo);
+      }
+    } catch (e) {
+      console.error('[MeteoAstur] Error renderizando Cordillera & Nieve:', e);
     }
 
     // 4. Pronóstico
-    const forecastContainer = document.getElementById('panel-forecast');
-    if (forecastContainer) {
-      forecastContainer.innerHTML = renderForecast(this.weatherData, this.prefs.units);
+    try {
+      const forecastContainer = document.getElementById('panel-forecast');
+      if (forecastContainer) {
+        forecastContainer.innerHTML = renderForecast(this.weatherData, this.prefs.units);
+      }
+    } catch (e) {
+      console.error('[MeteoAstur] Error renderizando Pronóstico:', e);
     }
 
     // 5. Gráfico si está activo
     if (this.activeTab === 'charts') {
-      renderWeatherChart('meteo-chart-canvas', this.weatherData.weather.hourly, 48);
+      try {
+        renderWeatherChart('meteo-chart-canvas', this.weatherData.weather.hourly, 48);
+      } catch (e) {
+        console.error('[MeteoAstur] Error renderizando Gráfica:', e);
+      }
     }
 
     // 6. Comparador si está activo
     if (this.activeTab === 'compare') {
-      this.renderCompareSection();
+      try {
+        this.renderCompareSection();
+      } catch (e) {
+        console.error('[MeteoAstur] Error renderizando Comparador:', e);
+      }
     }
 
     // 7. Aplicar Tema Atmosférico Dinámico y Partículas Ambientales
     if (this.weatherData.weather && this.weatherData.weather.current) {
-      const cur = this.weatherData.weather.current;
-      this.applyDynamicWeatherTheme(cur.weather_code, cur.is_day !== undefined ? cur.is_day : 1);
+      try {
+        const cur = this.weatherData.weather.current;
+        this.applyDynamicWeatherTheme(cur.weather_code, cur.is_day !== undefined ? cur.is_day : 1);
+      } catch (e) {
+        console.error('[MeteoAstur] Error aplicando tema atmosférico:', e);
+      }
     }
 
     this.updateFavButton();

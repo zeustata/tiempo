@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=6.0">
-  <link rel="stylesheet" href="css/components.css?v=6.0">
-  <link rel="stylesheet" href="css/weather-themes.css?v=6.0">
+  <link rel="stylesheet" href="css/main.css?v=6.1">
+  <link rel="stylesheet" href="css/components.css?v=6.1">
+  <link rel="stylesheet" href="css/weather-themes.css?v=6.1">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -158,7 +158,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v0.9.999m-beta 📋</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v0.9.999n-beta 📋</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -203,8 +203,17 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v0.9.999m-beta</span>
+            <span class="release-version">v0.9.999n-beta</span>
             <span class="release-date">24 Ago 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-fixed">Estabilidad</span> <strong>Aislamiento y Recuperación de Paneles</strong>: protección individual contra excepciones en el renderizado de tarjetas, mapa y comparador garantizando que todos los datos y módulos carguen siempre sin interrupciones.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v0.9.999m-beta</span>
+            <span class="release-date">24 Ago 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-new">Nuevo</span> <strong>Mareógrafo Continuo de 72 Horas (3 Días)</strong>: ampliación del gráfico interactivo a 72 horas completas que abarcan Hoy, Mañana y Pasado Mañana, con separadores de jornada, coeficientes diarios y ancho panorámico de 1980px con desplazamiento táctil ultra cómodo.</li>
@@ -595,7 +604,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=6.0').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=6.1').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -616,6 +625,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=6.0"></script>
+  <script type="module" src="js/app.js?v=6.1"></script>
 </body>
 </html>
