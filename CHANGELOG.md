@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.999f-beta] - 2026-08-23
+
+### 🌌 Transparencia Real y Visibilidad del Fondo Dinámico (Improved & Visual)
+- **Eliminación de Opacidades Oscuras en Temas**: Reconfiguración de todas las reglas de `weather-themes.css` a gradientes translúcidos (38% a 48% de opacidad) permitiendo visibilidad directa de las partículas climáticas y degradados de cielo.
+- **Efecto Lente Atmosférica**: Las partículas animadas (estrellas, lluvia, nieve y polvo solar) y los tonos del clima atraviesan con nitidez las tarjetas manteniendo perfecta legibilidad tipográfica.
+
+---
+
 ## [0.9.999e-beta] - 2026-08-23
 
 ### 🔮 Estética Liquid Glass & Glassmorphism Translúcido (New & Visual)
