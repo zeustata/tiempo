@@ -41,12 +41,55 @@ class MeteoAsturiasApp {
       this.switchConcejo(concejoId);
     });
 
-    // Auto-refresco cada 10 minutos
+    // Auto-refresco cada 10 minutos en segundo plano
     if (this.prefs.autoRefresh) {
       this.autoRefreshTimer = setInterval(() => {
         this.loadWeather(this.currentConcejo.id);
       }, 10 * 60 * 1000);
     }
+
+    // Auto-refresco instantáneo cada vez que abres o desbloqueas la App
+    this.setupAutoRefreshOnResume();
+  }
+
+  setupAutoRefreshOnResume() {
+    let lastRefreshTime = Date.now();
+
+    const refreshIfStale = () => {
+      const now = Date.now();
+      // Si han pasado más de 45 segundos desde la última carga o se vuelve a abrir la app
+      if (now - lastRefreshTime > 45 * 1000) {
+        lastRefreshTime = now;
+        console.log('[MeteoAstur] Reanudación detectada: actualizando datos del tiempo y versión...');
+        
+        // 1. Actualizar datos meteorológicos
+        this.loadWeather(this.currentConcejo.id);
+
+        // 2. Comprobar si hay nueva versión de la app en GitHub
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistration().then(reg => {
+            if (reg) reg.update();
+          });
+        }
+      }
+    };
+
+    // Cuando vuelves a la pestaña/app desde otra app o desbloqueas el móvil
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        refreshIfStale();
+      }
+    });
+
+    // Cuando la ventana recupera el foco en Windows/navegador
+    window.addEventListener('focus', () => {
+      refreshIfStale();
+    });
+
+    // Evento pageshow para móviles (cuando se recupera de la memoria de Android/iOS)
+    window.addEventListener('pageshow', (event) => {
+      refreshIfStale();
+    });
   }
 
   handleInitialHash() {
