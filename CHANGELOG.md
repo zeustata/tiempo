@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.999j-beta] - 2026-08-24
+
+### 🌊 Mareógrafo Dinámico en Tiempo Real & Cuadro Semanal de Mareas (New & Feature)
+- **Mareógrafo en Vivo con Onda Sinusoidal**: Gráfico continuo de oscilación del Cantábrico con indicador de posición en tiempo real, cota de agua en metros, porcentaje de llenado del ciclo y cuenta atrás hacia el próximo evento (Pleamar o Bajamar).
+- **Cuadro Semanal de Mareas & Coeficientes**: Previsión a 7 días con las 4 mareas diarias (horas y alturas), fases lunares astronómicas e insignias de clasificación cromática para Mareas Vivas / Mareonas (🔴), Medias (🟡) y Muertas (🟢).
+
+---
+
 ## [0.9.999i-beta] - 2026-08-24
 
 ### 🌊 Cristal Translúcido Universal en Costa & Mar, Cordillera & Nieve y Comparador (Fixed & Visual)

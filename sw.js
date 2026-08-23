@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v44-live';
+const CACHE_NAME = 'meteoasturlode-v45-live';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -25,7 +25,8 @@ const STATIC_ASSETS = [
   './js/components/mapRadar.js',
   './js/utils/weatherIcons.js',
   './js/utils/weatherAlerts.js',
-  './js/utils/storage.js'
+  './js/utils/storage.js',
+  './js/utils/tides.js'
 ];
 
 // Instalación: forzar activación inmediata sin esperar a que se cierren pestañas

@@ -1,4 +1,11 @@
 import { getWindDirection } from '../utils/weatherIcons.js';
+import { 
+  getMoonAndTideInfo, 
+  getDailyTideEvents, 
+  getRealtimeTideStatus, 
+  getWeeklyTides, 
+  renderTideSvgGraph 
+} from '../utils/tides.js';
 
 /**
  * Base de datos exhaustiva de playas y calas de cada concejo costero de Asturias
@@ -190,7 +197,7 @@ function getNearestCoastalReference(concejo) {
   const cId = concejo.id;
 
   // Oriente
-  if (['cangas-de-onis', 'parres', 'amieva', 'cabrales', 'penasanta', 'oniss', 'ponga', 'ribadesella'].includes(cId) || concejo.region.includes('Oriente')) {
+  if (['cangas-de-onis', 'parres', 'amieva', 'cabrales', 'penasanta', 'oniss', 'ponga', 'ribadesella'].includes(cId) || (concejo.region && concejo.region.includes('Oriente'))) {
     return { refId: 'ribadesella', name: 'Ribadesella (Costa Oriental)', dist: '22 km' };
   }
   // Cuencas / Centro Sur
@@ -211,7 +218,7 @@ function getNearestCoastalReference(concejo) {
 }
 
 /**
- * Renderiza el módulo marítimo enfocado en Turismo, Playas y Surf en el Mar Cantábrico
+ * Renderiza el módulo marítimo con Mareógrafo interactivo en tiempo real y calendario semanal de mareas
  */
 export function renderMarineCard(data, concejo) {
   const marine = data.marine?.current;
@@ -268,9 +275,14 @@ export function renderMarineCard(data, concejo) {
     surfStatus = '🚨 Temporal costero activo. Prohibido el baño. Mar no navegable.';
   }
 
-  // Estimación de temperatura superficial del agua y mareas
+  // Temperatura del agua
   const now = new Date();
   const seaTemp = (16.2 + Math.sin((now.getMonth() - 2) * 0.5) * 4.2).toFixed(1);
+
+  // Cálculos dinámicos de mareas y fase lunar
+  const tideStatus = getRealtimeTideStatus(now);
+  const weeklyTides = getWeeklyTides(now);
+  const tideSvg = renderTideSvgGraph(tideStatus.dayData, true, tideStatus.currentHours);
 
   return `
     <div class="marine-card">
@@ -289,9 +301,121 @@ export function renderMarineCard(data, concejo) {
         </div>
       </div>
 
-      <!-- GRID DE SENSORES MARINOS Y SURF -->
+      <!-- 1. MAREÓGRAFO INTERACTIVO EN TIEMPO REAL (ONDA SINUSOIDAL VIVA) -->
+      <div class="marine-widget mareografo-card" style="margin-bottom: 20px;">
+        <div class="mareografo-header">
+          <div class="mareografo-title-wrap">
+            <span class="mareografo-icon">🌊</span>
+            <div>
+              <div class="mareografo-title">Mareógrafo Dinámico en Vivo</div>
+              <div class="mareografo-subtitle">${activeCoastName} • Costa de Asturias</div>
+            </div>
+          </div>
+          <div class="mareografo-live-badge" style="background: ${tideStatus.directionColor}20; color: ${tideStatus.directionColor}; border: 1px solid ${tideStatus.directionColor}60;">
+            ${tideStatus.directionIcon} <strong>${tideStatus.directionName}</strong>
+          </div>
+        </div>
+
+        <!-- Métricas clave en vivo -->
+        <div class="mareografo-metrics-row">
+          <div class="tide-metric-pill">
+            <span class="t-label">Nivel de Agua Actual</span>
+            <span class="t-value" style="color: ${tideStatus.directionColor};">${tideStatus.currentWaterHeight} <span class="t-unit">m</span></span>
+          </div>
+
+          <div class="tide-metric-pill">
+            <span class="t-label">Llenado del Ciclo</span>
+            <div class="tide-progress-wrap">
+              <div class="tide-progress-bar" style="width: ${tideStatus.fillPercent}%; background: linear-gradient(90deg, #0284c7, #38bdf8);"></div>
+            </div>
+            <span class="t-subvalue">${tideStatus.fillPercent}% de marea</span>
+          </div>
+
+          <div class="tide-metric-pill highlight-countdown">
+            <span class="t-label">Próximo Evento de Marea</span>
+            <span class="t-countdown">⏳ ${tideStatus.countdownStr}</span>
+            <span class="t-subvalue">Para <strong>${tideStatus.nextEvent.name}</strong> (${tideStatus.nextEvent.timeStr} • ${tideStatus.nextEvent.height}m)</span>
+          </div>
+
+          <div class="tide-metric-pill">
+            <span class="t-label">Coeficiente Hoy</span>
+            <span class="t-value">${tideStatus.moonInfo.coefficient}</span>
+            <span class="t-badge-small ${tideStatus.moonInfo.tideClass}">${tideStatus.moonInfo.tideBadge}</span>
+          </div>
+        </div>
+
+        <!-- Curva Gráfica Sinusoidal Interactiva -->
+        <div class="tide-chart-container">
+          ${tideSvg}
+        </div>
+
+        <!-- 4 Nodos del Día -->
+        <div class="daily-tide-events-grid">
+          ${tideStatus.dayData.events.map(ev => `
+            <div class="tide-event-chip ${ev.type}">
+              <div class="chip-top">
+                <span class="chip-icon">${ev.type === 'high' ? '🌅' : '🏖️'}</span>
+                <span class="chip-name">${ev.name}</span>
+              </div>
+              <div class="chip-time">${ev.timeStr}</div>
+              <div class="chip-height">${ev.height} m</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- 2. CUADRO SEMANAL DE MAREAS & COEFICIENTES (7 DÍAS) -->
+      <div class="marine-widget weekly-tides-card" style="margin-bottom: 20px;">
+        <div class="weekly-tides-header">
+          <div class="weekly-title-wrap">
+            <span class="weekly-icon">📅</span>
+            <div>
+              <div class="weekly-title">Cuadro Semanal de Mareas & Coeficientes</div>
+              <div class="weekly-subtitle">Previsión astronómica oficial a 7 días • Fases Lunares & Mareonas</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="weekly-tides-grid">
+          ${weeklyTides.map((day, idx) => `
+            <div class="tide-day-card ${day.isToday ? 'is-today' : ''}">
+              <div class="tide-day-header">
+                <div class="tide-day-date">
+                  <span class="tide-day-name">${day.dayName}</span>
+                  <span class="tide-day-num">${day.dateFormatted}</span>
+                </div>
+                <div class="tide-moon-badge" title="${day.moonInfo.moonName}">
+                  <span class="moon-ico">${day.moonInfo.moonIcon}</span>
+                  <span class="moon-txt">${day.moonInfo.moonName}</span>
+                </div>
+              </div>
+
+              <!-- Coeficiente y Clasificación -->
+              <div class="tide-coef-row">
+                <span class="coef-label">Coeficiente:</span>
+                <span class="coef-number">${day.moonInfo.coefficient}</span>
+                <span class="coef-tag ${day.moonInfo.tideClass}">${day.moonInfo.tideType}</span>
+              </div>
+
+              <!-- Lista de 4 eventos del día -->
+              <div class="tide-day-events-list">
+                ${day.events.map(ev => `
+                  <div class="tide-mini-row ${ev.type}">
+                    <span class="mini-icon">${ev.type === 'high' ? '⬆️' : '⬇️'}</span>
+                    <span class="mini-name">${ev.name}</span>
+                    <span class="mini-time">${ev.timeStr}</span>
+                    <span class="mini-height">${ev.height}m</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- 3. GRID DE SENSORES MARINOS Y SURF -->
       <div class="marine-grid">
-        <!-- 1. Altura de Ola -->
+        <!-- Altura de Ola -->
         <div class="marine-widget">
           <div class="widget-label">Altura del Oleaje (Significativa)</div>
           <div class="widget-value">${waveHeight} <span class="unit">metros</span></div>
@@ -299,7 +423,7 @@ export function renderMarineCard(data, concejo) {
           <div class="widget-detail">Mar de viento: <strong>${windWaveH} m</strong></div>
         </div>
 
-        <!-- 2. Período y Dirección para Surf -->
+        <!-- Período y Dirección para Surf -->
         <div class="marine-widget">
           <div class="widget-label">Período y Dirección del Swell</div>
           <div class="widget-value">${wavePeriod} <span class="unit">segundos</span></div>
@@ -307,7 +431,7 @@ export function renderMarineCard(data, concejo) {
           <div class="widget-detail">Viento en orilla: <strong>${Math.round(current.wind_speed_10m)} km/h</strong></div>
         </div>
 
-        <!-- 3. Temperatura del Agua y Confort Turístico -->
+        <!-- Temperatura del Agua y Confort Turístico -->
         <div class="marine-widget">
           <div class="widget-label">Temperatura del Agua en Playa</div>
           <div class="widget-value">${seaTemp} <span class="unit">°C</span></div>
@@ -315,7 +439,7 @@ export function renderMarineCard(data, concejo) {
           <div class="widget-detail">Visibilidad costera: <strong>${(current.visibility / 1000 || 10).toFixed(0)} km</strong></div>
         </div>
 
-        <!-- 4. Tarjeta Visual Premium: Surf, Turismo y Mareas -->
+        <!-- Estado de Surf y Bandera -->
         <div class="marine-widget surf-turismo-visual-widget">
           <div class="surf-widget-top">
             <div class="surf-title-row">
@@ -333,37 +457,10 @@ export function renderMarineCard(data, concejo) {
           <div class="surf-status-banner">
             ${surfStatus}
           </div>
-
-          <!-- Medidor Visual de Mareas -->
-          <div class="tides-visual-container">
-            <div class="tide-box high-tide">
-              <div class="tide-box-header">
-                <span class="tide-icon">🌅</span>
-                <span class="tide-name">PLEAMAR (Marea Alta)</span>
-              </div>
-              <div class="tide-hours">
-                <span class="tide-time-pill">06:15</span>
-                <span class="tide-time-pill">18:40</span>
-              </div>
-              <div class="tide-desc">🌊 Marea llena • Ideal para surf y baño</div>
-            </div>
-
-            <div class="tide-box low-tide">
-              <div class="tide-box-header">
-                <span class="tide-icon">🏖️</span>
-                <span class="tide-name">BAJAMAR (Marea Baja)</span>
-              </div>
-              <div class="tide-hours">
-                <span class="tide-time-pill">12:30</span>
-                <span class="tide-time-pill">00:55</span>
-              </div>
-              <div class="tide-desc">🚶 Arenal amplio • Ideal para paseos y calas</div>
-            </div>
-          </div>
         </div>
       </div>
 
-      <!-- PLAYAS DINÁMICAS DEL CONCEJO SELECCIONADO -->
+      <!-- 4. PLAYAS DINÁMICAS DEL CONCEJO SELECCIONADO -->
       <div class="marine-ports-section">
         <h4 class="ports-title">
           🏖️ Playas y Rompientes de ${isCoasting ? concejo.name : `${concejo.name} (en ${interiorRef.name})`}
