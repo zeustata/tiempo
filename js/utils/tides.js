@@ -217,19 +217,19 @@ export function renderTideSvgGraph(dayData, isLiveToday = true, currentHours = n
   const { events, highTideHeight, lowTideHeight } = dayData;
   const p1 = events.find(e => e.type === 'high') || events[0];
 
-  const svgWidth = 800;
-  const svgHeight = 220;
-  const padX = 40;
-  const padYTop = 35;
-  const padYBottom = 45;
+  const svgWidth = 880;
+  const svgHeight = 240;
+  const padX = 50;
+  const padYTop = 40;
+  const padYBottom = 48;
   const usableWidth = svgWidth - padX * 2;
   const usableHeight = svgHeight - padYTop - padYBottom;
 
   // Curva de 24 horas con 96 puntos (cada 15 min)
   let pathD = '';
   const points = [];
-  const minH = lowTideHeight - 0.2;
-  const maxH = highTideHeight + 0.2;
+  const minH = lowTideHeight - 0.25;
+  const maxH = highTideHeight + 0.25;
 
   for (let step = 0; step <= 96; step++) {
     const t = (step / 96) * 24;
@@ -268,14 +268,14 @@ export function renderTideSvgGraph(dayData, isLiveToday = true, currentHours = n
 
     liveMarker = `
       <!-- Línea vertical de hora actual -->
-      <line x1="${liveX.toFixed(1)}" y1="${padYTop - 10}" x2="${liveX.toFixed(1)}" y2="${svgHeight - padYBottom}" stroke="rgba(56, 189, 248, 0.6)" stroke-width="2" stroke-dasharray="4 4" />
+      <line x1="${liveX.toFixed(1)}" y1="${padYTop - 15}" x2="${liveX.toFixed(1)}" y2="${svgHeight - padYBottom}" stroke="rgba(56, 189, 248, 0.75)" stroke-width="2" stroke-dasharray="4 4" />
       <!-- Punto de pulso brillante -->
-      <circle cx="${liveX.toFixed(1)}" cy="${liveY.toFixed(1)}" r="12" fill="rgba(56, 189, 248, 0.25)" class="tide-pulse-aura" />
-      <circle cx="${liveX.toFixed(1)}" cy="${liveY.toFixed(1)}" r="6" fill="#38bdf8" stroke="#ffffff" stroke-width="2" />
+      <circle cx="${liveX.toFixed(1)}" cy="${liveY.toFixed(1)}" r="14" fill="rgba(56, 189, 248, 0.3)" class="tide-pulse-aura" />
+      <circle cx="${liveX.toFixed(1)}" cy="${liveY.toFixed(1)}" r="6.5" fill="#38bdf8" stroke="#ffffff" stroke-width="2.5" />
       <!-- Badge de nivel actual en vivo -->
-      <g transform="translate(${Math.min(svgWidth - 90, Math.max(liveX - 40, 10))}, ${Math.max(10, liveY - 26)})">
-        <rect x="0" y="0" width="80" height="20" rx="10" fill="rgba(15, 23, 42, 0.85)" stroke="#38bdf8" stroke-width="1.2" />
-        <text x="40" y="14" font-size="11" font-weight="800" font-family="'JetBrains Mono', monospace" fill="#38bdf8" text-anchor="middle">AHORA ${nowWaterH.toFixed(2)}m</text>
+      <g transform="translate(${Math.min(svgWidth - 115, Math.max(liveX - 50, 10))}, ${Math.max(8, liveY - 28)})">
+        <rect x="0" y="0" width="100" height="22" rx="11" fill="rgba(15, 23, 42, 0.92)" stroke="#38bdf8" stroke-width="1.4" />
+        <text x="50" y="15" font-size="11.5" font-weight="800" font-family="'JetBrains Mono', monospace" fill="#38bdf8" text-anchor="middle">AHORA ${nowWaterH.toFixed(2)}m</text>
       </g>
     `;
   }
@@ -286,30 +286,30 @@ export function renderTideSvgGraph(dayData, isLiveToday = true, currentHours = n
     const norm = (e.height - minH) / (maxH - minH);
     const y = padYTop + (1 - norm) * usableHeight;
     const isHigh = e.type === 'high';
-    const color = isHigh ? '#38bdf8' : '#f59e0b';
-    const labelY = isHigh ? y - 10 : y + 16;
+    const color = isHigh ? '#38bdf8' : '#fbbf24';
+    const labelY = isHigh ? y - 12 : y + 18;
 
     return `
       <g class="tide-event-node">
-        <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4.5" fill="${color}" stroke="#0f172a" stroke-width="1.5" />
-        <text x="${x.toFixed(1)}" y="${labelY.toFixed(1)}" font-size="10.5" font-weight="700" fill="${color}" text-anchor="middle" font-family="'JetBrains Mono', monospace">
+        <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="5.5" fill="${color}" stroke="#0f172a" stroke-width="2" />
+        <text x="${x.toFixed(1)}" y="${labelY.toFixed(1)}" font-size="12" font-weight="800" fill="${color}" text-anchor="middle" font-family="'JetBrains Mono', monospace">
           ${e.name.toUpperCase()} ${e.timeStr} (${e.height}m)
         </text>
       </g>
     `;
   }).join('');
 
-  // Guías de horas (00h, 06h, 12h, 18h, 24h)
-  const hourTicks = [0, 6, 12, 18, 24].map(h => {
+  // Guías de horas (cada 3 horas: 00h, 03h, 06h, 09h, 12h, 15h, 18h, 21h, 24h)
+  const hourTicks = [0, 3, 6, 9, 12, 15, 18, 21, 24].map(h => {
     const x = padX + (h / 24) * usableWidth;
     return `
       <line x1="${x.toFixed(1)}" y1="${padYTop}" x2="${x.toFixed(1)}" y2="${svgHeight - padYBottom}" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1" />
-      <text x="${x.toFixed(1)}" y="${svgHeight - padYBottom + 16}" font-size="10" font-weight="600" fill="rgba(148, 163, 184, 0.8)" text-anchor="middle" font-family="'JetBrains Mono', monospace">${String(h).padStart(2, '0')}:00</text>
+      <text x="${x.toFixed(1)}" y="${svgHeight - padYBottom + 18}" font-size="11" font-weight="700" fill="rgba(148, 163, 184, 0.85)" text-anchor="middle" font-family="'JetBrains Mono', monospace">${String(h).padStart(2, '0')}:00</text>
     `;
   }).join('');
 
   return `
-    <svg width="780" height="210" viewBox="0 0 ${svgWidth} ${svgHeight}" class="tide-svg-chart" style="min-width: 780px; width: 780px; height: 210px; display: block; overflow: visible;">
+    <svg width="880" height="240" viewBox="0 0 ${svgWidth} ${svgHeight}" class="tide-svg-chart" style="min-width: 880px; width: 880px; height: 240px; display: block; overflow: visible;">
       <defs>
         <linearGradient id="tideAreaGrad" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.32" />
@@ -327,11 +327,11 @@ export function renderTideSvgGraph(dayData, isLiveToday = true, currentHours = n
       ${hourTicks}
 
       <!-- Línea base de cota cero -->
-      <line x1="${padX}" y1="${svgHeight - padYBottom}" x2="${padX + usableWidth}" y2="${svgHeight - padYBottom}" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1" />
+      <line x1="${padX}" y1="${svgHeight - padYBottom}" x2="${padX + usableWidth}" y2="${svgHeight - padYBottom}" stroke="rgba(255, 255, 255, 0.18)" stroke-width="1.2" />
 
       <!-- Área y curva de la onda de marea -->
       <path d="${areaD}" fill="url(#tideAreaGrad)" />
-      <path d="${pathD}" fill="none" stroke="url(#tideLineGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="${pathD}" fill="none" stroke="url(#tideLineGrad)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
 
       <!-- Nodos de pleamar y bajamar -->
       ${eventMarkers}

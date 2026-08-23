@@ -594,11 +594,22 @@
 
 .tide-scroll-viewport {
   width: 100%;
-  overflow-x: auto;
-  padding: 4px 0 10px;
+  overflow-x: scroll !important;
+  overflow-y: hidden !important;
+  padding: 8px 0 14px;
   scrollbar-width: thin;
-  -webkit-overflow-scrolling: touch;
+  -webkit-overflow-scrolling: touch !important;
   border-radius: var(--radius-sm);
+  display: block;
+}
+
+.tide-svg-chart {
+  width: 880px !important;
+  min-width: 880px !important;
+  max-width: none !important;
+  height: 240px !important;
+  display: block !important;
+  flex-shrink: 0 !important;
 }
 
 .tide-pulse-aura {

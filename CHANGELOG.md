@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.999L-beta] - 2026-08-24
+
+### 🔓 Desbloqueo Real de Scroll Táctil en el Mareógrafo Móvil (Fixed & Mobile UX)
+- **Eliminación de Compresión Forzada en SVG**: Se anuló la restricción `max-width: 100%` que comprimía el SVG en los 320px de la pantalla móvil impidiendo el scroll; ahora el gráfico se despliega con ancho completo de 880px.
+- **Scroll Táctil Inmediato & Textos Grandes**: Desplazamiento horizontal ultrasuave (`overflow-x: scroll`), etiquetas de horas cada 3 horas y textos de Pleamar/Bajamar grandes y nítidos sin solapamientos.
+
+---
+
 ## [0.9.999k-beta] - 2026-08-24
 
 ### 📱 Scroll Horizontal Táctil en el Mareógrafo Móvil (Improved & Mobile UX)
