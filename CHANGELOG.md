@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.999d-beta] - 2026-08-23
+
+### 📏 Corrección de Altura y Recorte de Texto en Selector de Módulos (Fixed)
+- **Eliminación del Colapso Vertical**: Añadido `flex-shrink: 0` a todas las tarjetas de módulos para evitar que se compriman verticalmente dentro del modal.
+- **Scroll Natural en Pantallas Móviles**: Configuración de `max-height: 72vh` con desplazamiento suave (`-webkit-overflow-scrolling: touch`) para que todo el texto y descripciones se lean íntegros con holgura.
+
+---
+
 ## [0.9.999c-beta] - 2026-08-23
 
 ### ⚡ Dinamismo Táctil, Ondas Ripple y Micro-Animaciones (New & Improved)

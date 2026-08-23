@@ -627,6 +627,9 @@ body {
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all 0.2s ease;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
 }
 
 .fav-modal-item:hover, .fav-modal-item.active {
@@ -691,15 +694,19 @@ body {
 .modal-nav-modules {
   max-width: 580px;
   width: 95%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .nav-modal-body {
-  max-height: 480px;
+  max-height: 72vh;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding-right: 4px;
+  padding: 4px 4px 14px 2px;
+  -webkit-overflow-scrolling: touch;
 }
 
 .nav-module-card {
@@ -707,7 +714,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 14px 18px;
-  background: rgba(30, 41, 59, 0.45);
+  background: rgba(30, 41, 59, 0.55);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
   cursor: pointer;
@@ -716,6 +723,8 @@ body {
   user-select: none;
   position: relative;
   overflow: hidden;
+  flex-shrink: 0;
+  box-sizing: border-box;
 }
 
 .nav-module-card:hover {
@@ -740,6 +749,7 @@ body {
   align-items: center;
   gap: 14px;
   min-width: 0;
+  width: 100%;
 }
 
 .nav-module-icon {
@@ -751,13 +761,15 @@ body {
 .nav-module-details {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
   min-width: 0;
+  flex: 1;
 }
 
 .nav-module-name {
   font-size: 1.05rem;
   font-weight: 700;
+  line-height: 1.25;
   color: var(--text-main);
 }
 
@@ -766,9 +778,10 @@ body {
 }
 
 .nav-module-desc {
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   color: var(--text-dim);
   line-height: 1.35;
+  word-break: break-word;
 }
 
 .nav-module-key {
@@ -793,16 +806,19 @@ body {
     display: none;
   }
   .nav-module-card {
-    padding: 12px 14px;
+    padding: 13px 14px;
+    flex-shrink: 0;
   }
   .nav-module-icon {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
   }
   .nav-module-name {
-    font-size: 0.95rem;
+    font-size: 1rem;
+    line-height: 1.25;
   }
   .nav-module-desc {
-    font-size: 0.76rem;
+    font-size: 0.78rem;
+    line-height: 1.35;
   }
   .search-and-fav-row {
     grid-template-columns: 1fr auto;
