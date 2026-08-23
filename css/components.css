@@ -648,21 +648,21 @@
   color: var(--text-main);
 }
 
-/* Fila térmica principal */
-.d-temp-main-row {
+/* Fila térmica principal reorganizada en bloque vertical */
+.d-temp-section {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 14px 18px;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px 18px;
   background: rgba(15, 23, 42, 0.5);
   border-radius: var(--radius-md);
   border: 1px solid var(--border-glass);
 }
 
-.d-temp-badges {
-  display: flex;
-  gap: 12px;
+.d-temp-badges-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
   align-items: center;
 }
 
@@ -670,7 +670,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 48px;
+  text-align: center;
+  background: rgba(15, 23, 42, 0.4);
+  padding: 8px 6px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .tb-label {
@@ -678,28 +682,36 @@
   font-weight: 700;
   color: var(--text-dim);
   text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
 }
 
 .temp-badge.max .tb-val {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 800;
   color: #f87171;
-  line-height: 1;
+  line-height: 1.1;
 }
 
 .temp-badge.min .tb-val {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 800;
   color: #60a5fa;
-  line-height: 1;
+  line-height: 1.1;
+}
+
+.temp-badge.osc .tb-val.osc-val {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--accent-gold);
+  line-height: 1.1;
 }
 
 .d-temp-bar-wrap {
-  flex: 1;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 6px;
-  min-width: 120px;
 }
 
 .temp-bar-bg {
@@ -721,12 +733,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.72rem;
+  font-size: 0.74rem;
   color: var(--text-dim);
   font-weight: 600;
 }
 
-.temp-diff-label {
+.temp-range-text {
   color: var(--text-muted);
   font-size: 0.72rem;
 }
@@ -948,4 +960,47 @@
   font-size: 0.88rem;
   color: var(--text-muted);
   line-height: 1.5;
+}
+
+/* --- REGLAS RESPONSIVE PARA MÓVILES (< 768px) --- */
+@media (max-width: 768px) {
+  .hero-weather-card,
+  .sensor-card,
+  .forecast-block,
+  .marine-card,
+  .mountain-card,
+  .chart-card,
+  .radar-wrapper {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 18px 18px;
+    border-radius: var(--radius-md);
+    margin-bottom: 16px;
+  }
+
+  .sensors-grid {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .sensor-card {
+    margin-bottom: 0;
+  }
+
+  .d-temp-badges-row {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .temp-badge.max .tb-val,
+  .temp-badge.min .tb-val {
+    font-size: 1.35rem;
+  }
+
+  .temp-badge.osc .tb-val.osc-val {
+    font-size: 1.05rem;
+  }
 }

@@ -12,6 +12,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.5-beta] - 2026-08-23
+
+### 📐 Alineación Perfecta de Sensores y Sección Térmica Despejada (Fixed & Improved)
+- **Alineación 100% Homogénea de Sensores en Móvil**: Se corrigió el orden de cascada CSS que provocaba que las tarjetas de sensores quedaran más estrechas que la tarjeta superior. Ahora todos los sensores tienen exactamente el 100% del ancho y la misma alineación de bordes.
+- **Sección Térmica de 10 Días Despejada**:
+  - Reorganización en bloque vertical: 3 insignias limpias arriba (`Máxima`, `Mínima` y `Oscilación Δ X°C`).
+  - Barra de rango térmico debajo a ancho completo, evitando que el texto de oscilación se corte en móviles pequeños.
+
+---
+
 ## [0.9.4-beta] - 2026-08-23
 
 ### 🎨 Alineación Visual y Perfeccionamiento de Tarjetas (Changed & Improved)

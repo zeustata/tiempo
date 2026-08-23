@@ -105,9 +105,9 @@ export function renderForecast(data, units = 'metric') {
           </div>
         </div>
 
-        <!-- SECCIÓN TÉRMICA DESTACADA -->
-        <div class="d-temp-main-row">
-          <div class="d-temp-badges">
+        <!-- SECCIÓN TÉRMICA DESTACADA (ORGANIZADA EN BLOQUE VERTICAL) -->
+        <div class="d-temp-section">
+          <div class="d-temp-badges-row">
             <div class="temp-badge max">
               <span class="tb-label">Máxima</span>
               <span class="tb-val">${maxT}°</span>
@@ -115,6 +115,10 @@ export function renderForecast(data, units = 'metric') {
             <div class="temp-badge min">
               <span class="tb-label">Mínima</span>
               <span class="tb-val">${minT}°</span>
+            </div>
+            <div class="temp-badge osc">
+              <span class="tb-label">Oscilación</span>
+              <span class="tb-val osc-val">Δ ${maxT - minT}°C</span>
             </div>
           </div>
 
@@ -124,7 +128,7 @@ export function renderForecast(data, units = 'metric') {
             </div>
             <div class="temp-bar-labels">
               <span>${minT}° Mín</span>
-              <span class="temp-diff-label">Oscilación ${maxT - minT}°C</span>
+              <span class="temp-range-text">Rango del día</span>
               <span>${maxT}° Máx</span>
             </div>
           </div>
