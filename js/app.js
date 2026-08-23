@@ -111,7 +111,7 @@ class MeteoAsturiasApp {
   }
 
   renderFavoritePills() {
-    const container = document.getElementById('favorites-pills');
+    const container = document.getElementById('favorites-pills') || document.getElementById('favorites-container');
     if (!container) return;
 
     if (!this.prefs.favorites || this.prefs.favorites.length === 0) {

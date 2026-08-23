@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.91-beta] - 2026-08-23
+
+### 🐛 Restauración de Pastillas de Favoritos (Fixed & Improved)
+- **Corrección de Identificador de Contenedor**: Corregida la discrepancia del DOM que impedía que se visualizaran las pastillas de ciudades guardadas como favoritas.
+- **Estilos Glassmorphism en Scroll Horizontal**: Presentación fluida de favoritos justo debajo de la barra de búsqueda principal.
+
+---
+
 ## [0.9.9-beta] - 2026-08-23
 
 ### 🔍 Barra Táctil de Búsqueda Rápida como Selector Principal (Changed & Improved)

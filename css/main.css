@@ -351,21 +351,17 @@ body {
   align-items: center;
   gap: 8px;
   overflow-x: auto;
-  padding-bottom: 4px;
+  padding: 4px 0 6px;
   scrollbar-width: thin;
   -webkit-overflow-scrolling: touch;
 }
 
-.fav-label {
-  font-size: 0.82rem;
-  color: var(--text-dim);
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.pill-item {
-  padding: 7px 15px;
-  background: rgba(30, 41, 59, 0.65);
+.fav-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: rgba(30, 41, 59, 0.7);
   border: 1px solid var(--border-glass);
   border-radius: 20px;
   font-size: 0.85rem;
@@ -373,20 +369,33 @@ body {
   color: var(--text-muted);
   cursor: pointer;
   white-space: nowrap;
-  transition: all 0.2s;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
 }
 
-.pill-item:hover {
+.fav-pill:hover {
   background: rgba(56, 189, 248, 0.15);
   color: var(--text-main);
   border-color: var(--primary);
+  transform: translateY(-1px);
 }
 
-.pill-item.active {
+.fav-pill.active {
   background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(2, 132, 199, 0.35));
   border-color: var(--primary);
   color: var(--primary);
   box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+}
+
+.fav-pill-badge {
+  font-size: 1rem;
+}
+
+.fav-empty-hint {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  font-style: italic;
+  padding: 4px 2px;
 }
 
 /* --- TABS DE NAVEGACIÓN --- */
