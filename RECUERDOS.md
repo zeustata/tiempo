@@ -59,11 +59,15 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
    - Integrados los **78 concejos oficiales de Asturias** con búsqueda insensible a acentos.
 8. **Mareógrafo Astronómico Panorámico de 72 Horas**:
    - Cálculo del ciclo semidiurno M2 (12h 25m) con oscilación sinusoidal continua a 3 días (Hoy, Mañana y Pasado Mañana), indicador en vivo con cuenta atrás, clasificación cromática de coeficientes (🔴 Vivas / 🟡 Medias / 🟢 Muertas), fases lunares y cuadro semanal de mareas a 7 días con scroll horizontal táctil de 1980px.
+9. **Tarjeta Oficial de Alertas Meteorológicas AEMET**:
+   - Ubicada estratégicamente en *Estación en Vivo* inmediatamente después del Hero Card principal. Mapea automáticamente los 78 concejos en las 5 zonas oficiales de avisos de Asturias (Litoral Occidental, Litoral Oriental, Cordillera, Suroccidente y Valles Centrales) con clasificación cromática (🟢 Sin avisos, 🟡 Amarillo, 🟠 Naranja, 🔴 Rojo), vigencia, probabilidades y recomendaciones de seguridad.
+10. **Tipografía Equilibrada y Proporcionada**:
+   - Hero Card estilizado con temperatura a `2.6rem`, título de concejo a `1.35rem` e icono a `2.8rem` para una lectura limpia y compacta.
 
 ---
 
 ## 🏗️ 3. Módulos de la Aplicación
-1. **📊 Estación en Vivo (`panel-live`)**: Panel principal con métricas actuales y tarjetas por bloques.
+1. **📊 Estación en Vivo (`panel-live`)**: Panel principal con Hero Card, Alertas AEMET y sensores detallados.
 2. **📡 Radar en Directo (`panel-radar`)**: Mapa interactivo con capas de lluvia/nubes de RainViewer/AEMET.
 3. **📅 Previsión 14 Días (`panel-forecast`)**: Pronóstico extendido por días y horas.
 4. **📈 Gráficas Meteo (`panel-charts`)**: Evolución temporal detallada con scroll táctil horizontal.
@@ -80,4 +84,6 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Transformación al diseño de cristal translúcido puro (Liquid Glass) sin desenfoques opacos en todas las tarjetas de la app.
 - Creación del Mareógrafo interactivo en tiempo real continuo de 72 horas y el Cuadro Semanal de Mareas y Coeficientes adaptado al litoral asturiano.
 - Blindaje total y aislamiento de excepciones ante respuestas nulas de modelos satelitales.
+- Integración de la Tarjeta Oficial de Alertas AEMET por comarcas asturianas tras la tarjeta principal.
+- Armonización y ajuste compacto de las fuentes tipográficas del Hero Card.
 - Subidas continuas a GitHub (`zeustata/tiempo`).
