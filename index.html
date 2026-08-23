@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=3.0">
-  <link rel="stylesheet" href="css/components.css?v=3.0">
-  <link rel="stylesheet" href="css/weather-themes.css?v=3.0">
+  <link rel="stylesheet" href="css/main.css?v=3.1">
+  <link rel="stylesheet" href="css/components.css?v=3.1">
+  <link rel="stylesheet" href="css/weather-themes.css?v=3.1">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -47,7 +47,6 @@
         <div class="brand-info">
           <div class="brand-title-row">
             <h1>MeteoAstur Lode</h1>
-            <span class="version-badge" id="app-version-badge" title="Versión de la aplicación (Haz clic para ver novedades)">v0.9.7-beta</span>
             <div id="live-clock" class="live-clock-badge" title="Hora y fecha en tiempo real">--:--:--</div>
             <div id="network-status" class="network-badge online" title="Estado de conexión">🟢 En línea</div>
           </div>
@@ -63,7 +62,6 @@
         <button id="btn-toggle-fav" class="btn-header" title="Guardar en Favoritos (Tecla F)">⭐ Guardar</button>
         <button id="btn-gps" class="btn-header" title="Buscar concejo más cercano por GPS (Tecla G)">📍 Mi Ubicación</button>
         <button id="btn-unit-toggle" class="btn-header" title="Cambiar unidades de viento">Unidades: km/h</button>
-        <button id="btn-refresh" class="btn-header" title="Actualizar datos (Tecla R)">🔄 Refrescar</button>
       </div>
     </header>
 
@@ -174,7 +172,9 @@
     <!-- FOOTER -->
     <footer class="app-footer">
       <div class="footer-credits">
-        <strong>MeteoAstur Lode</strong> <span class="footer-version-tag">v0.9.7-beta</span> • Estación Meteorológica del Principado de Asturias
+        <strong>MeteoAstur Lode</strong>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v0.9.8-beta 📋</button>
+        • Estación Meteorológica del Principado de Asturias
         <div id="last-updated" style="margin-top: 4px; font-size: 0.8rem; color: var(--text-dim);"></div>
       </div>
       <div class="footer-sources">
@@ -215,15 +215,21 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v0.9.7-beta</span>
+            <span class="release-version">v0.9.8-beta</span>
             <span class="release-date">23 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-new">Nuevo</span> <strong>🔍 Buscador Rápido en Vivo</strong> para encontrar y saltar a cualquiera de los 78 concejos al instante.</li>
-            <li><span class="tag tag-new">Nuevo</span> <strong>⚖️ Comparador Climático</strong> cara a cara entre dos concejos de Asturias en tiempo real.</li>
-            <li><span class="tag tag-new">Nuevo</span> <strong>⚠️ Motor de Alertas MeteoAlerta</strong>: detección de Galerna, Viento Sur, Temporal marino y Nieve.</li>
-            <li><span class="tag tag-improved">Mejora</span> <strong>🌊 Módulo Marino ampliado</strong>: Escala Douglas y red de puertos asturianos.</li>
-            <li><span class="tag tag-improved">Mejora</span> <strong>🏔️ Módulo de Montaña ampliado</strong>: Red de 8 puertos cantábricos y estaciones de esquí.</li>
+            <li><span class="tag tag-improved">Mejora</span> <strong>Cabecera más limpia y despejada</strong>: retirado el botón redundante de refresco y movida la versión a la tarjeta inferior.</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Insignia de versión interactiva en el pie</strong> para consultar novedades con un toque.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v0.9.7-beta</span>
+            <span class="release-date">23 Ago 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> Buscador rápido en vivo y comparador de concejos.</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -290,7 +296,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.0').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.1').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -311,6 +317,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0"></script>
+  <script type="module" src="js/app.js?v=3.1"></script>
 </body>
 </html>

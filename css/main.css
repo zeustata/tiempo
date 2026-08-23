@@ -660,6 +660,31 @@ kbd {
   color: var(--primary);
 }
 
+.version-badge-footer {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(192, 132, 252, 0.15);
+  color: #c084fc;
+  border: 1px solid rgba(192, 132, 252, 0.4);
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+  margin: 0 4px;
+}
+
+.version-badge-footer:hover {
+  background: rgba(192, 132, 252, 0.28);
+  border-color: #c084fc;
+  transform: translateY(-1px);
+  box-shadow: 0 0 10px rgba(192, 132, 252, 0.3);
+}
+
 .footer-sources {
   display: flex;
   gap: 12px;
