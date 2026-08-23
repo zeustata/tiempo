@@ -12,6 +12,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.999s-beta] - 2026-08-24
+
+### 🔍 Corrección de Contraste y Visibilidad en el Buscador de Concejos (Fixed & UI)
+- **Texto Nítido y Visible**: Aplicadas directivas explícitas de color blanco brillante (`#f8fafc`), `-webkit-text-fill-color`, cursor celeste y tipografía de 16px para evitar que los teclados virtuales o estilos de navegador oscurezcan el texto mientras se escribe.
+
+---
+
 ## [0.9.999r-beta] - 2026-08-24
 
 ### 💎 Tipografía Compacta y Proporcionada en el Hero Card (Improved & Visual)

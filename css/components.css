@@ -1789,28 +1789,31 @@
   min-width: 0;
   display: flex;
   align-items: center;
-  gap: 8px;
-  background: var(--bg-surface-elevated);
-  border: 1px solid var(--border-glass);
+  gap: 10px;
+  background: rgba(30, 41, 59, 0.65);
+  border: 1px solid rgba(56, 189, 248, 0.4);
   border-radius: var(--radius-sm);
-  padding: 8px 12px;
+  padding: 10px 14px;
 }
 
 .search-input-wrap input {
   flex: 1;
   min-width: 0;
   width: 100%;
-  background: transparent;
-  border: none;
-  color: var(--text-main);
+  background: transparent !important;
+  border: none !important;
+  color: #f8fafc !important;
+  -webkit-text-fill-color: #f8fafc !important;
+  caret-color: #38bdf8 !important;
   font-family: inherit;
-  font-size: 0.95rem;
+  font-size: 16px !important;
   font-weight: 600;
-  outline: none;
+  outline: none !important;
 }
 
 .search-input-wrap input::placeholder {
-  color: var(--text-dim);
+  color: rgba(148, 163, 184, 0.75) !important;
+  -webkit-text-fill-color: rgba(148, 163, 184, 0.75) !important;
   font-weight: 400;
 }
 
