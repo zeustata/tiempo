@@ -604,10 +604,10 @@
 }
 
 .tide-svg-chart {
-  width: 880px !important;
-  min-width: 880px !important;
+  width: 1980px !important;
+  min-width: 1980px !important;
   max-width: none !important;
-  height: 240px !important;
+  height: 250px !important;
   display: block !important;
   flex-shrink: 0 !important;
 }

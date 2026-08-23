@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.999m-beta] - 2026-08-24
+
+### 🌊 Mareógrafo Panorámico de 72 Horas (3 Días) (New & Visual)
+- **Onda Sinusoidal Continua de 3 Días**: Previsión marina de 72 horas completas que abarcan Hoy, Mañana y Pasado Mañana, con separadores visuales de fecha y coeficientes de marea.
+- **Formato Panorámico 1980px con Desplazamiento Fluido**: Ancho total de 1980px en el contenedor táctil, etiquetas cada 6 horas y nodos de pleamar/bajamar con máxima claridad en pantallas móviles.
+
+---
+
 ## [0.9.999L-beta] - 2026-08-24
 
 ### 🔓 Desbloqueo Real de Scroll Táctil en el Mareógrafo Móvil (Fixed & Mobile UX)

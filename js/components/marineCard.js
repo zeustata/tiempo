@@ -282,7 +282,7 @@ export function renderMarineCard(data, concejo) {
   // Cálculos dinámicos de mareas y fase lunar
   const tideStatus = getRealtimeTideStatus(now);
   const weeklyTides = getWeeklyTides(now);
-  const tideSvg = renderTideSvgGraph(tideStatus.dayData, true, tideStatus.currentHours);
+  const tideSvg = renderTideSvgGraph(now, true, tideStatus.currentHours);
 
   return `
     <div class="marine-card">
@@ -301,14 +301,14 @@ export function renderMarineCard(data, concejo) {
         </div>
       </div>
 
-      <!-- 1. MAREÓGRAFO INTERACTIVO EN TIEMPO REAL (ONDA SINUSOIDAL VIVA) -->
+      <!-- 1. MAREÓGRAFO INTERACTIVO EN TIEMPO REAL (ONDA SINUSOIDAL VIVA 72H) -->
       <div class="marine-widget mareografo-card" style="margin-bottom: 20px;">
         <div class="mareografo-header">
           <div class="mareografo-title-wrap">
             <span class="mareografo-icon">🌊</span>
             <div>
-              <div class="mareografo-title">Mareógrafo Dinámico en Vivo</div>
-              <div class="mareografo-subtitle">${activeCoastName} • Costa de Asturias</div>
+              <div class="mareografo-title">Mareógrafo Dinámico en Vivo (72 Horas)</div>
+              <div class="mareografo-subtitle">${activeCoastName} • Previsión Continua 3 Días</div>
             </div>
           </div>
           <div class="mareografo-live-badge" style="background: ${tideStatus.directionColor}20; color: ${tideStatus.directionColor}; border: 1px solid ${tideStatus.directionColor}60;">
@@ -344,10 +344,10 @@ export function renderMarineCard(data, concejo) {
           </div>
         </div>
 
-        <!-- Curva Gráfica Sinusoidal Interactiva con Scroll Horizontal Móvil -->
+        <!-- Curva Gráfica Sinusoidal Continua de 72h con Scroll Horizontal -->
         <div class="tide-chart-container">
           <div class="tide-scroll-hint-bar">
-            <span class="tide-scroll-hint-pill">👆 Desliza horizontalmente para recorrer las 24h</span>
+            <span class="tide-scroll-hint-pill">👆 Desliza horizontalmente para recorrer las 72h (3 días de marea)</span>
           </div>
           <div class="tide-scroll-viewport">
             ${tideSvg}
