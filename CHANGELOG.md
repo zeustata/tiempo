@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.997-beta] - 2026-08-23
+
+### 📅 Reorganización del Módulo 'Pronósticos' en Menú de Navegación (Improved & Changed)
+- **Renombrado a 'Pronósticos'**: Se actualizó el título del módulo para reflejar tanto la predicción horaria detallada para las próximas 48 horas como el pronóstico a 10 días.
+- **Acceso Prioritario en Segunda Posición**: Reubicado el módulo de *Pronósticos* a la segunda posición de la navegación (justo después de *Estación en Vivo*) para un flujo de consulta óptimo.
+
+---
+
 ## [0.9.996-beta] - 2026-08-23
 
 ### 🔄 Purga de Caché Forzada y Despliegue Inmediato de Concejos (Fixed & Improved)

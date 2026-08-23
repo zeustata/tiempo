@@ -12,10 +12,10 @@ import { getWeatherInfo } from './utils/weatherIcons.js';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, alertas climáticas y calidad del aire', key: '1' },
-  { id: 'radar', icon: '📡', title: 'Radar Cantábrico', desc: 'Precipitación y tormentas en directo vía satélite RainViewer', key: '2' },
-  { id: 'marine', icon: '🌊', title: 'Costa & Mar', desc: 'Oleaje, mareas, escala Douglas y puertos asturianos', key: '3' },
-  { id: 'mountain', icon: '🏔️', title: 'Cordillera & Nieve', desc: 'Estado de 8 puertos de montaña, cota de nieve y esquí', key: '4' },
-  { id: 'forecast', icon: '📅', title: 'Pronóstico 10 Días', desc: 'Tarjetas verticales detalladas con oscilación y UV', key: '5' },
+  { id: 'forecast', icon: '📅', title: 'Pronósticos', desc: 'Predicción horaria detallada para 48h y evolución por días', key: '2' },
+  { id: 'radar', icon: '📡', title: 'Radar Cantábrico', desc: 'Precipitación y tormentas en directo vía satélite RainViewer', key: '3' },
+  { id: 'marine', icon: '🌊', title: 'Costa & Mar', desc: 'Oleaje, mareas, escala Douglas, surf y playas', key: '4' },
+  { id: 'mountain', icon: '🏔️', title: 'Cordillera & Nieve', desc: 'Estado de puertos de montaña, cota de nieve y esquí', key: '5' },
   { id: 'charts', icon: '📈', title: 'Gráficos 48 Horas', desc: 'Curvas continuas de temperatura, lluvia y viento', key: '6' },
   { id: 'compare', icon: '⚖️', title: 'Comparador Climático', desc: 'Comparativa simultánea cara a cara entre dos concejos', key: '7' }
 ];
