@@ -1,21 +1,21 @@
 import { getWindDirection } from '../utils/weatherIcons.js';
 
 /**
- * Puertos pesqueros y deportivos clave de Asturias con coordenadas
+ * Principales playas, spots de surf y puntos turísticos de la costa asturiana
  */
-export const PUERTOS_ASTURIAS = [
-  { name: 'Gijón (El Musel)', lat: 43.56, lon: -5.69, region: 'Costa Central' },
-  { name: 'Avilés (San Juan de Nieva)', lat: 43.59, lon: -5.92, region: 'Costa Central' },
-  { name: 'Llanes (Puerto Pesquero)', lat: 43.42, lon: -4.75, region: 'Costa Oriental' },
-  { name: 'Ribadesella (Ría del Sella)', lat: 43.46, lon: -5.06, region: 'Costa Oriental' },
-  { name: 'Cudillero (La Ribera)', lat: 43.56, lon: -6.15, region: 'Costa Occidental' },
-  { name: 'Luarca (La Blanca)', lat: 43.54, lon: -6.53, region: 'Costa Occidental' },
-  { name: 'Tapia de Casariego', lat: 43.57, lon: -6.94, region: 'Costa Occidental' },
-  { name: 'Luanco (Gozón)', lat: 43.62, lon: -5.79, region: 'Cabo Peñas' }
+export const SPOTS_PLAYAS_ASTURIAS = [
+  { name: 'Playa de San Lorenzo (Gijón)', type: 'Spot Urbano & Surf Clásico', region: 'Costa Central' },
+  { name: 'Playa de Salinas (Castrillón)', type: 'Capital del Surf Asturiano', region: 'Costa Central' },
+  { name: 'Playa de Rodiles (Villaviciosa)', type: 'Mítica Ola Izquierda & Ría', region: 'Costa Oriental' },
+  { name: 'Tapia de Casariego (La Grande)', type: 'Cuna del Surf del Norte', region: 'Costa Occidental' },
+  { name: 'Santa Marina & Vega (Ribadesella)', type: 'Surf & Playas Naturales', region: 'Costa Oriental' },
+  { name: 'Playa de Torimbia / Gulpiyuri (Llanes)', type: 'Calas Turísticas de Ensueño', region: 'Costa Oriental' },
+  { name: 'Playa de Aguilar (Muros de Nalón)', type: 'Arena Dorada & Acantilados', region: 'Costa Occidental' },
+  { name: 'Puerto y Playa de Luanco (Gozón)', type: 'Aguas Tranquilas & Gastronomía', region: 'Cabo Peñas' }
 ];
 
 /**
- * Renderiza el módulo marítimo integral para el Mar Cantábrico
+ * Renderiza el módulo marítimo enfocado en Turismo, Playas y Surf en el Mar Cantábrico
  */
 export function renderMarineCard(data, concejo) {
   const marine = data.marine?.current;
@@ -29,46 +29,46 @@ export function renderMarineCard(data, concejo) {
   const waveDir = marine ? getWindDirection(marine.wave_direction) : { name: 'Noroeste (NW)' };
   const windWaveH = marine?.wind_wave_height ? marine.wind_wave_height.toFixed(1) : '0.6';
 
-  // Escala Douglas de estado de la mar
   const h = parseFloat(waveHeight);
   let douglasDegree = 3;
   let douglasName = 'Marejada';
-  let douglasAdvice = 'Condiciones navegables con precaución. Olas consistentes.';
-  let badgeColor = '#38bdf8';
+  let flagColor = '#f59e0b';
+  let flagBadge = '🟡 Bandera Amarilla';
+  let surfStatus = '🏄‍♂️ Olas consistentes. Muy buenas condiciones para surf en Salinas, Rodiles y San Lorenzo.';
 
-  if (h < 0.2) {
-    douglasDegree = 0;
-    douglasName = 'Mar Llana / Calma';
-    douglasAdvice = 'Mar como un espejo. Óptimo para baño y paddle surf.';
-    badgeColor = '#10b981';
-  } else if (h < 0.5) {
+  if (h < 0.6) {
     douglasDegree = 1;
-    douglasName = 'Mar Rizada';
-    douglasAdvice = 'Pequeñas olas sin crestas de espuma.';
-    badgeColor = '#10b981';
-  } else if (h < 1.25) {
+    douglasName = 'Mar Calma / Rizada';
+    flagBadge = '🟢 Bandera Verde';
+    flagColor = '#10b981';
+    surfStatus = '🏖️ Mar en calma. Día ideal para paseo, baño en familia y paddle surf (SUP).';
+  } else if (h < 1.3) {
     douglasDegree = 2;
     douglasName = 'Marejadilla';
-    douglasAdvice = 'Olas cortas pero bien formadas. Bandera verde/amarilla.';
-    badgeColor = '#10b981';
-  } else if (h < 2.5) {
+    flagBadge = '🟢 Bandera Verde / Amarilla';
+    flagColor = '#10b981';
+    surfStatus = '🏄‍♂️ Olas medianas de 1m. Ideal para iniciación al surf, longboard y baño tranquilo.';
+  } else if (h <= 2.6) {
     douglasDegree = 3;
-    douglasName = 'Marejada';
-    douglasAdvice = 'Olas de 1 a 2.5m. Buenas rompientes para surf en Salinas/Tapia/San Lorenzo.';
-    badgeColor = '#f59e0b';
-  } else if (h < 4.0) {
+    douglasName = 'Marejada Consistente';
+    flagBadge = '🟡 Bandera Amarilla';
+    flagColor = '#f59e0b';
+    surfStatus = '🔥 ¡Condiciones TOP de Surf! Rompientes activas en Salinas, San Lorenzo, Rodiles y Tapia.';
+  } else if (h <= 3.8) {
     douglasDegree = 4;
-    douglasName = 'Fuerte Marejada a Mar Gruesa';
-    douglasAdvice = '⚠️ Precaución en rompientes, espigones y salidas de ría.';
-    badgeColor = '#f97316';
+    douglasName = 'Fuerte Marejada';
+    flagBadge = '🔴 Bandera Roja';
+    flagColor = '#ef4444';
+    surfStatus = '⚠️ Rompientes potentes (+3m). Solo surfistas experimentados. Precaución en paseos marítimos.';
   } else {
     douglasDegree = 5;
-    douglasName = 'Mar Muy Gruesa / Temporal';
-    douglasAdvice = '🚨 ALERTA COSTERA: Prohibido baño y amarre preventivo en puertos.';
-    badgeColor = '#ef4444';
+    douglasName = 'Mar Gruesa / Temporal';
+    flagBadge = '🔴 Bandera Roja / Temporal';
+    flagColor = '#ef4444';
+    surfStatus = '🚨 Temporal costero activo. Prohibido el baño. Mar no navegable.';
   }
 
-  // Estimación de ciclo de mareas (Pleamar / Bajamar aproximada para el Cantábrico)
+  // Estimación de temperatura superficial del agua y mareas
   const now = new Date();
   const seaTemp = (16.2 + Math.sin((now.getMonth() - 2) * 0.5) * 4.2).toFixed(1);
 
@@ -76,59 +76,64 @@ export function renderMarineCard(data, concejo) {
     <div class="marine-card">
       <div class="section-title-wrap">
         <div>
-          <h3 class="section-heading">🌊 Estado del Mar Cantábrico & Costa Asturiana</h3>
+          <h3 class="section-heading">🌊 Costa, Playas & Surf en el Cantábrico</h3>
           <span class="section-subtitle">Datos oceanográficos en tiempo real • Modelo Marino Copernicus / ECMWF</span>
         </div>
-        <div class="sea-state-pill" style="background: ${badgeColor}22; color: ${badgeColor}; border: 1px solid ${badgeColor};">
+        <div class="sea-state-pill" style="background: ${flagColor}22; color: ${flagColor}; border: 1px solid ${flagColor};">
           Grado ${douglasDegree} • ${douglasName}
         </div>
       </div>
 
-      <!-- GRID DE SENSORES MARINOS -->
+      <!-- GRID DE SENSORES MARINOS Y SURF -->
       <div class="marine-grid">
-        <!-- 1. Altura Significativa de Ola -->
+        <!-- 1. Altura de Ola -->
         <div class="marine-widget">
-          <div class="widget-label">Altura de Ola (Significativa)</div>
+          <div class="widget-label">Altura del Oleaje (Significativa)</div>
           <div class="widget-value">${waveHeight} <span class="unit">metros</span></div>
           <div class="widget-detail">Mar de fondo (Swell): <strong>${swellHeight} m</strong></div>
           <div class="widget-detail">Mar de viento: <strong>${windWaveH} m</strong></div>
         </div>
 
-        <!-- 2. Período y Dirección -->
+        <!-- 2. Período y Dirección para Surf -->
         <div class="marine-widget">
-          <div class="widget-label">Período y Dirección del Oleaje</div>
+          <div class="widget-label">Período y Dirección del Swell</div>
           <div class="widget-value">${wavePeriod} <span class="unit">segundos</span></div>
-          <div class="widget-detail">Dirección oleaje: <strong>${waveDir.name}</strong></div>
-          <div class="widget-detail">Viento en costa: <strong>${Math.round(current.wind_speed_10m)} km/h</strong></div>
+          <div class="widget-detail">Dirección del oleaje: <strong>${waveDir.name}</strong></div>
+          <div class="widget-detail">Viento en orilla: <strong>${Math.round(current.wind_speed_10m)} km/h</strong></div>
         </div>
 
-        <!-- 3. Temperatura del Agua y Salinidad -->
+        <!-- 3. Temperatura del Agua y Confort Turístico -->
         <div class="marine-widget">
-          <div class="widget-label">Temperatura Superficial del Agua</div>
+          <div class="widget-label">Temperatura del Agua en Playa</div>
           <div class="widget-value">${seaTemp} <span class="unit">°C</span></div>
-          <div class="widget-detail">Costa central y oriental asturiana</div>
-          <div class="widget-detail">Visibilidad marítima: <strong>${(current.visibility / 1000 || 10).toFixed(0)} km</strong></div>
+          <div class="widget-detail">Playas de Asturias central y oriental</div>
+          <div class="widget-detail">Visibilidad costera: <strong>${(current.visibility / 1000 || 10).toFixed(0)} km</strong></div>
         </div>
 
-        <!-- 4. Mareas y Recomendación Náutica -->
+        <!-- 4. Recomendación de Surf, Turismo y Mareas -->
         <div class="marine-widget highlight-widget">
-          <div class="widget-label">Condiciones Náuticas & Pesca</div>
-          <div class="widget-status">${douglasAdvice}</div>
-          <div class="widget-tides">
-            <span>🌅 Pleamar aprox: <strong>06:15 / 18:40</strong> (Coef. 75)</span>
-            <span>🌇 Bajamar aprox: <strong>12:30 / 00:55</strong></span>
+          <div class="widget-label" style="display: flex; justify-content: space-between; align-items: center;">
+            <span>🏄‍♂️ Surf & Turismo en Playas</span>
+            <span style="font-size: 0.76rem; font-weight: 700; color: ${flagColor};">${flagBadge}</span>
+          </div>
+          <div class="widget-status" style="margin-top: 6px; font-weight: 600; color: #fff;">
+            ${surfStatus}
+          </div>
+          <div class="widget-tides" style="margin-top: 10px;">
+            <span>🌅 Pleamar aprox: <strong>06:15 / 18:40</strong> (Marea alta)</span>
+            <span>🌇 Bajamar aprox: <strong>12:30 / 00:55</strong> (Paseos por arenales)</span>
           </div>
         </div>
       </div>
 
-      <!-- RED DE PUERTOS PESQUEROS DE ASTURIAS -->
+      <!-- RED DE PLAYAS Y SPOTS DE SURF DE ASTURIAS -->
       <div class="marine-ports-section">
-        <h4 class="ports-title">⚓ Red de Puertos y Puntos Marítimos Clave</h4>
+        <h4 class="ports-title">🏖️ Principales Playas, Spots de Surf y Puntos de la Costa</h4>
         <div class="ports-grid">
-          ${PUERTOS_ASTURIAS.map(p => `
+          ${SPOTS_PLAYAS_ASTURIAS.map(p => `
             <div class="port-item">
               <span class="port-name">${p.name}</span>
-              <span class="port-region">${p.region}</span>
+              <span class="port-region">${p.type} • ${p.region}</span>
             </div>
           `).join('')}
         </div>

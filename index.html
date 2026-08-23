@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=4.0">
-  <link rel="stylesheet" href="css/components.css?v=4.0">
-  <link rel="stylesheet" href="css/weather-themes.css?v=4.0">
+  <link rel="stylesheet" href="css/main.css?v=4.1">
+  <link rel="stylesheet" href="css/components.css?v=4.1">
+  <link rel="stylesheet" href="css/weather-themes.css?v=4.1">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -158,7 +158,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v0.9.97-beta 📋</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v0.9.98-beta 📋</button>
         • Estación Meteorológica del Principado de Asturias
         <div id="last-updated" style="margin-top: 4px; font-size: 0.8rem; color: var(--text-dim);"></div>
       </div>
@@ -200,12 +200,21 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v0.9.97-beta</span>
+            <span class="release-version">v0.9.98-beta</span>
             <span class="release-date">23 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-new">Nuevo</span> <strong>Clima Dinámico Atmosférico y Fondos Vivos</strong>: la interfaz ahora reacciona en tiempo real al clima de cada concejo (azul soleado, gris orbayu, azul eléctrico tormenta, bruma plata o cielo estrellado).</li>
-            <li><span class="tag tag-new">Nuevo</span> <strong>Motor de Partículas Interactivas</strong>: motas doradas de sol, lluvia ambiental, copos de nieve o estrellas titilantes según las condiciones meteorológicas en directo.</li>
+            <li><span class="tag tag-improved">Mejora</span> <strong>Módulo Costa & Mar Centrado en Surf y Turismo</strong>: adaptada la tarjeta de condiciones marítimas para evaluar rompientes de surf, banderas de baño estimadas y paseos por arenales en marea baja.</li>
+            <li><span class="tag tag-new">Nuevo</span> Directorio de principales playas y spots de surf asturianos (*Salinas, Rodiles, San Lorenzo, Tapia, Ribadesella, Llanes*).</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v0.9.97-beta</span>
+            <span class="release-date">23 Ago 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> Clima dinámico atmosférico y partículas vivas.</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -372,7 +381,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=4.0').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=4.1').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -393,6 +402,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=4.0"></script>
+  <script type="module" src="js/app.js?v=4.1"></script>
 </body>
 </html>
