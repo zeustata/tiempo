@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.4">
-  <link rel="stylesheet" href="css/components.css?v=2.4">
-  <link rel="stylesheet" href="css/weather-themes.css?v=2.4">
+  <link rel="stylesheet" href="css/main.css?v=2.5">
+  <link rel="stylesheet" href="css/components.css?v=2.5">
+  <link rel="stylesheet" href="css/weather-themes.css?v=2.5">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -304,7 +304,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=2.4').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=2.5').then(reg => {
           // Comprobar actualizaciones inmediatamente
           reg.update();
 
@@ -329,6 +329,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.4"></script>
+  <script type="module" src="js/app.js?v=2.5"></script>
 </body>
 </html>

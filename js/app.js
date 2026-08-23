@@ -438,21 +438,30 @@ class MeteoAsturiasApp {
     document.addEventListener('webkitfullscreenchange', updateBtn);
     updateBtn();
 
-    // Intentar activar pantalla completa automáticamente en la primera interacción del usuario
-    const autoFullscreenOnFirstInteraction = () => {
+    // Intentar activar pantalla completa inmediatamente si el entorno lo permite
+    const tryEnterFullscreen = () => {
       if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-        if (document.documentElement.requestFullscreen) {
-          document.documentElement.requestFullscreen().catch(() => {});
-        } else if (document.documentElement.webkitRequestFullscreen) {
-          document.documentElement.webkitRequestFullscreen().catch(() => {});
+        const el = document.documentElement;
+        const requestMethod = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+        if (requestMethod) {
+          requestMethod.call(el).catch(() => {});
         }
       }
-      window.removeEventListener('click', autoFullscreenOnFirstInteraction);
-      window.removeEventListener('touchstart', autoFullscreenOnFirstInteraction);
     };
 
-    window.addEventListener('click', autoFullscreenOnFirstInteraction, { once: true });
-    window.addEventListener('touchstart', autoFullscreenOnFirstInteraction, { once: true });
+    tryEnterFullscreen();
+
+    // En navegador, cualquier primer toque o interacción lo expande a pantalla completa
+    const onUserInteraction = () => {
+      tryEnterFullscreen();
+      ['click', 'touchstart', 'pointerdown', 'keydown'].forEach(evt => {
+        window.removeEventListener(evt, onUserInteraction);
+      });
+    };
+
+    ['click', 'touchstart', 'pointerdown', 'keydown'].forEach(evt => {
+      window.addEventListener(evt, onUserInteraction, { passive: true });
+    });
   }
 
   toggleFullscreen() {
