@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.92-beta] - 2026-08-23
+
+### ⭐ Menú Desplegable de Favoritos en Cabecera (Changed & Improved)
+- **Sustitución de Botón de Unidades por Menú de Favoritos**: En lugar del botón de unidades, ahora se cuenta con el selector desplegable `⭐ Favoritos (X) ▾` en la cabecera.
+- **Gestión Rápida de Concejos Guardados**: Permite cambiar entre tus concejos favoritos o eliminarlos directamente desde el menú emergente.
+- **Pantalla Principal Completamente Despejada**: Se retira la fila inferior de favoritos para conseguir un aspecto ultralimpio y minimalista.
+
+---
+
 ## [0.9.91-beta] - 2026-08-23
 
 ### 🐛 Restauración de Pastillas de Favoritos (Fixed & Improved)
