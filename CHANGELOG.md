@@ -12,6 +12,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.1-beta] - 2026-08-23
+
+### 🎨 Mejoras de Experiencia y Diseño Móvil (Changed & Improved)
+- **Rediseño Completo de Pronóstico a 10 Días para Móviles**: Sustitución de las filas comprimidas por un feed vertical de **tarjetas enriquecidas de gran formato (el doble de espacio y visuales)**.
+- **Métricas Ampliadas en Cada Día**:
+  - **Temperaturas y Rango Térmico**: Indicadores grandes de Máx/Mín con barra de gradiente de oscilación térmica.
+  - **Precipitaciones**: Probabilidad de lluvia en `%` con litros acumulados en `mm`.
+  - **Viento y Rachas**: Velocidad media y ráfagas máximas del día.
+  - **Radiación Solar**: Índice UV máximo con nivel (*Bajo, Moderado, Alto, Muy Alto*).
+  - **Ciclo Solar**: Hora exacta de amanecer y puesta de sol (Ocaso).
+- **Tarjetas Horarias (24h) Mejoradas**: Iconos más grandes (2.2rem), tarjetas más altas y legibilidad superior en pantallas móviles.
+
+---
+
 ## [0.9.0-beta] - 2026-08-23
 
 ### 🚀 Novedades y Características (Added)

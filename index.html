@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.1">
-  <link rel="stylesheet" href="css/components.css?v=2.1">
-  <link rel="stylesheet" href="css/weather-themes.css?v=2.1">
+  <link rel="stylesheet" href="css/main.css?v=2.2">
+  <link rel="stylesheet" href="css/components.css?v=2.2">
+  <link rel="stylesheet" href="css/weather-themes.css?v=2.2">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -47,7 +47,7 @@
         <div class="brand-info">
           <div class="brand-title-row">
             <h1>MeteoAstur Lode</h1>
-            <span class="version-badge" id="app-version-badge" title="Versión de la aplicación (Haz clic para ver novedades)">v0.9.0-beta</span>
+            <span class="version-badge" id="app-version-badge" title="Versión de la aplicación (Haz clic para ver novedades)">v0.9.1-beta</span>
             <div id="live-clock" class="live-clock-badge" title="Hora y fecha en tiempo real">--:--:--</div>
             <div id="network-status" class="network-badge online" title="Estado de conexión">🟢 En línea</div>
           </div>
@@ -199,7 +199,7 @@
     <!-- FOOTER -->
     <footer class="app-footer">
       <div class="footer-credits">
-        <strong>MeteoAstur Lode</strong> <span class="footer-version-tag">v0.9.0-beta</span> • Estación Meteorológica del Principado de Asturias
+        <strong>MeteoAstur Lode</strong> <span class="footer-version-tag">v0.9.1-beta</span> • Estación Meteorológica del Principado de Asturias
         <div id="last-updated" style="margin-top: 4px; font-size: 0.8rem; color: var(--text-dim);"></div>
       </div>
       <div class="footer-sources">
@@ -240,16 +240,25 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v0.9.0-beta</span>
+            <span class="release-version">v0.9.1-beta</span>
             <span class="release-date">23 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-new">Nuevo</span> <strong>Instalación PWA Multiplataforma</strong> en móviles Android/iOS y Windows.</li>
-            <li><span class="tag tag-new">Nuevo</span> <strong>Auto-refresco inteligente</strong> al abrir la app o volver de segundo plano.</li>
-            <li><span class="tag tag-improved">Mejora</span> <strong>Radar Cantábrico despejado</strong>: sin amontonamientos de texto y con zoom panorámico.</li>
-            <li><span class="tag tag-improved">Mejora</span> <strong>Leyenda de intensidad de lluvia</strong> y marcadores discretos.</li>
-            <li><span class="tag tag-improved">Mejora</span> <strong>Favoritos limpios</strong> por defecto.</li>
-            <li><span class="tag tag-fix">Fix</span> Compatibilidad con Google Play WebAPK y motor anti-caché.</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Tarjetas de 10 días de gran formato</strong> con el doble de tamaño y diseño vertical para móviles.</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Métricas ampliadas</strong>: Rango térmico, rachas de viento, índice UV máx y salida/puesta de sol.</li>
+            <li><span class="tag tag-improved">Mejora</span> <strong>Tarjetas horarias 24h más altas</strong> con iconos de 2.2rem y mejor espaciado táctil.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v0.9.0-beta</span>
+            <span class="release-date">23 Ago 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> PWA Multiplataforma en móviles Android/iOS y Windows.</li>
+            <li><span class="tag tag-new">Nuevo</span> Auto-refresco inteligente al abrir la app o desbloquear el móvil.</li>
+            <li><span class="tag tag-improved">Mejora</span> Radar Cantábrico panorámico y despejado.</li>
+            <li><span class="tag tag-improved">Mejora</span> Favoritos limpios por defecto.</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -270,7 +279,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=2.1').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=2.2').then(reg => {
           // Comprobar actualizaciones inmediatamente
           reg.update();
 
@@ -295,6 +304,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.1"></script>
+  <script type="module" src="js/app.js?v=2.2"></script>
 </body>
 </html>
