@@ -12,6 +12,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.4-beta] - 2026-08-23
+
+### 🎨 Alineación Visual y Perfeccionamiento de Tarjetas (Changed & Improved)
+- **Alineación Geométrica Uniforme en Móvil**: Todas las tarjetas (`Hero`, `Sensores`, `Pronóstico`, `Mar`, `Montaña`, `Gráficos` y `Radar`) comparten ahora el mismo espaciado interno (`padding: 18px`), margen inferior y radio de curvatura.
+- **Corrección de la Tarjeta Hero Principal**:
+  - Rediseño de la cabecera (Concejo e Icono meteorológico en fila superior).
+  - Bloque térmico equilibrado (Temperatura gigante a la izquierda y descripción del estado, sensación térmica y mín/máx a la derecha) sin saltos de línea antiestéticos.
+- **Cuadrícula de Sensores Unificada**: Visualización en columna completa en pantallas móviles para eliminar asimetrías.
+
+---
+
 ## [0.9.3-beta] - 2026-08-23
 
 ### 🖥️ Control de Pantalla Completa y Modo Kiosko (Changed & Improved)

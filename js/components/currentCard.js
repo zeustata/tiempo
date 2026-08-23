@@ -1,7 +1,7 @@
 import { getWeatherInfo, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js';
 
 /**
- * Renderiza el dashboard principal con todos los sensores de la estación
+ * Renderiza el dashboard principal con alineación uniforme y todos los sensores de la estación
  */
 export function renderCurrentWeather(data, concejo, units = 'metric') {
   const current = data.weather.current;
@@ -14,7 +14,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric') {
   const uvInfo = getUVDescription(daily.uv_index_max[0]);
   const aqiInfo = getAQIDescription(aqi?.european_aqi);
 
-  // Calcular tendencia barométrica (diferencia con hace 3 horas si existe)
+  // Calcular tendencia barométrica
   let baroTrend = { text: 'Estable', icon: '→', class: 'trend-stable' };
   if (hourly && hourly.pressure_msl && hourly.pressure_msl.length > 3) {
     const currentPress = current.pressure_msl;
@@ -43,29 +43,28 @@ export function renderCurrentWeather(data, concejo, units = 'metric') {
   return `
     <!-- HERO WEATHER CARD -->
     <div class="hero-weather-card ${weatherInfo.bg}">
-      <div class="hero-header">
-        <div class="hero-location">
-          <div class="location-badge">${concejo.badge}</div>
+      <div class="hero-top-row">
+        <div class="hero-location-block">
+          <span class="location-badge">${concejo.badge}</span>
           <h2 class="location-title">${concejo.name}</h2>
           <p class="location-meta">Altitud: ${concejo.altitude} m • ${concejo.region}</p>
         </div>
-        <div class="weather-icon-large" title="${weatherInfo.label}">
+        <div class="hero-icon-block" title="${weatherInfo.label}">
           <span class="emoji-weather">${weatherInfo.icon}</span>
         </div>
       </div>
 
-      <div class="hero-body">
+      <div class="hero-main-row">
         <div class="temp-primary">
           <span class="temp-val">${Math.round(current.temperature_2m)}</span>
           <span class="temp-unit">°C</span>
         </div>
-        <div class="temp-details">
+        <div class="temp-info-block">
           <div class="condition-name">${weatherInfo.label}</div>
           <div class="temp-feels">Sensación térmica: <strong>${Math.round(current.apparent_temperature)}°C</strong></div>
-          <div class="temp-minmax">
-            <span>↓ ${Math.round(daily.temperature_2m_min[0])}°C</span>
-            <span class="separator">•</span>
-            <span>↑ ${Math.round(daily.temperature_2m_max[0])}°C</span>
+          <div class="temp-minmax-pills">
+            <span class="t-pill min">↓ ${Math.round(daily.temperature_2m_min[0])}°C</span>
+            <span class="t-pill max">↑ ${Math.round(daily.temperature_2m_max[0])}°C</span>
           </div>
         </div>
       </div>
