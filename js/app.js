@@ -24,7 +24,7 @@ class MeteoAsturiasApp {
   }
 
   async init() {
-    this.renderConcejoDropdown();
+    this.updateSearchTriggerDisplay();
     this.renderFavoritePills();
     this.setupEventListeners();
     this.setupQuickSearch();
@@ -103,15 +103,11 @@ class MeteoAsturiasApp {
     }
   }
 
-  renderConcejoDropdown() {
-    const select = document.getElementById('concejo-select');
-    if (!select) return;
-
-    select.innerHTML = CONCEJOS_ASTURIAS.map(c => `
-      <option value="${c.id}" ${c.id === this.currentConcejo.id ? 'selected' : ''}>
-        ${c.name} (${c.altitude} m • ${c.region})
-      </option>
-    `).join('');
+  updateSearchTriggerDisplay() {
+    const el = document.getElementById('search-bar-current-name');
+    if (el && this.currentConcejo) {
+      el.innerHTML = `<span class="active-badge">${this.currentConcejo.badge}</span> <strong>${this.currentConcejo.name}</strong> <span class="active-meta">(${this.currentConcejo.altitude} m • ${this.currentConcejo.region})</span>`;
+    }
   }
 
   renderFavoritePills() {
@@ -144,11 +140,17 @@ class MeteoAsturiasApp {
   }
 
   setupEventListeners() {
-    // Selector principal de concejo
-    const select = document.getElementById('concejo-select');
-    if (select) {
-      select.addEventListener('change', (e) => {
-        this.switchConcejo(e.target.value);
+    // Barra interactiva de búsqueda rápida
+    const searchTrigger = document.getElementById('main-search-trigger');
+    if (searchTrigger) {
+      searchTrigger.addEventListener('click', () => {
+        if (this.openSearchModal) this.openSearchModal();
+      });
+      searchTrigger.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          if (this.openSearchModal) this.openSearchModal();
+        }
       });
     }
 
@@ -584,7 +586,7 @@ class MeteoAsturiasApp {
     this.prefs.lastConcejo = concejoId;
     savePreferences(this.prefs);
 
-    this.renderConcejoDropdown();
+    this.updateSearchTriggerDisplay();
     this.renderFavoritePills();
     this.updateFavButton();
 

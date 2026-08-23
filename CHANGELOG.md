@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.9-beta] - 2026-08-23
+
+### 🔍 Barra Táctil de Búsqueda Rápida como Selector Principal (Changed & Improved)
+- **Sustitución Completa del Dropdown por Barra de Búsqueda**: Se reemplazó el selector nativo desplegable por una tarjeta interactiva elegante que muestra el concejo activo con su altitud y permite buscar predictivamente entre los 78 concejos con un solo toque.
+- **Ergonomía Táctil en Móviles**: Acceso más rápido, visual e intuitivo a cualquier concejo de Asturias.
+
+---
+
 ## [0.9.8-beta] - 2026-08-23
 
 ### 🧹 Limpieza de Cabecera e Integración de Versión en Pie (Changed & Improved)

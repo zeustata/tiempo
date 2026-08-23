@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=3.1">
-  <link rel="stylesheet" href="css/components.css?v=3.1">
-  <link rel="stylesheet" href="css/weather-themes.css?v=3.1">
+  <link rel="stylesheet" href="css/main.css?v=3.2">
+  <link rel="stylesheet" href="css/components.css?v=3.2">
+  <link rel="stylesheet" href="css/weather-themes.css?v=3.2">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -55,7 +55,6 @@
       </div>
 
       <div class="header-controls">
-        <button id="btn-open-search" class="btn-header btn-search-trigger" title="Buscar concejo (Atajo S / /)">🔍 Buscar</button>
         <button id="btn-install-app" class="btn-header btn-install" style="display: none;" title="Instalar en Windows / Móvil">📥 Instalar App</button>
         <button id="btn-fullscreen" class="btn-header" title="Alternar Pantalla Completa / Modo Ventana (Tecla K / F11)">🖥️ Completa</button>
         <button id="btn-shortcuts-help" class="btn-header btn-desktop-only" title="Ver atajos de teclado (Windows)">⌨️ Atajos</button>
@@ -65,11 +64,18 @@
       </div>
     </header>
 
-    <!-- SELECTOR DE CONCEJOS Y FAVORITOS -->
+    <!-- BARRA DE BÚSQUEDA RÁPIDA DE CONCEJOS Y FAVORITOS -->
     <section class="concejo-selector-bar">
-      <div class="search-and-select">
-        <div class="select-wrapper">
-          <select id="concejo-select" class="concejo-dropdown" aria-label="Seleccionar concejo de Asturias"></select>
+      <div class="search-trigger-card" id="main-search-trigger" role="button" tabindex="0" title="Toca para buscar o cambiar entre los 78 concejos">
+        <div class="search-trigger-left">
+          <span class="search-trigger-icon">🔍</span>
+          <div class="search-trigger-text" id="search-bar-current-name">
+            <span class="active-badge">⚡</span> <strong>Gijón</strong> <span class="active-meta">(8 m • Costa Central)</span>
+          </div>
+        </div>
+        <div class="search-trigger-right">
+          <span class="search-trigger-cta">Buscar concejo ➔</span>
+          <span class="search-trigger-kbd"><kbd>S</kbd> / <kbd>/</kbd></span>
         </div>
       </div>
       <div class="favorites-pills" id="favorites-container"></div>
@@ -173,7 +179,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v0.9.8-beta 📋</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v0.9.9-beta 📋</button>
         • Estación Meteorológica del Principado de Asturias
         <div id="last-updated" style="margin-top: 4px; font-size: 0.8rem; color: var(--text-dim);"></div>
       </div>
@@ -215,12 +221,21 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v0.9.8-beta</span>
+            <span class="release-version">v0.9.9-beta</span>
             <span class="release-date">23 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-improved">Mejora</span> <strong>Cabecera más limpia y despejada</strong>: retirado el botón redundante de refresco y movida la versión a la tarjeta inferior.</li>
-            <li><span class="tag tag-new">Nuevo</span> <strong>Insignia de versión interactiva en el pie</strong> para consultar novedades con un toque.</li>
+            <li><span class="tag tag-improved">Mejora</span> <strong>Barra de Búsqueda Principal</strong>: reemplazado el selector desplegable tradicional por una barra táctil de búsqueda interactiva directa.</li>
+            <li><span class="tag tag-improved">Mejora</span> Mayor ergonomía táctil en móviles para cambiar entre los 78 concejos.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v0.9.8-beta</span>
+            <span class="release-date">23 Ago 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-improved">Mejora</span> Cabecera limpia y versión integrada en la tarjeta del pie.</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -296,7 +311,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.1').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.2').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -317,6 +332,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.1"></script>
+  <script type="module" src="js/app.js?v=3.2"></script>
 </body>
 </html>
