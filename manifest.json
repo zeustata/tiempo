@@ -1,21 +1,70 @@
 {
+  "id": "com.meteoasturias.pro",
   "name": "MeteoAsturias Pro - Estación Meteorológica",
   "short_name": "MeteoAsturias",
-  "description": "Estación meteorológica avanzada, radar y clima en vivo para el Principado de Asturias.",
+  "description": "Estación meteorológica avanzada, radar en directo, mar Cantábrico y cotas de nieve para Asturias.",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui",
+    "browser"
+  ],
+  "orientation": "any",
   "background_color": "#070d17",
   "theme_color": "#070d17",
+  "lang": "es-ES",
+  "categories": ["weather", "utilities", "travel", "navigation"],
   "icons": [
     {
-      "src": "icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     },
     {
-      "src": "icons/icon-512.png",
+      "src": "icons/icon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon.svg",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "📡 Radar Cantábrico",
+      "short_name": "Radar",
+      "description": "Ver radar de precipitaciones y satélite en directo",
+      "url": "./index.html#radar",
+      "icons": [{ "src": "icons/icon.svg", "sizes": "any" }]
+    },
+    {
+      "name": "🌊 Mar Cantábrico & Costa",
+      "short_name": "Costa y Mar",
+      "description": "Oleaje, mareas y temperatura del agua",
+      "url": "./index.html#marine",
+      "icons": [{ "src": "icons/icon.svg", "sizes": "any" }]
+    },
+    {
+      "name": "🏔️ Cordillera & Nieve",
+      "short_name": "Nieve",
+      "description": "Cotas de nieve y puertos de montaña asturianos",
+      "url": "./index.html#mountain",
+      "icons": [{ "src": "icons/icon.svg", "sizes": "any" }]
+    },
+    {
+      "name": "📅 Pronóstico 10 Días",
+      "short_name": "Pronóstico",
+      "description": "Previsión detallada por horas y días",
+      "url": "./index.html#forecast",
+      "icons": [{ "src": "icons/icon.svg", "sizes": "any" }]
     }
   ]
 }

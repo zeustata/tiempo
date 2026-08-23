@@ -1,17 +1,59 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
   <defs>
+    <!-- Fondo con degradado nocturno / oceánico -->
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0f172a"/>
-      <stop offset="50%" stop-color="#0284c7"/>
-      <stop offset="100%" stop-color="#0369a1"/>
+      <stop offset="0%" stop-color="#070d17"/>
+      <stop offset="50%" stop-color="#0c2340"/>
+      <stop offset="100%" stop-color="#0284c7"/>
     </linearGradient>
+
+    <!-- Degradado Sol / Relámpago -->
     <linearGradient id="sunGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#fde047"/>
-      <stop offset="100%" stop-color="#f59e0b"/>
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="50%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#ea580c"/>
     </linearGradient>
+
+    <!-- Degradado Rayo -->
+    <linearGradient id="boltGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+
+    <!-- Nube con sombra suave -->
+    <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#cbd5e1"/>
+    </linearGradient>
+
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="10" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
   </defs>
-  <rect width="512" height="512" rx="110" fill="url(#bgGrad)"/>
-  <circle cx="256" cy="190" r="90" fill="url(#sunGrad)"/>
-  <path d="M160 370 h200 a70 70 0 0 0 0 -140 a90 90 0 0 0 -170 -20 a60 60 0 0 0 -30 160 z" fill="#f8fafc" opacity="0.95"/>
-  <path d="M260 350 L230 420 L275 420 L245 480" stroke="#38bdf8" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <!-- Fondo redondeado adaptativo (maskable safe) -->
+  <rect width="512" height="512" rx="115" fill="url(#bgGrad)"/>
+
+  <!-- Sol radiante -->
+  <circle cx="210" cy="185" r="75" fill="url(#sunGrad)" filter="url(#glow)"/>
+
+  <!-- Rayos solares decorativos -->
+  <path d="M210 80 L210 95 M210 275 L210 290 M105 185 L120 185 M300 185 L315 185 M135 110 L146 121 M274 249 L285 260 M135 260 L146 249 M274 121 L285 110" 
+        stroke="#fde047" stroke-width="6" stroke-linecap="round" opacity="0.6"/>
+
+  <!-- Nube estilizada -->
+  <g filter="url(#glow)">
+    <path d="M165 345 h195 a68 68 0 0 0 0 -136 a95 95 0 0 0 -170 -18 a60 60 0 0 0 -25 154 z" 
+          fill="url(#cloudGrad)"/>
+  </g>
+
+  <!-- Gotas / Rayo de tormenta cantábrica -->
+  <path d="M265 330 L235 400 L278 400 L248 460" 
+        stroke="url(#boltGrad)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  
+  <!-- Gotas de lluvia suave (Orbayu) -->
+  <line x1="180" y1="375" x2="170" y2="405" stroke="#38bdf8" stroke-width="7" stroke-linecap="round" opacity="0.8"/>
+  <line x1="335" y1="370" x2="325" y2="400" stroke="#38bdf8" stroke-width="7" stroke-linecap="round" opacity="0.8"/>
+  <line x1="305" y1="415" x2="295" y2="445" stroke="#38bdf8" stroke-width="7" stroke-linecap="round" opacity="0.8"/>
 </svg>

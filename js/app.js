@@ -11,10 +11,11 @@ import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, rese
 class MeteoAsturiasApp {
   constructor() {
     this.prefs = getPreferences();
-    this.currentConcejo = getConcejoById(this.prefs.lastConcejo);
+    this.currentConcejo = getConcejoById(this.prefs.lastConcejo) || CONCEJOS_ASTURIAS[0];
     this.weatherData = null;
     this.activeTab = 'live';
     this.autoRefreshTimer = null;
+    this.deferredInstallPrompt = null;
     
     this.init();
   }
@@ -23,7 +24,14 @@ class MeteoAsturiasApp {
     this.renderConcejoDropdown();
     this.renderFavoritePills();
     this.setupEventListeners();
+    this.setupPwaInstall();
+    this.setupKeyboardShortcuts();
+    this.setupLiveClock();
+    this.setupNetworkMonitor();
     this.initParticleCanvas();
+
+    // Comprobar si se abrió desde un acceso directo PWA (hash URL)
+    this.handleInitialHash();
 
     // Cargar datos del concejo actual
     await this.loadWeather(this.currentConcejo.id);
@@ -38,6 +46,14 @@ class MeteoAsturiasApp {
       this.autoRefreshTimer = setInterval(() => {
         this.loadWeather(this.currentConcejo.id);
       }, 10 * 60 * 1000);
+    }
+  }
+
+  handleInitialHash() {
+    const hash = window.location.hash.replace('#', '');
+    const validTabs = ['live', 'radar', 'marine', 'mountain', 'forecast', 'charts', 'glossary'];
+    if (validTabs.includes(hash)) {
+      this.switchTab(hash);
     }
   }
 
@@ -67,15 +83,22 @@ class MeteoAsturiasApp {
     const container = document.getElementById('favorites-container');
     if (!container) return;
 
-    const favs = this.prefs.favorites.map(id => getConcejoById(id)).filter(Boolean);
+    const favs = (this.prefs.favorites || []).map(id => getConcejoById(id)).filter(Boolean);
     
-    let html = '<span class="fav-label">Favoritos:</span>';
-    html += favs.map(c => '<button class="pill-item ' + (c.id === this.currentConcejo.id ? 'active' : '') + '" data-id="' + c.id + '">' + c.name.split('/')[0] + '</button>').join('');
+    let html = '<span class="fav-label">⭐ Favoritos:</span>';
+    if (favs.length === 0) {
+      html += '<span style="font-size: 0.8rem; color: var(--text-dim); padding: 4px 8px;">(Pulsa ⭐ Guardar para añadir concejos)</span>';
+    } else {
+      html += favs.map(c => '<button class="pill-item ' + (c.id === this.currentConcejo.id ? 'active' : '') + '" data-id="' + c.id + '">' + c.name.split('/')[0] + '</button>').join('');
+    }
     
     container.innerHTML = html;
 
     container.querySelectorAll('.pill-item').forEach(btn => {
-      btn.onclick = () => this.switchConcejo(btn.dataset.id);
+      btn.onclick = () => {
+        this.triggerHaptic();
+        this.switchConcejo(btn.dataset.id);
+      };
     });
   }
 
@@ -83,13 +106,17 @@ class MeteoAsturiasApp {
     // Cambio en selector dropdown
     const select = document.getElementById('concejo-select');
     if (select) {
-      select.addEventListener('change', (e) => this.switchConcejo(e.target.value));
+      select.addEventListener('change', (e) => {
+        this.triggerHaptic();
+        this.switchConcejo(e.target.value);
+      });
     }
 
     // Botón Favorito Toggle
     const favBtn = document.getElementById('btn-toggle-fav');
     if (favBtn) {
       favBtn.addEventListener('click', () => {
+        this.triggerHaptic();
         this.prefs.favorites = toggleFavorite(this.currentConcejo.id);
         this.updateFavButton();
         this.renderFavoritePills();
@@ -99,19 +126,26 @@ class MeteoAsturiasApp {
     // Botón Geolocalización GPS
     const gpsBtn = document.getElementById('btn-gps');
     if (gpsBtn) {
-      gpsBtn.addEventListener('click', () => this.locateUser());
+      gpsBtn.addEventListener('click', () => {
+        this.triggerHaptic();
+        this.locateUser();
+      });
     }
 
     // Botón Actualizar
     const refreshBtn = document.getElementById('btn-refresh');
     if (refreshBtn) {
-      refreshBtn.addEventListener('click', () => this.loadWeather(this.currentConcejo.id));
+      refreshBtn.addEventListener('click', () => {
+        this.triggerHaptic();
+        this.loadWeather(this.currentConcejo.id);
+      });
     }
 
     // Toggle de Unidades (km/h vs nudos)
     const unitBtn = document.getElementById('btn-unit-toggle');
     if (unitBtn) {
       unitBtn.addEventListener('click', () => {
+        this.triggerHaptic();
         this.prefs.units = this.prefs.units === 'metric' ? 'knots' : 'metric';
         savePreferences(this.prefs);
         unitBtn.textContent = this.prefs.units === 'metric' ? 'Unidades: km/h' : 'Unidades: Nudos (kt)';
@@ -119,27 +153,42 @@ class MeteoAsturiasApp {
       });
     }
 
+    // Botón Modo Pantalla Completa / Kiosko (Windows & Desktop)
+    const fullscreenBtn = document.getElementById('btn-fullscreen');
+    if (fullscreenBtn) {
+      fullscreenBtn.addEventListener('click', () => this.toggleFullscreen());
+    }
+
+    // Botón Modal de Atajos
+    const shortcutsBtn = document.getElementById('btn-shortcuts-help');
+    const shortcutsModal = document.getElementById('shortcuts-modal');
+    const closeModalBtn = document.getElementById('btn-close-modal');
+
+    if (shortcutsBtn && shortcutsModal) {
+      shortcutsBtn.addEventListener('click', () => {
+        shortcutsModal.style.display = 'flex';
+      });
+    }
+
+    if (closeModalBtn && shortcutsModal) {
+      closeModalBtn.addEventListener('click', () => {
+        shortcutsModal.style.display = 'none';
+      });
+    }
+
+    if (shortcutsModal) {
+      shortcutsModal.addEventListener('click', (e) => {
+        if (e.target === shortcutsModal) {
+          shortcutsModal.style.display = 'none';
+        }
+      });
+    }
+
     // Tabs de navegación
     document.querySelectorAll('.tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-
-        btn.classList.add('active');
-        const targetTab = btn.dataset.tab;
-        const panel = document.getElementById('panel-' + targetTab);
-        if (panel) panel.classList.add('active');
-
-        this.activeTab = targetTab;
-
-        // Si se activa el radar, recalculamos inmediatamente el tamaño del mapa de Leaflet
-        if (targetTab === 'radar') {
-          resizeMap();
-        }
-
-        if (targetTab === 'charts' && this.weatherData) {
-          renderWeatherChart('meteo-chart-canvas', this.weatherData.weather.hourly);
-        }
+        this.triggerHaptic();
+        this.switchTab(btn.dataset.tab);
       });
     });
 
@@ -162,8 +211,143 @@ class MeteoAsturiasApp {
     }
   }
 
+  switchTab(targetTab) {
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.tab === targetTab);
+    });
+    document.querySelectorAll('.tab-panel').forEach(p => {
+      p.classList.toggle('active', p.id === 'panel-' + targetTab);
+    });
+
+    this.activeTab = targetTab;
+    window.location.hash = targetTab;
+
+    if (targetTab === 'radar') {
+      setTimeout(() => resizeMap(), 50);
+    }
+
+    if (targetTab === 'charts' && this.weatherData) {
+      setTimeout(() => renderWeatherChart('meteo-chart-canvas', this.weatherData.weather.hourly), 50);
+    }
+  }
+
+  setupPwaInstall() {
+    const installBtn = document.getElementById('btn-install-app');
+    if (!installBtn) return;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      this.deferredInstallPrompt = e;
+      installBtn.style.display = 'inline-flex';
+    });
+
+    installBtn.addEventListener('click', async () => {
+      if (!this.deferredInstallPrompt) return;
+      this.deferredInstallPrompt.prompt();
+      const { outcome } = await this.deferredInstallPrompt.userChoice;
+      if (outcome === 'accepted') {
+        installBtn.style.display = 'none';
+      }
+      this.deferredInstallPrompt = null;
+    });
+
+    window.addEventListener('appinstalled', () => {
+      installBtn.style.display = 'none';
+    });
+  }
+
+  setupKeyboardShortcuts() {
+    const tabList = ['live', 'radar', 'marine', 'mountain', 'forecast', 'charts', 'glossary'];
+
+    window.addEventListener('keydown', (e) => {
+      // Ignorar si el usuario está escribiendo en un input o select
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+      const key = e.key.toLowerCase();
+
+      // Atajos de dígitos 1-7
+      if (e.key >= '1' && e.key <= '7') {
+        const index = parseInt(e.key, 10) - 1;
+        if (tabList[index]) {
+          this.switchTab(tabList[index]);
+        }
+      } else if (key === 'r') {
+        this.loadWeather(this.currentConcejo.id);
+      } else if (key === 'f') {
+        this.prefs.favorites = toggleFavorite(this.currentConcejo.id);
+        this.updateFavButton();
+        this.renderFavoritePills();
+      } else if (key === 'g') {
+        this.locateUser();
+      } else if (key === 's' || key === '/') {
+        e.preventDefault();
+        const select = document.getElementById('concejo-select');
+        if (select) select.focus();
+      } else if (key === 'k') {
+        this.toggleFullscreen();
+      } else if (e.key === 'Escape') {
+        const shortcutsModal = document.getElementById('shortcuts-modal');
+        if (shortcutsModal) shortcutsModal.style.display = 'none';
+      }
+    });
+  }
+
+  setupLiveClock() {
+    const clockEl = document.getElementById('live-clock');
+    if (!clockEl) return;
+
+    const updateClock = () => {
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      clockEl.textContent = '🕒 ' + timeStr;
+    };
+
+    updateClock();
+    setInterval(updateClock, 1000);
+  }
+
+  setupNetworkMonitor() {
+    const statusEl = document.getElementById('network-status');
+    if (!statusEl) return;
+
+    const updateStatus = () => {
+      if (navigator.onLine) {
+        statusEl.className = 'network-badge online';
+        statusEl.textContent = '🟢 En línea';
+      } else {
+        statusEl.className = 'network-badge offline';
+        statusEl.textContent = '🔴 Modo Offline';
+      }
+    };
+
+    window.addEventListener('online', updateStatus);
+    window.addEventListener('offline', updateStatus);
+    updateStatus();
+  }
+
+  toggleFullscreen() {
+    const btn = document.getElementById('btn-fullscreen');
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(() => {});
+      if (btn) btn.textContent = '🗗 Salir Kiosko';
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {});
+      }
+      if (btn) btn.textContent = '🖥️ Kiosko';
+    }
+  }
+
+  triggerHaptic() {
+    if ('vibrate' in navigator) {
+      try {
+        navigator.vibrate(12);
+      } catch (err) {}
+    }
+  }
+
   async switchConcejo(concejoId) {
-    this.currentConcejo = getConcejoById(concejoId);
+    this.currentConcejo = getConcejoById(concejoId) || this.currentConcejo;
     this.prefs.lastConcejo = concejoId;
     savePreferences(this.prefs);
 
@@ -185,7 +369,7 @@ class MeteoAsturiasApp {
 
   locateUser() {
     if (!navigator.geolocation) {
-      alert('Tu navegador no soporta geolocalización.');
+      alert('Tu dispositivo o navegador no soporta geolocalización.');
       return;
     }
 
@@ -199,7 +383,7 @@ class MeteoAsturiasApp {
         this.switchConcejo(closest.id);
       },
       (err) => {
-        alert('No se pudo obtener la ubicación GPS.');
+        alert('No se pudo obtener la ubicación GPS precisa.');
         if (gpsBtn) gpsBtn.textContent = '📍 Mi Ubicación';
       },
       { timeout: 8000 }
@@ -207,7 +391,7 @@ class MeteoAsturiasApp {
   }
 
   async loadWeather(concejoId) {
-    const concejo = getConcejoById(concejoId);
+    const concejo = getConcejoById(concejoId) || this.currentConcejo;
     const isCoast = concejo.type === 'coast';
 
     const livePanel = document.getElementById('panel-live');

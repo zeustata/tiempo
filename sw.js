@@ -1,8 +1,9 @@
-const CACHE_NAME = 'meteoasturias-cache-v1';
+const CACHE_NAME = 'meteoasturias-cache-v2';
 const STATIC_ASSETS = [
   './',
   './index.html',
   './manifest.json',
+  './icons/icon.svg',
   './css/main.css',
   './css/components.css',
   './css/weather-themes.css',
@@ -39,10 +40,10 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
-  // Solo cachear peticiones GET del mismo origen o librerías estáticas
+  // Solo cachear peticiones GET
   if (e.request.method !== 'GET') return;
 
-  // Si es una petición a API de meteorología, Network First
+  // Peticiones de datos meteorológicos y satélite: Network First con fallback a caché
   if (e.request.url.includes('open-meteo.com') || e.request.url.includes('rainviewer.com')) {
     e.respondWith(
       fetch(e.request).catch(() => caches.match(e.request))
