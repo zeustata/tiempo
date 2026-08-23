@@ -9,6 +9,10 @@ let animationTimer = null;
 let activeConcejoMarker = null;
 let isPlaying = false;
 
+// Coordenadas óptimas para encuadrar Asturias completa y el Mar Cantábrico
+const ASTURIAS_OVERVIEW_CENTER = [43.48, -5.85];
+const ASTURIAS_DEFAULT_ZOOM = 8;
+
 /**
  * Inicializa el mapa interactivo del radar en Asturias con Leaflet y RainViewer
  */
@@ -18,36 +22,36 @@ export async function initAsturiasMap(mapContainerId, onConcejoSelect) {
   const container = document.getElementById(mapContainerId);
   if (!container) return;
 
-  // Centro de Asturias y Mar Cantábrico
-  const asturiasCenter = [43.40, -5.85];
-
   if (!asturiasMap) {
     asturiasMap = L.map(mapContainerId, {
-      center: asturiasCenter,
-      zoom: 9,
-      minZoom: 7,
-      maxZoom: 15,
+      center: ASTURIAS_OVERVIEW_CENTER,
+      zoom: ASTURIAS_DEFAULT_ZOOM,
+      minZoom: 6,
+      maxZoom: 11, // Límite para evitar errores de zoom no soportado de RainViewer
       zoomControl: true,
       fadeAnimation: true
     });
 
-    // Capa 1: CartoDB Voyager (Clara, muy nítida con relieve costero y nombres limpios)
+    // Capa 1: CartoDB Voyager (Clara, muy nítida con relieve costero)
     const layerVoyager = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; OpenStreetMap &copy; CARTO &copy; RainViewer',
       subdomains: 'abcd',
-      maxZoom: 19
+      minZoom: 6,
+      maxZoom: 11
     });
 
-    // Capa 2: OpenStreetMap Estándar
-    const layerOSM = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap',
-      maxZoom: 19
-    });
-
-    // Capa 3: Esri World Imagery (Satélite Real de alta definición)
+    // Capa 2: Esri World Imagery (Satélite Real de alta definición)
     const layerSat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
       attribution: '&copy; Esri &copy; Earthstar Geographics',
-      maxZoom: 19
+      minZoom: 6,
+      maxZoom: 11
+    });
+
+    // Capa 3: OpenStreetMap Estándar
+    const layerOSM = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap',
+      minZoom: 6,
+      maxZoom: 11
     });
 
     layerVoyager.addTo(asturiasMap);
@@ -139,9 +143,12 @@ function showRadarFrame(index, host = 'https://tilecache.rainviewer.com') {
   }
 
   radarTileLayer = L.tileLayer(url, {
-    opacity: 0.78,
+    opacity: 0.80,
     zIndex: 10,
-    tileSize: 256
+    tileSize: 256,
+    minZoom: 6,
+    maxZoom: 11,
+    maxNativeZoom: 10 // Escala de forma limpia si se acerca sin pedir tiles inexistentes
   }).addTo(asturiasMap);
 
   // Actualizar etiqueta temporal del radar
@@ -172,14 +179,15 @@ export function playRadarAnimation() {
 
 export function resetMapCenter() {
   if (asturiasMap) {
-    asturiasMap.setView([43.40, -5.85], 9, { animate: true });
+    asturiasMap.setView(ASTURIAS_OVERVIEW_CENTER, ASTURIAS_DEFAULT_ZOOM, { animate: true });
     resizeMap();
   }
 }
 
 export function focusConcejoOnMap(lat, lon, concejoName) {
   if (asturiasMap) {
-    asturiasMap.setView([lat, lon], 10, { animate: true });
+    // Usamos zoom 9 para mantener el radar completamente nítido y sin cortes
+    asturiasMap.setView([lat, lon], 9, { animate: true });
 
     // Actualizar o poner un único marcador elegante y discreto en el concejo actual
     if (activeConcejoMarker) {

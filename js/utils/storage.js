@@ -1,20 +1,31 @@
 /**
- * Gestión de favoritos y preferencias de usuario
+ * Gestión de favoritos y preferencias de usuario para MeteoAstur Lode
  */
-const STORAGE_KEY = 'meteoasturias_prefs_v2';
+const STORAGE_KEY = 'meteoasturlode_prefs_v3';
 
 export function getPreferences() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return {
+    if (!raw) {
+      return {
+        lastConcejo: 'gijon',
+        favorites: [], // Vacío por defecto
+        units: 'metric', // metric (km/h) | knots (kt)
+        autoRefresh: true
+      };
+    }
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed.favorites)) {
+      parsed.favorites = [];
+    }
+    return parsed;
+  } catch (e) {
+    return {
       lastConcejo: 'gijon',
-      favorites: ['gijon', 'oviedo', 'sotres', 'castrillon', 'pajares'],
-      units: 'metric', // metric (km/h) | knots (kt)
+      favorites: [],
+      units: 'metric',
       autoRefresh: true
     };
-    return JSON.parse(raw);
-  } catch (e) {
-    return { lastConcejo: 'gijon', favorites: ['gijon', 'oviedo', 'sotres'], units: 'metric', autoRefresh: true };
   }
 }
 
@@ -28,6 +39,8 @@ export function savePreferences(prefs) {
 
 export function toggleFavorite(concejoId) {
   const prefs = getPreferences();
+  if (!Array.isArray(prefs.favorites)) prefs.favorites = [];
+  
   const index = prefs.favorites.indexOf(concejoId);
   if (index >= 0) {
     prefs.favorites.splice(index, 1);
@@ -40,5 +53,6 @@ export function toggleFavorite(concejoId) {
 
 export function isFavorite(concejoId) {
   const prefs = getPreferences();
+  if (!Array.isArray(prefs.favorites)) return false;
   return prefs.favorites.includes(concejoId);
 }
