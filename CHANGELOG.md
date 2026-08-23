@@ -12,6 +12,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.999r-beta] - 2026-08-24
+
+### 💎 Tipografía Compacta y Proporcionada en el Hero Card (Improved & Visual)
+- **Ajuste Armónico de Fuentes**: Reducción elegante del tamaño de la temperatura principal (de 3.8rem a 2.6rem), título del concejo, icono del cielo y sensación térmica para una visualización más refinada y equilibrada en dispositivos móviles y de escritorio.
+
+---
+
 ## [0.9.999q-beta] - 2026-08-24
 
 ### 📐 Reordenación Visual en Estación en Vivo (Improved & UX)
