@@ -137,7 +137,20 @@ class MeteoAsturiasApp {
     if (refreshBtn) {
       refreshBtn.addEventListener('click', () => {
         this.triggerHaptic();
-        this.loadWeather(this.currentConcejo.id);
+        refreshBtn.textContent = '⏳ Cargando...';
+        
+        // Comprobar si hay nueva versión de la app en la nube
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistration().then(reg => {
+            if (reg) reg.update();
+          });
+        }
+
+        this.loadWeather(this.currentConcejo.id).finally(() => {
+          setTimeout(() => {
+            if (refreshBtn) refreshBtn.textContent = '🔄 Refrescar';
+          }, 600);
+        });
       });
     }
 
