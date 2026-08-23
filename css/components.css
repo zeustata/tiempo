@@ -947,30 +947,485 @@
   position: relative;
 }
 
-/* --- GLOSSARY ASTURIANO --- */
-.glossary-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
+/* --- ALERTAS METEOROLÓGICAS --- */
+.alerts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
 }
 
-.glossary-card {
+.alert-banner {
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.alert-banner.alert-yellow {
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #fbbf24;
+}
+
+.alert-banner.alert-orange {
+  background: rgba(249, 115, 22, 0.18);
+  border: 1px solid rgba(249, 115, 22, 0.5);
+  color: #fb923c;
+}
+
+.alert-banner.alert-red {
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.6);
+  color: #f87171;
+}
+
+.alert-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+/* --- PUERTOS MARÍTIMOS Y PASOS DE MONTAÑA --- */
+.marine-ports-section, .mountain-passes-section {
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ports-title, .passes-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 12px;
+}
+
+.ports-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.port-item {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-glass);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.port-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.port-region {
+  font-size: 0.74rem;
+  color: var(--text-dim);
+}
+
+.passes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 10px;
+}
+
+.pass-card {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-glass);
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.pass-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pass-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.pass-alt {
+  font-size: 0.74rem;
+  color: var(--text-dim);
+}
+
+.pass-badge {
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.pass-card.status-ok .pass-badge {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.pass-card.status-caution .pass-badge {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.pass-card.status-warning .pass-badge {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.ski-resorts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.resort-item {
+  background: rgba(15, 23, 42, 0.4);
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.resort-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--accent-mountain);
+}
+
+.resort-data {
+  font-size: 0.74rem;
+  color: var(--text-dim);
+}
+
+/* --- COMPARADOR CLIMÁTICO --- */
+.compare-card {
+  background: var(--bg-surface);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+}
+
+.compare-selectors-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(15, 23, 42, 0.6);
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-glass);
+  margin-top: 14px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.selector-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 200px;
+}
+
+.sel-label {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+
+.static-concejo-pill {
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.compare-select-dropdown {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--primary);
+  color: var(--text-main);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+}
+
+.compare-vs-badge {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--accent-gold);
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 200px 1fr;
+  gap: 16px;
+  align-items: stretch;
+}
+
+@media (max-width: 850px) {
+  .compare-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.compare-column {
   background: var(--bg-surface-elevated);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
-  padding: 16px 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
-.glossary-card h4 {
-  font-size: 1.1rem;
+.col-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.col-badge {
+  font-size: 0.74rem;
+  font-weight: 700;
   color: var(--primary);
-  margin-bottom: 6px;
 }
 
-.glossary-card p {
+.col-name {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.col-meta {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.col-weather {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: var(--radius-sm);
+}
+
+.col-icon {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.col-temp {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.col-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.col-metrics {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   font-size: 0.88rem;
   color: var(--text-muted);
-  line-height: 1.5;
+}
+
+.col-metrics li {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 4px;
+}
+
+.col-metrics strong {
+  color: var(--text-main);
+}
+
+.compare-diff-card {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px dashed var(--border-glass);
+  border-radius: var(--radius-md);
+  padding: 18px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.diff-header {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+
+.diff-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.diff-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.diff-val {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.diff-val.warmer { color: #f87171; }
+.diff-val.colder { color: #60a5fa; }
+
+/* --- MODAL DE BÚSQUEDA RÁPIDA --- */
+.modal-search {
+  max-width: 580px;
+  width: 95%;
+}
+
+.search-input-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+}
+
+.search-input-wrap input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  outline: none;
+}
+
+.search-input-wrap input::placeholder {
+  color: var(--text-dim);
+  font-weight: 400;
+}
+
+.search-results-scroll {
+  max-height: 450px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-right: 4px;
+}
+
+.search-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  background: rgba(30, 41, 59, 0.4);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.search-item:hover, .search-item.selected {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: var(--primary);
+  transform: translateX(4px);
+}
+
+.search-item-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.search-badge {
+  font-size: 1.2rem;
+}
+
+.search-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.search-region {
+  font-size: 0.76rem;
+  color: var(--text-dim);
+}
+
+.search-item-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.search-fav-star {
+  font-size: 0.9rem;
+}
+
+.search-arrow {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+
+.search-empty {
+  text-align: center;
+  padding: 30px 10px;
+  color: var(--text-dim);
+  font-size: 0.9rem;
 }
 
 /* --- REGLAS RESPONSIVE PARA MÓVILES (< 768px) --- */
@@ -981,6 +1436,7 @@
   .marine-card,
   .mountain-card,
   .chart-card,
+  .compare-card,
   .radar-wrapper {
     width: 100%;
     box-sizing: border-box;

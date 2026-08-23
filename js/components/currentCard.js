@@ -1,4 +1,5 @@
 import { getWeatherInfo, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js';
+import { detectWeatherAlerts } from '../utils/weatherAlerts.js';
 
 /**
  * Renderiza el dashboard principal con alineación uniforme y todos los sensores de la estación
@@ -37,8 +38,22 @@ export function renderCurrentWeather(data, concejo, units = 'metric') {
   const alpha = ((a * T) / (b + T)) + Math.log(RH / 100);
   const dewPoint = ((b * alpha) / (a - alpha)).toFixed(1);
 
-  // Alerta especial de Viento Sur (Efecto Föhn en Asturias)
-  const isSouthWind = windDir.isSouth && current.wind_speed_10m > 15;
+  const alerts = detectWeatherAlerts(data, concejo);
+  let alertsMarkup = '';
+  if (alerts.length > 0) {
+    alertsMarkup = `
+      <div class="alerts-container">
+        ${alerts.map(a => `
+          <div class="alert-banner alert-${a.level}">
+            <span class="alert-icon">${a.icon}</span>
+            <div class="alert-text">
+              <strong>${a.title}:</strong> ${a.desc}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
 
   return `
     <!-- HERO WEATHER CARD -->
@@ -69,14 +84,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric') {
         </div>
       </div>
 
-      ${isSouthWind ? `
-        <div class="alert-banner foehn-alert">
-          <span class="alert-icon">⚠️</span>
-          <div class="alert-text">
-            <strong>Efecto Föhn / Vientu del Sur:</strong> Viento cálido y racheado de la cordillera. Aumento brusco de temperaturas y sequedad ambiental.
-          </div>
-        </div>
-      ` : ''}
+      ${alertsMarkup}
     </div>
 
     <!-- SENSORS GRID -->
