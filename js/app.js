@@ -1,14 +1,14 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=5.3';
-import { fetchWeatherData } from './services/weatherApi.js?v=5.3';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=5.3';
-import { renderCurrentWeather } from './components/currentCard.js?v=5.3';
-import { renderMarineCard } from './components/marineCard.js?v=5.3';
-import { renderMountainCard } from './components/mountainCard.js?v=5.3';
-import { renderForecast } from './components/forecastView.js?v=5.3';
-import { renderWeatherChart } from './components/chartsView.js?v=5.3';
-import { renderCompareView } from './components/compareView.js?v=5.3';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=5.3';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=5.3';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=5.4';
+import { fetchWeatherData } from './services/weatherApi.js?v=5.4';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=5.4';
+import { renderCurrentWeather } from './components/currentCard.js?v=5.4';
+import { renderMarineCard } from './components/marineCard.js?v=5.4';
+import { renderMountainCard } from './components/mountainCard.js?v=5.4';
+import { renderForecast } from './components/forecastView.js?v=5.4';
+import { renderWeatherChart } from './components/chartsView.js?v=5.4';
+import { renderCompareView } from './components/compareView.js?v=5.4';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=5.4';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=5.4';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, alertas climáticas y calidad del aire', key: '1' },

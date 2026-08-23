@@ -3,9 +3,9 @@
 
 :root {
   --bg-dark: #070d17;
-  --bg-surface: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(15, 23, 42, 0.62) 100%);
-  --bg-surface-elevated: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(30, 41, 59, 0.68) 100%);
-  --border-glass: rgba(255, 255, 255, 0.15);
+  --bg-surface: linear-gradient(135deg, rgba(255, 255, 255, 0.09) 0%, rgba(15, 23, 42, 0.22) 100%);
+  --bg-surface-elevated: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(30, 41, 59, 0.28) 100%);
+  --border-glass: rgba(255, 255, 255, 0.18);
   --border-glow: rgba(56, 189, 248, 0.45);
   
   --primary: #38bdf8;
@@ -24,9 +24,9 @@
   --radius-md: 14px;
   --radius-sm: 10px;
   
-  --shadow-card: 0 12px 36px 0 rgba(0, 0, 0, 0.4), inset 0 1px 1px 0 rgba(255, 255, 255, 0.2);
-  --shadow-glow: 0 0 30px rgba(56, 189, 248, 0.3), inset 0 1px 1px 0 rgba(255, 255, 255, 0.28);
-  --shadow-pop: 0 12px 30px rgba(0, 0, 0, 0.45);
+  --shadow-card: 0 8px 32px 0 rgba(0, 0, 0, 0.35), inset 0 1px 1px 0 rgba(255, 255, 255, 0.22);
+  --shadow-glow: 0 0 25px rgba(56, 189, 248, 0.25), inset 0 1px 1px 0 rgba(255, 255, 255, 0.28);
+  --shadow-pop: 0 10px 25px rgba(0, 0, 0, 0.35);
 }
 
 * {
@@ -379,13 +379,14 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 14px 20px;
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(30, 41, 59, 0.75));
-  backdrop-filter: blur(18px);
+  background: var(--bg-surface);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
   border: 1px solid rgba(56, 189, 248, 0.4);
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(56, 189, 248, 0.15);
+  box-shadow: var(--shadow-card);
   user-select: none;
   outline: none;
   font-family: inherit;
@@ -395,7 +396,7 @@ body {
 }
 
 .section-nav-trigger:hover, .section-nav-trigger:focus {
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.9));
+  background: var(--bg-surface-elevated);
   border-color: var(--primary);
   box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4), 0 0 20px rgba(56, 189, 248, 0.3);
   transform: translateY(-2px);

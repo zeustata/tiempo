@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.999g-beta] - 2026-08-23
+
+### 💎 Cristal Puro Ultraligero (18% - 24% Opacidad) (New & Visual)
+- **Transparencia Real y Cristalina**: Eliminación de capas base densas; tarjetas de estación, sensores, navegación y pronósticos calibradas a un 18%-24% de opacidad idéntico a la insignia de versión.
+- **Desenfoque y Bisel Esmerilado**: Transparencia pura con reflejos de borde de luz blanca y desenfoque fluido que deja ver con total claridad el fondo dinámico.
+
+---
+
 ## [0.9.999f-beta] - 2026-08-23
 
 ### 🌌 Transparencia Real y Visibilidad del Fondo Dinámico (Improved & Visual)
