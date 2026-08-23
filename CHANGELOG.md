@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.999i-beta] - 2026-08-24
+
+### 🌊 Cristal Translúcido Universal en Costa & Mar, Cordillera & Nieve y Comparador (Fixed & Visual)
+- **Extensión Completa a Todos los Módulos**: Eliminados todos los fondos opacos (0.9/0.6) y filtros de desenfoque residuales en los widgets de Surf, Mareas, Puertos Marítimos, Pasos de Montaña, Estaciones de Esquí, Radar y Comparador Climático.
+- **Transparencia 100% Homogénea**: Ahora cada tarjeta y sub-tarjeta de la aplicación permite ver las partículas atmosféricas en movimiento sin excepción.
+
+---
+
 ## [0.9.999h-beta] - 2026-08-23
 
 ### 🌟 Cristal Translúcido Nítido y Partículas Vivas (Fixed & Visual)

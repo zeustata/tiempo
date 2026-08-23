@@ -313,7 +313,6 @@
 /* --- MARINE & MOUNTAIN MODULES --- */
 .marine-card, .mountain-card {
   background: var(--bg-surface);
-  backdrop-filter: blur(16px);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
   padding: 24px 28px;
@@ -404,7 +403,7 @@
 
 .highlight-widget {
   border-color: rgba(56, 189, 248, 0.3);
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(14, 116, 144, 0.2));
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.45), rgba(14, 116, 144, 0.2));
 }
 
 .mountain-passes-list {
@@ -846,7 +845,6 @@
 /* --- RADAR & MAPS --- */
 .radar-wrapper {
   background: var(--bg-surface);
-  backdrop-filter: blur(16px);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
   padding: 20px;
@@ -894,8 +892,7 @@
 
 /* Radar Legend */
 .radar-legend-card {
-  background: rgba(15, 23, 42, 0.88);
-  backdrop-filter: blur(12px);
+  background: rgba(15, 23, 42, 0.55);
   border: 1px solid var(--border-glass);
   padding: 10px 14px;
   border-radius: var(--radius-sm);
@@ -938,7 +935,6 @@
 /* --- CHARTS WRAPPER & HORIZONTAL SCROLL EN MÓVILES --- */
 .chart-card {
   background: var(--bg-surface);
-  backdrop-filter: blur(16px);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
   padding: 24px;
@@ -1149,7 +1145,6 @@
 /* --- COMPARADOR CLIMÁTICO --- */
 .compare-card {
   background: var(--bg-surface);
-  backdrop-filter: blur(16px);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
   padding: 24px;
@@ -1160,7 +1155,7 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  background: rgba(15, 23, 42, 0.6);
+  background: rgba(15, 23, 42, 0.35);
   padding: 14px 18px;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-glass);
