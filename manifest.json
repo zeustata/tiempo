@@ -1,7 +1,7 @@
 {
-  "id": "com.meteoasturias.pro",
-  "name": "MeteoAsturias Pro - Estación Meteorológica",
-  "short_name": "MeteoAsturias",
+  "id": "com.meteoasturlode.app",
+  "name": "MeteoAstur Lode - Estación Meteorológica",
+  "short_name": "MeteoAstur Lode",
   "description": "Estación meteorológica avanzada, radar en directo, mar Cantábrico y cotas de nieve para Asturias.",
   "start_url": "./index.html",
   "scope": "./",
