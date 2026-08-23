@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.96-beta] - 2026-08-23
+
+### 📑 Ventana Modal de Navegación entre Módulos (Changed & Improved)
+- **Sustitución de Pestañas Horizontales por Selector de Sección**: Se eliminó la tira de pestañas con scroll horizontal para maximizar la superficie útil en pantalla.
+- **Selector de Sección Activa y Ventana Modal Táctil**: Al pulsar sobre la sección activa (*ej: `📊 Estación en Vivo`*), se abre un menú emergente con tarjetas descriptivas de los 7 módulos meteorológicos de la app.
+
+---
+
 ## [0.9.95-beta] - 2026-08-23
 
 ### 🛰️ Radar Cantábrico con Zoom Panorámico Más Alejado (Changed & Improved)

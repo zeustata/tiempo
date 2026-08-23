@@ -9,6 +9,16 @@ import { renderWeatherChart } from './components/chartsView.js';
 import { renderCompareView } from './components/compareView.js';
 import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js';
 
+const APP_MODULES = [
+  { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, alertas climáticas y calidad del aire', key: '1' },
+  { id: 'radar', icon: '📡', title: 'Radar Cantábrico', desc: 'Precipitación y tormentas en directo vía satélite RainViewer', key: '2' },
+  { id: 'marine', icon: '🌊', title: 'Costa & Mar', desc: 'Oleaje, mareas, escala Douglas y puertos asturianos', key: '3' },
+  { id: 'mountain', icon: '🏔️', title: 'Cordillera & Nieve', desc: 'Estado de 8 puertos de montaña, cota de nieve y esquí', key: '4' },
+  { id: 'forecast', icon: '📅', title: 'Pronóstico 10 Días', desc: 'Tarjetas verticales detalladas con oscilación y UV', key: '5' },
+  { id: 'charts', icon: '📈', title: 'Gráficos 48 Horas', desc: 'Curvas continuas de temperatura, lluvia y viento', key: '6' },
+  { id: 'compare', icon: '⚖️', title: 'Comparador Climático', desc: 'Comparativa simultánea cara a cara entre dos concejos', key: '7' }
+];
+
 class MeteoAsturiasApp {
   constructor() {
     this.prefs = getPreferences();
@@ -26,6 +36,7 @@ class MeteoAsturiasApp {
   async init() {
     this.updateSearchTriggerDisplay();
     this.renderFavoritesMenu();
+    this.setupNavModal();
     this.setupEventListeners();
     this.setupQuickSearch();
     this.setupPwaInstall();
@@ -418,10 +429,75 @@ class MeteoAsturiasApp {
     this.openSearchModal = openSearch;
   }
 
-  switchTab(targetTab) {
-    document.querySelectorAll('.tab-btn').forEach(b => {
-      b.classList.toggle('active', b.dataset.tab === targetTab);
+  setupNavModal() {
+    const triggerBtn = document.getElementById('btn-open-nav-modal');
+    const modal = document.getElementById('nav-modal');
+    const closeBtn = document.getElementById('btn-close-nav');
+    const grid = document.getElementById('nav-modal-grid');
+
+    if (!modal || !grid) return;
+
+    const renderNavItems = () => {
+      grid.innerHTML = APP_MODULES.map(m => {
+        const isActive = m.id === this.activeTab;
+        return `
+          <div class="nav-module-card ${isActive ? 'active' : ''}" data-tab="${m.id}">
+            <div class="nav-module-card-left">
+              <span class="nav-module-icon">${m.icon}</span>
+              <div class="nav-module-details">
+                <div class="nav-module-title-row">
+                  <span class="nav-module-name">${m.title}</span>
+                </div>
+                <span class="nav-module-desc">${m.desc}</span>
+              </div>
+            </div>
+            <span class="nav-module-key">Tecla ${m.key}</span>
+          </div>
+        `;
+      }).join('');
+
+      grid.querySelectorAll('.nav-module-card').forEach(card => {
+        card.addEventListener('click', () => {
+          this.triggerHaptic();
+          this.switchTab(card.dataset.tab);
+          modal.style.display = 'none';
+        });
+      });
+    };
+
+    if (triggerBtn) {
+      triggerBtn.addEventListener('click', () => {
+        this.triggerHaptic();
+        renderNavItems();
+        modal.style.display = 'flex';
+      });
+    }
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
+    }
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
     });
+
+    this.renderNavItems = renderNavItems;
+  }
+
+  switchTab(targetTab) {
+    const mod = APP_MODULES.find(m => m.id === targetTab) || APP_MODULES[0];
+
+    // Actualizar indicador de sección activa
+    const iconEl = document.getElementById('current-section-icon');
+    const titleEl = document.getElementById('current-section-title');
+    if (iconEl) iconEl.textContent = mod.icon;
+    if (titleEl) titleEl.textContent = mod.title;
+
+    // Actualizar paneles de contenido
     document.querySelectorAll('.tab-panel').forEach(p => {
       p.classList.toggle('active', p.id === 'panel-' + targetTab);
     });
@@ -439,6 +515,11 @@ class MeteoAsturiasApp {
 
     if (targetTab === 'compare') {
       this.renderCompareSection();
+    }
+
+    const navModal = document.getElementById('nav-modal');
+    if (navModal && navModal.style.display === 'flex') {
+      navModal.style.display = 'none';
     }
   }
 
@@ -516,6 +597,8 @@ class MeteoAsturiasApp {
         if (searchModal) searchModal.style.display = 'none';
         const favModal = document.getElementById('favorites-modal');
         if (favModal) favModal.style.display = 'none';
+        const navModal = document.getElementById('nav-modal');
+        if (navModal) navModal.style.display = 'none';
       }
     });
   }

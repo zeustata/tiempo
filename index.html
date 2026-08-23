@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=3.7">
-  <link rel="stylesheet" href="css/components.css?v=3.7">
-  <link rel="stylesheet" href="css/weather-themes.css?v=3.7">
+  <link rel="stylesheet" href="css/main.css?v=3.8">
+  <link rel="stylesheet" href="css/components.css?v=3.8">
+  <link rel="stylesheet" href="css/weather-themes.css?v=3.8">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -63,10 +63,25 @@
       </div>
     </header>
 
-    <!-- BARRA PRINCIPAL: BÚSQUEDA Y FAVORITOS LADO A LADO -->
+    <!-- BARRA PRINCIPAL DE CONTROL Y NAVEGACIÓN -->
     <section class="concejo-selector-bar">
+      <!-- 1. Selector de Módulo / Sección Activa (Abre Ventana Modal de Navegación) -->
+      <button class="section-nav-trigger" id="btn-open-nav-modal" title="Toca para cambiar de módulo meteorológico (Atajos 1 a 7)">
+        <div class="nav-trigger-left">
+          <span class="nav-trigger-icon" id="current-section-icon">📊</span>
+          <div class="nav-trigger-info">
+            <span class="nav-trigger-label">Sección activa</span>
+            <strong class="nav-trigger-title" id="current-section-title">Estación en Vivo</strong>
+          </div>
+        </div>
+        <div class="nav-trigger-right">
+          <span class="nav-trigger-cta">Cambiar vista ➔</span>
+          <span class="nav-trigger-kbd"><kbd>1-7</kbd></span>
+        </div>
+      </button>
+
+      <!-- 2. Tarjetas de Búsqueda de Concejo y Favoritos -->
       <div class="search-and-fav-row">
-        <!-- 1. Tarjeta de Búsqueda de Concejo -->
         <button class="search-trigger-card" id="main-search-trigger" title="Buscar concejo">
           <div class="search-trigger-left">
             <span class="search-trigger-icon">🔍</span>
@@ -78,52 +93,12 @@
           </div>
         </button>
 
-        <!-- 2. Tarjeta de Favoritos -->
         <button id="btn-favorites-menu" class="fav-trigger-card" title="Ver mis concejos favoritos">
           <span class="fav-trigger-icon">⭐</span>
           <span id="fav-btn-label">Favoritos (0)</span>
         </button>
       </div>
     </section>
-
-    <!-- PESTAÑAS DE NAVEGACIÓN (Desktop & Mobile Touch Tabs) -->
-    <nav class="view-tabs" role="tablist" aria-label="Navegación principal">
-      <button class="tab-btn active" data-tab="live" title="Atajo teclado: 1">
-        <span class="tab-icon">📊</span>
-        <span class="tab-text">Estación en Vivo</span>
-        <span class="shortcut-key">1</span>
-      </button>
-      <button class="tab-btn" data-tab="radar" title="Atajo teclado: 2">
-        <span class="tab-icon">📡</span>
-        <span class="tab-text">Radar Cantábrico</span>
-        <span class="shortcut-key">2</span>
-      </button>
-      <button class="tab-btn" data-tab="marine" title="Atajo teclado: 3">
-        <span class="tab-icon">🌊</span>
-        <span class="tab-text">Costa & Mar</span>
-        <span class="shortcut-key">3</span>
-      </button>
-      <button class="tab-btn" data-tab="mountain" title="Atajo teclado: 4">
-        <span class="tab-icon">🏔️</span>
-        <span class="tab-text">Cordillera & Nieve</span>
-        <span class="shortcut-key">4</span>
-      </button>
-      <button class="tab-btn" data-tab="forecast" title="Atajo teclado: 5">
-        <span class="tab-icon">📅</span>
-        <span class="tab-text">Pronóstico 10 Días</span>
-        <span class="shortcut-key">5</span>
-      </button>
-      <button class="tab-btn" data-tab="charts" title="Atajo teclado: 6">
-        <span class="tab-icon">📈</span>
-        <span class="tab-text">Gráficos 48h</span>
-        <span class="shortcut-key">6</span>
-      </button>
-      <button class="tab-btn" data-tab="compare" title="Atajo teclado: 7">
-        <span class="tab-icon">⚖️</span>
-        <span class="tab-text">Comparador</span>
-        <span class="shortcut-key">7</span>
-      </button>
-    </nav>
 
     <!-- PANELES DE CONTENIDO -->
     <main>
@@ -184,7 +159,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v0.9.95-beta 📋</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v0.9.96-beta 📋</button>
         • Estación Meteorológica del Principado de Asturias
         <div id="last-updated" style="margin-top: 4px; font-size: 0.8rem; color: var(--text-dim);"></div>
       </div>
@@ -226,12 +201,21 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v0.9.95-beta</span>
+            <span class="release-version">v0.9.96-beta</span>
             <span class="release-date">23 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-improved">Mejora</span> <strong>Radar con Zoom Panorámico Más Alejado</strong>: apertura con encuadre global de toda Asturias y el Mar Cantábrico para vigilar frentes y borrascas entrantes.</li>
-            <li><span class="tag tag-improved">Mejora</span> Posibilidad de alejar más el mapa para vista general del Golfo de Vizcaya.</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Ventana Modal de Módulos Meteorológicos</strong>: sustituida la barra de pestañas con scroll horizontal por un selector interactivo que despliega una ventana modal con tarjetas táctiles para cada sección.</li>
+            <li><span class="tag tag-improved">Mejora</span> Máximo aprovechamiento de pantalla vertical en móviles al eliminar pestañas fijas.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v0.9.95-beta</span>
+            <span class="release-date">23 Ago 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-improved">Mejora</span> Radar con zoom panorámico alejado por defecto.</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -362,11 +346,25 @@
     </div>
   </div>
 
+  <!-- MODAL DE NAVEGACIÓN ENTRE MÓDULOS -->
+  <div id="nav-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-card modal-nav-modules">
+      <div class="modal-header">
+        <div>
+          <h3>📑 Módulos Meteorológicos</h3>
+          <span class="modal-subtitle">Elige la sección que deseas consultar</span>
+        </div>
+        <button id="btn-close-nav" class="btn-close" aria-label="Cerrar menú">&times;</button>
+      </div>
+      <div class="modal-body nav-modal-body" id="nav-modal-grid"></div>
+    </div>
+  </div>
+
   <!-- Service Worker Registration & Live Auto-Update Engine -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.7').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.8').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -387,6 +385,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.7"></script>
+  <script type="module" src="js/app.js?v=3.8"></script>
 </body>
 </html>

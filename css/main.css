@@ -246,10 +246,92 @@ body {
   50% { box-shadow: 0 0 18px 4px rgba(56, 189, 248, 0.25); }
 }
 
-/* --- BARRA PRINCIPAL: BÚSQUEDA Y FAVORITOS LADO A LADO --- */
+/* --- BARRA PRINCIPAL: SELECTOR DE SECCIÓN Y BÚSQUEDA --- */
 .concejo-selector-bar {
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 22px;
   width: 100%;
+}
+
+.section-nav-trigger {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(30, 41, 59, 0.75));
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(56, 189, 248, 0.15);
+  user-select: none;
+  outline: none;
+  font-family: inherit;
+  color: var(--text-main);
+}
+
+.section-nav-trigger:hover, .section-nav-trigger:focus {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.9));
+  border-color: var(--primary);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4), 0 0 20px rgba(56, 189, 248, 0.3);
+  transform: translateY(-1px);
+}
+
+.nav-trigger-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.nav-trigger-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.nav-trigger-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  text-align: left;
+}
+
+.nav-trigger-label {
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.nav-trigger-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.2px;
+}
+
+.nav-trigger-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.nav-trigger-cta {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.nav-trigger-kbd {
+  font-size: 0.76rem;
+  color: var(--text-dim);
 }
 
 .search-and-fav-row {
@@ -445,7 +527,116 @@ body {
   line-height: 1.5;
 }
 
+/* --- MODAL DE NAVEGACIÓN ENTRE MÓDULOS --- */
+.modal-nav-modules {
+  max-width: 580px;
+  width: 95%;
+}
+
+.nav-modal-body {
+  max-height: 480px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 4px;
+}
+
+.nav-module-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: rgba(30, 41, 59, 0.45);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: left;
+  user-select: none;
+}
+
+.nav-module-card:hover {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: var(--primary);
+  transform: translateX(4px);
+}
+
+.nav-module-card.active {
+  background: linear-gradient(135deg, rgba(2, 132, 199, 0.3), rgba(56, 189, 248, 0.15));
+  border-color: var(--primary);
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+}
+
+.nav-module-card-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.nav-module-icon {
+  font-size: 1.7rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.nav-module-details {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.nav-module-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.nav-module-card.active .nav-module-name {
+  color: #38bdf8;
+}
+
+.nav-module-desc {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  line-height: 1.35;
+}
+
+.nav-module-key {
+  padding: 4px 8px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border-glass);
+  border-radius: 4px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  flex-shrink: 0;
+}
+
 @media (max-width: 600px) {
+  .section-nav-trigger {
+    padding: 12px 16px;
+  }
+  .nav-trigger-title {
+    font-size: 1.05rem;
+  }
+  .nav-trigger-kbd {
+    display: none;
+  }
+  .nav-module-card {
+    padding: 12px 14px;
+  }
+  .nav-module-icon {
+    font-size: 1.4rem;
+  }
+  .nav-module-name {
+    font-size: 0.95rem;
+  }
+  .nav-module-desc {
+    font-size: 0.76rem;
+  }
   .search-and-fav-row {
     grid-template-columns: 1fr auto;
     gap: 8px;
