@@ -43,10 +43,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric') {
   const aemetCardMarkup = renderAemetAlertCard(aemetStatus, concejo);
 
   return `
-    <!-- TARJETA OFICIAL DE ALERTAS Y AVISOS AEMET -->
-    ${aemetCardMarkup}
-
-    <!-- HERO WEATHER CARD -->
+    <!-- HERO WEATHER CARD (Tiempo, Ubicación y Temperatura) -->
     <div class="hero-weather-card ${weatherInfo.bg}">
       <div class="hero-top-row">
         <div class="hero-location-block">
@@ -74,6 +71,9 @@ export function renderCurrentWeather(data, concejo, units = 'metric') {
         </div>
       </div>
     </div>
+
+    <!-- TARJETA OFICIAL DE ALERTAS Y AVISOS AEMET -->
+    ${aemetCardMarkup}
 
     <!-- SENSORS GRID -->
     <div class="sensors-grid">

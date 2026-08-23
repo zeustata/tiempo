@@ -12,6 +12,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.999q-beta] - 2026-08-24
+
+### 📐 Reordenación Visual en Estación en Vivo (Improved & UX)
+- **Prioridad Visual al Hero Card**: Tarjeta de alertas oficial AEMET posicionada estratégicamente justo después de la tarjeta principal (tiempo, temperatura y ubicación) y antes de los sensores detallados.
+
+---
+
 ## [0.9.999p-beta] - 2026-08-24
 
 ### 🚨 Tarjeta Oficial de Alertas Meteorológicas AEMET (New & Safety)
