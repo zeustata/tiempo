@@ -106,56 +106,56 @@ class MeteoAsturiasApp {
   updateSearchTriggerDisplay() {
     const el = document.getElementById('search-bar-current-name');
     if (el && this.currentConcejo) {
-      el.innerHTML = `<span class="active-badge">${this.currentConcejo.badge}</span> <strong>${this.currentConcejo.name}</strong> <span class="active-meta">(${this.currentConcejo.altitude} m • ${this.currentConcejo.region})</span>`;
+      el.innerHTML = `<span class="active-badge">${this.currentConcejo.badge}</span> <strong>${this.currentConcejo.name}</strong>`;
     }
   }
 
   renderFavoritesMenu() {
-    const btn = document.getElementById('btn-favorites-menu');
-    const menu = document.getElementById('favorites-dropdown-menu');
-    if (!btn || !menu) return;
-
-    const count = this.prefs.favorites ? this.prefs.favorites.length : 0;
     const labelEl = document.getElementById('fav-btn-label');
+    const modalList = document.getElementById('favorites-modal-list');
+    const count = this.prefs.favorites ? this.prefs.favorites.length : 0;
+
     if (labelEl) {
       labelEl.textContent = `Favoritos (${count})`;
-    } else {
-      btn.innerHTML = `<span class="fav-trigger-icon">⭐</span> <span id="fav-btn-label">Favoritos (${count})</span> <span class="fav-trigger-arrow">▾</span>`;
     }
 
+    if (!modalList) return;
+
     if (count === 0) {
-      menu.innerHTML = `<div class="fav-empty-menu">No tienes favoritos guardados.<br><br>Pulsa en <strong>⭐ Guardar</strong> para añadir concejos aquí.</div>`;
+      modalList.innerHTML = `<div class="fav-modal-empty">No tienes concejos favoritos guardados todavía.<br><br>Pulsa en <strong>⭐ Guardar</strong> en cualquier localidad para tenerla siempre a mano aquí.</div>`;
       return;
     }
 
-    menu.innerHTML = this.prefs.favorites.map(id => {
+    modalList.innerHTML = this.prefs.favorites.map(id => {
       const concejo = getConcejoById(id);
       if (!concejo) return '';
       const isActive = concejo.id === this.currentConcejo.id;
       return `
-        <div class="fav-menu-item ${isActive ? 'active' : ''}" data-id="${concejo.id}">
-          <div class="fav-menu-item-info">
-            <span class="fav-menu-item-badge">${concejo.badge}</span>
-            <div class="fav-menu-item-text">
-              <span class="fav-menu-item-name">${concejo.name}</span>
-              <span class="fav-menu-item-meta">${concejo.altitude} m • ${concejo.region}</span>
+        <div class="fav-modal-item ${isActive ? 'active' : ''}" data-id="${concejo.id}">
+          <div class="fav-modal-item-left">
+            <span class="fav-modal-item-badge">${concejo.badge}</span>
+            <div class="fav-modal-item-info">
+              <span class="fav-modal-item-name">${concejo.name}</span>
+              <span class="fav-modal-item-meta">${concejo.altitude} m • ${concejo.region}</span>
             </div>
           </div>
-          <button class="fav-menu-remove-btn" data-remove-id="${concejo.id}" title="Quitar de favoritos">✕</button>
+          <button class="fav-modal-remove-btn" data-remove-id="${concejo.id}" title="Quitar de favoritos">🗑️ Quitar</button>
         </div>
       `;
     }).join('');
 
-    menu.querySelectorAll('.fav-menu-item').forEach(item => {
+    const favModal = document.getElementById('favorites-modal');
+
+    modalList.querySelectorAll('.fav-modal-item').forEach(item => {
       item.addEventListener('click', (e) => {
-        if (e.target.classList.contains('fav-menu-remove-btn')) return;
+        if (e.target.classList.contains('fav-modal-remove-btn')) return;
         this.triggerHaptic();
         this.switchConcejo(item.dataset.id);
-        menu.style.display = 'none';
+        if (favModal) favModal.style.display = 'none';
       });
     });
 
-    menu.querySelectorAll('.fav-menu-remove-btn').forEach(btnRemove => {
+    modalList.querySelectorAll('.fav-modal-remove-btn').forEach(btnRemove => {
       btnRemove.addEventListener('click', (e) => {
         e.stopPropagation();
         this.triggerHaptic();
@@ -192,20 +192,29 @@ class MeteoAsturiasApp {
       });
     }
 
-    // Dropdown de Favoritos en cabecera
+    // Modal de Favoritos
     const favMenuBtn = document.getElementById('btn-favorites-menu');
-    const favMenu = document.getElementById('favorites-dropdown-menu');
-    if (favMenuBtn && favMenu) {
-      favMenuBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        this.triggerHaptic();
-        const isOpen = favMenu.style.display === 'flex';
-        favMenu.style.display = isOpen ? 'none' : 'flex';
-      });
+    const favModal = document.getElementById('favorites-modal');
+    const closeFavBtn = document.getElementById('btn-close-favorites');
 
-      document.addEventListener('click', (e) => {
-        if (!favMenu.contains(e.target) && e.target !== favMenuBtn) {
-          favMenu.style.display = 'none';
+    if (favMenuBtn && favModal) {
+      favMenuBtn.addEventListener('click', () => {
+        this.triggerHaptic();
+        this.renderFavoritesMenu();
+        favModal.style.display = 'flex';
+      });
+    }
+
+    if (closeFavBtn && favModal) {
+      closeFavBtn.addEventListener('click', () => {
+        favModal.style.display = 'none';
+      });
+    }
+
+    if (favModal) {
+      favModal.addEventListener('click', (e) => {
+        if (e.target === favModal) {
+          favModal.style.display = 'none';
         }
       });
     }
@@ -505,6 +514,8 @@ class MeteoAsturiasApp {
         if (changelogModal) changelogModal.style.display = 'none';
         const searchModal = document.getElementById('search-modal');
         if (searchModal) searchModal.style.display = 'none';
+        const favModal = document.getElementById('favorites-modal');
+        if (favModal) favModal.style.display = 'none';
       }
     });
   }

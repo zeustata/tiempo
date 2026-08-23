@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=3.5">
-  <link rel="stylesheet" href="css/components.css?v=3.5">
-  <link rel="stylesheet" href="css/weather-themes.css?v=3.5">
+  <link rel="stylesheet" href="css/main.css?v=3.6">
+  <link rel="stylesheet" href="css/components.css?v=3.6">
+  <link rel="stylesheet" href="css/weather-themes.css?v=3.6">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -67,28 +67,22 @@
     <section class="concejo-selector-bar">
       <div class="search-and-fav-row">
         <!-- 1. Tarjeta de Búsqueda de Concejo -->
-        <div class="search-trigger-card" id="main-search-trigger" role="button" tabindex="0" title="Toca para buscar o cambiar entre los 78 concejos">
+        <button class="search-trigger-card" id="main-search-trigger" title="Buscar concejo">
           <div class="search-trigger-left">
             <span class="search-trigger-icon">🔍</span>
-            <div class="search-trigger-text" id="search-bar-current-name">
-              <span class="active-badge">⚡</span> <strong>Gijón</strong> <span class="active-meta">(8 m • Costa Central)</span>
-            </div>
+            <span class="search-trigger-text" id="search-bar-current-name">⚡ Gijón</span>
           </div>
           <div class="search-trigger-right">
             <span class="search-trigger-cta">Buscar ➔</span>
             <span class="search-trigger-kbd"><kbd>S</kbd> / <kbd>/</kbd></span>
           </div>
-        </div>
+        </button>
 
         <!-- 2. Tarjeta de Favoritos -->
-        <div class="fav-dropdown-wrapper">
-          <button id="btn-favorites-menu" class="fav-trigger-card" title="Ver mis concejos favoritos">
-            <span class="fav-trigger-icon">⭐</span>
-            <span id="fav-btn-label">Favoritos (0)</span>
-            <span class="fav-trigger-arrow">▾</span>
-          </button>
-          <div id="favorites-dropdown-menu" class="fav-dropdown-menu" style="display: none;"></div>
-        </div>
+        <button id="btn-favorites-menu" class="fav-trigger-card" title="Ver mis concejos favoritos">
+          <span class="fav-trigger-icon">⭐</span>
+          <span id="fav-btn-label">Favoritos (0)</span>
+        </button>
       </div>
     </section>
 
@@ -190,7 +184,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v0.9.93-beta 📋</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v0.9.94-beta 📋</button>
         • Estación Meteorológica del Principado de Asturias
         <div id="last-updated" style="margin-top: 4px; font-size: 0.8rem; color: var(--text-dim);"></div>
       </div>
@@ -232,12 +226,21 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v0.9.93-beta</span>
+            <span class="release-version">v0.9.94-beta</span>
             <span class="release-date">23 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-new">Nuevo</span> <strong>Diseño en Paralelo: Búsqueda y Favoritos</strong>: colocadas la tarjeta de búsqueda y la tarjeta de favoritos lado a lado en la misma fila.</li>
-            <li><span class="tag tag-fix">Corrección</span> <strong>Solución de Superposición</strong>: el menú de favoritos flota con `z-index: 9999` sin ocultarse ni taparse en móvil.</li>
+            <li><span class="tag tag-fix">Corrección</span> <strong>Ventana Modal de Favoritos</strong>: solución definitiva a la superposición con pestañas en móvil, mostrando tus favoritos en una ventana centrada e interactiva.</li>
+            <li><span class="tag tag-improved">Mejora</span> Ajuste del texto de la tarjeta de búsqueda para que no se apelotone en pantallas móviles estrechas.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v0.9.93-beta</span>
+            <span class="release-date">23 Ago 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> Diseño en paralelo: búsqueda y favoritos lado a lado.</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -336,11 +339,25 @@
     </div>
   </div>
 
+  <!-- MODAL DE CONCEJOS FAVORITOS -->
+  <div id="favorites-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-card modal-favorites">
+      <div class="modal-header">
+        <div>
+          <h3>⭐ Mis Concejos Favoritos</h3>
+          <span class="modal-subtitle">Tus localidades guardadas para acceso rápido</span>
+        </div>
+        <button id="btn-close-favorites" class="btn-close" aria-label="Cerrar favoritos">&times;</button>
+      </div>
+      <div class="modal-body favorites-modal-body" id="favorites-modal-list"></div>
+    </div>
+  </div>
+
   <!-- Service Worker Registration & Live Auto-Update Engine -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.5').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.6').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -361,6 +378,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.5"></script>
+  <script type="module" src="js/app.js?v=3.6"></script>
 </body>
 </html>
