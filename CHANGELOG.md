@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.994-beta] - 2026-08-23
+
+### 🔍 Buscador Optimizado para Móvil y Navegación Atrás en Android (Fixed & Improved)
+- **Placeholder de Búsqueda Compacto**: Sustituido el texto extenso por `Buscar (78 Concejos)`, eliminando el desbordamiento y los textos cortados en pantallas de móviles.
+- **Botón de Cierre Táctil de Gran Accesibilidad**: El botón `✕` de cierre del buscador y los modales ahora cuenta con dimensiones táctiles amplias (42x42px), borde sutil de cristal y espacio garantizado sin comprimirse.
+- **Soporte para Gesto y Botón Atrás en Android**: Al usar el botón o gesto físico de retroceso del teléfono Android, los modales abiertos se cierran de forma limpia y natural sin salir de la aplicación ni provocar bucles de recarga.
+
+---
+
 ## [0.9.993-beta] - 2026-08-23
 
 ### 🔘 Reorganización de Cabecera y Feedback Táctil Instantáneo (Improved & Fixed)

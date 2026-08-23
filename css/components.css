@@ -1326,24 +1326,34 @@
   width: 95%;
 }
 
-.search-input-wrap {
-  flex: 1;
+.modal-search .modal-header {
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-bottom: 16px;
+}
+
+.search-input-wrap {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   background: var(--bg-surface-elevated);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-sm);
-  padding: 8px 14px;
+  padding: 8px 12px;
 }
 
 .search-input-wrap input {
   flex: 1;
+  min-width: 0;
+  width: 100%;
   background: transparent;
   border: none;
   color: var(--text-main);
   font-family: inherit;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
   outline: none;
 }

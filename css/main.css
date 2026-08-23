@@ -989,6 +989,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
   margin-bottom: 20px;
   padding-bottom: 12px;
   border-bottom: 1px solid var(--border-glass);
@@ -1000,16 +1001,30 @@ body {
 }
 
 .btn-close {
-  background: transparent;
-  border: none;
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-sm);
   font-size: 1.6rem;
   color: var(--text-muted);
   cursor: pointer;
   line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.btn-close:hover {
+.btn-close:hover, .btn-close:active {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
   color: #ef4444;
+  transform: scale(1.05);
 }
 
 .modal-body {

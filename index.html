@@ -158,7 +158,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v0.9.993-beta 📋</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v0.9.994-beta 📋</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -203,8 +203,18 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v0.9.993-beta</span>
+            <span class="release-version">v0.9.994-beta</span>
             <span class="release-date">23 Ago 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-improved">Mejora</span> <strong>Buscador Optimizado para Móvil</strong>: texto de búsqueda compacto <em>Buscar (78 Concejos)</em> que no se desborda y botón de cierre <em>✕</em> táctil siempre visible y accesible.</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Soporte Gestual Atrás en Android</strong>: al usar el botón o gesto de volver atrás en Android, se cierra la tarjeta de búsqueda/modal activa de forma natural sin salirse de la app.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v0.9.993-beta</span>
+            <span class="release-date">23 Ago 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-improved">Mejora</span> <strong>Reordenación de Cabecera</strong>: botón <em>Guardar</em> situado en posición prioritaria y botón <em>Atajos</em> retirado para una experiencia limpia tanto en móvil como en escritorio.</li>
@@ -381,7 +391,7 @@
       <div class="modal-header">
         <div class="search-input-wrap">
           <span class="search-icon">🔍</span>
-          <input type="text" id="quick-search-input" placeholder="Buscar entre los 78 concejos (ej. Gijón, Llanes, Cangas...)" autocomplete="off">
+          <input type="text" id="quick-search-input" placeholder="Buscar (78 Concejos)" autocomplete="off">
           <button id="btn-clear-search" class="btn-clear" style="display: none;">✕</button>
         </div>
         <button id="btn-close-search" class="btn-close" aria-label="Cerrar búsqueda">&times;</button>

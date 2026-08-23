@@ -178,7 +178,52 @@ class MeteoAsturiasApp {
     });
   }
 
+  openModal(modal) {
+    if (!modal) return;
+    this.closeAllModals(false);
+    modal.style.display = 'flex';
+    try {
+      history.pushState({ modalOpen: true, modalId: modal.id }, '');
+    } catch (e) {}
+  }
+
+  closeModal(modal) {
+    if (!modal || modal.style.display === 'none') return;
+    modal.style.display = 'none';
+    if (history.state?.modalOpen) {
+      try {
+        history.back();
+      } catch (e) {}
+    }
+  }
+
+  closeAllModals(cleanHistory = true) {
+    const modals = document.querySelectorAll('.modal-overlay');
+    let anyOpen = false;
+    modals.forEach(m => {
+      if (m.style.display === 'flex') {
+        m.style.display = 'none';
+        anyOpen = true;
+      }
+    });
+    if (cleanHistory && anyOpen && history.state?.modalOpen) {
+      try {
+        history.back();
+      } catch (e) {}
+    }
+  }
+
   setupEventListeners() {
+    // Soporte para botón o gesto "Atrás" de Android / Navegador
+    window.addEventListener('popstate', () => {
+      const modals = document.querySelectorAll('.modal-overlay');
+      modals.forEach(m => {
+        if (m.style.display === 'flex') {
+          m.style.display = 'none';
+        }
+      });
+    });
+
     // Barra interactiva de búsqueda rápida
     const searchTrigger = document.getElementById('main-search-trigger');
     if (searchTrigger) {
@@ -213,20 +258,20 @@ class MeteoAsturiasApp {
       favMenuBtn.addEventListener('click', () => {
         this.triggerHaptic();
         this.renderFavoritesMenu();
-        favModal.style.display = 'flex';
+        this.openModal(favModal);
       });
     }
 
     if (closeFavBtn && favModal) {
       closeFavBtn.addEventListener('click', () => {
-        favModal.style.display = 'none';
+        this.closeModal(favModal);
       });
     }
 
     if (favModal) {
       favModal.addEventListener('click', (e) => {
         if (e.target === favModal) {
-          favModal.style.display = 'none';
+          this.closeModal(favModal);
         }
       });
     }
@@ -268,7 +313,7 @@ class MeteoAsturiasApp {
     if (shortcutsModal) {
       shortcutsModal.addEventListener('click', (e) => {
         if (e.target === shortcutsModal) {
-          shortcutsModal.style.display = 'none';
+          this.closeModal(shortcutsModal);
         }
       });
     }
@@ -281,20 +326,20 @@ class MeteoAsturiasApp {
     if (versionBadge && changelogModal) {
       versionBadge.addEventListener('click', () => {
         this.triggerHaptic();
-        changelogModal.style.display = 'flex';
+        this.openModal(changelogModal);
       });
     }
 
     if (closeChangelogBtn && changelogModal) {
       closeChangelogBtn.addEventListener('click', () => {
-        changelogModal.style.display = 'none';
+        this.closeModal(changelogModal);
       });
     }
 
     if (changelogModal) {
       changelogModal.addEventListener('click', (e) => {
         if (e.target === changelogModal) {
-          changelogModal.style.display = 'none';
+          this.closeModal(changelogModal);
         }
       });
     }
@@ -373,14 +418,14 @@ class MeteoAsturiasApp {
         item.addEventListener('click', () => {
           this.triggerHaptic();
           this.switchConcejo(item.dataset.id);
-          searchModal.style.display = 'none';
+          this.closeModal(searchModal);
         });
       });
     };
 
     const openSearch = () => {
       this.triggerHaptic();
-      searchModal.style.display = 'flex';
+      this.openModal(searchModal);
       searchInput.value = '';
       if (clearSearchBtn) clearSearchBtn.style.display = 'none';
       renderResults('');
@@ -393,7 +438,7 @@ class MeteoAsturiasApp {
 
     if (closeSearchBtn) {
       closeSearchBtn.addEventListener('click', () => {
-        searchModal.style.display = 'none';
+        this.closeModal(searchModal);
       });
     }
 
@@ -408,7 +453,7 @@ class MeteoAsturiasApp {
 
     searchModal.addEventListener('click', (e) => {
       if (e.target === searchModal) {
-        searchModal.style.display = 'none';
+        this.closeModal(searchModal);
       }
     });
 
@@ -460,7 +505,7 @@ class MeteoAsturiasApp {
         card.addEventListener('click', () => {
           this.triggerHaptic();
           this.switchTab(card.dataset.tab);
-          modal.style.display = 'none';
+          this.closeModal(modal);
         });
       });
     };
@@ -469,19 +514,19 @@ class MeteoAsturiasApp {
       triggerBtn.addEventListener('click', () => {
         this.triggerHaptic();
         renderNavItems();
-        modal.style.display = 'flex';
+        this.openModal(modal);
       });
     }
 
     if (closeBtn) {
       closeBtn.addEventListener('click', () => {
-        modal.style.display = 'none';
+        this.closeModal(modal);
       });
     }
 
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
-        modal.style.display = 'none';
+        this.closeModal(modal);
       }
     });
 
