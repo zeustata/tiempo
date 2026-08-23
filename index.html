@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=4.2">
-  <link rel="stylesheet" href="css/components.css?v=4.2">
-  <link rel="stylesheet" href="css/weather-themes.css?v=4.2">
+  <link rel="stylesheet" href="css/main.css?v=4.3">
+  <link rel="stylesheet" href="css/components.css?v=4.3">
+  <link rel="stylesheet" href="css/weather-themes.css?v=4.3">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -158,12 +158,15 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v0.9.99-beta 📋</button>
-        • Estación Meteorológica del Principado de Asturias
-        <div id="last-updated" style="margin-top: 4px; font-size: 0.8rem; color: var(--text-dim);"></div>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v0.9.991-beta 📋</button>
+        <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
+          Propietario: <strong>Manuel A. L. Barril</strong>
+          <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
+        </div>
+        <div id="last-updated" style="margin-top: 6px; font-size: 0.78rem; color: var(--text-dim);"></div>
       </div>
       <div class="footer-sources">
-        <span>Datos: Open-Meteo ECMWF / ICON / RainViewer API</span>
+        <span>Datos: Open-Meteo ECMWF / ICON / RainViewer API • Principado de Asturias</span>
       </div>
     </footer>
   </div>
@@ -200,12 +203,21 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v0.9.99-beta</span>
+            <span class="release-version">v0.9.991-beta</span>
             <span class="release-date">23 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-new">Nuevo</span> <strong>Módulo Costa & Playas 100% Dinámico por Concejo</strong>: al cambiar de concejo, el módulo marítimo enfoca automáticamente sus datos y muestra las playas y calas exactas de esa localidad (*Gijón, Salinas, Llanes, Rodiles, Tapia, Luarca, etc.*).</li>
-            <li><span class="tag tag-improved">Mejora</span> En concejos de interior, ofrece la referencia directa con la costa y arenales más cercanos.</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Diseño Visual Premium de Surf y Mareas</strong>: rediseñada la tarjeta con cajas gráficas para Pleamar/Bajamar con horarios destacados, insignia de bandera de playa y estado de rompientes.</li>
+            <li><span class="tag tag-improved">Mejora</span> Incorporación de información de autoría y propiedad en el pie de la aplicación.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v0.9.99-beta</span>
+            <span class="release-date">23 Ago 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> Módulo Costa & Playas dinámico según el concejo activo.</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -390,7 +402,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=4.2').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=4.3').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -411,6 +423,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=4.2"></script>
+  <script type="module" src="js/app.js?v=4.3"></script>
 </body>
 </html>

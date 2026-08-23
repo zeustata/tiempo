@@ -315,18 +315,50 @@ export function renderMarineCard(data, concejo) {
           <div class="widget-detail">Visibilidad costera: <strong>${(current.visibility / 1000 || 10).toFixed(0)} km</strong></div>
         </div>
 
-        <!-- 4. Recomendación de Surf, Turismo y Mareas -->
-        <div class="marine-widget highlight-widget">
-          <div class="widget-label" style="display: flex; justify-content: space-between; align-items: center;">
-            <span>🏄‍♂️ Surf & Turismo en Playas</span>
-            <span style="font-size: 0.76rem; font-weight: 700; color: ${flagColor};">${flagBadge}</span>
+        <!-- 4. Tarjeta Visual Premium: Surf, Turismo y Mareas -->
+        <div class="marine-widget surf-turismo-visual-widget">
+          <div class="surf-widget-top">
+            <div class="surf-title-row">
+              <span class="surf-title-icon">🏄‍♂️</span>
+              <div>
+                <div class="surf-title-main">Surf & Turismo de Playa</div>
+                <div class="surf-title-sub">${isCoasting ? `Litoral de ${concejo.name}` : `Costa de ${interiorRef.name}`}</div>
+              </div>
+            </div>
+            <div class="surf-flag-badge" style="background: ${flagColor}22; color: ${flagColor}; border: 1px solid ${flagColor};">
+              ${flagBadge}
+            </div>
           </div>
-          <div class="widget-status" style="margin-top: 6px; font-weight: 600; color: #fff;">
+
+          <div class="surf-status-banner">
             ${surfStatus}
           </div>
-          <div class="widget-tides" style="margin-top: 10px;">
-            <span>🌅 Pleamar aprox: <strong>06:15 / 18:40</strong> (Marea alta)</span>
-            <span>🌇 Bajamar aprox: <strong>12:30 / 00:55</strong> (Paseos por arenales)</span>
+
+          <!-- Medidor Visual de Mareas -->
+          <div class="tides-visual-container">
+            <div class="tide-box high-tide">
+              <div class="tide-box-header">
+                <span class="tide-icon">🌅</span>
+                <span class="tide-name">PLEAMAR (Marea Alta)</span>
+              </div>
+              <div class="tide-hours">
+                <span class="tide-time-pill">06:15</span>
+                <span class="tide-time-pill">18:40</span>
+              </div>
+              <div class="tide-desc">🌊 Marea llena • Ideal para surf y baño</div>
+            </div>
+
+            <div class="tide-box low-tide">
+              <div class="tide-box-header">
+                <span class="tide-icon">🏖️</span>
+                <span class="tide-name">BAJAMAR (Marea Baja)</span>
+              </div>
+              <div class="tide-hours">
+                <span class="tide-time-pill">12:30</span>
+                <span class="tide-time-pill">00:55</span>
+              </div>
+              <div class="tide-desc">🚶 Arenal amplio • Ideal para paseos y calas</div>
+            </div>
           </div>
         </div>
       </div>

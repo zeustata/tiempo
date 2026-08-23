@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.991-beta] - 2026-08-23
+
+### 🏄‍♂️ Rediseño Visual de Surf, Mareas y Créditos de Propiedad (New & Improved)
+- **Tarjetas Gráficas de Mareas**: Cajas visuales diferenciadas con píldoras de hora para Pleamar (*marea alta*) y Bajamar (*marea baja / paseos*).
+- **Banner Visual de Surf y Bandera de Playa**: Insignia luminosa con el estado estimado de baño y potencial de rompientes.
+- **Identificación de Propiedad**: Inclusión en el pie de página de la autoría y propiedad: *Manuel A. L. Barril* / *Princesa*.
+
+---
+
 ## [0.9.99-beta] - 2026-08-23
 
 ### 🏖️ Módulo Costa & Playas 100% Dinámico por Concejo (New & Improved)
