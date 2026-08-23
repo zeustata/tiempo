@@ -1,5 +1,5 @@
-import { getWeatherInfo, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js';
-import { detectWeatherAlerts } from '../utils/weatherAlerts.js';
+import { getWeatherInfo, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=6.3';
+import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=6.3';
 
 /**
  * Renderiza el dashboard principal con alineación uniforme y todos los sensores de la estación
@@ -38,24 +38,14 @@ export function renderCurrentWeather(data, concejo, units = 'metric') {
   const alpha = ((a * T) / (b + T)) + Math.log(RH / 100);
   const dewPoint = ((b * alpha) / (a - alpha)).toFixed(1);
 
-  const alerts = detectWeatherAlerts(data, concejo);
-  let alertsMarkup = '';
-  if (alerts.length > 0) {
-    alertsMarkup = `
-      <div class="alerts-container">
-        ${alerts.map(a => `
-          <div class="alert-banner alert-${a.level}">
-            <span class="alert-icon">${a.icon}</span>
-            <div class="alert-text">
-              <strong>${a.title}:</strong> ${a.desc}
-            </div>
-          </div>
-        `).join('')}
-      </div>
-    `;
-  }
+  // Estado Oficial de Alertas AEMET
+  const aemetStatus = getAemetAlertStatus(data, concejo);
+  const aemetCardMarkup = renderAemetAlertCard(aemetStatus, concejo);
 
   return `
+    <!-- TARJETA OFICIAL DE ALERTAS Y AVISOS AEMET -->
+    ${aemetCardMarkup}
+
     <!-- HERO WEATHER CARD -->
     <div class="hero-weather-card ${weatherInfo.bg}">
       <div class="hero-top-row">
@@ -83,8 +73,6 @@ export function renderCurrentWeather(data, concejo, units = 'metric') {
           </div>
         </div>
       </div>
-
-      ${alertsMarkup}
     </div>
 
     <!-- SENSORS GRID -->

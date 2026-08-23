@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.999p-beta] - 2026-08-24
+
+### 🚨 Tarjeta Oficial de Alertas Meteorológicas AEMET (New & Safety)
+- **Sistema de Avisos AEMET por Comarcas**: Integración en *Estación en Vivo* del sistema oficial de alertas tempranas adaptado a las 5 zonas de Asturias (Litoral Occidental, Litoral Oriental, Cordillera y Picos de Europa, Suroccidente y Valles Centrales).
+- **Semáforo Oficial de Riesgo**: Clasificación cromática (🟢 Sin avisos, 🟡 Amarillo, 🟠 Naranja, 🔴 Rojo) con desglose de fenómeno adverso (oleaje, viento, lluvias, nieve, efecto Föhn), ventanas horarias de vigencia, probabilidades y recomendaciones de Protección Civil.
+
+---
+
 ## [0.9.999o-beta] - 2026-08-24
 
 ### 🌊 Recuperación Completa de Costa & Mar & Blindaje ante Nulos (Fixed & Marine)
