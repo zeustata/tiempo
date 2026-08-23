@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MeteoAsturias Pro | Estación Meteorológica Integral del Principado</title>
+  <meta name="description" content="Estación meteorológica avanzada para Asturias: radar de precipitaciones, estado del mar Cantábrico, cotas de nieve en cordillera y datos en tiempo real de los concejos asturianos.">
+  <meta name="theme-color" content="#070d17">
+
+  <!-- Manifest PWA -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+  <!-- Leaflet CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- Estilos de la Aplicación -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/weather-themes.css">
+</head>
+<body>
+  <!-- Fondo de partículas -->
+  <canvas id="weather-particles-canvas"></canvas>
+
+  <div class="app-container">
+    <!-- BARRA DE CABECERA -->
+    <header class="app-header">
+      <div class="brand-section">
+        <div class="asturias-shield">⚡</div>
+        <div class="brand-info">
+          <h1>MeteoAsturias Pro</h1>
+          <p class="brand-tagline">Estación Meteorológica Integral del Principado</p>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <button id="btn-toggle-fav" class="btn-header" title="Guardar en Favoritos">⭐ Guardar</button>
+        <button id="btn-gps" class="btn-header" title="Buscar concejo más cercano por GPS">📍 Mi Ubicación</button>
+        <button id="btn-unit-toggle" class="btn-header" title="Cambiar unidades">Unidades: km/h</button>
+        <button id="btn-refresh" class="btn-header" title="Actualizar datos">🔄 Refrescar</button>
+      </div>
+    </header>
+
+    <!-- SELECTOR DE CONCEJOS Y FAVORITOS -->
+    <section class="concejo-selector-bar">
+      <div class="search-and-select">
+        <div class="select-wrapper">
+          <select id="concejo-select" class="concejo-dropdown" aria-label="Seleccionar concejo de Asturias"></select>
+        </div>
+      </div>
+      <div class="favorites-pills" id="favorites-container"></div>
+    </section>
+
+    <!-- PESTAÑAS DE NAVEGACIÓN -->
+    <nav class="view-tabs" role="tablist">
+      <button class="tab-btn active" data-tab="live">📊 Estación en Vivo</button>
+      <button class="tab-btn" data-tab="radar">📡 Radar Cantábrico</button>
+      <button class="tab-btn" data-tab="marine">🌊 Costa & Mar Cantábrico</button>
+      <button class="tab-btn" data-tab="mountain">🏔️ Cordillera & Nieve</button>
+      <button class="tab-btn" data-tab="forecast">📅 Pronóstico 10 Días</button>
+      <button class="tab-btn" data-tab="charts">📈 Gráficos 48h</button>
+      <button class="tab-btn" data-tab="glossary">📖 Glosario Astur</button>
+    </nav>
+
+    <!-- PANELES DE CONTENIDO -->
+    <main>
+      <!-- 1. EN VIVO -->
+      <div id="panel-live" class="tab-panel active"></div>
+
+      <!-- 2. RADAR -->
+      <div id="panel-radar" class="tab-panel">
+        <div class="radar-wrapper">
+          <div class="radar-controls-bar">
+            <div>
+              <h3 class="section-heading">📡 Radar Meteorológico en Directo sobre Asturias</h3>
+              <span id="radar-time-display" style="font-size: 0.9rem; color: var(--primary);">Cargando satélite...</span>
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;"><button id="btn-radar-center" class="btn-header" title="Centrar mapa en Asturias">🎯 Centrar Asturias</button><button id="btn-radar-play" class="btn-header">▶️ Reproducir Radar</button></div>
+          </div>
+          <div id="map-container"></div>
+        </div>
+      </div>
+
+      <!-- 3. MAR CANTÁBRICO -->
+      <div id="panel-marine" class="tab-panel"></div>
+
+      <!-- 4. MONTAÑA & NIEVE -->
+      <div id="panel-mountain" class="tab-panel"></div>
+
+      <!-- 5. PRONÓSTICO -->
+      <div id="panel-forecast" class="tab-panel"></div>
+
+      <!-- 6. GRÁFICOS -->
+      <div id="panel-charts" class="tab-panel">
+        <div class="chart-card">
+          <div class="section-title-wrap">
+            <h3 class="section-heading">📈 Evolución Meteorológica Próximas 36 Horas</h3>
+            <span class="section-subtitle">Curva de temperatura, probabilidad de precipitación y rachas de viento</span>
+          </div>
+          <div class="chart-container-box">
+            <canvas id="meteo-chart-canvas"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. GLOSARIO DEL CLIMA ASTURIANO -->
+      <div id="panel-glossary" class="tab-panel">
+        <div class="forecast-block">
+          <div class="section-title-wrap">
+            <h3 class="section-heading">📖 Términos y Fenómenos del Clima en Asturias</h3>
+            <span class="section-subtitle">Cultura meteorológica tradicional asturiana</span>
+          </div>
+          <div class="glossary-grid">
+            <div class="glossary-card">
+              <h4>🌧️ Orbayu / Calabobos</h4>
+              <p>Lluvia muy fina y persistente casi suspendida en el aire, típica del clima atlántico cantábrico que empapa suave pero continuamente.</p>
+            </div>
+            <div class="glossary-card">
+              <h4>🌫️ Borrina</h4>
+              <p>Niebla densa y baja que cubre valles, puertos y cordillera, provocando descensos repentinos de visibilidad.</p>
+            </div>
+            <div class="glossary-card">
+              <h4>💨 Vientu del Sur (Efecto Föhn)</h4>
+              <p>Viento que desciende de la Cordillera Cantábrica recalentado y seco, disparando los termómetros y resecando el ambiente en la costa.</p>
+            </div>
+            <div class="glossary-card">
+              <h4>🌊 Galerna Cantábrica</h4>
+              <p>Súbito e intenso cambio de tiempo marino en el Cantábrico, con ráfagas violentas del noroeste y brusca caída de temperatura.</p>
+            </div>
+            <div class="glossary-card">
+              <h4>⛅ Escampada</h4>
+              <p>Momento en que el cielo se abre temporalmente entre dos frentes o chubascos dejando ver el sol.</p>
+            </div>
+            <div class="glossary-card">
+              <h4>❄️ Neverón</h4>
+              <p>Ventisca helada de nieve densa y viento gélido en las altas cumbres de Picos de Europa y Cordillera Cantábrica.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="app-footer">
+      <div class="footer-credits">
+        <strong>MeteoAsturias Pro</strong> • Estación Meteorológica del Principado de Asturias
+        <div id="last-updated" style="margin-top: 4px; font-size: 0.8rem; color: var(--text-dim);"></div>
+      </div>
+      <div class="footer-sources">
+        <span>Datos: Open-Meteo ECMWF / ICON / RainViewer API</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(err => console.log('SW error:', err));
+      });
+    }
+  </script>
+
+  <!-- Módulo Principal de la Aplicación -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
