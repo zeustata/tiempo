@@ -4,11 +4,18 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
+## 👑 0. Identidad del Proyecto
+- **Usuario / Desarrollador**: **Lendo** (*Manuel A. L. Barril*).
+- **Asistente IA**: **Princesa**.
+- Siempre mantener el trato directo, cercano y personalizado hacia **Lendo**.
+
+---
+
 ## 📌 1. Reglas Fundamentales de Trabajo
 
 1. ⭐ **Regla de Oro (Validación y Visto Bueno Previo)**:
-   - Si el usuario propone hacer algo pero pregunta **"¿qué te parece?"**, solicita opinión o pide valorar una alternativa, **NO adelantarse modificando el código**.
-   - Responder confirmando lo entendido, dando la opinión o propuesta técnica y **esperar a que el usuario dé el visto bueno explícito** antes de tocar el código.
+   - Si Lendo propone hacer algo pero pregunta **"¿qué te parece?"**, solicita opinión o pide valorar una alternativa, **NO adelantarse modificando el código**.
+   - Responder confirmando lo entendido, dando la opinión o propuesta técnica y **esperar a que Lendo dé el visto bueno explícito** antes de tocar el código.
 
 2. 💻 **Actualización Dual (Local + Red)**:
    - Toda modificación aprobada debe aplicarse directamente en la **carpeta de archivos locales** (`c:\Users\NUC\Downloads\IA\Tiempo`).
@@ -22,7 +29,7 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
      - El archivo `CHANGELOG.md`.
 
 4. 🧪 **Mantenimiento de la Fase Beta**:
-   - La app se encuentra actualmente en fase de pruebas activas con el sufijo `-beta` hasta que el usuario decida publicar la versión oficial `1.0.0`.
+   - La app se encuentra actualmente en fase de pruebas activas con el sufijo `-beta` hasta que Lendo decida publicar la versión oficial `1.0.0`.
 
 ---
 
@@ -48,6 +55,8 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
    - Motor visual interactivo que adapta el fondo y genera partículas vivas acordes al estado del tiempo actual (lluvia, nieve, niebla, sol).
 6. **Radar Meteorológico**:
    - Zoom panorámico alejado por defecto centrado sobre el mar Cantábrico y la cordillera.
+7. **Catálogo de Concejos Completo**:
+   - Integrados los **78 concejos oficiales de Asturias** con búsqueda insensible a acentos.
 
 ---
 
@@ -67,4 +76,5 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Integración de badges interactivos de versiones en el pie de página.
 - Ajuste del selector de navegación (eliminación de "Sección activa" y botón "Menú").
 - Incorporación de la bandera del Principado de Asturias en la cabecera.
+- Incorporación del catálogo completo de los 78 concejos de Asturias.
 - Subidas continuas a GitHub (`zeustata/tiempo`).
