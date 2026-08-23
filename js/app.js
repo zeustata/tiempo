@@ -1,18 +1,18 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js';
-import { fetchWeatherData } from './services/weatherApi.js';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js';
-import { renderCurrentWeather } from './components/currentCard.js';
-import { renderMarineCard } from './components/marineCard.js';
-import { renderMountainCard } from './components/mountainCard.js';
-import { renderForecast } from './components/forecastView.js';
-import { renderWeatherChart } from './components/chartsView.js';
-import { renderCompareView } from './components/compareView.js';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js';
-import { getWeatherInfo } from './utils/weatherIcons.js';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=4.7';
+import { fetchWeatherData } from './services/weatherApi.js?v=4.7';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=4.7';
+import { renderCurrentWeather } from './components/currentCard.js?v=4.7';
+import { renderMarineCard } from './components/marineCard.js?v=4.7';
+import { renderMountainCard } from './components/mountainCard.js?v=4.7';
+import { renderForecast } from './components/forecastView.js?v=4.7';
+import { renderWeatherChart } from './components/chartsView.js?v=4.7';
+import { renderCompareView } from './components/compareView.js?v=4.7';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=4.7';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=4.7';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, alertas climáticas y calidad del aire', key: '1' },
-  { id: 'forecast', icon: '📅', title: 'Pronósticos', desc: 'Predicción horaria detallada para 48h y evolución por días', key: '2' },
+  { id: 'forecast', icon: '📅', title: 'Pronósticos', desc: 'Predicción horaria detallada para 72h y evolución por días', key: '2' },
   { id: 'radar', icon: '📡', title: 'Radar Cantábrico', desc: 'Precipitación y tormentas en directo vía satélite RainViewer', key: '3' },
   { id: 'marine', icon: '🌊', title: 'Costa & Mar', desc: 'Oleaje, mareas, escala Douglas, surf y playas', key: '4' },
   { id: 'mountain', icon: '🏔️', title: 'Cordillera & Nieve', desc: 'Estado de puertos de montaña, cota de nieve y esquí', key: '5' },

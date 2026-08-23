@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.999-beta] - 2026-08-23
+
+### 🚀 Actualización de Importaciones ES6 & Forzado de 72 Horas (Fixed & Improved)
+- **Versionado Interno de Módulos ES6**: Incorporado parámetro de control de versión en los `import` internos de JavaScript (`forecastView.js?v=4.7`) para evitar que navegadores móviles sirvan módulos cacheados en memoria.
+- **Renderizado Inmediato de 72 Horas**: Garantizada la carga instantánea de las 72 horas y sus separadores de días en cualquier dispositivo.
+
+---
+
 ## [0.9.998-beta] - 2026-08-23
 
 ### ⏱️ Pronóstico Horario Extendido a 72 Horas con Separadores de Días (New & Improved)
