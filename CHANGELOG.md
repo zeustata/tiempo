@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.999t-beta] - 2026-08-25
+
+### 📐 Cabecera 2x2 Fija & Sincronización Estable (Fixed & UI)
+- **Cabecera 2x2 Fija y Simétrica en Móviles**: Distribución en cuadrícula de 2 filas y 2 columnas fijas para *Instalar App*, *Guardar*, *Completa* y *Mi Ubicación*, eliminando amontonamientos verticales en teléfonos.
+- **Purga y Renovación de Caché en Service Worker**: Actualizado el manifiesto de caché (`meteoasturlode-v61-clean-stable`) y los parámetros de importación `?v=7.0` para garantizar una carga limpia y estable.
+
+---
+
 ## [0.9.999s-beta] - 2026-08-24
 
 ### 🔍 Corrección de Contraste y Visibilidad en el Buscador de Concejos (Fixed & UI)
