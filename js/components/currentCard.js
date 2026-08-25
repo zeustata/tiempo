@@ -12,7 +12,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric') {
   
   const weatherInfo = getWeatherInfo(current.weather_code);
   const windDir = getWindDirection(current.wind_direction_10m || 0);
-  const uvVal = (daily.uv_index_max && daily.uv_index_max[0] != null) ? daily.uv_index_max[0] : (hourly.uv_index ? (hourly.uv_index[new Date().getHours()] || 0) : 0);
+  const uvVal = (daily.uv_index_max && daily.uv_index_max[0] != null) ? daily.uv_index_max[0] : (hourly.uv_index && hourly.uv_index[new Date().getHours()] != null ? hourly.uv_index[new Date().getHours()] : null);
   const uvInfo = getUVDescription(uvVal);
   const aqiInfo = getAQIDescription(aqi?.european_aqi);
 
@@ -169,9 +169,9 @@ export function renderCurrentWeather(data, concejo, units = 'metric') {
           <span class="sensor-title">Radiación Solar / Índice UV</span>
         </div>
         <div class="sensor-body">
-          <div class="sensor-val" style="color: ${uvInfo.color};">${typeof uvVal === 'number' ? uvVal.toFixed(1) : '0.0'} <small class="uv-level">(${uvInfo.level})</small></div>
-          <div class="sensor-sub">Máximo previsto en la jornada</div>
-          <div class="sensor-hint" style="border-left: 3px solid ${uvInfo.color}; padding-left: 8px; margin-top: 8px;">
+          <div class="sensor-val" style="color: ${uvVal != null ? uvInfo.color : 'var(--text-dim)'};">${uvVal != null ? `${uvVal.toFixed(1)} <small class="uv-level">(${uvInfo.level})</small>` : '<span style="font-size: 1.35rem; font-weight: 700; color: var(--text-dim);">No disponible</span>'}</div>
+          <div class="sensor-sub">${uvVal != null ? 'Máximo previsto en la jornada' : 'No computado por este modelo'}</div>
+          <div class="sensor-hint" style="border-left: 3px solid ${uvVal != null ? uvInfo.color : 'rgba(148, 163, 184, 0.4)'}; padding-left: 8px; margin-top: 8px;">
             ${uvInfo.advice}
           </div>
         </div>

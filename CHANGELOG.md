@@ -12,6 +12,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.999w-beta] - 2026-08-25
+
+### ☀️ Indicación Explícita "No disponible" para Radiación UV (Improved & Safety)
+- **Claridad y Prevención de Errores**: Cuando un modelo meteorológico no computa el índice ultravioleta (como ECMWF o ICON), la tarjeta del sensor muestra explícitamente **"No disponible"** en gris con la indicación *"No computado por este modelo"*, eliminando el valor falso `0.0` y evitando que el usuario asuma que el riesgo solar es bajo cuando en realidad puede ser elevado.
+
+---
+
 ## [0.9.999v-beta] - 2026-08-25
 
 ### 🛡️ Blindaje de Lecturas Multimodelo en Vivo (Fixed & Resilience)
