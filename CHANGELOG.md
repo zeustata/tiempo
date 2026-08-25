@@ -12,6 +12,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.999u-beta] - 2026-08-25
+
+### 🛰️ Selector de Modelos Meteorológicos Científicos Integrado (New & Feature)
+- **Botón Multimodelo Ultralimpio en 1 Sola Línea**: Nuevo selector situado encima del menú principal con estética *Liquid Glass* (`🌟 Modelo: Auto Multi-Modelo ➔`) perfectamente simétrico con el botón de menú inferior, sin duplicidades de texto ni sobrecargas visuales.
+- **Modal de Selección de Modelos Científicos**: Ventana emergente táctil con fichas de los motores numéricos oficiales más prestigiosos del mundo:
+  - 🌟 **Auto Multi-Modelo**: Selección combinada y ponderada de alta resolución (1-3 km).
+  - 🇪🇺 **ECMWF IFS (Centro Europeo)**: El estándar de oro mundial de la meteorología científica (9 km).
+  - 🇫🇷 **AROME Cantábrico (Météo-France)**: Hiper-resolución (1.3 km) especializada en microclimas de costa y valles asturianos.
+  - 🇩🇪 **DWD ICON-EU (Alemania)**: Rápida actualización horaria para precipitación y dinámicas de viento (7 km).
+  - 🇺🇸 **NOAA GFS (Estados Unidos)**: Modelo numérico global norteamericano (13 km).
+- **Arquitectura Integrada y Persistencia**: Implementación robusta dentro de los módulos existentes (`weatherApi.js`), persistencia en `localStorage` y actualización inmediata en vivo de sensores, gráficas y previsiones con cero dependencias externas.
+
+---
+
 ## [0.9.999t-beta] - 2026-08-25
 
 ### 📐 Cabecera 2x2 Fija & Sincronización Estable (Fixed & UI)

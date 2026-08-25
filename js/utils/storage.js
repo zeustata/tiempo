@@ -11,6 +11,7 @@ export function getPreferences() {
         lastConcejo: 'gijon',
         favorites: [], // Vacío por defecto
         units: 'metric', // metric (km/h) | knots (kt)
+        model: 'best_match',
         autoRefresh: true
       };
     }
@@ -18,12 +19,16 @@ export function getPreferences() {
     if (!Array.isArray(parsed.favorites)) {
       parsed.favorites = [];
     }
+    if (!parsed.model) {
+      parsed.model = 'best_match';
+    }
     return parsed;
   } catch (e) {
     return {
       lastConcejo: 'gijon',
       favorites: [],
       units: 'metric',
+      model: 'best_match',
       autoRefresh: true
     };
   }

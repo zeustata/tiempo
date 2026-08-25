@@ -1,14 +1,14 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=7.0';
-import { fetchWeatherData } from './services/weatherApi.js?v=7.0';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=7.0';
-import { renderCurrentWeather } from './components/currentCard.js?v=7.0';
-import { renderMarineCard } from './components/marineCard.js?v=7.0';
-import { renderMountainCard } from './components/mountainCard.js?v=7.0';
-import { renderForecast } from './components/forecastView.js?v=7.0';
-import { renderWeatherChart } from './components/chartsView.js?v=7.0';
-import { renderCompareView } from './components/compareView.js?v=7.0';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=7.0';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=7.0';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=7.2';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=7.2';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=7.2';
+import { renderCurrentWeather } from './components/currentCard.js?v=7.2';
+import { renderMarineCard } from './components/marineCard.js?v=7.2';
+import { renderMountainCard } from './components/mountainCard.js?v=7.2';
+import { renderForecast } from './components/forecastView.js?v=7.2';
+import { renderWeatherChart } from './components/chartsView.js?v=7.2';
+import { renderCompareView } from './components/compareView.js?v=7.2';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=7.2';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=7.2';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, alertas climáticas y calidad del aire', key: '1' },
@@ -24,6 +24,7 @@ class MeteoAsturiasApp {
   constructor() {
     this.prefs = getPreferences();
     this.currentConcejo = getConcejoById(this.prefs.lastConcejo) || CONCEJOS_ASTURIAS[0];
+    this.currentModel = getModelById(this.prefs.model) || getDefaultModel();
     this.weatherData = null;
     this.compareConcejoB = getConcejoById(this.currentConcejo.id === 'gijon' ? 'oviedo' : 'gijon');
     this.compareWeatherDataB = null;
@@ -36,8 +37,10 @@ class MeteoAsturiasApp {
 
   async init() {
     this.updateSearchTriggerDisplay();
+    this.updateModelTriggerDisplay();
     this.renderFavoritesMenu();
     this.setupNavModal();
+    this.setupModelModal();
     this.setupEventListeners();
     this.setupQuickSearch();
     this.setupPwaInstall();
@@ -128,6 +131,14 @@ class MeteoAsturiasApp {
     if (el && this.currentConcejo) {
       el.innerHTML = `<span class="active-badge">${this.currentConcejo.badge}</span> <strong>${this.currentConcejo.name}</strong>`;
     }
+  }
+
+  updateModelTriggerDisplay() {
+    const iconEl = document.getElementById('current-model-icon');
+    const titleEl = document.getElementById('current-model-title');
+
+    if (iconEl && this.currentModel) iconEl.textContent = this.currentModel.flag;
+    if (titleEl && this.currentModel) titleEl.textContent = `Modelo: ${this.currentModel.name}`;
   }
 
   renderFavoritesMenu() {
@@ -224,7 +235,7 @@ class MeteoAsturiasApp {
   setupEventListeners() {
     // Sistema interactivo universal de ondas táctiles (Ripple Effect)
     document.addEventListener('pointerdown', (e) => {
-      const targetBtn = e.target.closest('.btn-header, .section-nav-trigger, .search-trigger-card, .fav-trigger-card, .btn-close, .version-badge-footer, .nav-modal-item, .hourly-card, .daily-card-rich, .fav-modal-remove-btn');
+      const targetBtn = e.target.closest('.btn-header, .section-nav-trigger, .model-nav-trigger, .search-trigger-card, .fav-trigger-card, .btn-close, .version-badge-footer, .nav-module-card, .model-module-card, .hourly-card, .daily-card-rich, .fav-modal-remove-btn');
       if (!targetBtn) return;
       
       const rect = targetBtn.getBoundingClientRect();
@@ -507,6 +518,84 @@ class MeteoAsturiasApp {
     this.openSearchModal = openSearch;
   }
 
+  setupModelModal() {
+    const triggerBtn = document.getElementById('btn-open-model-modal');
+    const modal = document.getElementById('model-modal');
+    const closeBtn = document.getElementById('btn-close-model');
+    const grid = document.getElementById('model-modal-grid');
+
+    if (!modal || !grid) return;
+
+    const renderModelItems = () => {
+      grid.innerHTML = WEATHER_MODELS.map(m => {
+        const isActive = m.id === this.currentModel.id;
+        return `
+          <div class="model-module-card ${isActive ? 'active' : ''}" data-model-id="${m.id}">
+            <div style="display: flex; gap: 14px; align-items: flex-start; width: 100%; min-width: 0;">
+              <span style="font-size: 1.6rem; line-height: 1; flex-shrink: 0;">${m.flag}</span>
+              <div style="display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0;">
+                <div class="model-module-header-row">
+                  <span class="model-module-name">${m.name}</span>
+                  <span class="model-tag-pill">${m.resolution}</span>
+                  ${m.tag ? `<span class="model-tag-pill" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; border-color: rgba(56, 189, 248, 0.4);">${m.tag}</span>` : ''}
+                </div>
+                <span class="model-module-agency">${m.agency}</span>
+                <span class="model-module-desc">${m.description}</span>
+                <span class="model-module-ideal">🎯 ${m.bestFor}</span>
+              </div>
+            </div>
+            ${isActive ? '<span class="model-module-check">✓</span>' : ''}
+          </div>
+        `;
+      }).join('');
+
+      grid.querySelectorAll('.model-module-card').forEach(card => {
+        card.addEventListener('click', () => {
+          this.triggerHaptic();
+          this.switchModel(card.dataset.modelId);
+          this.closeModal(modal);
+        });
+      });
+    };
+
+    if (triggerBtn) {
+      triggerBtn.addEventListener('click', () => {
+        this.triggerHaptic();
+        renderModelItems();
+        this.openModal(modal);
+      });
+    }
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        this.closeModal(modal);
+      });
+    }
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        this.closeModal(modal);
+      }
+    });
+  }
+
+  async switchModel(modelId) {
+    const selected = getModelById(modelId);
+    if (!selected) return;
+
+    this.currentModel = selected;
+    this.prefs.model = selected.id;
+    savePreferences(this.prefs);
+
+    this.updateModelTriggerDisplay();
+
+    // Recargar datos meteorológicos inmediatamente con el nuevo modelo
+    await this.loadWeather(this.currentConcejo.id);
+    if (this.compareConcejoB) {
+      this.loadCompareData(this.compareConcejoB.id);
+    }
+  }
+
   setupNavModal() {
     const triggerBtn = document.getElementById('btn-open-nav-modal');
     const modal = document.getElementById('nav-modal');
@@ -674,6 +763,8 @@ class MeteoAsturiasApp {
         if (searchModal) searchModal.style.display = 'none';
         const favModal = document.getElementById('favorites-modal');
         if (favModal) favModal.style.display = 'none';
+        const modelModal = document.getElementById('model-modal');
+        if (modelModal) modelModal.style.display = 'none';
         const navModal = document.getElementById('nav-modal');
         if (navModal) navModal.style.display = 'none';
       }
@@ -800,7 +891,7 @@ class MeteoAsturiasApp {
   async loadCompareData(concejoBId) {
     this.compareConcejoB = getConcejoById(concejoBId) || this.compareConcejoB;
     const isCoast = this.compareConcejoB.type === 'coast' || this.compareConcejoB.region.includes('Costa');
-    const result = await fetchWeatherData(this.compareConcejoB.lat, this.compareConcejoB.lon, isCoast);
+    const result = await fetchWeatherData(this.compareConcejoB.lat, this.compareConcejoB.lon, isCoast, this.currentModel.apiModel || '');
     if (result.success) {
       this.compareWeatherDataB = result;
       this.renderCompareSection();
@@ -860,7 +951,7 @@ class MeteoAsturiasApp {
 
     try {
       const isCoast = concejo.type === 'coast' || concejo.region.includes('Costa');
-      const result = await fetchWeatherData(concejo.lat, concejo.lon, isCoast);
+      const result = await fetchWeatherData(concejo.lat, concejo.lon, isCoast, this.currentModel.apiModel || '');
 
       if (result && result.success) {
         this.weatherData = result;

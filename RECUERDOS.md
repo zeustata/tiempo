@@ -64,6 +64,11 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 10. **Tipografía Equilibrada y Proporcionada**:
    - Hero Card estilizado con temperatura a `2.6rem`, título de concejo a `1.35rem` e icono a `2.8rem` para una lectura limpia y compacta.
 
+11. **Selector de Modelos Meteorológicos Científicos**:
+    - Botón interactivo de 1 sola línea situado inmediatamente encima del botón de *Menú* (`🌟 Modelo: Auto Multi-Modelo ➔`).
+    - Permite al usuario conmutar entre los modelos científicos más avanzados del mundo: 🌟 *Auto Multi-Modelo*, 🇪🇺 *ECMWF IFS (Centro Europeo)*, 🇫🇷 *Météo-France AROME Cantábrico (1.3 km)*, 🇩🇪 *DWD ICON-EU (Alemania)* y 🇺🇸 *NOAA GFS (EE. UU.)*.
+    - Implementación integrada sin dependencias externas, con persistencia en `localStorage` y actualización en vivo al instante de todos los datos climáticos.
+
 ---
 
 ## 🏗️ 3. Módulos de la Aplicación
@@ -87,4 +92,6 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Integración de la Tarjeta Oficial de Alertas AEMET por comarcas asturianas tras la tarjeta principal.
 - Armonización y ajuste compacto de las fuentes tipográficas del Hero Card.
 - Corrección de visibilidad y contraste nítido en el buscador rápido de concejos en móviles.
+- Reorganización fija en cuadrícula 2x2 de los botones de la cabecera en móviles.
+- Integración del Selector Multimodelo Científico (Auto, ECMWF, AROME, ICON, GFS) con botón superior de 1 sola línea encima del menú.
 - Subidas continuas a GitHub (`zeustata/tiempo`).
