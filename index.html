@@ -649,7 +649,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=6.6').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=7.0').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -670,6 +670,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=6.6"></script>
+  <script type="module" src="js/app.js?v=7.0"></script>
 </body>
 </html>
