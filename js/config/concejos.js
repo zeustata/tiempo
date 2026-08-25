@@ -114,10 +114,10 @@ export const CONCEJOS_ASTURIAS = [
   // --- 10. CANDAMO ---
   {
     id: 'candamo',
-    name: 'Candamo / Candamu (San Román)',
-    lat: 43.4503,
-    lon: -6.0694,
-    altitude: 60,
+    name: 'Candamo / Candamu (Grullos / San Román)',
+    lat: 43.4614,
+    lon: -6.0461,
+    altitude: 100,
     type: 'valley',
     region: 'Bajo Nalón',
     badge: '🍓 Huerta del Nalón / Cueva de la Peña',
@@ -1006,12 +1006,27 @@ export function searchConcejos(query) {
   );
 }
 
+/**
+ * Cálculo de distancia esférica real sobre la superficie de la Tierra (Fórmula de Haversine)
+ */
+export function calculateDistanceKm(lat1, lon1, lat2, lon2) {
+  const R = 6371; // Radio medio de la Tierra en km
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = 
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
 export function findClosestConcejo(lat, lon) {
   let closest = CONCEJOS_ASTURIAS[0];
   let minDist = Infinity;
 
   CONCEJOS_ASTURIAS.forEach(c => {
-    const d = Math.hypot(c.lat - lat, c.lon - lon);
+    const d = calculateDistanceKm(lat, lon, c.lat, c.lon);
     if (d < minDist) {
       minDist = d;
       closest = c;

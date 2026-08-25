@@ -1,14 +1,14 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=7.5';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=7.5';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=7.5';
-import { renderCurrentWeather } from './components/currentCard.js?v=7.5';
-import { renderMarineCard } from './components/marineCard.js?v=7.5';
-import { renderMountainCard } from './components/mountainCard.js?v=7.5';
-import { renderForecast } from './components/forecastView.js?v=7.5';
-import { renderWeatherChart } from './components/chartsView.js?v=7.5';
-import { renderCompareView } from './components/compareView.js?v=7.5';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=7.5';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=7.5';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=7.6';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=7.6';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=7.6';
+import { renderCurrentWeather } from './components/currentCard.js?v=7.6';
+import { renderMarineCard } from './components/marineCard.js?v=7.6';
+import { renderMountainCard } from './components/mountainCard.js?v=7.6';
+import { renderForecast } from './components/forecastView.js?v=7.6';
+import { renderWeatherChart } from './components/chartsView.js?v=7.6';
+import { renderCompareView } from './components/compareView.js?v=7.6';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=7.6';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=7.6';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, alertas climáticas y calidad del aire', key: '1' },
@@ -927,21 +927,32 @@ class MeteoAsturiasApp {
     }
 
     const gpsBtn = document.getElementById('btn-gps');
-    if (gpsBtn) gpsBtn.textContent = '📍 Localizando...';
+    if (gpsBtn) gpsBtn.textContent = '📍 Buscando GPS...';
+
+    const onGeoSuccess = (pos) => {
+      const closest = findClosestConcejo(pos.coords.latitude, pos.coords.longitude);
+      if (gpsBtn) gpsBtn.textContent = '📍 Mi Ubicación';
+      if (closest) {
+        this.switchConcejo(closest.id);
+      }
+    };
+
+    const onGeoError = () => {
+      // Intento secundario con menor precisión si el chip satelital tarda en fijar posición
+      navigator.geolocation.getCurrentPosition(
+        onGeoSuccess,
+        () => {
+          if (gpsBtn) gpsBtn.textContent = '📍 Mi Ubicación';
+          alert('No pudimos acceder a tu ubicación GPS. Asegúrate de dar permisos de ubicación precisa en tu dispositivo.');
+        },
+        { enableHighAccuracy: false, timeout: 7000 }
+      );
+    };
 
     navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        const closest = findClosestConcejo(pos.coords.latitude, pos.coords.longitude);
-        if (gpsBtn) gpsBtn.textContent = '📍 Mi Ubicación';
-        if (closest) {
-          this.switchConcejo(closest.id);
-        }
-      },
-      (err) => {
-        if (gpsBtn) gpsBtn.textContent = '📍 Mi Ubicación';
-        alert('No pudimos acceder a tu ubicación GPS. Asegúrate de dar permisos de localización.');
-      },
-      { timeout: 8000 }
+      onGeoSuccess,
+      onGeoError,
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
     );
   }
 

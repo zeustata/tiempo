@@ -95,4 +95,5 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Reorganización fija en cuadrícula 2x2 de los botones de la cabecera en móviles.
 - Integración del Selector Multimodelo Científico (Auto, ECMWF, AROME, ICON, GFS) con botón superior de 1 sola línea encima del menú.
 - Blindaje de variables nulas y despliegue del estado explícito "No disponible" en el índice UV para modelos que no lo computan.
+- Geolocalización satelital de alta precisión (`enableHighAccuracy`), algoritmo esférico de Haversine y calibración del centro de Candamo (Grullos / San Román).
 - Subidas continuas a GitHub (`zeustata/tiempo`).

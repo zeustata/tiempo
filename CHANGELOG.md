@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.999y-beta] - 2026-08-25
+
+### 🛰️ Geolocalización GPS de Alta Precisión y Algoritmo Haversine (Improved & Precision)
+- **Activación de Chip Satelital (High Accuracy)**: Habilitado `enableHighAccuracy: true` y `maximumAge: 0` para forzar a los navegadores y teléfonos a activar el receptor satelital GPS directo en vez de depender de antenas 4G o Wi-Fi con márgenes de error de varios kilómetros.
+- **Cálculo de Distancia Esférica (Fórmula de Haversine)**: Migración de la búsqueda del concejo más cercano a la fórmula de Haversine con curvatura terrestre y proyección real de latitud/longitud.
+- **Calibración Geográfica de Candamo**: Actualizadas las coordenadas de referencia al centro neurálgico y administrativo municipal (Grullos / San Román), garantizando una detección exacta en todos sus pueblos y valles limítrofes.
+
+---
+
 ## [0.9.999x-beta] - 2026-08-25
 
 ### ☀️ Indicación Explícita "No disponible" para Radiación UV (Improved & Safety)
