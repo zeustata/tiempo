@@ -94,4 +94,5 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Corrección de visibilidad y contraste nítido en el buscador rápido de concejos en móviles.
 - Reorganización fija en cuadrícula 2x2 de los botones de la cabecera en móviles.
 - Integración del Selector Multimodelo Científico (Auto, ECMWF, AROME, ICON, GFS) con botón superior de 1 sola línea encima del menú.
+- Blindaje de variables nulas y despliegue del estado explícito "No disponible" en el índice UV para modelos que no lo computan.
 - Subidas continuas a GitHub (`zeustata/tiempo`).
