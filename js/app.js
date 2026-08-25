@@ -1,14 +1,14 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=7.2';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=7.2';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=7.2';
-import { renderCurrentWeather } from './components/currentCard.js?v=7.2';
-import { renderMarineCard } from './components/marineCard.js?v=7.2';
-import { renderMountainCard } from './components/mountainCard.js?v=7.2';
-import { renderForecast } from './components/forecastView.js?v=7.2';
-import { renderWeatherChart } from './components/chartsView.js?v=7.2';
-import { renderCompareView } from './components/compareView.js?v=7.2';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=7.2';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=7.2';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=7.3';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=7.3';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=7.3';
+import { renderCurrentWeather } from './components/currentCard.js?v=7.3';
+import { renderMarineCard } from './components/marineCard.js?v=7.3';
+import { renderMountainCard } from './components/mountainCard.js?v=7.3';
+import { renderForecast } from './components/forecastView.js?v=7.3';
+import { renderWeatherChart } from './components/chartsView.js?v=7.3';
+import { renderCompareView } from './components/compareView.js?v=7.3';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=7.3';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=7.3';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, alertas climáticas y calidad del aire', key: '1' },

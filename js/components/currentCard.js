@@ -11,8 +11,9 @@ export function renderCurrentWeather(data, concejo, units = 'metric') {
   const aqi = data.aqi?.current;
   
   const weatherInfo = getWeatherInfo(current.weather_code);
-  const windDir = getWindDirection(current.wind_direction_10m);
-  const uvInfo = getUVDescription(daily.uv_index_max[0]);
+  const windDir = getWindDirection(current.wind_direction_10m || 0);
+  const uvVal = (daily.uv_index_max && daily.uv_index_max[0] != null) ? daily.uv_index_max[0] : (hourly.uv_index ? (hourly.uv_index[new Date().getHours()] || 0) : 0);
+  const uvInfo = getUVDescription(uvVal);
   const aqiInfo = getAQIDescription(aqi?.european_aqi);
 
   // Calcular tendencia barométrica
@@ -27,8 +28,10 @@ export function renderCurrentWeather(data, concejo, units = 'metric') {
   }
 
   // Conversión de viento a nudos si se solicita
-  const windSpeed = units === 'knots' ? (current.wind_speed_10m * 0.539957).toFixed(1) : current.wind_speed_10m.toFixed(1);
-  const windGusts = units === 'knots' ? (current.wind_gusts_10m * 0.539957).toFixed(1) : current.wind_gusts_10m.toFixed(1);
+  const rawSpeed = current.wind_speed_10m != null ? current.wind_speed_10m : 0;
+  const rawGusts = current.wind_gusts_10m != null ? current.wind_gusts_10m : rawSpeed;
+  const windSpeed = units === 'knots' ? (rawSpeed * 0.539957).toFixed(1) : rawSpeed.toFixed(1);
+  const windGusts = units === 'knots' ? (rawGusts * 0.539957).toFixed(1) : rawGusts.toFixed(1);
   const windUnit = units === 'knots' ? 'kt' : 'km/h';
 
   // Punto de rocío actual (aproximado por Magnus-Tetens)
@@ -110,10 +113,8 @@ export function renderCurrentWeather(data, concejo, units = 'metric') {
           <span class="sensor-title">Barómetro (Presión MSL)</span>
         </div>
         <div class="sensor-body">
-          <div class="sensor-val">${current.pressure_msl.toFixed(1)} <small>hPa</small></div>
-          <div class="sensor-sub">
-            Tendencia: <span class="trend-badge ${baroTrend.class}">${baroTrend.icon} ${baroTrend.text}</span>
-          </div>
+          <div class="sensor-val">${current.pressure_msl != null ? current.pressure_msl.toFixed(1) : '1013.0'} <small>hPa</small></div>
+          <div class="sensor-sub">Nivel del mar • Tendencia: <strong class="${baroTrend.class}">${baroTrend.text}</strong></div>
           <div class="pressure-gauge-bar">
             <div class="gauge-fill" style="width: ${Math.min(100, Math.max(0, ((current.pressure_msl - 980) / (1040 - 980)) * 100))}%;"></div>
           </div>
@@ -168,7 +169,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric') {
           <span class="sensor-title">Radiación Solar / Índice UV</span>
         </div>
         <div class="sensor-body">
-          <div class="sensor-val" style="color: ${uvInfo.color};">${daily.uv_index_max[0].toFixed(1)} <small class="uv-level">(${uvInfo.level})</small></div>
+          <div class="sensor-val" style="color: ${uvInfo.color};">${typeof uvVal === 'number' ? uvVal.toFixed(1) : '0.0'} <small class="uv-level">(${uvInfo.level})</small></div>
           <div class="sensor-sub">Máximo previsto en la jornada</div>
           <div class="sensor-hint" style="border-left: 3px solid ${uvInfo.color}; padding-left: 8px; margin-top: 8px;">
             ${uvInfo.advice}

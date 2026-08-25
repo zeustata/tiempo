@@ -12,6 +12,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.999v-beta] - 2026-08-25
+
+### 🛡️ Blindaje de Lecturas Multimodelo en Vivo (Fixed & Resilience)
+- **Protección de Datos Nulos en Sensores**: Manejo seguro y tolerante a fallos de variables de radiación solar UV (`uv_index_max`), tendencias barométricas y ráfagas de viento para modelos que omiten ciertas métricas (como ECMWF IFS o ICON-EU), evitando caídas de renderizado y garantizando que las tarjetas de *Estación en Vivo* se muestren siempre con total fluidez.
+
+---
+
 ## [0.9.999u-beta] - 2026-08-25
 
 ### 🛰️ Selector de Modelos Meteorológicos Científicos Integrado (New & Feature)
