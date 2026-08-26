@@ -12,12 +12,11 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
-## [0.9.1001-beta] - 2026-08-26
+## [0.9.1002-beta] - 2026-08-26
 
-### 🌊 2 Tarjetas de Marea Consolidadas y Cache-Busting Total (Feature & UX Mobile)
-- **Consolidación en 2 Tarjetas (1ª Marea y 2ª Marea del Día)**: Agrupación definitiva de los 4 eventos diarios en 2 únicas tarjetas (1ª Marea y 2ª Marea) con sus correspondientes Pleamar y Bajamar en estricto orden cronológico.
-- **Cache-Busting Total (`?v=1001`)**: Actualizados los parámetros de versión de todos los recursos CSS y JS (`components.css`, `main.css`, `weather-themes.css`, `app.js`, `sw.js`) para garantizar que los navegadores móviles y PWAs descarguen los nuevos estilos y scripts sin retener archivos antiguos en caché.
-- **Service Worker `meteoasturlode-v72-live`**: Renovación de la caché PWA para asegurar la recarga automática.
+### 🌊 Alineación Perfecta y Sin Desbordamientos en Tarjetas de Marea (Fix & UX Mobile)
+- **Alineación Perfecta al 100% en Móviles**: Adaptación de las 2 tarjetas de ciclos (1ª y 2ª Marea) para ocupar el ancho completo del contenedor en dispositivos móviles, distribuyendo la Pleamar y Bajamar en 2 columnas internas amplias con `white-space: nowrap` y `overflow: hidden`, garantizando que ninguna letra, número o unidad (`m`) se desborde fuera del marco.
+- **Cache-Busting Total (`?v=1002`) & SW `v73`**: Renovación de parámetros de versión de todos los recursos estáticos y de la caché de la aplicación para actualización inmediata.
 
 ---
 

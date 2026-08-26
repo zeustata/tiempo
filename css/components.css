@@ -626,40 +626,15 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 12px;
   margin-top: 14px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-@media (max-width: 680px) {
+@media (max-width: 720px) {
   .daily-tide-cycles-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
+    grid-template-columns: 1fr;
+    gap: 10px;
     margin-top: 10px;
-  }
-
-  .tide-cycle-card {
-    padding: 10px 8px;
-    gap: 6px;
-  }
-
-  .tide-cycle-items {
-    grid-template-columns: 1fr !important;
-    gap: 6px;
-  }
-
-  .tide-sub-item {
-    padding: 6px 8px;
-    gap: 2px;
-  }
-
-  .tide-sub-time {
-    font-size: 1.05rem !important;
-  }
-
-  .tide-sub-height {
-    font-size: 0.78rem !important;
-  }
-
-  .cycle-badge {
-    font-size: 0.7rem !important;
   }
 }
 
@@ -670,7 +645,10 @@
   padding: 12px 14px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -689,7 +667,7 @@
 }
 
 .cycle-badge {
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.6px;
@@ -699,16 +677,20 @@
 .tide-cycle-items {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .tide-sub-item {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 8px 10px;
+  gap: 6px;
+  padding: 10px 12px;
   border-radius: var(--radius-sm);
   border: 1px solid transparent;
+  min-width: 0;
+  box-sizing: border-box;
   transition: all 0.15s ease;
 }
 
@@ -725,15 +707,15 @@
 .tide-sub-meta {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
 }
 
 .tide-sub-icon {
-  font-size: 1rem;
+  font-size: 1.05rem;
 }
 
 .tide-sub-name {
-  font-size: 0.74rem;
+  font-size: 0.76rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.4px;
@@ -749,15 +731,17 @@
 
 .tide-sub-time {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 1.22rem;
+  font-size: 1.25rem;
   font-weight: 800;
   color: var(--text-main);
+  white-space: nowrap;
 }
 
 .tide-sub-height {
-  font-size: 0.84rem;
+  font-size: 0.88rem;
   font-weight: 700;
   color: var(--primary-light, #38bdf8);
+  white-space: nowrap;
 }
 
 .tide-sub-item.low .tide-sub-height {
