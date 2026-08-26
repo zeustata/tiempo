@@ -12,12 +12,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
-## [0.9.1000-beta] - 2026-08-26
+## [0.9.1001-beta] - 2026-08-26
 
-### 🌊 Tarjetas de Ciclos de Marea en Orden Cronológico y 2 Columnas Móvil (Feature & UX Mobile)
-- **Orden Cronológico Estricto de Mareas (Plea/Baja o Baja/Plea)**: Los eventos de cada ciclo se presentan en el orden horario real en que ocurren (identificando automáticamente si el día o ciclo arranca con Pleamar o con Bajamar).
-- **Diseño de 2 Columnas en Móvil**: En pantallas móviles, las 2 tarjetas de ciclo se presentan lado a lado en 2 columnas en una sola fila compacta, con tipografía y padding optimizados para lectura nítida sin ocupar espacio vertical.
-- **Invalidación de Caché en Móviles (Service Worker v71)**: Actualizado `CACHE_NAME` a `meteoasturlode-v71-live` para forzar la actualización inmediata en navegadores móviles y PWAs instaladas.
+### 🌊 2 Tarjetas de Marea Consolidadas y Cache-Busting Total (Feature & UX Mobile)
+- **Consolidación en 2 Tarjetas (1ª Marea y 2ª Marea del Día)**: Agrupación definitiva de los 4 eventos diarios en 2 únicas tarjetas (1ª Marea y 2ª Marea) con sus correspondientes Pleamar y Bajamar en estricto orden cronológico.
+- **Cache-Busting Total (`?v=1001`)**: Actualizados los parámetros de versión de todos los recursos CSS y JS (`components.css`, `main.css`, `weather-themes.css`, `app.js`, `sw.js`) para garantizar que los navegadores móviles y PWAs descarguen los nuevos estilos y scripts sin retener archivos antiguos en caché.
+- **Service Worker `meteoasturlode-v72-live`**: Renovación de la caché PWA para asegurar la recarga automática.
 
 ---
 

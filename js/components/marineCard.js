@@ -380,10 +380,10 @@ export function renderMarineCard(data, concejo) {
 
           return `
             <div class="daily-tide-cycles-grid">
-              <!-- Tarjeta 1er Ciclo (Primeras Mareas del Día) -->
+              <!-- Tarjeta 1 (1ª Marea del Día: Plea + Baja) -->
               <div class="tide-cycle-card">
                 <div class="tide-cycle-header">
-                  <span class="cycle-badge">🌅 1º Ciclo de Mareas</span>
+                  <span class="cycle-badge">🌅 1ª Marea del Día</span>
                 </div>
                 <div class="tide-cycle-items">
                   ${renderSubItem(ev0)}
@@ -391,10 +391,10 @@ export function renderMarineCard(data, concejo) {
                 </div>
               </div>
 
-              <!-- Tarjeta 2º Ciclo (Segundas Mareas del Día) -->
+              <!-- Tarjeta 2 (2ª Marea del Día: Plea + Baja) -->
               <div class="tide-cycle-card">
                 <div class="tide-cycle-header">
-                  <span class="cycle-badge">🌙 2º Ciclo de Mareas</span>
+                  <span class="cycle-badge">🌙 2ª Marea del Día</span>
                 </div>
                 <div class="tide-cycle-items">
                   ${renderSubItem(ev2)}
