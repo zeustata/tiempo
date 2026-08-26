@@ -354,72 +354,51 @@ export function renderMarineCard(data, concejo) {
           </div>
         </div>
 
-        <!-- 2 Ciclos del Día (Pleamar + Bajamar agrupadas) -->
+        <!-- 2 Ciclos del Día en Orden Cronológico Real (Plea/Baja o Baja/Plea) -->
         ${(() => {
-          const highEvents = tideStatus.dayData.events.filter(e => e.type === 'high');
-          const lowEvents = tideStatus.dayData.events.filter(e => e.type === 'low');
-          const high1 = highEvents[0] || { timeStr: '--:--', height: '--' };
-          const high2 = highEvents[1] || highEvents[0] || { timeStr: '--:--', height: '--' };
-          const low1 = lowEvents[0] || { timeStr: '--:--', height: '--' };
-          const low2 = lowEvents[1] || lowEvents[0] || { timeStr: '--:--', height: '--' };
+          const events = tideStatus.dayData.events || [];
+          const ev0 = events[0] || { type: 'high', name: 'Pleamar', timeStr: '--:--', height: '--' };
+          const ev1 = events[1] || { type: 'low', name: 'Bajamar', timeStr: '--:--', height: '--' };
+          const ev2 = events[2] || { type: 'high', name: 'Pleamar', timeStr: '--:--', height: '--' };
+          const ev3 = events[3] || { type: 'low', name: 'Bajamar', timeStr: '--:--', height: '--' };
+
+          const renderSubItem = (ev) => {
+            const isHigh = ev.type === 'high';
+            return `
+              <div class="tide-sub-item ${isHigh ? 'high' : 'low'}">
+                <div class="tide-sub-meta">
+                  <span class="tide-sub-icon">${isHigh ? '🌅' : '🏖️'}</span>
+                  <span class="tide-sub-name">${ev.name}</span>
+                </div>
+                <div class="tide-sub-data">
+                  <span class="tide-sub-time">${ev.timeStr}</span>
+                  <span class="tide-sub-height">${ev.height} m</span>
+                </div>
+              </div>
+            `;
+          };
 
           return `
             <div class="daily-tide-cycles-grid">
-              <!-- Tarjeta 1er Ciclo (Mañana / Primeras Mareas) -->
+              <!-- Tarjeta 1er Ciclo (Primeras Mareas del Día) -->
               <div class="tide-cycle-card">
                 <div class="tide-cycle-header">
                   <span class="cycle-badge">🌅 1º Ciclo de Mareas</span>
                 </div>
                 <div class="tide-cycle-items">
-                  <div class="tide-sub-item high">
-                    <div class="tide-sub-meta">
-                      <span class="tide-sub-icon">🌅</span>
-                      <span class="tide-sub-name">Pleamar</span>
-                    </div>
-                    <div class="tide-sub-data">
-                      <span class="tide-sub-time">${high1.timeStr}</span>
-                      <span class="tide-sub-height">${high1.height} m</span>
-                    </div>
-                  </div>
-                  <div class="tide-sub-item low">
-                    <div class="tide-sub-meta">
-                      <span class="tide-sub-icon">🏖️</span>
-                      <span class="tide-sub-name">Bajamar</span>
-                    </div>
-                    <div class="tide-sub-data">
-                      <span class="tide-sub-time">${low1.timeStr}</span>
-                      <span class="tide-sub-height">${low1.height} m</span>
-                    </div>
-                  </div>
+                  ${renderSubItem(ev0)}
+                  ${renderSubItem(ev1)}
                 </div>
               </div>
 
-              <!-- Tarjeta 2º Ciclo (Tarde-Noche / Segundas Mareas) -->
+              <!-- Tarjeta 2º Ciclo (Segundas Mareas del Día) -->
               <div class="tide-cycle-card">
                 <div class="tide-cycle-header">
                   <span class="cycle-badge">🌙 2º Ciclo de Mareas</span>
                 </div>
                 <div class="tide-cycle-items">
-                  <div class="tide-sub-item high">
-                    <div class="tide-sub-meta">
-                      <span class="tide-sub-icon">🌅</span>
-                      <span class="tide-sub-name">Pleamar</span>
-                    </div>
-                    <div class="tide-sub-data">
-                      <span class="tide-sub-time">${high2.timeStr}</span>
-                      <span class="tide-sub-height">${high2.height} m</span>
-                    </div>
-                  </div>
-                  <div class="tide-sub-item low">
-                    <div class="tide-sub-meta">
-                      <span class="tide-sub-icon">🏖️</span>
-                      <span class="tide-sub-name">Bajamar</span>
-                    </div>
-                    <div class="tide-sub-data">
-                      <span class="tide-sub-time">${low2.timeStr}</span>
-                      <span class="tide-sub-height">${low2.height} m</span>
-                    </div>
-                  </div>
+                  ${renderSubItem(ev2)}
+                  ${renderSubItem(ev3)}
                 </div>
               </div>
             </div>
