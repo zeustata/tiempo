@@ -12,11 +12,11 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
-## [0.9.1002-beta] - 2026-08-26
+## [0.9.1003-beta] - 2026-08-26
 
-### 🌊 Alineación Perfecta y Sin Desbordamientos en Tarjetas de Marea (Fix & UX Mobile)
-- **Alineación Perfecta al 100% en Móviles**: Adaptación de las 2 tarjetas de ciclos (1ª y 2ª Marea) para ocupar el ancho completo del contenedor en dispositivos móviles, distribuyendo la Pleamar y Bajamar en 2 columnas internas amplias con `white-space: nowrap` y `overflow: hidden`, garantizando que ninguna letra, número o unidad (`m`) se desborde fuera del marco.
-- **Cache-Busting Total (`?v=1002`) & SW `v73`**: Renovación de parámetros de versión de todos los recursos estáticos y de la caché de la aplicación para actualización inmediata.
+### 🌊 Filas Horizontales Espaciosas para Mareas (UX Mobile & Visual Perfection)
+- **Filas Horizontales Completas por Evento**: En cada una de las 2 tarjetas de ciclos (1ª y 2ª Marea), la Pleamar y la Bajamar se muestran en filas horizontales completas independientes con distribución de extremo a extremo (`justify-content: space-between`). A la izquierda se sitúan el icono y nombre en negrita, y a la derecha la hora en monoespaciado grande (`1.25rem`) y los metros (`m`), eliminando cualquier colisión o amontonamiento de texto.
+- **Cache-Busting Total (`?v=1003`) & SW `v74`**: Renovación de parámetros de versión de todos los recursos estáticos y de la caché de la aplicación para actualización inmediata en móviles y navegadores de escritorio.
 
 ---
 

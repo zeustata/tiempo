@@ -642,7 +642,7 @@
   background: var(--bg-surface-elevated);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
-  padding: 12px 14px;
+  padding: 14px 16px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -662,12 +662,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 6px;
+  padding-bottom: 8px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .cycle-badge {
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.6px;
@@ -675,21 +675,21 @@
 }
 
 .tide-cycle-items {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   width: 100%;
   box-sizing: border-box;
 }
 
 .tide-sub-item {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 10px 12px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
   border-radius: var(--radius-sm);
   border: 1px solid transparent;
-  min-width: 0;
+  width: 100%;
   box-sizing: border-box;
   transition: all 0.15s ease;
 }
@@ -707,38 +707,37 @@
 .tide-sub-meta {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .tide-sub-icon {
-  font-size: 1.05rem;
+  font-size: 1.15rem;
 }
 
 .tide-sub-name {
-  font-size: 0.76rem;
+  font-size: 0.82rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.4px;
-  color: var(--text-dim);
+  letter-spacing: 0.5px;
+  color: var(--text-main);
 }
 
 .tide-sub-data {
   display: flex;
   align-items: baseline;
-  justify-content: space-between;
-  gap: 6px;
+  gap: 10px;
 }
 
 .tide-sub-time {
   font-family: 'JetBrains Mono', monospace;
   font-size: 1.25rem;
   font-weight: 800;
-  color: var(--text-main);
+  color: #ffffff;
   white-space: nowrap;
 }
 
 .tide-sub-height {
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   font-weight: 700;
   color: var(--primary-light, #38bdf8);
   white-space: nowrap;
