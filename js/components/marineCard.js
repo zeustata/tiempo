@@ -366,11 +366,11 @@ export function renderMarineCard(data, concejo) {
             const isHigh = ev.type === 'high';
             return `
               <div class="tide-sub-item ${isHigh ? 'high' : 'low'}">
-                <div class="tide-sub-meta">
+                <div class="tide-sub-top">
                   <span class="tide-sub-icon">${isHigh ? '🌅' : '🏖️'}</span>
                   <span class="tide-sub-name">${ev.name}</span>
                 </div>
-                <div class="tide-sub-data">
+                <div class="tide-sub-bottom">
                   <span class="tide-sub-time">${ev.timeStr}</span>
                   <span class="tide-sub-height">${ev.height} m</span>
                 </div>

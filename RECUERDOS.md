@@ -96,6 +96,6 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Integración del Selector Multimodelo Científico (Auto, ECMWF, AROME, ICON, GFS) con botón superior de 1 sola línea encima del menú.
 - Blindaje de variables nulas y despliegue del estado explícito "No disponible" en el índice UV para modelos que no lo computan.
 - Geolocalización satelital de alta precisión (`enableHighAccuracy`), algoritmo esférico de Haversine y calibración del centro de Candamo (Grullos / San Román).
-- Consolidación definitiva de las mareas diarias en 2 únicas tarjetas con filas horizontales espaciosas (nombre a la izquierda y hora/metros a la derecha), cache-busting total v=1003 y Service Worker v74 (v0.9.1003-beta).
+- Consolidación definitiva de las mareas diarias en 2 únicas tarjetas con estructura a 2 niveles (nombre arriba, hora y metros abajo de extremo a extremo), cache-busting total v=1004 y Service Worker v75 (v0.9.1004-beta).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 

@@ -684,8 +684,8 @@
 
 .tide-sub-item {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 4px;
   padding: 10px 14px;
   border-radius: var(--radius-sm);
   border: 1px solid transparent;
@@ -704,43 +704,43 @@
   background: linear-gradient(135deg, rgba(245, 158, 11, 0.14), rgba(15, 23, 42, 0.45));
 }
 
-.tide-sub-meta {
+.tide-sub-top {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .tide-sub-icon {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
 }
 
 .tide-sub-name {
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: var(--text-main);
+  color: var(--text-dim);
 }
 
-.tide-sub-data {
+.tide-sub-bottom {
   display: flex;
   align-items: baseline;
-  gap: 10px;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .tide-sub-time {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   font-weight: 800;
   color: #ffffff;
-  white-space: nowrap;
+  letter-spacing: 0.5px;
 }
 
 .tide-sub-height {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: var(--primary-light, #38bdf8);
-  white-space: nowrap;
 }
 
 .tide-sub-item.low .tide-sub-height {

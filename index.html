@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1003">
-  <link rel="stylesheet" href="css/components.css?v=1003">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1003">
+  <link rel="stylesheet" href="css/main.css?v=1004">
+  <link rel="stylesheet" href="css/components.css?v=1004">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1004">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -171,7 +171,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v0.9.1003-beta 📋</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v0.9.1004-beta 📋</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -216,11 +216,11 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v0.9.1003-beta</span>
+            <span class="release-version">v0.9.1004-beta</span>
             <span class="release-date">26 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-improved">Diseño & Legibilidad</span> <strong>Diseño de Filas Horizontales Espaciosas para Mareas</strong>: dentro de cada una de las 2 tarjetas de marea, la Pleamar y la Bajamar se muestran en filas horizontales completas con nombre a la izquierda y hora/metros a la derecha, garantizando máxima claridad, legibilidad y cero colisiones tipográficas.</li>
+            <li><span class="tag tag-improved">Diseño & Legibilidad Total</span> <strong>Estructura a 2 Niveles por Evento de Marea</strong>: nombre arriba y hora/metros en fila inferior completa sin riesgo de corte ni choque de texto en ninguna pantalla móvil.</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -739,7 +739,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1003').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1004').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -760,6 +760,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1003"></script>
+  <script type="module" src="js/app.js?v=1004"></script>
 </body>
 </html>

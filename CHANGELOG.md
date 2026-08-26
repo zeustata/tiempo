@@ -12,11 +12,11 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
-## [0.9.1003-beta] - 2026-08-26
+## [0.9.1004-beta] - 2026-08-26
 
-### 🌊 Filas Horizontales Espaciosas para Mareas (UX Mobile & Visual Perfection)
-- **Filas Horizontales Completas por Evento**: En cada una de las 2 tarjetas de ciclos (1ª y 2ª Marea), la Pleamar y la Bajamar se muestran en filas horizontales completas independientes con distribución de extremo a extremo (`justify-content: space-between`). A la izquierda se sitúan el icono y nombre en negrita, y a la derecha la hora en monoespaciado grande (`1.25rem`) y los metros (`m`), eliminando cualquier colisión o amontonamiento de texto.
-- **Cache-Busting Total (`?v=1003`) & SW `v74`**: Renovación de parámetros de versión de todos los recursos estáticos y de la caché de la aplicación para actualización inmediata en móviles y navegadores de escritorio.
+### 🌊 Distribución a 2 Niveles por Marea (Visual Clarity & 100% Mobile Immunity)
+- **Estructura a 2 Niveles por Fila**: En cada evento de marea (Pleamar y Bajamar), el nombre e icono se sitúan en la línea superior (`tide-sub-top`) y la hora en monoespaciado grande (`1.35rem`) junto con los metros en cian/ámbar se sitúan en la línea inferior (`tide-sub-bottom`) de extremo a extremo (`justify-content: space-between`), asegurando holgura total y cero desbordamientos en cualquier ancho de pantalla móvil.
+- **Cache-Busting Total (`?v=1004`) & SW `v75`**: Renovación de versión de recursos para actualización inmediata en clientes.
 
 ---
 
