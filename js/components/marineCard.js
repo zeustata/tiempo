@@ -354,19 +354,77 @@ export function renderMarineCard(data, concejo) {
           </div>
         </div>
 
-        <!-- 4 Nodos del Día -->
-        <div class="daily-tide-events-grid">
-          ${tideStatus.dayData.events.map(ev => `
-            <div class="tide-event-chip ${ev.type}">
-              <div class="chip-top">
-                <span class="chip-icon">${ev.type === 'high' ? '🌅' : '🏖️'}</span>
-                <span class="chip-name">${ev.name}</span>
+        <!-- 2 Ciclos del Día (Pleamar + Bajamar agrupadas) -->
+        ${(() => {
+          const highEvents = tideStatus.dayData.events.filter(e => e.type === 'high');
+          const lowEvents = tideStatus.dayData.events.filter(e => e.type === 'low');
+          const high1 = highEvents[0] || { timeStr: '--:--', height: '--' };
+          const high2 = highEvents[1] || highEvents[0] || { timeStr: '--:--', height: '--' };
+          const low1 = lowEvents[0] || { timeStr: '--:--', height: '--' };
+          const low2 = lowEvents[1] || lowEvents[0] || { timeStr: '--:--', height: '--' };
+
+          return `
+            <div class="daily-tide-cycles-grid">
+              <!-- Tarjeta 1er Ciclo (Mañana / Primeras Mareas) -->
+              <div class="tide-cycle-card">
+                <div class="tide-cycle-header">
+                  <span class="cycle-badge">🌅 1º Ciclo de Mareas</span>
+                </div>
+                <div class="tide-cycle-items">
+                  <div class="tide-sub-item high">
+                    <div class="tide-sub-meta">
+                      <span class="tide-sub-icon">🌅</span>
+                      <span class="tide-sub-name">Pleamar</span>
+                    </div>
+                    <div class="tide-sub-data">
+                      <span class="tide-sub-time">${high1.timeStr}</span>
+                      <span class="tide-sub-height">${high1.height} m</span>
+                    </div>
+                  </div>
+                  <div class="tide-sub-item low">
+                    <div class="tide-sub-meta">
+                      <span class="tide-sub-icon">🏖️</span>
+                      <span class="tide-sub-name">Bajamar</span>
+                    </div>
+                    <div class="tide-sub-data">
+                      <span class="tide-sub-time">${low1.timeStr}</span>
+                      <span class="tide-sub-height">${low1.height} m</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="chip-time">${ev.timeStr}</div>
-              <div class="chip-height">${ev.height} m</div>
+
+              <!-- Tarjeta 2º Ciclo (Tarde-Noche / Segundas Mareas) -->
+              <div class="tide-cycle-card">
+                <div class="tide-cycle-header">
+                  <span class="cycle-badge">🌙 2º Ciclo de Mareas</span>
+                </div>
+                <div class="tide-cycle-items">
+                  <div class="tide-sub-item high">
+                    <div class="tide-sub-meta">
+                      <span class="tide-sub-icon">🌅</span>
+                      <span class="tide-sub-name">Pleamar</span>
+                    </div>
+                    <div class="tide-sub-data">
+                      <span class="tide-sub-time">${high2.timeStr}</span>
+                      <span class="tide-sub-height">${high2.height} m</span>
+                    </div>
+                  </div>
+                  <div class="tide-sub-item low">
+                    <div class="tide-sub-meta">
+                      <span class="tide-sub-icon">🏖️</span>
+                      <span class="tide-sub-name">Bajamar</span>
+                    </div>
+                    <div class="tide-sub-data">
+                      <span class="tide-sub-time">${low2.timeStr}</span>
+                      <span class="tide-sub-height">${low2.height} m</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          `).join('')}
-        </div>
+          `;
+        })()}
       </div>
 
       <!-- 2. CUADRO SEMANAL DE MAREAS & COEFICIENTES (7 DÍAS) -->

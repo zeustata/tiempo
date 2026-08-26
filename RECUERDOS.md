@@ -96,4 +96,6 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Integración del Selector Multimodelo Científico (Auto, ECMWF, AROME, ICON, GFS) con botón superior de 1 sola línea encima del menú.
 - Blindaje de variables nulas y despliegue del estado explícito "No disponible" en el índice UV para modelos que no lo computan.
 - Geolocalización satelital de alta precisión (`enableHighAccuracy`), algoritmo esférico de Haversine y calibración del centro de Candamo (Grullos / San Román).
+- Consolidación y rediseño de las mareas diarias en 2 tarjetas de ciclos (Pleamar + Bajamar) para optimización extrema del espacio vertical en móviles (v0.9.999z-beta).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
+

@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [0.9.999z-beta] - 2026-08-26
+
+### 🌊 Tarjetas de Ciclos de Marea Compactas y Combinadas (Feature & UX Mobile)
+- **Agrupación en 2 Tarjetas de Ciclos (Pleamar + Bajamar)**: Sustitución de los 4 bloques individuales apilados verticalmente en móviles por 2 tarjetas estructuradas por ciclos de marea (🌅 *1º Ciclo de Mareas* y 🌙 *2º Ciclo de Mareas*), donde cada tarjeta muestra conjuntamente su correspondiente Pleamar (azul cian) y Bajamar (ámbar) con horas en monoespaciado y cotas en metros.
+- **Optimización de Espacio Vertical en Móviles**: Reducción drástica del scroll vertical en dispositivos móviles, manteniendo una visualización espaciosa y equilibrada en 2 columnas en ordenadores de sobremesa.
+- **Estética Liquid Glass y Microanimaciones**: Fondos translúcidos con degradados diferenciados por tipo de marea y transiciones fluidas de realce al interactuar.
+
+---
+
 ## [0.9.999y-beta] - 2026-08-25
 
 ### 🛰️ Geolocalización GPS de Alta Precisión y Algoritmo Haversine (Improved & Precision)
