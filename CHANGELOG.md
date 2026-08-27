@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.1] - 2026-08-27
+
+### 📱 Optimización de Cabecera Móvil y Detección Standalone (Improved & Mobile UX)
+- **Cabecera Simétrica de 2 Botones en Móviles**: Ocultación inteligente del botón *Completa / Ventana* en pantallas de teléfonos móviles (`max-width: 768px`), desplegando una sola fila limpia y simétrica de 2 botones táctiles: `[ ⭐ Guardar ]` y `[ 📍 Mi Ubicación ]`.
+- **Detección Automática de Modo Standalone / App**: En la aplicación instalada (PWA / Google Play Store TWA en teléfonos y tablets), el sistema detecta el modo app (`display-mode: standalone`) y oculta automáticamente los botones redundantes (*Instalar App* y *Completa*), ofreciendo una interfaz 100% nativa.
+- **Cache-Busting Total (`?v=1.0.1`) & SW `v101-official`**: Actualización de manifiestos y caché para despliegue instantáneo.
+
+---
+
 ## [1.0.0] - 2026-08-27
 
 ### 🚀 Gran Lanzamiento Oficial v1.0.0 & Preparación Google Play Store (Major Release)
