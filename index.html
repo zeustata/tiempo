@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1004">
-  <link rel="stylesheet" href="css/components.css?v=1004">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1004">
+  <link rel="stylesheet" href="css/main.css?v=1.0.0">
+  <link rel="stylesheet" href="css/components.css?v=1.0.0">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.0">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -171,10 +171,13 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v0.9.1004-beta 📋</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.0 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
+        </div>
+        <div style="margin-top: 8px;">
+          <a href="privacy.html" style="color: var(--text-dim); font-size: 0.82rem; text-decoration: underline; transition: color 0.2s ease;">🔒 Política de Privacidad</a>
         </div>
         <div id="last-updated" style="margin-top: 6px; font-size: 0.78rem; color: var(--text-dim);"></div>
       </div>
@@ -216,8 +219,17 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
+            <span class="release-version">v1.0.0 🚀</span>
+            <span class="release-date">27 Ago 2026 (Oficial)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Lanzamiento Oficial</span> <strong>Gran Publicación Oficial v1.0.0 & Google Play Store</strong>: culminación de la fase beta con cobertura integral de los 78 concejos de Asturias, selector multimodelo científico, alertas oficiales AEMET por comarcas, mareógrafo dinámico continuo de 72 horas y política de privacidad oficial.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
             <span class="release-version">v0.9.1004-beta</span>
-            <span class="release-date">26 Ago 2026 (Actual)</span>
+            <span class="release-date">26 Ago 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-improved">Diseño & Legibilidad Total</span> <strong>Estructura a 2 Niveles por Evento de Marea</strong>: nombre arriba y hora/metros en fila inferior completa sin riesgo de corte ni choque de texto en ninguna pantalla móvil.</li>
@@ -739,7 +751,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1004').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.0').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -760,6 +772,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1004"></script>
+  <script type="module" src="js/app.js?v=1.0.0"></script>
 </body>
 </html>

@@ -12,6 +12,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.0] - 2026-08-27
+
+### 🚀 Gran Lanzamiento Oficial v1.0.0 & Preparación Google Play Store (Major Release)
+- **Culminación de la Fase Beta**: Finalización exitosa del ciclo beta y salto histórico a la **Versión Oficial 1.0.0** de *MeteoAstur Lode*.
+- **Política de Privacidad Oficial (`privacy.html`)**: Creación de la página oficial de Política de Privacidad adaptada a la normativa de Google Play Store, garantizando el tratamiento local de las coordenadas GPS y cero almacenamiento de datos de usuario en servidores externos.
+- **Identificación Oficial y Enlaces**: Integración del acceso directo a la Política de Privacidad en el pie de página y actualización del distintivo de versión a **`v1.0.0 🚀`**.
+- **Cache-Busting Total & Service Worker `v100-official`**: Purga completa de caché para garantizar la sincronización instantánea de todos los usuarios en web y dispositivos móviles.
+
+---
+
 ## [0.9.1004-beta] - 2026-08-26
 
 ### 🌊 Distribución a 2 Niveles por Marea (Visual Clarity & 100% Mobile Immunity)

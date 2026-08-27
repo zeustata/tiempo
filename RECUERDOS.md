@@ -22,14 +22,14 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
    - Acto seguido, realizar `git commit` y `git push origin main` para que la aplicación esté permanentemente actualizada y respaldada en la web.
 
 3. 🔢 **Incremento de Versión Obligatorio**:
-   - Con cada cambio o modificación de funcionalidades, estilos o estructura, **siempre se debe subir el número de versión** (actualmente en ciclo `v0.9.x-beta`).
+   - Con cada cambio o modificación de funcionalidades, estilos o estructura, **siempre se debe subir el número de versión** (actualmente en ciclo oficial `v1.x.x`).
    - Se debe reflejar la nueva versión en:
      - El badge del pie de página (`#app-version-badge` en `index.html`).
      - El historial del modal de versiones (`#version-modal` en `index.html`).
      - El archivo `CHANGELOG.md`.
 
-4. 🧪 **Mantenimiento de la Fase Beta**:
-   - La app se encuentra actualmente en fase de pruebas activas con el sufijo `-beta` hasta que Lendo decida publicar la versión oficial `1.0.0`.
+4. 🚀 **Versión Oficial 1.0.0**:
+   - Culminación de la fase beta y publicación de la versión oficial `1.0.0` para su despliegue y lanzamiento en Google Play Store.
 
 ---
 
@@ -96,6 +96,7 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Integración del Selector Multimodelo Científico (Auto, ECMWF, AROME, ICON, GFS) con botón superior de 1 sola línea encima del menú.
 - Blindaje de variables nulas y despliegue del estado explícito "No disponible" en el índice UV para modelos que no lo computan.
 - Geolocalización satelital de alta precisión (`enableHighAccuracy`), algoritmo esférico de Haversine y calibración del centro de Candamo (Grullos / San Román).
-- Consolidación definitiva de las mareas diarias en 2 únicas tarjetas con estructura a 2 niveles (nombre arriba, hora y metros abajo de extremo a extremo), cache-busting total v=1004 y Service Worker v75 (v0.9.1004-beta).
+- Consolidación definitiva de las mareas diarias en 2 únicas tarjetas con estructura a 2 niveles (nombre arriba, hora y metros abajo de extremo a extremo).
+- Culminación de la fase beta y lanzamiento histórico de la **Versión Oficial 1.0.0** (`v1.0.0 🚀`) con creación de la Política de Privacidad (`privacy.html`), enlace en pie de página, Service Worker `v100-official` y preparación para Google Play Store.
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 
