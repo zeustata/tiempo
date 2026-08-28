@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.9] - 2026-08-28
+
+### 🛡️ Reversión de Seguridad y Restauración Integral de Sensores (Stability & Rollback)
+- **Reversión a Estado Funcional Estable**: Aplicación de la Regla de Oro de Rollback para restaurar el estado funcional íntegro de la aplicación con sus 7 módulos oficiales (incluyendo el nuevo *Observatorio Astronómico & Cosmos*).
+- **Purga y Renovación de Caché**: Salto directo a **`v1.0.9`** y Service Worker `v109-official` para asegurar que todos los dispositivos y navegadores carguen inmediatamente los scripts estables sin residuos de caché.
+
+---
+
 ## [1.0.7] - 2026-08-28
 
 ### 🔭 Nuevo Módulo Astronómico & Semáforo de Visibilidad en Asturias (New Feature & Cosmos)
