@@ -12,11 +12,11 @@ import { getWeatherInfo } from './utils/weatherIcons.js?v=7.6';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, alertas climáticas y calidad del aire', key: '1' },
-  { id: 'forecast', icon: '📅', title: 'Pronósticos', desc: 'Predicción horaria detallada para 72h y evolución por días', key: '2' },
-  { id: 'radar', icon: '📡', title: 'Radar Cantábrico', desc: 'Precipitación y tormentas en directo vía satélite RainViewer', key: '3' },
-  { id: 'marine', icon: '🌊', title: 'Costa & Mar', desc: 'Oleaje, mareas, escala Douglas, surf y playas', key: '4' },
-  { id: 'mountain', icon: '🏔️', title: 'Cordillera & Nieve', desc: 'Estado de puertos de montaña, cota de nieve y esquí', key: '5' },
-  { id: 'charts', icon: '📈', title: 'Gráficos 48 Horas', desc: 'Curvas continuas de temperatura, lluvia y viento', key: '6' },
+  { id: 'charts', icon: '📈', title: 'Gráficos 48 Horas', desc: 'Curvas continuas de temperatura, lluvia y viento', key: '2' },
+  { id: 'forecast', icon: '📅', title: 'Pronósticos', desc: 'Predicción horaria detallada para 72h y evolución por días', key: '3' },
+  { id: 'radar', icon: '📡', title: 'Radar Cantábrico', desc: 'Precipitación y tormentas en directo vía satélite RainViewer', key: '4' },
+  { id: 'marine', icon: '🌊', title: 'Costa & Mar', desc: 'Oleaje, mareas, escala Douglas, surf y playas', key: '5' },
+  { id: 'mountain', icon: '🏔️', title: 'Cordillera & Nieve', desc: 'Estado de puertos de montaña, cota de nieve y esquí', key: '6' },
   { id: 'compare', icon: '⚖️', title: 'Comparador Climático', desc: 'Comparativa simultánea cara a cara entre dos concejos', key: '7' }
 ];
 
@@ -729,7 +729,7 @@ class MeteoAsturiasApp {
   }
 
   setupKeyboardShortcuts() {
-    const tabList = ['live', 'radar', 'marine', 'mountain', 'forecast', 'charts', 'compare'];
+    const tabList = APP_MODULES.map(m => m.id);
 
     window.addEventListener('keydown', (e) => {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;

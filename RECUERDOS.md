@@ -73,11 +73,11 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ## 🏗️ 3. Módulos de la Aplicación
 1. **📊 Estación en Vivo (`panel-live`)**: Panel principal con Hero Card, Alertas AEMET y sensores detallados.
-2. **📡 Radar en Directo (`panel-radar`)**: Mapa interactivo con capas de lluvia/nubes de RainViewer/AEMET.
+2. **📈 Gráficas Meteo (`panel-charts`)**: Evolución temporal detallada con scroll táctil horizontal y curvas 48 horas.
 3. **📅 Previsión 14 Días (`panel-forecast`)**: Pronóstico extendido por días y horas.
-4. **📈 Gráficas Meteo (`panel-charts`)**: Evolución temporal detallada con scroll táctil horizontal.
-5. **🏔️ Montaña y Puertos (`panel-mountain`)**: Datos de puertos asturianos y cotas de nieve.
-6. **🌊 Costa y Playas (`panel-marine`)**: Condiciones marítimas, surf, playas y mareógrafo en tiempo real de 72 horas.
+4. **📡 Radar en Directo (`panel-radar`)**: Mapa interactivo con capas de lluvia/nubes de RainViewer/AEMET.
+5. **🌊 Costa y Playas (`panel-marine`)**: Condiciones marítimas, surf, playas y mareógrafo en tiempo real de 72 horas.
+6. **🏔️ Montaña y Puertos (`panel-mountain`)**: Datos de puertos asturianos y cotas de nieve.
 7. **⚖️ Comparador (`panel-compare`)**: Comparación meteorológica en paralelo entre concejos.
 
 ---
@@ -100,5 +100,6 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Culminación de la fase beta y lanzamiento histórico de la **Versión Oficial 1.0.0** (`v1.0.0 🚀`) con creación de la Política de Privacidad (`privacy.html`), enlace en pie de página, Service Worker `v100-official` y preparación para Google Play Store.
 - Optimización inteligente de cabecera en modo standalone/móviles: ocultación de botones redundantes (*Instalar* y *Completa*) dejando 2 botones simétricos (*Guardar* y *Ubicación*) y salto a **v1.0.1** (SW `v101-official`).
 - Actualización de la Política de Privacidad (`privacy.html`): establecimiento del correo oficial directo (`zeustata@gmail.com`) como canal exclusivo de soporte para máxima privacidad, sencillez de cara al usuario final y cumplimiento de estándares para Google Play Store, con salto a **v1.0.2** (SW `v102-official`).
+- Reorganización del menú de navegación de módulos para situar **📈 Gráficos 48 Horas** en la segunda posición (entre *Estación en Vivo* y *Pronósticos*), agrupando el Top 3 de previsión local directa y sincronizando atajos numéricos, con salto a **v1.0.3** (SW `v103-official`).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 

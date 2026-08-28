@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.3] - 2026-08-28
+
+### 📈 Reorganización Prioritaria del Menú y Atajos de Teclado (UX & Navigation)
+- **Top 3 de Previsión Local Inmediata**: Reorganización del menú de navegación de módulos para situar **📈 Gráficos 48 Horas** en la segunda posición (justo entre *📊 Estación en Vivo* y *📅 Pronósticos*), permitiendo consultar la evolución temporal continua hora a hora de inmediato antes de los pronósticos por días.
+- **Sincronización de Atajos de Teclado Numéricos (1 al 7)**: Actualizada la asignación dinámica de teclas directas (1: Estación, 2: Gráficos 48h, 3: Pronósticos, 4: Radar, 5: Costa & Mar, 6: Cordillera & Nieve, 7: Comparador).
+- **Cache-Busting Total (`?v=1.0.3`) & SW `v103-official`**: Renovación de versión de recursos y caché del Service Worker para actualización inmediata.
+
+---
+
 ## [1.0.2] - 2026-08-28
 
 ### 🔒 Política de Privacidad y Canal Directo de Soporte (Privacy & Contact)
