@@ -12,6 +12,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.4] - 2026-08-28
+
+### 📈 Espaciado Holgado y Etiquetas a 2 Niveles en Gráficos 48h (Visual Perfection & Clarity)
+- **Anchura Holgada por Columna Horaria**: Ampliación del ancho base por hora de 34px a **54px por hora** (alcanzando cerca de **2600px** de desplazamiento táctil continuo a lo largo de las 48 horas), dotando a cada punto y barra de suficiente amplitud para evitar cualquier choque de textos.
+- **Etiquetas de Día/Hora en 2 Líneas Verticales**: Las marcas temporales de medianoche (`00:00`) y hora inicial se formatean automáticamente en dos niveles (`[Día, Hora]`), manteniendo un ancho compacto y limpio en el eje horizontal.
+- **Resalte Visual y Cuadrícula Guiada**: Las líneas verticales que marcan el cambio de día se acentúan en un tono cian sutil (`#38bdf8`) con mayor contraste para facilitar la lectura del paso de los días.
+- **Cache-Busting Total (`?v=1.0.4`) & SW `v104-official`**: Renovación de versión de recursos y caché del Service Worker para actualización inmediata.
+
+---
+
 ## [1.0.3] - 2026-08-28
 
 ### 📈 Reorganización Prioritaria del Menú y Atajos de Teclado (UX & Navigation)

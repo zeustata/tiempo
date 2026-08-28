@@ -9,8 +9,8 @@ export function renderWeatherChart(canvasId, hourlyData, hoursCount = 48) {
 
   const wrapper = document.getElementById('chart-canvas-wrapper');
   if (wrapper) {
-    // Calculamos el ancho mínimo proporcional a las horas (aprox 36px por cada hora) para que nunca se amontone en móvil
-    const targetWidth = Math.max(900, hoursCount * 34);
+    // Ancho proporcional holgado (54px por hora = ~2592px para 48h) para máxima legibilidad táctil
+    const targetWidth = Math.max(1400, hoursCount * 54);
     wrapper.style.minWidth = `${targetWidth}px`;
   }
 
@@ -29,11 +29,20 @@ export function renderWeatherChart(canvasId, hourlyData, hoursCount = 48) {
   for (let i = currentHour; i < currentHour + hoursCount && i < hourlyData.time.length; i++) {
     const d = new Date(hourlyData.time[i]);
     const isStartOfDay = d.getHours() === 0;
+    const isFirstHour = i === currentHour;
     const dayPrefix = d.toLocaleDateString('es-ES', { weekday: 'short' });
+    const formattedDay = dayPrefix.charAt(0).toUpperCase() + dayPrefix.slice(1);
     const hourStr = d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
     
-    // Si es medianoche o la primera hora, incluimos el día en la etiqueta
-    labels.push(isStartOfDay || i === currentHour ? `${dayPrefix} ${hourStr}` : hourStr);
+    // Si es medianoche o la primera hora, incluimos el día arriba y la hora abajo en 2 líneas limpias
+    if (isStartOfDay) {
+      labels.push([formattedDay, hourStr]);
+    } else if (isFirstHour) {
+      labels.push(['Hoy', hourStr]);
+    } else {
+      labels.push(hourStr);
+    }
+    
     fullDates.push(d.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }));
     
     temps.push(hourlyData.temperature_2m[i]);
@@ -145,14 +154,30 @@ export function renderWeatherChart(canvasId, hourlyData, hoursCount = 48) {
       scales: {
         x: {
           grid: {
-            color: 'rgba(255, 255, 255, 0.06)',
+            color: (context) => {
+              const label = labels[context.index];
+              return Array.isArray(label) ? 'rgba(56, 189, 248, 0.28)' : 'rgba(255, 255, 255, 0.06)';
+            },
+            lineWidth: (context) => {
+              const label = labels[context.index];
+              return Array.isArray(label) ? 1.5 : 1;
+            },
             drawTicks: true
           },
           ticks: {
-            color: '#94a3b8',
-            font: { family: 'Outfit, sans-serif', size: 11, weight: '600' },
+            color: (context) => {
+              const label = labels[context.index];
+              return Array.isArray(label) ? '#38bdf8' : '#94a3b8';
+            },
+            font: (context) => {
+              const label = labels[context.index];
+              return Array.isArray(label)
+                ? { family: 'Outfit, sans-serif', size: 11, weight: '700' }
+                : { family: 'Outfit, sans-serif', size: 11, weight: '600' };
+            },
             maxRotation: 0,
-            autoSkip: false
+            autoSkip: false,
+            padding: 4
           }
         },
         yTemp: {
