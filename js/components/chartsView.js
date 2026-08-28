@@ -1,3 +1,5 @@
+import { getWeatherInfo } from '../utils/weatherIcons.js?v=7.6';
+
 /**
  * Generador de gráficos de evolución horaria (48h) con scroll horizontal interactivo en móviles
  */
@@ -22,9 +24,12 @@ export function renderWeatherChart(canvasId, hourlyData, hoursCount = 48) {
   const currentHour = new Date().getHours();
   const labels = [];
   const fullDates = [];
+  const weatherDescriptions = [];
   const temps = [];
   const rains = [];
   const winds = [];
+
+  const weatherCodes = hourlyData.weather_code || hourlyData.weathercode || [];
 
   for (let i = currentHour; i < currentHour + hoursCount && i < hourlyData.time.length; i++) {
     const d = new Date(hourlyData.time[i]);
@@ -45,6 +50,10 @@ export function renderWeatherChart(canvasId, hourlyData, hoursCount = 48) {
     
     fullDates.push(d.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }));
     
+    const wCode = weatherCodes[i] != null ? weatherCodes[i] : 0;
+    const wInfo = getWeatherInfo(wCode);
+    weatherDescriptions.push(`${wInfo.icon} ${wInfo.label}`);
+
     temps.push(hourlyData.temperature_2m[i]);
     rains.push(hourlyData.precipitation_probability[i] || 0);
     winds.push(hourlyData.wind_gusts_10m[i] || 0);
@@ -135,6 +144,10 @@ export function renderWeatherChart(canvasId, hourlyData, hoursCount = 48) {
             title: function(items) {
               const index = items[0].dataIndex;
               return '🕒 ' + fullDates[index];
+            },
+            afterTitle: function(items) {
+              const index = items[0].dataIndex;
+              return weatherDescriptions[index] || '';
             },
             label: function(item) {
               if (item.dataset.label.includes('Temperatura')) {

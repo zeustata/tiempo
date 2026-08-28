@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.5] - 2026-08-28
+
+### 🌤️ Iconografía Meteorológica en Gráficos 48h (Visual Detail & UX)
+- **Icono y Estado del Cielo en Cuadro Interactivo**: Integración del icono meteorológico (☀️, 🌤️, 🌧️, ⛈️, etc.) y la descripción del estado del cielo en el encabezado del cuadro emergente táctil (*tooltip*) al pulsar cualquier hora del gráfico de 48 horas.
+- **Gráfica Limpia sin Sobrepeso Visual**: Toda la información se despliega de forma elegante dentro del cuadro flotante sin necesidad de añadir trazos, rayas ni líneas adicionales a las curvas de la cuadrícula.
+- **Cache-Busting Total (`?v=1.0.5`) & SW `v105-official`**: Renovación de versión de recursos y caché del Service Worker para actualización inmediata.
+
+---
+
 ## [1.0.4] - 2026-08-28
 
 ### 📈 Espaciado Holgado y Etiquetas a 2 Niveles en Gráficos 48h (Visual Perfection & Clarity)
