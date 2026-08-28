@@ -187,8 +187,43 @@
 .sensor-header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
   margin-bottom: 14px;
+}
+
+.sensor-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-explain-sensor {
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #fbbf24;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.btn-explain-sensor:hover {
+  background: rgba(245, 158, 11, 0.3);
+  border-color: #f59e0b;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+}
+
+.btn-explain-sensor:active {
+  transform: scale(0.96);
 }
 
 .sensor-icon {
@@ -2579,4 +2614,98 @@
   font-size: 0.78rem;
   color: #64748b;
   padding: 12px 0;
+}
+
+/* --- MODAL DIDÁCTICO EXPLÍCAME --- */
+.modal-explain-card {
+  max-width: 620px;
+  width: 92%;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.explain-modal-body {
+  overflow-y: auto;
+  padding: 16px 20px 24px;
+}
+
+.explain-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.explain-top-badge-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.explain-icon-large {
+  font-size: 2rem;
+}
+
+.explain-badge-tag {
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: #38bdf8;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+.explain-sections-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.explain-card-block {
+  background: rgba(15, 23, 42, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.explain-block-title {
+  font-size: 0.95rem;
+  color: #f8fafc;
+  margin: 0;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.explain-block-text {
+  font-size: 0.88rem;
+  color: #cbd5e1;
+  line-height: 1.5;
+}
+
+.explain-block-text strong {
+  color: #ffffff;
+}
+
+.explain-list {
+  margin: 6px 0 0 0;
+  padding-left: 18px;
+}
+
+.explain-list li {
+  margin-bottom: 6px;
+}
+
+.explain-footer-note {
+  text-align: center;
+  font-size: 0.76rem;
+  color: #64748b;
+  margin-top: 8px;
 }

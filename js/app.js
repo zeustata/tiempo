@@ -9,6 +9,7 @@ import { renderWeatherChart } from './components/chartsView.js?v=1.0.7';
 import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.7';
 import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=7.6';
 import { getWeatherInfo } from './utils/weatherIcons.js?v=7.6';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.10';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, alertas climáticas y calidad del aire', key: '1' },
@@ -41,6 +42,7 @@ class MeteoAsturiasApp {
     this.renderFavoritesMenu();
     this.setupNavModal();
     this.setupModelModal();
+    this.setupExplainModal();
     this.setupEventListeners();
     this.setupQuickSearch();
     this.setupPwaInstall();
@@ -649,6 +651,44 @@ class MeteoAsturiasApp {
     this.renderNavItems = renderNavItems;
   }
 
+  setupExplainModal() {
+    const modal = document.getElementById('explain-modal');
+    const closeBtn = document.getElementById('btn-close-explain');
+    const titleEl = document.getElementById('explain-modal-title');
+    const subtitleEl = document.getElementById('explain-modal-subtitle');
+    const contentEl = document.getElementById('explain-modal-content');
+
+    if (!modal) return;
+
+    // Delegación global de evento para cualquier botón .btn-explain-sensor en la app
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.btn-explain-sensor');
+      if (!btn) return;
+
+      this.triggerHaptic();
+      const topicKey = btn.dataset.explain || 'barometer';
+      const topic = WEATHER_EXPLANATIONS[topicKey] || WEATHER_EXPLANATIONS.barometer;
+
+      if (titleEl) titleEl.innerHTML = `💡 ${topic.title}`;
+      if (subtitleEl) subtitleEl.textContent = topic.subtitle;
+      if (contentEl) contentEl.innerHTML = getExplanationHtml(topicKey);
+
+      this.openModal(modal);
+    });
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        this.closeModal(modal);
+      });
+    }
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        this.closeModal(modal);
+      }
+    });
+  }
+
   switchTab(targetTab) {
     const mod = APP_MODULES.find(m => m.id === targetTab) || APP_MODULES[0];
 
@@ -762,6 +802,8 @@ class MeteoAsturiasApp {
         if (modelModal) modelModal.style.display = 'none';
         const navModal = document.getElementById('nav-modal');
         if (navModal) navModal.style.display = 'none';
+        const explainModal = document.getElementById('explain-modal');
+        if (explainModal) explainModal.style.display = 'none';
       }
     });
   }
