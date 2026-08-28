@@ -12,6 +12,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.7] - 2026-08-28
+
+### 🔭 Nuevo Módulo Astronómico & Semáforo de Visibilidad en Asturias (New Feature & Cosmos)
+- **🔭 Observatorio Astronómico & Cosmos**: Creación del nuevo módulo astronómico especializado para el seguimiento de los grandes fenómenos celestes (eclipses solares y lunares, lluvias de meteoros Perseidas/Gemínidas/Oriónidas, superlunas, conjunciones de planetas y auroras boreales).
+- **🚦 Semáforo de Visibilidad Geográfica**: Clasificación cromática en tiempo real para saber qué fenómenos son observables directamente desde Asturias (🟢 Visible en Asturias con consejos y mejores cumbres libres de niebla), cuáles en regiones limítrofes o España (🟡 España / Europa) y cuáles a escala mundial (🔴 Hemisferio Sur / Lejano).
+- **🌓 Fases Lunares & Cuentas Atrás Dinámicas**: Indicador en vivo de fase lunar actual, porcentaje de iluminación del disco, edad lunar y tarjetas interactivas con cuenta atrás exacta por evento.
+- **Filtros Táctiles Inmediatos**: Botonera con chips interactivos para filtrar en 1 toque por categoría de visibilidad (`🌟 Todos`, `🟢 Asturias`, `🟡 España`, `🔴 Global`).
+- **Cache-Busting Total (`?v=1.0.7`) & SW `v107-official`**: Renovación de versión de recursos y caché del Service Worker para actualización inmediata.
+
+---
+
 ## [1.0.6] - 2026-08-28
 
 ### ⚡ Optimización del Menú y Supresión de Cargas Innecesarias (Performance & Clarity)

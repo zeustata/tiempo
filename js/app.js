@@ -5,8 +5,8 @@ import { renderCurrentWeather } from './components/currentCard.js?v=7.6';
 import { renderMarineCard } from './components/marineCard.js?v=7.6';
 import { renderMountainCard } from './components/mountainCard.js?v=7.6';
 import { renderForecast } from './components/forecastView.js?v=7.6';
-import { renderWeatherChart } from './components/chartsView.js?v=1.0.5';
-import { renderCompareView } from './components/compareView.js?v=7.6';
+import { renderWeatherChart } from './components/chartsView.js?v=1.0.7';
+import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.7';
 import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=7.6';
 import { getWeatherInfo } from './utils/weatherIcons.js?v=7.6';
 
@@ -16,7 +16,8 @@ const APP_MODULES = [
   { id: 'forecast', icon: '📅', title: 'Pronósticos', desc: 'Predicción horaria detallada para 72h y evolución por días', key: '3' },
   { id: 'radar', icon: '📡', title: 'Radar Cantábrico', desc: 'Precipitación y tormentas en directo vía satélite RainViewer', key: '4' },
   { id: 'marine', icon: '🌊', title: 'Costa & Mar', desc: 'Oleaje, mareas, escala Douglas, surf y playas', key: '5' },
-  { id: 'mountain', icon: '🏔️', title: 'Cordillera & Nieve', desc: 'Estado de puertos de montaña, cota de nieve y esquí', key: '6' }
+  { id: 'mountain', icon: '🏔️', title: 'Cordillera & Nieve', desc: 'Estado de puertos de montaña, cota de nieve y esquí', key: '6' },
+  { id: 'astronomy', icon: '🔭', title: 'Astronomía & Cosmos', desc: 'Eclipses, lluvias de estrellas, fases lunares y semáforo de visibilidad en Asturias', key: '7' }
 ];
 
 class MeteoAsturiasApp {
@@ -673,8 +674,8 @@ class MeteoAsturiasApp {
       setTimeout(() => renderWeatherChart('meteo-chart-canvas', this.weatherData.weather.hourly, 48), 50);
     }
 
-    if (targetTab === 'compare') {
-      this.renderCompareSection();
+    if (targetTab === 'astronomy') {
+      renderAstronomyView('panel-astronomy', 'all');
     }
 
     const navModal = document.getElementById('nav-modal');
