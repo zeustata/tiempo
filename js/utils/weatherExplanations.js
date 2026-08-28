@@ -44,6 +44,42 @@ export const WEATHER_EXPLANATIONS = {
     ]
   },
 
+  humidity_dewpoint: {
+    icon: '💧',
+    title: '¿Qué es la Humedad y el Punto de Rocío?',
+    subtitle: 'El mejor indicador científico de sensación de bochorno y condensación',
+    badge: 'Humedad Relativa (%) & Punto de Rocío (°C)',
+    sections: [
+      {
+        icon: '🌊',
+        heading: '1. Humedad Relativa (%)',
+        text: 'Mide la cantidad de vapor de agua que hay en el aire comparada con el <strong>máximo posible</strong> a esa temperatura. Un 100% significa aire saturado donde ya no cabe ni una molécula más de vapor.'
+      },
+      {
+        icon: '🌫️',
+        heading: '2. ¿Qué es el Punto de Rocío (°C)?',
+        text: 'Es la <strong>temperatura exacta a la que debe enfriarse el aire para que el vapor se condense en agua líquida</strong>. Si la temperatura del suelo o del aire cae hasta el punto de rocío, se forman nieblas, vaho en los cristales o rocío en los prados.'
+      },
+      {
+        icon: '🌡️',
+        heading: '3. Escala de Sensación y Confort Humano',
+        text: `
+          <ul class="explain-list">
+            <li><strong>🧊 Menor de 10 °C:</strong> Aire seco y fresco. Confortable y fácil transpiración.</li>
+            <li><strong>✨ 10 °C a 16 °C:</strong> Nivel óptimo y agradable. Sensación térmica perfecta.</li>
+            <li><strong>😓 16 °C a 19 °C:</strong> Sensación perceptible de humedad y calor moderado.</li>
+            <li><strong>🔥 20 °C a 24 °C+:</strong> <em>Bochorno sofocante y pegajoso</em>. El sudor no se evapora y aumenta el cansancio térmico.</li>
+          </ul>
+        `
+      },
+      {
+        icon: '🏔️',
+        heading: 'Astucia Meteorológica en Asturias',
+        text: 'Cuando la temperatura ambiente y el punto de rocío están separados por menos de <strong>1 °C o 2 °C</strong> en la costa cantábrica o los valles asturianos, ¡la presencia de <em>niebla marina, nubes bajas o el típico orbayu</em> es prácticamente inevitable!'
+      }
+    ]
+  },
+
   uv: {
     icon: '☀️',
     title: '¿Qué es el Índice de Radiación Ultravioleta (UV)?',

@@ -1,5 +1,5 @@
-import { getWeatherInfo, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.0.11';
-import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.0.11';
+import { getWeatherInfo, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.0.12';
+import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.0.12';
 
 /**
  * Renderiza el dashboard principal con alineación uniforme y todos los sensores de la estación
@@ -132,8 +132,11 @@ export function renderCurrentWeather(data, concejo, units = 'metric') {
       <!-- 3. HIGRÓMETRO & ROCÍO -->
       <div class="sensor-card">
         <div class="sensor-header">
-          <span class="sensor-icon">💧</span>
-          <span class="sensor-title">Humedad y Punto de Rocío</span>
+          <div class="sensor-header-left">
+            <span class="sensor-icon">💧</span>
+            <span class="sensor-title">Humedad y Punto de Rocío</span>
+          </div>
+          <button class="btn-explain-sensor" data-explain="humidity_dewpoint" title="¿Qué es el punto de rocío y el bochorno? Pulsa para aprender">💡 Explícame</button>
         </div>
         <div class="sensor-body">
           <div class="sensor-val">${current.relative_humidity_2m}<small>%</small></div>

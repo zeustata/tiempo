@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.12] - 2026-08-28
+
+### 💧 Botón Didáctico "Explícame" en Humedad y Punto de Rocío (Learning & Dew Point)
+- **Botón `[ 💡 Explícame ]` en Higrómetro & Rocío**: Integración del botón interactivo didáctico en la tarjeta del sensor de Humedad (*Estación en Vivo*).
+- **Guía Didáctica del Punto de Rocío**: Despliegue interactivo con explicación clara de qué es la humedad relativa, el significado físico del Punto de Rocío (°C), la tabla de sensación de bochorno (<10°C seco, 10-16°C óptimo, >20°C sofocante) y por qué se producen las nieblas y el *orbayu* asturiano.
+- **Service Worker `v112-official` & Cache-Busting**: Renovación de versión y activación instantánea.
+
+---
+
 ## [1.0.11] - 2026-08-28
 
 ### 🚀 Sincronización Total de Caché & Despliegue del Botón "Explícame" (Release & Cache-Busting)

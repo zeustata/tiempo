@@ -108,5 +108,6 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Reversión atómica y segura del botón didáctico al estado funcional estable con salto a **v1.0.9** (SW `v109-official`) para purga inmediata de caché en todos los clientes.
 - Integración verificada y libre de errores del botón y modal didáctico interactivo **`[ 💡 Explícame ]`** en la tarjeta del Barómetro con explicación clara de presión, anticiclón, borrasca, lectura de tendencias y trucos asturianos, con arquitectura extensible a otros sensores, con salto a **v1.0.10** (SW `v110-official`).
 - Sincronización masiva de query strings de submódulos JavaScript para forzar la actualización inmediata del botón didáctico en clientes con salto a **v1.0.11** (SW `v111-official`).
+- Integración del botón didáctico **`[ 💡 Explícame ]`** en el sensor de Humedad y Punto de Rocío con guía completa sobre condensación, bochorno y formación de nieblas/orbayu asturiano con salto a **v1.0.12** (SW `v112-official`).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 
