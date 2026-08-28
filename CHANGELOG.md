@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.11] - 2026-08-28
+
+### 🚀 Sincronización Total de Caché & Despliegue del Botón "Explícame" (Release & Cache-Busting)
+- **Sincronización Total de Submódulos**: Actualización de todos los query strings de importación a `?v=1.0.11` en `app.js` y `currentCard.js` para forzar la recarga en caliente de las tarjetas climáticas y el botón didáctico `[ 💡 Explícame ]` en todos los navegadores y dispositivos móviles.
+- **Service Worker `v111-official`**: Purga de caché y activación inmediata.
+
+---
+
 ## [1.0.10] - 2026-08-28
 
 ### 💡 Botón y Modal Didáctico "Explícame" (Meteorological Learning & UX)

@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.10">
-  <link rel="stylesheet" href="css/components.css?v=1.0.10">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.10">
+  <link rel="stylesheet" href="css/main.css?v=1.0.11">
+  <link rel="stylesheet" href="css/components.css?v=1.0.11">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.11">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -171,7 +171,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.10 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.11 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -219,20 +219,21 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.10 🚀</span>
+            <span class="release-version">v1.0.11 🚀</span>
             <span class="release-date">28 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-new">Educación y Divulgación</span> <strong>Botón y Modal Didáctico "💡 Explícame"</strong>: integración de un botón interactivo ámbar en la tarjeta del Barómetro con ventana emergente educativa para entender la presión atmosférica, diferencias entre anticiclón y borrasca, interpretación de la tendencia de 3 horas y trucos meteorológicos en Asturias. Sistema preparado y modular para extenderse a más sensores.</li>
+            <li><span class="tag tag-improved">Cache-Busting Total</span> <strong>Renovación de Módulos</strong>: sincronización de todos los submódulos JavaScript para forzar la actualización inmediata en navegadores móviles.</li>
           </ul>
         </div>
         <div class="changelog-release">
           <div class="release-header">
-            <span class="release-version">v1.0.9</span>
+            <span class="release-version">v1.0.10</span>
             <span class="release-date">28 Ago 2026</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-improved">Estabilidad y Rendimiento</span> <strong>Restauración y Validación Completa de Sensores</strong>: consolidación y purga de caché para garantizar la carga instantánea de todos los sensores meteorológicos, radares, previsiones y módulo astronómico.</li>
+            <li><span class="tag tag-improved">Estabilidad y Rendimiento</span> <strong>Sincronización de Sensores</strong>: validación y preparación de la infraestructura del modal educativo.</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -846,7 +847,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.10').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.11').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -867,6 +868,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.10"></script>
+  <script type="module" src="js/app.js?v=1.0.11"></script>
 </body>
 </html>
