@@ -12,16 +12,6 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
-## [1.0.8] - 2026-08-28
-
-### 💡 Botón y Modal Didáctico "Explícame" (Meteorological Learning & UX)
-- **Botón Interactivo `[ 💡 Explícame ]` en Barómetro**: Integración de un botón táctil en la tarjeta del sensor del Barómetro para consultar de forma instantánea la explicación comprensible del valor barométrico.
-- **Ventana Emergente Didáctica (*Modal "Explícame el Clima"*)**: Despliegue interactivo con cierre táctil `[ ✕ ]` y por tecla Escape, explicando qué es la presión atmosférica, las diferencias entre anticiclón (>1013 hPa) y borrasca (<1013 hPa), cómo interpretar la tendencia de 3 horas y astucias climáticas específicas en Asturias.
-- **Arquitectura Modular Extensible**: Creación del diccionario educativo modular ([`js/utils/weatherExplanations.js`](js/utils/weatherExplanations.js)) preparado para extender explicaciones a otros sensores (UV, AQI, Humedad, etc.) en futuras iteraciones.
-- **Cache-Busting Total (`?v=1.0.8`) & SW `v108-official`**: Renovación de versión de recursos y caché del Service Worker para actualización inmediata.
-
----
-
 ## [1.0.7] - 2026-08-28
 
 ### 🔭 Nuevo Módulo Astronómico & Semáforo de Visibilidad en Asturias (New Feature & Cosmos)

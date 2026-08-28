@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.8">
-  <link rel="stylesheet" href="css/components.css?v=1.0.8">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.8">
+  <link rel="stylesheet" href="css/main.css?v=1.0.7">
+  <link rel="stylesheet" href="css/components.css?v=1.0.7">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.7">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -171,7 +171,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.8 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.7 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -219,17 +219,8 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.8 🚀</span>
+            <span class="release-version">v1.0.7 🚀</span>
             <span class="release-date">28 Ago 2026 (Actual)</span>
-          </div>
-          <ul class="changelog-list">
-            <li><span class="tag tag-new">Educación y Divulgación</span> <strong>Botón y Modal Didáctico "💡 Explícame"</strong>: integración de un botón interactivo ámbar en la tarjeta del Barómetro con ventana emergente educativa para entender la presión atmosférica, diferencias entre anticiclón y borrasca, interpretación de la tendencia de 3 horas y trucos meteorológicos en Asturias. Sistema preparado y modular para extenderse a más sensores.</li>
-          </ul>
-        </div>
-        <div class="changelog-release">
-          <div class="release-header">
-            <span class="release-version">v1.0.7</span>
-            <span class="release-date">28 Ago 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-new">Nuevo Módulo</span> <strong>🔭 Observatorio Astronómico & Cosmos</strong>: incorporación del nuevo módulo astronómico especializado con catálogo de eventos celestes (eclipses solares y lunares, lluvias de meteoros Perseidas/Gemínidas, superlunas, conjunciones y auroras boreales), semáforo inteligente de visibilidad geográfica (🟢 Asturias, 🟡 España/Europa, 🔴 Global) y cálculo de fases lunares en directo.</li>
@@ -819,25 +810,11 @@
     </div>
   </div>
 
-  <!-- MODAL DIDÁCTICO "EXPLÍCAME" -->
-  <div id="explain-modal" class="modal-overlay" style="display: none;">
-    <div class="modal-card modal-explain-card">
-      <div class="modal-header">
-        <div class="explain-modal-header-text">
-          <h3 id="explain-modal-title">💡 Explícame</h3>
-          <span id="explain-modal-subtitle" class="modal-subtitle">Guía didáctica meteorológica</span>
-        </div>
-        <button id="btn-close-explain" class="btn-close" aria-label="Cerrar ventana">&times;</button>
-      </div>
-      <div class="modal-body explain-modal-body" id="explain-modal-content"></div>
-    </div>
-  </div>
-
   <!-- Service Worker Registration & Live Auto-Update Engine -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.8').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.7').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -858,6 +835,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.8"></script>
+  <script type="module" src="js/app.js?v=1.0.7"></script>
 </body>
 </html>
