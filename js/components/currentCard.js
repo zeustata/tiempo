@@ -109,8 +109,11 @@ export function renderCurrentWeather(data, concejo, units = 'metric') {
       <!-- 2. BARÓMETRO -->
       <div class="sensor-card">
         <div class="sensor-header">
-          <span class="sensor-icon">⏱️</span>
-          <span class="sensor-title">Barómetro (Presión MSL)</span>
+          <div class="sensor-header-left">
+            <span class="sensor-icon">⏱️</span>
+            <span class="sensor-title">Barómetro (Presión MSL)</span>
+          </div>
+          <button class="btn-explain-sensor" data-explain="barometer" title="¿Cómo funciona el barómetro? Pulsa para aprender">💡 Explícame</button>
         </div>
         <div class="sensor-body">
           <div class="sensor-val">${current.pressure_msl != null ? current.pressure_msl.toFixed(1) : '1013.0'} <small>hPa</small></div>
