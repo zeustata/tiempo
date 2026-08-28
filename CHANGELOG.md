@@ -12,6 +12,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.6] - 2026-08-28
+
+### ⚡ Optimización del Menú y Supresión de Cargas Innecesarias (Performance & Clarity)
+- **Retirada del Comparador Climático**: Eliminación del botón del comparador del menú principal de navegación, consolidando una suite de **6 módulos esenciales** de meteorología asturiana.
+- **Ahorro de Datos y Recursos**: Supresión de la precarga en segundo plano del tiempo de otros concejos al arrancar la app, mejorando el consumo de memoria, batería y tiempos de respuesta.
+- **Atajos Directos Compactos (1 al 6)**: Sincronización automática de los atajos numéricos directos para los 6 módulos activos.
+- **Cache-Busting Total (`?v=1.0.6`) & SW `v106-official`**: Renovación de versión de recursos y caché del Service Worker para actualización inmediata.
+
+---
+
 ## [1.0.5] - 2026-08-28
 
 ### 🌤️ Iconografía Meteorológica en Gráficos 48h (Visual Detail & UX)

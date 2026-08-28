@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.5">
-  <link rel="stylesheet" href="css/components.css?v=1.0.5">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.5">
+  <link rel="stylesheet" href="css/main.css?v=1.0.6">
+  <link rel="stylesheet" href="css/components.css?v=1.0.6">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.6">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -171,7 +171,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.5 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.6 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -219,8 +219,17 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.5 🚀</span>
+            <span class="release-version">v1.0.6 🚀</span>
             <span class="release-date">28 Ago 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-improved">Optimización y Rendimiento</span> <strong>Menú Focalizado a 6 Módulos Esenciales</strong>: retirada del botón de comparador climático para simplificar la navegación y optimizar el rendimiento, eliminando consultas de red en segundo plano y dejando los 6 módulos clave de meteorología asturiana.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.0.5</span>
+            <span class="release-date">28 Ago 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-new">Iconografía en Gráficos</span> <strong>Icono y Estado del Cielo en Cuadro Interactivo 48h</strong>: integración del icono del tiempo oficial (☀️, 🌤️, 🌧️, ⛈️, etc.) y su descripción meteorológica en el encabezado del cuadro emergente táctil de cada hora sin sobrecargar la cuadrícula visual.</li>
@@ -796,7 +805,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.5').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.6').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -817,6 +826,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.5"></script>
+  <script type="module" src="js/app.js?v=1.0.6"></script>
 </body>
 </html>

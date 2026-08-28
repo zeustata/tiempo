@@ -73,12 +73,11 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ## 🏗️ 3. Módulos de la Aplicación
 1. **📊 Estación en Vivo (`panel-live`)**: Panel principal con Hero Card, Alertas AEMET y sensores detallados.
-2. **📈 Gráficas Meteo (`panel-charts`)**: Evolución temporal detallada con scroll táctil horizontal y curvas 48 horas.
+2. **📈 Gráficas Meteo (`panel-charts`)**: Evolución temporal detallada con scroll táctil horizontal y curvas 48 horas con iconografía del cielo.
 3. **📅 Previsión 14 Días (`panel-forecast`)**: Pronóstico extendido por días y horas.
 4. **📡 Radar en Directo (`panel-radar`)**: Mapa interactivo con capas de lluvia/nubes de RainViewer/AEMET.
 5. **🌊 Costa y Playas (`panel-marine`)**: Condiciones marítimas, surf, playas y mareógrafo en tiempo real de 72 horas.
 6. **🏔️ Montaña y Puertos (`panel-mountain`)**: Datos de puertos asturianos y cotas de nieve.
-7. **⚖️ Comparador (`panel-compare`)**: Comparación meteorológica en paralelo entre concejos.
 
 ---
 
@@ -103,5 +102,6 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Reorganización del menú de navegación de módulos para situar **📈 Gráficos 48 Horas** en la segunda posición (entre *Estación en Vivo* y *Pronósticos*), agrupando el Top 3 de previsión local directa y sincronizando atajos numéricos, con salto a **v1.0.3** (SW `v103-official`).
 - Optimización y holgura en **📈 Gráficos 48 Horas**: ampliación a 54px por hora (~2600px de ancho) y formateo de etiquetas en 2 líneas verticales (`[Día, Hora]`) con líneas guía sutiles en cian para eliminar cualquier superposición de horas y cuadrículas en móviles, con salto a **v1.0.4** (SW `v104-official`).
 - Integración de iconografía y estado del cielo en el cuadro emergente interactivo (*tooltip*) de **📈 Gráficos 48 Horas** sin sobrecargar la cuadrícula visual, con salto a **v1.0.5** (SW `v105-official`).
+- Retirada del botón del Comparador Climático y supresión de precargas de datos innecesarias en segundo plano, consolidando 6 módulos oficiales con atajos numéricos del 1 al 6, con salto a **v1.0.6** (SW `v106-official`).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 
