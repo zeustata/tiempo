@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.1">
-  <link rel="stylesheet" href="css/components.css?v=1.0.1">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.1">
+  <link rel="stylesheet" href="css/main.css?v=1.0.2">
+  <link rel="stylesheet" href="css/components.css?v=1.0.2">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.2">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -171,7 +171,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.1 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.2 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -219,8 +219,17 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.1 🚀</span>
-            <span class="release-date">27 Ago 2026 (Actual)</span>
+            <span class="release-version">v1.0.2 🚀</span>
+            <span class="release-date">28 Ago 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-improved">Privacidad y Soporte</span> <strong>Canal Directo de Contacto Oficial</strong>: actualización del canal de soporte en la Política de Privacidad mediante correo electrónico directo (<code>zeustata@gmail.com</code>), optimizando el estándar de privacidad para usuarios y preparación para Google Play Store.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.0.1</span>
+            <span class="release-date">27 Ago 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-improved">Diseño y Ergonomía Móvil</span> <strong>Cabecera Limpia & Detección Standalone</strong>: ocultación automática e inteligente de los botones redundantes (<em>Instalar</em> y <em>Completa</em>) en dispositivos móviles y en la app instalada (móviles y tablets), dejando una cabecera simétrica y despejada con acceso rápido exclusivo a <em>⭐ Guardar</em> y <em>📍 Mi Ubicación</em>.</li>
@@ -760,7 +769,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.1').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.2').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -781,6 +790,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.1"></script>
+  <script type="module" src="js/app.js?v=1.0.2"></script>
 </body>
 </html>

@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.2] - 2026-08-28
+
+### 🔒 Política de Privacidad y Canal Directo de Soporte (Privacy & Contact)
+- **Canal Directo de Soporte Oficial**: Actualización de la sección de contacto en la Política de Privacidad ([`privacy.html`](privacy.html)), estableciendo el correo oficial directo (`zeustata@gmail.com`) como canal exclusivo de atención al usuario.
+- **Preparación y Cumplimiento Google Play Store**: Adecuación a los estándares internacionales de tiendas de aplicaciones móviles, evitando fricción o exposición técnica innecesaria a usuarios finales y canalizando todas las dudas directamente a la bandeja privada del desarrollador.
+- **Cache-Busting Total (`?v=1.0.2`) & SW `v102-official`**: Renovación de versión de recursos y caché del Service Worker para actualización inmediata.
+
+---
+
 ## [1.0.1] - 2026-08-27
 
 ### 📱 Optimización de Cabecera Móvil y Detección Standalone (Improved & Mobile UX)
