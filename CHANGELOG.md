@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.29] - 2026-08-28
+
+### 📱 Desplazamiento Vertical Táctil en la Galería de Iconos
+- **Scroll Táctil Suave & Fluido**: Configurado `overflow-y: auto`, `max-height: 72vh`, `overscroll-behavior: contain` y `-webkit-overflow-scrolling: touch` en `.icon-themes-modal-body` para permitir deslizar cómodamente por las 5 tarjetas de estilos sin cortes.
+- **Barra de Scroll Estilizada**: Scrollbar translúcido personalizado con tonos azul cielo de MeteoAstur.
+- **Service Worker `v129-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
+
+---
+
 ## [1.0.28] - 2026-08-28
 
 ### 🌟 Gran Lanzamiento: Colección Completa con 5 Estilos de Iconos Meteorológicos

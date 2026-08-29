@@ -1708,13 +1708,33 @@ body:-webkit-full-screen .app-container {
 
 /* --- MODAL DE COLECCIÓN DE ESTILOS DE ICONOS --- */
 .icon-themes-modal-body {
-  padding: 16px;
+  padding: 8px 6px 16px 2px;
+  max-height: 72vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(56, 189, 248, 0.4) transparent;
+}
+
+.icon-themes-modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.icon-themes-modal-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.icon-themes-modal-body::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.3);
+  border-radius: 4px;
 }
 
 .icon-theme-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 14px;
+  padding-right: 4px;
 }
 
 .icon-theme-card {
