@@ -1,5 +1,5 @@
-import { getWeatherInfo, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.0.15';
-import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.0.15';
+import { getWeatherInfo, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.0.16';
+import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.0.16';
 
 /**
  * Renderiza el dashboard principal con alineación uniforme y todos los sensores de la estación

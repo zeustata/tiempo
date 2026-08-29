@@ -50,12 +50,21 @@ export function renderWeatherChart(canvasId, hourlyData, hoursCount = 48) {
     
     fullDates.push(d.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }));
     
-    const wCode = weatherCodes[i] != null ? weatherCodes[i] : 0;
-    const wInfo = getWeatherInfo(wCode);
+    const isDay = (hourlyData.is_day && hourlyData.is_day[i] != null) ? hourlyData.is_day[i] : (d.getHours() >= 8 && d.getHours() < 21 ? 1 : 0);
+    const pop = hourlyData.precipitation_probability ? (hourlyData.precipitation_probability[i] || 0) : 0;
+    const precipMm = hourlyData.precipitation ? (hourlyData.precipitation[i] || 0) : 0;
+
+    let wCode = weatherCodes[i] != null ? weatherCodes[i] : 0;
+    if (pop === 0 && precipMm <= 0.05 && ((wCode >= 51 && wCode <= 67) || (wCode >= 80 && wCode <= 82))) {
+      const cloudCover = hourlyData.cloud_cover ? (hourlyData.cloud_cover[i] || 0) : 75;
+      wCode = cloudCover >= 80 ? 3 : (cloudCover >= 35 ? 2 : 1);
+    }
+
+    const wInfo = getWeatherInfo(wCode, isDay);
     weatherDescriptions.push(`${wInfo.icon} ${wInfo.label}`);
 
     temps.push(hourlyData.temperature_2m[i]);
-    rains.push(hourlyData.precipitation_probability[i] || 0);
+    rains.push(pop);
     winds.push(hourlyData.wind_gusts_10m[i] || 0);
   }
 

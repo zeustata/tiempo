@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.16] - 2026-08-28
+
+### 🎯 Coherencia Inteligente Lluvia/Nubes e Iconografía Nocturna (Hourly Rain Coherence & Night Icons)
+- **Filtro de Coherencia en Pronóstico Horario y Gráficas**: Sincronización inteligente entre probabilidad de precipitación (%), litros acumulados (mm) y código de cielo WMO. Si para una hora concreta la probabilidad de lluvia es 0% y la precipitación prevista es 0.0 mm, el icono refleja el estado real de la nubosidad (☁️ cubierto / ⛅ intervalos) en lugar de una nube de lluvia, eliminando contradicciones visuales.
+- **Iconografía Nocturna Dinámica en `getWeatherInfo`**: Integración del parámetro de luz solar (`is_day`) para que las horas nocturnas muestren cielos nocturnos y lunares (🌙 / ☁️🌙) evitando soles diurnos tras el anochecer (21h, 22h, etc.).
+- **Service Worker `v116-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente instantánea en todos los clientes.
+
+---
+
 ## [1.0.15] - 2026-08-28
 
 ### 📐 Alineación y Simetría en Observatorio Astronómico (Layout Polish & Grid Balance)

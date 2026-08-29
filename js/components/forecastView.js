@@ -48,9 +48,22 @@ export function renderForecast(data, units = 'metric') {
     }
 
     const hourLabel = timeDate.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
-    const weather = getWeatherInfo(hourly.weather_code[i]);
+    const isDay = (hourly.is_day && hourly.is_day[i] != null) ? hourly.is_day[i] : (timeDate.getHours() >= 8 && timeDate.getHours() < 21 ? 1 : 0);
+    const pop = hourly.precipitation_probability ? (hourly.precipitation_probability[i] || 0) : 0;
+    const precipMm = hourly.precipitation ? (hourly.precipitation[i] || 0) : 0;
+
+    let code = hourly.weather_code[i];
+
+    // Coherencia Inteligente Horaria:
+    // Si la probabilidad de precipitación es 0% y los litros son 0.0 mm, pero el código es de lluvia/chubascos ligeros (51..67, 80..82),
+    // armonizamos con el estado real de nubosidad para eliminar contradicciones visuales.
+    if (pop === 0 && precipMm <= 0.05 && ((code >= 51 && code <= 67) || (code >= 80 && code <= 82))) {
+      const cloudCover = hourly.cloud_cover ? (hourly.cloud_cover[i] || 0) : 75;
+      code = cloudCover >= 80 ? 3 : (cloudCover >= 35 ? 2 : 1);
+    }
+
+    const weather = getWeatherInfo(code, isDay);
     const temp = Math.round(hourly.temperature_2m[i]);
-    const pop = hourly.precipitation_probability[i] || 0;
     const wind = units === 'knots' ? (hourly.wind_speed_10m[i] * 0.539957).toFixed(0) : Math.round(hourly.wind_speed_10m[i]);
 
     hourlyCards += `

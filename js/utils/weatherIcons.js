@@ -32,8 +32,26 @@ export const WMO_CODES = {
   99: { label: 'Tormenta con granizo fuerte', icon: '🌩️', lucide: 'zap', bg: 'storm', isRain: true, isSnow: true }
 };
 
-export function getWeatherInfo(code) {
-  return WMO_CODES[code] || { label: 'Variable', icon: '⛅', lucide: 'cloud', bg: 'cloudy', isRain: false, isSnow: false };
+export function getWeatherInfo(code, isDay = 1) {
+  const base = WMO_CODES[code] || { label: 'Variable', icon: '⛅', lucide: 'cloud', bg: 'cloudy', isRain: false, isSnow: false };
+  
+  // Si es de noche (isDay === 0 o false), adaptar los iconos y descripciones solares a nocturnas
+  if (isDay === 0 || isDay === false) {
+    if (code === 0) {
+      return { ...base, label: 'Despejado / Cielo Nocturno', icon: '🌙', bg: 'clear-night' };
+    }
+    if (code === 1) {
+      return { ...base, label: 'Poco nuboso de noche', icon: '🌙', bg: 'mostly-clear-night' };
+    }
+    if (code === 2) {
+      return { ...base, label: 'Parcialmente nublado', icon: '☁️🌙', bg: 'partly-cloudy-night' };
+    }
+    if (code === 51 || code === 53 || code === 80) {
+      return { ...base, icon: '🌧️', bg: 'drizzle' };
+    }
+  }
+  
+  return base;
 }
 
 export function getWindDirection(degrees) {
