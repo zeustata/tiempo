@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.33] - 2026-08-28
+
+### 🛡️ Rollback: Restauración del Diseño Clásico de Cabecera y Navegación
+- **Vuelta al Diseño Original**: Reversión limpia y segura del experimento de tarjeta universal a petición de Lendo. Se restaura la cabecera clásica con sus botones superiores y la barra separada de navegación (Modelo, Menú y Búsqueda).
+- **Service Worker `v133-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
+
+---
+
 ## [1.0.32] - 2026-08-28
 
 ### 📐 Cuadrícula Simétrica: Distribución de 2 Botones por Línea

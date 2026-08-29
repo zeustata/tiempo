@@ -129,5 +129,6 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Sustitución del estilo de cristal por el nuevo estilo artesano "✏️ Dibujo a Mano" (Hand-Drawn Sketch & Acuarela) con salto a **v1.0.30** (SW `v130-official`).
 - Unificación total de la cabecera en una Tarjeta Maestra Universal (Centro de Control Unificado: Identidad, Modelo, Menú y Acciones Rápidas) con salto a **v1.0.31** (SW `v131-official`).
 - Ajuste de cuadrícula simétrica de 2 botones por línea (50% / 50%) para navegación y acciones con salto a **v1.0.32** (SW `v132-official`).
+- Rollback seguro: Restauración de la cabecera clásica independiente (sin unificación) manteniendo el pack "Dibujo a Mano" con salto a **v1.0.33** (SW `v133-official`).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 

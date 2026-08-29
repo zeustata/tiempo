@@ -1,7 +1,7 @@
-import { getAsturWeatherSvg } from './weatherAsturIcons.js?v=1.0.32';
-import { getPixelWeatherSvg } from './weatherPixelIcons.js?v=1.0.32';
-import { getNeonWeatherSvg } from './weatherNeonIcons.js?v=1.0.32';
-import { getSketchWeatherSvg } from './weatherSketchIcons.js?v=1.0.32';
+import { getAsturWeatherSvg } from './weatherAsturIcons.js?v=1.0.33';
+import { getPixelWeatherSvg } from './weatherPixelIcons.js?v=1.0.33';
+import { getNeonWeatherSvg } from './weatherNeonIcons.js?v=1.0.33';
+import { getSketchWeatherSvg } from './weatherSketchIcons.js?v=1.0.33';
 
 /**
  * Mapeo de códigos meteorológicos WMO a descripciones en asturiano/castellano, iconos y clases

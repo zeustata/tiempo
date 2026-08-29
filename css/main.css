@@ -97,27 +97,20 @@ body {
   padding: 16px 20px 60px;
 }
 
-/* --- TARJETA CABECERA MAESTRA UNIVERSAL (Centro de Control Unificado) --- */
-.app-header.app-header-unified {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: 18px 22px;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-glass);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-card);
-  margin-bottom: 12px;
-  transition: all 0.3s ease;
-}
-
-.header-brand-row {
+/* --- HEADER & BARRA SUPERIOR --- */
+.app-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 12px;
-  width: 100%;
+  gap: 16px;
+  padding: 16px 24px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
 }
 
 .brand-section {
@@ -209,41 +202,12 @@ body {
   font-weight: 400;
 }
 
-/* Fila Unificada de Selectores: Modelo y Menú (Exactamente 2 por línea) */
-.header-selectors-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  width: 100%;
-  padding-top: 6px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-/* Fila de Acciones Rápidas: Guardar y Mi Ubicación (Exactamente 2 por línea) */
-.header-actions-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  width: 100%;
-  padding-top: 6px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.header-actions-row .btn-header {
-  width: 100%;
-  justify-content: center;
-  min-height: 40px;
-  padding: 8px 12px;
-  font-size: 0.85rem;
-}
-
-#btn-fullscreen {
-  grid-column: 1 / -1;
-}
-
-#btn-install-app:not([style*="none"]) ~ #btn-fullscreen,
-#btn-fullscreen ~ #btn-install-app:not([style*="none"]) {
-  grid-column: auto;
+/* Header Controls */
+.header-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .btn-header {
@@ -398,28 +362,28 @@ body {
   }
 }
 
-/* --- BARRA DE BÚSQUEDA DE CONCEJO Y FAVORITOS --- */
+/* --- BARRA PRINCIPAL: SELECTOR DE SECCIÓN Y BÚSQUEDA --- */
 .concejo-selector-bar {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 18px;
+  margin-bottom: 22px;
   width: 100%;
 }
 
-/* --- BOTÓN SELECTOR DE MODELO METEOROLÓGICO (DENTRO DE LA TARJETA MAESTRA) --- */
+/* --- BOTÓN SELECTOR DE MODELO METEOROLÓGICO (ENCIMA DEL MENÚ) --- */
 .model-nav-trigger {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 14px;
-  background: rgba(30, 41, 59, 0.65);
+  padding: 14px 20px;
+  background: var(--bg-surface);
   border: 1px solid rgba(245, 158, 11, 0.4);
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow-card);
   user-select: none;
   outline: none;
   font-family: inherit;
@@ -429,9 +393,9 @@ body {
 }
 
 .model-nav-trigger:hover, .model-nav-trigger:focus {
-  background: rgba(51, 65, 85, 0.85);
+  background: var(--bg-surface-elevated);
   border-color: #f59e0b;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 0 0 16px rgba(245, 158, 11, 0.25);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4), 0 0 20px rgba(245, 158, 11, 0.25);
   transform: translateY(-2px);
 }
 
@@ -444,12 +408,12 @@ body {
 .model-trigger-left {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
   min-width: 0;
 }
 
 .model-trigger-icon {
-  font-size: 1.35rem;
+  font-size: 1.6rem;
   line-height: 1;
   flex-shrink: 0;
 }
@@ -461,7 +425,7 @@ body {
 }
 
 .model-trigger-title {
-  font-size: 0.96rem;
+  font-size: 1.15rem;
   font-weight: 800;
   color: #fff;
   letter-spacing: -0.2px;
@@ -473,12 +437,12 @@ body {
 .model-trigger-right {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
   flex-shrink: 0;
 }
 
 .model-trigger-cta {
-  font-size: 0.82rem;
+  font-size: 0.88rem;
   font-weight: 700;
   color: #fbbf24;
 }
@@ -488,8 +452,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 14px;
-  background: rgba(30, 41, 59, 0.65);
+  padding: 14px 20px;
+  background: var(--bg-surface);
   border: 1px solid rgba(56, 189, 248, 0.4);
   border-radius: var(--radius-md);
   cursor: pointer;
@@ -504,9 +468,9 @@ body {
 }
 
 .section-nav-trigger:hover, .section-nav-trigger:focus {
-  background: rgba(51, 65, 85, 0.85);
+  background: var(--bg-surface-elevated);
   border-color: var(--primary);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 0 0 16px rgba(56, 189, 248, 0.3);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4), 0 0 20px rgba(56, 189, 248, 0.3);
   transform: translateY(-2px);
 }
 
@@ -519,23 +483,33 @@ body {
 .nav-trigger-left {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
   min-width: 0;
 }
 
 .nav-trigger-icon {
-  font-size: 1.35rem;
+  font-size: 1.6rem;
   line-height: 1;
 }
 
 .nav-trigger-info {
   display: flex;
-  align-items: center;
-  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  text-align: left;
+}
+
+.nav-trigger-label {
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--primary);
+  font-weight: 700;
 }
 
 .nav-trigger-title {
-  font-size: 0.96rem;
+  font-size: 1.15rem;
   font-weight: 800;
   color: #fff;
   letter-spacing: -0.2px;
@@ -544,12 +518,12 @@ body {
 .nav-trigger-right {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
   flex-shrink: 0;
 }
 
 .nav-trigger-cta {
-  font-size: 0.82rem;
+  font-size: 0.88rem;
   font-weight: 700;
   color: var(--primary);
 }

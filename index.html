@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.32">
-  <link rel="stylesheet" href="css/components.css?v=1.0.32">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.32">
+  <link rel="stylesheet" href="css/main.css?v=1.0.33">
+  <link rel="stylesheet" href="css/components.css?v=1.0.33">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.33">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -41,65 +41,58 @@
 
   <div class="app-container">
     <!-- BARRA DE CABECERA -->
-    <!-- TARJETA CABECERA MAESTRA UNIVERSAL (Centro de Control Unificado) -->
-    <header class="app-header app-header-unified">
-      <!-- 1. Fila de Identidad y Estado -->
-      <div class="header-brand-row">
-        <div class="brand-section">
-          <div class="asturias-shield" title="Bandera del Principado de Asturias">
-            <img src="icons/bandera-asturias.svg" alt="Bandera del Principado de Asturias" class="asturias-flag-img">
+    <header class="app-header">
+      <div class="brand-section">
+        <div class="asturias-shield" title="Bandera del Principado de Asturias">
+          <img src="icons/bandera-asturias.svg" alt="Bandera del Principado de Asturias" class="asturias-flag-img">
+        </div>
+        <div class="brand-info">
+          <div class="brand-title-row">
+            <h1>MeteoAstur Lode</h1>
+            <div id="live-clock" class="live-clock-badge" title="Hora y fecha en tiempo real">--:--:--</div>
+            <div id="network-status" class="network-badge online" title="Estado de conexión">🟢 En línea</div>
           </div>
-          <div class="brand-info">
-            <div class="brand-title-row">
-              <h1>MeteoAstur Lode</h1>
-              <div id="live-clock" class="live-clock-badge" title="Hora y fecha en tiempo real">--:--:--</div>
-              <div id="network-status" class="network-badge online" title="Estado de conexión">🟢 En línea</div>
-            </div>
-            <p class="brand-tagline">Estación Meteorológica Integral del Principado</p>
-          </div>
+          <p class="brand-tagline">Estación Meteorológica Integral del Principado</p>
         </div>
       </div>
 
-      <!-- 2. Fila Unificada de Selectores: Modelo y Menú de Módulos -->
-      <div class="header-selectors-row">
-        <!-- Selector de Modelo / Proveedor Meteorológico -->
-        <button class="model-nav-trigger" id="btn-open-model-modal" title="Toca para cambiar de modelo meteorológico (ECMWF, AROME, ICON, GFS)">
-          <div class="model-trigger-left">
-            <span class="model-trigger-icon" id="current-model-icon">🌟</span>
-            <div class="model-trigger-info">
-              <strong class="model-trigger-title" id="current-model-title">Modelo: Auto Multi-Modelo</strong>
-            </div>
-          </div>
-          <div class="model-trigger-right">
-            <span class="model-trigger-cta">Cambiar ➔</span>
-          </div>
-        </button>
-
-        <!-- Selector de Módulo / Menú de Navegación -->
-        <button class="section-nav-trigger" id="btn-open-nav-modal" title="Toca para cambiar de módulo meteorológico (Atajos 1 a 7)">
-          <div class="nav-trigger-left">
-            <span class="nav-trigger-icon" id="current-section-icon">📊</span>
-            <div class="nav-trigger-info">
-              <strong class="nav-trigger-title" id="current-section-title">Estación en Vivo</strong>
-            </div>
-          </div>
-          <div class="nav-trigger-right">
-            <span class="nav-trigger-cta">Menú ➔</span>
-          </div>
-        </button>
-      </div>
-
-      <!-- 3. Fila de Acciones Rápidas (Guardar, Mi Ubicación, Pantalla Completa, Instalar) -->
-      <div class="header-actions-row">
-        <button id="btn-toggle-fav" class="btn-header" title="Guardar en Favoritos (Tecla F)">⭐ Guardar</button>
-        <button id="btn-gps" class="btn-header" title="Buscar concejo más cercano por GPS (Tecla G)">📍 Mi Ubicación</button>
-        <button id="btn-fullscreen" class="btn-header" title="Alternar Pantalla Completa / Modo Ventana (Tecla K / F11)">🖥️ Completa</button>
+      <div class="header-controls">
         <button id="btn-install-app" class="btn-header btn-install" style="display: none;" title="Instalar en Windows / Móvil">📥 Instalar App</button>
+        <button id="btn-toggle-fav" class="btn-header" title="Guardar en Favoritos (Tecla F)">⭐ Guardar</button>
+        <button id="btn-fullscreen" class="btn-header" title="Alternar Pantalla Completa / Modo Ventana (Tecla K / F11)">🖥️ Completa</button>
+        <button id="btn-gps" class="btn-header" title="Buscar concejo más cercano por GPS (Tecla G)">📍 Mi Ubicación</button>
       </div>
     </header>
 
-    <!-- BARRA DE BÚSQUEDA DE CONCEJO Y FAVORITOS -->
+    <!-- BARRA PRINCIPAL DE CONTROL Y NAVEGACIÓN -->
     <section class="concejo-selector-bar">
+      <!-- 0. Selector de Modelo / Proveedor Meteorológico (Encima del Menú) -->
+      <button class="model-nav-trigger" id="btn-open-model-modal" title="Toca para cambiar de modelo meteorológico (ECMWF, AROME, ICON, GFS)">
+        <div class="model-trigger-left">
+          <span class="model-trigger-icon" id="current-model-icon">🌟</span>
+          <div class="model-trigger-info">
+            <strong class="model-trigger-title" id="current-model-title">Modelo: Auto Multi-Modelo</strong>
+          </div>
+        </div>
+        <div class="model-trigger-right">
+          <span class="model-trigger-cta">Cambiar ➔</span>
+        </div>
+      </button>
+
+      <!-- 1. Selector de Módulo / Menú de Navegación -->
+      <button class="section-nav-trigger" id="btn-open-nav-modal" title="Toca para cambiar de módulo meteorológico (Atajos 1 a 7)">
+        <div class="nav-trigger-left">
+          <span class="nav-trigger-icon" id="current-section-icon">📊</span>
+          <div class="nav-trigger-info">
+            <strong class="nav-trigger-title" id="current-section-title">Estación en Vivo</strong>
+          </div>
+        </div>
+        <div class="nav-trigger-right">
+          <span class="nav-trigger-cta">Menú ➔</span>
+        </div>
+      </button>
+
+      <!-- 2. Tarjetas de Búsqueda de Concejo y Favoritos -->
       <div class="search-and-fav-row">
         <button class="search-trigger-card" id="main-search-trigger" title="Buscar concejo">
           <div class="search-trigger-left">
@@ -178,7 +171,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.32 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.33 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -226,20 +219,11 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.32 🚀</span>
+            <span class="release-version">v1.0.33 🚀</span>
             <span class="release-date">28 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-improved">Diseño Simétrico</span> <strong>Cuadrícula de 2 Botones por Línea</strong>: Fila 1 para Modelo y Menú (50% / 50%) y Fila 2 para Guardar y Mi Ubicación (50% / 50%), logrando una alineación perfecta y equilibrada en la tarjeta unificada.</li>
-          </ul>
-        </div>
-        <div class="changelog-release">
-          <div class="release-header">
-            <span class="release-version">v1.0.31</span>
-            <span class="release-date">28 Ago 2026</span>
-          </div>
-          <ul class="changelog-list">
-            <li><span class="tag tag-new">Rediseño</span> Tarjeta Cabecera Maestra Universal.</li>
+            <li><span class="tag tag-fix">Rollback</span> <strong>Restauración del Diseño Clásico de Cabecera</strong>: retorno a la estructura original de tarjetas independientes (cabecera con controles superiores y barra de navegación separada para Modelo, Menú y Búsqueda).</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -1135,7 +1119,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.32').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.33').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1156,6 +1140,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.32"></script>
+  <script type="module" src="js/app.js?v=1.0.33"></script>
 </body>
 </html>
