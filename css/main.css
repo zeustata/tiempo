@@ -97,7 +97,7 @@ body {
   padding: 16px 20px 60px;
 }
 
-/* --- HEADER & BARRA SUPERIOR --- */
+/* --- HEADER & BARRA SUPERIOR (TARJETA MASTER UNIFICADA) --- */
 .app-header {
   display: flex;
   justify-content: space-between;
@@ -111,6 +111,44 @@ body {
   box-shadow: var(--shadow-card);
   margin-bottom: 20px;
   transition: all 0.3s ease;
+}
+
+.app-header.app-header-master {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  padding: 18px 20px;
+  margin-bottom: 22px;
+}
+
+.header-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  width: 100%;
+}
+
+.app-header.app-header-master .model-nav-trigger,
+.app-header.app-header-master .section-nav-trigger {
+  background: rgba(30, 41, 59, 0.7);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.app-header.app-header-master .model-nav-trigger:hover,
+.app-header.app-header-master .section-nav-trigger:hover {
+  background: var(--bg-surface-elevated);
+}
+
+.app-header.app-header-master .search-trigger-card,
+.app-header.app-header-master .fav-trigger-card {
+  background: rgba(30, 41, 59, 0.7);
+}
+
+.app-header.app-header-master .search-trigger-card:hover,
+.app-header.app-header-master .fav-trigger-card:hover {
+  background: var(--bg-surface-elevated);
 }
 
 .brand-section {

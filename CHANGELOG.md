@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.34] - 2026-08-28
+
+### 🌟 Tarjeta Maestra: Unificación Visual del Bloque Superior
+- **Unificación sin Alterar el Diseño**: Todo el bloque superior (cabecera con título, reloj y estado, botones de Guardar y Ubicación, selector de Modelo, selector de Menú, y fila de Búsqueda y Favoritos) se integra dentro de una única tarjeta contenedora, manteniendo exactamente la misma estética, orden y dimensiones individuales de cada elemento.
+- **Service Worker `v134-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
+
+---
+
 ## [1.0.33] - 2026-08-28
 
 ### 🛡️ Rollback: Restauración del Diseño Clásico de Cabecera y Navegación
