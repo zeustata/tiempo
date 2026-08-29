@@ -12,6 +12,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.22] - 2026-08-28
+
+### 🏔️ Iconografía "Estilu Asturianu" con Símbolos Culturales y Geográficos Reales
+- **Rediseño Vectorial con Elementos Emblemáticos de Asturias**:
+  - *Borrina*: Silueta de Hórreo asturiano tradicional con tejado a 4 aguas, pegollos y muelas entre niebla flotante.
+  - *Orbayu*: Gotas finas diagonales sobre la clásica Manzana verde de sidra de la pumarada.
+  - *Nevadona*: El majestuoso Picu Urriellu (Naranjo de Bulnes) cubierto de manto blanco de nieve con copos.
+  - *Soleyeru*: Sol radiante grabado con el Trisquel solar celta asturiano en oro.
+  - *Bastinazu / Tormenta*: Rayo de oro en zigzag descargando sobre el acantilado y el Faro del Cabo Peñas.
+  - *Noche*: Luna creciente azul-plata con estrellas y la silueta de la Cruz de la Victoria.
+- **Service Worker `v122-official` & Cache-Busting**: Actualización atómica de recursos estáticos.
+
+---
+
 ## [1.0.21] - 2026-08-28
 
 ### 🍏 Nuevo Set de Iconos Vectoriales "Estilu Asturianu" & Selector Conmutable

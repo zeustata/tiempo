@@ -1,15 +1,15 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.0.21';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.0.21';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=1.0.21';
-import { renderCurrentWeather } from './components/currentCard.js?v=1.0.21';
-import { renderMarineCard } from './components/marineCard.js?v=1.0.21';
-import { renderMountainCard } from './components/mountainCard.js?v=1.0.21';
-import { renderForecast } from './components/forecastView.js?v=1.0.21';
-import { renderWeatherChart } from './components/chartsView.js?v=1.0.21';
-import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.21';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.0.21';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=1.0.21';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.21';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.0.22';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.0.22';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=1.0.22';
+import { renderCurrentWeather } from './components/currentCard.js?v=1.0.22';
+import { renderMarineCard } from './components/marineCard.js?v=1.0.22';
+import { renderMountainCard } from './components/mountainCard.js?v=1.0.22';
+import { renderForecast } from './components/forecastView.js?v=1.0.22';
+import { renderWeatherChart } from './components/chartsView.js?v=1.0.22';
+import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.22';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.0.22';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=1.0.22';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.22';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, alertas climáticas y calidad del aire', key: '1' },
