@@ -136,5 +136,6 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Tarjeta ultra compacta con reducción del 50% de altura: botones dobles inteligentes (Buscar + GPS / Guardar + Favs) y Modelo + Menú al 50% con salto a **v1.0.37** (SW `v137-official`).
 - Simplificación minimalista de botones de navegación a [Modelo ➔] y [Menú ➔] con salto a **v1.0.38** (SW `v138-official`).
 - Simetría visual total con botones gemelos idénticos (icono cuadrado a la izquierda y acción con texto a la derecha) con salto a **v1.0.39** (SW `v139-official`).
+- Retirada de flechitas en botones de navegación y centrado armónico de Modelo y Menú con salto a **v1.0.40** (SW `v140-official`).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 

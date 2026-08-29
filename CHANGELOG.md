@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.40] - 2026-08-28
+
+### 🎯 Minimalismo y Centrado: Retirada de Flechas en Modelo y Menú
+- **Centrado Perfecto y Cero Ruido**: Eliminación de las flechitas decorativas `➔` en los selectores de *[🌟 Modelo]* y *[📊 Menú]*, centrando armónicamente el icono y el texto en cada botón.
+- **Service Worker `v140-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
+
+---
+
 ## [1.0.39] - 2026-08-28
 
 ### 📐 Simetría Visual Perfecta: Botones Dobles Gemelos

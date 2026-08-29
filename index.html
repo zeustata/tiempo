@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.39">
-  <link rel="stylesheet" href="css/components.css?v=1.0.39">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.39">
+  <link rel="stylesheet" href="css/main.css?v=1.0.40">
+  <link rel="stylesheet" href="css/components.css?v=1.0.40">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.40">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -90,7 +90,7 @@
         </div>
       </div>
 
-      <!-- 3. Fila 2: Modelo y Menú simétricos al 50% -->
+      <!-- 3. Fila 2: Modelo y Menú centrados al 50% -->
       <div class="compact-controls-grid">
         <!-- Selector de Modelo -->
         <button class="model-nav-trigger compact-nav-trigger" id="btn-open-model-modal" title="Toca para cambiar de modelo meteorológico">
@@ -98,7 +98,6 @@
             <span class="compact-trigger-icon" id="current-model-icon">🌟</span>
             <strong class="compact-trigger-label">Modelo</strong>
           </div>
-          <span class="compact-trigger-cta">➔</span>
         </button>
 
         <!-- Selector de Menú -->
@@ -107,7 +106,6 @@
             <span class="compact-trigger-icon" id="current-section-icon">📊</span>
             <strong class="compact-trigger-label">Menú</strong>
           </div>
-          <span class="compact-trigger-cta">➔</span>
         </button>
       </div>
     </header>
@@ -171,7 +169,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.39 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.40 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -219,11 +217,20 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.39 🚀</span>
+            <span class="release-version">v1.0.40 🚀</span>
             <span class="release-date">28 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-improved">Simetría Visual</span> <strong>Botones Dobles Gemelos</strong>: Estructura idéntica para <em>[🔍 | 📍 GPS]</em> y <em>[⭐ | 📑 Favs]</em> con iconos de ancho homogéneo a la izquierda y botones de acción a la derecha.</li>
+            <li><span class="tag tag-improved">Minimalismo</span> <strong>Botones Centrados sin Flechas</strong>: Retirada de las flechitas en <em>[🌟 Modelo]</em> y <em>[📊 Menú]</em> para un centrado equilibrado, limpio y sin ruido visual en la segunda fila.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.0.39</span>
+            <span class="release-date">28 Ago 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-improved">Simetría Visual</span> Botones dobles gemelos.</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -1173,7 +1180,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.39').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.40').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1194,6 +1201,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.39"></script>
+  <script type="module" src="js/app.js?v=1.0.40"></script>
 </body>
 </html>
