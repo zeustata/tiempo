@@ -12,6 +12,22 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.23] - 2026-08-28
+
+### 🎭 Lanzamiento de "Emojis Emotivos" (Estilo Cómic / Cartoon)
+- **Personajes Meteorológicos Expresivos con Ojos, Boca y Personalidad**:
+  - *Sol Feliz*: Sol dorado radiante con grandes ojos de cómic brillantes, coloretes rosados y amplia sonrisa abierta.
+  - *Luna Durmiente*: Luna azul cielo con gorro de noche a rayas y borla durmiendo plácidamente con "Zzz".
+  - *Nube Esponjosa*: Nube blanca regordeta con mejillas rosadas y carita kawaii.
+  - *Orbayu Travieso*: Nube tierna con gotitas bebé sonrientes con ojitos.
+  - *Lluvia Content*: Nube celeste con gotas alegres cayendo.
+  - *Tormenta Gruñona*: Nube oscura con cejas cómicas de enfado y gran rayo de oro brillante.
+  - *Nieve con Gorrito*: Nube de invierno con gorro de lana azul, pompón rojo y copos sonrientes.
+- **Selector Conmutable Oficial "🎭 Emojis Emotivos"**: Renombrado el botón del selector en el menú a *🎭 Emojis Emotivos* junto a *📱 Emojis Clásicos*.
+- **Service Worker `v123-official` & Cache-Busting**: Actualización atómica de caché y forzado de recarga.
+
+---
+
 ## [1.0.22] - 2026-08-28
 
 ### 🏔️ Iconografía "Estilu Asturianu" con Símbolos Culturales y Geográficos Reales

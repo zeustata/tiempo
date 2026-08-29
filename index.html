@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.22">
-  <link rel="stylesheet" href="css/components.css?v=1.0.22">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.22">
+  <link rel="stylesheet" href="css/main.css?v=1.0.23">
+  <link rel="stylesheet" href="css/components.css?v=1.0.23">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.23">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -171,7 +171,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.22 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.23 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -219,11 +219,21 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.22 🚀</span>
+            <span class="release-version">v1.0.23 🚀</span>
             <span class="release-date">28 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-new">Identidad Asturiana</span> <strong>Iconografía Vectorial con Símbolos Culturales y Geográficos Reales</strong>: rediseño completo del set "Estilu Asturianu" incorporando el <em>Hórreo tradicional</em> con pegollos y muelas en la borrina, la <em>Manzana de sidra verde</em> en el orbayu, la silueta del <em>Picu Urriellu (Naranjo de Bulnes)</em> en la nevadona, el <em>Trisquel solar celta</em> en el soleyeru, el <em>Faro del Cabo Peñas</em> en el bastinazu y la <em>Cruz de la Victoria</em> en el cielo nocturno.</li>
+            <li><span class="tag tag-new">Nuevo Diseño</span> <strong>🎭 Emojis Emotivos (Estilo Cómic)</strong>: nuevo set exclusivo y divertido de personajes meteorológicos con ojos, boca, coloretes y expresiones (Sol súper feliz, Luna durmiendo con gorro y Zzz, Nube regordeta, Nieve con gorrito de lana y Tormenta gruñona con rayo).</li>
+            <li><span class="tag tag-improved">Personalización</span> <strong>Botón "Emojis Emotivos" en el Menú</strong>: renombrado el selector conmutable a <em>🎭 Emojis Emotivos</em> y <em>📱 Emojis Clásicos</em>.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.0.22</span>
+            <span class="release-date">28 Ago 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Identidad</span> Iconografía con elementos geográficos asturianos.</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -914,12 +924,12 @@
         </div>
         <button id="btn-close-nav" class="btn-close" aria-label="Cerrar menú">&times;</button>
       </div>
-      <!-- Selector de Estilo de Iconos (Estilu Asturianu SVG / Clásicos Emojis) -->
+      <!-- Selector de Estilo de Iconos (Emojis Emotivos SVG / Clásicos Emojis) -->
       <div class="icon-theme-selector-wrap">
-        <span class="icon-theme-label">🎨 Estilo de Iconos de la Aplicación:</span>
+        <span class="icon-theme-label">🎨 Estilo de Iconos del Clima:</span>
         <div class="icon-theme-toggle-group">
-          <button class="icon-theme-btn active" id="btn-theme-astur" data-theme="astur" title="Iconos vectoriales SVG con diseño e identidad asturiana">
-            🍏 Estilu Asturianu
+          <button class="icon-theme-btn active" id="btn-theme-astur" data-theme="astur" title="Iconos estilo cómic con caras, ojos, boca y expresiones divertidas">
+            🎭 Emojis Emotivos
           </button>
           <button class="icon-theme-btn" id="btn-theme-classic" data-theme="classic" title="Emojis estándar del sistema operativo">
             📱 Emojis Clásicos
@@ -948,7 +958,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.22').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.23').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -969,6 +979,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.22"></script>
+  <script type="module" src="js/app.js?v=1.0.23"></script>
 </body>
 </html>

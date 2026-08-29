@@ -119,5 +119,6 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Blindaje estricto del umbral de lluvia para eliminar falsos iconos por ruido numérico del modelo (< 20% prob o < 0.3 mm) con salto a **v1.0.20** (SW `v120-official`).
 - Creación del set de iconos vectoriales propios "Estilu Asturianu" (SVG) y selector conmutable en el menú de navegación con salto a **v1.0.21** (SW `v121-official`).
 - Rediseño gráfico auténticamente asturiano de los iconos SVG con Hórreo, Picu Urriellu, Manzana de Sidra, Trisquel celta, Faro de Peñas y Cruz de la Victoria con salto a **v1.0.22** (SW `v122-official`).
+- Creación del set de personajes estilo cómic "Emojis Emotivos" (con ojos, boca, coloretes y expresiones divertidas) y renombrado oficial del botón en el menú con salto a **v1.0.23** (SW `v123-official`).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 
