@@ -32,9 +32,61 @@ export const WMO_CODES = {
   99: { label: 'Tormenta con granizo fuerte', icon: '🌩️', lucide: 'zap', bg: 'storm', isRain: true, isSnow: true }
 };
 
-export function getWeatherInfo(code, isDay = 1) {
-  const base = WMO_CODES[code] || { label: 'Variable', icon: '⛅', lucide: 'cloud', bg: 'cloudy', isRain: false, isSnow: false };
-  
+export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null) {
+  let base = WMO_CODES[code] || { label: 'Variable', icon: '⛅', lucide: 'cloud', bg: 'cloudy', isRain: false, isSnow: false };
+
+  // Graduación y coherencia inteligente de lluvia por tramos de intensidad
+  if (precipitation !== null || pop !== null) {
+    const p = precipitation != null ? parseFloat(precipitation) : 0;
+    const prob = pop != null ? parseFloat(pop) : 0;
+
+    // Caso 0: Seco / Sin lluvia medible (< 0.1 mm y prob < 20%)
+    if (p < 0.1 && prob < 20 && base.isRain && !base.isSnow) {
+      base = {
+        label: (isDay === 0 || isDay === false) ? 'Nublado de noche' : 'Nublado / Cubiertu',
+        icon: (isDay === 0 || isDay === false) ? '☁️🌙' : '☁️',
+        lucide: 'cloud',
+        bg: (isDay === 0 || isDay === false) ? 'partly-cloudy-night' : 'cloudy',
+        isRain: false,
+        isSnow: false
+      };
+    }
+    // Caso 1: Llovizna / Orbayu débil (0.1 a 0.4 mm o prob 20-40%)
+    else if ((p >= 0.1 && p < 0.5) || (prob >= 20 && prob < 45 && base.isRain)) {
+      base = {
+        label: isDay ? 'Orbayu / Llovizna ligera' : 'Orbayu nocturno ligero',
+        icon: isDay ? '🌦️' : '🌧️',
+        lucide: 'cloud-drizzle',
+        bg: 'drizzle',
+        isRain: true,
+        isSnow: false
+      };
+    }
+    // Caso 2: Lluvia moderada (0.5 a 2.0 mm o prob 45-75%)
+    else if ((p >= 0.5 && p < 2.0) || (prob >= 45 && prob < 75 && base.isRain)) {
+      base = {
+        label: 'Lluvia moderada',
+        icon: '🌧️',
+        lucide: 'cloud-rain',
+        bg: 'rain',
+        isRain: true,
+        isSnow: false
+      };
+    }
+    // Caso 3: Lluvia fuerte / Bastinazu (> 2.0 mm o prob >= 75% o tormenta)
+    else if (p >= 2.0 || prob >= 75 || code === 65 || code === 82 || code === 95 || code === 96 || code === 99) {
+      const isStorm = code === 95 || code === 96 || code === 99;
+      base = {
+        label: isStorm ? 'Tormenta eléctrica' : 'Lluvia fuerte / Bastinazu',
+        icon: isStorm ? '⛈️' : '⛈️',
+        lucide: 'cloud-rain-wind',
+        bg: isStorm ? 'storm' : 'heavy-rain',
+        isRain: true,
+        isSnow: false
+      };
+    }
+  }
+
   // Si es de noche (isDay === 0 o false), adaptar los iconos y descripciones solares a nocturnas
   if (isDay === 0 || isDay === false) {
     if (code === 0) {

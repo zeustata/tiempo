@@ -12,6 +12,19 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.17] - 2026-08-28
+
+### 🌧️ Graduación Escalonada por Intensidad de Precipitación (Rain Intensity Tiers)
+- **Iconografía Diferenciada por Volumen y Probabilidad**: Implementación de 4 tramos reales de lluvia en `getWeatherInfo`:
+  1. *Seco / Trazas inapreciables* (`< 0.1 mm` y `< 20%`): Nube seca `☁️` (o `☁️🌙`), eliminando falsos avisos con probabilidades residuales (3%, 5%, 10%).
+  2. *Orbayu / Llovizna suave* (`0.1 a 0.4 mm` o `20-44%`): Nube de llovizna suave `🌦️` de día / `🌧️` de noche.
+  3. *Lluvia moderada continua* (`0.5 a 2.0 mm` o `45-74%`): Nube de lluvia estándar `🌧️`.
+  4. *Lluvia fuerte / Bastinazu / Tormenta* (`> 2.0 mm` o `≥ 75%` o código de tormenta): Nube de lluvia intensa `⛈️`.
+- **Integración Global**: Desplegado en vivo en el sensor principal, en las 72h del pronóstico horario y en el trazado de las gráficas interactivas de 48h.
+- **Service Worker `v117-official` & Cache-Busting**: Actualización atómica de caché y sincronización en clientes.
+
+---
+
 ## [1.0.16] - 2026-08-28
 
 ### 🎯 Coherencia Inteligente Lluvia/Nubes e Iconografía Nocturna (Hourly Rain Coherence & Night Icons)

@@ -51,25 +51,16 @@ export function renderForecast(data, units = 'metric') {
     const isDay = (hourly.is_day && hourly.is_day[i] != null) ? hourly.is_day[i] : (timeDate.getHours() >= 8 && timeDate.getHours() < 21 ? 1 : 0);
     const pop = hourly.precipitation_probability ? (hourly.precipitation_probability[i] || 0) : 0;
     const precipMm = hourly.precipitation ? (hourly.precipitation[i] || 0) : 0;
+    const code = hourly.weather_code[i];
 
-    let code = hourly.weather_code[i];
-
-    // Coherencia Inteligente Horaria:
-    // Si la probabilidad de precipitación es 0% y los litros son 0.0 mm, pero el código es de lluvia/chubascos ligeros (51..67, 80..82),
-    // armonizamos con el estado real de nubosidad para eliminar contradicciones visuales.
-    if (pop === 0 && precipMm <= 0.05 && ((code >= 51 && code <= 67) || (code >= 80 && code <= 82))) {
-      const cloudCover = hourly.cloud_cover ? (hourly.cloud_cover[i] || 0) : 75;
-      code = cloudCover >= 80 ? 3 : (cloudCover >= 35 ? 2 : 1);
-    }
-
-    const weather = getWeatherInfo(code, isDay);
+    const weather = getWeatherInfo(code, isDay, precipMm, pop);
     const temp = Math.round(hourly.temperature_2m[i]);
     const wind = units === 'knots' ? (hourly.wind_speed_10m[i] * 0.539957).toFixed(0) : Math.round(hourly.wind_speed_10m[i]);
 
     hourlyCards += `
       <div class="hourly-card">
         <span class="h-time">${hourLabel}</span>
-        <span class="h-icon" title="${weather.label}">${weather.icon}</span>
+        <span class="h-icon" title="${weather.label}${precipMm >= 0.1 ? ` (${precipMm.toFixed(1)} mm)` : ''}">${weather.icon}</span>
         <span class="h-temp">${temp}°C</span>
         <div class="h-pop ${pop >= 40 ? 'pop-high' : ''}" title="Probabilidad de lluvia">
           <span class="pop-drop">💧</span>
@@ -99,11 +90,9 @@ export function renderForecast(data, units = 'metric') {
     const dayTitle = isToday ? 'Hoy' : isTomorrow ? 'Mañana' : dayDate.toLocaleDateString('es-ES', { weekday: 'long' });
     const dayFormatted = dayDate.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
     
-    const weather = getWeatherInfo(daily.weather_code[d]);
-    const maxT = Math.round(daily.temperature_2m_max[d]);
-    const minT = Math.round(daily.temperature_2m_min[d]);
     const rain = (daily.precipitation_sum[d] || 0).toFixed(1);
     const popMax = daily.precipitation_probability_max ? daily.precipitation_probability_max[d] : 0;
+    const weather = getWeatherInfo(daily.weather_code[d], 1, parseFloat(rain), popMax);
     
     const windSpeedRaw = daily.wind_speed_10m_max ? daily.wind_speed_10m_max[d] : 0;
     const windGustRaw = daily.wind_gusts_10m_max ? daily.wind_gusts_10m_max[d] : 0;

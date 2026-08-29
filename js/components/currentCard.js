@@ -1,5 +1,5 @@
-import { getWeatherInfo, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.0.16';
-import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.0.16';
+import { getWeatherInfo, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.0.17';
+import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.0.17';
 
 /**
  * Renderiza el dashboard principal con alineación uniforme y todos los sensores de la estación
@@ -10,7 +10,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric') {
   const daily = data.weather.daily;
   const aqi = data.aqi?.current;
   
-  const weatherInfo = getWeatherInfo(current.weather_code);
+  const weatherInfo = getWeatherInfo(current.weather_code, current.is_day, current.precipitation);
   const windDir = getWindDirection(current.wind_direction_10m || 0);
   const uvVal = (daily.uv_index_max && daily.uv_index_max[0] != null) ? daily.uv_index_max[0] : (hourly.uv_index && hourly.uv_index[new Date().getHours()] != null ? hourly.uv_index[new Date().getHours()] : null);
   const uvInfo = getUVDescription(uvVal);
