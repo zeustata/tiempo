@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.31] - 2026-08-28
+
+### 🌟 Rediseño Maestro: Tarjeta Cabecera Maestra Universal (Centro de Control Unificado)
+- **Unificación Total de la Cabecera**: Integración de los selectores de Modelo Meteorológico (`#btn-open-model-modal`) y Menú de Módulos (`#btn-open-nav-modal`) en una fila simétrica, y los botones de acción rápida (`⭐ Guardar`, `📍 Mi Ubicación`, `🖥️ Completa`, `📥 Instalar App`) en una segunda fila de acceso directo, todo dentro de una única tarjeta superior acristalada con `border-radius: var(--radius-lg)` y sombras suaves.
+- **Eliminación de Fragmentación Visual**: Supresión de cajas flotantes intermedias redundantes para maximizar el espacio útil y elevar los datos en vivo en pantalla.
+- **Service Worker `v131-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
+
+---
+
 ## [1.0.30] - 2026-08-28
 
 ### ✏️ Nuevo Estilo Oficial: Dibujo a Mano (Hand-Drawn & Acuarela)
