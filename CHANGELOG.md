@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.19] - 2026-08-28
+
+### 🎯 Prevalencia y Prioridad Absoluta del Filtro de Lluvia sobre Iconografía Nocturna
+- **Reordenación del Flujo de Ejecución en `getWeatherInfo`**: Adaptación previa de la iluminación solar/nocturna y ejecución final con poder de decisión absoluto del filtro de intensidad de precipitación.
+- **Resolución Definitiva de Nubes Secas**: Garantía incondicional de que horas con probabilidades residuales (<20% como 3%, 5%, 10%) o sin lluvia (<0.1 mm) muestren siempre la nube seca `☁️` (o `☁️🌙`), sin riesgo de sobreescritura accidental por códigos WMO teóricos de lluvia.
+- **Service Worker `v119-official` & Cache-Busting**: Actualización atómica de caché en todos los clientes y plataformas.
+
+---
+
 ## [1.0.18] - 2026-08-28
 
 ### 🛡️ Hotfix y Blindaje de Render en Módulo de Pronósticos (Forecast View Stability)

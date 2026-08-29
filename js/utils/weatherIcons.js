@@ -35,12 +35,25 @@ export const WMO_CODES = {
 export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null) {
   let base = WMO_CODES[code] || { label: 'Variable', icon: '⛅', lucide: 'cloud', bg: 'cloudy', isRain: false, isSnow: false };
 
-  // Graduación y coherencia inteligente de lluvia por tramos de intensidad
+  // 1. Si es de noche (isDay === 0 o false), adaptar los iconos solares base a nocturnos
+  if (isDay === 0 || isDay === false) {
+    if (code === 0) {
+      base = { ...base, label: 'Despejado / Cielo Nocturno', icon: '🌙', bg: 'clear-night' };
+    } else if (code === 1) {
+      base = { ...base, label: 'Poco nuboso de noche', icon: '🌙', bg: 'mostly-clear-night' };
+    } else if (code === 2) {
+      base = { ...base, label: 'Parcialmente nublado', icon: '☁️🌙', bg: 'partly-cloudy-night' };
+    } else if (code === 51 || code === 53 || code === 80) {
+      base = { ...base, label: 'Orbayu nocturno ligero', icon: '🌧️', bg: 'drizzle' };
+    }
+  }
+
+  // 2. Graduación y coherencia inteligente de lluvia por tramos de intensidad (prevalece sobre cualquier código teórico)
   if (precipitation !== null || pop !== null) {
     const p = precipitation != null ? parseFloat(precipitation) : 0;
     const prob = pop != null ? parseFloat(pop) : 0;
 
-    // Caso 0: Seco / Sin lluvia medible (< 0.1 mm y prob < 20%)
+    // Caso 0: Seco / Sin lluvia medible (< 0.1 mm y prob < 20%) -> Nube seca sin gotas
     if (p < 0.1 && prob < 20 && base.isRain && !base.isSnow) {
       base = {
         label: (isDay === 0 || isDay === false) ? 'Nublado de noche' : 'Nublado / Cubiertu',
@@ -54,8 +67,8 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     // Caso 1: Llovizna / Orbayu débil (0.1 a 0.4 mm o prob 20-40%)
     else if ((p >= 0.1 && p < 0.5) || (prob >= 20 && prob < 45 && base.isRain)) {
       base = {
-        label: isDay ? 'Orbayu / Llovizna ligera' : 'Orbayu nocturno ligero',
-        icon: isDay ? '🌦️' : '🌧️',
+        label: (isDay === 0 || isDay === false) ? 'Orbayu nocturno ligero' : 'Orbayu / Llovizna ligera',
+        icon: (isDay === 0 || isDay === false) ? '🌧️' : '🌦️',
         lucide: 'cloud-drizzle',
         bg: 'drizzle',
         isRain: true,
@@ -78,7 +91,7 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
       const isStorm = code === 95 || code === 96 || code === 99;
       base = {
         label: isStorm ? 'Tormenta eléctrica' : 'Lluvia fuerte / Bastinazu',
-        icon: isStorm ? '⛈️' : '⛈️',
+        icon: '⛈️',
         lucide: 'cloud-rain-wind',
         bg: isStorm ? 'storm' : 'heavy-rain',
         isRain: true,
@@ -87,22 +100,6 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     }
   }
 
-  // Si es de noche (isDay === 0 o false), adaptar los iconos y descripciones solares a nocturnas
-  if (isDay === 0 || isDay === false) {
-    if (code === 0) {
-      return { ...base, label: 'Despejado / Cielo Nocturno', icon: '🌙', bg: 'clear-night' };
-    }
-    if (code === 1) {
-      return { ...base, label: 'Poco nuboso de noche', icon: '🌙', bg: 'mostly-clear-night' };
-    }
-    if (code === 2) {
-      return { ...base, label: 'Parcialmente nublado', icon: '☁️🌙', bg: 'partly-cloudy-night' };
-    }
-    if (code === 51 || code === 53 || code === 80) {
-      return { ...base, icon: '🌧️', bg: 'drizzle' };
-    }
-  }
-  
   return base;
 }
 

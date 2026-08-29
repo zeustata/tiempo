@@ -115,5 +115,6 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Coherencia inteligente en pronóstico horario (72h) y gráficas (48h): armonización automática entre probabilidad de precipitación (%), litros y códigos de cielo para eliminar contradicciones visuales (nubes de lluvia con 0% de probabilidad) e incorporación de iconografía nocturna real (🌙) con salto a **v1.0.16** (SW `v116-official`).
 - Graduación de lluvia por intensidad real en 4 niveles (seco, orbayu ligero, lluvia moderada y bastinazu/fuerte) cruzando mm/h y probabilidad con salto a **v1.0.17** (SW `v117-official`).
 - Hotfix y blindaje de variables térmicas en tarjetas diarias del módulo Pronósticos con salto a **v1.0.18** (SW `v118-official`).
+- Reordenación y prevalencia absoluta del filtro de precipitación sobre adaptaciones nocturnas para garantizar nubes secas sin falsos avisos con salto a **v1.0.19** (SW `v119-official`).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 
