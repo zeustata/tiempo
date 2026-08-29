@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.26">
-  <link rel="stylesheet" href="css/components.css?v=1.0.26">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.26">
+  <link rel="stylesheet" href="css/main.css?v=1.0.27">
+  <link rel="stylesheet" href="css/components.css?v=1.0.27">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.27">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -171,7 +171,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.26 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.27 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -219,11 +219,20 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.26 🚀</span>
+            <span class="release-version">v1.0.27 🚀</span>
             <span class="release-date">28 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-new">Nueva Galería</span> <strong>Ventana Emergente de Estilos de Iconos</strong>: nuevo modal de colección accesible desde el menú con tarjetas y vista previa interactiva en vivo, estableciendo <em>📱 Emojis Clásicos</em> como estilo por defecto para nuevos usuarios y permitiendo activar <em>🎭 Emojis Emotivos</em> al instante.</li>
+            <li><span class="tag tag-improved">Diseño Compacto</span> <strong>Botón Estilizado en el Menú</strong>: optimización del botón de acceso a estilos de iconos a dos líneas limpias (título superior y estilo activo inferior), eliminando el subtítulo redundante para una estética más estrecha y elegante.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.0.26</span>
+            <span class="release-date">28 Ago 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Nueva Galería</span> Ventana emergente de selección de estilos de iconos con vista previa interactiva y clásicos por defecto.</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -950,20 +959,14 @@
         </div>
         <button id="btn-close-nav" class="btn-close" aria-label="Cerrar menú">&times;</button>
       </div>
-      <!-- Botón de Acceso a la Colección de Estilos de Iconos -->
+      <!-- Botón de Acceso Compacto a la Colección de Estilos de Iconos -->
       <div class="icon-theme-menu-entry">
-        <button class="btn-open-icon-theme-modal" id="btn-open-icon-themes" title="Personalizar el diseño visual de los iconos">
+        <button class="btn-open-icon-theme-modal" id="btn-open-icon-themes" title="Cambiar estilo visual de los iconos">
           <div class="btn-theme-modal-left">
-            <span class="theme-icon-symbol">🎨</span>
-            <div class="theme-text-wrap">
-              <span class="theme-title">Estilo de Iconos</span>
-              <span class="theme-subtitle">Personaliza el diseño visual</span>
-            </div>
+            <span class="theme-title">🎨 Estilo de Iconos</span>
+            <span class="badge-active-theme" id="badge-active-icon-theme">📱 Emojis Clásicos</span>
           </div>
-          <div class="btn-theme-modal-right">
-            <span class="badge-active-theme" id="badge-active-icon-theme">📱 Clásicos</span>
-            <span class="theme-chevron">➔</span>
-          </div>
+          <span class="theme-chevron">➔</span>
         </button>
       </div>
       <div class="modal-body nav-modal-body" id="nav-modal-grid"></div>
@@ -1040,7 +1043,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.26').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.27').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1061,6 +1064,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.26"></script>
+  <script type="module" src="js/app.js?v=1.0.27"></script>
 </body>
 </html>

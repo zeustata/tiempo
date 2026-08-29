@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.27] - 2026-08-28
+
+### 📐 Botón de Acceso Compacto y Estilizado en el Menú
+- **Diseño Estrecho y Limpio**: Eliminación del subtítulo descriptivo redundante y organización en dos líneas compactas (`🎨 Estilo de Iconos` superior y el pack activo en la línea inferior), reduciendo la altura del botón y mejorando el aprovechamiento del espacio en el menú.
+- **Service Worker `v127-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
+
+---
+
 ## [1.0.26] - 2026-08-28
 
 ### 🎨 Nueva Ventana Emergente de Estilos de Iconos & Emojis Clásicos por Defecto

@@ -1,4 +1,4 @@
-import { getAsturWeatherSvg } from './weatherAsturIcons.js?v=1.0.26';
+import { getAsturWeatherSvg } from './weatherAsturIcons.js?v=1.0.27';
 
 /**
  * Mapeo de códigos meteorológicos WMO a descripciones en asturiano/castellano, iconos y clases

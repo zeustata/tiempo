@@ -1651,7 +1651,7 @@ body:-webkit-full-screen .app-container {
 
 /* --- ACCESO A MODAL DE ESTILOS DE ICONOS EN EL MENÚ --- */
 .icon-theme-menu-entry {
-  padding: 10px 18px 12px;
+  padding: 8px 18px 10px;
   background: rgba(15, 23, 42, 0.45);
   border-bottom: 1px solid var(--border-glass);
 }
@@ -1661,7 +1661,7 @@ body:-webkit-full-screen .app-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 14px;
+  padding: 8px 14px;
   background: rgba(30, 41, 59, 0.65);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
@@ -1679,43 +1679,19 @@ body:-webkit-full-screen .app-container {
 
 .btn-theme-modal-left {
   display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.theme-icon-symbol {
-  font-size: 1.4rem;
-}
-
-.theme-text-wrap {
-  display: flex;
   flex-direction: column;
+  gap: 2px;
 }
 
 .theme-title {
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   font-weight: 700;
   color: var(--text-main);
 }
 
-.theme-subtitle {
-  font-size: 0.76rem;
-  color: var(--text-dim);
-}
-
-.btn-theme-modal-right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
 .badge-active-theme {
-  padding: 3px 8px;
-  background: rgba(56, 189, 248, 0.15);
-  border: 1px solid rgba(56, 189, 248, 0.35);
-  border-radius: var(--radius-full);
   font-size: 0.78rem;
-  font-weight: 700;
+  font-weight: 600;
   color: #38bdf8;
 }
 

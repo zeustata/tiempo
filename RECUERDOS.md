@@ -123,5 +123,6 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Simplificación y limpieza del selector en el menú retirando el encabezado redundante con salto a **v1.0.24** (SW `v124-official`).
 - Blindaje definitivo de la Regla de Oro de Probabilidad (< 20% = Incondicionalmente Seco / Nube limpia) para eliminar falsas lluvias por ensambles residuales con salto a **v1.0.25** (SW `v125-official`).
 - Creación de la ventana emergente de selección de estilos de iconos con vista previa interactiva y emojis clásicos por defecto con salto a **v1.0.26** (SW `v126-official`).
+- Compactación y estilización del botón de acceso a estilos en el menú en dos líneas limpias con salto a **v1.0.27** (SW `v127-official`).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 
