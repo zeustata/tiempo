@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.20] - 2026-08-28
+
+### 🛡️ Blindaje Estricto de Umbral en Probabilidades Residuales de Precipitación
+- **Eliminación Definitiva de Falsos Iconos de Lluvia por Ruido Numérico (< 0.3 mm / < 20% prob)**: Corrección del umbral de lluvia para que cualquier hora con probabilidad menor al 20% y menos de 0.3 mm de acumulación muestre exclusivamente la nube seca `☁️`, solventando la contradicción visual en las horas con 3% de probabilidad.
+- **Service Worker `v120-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente en clientes.
+
+---
+
 ## [1.0.19] - 2026-08-28
 
 ### 🎯 Prevalencia y Prioridad Absoluta del Filtro de Lluvia sobre Iconografía Nocturna

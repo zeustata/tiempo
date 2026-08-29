@@ -53,19 +53,21 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     const p = precipitation != null ? parseFloat(precipitation) : 0;
     const prob = pop != null ? parseFloat(pop) : 0;
 
-    // Caso 0: Seco / Sin lluvia medible (< 0.1 mm y prob < 20%) -> Nube seca sin gotas
-    if (p < 0.1 && prob < 20 && base.isRain && !base.isSnow) {
-      base = {
-        label: (isDay === 0 || isDay === false) ? 'Nublado de noche' : 'Nublado / Cubiertu',
-        icon: (isDay === 0 || isDay === false) ? '☁️🌙' : '☁️',
-        lucide: 'cloud',
-        bg: (isDay === 0 || isDay === false) ? 'partly-cloudy-night' : 'cloudy',
-        isRain: false,
-        isSnow: false
-      };
+    // Caso 0: Seco / Sin lluvia medible (prob < 20% y p < 0.3 mm) -> Nube seca sin gotas
+    if (prob < 20 && p < 0.3) {
+      if (base.isRain && !base.isSnow) {
+        base = {
+          label: (isDay === 0 || isDay === false) ? 'Nublado de noche' : 'Nublado / Cubiertu',
+          icon: (isDay === 0 || isDay === false) ? '☁️' : '☁️',
+          lucide: 'cloud',
+          bg: (isDay === 0 || isDay === false) ? 'partly-cloudy-night' : 'cloudy',
+          isRain: false,
+          isSnow: false
+        };
+      }
     }
-    // Caso 1: Llovizna / Orbayu débil (0.1 a 0.4 mm o prob 20-40%)
-    else if ((p >= 0.1 && p < 0.5) || (prob >= 20 && prob < 45 && base.isRain)) {
+    // Caso 1: Llovizna / Orbayu débil (prob 20-44% o p 0.3-0.5 mm)
+    else if ((prob >= 20 && prob < 45) || (p >= 0.3 && p < 0.5)) {
       base = {
         label: (isDay === 0 || isDay === false) ? 'Orbayu nocturno ligero' : 'Orbayu / Llovizna ligera',
         icon: (isDay === 0 || isDay === false) ? '🌧️' : '🌦️',
@@ -75,8 +77,8 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
         isSnow: false
       };
     }
-    // Caso 2: Lluvia moderada (0.5 a 2.0 mm o prob 45-75%)
-    else if ((p >= 0.5 && p < 2.0) || (prob >= 45 && prob < 75 && base.isRain)) {
+    // Caso 2: Lluvia moderada (prob 45-74% o p 0.5-2.0 mm)
+    else if ((prob >= 45 && prob < 75) || (p >= 0.5 && p < 2.0)) {
       base = {
         label: 'Lluvia moderada',
         icon: '🌧️',
@@ -86,8 +88,8 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
         isSnow: false
       };
     }
-    // Caso 3: Lluvia fuerte / Bastinazu (> 2.0 mm o prob >= 75% o tormenta)
-    else if (p >= 2.0 || prob >= 75 || code === 65 || code === 82 || code === 95 || code === 96 || code === 99) {
+    // Caso 3: Lluvia fuerte / Bastinazu (prob >= 75% o p >= 2.0 mm o tormenta)
+    else if (prob >= 75 || p >= 2.0 || code === 65 || code === 82 || code === 95 || code === 96 || code === 99) {
       const isStorm = code === 95 || code === 96 || code === 99;
       base = {
         label: isStorm ? 'Tormenta eléctrica' : 'Lluvia fuerte / Bastinazu',

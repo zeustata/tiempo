@@ -116,5 +116,6 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Graduación de lluvia por intensidad real en 4 niveles (seco, orbayu ligero, lluvia moderada y bastinazu/fuerte) cruzando mm/h y probabilidad con salto a **v1.0.17** (SW `v117-official`).
 - Hotfix y blindaje de variables térmicas en tarjetas diarias del módulo Pronósticos con salto a **v1.0.18** (SW `v118-official`).
 - Reordenación y prevalencia absoluta del filtro de precipitación sobre adaptaciones nocturnas para garantizar nubes secas sin falsos avisos con salto a **v1.0.19** (SW `v119-official`).
+- Blindaje estricto del umbral de lluvia para eliminar falsos iconos por ruido numérico del modelo (< 20% prob o < 0.3 mm) con salto a **v1.0.20** (SW `v120-official`).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 
