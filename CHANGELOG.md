@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.36] - 2026-08-28
+
+### 🚀 Reordenación Ergonómica: Buscar y Favoritos sobre Modelo
+- **Acceso Inmediato a Concejos**: Se traslada la fila de búsqueda (`🔍 Buscar ➔`) y `⭐ Favoritos` a la posición inmediatamente superior al selector de Modelo meteorológico, permitiendo interactuar con los concejos de forma más rápida y natural.
+- **Service Worker `v136-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
+
+---
+
 ## [1.0.35] - 2026-08-28
 
 ### 📱 Optimización de Cabecera: Alineación de Reloj, Estado y Subtítulo
