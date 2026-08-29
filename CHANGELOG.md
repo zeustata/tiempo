@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.37] - 2026-08-28
+
+### 🌟 Reducción del 50%: Botones Dobles Inteligentes & Tarjeta Ultra Compacta
+- **Botones Divididos (`Split Buttons`)**: Fusión de *Buscar Concejo* con botón directo *📍 GPS* a la izquierda (50%), y *Guardar en Favoritos* con el acceso a la lista *⭐ Favs* a la derecha (50%) en una sola fila interactiva.
+- **Distribución de Modelo y Menú**: Alineación horizontal de *🌟 Modelo* y *📊 Menú* en la segunda fila, reduciendo la altura vertical de la tarjeta principal a la mitad.
+- **Service Worker `v137-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
+
+---
+
 ## [1.0.36] - 2026-08-28
 
 ### 🚀 Reordenación Ergonómica: Buscar y Favoritos sobre Modelo

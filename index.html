@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.36">
-  <link rel="stylesheet" href="css/components.css?v=1.0.36">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.36">
+  <link rel="stylesheet" href="css/main.css?v=1.0.37">
+  <link rel="stylesheet" href="css/components.css?v=1.0.37">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.37">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -41,9 +41,9 @@
 
   <div class="app-container">
     <!-- BARRA DE CABECERA -->
-    <!-- TARJETA CABECERA Y NAVEGACIÓN UNIFICADA -->
+    <!-- TARJETA CABECERA Y NAVEGACIÓN COMPACTA UNIFICADA -->
     <header class="app-header app-header-master">
-      <!-- 1. Cabecera Principal (Marca y Controles) -->
+      <!-- 1. Cabecera Principal (Marca y Mini Herramientas) -->
       <div class="header-top-row">
         <div class="brand-section">
           <div class="asturias-shield" title="Bandera del Principado de Asturias">
@@ -59,58 +59,67 @@
           </div>
         </div>
 
-        <div class="header-controls">
-          <button id="btn-toggle-fav" class="btn-header" title="Guardar en Favoritos (Tecla F)">⭐ Guardar</button>
-          <button id="btn-gps" class="btn-header" title="Buscar concejo más cercano por GPS (Tecla G)">📍 Mi Ubicación</button>
-          <button id="btn-fullscreen" class="btn-header" title="Alternar Pantalla Completa / Modo Ventana (Tecla K / F11)">🖥️ Completa</button>
-          <button id="btn-install-app" class="btn-header btn-install" style="display: none;" title="Instalar en Windows / Móvil">📥 Instalar App</button>
+        <div class="header-extra-tools">
+          <button id="btn-fullscreen" class="btn-mini-tool" title="Alternar Pantalla Completa / Modo Ventana (Tecla K / F11)" aria-label="Pantalla Completa">🖥️</button>
+          <button id="btn-install-app" class="btn-mini-tool btn-install" style="display: none;" title="Instalar en Windows / Móvil" aria-label="Instalar App">📥</button>
         </div>
       </div>
 
-      <!-- 2. Tarjetas de Búsqueda de Concejo y Favoritos -->
-      <div class="search-and-fav-row">
-        <button class="search-trigger-card" id="main-search-trigger" title="Buscar concejo">
-          <div class="search-trigger-left">
-            <span class="search-trigger-icon">🔍</span>
-            <span class="search-trigger-text" id="search-bar-current-name">⚡ Gijón</span>
-          </div>
-          <div class="search-trigger-right">
-            <span class="search-trigger-cta">Buscar ➔</span>
-            <span class="search-trigger-kbd"><kbd>S</kbd> / <kbd>/</kbd></span>
-          </div>
-        </button>
+      <!-- 2. Fila 1: Botones Dobles (Búsqueda + GPS | Guardar + Favoritos) -->
+      <div class="compact-controls-grid">
+        <!-- Grupo 1: Búsqueda y GPS -->
+        <div class="split-control-btn">
+          <button id="main-search-trigger" class="split-btn-main" title="Buscar concejo">
+            <span class="split-btn-icon">🔍</span>
+            <span class="split-btn-label" id="search-bar-current-name">Buscar</span>
+          </button>
+          <button id="btn-gps" class="split-btn-side" title="Localizar por GPS (Tecla G)" aria-label="Mi Ubicación GPS">
+            <span class="split-btn-icon">📍</span>
+            <span class="split-btn-side-text">GPS</span>
+          </button>
+        </div>
 
-        <button id="btn-favorites-menu" class="fav-trigger-card" title="Ver mis concejos favoritos">
-          <span class="fav-trigger-icon">⭐</span>
-          <span id="fav-btn-label">Favoritos (0)</span>
-        </button>
+        <!-- Grupo 2: Guardar y Favoritos -->
+        <div class="split-control-btn">
+          <button id="btn-toggle-fav" class="split-btn-main" title="Guardar en Favoritos (Tecla F)">
+            <span class="split-btn-icon">⭐</span>
+            <span class="split-btn-label" id="fav-toggle-label">Guardar</span>
+          </button>
+          <button id="btn-favorites-menu" class="split-btn-side" title="Ver concejos favoritos" aria-label="Mis Favoritos">
+            <span class="split-btn-icon">📑</span>
+            <span class="split-btn-side-text" id="fav-btn-label">Favs (0)</span>
+          </button>
+        </div>
       </div>
 
-      <!-- 3. Selector de Modelo / Proveedor Meteorológico -->
-      <button class="model-nav-trigger" id="btn-open-model-modal" title="Toca para cambiar de modelo meteorológico (ECMWF, AROME, ICON, GFS)">
-        <div class="model-trigger-left">
-          <span class="model-trigger-icon" id="current-model-icon">🌟</span>
-          <div class="model-trigger-info">
-            <strong class="model-trigger-title" id="current-model-title">Modelo: Auto Multi-Modelo</strong>
+      <!-- 3. Fila 2: Modelo y Menú juntos al 50% -->
+      <div class="compact-controls-grid">
+        <!-- Selector de Modelo -->
+        <button class="model-nav-trigger compact-nav-trigger" id="btn-open-model-modal" title="Toca para cambiar de modelo meteorológico">
+          <div class="model-trigger-left">
+            <span class="model-trigger-icon" id="current-model-icon">🌟</span>
+            <div class="model-trigger-info">
+              <strong class="model-trigger-title" id="current-model-title">Modelo: Auto</strong>
+            </div>
           </div>
-        </div>
-        <div class="model-trigger-right">
-          <span class="model-trigger-cta">Cambiar ➔</span>
-        </div>
-      </button>
+          <div class="model-trigger-right">
+            <span class="model-trigger-cta">➔</span>
+          </div>
+        </button>
 
-      <!-- 4. Selector de Módulo / Menú de Navegación -->
-      <button class="section-nav-trigger" id="btn-open-nav-modal" title="Toca para cambiar de módulo meteorológico (Atajos 1 a 7)">
-        <div class="nav-trigger-left">
-          <span class="nav-trigger-icon" id="current-section-icon">📊</span>
-          <div class="nav-trigger-info">
-            <strong class="nav-trigger-title" id="current-section-title">Estación en Vivo</strong>
+        <!-- Selector de Menú -->
+        <button class="section-nav-trigger compact-nav-trigger" id="btn-open-nav-modal" title="Toca para cambiar de módulo meteorológico">
+          <div class="nav-trigger-left">
+            <span class="nav-trigger-icon" id="current-section-icon">📊</span>
+            <div class="nav-trigger-info">
+              <strong class="nav-trigger-title" id="current-section-title">En Vivo</strong>
+            </div>
           </div>
-        </div>
-        <div class="nav-trigger-right">
-          <span class="nav-trigger-cta">Menú ➔</span>
-        </div>
-      </button>
+          <div class="nav-trigger-right">
+            <span class="nav-trigger-cta">Menú ➔</span>
+          </div>
+        </button>
+      </div>
     </header>
 
     <!-- PANELES DE CONTENIDO -->
@@ -172,7 +181,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.36 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.37 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -220,11 +229,20 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.36 🚀</span>
+            <span class="release-version">v1.0.37 🚀</span>
             <span class="release-date">28 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-improved">Usabilidad UX</span> <strong>Reordenación Ergonómica</strong>: Colocación de los botones de búsqueda (<em>🔍 Buscar</em>) y <em>⭐ Favoritos</em> justo encima del selector de Modelo meteorológico, facilitando el acceso rápido e intuitivo a los concejos.</li>
+            <li><span class="tag tag-new">Ultra Compacto</span> <strong>Botones Dobles Inteligentes & Reducción del 50%</strong>: Fusión de <em>Buscar + GPS</em> y <em>Guardar + Favs</em> en una única fila de botones dobles (`Split Buttons`), y alineación simétrica de <em>Modelo</em> y <em>Menú</em> al 50%, reduciendo drásticamente la altura de la tarjeta para visibilidad instantánea del tiempo.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.0.36</span>
+            <span class="release-date">28 Ago 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-improved">Usabilidad UX</span> Reordenación de botones.</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -1147,7 +1165,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.36').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.37').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1168,6 +1186,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.36"></script>
+  <script type="module" src="js/app.js?v=1.0.37"></script>
 </body>
 </html>

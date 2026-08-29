@@ -133,5 +133,6 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Unificación del bloque superior dentro de una única tarjeta contenedora exterior conservando al 100% el diseño estético y disposición original de cada elemento con salto a **v1.0.34** (SW `v134-official`).
 - Ajuste de cabecera: reloj y estado en una misma fila horizontal paralela y subtítulo corto "Estación Meteorológica Asturias" con salto a **v1.0.35** (SW `v135-official`).
 - Reordenación ergonómica: fila de Buscar concejo y Favoritos colocada encima del selector de Modelo con salto a **v1.0.36** (SW `v136-official`).
+- Tarjeta ultra compacta con reducción del 50% de altura: botones dobles inteligentes (Buscar + GPS / Guardar + Favs) y Modelo + Menú al 50% con salto a **v1.0.37** (SW `v137-official`).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 
