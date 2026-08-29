@@ -1,4 +1,4 @@
-import { getWeatherInfo, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=1.0.37';
+import { getWeatherInfo, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=1.0.38';
 
 /**
  * Renderiza el pronóstico por horas (24h) y las tarjetas enriquecidas a 10 días

@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.37">
-  <link rel="stylesheet" href="css/components.css?v=1.0.37">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.37">
+  <link rel="stylesheet" href="css/main.css?v=1.0.38">
+  <link rel="stylesheet" href="css/components.css?v=1.0.38">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.38">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -92,32 +92,24 @@
         </div>
       </div>
 
-      <!-- 3. Fila 2: Modelo y Menú juntos al 50% -->
+      <!-- 3. Fila 2: Modelo y Menú simétricos al 50% -->
       <div class="compact-controls-grid">
         <!-- Selector de Modelo -->
         <button class="model-nav-trigger compact-nav-trigger" id="btn-open-model-modal" title="Toca para cambiar de modelo meteorológico">
-          <div class="model-trigger-left">
-            <span class="model-trigger-icon" id="current-model-icon">🌟</span>
-            <div class="model-trigger-info">
-              <strong class="model-trigger-title" id="current-model-title">Modelo: Auto</strong>
-            </div>
+          <div class="compact-trigger-content">
+            <span class="compact-trigger-icon" id="current-model-icon">🌟</span>
+            <strong class="compact-trigger-label">Modelo</strong>
           </div>
-          <div class="model-trigger-right">
-            <span class="model-trigger-cta">➔</span>
-          </div>
+          <span class="compact-trigger-cta">➔</span>
         </button>
 
         <!-- Selector de Menú -->
         <button class="section-nav-trigger compact-nav-trigger" id="btn-open-nav-modal" title="Toca para cambiar de módulo meteorológico">
-          <div class="nav-trigger-left">
-            <span class="nav-trigger-icon" id="current-section-icon">📊</span>
-            <div class="nav-trigger-info">
-              <strong class="nav-trigger-title" id="current-section-title">En Vivo</strong>
-            </div>
+          <div class="compact-trigger-content">
+            <span class="compact-trigger-icon" id="current-section-icon">📊</span>
+            <strong class="compact-trigger-label">Menú</strong>
           </div>
-          <div class="nav-trigger-right">
-            <span class="nav-trigger-cta">Menú ➔</span>
-          </div>
+          <span class="compact-trigger-cta">➔</span>
         </button>
       </div>
     </header>
@@ -181,7 +173,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.37 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.38 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -229,11 +221,20 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.37 🚀</span>
+            <span class="release-version">v1.0.38 🚀</span>
             <span class="release-date">28 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-new">Ultra Compacto</span> <strong>Botones Dobles Inteligentes & Reducción del 50%</strong>: Fusión de <em>Buscar + GPS</em> y <em>Guardar + Favs</em> en una única fila de botones dobles (`Split Buttons`), y alineación simétrica de <em>Modelo</em> y <em>Menú</em> al 50%, reduciendo drásticamente la altura de la tarjeta para visibilidad instantánea del tiempo.</li>
+            <li><span class="tag tag-improved">Diseño Limpio</span> <strong>Botones Minimalistas de Modelo y Menú</strong>: Simplificación de la segunda fila a <em>[🌟 Modelo ➔]</em> y <em>[📊 Menú ➔]</em>, eliminando textos largos y evitando solapamientos para una estética limpia y legible en cualquier pantalla.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.0.37</span>
+            <span class="release-date">28 Ago 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Ultra Compacto</span> Botones dobles inteligentes y reducción del 50%.</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -1165,7 +1166,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.37').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.38').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1186,6 +1187,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.37"></script>
+  <script type="module" src="js/app.js?v=1.0.38"></script>
 </body>
 </html>

@@ -251,7 +251,7 @@ body {
 
 /* Selector de Modelo y Menú Compactos */
 .compact-nav-trigger {
-  padding: 6px 10px;
+  padding: 6px 12px;
   min-height: 38px;
   display: flex;
   justify-content: space-between;
@@ -265,6 +265,10 @@ body {
   transition: all 0.2s ease;
   min-width: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.compact-nav-trigger:active {
+  transform: scale(0.97);
 }
 
 .compact-nav-trigger.model-nav-trigger {
@@ -283,24 +287,36 @@ body {
   box-shadow: 0 4px 14px rgba(56, 189, 248, 0.25);
 }
 
-.compact-nav-trigger .model-trigger-title,
-.compact-nav-trigger .nav-trigger-title {
-  font-size: 0.84rem;
+.compact-trigger-content {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+}
+
+.compact-trigger-icon {
+  font-size: 1.15rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.compact-trigger-label {
+  font-size: 0.88rem;
   font-weight: 800;
+  color: #fff;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-.compact-nav-trigger .model-trigger-icon,
-.compact-nav-trigger .nav-trigger-icon {
-  font-size: 1.05rem;
+.compact-trigger-cta {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #fbbf24;
+  flex-shrink: 0;
+  margin-left: 4px;
 }
 
-.compact-nav-trigger .model-trigger-cta,
-.compact-nav-trigger .nav-trigger-cta {
-  font-size: 0.75rem;
-  font-weight: 700;
+.section-nav-trigger .compact-trigger-cta {
+  color: var(--primary);
 }
 
 .brand-section {

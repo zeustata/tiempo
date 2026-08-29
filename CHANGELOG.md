@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.38] - 2026-08-28
+
+### ✨ Limpieza y Minimalismo: Botones Simétricos de Modelo y Menú
+- **Eliminación de Textos Largos Superpuestos**: Rediseño limpio de la fila de navegación a dos botones simétricos al 50% con `[🌟 Modelo ➔]` y `[📊 Menú ➔]`, garantizando cero desbordamientos o textos montados en cualquier pantalla móvil.
+- **Service Worker `v138-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
+
+---
+
 ## [1.0.37] - 2026-08-28
 
 ### 🌟 Reducción del 50%: Botones Dobles Inteligentes & Tarjeta Ultra Compacta
