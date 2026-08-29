@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.26] - 2026-08-28
+
+### 🎨 Nueva Ventana Emergente de Estilos de Iconos & Emojis Clásicos por Defecto
+- **Emojis Clásicos por Defecto**: Configurado `classic` como estilo inicial estándar y universal para cualquier usuario nuevo que entre a la aplicación.
+- **Ventana Emergente de Colección de Iconos (`#icon-themes-modal`)**: Modal dedicado accesible mediante un único botón limpio en el menú de navegación (`🎨 Estilo de Iconos ➔`), con tarjetas interactivas, vista previa en vivo (emojis estándar vs personajes SVG de cómic) y estado activo en tiempo real.
+- **Service Worker `v126-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
+
+---
+
 ## [1.0.25] - 2026-08-28
 
 ### 🛡️ Blindaje Científico: Regla de Oro de Probabilidad de Lluvia (< 20% = Incondicionalmente Seco)

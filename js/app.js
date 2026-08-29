@@ -1,15 +1,16 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.0.25';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.0.25';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=1.0.25';
-import { renderCurrentWeather } from './components/currentCard.js?v=1.0.25';
-import { renderMarineCard } from './components/marineCard.js?v=1.0.25';
-import { renderMountainCard } from './components/mountainCard.js?v=1.0.25';
-import { renderForecast } from './components/forecastView.js?v=1.0.25';
-import { renderWeatherChart } from './components/chartsView.js?v=1.0.25';
-import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.25';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.0.25';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=1.0.25';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.25';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.0.26';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.0.26';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=1.0.26';
+import { renderCurrentWeather } from './components/currentCard.js?v=1.0.26';
+import { renderMarineCard } from './components/marineCard.js?v=1.0.26';
+import { renderMountainCard } from './components/mountainCard.js?v=1.0.26';
+import { renderForecast } from './components/forecastView.js?v=1.0.26';
+import { renderWeatherChart } from './components/chartsView.js?v=1.0.26';
+import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.26';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.0.26';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=1.0.26';
+import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.0.26';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.26';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, alertas climáticas y calidad del aire', key: '1' },
@@ -41,6 +42,7 @@ class MeteoAsturiasApp {
     this.updateModelTriggerDisplay();
     this.renderFavoritesMenu();
     this.setupNavModal();
+    this.setupIconThemesModal();
     this.setupModelModal();
     this.setupExplainModal();
     this.setupEventListeners();
@@ -598,39 +600,19 @@ class MeteoAsturiasApp {
     const modal = document.getElementById('nav-modal');
     const closeBtn = document.getElementById('btn-close-nav');
     const grid = document.getElementById('nav-modal-grid');
-    const btnAstur = document.getElementById('btn-theme-astur');
-    const btnClassic = document.getElementById('btn-theme-classic');
+    const badgeTheme = document.getElementById('badge-active-icon-theme');
 
     if (!modal || !grid) return;
 
-    const updateThemeButtons = () => {
-      const currentTheme = this.prefs.iconTheme || 'astur';
-      if (btnAstur) btnAstur.classList.toggle('active', currentTheme === 'astur');
-      if (btnClassic) btnClassic.classList.toggle('active', currentTheme === 'classic');
+    const updateNavHeaderThemeBadge = () => {
+      if (badgeTheme) {
+        const theme = this.prefs.iconTheme || 'classic';
+        badgeTheme.textContent = theme === 'astur' ? '🎭 Emotivos' : '📱 Clásicos';
+      }
     };
 
-    if (btnAstur) {
-      btnAstur.addEventListener('click', () => {
-        this.triggerHaptic();
-        this.prefs.iconTheme = 'astur';
-        savePreferences(this.prefs);
-        updateThemeButtons();
-        this.renderAllComponents();
-      });
-    }
-
-    if (btnClassic) {
-      btnClassic.addEventListener('click', () => {
-        this.triggerHaptic();
-        this.prefs.iconTheme = 'classic';
-        savePreferences(this.prefs);
-        updateThemeButtons();
-        this.renderAllComponents();
-      });
-    }
-
     const renderNavItems = () => {
-      updateThemeButtons();
+      updateNavHeaderThemeBadge();
       grid.innerHTML = APP_MODULES.map(m => {
         const isActive = m.id === this.activeTab;
         return `
@@ -678,6 +660,75 @@ class MeteoAsturiasApp {
     });
 
     this.renderNavItems = renderNavItems;
+    this.updateNavHeaderThemeBadge = updateNavHeaderThemeBadge;
+  }
+
+  setupIconThemesModal() {
+    const triggerBtn = document.getElementById('btn-open-icon-themes');
+    const modal = document.getElementById('icon-themes-modal');
+    const closeBtn = document.getElementById('btn-close-icon-themes');
+    const cardClassic = document.getElementById('theme-card-classic');
+    const cardAstur = document.getElementById('theme-card-astur');
+    const previewComic = document.getElementById('preview-comic-icons');
+
+    if (!modal) return;
+
+    // Renderizar las miniaturas SVG en la vista previa del tema cómic
+    if (previewComic) {
+      previewComic.innerHTML = `
+        <span class="preview-svg">${getAsturWeatherSvg('sun', 28)}</span>
+        <span class="preview-svg">${getAsturWeatherSvg('cloud', 28)}</span>
+        <span class="preview-svg">${getAsturWeatherSvg('rain', 28)}</span>
+        <span class="preview-svg">${getAsturWeatherSvg('storm', 28)}</span>
+        <span class="preview-svg">${getAsturWeatherSvg('moon', 28)}</span>
+      `;
+    }
+
+    const updateActiveThemeCards = () => {
+      const currentTheme = this.prefs.iconTheme || 'classic';
+      if (cardClassic) cardClassic.classList.toggle('active', currentTheme === 'classic');
+      if (cardAstur) cardAstur.classList.toggle('active', currentTheme === 'astur');
+      if (this.updateNavHeaderThemeBadge) this.updateNavHeaderThemeBadge();
+    };
+
+    const selectTheme = (themeId) => {
+      this.triggerHaptic();
+      this.prefs.iconTheme = themeId;
+      savePreferences(this.prefs);
+      updateActiveThemeCards();
+      this.renderAllComponents();
+      this.closeModal(modal);
+    };
+
+    if (cardClassic) {
+      cardClassic.addEventListener('click', () => selectTheme('classic'));
+    }
+
+    if (cardAstur) {
+      cardAstur.addEventListener('click', () => selectTheme('astur'));
+    }
+
+    if (triggerBtn) {
+      triggerBtn.addEventListener('click', () => {
+        this.triggerHaptic();
+        updateActiveThemeCards();
+        this.openModal(modal);
+      });
+    }
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        this.closeModal(modal);
+      });
+    }
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        this.closeModal(modal);
+      }
+    });
+
+    updateActiveThemeCards();
   }
 
   setupExplainModal() {
@@ -831,6 +882,8 @@ class MeteoAsturiasApp {
         if (modelModal) modelModal.style.display = 'none';
         const navModal = document.getElementById('nav-modal');
         if (navModal) navModal.style.display = 'none';
+        const iconThemesModal = document.getElementById('icon-themes-modal');
+        if (iconThemesModal) iconThemesModal.style.display = 'none';
         const explainModal = document.getElementById('explain-modal');
         if (explainModal) explainModal.style.display = 'none';
       }
