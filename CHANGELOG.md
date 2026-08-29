@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.32] - 2026-08-28
+
+### 📐 Cuadrícula Simétrica: Distribución de 2 Botones por Línea
+- **Alineación Perfecta al 50%**: Configuración de `grid-template-columns: 1fr 1fr` tanto para la fila de navegación (Modelo y Menú) como para la fila de acciones (Guardar y Mi Ubicación), garantizando un diseño estructurado, equilibrado y de fácil pulsación con el pulgar.
+- **Service Worker `v132-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
+
+---
+
 ## [1.0.31] - 2026-08-28
 
 ### 🌟 Rediseño Maestro: Tarjeta Cabecera Maestra Universal (Centro de Control Unificado)

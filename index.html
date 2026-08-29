@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.31">
-  <link rel="stylesheet" href="css/components.css?v=1.0.31">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.31">
+  <link rel="stylesheet" href="css/main.css?v=1.0.32">
+  <link rel="stylesheet" href="css/components.css?v=1.0.32">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.32">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -178,7 +178,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.31 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.32 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -226,11 +226,20 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.31 🚀</span>
+            <span class="release-version">v1.0.32 🚀</span>
             <span class="release-date">28 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-new">Rediseño Maestro</span> <strong>Tarjeta Cabecera Maestra Universal</strong>: integración total de los selectores de Modelo y Menú de Módulos, junto con las acciones rápidas de Guardar Favorito, GPS y Pantalla Completa dentro de una única tarjeta superior unificada con estética glassmorphism ultra compacta.</li>
+            <li><span class="tag tag-improved">Diseño Simétrico</span> <strong>Cuadrícula de 2 Botones por Línea</strong>: Fila 1 para Modelo y Menú (50% / 50%) y Fila 2 para Guardar y Mi Ubicación (50% / 50%), logrando una alineación perfecta y equilibrada en la tarjeta unificada.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.0.31</span>
+            <span class="release-date">28 Ago 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Rediseño</span> Tarjeta Cabecera Maestra Universal.</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -1126,7 +1135,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.31').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.32').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1147,6 +1156,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.31"></script>
+  <script type="module" src="js/app.js?v=1.0.32"></script>
 </body>
 </html>
