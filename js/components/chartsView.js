@@ -1,4 +1,4 @@
-import { getWeatherInfo } from '../utils/weatherIcons.js?v=1.0.24';
+import { getWeatherInfo } from '../utils/weatherIcons.js?v=1.0.25';
 
 /**
  * Generador de gráficos de evolución horaria (48h) con scroll horizontal interactivo en móviles

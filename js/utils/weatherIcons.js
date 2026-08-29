@@ -1,110 +1,115 @@
-import { getAsturWeatherSvg } from './weatherAsturIcons.js?v=1.0.24';
+import { getAsturWeatherSvg } from './weatherAsturIcons.js?v=1.0.25';
 
 /**
  * Mapeo de códigos meteorológicos WMO a descripciones en asturiano/castellano, iconos y clases
  */
 export const WMO_CODES = {
-  0: { label: 'Despejado / Soleyeru', icon: '☀️', svgKey: 'clear-day', lucide: 'sun', bg: 'clear', isRain: false, isSnow: false },
-  1: { label: 'Principalmente despejado', icon: '🌤️', svgKey: 'mostly-clear-day', lucide: 'sun-dim', bg: 'mostly-clear', isRain: false, isSnow: false },
-  2: { label: 'Parcialmente nublado', icon: '⛅', svgKey: 'partly-cloudy-day', lucide: 'cloud-sun', bg: 'partly-cloudy', isRain: false, isSnow: false },
+  0: { label: 'Despejado / Soleyeru', icon: '☀️', svgKey: 'clear-day', lucide: 'sun', bg: 'clear-day', isRain: false, isSnow: false },
+  1: { label: 'Principalmente despejado', icon: '🌤️', svgKey: 'mostly-clear-day', lucide: 'sun-medium', bg: 'clear-day', isRain: false, isSnow: false },
+  2: { label: 'Parcialmente nublado / Claros', icon: '⛅', svgKey: 'partly-cloudy-day', lucide: 'cloud-sun', bg: 'partly-cloudy', isRain: false, isSnow: false },
   3: { label: 'Nublado / Cubiertu', icon: '☁️', svgKey: 'cloudy', lucide: 'cloud', bg: 'cloudy', isRain: false, isSnow: false },
   45: { label: 'Niebla / Borrina', icon: '🌫️', svgKey: 'fog', lucide: 'cloud-fog', bg: 'fog', isRain: false, isSnow: false },
   48: { label: 'Niebla con escarcha', icon: '🌫️', svgKey: 'fog', lucide: 'cloud-fog', bg: 'fog', isRain: false, isSnow: false },
-  51: { label: 'Orbayu / Calabobos ligero', icon: '🌦️', svgKey: 'drizzle', lucide: 'cloud-drizzle', bg: 'drizzle', isRain: true, isSnow: false },
+  51: { label: 'Orbayu llixeru (Llovizna ligera)', icon: '🌦️', svgKey: 'drizzle', lucide: 'cloud-drizzle', bg: 'drizzle', isRain: true, isSnow: false },
   53: { label: 'Orbayu moderado', icon: '🌦️', svgKey: 'drizzle', lucide: 'cloud-drizzle', bg: 'drizzle', isRain: true, isSnow: false },
-  55: { label: 'Orbayu persistente', icon: '🌧️', svgKey: 'drizzle', lucide: 'cloud-drizzle', bg: 'drizzle', isRain: true, isSnow: false },
-  56: { label: 'Llovizna engelante ligera', icon: '🌨️', svgKey: 'snow', lucide: 'cloud-snow', bg: 'snow', isRain: true, isSnow: true },
-  57: { label: 'Llovizna engelante densa', icon: '🌨️', svgKey: 'snow', lucide: 'cloud-snow', bg: 'snow', isRain: true, isSnow: true },
+  55: { label: 'Orbayu trupu (Llovizna densa)', icon: '🌧️', svgKey: 'drizzle', lucide: 'cloud-drizzle', bg: 'drizzle', isRain: true, isSnow: false },
+  56: { label: 'Llovizna helada ligera', icon: '🌧️', svgKey: 'drizzle', lucide: 'cloud-drizzle', bg: 'drizzle', isRain: true, isSnow: false },
+  57: { label: 'Llovizna helada densa', icon: '🌧️', svgKey: 'drizzle', lucide: 'cloud-drizzle', bg: 'drizzle', isRain: true, isSnow: false },
   61: { label: 'Lluvia débil', icon: '🌧️', svgKey: 'rain', lucide: 'cloud-rain', bg: 'rain', isRain: true, isSnow: false },
   63: { label: 'Lluvia moderada', icon: '🌧️', svgKey: 'rain', lucide: 'cloud-rain', bg: 'rain', isRain: true, isSnow: false },
-  65: { label: 'Lluvia fuerte / Bastinazu', icon: '⛈️', svgKey: 'storm', lucide: 'cloud-rain-wind', bg: 'heavy-rain', isRain: true, isSnow: false },
-  66: { label: 'Lluvia engelante ligera', icon: '🌨️', svgKey: 'snow', lucide: 'cloud-snow', bg: 'snow', isRain: true, isSnow: true },
-  67: { label: 'Lluvia engelante fuerte', icon: '🌨️', svgKey: 'snow', lucide: 'cloud-snow', bg: 'snow', isRain: true, isSnow: true },
-  71: { label: 'Nevada ligera', icon: '❄️', svgKey: 'snow', lucide: 'snowflake', bg: 'snow', isRain: false, isSnow: true },
-  73: { label: 'Nevada moderada', icon: '❄️', svgKey: 'snow', lucide: 'snowflake', bg: 'snow', isRain: false, isSnow: true },
-  75: { label: 'Nevada fuerte / Temporal', icon: '❄️', svgKey: 'snow', lucide: 'snowflake', bg: 'snow', isRain: false, isSnow: true },
-  77: { label: 'Granizo menudo', icon: '🌨️', svgKey: 'snow', lucide: 'cloud-hail', bg: 'hail', isRain: false, isSnow: true },
-  80: { label: 'Chubascos débiles', icon: '🌦️', svgKey: 'drizzle', lucide: 'cloud-sun-rain', bg: 'rain', isRain: true, isSnow: false },
+  65: { label: 'Lluvia fuerte / Bastinazu', icon: '🌧️', svgKey: 'heavy-rain', lucide: 'cloud-rain-wind', bg: 'heavy-rain', isRain: true, isSnow: false },
+  66: { label: 'Lluvia helada ligera', icon: '🌧️', svgKey: 'rain', lucide: 'cloud-rain', bg: 'rain', isRain: true, isSnow: false },
+  67: { label: 'Lluvia helada fuerte', icon: '🌧️', svgKey: 'heavy-rain', lucide: 'cloud-rain-wind', bg: 'heavy-rain', isRain: true, isSnow: false },
+  71: { label: 'Nevada ligera', icon: '🌨️', svgKey: 'snow', lucide: 'snowflake', bg: 'snow', isRain: false, isSnow: true },
+  73: { label: 'Nevada moderada', icon: '🌨️', svgKey: 'snow', lucide: 'snowflake', bg: 'snow', isRain: false, isSnow: true },
+  75: { label: 'Nevadona fuerte', icon: '❄️', svgKey: 'snow', lucide: 'snowflake', bg: 'snow', isRain: false, isSnow: true },
+  77: { label: 'Granos de nieve', icon: '🌨️', svgKey: 'snow', lucide: 'snowflake', bg: 'snow', isRain: false, isSnow: true },
+  80: { label: 'Chubascos de orbayu', icon: '🌦️', svgKey: 'drizzle', lucide: 'cloud-drizzle', bg: 'drizzle', isRain: true, isSnow: false },
   81: { label: 'Chubascos moderados', icon: '🌧️', svgKey: 'rain', lucide: 'cloud-rain', bg: 'rain', isRain: true, isSnow: false },
-  82: { label: 'Chubascos violentos', icon: '⛈️', svgKey: 'storm', lucide: 'cloud-rain-wind', bg: 'heavy-rain', isRain: true, isSnow: false },
-  85: { label: 'Chubascos de nieve débiles', icon: '🌨️', svgKey: 'snow', lucide: 'cloud-snow', bg: 'snow', isRain: false, isSnow: true },
+  82: { label: 'Chubascos violentos / Bastinazu', icon: '⛈️', svgKey: 'storm', lucide: 'cloud-lightning', bg: 'heavy-rain', isRain: true, isSnow: false },
+  85: { label: 'Chubascos de nieve débiles', icon: '🌨️', svgKey: 'snow', lucide: 'snowflake', bg: 'snow', isRain: false, isSnow: true },
   86: { label: 'Chubascos de nieve fuertes', icon: '❄️', svgKey: 'snow', lucide: 'snowflake', bg: 'snow', isRain: false, isSnow: true },
-  95: { label: 'Tormenta eléctrica', icon: '⚡', svgKey: 'storm', lucide: 'cloud-lightning', bg: 'storm', isRain: true, isSnow: false },
-  96: { label: 'Tormenta con granizo débil', icon: '⛈️', svgKey: 'storm', lucide: 'cloud-lightning', bg: 'storm', isRain: true, isSnow: true },
-  99: { label: 'Tormenta con granizo fuerte', icon: '🌩️', svgKey: 'storm', lucide: 'zap', bg: 'storm', isRain: true, isSnow: true }
+  95: { label: 'Tormenta', icon: '⛈️', svgKey: 'storm', lucide: 'cloud-lightning', bg: 'storm', isRain: true, isSnow: false },
+  96: { label: 'Tormenta con granizo débil', icon: '⛈️', svgKey: 'storm', lucide: 'cloud-lightning', bg: 'storm', isRain: true, isSnow: false },
+  99: { label: 'Tormenta con granizo fuerte', icon: '⛈️', svgKey: 'storm', lucide: 'cloud-lightning', bg: 'storm', isRain: true, isSnow: false }
 };
 
 export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null) {
   let base = WMO_CODES[code] || { label: 'Variable', icon: '⛅', svgKey: 'cloudy', lucide: 'cloud', bg: 'cloudy', isRain: false, isSnow: false };
 
-  // 1. Si es de noche (isDay === 0 o false), adaptar los iconos solares base a nocturnos
-  if (isDay === 0 || isDay === false) {
+  const isNight = isDay === 0 || isDay === false;
+
+  // 1. Si es de noche, adaptar los iconos solares base a nocturnos
+  if (isNight) {
     if (code === 0) {
       base = { ...base, label: 'Despejado / Cielo Nocturno', icon: '🌙', svgKey: 'clear-night', bg: 'clear-night' };
     } else if (code === 1) {
       base = { ...base, label: 'Poco nuboso de noche', icon: '🌙', svgKey: 'mostly-clear-night', bg: 'mostly-clear-night' };
     } else if (code === 2) {
       base = { ...base, label: 'Parcialmente nublado', icon: '☁️🌙', svgKey: 'partly-cloudy-night', bg: 'partly-cloudy-night' };
-    } else if (code === 51 || code === 53 || code === 80) {
-      base = { ...base, label: 'Orbayu nocturno ligero', icon: '🌧️', svgKey: 'drizzle', bg: 'drizzle' };
+    } else if (code === 3) {
+      base = { ...base, label: 'Nublado de noche', icon: '☁️', svgKey: 'cloudy', bg: 'cloudy' };
     }
   }
 
-  // 2. Graduación y coherencia inteligente de lluvia por tramos de intensidad (prevalece sobre cualquier código teórico)
+  // 2. Graduación y coherencia inteligente de lluvia (REGLA DE ORO DE PROBABILIDAD)
   if (precipitation !== null || pop !== null) {
-    const p = precipitation != null ? parseFloat(precipitation) : 0;
-    const prob = pop != null ? parseFloat(pop) : 0;
+    const p = precipitation != null ? Math.max(0, parseFloat(precipitation)) : 0;
+    const prob = pop != null ? Math.max(0, parseFloat(pop)) : 0;
 
-    // Caso 0: Seco / Sin lluvia medible (prob < 20% y p < 0.3 mm) -> Nube seca sin gotas
-    if (prob < 20 && p < 0.3) {
-      if (base.isRain && !base.isSnow) {
+    // REGLA DE ORO 1: Si la probabilidad es < 20%, NUNCA ES LLUVIA (Riesgo nulo/residual)
+    if (prob < 20) {
+      if (base.isRain || base.svgKey === 'drizzle' || base.svgKey === 'rain' || base.svgKey === 'storm') {
         base = {
-          label: (isDay === 0 || isDay === false) ? 'Nublado de noche' : 'Nublado / Cubiertu',
+          label: isNight ? 'Nublado de noche' : 'Nublado / Cubiertu',
           icon: '☁️',
-          svgKey: (isDay === 0 || isDay === false) ? 'partly-cloudy-night' : 'cloudy',
+          svgKey: 'cloudy',
           lucide: 'cloud',
-          bg: (isDay === 0 || isDay === false) ? 'partly-cloudy-night' : 'cloudy',
+          bg: isNight ? 'partly-cloudy-night' : 'cloudy',
           isRain: false,
           isSnow: false
         };
       }
     }
-    // Caso 1: Llovizna / Orbayu débil (prob 20-44% o p 0.3-0.5 mm)
-    else if ((prob >= 20 && prob < 45) || (p >= 0.3 && p < 0.5)) {
-      base = {
-        label: (isDay === 0 || isDay === false) ? 'Orbayu nocturno ligero' : 'Orbayu / Llovizna ligera',
-        icon: (isDay === 0 || isDay === false) ? '🌧️' : '🌦️',
-        svgKey: 'drizzle',
-        lucide: 'cloud-drizzle',
-        bg: 'drizzle',
-        isRain: true,
-        isSnow: false
-      };
-    }
-    // Caso 2: Lluvia moderada (prob 45-74% o p 0.5-2.0 mm)
-    else if ((prob >= 45 && prob < 75) || (p >= 0.5 && p < 2.0)) {
-      base = {
-        label: 'Lluvia moderada',
-        icon: '🌧️',
-        svgKey: 'rain',
-        lucide: 'cloud-rain',
-        bg: 'rain',
-        isRain: true,
-        isSnow: false
-      };
-    }
-    // Caso 3: Lluvia fuerte / Bastinazu (prob >= 75% o p >= 2.0 mm o tormenta)
-    else if (prob >= 75 || p >= 2.0 || code === 65 || code === 82 || code === 95 || code === 96 || code === 99) {
-      const isStorm = code === 95 || code === 96 || code === 99;
-      base = {
-        label: isStorm ? 'Tormenta eléctrica' : 'Lluvia fuerte / Bastinazu',
-        icon: '⛈️',
-        svgKey: 'storm',
-        lucide: 'cloud-rain-wind',
-        bg: isStorm ? 'storm' : 'heavy-rain',
-        isRain: true,
-        isSnow: false
-      };
+    // REGLA DE ORO 2: Si la probabilidad es >= 20%, graduamos la lluvia por intensidad real
+    else {
+      // Caso 3: Lluvia fuerte / Bastinazu / Tormenta (prob >= 75% o p >= 2.0 mm o código de tormenta)
+      if (prob >= 75 || p >= 2.0 || code === 65 || code === 82 || code === 95 || code === 96 || code === 99) {
+        const isStorm = code === 95 || code === 96 || code === 99;
+        base = {
+          label: isStorm ? 'Tormenta eléctrica' : 'Lluvia fuerte / Bastinazu',
+          icon: '⛈️',
+          svgKey: 'storm',
+          lucide: 'cloud-rain-wind',
+          bg: isStorm ? 'storm' : 'heavy-rain',
+          isRain: true,
+          isSnow: false
+        };
+      }
+      // Caso 2: Lluvia moderada (prob >= 45% o p >= 0.5 mm)
+      else if (prob >= 45 || p >= 0.5) {
+        base = {
+          label: 'Lluvia moderada',
+          icon: '🌧️',
+          svgKey: 'rain',
+          lucide: 'cloud-rain',
+          bg: 'rain',
+          isRain: true,
+          isSnow: false
+        };
+      }
+      // Caso 1: Orbayu / Llovizna ligera (prob 20-44% o p >= 0.1 mm)
+      else {
+        base = {
+          label: isNight ? 'Orbayu nocturno ligero' : 'Orbayu / Llovizna ligera',
+          icon: isNight ? '🌧️' : '🌦️',
+          svgKey: 'drizzle',
+          lucide: 'cloud-drizzle',
+          bg: 'drizzle',
+          isRain: true,
+          isSnow: false
+        };
+      }
     }
   }
 

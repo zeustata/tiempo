@@ -121,5 +121,6 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Rediseño gráfico auténticamente asturiano de los iconos SVG con Hórreo, Picu Urriellu, Manzana de Sidra, Trisquel celta, Faro de Peñas y Cruz de la Victoria con salto a **v1.0.22** (SW `v122-official`).
 - Creación del set de personajes estilo cómic "Emojis Emotivos" (con ojos, boca, coloretes y expresiones divertidas) y renombrado oficial del botón en el menú con salto a **v1.0.23** (SW `v123-official`).
 - Simplificación y limpieza del selector en el menú retirando el encabezado redundante con salto a **v1.0.24** (SW `v124-official`).
+- Blindaje definitivo de la Regla de Oro de Probabilidad (< 20% = Incondicionalmente Seco / Nube limpia) para eliminar falsas lluvias por ensambles residuales con salto a **v1.0.25** (SW `v125-official`).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 

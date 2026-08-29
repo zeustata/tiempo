@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.25] - 2026-08-28
+
+### 🛡️ Blindaje Científico: Regla de Oro de Probabilidad de Lluvia (< 20% = Incondicionalmente Seco)
+- **Eliminación Total de Falsos Avisos por Residuos Numéricos de Simulación**: Aislamiento estricto de todas las horas con probabilidad de precipitación inferior al 20% (3%, 5%, 10%), ignorando milímetros teóricos aislados de ensambles y garantizando que muestren siempre la nube seca sonriente `☁️` sin gotas de lluvia.
+- **Service Worker `v125-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
+
+---
+
 ## [1.0.24] - 2026-08-28
 
 ### 🧹 Diseño Minimalista en Selector de Emojis Emotivos
