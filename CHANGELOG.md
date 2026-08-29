@@ -12,6 +12,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.15] - 2026-08-28
+
+### 📐 Alineación y Simetría en Observatorio Astronómico (Layout Polish & Grid Balance)
+- **Cuadrícula 2x2 Simétrica para Filtros del Semáforo**: Organización de los botones de filtrado (*Todos*, *Asturias*, *España/Europa*, *Global*) en cuadrícula simétrica `2x2` al 50% de ancho en móviles, eliminando asimetrías y saltos de línea huérfanos.
+- **Armonización de Métricas Lunares**: Estructuración de las 3 tarjetas superiores (*Edad Lunar*, *Próxima Luna Llena* y *Estado del Cielo*) en 3 columnas uniformes de una sola fila (`repeat(3, 1fr)`) con texto centrado e insignias compactas.
+- **Encaje Limpio en Tarjetas de Eventos Celestes**: Separador sutil y alineación armónica de las etiquetas de tipo de evento, cuenta atrás y semáforo de visibilidad en Asturias.
+- **Service Worker `v115-official` & Cache-Busting**: Actualización atómica de caché y versionado en caliente en todos los navegadores y clientes móviles.
+
+---
+
 ## [1.0.14] - 2026-08-28
 
 ### 💡 Suite Didáctica Completa "Explícame" en Todos los Sensores (Full Interactive Education Suite)

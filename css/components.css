@@ -2381,8 +2381,8 @@
 
 .astronomy-moon-details-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
   margin-top: 18px;
   padding-top: 14px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -2392,22 +2392,27 @@
   background: rgba(15, 23, 42, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
-  padding: 10px 12px;
+  padding: 10px 8px;
   display: flex;
   flex-direction: column;
   gap: 4px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
 }
 
 .moon-metric-pill .metric-label {
-  font-size: 0.75rem;
-  color: #94a3b8;
+  font-size: 0.74rem;
+  color: #cbd5e1;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .moon-metric-pill .metric-val {
-  font-size: 0.95rem;
-  color: #e2e8f0;
-  font-weight: 700;
+  font-size: 0.92rem;
+  color: #f8fafc;
+  font-weight: 800;
+  white-space: nowrap;
 }
 
 /* FILTROS Y SEMÁFORO */
@@ -2424,22 +2429,35 @@
 }
 
 .astronomy-filter-chips {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 8px;
-  flex-wrap: wrap;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .astronomy-filter-chips {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 .astro-chip {
   background: rgba(15, 23, 42, 0.55);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #94a3b8;
-  padding: 8px 14px;
-  border-radius: 20px;
-  font-size: 0.82rem;
-  font-weight: 600;
+  color: #cbd5e1;
+  padding: 10px 8px;
+  border-radius: 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;
   font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .astro-chip:hover {
@@ -2479,7 +2497,7 @@
 /* LISTADO DE EVENTOS */
 .astronomy-events-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 16px;
 }
 
@@ -2515,9 +2533,11 @@
 .astro-event-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   gap: 8px;
   flex-wrap: wrap;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .astro-event-type-row {
