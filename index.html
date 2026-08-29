@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.34">
-  <link rel="stylesheet" href="css/components.css?v=1.0.34">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.34">
+  <link rel="stylesheet" href="css/main.css?v=1.0.35">
+  <link rel="stylesheet" href="css/components.css?v=1.0.35">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.35">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -50,20 +50,20 @@
             <img src="icons/bandera-asturias.svg" alt="Bandera del Principado de Asturias" class="asturias-flag-img">
           </div>
           <div class="brand-info">
-            <div class="brand-title-row">
-              <h1>MeteoAstur Lode</h1>
+            <h1>MeteoAstur Lode</h1>
+            <div class="brand-badges-row">
               <div id="live-clock" class="live-clock-badge" title="Hora y fecha en tiempo real">--:--:--</div>
               <div id="network-status" class="network-badge online" title="Estado de conexión">🟢 En línea</div>
             </div>
-            <p class="brand-tagline">Estación Meteorológica Integral del Principado</p>
+            <p class="brand-tagline">Estación Meteorológica Asturias</p>
           </div>
         </div>
 
         <div class="header-controls">
-          <button id="btn-install-app" class="btn-header btn-install" style="display: none;" title="Instalar en Windows / Móvil">📥 Instalar App</button>
           <button id="btn-toggle-fav" class="btn-header" title="Guardar en Favoritos (Tecla F)">⭐ Guardar</button>
-          <button id="btn-fullscreen" class="btn-header" title="Alternar Pantalla Completa / Modo Ventana (Tecla K / F11)">🖥️ Completa</button>
           <button id="btn-gps" class="btn-header" title="Buscar concejo más cercano por GPS (Tecla G)">📍 Mi Ubicación</button>
+          <button id="btn-fullscreen" class="btn-header" title="Alternar Pantalla Completa / Modo Ventana (Tecla K / F11)">🖥️ Completa</button>
+          <button id="btn-install-app" class="btn-header btn-install" style="display: none;" title="Instalar en Windows / Móvil">📥 Instalar App</button>
         </div>
       </div>
 
@@ -172,7 +172,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.34 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.35 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -220,11 +220,20 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.34 🚀</span>
+            <span class="release-version">v1.0.35 🚀</span>
             <span class="release-date">28 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-new">Tarjeta Maestra</span> <strong>Unificación Exterior Integral</strong>: Todo el bloque superior (cabecera, modelo, menú, búsqueda y favoritos) integrado dentro de una única tarjeta contenedora, manteniendo al 100% el diseño estético, orden vertical y estilo visual exacto de cada elemento.</li>
+            <li><span class="tag tag-improved">Alineación Visual</span> <strong>Reloj, Estado y Subtítulo Compacto</strong>: Título en una sola línea, reloj y estado "🟢 En línea" alineados en paralelo en una misma fila (`brand-badges-row`), y subtítulo optimizado a <em>Estación Meteorológica Asturias</em> para ahorrar espacio vertical.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.0.34</span>
+            <span class="release-date">28 Ago 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Tarjeta Maestra</span> Unificación visual del bloque superior.</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -1129,7 +1138,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.34').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.35').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1150,6 +1159,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.34"></script>
+  <script type="module" src="js/app.js?v=1.0.35"></script>
 </body>
 </html>

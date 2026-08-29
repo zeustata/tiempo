@@ -186,22 +186,25 @@ body {
 .brand-info {
   display: flex;
   flex-direction: column;
-}
-
-.brand-title-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
+  gap: 3px;
 }
 
 .brand-info h1 {
-  font-size: 1.8rem;
+  font-size: 1.75rem;
   font-weight: 800;
   letter-spacing: -0.5px;
   background: linear-gradient(135deg, #f8fafc 40%, #38bdf8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.brand-badges-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
 }
 
 .live-clock-badge {
@@ -213,13 +216,15 @@ body {
   color: var(--primary);
   border: 1px solid rgba(56, 189, 248, 0.3);
   border-radius: 6px;
+  white-space: nowrap;
 }
 
 .network-badge {
   font-size: 0.75rem;
   font-weight: 700;
-  padding: 2px 7px;
+  padding: 3px 8px;
   border-radius: 6px;
+  white-space: nowrap;
 }
 
 .network-badge.online {
@@ -235,17 +240,33 @@ body {
 }
 
 .brand-tagline {
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   color: var(--text-muted);
   font-weight: 400;
+  margin: 0;
 }
 
 /* Header Controls */
 .header-controls {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  width: 100%;
+}
+
+.header-controls .btn-header {
+  width: 100%;
+  justify-content: center;
+  min-height: 40px;
+}
+
+#btn-fullscreen {
+  grid-column: 1 / -1;
+}
+
+#btn-install-app:not([style*="none"]) ~ #btn-fullscreen,
+#btn-fullscreen ~ #btn-install-app:not([style*="none"]) {
+  grid-column: auto;
 }
 
 .btn-header {

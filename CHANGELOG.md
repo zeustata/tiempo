@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.35] - 2026-08-28
+
+### 📱 Optimización de Cabecera: Alineación de Reloj, Estado y Subtítulo
+- **Alineación Horizontal de Badges**: Inclusión de `brand-badges-row` con `flex-wrap: nowrap` para que el reloj (`🕒`) y el estado (`🟢 En línea`) se muestren siempre en paralelo en una sola fila nítida debajo del título principal `MeteoAstur Lode`.
+- **Subtítulo Compacto**: Simplificación del texto descriptivo a *Estación Meteorológica Asturias* para optimizar el espacio vertical.
+- **Service Worker `v135-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
+
+---
+
 ## [1.0.34] - 2026-08-28
 
 ### 🌟 Tarjeta Maestra: Unificación Visual del Bloque Superior
