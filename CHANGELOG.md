@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.24] - 2026-08-28
+
+### 🧹 Diseño Minimalista en Selector de Emojis Emotivos
+- **Eliminación de Texto Redundante**: Retirada del encabezado superior en el selector de iconos del menú, dejando directamente los dos botones conmutables (*🎭 Emojis Emotivos* y *📱 Emojis Clásicos*) con espaciado compacto y limpio.
+- **Service Worker `v124-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
+
+---
+
 ## [1.0.23] - 2026-08-28
 
 ### 🎭 Lanzamiento de "Emojis Emotivos" (Estilo Cómic / Cartoon)
