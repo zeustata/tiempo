@@ -1,10 +1,10 @@
-import { getWeatherInfo, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.0.20';
-import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.0.20';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.0.21';
+import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.0.21';
 
 /**
  * Renderiza el dashboard principal con alineación uniforme y todos los sensores de la estación
  */
-export function renderCurrentWeather(data, concejo, units = 'metric') {
+export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme = 'astur') {
   const current = data.weather.current;
   const hourly = data.weather.hourly;
   const daily = data.weather.daily;
@@ -55,7 +55,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric') {
           <p class="location-meta">Altitud: ${concejo.altitude} m • ${concejo.region}</p>
         </div>
         <div class="hero-icon-block" title="${weatherInfo.label}">
-          <span class="emoji-weather">${weatherInfo.icon}</span>
+          ${renderWeatherIconHtml(weatherInfo, 54, iconTheme)}
         </div>
       </div>
 

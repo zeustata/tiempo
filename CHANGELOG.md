@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.21] - 2026-08-28
+
+### 🍏 Nuevo Set de Iconos Vectoriales "Estilu Asturianu" & Selector Conmutable
+- **Iconos Vectoriales SVG Propios con Identidad Asturiana**: Creación del módulo `weatherAsturIcons.js` con diseño vectorial exclusivo en alta resolución (Soleyeru, Intervalos, Orbayu, Lluvia continua, Bastinazu & Tormenta con Rayo Oro, Borrina asturiana, Nevadona en Picos y Noche Estrellada).
+- **Selector Conmutable en el Menú de Navegación**: Integración en el modal de menú de un selector con dos estilos disponibles: `🍏 Estilu Asturianu` (por defecto) y `📱 Emojis Clásicos`, con memorización permanente en `localStorage` y cambio instantáneo en vivo sin recargar la página.
+- **Service Worker `v121-official` & Cache-Busting**: Actualización atómica de caché y sincronización de recursos estáticos.
+
+---
+
 ## [1.0.20] - 2026-08-28
 
 ### 🛡️ Blindaje Estricto de Umbral en Probabilidades Residuales de Precipitación

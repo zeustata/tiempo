@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.20">
-  <link rel="stylesheet" href="css/components.css?v=1.0.20">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.20">
+  <link rel="stylesheet" href="css/main.css?v=1.0.21">
+  <link rel="stylesheet" href="css/components.css?v=1.0.21">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.21">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -171,7 +171,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.20 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.21 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -219,8 +219,18 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.20 🚀</span>
+            <span class="release-version">v1.0.21 🚀</span>
             <span class="release-date">28 Ago 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo Diseño</span> <strong>Iconos Vectoriales "Estilu Asturianu" (SVG)</strong>: nuevo set exclusivo de iconos vectoriales con paleta y personalidad asturiana (Soleyeru, Orbayu, Lluvia cantábrica, Bastinazu & Rayo, Borrina, Nevadona y Noche Estrellada).</li>
+            <li><span class="tag tag-improved">Personalización</span> <strong>Selector Conmutable en el Menú</strong>: interruptor instantáneo en el menú para alternar libremente entre <em>🍏 Estilu Asturianu</em> y <em>📱 Emojis Clásicos</em> con persistencia en memoria local.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.0.20</span>
+            <span class="release-date">28 Ago 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-new">Coherencia Definitiva</span> <strong>Blindaje de Umbral en Probabilidades Residuales</strong>: eliminación incondicional de cualquier icono de lluvia en horas con menos del 20% de probabilidad o menos de 0.3 mm acumulados, garantizando nube seca ☁️ a las 23:00 y en todas las horas con porcentajes residuales.</li>
@@ -896,6 +906,18 @@
         </div>
         <button id="btn-close-nav" class="btn-close" aria-label="Cerrar menú">&times;</button>
       </div>
+      <!-- Selector de Estilo de Iconos (Estilu Asturianu SVG / Clásicos Emojis) -->
+      <div class="icon-theme-selector-wrap">
+        <span class="icon-theme-label">🎨 Estilo de Iconos de la Aplicación:</span>
+        <div class="icon-theme-toggle-group">
+          <button class="icon-theme-btn active" id="btn-theme-astur" data-theme="astur" title="Iconos vectoriales SVG con diseño e identidad asturiana">
+            🍏 Estilu Asturianu
+          </button>
+          <button class="icon-theme-btn" id="btn-theme-classic" data-theme="classic" title="Emojis estándar del sistema operativo">
+            📱 Emojis Clásicos
+          </button>
+        </div>
+      </div>
       <div class="modal-body nav-modal-body" id="nav-modal-grid"></div>
     </div>
   </div>
@@ -918,7 +940,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.20').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.21').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -939,6 +961,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.20"></script>
+  <script type="module" src="js/app.js?v=1.0.21"></script>
 </body>
 </html>

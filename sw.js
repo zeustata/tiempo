@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v120-official';
+const CACHE_NAME = 'meteoasturlode-v121-official';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -25,6 +25,7 @@ const STATIC_ASSETS = [
   './js/components/astronomyCard.js',
   './js/components/mapRadar.js',
   './js/utils/weatherIcons.js',
+  './js/utils/weatherAsturIcons.js',
   './js/utils/weatherAlerts.js',
   './js/utils/weatherExplanations.js',
   './js/utils/storage.js',

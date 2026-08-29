@@ -12,6 +12,7 @@ export function getPreferences() {
         favorites: [], // Vacío por defecto
         units: 'metric', // metric (km/h) | knots (kt)
         model: 'best_match',
+        iconTheme: 'astur', // astur (SVG personalizados) | classic (emojis)
         autoRefresh: true
       };
     }
@@ -22,6 +23,9 @@ export function getPreferences() {
     if (!parsed.model) {
       parsed.model = 'best_match';
     }
+    if (!parsed.iconTheme) {
+      parsed.iconTheme = 'astur';
+    }
     return parsed;
   } catch (e) {
     return {
@@ -29,6 +33,7 @@ export function getPreferences() {
       favorites: [],
       units: 'metric',
       model: 'best_match',
+      iconTheme: 'astur',
       autoRefresh: true
     };
   }

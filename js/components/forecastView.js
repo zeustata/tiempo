@@ -1,9 +1,9 @@
-import { getWeatherInfo } from '../utils/weatherIcons.js?v=1.0.20';
+import { getWeatherInfo, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=1.0.21';
 
 /**
  * Renderiza el pronóstico por horas (24h) y las tarjetas enriquecidas a 10 días
  */
-export function renderForecast(data, units = 'metric') {
+export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
   const hourly = data.weather.hourly;
   const daily = data.weather.daily;
   const now = new Date();
@@ -60,7 +60,7 @@ export function renderForecast(data, units = 'metric') {
     hourlyCards += `
       <div class="hourly-card">
         <span class="h-time">${hourLabel}</span>
-        <span class="h-icon" title="${weather.label}${precipMm >= 0.1 ? ` (${precipMm.toFixed(1)} mm)` : ''}">${weather.icon}</span>
+        <span class="h-icon" title="${weather.label}${precipMm >= 0.1 ? ` (${precipMm.toFixed(1)} mm)` : ''}">${renderWeatherIconHtml(weather, 28, iconTheme)}</span>
         <span class="h-temp">${temp}°C</span>
         <div class="h-pop ${pop >= 40 ? 'pop-high' : ''}" title="Probabilidad de lluvia">
           <span class="pop-drop">💧</span>
@@ -135,7 +135,7 @@ export function renderForecast(data, units = 'metric') {
           </div>
 
           <div class="d-condition-badge">
-            <span class="d-icon-large">${weather.icon}</span>
+            <span class="d-icon-large">${renderWeatherIconHtml(weather, 36, iconTheme)}</span>
             <div class="d-condition-info">
               <span class="d-desc-text">${weather.label}</span>
             </div>

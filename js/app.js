@@ -1,15 +1,15 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.0.20';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.0.20';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=1.0.20';
-import { renderCurrentWeather } from './components/currentCard.js?v=1.0.20';
-import { renderMarineCard } from './components/marineCard.js?v=1.0.20';
-import { renderMountainCard } from './components/mountainCard.js?v=1.0.20';
-import { renderForecast } from './components/forecastView.js?v=1.0.20';
-import { renderWeatherChart } from './components/chartsView.js?v=1.0.20';
-import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.20';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.0.20';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=1.0.20';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.20';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.0.21';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.0.21';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=1.0.21';
+import { renderCurrentWeather } from './components/currentCard.js?v=1.0.21';
+import { renderMarineCard } from './components/marineCard.js?v=1.0.21';
+import { renderMountainCard } from './components/mountainCard.js?v=1.0.21';
+import { renderForecast } from './components/forecastView.js?v=1.0.21';
+import { renderWeatherChart } from './components/chartsView.js?v=1.0.21';
+import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.21';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.0.21';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=1.0.21';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.21';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, alertas climáticas y calidad del aire', key: '1' },
@@ -598,10 +598,39 @@ class MeteoAsturiasApp {
     const modal = document.getElementById('nav-modal');
     const closeBtn = document.getElementById('btn-close-nav');
     const grid = document.getElementById('nav-modal-grid');
+    const btnAstur = document.getElementById('btn-theme-astur');
+    const btnClassic = document.getElementById('btn-theme-classic');
 
     if (!modal || !grid) return;
 
+    const updateThemeButtons = () => {
+      const currentTheme = this.prefs.iconTheme || 'astur';
+      if (btnAstur) btnAstur.classList.toggle('active', currentTheme === 'astur');
+      if (btnClassic) btnClassic.classList.toggle('active', currentTheme === 'classic');
+    };
+
+    if (btnAstur) {
+      btnAstur.addEventListener('click', () => {
+        this.triggerHaptic();
+        this.prefs.iconTheme = 'astur';
+        savePreferences(this.prefs);
+        updateThemeButtons();
+        this.renderAllComponents();
+      });
+    }
+
+    if (btnClassic) {
+      btnClassic.addEventListener('click', () => {
+        this.triggerHaptic();
+        this.prefs.iconTheme = 'classic';
+        savePreferences(this.prefs);
+        updateThemeButtons();
+        this.renderAllComponents();
+      });
+    }
+
     const renderNavItems = () => {
+      updateThemeButtons();
       grid.innerHTML = APP_MODULES.map(m => {
         const isActive = m.id === this.activeTab;
         return `
@@ -1027,7 +1056,7 @@ class MeteoAsturiasApp {
     try {
       const liveContainer = document.getElementById('panel-live');
       if (liveContainer) {
-        liveContainer.innerHTML = renderCurrentWeather(this.weatherData, this.currentConcejo, this.prefs.units);
+        liveContainer.innerHTML = renderCurrentWeather(this.weatherData, this.currentConcejo, this.prefs.units, this.prefs.iconTheme);
       }
     } catch (e) {
       console.error('[MeteoAstur] Error renderizando Vivo:', e);
@@ -1057,7 +1086,7 @@ class MeteoAsturiasApp {
     try {
       const forecastContainer = document.getElementById('panel-forecast');
       if (forecastContainer) {
-        forecastContainer.innerHTML = renderForecast(this.weatherData, this.prefs.units);
+        forecastContainer.innerHTML = renderForecast(this.weatherData, this.prefs.units, this.prefs.iconTheme);
       }
     } catch (e) {
       console.error('[MeteoAstur] Error renderizando Pronóstico:', e);

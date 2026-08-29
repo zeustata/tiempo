@@ -1648,3 +1648,82 @@ body:-webkit-full-screen .app-container {
     display: none !important;
   }
 }
+
+/* --- SELECTOR DE TEMA DE ICONOS (ESTILU ASTURIANU / CLÁSICO) --- */
+.icon-theme-selector-wrap {
+  padding: 12px 18px;
+  background: rgba(15, 23, 42, 0.45);
+  border-bottom: 1px solid var(--border-glass);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.icon-theme-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #cbd5e1;
+}
+
+.icon-theme-toggle-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.icon-theme-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.icon-theme-btn:hover {
+  background: rgba(56, 189, 248, 0.15);
+  color: var(--text-main);
+  border-color: rgba(56, 189, 248, 0.4);
+}
+
+.icon-theme-btn.active {
+  background: linear-gradient(135deg, rgba(2, 132, 199, 0.35), rgba(56, 189, 248, 0.2));
+  border-color: var(--primary);
+  color: #38bdf8;
+  font-weight: 700;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+}
+
+/* --- ICONOS VECTORIALES SVG ESTILU ASTURIANU --- */
+.astur-svg-icon {
+  display: inline-block;
+  vertical-align: middle;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
+  transition: transform 0.2s ease;
+}
+
+.astur-svg-icon:hover {
+  transform: scale(1.08);
+}
+
+.astur-svg-icon.icon-sun {
+  filter: drop-shadow(0 0 8px rgba(250, 204, 21, 0.45));
+}
+
+.astur-svg-icon.icon-moon {
+  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.35));
+}
+
+.astur-svg-icon.icon-storm {
+  filter: drop-shadow(0 0 8px rgba(234, 179, 8, 0.4));
+}
