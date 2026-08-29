@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.18] - 2026-08-28
+
+### 🛡️ Hotfix y Blindaje de Render en Módulo de Pronósticos (Forecast View Stability)
+- **Corrección de Variables Térmicas en Tarjetas Diarias a 10 Días**: Restauración y blindaje del cálculo relativo de las barras térmicas y métricas de máximas/mínimas en `forecastView.js`.
+- **Sincronización Total con Graduación de Lluvia**: Enlace perfecto entre el módulo de pronósticos (72h horarias y 10 días diarios) y el motor de graduación por intensidad de precipitación.
+- **Service Worker `v118-official` & Cache-Busting**: Actualización atómica de caché y forzado de recarga en clientes.
+
+---
+
 ## [1.0.17] - 2026-08-28
 
 ### 🌧️ Graduación Escalonada por Intensidad de Precipitación (Rain Intensity Tiers)

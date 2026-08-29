@@ -114,5 +114,6 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Perfeccionamiento visual y simetría en el módulo Observatorio Astronómico: cuadrícula fija 2x2 para los filtros del semáforo de visibilidad, 3 columnas proporcionales en una sola fila para las métricas lunares y encaje simétrico de etiquetas en eventos astronómicos con salto a **v1.0.15** (SW `v115-official`).
 - Coherencia inteligente en pronóstico horario (72h) y gráficas (48h): armonización automática entre probabilidad de precipitación (%), litros y códigos de cielo para eliminar contradicciones visuales (nubes de lluvia con 0% de probabilidad) e incorporación de iconografía nocturna real (🌙) con salto a **v1.0.16** (SW `v116-official`).
 - Graduación de lluvia por intensidad real en 4 niveles (seco, orbayu ligero, lluvia moderada y bastinazu/fuerte) cruzando mm/h y probabilidad con salto a **v1.0.17** (SW `v117-official`).
+- Hotfix y blindaje de variables térmicas en tarjetas diarias del módulo Pronósticos con salto a **v1.0.18** (SW `v118-official`).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 

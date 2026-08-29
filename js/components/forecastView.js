@@ -1,4 +1,4 @@
-import { getWeatherInfo } from '../utils/weatherIcons.js';
+import { getWeatherInfo } from '../utils/weatherIcons.js?v=1.0.18';
 
 /**
  * Renderiza el pronóstico por horas (24h) y las tarjetas enriquecidas a 10 días
@@ -90,6 +90,8 @@ export function renderForecast(data, units = 'metric') {
     const dayTitle = isToday ? 'Hoy' : isTomorrow ? 'Mañana' : dayDate.toLocaleDateString('es-ES', { weekday: 'long' });
     const dayFormatted = dayDate.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
     
+    const maxT = Math.round(daily.temperature_2m_max[d]);
+    const minT = Math.round(daily.temperature_2m_min[d]);
     const rain = (daily.precipitation_sum[d] || 0).toFixed(1);
     const popMax = daily.precipitation_probability_max ? daily.precipitation_probability_max[d] : 0;
     const weather = getWeatherInfo(daily.weather_code[d], 1, parseFloat(rain), popMax);
