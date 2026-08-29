@@ -164,7 +164,7 @@ body {
   width: 100%;
 }
 
-/* Botones dobles inteligentes (Split Buttons) */
+/* Botones dobles inteligentes (Split Buttons Gemelos) */
 .split-control-btn {
   display: flex;
   align-items: stretch;
@@ -183,12 +183,36 @@ body {
   box-shadow: 0 4px 14px rgba(56, 189, 248, 0.25);
 }
 
-.split-btn-main {
+.split-btn-icon-side {
+  width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--primary);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+
+.split-btn-icon-side:hover {
+  background: rgba(56, 189, 248, 0.2);
+  color: #fff;
+}
+
+.split-btn-icon-side:active {
+  transform: scale(0.94);
+}
+
+.split-btn-action {
   flex: 1;
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
+  justify-content: center;
+  gap: 5px;
+  padding: 6px 8px;
   background: transparent;
   border: none;
   color: var(--text-main);
@@ -197,54 +221,25 @@ body {
   font-weight: 700;
   cursor: pointer;
   min-width: 0;
-  text-align: left;
   transition: background 0.15s ease;
 }
 
-.split-btn-main:hover {
+.split-btn-action:hover {
   background: rgba(255, 255, 255, 0.05);
 }
 
-.split-btn-main:active {
+.split-btn-action:active {
   transform: scale(0.98);
 }
 
-.split-btn-main .split-btn-label {
+.split-btn-action-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.split-btn-side {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 3px;
-  padding: 6px 9px;
-  background: rgba(255, 255, 255, 0.04);
-  border: none;
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
-  color: var(--primary);
-  font-family: inherit;
-  font-size: 0.78rem;
-  font-weight: 700;
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: all 0.15s ease;
-  white-space: nowrap;
-}
-
-.split-btn-side:hover {
-  background: rgba(56, 189, 248, 0.2);
-  color: #fff;
-}
-
-.split-btn-side:active {
-  transform: scale(0.96);
-}
-
 .split-btn-icon {
-  font-size: 0.95rem;
+  font-size: 1rem;
   line-height: 1;
   flex-shrink: 0;
 }

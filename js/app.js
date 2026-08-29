@@ -1,19 +1,19 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.0.38';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.0.38';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=1.0.38';
-import { renderCurrentWeather } from './components/currentCard.js?v=1.0.38';
-import { renderMarineCard } from './components/marineCard.js?v=1.0.38';
-import { renderMountainCard } from './components/mountainCard.js?v=1.0.38';
-import { renderForecast } from './components/forecastView.js?v=1.0.38';
-import { renderWeatherChart } from './components/chartsView.js?v=1.0.38';
-import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.38';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.0.38';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=1.0.38';
-import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.0.38';
-import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.0.38';
-import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.0.38';
-import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.0.38';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.38';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.0.39';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.0.39';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=1.0.39';
+import { renderCurrentWeather } from './components/currentCard.js?v=1.0.39';
+import { renderMarineCard } from './components/marineCard.js?v=1.0.39';
+import { renderMountainCard } from './components/mountainCard.js?v=1.0.39';
+import { renderForecast } from './components/forecastView.js?v=1.0.39';
+import { renderWeatherChart } from './components/chartsView.js?v=1.0.39';
+import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.39';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.0.39';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=1.0.39';
+import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.0.39';
+import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.0.39';
+import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.0.39';
+import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.0.39';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.39';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, alertas climáticas y calidad del aire', key: '1' },
@@ -1074,9 +1074,14 @@ class MeteoAsturiasApp {
 
   updateFavButton() {
     const favBtn = document.getElementById('btn-toggle-fav');
+    const favIcon = document.getElementById('fav-icon-indicator');
     if (!favBtn) return;
     const fav = isFavorite(this.currentConcejo.id);
-    favBtn.innerHTML = `<span class="split-btn-icon">${fav ? '⭐' : '☆'}</span><span class="split-btn-label">${fav ? 'Guardado' : 'Guardar'}</span>`;
+    if (favIcon) {
+      favIcon.textContent = fav ? '⭐' : '☆';
+    } else {
+      favBtn.innerHTML = `<span class="split-btn-icon">${fav ? '⭐' : '☆'}</span>`;
+    }
     favBtn.classList.toggle('active', fav);
   }
 
@@ -1087,11 +1092,11 @@ class MeteoAsturiasApp {
     }
 
     const gpsBtn = document.getElementById('btn-gps');
-    if (gpsBtn) gpsBtn.innerHTML = '<span class="split-btn-icon">📍</span><span class="split-btn-side-text">GPS...</span>';
+    if (gpsBtn) gpsBtn.innerHTML = '<span class="split-btn-icon">📍</span><span class="split-btn-action-text">GPS...</span>';
 
     const onGeoSuccess = (pos) => {
       const closest = findClosestConcejo(pos.coords.latitude, pos.coords.longitude);
-      if (gpsBtn) gpsBtn.innerHTML = '<span class="split-btn-icon">📍</span><span class="split-btn-side-text">GPS</span>';
+      if (gpsBtn) gpsBtn.innerHTML = '<span class="split-btn-icon">📍</span><span class="split-btn-action-text">GPS</span>';
       if (closest) {
         this.switchConcejo(closest.id);
       }
@@ -1102,7 +1107,7 @@ class MeteoAsturiasApp {
       navigator.geolocation.getCurrentPosition(
         onGeoSuccess,
         () => {
-          if (gpsBtn) gpsBtn.innerHTML = '<span class="split-btn-icon">📍</span><span class="split-btn-side-text">GPS</span>';
+          if (gpsBtn) gpsBtn.innerHTML = '<span class="split-btn-icon">📍</span><span class="split-btn-action-text">GPS</span>';
           alert('No pudimos acceder a tu ubicación GPS. Asegúrate de dar permisos de ubicación precisa en tu dispositivo.');
         },
         { enableHighAccuracy: false, timeout: 7000 }

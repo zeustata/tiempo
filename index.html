@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.38">
-  <link rel="stylesheet" href="css/components.css?v=1.0.38">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.38">
+  <link rel="stylesheet" href="css/main.css?v=1.0.39">
+  <link rel="stylesheet" href="css/components.css?v=1.0.39">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.39">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -65,29 +65,27 @@
         </div>
       </div>
 
-      <!-- 2. Fila 1: Botones Dobles (Búsqueda + GPS | Guardar + Favoritos) -->
+      <!-- 2. Fila 1: Botones Dobles Gemelos (🔍 + GPS | ⭐ + Favs) -->
       <div class="compact-controls-grid">
-        <!-- Grupo 1: Búsqueda y GPS -->
+        <!-- Grupo 1: Buscar (icono) + GPS (acción) -->
         <div class="split-control-btn">
-          <button id="main-search-trigger" class="split-btn-main" title="Buscar concejo">
+          <button id="main-search-trigger" class="split-btn-icon-side" title="Buscar concejo (Tecla S)" aria-label="Buscar Concejos">
             <span class="split-btn-icon">🔍</span>
-            <span class="split-btn-label" id="search-bar-current-name">Buscar</span>
           </button>
-          <button id="btn-gps" class="split-btn-side" title="Localizar por GPS (Tecla G)" aria-label="Mi Ubicación GPS">
+          <button id="btn-gps" class="split-btn-action" title="Localizar por GPS (Tecla G)" aria-label="Mi Ubicación GPS">
             <span class="split-btn-icon">📍</span>
-            <span class="split-btn-side-text">GPS</span>
+            <span class="split-btn-action-text">GPS</span>
           </button>
         </div>
 
-        <!-- Grupo 2: Guardar y Favoritos -->
+        <!-- Grupo 2: Guardar (icono) + Favoritos (acción) -->
         <div class="split-control-btn">
-          <button id="btn-toggle-fav" class="split-btn-main" title="Guardar en Favoritos (Tecla F)">
-            <span class="split-btn-icon">⭐</span>
-            <span class="split-btn-label" id="fav-toggle-label">Guardar</span>
+          <button id="btn-toggle-fav" class="split-btn-icon-side" title="Guardar/Quitar Favorito (Tecla F)" aria-label="Guardar Favorito">
+            <span class="split-btn-icon" id="fav-icon-indicator">⭐</span>
           </button>
-          <button id="btn-favorites-menu" class="split-btn-side" title="Ver concejos favoritos" aria-label="Mis Favoritos">
+          <button id="btn-favorites-menu" class="split-btn-action" title="Ver concejos favoritos" aria-label="Mis Favoritos">
             <span class="split-btn-icon">📑</span>
-            <span class="split-btn-side-text" id="fav-btn-label">Favs (0)</span>
+            <span class="split-btn-action-text" id="fav-btn-label">Favs (0)</span>
           </button>
         </div>
       </div>
@@ -173,7 +171,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.38 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.39 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -221,11 +219,20 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.38 🚀</span>
+            <span class="release-version">v1.0.39 🚀</span>
             <span class="release-date">28 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-improved">Diseño Limpio</span> <strong>Botones Minimalistas de Modelo y Menú</strong>: Simplificación de la segunda fila a <em>[🌟 Modelo ➔]</em> y <em>[📊 Menú ➔]</em>, eliminando textos largos y evitando solapamientos para una estética limpia y legible en cualquier pantalla.</li>
+            <li><span class="tag tag-improved">Simetría Visual</span> <strong>Botones Dobles Gemelos</strong>: Estructura idéntica para <em>[🔍 | 📍 GPS]</em> y <em>[⭐ | 📑 Favs]</em> con iconos de ancho homogéneo a la izquierda y botones de acción a la derecha.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.0.38</span>
+            <span class="release-date">28 Ago 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-improved">Diseño Limpio</span> Botones minimalistas de Modelo y Menú.</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -1166,7 +1173,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.38').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.39').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1187,6 +1194,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.38"></script>
+  <script type="module" src="js/app.js?v=1.0.39"></script>
 </body>
 </html>

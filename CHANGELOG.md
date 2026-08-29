@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.39] - 2026-08-28
+
+### 📐 Simetría Visual Perfecta: Botones Dobles Gemelos
+- **Homogeneidad de Tamaños**: Rediseño de la primera fila de acciones con estructura gemela: icono de ancho fijo a la izquierda (`🔍` y `⭐`) y botón de acción directa a la derecha (`📍 GPS` y `📑 Favs`), logrando un equilibrio visual total.
+- **Service Worker `v139-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
+
+---
+
 ## [1.0.38] - 2026-08-28
 
 ### ✨ Limpieza y Minimalismo: Botones Simétricos de Modelo y Menú
