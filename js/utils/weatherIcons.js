@@ -1,7 +1,7 @@
-import { getAsturWeatherSvg } from './weatherAsturIcons.js?v=1.0.29';
-import { getPixelWeatherSvg } from './weatherPixelIcons.js?v=1.0.29';
-import { getNeonWeatherSvg } from './weatherNeonIcons.js?v=1.0.29';
-import { getGlassWeatherSvg } from './weatherGlassIcons.js?v=1.0.29';
+import { getAsturWeatherSvg } from './weatherAsturIcons.js?v=1.0.30';
+import { getPixelWeatherSvg } from './weatherPixelIcons.js?v=1.0.30';
+import { getNeonWeatherSvg } from './weatherNeonIcons.js?v=1.0.30';
+import { getSketchWeatherSvg } from './weatherSketchIcons.js?v=1.0.30';
 
 /**
  * Mapeo de códigos meteorológicos WMO a descripciones en asturiano/castellano, iconos y clases
@@ -125,7 +125,7 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
  * - 'astur': Emojis Emotivos (Cómic con caras)
  * - 'pixel': Pixel Art Retro (8-bits arcade)
  * - 'neon': Minimalista Neón (Glow & Line Art)
- * - 'glass': Cristal 3D (Glassmorphism & Volumen)
+ * - 'sketch': Dibujo a Mano (Hand-Drawn Sketch & Acuarela)
  */
 export function renderWeatherIconHtml(weatherInfo, size = 32, theme = 'classic') {
   if (!weatherInfo) return '';
@@ -142,8 +142,8 @@ export function renderWeatherIconHtml(weatherInfo, size = 32, theme = 'classic')
     return getNeonWeatherSvg(weatherInfo.svgKey, size);
   }
 
-  if (theme === 'glass') {
-    return getGlassWeatherSvg(weatherInfo.svgKey, size);
+  if (theme === 'sketch' || theme === 'glass') {
+    return getSketchWeatherSvg(weatherInfo.svgKey, size);
   }
 
   // Por defecto para 'astur' o cualquier clave personalizada

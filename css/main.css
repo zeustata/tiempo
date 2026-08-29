@@ -1864,6 +1864,6 @@ body:-webkit-full-screen .app-container {
   filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.55));
 }
 
-.astur-svg-icon.glass-icon {
-  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.35));
+.astur-svg-icon.sketch-icon {
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
 }

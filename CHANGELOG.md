@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.30] - 2026-08-28
+
+### ✏️ Nuevo Estilo Oficial: Dibujo a Mano (Hand-Drawn & Acuarela)
+- **Relevo Artístico del Pack Cristal**: Sustitución del estilo glassmorphism por un nuevo pack `weatherSketchIcons.js` con trazos artísticos a mano alzada, textura de tinta/lápiz, sombreados orgánicos y toques cálidos de acuarela.
+- **Galería Modal Actualizada**: Tarjeta interactiva `✏️ Dibujo a Mano` con vista previa en vivo y badge `✏️ Dibujo a Mano` en el menú principal.
+- **Service Worker `v130-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
+
+---
+
 ## [1.0.29] - 2026-08-28
 
 ### 📱 Desplazamiento Vertical Táctil en la Galería de Iconos

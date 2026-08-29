@@ -126,5 +126,6 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Compactación y estilización del botón de acceso a estilos en el menú en dos líneas limpias con salto a **v1.0.27** (SW `v127-official`).
 - Gran Lanzamiento de la Colección de 5 Estilos de Iconos (Clásicos, Emotivos, Pixel Art Retro 8-Bits, Minimalista Neón Glow y Cristal 3D Glassmorphism) con salto a **v1.0.28** (SW `v128-official`).
 - Habilitación de scroll vertical táctil suave en el modal de selección de iconos con salto a **v1.0.29** (SW `v129-official`).
+- Sustitución del estilo de cristal por el nuevo estilo artesano "✏️ Dibujo a Mano" (Hand-Drawn Sketch & Acuarela) con salto a **v1.0.30** (SW `v130-official`).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 
