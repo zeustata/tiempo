@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.27">
-  <link rel="stylesheet" href="css/components.css?v=1.0.27">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.27">
+  <link rel="stylesheet" href="css/main.css?v=1.0.28">
+  <link rel="stylesheet" href="css/components.css?v=1.0.28">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.28">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -171,7 +171,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.27 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.28 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -219,11 +219,20 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.27 🚀</span>
+            <span class="release-version">v1.0.28 🚀</span>
             <span class="release-date">28 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-improved">Diseño Compacto</span> <strong>Botón Estilizado en el Menú</strong>: optimización del botón de acceso a estilos de iconos a dos líneas limpias (título superior y estilo activo inferior), eliminando el subtítulo redundante para una estética más estrecha y elegante.</li>
+            <li><span class="tag tag-new">Gran Colección</span> <strong>5 Estilos Únicos de Iconos Meteorológicos</strong>: inauguración de la galería completa con <em>📱 Emojis Clásicos</em>, <em>🎭 Emojis Emotivos (Cómic)</em>, <em>👾 Pixel Art Retro (8-Bits Arcade)</em>, <em>✨ Minimalista Neón (Glow &amp; Line Art)</em> y <em>💎 Cristal 3D (Glassmorphism)</em>.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.0.27</span>
+            <span class="release-date">28 Ago 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-improved">Diseño</span> Botón estilizado y compacto en menú.</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -1016,9 +1025,49 @@
               <span class="theme-check-badge">✓ Activo</span>
             </div>
             <p class="theme-card-desc">Personajes animados y expresivos con ojos, sonrisas y coloretes.</p>
-            <div class="theme-card-preview" id="preview-comic-icons">
-              <!-- Renderizado dinámico de SVGs cómic -->
+            <div class="theme-card-preview" id="preview-comic-icons"></div>
+          </div>
+
+          <!-- Tarjeta 3: Pixel Art Retro (8-Bits) -->
+          <div class="icon-theme-card" id="theme-card-pixel" data-theme="pixel">
+            <div class="theme-card-header">
+              <span class="theme-card-icon">👾</span>
+              <div class="theme-card-info">
+                <h4>Pixel Art Retro</h4>
+                <span class="theme-card-tag">8-Bits Arcade</span>
+              </div>
+              <span class="theme-check-badge">✓ Activo</span>
             </div>
+            <p class="theme-card-desc">Estilo nostálgico de videojuego clásico retro con píxeles nítidos.</p>
+            <div class="theme-card-preview" id="preview-pixel-icons"></div>
+          </div>
+
+          <!-- Tarjeta 4: Minimalista Neón -->
+          <div class="icon-theme-card" id="theme-card-neon" data-theme="neon">
+            <div class="theme-card-header">
+              <span class="theme-card-icon">✨</span>
+              <div class="theme-card-info">
+                <h4>Minimalista Neón</h4>
+                <span class="theme-card-tag">Glow & Line Art</span>
+              </div>
+              <span class="theme-check-badge">✓ Activo</span>
+            </div>
+            <p class="theme-card-desc">Trazos finos y elegantes con suave resplandor neón futurista.</p>
+            <div class="theme-card-preview" id="preview-neon-icons"></div>
+          </div>
+
+          <!-- Tarjeta 5: Cristal 3D (Glassmorphism) -->
+          <div class="icon-theme-card" id="theme-card-glass" data-theme="glass">
+            <div class="theme-card-header">
+              <span class="theme-card-icon">💎</span>
+              <div class="theme-card-info">
+                <h4>Cristal 3D</h4>
+                <span class="theme-card-tag">Glassmorphism</span>
+              </div>
+              <span class="theme-check-badge">✓ Activo</span>
+            </div>
+            <p class="theme-card-desc">Capas de vidrio esmerilado translúcido con volumen y reflejos de luz.</p>
+            <div class="theme-card-preview" id="preview-glass-icons"></div>
           </div>
         </div>
       </div>
@@ -1043,7 +1092,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.27').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.28').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1064,6 +1113,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.27"></script>
+  <script type="module" src="js/app.js?v=1.0.28"></script>
 </body>
 </html>

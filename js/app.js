@@ -1,16 +1,19 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.0.27';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.0.27';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=1.0.27';
-import { renderCurrentWeather } from './components/currentCard.js?v=1.0.27';
-import { renderMarineCard } from './components/marineCard.js?v=1.0.27';
-import { renderMountainCard } from './components/mountainCard.js?v=1.0.27';
-import { renderForecast } from './components/forecastView.js?v=1.0.27';
-import { renderWeatherChart } from './components/chartsView.js?v=1.0.27';
-import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.27';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.0.27';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=1.0.27';
-import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.0.27';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.27';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.0.28';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.0.28';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=1.0.28';
+import { renderCurrentWeather } from './components/currentCard.js?v=1.0.28';
+import { renderMarineCard } from './components/marineCard.js?v=1.0.28';
+import { renderMountainCard } from './components/mountainCard.js?v=1.0.28';
+import { renderForecast } from './components/forecastView.js?v=1.0.28';
+import { renderWeatherChart } from './components/chartsView.js?v=1.0.28';
+import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.28';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.0.28';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=1.0.28';
+import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.0.28';
+import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.0.28';
+import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.0.28';
+import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=1.0.28';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.28';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, alertas climáticas y calidad del aire', key: '1' },
@@ -607,7 +610,14 @@ class MeteoAsturiasApp {
     const updateNavHeaderThemeBadge = () => {
       if (badgeTheme) {
         const theme = this.prefs.iconTheme || 'classic';
-        badgeTheme.textContent = theme === 'astur' ? '🎭 Emojis Emotivos' : '📱 Emojis Clásicos';
+        const themeNames = {
+          classic: '📱 Emojis Clásicos',
+          astur: '🎭 Emojis Emotivos',
+          pixel: '👾 Pixel Art Retro',
+          neon: '✨ Minimalista Neón',
+          glass: '💎 Cristal 3D'
+        };
+        badgeTheme.textContent = themeNames[theme] || '📱 Emojis Clásicos';
       }
     };
 
@@ -667,13 +677,15 @@ class MeteoAsturiasApp {
     const triggerBtn = document.getElementById('btn-open-icon-themes');
     const modal = document.getElementById('icon-themes-modal');
     const closeBtn = document.getElementById('btn-close-icon-themes');
-    const cardClassic = document.getElementById('theme-card-classic');
-    const cardAstur = document.getElementById('theme-card-astur');
+
     const previewComic = document.getElementById('preview-comic-icons');
+    const previewPixel = document.getElementById('preview-pixel-icons');
+    const previewNeon = document.getElementById('preview-neon-icons');
+    const previewGlass = document.getElementById('preview-glass-icons');
 
     if (!modal) return;
 
-    // Renderizar las miniaturas SVG en la vista previa del tema cómic
+    // Renderizar miniaturas SVG dinámicas para cada colección
     if (previewComic) {
       previewComic.innerHTML = `
         <span class="preview-svg">${getAsturWeatherSvg('sun', 28)}</span>
@@ -684,10 +696,42 @@ class MeteoAsturiasApp {
       `;
     }
 
+    if (previewPixel) {
+      previewPixel.innerHTML = `
+        <span class="preview-svg">${getPixelWeatherSvg('sun', 28)}</span>
+        <span class="preview-svg">${getPixelWeatherSvg('cloud', 28)}</span>
+        <span class="preview-svg">${getPixelWeatherSvg('rain', 28)}</span>
+        <span class="preview-svg">${getPixelWeatherSvg('storm', 28)}</span>
+        <span class="preview-svg">${getPixelWeatherSvg('moon', 28)}</span>
+      `;
+    }
+
+    if (previewNeon) {
+      previewNeon.innerHTML = `
+        <span class="preview-svg">${getNeonWeatherSvg('sun', 28)}</span>
+        <span class="preview-svg">${getNeonWeatherSvg('cloud', 28)}</span>
+        <span class="preview-svg">${getNeonWeatherSvg('rain', 28)}</span>
+        <span class="preview-svg">${getNeonWeatherSvg('storm', 28)}</span>
+        <span class="preview-svg">${getNeonWeatherSvg('moon', 28)}</span>
+      `;
+    }
+
+    if (previewGlass) {
+      previewGlass.innerHTML = `
+        <span class="preview-svg">${getGlassWeatherSvg('sun', 28)}</span>
+        <span class="preview-svg">${getGlassWeatherSvg('cloud', 28)}</span>
+        <span class="preview-svg">${getGlassWeatherSvg('rain', 28)}</span>
+        <span class="preview-svg">${getGlassWeatherSvg('storm', 28)}</span>
+        <span class="preview-svg">${getGlassWeatherSvg('moon', 28)}</span>
+      `;
+    }
+
     const updateActiveThemeCards = () => {
       const currentTheme = this.prefs.iconTheme || 'classic';
-      if (cardClassic) cardClassic.classList.toggle('active', currentTheme === 'classic');
-      if (cardAstur) cardAstur.classList.toggle('active', currentTheme === 'astur');
+      modal.querySelectorAll('.icon-theme-card').forEach(card => {
+        const theme = card.dataset.theme;
+        card.classList.toggle('active', theme === currentTheme);
+      });
       if (this.updateNavHeaderThemeBadge) this.updateNavHeaderThemeBadge();
     };
 
@@ -700,13 +744,12 @@ class MeteoAsturiasApp {
       this.closeModal(modal);
     };
 
-    if (cardClassic) {
-      cardClassic.addEventListener('click', () => selectTheme('classic'));
-    }
-
-    if (cardAstur) {
-      cardAstur.addEventListener('click', () => selectTheme('astur'));
-    }
+    modal.querySelectorAll('.icon-theme-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const theme = card.dataset.theme;
+        if (theme) selectTheme(theme);
+      });
+    });
 
     if (triggerBtn) {
       triggerBtn.addEventListener('click', () => {

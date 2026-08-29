@@ -124,5 +124,6 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Blindaje definitivo de la Regla de Oro de Probabilidad (< 20% = Incondicionalmente Seco / Nube limpia) para eliminar falsas lluvias por ensambles residuales con salto a **v1.0.25** (SW `v125-official`).
 - Creación de la ventana emergente de selección de estilos de iconos con vista previa interactiva y emojis clásicos por defecto con salto a **v1.0.26** (SW `v126-official`).
 - Compactación y estilización del botón de acceso a estilos en el menú en dos líneas limpias con salto a **v1.0.27** (SW `v127-official`).
+- Gran Lanzamiento de la Colección de 5 Estilos de Iconos (Clásicos, Emotivos, Pixel Art Retro 8-Bits, Minimalista Neón Glow y Cristal 3D Glassmorphism) con salto a **v1.0.28** (SW `v128-official`).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 

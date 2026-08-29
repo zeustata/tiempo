@@ -1,4 +1,7 @@
-import { getAsturWeatherSvg } from './weatherAsturIcons.js?v=1.0.27';
+import { getAsturWeatherSvg } from './weatherAsturIcons.js?v=1.0.28';
+import { getPixelWeatherSvg } from './weatherPixelIcons.js?v=1.0.28';
+import { getNeonWeatherSvg } from './weatherNeonIcons.js?v=1.0.28';
+import { getGlassWeatherSvg } from './weatherGlassIcons.js?v=1.0.28';
 
 /**
  * Mapeo de códigos meteorológicos WMO a descripciones en asturiano/castellano, iconos y clases
@@ -117,13 +120,33 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
 }
 
 /**
- * Renderiza el icono meteorológico según el tema activo ('astur' SVG o 'classic' Emoji)
+ * Renderiza el icono meteorológico según el tema activo:
+ * - 'classic': Emojis nativos estándar
+ * - 'astur': Emojis Emotivos (Cómic con caras)
+ * - 'pixel': Pixel Art Retro (8-bits arcade)
+ * - 'neon': Minimalista Neón (Glow & Line Art)
+ * - 'glass': Cristal 3D (Glassmorphism & Volumen)
  */
-export function renderWeatherIconHtml(weatherInfo, size = 32, theme = 'astur') {
+export function renderWeatherIconHtml(weatherInfo, size = 32, theme = 'classic') {
   if (!weatherInfo) return '';
+  
   if (theme === 'classic' || !weatherInfo.svgKey) {
     return `<span class="emoji-weather-icon" style="font-size: ${Math.round(size * 0.85)}px; line-height: 1; display: inline-flex; align-items: center; justify-content: center;">${weatherInfo.icon}</span>`;
   }
+
+  if (theme === 'pixel') {
+    return getPixelWeatherSvg(weatherInfo.svgKey, size);
+  }
+
+  if (theme === 'neon') {
+    return getNeonWeatherSvg(weatherInfo.svgKey, size);
+  }
+
+  if (theme === 'glass') {
+    return getGlassWeatherSvg(weatherInfo.svgKey, size);
+  }
+
+  // Por defecto para 'astur' o cualquier clave personalizada
   return getAsturWeatherSvg(weatherInfo.svgKey, size);
 }
 

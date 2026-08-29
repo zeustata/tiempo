@@ -12,6 +12,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.28] - 2026-08-28
+
+### 🌟 Gran Lanzamiento: Colección Completa con 5 Estilos de Iconos Meteorológicos
+- **👾 Pixel Art Retro (8-Bits Arcade)**: Catálogo vectorial completo (`weatherPixelIcons.js`) con renderizado nítido `crispEdges`, sol dorado pixelado, rayos arcade y estética retro nostálgica.
+- **✨ Minimalista Neón (Glow & Line Art)**: Catálogo vectorial luminoso (`weatherNeonIcons.js`) con filtros SVG gaussianos de resplandor neón, trazo fino en azul cantábrico, cian y oro eléctrico sobre fondo oscuro.
+- **💎 Cristal 3D (Glassmorphism)**: Catálogo vectorial premium (`weatherGlassIcons.js`) con capas de vidrio translúcido esmerilado, degradados radiales, reflejos especulares de luz y relieve 3D.
+- **Galería Modal con 5 Tarjetas Interactivas**: Tarjetas con miniaturas dinámicas en vivo para cada estilo, selector instantáneo y sincronización en tiempo real con el menú.
+- **Service Worker `v128-official` & Cache-Busting**: Inclusión de los 3 nuevos módulos en caché estática y recarga atómica.
+
+---
+
 ## [1.0.27] - 2026-08-28
 
 ### 📐 Botón de Acceso Compacto y Estilizado en el Menú

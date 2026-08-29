@@ -1832,4 +1832,18 @@ body:-webkit-full-screen .app-container {
 
 .astur-svg-icon.icon-storm {
   filter: drop-shadow(0 0 8px rgba(234, 179, 8, 0.4));
+}
+
+/* Efectos visuales por pack de iconos */
+.astur-svg-icon.pixel-icon {
+  image-rendering: pixelated;
+  filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.45));
+}
+
+.astur-svg-icon.neon-icon {
+  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.55));
+}
+
+.astur-svg-icon.glass-icon {
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.35));
 }
