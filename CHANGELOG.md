@@ -12,6 +12,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.13] - 2026-08-28
+
+### 🎨 Alto Contraste y Accesibilidad Visual (High Contrast & Clear Readability)
+- **Incremento de Contraste en Tokens Globales**: Elevación de las variables de color del sistema de diseño en `main.css` (`--text-muted` a `#cbd5e1` y `--text-dim` a `#94a3b8`), eliminando grises pizarra oscuros que dificultaban la lectura sobre fondos translúcidos *Liquid Glass*.
+- **Claridad Nítida en Módulos y Sensores**: Refuerzo de etiquetas de métricas (`.widget-label`, `.m-label`, `.t-label`, `.cycle-badge`, `.tide-sub-name`, etc.) a tonos blanco hielo/plata luminosos (`#cbd5e1` / `#e2e8f0`) con tipografía nítida y contrastada.
+- **Legibilidad Garantizada bajo cualquier Clima**: Visibilidad óptima comprobada para cualquier estado del fondo dinámico (días despejados con cielo azul, días cubiertos o de niebla con tonos grisáceos, noches estrelladas y tormentas).
+- **Service Worker `v113-official` & Cache-Busting**: Actualización atómica de caché y versionado en caliente en todos los navegadores y clientes móviles.
+
+---
+
 ## [1.0.12] - 2026-08-28
 
 ### 💧 Botón Didáctico "Explícame" en Humedad y Punto de Rocío (Learning & Dew Point)

@@ -56,9 +56,18 @@
 }
 
 .location-meta {
-  font-size: 0.80rem;
-  color: var(--text-dim);
+  font-size: 0.82rem;
+  color: #cbd5e1;
+  font-weight: 600;
+}
+
+.section-subtitle {
+  font-size: 0.84rem;
+  color: #cbd5e1;
   font-weight: 500;
+  line-height: 1.3;
+  display: block;
+  margin-top: 2px;
 }
 
 .hero-icon-block {
@@ -413,9 +422,10 @@
 
 .widget-label, .m-label {
   font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--text-dim);
+  font-weight: 700;
+  color: #cbd5e1;
   text-transform: uppercase;
+  letter-spacing: 0.4px;
   margin-bottom: 6px;
 }
 
@@ -433,7 +443,7 @@
 
 .widget-detail, .m-detail {
   font-size: 0.85rem;
-  color: var(--text-muted);
+  color: #cbd5e1;
 }
 
 .highlight-widget {
@@ -479,8 +489,8 @@
 }
 
 .mareografo-subtitle, .weekly-subtitle {
-  font-size: 0.82rem;
-  color: var(--text-dim);
+  font-size: 0.84rem;
+  color: #cbd5e1;
   font-weight: 500;
 }
 
@@ -513,10 +523,10 @@
 }
 
 .t-label {
-  font-size: 0.74rem;
+  font-size: 0.76rem;
   font-weight: 700;
   text-transform: uppercase;
-  color: var(--text-dim);
+  color: #cbd5e1;
   letter-spacing: 0.5px;
 }
 
@@ -535,8 +545,8 @@
 }
 
 .t-subvalue {
-  font-size: 0.8rem;
-  color: var(--text-muted);
+  font-size: 0.82rem;
+  color: #cbd5e1;
   font-weight: 500;
 }
 
@@ -706,7 +716,7 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.6px;
-  color: var(--text-dim);
+  color: #e2e8f0;
 }
 
 .tide-cycle-items {
@@ -754,7 +764,15 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: var(--text-dim);
+  color: #e2e8f0;
+}
+
+.tide-sub-item.high .tide-sub-name {
+  color: #bae6fd;
+}
+
+.tide-sub-item.low .tide-sub-name {
+  color: #fde68a;
 }
 
 .tide-sub-bottom {
@@ -835,8 +853,8 @@
 }
 
 .tide-day-num {
-  font-size: 0.74rem;
-  color: var(--text-dim);
+  font-size: 0.76rem;
+  color: #cbd5e1;
   font-weight: 600;
 }
 
@@ -845,8 +863,8 @@
   flex-direction: column;
   align-items: center;
   gap: 2px;
-  font-size: 0.7rem;
-  color: var(--text-dim);
+  font-size: 0.72rem;
+  color: #cbd5e1;
 }
 
 .moon-ico {
@@ -855,8 +873,9 @@
 }
 
 .moon-txt {
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   font-weight: 600;
+  color: #cbd5e1;
   white-space: nowrap;
 }
 
@@ -869,7 +888,7 @@
 }
 
 .coef-label {
-  color: var(--text-dim);
+  color: #cbd5e1;
   font-weight: 600;
 }
 
@@ -1609,8 +1628,8 @@
 }
 
 .pass-alt {
-  font-size: 0.74rem;
-  color: var(--text-dim);
+  font-size: 0.76rem;
+  color: #cbd5e1;
 }
 
 .pass-badge {
@@ -1659,8 +1678,8 @@
 }
 
 .resort-data {
-  font-size: 0.74rem;
-  color: var(--text-dim);
+  font-size: 0.76rem;
+  color: #cbd5e1;
 }
 
 /* --- COMPARADOR CLIMÁTICO --- */
@@ -2324,7 +2343,7 @@
 
 .astronomy-subtitle {
   font-size: 0.84rem;
-  color: #94a3b8;
+  color: #cbd5e1;
   margin-top: 2px;
   display: block;
 }
