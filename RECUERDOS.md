@@ -110,5 +110,6 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Sincronización masiva de query strings de submódulos JavaScript para forzar la actualización inmediata del botón didáctico en clientes con salto a **v1.0.11** (SW `v111-official`).
 - Integración del botón didáctico **`[ 💡 Explícame ]`** en el sensor de Humedad y Punto de Rocío con guía completa sobre condensación, bochorno y formación de nieblas/orbayu asturiano con salto a **v1.0.12** (SW `v112-official`).
 - Refuerzo global de contraste y accesibilidad visual: elevación de tokens de color (`--text-muted` a `#cbd5e1`, `--text-dim` a `#94a3b8`) y aclarado nítido de etiquetas en mareógrafos, sensores y módulos de montaña para lectura cristalina en cualquier condición atmosférica con salto a **v1.0.13** (SW `v113-official`).
+- Despliegue de la suite didáctica completa: integración de botones interactivos **`[ 💡 Explícame ]`** en la totalidad de los 6 sensores de la Estación en Vivo (Anemómetro/Viento, Barómetro, Humedad/Rocío, Pluviómetro, Radiación UV y Calidad del Aire AQI) con salto a **v1.0.14** (SW `v114-official`).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 

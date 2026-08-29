@@ -44,6 +44,78 @@ export const WEATHER_EXPLANATIONS = {
     ]
   },
 
+  wind: {
+    icon: '🧭',
+    title: '¿Cómo interpretar el Viento y las Ráfagas?',
+    subtitle: 'Diferencia entre viento sostenido y rachas, escala Beaufort y vientos típicos de Asturias',
+    badge: 'Velocidad Sostenida (km/h) vs Rachas Máximas',
+    sections: [
+      {
+        icon: '💨',
+        heading: '1. Viento Medio vs Rachas / Ráfagas',
+        text: 'La <strong>velocidad media</strong> representa el flujo continuo durante los últimos 10 minutos. Las <strong>rachas o ráfagas</strong> son picos repentinos de 3 segundos que pueden ser hasta un <strong>50% o 100% superiores</strong>, y son las que causan caídas de ramas, vuelco de objetos y peligro en carretera.'
+      },
+      {
+        icon: '📊',
+        heading: '2. Escala de Intensidad (Beaufort)',
+        text: `
+          <ul class="explain-list">
+            <li><strong>🟢 0 a 19 km/h (Brisa Suave):</strong> Hojas de árboles en movimiento; sensación agradable.</li>
+            <li><strong>🟡 20 a 39 km/h (Moderado):</strong> Se mueven ramas pequeñas; levanta polvo y papeles.</li>
+            <li><strong>🟠 40 a 60 km/h (Fuerte):</strong> Dificultad para abrir paraguas o caminar contra el viento.</li>
+            <li><strong>🔴 > 60 a 90+ km/h (Temporal / Vendaval):</strong> Riesgo de caída de tejas y ramas. Avisos meteorológicos activos.</li>
+          </ul>
+        `
+      },
+      {
+        icon: '🧭',
+        heading: '3. Rosa de los Vientos',
+        text: 'Indica el punto cardinal de procedencia: <strong>N (Norte)</strong>, <strong>NE (Nordeste)</strong>, <strong>E (Este)</strong>, <strong>SE (Sureste)</strong>, <strong>S (Sur)</strong>, <strong>SO (Suroeste)</strong>, <strong>O (Oeste)</strong> y <strong>NO (Noroeste)</strong>.'
+      },
+      {
+        icon: '🏔️',
+        heading: 'Astucia con los Vientos en Asturias',
+        text: 'El <strong>Viento Sur (Ábrego)</strong> desciende recalentado y seco de la Cordillera Cantábrica por <em>efecto Foehn</em>, disparando las temperaturas y el riesgo de incendios. En contraste, el <strong>Gallego o Noroeste (NO)</strong> llega cargado de humedad marina cantábrica trayendo chubascos, oleaje bravo y bajada térmica.'
+      }
+    ]
+  },
+
+  rain: {
+    icon: '🌧️',
+    title: '¿Cómo funciona el Pluviómetro y la Lluvia?',
+    subtitle: 'Aprende a leer los litros por metro cuadrado (l/m²), intensidad y tipos de precipitación',
+    badge: '1 mm de precipitación = 1 Litro por m²',
+    sections: [
+      {
+        icon: '🪣',
+        heading: '1. ¿Qué significa 1 mm de lluvia?',
+        text: 'Cada milímetro registrado por el pluviómetro equivale exactamente a <strong>1 litro de agua acumulada sobre una superficie de un metro cuadrado (1 l/m²)</strong>. Si caen 20 mm, un tejado de 100 m² habrá recibido 2.000 litros de agua.'
+      },
+      {
+        icon: '⏱️',
+        heading: '2. Escala de Intensidad Oficial (AEMET)',
+        text: `
+          <ul class="explain-list">
+            <li><strong>🟢 Menos de 2 mm/h:</strong> <em>Lluvia débil / Llovizna:</em> Humedece el suelo sin provocar escorrentía.</li>
+            <li><strong>🟡 2 a 15 mm/h:</strong> <em>Lluvia moderada:</em> Precipitación constante ordinaria.</li>
+            <li><strong>🟠 15 a 30 mm/h:</strong> <em>Lluvia fuerte:</em> Charcos inmediatos y reducción notable de visibilidad al volante.</li>
+            <li><strong>🔴 > 30 a 60 mm/h:</strong> <em>Lluvia muy fuerte o torrencial:</em> Riesgo de desbordamiento de arroyos y balsas en carreteras.</li>
+          </ul>
+        `
+      },
+      {
+        icon: '🎯',
+        heading: '3. Probabilidad (%) vs Cantidad (mm)',
+        text: 'Un 90% de probabilidad significa que es casi seguro que precipitará, aunque pueda ser un simple calabobos. Por contra, un 30% en verano puede corresponder a una tormenta muy localizada pero de gran intensidad.'
+      },
+      {
+        icon: '🌫️',
+        heading: 'Singularidades de la Lluvia en Asturias',
+        text: 'En Asturias el agua se vive de muchas formas: desde el tradicional <strong>orbayu o calabobos</strong> (gotículas casi suspendidas en el aire con 100% de humedad) hasta el <strong>bastinazu</strong> (tromba repentina y torrencial de corta duración).'
+      }
+    ]
+  },
+
   humidity_dewpoint: {
     icon: '💧',
     title: '¿Qué es la Humedad y el Punto de Rocío?',

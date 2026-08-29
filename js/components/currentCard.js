@@ -1,5 +1,5 @@
-import { getWeatherInfo, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.0.13';
-import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.0.13';
+import { getWeatherInfo, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.0.14';
+import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.0.14';
 
 /**
  * Renderiza el dashboard principal con alineación uniforme y todos los sensores de la estación
@@ -83,8 +83,11 @@ export function renderCurrentWeather(data, concejo, units = 'metric') {
       <!-- 1. ANEMÓMETRO & ROSA DE LOS VIENTOS -->
       <div class="sensor-card">
         <div class="sensor-header">
-          <span class="sensor-icon">🧭</span>
-          <span class="sensor-title">Anemómetro y Dirección</span>
+          <div class="sensor-header-left">
+            <span class="sensor-icon">🧭</span>
+            <span class="sensor-title">Anemómetro y Dirección</span>
+          </div>
+          <button class="btn-explain-sensor" data-explain="wind" title="¿Cómo interpretar el viento y las rachas? Pulsa para aprender">💡 Explícame</button>
         </div>
         <div class="sensor-body wind-body">
           <div class="compass-wrapper">
@@ -153,8 +156,11 @@ export function renderCurrentWeather(data, concejo, units = 'metric') {
       <!-- 4. PLUVIÓMETRO -->
       <div class="sensor-card">
         <div class="sensor-header">
-          <span class="sensor-icon">🌧️</span>
-          <span class="sensor-title">Pluviómetro Digital</span>
+          <div class="sensor-header-left">
+            <span class="sensor-icon">🌧️</span>
+            <span class="sensor-title">Pluviómetro Digital</span>
+          </div>
+          <button class="btn-explain-sensor" data-explain="rain" title="¿Cómo funciona el pluviómetro y la lluvia? Pulsa para aprender">💡 Explícame</button>
         </div>
         <div class="sensor-body">
           <div class="sensor-val">${(daily.precipitation_sum[0] || 0).toFixed(1)} <small>mm (l/m²)</small></div>
@@ -171,8 +177,11 @@ export function renderCurrentWeather(data, concejo, units = 'metric') {
       <!-- 5. ÍNDICE UV & RADIACIÓN -->
       <div class="sensor-card">
         <div class="sensor-header">
-          <span class="sensor-icon">☀️</span>
-          <span class="sensor-title">Radiación Solar / Índice UV</span>
+          <div class="sensor-header-left">
+            <span class="sensor-icon">☀️</span>
+            <span class="sensor-title">Radiación Solar / Índice UV</span>
+          </div>
+          <button class="btn-explain-sensor" data-explain="uv" title="¿Qué es el índice UV y cómo protegerse? Pulsa para aprender">💡 Explícame</button>
         </div>
         <div class="sensor-body">
           <div class="sensor-val" style="color: ${uvVal != null ? uvInfo.color : 'var(--text-dim)'};">${uvVal != null ? `${uvVal.toFixed(1)} <small class="uv-level">(${uvInfo.level})</small>` : '<span style="font-size: 1.35rem; font-weight: 700; color: var(--text-dim);">No disponible</span>'}</div>
@@ -186,8 +195,11 @@ export function renderCurrentWeather(data, concejo, units = 'metric') {
       <!-- 6. CALIDAD DEL AIRE -->
       <div class="sensor-card">
         <div class="sensor-header">
-          <span class="sensor-icon">🍃</span>
-          <span class="sensor-title">Calidad del Aire (AQI)</span>
+          <div class="sensor-header-left">
+            <span class="sensor-icon">🍃</span>
+            <span class="sensor-title">Calidad del Aire (AQI)</span>
+          </div>
+          <button class="btn-explain-sensor" data-explain="aqi" title="¿Qué mide el índice de calidad del aire? Pulsa para aprender">💡 Explícame</button>
         </div>
         <div class="sensor-body">
           <div class="sensor-val" style="color: ${aqiInfo.color};">${aqi?.european_aqi ?? 'Óptimo'} <small>(${aqiInfo.level})</small></div>

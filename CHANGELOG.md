@@ -12,6 +12,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.14] - 2026-08-28
+
+### 💡 Suite Didáctica Completa "Explícame" en Todos los Sensores (Full Interactive Education Suite)
+- **Despliegue Global en los 6 Sensores de Estación en Vivo**: Integración de botones interactivos didácticos `[ 💡 Explícame ]` en la totalidad de las tarjetas meteorológicas principales:
+  1. 🧭 **Anemómetro y Dirección**: Guía sobre la diferencia entre viento medio y rachas máximas instantáneas, escala de intensidad Beaufort (brisa, moderado, fuerte, temporal), la Rosa de los Vientos y la influencia de los vientos asturianos (el *Sur/Ábrego* cálido y seco por efecto Foehn frente al *Gallego/NO* frío y húmedo).
+  2. 🌧️ **Pluviómetro Digital**: Explicación de la equivalencia 1 mm = 1 l/m², escala oficial de intensidad de lluvia AEMET (<2 débil, 2-15 moderada, 15-30 fuerte, >30 torrencial), probabilidad vs volumen y singularidades asturianas (*orbayu / calabobos* vs *bastinazu*).
+  3. ⏱️ **Barómetro y Presión**: Funcionamiento de altas/bajas presiones y tendencia.
+  4. 💧 **Higrómetro y Punto de Rocío**: Escala de bochorno y condensación.
+  5. ☀️ **Radiación Solar e Índice UV**: Rangos de protección solar y aumento de UV por altitud en la Cordillera.
+  6. 🍃 **Calidad del Aire (AQI)**: Monitoreo de partículas PM2.5 / PM10 y escala europea de salubridad.
+- **Service Worker `v114-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente instantánea en todos los clientes.
+
+---
+
 ## [1.0.13] - 2026-08-28
 
 ### 🎨 Alto Contraste y Accesibilidad Visual (High Contrast & Clear Readability)
