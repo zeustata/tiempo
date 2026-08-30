@@ -5,7 +5,7 @@ import {
   getRealtimeTideStatus, 
   getWeeklyTides, 
   renderTideSvgGraph 
-} from '../utils/tides.js?v=6.2';
+} from '../utils/tides.js?v=6.3';
 
 /**
  * Base de datos exhaustiva de playas y calas de cada concejo costero de Asturias
@@ -360,9 +360,10 @@ export function renderMarineCard(data, concejo) {
           const ev0 = events[0] || { type: 'high', name: 'Pleamar', timeStr: '--:--', height: '--' };
           const ev1 = events[1] || { type: 'low', name: 'Bajamar', timeStr: '--:--', height: '--' };
           const ev2 = events[2] || { type: 'high', name: 'Pleamar', timeStr: '--:--', height: '--' };
-          const ev3 = events[3] || { type: 'low', name: 'Bajamar', timeStr: '--:--', height: '--' };
+          const ev3 = events[3];
 
           const renderSubItem = (ev) => {
+            if (!ev) return '';
             const isHigh = ev.type === 'high';
             return `
               <div class="tide-sub-item ${isHigh ? 'high' : 'low'}">
@@ -380,7 +381,7 @@ export function renderMarineCard(data, concejo) {
 
           return `
             <div class="daily-tide-cycles-grid">
-              <!-- Tarjeta 1 (1ª Marea del Día: Plea + Baja) -->
+              <!-- Tarjeta 1 (1ª Marea del Día) -->
               <div class="tide-cycle-card">
                 <div class="tide-cycle-header">
                   <span class="cycle-badge">🌅 1ª Marea del Día</span>
@@ -391,14 +392,25 @@ export function renderMarineCard(data, concejo) {
                 </div>
               </div>
 
-              <!-- Tarjeta 2 (2ª Marea del Día: Plea + Baja) -->
+              <!-- Tarjeta 2 (2ª Marea del Día) -->
               <div class="tide-cycle-card">
                 <div class="tide-cycle-header">
                   <span class="cycle-badge">🌙 2ª Marea del Día</span>
                 </div>
                 <div class="tide-cycle-items">
                   ${renderSubItem(ev2)}
-                  ${renderSubItem(ev3)}
+                  ${ev3 ? renderSubItem(ev3) : `
+                    <div class="tide-sub-item low" style="opacity: 0.75; border-style: dashed;">
+                      <div class="tide-sub-top">
+                        <span class="tide-sub-icon">⏳</span>
+                        <span class="tide-sub-name">Próx. Ciclo</span>
+                      </div>
+                      <div class="tide-sub-bottom">
+                        <span class="tide-sub-time">Madrugada</span>
+                        <span class="tide-sub-height">Día sig.</span>
+                      </div>
+                    </div>
+                  `}
                 </div>
               </div>
             </div>

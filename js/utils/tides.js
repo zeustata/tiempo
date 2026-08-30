@@ -12,7 +12,11 @@
 const REF_NEW_MOON = new Date(Date.UTC(2024, 0, 11, 11, 57, 0)).getTime();
 const SYNODIC_MONTH_MS = 29.530588 * 24 * 60 * 60 * 1000;
 const LUNAR_DAY_HOURS = 24.8412; // 24h 50m 28s
-const TIDE_CYCLE_HOURS = LUNAR_DAY_HOURS / 2; // ~12.42h (12h 25m)
+const TIDE_CYCLE_HOURS = LUNAR_DAY_HOURS / 2; // ~12.4206h (12h 25m 14s)
+const TIDE_CYCLE_MS = TIDE_CYCLE_HOURS * 3600 * 1000;
+const TIDE_HALF_CYCLE_MS = TIDE_CYCLE_MS / 2; // ~6.2103h (6h 12m 37s)
+// Offset de calibración para la costa asturiana (Pleamar base a 3.8h de la época de referencia)
+const REF_HIGH_TIDE_MS = REF_NEW_MOON + 3.8 * 3600 * 1000;
 
 /**
  * Obtiene la fase lunar y su coeficiente para una fecha
@@ -90,10 +94,13 @@ export function getMoonAndTideInfo(date = new Date()) {
 }
 
 /**
- * Calcula los 4 eventos de marea del día (horas y cotas en metros)
+ * Calcula los eventos reales de marea del día (horas y cotas en metros de forma continua)
  */
 export function getDailyTideEvents(targetDate = new Date()) {
-  const startOfDay = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
+  const startOfDay = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate(), 0, 0, 0, 0);
+  const startOfDayMs = startOfDay.getTime();
+  const endOfDayMs = startOfDayMs + 24 * 60 * 60 * 1000;
+
   const moonInfo = getMoonAndTideInfo(startOfDay);
   const coef = moonInfo.coefficient;
 
@@ -102,31 +109,30 @@ export function getDailyTideEvents(targetDate = new Date()) {
   const highTideHeight = +(3.45 + coefFactor * 0.95).toFixed(2);
   const lowTideHeight = +(1.25 - coefFactor * 0.85).toFixed(2);
 
-  // Desfase diario de la marea (~50 min cada 24 horas respecto a la órbita lunar)
-  const daysSinceEpoch = (startOfDay.getTime() - REF_NEW_MOON) / (24 * 60 * 60 * 1000);
-  const baseTideHour = ((daysSinceEpoch * 0.8412 + 3.8) % TIDE_CYCLE_HOURS + TIDE_CYCLE_HOURS) % TIDE_CYCLE_HOURS;
+  // Cálculo astronómico continuo: obtener crestas (pleamares) y senos (bajamares) en [startOfDayMs, endOfDayMs)
+  // n par = Pleamar, n impar = Bajamar
+  const nStart = Math.ceil((startOfDayMs - REF_HIGH_TIDE_MS) / TIDE_HALF_CYCLE_MS);
+  const nEnd = Math.floor((endOfDayMs - 1 - REF_HIGH_TIDE_MS) / TIDE_HALF_CYCLE_MS);
 
-  // Generamos los 4 puntos del día
   const events = [];
-  
-  let h_p1 = baseTideHour;
-  let h_b1 = (h_p1 + 6.21) % 24;
-  let h_p2 = (h_p1 + 12.42) % 24;
-  let h_b2 = (h_p2 + 6.21) % 24;
+  for (let n = nStart; n <= nEnd; n++) {
+    const tMs = REF_HIGH_TIDE_MS + n * TIDE_HALF_CYCLE_MS;
+    const isHigh = Math.abs(n % 2) === 0;
+    const d = new Date(tMs);
+    const hrs = d.getHours();
+    const mins = d.getMinutes();
+    const timeHours = hrs + mins / 60 + d.getSeconds() / 3600;
+    const timeStr = `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
 
-  events.push({ type: 'high', name: 'Pleamar', timeHours: h_p1, height: highTideHeight });
-  events.push({ type: 'low', name: 'Bajamar', timeHours: h_b1, height: lowTideHeight });
-  events.push({ type: 'high', name: 'Pleamar', timeHours: h_p2, height: highTideHeight });
-  events.push({ type: 'low', name: 'Bajamar', timeHours: h_b2, height: lowTideHeight });
-
-  events.sort((a, b) => a.timeHours - b.timeHours);
-
-  events.forEach(e => {
-    const totalMinutes = Math.round(e.timeHours * 60);
-    const hrs = Math.floor(totalMinutes / 60) % 24;
-    const mins = totalMinutes % 60;
-    e.timeStr = `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
-  });
+    events.push({
+      type: isHigh ? 'high' : 'low',
+      name: isHigh ? 'Pleamar' : 'Bajamar',
+      timeHours,
+      timeStr,
+      timestamp: tMs,
+      height: isHigh ? highTideHeight : lowTideHeight
+    });
+  }
 
   return {
     date: startOfDay,
@@ -141,34 +147,50 @@ export function getDailyTideEvents(targetDate = new Date()) {
  * Calcula el estado actual en tiempo real (altura, subiendo/bajando, próximo evento y % de llenado)
  */
 export function getRealtimeTideStatus(now = new Date()) {
+  const nowMs = now.getTime();
   const currentHours = now.getHours() + now.getMinutes() / 60 + now.getSeconds() / 3600;
   const dayData = getDailyTideEvents(now);
-  const { events, highTideHeight, lowTideHeight, moonInfo } = dayData;
+  const { highTideHeight, lowTideHeight, moonInfo } = dayData;
 
   const meanLevel = (highTideHeight + lowTideHeight) / 2;
   const amplitude = (highTideHeight - lowTideHeight) / 2;
   
-  const p1 = events.find(e => e.type === 'high') || events[0];
-  const deltaHours = currentHours - p1.timeHours;
-  const currentWaterHeight = +(meanLevel + amplitude * Math.cos((deltaHours / TIDE_CYCLE_HOURS) * 2 * Math.PI)).toFixed(2);
+  // Fase continua sobre la línea temporal absoluta
+  const phase = ((nowMs - REF_HIGH_TIDE_MS) / TIDE_CYCLE_MS) * 2 * Math.PI;
+  const currentWaterHeight = +(meanLevel + amplitude * Math.cos(phase)).toFixed(2);
   
   const fillPercent = Math.min(100, Math.max(0, Math.round(((currentWaterHeight - lowTideHeight) / (highTideHeight - lowTideHeight)) * 100)));
 
-  const slope = -Math.sin((deltaHours / TIDE_CYCLE_HOURS) * 2 * Math.PI);
+  const slope = -Math.sin(phase);
   const isRising = slope > 0;
 
-  let nextEvent = events.find(e => e.timeHours > currentHours);
-  let hoursUntilNext = 0;
+  // Próximo evento continuo (siguiente cresta o seno en la línea de tiempo)
+  const nextN = Math.floor((nowMs - REF_HIGH_TIDE_MS) / TIDE_HALF_CYCLE_MS) + 1;
+  const nextTMs = REF_HIGH_TIDE_MS + nextN * TIDE_HALF_CYCLE_MS;
+  const isNextHigh = Math.abs(nextN % 2) === 0;
+  const nextDate = new Date(nextTMs);
+  const nextHrs = nextDate.getHours();
+  const nextMins = nextDate.getMinutes();
+  const nextTimeStr = `${String(nextHrs).padStart(2, '0')}:${String(nextMins).padStart(2, '0')}`;
+  
+  // Coeficiente y altura para el momento del próximo evento
+  const nextMoon = getMoonAndTideInfo(nextDate);
+  const nextCoefFactor = (nextMoon.coefficient - 70) / 45;
+  const nextHeight = isNextHigh 
+    ? +(3.45 + nextCoefFactor * 0.95).toFixed(2)
+    : +(1.25 - nextCoefFactor * 0.85).toFixed(2);
 
-  if (nextEvent) {
-    hoursUntilNext = nextEvent.timeHours - currentHours;
-  } else {
-    const tomorrowData = getDailyTideEvents(new Date(now.getTime() + 24 * 60 * 60 * 1000));
-    nextEvent = tomorrowData.events[0];
-    hoursUntilNext = (24 - currentHours) + nextEvent.timeHours;
-  }
+  const nextEvent = {
+    type: isNextHigh ? 'high' : 'low',
+    name: isNextHigh ? 'Pleamar' : 'Bajamar',
+    timeHours: nextHrs + nextMins / 60,
+    timeStr: nextTimeStr,
+    timestamp: nextTMs,
+    height: nextHeight
+  };
 
-  const minsUntilNext = Math.round(hoursUntilNext * 60);
+  const hoursUntilNext = (nextTMs - nowMs) / (3600 * 1000);
+  const minsUntilNext = Math.max(0, Math.round(hoursUntilNext * 60));
   const countdownHours = Math.floor(minsUntilNext / 60);
   const countdownMins = minsUntilNext % 60;
   const countdownStr = countdownHours > 0 
@@ -214,11 +236,12 @@ export function getWeeklyTides(startDate = new Date()) {
  * Genera el SVG interactivo continuo de 72 Horas (3 Días: Hoy, Mañana y Pasado Mañana)
  */
 export function renderTideSvgGraph(baseDate = new Date(), isLiveToday = true, currentHours = null) {
-  const startOfDay = new Date(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate());
+  const startOfDay = new Date(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate(), 0, 0, 0, 0);
+  const startOfDayMs = startOfDay.getTime();
   
   // Obtenemos los datos de los 3 días
   const daysData = [0, 1, 2].map(offset => {
-    const d = new Date(startOfDay.getTime() + offset * 24 * 60 * 60 * 1000);
+    const d = new Date(startOfDayMs + offset * 24 * 60 * 60 * 1000);
     const tideData = getDailyTideEvents(d);
     const dayLabel = offset === 0 ? 'HOY' : (offset === 1 ? 'MAÑANA' : 'PASADO MAÑANA');
     const dateFormatted = d.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' });
@@ -249,20 +272,22 @@ export function renderTideSvgGraph(baseDate = new Date(), isLiveToday = true, cu
   const minH = globalMinH - 0.25;
   const maxH = globalMaxH + 0.25;
 
-  // Curva continua de 72 horas con 288 puntos (cada 15 min)
+  // Curva armónica 100% continua de 72 horas con 288 puntos (cada 15 min)
   let pathD = '';
   const totalSteps = 288;
 
   for (let step = 0; step <= totalSteps; step++) {
     const globalT = (step / totalSteps) * 72;
+    const tMs = startOfDayMs + globalT * 3600 * 1000;
     const dayIdx = Math.min(2, Math.floor(globalT / 24));
-    const localT = globalT - dayIdx * 24;
     const curDay = daysData[dayIdx];
-    const p1 = curDay.events.find(e => e.type === 'high') || curDay.events[0];
 
     const meanLevel = (curDay.highTideHeight + curDay.lowTideHeight) / 2;
     const amplitude = (curDay.highTideHeight - curDay.lowTideHeight) / 2;
-    const h = meanLevel + amplitude * Math.cos(((localT - p1.timeHours) / TIDE_CYCLE_HOURS) * 2 * Math.PI);
+    
+    // Función sinusoidal continua sobre el tiempo astronómico real
+    const phase = ((tMs - REF_HIGH_TIDE_MS) / TIDE_CYCLE_MS) * 2 * Math.PI;
+    const h = meanLevel + amplitude * Math.cos(phase);
 
     const x = padX + (globalT / 72) * usableWidth;
     const norm = (h - minH) / (maxH - minH);
@@ -300,13 +325,14 @@ export function renderTideSvgGraph(baseDate = new Date(), isLiveToday = true, cu
   // Indicador de posición en tiempo real (en el día de hoy)
   let liveMarker = '';
   if (isLiveToday) {
-    const nowH = currentHours !== null ? currentHours : (new Date().getHours() + new Date().getMinutes() / 60);
+    const nowH = currentHours !== null ? currentHours : (new Date().getHours() + new Date().getMinutes() / 60 + new Date().getSeconds() / 3600);
     const liveX = padX + (nowH / 72) * usableWidth;
     const curDay = daysData[0];
-    const p1 = curDay.events.find(e => e.type === 'high') || curDay.events[0];
     const meanLevel = (curDay.highTideHeight + curDay.lowTideHeight) / 2;
     const amplitude = (curDay.highTideHeight - curDay.lowTideHeight) / 2;
-    const nowWaterH = meanLevel + amplitude * Math.cos(((nowH - p1.timeHours) / TIDE_CYCLE_HOURS) * 2 * Math.PI);
+    const liveTMs = startOfDayMs + nowH * 3600 * 1000;
+    const livePhase = ((liveTMs - REF_HIGH_TIDE_MS) / TIDE_CYCLE_MS) * 2 * Math.PI;
+    const nowWaterH = meanLevel + amplitude * Math.cos(livePhase);
     const norm = (nowWaterH - minH) / (maxH - minH);
     const liveY = padYTop + (1 - norm) * usableHeight;
 
