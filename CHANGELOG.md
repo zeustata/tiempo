@@ -12,6 +12,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.46] - 2026-08-30
+
+### 🌊 Geolocalización de Mareas por Concejo (Oriente vs Occidente de Asturias)
+- **Ajuste Longitudinal Geodésico ($4\text{ min/grado}$)**: Integración de la coordenada de longitud de cada concejo en el cálculo armónico de mareas (`tides.js` y `marineCard.js`), adaptando las horas de pleamar y bajamar a la costa exacta donde se encuentre el usuario:
+  - *Llanes / Ribadedeva / Oriente*: La marea se adelanta de 4 a 6 minutos respecto a Gijón.
+  - *Gijón / Cabo Peñas / Centro*: Referencia base calibrada con AEMET / San Lorenzo.
+  - *Luarca / Tapia de Casariego / Castropol*: La marea se retrasa de 5 a 8 minutos respecto a Gijón.
+- **Mareógrafo Dinámico Georreferenciado**: El trazado armónico SVG de 72 horas y el cuadro semanal adaptan sus fases al concejo activo.
+- **Service Worker `v146-official` & Cache-Busting**: Actualización global de dependencias internas a `?v=1.0.46`.
+
+---
+
 ## [1.0.45] - 2026-08-30
 
 ### 🚀 Cache-Busting Integral en Cascada & Propagación Instantánea

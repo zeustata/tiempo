@@ -91,18 +91,21 @@ export function getMoonAndTideInfo(date = new Date()) {
 }
 
 /**
- * Calcula la hora de la primera pleamar base para una fecha dada (en horas del día 0..12.26h)
+ * Calcula la hora de la primera pleamar base para una fecha y longitud dadas (en horas del día 0..12.26h)
+ * Desfase geodésico: 4 minutos por cada grado de longitud respecto a Gijón (-5.6615°)
  */
-function getBaseHighTideHour(date) {
+function getBaseHighTideHour(date, lon = -5.6615) {
   const startOfDay = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0);
   const diffDays = Math.round((startOfDay - REF_BASE_DATE) / (24 * 3600 * 1000));
-  return ((REF_HIGH_HOUR + diffDays * LUNAR_DELAY_HOURS) % TIDE_CYCLE_HOURS + TIDE_CYCLE_HOURS) % TIDE_CYCLE_HOURS;
+  const lonOffsetHours = (lon - (-5.6615)) * (4 / 60);
+  const rawHigh = REF_HIGH_HOUR + diffDays * LUNAR_DELAY_HOURS - lonOffsetHours;
+  return ((rawHigh % TIDE_CYCLE_HOURS) + TIDE_CYCLE_HOURS) % TIDE_CYCLE_HOURS;
 }
 
 /**
- * Calcula los eventos reales de marea del día (horas y cotas en metros) calibrados con IHM
+ * Calcula los eventos reales de marea del día (horas y cotas en metros) calibrados con IHM y adaptados a la longitud local
  */
-export function getDailyTideEvents(targetDate = new Date()) {
+export function getDailyTideEvents(targetDate = new Date(), lon = -5.6615) {
   const startOfDay = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate(), 0, 0, 0, 0);
   const moonInfo = getMoonAndTideInfo(startOfDay);
   const coef = moonInfo.coefficient;
@@ -112,7 +115,7 @@ export function getDailyTideEvents(targetDate = new Date()) {
   const highTideHeight = +(3.45 + coefFactor * 0.95).toFixed(2);
   const lowTideHeight = +(1.25 - coefFactor * 0.85).toFixed(2);
 
-  const baseHighHour = getBaseHighTideHour(startOfDay);
+  const baseHighHour = getBaseHighTideHour(startOfDay, lon);
 
   // Recorremos desde antes de las 00:00 para encontrar todos los eventos dentro de [0, 24)
   let t = baseHighHour;
@@ -155,16 +158,16 @@ export function getDailyTideEvents(targetDate = new Date()) {
 /**
  * Calcula el estado actual en tiempo real (altura, subiendo/bajando, próximo evento y % de llenado)
  */
-export function getRealtimeTideStatus(now = new Date()) {
+export function getRealtimeTideStatus(now = new Date(), lon = -5.6615) {
   const currentHours = now.getHours() + now.getMinutes() / 60 + now.getSeconds() / 3600;
-  const dayData = getDailyTideEvents(now);
+  const dayData = getDailyTideEvents(now, lon);
   const { events, highTideHeight, lowTideHeight, moonInfo } = dayData;
 
   const meanLevel = (highTideHeight + lowTideHeight) / 2;
   const amplitude = (highTideHeight - lowTideHeight) / 2;
 
   // Fase armónica local continua
-  const baseHigh = getBaseHighTideHour(now);
+  const baseHigh = getBaseHighTideHour(now, lon);
   const deltaHours = currentHours - baseHigh;
   const currentWaterHeight = +(meanLevel + amplitude * Math.cos((deltaHours / TIDE_CYCLE_HOURS) * 2 * Math.PI)).toFixed(2);
   
@@ -181,7 +184,7 @@ export function getRealtimeTideStatus(now = new Date()) {
     hoursUntilNext = nextEvent.timeHours - currentHours;
   } else {
     const tomorrow = new Date(now.getTime() + 24 * 3600 * 1000);
-    const tomorrowData = getDailyTideEvents(tomorrow);
+    const tomorrowData = getDailyTideEvents(tomorrow, lon);
     nextEvent = tomorrowData.events[0];
     hoursUntilNext = (24 - currentHours) + nextEvent.timeHours;
   }
@@ -211,11 +214,11 @@ export function getRealtimeTideStatus(now = new Date()) {
 /**
  * Genera el pronóstico de mareas para los próximos 7 días
  */
-export function getWeeklyTides(startDate = new Date()) {
+export function getWeeklyTides(startDate = new Date(), lon = -5.6615) {
   const week = [];
   for (let i = 0; i < 7; i++) {
     const d = new Date(startDate.getTime() + i * 24 * 60 * 60 * 1000);
-    const tideData = getDailyTideEvents(d);
+    const tideData = getDailyTideEvents(d, lon);
     week.push({
       dayIndex: i,
       isToday: i === 0,
@@ -231,13 +234,13 @@ export function getWeeklyTides(startDate = new Date()) {
 /**
  * Genera el SVG interactivo continuo de 72 Horas (3 Días: Hoy, Mañana y Pasado Mañana)
  */
-export function renderTideSvgGraph(baseDate = new Date(), isLiveToday = true, currentHours = null) {
+export function renderTideSvgGraph(baseDate = new Date(), isLiveToday = true, currentHours = null, lon = -5.6615) {
   const startOfDay = new Date(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate(), 0, 0, 0, 0);
   
   // Obtenemos los datos de los 3 días
   const daysData = [0, 1, 2].map(offset => {
     const d = new Date(startOfDay.getTime() + offset * 24 * 60 * 60 * 1000);
-    const tideData = getDailyTideEvents(d);
+    const tideData = getDailyTideEvents(d, lon);
     const dayLabel = offset === 0 ? 'HOY' : (offset === 1 ? 'MAÑANA' : 'PASADO MAÑANA');
     const dateFormatted = d.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' });
     return {
@@ -270,7 +273,7 @@ export function renderTideSvgGraph(baseDate = new Date(), isLiveToday = true, cu
   // Curva armónica continua de 72 horas con 288 puntos (cada 15 min)
   let pathD = '';
   const totalSteps = 288;
-  const day0BaseHigh = getBaseHighTideHour(startOfDay);
+  const day0BaseHigh = getBaseHighTideHour(startOfDay, lon);
 
   for (let step = 0; step <= totalSteps; step++) {
     const globalT = (step / totalSteps) * 72; // horas acumuladas 0..72

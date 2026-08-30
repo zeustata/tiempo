@@ -1,11 +1,11 @@
-import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.45';
+import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.46';
 import { 
   getMoonAndTideInfo, 
   getDailyTideEvents, 
   getRealtimeTideStatus, 
   getWeeklyTides, 
   renderTideSvgGraph 
-} from '../utils/tides.js?v=1.0.45';
+} from '../utils/tides.js?v=1.0.46';
 
 /**
  * Base de datos exhaustiva de playas y calas de cada concejo costero de Asturias
@@ -279,10 +279,13 @@ export function renderMarineCard(data, concejo) {
   const now = new Date();
   const seaTemp = (16.2 + Math.sin((now.getMonth() - 2) * 0.5) * 4.2).toFixed(1);
 
-  // Cálculos dinámicos de mareas y fase lunar
-  const tideStatus = getRealtimeTideStatus(now);
-  const weeklyTides = getWeeklyTides(now);
-  const tideSvg = renderTideSvgGraph(now, true, tideStatus.currentHours);
+  // Coordenada longitudinal local para cálculo exacto de mareas
+  const targetLon = (isCoasting && typeof concejo.lon === 'number') ? concejo.lon : (concejo.lon || -5.6615);
+
+  // Cálculos dinámicos de mareas y fase lunar adaptados a la longitud local
+  const tideStatus = getRealtimeTideStatus(now, targetLon);
+  const weeklyTides = getWeeklyTides(now, targetLon);
+  const tideSvg = renderTideSvgGraph(now, true, tideStatus.currentHours, targetLon);
 
   return `
     <div class="marine-card">
@@ -308,7 +311,7 @@ export function renderMarineCard(data, concejo) {
             <span class="mareografo-icon">🌊</span>
             <div>
               <div class="mareografo-title">Mareógrafo Dinámico en Vivo (72 Horas)</div>
-              <div class="mareografo-subtitle">${activeCoastName} • Previsión Continua 3 Días</div>
+              <div class="mareografo-subtitle">${activeCoastName} • Previsión Continua 3 Días (${Math.abs(targetLon).toFixed(2)}° O)</div>
             </div>
           </div>
           <div class="mareografo-live-badge" style="background: ${tideStatus.directionColor}20; color: ${tideStatus.directionColor}; border: 1px solid ${tideStatus.directionColor}60;">
