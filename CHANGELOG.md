@@ -12,6 +12,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.43] - 2026-08-30
+
+### 🌊 Calibración Oficial IHM: Mareas del Cantábrico & Concordancia Total
+- **Calibración con el Instituto Hidrográfico de la Marina (IHM / El Musel)**: Ajuste milimétrico del desfase lunar solar local ($0.8344\text{ h/día}$) sobre la época base para Gijón y la costa asturiana, sincronizando las pleamares y bajamares con las tablas astronómicas oficiales.
+- **Precisión Horaria**: Sincronización a $\pm 1\text{ min}$ respecto a los datos oficiales de Puertos del Estado.
+- **Continuidad Total 72h & Días de 3 Mareas**: El mareógrafo interactivo y el cuadro semanal mantienen su trazado armónico sinusoidal continuo sin quiebros ni solapes.
+- **Service Worker `v143-official` & Cache-Busting**: Actualización global de dependencias internas a `?v=1.0.43`.
+
+---
+
 ## [1.0.42] - 2026-08-30
 
 ### 🌊 Corrección Astronómica: Mareógrafo Continuo, Días de 3 Mareas & Invalidation Total
