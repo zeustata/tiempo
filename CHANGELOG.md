@@ -12,14 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
-## [1.0.41] - 2026-08-30
+## [1.0.42] - 2026-08-30
 
-### 🌊 Corrección Astronómica: Mareógrafo Continuo & Fin de la Doble Bajamar
+### 🌊 Corrección Astronómica: Mareógrafo Continuo, Días de 3 Mareas & Invalidation Total
 - **Cálculo Continuo Armónico ($M_2 \approx 12.42\text{ h}$)**: Reestructuración del algoritmo de mareas en `js/utils/tides.js` para calcular la onda sobre el tiempo astronómico absoluto, eliminando las anomalías de solape por módulo `% 24`.
-- **Resolución de Doble Bajamar en Medianoche**: Los eventos de pleamar y bajamar de cada jornada se obtienen directamente de los máximos y mínimos astronómicos reales dentro de cada franja de 24h, garantizando un espaciado físico constante de ~6h 12m y eliminando las duplicaciones artificiales entre días consecutivos.
-- **Onda 72h 100% Suave y Continua**: El trazado gráfico SVG del Mareógrafo genera una curva pura y sin saltos de fase ni quiebros en los pasos de medianoche (00:00).
-- **Adaptabilidad en Tarjetas de Marea**: `marineCard.js` gestiona con total fluidez jornadas astronómicas de 4 o 3 mareas con indicación clara del siguiente ciclo.
-- **Service Worker `v141-official` & Cache-Busting**: Actualización atómica de caché (`v=6.3`) para propagación inmediata.
+- **Soporte Astronómico de Días con 3 Mareas**: Reconocimiento natural de las jornadas en las que el ciclo cruza la medianoche (como el Sábado 5 de septiembre), sin forzar artificialmente 4 eventos ni generar solapes de doble bajamar.
+- **Onda 72h 100% Suave y Continua**: El trazado gráfico SVG del Mareógrafo genera una curva armónica pura sin saltos de fase ni quiebros en los pasos de medianoche (00:00).
+- **Adaptabilidad en Tarjetas de Marea**: `marineCard.js` gestiona con total fluidez tanto jornadas de 4 mareas como de 3 mareas.
+- **Cache-Busting Total & Service Worker `v142-official`**: Actualización unificada de parámetros `?v=1.0.42` en todos los módulos de `app.js` y `index.html` para forzar la recarga instantánea en dispositivos y PWA.
 
 ---
 
