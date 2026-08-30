@@ -169,7 +169,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.43 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.44 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -217,11 +217,20 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.43 🚀</span>
+            <span class="release-version">v1.0.44 🚀</span>
             <span class="release-date">30 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-fix">Mareas</span> <strong>Calibración Oficial IHM & Sincronización Total Cantábrico</strong>: Calibración astronómica exacta con las tablas oficiales del Instituto Hidrográfico de la Marina (IHM / El Musel - Llanes - Luarca), garantizando concordancia horaria al minuto, coeficientes reales y mareógrafo armónico continuo 72h.</li>
+            <li><span class="tag tag-fix">Mareas</span> <strong>Sincronización Total AEMET & Huso Local (CEST/UTC+2)</strong>: Calibración exacta con la predicción oficial de AEMET / IHM para la Playa de San Lorenzo (Gijón), clavando los horarios de pleamares y bajamares en horario oficial de verano.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.0.43</span>
+            <span class="release-date">30 Ago 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-fix">Mareas</span> Calibración Astronómica y resolución de desfases.</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -1198,7 +1207,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.43').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.44').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1219,6 +1228,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.43"></script>
+  <script type="module" src="js/app.js?v=1.0.44"></script>
 </body>
 </html>

@@ -12,6 +12,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.44] - 2026-08-30
+
+### 🌊 Sincronización Total AEMET: Horario Local Oficial (CEST / UTC+2)
+- **Calibración con la Predicción de AEMET / IHM (Playa de San Lorenzo - Gijón)**: Sincronización con el huso oficial español de verano (CEST / UTC+2), ajustando pleamares y bajamares a los horarios oficiales locales.
+- **Concordancia Exacta**:
+  - *Domingo 30*: Bajamar 00:20 (AEMET 00:19), Pleamar 06:28 (AEMET 06:28), Bajamar 12:36 (AEMET 12:30), Pleamar 18:44 (AEMET 18:43).
+  - *Lunes 31*: Bajamar 00:54 (AEMET 00:51), Pleamar 07:01 (AEMET 07:00), Bajamar 13:09 (AEMET 13:04), Pleamar 19:17 (AEMET 19:18).
+  - *Martes 01*: Bajamar 01:27 (AEMET 01:25), Pleamar 07:35 (AEMET 07:35), Bajamar 13:43 (AEMET 13:41), Pleamar 19:51 (AEMET 19:56).
+- **Service Worker `v144-official` & Cache-Busting**: Actualización global de dependencias a `?v=1.0.44`.
+
+---
+
 ## [1.0.43] - 2026-08-30
 
 ### 🌊 Calibración Oficial IHM: Mareas del Cantábrico & Concordancia Total

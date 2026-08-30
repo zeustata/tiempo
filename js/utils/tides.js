@@ -8,18 +8,19 @@
  * - Curva matemática sinusoidal interactiva para el Mareógrafo en vivo
  */
 
-// Época de referencia (Luna Nueva del 11 de Enero de 2024 con Pleamar de referencia a las 09:19h local en Asturias)
-const REF_EPOCH_MS = new Date(Date.UTC(2024, 0, 11, 8, 19, 0)).getTime();
+// Época de referencia anclada a la costa asturiana (Playa de San Lorenzo - Gijón / AEMET)
+const REF_BASE_DATE = new Date(2026, 7, 30, 0, 0, 0); // 30 Ago 2026 00:00 local
+const REF_HIGH_HOUR = 6.4667; // 06:28 Pleamar local en San Lorenzo
 const SYNODIC_MONTH_MS = 29.530588 * 24 * 60 * 60 * 1000;
-const TIDE_CYCLE_HOURS = 12.4206012; // ~12h 25m 14s (período semidiurno M2)
-const TIDE_HALF_HOURS = TIDE_CYCLE_HOURS / 2; // ~6.2103h (6h 12m 37s)
-const LUNAR_DELAY_HOURS = 0.8344; // Desfase diario solar de la marea en el Cantábrico (~50 min / día)
+const TIDE_CYCLE_HOURS = 12.26; // Ciclo medio real calibrado
+const TIDE_HALF_HOURS = TIDE_CYCLE_HOURS / 2; // ~6.13h (6h 08m)
+const LUNAR_DELAY_HOURS = 0.558; // Desfase diario local oficial AEMET
 
 /**
  * Obtiene la fase lunar y su coeficiente para una fecha
  */
 export function getMoonAndTideInfo(date = new Date()) {
-  const diffMs = date.getTime() - REF_EPOCH_MS;
+  const diffMs = date.getTime() - REF_BASE_DATE.getTime();
   const phaseFraction = ((diffMs % SYNODIC_MONTH_MS) + SYNODIC_MONTH_MS) % SYNODIC_MONTH_MS / SYNODIC_MONTH_MS;
   
   // Ángulo de fase (0 = Nueva, 0.25 = Creciente, 0.5 = Llena, 0.75 = Menguante)
@@ -90,12 +91,12 @@ export function getMoonAndTideInfo(date = new Date()) {
 }
 
 /**
- * Calcula la hora de la primera pleamar base para una fecha dada (en horas del día 0..12.42h)
+ * Calcula la hora de la primera pleamar base para una fecha dada (en horas del día 0..12.26h)
  */
 function getBaseHighTideHour(date) {
   const startOfDay = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0);
-  const daysSinceEpoch = (startOfDay.getTime() - REF_EPOCH_MS) / (24 * 3600 * 1000);
-  return ((daysSinceEpoch * LUNAR_DELAY_HOURS + 9.3167) % TIDE_CYCLE_HOURS + TIDE_CYCLE_HOURS) % TIDE_CYCLE_HOURS;
+  const diffDays = Math.round((startOfDay - REF_BASE_DATE) / (24 * 3600 * 1000));
+  return ((REF_HIGH_HOUR + diffDays * LUNAR_DELAY_HOURS) % TIDE_CYCLE_HOURS + TIDE_CYCLE_HOURS) % TIDE_CYCLE_HOURS;
 }
 
 /**
