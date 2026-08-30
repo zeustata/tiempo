@@ -12,6 +12,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.48] - 2026-08-30
+
+### 🏔️ Rediseño Glaciar Alpino: Montaña, Altitudes & Estaciones de Esquí
+- **Armonización Visual Glaciar (`#38bdf8`)**: Sustitución del tono morado/ultravioleta por una refinada paleta de Azul Hielo / Glaciar de alto contraste en toda la sección de Montaña.
+- **Pill de Altitud del Concejo (`.altitude-pill`)**: Estilizado con cristal escarchado translúcido, borde cyan luminoso y sombra suave para una legibilidad óptima.
+- **Estaciones de Esquí (Valgrande-Pajares & Fuentes de Invierno)**: Tipografía y contenedores adaptados al esquema cromático alpino cantábrico.
+- **Service Worker `v148-official` & Cache-Busting**: Actualización global de CSS (`main.css?v=1.0.48`, `components.css?v=1.0.48`) y módulos JS a `?v=1.0.48`.
+
+---
+
 ## [1.0.47] - 2026-08-30
 
 ### 🌧️ Radar Cantábrico: Eliminación de Marcas de Agua & Capa Topográfica HD
