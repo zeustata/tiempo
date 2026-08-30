@@ -1,4 +1,4 @@
-import { fetchRainViewerRadar } from '../services/radarService.js';
+import { fetchRainViewerRadar } from '../services/radarService.js?v=1.0.47';
 
 let asturiasMap = null;
 let radarTileLayer = null;
@@ -32,10 +32,9 @@ export async function initAsturiasMap(mapContainerId, onConcejoSelect) {
       fadeAnimation: true
     });
 
-    // Capa 1: CartoDB Voyager (Clara, muy nítida con relieve costero)
-    const layerVoyager = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; OpenStreetMap &copy; CARTO &copy; RainViewer',
-      subdomains: 'abcd',
+    // Capa 1: Esri World Topo Map (Relieve topográfico HD, montañas y costas de Asturias, 100% libre sin API Key)
+    const layerTopo = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+      attribution: '&copy; Esri &copy; OpenStreetMap &copy; RainViewer',
       minZoom: 6,
       maxZoom: 11
     });
@@ -49,17 +48,17 @@ export async function initAsturiasMap(mapContainerId, onConcejoSelect) {
 
     // Capa 3: OpenStreetMap Estándar
     const layerOSM = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap',
+      attribution: '&copy; OpenStreetMap &copy; RainViewer',
       minZoom: 6,
       maxZoom: 11
     });
 
-    layerVoyager.addTo(asturiasMap);
+    layerTopo.addTo(asturiasMap);
 
     baseLayers = {
-      "🗺️ Mapa Topográfico": layerVoyager,
+      "🗺️ Mapa Topográfico HD": layerTopo,
       "🛰️ Satélite Real (Esri)": layerSat,
-      "📍 OpenStreetMap": layerOSM
+      "📍 OpenStreetMap Oficial": layerOSM
     };
 
     L.control.layers(baseLayers, null, { position: 'topright' }).addTo(asturiasMap);

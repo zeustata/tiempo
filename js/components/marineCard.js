@@ -1,11 +1,11 @@
-import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.46';
+import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.47';
 import { 
   getMoonAndTideInfo, 
   getDailyTideEvents, 
   getRealtimeTideStatus, 
   getWeeklyTides, 
   renderTideSvgGraph 
-} from '../utils/tides.js?v=1.0.46';
+} from '../utils/tides.js?v=1.0.47';
 
 /**
  * Base de datos exhaustiva de playas y calas de cada concejo costero de Asturias

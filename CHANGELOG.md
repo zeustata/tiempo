@@ -12,6 +12,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.47] - 2026-08-30
+
+### 🌧️ Radar Cantábrico: Eliminación de Marcas de Agua & Capa Topográfica HD
+- **Nueva Capa Base Esri World Topo Map**: Sustitución definitiva de CartoDB (que introdujo marca de agua de API Key) por Esri World Topo Map en alta definición, 100% libre, sin marcas de agua ni restricciones de acceso.
+- **Relieve Fino de Asturias y Cantábrico**: Representación nítida de los Picos de Europa, cordales montañosos, ríos y litoral sobre la animación de radar de lluvia de RainViewer.
+- **Selector de Capas Mejorado**: Mantiene acceso rápido a *Topográfico HD*, *Satélite Real HD* y *OpenStreetMap Oficial*.
+- **Service Worker `v147-official` & Cache-Busting**: Actualización global de dependencias a `?v=1.0.47`.
+
+---
+
 ## [1.0.46] - 2026-08-30
 
 ### 🌊 Geolocalización de Mareas por Concejo (Oriente vs Occidente de Asturias)
