@@ -169,7 +169,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.44 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.45 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -217,11 +217,20 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.44 🚀</span>
+            <span class="release-version">v1.0.45 🚀</span>
             <span class="release-date">30 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-fix">Mareas</span> <strong>Sincronización Total AEMET & Huso Local (CEST/UTC+2)</strong>: Calibración exacta con la predicción oficial de AEMET / IHM para la Playa de San Lorenzo (Gijón), clavando los horarios de pleamares y bajamares en horario oficial de verano.</li>
+            <li><span class="tag tag-fix">Mareas</span> <strong>Sincronización Total en Cascada & Cache-Busting Interno</strong>: Actualización de todas las referencias internas de `tides.js` en los componentes (`marineCard.js`, etc.) a `?v=1.0.45`, asegurando la descarga forzada e inmediata de los horarios locales oficiales de AEMET en todos los dispositivos.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.0.44</span>
+            <span class="release-date">30 Ago 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-fix">Mareas</span> Sincronización Total AEMET & Huso Local (CEST/UTC+2).</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -1207,7 +1216,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.44').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.45').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1228,6 +1237,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.44"></script>
+  <script type="module" src="js/app.js?v=1.0.45"></script>
 </body>
 </html>

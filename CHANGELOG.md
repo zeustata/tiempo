@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.45] - 2026-08-30
+
+### 🚀 Cache-Busting Integral en Cascada & Propagación Instantánea
+- **Actualización Total de Imports Internos**: Sincronización en cascada de todas las referencias de `tides.js` y `weatherIcons.js` dentro de `marineCard.js`, `currentCard.js`, `forecastView.js`, `chartsView.js` y `app.js` a `?v=1.0.45`.
+- **Eliminación Definitiva de Caché Residual**: Garantiza que ningún navegador o PWA mantenga archivos anteriores en memoria y descargue al 100% la calibración oficial de AEMET (Playa de San Lorenzo: Bajamar 00:20, Pleamar 06:28, Bajamar 12:36, Pleamar 18:44).
+- **Service Worker `v145-official`**: Nuevo nombre de caché atómica para activación inmediata.
+
+---
+
 ## [1.0.44] - 2026-08-30
 
 ### 🌊 Sincronización Total AEMET: Horario Local Oficial (CEST / UTC+2)
