@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.64] - 2026-08-31
+
+### 🌊 Temperatura Marina Unificada y Sensor en Vivo Satelital
+- **Integración de `sea_surface_temperature` en la API Marina**: Activación del parámetro oficial de temperatura del agua superficial en la llamada a Open-Meteo (`marine-api.open-meteo.com`) para todos los concejos.
+- **Cálculo Centralizado (`getSeaWaterTemperature`)**: Exportación y uso de la misma función compartida en `marineCard.js` y `surfCard.js`, resolviendo la discrepancia previa y garantizando sincronización 1:1 al milímetro en toda la app.
+- **Service Worker `v164-official`**: Purgado y recarga automática en clientes web y móviles.
+
+---
+
 ## [1.0.63] - 2026-08-31
 
 ### 🧭 Inteligencia Aerodinámica y Relieve Costero de Asturias (Surf Pro)

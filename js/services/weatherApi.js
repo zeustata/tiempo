@@ -86,12 +86,11 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
     const aqiUrl = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&current=european_aqi,pm10,pm2_5,nitrogen_dioxide,ozone,sulphur_dioxide&timezone=Europe%2FMadrid`;
     const aqiPromise = fetch(aqiUrl).then(r => r.json()).catch(() => null);
 
-    // 3. Datos Marinos si es zona costera
-    let marinePromise = Promise.resolve(null);
-    if (isCoast) {
-      const marineUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&current=wave_height,wave_direction,wave_period,wind_wave_height,wind_wave_direction,wind_wave_period,swell_wave_height,swell_wave_direction,swell_wave_period&hourly=wave_height,wave_direction,wave_period,swell_wave_height,swell_wave_period&timezone=Europe%2FMadrid`;
-      marinePromise = fetch(marineUrl).then(r => r.json()).catch(() => null);
-    }
+    // 3. Datos Marinos y Temperatura del Agua (en costa o referencia cantábrica)
+    const marineLat = isCoast ? lat : 43.58;
+    const marineLon = lon;
+    const marineUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${marineLat}&longitude=${marineLon}&current=wave_height,wave_direction,wave_period,wind_wave_height,wind_wave_direction,wind_wave_period,swell_wave_height,swell_wave_direction,swell_wave_period,sea_surface_temperature&hourly=wave_height,wave_direction,wave_period,swell_wave_height,swell_wave_period&timezone=Europe%2FMadrid`;
+    const marinePromise = fetch(marineUrl).then(r => r.json()).catch(() => null);
 
     const [weather, aqi, marine] = await Promise.all([weatherPromise, aqiPromise, marinePromise]);
 

@@ -1,10 +1,11 @@
-import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.63';
+import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.64';
 import { 
   PLAYAS_POR_CONCEJO, 
   getNearestCoastalReference, 
   getSurfWindCondition,
-  getBeachSpecificWindCondition
-} from './marineCard.js?v=1.0.63';
+  getBeachSpecificWindCondition,
+  getSeaWaterTemperature
+} from './marineCard.js?v=1.0.64';
 
 /**
  * Calcula la escala de Douglas a partir de la altura significativa de ola
@@ -128,10 +129,8 @@ export function renderSurfCard(data, concejo) {
   // Calidad global del swell
   const surfQuality = evaluateSurfQuality(waveHeight, wavePeriod, surfWind);
 
-  // Temperatura del mar y traje
-  const seaTemp = (marine && typeof marine.sea_surface_temperature === 'number') 
-    ? marine.sea_surface_temperature.toFixed(1) 
-    : '14.8';
+  // Temperatura del mar y traje unificada
+  const seaTemp = getSeaWaterTemperature(marine);
   const wetsuit = getWetsuitRecommendation(parseFloat(seaTemp));
 
   return `

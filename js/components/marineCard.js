@@ -1,11 +1,11 @@
-import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.63';
+import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.64';
 import { 
   getMoonAndTideInfo, 
   getDailyTideEvents, 
   getRealtimeTideStatus, 
   getWeeklyTides, 
   renderTideSvgGraph 
-} from '../utils/tides.js?v=1.0.63';
+} from '../utils/tides.js?v=1.0.64';
 
 /**
  * Base de datos exhaustiva y profesional de playas, picos de surf y fondos marinos de Asturias
@@ -1041,11 +1041,21 @@ export function renderMarineCard(data, concejo) {
     bathStatus = '🚨 Temporal costero activo. Prohibido el baño en todas las playas.';
   }
 
-  // Temperatura del agua
+/**
+ * Obtiene la temperatura del agua del mar en grados centígrados de forma unificada
+ * (utiliza el sensor de satélite/boya en vivo de Open-Meteo o climatología del Cantábrico)
+ */
+export function getSeaWaterTemperature(marine) {
+  if (marine && typeof marine.sea_surface_temperature === 'number') {
+    return marine.sea_surface_temperature.toFixed(1);
+  }
   const now = new Date();
-  const seaTemp = (marine && typeof marine.sea_surface_temperature === 'number') 
-    ? marine.sea_surface_temperature.toFixed(1) 
-    : (16.2 + Math.sin((now.getMonth() - 2) * 0.5) * 4.2).toFixed(1);
+  return (16.2 + Math.sin((now.getMonth() - 2) * 0.5) * 4.2).toFixed(1);
+}
+
+  // Temperatura del agua unificada
+  const now = new Date();
+  const seaTemp = getSeaWaterTemperature(marine);
 
   // Visibilidad costera
   const visibilityKm = (current.visibility / 1000 || 10).toFixed(0);
