@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.65] - 2026-08-31
+
+### 🔧 Corrección Crítica de Exportación de Módulos (ES Modules)
+- **Ámbito Superior en Funciones Exportadas**: Reubicación de `getSeaWaterTemperature` fuera de la función `renderMarineCard` para cumplir estrictamente la especificación ECMAScript de `export` a nivel superior.
+- **Restablecimiento Total del Ciclo de Ejecución**: Eliminado el bloqueo de parsing que impedía la carga del menú y módulos en dispositivos.
+- **Service Worker `v165-official`**: Actualización atómica de caché y recarga limpia.
+
+---
+
 ## [1.0.64] - 2026-08-31
 
 ### 🌊 Temperatura Marina Unificada y Sensor en Vivo Satelital

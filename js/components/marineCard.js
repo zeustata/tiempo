@@ -1,11 +1,11 @@
-import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.64';
+import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.65';
 import { 
   getMoonAndTideInfo, 
   getDailyTideEvents, 
   getRealtimeTideStatus, 
   getWeeklyTides, 
   renderTideSvgGraph 
-} from '../utils/tides.js?v=1.0.64';
+} from '../utils/tides.js?v=1.0.65';
 
 /**
  * Base de datos exhaustiva y profesional de playas, picos de surf y fondos marinos de Asturias
@@ -983,6 +983,18 @@ export function getSurfWindCondition(windDirDeg, windSpeedKm) {
 }
 
 /**
+ * Obtiene la temperatura del agua del mar en grados centígrados de forma unificada
+ * (utiliza el sensor de satélite/boya en vivo de Open-Meteo o climatología del Cantábrico)
+ */
+export function getSeaWaterTemperature(marine) {
+  if (marine && typeof marine.sea_surface_temperature === 'number') {
+    return marine.sea_surface_temperature.toFixed(1);
+  }
+  const now = new Date();
+  return (16.2 + Math.sin((now.getMonth() - 2) * 0.5) * 4.2).toFixed(1);
+}
+
+/**
  * Renderiza el módulo marítimo con Mareógrafo interactivo en tiempo real, 
  * Cuadro semanal de mareas y Catálogo de Playas y Calas de Asturias (Turismo y Baño)
  */
@@ -1040,18 +1052,6 @@ export function renderMarineCard(data, concejo) {
     flagColor = '#ef4444';
     bathStatus = '🚨 Temporal costero activo. Prohibido el baño en todas las playas.';
   }
-
-/**
- * Obtiene la temperatura del agua del mar en grados centígrados de forma unificada
- * (utiliza el sensor de satélite/boya en vivo de Open-Meteo o climatología del Cantábrico)
- */
-export function getSeaWaterTemperature(marine) {
-  if (marine && typeof marine.sea_surface_temperature === 'number') {
-    return marine.sea_surface_temperature.toFixed(1);
-  }
-  const now = new Date();
-  return (16.2 + Math.sin((now.getMonth() - 2) * 0.5) * 4.2).toFixed(1);
-}
 
   // Temperatura del agua unificada
   const now = new Date();
