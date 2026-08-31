@@ -722,20 +722,34 @@
   }
 }
 
-/* --- MAREAS DEL DÍA EN 2 BLOQUES EXTREMOS (CERO COLISIONES & COMPACTO) --- */
-.daily-tides-list {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
+/* --- MAREAS DEL DÍA EN ESTRUCTURA A 2 NIVELES (CERO COLISIONES & LIQUID GLASS) --- */
+.daily-tides-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
   width: 100%;
-  margin-top: 14px;
+  margin-top: 16px;
   box-sizing: border-box;
 }
 
-.tide-row-item {
+@media (max-width: 580px) {
+  .daily-tides-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+}
+
+@media (max-width: 370px) {
+  .daily-tides-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+.tide-sub-item {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 6px;
   padding: 10px 14px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-glass);
@@ -745,86 +759,85 @@
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.tide-row-item:hover {
+.tide-sub-item:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
 }
 
-.tide-row-item.high {
+.tide-sub-item.high {
   border-color: rgba(56, 189, 248, 0.35);
-  background: linear-gradient(90deg, rgba(2, 132, 199, 0.18), rgba(15, 23, 42, 0.6));
+  background: linear-gradient(135deg, rgba(2, 132, 199, 0.18), rgba(15, 23, 42, 0.6));
 }
 
-.tide-row-item.low {
+.tide-sub-item.low {
   border-color: rgba(245, 158, 11, 0.35);
-  background: linear-gradient(90deg, rgba(245, 158, 11, 0.15), rgba(15, 23, 42, 0.6));
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(15, 23, 42, 0.6));
 }
 
-.tide-row-left {
+.tide-sub-top {
   display: flex;
   align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.tide-row-icon {
-  font-size: 1.15rem;
+.tide-sub-type-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tide-sub-icon {
+  font-size: 1.1rem;
   line-height: 1;
-  flex-shrink: 0;
 }
 
-.tide-row-name {
-  font-size: 0.84rem;
+.tide-sub-name {
+  font-size: 0.78rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  white-space: nowrap;
 }
 
-.tide-row-item.high .tide-row-name {
+.tide-sub-item.high .tide-sub-name {
   color: #bae6fd;
 }
 
-.tide-row-item.low .tide-row-name {
+.tide-sub-item.low .tide-sub-name {
   color: #fde68a;
 }
 
-.tide-row-order {
+.tide-sub-order {
   font-size: 0.68rem;
   font-weight: 700;
   color: #94a3b8;
   background: rgba(255, 255, 255, 0.08);
   padding: 1px 6px;
   border-radius: 6px;
-  flex-shrink: 0;
 }
 
-.tide-row-right {
+.tide-sub-bottom {
   display: flex;
-  align-items: center;
-  gap: 14px;
-  flex-shrink: 0;
+  align-items: baseline;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.tide-row-time {
+.tide-sub-time {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 1.25rem;
+  font-size: 1.28rem;
   font-weight: 800;
   color: #ffffff;
   letter-spacing: 0.5px;
-  white-space: nowrap;
 }
 
-.tide-row-height {
+.tide-sub-height {
   font-size: 0.95rem;
   font-weight: 800;
   color: var(--primary-light, #38bdf8);
-  min-width: 52px;
-  text-align: right;
-  white-space: nowrap;
 }
 
-.tide-row-item.low .tide-row-height {
+.tide-sub-item.low .tide-sub-height {
   color: #fbbf24;
 }
 

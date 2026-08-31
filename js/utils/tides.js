@@ -253,10 +253,10 @@ export function renderTideSvgGraph(baseDate = new Date(), isLiveToday = true, cu
   });
 
   const svgWidth = 1980;
-  const svgHeight = 250;
-  const padX = 45;
-  const padYTop = 48;
-  const padYBottom = 48;
+  const svgHeight = 270;
+  const padX = 55;
+  const padYTop = 64;
+  const padYBottom = 54;
   const usableWidth = svgWidth - padX * 2;
   const usableHeight = svgHeight - padYTop - padYBottom;
 
@@ -304,7 +304,7 @@ export function renderTideSvgGraph(baseDate = new Date(), isLiveToday = true, cu
   // Separadores y rótulos de jornada
   const dayBanners = daysData.map((d, i) => {
     const startX = padX + (i * 24 / 72) * usableWidth;
-    const bannerX = startX + 14;
+    const bannerX = Math.max(14, Math.min(svgWidth - 240, startX + 14));
     const dividerLine = i > 0 
       ? `<line x1="${startX.toFixed(1)}" y1="${padYTop - 25}" x2="${startX.toFixed(1)}" y2="${svgHeight - padYBottom}" stroke="rgba(56, 189, 248, 0.45)" stroke-width="1.5" stroke-dasharray="6 4" />`
       : '';
@@ -312,8 +312,8 @@ export function renderTideSvgGraph(baseDate = new Date(), isLiveToday = true, cu
     return `
       ${dividerLine}
       <g transform="translate(${bannerX.toFixed(1)}, 14)">
-        <rect x="0" y="0" width="220" height="24" rx="12" fill="rgba(15, 23, 42, 0.88)" stroke="rgba(56, 189, 248, 0.35)" stroke-width="1" />
-        <text x="110" y="16" font-size="11" font-weight="800" fill="#f8fafc" text-anchor="middle" font-family="'JetBrains Mono', monospace">
+        <rect x="0" y="0" width="224" height="26" rx="13" fill="rgba(15, 23, 42, 0.92)" stroke="rgba(56, 189, 248, 0.4)" stroke-width="1" />
+        <text x="112" y="17" font-size="11" font-weight="800" fill="#f8fafc" text-anchor="middle" font-family="'JetBrains Mono', monospace">
           📅 ${d.dayLabel} (${d.dateFormatted}) • Coef ${d.moonInfo.coefficient}
         </text>
       </g>
@@ -340,7 +340,7 @@ export function renderTideSvgGraph(baseDate = new Date(), isLiveToday = true, cu
       <circle cx="${liveX.toFixed(1)}" cy="${liveY.toFixed(1)}" r="14" fill="rgba(56, 189, 248, 0.35)" class="tide-pulse-aura" />
       <circle cx="${liveX.toFixed(1)}" cy="${liveY.toFixed(1)}" r="6.5" fill="#38bdf8" stroke="#ffffff" stroke-width="2.5" />
       <!-- Badge de nivel actual en vivo -->
-      <g transform="translate(${Math.min(svgWidth - 125, Math.max(liveX - 55, 10))}, ${Math.max(8, liveY - 28)})">
+      <g transform="translate(${Math.min(svgWidth - 125, Math.max(liveX - 55, 10))}, ${Math.max(44, liveY - 28)})">
         <rect x="0" y="0" width="110" height="22" rx="11" fill="rgba(15, 23, 42, 0.95)" stroke="#38bdf8" stroke-width="1.5" />
         <text x="55" y="15" font-size="11.5" font-weight="800" font-family="'JetBrains Mono', monospace" fill="#38bdf8" text-anchor="middle">AHORA ${nowWaterH.toFixed(2)}m</text>
       </g>
@@ -356,12 +356,23 @@ export function renderTideSvgGraph(baseDate = new Date(), isLiveToday = true, cu
       const y = padYTop + (1 - norm) * usableHeight;
       const isHigh = e.type === 'high';
       const color = isHigh ? '#38bdf8' : '#fbbf24';
-      const labelY = isHigh ? y - 12 : y + 18;
+      const labelY = isHigh ? Math.max(48, y - 12) : Math.min(svgHeight - 18, y + 18);
+
+      // Anclaje inteligente según proximidad a los bordes
+      let anchor = 'middle';
+      let textX = x;
+      if (x < 115) {
+        anchor = 'start';
+        textX = Math.max(14, x - 6);
+      } else if (x > svgWidth - 115) {
+        anchor = 'end';
+        textX = Math.min(svgWidth - 14, x + 6);
+      }
 
       return `
         <g class="tide-event-node">
           <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="5.5" fill="${color}" stroke="#0f172a" stroke-width="2" />
-          <text x="${x.toFixed(1)}" y="${labelY.toFixed(1)}" font-size="11.5" font-weight="800" fill="${color}" text-anchor="middle" font-family="'JetBrains Mono', monospace">
+          <text x="${textX.toFixed(1)}" y="${labelY.toFixed(1)}" font-size="11.5" font-weight="800" fill="${color}" text-anchor="${anchor}" font-family="'JetBrains Mono', monospace">
             ${e.name.toUpperCase()} ${e.timeStr} (${e.height}m)
           </text>
         </g>
@@ -381,7 +392,7 @@ export function renderTideSvgGraph(baseDate = new Date(), isLiveToday = true, cu
   }
 
   return `
-    <svg width="1980" height="250" viewBox="0 0 ${svgWidth} ${svgHeight}" class="tide-svg-chart" style="min-width: 1980px; width: 1980px; height: 250px; display: block; overflow: visible;">
+    <svg width="1980" height="270" viewBox="0 0 ${svgWidth} ${svgHeight}" class="tide-svg-chart" style="min-width: 1980px; width: 1980px; height: 270px; display: block; overflow: visible;">
       <defs>
         <linearGradient id="tideAreaGrad" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.32" />

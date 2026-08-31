@@ -1138,20 +1138,22 @@ export function renderMarineCard(data, concejo) {
           </div>
         </div>
 
-        <!-- Mareas de Hoy en 2 Bloques Extremos (Cero Colisiones, Compactas y Dinámicas) -->
-        <div class="daily-tides-list">
+        <!-- Mareas de Hoy en Estructura a 2 Niveles (Liquid Glass, Cero Colisiones) -->
+        <div class="daily-tides-grid">
           ${(tideStatus.dayData.events || []).map((ev, idx) => {
             const isHigh = ev.type === 'high';
             return `
-              <div class="tide-row-item ${isHigh ? 'high' : 'low'}">
-                <div class="tide-row-left">
-                  <span class="tide-row-icon">${isHigh ? '🌅' : '🏖️'}</span>
-                  <span class="tide-row-name">${ev.name}</span>
-                  <span class="tide-row-order">#${idx + 1}</span>
+              <div class="tide-sub-item ${isHigh ? 'high' : 'low'}">
+                <div class="tide-sub-top">
+                  <div class="tide-sub-type-badge">
+                    <span class="tide-sub-icon">${isHigh ? '🌅' : '🏖️'}</span>
+                    <span class="tide-sub-name">${ev.name}</span>
+                  </div>
+                  <span class="tide-sub-order">#${idx + 1}</span>
                 </div>
-                <div class="tide-row-right">
-                  <span class="tide-row-time">${ev.timeStr}</span>
-                  <span class="tide-row-height">${ev.height} m</span>
+                <div class="tide-sub-bottom">
+                  <span class="tide-sub-time">${ev.timeStr}</span>
+                  <span class="tide-sub-height">${ev.height} m</span>
                 </div>
               </div>
             `;

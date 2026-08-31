@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.69] - 2026-08-31
+
+### 💎 Mareas de Hoy en Tarjeta Única a 2 Niveles & Calibración de Gráfico 72h
+- **Tarjeta Única Unificada**: Consolidación de todos los eventos diarios de mareas dentro de una única tarjeta con estructura a 2 niveles (arriba: icono, tipo y orden; abajo: hora y altura) con renderizado en rejilla armónica (`.daily-tides-grid` y `.tide-sub-item`), garantizando cero desbordes en dispositivos móviles.
+- **Calibración SVG en Mareógrafo de 72h**: Ampliación de la altura a 270px, ajuste de márgenes verticales de seguridad y anclaje inteligente (`text-anchor`) en las etiquetas de los extremos para erradicar cualquier corte o truncamiento de texto.
+- **Service Worker `v169-official`**: Purgado y actualización atómica en caché.
+
+---
+
 ## [1.0.68] - 2026-08-31
 
 ### 💎 Mareas en 2 Bloques Extremos (Space-Between)
