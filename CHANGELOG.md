@@ -12,6 +12,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.52] - 2026-08-31
+
+### 📅 Pronósticos a 10 Días: Panel Único Unificado de Métricas Diarias (Opción 1)
+- **Fusión en 1 Solo Bloque Integrado (`.d-unified-panel`)**: Agrupación completa de todas las métricas térmicas y atmosféricas en un único contenedor de cristal con 2 filas armónicas:
+  - **Fila 1 (Térmica en Línea)**: `🔺 Máx ${maxT}°` • `🔻 Mín ${minT}°` • `Δ Osc. ${maxT - minT}°`.
+  - **Línea Divisoria Sutil**: Separación tenue de degradado.
+  - **Fila 2 (Métricas Integradas)**: Cuadrícula con Lluvia (`% y mm`), Viento medio y rachas, Radiación UV y horarios de Sol/Ocaso.
+- **Ahorro de Espacio Superior al 40%**: Eliminadas las 7 cajitas/pastillas sueltas anteriores, logrando tarjetas diarias ultra compactas y perfectamente legibles.
+- **Service Worker `v152-official` & Cache-Busting Total**: Sincronización a `?v=1.0.52` en toda la aplicación.
+
+---
+
 ## [1.0.51] - 2026-08-31
 
 ### 📅 Pronósticos a 10 Días: Supresión de Barra Redundante & Máxima Compactación

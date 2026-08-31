@@ -1,4 +1,4 @@
-import { getWeatherInfo, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=1.0.51';
+import { getWeatherInfo, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=1.0.52';
 
 /**
  * Calcula la condición meteorológica representativa para un tramo horario (ej. mañana o tarde)
@@ -195,57 +195,62 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
           </div>
         </div>
 
-        <!-- SECCIÓN TÉRMICA DESTACADA (ORGANIZADA EN BLOQUE COMPACTO) -->
-        <div class="d-temp-section">
-          <div class="d-temp-badges-row">
-            <div class="temp-badge max">
-              <span class="tb-label">Máxima</span>
-              <span class="tb-val">${maxT}°</span>
+        <!-- PANEL ÚNICO UNIFICADO (TEMPERATURAS + MÉTRICAS) -->
+        <div class="d-unified-panel">
+          <!-- Fila 1: Temperaturas Clave en Línea -->
+          <div class="d-unified-temps-row">
+            <div class="u-temp-item max" title="Temperatura Máxima">
+              <span class="u-temp-icon">🔺</span>
+              <span class="u-temp-label">Máx</span>
+              <span class="u-temp-val">${maxT}°</span>
             </div>
-            <div class="temp-badge min">
-              <span class="tb-label">Mínima</span>
-              <span class="tb-val">${minT}°</span>
+            <div class="u-temp-item min" title="Temperatura Mínima">
+              <span class="u-temp-icon">🔻</span>
+              <span class="u-temp-label">Mín</span>
+              <span class="u-temp-val">${minT}°</span>
             </div>
-            <div class="temp-badge osc">
-              <span class="tb-label">Rango</span>
-              <span class="tb-val osc-val">Δ ${maxT - minT}°</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- CUADRÍCULA DE MÉTRICAS CLAVE -->
-        <div class="d-card-metrics-grid">
-          <div class="metric-pill ${popMax >= 40 ? 'metric-rain-active' : ''}">
-            <span class="m-icon">💧</span>
-            <div class="m-data">
-              <span class="m-val">${popMax}% Lluvia</span>
-              <span class="m-sub">${rain > 0 ? rain + ' mm acum.' : 'Sin lluvia prevista'}</span>
+            <div class="u-temp-item osc" title="Oscilación Térmica">
+              <span class="u-temp-label">Δ Osc.</span>
+              <span class="u-temp-val osc-val">${maxT - minT}°</span>
             </div>
           </div>
 
-          <div class="metric-pill">
-            <span class="m-icon">💨</span>
-            <div class="m-data">
-              <span class="m-val">${windSpeed} ${unitLabel}</span>
-              <span class="m-sub">Rachas: ${windGust} ${unitLabel}</span>
-            </div>
-          </div>
+          <div class="d-unified-divider"></div>
 
-          ${uvMax !== null ? `
-          <div class="metric-pill">
-            <span class="m-icon">☀️</span>
-            <div class="m-data">
-              <span class="m-val">UV ${uvMax} (${uvText})</span>
-              <span class="m-sub">Índice solar máx.</span>
+          <!-- Fila 2: Métricas Integradas -->
+          <div class="d-unified-metrics-grid">
+            <div class="u-metric-item ${popMax >= 40 ? 'metric-rain-active' : ''}" title="Probabilidad de lluvia y acumulado">
+              <span class="u-m-icon">💧</span>
+              <div class="u-m-info">
+                <span class="u-m-val">${popMax}%</span>
+                <span class="u-m-sub">${rain > 0 ? rain + ' mm' : 'Seco'}</span>
+              </div>
             </div>
-          </div>
-          ` : ''}
 
-          <div class="metric-pill">
-            <span class="m-icon">🌅</span>
-            <div class="m-data">
-              <span class="m-val">${sunriseStr} / ${sunsetStr}</span>
-              <span class="m-sub">Sol y Ocaso</span>
+            <div class="u-metric-item" title="Viento medio y rachas máximas">
+              <span class="u-m-icon">💨</span>
+              <div class="u-m-info">
+                <span class="u-m-val">${windSpeed} ${unitLabel}</span>
+                <span class="u-m-sub">Racha ${windGust}</span>
+              </div>
+            </div>
+
+            ${uvMax !== null ? `
+            <div class="u-metric-item" title="Índice Ultravioleta Máximo">
+              <span class="u-m-icon">☀️</span>
+              <div class="u-m-info">
+                <span class="u-m-val">UV ${uvMax}</span>
+                <span class="u-m-sub">${uvText}</span>
+              </div>
+            </div>
+            ` : ''}
+
+            <div class="u-metric-item" title="Salida y Puesta de Sol">
+              <span class="u-m-icon">🌅</span>
+              <div class="u-m-info">
+                <span class="u-m-val">${sunriseStr}</span>
+                <span class="u-m-sub">${sunsetStr}</span>
+              </div>
             </div>
           </div>
         </div>

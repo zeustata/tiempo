@@ -1309,128 +1309,142 @@
   color: var(--text-main);
 }
 
-/* Fila térmica principal organizada en bloque compacto */
-.d-temp-section {
+/* --- PANEL ÚNICO UNIFICADO (Opción 1: Temperaturas + Métricas en 1 solo bloque) --- */
+.d-unified-panel {
   display: flex;
   flex-direction: column;
-  padding: 10px 14px;
-  background: rgba(15, 23, 42, 0.5);
-  border-radius: var(--radius-md);
+  background: rgba(15, 23, 42, 0.55);
   border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  gap: 9px;
+  transition: all 0.2s ease;
 }
 
-.d-temp-badges-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+.d-unified-panel:hover {
+  border-color: rgba(56, 189, 248, 0.35);
+  background: rgba(15, 23, 42, 0.75);
+}
+
+/* Fila 1: Temperaturas en Línea */
+.d-unified-temps-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
   gap: 8px;
-  align-items: stretch;
   width: 100%;
 }
 
-.temp-badge {
+.u-temp-item {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  text-align: center;
-  background: rgba(15, 23, 42, 0.45);
-  padding: 8px 4px;
-  border-radius: var(--radius-sm);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  min-width: 0;
-  overflow: hidden;
+  gap: 5px;
 }
 
-.tb-label {
-  font-size: 0.68rem;
+.u-temp-icon {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.u-temp-label {
+  font-size: 0.75rem;
   font-weight: 700;
   color: var(--text-dim);
   text-transform: uppercase;
   letter-spacing: 0.3px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  max-width: 100%;
-  margin-bottom: 2px;
 }
 
-.temp-badge.max .tb-val {
-  font-size: 1.45rem;
-  font-weight: 800;
-  color: #f87171;
-  line-height: 1.1;
-  white-space: nowrap;
-}
-
-.temp-badge.min .tb-val {
-  font-size: 1.45rem;
-  font-weight: 800;
-  color: #60a5fa;
-  line-height: 1.1;
-  white-space: nowrap;
-}
-
-.temp-badge.osc .tb-val.osc-val {
+.u-temp-val {
   font-size: 1.25rem;
   font-weight: 800;
+  line-height: 1;
+}
+
+.u-temp-item.max .u-temp-val {
+  color: #f87171;
+}
+
+.u-temp-item.min .u-temp-val {
+  color: #60a5fa;
+}
+
+.u-temp-item.osc .osc-val {
   color: var(--accent-gold);
-  line-height: 1.1;
-  white-space: nowrap;
 }
 
-/* Cuadrícula de Métricas de la Tarjeta */
-.d-card-metrics-grid {
+/* Divisor Fino */
+.d-unified-divider {
+  height: 1px;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
+  width: 100%;
+}
+
+/* Fila 2: Cuadrícula de Métricas */
+.d-unified-metrics-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  align-items: center;
 }
 
-@media (max-width: 420px) {
-  .d-card-metrics-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.metric-pill {
+.u-metric-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
-  background: rgba(15, 23, 42, 0.4);
-  border: 1px solid var(--border-glass);
+  gap: 6px;
+  padding: 5px 6px;
   border-radius: var(--radius-sm);
-  transition: background 0.2s;
+  background: rgba(15, 23, 42, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  min-width: 0;
 }
 
-.metric-pill .m-icon {
-  font-size: 1.4rem;
+.u-metric-item.metric-rain-active {
+  background: rgba(14, 165, 233, 0.15);
+  border-color: rgba(14, 165, 233, 0.35);
+}
+
+.u-m-icon {
+  font-size: 1.15rem;
+  line-height: 1;
   flex-shrink: 0;
 }
 
-.metric-pill .m-data {
+.u-m-info {
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
 }
 
-.metric-pill .m-val {
-  font-size: 0.88rem;
-  font-weight: 700;
+.u-m-val {
+  font-size: 0.8rem;
+  font-weight: 800;
   color: var(--text-main);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  line-height: 1.1;
 }
 
-.metric-pill .m-sub {
-  font-size: 0.74rem;
+.u-m-sub {
+  font-size: 0.68rem;
+  font-weight: 600;
   color: var(--text-dim);
-  font-weight: 500;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  line-height: 1.1;
+  margin-top: 1px;
 }
 
-.metric-pill.metric-rain-active {
-  background: rgba(56, 189, 248, 0.12);
-  border-color: rgba(56, 189, 248, 0.35);
-}
-
-.metric-pill.metric-rain-active .m-val {
-  color: #38bdf8;
+@media (max-width: 480px) {
+  .d-unified-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+  .u-temp-val {
+    font-size: 1.15rem;
+  }
 }
 
 /* --- RADAR & MAPS --- */

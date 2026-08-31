@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.51">
-  <link rel="stylesheet" href="css/components.css?v=1.0.51">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.51">
+  <link rel="stylesheet" href="css/main.css?v=1.0.52">
+  <link rel="stylesheet" href="css/components.css?v=1.0.52">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.52">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -169,7 +169,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.51 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.52 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -217,11 +217,20 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.51 🚀</span>
+            <span class="release-version">v1.0.52 🚀</span>
             <span class="release-date">31 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-improved">Pronósticos</span> <strong>Optimización & Limpieza de Tarjetas Diarias</strong>: Supresión de la barra horizontal redundante de "Rango del día", reduciendo la altura de las tarjetas y focalizando la información térmica en las tres métricas clave (Máxima, Mínima y Oscilación Δ) para una visualización mucho más ágil y limpia.</li>
+            <li><span class="tag tag-new">Diseño</span> <strong>Panel Único Unificado de Métricas Diarias</strong>: Fusión de las 7 cajitas sueltas de temperatura y métricas en un único contenedor armónico de cristal con 2 filas (Fila 1: Temperaturas en línea con Máx, Mín y Oscilación Δ; Fila 2: Cuadrícula con Lluvia, Viento, UV y Sol/Ocaso), ahorrando más del 40% de altura vertical.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.0.51</span>
+            <span class="release-date">31 Ago 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-improved">Pronósticos</span> Supresión de la barra horizontal redundante de "Rango del día".</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -1270,7 +1279,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.51').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.52').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1291,6 +1300,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.51"></script>
+  <script type="module" src="js/app.js?v=1.0.52"></script>
 </body>
 </html>

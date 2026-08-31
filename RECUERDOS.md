@@ -138,5 +138,6 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Simetría visual total con botones gemelos idénticos (icono cuadrado a la izquierda y acción con texto a la derecha) con salto a **v1.0.39** (SW `v139-official`).
 - Doble previsión horaria Mañana / Tarde en tarjetas diarias de pronóstico a 10 días (Opción B inicial en v1.0.49 y consolidación de la **Opción A: Badge Unificado Horizontal** con filas limpias y divisor) con salto a **v1.0.50** (SW `v150-official`).
 - Supresión de la barra horizontal redundante de "Rango del día" en tarjetas de pronóstico diario, reduciendo altura y dejando las 3 cajas térmicas esenciales (Máx, Mín, Oscilación Δ) con salto a **v1.0.51** (SW `v151-official`).
+- Unificación total de métricas y temperaturas de tarjetas diarias a 10 días en un único panel armónico de 2 filas (Opción 1), ahorrando más del 40% de altura con salto a **v1.0.52** (SW `v152-official`).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 
