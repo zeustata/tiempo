@@ -1,4 +1,4 @@
-import { getWeatherInfo, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=1.0.52';
+import { getWeatherInfo, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=1.0.53';
 
 /**
  * Calcula la condición meteorológica representativa para un tramo horario (ej. mañana o tarde)
@@ -197,21 +197,17 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
 
         <!-- PANEL ÚNICO UNIFICADO (TEMPERATURAS + MÉTRICAS) -->
         <div class="d-unified-panel">
-          <!-- Fila 1: Temperaturas Clave en Línea -->
+          <!-- Fila 1: Temperaturas (Mínima a la izquierda, Máxima a la derecha) -->
           <div class="d-unified-temps-row">
-            <div class="u-temp-item max" title="Temperatura Máxima">
-              <span class="u-temp-icon">🔺</span>
-              <span class="u-temp-label">Máx</span>
-              <span class="u-temp-val">${maxT}°</span>
-            </div>
             <div class="u-temp-item min" title="Temperatura Mínima">
               <span class="u-temp-icon">🔻</span>
               <span class="u-temp-label">Mín</span>
               <span class="u-temp-val">${minT}°</span>
             </div>
-            <div class="u-temp-item osc" title="Oscilación Térmica">
-              <span class="u-temp-label">Δ Osc.</span>
-              <span class="u-temp-val osc-val">${maxT - minT}°</span>
+            <div class="u-temp-item max" title="Temperatura Máxima">
+              <span class="u-temp-icon">🔺</span>
+              <span class="u-temp-label">Máx</span>
+              <span class="u-temp-val">${maxT}°</span>
             </div>
           </div>
 

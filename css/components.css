@@ -1326,50 +1326,46 @@
   background: rgba(15, 23, 42, 0.75);
 }
 
-/* Fila 1: Temperaturas en Línea */
+/* Fila 1: Temperaturas en Línea (Mínima izquierda, Máxima derecha) */
 .d-unified-temps-row {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  gap: 8px;
+  padding: 2px 10px;
   width: 100%;
 }
 
 .u-temp-item {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
 }
 
 .u-temp-icon {
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   line-height: 1;
 }
 
 .u-temp-label {
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-weight: 700;
   color: var(--text-dim);
   text-transform: uppercase;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.4px;
 }
 
 .u-temp-val {
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   font-weight: 800;
   line-height: 1;
-}
-
-.u-temp-item.max .u-temp-val {
-  color: #f87171;
 }
 
 .u-temp-item.min .u-temp-val {
   color: #60a5fa;
 }
 
-.u-temp-item.osc .osc-val {
-  color: var(--accent-gold);
+.u-temp-item.max .u-temp-val {
+  color: #f87171;
 }
 
 /* Divisor Fino */

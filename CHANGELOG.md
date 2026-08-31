@@ -12,6 +12,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.53] - 2026-08-31
+
+### 📅 Pronósticos a 10 Días: Simetría Térmica Mínima / Máxima & Eliminación de Desbordes
+- **Reordenación Simétrica de Temperaturas**:
+  - 🔻 **Mínima a la izquierda** (`#60a5fa` en azul suave con icono hacia abajo).
+  - 🔺 **Máxima a la derecha** (`#f87171` en rojo suave con icono hacia arriba).
+- **Supresión de Oscilación (Δ OSC)**: Retirada de la etiqueta de oscilación para eliminar el desborde en móviles y dotar a ambas temperaturas de un espacio generoso, centrado y equilibrado.
+- **Service Worker `v153-official` & Cache-Busting Total**: Sincronización a `?v=1.0.53` en toda la app.
+
+---
+
 ## [1.0.52] - 2026-08-31
 
 ### 📅 Pronósticos a 10 Días: Panel Único Unificado de Métricas Diarias (Opción 1)
