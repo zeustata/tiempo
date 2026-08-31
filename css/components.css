@@ -1200,6 +1200,100 @@
   text-transform: capitalize;
 }
 
+/* Doble Cápsula de Condición: Mañana vs Tarde */
+.d-dayparts-grid {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.d-daypart-capsule {
+  display: flex;
+  flex-direction: column;
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  padding: 6px 10px;
+  min-width: 125px;
+  flex: 1;
+  transition: all 0.2s ease;
+}
+
+.d-daypart-capsule:hover {
+  background: rgba(15, 23, 42, 0.85);
+  border-color: rgba(56, 189, 248, 0.4);
+}
+
+.d-daypart-capsule.morning {
+  border-left: 3px solid #f59e0b;
+}
+
+.d-daypart-capsule.afternoon {
+  border-left: 3px solid #38bdf8;
+}
+
+.d-daypart-head {
+  display: flex;
+  align-items: center;
+  margin-bottom: 3px;
+}
+
+.d-daypart-tag {
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.d-daypart-capsule.morning .d-daypart-tag {
+  color: #fbbf24;
+}
+
+.d-daypart-capsule.afternoon .d-daypart-tag {
+  color: #38bdf8;
+}
+
+.d-daypart-body {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.d-daypart-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.35));
+}
+
+.d-daypart-desc {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.2;
+}
+
+@media (max-width: 480px) {
+  .d-dayparts-grid {
+    width: 100%;
+    gap: 6px;
+  }
+  .d-daypart-capsule {
+    min-width: 0;
+    padding: 5px 8px;
+  }
+  .d-daypart-icon {
+    font-size: 1.35rem;
+  }
+  .d-daypart-desc {
+    font-size: 0.76rem;
+  }
+}
+
 .d-condition-badge {
   display: flex;
   align-items: center;

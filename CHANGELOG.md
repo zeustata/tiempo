@@ -12,6 +12,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.49] - 2026-08-31
+
+### 📅 Pronósticos a 10 Días: Doble Previsión Mañana / Tarde (Opción B)
+- **Doble Cápsula Visual por Día**: Desglose horario inteligente en cada una de las tarjetas diarias a 10 días, dividiendo la jornada en:
+  - 🌅 **Mañana (08:00 – 14:00)**: Icono representativo del tiempo matutino con su etiqueta descriptiva y barra lateral ámbar/dorada (`#f59e0b`).
+  - 🌇 **Tarde (14:00 – 21:00)**: Icono representativo del tiempo vespertino con su etiqueta descriptiva y barra lateral azul cielo (`#38bdf8`).
+- **Algoritmo de Detección de Tramo Horario (`getDaypartWeather`)**: Computa el estado del cielo dominante, probabilidad de lluvia y precipitación acumulada en cada tramo específico a partir de las 240 horas descargadas de los modelos meteorológicos (ECMWF / ICON).
+- **Diseño Adaptativo Móvil**: Cápsulas compactas y legibles con microinteracciones `hover`, sombra suave y tipografía nítida en pantallas pequeñas y de escritorio.
+- **Service Worker `v149-official` & Cache-Busting**: Actualización a `?v=1.0.49` para asegurar refresco inmediato sin caché obsoleta.
+
+---
+
 ## [1.0.48] - 2026-08-30
 
 ### 🏔️ Rediseño Glaciar Alpino: Montaña, Altitudes & Estaciones de Esquí

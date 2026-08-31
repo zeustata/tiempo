@@ -1,4 +1,55 @@
-import { getWeatherInfo, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=1.0.47';
+import { getWeatherInfo, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=1.0.49';
+
+/**
+ * Calcula la condición meteorológica representativa para un tramo horario (ej. mañana o tarde)
+ */
+function getDaypartWeather(hourly, dayDateStr, startHour, endHour, fallbackCode, fallbackPop, fallbackRain) {
+  if (!hourly || !hourly.time) {
+    return getWeatherInfo(fallbackCode, 1, fallbackRain, fallbackPop);
+  }
+
+  let hoursCount = 0;
+  let popMax = 0;
+  let precipSum = 0;
+  const codes = [];
+
+  for (let i = 0; i < hourly.time.length; i++) {
+    const tStr = hourly.time[i];
+    if (tStr.startsWith(dayDateStr)) {
+      const h = new Date(tStr).getHours();
+      if (h >= startHour && h <= endHour) {
+        hoursCount++;
+        const pop = hourly.precipitation_probability ? (hourly.precipitation_probability[i] || 0) : 0;
+        const p = hourly.precipitation ? (hourly.precipitation[i] || 0) : 0;
+        if (pop > popMax) popMax = pop;
+        precipSum += p;
+        if (hourly.weather_code && hourly.weather_code[i] != null) {
+          codes.push(hourly.weather_code[i]);
+        }
+      }
+    }
+  }
+
+  if (hoursCount === 0 || codes.length === 0) {
+    return getWeatherInfo(fallbackCode, 1, fallbackRain, fallbackPop);
+  }
+
+  // Determinar código representativo del tramo
+  let dominantCode = codes[Math.floor(codes.length / 2)];
+  if (popMax >= 20 && precipSum >= 0.1) {
+    // Si hay lluvia representativa, priorizar código de lluvia o tormenta
+    const rainCode = codes.find(c => (c >= 51 && c <= 67) || (c >= 80 && c <= 82) || (c >= 95 && c <= 99));
+    if (rainCode != null) dominantCode = rainCode;
+  } else {
+    // Si no llueve, elegir el código más frecuente de nubosidad/sol
+    const counts = {};
+    for (const c of codes) counts[c] = (counts[c] || 0) + 1;
+    dominantCode = Object.keys(counts).reduce((a, b) => counts[a] >= counts[b] ? a : b);
+    dominantCode = Number(dominantCode);
+  }
+
+  return getWeatherInfo(dominantCode, 1, precipSum, popMax);
+}
 
 /**
  * Renderiza el pronóstico por horas (24h) y las tarjetas enriquecidas a 10 días
@@ -71,7 +122,7 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
     `;
   }
 
-  // 2. Pronóstico Diario (Tarjetas Visuales Amplias a 10 Días)
+  // 2. Pronóstico Diario (Tarjetas Visuales Amplias a 10 Días con desglose Mañana / Tarde)
   let dailyCards = '';
   
   // Calcular mínimas y máximas globales de la semana para la escala visual
@@ -82,7 +133,8 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
   const tempSpan = Math.max(1, globalMax - globalMin);
 
   for (let d = 0; d < daily.time.length; d++) {
-    const dayDate = new Date(daily.time[d]);
+    const dayDateStr = daily.time[d];
+    const dayDate = new Date(dayDateStr);
     const isToday = d === 0;
     const isTomorrow = d === 1;
     
@@ -94,7 +146,10 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
     const minT = Math.round(daily.temperature_2m_min[d]);
     const rain = (daily.precipitation_sum[d] || 0).toFixed(1);
     const popMax = daily.precipitation_probability_max ? daily.precipitation_probability_max[d] : 0;
-    const weather = getWeatherInfo(daily.weather_code[d], 1, parseFloat(rain), popMax);
+    
+    // Desglose de tiempo: 🌅 Mañana (08:00 a 14:00) y 🌇 Tarde (14:00 a 21:00)
+    const morningWeather = getDaypartWeather(hourly, dayDateStr, 8, 13, daily.weather_code[d], popMax, parseFloat(rain));
+    const afternoonWeather = getDaypartWeather(hourly, dayDateStr, 14, 21, daily.weather_code[d], popMax, parseFloat(rain));
     
     const windSpeedRaw = daily.wind_speed_10m_max ? daily.wind_speed_10m_max[d] : 0;
     const windGustRaw = daily.wind_gusts_10m_max ? daily.wind_gusts_10m_max[d] : 0;
@@ -134,10 +189,26 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
             <span class="d-date-sub">${dayFormatted}</span>
           </div>
 
-          <div class="d-condition-badge">
-            <span class="d-icon-large">${renderWeatherIconHtml(weather, 36, iconTheme)}</span>
-            <div class="d-condition-info">
-              <span class="d-desc-text">${weather.label}</span>
+          <!-- DOBLE CÁPSULA: MAÑANA Y TARDE -->
+          <div class="d-dayparts-grid">
+            <div class="d-daypart-capsule morning" title="Previsión Mañana (08:00 - 14:00): ${morningWeather.label}">
+              <div class="d-daypart-head">
+                <span class="d-daypart-tag">🌅 Mañana</span>
+              </div>
+              <div class="d-daypart-body">
+                <span class="d-daypart-icon">${renderWeatherIconHtml(morningWeather, 24, iconTheme)}</span>
+                <span class="d-daypart-desc">${morningWeather.label}</span>
+              </div>
+            </div>
+
+            <div class="d-daypart-capsule afternoon" title="Previsión Tarde (14:00 - 21:00): ${afternoonWeather.label}">
+              <div class="d-daypart-head">
+                <span class="d-daypart-tag">🌇 Tarde</span>
+              </div>
+              <div class="d-daypart-body">
+                <span class="d-daypart-icon">${renderWeatherIconHtml(afternoonWeather, 24, iconTheme)}</span>
+                <span class="d-daypart-desc">${afternoonWeather.label}</span>
+              </div>
             </div>
           </div>
         </div>

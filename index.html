@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.48">
-  <link rel="stylesheet" href="css/components.css?v=1.0.48">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.48">
+  <link rel="stylesheet" href="css/main.css?v=1.0.49">
+  <link rel="stylesheet" href="css/components.css?v=1.0.49">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.49">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -169,7 +169,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.48 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.49 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -217,8 +217,17 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.48 🚀</span>
-            <span class="release-date">30 Ago 2026 (Actual)</span>
+            <span class="release-version">v1.0.49 🚀</span>
+            <span class="release-date">31 Ago 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Pronósticos</span> <strong>Doble Previsión Mañana / Tarde en Tarjetas a 10 Días</strong>: Desglose horario inteligente en cada día con dos cápsulas dedicadas (🌅 <em>Mañana</em> 08:00–14:00 y 🌇 <em>Tarde</em> 14:00–21:00) para reflejar con total fidelidad los cambios meteorológicos diurnos habituales en Asturias.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.0.48</span>
+            <span class="release-date">30 Ago 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-ui">Montaña</span> <strong>Diseño Glaciar Alpino & Armonía Visual</strong>: Rediseño de las etiquetas de altitud del concejo y estaciones de esquí (Valgrande-Pajares y Fuentes de Invierno) sustituyendo el tono ultravioleta por un elegante Azul Hielo / Glaciar de alto contraste.</li>
@@ -1243,7 +1252,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.48').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.49').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
