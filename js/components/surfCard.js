@@ -1,11 +1,11 @@
-import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.67';
+import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.68';
 import { 
   PLAYAS_POR_CONCEJO, 
   getNearestCoastalReference, 
   getSurfWindCondition,
   getBeachSpecificWindCondition,
   getSeaWaterTemperature
-} from './marineCard.js?v=1.0.67';
+} from './marineCard.js?v=1.0.68';
 
 /**
  * Calcula la escala de Douglas a partir de la altura significativa de ola

@@ -1,11 +1,11 @@
-import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.67';
+import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.68';
 import { 
   getMoonAndTideInfo, 
   getDailyTideEvents, 
   getRealtimeTideStatus, 
   getWeeklyTides, 
   renderTideSvgGraph 
-} from '../utils/tides.js?v=1.0.67';
+} from '../utils/tides.js?v=1.0.68';
 
 /**
  * Base de datos exhaustiva y profesional de playas, picos de surf y fondos marinos de Asturias
@@ -1138,7 +1138,7 @@ export function renderMarineCard(data, concejo) {
           </div>
         </div>
 
-        <!-- Mareas de Hoy en Filas Horizontales 100% (Compactas, Dinámicas y sin desbordes) -->
+        <!-- Mareas de Hoy en 2 Bloques Extremos (Cero Colisiones, Compactas y Dinámicas) -->
         <div class="daily-tides-list">
           ${(tideStatus.dayData.events || []).map((ev, idx) => {
             const isHigh = ev.type === 'high';
@@ -1149,10 +1149,8 @@ export function renderMarineCard(data, concejo) {
                   <span class="tide-row-name">${ev.name}</span>
                   <span class="tide-row-order">#${idx + 1}</span>
                 </div>
-                <div class="tide-row-center">
-                  <span class="tide-row-time">${ev.timeStr}</span>
-                </div>
                 <div class="tide-row-right">
+                  <span class="tide-row-time">${ev.timeStr}</span>
                   <span class="tide-row-height">${ev.height} m</span>
                 </div>
               </div>

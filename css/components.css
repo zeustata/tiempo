@@ -722,7 +722,7 @@
   }
 }
 
-/* --- MAREAS DEL DÍA EN FILAS HORIZONTALES 100% (COMPACTAS & SIN CORTES) --- */
+/* --- MAREAS DEL DÍA EN 2 BLOQUES EXTREMOS (CERO COLISIONES & COMPACTO) --- */
 .daily-tides-list {
   display: flex;
   flex-direction: column;
@@ -764,8 +764,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  flex: 1;
-  min-width: 0;
+  flex-shrink: 0;
 }
 
 .tide-row-icon {
@@ -800,11 +799,11 @@
   flex-shrink: 0;
 }
 
-.tide-row-center {
-  flex: 1;
-  text-align: center;
+.tide-row-right {
   display: flex;
-  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
 }
 
 .tide-row-time {
@@ -813,19 +812,16 @@
   font-weight: 800;
   color: #ffffff;
   letter-spacing: 0.5px;
-}
-
-.tide-row-right {
-  flex: 1;
-  text-align: right;
-  display: flex;
-  justify-content: flex-end;
+  white-space: nowrap;
 }
 
 .tide-row-height {
   font-size: 0.95rem;
   font-weight: 800;
   color: var(--primary-light, #38bdf8);
+  min-width: 52px;
+  text-align: right;
+  white-space: nowrap;
 }
 
 .tide-row-item.low .tide-row-height {

@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.68] - 2026-08-31
+
+### 💎 Mareas en 2 Bloques Extremos (Space-Between)
+- **Estructura a Prueba de Colisiones**: Reorganización de las filas de marea en dos bloques independientes (Izquierda: Icono + Tipo + Orden • Derecha: Hora + Altura) utilizando `justify-content: space-between`, imposibilitando cualquier solapamiento de textos en pantallas móviles.
+- **Service Worker `v168-official`**: Actualización atómica en caché.
+
+---
+
 ## [1.0.67] - 2026-08-31
 
 ### 💎 Perfección Visual: Filas Horizontales 100% de Ancho en Mareas
