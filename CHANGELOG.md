@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.67] - 2026-08-31
+
+### 💎 Perfección Visual: Filas Horizontales 100% de Ancho en Mareas
+- **Filas Horizontales de Cristal (`.tide-row-item`)**: Sustitución de la rejilla de 2 columnas por filas completas al 100% de ancho (Izquierda: Icono + Tipo • Centro: Hora • Derecha: Altura en metros), eliminando cualquier corte o desborde en pantallas móviles estrechas.
+- **Service Worker `v167-official`**: Actualización atómica en web y PWA.
+
+---
+
 ## [1.0.66] - 2026-08-31
 
 ### 🏖️ Mareas del Día en Pastillas Compactas & Dinámicas (3 o 4 Mareas)

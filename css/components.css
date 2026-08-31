@@ -722,115 +722,113 @@
   }
 }
 
-/* --- MAREAS DEL DÍA COMPACTAS & DINÁMICAS (3 O 4 MAREAS) --- */
-.daily-tides-compact-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
-  gap: 10px;
+/* --- MAREAS DEL DÍA EN FILAS HORIZONTALES 100% (COMPACTAS & SIN CORTES) --- */
+.daily-tides-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
   width: 100%;
   margin-top: 14px;
   box-sizing: border-box;
 }
 
-@media (max-width: 480px) {
-  .daily-tides-compact-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-  }
-}
-
-.tide-compact-pill {
+.tide-row-item {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 10px 12px;
-  border-radius: var(--radius-md);
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border-glass);
   background: var(--bg-surface-elevated);
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
   box-sizing: border-box;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.tide-compact-pill:hover {
+.tide-row-item:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
 }
 
-.tide-compact-pill.high {
+.tide-row-item.high {
   border-color: rgba(56, 189, 248, 0.35);
-  background: linear-gradient(145deg, rgba(2, 132, 199, 0.16), rgba(15, 23, 42, 0.55));
+  background: linear-gradient(90deg, rgba(2, 132, 199, 0.18), rgba(15, 23, 42, 0.6));
 }
 
-.tide-compact-pill.low {
+.tide-row-item.low {
   border-color: rgba(245, 158, 11, 0.35);
-  background: linear-gradient(145deg, rgba(245, 158, 11, 0.14), rgba(15, 23, 42, 0.55));
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.15), rgba(15, 23, 42, 0.6));
 }
 
-.tide-compact-header {
+.tide-row-left {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 4px;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
 }
 
-.tide-compact-title {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.tide-compact-icon {
-  font-size: 1.05rem;
+.tide-row-icon {
+  font-size: 1.15rem;
   line-height: 1;
+  flex-shrink: 0;
 }
 
-.tide-compact-name {
-  font-size: 0.76rem;
+.tide-row-name {
+  font-size: 0.84rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  white-space: nowrap;
 }
 
-.tide-compact-pill.high .tide-compact-name {
+.tide-row-item.high .tide-row-name {
   color: #bae6fd;
 }
 
-.tide-compact-pill.low .tide-compact-name {
+.tide-row-item.low .tide-row-name {
   color: #fde68a;
 }
 
-.tide-compact-order {
+.tide-row-order {
   font-size: 0.68rem;
   font-weight: 700;
   color: #94a3b8;
   background: rgba(255, 255, 255, 0.08);
   padding: 1px 6px;
   border-radius: 6px;
+  flex-shrink: 0;
 }
 
-.tide-compact-body {
+.tide-row-center {
+  flex: 1;
+  text-align: center;
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 6px;
-  margin-top: 2px;
+  justify-content: center;
 }
 
-.tide-compact-time {
+.tide-row-time {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 800;
   color: #ffffff;
   letter-spacing: 0.5px;
 }
 
-.tide-compact-height {
-  font-size: 0.88rem;
-  font-weight: 700;
+.tide-row-right {
+  flex: 1;
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.tide-row-height {
+  font-size: 0.95rem;
+  font-weight: 800;
   color: var(--primary-light, #38bdf8);
 }
 
-.tide-compact-pill.low .tide-compact-height {
+.tide-row-item.low .tide-row-height {
   color: #fbbf24;
 }
 

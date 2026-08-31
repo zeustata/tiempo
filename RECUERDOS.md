@@ -154,6 +154,7 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Unificación Total de Temperatura Marina: inclusión de `sea_surface_temperature` en la API marina en vivo y cálculo centralizado en `getSeaWaterTemperature` compartido entre Playas & Mareas y Surf & Rompientes con salto a **v1.0.64** (SW `v164-official`).
 - Corrección de exportación top-level de `getSeaWaterTemperature` en `marineCard.js` para restablecer el arranque inmediato de los módulos y el menú con salto a **v1.0.65** (SW `v165-official`).
 - Mareas del Día en Pastillas Compactas y Dinámicas: reducción del 65% de espacio vertical con `.tide-compact-pill` adaptándose dinámicamente tanto si el día tiene 3 o 4 mareas astronómicas con salto a **v1.0.66** (SW `v166-official`). *(Frase de Lendo para arrancar cambios: "¡Písale!" en honor a Star Trek)*.
+- Perfección visual en Mareas del Día: sustitución por filas horizontales 100% de ancho `.tide-row-item` con cero recortes en móviles con salto a **v1.0.67** (SW `v167-official`).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 
 

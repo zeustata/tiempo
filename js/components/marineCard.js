@@ -1,11 +1,11 @@
-import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.66';
+import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.67';
 import { 
   getMoonAndTideInfo, 
   getDailyTideEvents, 
   getRealtimeTideStatus, 
   getWeeklyTides, 
   renderTideSvgGraph 
-} from '../utils/tides.js?v=1.0.66';
+} from '../utils/tides.js?v=1.0.67';
 
 /**
  * Base de datos exhaustiva y profesional de playas, picos de surf y fondos marinos de Asturias
@@ -1138,22 +1138,22 @@ export function renderMarineCard(data, concejo) {
           </div>
         </div>
 
-        <!-- Mareas de Hoy en Formato Compacto y Dinámico (Adaptable a 3 o 4 mareas reales) -->
-        <div class="daily-tides-compact-grid">
+        <!-- Mareas de Hoy en Filas Horizontales 100% (Compactas, Dinámicas y sin desbordes) -->
+        <div class="daily-tides-list">
           ${(tideStatus.dayData.events || []).map((ev, idx) => {
             const isHigh = ev.type === 'high';
             return `
-              <div class="tide-compact-pill ${isHigh ? 'high' : 'low'}">
-                <div class="tide-compact-header">
-                  <div class="tide-compact-title">
-                    <span class="tide-compact-icon">${isHigh ? '🌅' : '🏖️'}</span>
-                    <span class="tide-compact-name">${ev.name}</span>
-                  </div>
-                  <span class="tide-compact-order">#${idx + 1}</span>
+              <div class="tide-row-item ${isHigh ? 'high' : 'low'}">
+                <div class="tide-row-left">
+                  <span class="tide-row-icon">${isHigh ? '🌅' : '🏖️'}</span>
+                  <span class="tide-row-name">${ev.name}</span>
+                  <span class="tide-row-order">#${idx + 1}</span>
                 </div>
-                <div class="tide-compact-body">
-                  <span class="tide-compact-time">${ev.timeStr}</span>
-                  <span class="tide-compact-height">${ev.height} m</span>
+                <div class="tide-row-center">
+                  <span class="tide-row-time">${ev.timeStr}</span>
+                </div>
+                <div class="tide-row-right">
+                  <span class="tide-row-height">${ev.height} m</span>
                 </div>
               </div>
             `;
