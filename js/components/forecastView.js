@@ -1,4 +1,4 @@
-import { getWeatherInfo, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=1.0.49';
+import { getWeatherInfo, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=1.0.50';
 
 /**
  * Calcula la condición meteorológica representativa para un tramo horario (ej. mañana o tarde)
@@ -190,26 +190,18 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
             <span class="d-date-sub">${dayFormatted}</span>
           </div>
 
-          <!-- DOBLE CÁPSULA: MAÑANA Y TARDE -->
-          <div class="d-dayparts-grid">
-            <div class="d-daypart-capsule morning" title="Previsión Mañana (08:00 - 14:00): ${morningWeather.label}">
-              <div class="d-daypart-head">
-                <span class="d-daypart-tag">🌅 Mañana</span>
-              </div>
-              <div class="d-daypart-body">
-                <span class="d-daypart-icon">${renderWeatherIconHtml(morningWeather, 24, iconTheme)}</span>
-                <span class="d-daypart-desc">${morningWeather.label}</span>
-              </div>
+          <!-- OPCIÓN A: BADGE UNIFICADO MAÑANA Y TARDE -->
+          <div class="d-dayparts-badge">
+            <div class="d-daypart-row morning" title="Previsión Mañana (08:00 - 14:00): ${morningWeather.label}">
+              <span class="d-daypart-label">🌅 Mañana</span>
+              <span class="d-daypart-icon">${renderWeatherIconHtml(morningWeather, 22, iconTheme)}</span>
+              <span class="d-daypart-text">${morningWeather.label}</span>
             </div>
-
-            <div class="d-daypart-capsule afternoon" title="Previsión Tarde (14:00 - 21:00): ${afternoonWeather.label}">
-              <div class="d-daypart-head">
-                <span class="d-daypart-tag">🌇 Tarde</span>
-              </div>
-              <div class="d-daypart-body">
-                <span class="d-daypart-icon">${renderWeatherIconHtml(afternoonWeather, 24, iconTheme)}</span>
-                <span class="d-daypart-desc">${afternoonWeather.label}</span>
-              </div>
+            <div class="d-daypart-divider"></div>
+            <div class="d-daypart-row afternoon" title="Previsión Tarde (14:00 - 21:00): ${afternoonWeather.label}">
+              <span class="d-daypart-label">🌇 Tarde</span>
+              <span class="d-daypart-icon">${renderWeatherIconHtml(afternoonWeather, 22, iconTheme)}</span>
+              <span class="d-daypart-text">${afternoonWeather.label}</span>
             </div>
           </div>
         </div>

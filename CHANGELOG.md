@@ -12,6 +12,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.50] - 2026-08-31
+
+### 📅 Pronósticos a 10 Días: Doble Previsión Mañana / Tarde (Opción A - Badge Unificado)
+- **Elegante Badge Unificado Horizontal en Tarjetas Diarias**: Sustitución del diseño de cápsulas independientes por un bloque integrado y armónico con divisor tenue que muestra:
+  - 🌅 **Mañana**: Etiqueta dorada (`#fbbf24`), icono del tiempo activo y descripción clara del cielo matutino.
+  - 🌇 **Tarde**: Etiqueta azul cielo (`#38bdf8`), icono del tiempo activo y previsión vespertina.
+- **Alineación Simétrica & Compacta**: Estilizado con cristal translúcido oscuro (`rgba(15, 23, 42, 0.68)`), elevación suave y adaptación táctil para teléfonos y ordenadores.
+- **Service Worker `v150-official` & Cache-Busting Total**: Sincronización a `?v=1.0.50` en todos los scripts, estilos y manifest.
+
+---
+
 ## [1.0.49] - 2026-08-31
 
 ### 📅 Pronósticos a 10 Días: Doble Previsión Mañana / Tarde (Opción B)

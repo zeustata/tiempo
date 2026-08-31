@@ -1200,68 +1200,53 @@
   text-transform: capitalize;
 }
 
-/* Doble Cápsula de Condición: Mañana vs Tarde */
-.d-dayparts-grid {
-  display: flex;
-  align-items: stretch;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.d-daypart-capsule {
+/* --- OPCIÓN A: DOBLE BADGE HORIZONTAL / FILAS MAÑANA Y TARDE --- */
+.d-dayparts-badge {
   display: flex;
   flex-direction: column;
-  background: rgba(15, 23, 42, 0.65);
+  gap: 5px;
+  background: rgba(15, 23, 42, 0.68);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
-  padding: 6px 10px;
-  min-width: 125px;
-  flex: 1;
+  padding: 8px 14px;
+  min-width: 220px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
   transition: all 0.2s ease;
 }
 
-.d-daypart-capsule:hover {
-  background: rgba(15, 23, 42, 0.85);
-  border-color: rgba(56, 189, 248, 0.4);
+.d-dayparts-badge:hover {
+  background: rgba(15, 23, 42, 0.88);
+  border-color: rgba(56, 189, 248, 0.45);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
 }
 
-.d-daypart-capsule.morning {
-  border-left: 3px solid #f59e0b;
-}
-
-.d-daypart-capsule.afternoon {
-  border-left: 3px solid #38bdf8;
-}
-
-.d-daypart-head {
+.d-daypart-row {
   display: flex;
   align-items: center;
-  margin-bottom: 3px;
+  gap: 9px;
 }
 
-.d-daypart-tag {
-  font-size: 0.68rem;
+.d-daypart-label {
+  font-size: 0.76rem;
   font-weight: 800;
+  min-width: 72px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  letter-spacing: 0.3px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
-.d-daypart-capsule.morning .d-daypart-tag {
+.d-daypart-row.morning .d-daypart-label {
   color: #fbbf24;
 }
 
-.d-daypart-capsule.afternoon .d-daypart-tag {
+.d-daypart-row.afternoon .d-daypart-label {
   color: #38bdf8;
 }
 
-.d-daypart-body {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-
 .d-daypart-icon {
-  font-size: 1.5rem;
+  font-size: 1.45rem;
   line-height: 1;
   display: flex;
   align-items: center;
@@ -1270,27 +1255,35 @@
   filter: drop-shadow(0 2px 5px rgba(0,0,0,0.35));
 }
 
-.d-daypart-desc {
-  font-size: 0.82rem;
+.d-daypart-text {
+  font-size: 0.86rem;
   font-weight: 700;
   color: var(--text-main);
   line-height: 1.2;
 }
 
+.d-daypart-divider {
+  height: 1px;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+  width: 100%;
+}
+
 @media (max-width: 480px) {
-  .d-dayparts-grid {
+  .d-dayparts-badge {
     width: 100%;
-    gap: 6px;
-  }
-  .d-daypart-capsule {
     min-width: 0;
-    padding: 5px 8px;
+    padding: 7px 10px;
+    gap: 4px;
+  }
+  .d-daypart-label {
+    font-size: 0.72rem;
+    min-width: 68px;
   }
   .d-daypart-icon {
-    font-size: 1.35rem;
+    font-size: 1.3rem;
   }
-  .d-daypart-desc {
-    font-size: 0.76rem;
+  .d-daypart-text {
+    font-size: 0.80rem;
   }
 }
 
