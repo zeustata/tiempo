@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.56">
-  <link rel="stylesheet" href="css/components.css?v=1.0.56">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.56">
+  <link rel="stylesheet" href="css/main.css?v=1.0.57">
+  <link rel="stylesheet" href="css/components.css?v=1.0.57">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.57">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -169,7 +169,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.56 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.57 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -217,8 +217,17 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.56 🚀</span>
+            <span class="release-version">v1.0.57 🚀</span>
             <span class="release-date">31 Ago 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Inteligencia de Surf</span> <strong>Viento Offshore / Onshore en Tiempo Real & Picos de Asturias</strong>: Detector aerodinámico en vivo cruzando viento y orientación del litoral (Offshore 🟢, Onshore 🔴, Cross-shore 🟡, Glassy ✨), botón interactivo didáctico [ 💡 Guía de Surf ] y catálogo exhaustivo de playas asturianas con sus picos bautizados, tipo de fondo (Arena / Roca) y dirección de ola (Izquierdas / Derechas / A-Frame).</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.0.56</span>
+            <span class="release-date">31 Ago 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-improved">Anemómetro</span> <strong>Orientación Perímetro ➔ Centro</strong>: Ajuste náutico de la flecha de viento para que nazca en el punto cardinal de procedencia (exterior) e incida con su punta directamente sobre el punto central (posición del observador / estación), maximizando la intuición visual de cómo entra el flujo de aire.</li>
@@ -1315,7 +1324,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.56').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.57').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1336,6 +1345,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.56"></script>
+  <script type="module" src="js/app.js?v=1.0.57"></script>
 </body>
 </html>

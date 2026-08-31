@@ -206,6 +206,69 @@ export const WEATHER_EXPLANATIONS = {
         `
       }
     ]
+  },
+
+  surf: {
+    icon: '🏄‍♂️',
+    title: '¿Cómo entender el Viento, Olas y Picos de Surf?',
+    subtitle: 'Guía de viento Offshore vs Onshore, fondos marinos, izquierdas/derechas y picos de Asturias',
+    badge: 'Offshore (Terral) vs Onshore (Mar) • Beach & Reef Breaks',
+    sections: [
+      {
+        icon: '🧭',
+        heading: '1. Offshore vs Onshore (El Viento y la Calidad de la Ola)',
+        text: `
+          <ul class="explain-list">
+            <li><strong>🟢 Offshore (Viento Terral / De Tierra al Mar):</strong> En Asturias (costa orientada al Norte), es el viento del <em>Sur, Suroeste o Sureste</em>. Frena la caída de la cresta, ahueca el labio formando <strong>tubos perfectos</strong> y deja la superficie lisa como un espejo (<em>efecto glassy</em>). ¡El viento soñado!</li>
+            <li><strong>🔴 Onshore (Viento de Mar a Tierra):</strong> Viento del <em>Norte, Noroeste o Noreste</em>. Choca de frente contra la ola, la aplasta antes de tiempo y genera <em>chop</em> (mar picado, revuelto y lleno de espuma desordenada).</li>
+            <li><strong>🟡 Cross-shore (Viento Lateral):</strong> Viento de <em>Este u Oeste</em> que recorre la orilla de lado, barriendo las olas y creando corrientes laterales de arrastre.</li>
+            <li><strong>✨ Glassy (Calma Total):</strong> Viento casi nulo (< 8 km/h). El agua parece una pista de hielo y las olas rompen limpias y cristalinas.</li>
+          </ul>
+        `
+      },
+      {
+        icon: '🔄',
+        heading: '2. ¿Cómo se define Surfear de Izquierdas o de Derechas?',
+        text: `
+          La dirección se mide siempre <strong>desde la perspectiva del surfista que rema la ola y mira hacia la orilla</strong>:
+          <ul class="explain-list">
+            <li><strong>⬅️ Ola de Izquierdas:</strong> La pared de la ola rompe abriendo hacia la izquierda del surfista (vista desde la arena de la playa abre hacia tu derecha).</li>
+            <li><strong>➡️ Ola de Derechas:</strong> La pared rompe abriendo hacia la derecha del surfista (vista desde la arena abre hacia tu izquierda).</li>
+            <li><strong>↔️ Pico (A-Frame / Dos Aguas):</strong> La ola rompe en el centro exacto y abre pared simultáneamente a izquierda y derecha, permitiendo a dos surfistas cogerla a la vez en direcciones opuestas.</li>
+            <li><strong>🚫 Cerrote (Close-out):</strong> La ola rompe entera de golpe en toda su longitud a la vez, sin permitir surfear la pared.</li>
+          </ul>
+        `
+      },
+      {
+        icon: '🪨',
+        heading: '3. Fondos Marinos: Arena (Beach Break) vs Roca (Reef Break)',
+        text: `
+          <ul class="explain-list">
+            <li><strong>🏖️ Fondo de Arena (Beach Break):</strong> (Ej. <em>Salinas, San Lorenzo, Xagó, Vega</em>). Las olas rompen sobre barras de arena móviles que cambian según las mareas y temporales. Olas dinámicas y caídas más seguras.</li>
+            <li><strong>🪨 Fondo de Roca / Arrecife (Point & Reef Break):</strong> (Ej. <em>El Mongol</em> en Gijón, puntas de Verdicio, Tapia). La ola rompe con trayectoria geométrica fija y consistente sobre losa de roca, exigiendo mayor nivel.</li>
+            <li><strong>🪨🏖️ Fondo Mixto:</strong> Combinación de barras de arena con arrecifes o lajas rocosas en los extremos.</li>
+          </ul>
+        `
+      },
+      {
+        icon: '📍',
+        heading: '4. Picos Legendarios de Asturias',
+        text: `
+          <ul class="explain-list">
+            <li><strong>Villaviciosa (Rodiles):</strong> <em>La Barra de Rodiles</em>, mítica izquierda tubular de fama mundial en la ría + picos del arenal.</li>
+            <li><strong>Castrillón (Salinas / Espartal):</strong> <em>El Balneario</em>, <em>Las Dunas</em> y <em>El Espartal</em> (consistencia diaria).</li>
+            <li><strong>Gijón (San Lorenzo & Peñarrubia):</strong> <em>Escalera 4</em>, <em>Escalera 10 (Piles)</em>, <em>El Peñón</em> y la potente derecha sobre losa de <em>El Mongol</em>.</li>
+            <li><strong>Gozón (Xagó & Verdicio):</strong> <em>El Escamplero</em> y <em>La Duna</em>, picos consistentes con poco mar.</li>
+            <li><strong>Tapia de Casariego:</strong> Cuna del surf cantábrico (<em>La Grande</em>, <em>La Muralla</em> y <em>Los Campos</em>).</li>
+          </ul>
+        `
+      },
+      {
+        icon: '⏱️',
+        heading: '5. El Período de Oleaje (Swell en Segundos)',
+        text: 'El período es el tiempo que pasa entre el paso de dos crestas consecutivas de olas. Un período de <strong>10 a 15+ segundos</strong> indica <em>mar de fondo potente y ordenado</em> generado por borrascas lejanas en el Atlántico Norte. Un período corto (< 8 segundos) indica mar de viento local y desordenado.'
+      }
+    ]
   }
 };
 

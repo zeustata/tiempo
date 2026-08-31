@@ -1,191 +1,698 @@
-import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.47';
+import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.57';
 import { 
   getMoonAndTideInfo, 
   getDailyTideEvents, 
   getRealtimeTideStatus, 
   getWeeklyTides, 
   renderTideSvgGraph 
-} from '../utils/tides.js?v=1.0.47';
+} from '../utils/tides.js?v=1.0.57';
 
 /**
- * Base de datos exhaustiva de playas y calas de cada concejo costero de Asturias
+ * Base de datos exhaustiva y profesional de playas, picos de surf y fondos marinos de Asturias
  */
 export const PLAYAS_POR_CONCEJO = {
   'gijon': {
     name: 'Gijón / Xixón',
     region: 'Costa Central',
     playas: [
-      { name: 'Playa de San Lorenzo', type: 'Surf clásico, escaleras 1 a 15 y paseo del Muro', tag: 'Urbana & Surf' },
-      { name: 'Playa de Poniente', type: 'Aguas tranquilas, puerto deportivo y arena fina', tag: 'Familiar' },
-      { name: 'Playa del Arbeyal', type: 'Playa resguardada en La Calzada', tag: 'Tranquila' },
-      { name: 'Playa de Estaño', type: 'Cala con encanto y pozo natural de marea', tag: 'Cala' },
-      { name: 'Playa de Peñarrubia', type: 'Acantilados imponentes y rompientes de surf', tag: 'Natural' },
-      { name: 'Playa de Serín', type: 'Cala virgen entre acantilados salvajes', tag: 'Salvaje' }
+      { 
+        name: 'Playa de San Lorenzo', 
+        type: 'Surf clásico asturiano, escaleras 1 a 15 y paseo del Muro', 
+        tag: 'Surf Top',
+        picos: 'Escalera 4 (Pared) • Escalera 10 (Piles) • El Peñón',
+        bottom: '🏖️ Arena (Beach Break)',
+        waveType: '↔️ Picos A-Frame (Izquierda y Derecha)',
+        bestTide: 'Media Marea a Pleamar',
+        surfLevel: 'Todos los niveles'
+      },
+      { 
+        name: 'Playa de Peñarrubia', 
+        type: 'Acantilados imponentes y rompiente mítica sobre losa', 
+        tag: 'Surf Avanzado',
+        picos: 'El Mongol (derecha tubular potente sobre roca)',
+        bottom: '🪨 Roca / Losa (Point & Reef Break)',
+        waveType: '➡️ Derecha potente y rápida',
+        bestTide: 'Pleamar / Coeficiente vivo',
+        surfLevel: 'Avanzado - Experto'
+      },
+      { 
+        name: 'Playa de Poniente', 
+        type: 'Aguas tranquilas, puerto deportivo y arena dorada', 
+        tag: 'Familiar & SUP',
+        picos: 'Aguas calmas resguardadas por el dique',
+        bottom: '🏖️ Arena fina',
+        waveType: '🚫 Sin rompiente (Aguas mansas)',
+        bestTide: 'Todas las mareas',
+        surfLevel: 'Paddle Surf / Baño'
+      },
+      { 
+        name: 'Playa del Arbeyal', 
+        type: 'Playa resguardada en La Calzada con vistas al Musel', 
+        tag: 'Tranquila',
+        picos: 'Ensenada protegida',
+        bottom: '🏖️ Arena fina',
+        waveType: '🚫 Sin rompiente',
+        bestTide: 'Todas las mareas',
+        surfLevel: 'Baño y Paseo'
+      },
+      { 
+        name: 'Playa de Estaño', 
+        type: 'Cala con encanto, pozo natural de marea del Cura y chiringuito', 
+        tag: 'Cala & Snorkel',
+        picos: 'Rompiente exterior en marea viva',
+        bottom: '🪨🏖️ Mixto (Arena y Rocas)',
+        waveType: '↔️ Picos cortos',
+        bestTide: 'Media Marea',
+        surfLevel: 'Snorkel / Baño'
+      },
+      { 
+        name: 'Playa de Serín', 
+        type: 'Cala virgen entre altos acantilados salvajes', 
+        tag: 'Salvaje',
+        picos: 'Picos de mar abierto',
+        bottom: '🪨 Cantos rodados y roca',
+        waveType: '↔️ Olas orilleras',
+        bestTide: 'Media Marea',
+        surfLevel: 'Naturaleza & Baño'
+      }
     ]
   },
   'castrillon': {
     name: 'Castrillón',
     region: 'Costa Central',
     playas: [
-      { name: 'Playa de Salinas', type: 'Meca del surf asturiano, dunas y gran paseo', tag: 'Surf Top' },
-      { name: 'Playa de San Juan de Nieva', type: 'Potente rompiente de olas en la entrada de la ría', tag: 'Surf' },
-      { name: 'Playa de Arnao', type: 'Piscina natural fósil y Museo de la Mina', tag: 'Histórica' },
-      { name: 'Santa María del Mar', type: 'Cala protegida con islote rocoso', tag: 'Familiar' },
-      { name: 'Playa de Bayas / El Sablón', type: 'Arenal virgen más largo de Asturias', tag: 'Monumento Natural' }
-    ]
-  },
-  'llanes': {
-    name: 'Llanes',
-    region: 'Costa Oriental',
-    playas: [
-      { name: 'Playa de Torimbia', type: 'Cala paisajística virgen protegida de postal', tag: 'Salvaje' },
-      { name: 'Playa de Gulpiyuri', type: 'Monumento Natural: playa interior de mar en un prado', tag: 'Monumento Natural' },
-      { name: 'Playa de Barro', type: 'Aguas cristalinas y arena fina protegida del viento', tag: 'Familiar' },
-      { name: 'Playa de Toró', type: 'Formaciones rocosas kársticas puntiagudas', tag: 'Fotogénica' },
-      { name: 'Playa del Sablón', type: 'Arenal urbano junto a la muralla medieval', tag: 'Urbana' },
-      { name: 'Playa de Poo', type: 'Piscina natural de marea ideal para baño seguro', tag: 'Familiar' },
-      { name: 'Playa de Cuevas del Mar', type: 'Arcos gigantes de roca sobre el agua', tag: 'Paisaje' }
+      { 
+        name: 'Playa de Salinas', 
+        type: 'Meca del surf asturiano, festival internacional de Longboard y gran paseo', 
+        tag: 'Surf Top Mundial',
+        picos: 'El Balneario • Las Dunas centrales • El Espartal',
+        bottom: '🏖️ Arena (Beach Break constante)',
+        waveType: '↔️ Múltiples Picos (Izquierdas y Derechas)',
+        bestTide: 'Todas las mareas (óptimo media subiendo)',
+        surfLevel: 'Iniciación a Experto'
+      },
+      { 
+        name: 'Playa de San Juan de Nieva', 
+        type: 'Potente rompiente de olas en la entrada de la ría de Avilés', 
+        tag: 'Surf Potente',
+        picos: 'Picos del Espigón de San Juan',
+        bottom: '🏖️ Arena (Barras de ría)',
+        waveType: '↔️ Derechas e Izquierdas rápidas y tubulares',
+        bestTide: 'Media Marea',
+        surfLevel: 'Intermedio a Pro'
+      },
+      { 
+        name: 'Playa de Bayas / El Sablón', 
+        type: 'Monumento Natural: el arenal virgen más largo de Asturias con dunas salvajes', 
+        tag: 'Monumento Natural',
+        picos: 'Picos abiertos frente a la Isla de Deva',
+        bottom: '🏖️ Arena dorada',
+        waveType: '↔️ Olas con mucha fuerza de mar abierto',
+        bestTide: 'Media Marea a Bajamar',
+        surfLevel: 'Intermedio'
+      },
+      { 
+        name: 'Playa de Arnao', 
+        type: 'Piscina natural fósil arrecifal y Museo de la Mina a pie de mar', 
+        tag: 'Geológica & Familiar',
+        picos: 'Piscina marina entre arrecifes fósiles',
+        bottom: '🪨 Arrecife fósil y arena',
+        waveType: '🚫 Protegida del oleaje',
+        bestTide: 'Media a Bajamar',
+        surfLevel: 'Baño y Geología'
+      },
+      { 
+        name: 'Santa María del Mar', 
+        type: 'Cala protegida con islote rocoso y desembocadura fluvial', 
+        tag: 'Familiar',
+        picos: 'Pico abrigado del islote',
+        bottom: '🏖️ Arena y cantos',
+        waveType: '↔️ Olas suaves',
+        bestTide: 'Media Marea',
+        surfLevel: 'Iniciación / Baño'
+      }
     ]
   },
   'villaviciosa': {
     name: 'Villaviciosa',
     region: 'Costa Oriental',
     playas: [
-      { name: 'Playa de Rodiles', type: 'Mítica ola izquierda mundial, pinar y dunas', tag: 'Surf Top' },
-      { name: 'Playa del Puntal', type: 'Aguas mansas en el estuario de la Ría de Villaviciosa', tag: 'Ría' },
-      { name: 'Playa de Tazones', type: 'Junto al puerto marinero con huellas de dinosaurio', tag: 'Marinera' },
-      { name: 'Playa de Merón', type: 'Cala virgen entre acantilados jurásicos', tag: 'Tranquila' }
-    ]
-  },
-  'ribadesella': {
-    name: 'Ribadesella',
-    region: 'Costa Oriental',
-    playas: [
-      { name: 'Playa de Santa Marina', type: 'Arenal histórico con palacetes indianos y surf', tag: 'Urbana & Surf' },
-      { name: 'Playa de Vega', type: 'Arenal salvaje, rompientes de surf y dunas protegidas', tag: 'Monumento Natural' },
-      { name: 'Playa de Guadamía', type: 'Fiordo natural entre acantilados y bufones', tag: 'Fiordo' }
+      { 
+        name: 'Playa de Rodiles', 
+        type: 'La mítica "Barra de Rodiles", una de las mejores izquierdas tubulares de Europa', 
+        tag: 'Surf Top Mundial',
+        picos: 'La Barra (izq. tubular de ría) • Picos del Arenal y Pinar',
+        bottom: '🏖️ Arena sobre barra de ría (Beach Break)',
+        waveType: '⬅️ Izquierda perfecta, tubular y kilométrica',
+        bestTide: 'Media Marea a Bajamar',
+        surfLevel: 'Avanzado - Pro (La Barra) / Todos (Arenal)'
+      },
+      { 
+        name: 'Playa del Puntal', 
+        type: 'Aguas mansas y resguardadas en la Ría de Villaviciosa con pineda', 
+        tag: 'Ría & SUP',
+        picos: 'Estuario en calma',
+        bottom: '🏖️ Arena fina',
+        waveType: '🚫 Sin oleaje',
+        bestTide: 'Pleamar',
+        surfLevel: 'Paddle Surf / Kayak'
+      },
+      { 
+        name: 'Playa de Merón', 
+        type: 'Cala virgen entre acantilados jurásicos con icnitas', 
+        tag: 'Salvaje & Surf',
+        picos: 'Picos centrales del pedrero',
+        bottom: '🪨🏖️ Mixto (Arena y Rocas)',
+        waveType: '↔️ Izquierdas y Derechas de mar abierto',
+        bestTide: 'Media Marea',
+        surfLevel: 'Intermedio'
+      },
+      { 
+        name: 'Playa de Tazones', 
+        type: 'Junto al emblemático puerto marinero con huellas de dinosaurio', 
+        tag: 'Marinera',
+        picos: 'Pequeña ensenada de cantos',
+        bottom: '🪨 Losa y cantos',
+        waveType: '🚫 Mar abrigada',
+        bestTide: 'Media a Pleamar',
+        surfLevel: 'Turismo & Gastronomía'
+      }
     ]
   },
   'gozon': {
     name: 'Gozón (Luanco)',
     region: 'Cabo Peñas',
     playas: [
-      { name: 'Playa de Luanco', type: 'Playa tranquila junto al muelle y casco histórico', tag: 'Familiar' },
-      { name: 'Playa de Verdicio', type: 'Olas consistentes de mar abierto, dunas y surf', tag: 'Surf' },
-      { name: 'Playa de Bañugues', type: 'Aguas someras sin olas, fósiles y mar calma', tag: 'Familiar' },
-      { name: 'Playa de Aguilera', type: 'Cala virgen de aguas esmeralda cerca de Peñas', tag: 'Natural' }
+      { 
+        name: 'Playa de Xagó', 
+        type: 'Extenso arenal con dunas eólicas protegidas y máxima consistencia de olas', 
+        tag: 'Surf Muy Consistente',
+        picos: 'El Escamplero (extremo este) • Picos de la Gran Duna',
+        bottom: '🏖️ Arena (Beach Break potente)',
+        waveType: '↔️ Picos A-Frame consistentes todo el año',
+        bestTide: 'Bajamar a Media Marea',
+        surfLevel: 'Iniciación a Intermedio'
+      },
+      { 
+        name: 'Playa de Verdicio (Tenrero)', 
+        type: 'Olas consistentes de mar abierto cerca de Peñas con dunas', 
+        tag: 'Surf & Paisaje',
+        picos: 'La Izquierda de la Punta • Rompiente central',
+        bottom: '🪨🏖️ Mixto (Arena y Laja rocosa)',
+        waveType: '↔️ Olas rápidas con fuerza',
+        bestTide: 'Media Marea a Bajamar',
+        surfLevel: 'Intermedio a Experto'
+      },
+      { 
+        name: 'Playa de Luanco', 
+        type: 'Arenal histórico urbano junto al muelle y el Museo Marítimo', 
+        tag: 'Familiar & Urbana',
+        picos: 'Aguas calmas abrigadas',
+        bottom: '🏖️ Arena fina',
+        waveType: '🚫 Sin olas',
+        bestTide: 'Todas las mareas',
+        surfLevel: 'Baño y Familias'
+      },
+      { 
+        name: 'Playa de Bañugues', 
+        type: 'Ensenada somera sin olas, fósiles y mar calma protegida del oleaje', 
+        tag: 'Familiar',
+        picos: 'Aguas someras en ensenada',
+        bottom: '🏖️ Arena y fango',
+        waveType: '🚫 Sin oleaje',
+        bestTide: 'Pleamar',
+        surfLevel: 'Ideal niños pequeños'
+      }
     ]
   },
-  'cudillero': {
-    name: 'Cudillero',
-    region: 'Costa Occidental',
+  'ribadesella': {
+    name: 'Ribadesella',
+    region: 'Costa Oriental',
     playas: [
-      { name: 'Playa del Silencio (El Gavieru)', type: 'Anfiteatro rocoso único de aguas cristalinas', tag: 'Top Paisaje' },
-      { name: 'Concha de Artedo', type: 'Gran bahía protegida de cantos rodados y arena', tag: 'Protegida' },
-      { name: 'San Pedro de la Ribera', type: 'Arenal amplio con pradera y desembocadura', tag: 'Familiar' }
+      { 
+        name: 'Playa de Santa Marina', 
+        type: 'Arenal aristocrático con palacetes indianos y desembocadura del Sella', 
+        tag: 'Urbana & Surf',
+        picos: 'Pico del Muro (Oeste) • Desembocadura de la ría del Sella',
+        bottom: '🏖️ Arena (Beach Break)',
+        waveType: '↔️ Picos protegidos con temporales de mar grande',
+        bestTide: 'Media Marea a Pleamar',
+        surfLevel: 'Iniciación y Longboard'
+      },
+      { 
+        name: 'Playa de Vega', 
+        type: 'Monumento Natural: arenal salvaje con dunas, desfiladero y surf potente', 
+        tag: 'Monumento Natural',
+        picos: 'Pico del Río (Centro) • Rompiente del Extremo Oeste',
+        bottom: '🪨🏖️ Mixto (Arena con lajas y cantos)',
+        waveType: '↔️ Olas huecas y con mucha fuerza',
+        bestTide: 'Media Marea',
+        surfLevel: 'Intermedio a Pro'
+      },
+      { 
+        name: 'Playa de Guadamía', 
+        type: 'Espectacular fiordo kárstico natural entre acantilados y bufones', 
+        tag: 'Fiordo & Paisaje',
+        picos: 'Piscina natural en marea alta',
+        bottom: '🏖️ Arena fina',
+        waveType: '🚫 Calma interior',
+        bestTide: 'Pleamar',
+        surfLevel: 'Baño & Kayak'
+      }
     ]
   },
   'tapia': {
     name: 'Tapia de Casariego',
     region: 'Costa Occidental',
     playas: [
-      { name: 'Playa de La Grande', type: 'Cuna del surf de Asturias y campeonato mundial', tag: 'Surf Top' },
-      { name: 'Playa del Murallón', type: 'Piscina marina natural de agua salada', tag: 'Piscina Salada' },
-      { name: 'Playa de Serantes', type: 'Desembocadura de río y arenal tranquilo', tag: 'Natural' },
-      { name: 'Santa Gadea', type: 'Cala rocosa de mar abierto y cantos', tag: 'Salvaje' }
+      { 
+        name: 'Playa de La Grande', 
+        type: 'Cuna histórica del surf en Asturias y sede del Memorial Peter Gulley', 
+        tag: 'Surf Mítico',
+        picos: 'La Grande • La Muralla • Los Campos',
+        bottom: '🪨🏖️ Mixto (Losa rocosa y arena)',
+        waveType: '↔️ Izquierdas y Derechas tubulares y rápidas',
+        bestTide: 'Media Marea a Bajamar',
+        surfLevel: 'Todos los niveles'
+      },
+      { 
+        name: 'Playa del Murallón', 
+        type: 'Piscina marina de agua salada encajada en las rocas del muelle', 
+        tag: 'Piscina Salada',
+        picos: 'Piscina natural protegida',
+        bottom: '🪨 Roca',
+        waveType: '🚫 Sin olas',
+        bestTide: 'Media a Pleamar',
+        surfLevel: 'Baño y Relax'
+      },
+      { 
+        name: 'Playa de Serantes', 
+        type: 'Desembocadura de río y arenal tranquilo de aguas limpias', 
+        tag: 'Natural',
+        picos: 'Rompiente de desembocadura',
+        bottom: '🏖️ Arena fina',
+        waveType: '↔️ Picos suaves',
+        bestTide: 'Media Marea',
+        surfLevel: 'Iniciación / Baño'
+      }
     ]
   },
-  'valdes': {
-    name: 'Valdés (Luarca)',
-    region: 'Costa Occidental',
-    playas: [
-      { name: 'Playas de Luarca (1ª y 2ª)', type: 'Aguas calmas y protegidas por el espigón blanco', tag: 'Familiar' },
-      { name: 'Playa de Portizuelo', type: 'Piedras del óleo y paisaje de pescadores', tag: 'Pintoresca' },
-      { name: 'Playa de Otur', type: 'Arenal amplio con dunas y oleaje limpio para surf', tag: 'Surf' },
-      { name: 'Playa de Cueva', type: 'Desembocadura del río Esva entre altos acantilados', tag: 'Paisaje' },
-      { name: 'Playa de Barayo', type: 'Reserva natural parcial de marisma y dunas', tag: 'Reserva Natural' }
-    ]
-  },
-  'carreno': {
-    name: 'Carreño (Candás)',
-    region: 'Costa Central',
-    playas: [
-      { name: 'Playa de Candás', type: 'Playa urbana con paseo marítimo', tag: 'Urbana' },
-      { name: 'Playa de la Palmera', type: 'Aguas tranquilas y ambiente marinero', tag: 'Familiar' },
-      { name: 'Playa de Carranques (Perlora)', type: 'Ensenada de aguas mansas en la Ciudad de Vacaciones', tag: 'Tranquila' },
-      { name: 'Playa de Tranqueru', type: 'Cala natural accesible por la Vía Verde costera', tag: 'Cala' }
-    ]
-  },
-  'colunga': {
-    name: 'Colunga',
+  'llanes': {
+    name: 'Llanes',
     region: 'Costa Oriental',
     playas: [
-      { name: 'Playa de La Isla', type: 'Amplio arenal con islote accesible a pie en bajamar', tag: 'Familiar' },
-      { name: 'Playa de La Griega', type: 'Icnitas y huellas gigantes de dinosaurios', tag: 'Jurásica' },
-      { name: 'Playa de Lastres', type: 'Arenal bajo el pueblo marinero escalonado', tag: 'Marinera' }
+      { 
+        name: 'Playa de San Antolín', 
+        type: 'Extenso arenal abierto de mar Cantábrico con desembocadura del Bedón', 
+        tag: 'Surf & Paisaje',
+        picos: 'Picos del Río Bedón • Centro del arenal',
+        bottom: '🏖️ Arena y cantos',
+        waveType: '↔️ Olas orilleras rápidas y potentes',
+        bestTide: 'Media Marea a Bajamar',
+        surfLevel: 'Intermedio a Experto'
+      },
+      { 
+        name: 'Playa de Andrín', 
+        type: 'Concha de arena salvaje encajada entre acantilados y corrientes', 
+        tag: 'Surf Potente',
+        picos: 'Pico de la Punta de Andrín',
+        bottom: '🏖️ Arena (Fuerte desnivel)',
+        waveType: '↔️ Rompiente orillera potente (Shorebreak)',
+        bestTide: 'Media Marea',
+        surfLevel: 'Experto'
+      },
+      { 
+        name: 'Playa de Torimbia', 
+        type: 'Monumento Paisajístico virgen protegida de postal y tradición naturista', 
+        tag: 'Top Paisaje',
+        picos: 'Rompiente en concha',
+        bottom: '🏖️ Arena dorada',
+        waveType: '↔️ Olas de mar abierto',
+        bestTide: 'Media Marea',
+        surfLevel: 'Baño & Paisaje'
+      },
+      { 
+        name: 'Playa de Gulpiyuri', 
+        type: 'Monumento Natural único: playa de mar sin costa abierta en medio de un prado', 
+        tag: 'Monumento Natural',
+        picos: 'Aguas filtradas bajo los acantilados',
+        bottom: '🏖️ Arena blanca',
+        waveType: '🚫 Sin olas (Piscina interior)',
+        bestTide: 'Pleamar',
+        surfLevel: 'Visita Geológica'
+      },
+      { 
+        name: 'Playa de Barro', 
+        type: 'Aguas cristalinas turquesas y arena fina abrigada de los vientos', 
+        tag: 'Familiar Top',
+        picos: 'Bahía abrigada por islotes',
+        bottom: '🏖️ Arena fina',
+        waveType: '🚫 Aguas mansas',
+        bestTide: 'Todas las mareas',
+        surfLevel: 'Baño en familia'
+      },
+      { 
+        name: 'Playa de Cuevas del Mar', 
+        type: 'Arcos gigantes de roca kárstica horadados por el Cantábrico', 
+        tag: 'Fotogénica',
+        picos: 'Ensenada de cuevas',
+        bottom: '🏖️ Arena y roca',
+        waveType: '↔️ Olas suaves',
+        bestTide: 'Bajamar (recorrer cuevas)',
+        surfLevel: 'Baño & Fotografía'
+      }
     ]
   },
   'caravia': {
     name: 'Caravia',
     region: 'Costa Oriental',
     playas: [
-      { name: 'Playa de La Espasa', type: 'Gran arenal abierto con vistas a la Sierra del Sueve', tag: 'Surf & Paisaje' },
-      { name: 'Arenal de Morís', type: 'Extenso arenal con senda costera y surf', tag: 'Surf' }
-    ]
-  },
-  'muros-de-nalon': {
-    name: 'Muros de Nalón',
-    region: 'Costa Occidental',
-    playas: [
-      { name: 'Playa de Aguilar', type: 'Playa dorada, roca de Peñafurada y senda de los Miradores', tag: 'Familiar' },
-      { name: 'Playa de las Llanas', type: 'Cala salvaje al pie de altos acantilados', tag: 'Salvaje' }
+      { 
+        name: 'Playa de La Espasa', 
+        type: 'Gran arenal abierto con vistas panorámicas a la Sierra del Sueve', 
+        tag: 'Surf & Paisaje',
+        picos: 'Picos de la Ría del Espasa • Centro',
+        bottom: '🏖️ Arena (Beach Break)',
+        waveType: '↔️ Izquierdas y Derechas maniobrables',
+        bestTide: 'Media Marea a Bajamar',
+        surfLevel: 'Iniciación e Intermedio'
+      },
+      { 
+        name: 'Arenal de Morís', 
+        type: 'Extenso arenal con senda costera, acantilados y olas constantes', 
+        tag: 'Surf Constante',
+        picos: 'Pico de la Punta Este • Rompiente central',
+        bottom: '🏖️ Arena dorada',
+        waveType: '↔️ Olas con buena pared',
+        bestTide: 'Media Marea',
+        surfLevel: 'Todos los niveles'
+      }
     ]
   },
   'soto-del-barco': {
     name: 'Soto del Barco',
     region: 'Costa Central',
     playas: [
-      { name: 'Playa de los Quebrantos', type: 'Arenal en la desembocadura de la ría del Nalón con dunas', tag: 'Surf & Dunas' }
+      { 
+        name: 'Playa de los Quebrantos', 
+        type: 'Arenal en la desembocadura de la ría del Nalón unido a San Juan de la Arena', 
+        tag: 'Surf & Dunas',
+        picos: 'La Barra del Nalón • Picos de dunas',
+        bottom: '🏖️ Arena (Barra fluvial y marina)',
+        waveType: '↔️ Derechas e Izquierdas rápidas',
+        bestTide: 'Media Marea a Bajamar',
+        surfLevel: 'Iniciación a Intermedio'
+      }
+    ]
+  },
+  'valdes': {
+    name: 'Valdés (Luarca)',
+    region: 'Costa Occidental',
+    playas: [
+      { 
+        name: 'Playa de Otur', 
+        type: 'Arenal amplio con dunas y oleaje limpio muy frecuentado por surfistas', 
+        tag: 'Surf Occidental',
+        picos: 'Picos centrales del arenal de Otur',
+        bottom: '🏖️ Arena fina',
+        waveType: '↔️ Picos limpios y ordenados',
+        bestTide: 'Media Marea',
+        surfLevel: 'Iniciación a Intermedio'
+      },
+      { 
+        name: 'Playa de Cueva', 
+        type: 'Desembocadura del río Esva encajada entre altos acantilados', 
+        tag: 'Paisaje & Surf',
+        picos: 'Picos de la desembocadura del Esva',
+        bottom: '🪨🏖️ Mixto (Cantos y arena)',
+        waveType: '↔️ Olas de mar abierto',
+        bestTide: 'Media Marea',
+        surfLevel: 'Intermedio'
+      },
+      { 
+        name: 'Playas de Luarca (1ª y 2ª)', 
+        type: 'Aguas calmas y protegidas por el espigón blanco del puerto', 
+        tag: 'Familiar',
+        picos: 'Concha urbana abrigada',
+        bottom: '🏖️ Arena fina',
+        waveType: '🚫 Calma',
+        bestTide: 'Todas las mareas',
+        surfLevel: 'Baño y Paseo'
+      }
     ]
   },
   'navia': {
     name: 'Navia',
     region: 'Costa Occidental',
     playas: [
-      { name: 'Playa de Navia', type: 'Amplio arenal con pinar y ría', tag: 'Familiar' },
-      { name: 'Playa de Frejulfe', type: 'Monumento Natural con potentes rompientes de surf', tag: 'Monumento Natural' },
-      { name: 'Playa de Barayo', type: 'Reserva natural con ría, marisma y dunas', tag: 'Reserva Natural' }
+      { 
+        name: 'Playa de Frejulfe', 
+        type: 'Monumento Natural: imponente arenal virgen con pinar y potentes tubos', 
+        tag: 'Monumento Natural & Surf',
+        picos: 'Pico del Río Frejulfe • Rompiente Este',
+        bottom: '🪨🏖️ Mixto (Arena y losas)',
+        waveType: '↔️ Olas muy potentes, tubulares y rápidas',
+        bestTide: 'Media Marea a Bajamar',
+        surfLevel: 'Intermedio a Pro'
+      },
+      { 
+        name: 'Playa de Navia', 
+        type: 'Amplio arenal con pinar, ría y gran parque recreativo', 
+        tag: 'Familiar & Ría',
+        picos: 'Picos de la barra de Navia',
+        bottom: '🏖️ Arena dorada',
+        waveType: '↔️ Olas suaves',
+        bestTide: 'Media Marea',
+        surfLevel: 'Iniciación / Baño'
+      }
     ]
   },
-  'coana': {
-    name: 'Coaña',
-    region: 'Costa Occidental',
+  'colunga': {
+    name: 'Colunga',
+    region: 'Costa Oriental',
     playas: [
-      { name: 'Playa de Foxos', type: 'Cala de cantos y arena junto a la ría de Navia', tag: 'Tranquila' },
-      { name: 'Playa de Arnelles', type: 'Cala acogedora cerca del puerto de Ortiguera', tag: 'Cala' }
+      { 
+        name: 'Playa de La Isla', 
+        type: 'Amplio arenal con islote rocoso accesible a pie en bajamar', 
+        tag: 'Familiar & Paseo',
+        picos: 'Ensenada abrigada por el islote',
+        bottom: '🏖️ Arena dorada',
+        waveType: '↔️ Olas suaves en pleamar',
+        bestTide: 'Todas las mareas',
+        surfLevel: 'Baño y Familias'
+      },
+      { 
+        name: 'Playa de La Griega', 
+        type: 'Icnitas de dinosaurios saurópodos gigantes y desembocadura del Libardón', 
+        tag: 'Jurásica',
+        picos: 'Picos suaves junto al río',
+        bottom: '🏖️ Arena y losas jurásicas',
+        waveType: '↔️ Rompiente suave',
+        bestTide: 'Media Marea',
+        surfLevel: 'Cultura & Baño'
+      },
+      { 
+        name: 'Playa de Lastres', 
+        type: 'Arenal bajo el emblemático pueblo marinero escalonado', 
+        tag: 'Marinera',
+        picos: 'Concha resguardada por el muelle',
+        bottom: '🏖️ Arena y grava',
+        waveType: '🚫 Mar tranquila',
+        bestTide: 'Media a Pleamar',
+        surfLevel: 'Turismo & Baño'
+      }
     ]
   },
-  'el-franco': {
-    name: 'El Franco',
+  'cudillero': {
+    name: 'Cudillero',
     region: 'Costa Occidental',
     playas: [
-      { name: 'Playa de Porcía', type: 'Ría meándrica con islotes boyas de roca kárstica', tag: 'Top Paisaje' },
-      { name: 'Playa de Pormenande', type: 'Cala abrigada de pescadores y aguas mansas', tag: 'Cala' }
+      { 
+        name: 'Playa del Silencio (El Gavieru)', 
+        type: 'Anfiteatro rocoso único de aguas cristalinas esmeralda', 
+        tag: 'Top Paisaje',
+        picos: 'Aguas cristalinas abrigadas por acantilados',
+        bottom: '🪨 Cantos rodados y roca viva',
+        waveType: '🚫 Calma (Poco oleaje)',
+        bestTide: 'Media a Bajamar',
+        surfLevel: 'Snorkel y Paisaje'
+      },
+      { 
+        name: 'Concha de Artedo', 
+        type: 'Gran bahía protegida de cantos rodados, arena y pasarela sobre marisma', 
+        tag: 'Protegida & Familiar',
+        picos: 'Gran concha semicircular',
+        bottom: '🪨🏖️ Cantos y arena',
+        waveType: '↔️ Olas suaves',
+        bestTide: 'Media a Pleamar',
+        surfLevel: 'Baño y Gastronomía'
+      },
+      { 
+        name: 'San Pedro de la Ribera', 
+        type: 'Arenal amplio con pradera verde, área recreativa y desembocadura', 
+        tag: 'Familiar & Surf',
+        picos: 'Picos centrales de San Pedro',
+        bottom: '🏖️ Arena fina',
+        waveType: '↔️ Olas manejables',
+        bestTide: 'Media Marea',
+        surfLevel: 'Iniciación'
+      }
+    ]
+  },
+  'muros-de-nalon': {
+    name: 'Muros de Nalón',
+    region: 'Costa Occidental',
+    playas: [
+      { 
+        name: 'Playa de Aguilar', 
+        type: 'Playa dorada con la roca de Peñafurada y senda de los Miradores', 
+        tag: 'Familiar & Surf',
+        picos: 'Picos junto a Peñafurada • Centro',
+        bottom: '🏖️ Arena dorada',
+        waveType: '↔️ Olas suaves y divertidas',
+        bestTide: 'Media Marea',
+        surfLevel: 'Iniciación y Baño'
+      },
+      { 
+        name: 'Playa de las Llanas', 
+        type: 'Cala salvaje al pie de impresionantes acantilados con escalinata', 
+        tag: 'Salvaje',
+        picos: 'Picos abiertos de mar Cantábrico',
+        bottom: '🪨🏖️ Mixto',
+        waveType: '↔️ Rompiente rápida',
+        bestTide: 'Bajamar',
+        surfLevel: 'Naturaleza y Retiro'
+      }
+    ]
+  },
+  'carreno': {
+    name: 'Carreño (Candás)',
+    region: 'Costa Central',
+    playas: [
+      { 
+        name: 'Playa de Candás', 
+        type: 'Playa urbana con paseo marítimo, espigón y ambiente marinero', 
+        tag: 'Urbana',
+        picos: 'Ensenada abrigada por el dique',
+        bottom: '🏖️ Arena fina',
+        waveType: '🚫 Calma',
+        bestTide: 'Todas las mareas',
+        surfLevel: 'Baño y Paseo'
+      },
+      { 
+        name: 'Playa de la Palmera', 
+        type: 'Aguas tranquilas con solárium y vistas al puerto de Candás', 
+        tag: 'Familiar',
+        picos: 'Zona de baño abrigada',
+        bottom: '🏖️ Arena',
+        waveType: '🚫 Sin olas',
+        bestTide: 'Media a Pleamar',
+        surfLevel: 'Baño seguro'
+      },
+      { 
+        name: 'Playa de Carranques (Perlora)', 
+        type: 'Ensenada de aguas mansas en la histórica Ciudad de Vacaciones', 
+        tag: 'Tranquila',
+        picos: 'Ensenada natural',
+        bottom: '🏖️ Arena y roquedo',
+        waveType: '🚫 Aguas mansas',
+        bestTide: 'Todas las mareas',
+        surfLevel: 'Familias y Niños'
+      }
     ]
   },
   'castropol': {
     name: 'Castropol',
     region: 'Ría del Eo',
     playas: [
-      { name: 'Playa de Penarronda', type: 'Monumento Natural con arco de roca y dunas', tag: 'Monumento Natural' },
-      { name: 'Playa de Arnao (Ría del Eo)', type: 'Aguas calmas en la Ría del Eo', tag: 'Ría' }
+      { 
+        name: 'Playa de Penarronda', 
+        type: 'Monumento Natural con gran arco de roca central, dunas y alhelí marino', 
+        tag: 'Monumento Natural & Surf',
+        picos: 'Picos del Arco de Roca • Centro',
+        bottom: '🏖️ Arena fina',
+        waveType: '↔️ Izquierdas y Derechas con buena pared',
+        bestTide: 'Media Marea a Bajamar',
+        surfLevel: 'Iniciación a Intermedio'
+      },
+      { 
+        name: 'Playa de Arnao (Ría del Eo)', 
+        type: 'Aguas cristalinas y calmas en la desembocadura de la Reserva de la Biosfera', 
+        tag: 'Ría & Paisaje',
+        picos: 'Ensenada de la Ría del Eo',
+        bottom: '🏖️ Arena fina',
+        waveType: '🚫 Aguas calmas',
+        bestTide: 'Media a Pleamar',
+        surfLevel: 'Paddle Surf y Baño'
+      }
+    ]
+  },
+  'el-franco': {
+    name: 'El Franco',
+    region: 'Costa Occidental',
+    playas: [
+      { 
+        name: 'Playa de Porcía', 
+        type: 'Ría meándrica espectacular con islotes boyas de roca kárstica', 
+        tag: 'Top Paisaje & Ría',
+        picos: 'Estuario meándrico protegido',
+        bottom: '🏖️ Arena fina',
+        waveType: '↔️ Olas suaves en la barra exterior',
+        bestTide: 'Media Marea a Pleamar',
+        surfLevel: 'Baño y Fotografía'
+      },
+      { 
+        name: 'Playa de Pormenande', 
+        type: 'Cala abrigada de pescadores con aguas mansas e islote de El Rego', 
+        tag: 'Cala Marinera',
+        picos: 'Piscina natural protegida',
+        bottom: '🪨 Cantos rodados',
+        waveType: '🚫 Calma',
+        bestTide: 'Todas las mareas',
+        surfLevel: 'Snorkel y Baño'
+      }
+    ]
+  },
+  'coana': {
+    name: 'Coaña',
+    region: 'Costa Occidental',
+    playas: [
+      { 
+        name: 'Playa de Foxos', 
+        type: 'Cala de cantos y arena junto a la ría de Navia y el Castro de Coaña', 
+        tag: 'Tranquila',
+        picos: 'Ensenada fluvial-marina',
+        bottom: '🪨🏖️ Mixto',
+        waveType: '↔️ Olas suaves',
+        bestTide: 'Media Marea',
+        surfLevel: 'Baño y Paseo'
+      },
+      { 
+        name: 'Playa de Arnelles', 
+        type: 'Cala acogedora de arena fina cerca del pintoresco puerto de Ortiguera', 
+        tag: 'Cala',
+        picos: 'Cala abrigada',
+        bottom: '🏖️ Arena fina',
+        waveType: '🚫 Calma',
+        bestTide: 'Media Marea',
+        surfLevel: 'Baño y Desconexión'
+      }
     ]
   },
   'ribadedeva': {
     name: 'Ribadedeva',
     region: 'Costa Oriental',
     playas: [
-      { name: 'Playa de La Franca', type: 'Gran concha de arena fina con cuevas en bajamar', tag: 'Familiar Top' }
+      { 
+        name: 'Playa de La Franca', 
+        type: 'Gran concha de arena fina con cuevas y arcos explorables en bajamar', 
+        tag: 'Familiar Top',
+        picos: 'Rompiente suave en la bahía',
+        bottom: '🏖️ Arena fina dorada',
+        waveType: '↔️ Olas suaves en pleamar',
+        bestTide: 'Bajamar (cuevas) / Pleamar (baño)',
+        surfLevel: 'Baño y Familias'
+      }
     ]
   }
 };
@@ -218,7 +725,67 @@ function getNearestCoastalReference(concejo) {
 }
 
 /**
- * Renderiza el módulo marítimo con Mareógrafo interactivo en tiempo real y calendario semanal de mareas
+ * Computa la calidad e idoneidad del viento para surf en la costa asturiana
+ * (La costa cantábrica asturiana mira principalmente al Norte: 340° a 20°)
+ */
+export function getSurfWindCondition(windDirDeg, windSpeedKm) {
+  const speed = typeof windSpeedKm === 'number' ? windSpeedKm : 12;
+  const deg = typeof windDirDeg === 'number' ? ((windDirDeg % 360) + 360) % 360 : 180;
+
+  // Calma / Glassy si el viento es casi nulo (< 8 km/h)
+  if (speed < 8) {
+    return {
+      type: 'glassy',
+      name: 'Glassy / Mar Calma',
+      badge: '✨ Glassy (< 8 km/h)',
+      color: '#38bdf8',
+      desc: 'Mar liso como un espejo. Sin viento que distorsione la ola; condiciones limpias y perfectas para disfrutar del agua.',
+      effect: 'Cara de la ola cristalina y lisa.',
+      statusClass: 'surf-wind-glassy'
+    };
+  }
+
+  // Viento Sur (115° a 245°): Viento de tierra hacia el mar -> OFFSHORE
+  if (deg >= 115 && deg <= 245) {
+    return {
+      type: 'offshore',
+      name: 'Offshore (Viento Terral)',
+      badge: '🟢 Viento Offshore',
+      color: '#10b981',
+      desc: 'Viento de tierra (Sur / SO / SE). Peina la ola retrasando su rotura, ahueca el tubo y alisa la superficie.',
+      effect: 'Tubos huecos y pared limpia (¡Condición Ideal!).',
+      statusClass: 'surf-wind-offshore'
+    };
+  }
+
+  // Viento Norte (315° a 360° o 0° a 45°): Viento de mar hacia tierra -> ONSHORE
+  if (deg >= 315 || deg <= 45) {
+    return {
+      type: 'onshore',
+      name: 'Onshore (Viento de Mar)',
+      badge: '🔴 Viento Onshore',
+      color: '#ef4444',
+      desc: 'Viento de mar hacia tierra (Norte / NO / NE). Choca de frente, aplasta la ola y genera mar picado con espuma.',
+      effect: 'Olas desordenadas y mar picado (chop).',
+      statusClass: 'surf-wind-onshore'
+    };
+  }
+
+  // Viento lateral Este u Oeste (45° a 115° o 245° a 315°): CROSS-SHORE
+  return {
+    type: 'crossshore',
+    name: 'Cross-shore (Viento Lateral)',
+    badge: '🟡 Viento Lateral',
+    color: '#f59e0b',
+    desc: 'Viento lateral (Este u Oeste). Recorre la orilla de lado, barriendo las paredes y creando corriente de deriva.',
+    effect: 'Corriente lateral a lo largo de la playa.',
+    statusClass: 'surf-wind-cross'
+  };
+}
+
+/**
+ * Renderiza el módulo marítimo con Mareógrafo interactivo en tiempo real, 
+ * Cuadro semanal de mareas e Inteligencia de Surf y Picos de Asturias
  */
 export function renderMarineCard(data, concejo) {
   const marine = data.marine?.current;
@@ -236,12 +803,17 @@ export function renderMarineCard(data, concejo) {
   const waveDir = (marine && typeof marine.wave_direction === 'number') ? getWindDirection(marine.wave_direction) : { name: 'Noroeste (NW)' };
   const windWaveH = (marine && typeof marine.wind_wave_height === 'number') ? marine.wind_wave_height.toFixed(1) : '0.6';
 
+  const windSpeed = Math.round(current.wind_speed_10m || 10);
+  const windDeg = current.wind_direction_10m || 0;
+  const windDirObj = getWindDirection(windDeg);
+  const surfWind = getSurfWindCondition(windDeg, windSpeed);
+
   const h = parseFloat(waveHeight);
   let douglasDegree = 3;
   let douglasName = 'Marejada';
   let flagColor = '#f59e0b';
   let flagBadge = '🟡 Bandera Amarilla';
-  let surfStatus = `🏄‍♂️ Olas consistentes. Muy buenas condiciones para surf en la costa de ${isCoasting ? concejo.name : interiorRef.refId}.`;
+  let surfStatus = `🏄‍♂️ Olas consistentes. Muy buenas condiciones para surf en la costa de ${isCoasting ? concejo.name : interiorRef.name}.`;
 
   if (h < 0.6) {
     douglasDegree = 1;
@@ -454,7 +1026,7 @@ export function renderMarineCard(data, concejo) {
                 <span class="coef-tag ${day.moonInfo.tideClass}">${day.moonInfo.tideType}</span>
               </div>
 
-              <!-- Lista de 4 eventos del día -->
+              <!-- Lista de eventos del día -->
               <div class="tide-day-events-list">
                 ${day.events.map(ev => `
                   <div class="tide-mini-row ${ev.type}">
@@ -470,7 +1042,7 @@ export function renderMarineCard(data, concejo) {
         </div>
       </div>
 
-      <!-- 3. GRID DE SENSORES MARINOS Y SURF -->
+      <!-- 3. GRID DE SENSORES MARINOS Y CONDICIONES GENERALES -->
       <div class="marine-grid">
         <!-- Altura de Ola -->
         <div class="marine-widget">
@@ -485,7 +1057,7 @@ export function renderMarineCard(data, concejo) {
           <div class="widget-label">Período y Dirección del Swell</div>
           <div class="widget-value">${wavePeriod} <span class="unit">segundos</span></div>
           <div class="widget-detail">Dirección del oleaje: <strong>${waveDir.name}</strong></div>
-          <div class="widget-detail">Viento en orilla: <strong>${Math.round(current.wind_speed_10m)} km/h</strong></div>
+          <div class="widget-detail">Viento en orilla: <strong>${windSpeed} km/h (${windDirObj.name})</strong></div>
         </div>
 
         <!-- Temperatura del Agua y Confort Turístico -->
@@ -496,7 +1068,7 @@ export function renderMarineCard(data, concejo) {
           <div class="widget-detail">Visibilidad costera: <strong>${(current.visibility / 1000 || 10).toFixed(0)} km</strong></div>
         </div>
 
-        <!-- Estado de Surf y Bandera -->
+        <!-- Estado de Surf y Bandera General -->
         <div class="marine-widget surf-turismo-visual-widget">
           <div class="surf-widget-top">
             <div class="surf-title-row">
@@ -517,16 +1089,113 @@ export function renderMarineCard(data, concejo) {
         </div>
       </div>
 
-      <!-- 4. PLAYAS DINÁMICAS DEL CONCEJO SELECCIONADO -->
+      <!-- 4. PANEL DE INTELIGENCIA DE SURF: VIENTO OFFSHORE/ONSHORE & GUÍA DIDÁCTICA -->
+      <div class="marine-widget surf-intelligence-card" style="margin-top: 20px; margin-bottom: 20px;">
+        <div class="surf-intel-header">
+          <div class="surf-intel-title-wrap">
+            <span class="surf-intel-icon">🧭</span>
+            <div>
+              <div class="surf-intel-title">Calidad de Viento para Surf (Offshore / Onshore)</div>
+              <div class="surf-intel-subtitle">Análisis aerodinámico en vivo cruzando viento y orientación cantábrica</div>
+            </div>
+          </div>
+          <button class="btn-explain-sensor surf-guide-btn" data-explain="surf" title="Aprender sobre Offshore, Fondos, Izquierdas y Picos">
+            💡 Guía de Surf y Olas
+          </button>
+        </div>
+
+        <div class="surf-wind-analysis-grid">
+          <!-- Tarjeta de Estado del Viento en Vivo -->
+          <div class="surf-wind-pill-card ${surfWind.statusClass}">
+            <div class="surf-wind-badge-row">
+              <span class="surf-wind-status-badge" style="background: ${surfWind.color}22; color: ${surfWind.color}; border: 1px solid ${surfWind.color}80;">
+                ${surfWind.badge}
+              </span>
+              <span class="surf-wind-reading">${windSpeed} km/h • ${windDirObj.name} (${Math.round(windDeg)}°)</span>
+            </div>
+            <div class="surf-wind-desc-text">
+              <strong>${surfWind.name}:</strong> ${surfWind.desc}
+            </div>
+            <div class="surf-wind-effect-tag">
+              ⚡ <strong>Efecto en la rompiente:</strong> ${surfWind.effect}
+            </div>
+          </div>
+
+          <!-- Consejos de Orientación y Lectura Rápida -->
+          <div class="surf-quick-tips-card">
+            <div class="quick-tip-row">
+              <span class="tip-icon">🟢</span>
+              <div class="tip-body">
+                <strong>Offshore (Viento Sur):</strong> Ideal. Peina la ola, crea tubos y deja el mar como un espejo.
+              </div>
+            </div>
+            <div class="quick-tip-row">
+              <span class="tip-icon">🔴</span>
+              <div class="tip-body">
+                <strong>Onshore (Viento Norte):</strong> Mar picado (chop), aplasta las olas y genera espuma.
+              </div>
+            </div>
+            <div class="quick-tip-row">
+              <span class="tip-icon">🏄‍♂️</span>
+              <div class="tip-body">
+                <strong>Izquierdas / Derechas:</strong> Se definen siempre mirando hacia la playa desde la ola.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. CATÁLOGO DE PLAYAS, PICOS Y FONDOS MARINOS DEL CONCEJO -->
       <div class="marine-ports-section">
-        <h4 class="ports-title">
-          🏖️ Playas y Rompientes de ${isCoasting ? concejo.name : `${concejo.name} (en ${interiorRef.name})`}
-        </h4>
-        <div class="ports-grid">
+        <div class="beach-section-header">
+          <div>
+            <h4 class="ports-title" style="margin-bottom: 2px;">
+              🏖️ Rompientes, Picos de Surf & Fondos de ${isCoasting ? concejo.name : `${concejo.name} (en ${interiorRef.name})`}
+            </h4>
+            <span class="beach-section-subtitle">
+              Picos bautizados, tipo de fondo (arena/roca), dirección de ola y marea óptima
+            </span>
+          </div>
+        </div>
+
+        <div class="beaches-grid">
           ${activePlayas.map(p => `
-            <div class="port-item">
-              <span class="port-name">${p.name}</span>
-              <span class="port-region">${p.type} • <strong>${p.tag}</strong></span>
+            <div class="beach-card">
+              <div class="beach-card-top">
+                <span class="beach-card-name">${p.name}</span>
+                <span class="beach-card-tag">${p.tag || 'Playa'}</span>
+              </div>
+              
+              <div class="beach-card-desc">${p.type}</div>
+
+              <div class="beach-details-grid">
+                ${p.picos ? `
+                  <div class="beach-detail-item full-width">
+                    <span class="detail-label">📍 Picos de Surf:</span>
+                    <span class="detail-value highlight-pico">${p.picos}</span>
+                  </div>
+                ` : ''}
+
+                <div class="beach-detail-item">
+                  <span class="detail-label">🪨 Fondo Marino:</span>
+                  <span class="detail-value">${p.bottom || '🏖️ Arena (Beach Break)'}</span>
+                </div>
+
+                <div class="beach-detail-item">
+                  <span class="detail-label">🔄 Dirección Ola:</span>
+                  <span class="detail-value">${p.waveType || '↔️ Picos A-Frame'}</span>
+                </div>
+
+                <div class="beach-detail-item">
+                  <span class="detail-label">⏳ Marea Óptima:</span>
+                  <span class="detail-value">${p.bestTide || 'Media Marea'}</span>
+                </div>
+
+                <div class="beach-detail-item">
+                  <span class="detail-label">🎯 Nivel:</span>
+                  <span class="detail-value level-badge">${p.surfLevel || 'Todos'}</span>
+                </div>
+              </div>
             </div>
           `).join('')}
         </div>

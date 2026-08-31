@@ -12,6 +12,27 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.57] - 2026-08-31
+
+### 🏄‍♂️ Inteligencia de Surf: Detector Offshore / Onshore en Vivo & Catálogo de Picos de Asturias
+- **Detector Aerodinámico en Vivo de Viento para Surf (`getSurfWindCondition`)**:
+  - Cruce en tiempo real entre la dirección del viento y la orientación septentrional del litoral asturiano:
+    - 🟢 **OFFSHORE (Viento Terral - Sur/SO/SE)**: Viento favorable de tierra que frena la cresta, ahueca el tubo y alisa la superficie (*efecto glassy*).
+    - 🔴 **ONSHORE (Viento de Mar - Norte/NO/NE)**: Choca de frente, aplasta la ola y genera *chop* (mar picado y desordenado).
+    - 🟡 **CROSS-SHORE (Viento Lateral - Este/Oeste)**: Barre la orilla y genera corriente de deriva.
+    - ✨ **GLASSY (< 8 km/h)**: Mar liso como un espejo con condiciones cristalinas.
+- **Catálogo Exhaustivo de Playas, Rompientes y Fondos Marinos**:
+  - Enriquecimiento de todas las playas asturianas con:
+    - **Picos de Surf bautizados**: *La Barra de Rodiles* (Villaviciosa), *El Balneario y Las Dunas* (Salinas), *Escalera 4, 10 y El Mongol* (Gijón), *El Escamplero* (Xagó), *La Grande y La Muralla* (Tapia), *Pico del Río* (Vega / Ribadesella), etc.
+    - **Fondo Marino**: 🏖️ Arena (*Beach Break*), 🪨 Roca / Losa (*Point & Reef Break*) o 🪨🏖️ Mixto.
+    - **Dirección de Ola**: ⬅️ Izquierdas tubulares, ➡️ Derechas de punta, ↔️ Picos A-Frame.
+    - **Marea Idónea y Nivel**: Bajamar, Media marea, Pleamar, Iniciación, Intermedio o Avanzado-Pro.
+- **Suite Didáctica Interactiva `[ 💡 Guía de Surf y Olas ]`**:
+  - Despliegue en modal con explicaciones ilustradas sobre Offshore vs Onshore, cómo se definen las olas de izquierdas/derechas (perspectiva del surfista mirando a la playa), tipos de fondo y el significado del período de oleaje (swell en segundos).
+- **Service Worker `v157-official` & Cache-Busting Total**: Sincronización a `?v=1.0.57` en toda la aplicación.
+
+---
+
 ## [1.0.56] - 2026-08-31
 
 ### 🧭 Anemómetro: Orientación Náutica Perímetro ➔ Centro
