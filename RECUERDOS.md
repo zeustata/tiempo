@@ -141,5 +141,6 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Unificación total de métricas y temperaturas de tarjetas diarias a 10 días en un único panel armónico de 2 filas (Opción 1), ahorrando más del 40% de altura con salto a **v1.0.52** (SW `v152-official`).
 - Reordenación simétrica de temperaturas en panel diario (🔻 Mínima a la izquierda / 🔺 Máxima a la derecha) y retirada de oscilación para eliminar desbordes en móviles con salto a **v1.0.53** (SW `v153-official`).
 - Flecha aerodinámica vectorial SVG en el anemómetro/rosa de los vientos (cola de origen, fuste y punta hacia el destino) con aclaración de flujo (Viene de ➔ va hacia) con salto a **v1.0.54** (SW `v154-official`).
+- Corrección y restauración total del renderizado de los 6 sensores en Estación en Vivo con salto a **v1.0.55** (SW `v155-official`).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 

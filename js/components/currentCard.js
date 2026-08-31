@@ -1,5 +1,5 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.0.49';
-import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.0.49';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.0.55';
+import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.0.55';
 
 /**
  * Renderiza el dashboard principal con alineación uniforme y todos los sensores de la estación
@@ -76,7 +76,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
     </div>
 
     <!-- TARJETA OFICIAL DE ALERTAS Y AVISOS AEMET -->
-    ${alertCardHtml}
+    ${aemetCardMarkup}
 
     <!-- SENSORS GRID -->
     <div class="sensors-grid">

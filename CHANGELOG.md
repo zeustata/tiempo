@@ -12,6 +12,21 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.55] - 2026-08-31
+
+### 🛠️ Corrección: Restauración de los 6 Sensores en Estación en Vivo
+- **Resolución de Renderizado en `currentCard.js`**: Corrección de variable en plantilla HTML que impedía desplegar los bloques inferiores de sensores tras la tarjeta superior.
+- **Visualización Completa y Fluida**:
+  1. Anemómetro y Dirección con la nueva flecha aerodinámica SVG.
+  2. Barómetro MSL con manómetro y tendencia.
+  3. Higrómetro y Punto de Rocío.
+  4. Pluviómetro Digital.
+  5. Radiación Solar / Índice UV.
+  6. Calidad del Aire (AQI).
+- **Service Worker `v155-official` & Cache-Busting Total**: Sincronización a `?v=1.0.55` en toda la app.
+
+---
+
 ## [1.0.54] - 2026-08-31
 
 ### 🧭 Anemómetro: Flecha Aerodinámica de Dirección & Sentido de Viento
