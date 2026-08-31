@@ -172,7 +172,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.58 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.59 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -220,11 +220,20 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.58 🚀</span>
+            <span class="release-version">v1.0.59 🚀</span>
             <span class="release-date">31 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-new">Módulos Separados</span> <strong>División Especializada de Costa en Turismo y Surf</strong>: Separación completa en dos submódulos dedicados: <strong>🏖️ Playas & Mareas</strong> (enfocado a turismo, baño, mareógrafo 72h, fases lunares, estado de baño y catálogo de calas/arenales) y <strong>🏄‍♂️ Surf & Rompientes</strong> (enfocado a surfistas con swell, período, mar de fondo, viento offshore/onshore en vivo, suite didáctica y catálogo de picos bautizados y fondos). Menú ampliado a 8 accesos directos armonizados.</li>
+            <li><span class="tag tag-fix">Corrección Crítica</span> <strong>Exportación de Módulos</strong>: Corrección del export en el puente de datos costeros entre Playas y Surf, reactivando de inmediato la carga de todos los scripts y el menú interactivo.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.0.58</span>
+            <span class="release-date">31 Ago 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Módulos Separados</span> <strong>División Especializada de Costa en Turismo y Surf</strong>: Separación completa en dos submódulos dedicados: <strong>🏖️ Playas & Mareas</strong> y <strong>🏄‍♂️ Surf & Rompientes</strong>. Menú ampliado a 8 accesos directos.</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -1336,7 +1345,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.58').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.59').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1357,6 +1366,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.58"></script>
+  <script type="module" src="js/app.js?v=1.0.59"></script>
 </body>
 </html>

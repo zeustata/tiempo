@@ -1,11 +1,11 @@
-import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.58';
+import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.59';
 import { 
   getMoonAndTideInfo, 
   getDailyTideEvents, 
   getRealtimeTideStatus, 
   getWeeklyTides, 
   renderTideSvgGraph 
-} from '../utils/tides.js?v=1.0.58';
+} from '../utils/tides.js?v=1.0.59';
 
 /**
  * Base de datos exhaustiva y profesional de playas, picos de surf y fondos marinos de Asturias
@@ -700,7 +700,7 @@ export const PLAYAS_POR_CONCEJO = {
 /**
  * Mapeo de referencia costera más cercana para concejos de interior o montaña
  */
-function getNearestCoastalReference(concejo) {
+export function getNearestCoastalReference(concejo) {
   const cId = concejo.id;
 
   // Oriente

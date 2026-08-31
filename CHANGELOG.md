@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.59] - 2026-08-31
+
+### 🛠️ Corrección Crítica de Exportación de Módulos
+- **Exportación en `marineCard.js`**: Incorporación explícita de `export function getNearestCoastalReference` requerida por el nuevo módulo `surfCard.js`, resolviendo la excepción de importación que detenía el árbol de dependencias ES Module al inicio.
+- **Service Worker `v159-official`**: Purgado forzado de caché para actualización instantánea en todos los navegadores y dispositivos móviles.
+
+---
+
 ## [1.0.58] - 2026-08-31
 
 ### 🏖️🏄‍♂️ División Especializada de Costa en 2 Módulos: Playas & Mareas (Turismo) y Surf & Rompientes (Deportes)

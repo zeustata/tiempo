@@ -146,6 +146,7 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Flecha de viento náutica en anemómetro orientada desde el punto de origen exterior hacia el centro del observador con salto a **v1.0.56** (SW `v156-official`).
 - Despliegue de Inteligencia de Surf y Dinámica Marina: detector en tiempo real de viento Offshore / Onshore / Cross-shore / Glassy, catálogo de playas de Asturias enriquecido con picos de surf bautizados, tipo de fondo (Arena / Roca / Mixto), dirección de ola (Izquierdas / Derechas / A-Frames), marea óptima y suite didáctica interactiva `[ 💡 Guía de Surf y Olas ]` con salto a **v1.0.57** (SW `v157-official`).
 - Separación especializada de la costa en dos módulos independientes: **🏖️ Playas & Mareas** (turismo, baño, mareógrafo 72h, fases lunares y catálogo de arenales) y **🏄‍♂️ Surf & Rompientes** (swell, período, mar de fondo/viento, inteligencia de viento offshore/onshore, suite didáctica y picos bautizados), ampliando a 8 módulos el menú con salto a **v1.0.58** (SW `v158-official`).
+- Corrección de la exportación de `getNearestCoastalReference` en `marineCard.js` para reactivar la ejecución de scripts y el menú con salto a **v1.0.59** (SW `v159-official`).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 
 
