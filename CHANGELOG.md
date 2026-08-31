@@ -12,6 +12,29 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.58] - 2026-08-31
+
+### 🏖️🏄‍♂️ División Especializada de Costa en 2 Módulos: Playas & Mareas (Turismo) y Surf & Rompientes (Deportes)
+- **Módulo 1: 🏖️ Playas & Mareas (`panel-marine` / Atajo `5`)**:
+  - **Enfoque**: Bañistas, familias, turismo costero y paseos marítimos.
+  - **Componentes integrados**:
+    - Mareógrafo Dinámico en Vivo (72 Horas) con onda sinusoidal interactiva continua y cuenta atrás al próximo evento (Pleamar / Bajamar).
+    - Cuadro Semanal de Mareas & Coeficientes (7 Días) con fases lunares y mareonas asturianas.
+    - Grid de confort de playa: Temperatura del agua, visibilidad costera, estado Douglas y Bandera de Baño (Verde, Amarilla, Roja) con avisos de seguridad.
+    - Catálogo turístico de playas y calas de cada concejo (entorno, tipo de arena, calas con encanto y marea idónea para disfrutar de la arena).
+- **Módulo 2: 🏄‍♂️ Surf & Rompientes (`panel-surf` / Atajo `6`)**:
+  - **Enfoque**: Surf, bodyboard, SUP y deportes náuticos.
+  - **Componentes integrados**:
+    - Sensores de Swell y Oleaje: Altura significativa de ola, desglose de mar de fondo y mar de viento, período en segundos, dirección del swell (NW, WNW...) y viento en costa.
+    - Aptitud de rompiente y recomendación de traje de neopreno en función de la temperatura del agua marina.
+    - Panel de Inteligencia de Viento Surf en tiempo real (Offshore 🟢, Onshore 🔴, Cross-shore 🟡, Glassy ✨) con su efecto directo en la ola.
+    - Suite Didáctica Interactiva: Botón `[ 💡 Guía de Surf y Olas ]`.
+    - Catálogo técnico de rompientes, picos bautizados, tipo de fondo (Beach break, Reef, Losa), dirección de la ola (izquierdas, derechas, A-Frames) y nivel técnico.
+- **Navegación Ampliada a 8 Módulos**: Reorganización simétrica del menú modal y atajos numéricos del 1 al 8.
+- **Service Worker `v158-official` & Cache-Busting Total**: Sincronización a `?v=1.0.58` en toda la aplicación.
+
+---
+
 ## [1.0.57] - 2026-08-31
 
 ### 🏄‍♂️ Inteligencia de Surf: Detector Offshore / Onshore en Vivo & Catálogo de Picos de Asturias

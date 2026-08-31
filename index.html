@@ -132,8 +132,11 @@
         </div>
       </div>
 
-      <!-- 3. MAR CANTÁBRICO -->
+      <!-- 3. MAR CANTÁBRICO (PLAYAS & MAREAS) -->
       <div id="panel-marine" class="tab-panel"></div>
+
+      <!-- 3b. SURF & ROMPIENTES -->
+      <div id="panel-surf" class="tab-panel"></div>
 
       <!-- 4. MONTAÑA & NIEVE -->
       <div id="panel-mountain" class="tab-panel"></div>
@@ -169,7 +172,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.57 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.58 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -193,7 +196,7 @@
         <button id="btn-close-modal" class="btn-close" aria-label="Cerrar modal">&times;</button>
       </div>
       <div class="modal-body">
-        <div class="shortcut-row"><kbd>1</kbd> - <kbd>7</kbd><span>Cambiar entre pestañas (1: Vivo ... 7: Comparador)</span></div>
+        <div class="shortcut-row"><kbd>1</kbd> - <kbd>8</kbd><span>Cambiar entre módulos (1: Vivo ... 8: Cosmos)</span></div>
         <div class="shortcut-row"><kbd>S</kbd> / <kbd>/</kbd><span>Abrir buscador rápido de los 78 concejos</span></div>
         <div class="shortcut-row"><kbd>R</kbd><span>Refrescar datos meteorológicos en directo</span></div>
         <div class="shortcut-row"><kbd>F</kbd><span>Añadir o quitar concejo actual de Favoritos</span></div>
@@ -217,8 +220,17 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.57 🚀</span>
+            <span class="release-version">v1.0.58 🚀</span>
             <span class="release-date">31 Ago 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Módulos Separados</span> <strong>División Especializada de Costa en Turismo y Surf</strong>: Separación completa en dos submódulos dedicados: <strong>🏖️ Playas & Mareas</strong> (enfocado a turismo, baño, mareógrafo 72h, fases lunares, estado de baño y catálogo de calas/arenales) y <strong>🏄‍♂️ Surf & Rompientes</strong> (enfocado a surfistas con swell, período, mar de fondo, viento offshore/onshore en vivo, suite didáctica y catálogo de picos bautizados y fondos). Menú ampliado a 8 accesos directos armonizados.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.0.57</span>
+            <span class="release-date">31 Ago 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-new">Inteligencia de Surf</span> <strong>Viento Offshore / Onshore en Tiempo Real & Picos de Asturias</strong>: Detector aerodinámico en vivo cruzando viento y orientación del litoral (Offshore 🟢, Onshore 🔴, Cross-shore 🟡, Glassy ✨), botón interactivo didáctico [ 💡 Guía de Surf ] y catálogo exhaustivo de playas asturianas con sus picos bautizados, tipo de fondo (Arena / Roca) y dirección de ola (Izquierdas / Derechas / A-Frame).</li>
@@ -1324,7 +1336,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.57').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.58').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1345,6 +1357,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.57"></script>
+  <script type="module" src="js/app.js?v=1.0.58"></script>
 </body>
 </html>

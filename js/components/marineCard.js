@@ -1,11 +1,11 @@
-import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.57';
+import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.58';
 import { 
   getMoonAndTideInfo, 
   getDailyTideEvents, 
   getRealtimeTideStatus, 
   getWeeklyTides, 
   renderTideSvgGraph 
-} from '../utils/tides.js?v=1.0.57';
+} from '../utils/tides.js?v=1.0.58';
 
 /**
  * Base de datos exhaustiva y profesional de playas, picos de surf y fondos marinos de Asturias
@@ -785,7 +785,7 @@ export function getSurfWindCondition(windDirDeg, windSpeedKm) {
 
 /**
  * Renderiza el módulo marítimo con Mareógrafo interactivo en tiempo real, 
- * Cuadro semanal de mareas e Inteligencia de Surf y Picos de Asturias
+ * Cuadro semanal de mareas y Catálogo de Playas y Calas de Asturias (Turismo y Baño)
  */
 export function renderMarineCard(data, concejo) {
   const marine = data.marine?.current;
@@ -798,58 +798,58 @@ export function renderMarineCard(data, concejo) {
   const activeCoastName = isCoasting ? coastalData.name : `${interiorRef.name} (más cercana a ${concejo.name} • ${interiorRef.dist})`;
 
   const waveHeight = (marine && typeof marine.wave_height === 'number') ? marine.wave_height.toFixed(1) : (isCoasting ? '1.4' : '1.3');
-  const swellHeight = (marine && typeof marine.swell_wave_height === 'number') ? marine.swell_wave_height.toFixed(1) : ((marine && typeof marine.wave_height === 'number') ? marine.wave_height.toFixed(1) : '1.2');
-  const wavePeriod = (marine && typeof marine.wave_period === 'number') ? Math.round(marine.wave_period) : 11;
-  const waveDir = (marine && typeof marine.wave_direction === 'number') ? getWindDirection(marine.wave_direction) : { name: 'Noroeste (NW)' };
-  const windWaveH = (marine && typeof marine.wind_wave_height === 'number') ? marine.wind_wave_height.toFixed(1) : '0.6';
 
   const windSpeed = Math.round(current.wind_speed_10m || 10);
   const windDeg = current.wind_direction_10m || 0;
   const windDirObj = getWindDirection(windDeg);
-  const surfWind = getSurfWindCondition(windDeg, windSpeed);
 
   const h = parseFloat(waveHeight);
   let douglasDegree = 3;
   let douglasName = 'Marejada';
   let flagColor = '#f59e0b';
   let flagBadge = '🟡 Bandera Amarilla';
-  let surfStatus = `🏄‍♂️ Olas consistentes. Muy buenas condiciones para surf en la costa de ${isCoasting ? concejo.name : interiorRef.name}.`;
+  let bathStatus = 'Precaución en el baño. Oleaje moderado con corriente en orilla.';
 
   if (h < 0.6) {
     douglasDegree = 1;
     douglasName = 'Mar Calma / Rizada';
     flagBadge = '🟢 Bandera Verde';
     flagColor = '#10b981';
-    surfStatus = '🏖️ Mar en calma. Día ideal para paseo por la arena, baño en familia y paddle surf (SUP).';
+    bathStatus = 'Condiciones excelentes para el baño, paseo por la orilla y niños.';
   } else if (h < 1.3) {
     douglasDegree = 2;
     douglasName = 'Marejadilla';
     flagBadge = '🟢 Bandera Verde / Amarilla';
     flagColor = '#10b981';
-    surfStatus = '🏄‍♂️ Olas medianas de 1m. Ideal para iniciación al surf, longboard y baño tranquilo.';
+    bathStatus = 'Mar en buenas condiciones. Baño agradable prestando atención a zonas de rompiente.';
   } else if (h <= 2.6) {
     douglasDegree = 3;
     douglasName = 'Marejada Consistente';
     flagBadge = '🟡 Bandera Amarilla';
     flagColor = '#f59e0b';
-    surfStatus = `🔥 ¡Condiciones TOP de Surf! Rompientes activas en las playas de ${isCoasting ? concejo.name : interiorRef.name}.`;
+    bathStatus = 'Precaución en el baño. Oleaje marcado y corrientes de resaca en orilla.';
   } else if (h <= 3.8) {
     douglasDegree = 4;
     douglasName = 'Fuerte Marejada';
     flagBadge = '🔴 Bandera Roja';
     flagColor = '#ef4444';
-    surfStatus = '⚠️ Rompientes potentes (+3m). Solo surfistas experimentados. Precaución en paseos marítimos.';
+    bathStatus = 'Peligro. Baño desaconsejado por fuerte oleaje y corrientes.';
   } else {
     douglasDegree = 5;
     douglasName = 'Mar Gruesa / Temporal';
     flagBadge = '🔴 Bandera Roja / Temporal';
     flagColor = '#ef4444';
-    surfStatus = '🚨 Temporal costero activo. Prohibido el baño. Mar no navegable.';
+    bathStatus = '🚨 Temporal costero activo. Prohibido el baño en todas las playas.';
   }
 
   // Temperatura del agua
   const now = new Date();
-  const seaTemp = (16.2 + Math.sin((now.getMonth() - 2) * 0.5) * 4.2).toFixed(1);
+  const seaTemp = (marine && typeof marine.sea_surface_temperature === 'number') 
+    ? marine.sea_surface_temperature.toFixed(1) 
+    : (16.2 + Math.sin((now.getMonth() - 2) * 0.5) * 4.2).toFixed(1);
+
+  // Visibilidad costera
+  const visibilityKm = (current.visibility / 1000 || 10).toFixed(0);
 
   // Coordenada longitudinal local para cálculo exacto de mareas
   const targetLon = (isCoasting && typeof concejo.lon === 'number') ? concejo.lon : (concejo.lon || -5.6615);
@@ -863,16 +863,16 @@ export function renderMarineCard(data, concejo) {
     <div class="marine-card">
       <div class="section-title-wrap">
         <div>
-          <h3 class="section-heading">🌊 Costa, Playas & Surf de ${concejo.name}</h3>
+          <h3 class="section-heading">🏖️ Playas, Mareas & Turismo de ${concejo.name}</h3>
           <span class="section-subtitle">
             ${isCoasting 
-              ? `Litoral de ${concejo.name} (${coastalData.region}) • Modelo Marino Copernicus / ECMWF`
+              ? `Litoral de ${concejo.name} (${coastalData.region}) • Guía costera, mareas y arenales`
               : `🌲 ${concejo.name} es concejo de interior. Datos enfocados a la costa más cercana: ${interiorRef.name}`
             }
           </span>
         </div>
         <div class="sea-state-pill" style="background: ${flagColor}22; color: ${flagColor}; border: 1px solid ${flagColor};">
-          Grado ${douglasDegree} • ${douglasName}
+          ${flagBadge}
         </div>
       </div>
 
@@ -1042,39 +1042,39 @@ export function renderMarineCard(data, concejo) {
         </div>
       </div>
 
-      <!-- 3. GRID DE SENSORES MARINOS Y CONDICIONES GENERALES -->
+      <!-- 3. GRID DE SENSORES TURÍSTICOS Y CONDICIONES DE PLAYA -->
       <div class="marine-grid">
-        <!-- Altura de Ola -->
-        <div class="marine-widget">
-          <div class="widget-label">Altura del Oleaje (Significativa)</div>
-          <div class="widget-value">${waveHeight} <span class="unit">metros</span></div>
-          <div class="widget-detail">Mar de fondo (Swell): <strong>${swellHeight} m</strong></div>
-          <div class="widget-detail">Mar de viento: <strong>${windWaveH} m</strong></div>
-        </div>
-
-        <!-- Período y Dirección para Surf -->
-        <div class="marine-widget">
-          <div class="widget-label">Período y Dirección del Swell</div>
-          <div class="widget-value">${wavePeriod} <span class="unit">segundos</span></div>
-          <div class="widget-detail">Dirección del oleaje: <strong>${waveDir.name}</strong></div>
-          <div class="widget-detail">Viento en orilla: <strong>${windSpeed} km/h (${windDirObj.name})</strong></div>
-        </div>
-
-        <!-- Temperatura del Agua y Confort Turístico -->
+        <!-- Temperatura del Agua y Confort -->
         <div class="marine-widget">
           <div class="widget-label">Temperatura del Agua en Playa</div>
           <div class="widget-value">${seaTemp} <span class="unit">°C</span></div>
           <div class="widget-detail">${isCoasting ? `Playas de ${concejo.name}` : `Costa de ${interiorRef.name}`}</div>
-          <div class="widget-detail">Visibilidad costera: <strong>${(current.visibility / 1000 || 10).toFixed(0)} km</strong></div>
+          <div class="widget-detail">Sensación: <strong>${parseFloat(seaTemp) >= 19 ? 'Agradable / Cálida' : (parseFloat(seaTemp) >= 16 ? 'Fresca y vivificante' : 'Fría / Cantábrico')}</strong></div>
         </div>
 
-        <!-- Estado de Surf y Bandera General -->
+        <!-- Visibilidad Costera -->
+        <div class="marine-widget">
+          <div class="widget-label">Visibilidad & Bruma Marina</div>
+          <div class="widget-value">${visibilityKm} <span class="unit">km</span></div>
+          <div class="widget-detail">Viento en costa: <strong>${windSpeed} km/h (${windDirObj.name})</strong></div>
+          <div class="widget-detail">Ambiente: <strong>${parseFloat(visibilityKm) >= 15 ? 'Cielos limpios y diáfanos' : 'Ligera bruma marina'}</strong></div>
+        </div>
+
+        <!-- Estado de la Mar (Douglas) -->
+        <div class="marine-widget">
+          <div class="widget-label">Estado de la Mar (Escala Douglas)</div>
+          <div class="widget-value">${waveHeight} <span class="unit">m</span></div>
+          <div class="widget-detail">Grado: <strong>Grado ${douglasDegree} (${douglasName})</strong></div>
+          <div class="widget-detail">Tipo de mar: <strong>${h < 1.0 ? 'Mar en calma / Rizada' : 'Oleaje atlántico cantábrico'}</strong></div>
+        </div>
+
+        <!-- Bandera y Seguridad de Baño -->
         <div class="marine-widget surf-turismo-visual-widget">
           <div class="surf-widget-top">
             <div class="surf-title-row">
-              <span class="surf-title-icon">🏄‍♂️</span>
+              <span class="surf-title-icon">🚩</span>
               <div>
-                <div class="surf-title-main">Surf & Turismo de Playa</div>
+                <div class="surf-title-main">Seguridad & Bandera de Baño</div>
                 <div class="surf-title-sub">${isCoasting ? `Litoral de ${concejo.name}` : `Costa de ${interiorRef.name}`}</div>
               </div>
             </div>
@@ -1083,77 +1083,21 @@ export function renderMarineCard(data, concejo) {
             </div>
           </div>
 
-          <div class="surf-status-banner">
-            ${surfStatus}
+          <div class="surf-status-banner" style="color: ${flagColor};">
+            ${bathStatus}
           </div>
         </div>
       </div>
 
-      <!-- 4. PANEL DE INTELIGENCIA DE SURF: VIENTO OFFSHORE/ONSHORE & GUÍA DIDÁCTICA -->
-      <div class="marine-widget surf-intelligence-card" style="margin-top: 20px; margin-bottom: 20px;">
-        <div class="surf-intel-header">
-          <div class="surf-intel-title-wrap">
-            <span class="surf-intel-icon">🧭</span>
-            <div>
-              <div class="surf-intel-title">Calidad de Viento para Surf (Offshore / Onshore)</div>
-              <div class="surf-intel-subtitle">Análisis aerodinámico en vivo cruzando viento y orientación cantábrica</div>
-            </div>
-          </div>
-          <button class="btn-explain-sensor surf-guide-btn" data-explain="surf" title="Aprender sobre Offshore, Fondos, Izquierdas y Picos">
-            💡 Guía de Surf y Olas
-          </button>
-        </div>
-
-        <div class="surf-wind-analysis-grid">
-          <!-- Tarjeta de Estado del Viento en Vivo -->
-          <div class="surf-wind-pill-card ${surfWind.statusClass}">
-            <div class="surf-wind-badge-row">
-              <span class="surf-wind-status-badge" style="background: ${surfWind.color}22; color: ${surfWind.color}; border: 1px solid ${surfWind.color}80;">
-                ${surfWind.badge}
-              </span>
-              <span class="surf-wind-reading">${windSpeed} km/h • ${windDirObj.name} (${Math.round(windDeg)}°)</span>
-            </div>
-            <div class="surf-wind-desc-text">
-              <strong>${surfWind.name}:</strong> ${surfWind.desc}
-            </div>
-            <div class="surf-wind-effect-tag">
-              ⚡ <strong>Efecto en la rompiente:</strong> ${surfWind.effect}
-            </div>
-          </div>
-
-          <!-- Consejos de Orientación y Lectura Rápida -->
-          <div class="surf-quick-tips-card">
-            <div class="quick-tip-row">
-              <span class="tip-icon">🟢</span>
-              <div class="tip-body">
-                <strong>Offshore (Viento Sur):</strong> Ideal. Peina la ola, crea tubos y deja el mar como un espejo.
-              </div>
-            </div>
-            <div class="quick-tip-row">
-              <span class="tip-icon">🔴</span>
-              <div class="tip-body">
-                <strong>Onshore (Viento Norte):</strong> Mar picado (chop), aplasta las olas y genera espuma.
-              </div>
-            </div>
-            <div class="quick-tip-row">
-              <span class="tip-icon">🏄‍♂️</span>
-              <div class="tip-body">
-                <strong>Izquierdas / Derechas:</strong> Se definen siempre mirando hacia la playa desde la ola.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 5. CATÁLOGO DE PLAYAS, PICOS Y FONDOS MARINOS DEL CONCEJO -->
+      <!-- 4. CATÁLOGO TURÍSTICO DE PLAYAS Y CALAS DEL CONCEJO -->
       <div class="marine-ports-section">
         <div class="beach-section-header">
           <div>
             <h4 class="ports-title" style="margin-bottom: 2px;">
-              🏖️ Rompientes, Picos de Surf & Fondos de ${isCoasting ? concejo.name : `${concejo.name} (en ${interiorRef.name})`}
+              🏖️ Guía de Playas y Calas de ${isCoasting ? concejo.name : `${concejo.name} (en ${interiorRef.name})`}
             </h4>
             <span class="beach-section-subtitle">
-              Picos bautizados, tipo de fondo (arena/roca), dirección de ola y marea óptima
+              Arenales, calas con encanto, entorno marinero y mejor momento de marea
             </span>
           </div>
         </div>
@@ -1169,31 +1113,19 @@ export function renderMarineCard(data, concejo) {
               <div class="beach-card-desc">${p.type}</div>
 
               <div class="beach-details-grid">
-                ${p.picos ? `
-                  <div class="beach-detail-item full-width">
-                    <span class="detail-label">📍 Picos de Surf:</span>
-                    <span class="detail-value highlight-pico">${p.picos}</span>
-                  </div>
-                ` : ''}
-
                 <div class="beach-detail-item">
-                  <span class="detail-label">🪨 Fondo Marino:</span>
-                  <span class="detail-value">${p.bottom || '🏖️ Arena (Beach Break)'}</span>
-                </div>
-
-                <div class="beach-detail-item">
-                  <span class="detail-label">🔄 Dirección Ola:</span>
-                  <span class="detail-value">${p.waveType || '↔️ Picos A-Frame'}</span>
+                  <span class="detail-label">🏖️ Entorno / Fondo:</span>
+                  <span class="detail-value">${p.bottom || 'Arena fina dorada'}</span>
                 </div>
 
                 <div class="beach-detail-item">
                   <span class="detail-label">⏳ Marea Óptima:</span>
-                  <span class="detail-value">${p.bestTide || 'Media Marea'}</span>
+                  <span class="detail-value">${p.bestTide || 'Media Marea / Bajamar'}</span>
                 </div>
 
-                <div class="beach-detail-item">
-                  <span class="detail-label">🎯 Nivel:</span>
-                  <span class="detail-value level-badge">${p.surfLevel || 'Todos'}</span>
+                <div class="beach-detail-item full-width">
+                  <span class="detail-label">🎯 Recomendación:</span>
+                  <span class="detail-value">${p.surfLevel.includes('Baño') || p.surfLevel.includes('Familiar') || p.surfLevel.includes('Todos') ? '👨‍👩‍👧‍👦 Ideal para baño, descanso y paseos' : '🌊 Precaución con el oleaje en días de mar viva'}</span>
                 </div>
               </div>
             </div>

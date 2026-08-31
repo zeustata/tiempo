@@ -1,28 +1,30 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.0.57';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.0.57';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=1.0.57';
-import { renderCurrentWeather } from './components/currentCard.js?v=1.0.57';
-import { renderMarineCard } from './components/marineCard.js?v=1.0.57';
-import { renderMountainCard } from './components/mountainCard.js?v=1.0.57';
-import { renderForecast } from './components/forecastView.js?v=1.0.57';
-import { renderWeatherChart } from './components/chartsView.js?v=1.0.57';
-import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.57';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.0.57';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=1.0.57';
-import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.0.57';
-import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.0.57';
-import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.0.57';
-import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.0.57';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.57';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.0.58';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.0.58';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=1.0.58';
+import { renderCurrentWeather } from './components/currentCard.js?v=1.0.58';
+import { renderMarineCard } from './components/marineCard.js?v=1.0.58';
+import { renderSurfCard } from './components/surfCard.js?v=1.0.58';
+import { renderMountainCard } from './components/mountainCard.js?v=1.0.58';
+import { renderForecast } from './components/forecastView.js?v=1.0.58';
+import { renderWeatherChart } from './components/chartsView.js?v=1.0.58';
+import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.58';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.0.58';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=1.0.58';
+import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.0.58';
+import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.0.58';
+import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.0.58';
+import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.0.58';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.58';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, alertas climáticas y calidad del aire', key: '1' },
   { id: 'charts', icon: '📈', title: 'Gráficos 48 Horas', desc: 'Curvas continuas con iconos del cielo, temperatura, lluvia y viento', key: '2' },
   { id: 'forecast', icon: '📅', title: 'Pronósticos', desc: 'Predicción horaria detallada para 72h y evolución por días', key: '3' },
   { id: 'radar', icon: '📡', title: 'Radar Cantábrico', desc: 'Precipitación y tormentas en directo vía satélite RainViewer', key: '4' },
-  { id: 'marine', icon: '🌊', title: 'Costa & Mar', desc: 'Oleaje, mareas, escala Douglas, surf y playas', key: '5' },
-  { id: 'mountain', icon: '🏔️', title: 'Cordillera & Nieve', desc: 'Estado de puertos de montaña, cota de nieve y esquí', key: '6' },
-  { id: 'astronomy', icon: '🔭', title: 'Astronomía & Cosmos', desc: 'Eclipses, lluvias de estrellas, fases lunares y semáforo de visibilidad en Asturias', key: '7' }
+  { id: 'marine', icon: '🏖️', title: 'Playas & Mareas', desc: 'Mareógrafo 72h, fases lunares, estado de baño, bandera y calas', key: '5' },
+  { id: 'surf', icon: '🏄‍♂️', title: 'Surf & Rompientes', desc: 'Swell, período, viento offshore/onshore, picos bautizados y fondos', key: '6' },
+  { id: 'mountain', icon: '🏔️', title: 'Cordillera & Nieve', desc: 'Estado de puertos de montaña, cota de nieve y esquí', key: '7' },
+  { id: 'astronomy', icon: '🔭', title: 'Astronomía & Cosmos', desc: 'Eclipses, lluvias de estrellas, fases lunares y semáforo de visibilidad en Asturias', key: '8' }
 ];
 
 class MeteoAsturiasApp {
@@ -892,7 +894,7 @@ class MeteoAsturiasApp {
 
       const key = e.key.toLowerCase();
 
-      if (e.key >= '1' && e.key <= '7') {
+      if (e.key >= '1' && e.key <= '8') {
         const index = parseInt(e.key, 10) - 1;
         if (tabList[index]) {
           this.switchTab(tabList[index]);
@@ -1161,14 +1163,24 @@ class MeteoAsturiasApp {
       console.error('[MeteoAstur] Error renderizando Vivo:', e);
     }
 
-    // 2. Módulo Marino
+    // 2. Módulo Playas & Mareas
     try {
       const marineContainer = document.getElementById('panel-marine');
       if (marineContainer) {
         marineContainer.innerHTML = renderMarineCard(this.weatherData, this.currentConcejo);
       }
     } catch (e) {
-      console.error('[MeteoAstur] Error renderizando Costa & Mar:', e);
+      console.error('[MeteoAstur] Error renderizando Playas & Mareas:', e);
+    }
+
+    // 2b. Módulo Surf & Rompientes
+    try {
+      const surfContainer = document.getElementById('panel-surf');
+      if (surfContainer) {
+        surfContainer.innerHTML = renderSurfCard(this.weatherData, this.currentConcejo);
+      }
+    } catch (e) {
+      console.error('[MeteoAstur] Error renderizando Surf & Rompientes:', e);
     }
 
     // 3. Módulo Montaña
