@@ -1,4 +1,4 @@
-import { getWeatherInfo, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=1.0.50';
+import { getWeatherInfo, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=1.0.51';
 
 /**
  * Calcula la condición meteorológica representativa para un tramo horario (ej. mañana o tarde)
@@ -123,15 +123,8 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
     `;
   }
 
-  // 2. Pronóstico Diario (Tarjetas Visuales Amplias a 10 Días con desglose Mañana / Tarde)
+  // 2. Pronóstico Diario (Tarjetas Visuales a 10 Días con desglose Mañana / Tarde)
   let dailyCards = '';
-  
-  // Calcular mínimas y máximas globales de la semana para la escala visual
-  const allMins = daily.temperature_2m_min.map(t => Math.round(t));
-  const allMaxs = daily.temperature_2m_max.map(t => Math.round(t));
-  const globalMin = Math.min(...allMins);
-  const globalMax = Math.max(...allMaxs);
-  const tempSpan = Math.max(1, globalMax - globalMin);
 
   for (let d = 0; d < daily.time.length; d++) {
     const dayDateStr = daily.time[d];
@@ -173,10 +166,6 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
       sunsetStr = new Date(daily.sunset[d]).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
     }
 
-    // Cálculo relativo de la barra térmica
-    const leftPercent = Math.max(0, Math.min(85, ((minT - globalMin) / tempSpan) * 100));
-    const widthPercent = Math.max(15, Math.min(100 - leftPercent, ((maxT - minT) / tempSpan) * 100));
-
     dailyCards += `
       <div class="daily-card-rich ${isToday ? 'is-today' : ''}">
         <!-- CABECERA DE LA TARJETA -->
@@ -206,7 +195,7 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
           </div>
         </div>
 
-        <!-- SECCIÓN TÉRMICA DESTACADA (ORGANIZADA EN BLOQUE VERTICAL) -->
+        <!-- SECCIÓN TÉRMICA DESTACADA (ORGANIZADA EN BLOQUE COMPACTO) -->
         <div class="d-temp-section">
           <div class="d-temp-badges-row">
             <div class="temp-badge max">
@@ -220,17 +209,6 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
             <div class="temp-badge osc">
               <span class="tb-label">Rango</span>
               <span class="tb-val osc-val">Δ ${maxT - minT}°</span>
-            </div>
-          </div>
-
-          <div class="d-temp-bar-wrap">
-            <div class="temp-bar-bg">
-              <div class="temp-bar-fill" style="margin-left: ${leftPercent.toFixed(1)}%; width: ${widthPercent.toFixed(1)}%;"></div>
-            </div>
-            <div class="temp-bar-labels">
-              <span>${minT}° Mín</span>
-              <span class="temp-range-text">Rango del día</span>
-              <span>${maxT}° Máx</span>
             </div>
           </div>
         </div>

@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.51] - 2026-08-31
+
+### 📅 Pronósticos a 10 Días: Supresión de Barra Redundante & Máxima Compactación
+- **Eliminación de la Barra de Rango Térmico (`.d-temp-bar-wrap`)**: Retirada de la barra repetitiva de "Rango del día" y sus cálculos asociados (`globalMin`/`globalMax`), eliminando duplicidades y reduciendo sensiblemente la altura de las 10 tarjetas diarias.
+- **Enfoque Térmico Nítido**: Información térmica centralizada en los 3 bloques principales (Máxima, Mínima y Oscilación Δ) con padding compacto (`10px 14px`).
+- **Service Worker `v151-official` & Cache-Busting Total**: Sincronización a `?v=1.0.51` en todos los archivos del proyecto.
+
+---
+
 ## [1.0.50] - 2026-08-31
 
 ### 📅 Pronósticos a 10 Días: Doble Previsión Mañana / Tarde (Opción A - Badge Unificado)
