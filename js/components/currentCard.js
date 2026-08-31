@@ -1,5 +1,5 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.0.55';
-import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.0.55';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.0.56';
+import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.0.56';
 
 /**
  * Renderiza el dashboard principal con alineación uniforme y todos los sensores de la estación
@@ -99,14 +99,14 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
               <span class="compass-cardinal card-s">S</span>
               <span class="compass-cardinal card-w">O</span>
               <div class="compass-needle" style="transform: rotate(${current.wind_direction_10m}deg);">
-                <svg class="wind-arrow-svg" viewBox="0 0 28 80" width="26" height="74" aria-hidden="true">
-                  <!-- Origen / Cola de veleta (donde entra el viento) -->
-                  <path d="M6 8 L14 18 L22 8 L14 3 Z" fill="#94a3b8" stroke="#cbd5e1" stroke-width="1" />
-                  <circle cx="14" cy="18" r="2.5" fill="#f59e0b" />
+                <svg class="wind-arrow-svg" viewBox="0 0 92 92" width="92" height="92" aria-hidden="true">
+                  <!-- Origen / Cola de veleta en el borde exterior (donde entra el viento) -->
+                  <path d="M40 15 L46 23 L52 15 L46 12 Z" fill="#94a3b8" stroke="#cbd5e1" stroke-width="1" />
+                  <circle cx="46" cy="23" r="2" fill="#f59e0b" />
                   <!-- Fuste aerodinámico -->
-                  <line x1="14" y1="18" x2="14" y2="54" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" />
-                  <!-- Punta de flecha (indica hacia dónde sopla) -->
-                  <polygon points="14,76 4,52 14,57 24,52" fill="#38bdf8" stroke="#0284c7" stroke-width="1" />
+                  <line x1="46" y1="23" x2="46" y2="36" stroke="#38bdf8" stroke-width="2.8" stroke-linecap="round" />
+                  <!-- Punta de flecha apuntando directamente al centro (hacia el observador) -->
+                  <polygon points="46,43 39,32 46,35 53,32" fill="#38bdf8" stroke="#0284c7" stroke-width="1" />
                 </svg>
               </div>
               <div class="compass-center-dot"></div>

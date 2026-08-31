@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.56] - 2026-08-31
+
+### 🧭 Anemómetro: Orientación Náutica Perímetro ➔ Centro
+- **Geometría de Flujo Hacia el Observador**: Rediseño del vector de la flecha en la rosa de los vientos para que nazca en el cuadrante exterior de procedencia y desemboque exactamente sobre el punto de pivote central (donde se sitúa el usuario / estación meteorológica).
+- **Intuición Cartográfica Plena**: Al originarse en el borde exterior y apuntar hacia el centro, el impacto visual del viento es inmediato e inequívoco en cualquier ángulo de giro (0° a 360°).
+- **Service Worker `v156-official` & Cache-Busting Total**: Sincronización a `?v=1.0.56` en toda la app.
+
+---
+
 ## [1.0.55] - 2026-08-31
 
 ### 🛠️ Corrección: Restauración de los 6 Sensores en Estación en Vivo
