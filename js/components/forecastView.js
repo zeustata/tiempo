@@ -16,7 +16,8 @@ function getDaypartWeather(hourly, dayDateStr, startHour, endHour, fallbackCode,
   for (let i = 0; i < hourly.time.length; i++) {
     const tStr = hourly.time[i];
     if (tStr.startsWith(dayDateStr)) {
-      const h = new Date(tStr).getHours();
+      const parts = tStr.split('T');
+      const h = parts[1] ? parseInt(parts[1].split(':')[0], 10) : new Date(tStr).getHours();
       if (h >= startHour && h <= endHour) {
         hoursCount++;
         const pop = hourly.precipitation_probability ? (hourly.precipitation_probability[i] || 0) : 0;
