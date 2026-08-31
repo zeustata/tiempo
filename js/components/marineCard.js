@@ -1,11 +1,11 @@
-import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.70';
+import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.71';
 import { 
   getMoonAndTideInfo, 
   getDailyTideEvents, 
   getRealtimeTideStatus, 
   getWeeklyTides, 
   renderTideSvgGraph 
-} from '../utils/tides.js?v=1.0.70';
+} from '../utils/tides.js?v=1.0.71';
 
 /**
  * Base de datos exhaustiva y profesional de playas, picos de surf y fondos marinos de Asturias
@@ -1138,18 +1138,22 @@ export function renderMarineCard(data, concejo) {
           </div>
         </div>
 
-        <!-- Mareas de Hoy en Estructura a 2 Niveles (Liquid Glass, Cero Colisiones) -->
-        <div class="daily-tides-grid">
-          ${(tideStatus.dayData.events || []).map((ev, idx) => {
+        <!-- Mareas de Hoy Organizadas por Ciclos Diarios -->
+        ${(() => {
+          const events = tideStatus.dayData.events || [];
+          const ev0 = events[0];
+          const ev1 = events[1];
+          const ev2 = events[2];
+          const ev3 = events[3];
+
+          const renderSubItem = (ev) => {
+            if (!ev) return '';
             const isHigh = ev.type === 'high';
             return `
               <div class="tide-sub-item ${isHigh ? 'high' : 'low'}">
                 <div class="tide-sub-top">
-                  <div class="tide-sub-type-badge">
-                    <span class="tide-sub-icon">${isHigh ? '🌅' : '🏖️'}</span>
-                    <span class="tide-sub-name">${ev.name}</span>
-                  </div>
-                  <span class="tide-sub-order">#${idx + 1}</span>
+                  <span class="tide-sub-icon">${isHigh ? '🌅' : '🏖️'}</span>
+                  <span class="tide-sub-name">${ev.name}</span>
                 </div>
                 <div class="tide-sub-bottom">
                   <span class="tide-sub-time">${ev.timeStr}</span>
@@ -1157,8 +1161,45 @@ export function renderMarineCard(data, concejo) {
                 </div>
               </div>
             `;
-          }).join('')}
-        </div>
+          };
+
+          return `
+            <div class="daily-tide-cycles-grid">
+              <!-- Tarjeta 1 (1ª Marea del Día) -->
+              <div class="tide-cycle-card">
+                <div class="tide-cycle-header">
+                  <span class="cycle-badge">🌅 1ª Marea del Día</span>
+                </div>
+                <div class="tide-cycle-items">
+                  ${renderSubItem(ev0)}
+                  ${renderSubItem(ev1)}
+                </div>
+              </div>
+
+              <!-- Tarjeta 2 (2ª Marea del Día) -->
+              <div class="tide-cycle-card">
+                <div class="tide-cycle-header">
+                  <span class="cycle-badge">🌙 2ª Marea del Día</span>
+                </div>
+                <div class="tide-cycle-items">
+                  ${renderSubItem(ev2)}
+                  ${ev3 ? renderSubItem(ev3) : `
+                    <div class="tide-sub-item low" style="opacity: 0.75; border-style: dashed;">
+                      <div class="tide-sub-top">
+                        <span class="tide-sub-icon">⏳</span>
+                        <span class="tide-sub-name">Próx. Ciclo</span>
+                      </div>
+                      <div class="tide-sub-bottom">
+                        <span class="tide-sub-time">Madrugada</span>
+                        <span class="tide-sub-height">Día sig.</span>
+                      </div>
+                    </div>
+                  `}
+                </div>
+              </div>
+            </div>
+          `;
+        })()}
       </div>
 
       <!-- 2. CUADRO SEMANAL DE MAREAS & COEFICIENTES (7 DÍAS) -->

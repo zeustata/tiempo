@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.71] - 2026-08-31
+
+### 🏖️ Restauración Estable: Mareas de Hoy por Ciclos Diarios
+- **Restauración de 2 Tarjetas de Ciclo Diarias (`.tide-cycle-card`)**: Vuelta al diseño contrastado y validado en el historial con 2 bloques de ciclo (`🌅 1ª Marea del Día` y `🌙 2ª Marea del Día`), conteniendo las pleamares y bajamares una debajo de otra (`.tide-sub-item`) a 2 niveles (nombre arriba, hora y metros abajo).
+- **Service Worker `v171-official` & Cache-Busting Total**: Sincronización completa a `?v=1.0.71` en scripts, estilos y manifest.
+
+---
+
 ## [1.0.70] - 2026-08-31
 
 ### 🎯 Sincronización en Vivo con Auto-Centrado & Cuadrícula 2x2 Compacta

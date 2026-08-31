@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.70">
-  <link rel="stylesheet" href="css/components.css?v=1.0.70">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.70">
+  <link rel="stylesheet" href="css/main.css?v=1.0.71">
+  <link rel="stylesheet" href="css/components.css?v=1.0.71">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.71">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -172,7 +172,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.70 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.71 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -220,21 +220,20 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.70 🚀</span>
+            <span class="release-version">v1.0.71 🚀</span>
             <span class="release-date">31 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-ui">Auto-Centrado</span> <strong>Sincronización en Vivo del Mareógrafo (72h)</strong>: Centrado automático en el marcador en tiempo real ("AHORA") al abrir la vista de Playas & Mareas, y optimización de altura de la curva a 200px para llenar armónicamente el visor.</li>
-            <li><span class="tag tag-ui">Cuadrícula 2x2</span> <strong>Mareas de Hoy en Cuadrícula Compacta 2x2</strong>: Cuadrícula fija simétrica de 2 columnas x 2 filas en una sola tarjeta sin desbordes ni scroll vertical innecesario en móviles.</li>
+            <li><span class="tag tag-ui">Restauración Estable</span> <strong>Mareas de Hoy por Ciclos Diarios</strong>: Restauración completa de las 2 tarjetas de ciclo diarias (1ª Marea y 2ª Marea) con disposición a 2 niveles (nombre arriba, hora y metros abajo) uno debajo del otro, garantizando máxima legibilidad y estabilidad en todos los dispositivos.</li>
           </ul>
         </div>
         <div class="changelog-release">
           <div class="release-header">
-            <span class="release-version">v1.0.69</span>
+            <span class="release-version">v1.0.70</span>
             <span class="release-date">31 Ago 2026</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-ui">Tarjeta Única</span> Mareas de Hoy en Tarjeta Única a 2 Niveles.</li>
+            <li><span class="tag tag-ui">Auto-Centrado</span> Auto-centrado en tiempo real del Mareógrafo de 72h.</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -1445,7 +1444,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.70').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.71').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1466,6 +1465,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.70"></script>
+  <script type="module" src="js/app.js?v=1.0.71"></script>
 </body>
 </html>
