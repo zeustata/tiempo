@@ -722,120 +722,115 @@
   }
 }
 
-.tide-cycle-card {
-  background: var(--bg-surface-elevated);
-  border: 1px solid var(--border-glass);
-  border-radius: var(--radius-md);
-  padding: 14px 16px;
-  display: flex;
-  flex-direction: column;
+/* --- MAREAS DEL DÍA COMPACTAS & DINÁMICAS (3 O 4 MAREAS) --- */
+.daily-tides-compact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
   gap: 10px;
   width: 100%;
+  margin-top: 14px;
   box-sizing: border-box;
-  overflow: hidden;
+}
+
+@media (max-width: 480px) {
+  .daily-tides-compact-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+}
+
+.tide-compact-pill {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-glass);
+  background: var(--bg-surface-elevated);
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
 }
 
-.tide-cycle-card:hover {
+.tide-compact-pill:hover {
   transform: translateY(-2px);
-  border-color: rgba(56, 189, 248, 0.4);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
 }
 
-.tide-cycle-header {
+.tide-compact-pill.high {
+  border-color: rgba(56, 189, 248, 0.35);
+  background: linear-gradient(145deg, rgba(2, 132, 199, 0.16), rgba(15, 23, 42, 0.55));
+}
+
+.tide-compact-pill.low {
+  border-color: rgba(245, 158, 11, 0.35);
+  background: linear-gradient(145deg, rgba(245, 158, 11, 0.14), rgba(15, 23, 42, 0.55));
+}
+
+.tide-compact-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.cycle-badge {
-  font-size: 0.82rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  color: #e2e8f0;
-}
-
-.tide-cycle-items {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.tide-sub-item {
-  display: flex;
-  flex-direction: column;
   gap: 4px;
-  padding: 10px 14px;
-  border-radius: var(--radius-sm);
-  border: 1px solid transparent;
-  width: 100%;
-  box-sizing: border-box;
-  transition: all 0.15s ease;
 }
 
-.tide-sub-item.high {
-  border-color: rgba(56, 189, 248, 0.35);
-  background: linear-gradient(135deg, rgba(2, 132, 199, 0.16), rgba(15, 23, 42, 0.45));
-}
-
-.tide-sub-item.low {
-  border-color: rgba(245, 158, 11, 0.35);
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.14), rgba(15, 23, 42, 0.45));
-}
-
-.tide-sub-top {
+.tide-compact-title {
   display: flex;
   align-items: center;
   gap: 6px;
 }
 
-.tide-sub-icon {
-  font-size: 1.1rem;
+.tide-compact-icon {
+  font-size: 1.05rem;
+  line-height: 1;
 }
 
-.tide-sub-name {
-  font-size: 0.78rem;
+.tide-compact-name {
+  font-size: 0.76rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: #e2e8f0;
 }
 
-.tide-sub-item.high .tide-sub-name {
+.tide-compact-pill.high .tide-compact-name {
   color: #bae6fd;
 }
 
-.tide-sub-item.low .tide-sub-name {
+.tide-compact-pill.low .tide-compact-name {
   color: #fde68a;
 }
 
-.tide-sub-bottom {
+.tide-compact-order {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 1px 6px;
+  border-radius: 6px;
+}
+
+.tide-compact-body {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  width: 100%;
+  gap: 6px;
+  margin-top: 2px;
 }
 
-.tide-sub-time {
+.tide-compact-time {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 1.35rem;
+  font-size: 1.2rem;
   font-weight: 800;
   color: #ffffff;
   letter-spacing: 0.5px;
 }
 
-.tide-sub-height {
-  font-size: 0.95rem;
+.tide-compact-height {
+  font-size: 0.88rem;
   font-weight: 700;
   color: var(--primary-light, #38bdf8);
 }
 
-.tide-sub-item.low .tide-sub-height {
+.tide-compact-pill.low .tide-compact-height {
   color: #fbbf24;
 }
 

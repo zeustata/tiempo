@@ -1,11 +1,11 @@
-import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.65';
+import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.66';
 import { 
   getMoonAndTideInfo, 
   getDailyTideEvents, 
   getRealtimeTideStatus, 
   getWeeklyTides, 
   renderTideSvgGraph 
-} from '../utils/tides.js?v=1.0.65';
+} from '../utils/tides.js?v=1.0.66';
 
 /**
  * Base de datos exhaustiva y profesional de playas, picos de surf y fondos marinos de Asturias
@@ -1138,68 +1138,27 @@ export function renderMarineCard(data, concejo) {
           </div>
         </div>
 
-        <!-- 2 Ciclos del Día en Orden Cronológico Real (Plea/Baja o Baja/Plea) -->
-        ${(() => {
-          const events = tideStatus.dayData.events || [];
-          const ev0 = events[0] || { type: 'high', name: 'Pleamar', timeStr: '--:--', height: '--' };
-          const ev1 = events[1] || { type: 'low', name: 'Bajamar', timeStr: '--:--', height: '--' };
-          const ev2 = events[2] || { type: 'high', name: 'Pleamar', timeStr: '--:--', height: '--' };
-          const ev3 = events[3];
-
-          const renderSubItem = (ev) => {
-            if (!ev) return '';
+        <!-- Mareas de Hoy en Formato Compacto y Dinámico (Adaptable a 3 o 4 mareas reales) -->
+        <div class="daily-tides-compact-grid">
+          ${(tideStatus.dayData.events || []).map((ev, idx) => {
             const isHigh = ev.type === 'high';
             return `
-              <div class="tide-sub-item ${isHigh ? 'high' : 'low'}">
-                <div class="tide-sub-top">
-                  <span class="tide-sub-icon">${isHigh ? '🌅' : '🏖️'}</span>
-                  <span class="tide-sub-name">${ev.name}</span>
+              <div class="tide-compact-pill ${isHigh ? 'high' : 'low'}">
+                <div class="tide-compact-header">
+                  <div class="tide-compact-title">
+                    <span class="tide-compact-icon">${isHigh ? '🌅' : '🏖️'}</span>
+                    <span class="tide-compact-name">${ev.name}</span>
+                  </div>
+                  <span class="tide-compact-order">#${idx + 1}</span>
                 </div>
-                <div class="tide-sub-bottom">
-                  <span class="tide-sub-time">${ev.timeStr}</span>
-                  <span class="tide-sub-height">${ev.height} m</span>
+                <div class="tide-compact-body">
+                  <span class="tide-compact-time">${ev.timeStr}</span>
+                  <span class="tide-compact-height">${ev.height} m</span>
                 </div>
               </div>
             `;
-          };
-
-          return `
-            <div class="daily-tide-cycles-grid">
-              <!-- Tarjeta 1 (1ª Marea del Día) -->
-              <div class="tide-cycle-card">
-                <div class="tide-cycle-header">
-                  <span class="cycle-badge">🌅 1ª Marea del Día</span>
-                </div>
-                <div class="tide-cycle-items">
-                  ${renderSubItem(ev0)}
-                  ${renderSubItem(ev1)}
-                </div>
-              </div>
-
-              <!-- Tarjeta 2 (2ª Marea del Día) -->
-              <div class="tide-cycle-card">
-                <div class="tide-cycle-header">
-                  <span class="cycle-badge">🌙 2ª Marea del Día</span>
-                </div>
-                <div class="tide-cycle-items">
-                  ${renderSubItem(ev2)}
-                  ${ev3 ? renderSubItem(ev3) : `
-                    <div class="tide-sub-item low" style="opacity: 0.75; border-style: dashed;">
-                      <div class="tide-sub-top">
-                        <span class="tide-sub-icon">⏳</span>
-                        <span class="tide-sub-name">Próx. Ciclo</span>
-                      </div>
-                      <div class="tide-sub-bottom">
-                        <span class="tide-sub-time">Madrugada</span>
-                        <span class="tide-sub-height">Día sig.</span>
-                      </div>
-                    </div>
-                  `}
-                </div>
-              </div>
-            </div>
-          `;
-        })()}
+          }).join('')}
+        </div>
       </div>
 
       <!-- 2. CUADRO SEMANAL DE MAREAS & COEFICIENTES (7 DÍAS) -->

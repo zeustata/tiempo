@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.66] - 2026-08-31
+
+### 🏖️ Mareas del Día en Pastillas Compactas & Dinámicas (3 o 4 Mareas)
+- **Rejilla Dinámica Adaptable**: Rediseño integral de las mareas diarias en `marineCard.js`, sustituyendo los dos contenedores sobredimensionados por pastillas horizontales de cristal (`.tide-compact-pill`) que ahorran un 65% de espacio vertical.
+- **Soporte Astronómico Exacto**: Renderizado directo de los eventos reales del día (`events.map`), adaptándose de forma natural a días con 3 o 4 mareas sin inventar ciclos ficticios.
+- **Service Worker `v166-official`**: Actualización inmediata en caché.
+
+---
+
 ## [1.0.65] - 2026-08-31
 
 ### 🔧 Corrección Crítica de Exportación de Módulos (ES Modules)
