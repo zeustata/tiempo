@@ -76,11 +76,11 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
     </div>
 
     <!-- TARJETA OFICIAL DE ALERTAS Y AVISOS AEMET -->
-    ${aemetCardMarkup}
+    ${alertCardHtml}
 
     <!-- SENSORS GRID -->
     <div class="sensors-grid">
-      <!-- 1. ANEMÓMETRO & ROSA DE LOS VIENTOS -->
+      <!-- 1. ANEMÓMETRO Y DIRECCIÓN -->
       <div class="sensor-card">
         <div class="sensor-header">
           <div class="sensor-header-left">
@@ -91,19 +91,31 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
         </div>
         <div class="sensor-body wind-body">
           <div class="compass-wrapper">
-            <div class="compass-dial">
+            <div class="compass-dial" title="Rosa de los vientos: Viento del ${windDir.name} (${current.wind_direction_10m}°), entra por el ${windDir.name} y sopla hacia el ${windDir.toName}">
+              <div class="compass-axis-v"></div>
+              <div class="compass-axis-h"></div>
               <span class="compass-cardinal card-n">N</span>
               <span class="compass-cardinal card-e">E</span>
               <span class="compass-cardinal card-s">S</span>
               <span class="compass-cardinal card-w">O</span>
               <div class="compass-needle" style="transform: rotate(${current.wind_direction_10m}deg);">
-                <div class="needle-arrow"></div>
+                <svg class="wind-arrow-svg" viewBox="0 0 28 80" width="26" height="74" aria-hidden="true">
+                  <!-- Origen / Cola de veleta (donde entra el viento) -->
+                  <path d="M6 8 L14 18 L22 8 L14 3 Z" fill="#94a3b8" stroke="#cbd5e1" stroke-width="1" />
+                  <circle cx="14" cy="18" r="2.5" fill="#f59e0b" />
+                  <!-- Fuste aerodinámico -->
+                  <line x1="14" y1="18" x2="14" y2="54" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" />
+                  <!-- Punta de flecha (indica hacia dónde sopla) -->
+                  <polygon points="14,76 4,52 14,57 24,52" fill="#38bdf8" stroke="#0284c7" stroke-width="1" />
+                </svg>
               </div>
+              <div class="compass-center-dot"></div>
             </div>
           </div>
           <div class="wind-info">
             <div class="sensor-val">${windSpeed} <small>${windUnit}</small></div>
             <div class="sensor-sub">Dirección: <strong>${windDir.name} (${current.wind_direction_10m}°)</strong></div>
+            <div class="sensor-sub wind-flow-tag">Viene del <strong>${windDir.short}</strong> ➔ sopla al <strong>${windDir.to}</strong></div>
             <div class="sensor-sub">Racha máx hoy: <strong>${windGusts} ${windUnit}</strong></div>
           </div>
         </div>

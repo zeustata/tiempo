@@ -140,5 +140,6 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Supresión de la barra horizontal redundante de "Rango del día" en tarjetas de pronóstico diario, reduciendo altura y dejando las 3 cajas térmicas esenciales (Máx, Mín, Oscilación Δ) con salto a **v1.0.51** (SW `v151-official`).
 - Unificación total de métricas y temperaturas de tarjetas diarias a 10 días en un único panel armónico de 2 filas (Opción 1), ahorrando más del 40% de altura con salto a **v1.0.52** (SW `v152-official`).
 - Reordenación simétrica de temperaturas en panel diario (🔻 Mínima a la izquierda / 🔺 Máxima a la derecha) y retirada de oscilación para eliminar desbordes en móviles con salto a **v1.0.53** (SW `v153-official`).
+- Flecha aerodinámica vectorial SVG en el anemómetro/rosa de los vientos (cola de origen, fuste y punta hacia el destino) con aclaración de flujo (Viene de ➔ va hacia) con salto a **v1.0.54** (SW `v154-official`).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 

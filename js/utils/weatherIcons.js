@@ -1,7 +1,7 @@
-import { getAsturWeatherSvg } from './weatherAsturIcons.js?v=1.0.49';
-import { getPixelWeatherSvg } from './weatherPixelIcons.js?v=1.0.49';
-import { getNeonWeatherSvg } from './weatherNeonIcons.js?v=1.0.49';
-import { getSketchWeatherSvg } from './weatherSketchIcons.js?v=1.0.49';
+import { getAsturWeatherSvg } from './weatherAsturIcons.js?v=1.0.54';
+import { getPixelWeatherSvg } from './weatherPixelIcons.js?v=1.0.54';
+import { getNeonWeatherSvg } from './weatherNeonIcons.js?v=1.0.54';
+import { getSketchWeatherSvg } from './weatherSketchIcons.js?v=1.0.54';
 
 /**
  * Mapeo de códigos meteorológicos WMO a descripciones en asturiano/castellano, iconos y clases
@@ -90,7 +90,7 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
         };
       }
       // Caso 2: Lluvia moderada (prob >= 45% o p >= 0.5 mm)
-      else if (prob >= 45 || p >= 0.5) {
+      else if (prob >= 45 || p >= 0.5 || code === 61 || code === 63 || code === 81) {
         base = {
           label: 'Lluvia moderada',
           icon: '🌧️',
@@ -152,14 +152,14 @@ export function renderWeatherIconHtml(weatherInfo, size = 32, theme = 'classic')
 
 export function getWindDirection(degrees) {
   const directions = [
-    { name: 'Norte', short: 'N', isSouth: false },
-    { name: 'Noreste', short: 'NE', isSouth: false },
-    { name: 'Este', short: 'E', isSouth: false },
-    { name: 'Sureste', short: 'SE', isSouth: true },
-    { name: 'Sur (Vientu del Sur)', short: 'S', isSouth: true },
-    { name: 'Suroeste', short: 'SW', isSouth: true },
-    { name: 'Oeste', short: 'W', isSouth: false },
-    { name: 'Noroeste', short: 'NW', isSouth: false }
+    { name: 'Norte', short: 'N', to: 'S', toName: 'Sur', isSouth: false },
+    { name: 'Noreste', short: 'NE', to: 'SO', toName: 'Suroeste', isSouth: false },
+    { name: 'Este', short: 'E', to: 'O', toName: 'Oeste', isSouth: false },
+    { name: 'Sureste', short: 'SE', to: 'NO', toName: 'Noroeste', isSouth: true },
+    { name: 'Sur (Vientu del Sur)', short: 'S', to: 'N', toName: 'Norte', isSouth: true },
+    { name: 'Suroeste', short: 'SO', to: 'NE', toName: 'Noreste', isSouth: true },
+    { name: 'Oeste', short: 'O', to: 'E', toName: 'Este', isSouth: false },
+    { name: 'Noroeste', short: 'NO', to: 'SE', toName: 'Sureste', isSouth: false }
   ];
   const index = Math.round(degrees / 45) % 8;
   return directions[index];

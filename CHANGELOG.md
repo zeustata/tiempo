@@ -12,6 +12,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.54] - 2026-08-31
+
+### 🧭 Anemómetro: Flecha Aerodinámica de Dirección & Sentido de Viento
+- **Sustitución de Línea Simple por Veleta Aerodinámica (SVG)**: Rediseño completo de la rosa de los vientos en la *Estación en Vivo*:
+  - **Origen / Cola (arriba)**: Estilizada con aletas estabilizadoras en ámbar/slate que marcan exactamente de qué punto cardinal procede el viento.
+  - **Fuste & Punta Luminosa (abajo)**: Flecha azul cyan brillante (`#38bdf8`) que señala con total nitidez hacia dónde sopla el aire.
+  - **Ejes Guía & Punto Pivotante**: Ejes cardinales sutiles con punto central y N en color principal.
+- **Aclaración Textual de Flujo Meteorológico**: Indicación explícita bajo la velocidad (ej. `Viene del N ➔ sopla al S`) para evitar cualquier ambigüedad de lectura náutica/surf.
+- **Service Worker `v154-official` & Cache-Busting Total**: Sincronización a `?v=1.0.54` en toda la app.
+
+---
+
 ## [1.0.53] - 2026-08-31
 
 ### 📅 Pronósticos a 10 Días: Simetría Térmica Mínima / Máxima & Eliminación de Desbordes
