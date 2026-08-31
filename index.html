@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.57">
-  <link rel="stylesheet" href="css/components.css?v=1.0.57">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.57">
+  <link rel="stylesheet" href="css/main.css?v=1.0.60">
+  <link rel="stylesheet" href="css/components.css?v=1.0.60">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.60">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -172,7 +172,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.59 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.60 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -220,11 +220,20 @@
       <div class="modal-body changelog-scroll">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.59 🚀</span>
+            <span class="release-version">v1.0.60 🚀</span>
             <span class="release-date">31 Ago 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-fix">Corrección Crítica</span> <strong>Exportación de Módulos</strong>: Corrección del export en el puente de datos costeros entre Playas y Surf, reactivando de inmediato la carga de todos los scripts y el menú interactivo.</li>
+            <li><span class="tag tag-ui">Diseño & Armonía</span> <strong>Filas Técnicas Horizontales en Playas y Surf</strong>: Rediseño visual de las especificaciones de playas y picos (Fondo Marino, Dirección de Ola, Marea Óptima, Nivel) en filas completas tipo ficha técnica con alineación simétrica perfecta, eliminando desbordes y textos partidos en móviles.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.0.59</span>
+            <span class="release-date">31 Ago 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-fix">Corrección</span> Exportación de módulos y puente costero.</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -1345,7 +1354,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.59').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.60').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1366,6 +1375,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.59"></script>
+  <script type="module" src="js/app.js?v=1.0.60"></script>
 </body>
 </html>

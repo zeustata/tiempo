@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.60] - 2026-08-31
+
+### 📐 Diseño & Armonía Visual: Filas Técnicas Horizontales en Playas y Surf
+- **Transformación a Ficha Técnica de Extremo a Extremo**: Rediseño visual de las especificaciones de playas y picos (Fondo Marino, Dirección de Ola, Marea Óptima, Nivel) pasando de cuadrícula estrecha 2x2 a filas técnicas horizontales (`.beach-details-grid` y `.beach-detail-item` con ancho 100%).
+- **Alineación Simétrica y Lectura Fluida en Móviles**: Cada característica se presenta con su etiqueta e icono a la izquierda (`#94a3b8`) y su valor en texto claro/badge a la derecha (`#f1f5f9` / `#34d399`), eliminando por completo desbordes, cortes y desajustes de altura entre columnas.
+- **Service Worker `v160-official`**: Purgado y renovación instantánea de caché con sincronización a `?v=1.0.60` en CSS y JS.
+
+---
+
 ## [1.0.59] - 2026-08-31
 
 ### 🛠️ Corrección Crítica de Exportación de Módulos

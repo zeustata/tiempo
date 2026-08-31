@@ -1,20 +1,20 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.0.59';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.0.59';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=1.0.59';
-import { renderCurrentWeather } from './components/currentCard.js?v=1.0.59';
-import { renderMarineCard } from './components/marineCard.js?v=1.0.59';
-import { renderSurfCard } from './components/surfCard.js?v=1.0.59';
-import { renderMountainCard } from './components/mountainCard.js?v=1.0.59';
-import { renderForecast } from './components/forecastView.js?v=1.0.59';
-import { renderWeatherChart } from './components/chartsView.js?v=1.0.59';
-import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.59';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.0.59';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=1.0.59';
-import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.0.59';
-import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.0.59';
-import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.0.59';
-import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.0.59';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.59';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.0.60';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.0.60';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=1.0.60';
+import { renderCurrentWeather } from './components/currentCard.js?v=1.0.60';
+import { renderMarineCard } from './components/marineCard.js?v=1.0.60';
+import { renderSurfCard } from './components/surfCard.js?v=1.0.60';
+import { renderMountainCard } from './components/mountainCard.js?v=1.0.60';
+import { renderForecast } from './components/forecastView.js?v=1.0.60';
+import { renderWeatherChart } from './components/chartsView.js?v=1.0.60';
+import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.60';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.0.60';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=1.0.60';
+import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.0.60';
+import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.0.60';
+import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.0.60';
+import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.0.60';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.60';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, alertas climáticas y calidad del aire', key: '1' },
