@@ -157,6 +157,7 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Perfección visual en Mareas del Día: sustitución por filas horizontales 100% de ancho `.tide-row-item` con salto a **v1.0.67** (SW `v167-official`).
 - Estructura anti-colisión en 2 bloques extremos (Izquierda: Tipo • Derecha: Hora + Altura) con salto a **v1.0.68** (SW `v168-official`).
 - Mareas de Hoy en Tarjeta Única a 2 Niveles (`.daily-tides-grid` y `.tide-sub-item` con arriba: icono + tipo + orden, abajo: hora + altura) y calibración de márgenes/anclajes de texto en el Mareógrafo SVG de 72h con salto a **v1.0.69** (SW `v169-official`).
+- Auto-Centrado en tiempo real del Mareógrafo de 72h ("AHORA") y consolidación de Mareas de Hoy en cuadrícula fija 2x2 súper compacta con salto a **v1.0.70** (SW `v170-official`).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 
 

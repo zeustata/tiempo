@@ -1,11 +1,11 @@
-import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.69';
+import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.70';
 import { 
   getMoonAndTideInfo, 
   getDailyTideEvents, 
   getRealtimeTideStatus, 
   getWeeklyTides, 
   renderTideSvgGraph 
-} from '../utils/tides.js?v=1.0.69';
+} from '../utils/tides.js?v=1.0.70';
 
 /**
  * Base de datos exhaustiva y profesional de playas, picos de surf y fondos marinos de Asturias
@@ -1302,4 +1302,22 @@ export function renderMarineCard(data, concejo) {
       </div>
     </div>
   `;
+}
+
+/**
+ * Centra automáticamente el mareógrafo horizontal en la hora actual en vivo
+ */
+export function scrollTideChartToNow() {
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      const viewport = document.querySelector('.tide-scroll-viewport');
+      if (!viewport) return;
+      const now = new Date();
+      const nowH = now.getHours() + now.getMinutes() / 60;
+      const usableWidth = 1980 - 55 * 2;
+      const liveX = 55 + (nowH / 72) * usableWidth;
+      const viewWidth = viewport.clientWidth || window.innerWidth;
+      viewport.scrollLeft = Math.max(0, liveX - viewWidth / 2);
+    }, 80);
+  });
 }

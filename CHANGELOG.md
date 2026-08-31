@@ -12,6 +12,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.70] - 2026-08-31
+
+### 🎯 Sincronización en Vivo con Auto-Centrado & Cuadrícula 2x2 Compacta
+- **Auto-Centrado en Vivo en Mareógrafo (`scrollTideChartToNow`)**: Al cargar o acceder a *Playas & Mareas*, el visor horizontal se desplaza automáticamente para situar el punto en tiempo real ("AHORA") exactamente en el centro de la pantalla.
+- **Armonización de Altura SVG**: Ajuste a 200px de altura para eliminar espacios vacíos y que la curva sinusoidal llene el marco con holgura y elegancia.
+- **Cuadrícula Fija 2x2 en Mareas de Hoy**: Fijación de 2 columnas por 2 filas simétricas sin saltos a una sola columna en pantallas estrechas, reduciendo el espacio vertical al mínimo con lectura 100% clara.
+- **Service Worker `v170-official` & Cache-Busting Total**: Sincronización a `?v=1.0.70` en toda la aplicación.
+
+---
+
 ## [1.0.69] - 2026-08-31
 
 ### 💎 Mareas de Hoy en Tarjeta Única a 2 Niveles & Calibración de Gráfico 72h
