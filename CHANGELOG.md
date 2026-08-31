@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.62] - 2026-08-31
+
+### 💎 Armonía Visual Plena: Unificación de Márgenes y Alineación Vertical en Playas y Surf
+- **Unificación 1:1 de Ancho y Márgenes con Tarjetas Superiores**: Ajuste de las tarjetas de arenales (`.beach-card`) y cuadrícula (`.beaches-grid`) con ancho 100%, relleno uniforme (`16px 20px`) y bordes idénticos a los widgets de sensores superiores (`.marine-widget`).
+- **Disposición Vertical Homogénea (Etiqueta Arriba / Valor Abajo)**: Transformación de todas las especificaciones (*Fondo Marino*, *Dirección de Ola*, *Marea Óptima*, *Nivel Técnico*, *Picos de Surf*) en bloques con etiqueta e icono en cabecera y valor debajo alineado con precisión estricta a la izquierda, eliminando cualquier desfase horizontal o efecto zigzag.
+- **Service Worker `v162-official`**: Purgado forzado y sincronización de caché a `?v=1.0.62`.
+
+---
+
 ## [1.0.61] - 2026-08-31
 
 ### 🏄‍♂️📐 Despliegue de Ficha Técnica Horizontal Incondicional (Blindaje de Caché)
