@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.68">
-  <link rel="stylesheet" href="css/components.css?v=1.0.68">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.68">
+  <link rel="stylesheet" href="css/main.css?v=1.0.69">
+  <link rel="stylesheet" href="css/components.css?v=1.0.69">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.69">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -1436,7 +1436,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.68').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.69').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1457,6 +1457,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.68"></script>
+  <script type="module" src="js/app.js?v=1.0.69"></script>
 </body>
 </html>
