@@ -1,11 +1,11 @@
-import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.60';
+import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.61';
 import { 
   getMoonAndTideInfo, 
   getDailyTideEvents, 
   getRealtimeTideStatus, 
   getWeeklyTides, 
   renderTideSvgGraph 
-} from '../utils/tides.js?v=1.0.60';
+} from '../utils/tides.js?v=1.0.61';
 
 /**
  * Base de datos exhaustiva y profesional de playas, picos de surf y fondos marinos de Asturias
@@ -1112,20 +1112,20 @@ export function renderMarineCard(data, concejo) {
               
               <div class="beach-card-desc">${p.type}</div>
 
-              <div class="beach-details-grid">
-                <div class="beach-detail-item">
-                  <span class="detail-label">🏖️ Entorno / Fondo:</span>
-                  <span class="detail-value">${p.bottom || 'Arena fina dorada'}</span>
+              <div class="beach-specs-table">
+                <div class="beach-spec-row">
+                  <span class="spec-label">🏖️ Entorno / Fondo:</span>
+                  <span class="spec-value">${p.bottom || 'Arena fina dorada'}</span>
                 </div>
 
-                <div class="beach-detail-item">
-                  <span class="detail-label">⏳ Marea Óptima:</span>
-                  <span class="detail-value">${p.bestTide || 'Media Marea / Bajamar'}</span>
+                <div class="beach-spec-row">
+                  <span class="spec-label">⏳ Marea Óptima:</span>
+                  <span class="spec-value">${p.bestTide || 'Media Marea / Bajamar'}</span>
                 </div>
 
-                <div class="beach-detail-item full-width">
-                  <span class="detail-label">🎯 Recomendación:</span>
-                  <span class="detail-value">${p.surfLevel.includes('Baño') || p.surfLevel.includes('Familiar') || p.surfLevel.includes('Todos') ? '👨‍👩‍👧‍👦 Ideal para baño, descanso y paseos' : '🌊 Precaución con el oleaje en días de mar viva'}</span>
+                <div class="beach-spec-row full-card">
+                  <span class="spec-label">🎯 Recomendación:</span>
+                  <span class="spec-value">${p.surfLevel.includes('Baño') || p.surfLevel.includes('Familiar') || p.surfLevel.includes('Todos') ? '👨‍👩‍👧‍👦 Ideal para baño, descanso y paseos' : '🌊 Precaución con el oleaje en días de mar viva'}</span>
                 </div>
               </div>
             </div>

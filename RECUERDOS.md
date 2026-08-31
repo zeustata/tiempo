@@ -148,6 +148,7 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Separación especializada de la costa en dos módulos independientes: **🏖️ Playas & Mareas** (turismo, baño, mareógrafo 72h, fases lunares y catálogo de arenales) y **🏄‍♂️ Surf & Rompientes** (swell, período, mar de fondo/viento, inteligencia de viento offshore/onshore, suite didáctica y picos bautizados), ampliando a 8 módulos el menú con salto a **v1.0.58** (SW `v158-official`).
 - Corrección de la exportación de `getNearestCoastalReference` en `marineCard.js` para reactivar la ejecución de scripts y el menú con salto a **v1.0.59** (SW `v159-official`).
 - Rediseño visual de las especificaciones de playas y picos (Fondo Marino, Dirección de Ola, Marea Óptima, Nivel) en filas técnicas horizontales de ancho 100% (Liquid Glass) con alineación simétrica y cero desbordes en móviles con salto a **v1.0.60** (SW `v160-official`).
+- Despliegue de clases semánticas dedicadas e independientes (`.beach-specs-table`, `.beach-picos-box`, `.beach-spec-row`) con estilos directos y actualización atómica en `surfCard.js` y `marineCard.js` con salto a **v1.0.61** (SW `v161-official`).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 
 

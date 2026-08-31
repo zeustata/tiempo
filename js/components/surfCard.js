@@ -1,9 +1,9 @@
-import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.60';
+import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.61';
 import { 
   PLAYAS_POR_CONCEJO, 
   getNearestCoastalReference, 
   getSurfWindCondition 
-} from './marineCard.js?v=1.0.60';
+} from './marineCard.js?v=1.0.61';
 
 /**
  * Calcula la escala de Douglas a partir de la altura significativa de ola
@@ -279,32 +279,32 @@ export function renderSurfCard(data, concejo) {
               
               <div class="beach-card-desc">${p.type}</div>
 
-              <div class="beach-details-grid">
+              <div class="beach-specs-table">
                 ${p.picos ? `
-                  <div class="beach-detail-item full-width">
-                    <span class="detail-label">📍 Picos de Surf:</span>
-                    <span class="detail-value highlight-pico">${p.picos}</span>
+                  <div class="beach-picos-box">
+                    <span class="picos-box-label">📍 PICOS DE SURF:</span>
+                    <span class="picos-box-value">${p.picos}</span>
                   </div>
                 ` : ''}
 
-                <div class="beach-detail-item">
-                  <span class="detail-label">🪨 Fondo Marino:</span>
-                  <span class="detail-value">${p.bottom || '🏖️ Arena (Beach Break)'}</span>
+                <div class="beach-spec-row">
+                  <span class="spec-label">🪨 Fondo Marino:</span>
+                  <span class="spec-value">${p.bottom || '🏖️ Arena (Beach Break)'}</span>
                 </div>
 
-                <div class="beach-detail-item">
-                  <span class="detail-label">🔄 Dirección Ola:</span>
-                  <span class="detail-value">${p.waveType || '↔️ Picos A-Frame'}</span>
+                <div class="beach-spec-row">
+                  <span class="spec-label">🔄 Dirección Ola:</span>
+                  <span class="spec-value">${p.waveType || '↔️ Picos A-Frame'}</span>
                 </div>
 
-                <div class="beach-detail-item">
-                  <span class="detail-label">⏳ Marea Óptima:</span>
-                  <span class="detail-value">${p.bestTide || 'Media Marea'}</span>
+                <div class="beach-spec-row">
+                  <span class="spec-label">⏳ Marea Óptima:</span>
+                  <span class="spec-value">${p.bestTide || 'Media Marea'}</span>
                 </div>
 
-                <div class="beach-detail-item">
-                  <span class="detail-label">🎯 Nivel:</span>
-                  <span class="detail-value level-badge">${p.surfLevel || 'Todos'}</span>
+                <div class="beach-spec-row">
+                  <span class="spec-label">🎯 Nivel Técnico:</span>
+                  <span class="spec-value level-badge">${p.surfLevel || 'Todos'}</span>
                 </div>
               </div>
             </div>
@@ -314,3 +314,4 @@ export function renderSurfCard(data, concejo) {
     </div>
   `;
 }
+

@@ -12,6 +12,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.61] - 2026-08-31
+
+### 🏄‍♂️📐 Despliegue de Ficha Técnica Horizontal Incondicional (Blindaje de Caché)
+- **Nuevas Clases Semánticas e Independientes**: Implementación de `.beach-specs-table`, `.beach-picos-box` y `.beach-spec-row` con estilos `!important` y renderizado HTML en `surfCard.js` y `marineCard.js`, garantizando la presentación en filas técnicas horizontales simétricas de extremo a extremo sin dependencia de selectores heredados.
+- **Service Worker `v161-official`**: Purgado total de caché y actualización atómica en clientes web y móviles.
+
+---
+
 ## [1.0.60] - 2026-08-31
 
 ### 📐 Diseño & Armonía Visual: Filas Técnicas Horizontales en Playas y Surf
