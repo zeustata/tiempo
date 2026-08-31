@@ -12,6 +12,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.63] - 2026-08-31
+
+### 🧭 Inteligencia Aerodinámica y Relieve Costero de Asturias (Surf Pro)
+- **Orientación Real Playa a Playa (Azimut de Costa)**: Enriquecimiento de toda la base de datos `PLAYAS_POR_CONCEJO` con la orientación exacta de apertura al mar (`facing` y `facingDeg`) de todos los arenales y picos de Asturias (ej. *Salinas -> 350° Norte*, *Xagó -> 295° Oeste-Noroeste*, *Candás/Luanco -> 115° Este-Sureste*, *Rodiles -> 335° Noroeste*).
+- **Motor de Viento Local en Vivo (`getBeachSpecificWindCondition`)**: Cálculo dinámico del ángulo de incidencia del viento en tiempo real para cada playa, determinando si es *🟢 Offshore (Terral)*, *🔴 Onshore (Mar Picado)*, *🟡 Cross-shore (Lateral)* o *✨ Glassy*, reflejando con exactitud la física real (el viento del Oeste entra Onshore en Xagó y Offshore en Candás).
+- **Capítulo Geográfico en la Guía Didáctica de Surf**: Inclusión de la sección didáctica *"El Relieve de Asturias y la Orientación de Playas (El Efecto Cabo Peñas)"*.
+- **Service Worker `v163-official`**: Actualización atómica en web y PWA.
+
+---
+
 ## [1.0.62] - 2026-08-31
 
 ### 💎 Armonía Visual Plena: Unificación de Márgenes y Alineación Vertical en Playas y Surf

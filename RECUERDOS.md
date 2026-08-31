@@ -150,6 +150,7 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Rediseño visual de las especificaciones de playas y picos (Fondo Marino, Dirección de Ola, Marea Óptima, Nivel) en filas técnicas horizontales de ancho 100% (Liquid Glass) con alineación simétrica y cero desbordes en móviles con salto a **v1.0.60** (SW `v160-official`).
 - Despliegue de clases semánticas dedicadas e independientes (`.beach-specs-table`, `.beach-picos-box`, `.beach-spec-row`) con estilos directos y actualización atómica en `surfCard.js` y `marineCard.js` con salto a **v1.0.61** (SW `v161-official`).
 - Unificación armónica total: ajuste de ancho 100% y padding `16px 20px` en `.beach-card` coincidiendo 1:1 con `.marine-widget`, y formato vertical con etiqueta arriba y valor abajo alineado estrictamente a la izquierda como los sensores de la app con salto a **v1.0.62** (SW `v162-official`).
+- Motor de Inteligencia Aerodinámica Costera Pro: asignación de azimut de costa (`facingDeg`) a todas las playas de Asturias y cálculo dinámico de viento Offshore/Onshore en vivo por playa (demostrando el efecto Cabo Peñas de Xagó vs Candás) con capítulo didáctico en la Guía de Surf con salto a **v1.0.63** (SW `v163-official`).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 
 

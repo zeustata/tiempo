@@ -251,8 +251,20 @@ export const WEATHER_EXPLANATIONS = {
         `
       },
       {
+        icon: '⛰️',
+        heading: '4. El Relieve de Asturias y la Orientación de Playas (El Efecto Cabo Peñas)',
+        text: `
+          Asturias no es una línea recta que mire al Norte franco; sus cabos, rías y ensenadas cambian la dirección de cada playa:
+          <ul class="explain-list">
+            <li><strong>El Ejemplo Clásico de Xagó vs Candás / Luanco:</strong> Con viento del <em>Oeste (Poniente)</em>, en la playa de <strong>Xagó (Gozón)</strong> el viento entra de frente desde el mar porque el arenal mira al Oeste/Noroeste, siendo <strong>🔴 Onshore (mar picado/chop)</strong>. Sin embargo, ese mismo viento de Poniente al otro lado de la península de Peñas en <strong>Candás (Carreño)</strong> o <strong>Luanco</strong> baja desde tierra hacia el mar saliendo hacia el Este, siendo <strong>🟢 Offshore (terral / aguas mansas y limpias)</strong>.</li>
+            <li><strong>La Barra de Rodiles (Villaviciosa):</strong> Encajada en la ría mirando al NNW; con viento del <em>Suroeste / Sur</em> el monte Rodiles canaliza el viento desde tierra dejándola con un terral tubular perfecto.</li>
+            <li><strong>Consejo de Surfista Local:</strong> Si en tu playa habitual entra viento de mar picado (Onshore), busca un arenal cercano al otro lado de un cabo o con orientación resguardada.</li>
+          </ul>
+        `
+      },
+      {
         icon: '📍',
-        heading: '4. Picos Legendarios de Asturias',
+        heading: '5. Picos Legendarios de Asturias',
         text: `
           <ul class="explain-list">
             <li><strong>Villaviciosa (Rodiles):</strong> <em>La Barra de Rodiles</em>, mítica izquierda tubular de fama mundial en la ría + picos del arenal.</li>
@@ -265,7 +277,7 @@ export const WEATHER_EXPLANATIONS = {
       },
       {
         icon: '⏱️',
-        heading: '5. El Período de Oleaje (Swell en Segundos)',
+        heading: '6. El Período de Oleaje (Swell en Segundos)',
         text: 'El período es el tiempo que pasa entre el paso de dos crestas consecutivas de olas. Un período de <strong>10 a 15+ segundos</strong> indica <em>mar de fondo potente y ordenado</em> generado por borrascas lejanas en el Atlántico Norte. Un período corto (< 8 segundos) indica mar de viento local y desordenado.'
       }
     ]

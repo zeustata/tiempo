@@ -1,14 +1,15 @@
-import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.62';
+import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.63';
 import { 
   getMoonAndTideInfo, 
   getDailyTideEvents, 
   getRealtimeTideStatus, 
   getWeeklyTides, 
   renderTideSvgGraph 
-} from '../utils/tides.js?v=1.0.62';
+} from '../utils/tides.js?v=1.0.63';
 
 /**
  * Base de datos exhaustiva y profesional de playas, picos de surf y fondos marinos de Asturias
+ * Incluye orientación real de costa (azimut de apertura al mar) para cálculo aerodinámico Offshore/Onshore
  */
 export const PLAYAS_POR_CONCEJO = {
   'gijon': {
@@ -19,6 +20,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de San Lorenzo', 
         type: 'Surf clásico asturiano, escaleras 1 a 15 y paseo del Muro', 
         tag: 'Surf Top',
+        facing: 'N',
+        facingDeg: 355,
         picos: 'Escalera 4 (Pared) • Escalera 10 (Piles) • El Peñón',
         bottom: '🏖️ Arena (Beach Break)',
         waveType: '↔️ Picos A-Frame (Izquierda y Derecha)',
@@ -29,6 +32,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Peñarrubia', 
         type: 'Acantilados imponentes y rompiente mítica sobre losa', 
         tag: 'Surf Avanzado',
+        facing: 'NNE',
+        facingDeg: 25,
         picos: 'El Mongol (derecha tubular potente sobre roca)',
         bottom: '🪨 Roca / Losa (Point & Reef Break)',
         waveType: '➡️ Derecha potente y rápida',
@@ -39,6 +44,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Poniente', 
         type: 'Aguas tranquilas, puerto deportivo y arena dorada', 
         tag: 'Familiar & SUP',
+        facing: 'NE',
+        facingDeg: 45,
         picos: 'Aguas calmas resguardadas por el dique',
         bottom: '🏖️ Arena fina',
         waveType: '🚫 Sin rompiente (Aguas mansas)',
@@ -49,6 +56,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa del Arbeyal', 
         type: 'Playa resguardada en La Calzada con vistas al Musel', 
         tag: 'Tranquila',
+        facing: 'E',
+        facingDeg: 90,
         picos: 'Ensenada protegida',
         bottom: '🏖️ Arena fina',
         waveType: '🚫 Sin rompiente',
@@ -59,6 +68,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Estaño', 
         type: 'Cala con encanto, pozo natural de marea del Cura y chiringuito', 
         tag: 'Cala & Snorkel',
+        facing: 'NNE',
+        facingDeg: 20,
         picos: 'Rompiente exterior en marea viva',
         bottom: '🪨🏖️ Mixto (Arena y Rocas)',
         waveType: '↔️ Picos cortos',
@@ -69,6 +80,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Serín', 
         type: 'Cala virgen entre altos acantilados salvajes', 
         tag: 'Salvaje',
+        facing: 'N',
+        facingDeg: 355,
         picos: 'Picos de mar abierto',
         bottom: '🪨 Cantos rodados y roca',
         waveType: '↔️ Olas orilleras',
@@ -85,6 +98,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Salinas', 
         type: 'Meca del surf asturiano, festival internacional de Longboard y gran paseo', 
         tag: 'Surf Top Mundial',
+        facing: 'N',
+        facingDeg: 350,
         picos: 'El Balneario • Las Dunas centrales • El Espartal',
         bottom: '🏖️ Arena (Beach Break constante)',
         waveType: '↔️ Múltiples Picos (Izquierdas y Derechas)',
@@ -95,6 +110,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de San Juan de Nieva', 
         type: 'Potente rompiente de olas en la entrada de la ría de Avilés', 
         tag: 'Surf Potente',
+        facing: 'NW',
+        facingDeg: 320,
         picos: 'Picos del Espigón de San Juan',
         bottom: '🏖️ Arena (Barras de ría)',
         waveType: '↔️ Derechas e Izquierdas rápidas y tubulares',
@@ -105,6 +122,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Bayas / El Sablón', 
         type: 'Monumento Natural: el arenal virgen más largo de Asturias con dunas salvajes', 
         tag: 'Monumento Natural',
+        facing: 'NW',
+        facingDeg: 325,
         picos: 'Picos abiertos frente a la Isla de Deva',
         bottom: '🏖️ Arena dorada',
         waveType: '↔️ Olas con mucha fuerza de mar abierto',
@@ -115,6 +134,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Arnao', 
         type: 'Piscina natural fósil arrecifal y Museo de la Mina a pie de mar', 
         tag: 'Geológica & Familiar',
+        facing: 'N',
+        facingDeg: 355,
         picos: 'Piscina marina entre arrecifes fósiles',
         bottom: '🪨 Arrecife fósil y arena',
         waveType: '🚫 Protegida del oleaje',
@@ -125,6 +146,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Santa María del Mar', 
         type: 'Cala protegida con islote rocoso y desembocadura fluvial', 
         tag: 'Familiar',
+        facing: 'NW',
+        facingDeg: 330,
         picos: 'Pico abrigado del islote',
         bottom: '🏖️ Arena y cantos',
         waveType: '↔️ Olas suaves',
@@ -141,6 +164,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Rodiles', 
         type: 'La mítica "Barra de Rodiles", una de las mejores izquierdas tubulares de Europa', 
         tag: 'Surf Top Mundial',
+        facing: 'NNW',
+        facingDeg: 335,
         picos: 'La Barra (izq. tubular de ría) • Picos del Arenal y Pinar',
         bottom: '🏖️ Arena sobre barra de ría (Beach Break)',
         waveType: '⬅️ Izquierda perfecta, tubular y kilométrica',
@@ -151,6 +176,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa del Puntal', 
         type: 'Aguas mansas y resguardadas en la Ría de Villaviciosa con pineda', 
         tag: 'Ría & SUP',
+        facing: 'WNW',
+        facingDeg: 290,
         picos: 'Estuario en calma',
         bottom: '🏖️ Arena fina',
         waveType: '🚫 Sin oleaje',
@@ -161,6 +188,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Merón', 
         type: 'Cala virgen entre acantilados jurásicos con icnitas', 
         tag: 'Salvaje & Surf',
+        facing: 'N',
+        facingDeg: 0,
         picos: 'Picos centrales del pedrero',
         bottom: '🪨🏖️ Mixto (Arena y Rocas)',
         waveType: '↔️ Izquierdas y Derechas de mar abierto',
@@ -171,6 +200,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Tazones', 
         type: 'Junto al emblemático puerto marinero con huellas de dinosaurio', 
         tag: 'Marinera',
+        facing: 'NE',
+        facingDeg: 45,
         picos: 'Pequeña ensenada de cantos',
         bottom: '🪨 Losa y cantos',
         waveType: '🚫 Mar abrigada',
@@ -187,6 +218,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Xagó', 
         type: 'Extenso arenal con dunas eólicas protegidas y máxima consistencia de olas', 
         tag: 'Surf Muy Consistente',
+        facing: 'WNW',
+        facingDeg: 295,
         picos: 'El Escamplero (extremo este) • Picos de la Gran Duna',
         bottom: '🏖️ Arena (Beach Break potente)',
         waveType: '↔️ Picos A-Frame consistentes todo el año',
@@ -197,6 +230,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Verdicio (Tenrero)', 
         type: 'Olas consistentes de mar abierto cerca de Peñas con dunas', 
         tag: 'Surf & Paisaje',
+        facing: 'NNW',
+        facingDeg: 340,
         picos: 'La Izquierda de la Punta • Rompiente central',
         bottom: '🪨🏖️ Mixto (Arena y Laja rocosa)',
         waveType: '↔️ Olas rápidas con fuerza',
@@ -207,6 +242,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Luanco', 
         type: 'Arenal histórico urbano junto al muelle y el Museo Marítimo', 
         tag: 'Familiar & Urbana',
+        facing: 'ESE',
+        facingDeg: 110,
         picos: 'Aguas calmas abrigadas',
         bottom: '🏖️ Arena fina',
         waveType: '🚫 Sin olas',
@@ -217,6 +254,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Bañugues', 
         type: 'Ensenada somera sin olas, fósiles y mar calma protegida del oleaje', 
         tag: 'Familiar',
+        facing: 'NE',
+        facingDeg: 45,
         picos: 'Aguas someras en ensenada',
         bottom: '🏖️ Arena y fango',
         waveType: '🚫 Sin oleaje',
@@ -233,6 +272,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Santa Marina', 
         type: 'Arenal aristocrático con palacetes indianos y desembocadura del Sella', 
         tag: 'Urbana & Surf',
+        facing: 'NNE',
+        facingDeg: 15,
         picos: 'Pico del Muro (Oeste) • Desembocadura de la ría del Sella',
         bottom: '🏖️ Arena (Beach Break)',
         waveType: '↔️ Picos protegidos con temporales de mar grande',
@@ -243,6 +284,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Vega', 
         type: 'Monumento Natural: arenal salvaje con dunas, desfiladero y surf potente', 
         tag: 'Monumento Natural',
+        facing: 'NNW',
+        facingDeg: 340,
         picos: 'Pico del Río (Centro) • Rompiente del Extremo Oeste',
         bottom: '🪨🏖️ Mixto (Arena con lajas y cantos)',
         waveType: '↔️ Olas huecas y con mucha fuerza',
@@ -253,6 +296,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Guadamía', 
         type: 'Espectacular fiordo kárstico natural entre acantilados y bufones', 
         tag: 'Fiordo & Paisaje',
+        facing: 'N',
+        facingDeg: 0,
         picos: 'Piscina natural en marea alta',
         bottom: '🏖️ Arena fina',
         waveType: '🚫 Calma interior',
@@ -269,6 +314,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de La Grande', 
         type: 'Cuna histórica del surf en Asturias y sede del Memorial Peter Gulley', 
         tag: 'Surf Mítico',
+        facing: 'N',
+        facingDeg: 350,
         picos: 'La Grande • La Muralla • Los Campos',
         bottom: '🪨🏖️ Mixto (Losa rocosa y arena)',
         waveType: '↔️ Izquierdas y Derechas tubulares y rápidas',
@@ -279,6 +326,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa del Murallón', 
         type: 'Piscina marina de agua salada encajada en las rocas del muelle', 
         tag: 'Piscina Salada',
+        facing: 'NNE',
+        facingDeg: 20,
         picos: 'Piscina natural protegida',
         bottom: '🪨 Roca',
         waveType: '🚫 Sin olas',
@@ -289,6 +338,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Serantes', 
         type: 'Desembocadura de río y arenal tranquilo de aguas limpias', 
         tag: 'Natural',
+        facing: 'N',
+        facingDeg: 355,
         picos: 'Rompiente de desembocadura',
         bottom: '🏖️ Arena fina',
         waveType: '↔️ Picos suaves',
@@ -305,6 +356,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de San Antolín', 
         type: 'Extenso arenal abierto de mar Cantábrico con desembocadura del Bedón', 
         tag: 'Surf & Paisaje',
+        facing: 'N',
+        facingDeg: 355,
         picos: 'Picos del Río Bedón • Centro del arenal',
         bottom: '🏖️ Arena y cantos',
         waveType: '↔️ Olas orilleras rápidas y potentes',
@@ -315,6 +368,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Andrín', 
         type: 'Concha de arena salvaje encajada entre acantilados y corrientes', 
         tag: 'Surf Potente',
+        facing: 'NNE',
+        facingDeg: 20,
         picos: 'Pico de la Punta de Andrín',
         bottom: '🏖️ Arena (Fuerte desnivel)',
         waveType: '↔️ Rompiente orillera potente (Shorebreak)',
@@ -325,6 +380,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Torimbia', 
         type: 'Monumento Paisajístico virgen protegida de postal y tradición naturista', 
         tag: 'Top Paisaje',
+        facing: 'N',
+        facingDeg: 0,
         picos: 'Rompiente en concha',
         bottom: '🏖️ Arena dorada',
         waveType: '↔️ Olas de mar abierto',
@@ -335,6 +392,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Gulpiyuri', 
         type: 'Monumento Natural único: playa de mar sin costa abierta en medio de un prado', 
         tag: 'Monumento Natural',
+        facing: 'N',
+        facingDeg: 0,
         picos: 'Aguas filtradas bajo los acantilados',
         bottom: '🏖️ Arena blanca',
         waveType: '🚫 Sin olas (Piscina interior)',
@@ -345,6 +404,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Barro', 
         type: 'Aguas cristalinas turquesas y arena fina abrigada de los vientos', 
         tag: 'Familiar Top',
+        facing: 'NE',
+        facingDeg: 35,
         picos: 'Bahía abrigada por islotes',
         bottom: '🏖️ Arena fina',
         waveType: '🚫 Aguas mansas',
@@ -355,6 +416,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Cuevas del Mar', 
         type: 'Arcos gigantes de roca kárstica horadados por el Cantábrico', 
         tag: 'Fotogénica',
+        facing: 'N',
+        facingDeg: 355,
         picos: 'Ensenada de cuevas',
         bottom: '🏖️ Arena y roca',
         waveType: '↔️ Olas suaves',
@@ -371,6 +434,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de La Espasa', 
         type: 'Gran arenal abierto con vistas panorámicas a la Sierra del Sueve', 
         tag: 'Surf & Paisaje',
+        facing: 'N',
+        facingDeg: 355,
         picos: 'Picos de la Ría del Espasa • Centro',
         bottom: '🏖️ Arena (Beach Break)',
         waveType: '↔️ Izquierdas y Derechas maniobrables',
@@ -381,6 +446,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Arenal de Morís', 
         type: 'Extenso arenal con senda costera, acantilados y olas constantes', 
         tag: 'Surf Constante',
+        facing: 'N',
+        facingDeg: 350,
         picos: 'Pico de la Punta Este • Rompiente central',
         bottom: '🏖️ Arena dorada',
         waveType: '↔️ Olas con buena pared',
@@ -397,6 +464,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de los Quebrantos', 
         type: 'Arenal en la desembocadura de la ría del Nalón unido a San Juan de la Arena', 
         tag: 'Surf & Dunas',
+        facing: 'NW',
+        facingDeg: 315,
         picos: 'La Barra del Nalón • Picos de dunas',
         bottom: '🏖️ Arena (Barra fluvial y marina)',
         waveType: '↔️ Derechas e Izquierdas rápidas',
@@ -413,6 +482,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Otur', 
         type: 'Arenal amplio con dunas y oleaje limpio muy frecuentado por surfistas', 
         tag: 'Surf Occidental',
+        facing: 'N',
+        facingDeg: 355,
         picos: 'Picos centrales del arenal de Otur',
         bottom: '🏖️ Arena fina',
         waveType: '↔️ Picos limpios y ordenados',
@@ -423,6 +494,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Cueva', 
         type: 'Desembocadura del río Esva encajada entre altos acantilados', 
         tag: 'Paisaje & Surf',
+        facing: 'NW',
+        facingDeg: 320,
         picos: 'Picos de la desembocadura del Esva',
         bottom: '🪨🏖️ Mixto (Cantos y arena)',
         waveType: '↔️ Olas de mar abierto',
@@ -433,6 +506,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playas de Luarca (1ª y 2ª)', 
         type: 'Aguas calmas y protegidas por el espigón blanco del puerto', 
         tag: 'Familiar',
+        facing: 'NNE',
+        facingDeg: 25,
         picos: 'Concha urbana abrigada',
         bottom: '🏖️ Arena fina',
         waveType: '🚫 Calma',
@@ -449,6 +524,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Frejulfe', 
         type: 'Monumento Natural: imponente arenal virgen con pinar y potentes tubos', 
         tag: 'Monumento Natural & Surf',
+        facing: 'NNW',
+        facingDeg: 340,
         picos: 'Pico del Río Frejulfe • Rompiente Este',
         bottom: '🪨🏖️ Mixto (Arena y losas)',
         waveType: '↔️ Olas muy potentes, tubulares y rápidas',
@@ -459,6 +536,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Navia', 
         type: 'Amplio arenal con pinar, ría y gran parque recreativo', 
         tag: 'Familiar & Ría',
+        facing: 'N',
+        facingDeg: 0,
         picos: 'Picos de la barra de Navia',
         bottom: '🏖️ Arena dorada',
         waveType: '↔️ Olas suaves',
@@ -475,6 +554,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de La Isla', 
         type: 'Amplio arenal con islote rocoso accesible a pie en bajamar', 
         tag: 'Familiar & Paseo',
+        facing: 'N',
+        facingDeg: 0,
         picos: 'Ensenada abrigada por el islote',
         bottom: '🏖️ Arena dorada',
         waveType: '↔️ Olas suaves en pleamar',
@@ -485,6 +566,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de La Griega', 
         type: 'Icnitas de dinosaurios saurópodos gigantes y desembocadura del Libardón', 
         tag: 'Jurásica',
+        facing: 'NNE',
+        facingDeg: 25,
         picos: 'Picos suaves junto al río',
         bottom: '🏖️ Arena y losas jurásicas',
         waveType: '↔️ Rompiente suave',
@@ -495,6 +578,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Lastres', 
         type: 'Arenal bajo el emblemático pueblo marinero escalonado', 
         tag: 'Marinera',
+        facing: 'E',
+        facingDeg: 90,
         picos: 'Concha resguardada por el muelle',
         bottom: '🏖️ Arena y grava',
         waveType: '🚫 Mar tranquila',
@@ -511,6 +596,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa del Silencio (El Gavieru)', 
         type: 'Anfiteatro rocoso único de aguas cristalinas esmeralda', 
         tag: 'Top Paisaje',
+        facing: 'NE',
+        facingDeg: 45,
         picos: 'Aguas cristalinas abrigadas por acantilados',
         bottom: '🪨 Cantos rodados y roca viva',
         waveType: '🚫 Calma (Poco oleaje)',
@@ -521,6 +608,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Concha de Artedo', 
         type: 'Gran bahía protegida de cantos rodados, arena y pasarela sobre marisma', 
         tag: 'Protegida & Familiar',
+        facing: 'ENE',
+        facingDeg: 65,
         picos: 'Gran concha semicircular',
         bottom: '🪨🏖️ Cantos y arena',
         waveType: '↔️ Olas suaves',
@@ -531,6 +620,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'San Pedro de la Ribera', 
         type: 'Arenal amplio con pradera verde, área recreativa y desembocadura', 
         tag: 'Familiar & Surf',
+        facing: 'N',
+        facingDeg: 0,
         picos: 'Picos centrales de San Pedro',
         bottom: '🏖️ Arena fina',
         waveType: '↔️ Olas manejables',
@@ -547,6 +638,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Aguilar', 
         type: 'Playa dorada con la roca de Peñafurada y senda de los Miradores', 
         tag: 'Familiar & Surf',
+        facing: 'N',
+        facingDeg: 355,
         picos: 'Picos junto a Peñafurada • Centro',
         bottom: '🏖️ Arena dorada',
         waveType: '↔️ Olas suaves y divertidas',
@@ -557,6 +650,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de las Llanas', 
         type: 'Cala salvaje al pie de impresionantes acantilados con escalinata', 
         tag: 'Salvaje',
+        facing: 'N',
+        facingDeg: 350,
         picos: 'Picos abiertos de mar Cantábrico',
         bottom: '🪨🏖️ Mixto',
         waveType: '↔️ Rompiente rápida',
@@ -573,6 +668,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Candás', 
         type: 'Playa urbana con paseo marítimo, espigón y ambiente marinero', 
         tag: 'Urbana',
+        facing: 'ESE',
+        facingDeg: 115,
         picos: 'Ensenada abrigada por el dique',
         bottom: '🏖️ Arena fina',
         waveType: '🚫 Calma',
@@ -583,6 +680,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de la Palmera', 
         type: 'Aguas tranquilas con solárium y vistas al puerto de Candás', 
         tag: 'Familiar',
+        facing: 'ESE',
+        facingDeg: 115,
         picos: 'Zona de baño abrigada',
         bottom: '🏖️ Arena',
         waveType: '🚫 Sin olas',
@@ -593,6 +692,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Carranques (Perlora)', 
         type: 'Ensenada de aguas mansas en la histórica Ciudad de Vacaciones', 
         tag: 'Tranquila',
+        facing: 'ENE',
+        facingDeg: 70,
         picos: 'Ensenada natural',
         bottom: '🏖️ Arena y roquedo',
         waveType: '🚫 Aguas mansas',
@@ -609,6 +710,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Penarronda', 
         type: 'Monumento Natural con gran arco de roca central, dunas y alhelí marino', 
         tag: 'Monumento Natural & Surf',
+        facing: 'N',
+        facingDeg: 355,
         picos: 'Picos del Arco de Roca • Centro',
         bottom: '🏖️ Arena fina',
         waveType: '↔️ Izquierdas y Derechas con buena pared',
@@ -619,6 +722,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Arnao (Ría del Eo)', 
         type: 'Aguas cristalinas y calmas en la desembocadura de la Reserva de la Biosfera', 
         tag: 'Ría & Paisaje',
+        facing: 'NW',
+        facingDeg: 310,
         picos: 'Ensenada de la Ría del Eo',
         bottom: '🏖️ Arena fina',
         waveType: '🚫 Aguas calmas',
@@ -635,6 +740,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Porcía', 
         type: 'Ría meándrica espectacular con islotes boyas de roca kárstica', 
         tag: 'Top Paisaje & Ría',
+        facing: 'N',
+        facingDeg: 0,
         picos: 'Estuario meándrico protegido',
         bottom: '🏖️ Arena fina',
         waveType: '↔️ Olas suaves en la barra exterior',
@@ -645,6 +752,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Pormenande', 
         type: 'Cala abrigada de pescadores con aguas mansas e islote de El Rego', 
         tag: 'Cala Marinera',
+        facing: 'NE',
+        facingDeg: 35,
         picos: 'Piscina natural protegida',
         bottom: '🪨 Cantos rodados',
         waveType: '🚫 Calma',
@@ -661,6 +770,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Foxos', 
         type: 'Cala de cantos y arena junto a la ría de Navia y el Castro de Coaña', 
         tag: 'Tranquila',
+        facing: 'NE',
+        facingDeg: 35,
         picos: 'Ensenada fluvial-marina',
         bottom: '🪨🏖️ Mixto',
         waveType: '↔️ Olas suaves',
@@ -671,6 +782,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de Arnelles', 
         type: 'Cala acogedora de arena fina cerca del pintoresco puerto de Ortiguera', 
         tag: 'Cala',
+        facing: 'NNE',
+        facingDeg: 20,
         picos: 'Cala abrigada',
         bottom: '🏖️ Arena fina',
         waveType: '🚫 Calma',
@@ -687,6 +800,8 @@ export const PLAYAS_POR_CONCEJO = {
         name: 'Playa de La Franca', 
         type: 'Gran concha de arena fina con cuevas y arcos explorables en bajamar', 
         tag: 'Familiar Top',
+        facing: 'NNE',
+        facingDeg: 25,
         picos: 'Rompiente suave en la bahía',
         bottom: '🏖️ Arena fina dorada',
         waveType: '↔️ Olas suaves en pleamar',
@@ -725,8 +840,92 @@ export function getNearestCoastalReference(concejo) {
 }
 
 /**
- * Computa la calidad e idoneidad del viento para surf en la costa asturiana
- * (La costa cantábrica asturiana mira principalmente al Norte: 340° a 20°)
+ * Calcula con precisión física y geográfica si el viento actual es Offshore, Onshore o Cross-shore
+ * para una playa concreta de Asturias según su orientación real de costa (azimut de apertura al mar).
+ */
+export function getBeachSpecificWindCondition(beachFacingDeg, windDirDeg, windSpeedKm) {
+  const speed = typeof windSpeedKm === 'number' ? windSpeedKm : 12;
+  const facing = typeof beachFacingDeg === 'number' ? ((beachFacingDeg % 360) + 360) % 360 : 355;
+  const windFrom = typeof windDirDeg === 'number' ? ((windDirDeg % 360) + 360) % 360 : 180;
+
+  // Calma / Glassy si el viento es casi nulo (< 8 km/h)
+  if (speed < 8) {
+    return {
+      type: 'glassy',
+      badge: '✨ Glassy (< 8 km/h)',
+      statusClass: 'surf-wind-glassy',
+      color: '#38bdf8',
+      shortDesc: 'Mar liso como un espejo, sin viento',
+      isOffshore: true
+    };
+  }
+
+  // Ángulo relativo entre la procedencia del viento y la dirección abierta al mar de la playa:
+  // diffSea = 0° significa que el viento viene directamente desde el mar hacia la orilla (ONSHORE).
+  // diffSea = 180° significa que el viento viene desde tierra hacia el mar (OFFSHORE).
+  const diffSea = Math.abs(((windFrom - facing + 540) % 360) - 180);
+
+  // 1. ONSHORE PURO (0° a 45°): Viento de mar a tierra -> Aplasta la ola y crea chop
+  if (diffSea <= 45) {
+    return {
+      type: 'onshore',
+      badge: '🔴 Onshore (Viento de Mar)',
+      statusClass: 'surf-wind-onshore',
+      color: '#ef4444',
+      shortDesc: 'Chop / Mar picado que aplasta la rompiente',
+      isOffshore: false
+    };
+  }
+
+  // 2. CROSS-ONSHORE (45° a 75°): Viento diagonal entrando desde el mar
+  if (diffSea <= 75) {
+    return {
+      type: 'cross-onshore',
+      badge: '🟡 Cross-Onshore (Diagonal Mar)',
+      statusClass: 'surf-wind-cross',
+      color: '#f59e0b',
+      shortDesc: 'Entrada diagonal de mar, algo revuelto',
+      isOffshore: false
+    };
+  }
+
+  // 3. CROSS-SHORE PURO (75° a 105°): Viento lateral / paralelo a la orilla
+  if (diffSea <= 105) {
+    return {
+      type: 'crossshore',
+      badge: '🟡 Cross-shore (Viento Lateral)',
+      statusClass: 'surf-wind-cross',
+      color: '#f59e0b',
+      shortDesc: 'Viento lateral a la orilla con corriente de deriva',
+      isOffshore: false
+    };
+  }
+
+  // 4. CROSS-OFFSHORE (105° a 135°): Viento diagonal saliendo desde tierra
+  if (diffSea <= 135) {
+    return {
+      type: 'cross-offshore',
+      badge: '🟢 Cross-Offshore (Diagonal Tierra)',
+      statusClass: 'surf-wind-offshore',
+      color: '#10b981',
+      shortDesc: 'Diagonal favorable desde tierra, ola ordenada',
+      isOffshore: true
+    };
+  }
+
+  // 5. OFFSHORE PURO (135° a 180°): Viento de tierra hacia el mar -> Peina la ola y abre tubos
+  return {
+    type: 'offshore',
+    badge: '🟢 Offshore (Terral)',
+    statusClass: 'surf-wind-offshore',
+    color: '#10b981',
+    shortDesc: 'Terral que peina la ola y abre tubos limpios',
+    isOffshore: true
+  };
+}
+
+/**
+ * Computa la calidad e idoneidad del viento para surf en la costa asturiana a nivel general
  */
 export function getSurfWindCondition(windDirDeg, windSpeedKm) {
   const speed = typeof windSpeedKm === 'number' ? windSpeedKm : 12;
