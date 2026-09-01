@@ -335,6 +335,48 @@ export const WEATHER_EXPLANATIONS = {
         `
       }
     ]
+  },
+
+  surf_energy: {
+    icon: '⚡',
+    title: '¿Qué es la Energía de la Ola (kJ)?',
+    subtitle: 'El indicador definitivo de fuerza, empuje y calidad de surf en la rompiente',
+    badge: 'Energía (kJ) ∝ Altura² × Período',
+    sections: [
+      {
+        icon: '🌊',
+        heading: '1. ¿Por qué la altura en metros engaña?',
+        text: 'Medir solo los metros de una ola no basta. Una ola de <strong>1,2 m con 14 segundos</strong> de período desplaza una masa inmensa de agua a gran velocidad con paredes tubulares. En cambio, una ola de <strong>1,8 m con 6 segundos</strong> es mar de viento débil, fofo y revuelto. La <strong>Energía de la Ola (en kiloJulios, kJ)</strong> combina ambos factores para medir el empuje real en la rompiente.'
+      },
+      {
+        icon: '📊',
+        heading: '2. Escala de Potencia y Zona de Confort',
+        text: `
+          <ul class="explain-list">
+            <li><strong>🟢 50 a 200 kJ (Suave / Iniciación):</strong> Olas dóciles con poco empuje. Ideal para escuelas de surf, niños, principiantes o tablas tipo Longboard y Foam.</li>
+            <li><strong>🟡 200 a 600 kJ (Divertida / Óptima):</strong> La zona dulce para la mayoría de surfistas. Olas con fuerza para acelerar y hacer maniobras con tabla corta (shortboard) o evolutiva.</li>
+            <li><strong>🟠 600 a 1.500 kJ (Potente / Consistente):</strong> Mucha masa de agua y velocidad. Olas huecas, secciones tubulares y fondos que rompen con decisión. Exige remada y nivel intermedio-avanzado.</li>
+            <li><strong>🔴 > 1.500 kJ (Pesada / Solo Expertos):** Rompientes mayores, fondos de roca exigentes o temporales cantábricos de gran calibre. Precaución con corrientes de fondo.</li>
+          </ul>
+        `
+      },
+      {
+        icon: '🧮',
+        heading: '3. La Física del Mar: ¿Cómo se calcula?',
+        text: 'La física oceanográfica demuestra que la energía es proporcional al <strong>cuadrado de la altura ($H^2$) multiplicado por el período ($T$)</strong>. Duplicar la altura cuadruplica la fuerza del impacto, y un período largo compacta la energía en trenes de olas muy organizados.'
+      },
+      {
+        icon: '🏄‍♂️',
+        heading: 'Astucia en los Picos de Asturias',
+        text: `
+          <ul class="explain-list">
+            <li><strong>Salinas y San Lorenzo:</strong> Con 300-600 kJ y viento Offshore (Sur), los arenales ofrecen picos constantes de izquierda y derecha en casi cualquier marea.</li>
+            <li><strong>La Barra de Rodiles:</strong> Suele necesitar más de <strong>500-800 kJ</strong> y período > 12s con marea bajando para que la mítica izquierda rompa con su característico tubo a lo largo de la ría.</li>
+            <li><strong>Días de poco mar (< 150 kJ):</strong> Aprovecha arenales expuestos y abiertos como <strong>Xagó o Verdicio</strong>, que exprimen cualquier rastro de energía atlántica.</li>
+          </ul>
+        `
+      }
+    ]
   }
 };
 

@@ -172,7 +172,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.72 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.73 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -220,8 +220,18 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.72 🚀</span>
+            <span class="release-version">v1.0.73 🚀</span>
             <span class="release-date">01 Sep 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> <strong>Inteligencia de Energía de la Ola (kJ)</strong>: Cálculo de la potencia real de ola en kiloJulios ($E \propto H_s^2 \cdot T$) con código de color (Suave 🟢, Óptima 🟡, Potente 🟠, Pesada 🔴) y botón didáctico <em>💡 Explícame</em> en el módulo de Surf & Rompientes.</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Cronograma de Surf a 3 Horas</strong>: Previsión especializada inspirada en Surf-Forecast y Windguru con franjas horarias clave (08h, 11h, 14h, 17h, 20h) para Hoy y Mañana, combinando altura, swell, período, energía (kJ), viento offshore/onshore y nivel de marea en vivo.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.0.72</span>
+            <span class="release-date">01 Sep 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-new">Nuevo</span> <strong>Guía Didáctica de Coeficientes y Mareas ("Explícame")</strong>: Integración de la suite educativa interactiva en el módulo de Playas y Mareas. Botón directo en la píldora de <em>Coeficiente Hoy</em> y en la cabecera del <em>Cuadro Semanal</em> explicando qué mide el coeficiente (20 a 118), mareas vivas vs muertas y su impacto en las calas y arenales de Asturias.</li>
@@ -1453,7 +1463,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.72').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.73').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1474,6 +1484,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.72"></script>
+  <script type="module" src="js/app.js?v=1.0.73"></script>
 </body>
 </html>

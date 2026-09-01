@@ -1,11 +1,12 @@
-import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.71';
+import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.73';
+import { getRealtimeTideStatus } from '../utils/tides.js?v=1.0.73';
 import { 
   PLAYAS_POR_CONCEJO, 
   getNearestCoastalReference, 
   getSurfWindCondition,
   getBeachSpecificWindCondition,
   getSeaWaterTemperature
-} from './marineCard.js?v=1.0.71';
+} from './marineCard.js?v=1.0.73';
 
 /**
  * Calcula la escala de Douglas a partir de la altura significativa de ola
@@ -32,6 +33,57 @@ function getWetsuitRecommendation(tempC) {
   if (t < 18) return { suit: '4/3 mm estándar o 3/2 mm sellado', icon: '🏄‍♂️', tag: 'Fresca' };
   if (t < 21) return { suit: '3/2 mm integral / primavera', icon: '☀️', tag: 'Agradable' };
   return { suit: '2 mm shorty o bañador / licra', icon: '🌴', tag: 'Cálida' };
+}
+
+/**
+ * Calcula la Energía de la Ola en kiloJulios (kJ) según la física oceanográfica (E ~ k * H^2 * T)
+ */
+export function calculateWaveEnergy(heightM, periodS) {
+  const h = Math.max(0, parseFloat(heightM) || 0);
+  const t = Math.max(1, parseFloat(periodS) || 1);
+  
+  // Calibración estándar de energía en kJ para rompientes cantábricas
+  const rawKj = Math.round(30 * (h * h) * t);
+
+  let label = 'Suave (Iniciación / Longboard)';
+  let shortLabel = 'Suave';
+  let badgeClass = 'energy-soft';
+  let color = '#10b981';
+  let icon = '🟢';
+  let desc = 'Olas dóciles con poco empuje. Excelente para escuelas, principiantes y longboard.';
+
+  if (rawKj >= 1500) {
+    label = 'Pesada (Solo Expertos)';
+    shortLabel = 'Pesada';
+    badgeClass = 'energy-extreme';
+    color = '#ef4444';
+    icon = '🔴';
+    desc = 'Gran potencia y masa de agua con fuertes corrientes. Solo surfistas expertos.';
+  } else if (rawKj >= 600) {
+    label = 'Potente (Tubos / Consistente)';
+    shortLabel = 'Potente';
+    badgeClass = 'energy-high';
+    color = '#f97316';
+    icon = '🟠';
+    desc = 'Mucha fuerza y empuje. Paredes consistentes, huecas y tubulares.';
+  } else if (rawKj >= 200) {
+    label = 'Óptima (Divertida / Shortboard)';
+    shortLabel = 'Óptima';
+    badgeClass = 'energy-optimal';
+    color = '#fbbf24';
+    icon = '🟡';
+    desc = 'Potencia ideal y buen empuje para maniobras con tabla corta y evolutiva.';
+  }
+
+  return {
+    kj: rawKj,
+    label,
+    shortLabel,
+    badgeClass,
+    color,
+    icon,
+    desc
+  };
 }
 
 /**
@@ -93,6 +145,80 @@ function evaluateSurfQuality(waveHeight, wavePeriod, windCondition) {
 }
 
 /**
+ * Genera los tramos de previsión cada 3 horas para Hoy y Mañana (estilo Surf-Forecast / Windguru)
+ */
+function getSurfTimelineSlots(data, concejo) {
+  const marineHourly = data.marine?.hourly;
+  const weatherHourly = data.weather?.hourly;
+  if (!weatherHourly || !weatherHourly.time) return [];
+
+  const now = new Date();
+  const slots = [];
+  const targetHours = [8, 11, 14, 17, 20];
+
+  [0, 1].forEach(dayOffset => {
+    const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + dayOffset);
+    const dayLabel = dayOffset === 0 ? 'Hoy' : 'Mañana';
+    const dayName = d.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' });
+
+    targetHours.forEach(hour => {
+      const targetDate = new Date(d.getFullYear(), d.getMonth(), d.getDate(), hour, 0, 0);
+      const hourPrefix = `${targetDate.getFullYear()}-${String(targetDate.getMonth()+1).padStart(2, '0')}-${String(targetDate.getDate()).padStart(2, '0')}T${String(hour).padStart(2, '0')}`;
+      
+      let idx = weatherHourly.time.findIndex(t => t.startsWith(hourPrefix));
+      if (idx === -1) {
+        idx = dayOffset * 24 + hour;
+      }
+      if (idx < 0 || idx >= weatherHourly.time.length) return;
+
+      const timeStr = `${String(hour).padStart(2, '0')}:00`;
+      const isPast = dayOffset === 0 && now.getHours() > (hour + 1);
+
+      // Métricas de oleaje
+      const rawH = marineHourly?.wave_height ? marineHourly.wave_height[idx] : null;
+      const h = (typeof rawH === 'number') ? rawH.toFixed(1) : '1.3';
+      
+      const rawSwellH = marineHourly?.swell_wave_height ? marineHourly.swell_wave_height[idx] : null;
+      const swellH = (typeof rawSwellH === 'number') ? rawSwellH.toFixed(1) : h;
+
+      const rawPeriod = marineHourly?.wave_period ? marineHourly.wave_period[idx] : null;
+      const period = (typeof rawPeriod === 'number') ? Math.round(rawPeriod) : 11;
+
+      const energy = calculateWaveEnergy(h, period);
+
+      // Viento y calidad
+      const windSpd = Math.round(weatherHourly.wind_speed_10m[idx] || 0);
+      const windDeg = weatherHourly.wind_direction_10m[idx] || 180;
+      const windDirObj = getWindDirection(windDeg);
+      const surfWind = getSurfWindCondition(windDeg, windSpd);
+
+      // Estado de marea
+      const tideStatus = getRealtimeTideStatus(targetDate, concejo.lon || -5.6615);
+
+      slots.push({
+        dayOffset,
+        dayLabel,
+        dayName,
+        timeStr,
+        fullDate: targetDate,
+        isPast,
+        h,
+        swellH,
+        period,
+        energy,
+        windSpd,
+        windDeg,
+        windDirObj,
+        surfWind,
+        tideStatus
+      });
+    });
+  });
+
+  return slots;
+}
+
+/**
  * Renderiza el módulo especializado de Surf, Rompientes & Olas
  */
 export function renderSurfCard(data, concejo) {
@@ -121,6 +247,9 @@ export function renderSurfCard(data, concejo) {
   // Análisis dinámico Offshore / Onshore
   const surfWind = getSurfWindCondition(windDeg, windSpeed);
 
+  // Energía de la Ola (kJ)
+  const waveEnergy = calculateWaveEnergy(waveHeight, wavePeriod);
+
   // Escala Douglas
   const douglas = getDouglasScale(parseFloat(waveHeight));
   const douglasDegree = douglas.degree;
@@ -132,6 +261,9 @@ export function renderSurfCard(data, concejo) {
   // Temperatura del mar y traje unificada
   const seaTemp = getSeaWaterTemperature(marine);
   const wetsuit = getWetsuitRecommendation(parseFloat(seaTemp));
+
+  // Tramos de evolución a 3 horas
+  const timelineSlots = getSurfTimelineSlots(data, concejo);
 
   return `
     <div class="marine-card">
@@ -150,7 +282,7 @@ export function renderSurfCard(data, concejo) {
         </div>
       </div>
 
-      <!-- 1. GRID DE SENSORES TÉCNICOS DE SWELL Y ROMPIENTE -->
+      <!-- 1. GRID DE SENSORES TÉCNICOS DE SWELL, ENERGÍA Y ROMPIENTE -->
       <div class="marine-grid">
         <!-- Altura de Ola Significativa -->
         <div class="marine-widget">
@@ -166,6 +298,21 @@ export function renderSurfCard(data, concejo) {
           <div class="widget-value">${wavePeriod} <span class="unit">segundos</span></div>
           <div class="widget-detail">Dirección del oleaje: <strong>${waveDir.name}</strong></div>
           <div class="widget-detail">Viento en costa: <strong>${windSpeed} km/h (${windDirObj.name})</strong></div>
+        </div>
+
+        <!-- Energía de la Ola (kJ) -->
+        <div class="marine-widget surf-energy-widget">
+          <div class="t-label-row">
+            <span class="widget-label">⚡ Energía de la Ola (Potencia)</span>
+            <button class="btn-explain-sensor" data-explain="surf_energy" title="¿Qué es la energía de la ola en kJ? Pulsa para aprender">💡 Explícame</button>
+          </div>
+          <div class="widget-value" style="color: ${waveEnergy.color};">${waveEnergy.kj} <span class="unit">kJ (kiloJulios)</span></div>
+          <div class="surf-energy-badge-row">
+            <span class="surf-energy-pill ${waveEnergy.badgeClass}" style="background: ${waveEnergy.color}22; color: ${waveEnergy.color}; border: 1px solid ${waveEnergy.color}66;">
+              ${waveEnergy.icon} ${waveEnergy.label}
+            </span>
+          </div>
+          <div class="widget-detail" style="margin-top: 6px;">${waveEnergy.desc}</div>
         </div>
 
         <!-- Aptitud y Calidad de la Rompiente -->
@@ -200,7 +347,77 @@ export function renderSurfCard(data, concejo) {
         </div>
       </div>
 
-      <!-- 2. PANEL DE INTELIGENCIA DE SURF: VIENTO OFFSHORE/ONSHORE & GUÍA DIDÁCTICA -->
+      <!-- 2. CRONOGRAMA DE SURF CADA 3 HORAS (EVOLUCIÓN HORARIA TIPO SURF-FORECAST / WINDGURU) -->
+      ${timelineSlots.length > 0 ? `
+        <div class="marine-widget surf-timeline-widget" style="margin-top: 20px; margin-bottom: 20px;">
+          <div class="surf-timeline-header">
+            <div class="surf-timeline-title-wrap">
+              <span class="surf-timeline-icon">⏱️</span>
+              <div>
+                <div class="surf-timeline-title">Evolución de Rompiente & Swell a 3 Horas</div>
+                <div class="surf-timeline-subtitle">Previsión en franjas clave (08h, 11h, 14h, 17h, 20h) • Hoy y Mañana</div>
+              </div>
+            </div>
+            <button class="btn-explain-sensor" data-explain="surf_energy" title="¿Cómo interpretar la energía en kJ de las olas? Pulsa para aprender">
+              💡 Energía (kJ)
+            </button>
+          </div>
+
+          <div class="surf-timeline-scroll-container">
+            <div class="surf-timeline-scroll-hint">
+              <span>👆 Desliza horizontalmente para ver la evolución a 3 horas de Hoy y Mañana</span>
+            </div>
+            <div class="surf-timeline-grid">
+              ${timelineSlots.map(slot => `
+                <div class="surf-slot-card ${slot.isPast ? 'is-past' : ''}">
+                  <div class="surf-slot-top">
+                    <span class="slot-day">${slot.dayLabel}</span>
+                    <span class="slot-hour">${slot.timeStr}</span>
+                  </div>
+
+                  <!-- Ola y Swell -->
+                  <div class="slot-metric-row">
+                    <div class="slot-metric-main">
+                      <span class="slot-wave-val">${slot.h}m</span>
+                      <span class="slot-swell-sub">Swell: ${slot.swellH}m</span>
+                    </div>
+                    <div class="slot-period-badge">
+                      <span class="period-num">${slot.period}s</span>
+                      <span class="period-lbl">período</span>
+                    </div>
+                  </div>
+
+                  <!-- Energía kJ -->
+                  <div class="slot-energy-box" style="border-left: 3px solid ${slot.energy.color}; background: rgba(15, 23, 42, 0.65);">
+                    <div class="slot-energy-top">
+                      <span class="slot-energy-kj" style="color: ${slot.energy.color};">⚡ ${slot.energy.kj} kJ</span>
+                      <span class="slot-energy-tag" style="color: ${slot.energy.color};">${slot.energy.shortLabel}</span>
+                    </div>
+                  </div>
+
+                  <!-- Viento y Calidad -->
+                  <div class="slot-wind-box ${slot.surfWind.statusClass}" style="border: 1px solid ${slot.surfWind.color}55;">
+                    <div class="slot-wind-top">
+                      <span class="slot-wind-badge" style="color: ${slot.surfWind.color};">${slot.surfWind.badge}</span>
+                      <span class="slot-wind-speed">${slot.windSpd} km/h</span>
+                    </div>
+                    <div class="slot-wind-dir">${slot.windDirObj.name}</div>
+                  </div>
+
+                  <!-- Marea en esa hora -->
+                  <div class="slot-tide-row">
+                    <span class="slot-tide-ico">${slot.tideStatus.directionIcon}</span>
+                    <span class="slot-tide-txt">${slot.tideStatus.directionName.split(' ')[0]}</span>
+                    <span class="slot-tide-h">${slot.tideStatus.currentWaterHeight}m</span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      ` : ''}
+
+      <!-- 3. PANEL DE INTELIGENCIA DE SURF: VIENTO OFFSHORE/ONSHORE & GUÍA DIDÁCTICA -->
       <div class="marine-widget surf-intelligence-card" style="margin-top: 20px; margin-bottom: 20px;">
         <div class="surf-intel-header">
           <div class="surf-intel-title-wrap">
@@ -256,7 +473,7 @@ export function renderSurfCard(data, concejo) {
         </div>
       </div>
 
-      <!-- 3. CATÁLOGO TÉCNICO DE PICOS DE SURF, FONDOS & ROMPIENTES -->
+      <!-- 4. CATÁLOGO TÉCNICO DE PICOS DE SURF, FONDOS & ROMPIENTES -->
       <div class="marine-ports-section">
         <div class="beach-section-header">
           <div>

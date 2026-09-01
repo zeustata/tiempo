@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.73] - 2026-09-01
+
+### 🏄‍♂️ Inteligencia de Energía de la Ola (kJ) & Cronograma de Surf a 3 Horas
+- **Cálculo de Energía de la Ola (kJ)**: Integración del cálculo físico de potencia de oleaje ($E \propto H_s^2 \cdot T$) con escala cromática (Suave 🟢, Óptima 🟡, Potente 🟠, Pesada 🔴) en la tarjeta de métricas marinas y el visor didáctico `WEATHER_EXPLANATIONS.surf_energy`.
+- **Cronograma de Surf a 3 Horas (Hoy y Mañana)**: Despliegue de un visor interactivo horizontal con las franjas clave de surf (08h, 11h, 14h, 17h, 20h) combinando altura y swell (m), período (s), energía (kJ), viento local offshore/onshore y nivel/estado de la marea en tiempo real.
+- **Service Worker `v173-official` & Cache-Busting Total**: Sincronización completa a `?v=1.0.73` en scripts, estilos y manifest.
+
+---
+
 ## [1.0.72] - 2026-09-01
 
 ### 💡 Suite Didáctica de Coeficientes y Mareas ("Explícame")
