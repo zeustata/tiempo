@@ -1122,7 +1122,10 @@ export function renderMarineCard(data, concejo) {
           </div>
 
           <div class="tide-metric-pill">
-            <span class="t-label">Coeficiente Hoy</span>
+            <div class="t-label-row">
+              <span class="t-label">Coeficiente Hoy</span>
+              <button class="btn-explain-sensor" data-explain="tides" title="¿Qué es el Coeficiente de Marea? Pulsa para aprender">💡 Explícame</button>
+            </div>
             <span class="t-value">${tideStatus.moonInfo.coefficient}</span>
             <span class="t-badge-small ${tideStatus.moonInfo.tideClass}">${tideStatus.moonInfo.tideBadge}</span>
           </div>
@@ -1212,6 +1215,7 @@ export function renderMarineCard(data, concejo) {
               <div class="weekly-subtitle">Previsión astronómica oficial a 7 días • Fases Lunares & Mareonas</div>
             </div>
           </div>
+          <button class="btn-explain-sensor" data-explain="tides" title="¿Qué es el Coeficiente de Marea y cómo interpretarlo? Pulsa para aprender">💡 Explícame</button>
         </div>
 
         <div class="weekly-tides-grid">

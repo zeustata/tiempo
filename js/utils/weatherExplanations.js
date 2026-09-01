@@ -281,6 +281,60 @@ export const WEATHER_EXPLANATIONS = {
         text: 'El período es el tiempo que pasa entre el paso de dos crestas consecutivas de olas. Un período de <strong>10 a 15+ segundos</strong> indica <em>mar de fondo potente y ordenado</em> generado por borrascas lejanas en el Atlántico Norte. Un período corto (< 8 segundos) indica mar de viento local y desordenado.'
       }
     ]
+  },
+
+  tides: {
+    icon: '🌊',
+    title: '¿Cómo entender el Coeficiente y las Mareas?',
+    subtitle: 'Aprende qué mide el coeficiente, mareas vivas vs muertas y su impacto en las playas de Asturias',
+    badge: 'Escala 20 a 118 en el Cantábrico • Pleamar vs Bajamar',
+    sections: [
+      {
+        icon: '📐',
+        heading: '1. ¿Qué es el Coeficiente de Marea?',
+        text: 'El coeficiente expresa la <strong>amplitud prevista de la marea</strong> (la diferencia de altura en metros entre la bajamar y la pleamar sucesivas). En el mar Cantábrico oscila entre <strong>20</strong> (mínima amplitud) y <strong>118</strong> (máxima amplitud astronómica posible).'
+      },
+      {
+        icon: '🔴',
+        heading: '2. Mareas Vivas y "Mareonas" (Coeficiente 85 a 118)',
+        text: `
+          Ocurren cuando el Sol, la Luna y la Tierra están alineados (en <strong>Luna Llena y Luna Nueva</strong>), sumando sus fuerzas gravitatorias (<em>mareas de sicigia</em>):
+          <ul class="explain-list">
+            <li><strong>En Pleamar (Marea Alta):</strong> El mar sube con enorme fuerza, cubriendo casi por completo la arena en calas estrechas y acantilados.</li>
+            <li><strong>En Bajamar (Marea Baja):</strong> El agua se retira cientos de metros mar adentro, dejando al descubierto inmensas explanadas de arena, lajas de roca y bancos de marisqueo.</li>
+            <li><strong>⚠️ Precaución:</strong> Las corrientes de vaciante y llenante en rías y rompientes son mucho más rápidas e intensas.</li>
+          </ul>
+        `
+      },
+      {
+        icon: '🟢',
+        heading: '3. Mareas Muertas (Coeficiente 20 a 64)',
+        text: `
+          Ocurren cuando el Sol y la Luna forman un ángulo de 90° respecto a la Tierra (en <strong>Cuarto Creciente y Cuarto Menguante</strong>), contrarrestando sus atracciones (<em>mareas de cuadratura</em>):
+          <ul class="explain-list">
+            <li>La diferencia entre pleamar y bajamar es <strong>mínima</strong>.</li>
+            <li>El mar apenas avanza al subir ni se retira al bajar; la línea de orilla se mantiene muy estable durante todo el día.</li>
+            <li>Ideal para baño tranquilo y fondeo de embarcaciones.</li>
+          </ul>
+        `
+      },
+      {
+        icon: '🟡',
+        heading: '4. Mareas Medias (Coeficiente 65 a 84)',
+        text: 'Representan el régimen intermedio y equilibrado del Cantábrico, con oscilación normal de agua y corrientes moderadas.'
+      },
+      {
+        icon: '🏖️',
+        heading: 'Astucia y Seguridad en las Playas de Asturias',
+        text: `
+          <ul class="explain-list">
+            <li><strong>Calas encajadas (Gulpiyuri, Poo, Peñarrubia, Cuevas del Mar):</strong> Con coeficientes superiores a 90-100 en pleamar, ¡el agua llega a las paredes de roca y la playa seca desaparece por completo! Planifica tu visita hacia la media marea o bajamar.</li>
+            <li><strong>Grandes arenales (Salinas, San Lorenzo, Rodiles, Xagó):</strong> En mareas vivas con bajamar se crean kilómetros de playa firme ideales para caminar y deportes en la arena.</li>
+            <li><strong>Desembocaduras de rías (Villaviciosa, Navia, Ribadesella):</strong> Con coeficientes altos, el cambio de marea genera corrientes peligrosas de arrastre hacia mar abierto.</li>
+          </ul>
+        `
+      }
+    ]
   }
 };
 

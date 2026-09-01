@@ -159,6 +159,7 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Mareas de Hoy en Tarjeta Única a 2 Niveles (`.daily-tides-grid` y `.tide-sub-item` con arriba: icono + tipo + orden, abajo: hora + altura) y calibración de márgenes/anclajes de texto en el Mareógrafo SVG de 72h con salto a **v1.0.69** (SW `v169-official`).
 - Auto-Centrado en tiempo real del Mareógrafo de 72h ("AHORA") y consolidación de Mareas de Hoy en cuadrícula fija 2x2 súper compacta con salto a **v1.0.70** (SW `v170-official`).
 - Restauración completa y segura de las 2 tarjetas de ciclo diarias (1ª Marea y 2ª Marea) con pleamares y bajamares una debajo de otra con salto a **v1.0.71** (SW `v171-official`).
+- Despliegue de la Suite Didáctica de Coeficientes y Mareas (`[ 💡 Explícame ]`) en Playas & Mareas (píldora de Coeficiente Hoy y cabecera del Cuadro Semanal) explicando la amplitud de marea (escala 20-118), mareas vivas vs muertas y precauciones en calas y arenales de Asturias con salto a **v1.0.72** (SW `v172-official`).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 
 

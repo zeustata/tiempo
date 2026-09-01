@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.72] - 2026-09-01
+
+### 💡 Suite Didáctica de Coeficientes y Mareas ("Explícame")
+- **Extensión Didáctica en Playas & Mareas**: Integración del motor educativo interactivo `WEATHER_EXPLANATIONS.tides` accesible mediante botones `💡 Explícame` en la píldora de *Coeficiente Hoy* y en la cabecera del *Cuadro Semanal de Mareas & Coeficientes*.
+- **Contenido Técnico y Astuto de Mareas**: Explicación detallada de la amplitud de marea (escala 20 a 118 en el Cantábrico), contraste entre Mareas Vivas / Mareonas (85-118) de sicigia y Mareas Muertas (20-64) de cuadratura, junto con recomendaciones prácticas de seguridad para calas estrechas (Gulpiyuri, Poo, Peñarrubia), grandes arenales (Salinas, San Lorenzo, Rodiles) y corrientes de rías.
+- **Service Worker `v172-official` & Cache-Busting Total**: Sincronización completa a `?v=1.0.72` en todos los archivos y caché PWA.
+
+---
+
 ## [1.0.71] - 2026-08-31
 
 ### 🏖️ Restauración Estable: Mareas de Hoy por Ciclos Diarios

@@ -561,6 +561,14 @@
   gap: 6px;
 }
 
+.t-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 8px;
+}
+
 .t-label {
   font-size: 0.76rem;
   font-weight: 700;
