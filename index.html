@@ -1463,7 +1463,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.73').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.74').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1484,6 +1484,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.73"></script>
+  <script type="module" src="js/app.js?v=1.0.74"></script>
 </body>
 </html>

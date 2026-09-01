@@ -12,6 +12,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.74] - 2026-09-01
+
+### 🏄‍♂️ Calibración de Energía de Oleaje (kJ) & Estándar Oceanográfico Cantábrico
+- **Calibración Fiel del Factor de Energía ($E = 11 \cdot H_{\text{swell}}^2 \cdot T$)**: Ajuste del multiplicador y cálculo sobre la altura del mar de fondo (*Swell*), alineando los resultados al milímetro con los estándares oceanográficos y de plataformas como *Surf-Forecast*.
+- **Corrección de Escala y Coherencia**: Olas de 1.3m con 8s se calculan ahora en ~148 kJ (categoría 🟢 *Suave / Poca Fuerza*), reservando los 400-600 kJ para olas con períodos consistentes de mar de fondo (>12-14s) u olas potentes.
+- **Armonización de Umbrales**: Reestructuración de tramos (🟢 `< 200 kJ` Suave, 🟡 `200-500 kJ` Óptima, 🟠 `500-1200 kJ` Potente, 🔴 `> 1200 kJ` Pesada) sincronizada en tarjeta, cronograma de 3 horas y visor didáctico `WEATHER_EXPLANATIONS.surf_energy`.
+- **Service Worker `v174-official` & Cache-Busting Total**: Sincronización completa a `?v=1.0.74` en scripts, estilos y manifest.
+
+---
+
 ## [1.0.73] - 2026-09-01
 
 ### 🏄‍♂️ Inteligencia de Energía de la Ola (kJ) & Cronograma de Surf a 3 Horas

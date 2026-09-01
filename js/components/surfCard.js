@@ -1,12 +1,12 @@
-import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.73';
-import { getRealtimeTideStatus } from '../utils/tides.js?v=1.0.73';
+import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.74';
+import { getRealtimeTideStatus } from '../utils/tides.js?v=1.0.74';
 import { 
   PLAYAS_POR_CONCEJO, 
   getNearestCoastalReference, 
   getSurfWindCondition,
   getBeachSpecificWindCondition,
   getSeaWaterTemperature
-} from './marineCard.js?v=1.0.73';
+} from './marineCard.js?v=1.0.74';
 
 /**
  * Calcula la escala de Douglas a partir de la altura significativa de ola
@@ -36,30 +36,31 @@ function getWetsuitRecommendation(tempC) {
 }
 
 /**
- * Calcula la Energía de la Ola en kiloJulios (kJ) según la física oceanográfica (E ~ k * H^2 * T)
+ * Calcula la Energía de la Ola en kiloJulios (kJ) según la física oceanográfica (E ~ k * H_swell^2 * T)
+ * Calibrada con estándares reales de Surf-Forecast y oceanografía cantábrica (factor k=11)
  */
 export function calculateWaveEnergy(heightM, periodS) {
   const h = Math.max(0, parseFloat(heightM) || 0);
   const t = Math.max(1, parseFloat(periodS) || 1);
   
   // Calibración estándar de energía en kJ para rompientes cantábricas
-  const rawKj = Math.round(30 * (h * h) * t);
+  const rawKj = Math.round(11 * (h * h) * t);
 
-  let label = 'Suave (Iniciación / Longboard)';
+  let label = 'Suave (Iniciación / Poca Fuerza)';
   let shortLabel = 'Suave';
   let badgeClass = 'energy-soft';
   let color = '#10b981';
   let icon = '🟢';
   let desc = 'Olas dóciles con poco empuje. Excelente para escuelas, principiantes y longboard.';
 
-  if (rawKj >= 1500) {
+  if (rawKj >= 1200) {
     label = 'Pesada (Solo Expertos)';
     shortLabel = 'Pesada';
     badgeClass = 'energy-extreme';
     color = '#ef4444';
     icon = '🔴';
     desc = 'Gran potencia y masa de agua con fuertes corrientes. Solo surfistas expertos.';
-  } else if (rawKj >= 600) {
+  } else if (rawKj >= 500) {
     label = 'Potente (Tubos / Consistente)';
     shortLabel = 'Potente';
     badgeClass = 'energy-high';
@@ -184,7 +185,7 @@ function getSurfTimelineSlots(data, concejo) {
       const rawPeriod = marineHourly?.wave_period ? marineHourly.wave_period[idx] : null;
       const period = (typeof rawPeriod === 'number') ? Math.round(rawPeriod) : 11;
 
-      const energy = calculateWaveEnergy(h, period);
+      const energy = calculateWaveEnergy(swellH, period);
 
       // Viento y calidad
       const windSpd = Math.round(weatherHourly.wind_speed_10m[idx] || 0);
@@ -247,8 +248,8 @@ export function renderSurfCard(data, concejo) {
   // Análisis dinámico Offshore / Onshore
   const surfWind = getSurfWindCondition(windDeg, windSpeed);
 
-  // Energía de la Ola (kJ)
-  const waveEnergy = calculateWaveEnergy(waveHeight, wavePeriod);
+  // Energía de la Ola (kJ) basada en mar de fondo (Swell)
+  const waveEnergy = calculateWaveEnergy(swellHeight || waveHeight, wavePeriod);
 
   // Escala Douglas
   const douglas = getDouglasScale(parseFloat(waveHeight));
