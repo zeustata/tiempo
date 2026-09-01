@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.71">
-  <link rel="stylesheet" href="css/components.css?v=1.0.71">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.71">
+  <link rel="stylesheet" href="css/main.css?v=1.0.74">
+  <link rel="stylesheet" href="css/components.css?v=1.0.74">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.74">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -172,7 +172,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.73 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.74 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -220,8 +220,17 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.73 🚀</span>
+            <span class="release-version">v1.0.74 🚀</span>
             <span class="release-date">01 Sep 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> <strong>Calibración Fiel de Energía de la Ola (kJ)</strong>: Ajuste del cálculo de energía de oleaje al estándar oceanográfico de <em>Surf-Forecast</em> ($E = 11 \cdot H_{\text{swell}}^2 \cdot T$) y cálculo sobre mar de fondo (*Swell*), corrigiendo la sobreestimación en olas de período corto detectada por Edu (1.3m y 8s = 148 kJ 🟢 Suave).</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.0.73</span>
+            <span class="release-date">01 Sep 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-new">Nuevo</span> <strong>Inteligencia de Energía de la Ola (kJ)</strong>: Cálculo de la potencia real de ola en kiloJulios ($E \propto H_s^2 \cdot T$) con código de color (Suave 🟢, Óptima 🟡, Potente 🟠, Pesada 🔴) y botón didáctico <em>💡 Explícame</em> en el módulo de Surf & Rompientes.</li>
