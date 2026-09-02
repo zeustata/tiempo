@@ -1,4 +1,4 @@
-import { getWeatherInfo, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=1.0.56';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection } from '../utils/weatherIcons.js?v=1.0.75';
 
 /**
  * Calcula la condición meteorológica representativa para un tramo horario (ej. mañana o tarde)
@@ -107,7 +107,9 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
 
     const weather = getWeatherInfo(code, isDay, precipMm, pop);
     const temp = Math.round(hourly.temperature_2m[i]);
-    const wind = units === 'knots' ? (hourly.wind_speed_10m[i] * 0.539957).toFixed(0) : Math.round(hourly.wind_speed_10m[i]);
+    const windSpeed = units === 'knots' ? (hourly.wind_speed_10m[i] * 0.539957).toFixed(0) : Math.round(hourly.wind_speed_10m[i]);
+    const windDeg = (hourly.wind_direction_10m && hourly.wind_direction_10m[i] != null) ? hourly.wind_direction_10m[i] : 0;
+    const windDir = getWindDirection(windDeg);
 
     hourlyCards += `
       <div class="hourly-card">
@@ -118,7 +120,13 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
           <span class="pop-drop">💧</span>
           <span>${pop}%</span>
         </div>
-        <span class="h-wind">💨 ${wind} ${unitLabel}</span>
+        <span class="h-wind" title="Viento del ${windDir.name} (${Math.round(windDeg)}°), sopla hacia el ${windDir.toName} a ${windSpeed} ${unitLabel}">
+          <svg class="h-wind-arrow" style="transform: rotate(${Math.round(windDeg + 180)}deg);" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
+            <path d="M12 2L5 13h4.5v9h5v-9H19L12 2z" fill="currentColor"/>
+          </svg>
+          <span class="h-wind-dir">${windDir.short}</span>
+          <span class="h-wind-val">${windSpeed} ${unitLabel}</span>
+        </span>
       </div>
     `;
   }

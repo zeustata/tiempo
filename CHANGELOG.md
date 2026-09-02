@@ -12,6 +12,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.75] - 2026-09-02
+
+### 🧭 Flecha Dinámica de Dirección & Rumbo Cardinal en Pronóstico Horario (72 Horas)
+- **Vector Físico de Viento Dinámico en 360°**: Sustitución del icono genérico `💨` por una flecha aerodinámica SVG con rotación continua en tiempo real calculada según el rumbo físico de desplazamiento de la masa de aire (`(windDeg + 180)deg`), indicando hacia dónde sopla exactamente en cada una de las 72 horas.
+- **Rumbo Cardinal en Español & Velocidad**: Despliegue de la abreviatura del rumbo cardinal en tono cyan brillante (`N`, `NE`, `E`, `SE`, `S`, `SO`, `O`, `NO`) junto a la velocidad en km/h (o nudos) y cuadro emergente explicativo al posar el cursor o pulsar.
+- **Diseño Ergonómico Compacto**: Ajuste simétrico de anchos y alineación `inline-flex` en `.hourly-card`, manteniendo la holgura y diseño sin desbordes.
+- **Service Worker `v175-official` & Cache-Busting Total**: Sincronización completa a `?v=1.0.75` en scripts, estilos y manifest.
+
+---
+
 ## [1.0.74] - 2026-09-01
 
 ### 🏄‍♂️ Calibración de Energía de Oleaje (kJ) & Estándar Oceanográfico Cantábrico
