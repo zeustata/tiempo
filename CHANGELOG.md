@@ -12,6 +12,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.76] - 2026-09-02
+
+### 💡 Suite Didáctica de Olas y Swell ("Explícame") en Playas y Surf
+- **Módulo Didáctico `WEATHER_EXPLANATIONS.waves`**: Explicación completa e ilustrada sobre qué es la *Altura Significativa ($H_s$)* (promedio del tercio más alto y por qué 1 de cada 10 olas es un 30% mayor), diferenciación física entre *Mar de fondo (Swell)* y *Mar de viento (Chop)*, desglose de la *Escala Douglas* de 0 a 6+ y precauciones en pedreros/acantilados cantábricos.
+- **Módulo Didáctico `WEATHER_EXPLANATIONS.swell`**: Guía técnica sobre el *Período en Segundos ($T$)* (período largo vs corto y volumen subacuático), cuadrantes de dirección de oleaje dominantes en Asturias (*Noroeste NW, Norte N, Poniente W*) y fenómeno de *Refracción marina* costera.
+- **Botones Interactivos `[ 💡 Explícame ]`**: Desplegados en las tarjetas de *Altura del Oleaje (Significativa)* y *Período y Dirección del Swell* en **Surf & Rompientes**, y en la tarjeta de *Estado de la Mar (Escala Douglas)* en **Playas & Mareas**.
+- **Service Worker `v176-official` & Cache-Busting Total**: Sincronización completa a `?v=1.0.76` en todos los archivos.
+
+---
+
 ## [1.0.75] - 2026-09-02
 
 ### 🧭 Flecha Dinámica de Dirección & Rumbo Cardinal en Pronóstico Horario (72 Horas)

@@ -163,6 +163,7 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Inteligencia de Energía de la Ola en kiloJulios ($E \propto H_s^2 \cdot T$) con suite didáctica `surf_energy` y Cronograma de Surf a 3 Horas (08h, 11h, 14h, 17h, 20h para Hoy y Mañana cruzando oleaje, swell, período, energía, viento offshore/onshore y mareas en tiempo real al estilo Surf-Forecast y Windguru) con salto a **v1.0.73** (SW `v173-official`).
 - Calibración Fiel de Energía de Oleaje (kJ) a estándar oceanográfico de *Surf-Forecast* ($E = 11 \cdot H_{\text{swell}}^2 \cdot T$) con ajuste de umbrales y cálculo directo sobre el mar de fondo (corrección observada por Edu en olas de 1.3m y 8s que ahora dan 148 kJ Suave) con salto a **v1.0.74** (SW `v174-official`).
 - Flecha Dinámica Rotatoria de 360° y Rumbo Cardinal en Pronóstico Horario a 72 Horas (propuesta de Edu y Opción A aprobada por Lendo con vector físico de flujo de viento `(windDeg + 180)deg`, iniciales en español N/NE/E/SE/S/SO/O/NO y velocidad) con salto a **v1.0.75** (SW `v175-official`).
+- Despliegue de la Suite Didáctica de Olas y Swell (`[ 💡 Explícame ]`) en Surf & Rompientes (Altura de Oleaje y Período/Dirección del Swell) y Playas & Mareas (Estado de la Mar - Douglas), explicando Altura Significativa ($H_s$), Mar de Fondo vs Mar de Viento, Escala Douglas, Período ($T$) y Refracción Marina Cantábrica con salto a **v1.0.76** (SW `v176-official`).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 
 

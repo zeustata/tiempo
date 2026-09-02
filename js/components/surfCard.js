@@ -1,12 +1,12 @@
-import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.75';
-import { getRealtimeTideStatus } from '../utils/tides.js?v=1.0.75';
+import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.76';
+import { getRealtimeTideStatus } from '../utils/tides.js?v=1.0.76';
 import { 
   PLAYAS_POR_CONCEJO, 
   getNearestCoastalReference, 
   getSurfWindCondition,
   getBeachSpecificWindCondition,
   getSeaWaterTemperature
-} from './marineCard.js?v=1.0.75';
+} from './marineCard.js?v=1.0.76';
 
 /**
  * Calcula la escala de Douglas a partir de la altura significativa de ola
@@ -287,7 +287,10 @@ export function renderSurfCard(data, concejo) {
       <div class="marine-grid">
         <!-- Altura de Ola Significativa -->
         <div class="marine-widget">
-          <div class="widget-label">Altura del Oleaje (Significativa)</div>
+          <div class="t-label-row">
+            <span class="widget-label">Altura del Oleaje (Significativa)</span>
+            <button class="btn-explain-sensor" data-explain="waves" title="¿Cómo entender la altura del oleaje, mar de fondo y escala Douglas? Pulsa para aprender">💡 Explícame</button>
+          </div>
           <div class="widget-value">${waveHeight} <span class="unit">metros</span></div>
           <div class="widget-detail">Mar de fondo (Swell): <strong>${swellHeight} m</strong></div>
           <div class="widget-detail">Mar de viento (Chop): <strong>${windWaveH} m</strong></div>
@@ -295,7 +298,10 @@ export function renderSurfCard(data, concejo) {
 
         <!-- Período y Dirección del Swell -->
         <div class="marine-widget">
-          <div class="widget-label">Período y Dirección del Swell</div>
+          <div class="t-label-row">
+            <span class="widget-label">Período y Dirección del Swell</span>
+            <button class="btn-explain-sensor" data-explain="swell" title="¿Qué es el período en segundos y la dirección del swell? Pulsa para aprender">💡 Explícame</button>
+          </div>
           <div class="widget-value">${wavePeriod} <span class="unit">segundos</span></div>
           <div class="widget-detail">Dirección del oleaje: <strong>${waveDir.name}</strong></div>
           <div class="widget-detail">Viento en costa: <strong>${windSpeed} km/h (${windDirObj.name})</strong></div>

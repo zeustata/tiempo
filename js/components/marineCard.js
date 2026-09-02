@@ -1,11 +1,11 @@
-import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.71';
+import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.76';
 import { 
   getMoonAndTideInfo, 
   getDailyTideEvents, 
   getRealtimeTideStatus, 
   getWeeklyTides, 
   renderTideSvgGraph 
-} from '../utils/tides.js?v=1.0.71';
+} from '../utils/tides.js?v=1.0.76';
 
 /**
  * Base de datos exhaustiva y profesional de playas, picos de surf y fondos marinos de Asturias
@@ -1275,7 +1275,10 @@ export function renderMarineCard(data, concejo) {
 
         <!-- Estado de la Mar (Douglas) -->
         <div class="marine-widget">
-          <div class="widget-label">Estado de la Mar (Escala Douglas)</div>
+          <div class="t-label-row">
+            <span class="widget-label">Estado de la Mar (Escala Douglas)</span>
+            <button class="btn-explain-sensor" data-explain="waves" title="¿Cómo entender la altura del oleaje y la escala Douglas? Pulsa para aprender">💡 Explícame</button>
+          </div>
           <div class="widget-value">${waveHeight} <span class="unit">m</span></div>
           <div class="widget-detail">Grado: <strong>Grado ${douglasDegree} (${douglasName})</strong></div>
           <div class="widget-detail">Tipo de mar: <strong>${h < 1.0 ? 'Mar en calma / Rizada' : 'Oleaje atlántico cantábrico'}</strong></div>

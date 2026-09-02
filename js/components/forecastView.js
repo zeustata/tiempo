@@ -1,4 +1,4 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection } from '../utils/weatherIcons.js?v=1.0.75';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection } from '../utils/weatherIcons.js?v=1.0.76';
 
 /**
  * Calcula la condición meteorológica representativa para un tramo horario (ej. mañana o tarde)

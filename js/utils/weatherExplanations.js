@@ -377,6 +377,92 @@ export const WEATHER_EXPLANATIONS = {
         `
       }
     ]
+  },
+
+  waves: {
+    icon: '🌊',
+    title: '¿Cómo entender la Altura del Oleaje y el Estado de la Mar?',
+    subtitle: 'Aprende qué es la altura significativa, mar de fondo vs mar de viento y la escala Douglas',
+    badge: 'Altura Significativa (Hs) • Swell vs Chop • Escala Douglas',
+    sections: [
+      {
+        icon: '📏',
+        heading: '1. ¿Qué es la Altura Significativa (Hs)?',
+        text: 'La altura que ves (ej. 1,5 m) es la <strong>Altura Significativa ($H_s$)</strong>: el promedio del tercio más alto ($1/3$) de todas las olas observadas. <em>¡Ojo!</em> Esto significa que <strong>1 de cada 10 olas puede ser hasta un 30% más grande</strong> que el valor medio indicado, y olas aisladas pueden alcanzar casi el doble.'
+      },
+      {
+        icon: '🌊',
+        heading: '2. Mar de Fondo (Swell) vs Mar de Viento (Chop)',
+        text: `
+          <ul class="explain-list">
+            <li><strong>🌊 Mar de Fondo (Swell):</strong> Olas limpias, regulares y organizadas en largas series continuas. Se generaron hace días a miles de kilómetros por profundas borrascas atlánticas y viajan intactas. Es el mar noble y buscado para surfear y navegar.</li>
+            <li><strong>💨 Mar de Viento (Wind Waves / Chop):</strong> Olas cortas, picadas, desordenadas y con espuma blanca provocadas por el viento local que sopla en ese instante sobre la costa cantábrica.</li>
+          </ul>
+        `
+      },
+      {
+        icon: '⚓',
+        heading: '3. Escala Douglas (Estado de la Mar)',
+        text: `
+          <ul class="explain-list">
+            <li><strong>Grado 0 (Mar Llana):</strong> 0 m de altura. Mar espejo.</li>
+            <li><strong>Grado 1 (Mar Rizada):</strong> 0 a 0,1 m. Pequeñas ondulaciones sin crestas.</li>
+            <li><strong>Grado 2 (Marejadilla):</strong> 0,1 a 0,5 m. Olas cortas y bien formadas.</li>
+            <li><strong>Grado 3 (Marejada):</strong> 0,5 a 1,25 m. Olas moderadas con algunos borreguillos blancos.</li>
+            <li><strong>Grado 4 (Fuerte Marejada):</strong> 1,25 a 2,5 m. Olas más largas y numerosas crestas de espuma.</li>
+            <li><strong>Grado 5 (Gruesa):</strong> 2,5 a 4,0 m. Mar imponente con rociones continuos.</li>
+            <li><strong>Grado 6+ (Muy Gruesa a Arbolada):</strong> > 4,0 m. Temporal cantábrico mayor.</li>
+          </ul>
+        `
+      },
+      {
+        icon: '🛡️',
+        heading: 'Astucia y Seguridad en la Costa de Asturias',
+        text: `
+          <ul class="explain-list">
+            <li><strong>En pedreros y acantilados (Peñas, Tazones, Vidio):</strong> Nunca des la espalda al mar; los trenes de series mayores de fondo pueden subir de golpe varios metros sobre la roca seca.</li>
+            <li><strong>En arenales:</strong> Con más de 1,5 metros (Marejada/Fuerte Marejada), las corrientes de resaca (canales de retorno) se multiplican cerca de las orillas.</li>
+          </ul>
+        `
+      }
+    ]
+  },
+
+  swell: {
+    icon: '⏱️',
+    title: '¿Qué es el Período y la Dirección del Swell?',
+    subtitle: 'El tiempo entre olas, la dirección de llegada y su impacto en la rompiente',
+    badge: 'Período en Segundos (T) • Rumbo del Swell (NW, WNW, N) • Refracción',
+    sections: [
+      {
+        icon: '⏱️',
+        heading: '1. El Período de Oleaje (T en Segundos)',
+        text: `
+          El período es el tiempo en segundos que tarda en pasar una ola y la siguiente por un punto fijo:
+          <ul class="explain-list">
+            <li><strong>🟢 Período Largo (11 a 16+ segundos):</strong> Procede de borrascas lejanas atlánticas. Las olas viajan compactadas en trenes muy ordenados, con inmensa masa de agua en movimiento a gran velocidad subacuática. Al llegar a la playa levantan paredes limpias, potentes y tubulares.</li>
+            <li><strong>🟡 Período Medio (8 a 10 segundos):</strong> Frecuencia habitual cantábrica. Olas consistentes con ritmo ágil de rompiente.</li>
+            <li><strong>🔴 Período Corto (< 7-8 segundos):</strong> Típico mar de viento local. Olas fofas, apelmazadas y sin empuje submarino.</li>
+          </ul>
+        `
+      },
+      {
+        icon: '🧭',
+        heading: '2. Dirección del Swell en Asturias (NW, WNW, N)',
+        text: `
+          <ul class="explain-list">
+            <li><strong>Noroeste (NW / WNW):</strong> La dirección reina en el Cantábrico (el 80% de los temporales atlánticos entran desde este cuadrante). Entra con total franqueza y potencia a las costas de Asturias.</li>
+            <li><strong>Norte (N):</strong> Entra perpendicular de lleno en todos los arenales abiertos septentrionales.</li>
+            <li><strong>Oeste / Poniente (W):</strong> Requiere refracción al rodear cabos salientes como Peñas, Lastres o Busto para entrar en las bahías orientadas al este.</li>
+          </ul>
+        `
+      },
+      {
+        icon: '🏖️',
+        heading: '3. Refracción Marina y Geografía de la Costa',
+        text: 'Cuando el tren de olas entra en aguas poco profundas, la parte de la ola que toca antes el fondo submarino se frena, haciendo que la cresta gire (<strong>refracción</strong>) adaptándose a la silueta de la costa. Por eso playas resguardadas como <em>Luanco, Candás o San Lorenzo</em> pueden recibir olas perfectamente ordenadas aunque el oleaje en mar abierto sea de Noroeste.'
+      }
+    ]
   }
 };
 
