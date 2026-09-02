@@ -1,12 +1,12 @@
-import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.76';
-import { getRealtimeTideStatus } from '../utils/tides.js?v=1.0.76';
+import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.77';
+import { getRealtimeTideStatus } from '../utils/tides.js?v=1.0.77';
 import { 
   PLAYAS_POR_CONCEJO, 
   getNearestCoastalReference, 
   getSurfWindCondition,
   getBeachSpecificWindCondition,
   getSeaWaterTemperature
-} from './marineCard.js?v=1.0.76';
+} from './marineCard.js?v=1.0.77';
 
 /**
  * Calcula la escala de Douglas a partir de la altura significativa de ola
@@ -38,13 +38,21 @@ function getWetsuitRecommendation(tempC) {
 /**
  * Calcula la Energía de la Ola en kiloJulios (kJ) según la física oceanográfica (E ~ k * H_swell^2 * T)
  * Calibrada con estándares reales de Surf-Forecast y oceanografía cantábrica (factor k=11)
+ * Soporta Multi-Swell (Energía Combinada = Swell 1 + Swell 2)
  */
-export function calculateWaveEnergy(heightM, periodS) {
-  const h = Math.max(0, parseFloat(heightM) || 0);
-  const t = Math.max(1, parseFloat(periodS) || 1);
-  
-  // Calibración estándar de energía en kJ para rompientes cantábricas
-  const rawKj = Math.round(11 * (h * h) * t);
+export function calculateWaveEnergy(heightM, periodS, secondaryHeightM = 0, secondaryPeriodS = 0) {
+  const h1 = Math.max(0, parseFloat(heightM) || 0);
+  const t1 = Math.max(1, parseFloat(periodS) || 1);
+  const e1 = 11 * (h1 * h1) * t1;
+
+  const h2 = Math.max(0, parseFloat(secondaryHeightM) || 0);
+  const t2 = Math.max(1, parseFloat(secondaryPeriodS) || 1);
+  const e2 = h2 > 0 ? (11 * (h2 * h2) * t2) : 0;
+
+  const rawKj = Math.round(e1 + e2);
+  const primaryKj = Math.round(e1);
+  const secondaryKj = Math.round(e2);
+  const hasSecondary = h2 >= 0.2 && secondaryKj > 0;
 
   let label = 'Suave (Iniciación / Poca Fuerza)';
   let shortLabel = 'Suave';
@@ -78,6 +86,9 @@ export function calculateWaveEnergy(heightM, periodS) {
 
   return {
     kj: rawKj,
+    primaryKj,
+    secondaryKj,
+    hasSecondary,
     label,
     shortLabel,
     badgeClass,
@@ -182,10 +193,16 @@ function getSurfTimelineSlots(data, concejo) {
       const rawSwellH = marineHourly?.swell_wave_height ? marineHourly.swell_wave_height[idx] : null;
       const swellH = (typeof rawSwellH === 'number') ? rawSwellH.toFixed(1) : h;
 
-      const rawPeriod = marineHourly?.wave_period ? marineHourly.wave_period[idx] : null;
+      const rawPeriod = marineHourly?.swell_wave_period ? marineHourly.swell_wave_period[idx] : (marineHourly?.wave_period ? marineHourly.wave_period[idx] : null);
       const period = (typeof rawPeriod === 'number') ? Math.round(rawPeriod) : 11;
 
-      const energy = calculateWaveEnergy(swellH, period);
+      const rawSecH = marineHourly?.secondary_swell_wave_height ? marineHourly.secondary_swell_wave_height[idx] : null;
+      const secH = (typeof rawSecH === 'number') ? rawSecH.toFixed(1) : '0';
+
+      const rawSecPeriod = marineHourly?.secondary_swell_wave_period ? marineHourly.secondary_swell_wave_period[idx] : null;
+      const secPeriod = (typeof rawSecPeriod === 'number') ? Math.round(rawSecPeriod) : 0;
+
+      const energy = calculateWaveEnergy(swellH, period, secH, secPeriod);
 
       // Viento y calidad
       const windSpd = Math.round(weatherHourly.wind_speed_10m[idx] || 0);
@@ -233,12 +250,18 @@ export function renderSurfCard(data, concejo) {
     ? (coastalData ? coastalData.playas : [])
     : (PLAYAS_POR_CONCEJO[interiorRef.refId] ? PLAYAS_POR_CONCEJO[interiorRef.refId].playas : []);
 
-  // Métricas del oleaje y swell
+  // Métricas del oleaje y swell primario y secundario
   const waveHeight = (marine && typeof marine.wave_height === 'number') ? marine.wave_height.toFixed(1) : (isCoasting ? '1.4' : '1.3');
   const swellHeight = (marine && typeof marine.swell_wave_height === 'number') ? marine.swell_wave_height.toFixed(1) : ((marine && typeof marine.wave_height === 'number') ? marine.wave_height.toFixed(1) : '1.2');
-  const wavePeriod = (marine && typeof marine.wave_period === 'number') ? Math.round(marine.wave_period) : 11;
-  const waveDir = (marine && typeof marine.wave_direction === 'number') ? getWindDirection(marine.wave_direction) : { name: 'Noroeste (NW)' };
+  const wavePeriod = (marine && typeof marine.swell_wave_period === 'number') ? Math.round(marine.swell_wave_period) : ((marine && typeof marine.wave_period === 'number') ? Math.round(marine.wave_period) : 11);
+  const waveDir = (marine && typeof marine.swell_wave_direction === 'number') ? getWindDirection(marine.swell_wave_direction) : ((marine && typeof marine.wave_direction === 'number') ? getWindDirection(marine.wave_direction) : { name: 'Noroeste (NW)' });
   const windWaveH = (marine && typeof marine.wind_wave_height === 'number') ? marine.wind_wave_height.toFixed(1) : '0.6';
+
+  // Swell Secundario
+  const secSwellH = (marine && typeof marine.secondary_swell_wave_height === 'number') ? marine.secondary_swell_wave_height.toFixed(1) : '0.0';
+  const secSwellPeriod = (marine && typeof marine.secondary_swell_wave_period === 'number') ? Math.round(marine.secondary_swell_wave_period) : 0;
+  const secSwellDir = (marine && typeof marine.secondary_swell_wave_direction === 'number') ? getWindDirection(marine.secondary_swell_wave_direction) : null;
+  const hasSecondary = parseFloat(secSwellH) >= 0.2;
   
   // Viento actual
   const windSpeed = Math.round(current.wind_speed_10m || 0);
@@ -248,8 +271,8 @@ export function renderSurfCard(data, concejo) {
   // Análisis dinámico Offshore / Onshore
   const surfWind = getSurfWindCondition(windDeg, windSpeed);
 
-  // Energía de la Ola (kJ) basada en mar de fondo (Swell)
-  const waveEnergy = calculateWaveEnergy(swellHeight || waveHeight, wavePeriod);
+  // Energía de la Ola (kJ) combinada basada en Multi-Swell
+  const waveEnergy = calculateWaveEnergy(swellHeight || waveHeight, wavePeriod, secSwellH, secSwellPeriod);
 
   // Escala Douglas
   const douglas = getDouglasScale(parseFloat(waveHeight));
@@ -303,15 +326,18 @@ export function renderSurfCard(data, concejo) {
             <button class="btn-explain-sensor" data-explain="swell" title="¿Qué es el período en segundos y la dirección del swell? Pulsa para aprender">💡 Explícame</button>
           </div>
           <div class="widget-value">${wavePeriod} <span class="unit">segundos</span></div>
-          <div class="widget-detail">Dirección del oleaje: <strong>${waveDir.name}</strong></div>
-          <div class="widget-detail">Viento en costa: <strong>${windSpeed} km/h (${windDirObj.name})</strong></div>
+          <div class="widget-detail">🌊 Swell 1 (Principal): <strong>${swellHeight}m · ${wavePeriod}s (${waveDir.name})</strong></div>
+          ${hasSecondary && secSwellDir 
+            ? `<div class="widget-detail" style="color: #7dd3fc;">🌊 Swell 2 (Secundario): <strong>${secSwellH}m · ${secSwellPeriod}s (${secSwellDir.name})</strong></div>` 
+            : `<div class="widget-detail">Viento en costa: <strong>${windSpeed} km/h (${windDirObj.name})</strong></div>`
+          }
         </div>
 
         <!-- Energía de la Ola (kJ) -->
         <div class="marine-widget surf-energy-widget">
           <div class="t-label-row">
-            <span class="widget-label">⚡ Energía de la Ola (Potencia)</span>
-            <button class="btn-explain-sensor" data-explain="surf_energy" title="¿Qué es la energía de la ola en kJ? Pulsa para aprender">💡 Explícame</button>
+            <span class="widget-label">⚡ Energía de la Ola (Combinada)</span>
+            <button class="btn-explain-sensor" data-explain="surf_energy" title="¿Qué es la energía de la ola en kJ y multiswell? Pulsa para aprender">💡 Explícame</button>
           </div>
           <div class="widget-value" style="color: ${waveEnergy.color};">${waveEnergy.kj} <span class="unit">kJ (kiloJulios)</span></div>
           <div class="surf-energy-badge-row">
@@ -319,7 +345,11 @@ export function renderSurfCard(data, concejo) {
               ${waveEnergy.icon} ${waveEnergy.label}
             </span>
           </div>
-          <div class="widget-detail" style="margin-top: 6px;">${waveEnergy.desc}</div>
+          <div class="widget-detail" style="margin-top: 6px;">
+            ${waveEnergy.hasSecondary 
+              ? `⚡ Energía Combinada: <strong>${waveEnergy.primaryKj} kJ</strong> (Swell 1) + <strong>${waveEnergy.secondaryKj} kJ</strong> (Swell 2)` 
+              : waveEnergy.desc}
+          </div>
         </div>
 
         <!-- Aptitud y Calidad de la Rompiente -->

@@ -366,6 +366,11 @@ export const WEATHER_EXPLANATIONS = {
         text: 'La física oceanográfica demuestra que la energía es proporcional al <strong>cuadrado de la altura del mar de fondo ($H_{\\text{swell}}^2$) multiplicado por el período ($T$)</strong>. Duplicar la altura cuadruplica la fuerza del impacto, y un período largo compacta la energía en trenes de olas muy organizados.'
       },
       {
+        icon: '🌊',
+        heading: '4. Multi-Swell y Energía Combinada Total',
+        text: 'En el océano a menudo coexisten <strong>dos o más trenes de olas simultáneos</strong> (ej. un <em>Swell Primario</em> del NW de borrascas lejanas y un <em>Swell Secundario</em> del WNW o Norte). Siguiendo el estándar de <em>Surf-Forecast</em>, la <strong>Energía Combinada Total</strong> suma la potencia de ambos trenes ($E_{\\text{total}} = E_1 + E_2$), ofreciendo una radiografía exacta del empuje total que llega a la orilla.'
+      },
+      {
         icon: '🏄‍♂️',
         heading: 'Astucia en los Picos de Asturias',
         text: `

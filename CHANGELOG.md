@@ -12,6 +12,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.77] - 2026-09-02
+
+### 🏄‍♂️ Inteligencia Multi-Swell & Energía Combinada Total (Estándar Surf-Forecast)
+- **Soporte de Multi-Swell Satelital en Vivo**: Integración de las variables de mar de fondo secundario (`secondary_swell_wave_height`, `secondary_swell_wave_direction`, `secondary_swell_wave_period`) en las llamadas a Open-Meteo para todos los concejos asturianos y costas adyacentes.
+- **Cálculo Físico de Energía Combinada Total ($E_{\text{total}} = E_1 + E_2$)**: Suma de la potencia del Swell 1 (Principal) y Swell 2 (Secundario) ($11 \cdot H_1^2 \cdot T_1 + 11 \cdot H_2^2 \cdot T_2$), alineando el resultado al 100% con la tabla desglosada oficial de *Surf-Forecast* y plataformas profesionales.
+- **Desglose Visual de Swells en Tarjeta & Cronograma de 3 Horas**: Muestra la línea de *Swell 1 (Principal)* y *Swell 2 (Secundario)* con sus metros, segundos y rumbos independientes, desglosando la energía combinada en la tarjeta principal y en cada franja horaria.
+- **Ampliación Didáctica**: Nueva sección sobre Multi-Swell y Energía Combinada en `WEATHER_EXPLANATIONS.surf_energy`.
+- **Service Worker `v177-official` & Cache-Busting Total**: Sincronización completa a `?v=1.0.77` en scripts, estilos y manifest.
+
+---
+
 ## [1.0.76] - 2026-09-02
 
 ### 💡 Suite Didáctica de Olas y Swell ("Explícame") en Playas y Surf

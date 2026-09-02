@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.76">
-  <link rel="stylesheet" href="css/components.css?v=1.0.76">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.76">
+  <link rel="stylesheet" href="css/main.css?v=1.0.77">
+  <link rel="stylesheet" href="css/components.css?v=1.0.77">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.77">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -172,7 +172,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.76 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.77 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -220,8 +220,17 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.76 🚀</span>
+            <span class="release-version">v1.0.77 🚀</span>
             <span class="release-date">02 Sep 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> <strong>Inteligencia Multi-Swell & Energía Combinada Total (Estándar Surf-Forecast)</strong>: Soporte completo para múltiples trenes de olas simultáneos (Swell 1 Principal + Swell 2 Secundario con alturas, períodos y rumbos independientes) y cálculo físico de la Energía Combinada Total ($E_{\text{total}} = E_1 + E_2$) en tarjeta de sensores y cronograma a 3 horas.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.0.76</span>
+            <span class="release-date">02 Sep 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-new">Nuevo</span> <strong>Suite Didáctica de Olas y Swell ("Explícame")</strong>: Incorporación de los botones educativos interactivos <em>💡 Explícame</em> en las tarjetas de <em>Altura del Oleaje</em> y <em>Período y Dirección del Swell</em> (Surf & Rompientes) y <em>Estado de la Mar (Douglas)</em> (Playas & Mareas), explicando qué es la altura significativa ($H_s$), mar de fondo vs mar de viento, escala Douglas, período ($T$) y refracción marina cantábrica.</li>
@@ -1490,7 +1499,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.76').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.77').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1511,6 +1520,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.76"></script>
+  <script type="module" src="js/app.js?v=1.0.77"></script>
 </body>
 </html>
