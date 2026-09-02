@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.80] - 2026-09-02
+
+### 📱 Filas Horizontales Espaciosas y Switch Compacto Móvil para Previsión de Surf
+- **Filas Horizontales Espaciosas para Mañana y Tarde (`.surf-dayparts-list`)**: Rediseño de las tarjetas diarias de 7 días reemplazando las 2 columnas estrechas por filas horizontales completas y legibles al 100%, mostrando claramente metros de ola, mar de fondo (Swell), período en segundos ($T$), energía combinada en kiloJulios (⚡ kJ) y viento en la rompiente (*Offshore / Onshore / Glassy*).
+- **Ajuste Ergonómico del Switch (`⏱️ 3 Horas` / `📅 7 Días`)**: Reducción de textos en el interruptor deslizante segmentado y contención estricta de márgenes laterales en el widget para eliminar cualquier desborde en teléfonos móviles.
+- **Service Worker `v180-official` & Cache-Busting Total**: Sincronización completa a `?v=1.0.80` en todos los archivos.
+
+---
+
 ## [1.0.79] - 2026-09-02
 
 ### 📱 Interruptor Deslizante Segmentado 100% Móvil para Previsión de Surf

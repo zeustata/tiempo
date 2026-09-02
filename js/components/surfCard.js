@@ -1,12 +1,12 @@
-import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.79';
-import { getRealtimeTideStatus } from '../utils/tides.js?v=1.0.79';
+import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.80';
+import { getRealtimeTideStatus } from '../utils/tides.js?v=1.0.80';
 import { 
   PLAYAS_POR_CONCEJO, 
   getNearestCoastalReference, 
   getSurfWindCondition,
   getBeachSpecificWindCondition,
   getSeaWaterTemperature
-} from './marineCard.js?v=1.0.79';
+} from './marineCard.js?v=1.0.80';
 
 /**
  * Calcula la escala de Douglas a partir de la altura significativa de ola
@@ -502,11 +502,11 @@ export function renderSurfCard(data, concejo) {
             <div class="surf-switch-glider"></div>
             <button class="surf-switch-option active" data-surf-tab="timeline" id="btn-surf-tab-timeline" aria-label="Ver evolución a 3 horas">
               <span class="surf-switch-icon">⏱️</span>
-              <span class="surf-switch-label">Horas (3h)</span>
+              <span class="surf-switch-label">3 Horas</span>
             </button>
             <button class="surf-switch-option" data-surf-tab="daily" id="btn-surf-tab-daily" aria-label="Ver previsión de 7 días mañana y tarde">
               <span class="surf-switch-icon">📅</span>
-              <span class="surf-switch-label">7 Días (M/T)</span>
+              <span class="surf-switch-label">7 Días</span>
             </button>
           </div>
         </div>
@@ -576,38 +576,46 @@ export function renderSurfCard(data, concejo) {
                   <div class="surf-daily-date-sub">${day.dayFormatted}</div>
                 </div>
                 
-                <div class="surf-dayparts-row">
+                <div class="surf-dayparts-list">
                   <!-- MAÑANA -->
-                  <div class="surf-daypart-col morning-col">
-                    <div class="surf-daypart-tag morning-tag">🌅 Mañana (08h - 14h)</div>
-                    <div class="surf-dp-wave">
-                      <span class="surf-dp-val">${day.morning.h}m</span>
-                      <span class="surf-dp-swell">Swell: ${day.morning.swellH}m · ${day.morning.period}s (${day.morning.waveDir.short})</span>
+                  <div class="surf-daypart-row-item morning-item">
+                    <div class="surf-dp-top-row">
+                      <span class="surf-daypart-tag morning-tag">🌅 Mañana (08h - 14h)</span>
+                      <div class="surf-dp-energy-pill" style="background: ${day.morning.energy.color}22; color: ${day.morning.energy.color}; border: 1px solid ${day.morning.energy.color}66;">
+                        ⚡ ${day.morning.energy.kj} kJ • ${day.morning.energy.shortLabel}
+                      </div>
                     </div>
-                    <div class="surf-dp-energy" style="border-left: 3px solid ${day.morning.energy.color};">
-                      <span style="color: ${day.morning.energy.color}; font-weight: 700;">⚡ ${day.morning.energy.kj} kJ</span>
-                      <span class="surf-dp-badge" style="color: ${day.morning.energy.color};">${day.morning.energy.shortLabel}</span>
-                    </div>
-                    <div class="surf-dp-wind ${day.morning.surfWind.statusClass}">
-                      <span class="surf-dp-wind-badge" style="color: ${day.morning.surfWind.color};">${day.morning.surfWind.badge}</span>
-                      <span class="surf-dp-wind-spd">${day.morning.windSpd} km/h • ${day.morning.windDirObj.short}</span>
+                    
+                    <div class="surf-dp-grid-row">
+                      <div class="surf-dp-wave-col">
+                        <span class="surf-dp-val">${day.morning.h}m</span>
+                        <span class="surf-dp-swell">Swell: ${day.morning.swellH}m · ${day.morning.period}s (${day.morning.waveDir.short})</span>
+                      </div>
+                      <div class="surf-dp-wind-col ${day.morning.surfWind.statusClass}">
+                        <span class="surf-dp-wind-badge" style="color: ${day.morning.surfWind.color};">${day.morning.surfWind.badge}</span>
+                        <span class="surf-dp-wind-spd">${day.morning.windSpd} km/h (${day.morning.windDirObj.short})</span>
+                      </div>
                     </div>
                   </div>
 
                   <!-- TARDE -->
-                  <div class="surf-daypart-col afternoon-col">
-                    <div class="surf-daypart-tag afternoon-tag">🌇 Tarde (14h - 20h)</div>
-                    <div class="surf-dp-wave">
-                      <span class="surf-dp-val">${day.afternoon.h}m</span>
-                      <span class="surf-dp-swell">Swell: ${day.afternoon.swellH}m · ${day.afternoon.period}s (${day.afternoon.waveDir.short})</span>
+                  <div class="surf-daypart-row-item afternoon-item">
+                    <div class="surf-dp-top-row">
+                      <span class="surf-daypart-tag afternoon-tag">🌇 Tarde (14h - 20h)</span>
+                      <div class="surf-dp-energy-pill" style="background: ${day.afternoon.energy.color}22; color: ${day.afternoon.energy.color}; border: 1px solid ${day.afternoon.energy.color}66;">
+                        ⚡ ${day.afternoon.energy.kj} kJ • ${day.afternoon.energy.shortLabel}
+                      </div>
                     </div>
-                    <div class="surf-dp-energy" style="border-left: 3px solid ${day.afternoon.energy.color};">
-                      <span style="color: ${day.afternoon.energy.color}; font-weight: 700;">⚡ ${day.afternoon.energy.kj} kJ</span>
-                      <span class="surf-dp-badge" style="color: ${day.afternoon.energy.color};">${day.afternoon.energy.shortLabel}</span>
-                    </div>
-                    <div class="surf-dp-wind ${day.afternoon.surfWind.statusClass}">
-                      <span class="surf-dp-wind-badge" style="color: ${day.afternoon.surfWind.color};">${day.afternoon.surfWind.badge}</span>
-                      <span class="surf-dp-wind-spd">${day.afternoon.windSpd} km/h • ${day.afternoon.windDirObj.short}</span>
+                    
+                    <div class="surf-dp-grid-row">
+                      <div class="surf-dp-wave-col">
+                        <span class="surf-dp-val">${day.afternoon.h}m</span>
+                        <span class="surf-dp-swell">Swell: ${day.afternoon.swellH}m · ${day.afternoon.period}s (${day.afternoon.waveDir.short})</span>
+                      </div>
+                      <div class="surf-dp-wind-col ${day.afternoon.surfWind.statusClass}">
+                        <span class="surf-dp-wind-badge" style="color: ${day.afternoon.surfWind.color};">${day.afternoon.surfWind.badge}</span>
+                        <span class="surf-dp-wind-spd">${day.afternoon.windSpd} km/h (${day.afternoon.windDirObj.short})</span>
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -167,6 +167,7 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Inteligencia Multi-Swell y Energía Combinada Total ($E_{\text{total}} = E_1 + E_2$) alineada 1:1 con la tabla oficial de *Surf-Forecast* (detección de Swell 1 Principal + Swell 2 Secundario con alturas, períodos y rumbos independientes y suma de potencia física en kiloJulios) con salto a **v1.0.77** (SW `v177-official`).
 - Previsión Extendida de Surf a 7 Días (Mañana 08h-14h vs Tarde 14h-20h) con selector conmutable de pestañas táctiles en el visor de Rompientes (Opción A elegida por Lendo) con salto a **v1.0.78** (SW `v178-official`).
 - Interruptor Deslizante Segmentado 100% Móvil (`.surf-sliding-segmented-switch` con glider animado) para conmutar entre Horas 3h y 7 Días M/T sin desbordamientos ni cortes de texto con salto a **v1.0.79** (SW `v179-official`).
+- Rediseño de Previsión de 7 Días a Filas Horizontales Espaciosas (`.surf-daypart-row-item`) para Mañana y Tarde eliminando columnas apretadas y optimización del switch a 3 Horas / 7 Días con salto a **v1.0.80** (SW `v180-official`).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 
 

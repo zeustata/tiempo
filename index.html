@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.79">
-  <link rel="stylesheet" href="css/components.css?v=1.0.79">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.79">
+  <link rel="stylesheet" href="css/main.css?v=1.0.80">
+  <link rel="stylesheet" href="css/components.css?v=1.0.80">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.80">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -172,7 +172,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.79 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.80 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -220,8 +220,17 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.79 🚀</span>
+            <span class="release-version">v1.0.80 🚀</span>
             <span class="release-date">02 Sep 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> <strong>Filas Horizontales Espaciosas y Switch Compacto Móvil</strong>: Sustitución de las columnas comprimidas por filas horizontales completas para Mañana y Tarde en la previsión semanal de surf (altura, swell, período, energía kJ y viento lateral/offshore) y ajuste ergonómico del switch a <em>⏱️ 3 Horas</em> / <em>📅 7 Días</em> con márgenes contenidos.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.0.79</span>
+            <span class="release-date">02 Sep 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-new">Nuevo</span> <strong>Interruptor Deslizante Segmentado 100% Móvil</strong>: Sustitución de los botones por un switch deslizante táctil animado tipo iOS / Liquid Glass a ancho completo con posiciones simétricas exactas (<em>⏱️ Horas 3h</em> / <em>📅 7 Días M/T</em>) eliminando cualquier desbordamiento o corte de texto en teléfonos móviles.</li>
@@ -1517,7 +1526,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.79').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.80').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1538,6 +1547,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.79"></script>
+  <script type="module" src="js/app.js?v=1.0.80"></script>
 </body>
 </html>

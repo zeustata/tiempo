@@ -2084,22 +2084,25 @@
   letter-spacing: -0.2px;
 }
 
-/* --- CUADRÍCULA DE PREVISIÓN DIARIA 7 DÍAS (MAÑANA / TARDE) --- */
+/* --- CUADRÍCULA Y FILAS DE PREVISIÓN DIARIA 7 DÍAS --- */
 .surf-daily-cards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 14px;
-  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .surf-daily-card {
   background: var(--bg-surface-elevated);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
-  padding: 14px 16px;
+  padding: 12px 14px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
   transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
@@ -2113,7 +2116,7 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  padding-bottom: 8px;
+  padding-bottom: 6px;
 }
 
 .surf-daily-day-badge {
@@ -2128,28 +2131,39 @@
   font-weight: 600;
 }
 
-.surf-dayparts-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.surf-daypart-col {
-  background: rgba(15, 23, 42, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 8px;
-  padding: 10px 10px;
+.surf-dayparts-list {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.surf-daypart-row-item {
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.surf-dp-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .surf-daypart-tag {
   font-size: 0.72rem;
   font-weight: 800;
-  padding: 3px 6px;
+  padding: 3px 8px;
   border-radius: 4px;
-  text-align: center;
   letter-spacing: 0.2px;
 }
 
@@ -2165,14 +2179,29 @@
   border: 1px solid rgba(168, 85, 247, 0.35);
 }
 
-.surf-dp-wave {
+.surf-dp-energy-pill {
+  font-size: 0.74rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.surf-dp-grid-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  align-items: center;
+}
+
+.surf-dp-wave-col {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
 }
 
 .surf-dp-val {
-  font-size: 1.15rem;
+  font-size: 1.12rem;
   font-weight: 900;
   color: var(--text-main);
   font-family: 'JetBrains Mono', monospace;
@@ -2185,37 +2214,23 @@
   font-weight: 500;
 }
 
-.surf-dp-energy {
-  padding: 5px 8px;
-  background: rgba(15, 23, 42, 0.65);
-  border-radius: 4px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.76rem;
-}
-
-.surf-dp-badge {
-  font-size: 0.68rem;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
-.surf-dp-wind {
+.surf-dp-wind-col {
   background: rgba(15, 23, 42, 0.5);
-  border-radius: 4px;
+  border-radius: 6px;
   padding: 5px 8px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.72rem;
+  flex-direction: column;
+  gap: 2px;
+  text-align: right;
 }
 
 .surf-dp-wind-badge {
+  font-size: 0.72rem;
   font-weight: 800;
 }
 
 .surf-dp-wind-spd {
+  font-size: 0.72rem;
   color: #cbd5e1;
   font-weight: 600;
 }
