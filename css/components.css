@@ -2007,6 +2007,177 @@
   font-weight: 700;
 }
 
+/* --- TABS SELECTOR PARA PREVISIÓN DE SURF --- */
+.surf-forecast-tabs-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(15, 23, 42, 0.6);
+  padding: 4px;
+  border-radius: 9999px;
+  border: 1px solid var(--border-glass);
+}
+
+.surf-tab-pill {
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #94a3b8;
+  background: transparent;
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.surf-tab-pill:hover {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.surf-tab-pill.active {
+  color: #0f172a;
+  background: #38bdf8;
+  box-shadow: 0 2px 8px rgba(56, 189, 248, 0.4);
+}
+
+/* --- CUADRÍCULA DE PREVISIÓN DIARIA 7 DÍAS (MAÑANA / TARDE) --- */
+.surf-daily-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.surf-daily-card {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.surf-daily-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(56, 189, 248, 0.35);
+}
+
+.surf-daily-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 8px;
+}
+
+.surf-daily-day-badge {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.surf-daily-date-sub {
+  font-size: 0.78rem;
+  color: #cbd5e1;
+  font-weight: 600;
+}
+
+.surf-dayparts-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.surf-daypart-col {
+  background: rgba(15, 23, 42, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 10px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.surf-daypart-tag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 3px 6px;
+  border-radius: 4px;
+  text-align: center;
+  letter-spacing: 0.2px;
+}
+
+.morning-tag {
+  background: rgba(245, 158, 11, 0.18);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.afternoon-tag {
+  background: rgba(168, 85, 247, 0.18);
+  color: #c084fc;
+  border: 1px solid rgba(168, 85, 247, 0.35);
+}
+
+.surf-dp-wave {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.surf-dp-val {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: var(--text-main);
+  font-family: 'JetBrains Mono', monospace;
+  line-height: 1.1;
+}
+
+.surf-dp-swell {
+  font-size: 0.72rem;
+  color: #cbd5e1;
+  font-weight: 500;
+}
+
+.surf-dp-energy {
+  padding: 5px 8px;
+  background: rgba(15, 23, 42, 0.65);
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.76rem;
+}
+
+.surf-dp-badge {
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.surf-dp-wind {
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 4px;
+  padding: 5px 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.72rem;
+}
+
+.surf-dp-wind-badge {
+  font-weight: 800;
+}
+
+.surf-dp-wind-spd {
+  color: #cbd5e1;
+  font-weight: 600;
+}
+
 /* --- INTELIGENCIA DE SURF Y CONDICIONES DE VIENTO --- */
 .surf-intelligence-card {
   grid-column: 1 / -1;

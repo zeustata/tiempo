@@ -1,20 +1,20 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.0.77';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.0.77';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=1.0.77';
-import { renderCurrentWeather } from './components/currentCard.js?v=1.0.77';
-import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.0.77';
-import { renderSurfCard } from './components/surfCard.js?v=1.0.77';
-import { renderMountainCard } from './components/mountainCard.js?v=1.0.77';
-import { renderForecast } from './components/forecastView.js?v=1.0.77';
-import { renderWeatherChart } from './components/chartsView.js?v=1.0.77';
-import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.77';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.0.77';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=1.0.77';
-import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.0.77';
-import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.0.77';
-import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.0.77';
-import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.0.77';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.77';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.0.78';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.0.78';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=1.0.78';
+import { renderCurrentWeather } from './components/currentCard.js?v=1.0.78';
+import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.0.78';
+import { renderSurfCard } from './components/surfCard.js?v=1.0.78';
+import { renderMountainCard } from './components/mountainCard.js?v=1.0.78';
+import { renderForecast } from './components/forecastView.js?v=1.0.78';
+import { renderWeatherChart } from './components/chartsView.js?v=1.0.78';
+import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.78';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.0.78';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=1.0.78';
+import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.0.78';
+import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.0.78';
+import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.0.78';
+import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.0.78';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.78';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, alertas climáticas y calidad del aire', key: '1' },
@@ -808,6 +808,29 @@ class MeteoAsturiasApp {
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
         this.closeModal(modal);
+      }
+    });
+
+    // Delegación global para conmutador de previsión de surf (Horario 3h vs Extendido 7 Días)
+    document.addEventListener('click', (e) => {
+      const tabBtn = e.target.closest('.surf-tab-pill');
+      if (!tabBtn) return;
+
+      this.triggerHaptic();
+      const targetTab = tabBtn.dataset.surfTab;
+      document.querySelectorAll('.surf-tab-pill').forEach(b => b.classList.remove('active'));
+      tabBtn.classList.add('active');
+
+      const timelineView = document.getElementById('surf-timeline-view');
+      const dailyView = document.getElementById('surf-daily-view');
+      if (timelineView && dailyView) {
+        if (targetTab === 'daily') {
+          timelineView.style.display = 'none';
+          dailyView.style.display = 'block';
+        } else {
+          timelineView.style.display = 'block';
+          dailyView.style.display = 'none';
+        }
       }
     });
   }

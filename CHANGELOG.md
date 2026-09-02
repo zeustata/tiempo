@@ -12,6 +12,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.78] - 2026-09-02
+
+### 🏄‍♂️ Previsión Extendida de Surf a 7 Días (Mañana vs Tarde) con Selector Conmutable
+- **Panel de Planificación Semanal de Rompientes (7 Días)**: Nueva función `getSurfDailyForecast` que calcula la evolución de oleaje, swell, período, energía combinada en kJ, velocidad y rumbo de viento y aptitud de rompiente para cada uno de los próximos 7 días completos.
+- **Estructura Símétrica Mañana (08h-14h) vs Tarde (14h-20h)**: Cada día cuenta con dos cápsulas visuales claras que permiten comparar el amanecer y el atardecer, facilitando la elección del mejor baño del día.
+- **Selector Conmutable de Previsión**: Pestañas interactivas `[ ⏱️ Próximas Horas (3h) ]` y `[ 📅 Previsión 7 Días (Mañana / Tarde) ]` en la cabecera del visor de surf con transición suave e instantánea.
+- **Service Worker `v178-official` & Cache-Busting Total**: Sincronización completa a `?v=1.0.78` en todos los componentes.
+
+---
+
 ## [1.0.77] - 2026-09-02
 
 ### 🏄‍♂️ Inteligencia Multi-Swell & Energía Combinada Total (Estándar Surf-Forecast)

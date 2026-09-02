@@ -1,12 +1,12 @@
-import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.77';
-import { getRealtimeTideStatus } from '../utils/tides.js?v=1.0.77';
+import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.78';
+import { getRealtimeTideStatus } from '../utils/tides.js?v=1.0.78';
 import { 
   PLAYAS_POR_CONCEJO, 
   getNearestCoastalReference, 
   getSurfWindCondition,
   getBeachSpecificWindCondition,
   getSeaWaterTemperature
-} from './marineCard.js?v=1.0.77';
+} from './marineCard.js?v=1.0.78';
 
 /**
  * Calcula la escala de Douglas a partir de la altura significativa de ola
@@ -237,6 +237,105 @@ function getSurfTimelineSlots(data, concejo) {
 }
 
 /**
+ * Genera el pronóstico extendido a 7 días de surf desglosado en Mañana (08h-14h) y Tarde (14h-20h)
+ */
+function getSurfDailyForecast(data, concejo) {
+  const marineHourly = data.marine?.hourly;
+  const weatherHourly = data.weather?.hourly;
+  if (!marineHourly || !marineHourly.time || !weatherHourly || !weatherHourly.time) {
+    return [];
+  }
+
+  const now = new Date();
+  const dailyForecast = [];
+
+  for (let d = 0; d < 7; d++) {
+    const targetDate = new Date(now);
+    targetDate.setDate(now.getDate() + d);
+    const dayDateStr = targetDate.toISOString().split('T')[0];
+    const isToday = d === 0;
+    const isTomorrow = d === 1;
+    const dayTitle = isToday ? 'Hoy' : isTomorrow ? 'Mañana' : targetDate.toLocaleDateString('es-ES', { weekday: 'long' });
+    const dayCapitalized = dayTitle.charAt(0).toUpperCase() + dayTitle.slice(1);
+    const dayFormatted = targetDate.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+
+    // 1. TRAMO MAÑANA (Índice representativo: 11:00)
+    const morningHour = 11;
+    const morningPrefix = `${dayDateStr}T${String(morningHour).padStart(2, '0')}`;
+    let morningIdx = marineHourly.time.findIndex(t => t.startsWith(morningPrefix));
+    if (morningIdx === -1) morningIdx = Math.min(d * 24 + morningHour, marineHourly.time.length - 1);
+
+    const mH = (typeof marineHourly.wave_height[morningIdx] === 'number') ? marineHourly.wave_height[morningIdx].toFixed(1) : '1.2';
+    const mSwellH = (typeof marineHourly.swell_wave_height?.[morningIdx] === 'number') ? marineHourly.swell_wave_height[morningIdx].toFixed(1) : mH;
+    const mPeriod = (typeof marineHourly.swell_wave_period?.[morningIdx] === 'number') ? Math.round(marineHourly.swell_wave_period[morningIdx]) : ((typeof marineHourly.wave_period?.[morningIdx] === 'number') ? Math.round(marineHourly.wave_period[morningIdx]) : 10);
+    const mWaveDir = (typeof marineHourly.swell_wave_direction?.[morningIdx] === 'number') ? getWindDirection(marineHourly.swell_wave_direction[morningIdx]) : { name: 'NW', short: 'NW' };
+    
+    const mSecH = (typeof marineHourly.secondary_swell_wave_height?.[morningIdx] === 'number') ? marineHourly.secondary_swell_wave_height[morningIdx].toFixed(1) : '0';
+    const mSecPeriod = (typeof marineHourly.secondary_swell_wave_period?.[morningIdx] === 'number') ? Math.round(marineHourly.secondary_swell_wave_period[morningIdx]) : 0;
+    const mEnergy = calculateWaveEnergy(mSwellH, mPeriod, mSecH, mSecPeriod);
+
+    const mWindSpd = Math.round(weatherHourly.wind_speed_10m?.[morningIdx] || 0);
+    const mWindDeg = weatherHourly.wind_direction_10m?.[morningIdx] || 180;
+    const mWindDirObj = getWindDirection(mWindDeg);
+    const mSurfWind = getSurfWindCondition(mWindDeg, mWindSpd);
+    const mQuality = evaluateSurfQuality(mH, mPeriod, mSurfWind);
+
+    // 2. TRAMO TARDE (Índice representativo: 17:00)
+    const afternoonHour = 17;
+    const afternoonPrefix = `${dayDateStr}T${String(afternoonHour).padStart(2, '0')}`;
+    let afternoonIdx = marineHourly.time.findIndex(t => t.startsWith(afternoonPrefix));
+    if (afternoonIdx === -1) afternoonIdx = Math.min(d * 24 + afternoonHour, marineHourly.time.length - 1);
+
+    const aH = (typeof marineHourly.wave_height[afternoonIdx] === 'number') ? marineHourly.wave_height[afternoonIdx].toFixed(1) : '1.2';
+    const aSwellH = (typeof marineHourly.swell_wave_height?.[afternoonIdx] === 'number') ? marineHourly.swell_wave_height[afternoonIdx].toFixed(1) : aH;
+    const aPeriod = (typeof marineHourly.swell_wave_period?.[afternoonIdx] === 'number') ? Math.round(marineHourly.swell_wave_period[afternoonIdx]) : ((typeof marineHourly.wave_period?.[afternoonIdx] === 'number') ? Math.round(marineHourly.wave_period[afternoonIdx]) : 10);
+    const aWaveDir = (typeof marineHourly.swell_wave_direction?.[afternoonIdx] === 'number') ? getWindDirection(marineHourly.swell_wave_direction[afternoonIdx]) : { name: 'NW', short: 'NW' };
+    
+    const aSecH = (typeof marineHourly.secondary_swell_wave_height?.[afternoonIdx] === 'number') ? marineHourly.secondary_swell_wave_height[afternoonIdx].toFixed(1) : '0';
+    const aSecPeriod = (typeof marineHourly.secondary_swell_wave_period?.[afternoonIdx] === 'number') ? Math.round(marineHourly.secondary_swell_wave_period[afternoonIdx]) : 0;
+    const aEnergy = calculateWaveEnergy(aSwellH, aPeriod, aSecH, aSecPeriod);
+
+    const aWindSpd = Math.round(weatherHourly.wind_speed_10m?.[afternoonIdx] || 0);
+    const aWindDeg = weatherHourly.wind_direction_10m?.[afternoonIdx] || 180;
+    const aWindDirObj = getWindDirection(aWindDeg);
+    const aSurfWind = getSurfWindCondition(aWindDeg, aWindSpd);
+    const aQuality = evaluateSurfQuality(aH, aPeriod, aSurfWind);
+
+    dailyForecast.push({
+      dayIndex: d,
+      dayTitle: dayCapitalized,
+      dayFormatted,
+      morning: {
+        h: mH,
+        swellH: mSwellH,
+        period: mPeriod,
+        waveDir: mWaveDir,
+        energy: mEnergy,
+        windSpd: mWindSpd,
+        windDeg: mWindDeg,
+        windDirObj: mWindDirObj,
+        surfWind: mSurfWind,
+        quality: mQuality
+      },
+      afternoon: {
+        h: aH,
+        swellH: aSwellH,
+        period: aPeriod,
+        waveDir: aWaveDir,
+        energy: aEnergy,
+        windSpd: aWindSpd,
+        windDeg: aWindDeg,
+        windDirObj: aWindDirObj,
+        surfWind: aSurfWind,
+        quality: aQuality
+      }
+    });
+  }
+
+  return dailyForecast;
+}
+
+/**
  * Renderiza el módulo especializado de Surf, Rompientes & Olas
  */
 export function renderSurfCard(data, concejo) {
@@ -286,8 +385,9 @@ export function renderSurfCard(data, concejo) {
   const seaTemp = getSeaWaterTemperature(marine);
   const wetsuit = getWetsuitRecommendation(parseFloat(seaTemp));
 
-  // Tramos de evolución a 3 horas
+  // Tramos de evolución a 3 horas y previsión diaria a 7 días
   const timelineSlots = getSurfTimelineSlots(data, concejo);
+  const dailyForecast = getSurfDailyForecast(data, concejo);
 
   return `
     <div class="marine-card">
@@ -384,22 +484,24 @@ export function renderSurfCard(data, concejo) {
         </div>
       </div>
 
-      <!-- 2. CRONOGRAMA DE SURF CADA 3 HORAS (EVOLUCIÓN HORARIA TIPO SURF-FORECAST / WINDGURU) -->
-      ${timelineSlots.length > 0 ? `
-        <div class="marine-widget surf-timeline-widget" style="margin-top: 20px; margin-bottom: 20px;">
-          <div class="surf-timeline-header">
-            <div class="surf-timeline-title-wrap">
-              <span class="surf-timeline-icon">⏱️</span>
-              <div>
-                <div class="surf-timeline-title">Evolución de Rompiente & Swell a 3 Horas</div>
-                <div class="surf-timeline-subtitle">Previsión en franjas clave (08h, 11h, 14h, 17h, 20h) • Hoy y Mañana</div>
-              </div>
+      <!-- 2. VISOR DUAL DE PREVISIÓN DE SURF (HORARIO 3H vs EXTENDIDO 7 DÍAS MAÑANA/TARDE) -->
+      <div class="marine-widget surf-timeline-widget" style="margin-top: 20px; margin-bottom: 20px;">
+        <div class="surf-timeline-header">
+          <div class="surf-timeline-title-wrap">
+            <span class="surf-timeline-icon">⏱️</span>
+            <div>
+              <div class="surf-timeline-title">Previsión de Surf & Rompiente</div>
+              <div class="surf-timeline-subtitle">Evolución de oleaje, swell, energía kJ y viento en ${concejo.name}</div>
             </div>
-            <button class="btn-explain-sensor" data-explain="surf_energy" title="¿Cómo interpretar la energía en kJ de las olas? Pulsa para aprender">
-              💡 Energía (kJ)
-            </button>
           </div>
+          <div class="surf-forecast-tabs-row">
+            <button class="surf-tab-pill active" data-surf-tab="timeline">⏱️ Próximas Horas (3h)</button>
+            <button class="surf-tab-pill" data-surf-tab="daily">📅 Previsión 7 Días (Mañana / Tarde)</button>
+          </div>
+        </div>
 
+        <!-- VISTA 1: CRONOGRAMA 3 HORAS (POR DEFECTO) -->
+        <div id="surf-timeline-view" class="surf-tab-content active">
           <div class="surf-timeline-scroll-container">
             <div class="surf-timeline-scroll-hint">
               <span>👆 Desliza horizontalmente para ver la evolución a 3 horas de Hoy y Mañana</span>
@@ -452,7 +554,57 @@ export function renderSurfCard(data, concejo) {
             </div>
           </div>
         </div>
-      ` : ''}
+
+        <!-- VISTA 2: PREVISIÓN EXTENDIDA 7 DÍAS (MAÑANA / TARDE) -->
+        <div id="surf-daily-view" class="surf-tab-content" style="display: none;">
+          <div class="surf-daily-cards-grid">
+            ${dailyForecast.map(day => `
+              <div class="surf-daily-card">
+                <div class="surf-daily-card-header">
+                  <div class="surf-daily-day-badge">📅 ${day.dayTitle}</div>
+                  <div class="surf-daily-date-sub">${day.dayFormatted}</div>
+                </div>
+                
+                <div class="surf-dayparts-row">
+                  <!-- MAÑANA -->
+                  <div class="surf-daypart-col morning-col">
+                    <div class="surf-daypart-tag morning-tag">🌅 Mañana (08h - 14h)</div>
+                    <div class="surf-dp-wave">
+                      <span class="surf-dp-val">${day.morning.h}m</span>
+                      <span class="surf-dp-swell">Swell: ${day.morning.swellH}m · ${day.morning.period}s (${day.morning.waveDir.short})</span>
+                    </div>
+                    <div class="surf-dp-energy" style="border-left: 3px solid ${day.morning.energy.color};">
+                      <span style="color: ${day.morning.energy.color}; font-weight: 700;">⚡ ${day.morning.energy.kj} kJ</span>
+                      <span class="surf-dp-badge" style="color: ${day.morning.energy.color};">${day.morning.energy.shortLabel}</span>
+                    </div>
+                    <div class="surf-dp-wind ${day.morning.surfWind.statusClass}">
+                      <span class="surf-dp-wind-badge" style="color: ${day.morning.surfWind.color};">${day.morning.surfWind.badge}</span>
+                      <span class="surf-dp-wind-spd">${day.morning.windSpd} km/h • ${day.morning.windDirObj.short}</span>
+                    </div>
+                  </div>
+
+                  <!-- TARDE -->
+                  <div class="surf-daypart-col afternoon-col">
+                    <div class="surf-daypart-tag afternoon-tag">🌇 Tarde (14h - 20h)</div>
+                    <div class="surf-dp-wave">
+                      <span class="surf-dp-val">${day.afternoon.h}m</span>
+                      <span class="surf-dp-swell">Swell: ${day.afternoon.swellH}m · ${day.afternoon.period}s (${day.afternoon.waveDir.short})</span>
+                    </div>
+                    <div class="surf-dp-energy" style="border-left: 3px solid ${day.afternoon.energy.color};">
+                      <span style="color: ${day.afternoon.energy.color}; font-weight: 700;">⚡ ${day.afternoon.energy.kj} kJ</span>
+                      <span class="surf-dp-badge" style="color: ${day.afternoon.energy.color};">${day.afternoon.energy.shortLabel}</span>
+                    </div>
+                    <div class="surf-dp-wind ${day.afternoon.surfWind.statusClass}">
+                      <span class="surf-dp-wind-badge" style="color: ${day.afternoon.surfWind.color};">${day.afternoon.surfWind.badge}</span>
+                      <span class="surf-dp-wind-spd">${day.afternoon.windSpd} km/h • ${day.afternoon.windDirObj.short}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
 
       <!-- 3. PANEL DE INTELIGENCIA DE SURF: VIENTO OFFSHORE/ONSHORE & GUÍA DIDÁCTICA -->
       <div class="marine-widget surf-intelligence-card" style="margin-top: 20px; margin-bottom: 20px;">
