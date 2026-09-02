@@ -1,12 +1,12 @@
-import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.78';
-import { getRealtimeTideStatus } from '../utils/tides.js?v=1.0.78';
+import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.79';
+import { getRealtimeTideStatus } from '../utils/tides.js?v=1.0.79';
 import { 
   PLAYAS_POR_CONCEJO, 
   getNearestCoastalReference, 
   getSurfWindCondition,
   getBeachSpecificWindCondition,
   getSeaWaterTemperature
-} from './marineCard.js?v=1.0.78';
+} from './marineCard.js?v=1.0.79';
 
 /**
  * Calcula la escala de Douglas a partir de la altura significativa de ola
@@ -488,15 +488,26 @@ export function renderSurfCard(data, concejo) {
       <div class="marine-widget surf-timeline-widget" style="margin-top: 20px; margin-bottom: 20px;">
         <div class="surf-timeline-header">
           <div class="surf-timeline-title-wrap">
-            <span class="surf-timeline-icon">⏱️</span>
+            <span class="surf-timeline-icon">🏄‍♂️</span>
             <div>
               <div class="surf-timeline-title">Previsión de Surf & Rompiente</div>
               <div class="surf-timeline-subtitle">Evolución de oleaje, swell, energía kJ y viento en ${concejo.name}</div>
             </div>
           </div>
-          <div class="surf-forecast-tabs-row">
-            <button class="surf-tab-pill active" data-surf-tab="timeline">⏱️ Próximas Horas (3h)</button>
-            <button class="surf-tab-pill" data-surf-tab="daily">📅 Previsión 7 Días (Mañana / Tarde)</button>
+        </div>
+
+        <!-- INTERRUPTOR DESLIZANTE SEGMENTADO (100% RESPONSIVE EN MÓVIL Y DESKTOP) -->
+        <div class="surf-toggle-container">
+          <div class="surf-sliding-segmented-switch" id="surf-segmented-switch" data-active="timeline">
+            <div class="surf-switch-glider"></div>
+            <button class="surf-switch-option active" data-surf-tab="timeline" id="btn-surf-tab-timeline" aria-label="Ver evolución a 3 horas">
+              <span class="surf-switch-icon">⏱️</span>
+              <span class="surf-switch-label">Horas (3h)</span>
+            </button>
+            <button class="surf-switch-option" data-surf-tab="daily" id="btn-surf-tab-daily" aria-label="Ver previsión de 7 días mañana y tarde">
+              <span class="surf-switch-icon">📅</span>
+              <span class="surf-switch-label">7 Días (M/T)</span>
+            </button>
           </div>
         </div>
 

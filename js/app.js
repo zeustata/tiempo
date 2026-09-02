@@ -1,20 +1,20 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.0.78';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.0.78';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=1.0.78';
-import { renderCurrentWeather } from './components/currentCard.js?v=1.0.78';
-import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.0.78';
-import { renderSurfCard } from './components/surfCard.js?v=1.0.78';
-import { renderMountainCard } from './components/mountainCard.js?v=1.0.78';
-import { renderForecast } from './components/forecastView.js?v=1.0.78';
-import { renderWeatherChart } from './components/chartsView.js?v=1.0.78';
-import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.78';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.0.78';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=1.0.78';
-import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.0.78';
-import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.0.78';
-import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.0.78';
-import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.0.78';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.78';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.0.79';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.0.79';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=1.0.79';
+import { renderCurrentWeather } from './components/currentCard.js?v=1.0.79';
+import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.0.79';
+import { renderSurfCard } from './components/surfCard.js?v=1.0.79';
+import { renderMountainCard } from './components/mountainCard.js?v=1.0.79';
+import { renderForecast } from './components/forecastView.js?v=1.0.79';
+import { renderWeatherChart } from './components/chartsView.js?v=1.0.79';
+import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.79';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.0.79';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=1.0.79';
+import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.0.79';
+import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.0.79';
+import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.0.79';
+import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.0.79';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.79';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, alertas climáticas y calidad del aire', key: '1' },
@@ -811,15 +811,20 @@ class MeteoAsturiasApp {
       }
     });
 
-    // Delegación global para conmutador de previsión de surf (Horario 3h vs Extendido 7 Días)
+    // Delegación global para interruptor deslizante segmentado de previsión de surf (Horario 3h vs Extendido 7 Días)
     document.addEventListener('click', (e) => {
-      const tabBtn = e.target.closest('.surf-tab-pill');
-      if (!tabBtn) return;
+      const switchOption = e.target.closest('.surf-switch-option');
+      if (!switchOption) return;
 
       this.triggerHaptic();
-      const targetTab = tabBtn.dataset.surfTab;
-      document.querySelectorAll('.surf-tab-pill').forEach(b => b.classList.remove('active'));
-      tabBtn.classList.add('active');
+      const targetTab = switchOption.dataset.surfTab;
+      const segmentedSwitch = document.getElementById('surf-segmented-switch');
+      if (segmentedSwitch) {
+        segmentedSwitch.dataset.active = targetTab;
+      }
+
+      document.querySelectorAll('.surf-switch-option').forEach(b => b.classList.remove('active'));
+      switchOption.classList.add('active');
 
       const timelineView = document.getElementById('surf-timeline-view');
       const dailyView = document.getElementById('surf-daily-view');

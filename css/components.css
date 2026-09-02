@@ -2007,39 +2007,81 @@
   font-weight: 700;
 }
 
-/* --- TABS SELECTOR PARA PREVISIÓN DE SURF --- */
-.surf-forecast-tabs-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(15, 23, 42, 0.6);
-  padding: 4px;
-  border-radius: 9999px;
-  border: 1px solid var(--border-glass);
+/* --- INTERRUPTOR DESLIZANTE SEGMENTADO PARA PREVISIÓN DE SURF --- */
+.surf-toggle-container {
+  width: 100%;
+  margin: 10px 0 16px 0;
 }
 
-.surf-tab-pill {
-  padding: 6px 14px;
-  font-size: 0.8rem;
+.surf-sliding-segmented-switch {
+  position: relative;
+  display: flex;
+  width: 100%;
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid var(--border-glass);
+  border-radius: 9999px;
+  padding: 4px;
+  box-sizing: border-box;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.surf-switch-glider {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  background: #38bdf8;
+  border-radius: 9999px;
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 10px rgba(56, 189, 248, 0.45);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.surf-sliding-segmented-switch[data-active="daily"] .surf-switch-glider {
+  transform: translateX(100%);
+}
+
+.surf-switch-option {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 10px;
+  font-size: 0.85rem;
   font-weight: 700;
   color: #94a3b8;
   background: transparent;
   border: none;
-  border-radius: 9999px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: color 0.25s ease;
+  border-radius: 9999px;
+  text-align: center;
   white-space: nowrap;
+  user-select: none;
 }
 
-.surf-tab-pill:hover {
+.surf-switch-option:hover {
   color: var(--text-main);
-  background: rgba(255, 255, 255, 0.06);
 }
 
-.surf-tab-pill.active {
+.surf-switch-option.active {
   color: #0f172a;
-  background: #38bdf8;
-  box-shadow: 0 2px 8px rgba(56, 189, 248, 0.4);
+  font-weight: 800;
+}
+
+.surf-switch-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.surf-switch-label {
+  letter-spacing: -0.2px;
 }
 
 /* --- CUADRÍCULA DE PREVISIÓN DIARIA 7 DÍAS (MAÑANA / TARDE) --- */

@@ -12,6 +12,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.79] - 2026-09-02
+
+### 📱 Interruptor Deslizante Segmentado 100% Móvil para Previsión de Surf
+- **Interruptor Deslizante Segmentado de Ancho Completo (`.surf-sliding-segmented-switch`)**: Sustitución de los botones con textos largos por una cápsula deslizable tipo iOS / Liquid Glass con dos posiciones simétricas al 50% (`⏱️ Horas 3h` / `📅 7 Días M/T`), eliminando por completo cualquier corte de texto o desbordamiento horizontal en pantallas móviles.
+- **Glider Animado de Alta Fluidez**: Deslizamiento suave de la pastilla celeste brillante con aceleración cúbica (`cubic-bezier(0.4, 0, 0.2, 1)`) y retroalimentación háptica en dispositivos móviles.
+- **Service Worker `v179-official` & Cache-Busting Total**: Sincronización completa a `?v=1.0.79` en todos los archivos.
+
+---
+
 ## [1.0.78] - 2026-09-02
 
 ### 🏄‍♂️ Previsión Extendida de Surf a 7 Días (Mañana vs Tarde) con Selector Conmutable
