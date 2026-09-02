@@ -167,7 +167,17 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Inteligencia Multi-Swell y Energía Combinada Total ($E_{\text{total}} = E_1 + E_2$) alineada 1:1 con la tabla oficial de *Surf-Forecast* (detección de Swell 1 Principal + Swell 2 Secundario con alturas, períodos y rumbos independientes y suma de potencia física en kiloJulios) con salto a **v1.0.77** (SW `v177-official`).
 - Previsión Extendida de Surf a 7 Días (Mañana 08h-14h vs Tarde 14h-20h) con selector conmutable de pestañas táctiles en el visor de Rompientes (Opción A elegida por Lendo) con salto a **v1.0.78** (SW `v178-official`).
 - Interruptor Deslizante Segmentado 100% Móvil (`.surf-sliding-segmented-switch` con glider animado) para conmutar entre Horas 3h y 7 Días M/T sin desbordamientos ni cortes de texto con salto a **v1.0.79** (SW `v179-official`).
-- Rediseño de Previsión de 7 Días a Filas Horizontales Espaciosas (`.surf-daypart-row-item`) para Mañana y Tarde eliminando columnas apretadas y optimización del switch a 3 Horas / 7 Días con salto a **v1.0.80** (SW `v180-official`).
+- Carga Instantánea 0 ms & Stale-While-Revalidate: Almacenamiento en caché de la última instantánea meteorológica (`localStorage`), inyección de Skeleton Loader ultra fluido para arranques en frío, eliminación de recargas agresivas por `controllerchange` y salto a **v1.0.81** (SW `v181-official`).
+- Verificación Oficial de Desarrollador de Google Play Console: Soporte a Lendo para completar la verificación de identidad y número de teléfono.
+- Generación del Kit Gráfico Oficial de Google Play Store:
+  - Portada Principal Cinematográfica (1024 x 500 px): Cristal holográfico 3D con la bandera del Principado de Asturias, insignia dorada `👑 Principado de Asturias • 78 Concejos Oficiales`, rayos aurorales y los 9 módulos de la app con gradientes de neón individuales.
+  - 18 Capturas de Pantalla Pixel-Perfect: 10 de móvil (1080 x 2400 px) y 8 de tablet horizontal (1920 x 1080 px) recorriendo todas las vistas reales de la app.
+- Configuración Integral de la Ficha y Políticas en Google Play Console:
+  - Las 11 tareas legales completadas al 100% (Política de Privacidad, Sin Anuncios, PEGI 3 para todos los públicos, Seguridad de Datos, Categoría El Tiempo).
+- Generación del Paquete Instalable Oficial (`.aab`):
+  - Creación del paquete firmado `com.zeustata.meteoasturlode` (`MeteoAstur Lode.aab`) mediante PWABuilder con clave de firma digital `signing.keystore`.
+  - Subida y publicación exitosa del paquete `.aab` a la consola de Google Play en el canal de Prueba Interna (`v1.0.81`), quedando en estado activo y en cola de revisión de seguridad por Google.
 - Subidas continuas a GitHub (`zeustata/tiempo`).
+
 
 
