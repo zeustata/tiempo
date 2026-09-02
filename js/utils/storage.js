@@ -66,3 +66,29 @@ export function isFavorite(concejoId) {
   if (!Array.isArray(prefs.favorites)) return false;
   return prefs.favorites.includes(concejoId);
 }
+
+const WEATHER_CACHE_PREFIX = 'meteoastur_weather_cache_';
+
+export function getCachedWeather(concejoId, modelId = 'best_match') {
+  try {
+    const raw = localStorage.getItem(`${WEATHER_CACHE_PREFIX}${concejoId}_${modelId}`);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (parsed && parsed.success && parsed.weather) {
+      if (parsed.timestamp) parsed.timestamp = new Date(parsed.timestamp);
+      return parsed;
+    }
+    return null;
+  } catch (e) {
+    return null;
+  }
+}
+
+export function saveCachedWeather(concejoId, modelId = 'best_match', data) {
+  try {
+    if (!data || !data.success) return;
+    localStorage.setItem(`${WEATHER_CACHE_PREFIX}${concejoId}_${modelId}`, JSON.stringify(data));
+  } catch (e) {
+    console.warn('Error saving weather cache', e);
+  }
+}

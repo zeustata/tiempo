@@ -1,20 +1,20 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.0.80';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.0.80';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite } from './utils/storage.js?v=1.0.80';
-import { renderCurrentWeather } from './components/currentCard.js?v=1.0.80';
-import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.0.80';
-import { renderSurfCard } from './components/surfCard.js?v=1.0.80';
-import { renderMountainCard } from './components/mountainCard.js?v=1.0.80';
-import { renderForecast } from './components/forecastView.js?v=1.0.80';
-import { renderWeatherChart } from './components/chartsView.js?v=1.0.80';
-import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.80';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.0.80';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=1.0.80';
-import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.0.80';
-import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.0.80';
-import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.0.80';
-import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.0.80';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.80';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.0.81';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.0.81';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.0.81';
+import { renderCurrentWeather } from './components/currentCard.js?v=1.0.81';
+import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.0.81';
+import { renderSurfCard } from './components/surfCard.js?v=1.0.81';
+import { renderMountainCard } from './components/mountainCard.js?v=1.0.81';
+import { renderForecast } from './components/forecastView.js?v=1.0.81';
+import { renderWeatherChart } from './components/chartsView.js?v=1.0.81';
+import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.81';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.0.81';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=1.0.81';
+import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.0.81';
+import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.0.81';
+import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.0.81';
+import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.0.81';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.81';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, alertas climáticas y calidad del aire', key: '1' },
@@ -59,11 +59,22 @@ class MeteoAsturiasApp {
     this.setupFullscreen();
     this.initParticleCanvas();
 
+    // 1. Carga instantánea desde caché local (0 ms) para que los botones y tarjetas aparezcan de inmediato
+    const cached = getCachedWeather(this.currentConcejo.id, this.currentModel.id);
+    if (cached) {
+      this.weatherData = cached;
+      this.renderAllComponents();
+      this.updateLastUpdatedTime(cached.timestamp);
+    } else {
+      this.renderSkeletonLoading();
+    }
+
     // Comprobar si se abrió desde un acceso directo PWA (hash URL)
     this.handleInitialHash();
 
-    // Cargar datos del concejo actual
+    // Cargar datos actualizados en segundo plano/red
     await this.loadWeather(this.currentConcejo.id);
+
 
 
 
@@ -1061,6 +1072,27 @@ class MeteoAsturiasApp {
     }
   }
 
+  renderSkeletonLoading() {
+    const liveContainer = document.getElementById('panel-live');
+    if (!liveContainer || this.weatherData) return;
+    liveContainer.innerHTML = `
+      <div class="skeleton-card skeleton-hero">
+        <div class="skeleton-line skeleton-title"></div>
+        <div class="skeleton-line skeleton-sub"></div>
+        <div class="skeleton-row">
+          <div class="skeleton-box skeleton-temp"></div>
+          <div class="skeleton-box skeleton-icon"></div>
+        </div>
+      </div>
+      <div class="skeleton-grid">
+        <div class="skeleton-card skeleton-sensor"></div>
+        <div class="skeleton-card skeleton-sensor"></div>
+        <div class="skeleton-card skeleton-sensor"></div>
+        <div class="skeleton-card skeleton-sensor"></div>
+      </div>
+    `;
+  }
+
   async switchConcejo(concejoId) {
     this.currentConcejo = getConcejoById(concejoId) || this.currentConcejo;
     this.prefs.lastConcejo = concejoId;
@@ -1069,6 +1101,16 @@ class MeteoAsturiasApp {
     this.updateSearchTriggerDisplay();
     this.renderFavoritesMenu();
     this.updateFavButton();
+
+    // Comprobar si tenemos datos guardados en caché de este concejo para pintarlo en 0ms
+    const cached = getCachedWeather(concejoId, this.currentModel.id);
+    if (cached) {
+      this.weatherData = cached;
+      this.renderAllComponents();
+      this.updateLastUpdatedTime(cached.timestamp);
+    } else {
+      this.renderSkeletonLoading();
+    }
 
     focusConcejoOnMap(this.currentConcejo.lat, this.currentConcejo.lon, this.currentConcejo.name);
     await this.loadWeather(concejoId);
@@ -1165,6 +1207,7 @@ class MeteoAsturiasApp {
 
       if (result && result.success) {
         this.weatherData = result;
+        saveCachedWeather(concejoId, this.currentModel.id, result);
         this.renderAllComponents();
         this.updateLastUpdatedTime(result.timestamp);
       } else {
@@ -1178,9 +1221,11 @@ class MeteoAsturiasApp {
   updateLastUpdatedTime(date) {
     const el = document.getElementById('last-updated');
     if (el && date) {
-      el.textContent = `Actualizado: ${date.toLocaleTimeString('es-ES')}`;
+      const d = date instanceof Date ? date : new Date(date);
+      el.textContent = `Actualizado: ${d.toLocaleTimeString('es-ES')}`;
     }
   }
+
 
   renderAllComponents() {
     if (!this.weatherData) return;
