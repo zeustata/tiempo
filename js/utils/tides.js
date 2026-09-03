@@ -13,8 +13,8 @@ const LUNAR_MONTH_DAYS = 29.53058867;
 const REF_NEW_MOON_UTC_MS = Date.UTC(2024, 0, 11, 11, 57, 0);
 
 // Época de pleamar de referencia anclada en el Cantábrico (Playa de San Lorenzo - Gijón / El Musel - AEMET/IHM)
-// Calibrada a las 06:28 hora local de verano (CEST / UTC+2) del 30 de agosto de 2026 = 04:28:00 UTC
-const REF_TIDE_UTC_MS = Date.UTC(2026, 7, 30, 4, 28, 0);
+// Calibrada exactamente con la tabla oficial en vivo: 3 de septiembre de 2026 a las 09:01 hora local de verano (CEST / UTC+2) = 07:01:00 UTC
+const REF_TIDE_UTC_MS = Date.UTC(2026, 8, 3, 7, 1, 0);
 const TIDE_CYCLE_HOURS = 12.4206012; // Período semidiurno M2 (~12h 25m 14s)
 const TIDE_CYCLE_MS = TIDE_CYCLE_HOURS * 3600 * 1000;
 const TIDE_HALF_MS = TIDE_CYCLE_MS / 2;
