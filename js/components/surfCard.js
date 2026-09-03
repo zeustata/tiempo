@@ -99,13 +99,40 @@ export function calculateWaveEnergy(heightM, periodS, secondaryHeightM = 0, seco
 }
 
 /**
- * Evalúa la calidad global del swell para surfing
+ * Evalúa la calidad global del swell para surfing armonizada con la energía (kJ), período y viento
  */
-function evaluateSurfQuality(waveHeight, wavePeriod, windCondition) {
+function evaluateSurfQuality(waveHeight, wavePeriod, windCondition, waveEnergy = null) {
   const h = parseFloat(waveHeight) || 1.2;
   const p = parseInt(wavePeriod, 10) || 10;
-  const isOffshoreOrGlassy = windCondition.type === 'offshore' || windCondition.type === 'glassy';
+  const isOffshoreOrGlassy = windCondition && (windCondition.type === 'offshore' || windCondition.type === 'glassy');
+  const isOnshore = windCondition && (windCondition.type === 'onshore' || windCondition.type === 'cross-onshore');
+  const energyKj = waveEnergy?.kj || Math.round(11 * (h * h) * p);
 
+  // 1. Mar casi plato o sin fuerza
+  if (h < 0.6 || energyKj < 45) {
+    return {
+      status: '🏖️ Mar Casi Plato / Olas Muy Pequeñas',
+      badge: 'Olas Pequeñas',
+      color: '#94a3b8',
+      bg: '#94a3b822',
+      border: '#94a3b8',
+      desc: 'Ideal para tablas con mucho volumen (Longboard, SUP, Softboard) o iniciación en la orilla.'
+    };
+  }
+
+  // 2. Mar realmente duro / Temporal / Oleaje masivo (> 3m o > 1200 kJ)
+  if (h >= 3.0 || energyKj >= 1200) {
+    return {
+      status: '⚠️ Mar Fuerte / Oleaje Duro y Masivo',
+      badge: 'Mar Duro / Pro',
+      color: '#ef4444',
+      bg: '#ef444422',
+      border: '#ef4444',
+      desc: 'Olas de gran tamaño, fuerte resaca y corrientes intensas. Solo apto para surfistas muy experimentados en calas resguardadas.'
+    };
+  }
+
+  // 3. Sesión Épica (Mar de fondo de calidad, período largo y viento peinando la ola)
   if (h >= 0.8 && h <= 2.5 && p >= 11 && isOffshoreOrGlassy) {
     return {
       status: '🔥 Sesión Épica / Olas Excelentes',
@@ -113,18 +140,20 @@ function evaluateSurfQuality(waveHeight, wavePeriod, windCondition) {
       color: '#10b981',
       bg: '#10b98122',
       border: '#10b981',
-      desc: 'Mar de fondo largo con período de calidad y viento favorable que peina la rompiente.'
+      desc: 'Mar de fondo largo con período de gran calidad y viento favorable que peina la rompiente.'
     };
   }
-  if (h >= 0.6 && h <= 3.0 && p >= 9) {
-    if (windCondition.type === 'onshore') {
+
+  // 4. Buenas condiciones con período medio/largo (p >= 9s)
+  if (p >= 9) {
+    if (isOnshore) {
       return {
         status: '🌊 Olas con Mar Picado (Chop)',
         badge: 'Chop / Desordenado',
         color: '#f59e0b',
         bg: '#f59e0b22',
         border: '#f59e0b',
-        desc: 'Hay fuerza y tamaño de ola, pero el viento onshore genera espuma y textura rizada.'
+        desc: 'Hay fuerza y tamaño de ola, pero el viento de mar genera espuma y textura rizada.'
       };
     }
     return {
@@ -133,26 +162,29 @@ function evaluateSurfQuality(waveHeight, wavePeriod, windCondition) {
       color: '#38bdf8',
       bg: '#38bdf822',
       border: '#38bdf8',
-      desc: 'Buen tamaño de ola y consistencia en la mayoría de rompientes expuestas.'
+      desc: 'Buen tamaño de ola, empuje consistente y paredes definidas en rompientes expuestas.'
     };
   }
-  if (h < 0.6) {
+
+  // 5. Período corto (p < 9s): Mar de viento o swell joven (olas fofas de poco empuje)
+  if (isOnshore) {
     return {
-      status: '🏖️ Mar Casi Plato / Olas Muy Pequeñas',
-      badge: 'Olas Pequeñas',
-      color: '#94a3b8',
-      bg: '#94a3b822',
-      border: '#94a3b8',
-      desc: 'Ideal para tablas con mucho volumen (Longboard, SUP, Softboard) o iniciación.'
+      status: '💨 Mar de Viento / Olas Revueltas',
+      badge: 'Mar Revuelto',
+      color: '#f59e0b',
+      bg: '#f59e0b22',
+      border: '#f59e0b',
+      desc: 'Período corto con viento desfavorable. Olas fofas y revueltas con poco empuje de fondo.'
     };
   }
+
   return {
-    status: '⚠️ Mar Fuerte / Oleaje Duro y Masivo',
-    badge: 'Mar Duro / Pro',
-    color: '#ef4444',
-    bg: '#ef444422',
-    border: '#ef4444',
-    desc: 'Olas de gran tamaño y fuertes corrientes. Solo apto para surfistas experimentados en calas resguardadas.'
+    status: '🏄‍♂️ Olas Suaves / Período Corto',
+    badge: 'Suave / Iniciación',
+    color: '#0ea5e9',
+    bg: '#0ea5e922',
+    border: '#0ea5e9',
+    desc: 'Olas con ritmo rápido y empuje suave. Muy buenas para tablas evolutivas, longboard e iniciación.'
   };
 }
 
@@ -278,7 +310,7 @@ function getSurfDailyForecast(data, concejo) {
     const mWindDeg = weatherHourly.wind_direction_10m?.[morningIdx] || 180;
     const mWindDirObj = getWindDirection(mWindDeg);
     const mSurfWind = getSurfWindCondition(mWindDeg, mWindSpd);
-    const mQuality = evaluateSurfQuality(mH, mPeriod, mSurfWind);
+    const mQuality = evaluateSurfQuality(mH, mPeriod, mSurfWind, mEnergy);
 
     // 2. TRAMO TARDE (Índice representativo: 17:00)
     const afternoonHour = 17;
@@ -299,7 +331,7 @@ function getSurfDailyForecast(data, concejo) {
     const aWindDeg = weatherHourly.wind_direction_10m?.[afternoonIdx] || 180;
     const aWindDirObj = getWindDirection(aWindDeg);
     const aSurfWind = getSurfWindCondition(aWindDeg, aWindSpd);
-    const aQuality = evaluateSurfQuality(aH, aPeriod, aSurfWind);
+    const aQuality = evaluateSurfQuality(aH, aPeriod, aSurfWind, aEnergy);
 
     dailyForecast.push({
       dayIndex: d,
@@ -379,7 +411,7 @@ export function renderSurfCard(data, concejo) {
   const douglasName = douglas.name;
 
   // Calidad global del swell
-  const surfQuality = evaluateSurfQuality(waveHeight, wavePeriod, surfWind);
+  const surfQuality = evaluateSurfQuality(waveHeight, wavePeriod, surfWind, waveEnergy);
 
   // Temperatura del mar y traje unificada
   const seaTemp = getSeaWaterTemperature(marine);
