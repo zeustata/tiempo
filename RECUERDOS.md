@@ -176,8 +176,9 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - Las 11 tareas legales completadas al 100% (Política de Privacidad, Sin Anuncios, PEGI 3 para todos los públicos, Seguridad de Datos, Categoría El Tiempo).
 - Generación del Paquete Instalable Oficial (`.aab`):
   - Creación del paquete firmado `com.zeustata.meteoasturlode` (`MeteoAstur Lode.aab`) mediante PWABuilder con clave de firma digital `signing.keystore`.
-  - Subida y publicación exitosa del paquete `.aab` a la consola de Google Play en el canal de Prueba Interna (`v1.0.81`), quedando en estado activo y en cola de revisión de seguridad por Google.
+- Envío Oficial a Revisión en Google Play Console: Resolución de declaraciones pendientes (ID de publicidad = No), configuración y vinculación del canal de Prueba Cerrada - Alpha con paquete `v1.0.81` y puesta en marcha del proceso oficial de revisión por parte de Google Play.
 - Subidas continuas a GitHub (`zeustata/tiempo`).
+
 
 
 
