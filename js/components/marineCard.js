@@ -812,6 +812,12 @@ export const PLAYAS_POR_CONCEJO = {
   }
 };
 
+// Alias canónicos para concordancia 100% con los IDs oficiales de concejos.js
+PLAYAS_POR_CONCEJO['tapiadecasariego'] = PLAYAS_POR_CONCEJO['tapia'];
+PLAYAS_POR_CONCEJO['elfranco'] = PLAYAS_POR_CONCEJO['el-franco'];
+PLAYAS_POR_CONCEJO['murosdenalon'] = PLAYAS_POR_CONCEJO['muros-de-nalon'];
+PLAYAS_POR_CONCEJO['sotodelbarco'] = PLAYAS_POR_CONCEJO['soto-del-barco'];
+
 /**
  * Mapeo de referencia costera más cercana para concejos de interior o montaña
  */
@@ -819,20 +825,20 @@ export function getNearestCoastalReference(concejo) {
   const cId = concejo.id;
 
   // Oriente
-  if (['cangas-de-onis', 'parres', 'amieva', 'cabrales', 'penasanta', 'oniss', 'ponga', 'ribadesella'].includes(cId) || (concejo.region && concejo.region.includes('Oriente'))) {
+  if (['cangasdeonis', 'cangas-de-onis', 'parres', 'amieva', 'cabrales', 'penasanta', 'onis', 'oniss', 'ponga', 'ribadesella'].includes(cId) || (concejo.region && concejo.region.includes('Oriente'))) {
     return { refId: 'ribadesella', name: 'Ribadesella (Costa Oriental)', dist: '22 km' };
   }
   // Cuencas / Centro Sur
-  if (['mieres', 'langreo', 'laviana', 'san-martin-del-rey-aurelio', 'morcin', 'riosa', 'lena', 'aller', 'sobrescobio', 'caso'].includes(cId)) {
+  if (['mieres', 'langreo', 'laviana', 'sanmartindelreyaurelio', 'san-martin-del-rey-aurelio', 'morcin', 'riosa', 'lena', 'aller', 'sobrescobio', 'caso'].includes(cId)) {
     return { refId: 'gijon', name: 'Gijón / Xixón (Costa Central)', dist: '35 km' };
   }
   // Occidente Interior / Montaña
-  if (['cangas-del-narcea', 'tineo', 'allande', 'somiedo', 'belmonte-de-miranda', 'ibias', 'degana'].includes(cId)) {
+  if (['cangasdelnarcea', 'cangas-del-narcea', 'tineo', 'allande', 'somiedo', 'belmontedemiranda', 'belmonte-de-miranda', 'ibias', 'degana'].includes(cId)) {
     return { refId: 'valdes', name: 'Luarca / Valdés (Costa Occidental)', dist: '45 km' };
   }
-  // Centro / Oviedo / Siero / Noreña / Grado / Pravia
-  if (['pravia', 'candamo', 'salass'].includes(cId)) {
-    return { refId: 'muros-de-nalon', name: 'Muros de Nalón / Aguilar', dist: '14 km' };
+  // Centro / Oviedo / Siero / Noreña / Grado / Pravia / Bajo Nalón
+  if (['pravia', 'candamo', 'salas', 'salass', 'grado'].includes(cId)) {
+    return { refId: 'murosdenalon', name: 'Muros de Nalón / Aguilar', dist: '14 km' };
   }
 
   // Por defecto: Gijón (Costa Central)

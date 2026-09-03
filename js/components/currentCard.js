@@ -217,8 +217,8 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
           <div class="sensor-val" style="color: ${aqiInfo.color};">${aqi?.european_aqi ?? 'Óptimo'} <small>(${aqiInfo.level})</small></div>
           <div class="sensor-sub">${aqiInfo.label}</div>
           <div class="aqi-particles">
-            <span>PM2.5: <strong>${aqi?.pm2_5 ? aqi.pm2_5.toFixed(1) : '8.2'} µg/m³</strong></span>
-            <span>PM10: <strong>${aqi?.pm10 ? aqi.pm10.toFixed(1) : '14.1'} µg/m³</strong></span>
+            <span>PM2.5: <strong>${typeof aqi?.pm2_5 === 'number' ? aqi.pm2_5.toFixed(1) : '8.2'} µg/m³</strong></span>
+            <span>PM10: <strong>${typeof aqi?.pm10 === 'number' ? aqi.pm10.toFixed(1) : '14.1'} µg/m³</strong></span>
           </div>
         </div>
       </div>

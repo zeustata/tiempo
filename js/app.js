@@ -1313,7 +1313,7 @@ class MeteoAsturiasApp {
   }
 
   applyDynamicWeatherTheme(weatherCode, isDay = 1) {
-    const info = getWeatherInfo(weatherCode);
+    const info = getWeatherInfo(weatherCode, isDay);
     const bgType = info ? info.bg : 'cloudy';
     let themeKey = bgType;
 
@@ -1324,9 +1324,10 @@ class MeteoAsturiasApp {
     document.body.setAttribute('data-weather-theme', themeKey);
 
     // Ajustar modo de partículas interactivas
-    if (bgType === 'clear' && isDay) {
+    const isClearLike = bgType === 'clear' || bgType === 'clear-day' || bgType === 'clear-night' || bgType === 'mostly-clear' || bgType === 'mostly-clear-day' || bgType === 'mostly-clear-night';
+    if (isClearLike && isDay) {
       this.setParticleMode('sun-motes');
-    } else if (bgType === 'clear' && !isDay) {
+    } else if (isClearLike && !isDay) {
       this.setParticleMode('stars');
     } else if (bgType === 'rain' || bgType === 'drizzle') {
       this.setParticleMode('rain');

@@ -8,20 +8,24 @@
  * - Curva matemática sinusoidal interactiva para el Mareógrafo en vivo
  */
 
-// Época de referencia anclada a la costa asturiana (Playa de San Lorenzo - Gijón / AEMET)
-const REF_BASE_DATE = new Date(2026, 7, 30, 0, 0, 0); // 30 Ago 2026 00:00 local
-const REF_HIGH_HOUR = 6.4667; // 06:28 Pleamar local en San Lorenzo
-const SYNODIC_MONTH_MS = 29.530588 * 24 * 60 * 60 * 1000;
-const TIDE_CYCLE_HOURS = 12.26; // Ciclo medio real calibrado
-const TIDE_HALF_HOURS = TIDE_CYCLE_HOURS / 2; // ~6.13h (6h 08m)
-const LUNAR_DELAY_HOURS = 0.558; // Desfase diario local oficial AEMET
+// Época de referencia astronómica y lunar unificada (Luna Nueva real: 11 Enero 2024 a las 11:57 UTC)
+const LUNAR_MONTH_DAYS = 29.53058867;
+const REF_NEW_MOON_UTC_MS = Date.UTC(2024, 0, 11, 11, 57, 0);
+
+// Época de pleamar de referencia anclada en el Cantábrico (Playa de San Lorenzo - Gijón / El Musel - AEMET/IHM)
+// Calibrada a las 06:28 hora local de verano (CEST / UTC+2) del 30 de agosto de 2026 = 04:28:00 UTC
+const REF_TIDE_UTC_MS = Date.UTC(2026, 7, 30, 4, 28, 0);
+const TIDE_CYCLE_HOURS = 12.4206012; // Período semidiurno M2 (~12h 25m 14s)
+const TIDE_CYCLE_MS = TIDE_CYCLE_HOURS * 3600 * 1000;
+const TIDE_HALF_MS = TIDE_CYCLE_MS / 2;
 
 /**
  * Obtiene la fase lunar y su coeficiente para una fecha
  */
 export function getMoonAndTideInfo(date = new Date()) {
-  const diffMs = date.getTime() - REF_BASE_DATE.getTime();
-  const phaseFraction = ((diffMs % SYNODIC_MONTH_MS) + SYNODIC_MONTH_MS) % SYNODIC_MONTH_MS / SYNODIC_MONTH_MS;
+  const diffDays = (date.getTime() - REF_NEW_MOON_UTC_MS) / (1000 * 60 * 60 * 24);
+  const moonAge = ((diffDays % LUNAR_MONTH_DAYS) + LUNAR_MONTH_DAYS) % LUNAR_MONTH_DAYS;
+  const phaseFraction = moonAge / LUNAR_MONTH_DAYS;
   
   // Ángulo de fase (0 = Nueva, 0.25 = Creciente, 0.5 = Llena, 0.75 = Menguante)
   const angle = phaseFraction * 2 * Math.PI;
@@ -80,6 +84,7 @@ export function getMoonAndTideInfo(date = new Date()) {
 
   return {
     phaseFraction,
+    moonAge: moonAge.toFixed(1),
     moonName,
     moonIcon,
     coefficient,
@@ -91,22 +96,12 @@ export function getMoonAndTideInfo(date = new Date()) {
 }
 
 /**
- * Calcula la hora de la primera pleamar base para una fecha y longitud dadas (en horas del día 0..12.26h)
- * Desfase geodésico: 4 minutos por cada grado de longitud respecto a Gijón (-5.6615°)
- */
-function getBaseHighTideHour(date, lon = -5.6615) {
-  const startOfDay = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0);
-  const diffDays = Math.round((startOfDay - REF_BASE_DATE) / (24 * 3600 * 1000));
-  const lonOffsetHours = (lon - (-5.6615)) * (4 / 60);
-  const rawHigh = REF_HIGH_HOUR + diffDays * LUNAR_DELAY_HOURS - lonOffsetHours;
-  return ((rawHigh % TIDE_CYCLE_HOURS) + TIDE_CYCLE_HOURS) % TIDE_CYCLE_HOURS;
-}
-
-/**
- * Calcula los eventos reales de marea del día (horas y cotas en metros) calibrados con IHM y adaptados a la longitud local
+ * Calcula los eventos reales de marea del día (horas y cotas en metros)
+ * adaptados al huso horario local (CEST/CET) y longitud geodésica local (4 min/grado respecto a Gijón)
  */
 export function getDailyTideEvents(targetDate = new Date(), lon = -5.6615) {
   const startOfDay = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate(), 0, 0, 0, 0);
+  const endOfDay = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate(), 24, 0, 0, 0);
   const moonInfo = getMoonAndTideInfo(startOfDay);
   const coef = moonInfo.coefficient;
 
@@ -115,36 +110,35 @@ export function getDailyTideEvents(targetDate = new Date(), lon = -5.6615) {
   const highTideHeight = +(3.45 + coefFactor * 0.95).toFixed(2);
   const lowTideHeight = +(1.25 - coefFactor * 0.85).toFixed(2);
 
-  const baseHighHour = getBaseHighTideHour(startOfDay, lon);
+  // Desfase geodésico longitudinal: 4 minutos por grado respecto a Gijón (-5.6615°)
+  const lonOffsetMs = (lon - (-5.6615)) * (4 * 60 * 1000);
 
-  // Recorremos desde antes de las 00:00 para encontrar todos los eventos dentro de [0, 24)
-  let t = baseHighHour;
-  while (t > 0) {
-    t -= TIDE_HALF_HOURS;
-  }
+  // Localizar ciclos semidiurnos que caen en la jornada local [startOfDay, endOfDay)
+  const t0 = startOfDay.getTime() - lonOffsetMs;
+  const cycleIndexStart = Math.floor((t0 - REF_TIDE_UTC_MS) / TIDE_HALF_MS) - 2;
 
-  let isHigh = (Math.round(Math.abs(baseHighHour - t) / TIDE_HALF_HOURS) % 2 === 0);
   const events = [];
-
-  while (t < 24) {
-    if (t >= 0) {
-      const totalMin = Math.round(t * 60);
-      const hrs = Math.floor(totalMin / 60);
-      const mins = totalMin % 60;
-      const tMs = startOfDay.getTime() + totalMin * 60 * 1000;
+  for (let k = cycleIndexStart; k <= cycleIndexStart + 10; k++) {
+    const eventTimeMs = REF_TIDE_UTC_MS + k * TIDE_HALF_MS + lonOffsetMs;
+    if (eventTimeMs >= startOfDay.getTime() && eventTimeMs < endOfDay.getTime()) {
+      const d = new Date(eventTimeMs);
+      const isHigh = Math.abs(k % 2) === 0;
+      const hours = d.getHours() + d.getMinutes() / 60 + d.getSeconds() / 3600;
+      const timeStr = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
 
       events.push({
         type: isHigh ? 'high' : 'low',
         name: isHigh ? 'Pleamar' : 'Bajamar',
-        timeHours: t,
-        timeStr: `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}`,
-        timestamp: tMs,
+        timeHours: hours,
+        timeStr,
+        timestamp: eventTimeMs,
         height: isHigh ? highTideHeight : lowTideHeight
       });
     }
-    t += TIDE_HALF_HOURS;
-    isHigh = !isHigh;
   }
+
+  // Ordenar cronológicamente por seguridad
+  events.sort((a, b) => a.timestamp - b.timestamp);
 
   return {
     date: startOfDay,
@@ -166,27 +160,28 @@ export function getRealtimeTideStatus(now = new Date(), lon = -5.6615) {
   const meanLevel = (highTideHeight + lowTideHeight) / 2;
   const amplitude = (highTideHeight - lowTideHeight) / 2;
 
-  // Fase armónica local continua
-  const baseHigh = getBaseHighTideHour(now, lon);
-  const deltaHours = currentHours - baseHigh;
-  const currentWaterHeight = +(meanLevel + amplitude * Math.cos((deltaHours / TIDE_CYCLE_HOURS) * 2 * Math.PI)).toFixed(2);
-  
+  // Fase armónica local continua en tiempo universal con desfase de longitud
+  const lonOffsetMs = (lon - (-5.6615)) * (4 * 60 * 1000);
+  const deltaMs = now.getTime() - lonOffsetMs - REF_TIDE_UTC_MS;
+  const phase = ((deltaMs % TIDE_CYCLE_MS) + TIDE_CYCLE_MS) % TIDE_CYCLE_MS / TIDE_CYCLE_MS;
+
+  const currentWaterHeight = +(meanLevel + amplitude * Math.cos(phase * 2 * Math.PI)).toFixed(2);
   const fillPercent = Math.min(100, Math.max(0, Math.round(((currentWaterHeight - lowTideHeight) / (highTideHeight - lowTideHeight)) * 100)));
 
-  const slope = -Math.sin((deltaHours / TIDE_CYCLE_HOURS) * 2 * Math.PI);
+  const slope = -Math.sin(phase * 2 * Math.PI);
   const isRising = slope > 0;
 
   // Próximo evento (buscar en los eventos de hoy o pasar al primer evento de mañana)
-  let nextEvent = events.find(e => e.timeHours > currentHours);
+  let nextEvent = events.find(e => e.timestamp > now.getTime());
   let hoursUntilNext = 0;
 
   if (nextEvent) {
-    hoursUntilNext = nextEvent.timeHours - currentHours;
+    hoursUntilNext = (nextEvent.timestamp - now.getTime()) / (3600 * 1000);
   } else {
     const tomorrow = new Date(now.getTime() + 24 * 3600 * 1000);
     const tomorrowData = getDailyTideEvents(tomorrow, lon);
     nextEvent = tomorrowData.events[0];
-    hoursUntilNext = (24 - currentHours) + nextEvent.timeHours;
+    hoursUntilNext = (nextEvent.timestamp - now.getTime()) / (3600 * 1000);
   }
 
   const minsUntilNext = Math.max(0, Math.round(hoursUntilNext * 60));
@@ -273,21 +268,23 @@ export function renderTideSvgGraph(baseDate = new Date(), isLiveToday = true, cu
   // Curva armónica continua de 72 horas con 288 puntos (cada 15 min)
   let pathD = '';
   const totalSteps = 288;
-  const day0BaseHigh = getBaseHighTideHour(startOfDay, lon);
+  const totalDurationMs = 72 * 3600 * 1000;
+  const lonOffsetMs = (lon - (-5.6615)) * (4 * 60 * 1000);
 
   for (let step = 0; step <= totalSteps; step++) {
-    const globalT = (step / totalSteps) * 72; // horas acumuladas 0..72
-    const dayIdx = Math.min(2, Math.floor(globalT / 24));
+    const globalFraction = step / totalSteps;
+    const stepTimeMs = startOfDay.getTime() + globalFraction * totalDurationMs;
+    const dayIdx = Math.min(2, Math.floor(globalFraction * 3));
     const curDay = daysData[dayIdx];
 
     const meanLevel = (curDay.highTideHeight + curDay.lowTideHeight) / 2;
     const amplitude = (curDay.highTideHeight - curDay.lowTideHeight) / 2;
-    
-    // Progresión continua de la fase lunar con desfase calibrado (0.8344h cada 24h)
-    const effectiveHigh = day0BaseHigh + (globalT / 24) * LUNAR_DELAY_HOURS;
-    const h = meanLevel + amplitude * Math.cos(((globalT - effectiveHigh) / TIDE_CYCLE_HOURS) * 2 * Math.PI);
 
-    const x = padX + (globalT / 72) * usableWidth;
+    const deltaMs = stepTimeMs - lonOffsetMs - REF_TIDE_UTC_MS;
+    const phase = ((deltaMs % TIDE_CYCLE_MS) + TIDE_CYCLE_MS) % TIDE_CYCLE_MS / TIDE_CYCLE_MS;
+    const h = meanLevel + amplitude * Math.cos(phase * 2 * Math.PI);
+
+    const x = padX + globalFraction * usableWidth;
     const norm = (h - minH) / (maxH - minH);
     const y = padYTop + (1 - norm) * usableHeight;
 
@@ -323,13 +320,19 @@ export function renderTideSvgGraph(baseDate = new Date(), isLiveToday = true, cu
   // Indicador de posición en tiempo real (en el día de hoy)
   let liveMarker = '';
   if (isLiveToday) {
-    const nowH = currentHours !== null ? currentHours : (new Date().getHours() + new Date().getMinutes() / 60 + new Date().getSeconds() / 3600);
-    const liveX = padX + (nowH / 72) * usableWidth;
+    const now = new Date();
+    const liveTimeMs = currentHours !== null
+      ? (startOfDay.getTime() + currentHours * 3600 * 1000)
+      : now.getTime();
+    const liveFraction = Math.max(0, Math.min(1, (liveTimeMs - startOfDay.getTime()) / totalDurationMs));
+    const liveX = padX + liveFraction * usableWidth;
+
     const curDay = daysData[0];
     const meanLevel = (curDay.highTideHeight + curDay.lowTideHeight) / 2;
     const amplitude = (curDay.highTideHeight - curDay.lowTideHeight) / 2;
-    const effectiveHigh = day0BaseHigh + (nowH / 24) * LUNAR_DELAY_HOURS;
-    const nowWaterH = meanLevel + amplitude * Math.cos(((nowH - effectiveHigh) / TIDE_CYCLE_HOURS) * 2 * Math.PI);
+    const deltaMs = liveTimeMs - lonOffsetMs - REF_TIDE_UTC_MS;
+    const phase = ((deltaMs % TIDE_CYCLE_MS) + TIDE_CYCLE_MS) % TIDE_CYCLE_MS / TIDE_CYCLE_MS;
+    const nowWaterH = meanLevel + amplitude * Math.cos(phase * 2 * Math.PI);
     const norm = (nowWaterH - minH) / (maxH - minH);
     const liveY = padYTop + (1 - norm) * usableHeight;
 
@@ -350,8 +353,9 @@ export function renderTideSvgGraph(baseDate = new Date(), isLiveToday = true, cu
   // Nodos y etiquetas de eventos (Pleamares y Bajamares de los 3 días)
   const eventMarkers = daysData.flatMap(day => {
     return day.events.map(e => {
-      const globalTime = day.offset * 24 + e.timeHours;
-      const x = padX + (globalTime / 72) * usableWidth;
+      const eventTimeMs = e.timestamp;
+      const eventFraction = (eventTimeMs - startOfDay.getTime()) / totalDurationMs;
+      const x = padX + eventFraction * usableWidth;
       const norm = (e.height - minH) / (maxH - minH);
       const y = padYTop + (1 - norm) * usableHeight;
       const isHigh = e.type === 'high';

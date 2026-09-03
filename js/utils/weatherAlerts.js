@@ -10,7 +10,7 @@ export function getAemetZone(concejo) {
   const reg = concejo.region || '';
 
   // 1. Litoral Occidental Asturiano
-  if (['castropol', 'tapia-de-casariego', 'el-franco', 'coana', 'navia', 'valdes', 'cudillero'].includes(cId) || (reg.includes('Costa') && reg.includes('Occidental'))) {
+  if (['castropol', 'tapiadecasariego', 'tapia-de-casariego', 'elfranco', 'el-franco', 'coana', 'navia', 'valdes', 'cudillero'].includes(cId) || (reg.includes('Costa') && (reg.includes('Occidental') || reg.includes('Noroccidental')))) {
     return {
       id: 'litoral_occidental',
       name: 'Litoral Occidental Asturiano',
@@ -20,7 +20,7 @@ export function getAemetZone(concejo) {
   }
 
   // 2. Litoral Oriental y Central Asturiano
-  if (['muros-de-nalon', 'soto-del-barco', 'castrillon', 'illes', 'aviles', 'gozon', 'carreno', 'gijon', 'villaviciosa', 'colunga', 'caravia', 'ribadesella', 'llanes', 'ribadedeva'].includes(cId) || reg.includes('Costa')) {
+  if (['murosdenalon', 'muros-de-nalon', 'sotodelbarco', 'soto-del-barco', 'castrillon', 'aviles', 'gozon', 'carreno', 'gijon', 'villaviciosa', 'colunga', 'caravia', 'ribadesella', 'llanes', 'ribadedeva'].includes(cId) || (reg.includes('Costa') && !reg.includes('Occidental'))) {
     return {
       id: 'litoral_oriental',
       name: 'Litoral Central y Oriental de Asturias',
@@ -30,7 +30,7 @@ export function getAemetZone(concejo) {
   }
 
   // 3. Cordillera Cantábrica y Picos de Europa
-  if (['somiedo', 'cangas-del-narcea', 'quiros', 'teverga', 'lena', 'aller', 'sobrescobio', 'caso', 'ponga', 'amieva', 'cabrales', 'penasanta', 'oniss', 'cangas-de-onis'].includes(cId) || concejo.altitude >= 700 || reg.includes('Montaña') || reg.includes('Cordillera')) {
+  if (['somiedo', 'quiros', 'teverga', 'lena', 'aller', 'sobrescobio', 'caso', 'ponga', 'amieva', 'cabrales', 'penasanta', 'onis', 'oniss', 'cangasdeonis', 'cangas-de-onis', 'sotres', 'covadonga_lagos', 'pajares', 'fuentesdeinvierno'].includes(cId) || concejo.altitude >= 700 || reg.includes('Montaña') || reg.includes('Cordillera') || reg.includes('Picos de Europa')) {
     return {
       id: 'cordillera_picos',
       name: 'Cordillera Cantábrica y Picos de Europa',
@@ -40,7 +40,7 @@ export function getAemetZone(concejo) {
   }
 
   // 4. Suroccidente Asturiano
-  if (['tineo', 'allande', 'ibias', 'degana', 'belmonte-de-miranda', 'salas'].includes(cId) || reg.includes('Suroccidente')) {
+  if (['cangasdelnarcea', 'cangas-del-narcea', 'tineo', 'allande', 'ibias', 'degana', 'belmontedemiranda', 'belmonte-de-miranda', 'salas', 'villayon'].includes(cId) || reg.includes('Suroccidente')) {
     return {
       id: 'suroccidente',
       name: 'Suroccidente Asturiano',
