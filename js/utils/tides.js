@@ -142,8 +142,8 @@ export function getDailyTideEvents(targetDate = new Date(), lon = -5.6615) {
   const year = targetDate.getFullYear();
 
   // Desfase geodésico longitudinal respecto a Salinas / Avilés (-5.9744°)
-  // 4 minutos por grado hacia el este (adelanta) o hacia el oeste (retrasa)
-  const lonOffsetMs = (lon - REF_AVIL_LON) * (4 * 60 * 1000);
+  // La onda se propaga de Este a Oeste: en el Oriente (Llanes) se adelanta ~5m y en el Occidente (Tapia) se retrasa ~4m
+  const lonOffsetMs = (REF_AVIL_LON - lon) * (4 * 60 * 1000);
 
   // Verificación en tabla de efemérides astronómicas calibradas para Septiembre 2026
   if (year === 2026 && month === 8 && SEPT_2026_EPHEMERIS[dayNum]) {
