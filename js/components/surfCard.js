@@ -1,5 +1,5 @@
 import { getWindDirection } from '../utils/weatherIcons.js?v=1.0.81';
-import { getRealtimeTideStatus } from '../utils/tides.js?v=1.0.81-tides';
+import { getRealtimeTideStatus } from '../utils/tides.js?v=1.0.81-tides-auto';
 import { 
   PLAYAS_POR_CONCEJO, 
   getNearestCoastalReference, 

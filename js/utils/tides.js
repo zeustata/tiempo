@@ -188,49 +188,110 @@ export function getDailyTideEvents(targetDate = new Date(), lon = -5.6615) {
     };
   }
 
-  // Fallback armónico estándar para fechas fuera del calendario de efemérides
+  // Motor armónico astronómico multi-frecuencia (6 constituyentes) para cualquier fecha futura (octubre, noviembre, 2027...)
   const moonInfo = getMoonAndTideInfo(startOfDay);
-  const coef = moonInfo.coefficient;
-  const coefFactor = (coef - 70) / 45;
-  const highTideHeight = +(3.45 + coefFactor * 0.95).toFixed(2);
-  const lowTideHeight = +(1.25 - coefFactor * 0.85).toFixed(2);
-  const REF_TIDE_UTC_MS = Date.UTC(2026, 8, 4, 8, 1, 0); // Anclaje armónico
-  const TIDE_CYCLE_HOURS = 12.4206012;
-  const TIDE_CYCLE_MS = TIDE_CYCLE_HOURS * 3600 * 1000;
-  const TIDE_HALF_MS = TIDE_CYCLE_MS / 2;
+  const harmonicEvents = getHarmonicEventsForDate(startOfDay, endOfDay, lonOffsetMs);
 
-  const t0 = startOfDay.getTime() - lonOffsetMs;
-  const cycleIndexStart = Math.floor((t0 - REF_TIDE_UTC_MS) / TIDE_HALF_MS) - 2;
-
-  const events = [];
-  for (let k = cycleIndexStart; k <= cycleIndexStart + 10; k++) {
-    const eventTimeMs = REF_TIDE_UTC_MS + k * TIDE_HALF_MS + lonOffsetMs;
-    if (eventTimeMs >= startOfDay.getTime() && eventTimeMs < endOfDay.getTime()) {
-      const d = new Date(eventTimeMs);
-      const isHigh = Math.abs(k % 2) === 0;
-      const hours = d.getHours() + d.getMinutes() / 60 + d.getSeconds() / 3600;
-      const timeStr = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
-
-      events.push({
-        type: isHigh ? 'high' : 'low',
-        name: isHigh ? 'Pleamar' : 'Bajamar',
-        timeHours: hours,
-        timeStr,
-        timestamp: eventTimeMs,
-        height: isHigh ? highTideHeight : lowTideHeight
-      });
-    }
-  }
-
-  events.sort((a, b) => a.timestamp - b.timestamp);
+  const highEvents = harmonicEvents.filter(e => e.type === 'high');
+  const lowEvents = harmonicEvents.filter(e => e.type === 'low');
+  const highTideHeight = highEvents.length > 0 ? Math.max(...highEvents.map(e => e.height)) : 3.45;
+  const lowTideHeight = lowEvents.length > 0 ? Math.min(...lowEvents.map(e => e.height)) : 1.25;
 
   return {
     date: startOfDay,
     moonInfo,
     highTideHeight,
     lowTideHeight,
-    events
+    events: harmonicEvents
   };
+}
+
+/**
+ * Constantes y motor de descomposición armónica astronómica del Cantábrico Central (Asturias)
+ * Basado en los 6 constituyentes fundamentales: M2 (lunar principal), S2 (solar principal),
+ * N2 (elíptica lunar mayor), K2 (luni-solar semidiurna), K1 (luni-solar diurna), O1 (lunar diurna).
+ * Cota media z0 = 2.346m referida a la cota cero del puerto de Avilés / El Musel (Gijón).
+ */
+const Z0_MSL = 2.346;
+const EPOCH_UTC_MS = Date.UTC(2026, 0, 1, 0, 0, 0);
+
+const HARMONIC_CONSTITUENTS = [
+  { name: 'M2', w: 0.50586805, amp: 1.2355, phase: 0.4322 },
+  { name: 'S2', w: 0.52359878, amp: 0.3962, phase: 2.1822 },
+  { name: 'N2', w: 0.49636692, amp: 0.2197, phase: 0.1058 },
+  { name: 'K2', w: 0.52503234, amp: 0.1656, phase: -1.7405 },
+  { name: 'K1', w: 0.26251617, amp: 0.0674, phase: 1.2266 },
+  { name: 'O1', w: 0.24335188, amp: 0.0785, phase: -1.5272 }
+];
+
+function evalHarmonicDeriv(tHours) {
+  let dh = 0;
+  for (let i = 0; i < HARMONIC_CONSTITUENTS.length; i++) {
+    const c = HARMONIC_CONSTITUENTS[i];
+    dh -= c.w * c.amp * Math.sin(c.w * tHours - c.phase);
+  }
+  return dh;
+}
+
+function evalHarmonicD2(tHours) {
+  let d2 = 0;
+  for (let i = 0; i < HARMONIC_CONSTITUENTS.length; i++) {
+    const c = HARMONIC_CONSTITUENTS[i];
+    d2 -= c.w * c.w * c.amp * Math.cos(c.w * tHours - c.phase);
+  }
+  return d2;
+}
+
+function evalHarmonicHeight(tHours) {
+  let h = Z0_MSL;
+  for (let i = 0; i < HARMONIC_CONSTITUENTS.length; i++) {
+    const c = HARMONIC_CONSTITUENTS[i];
+    h += c.amp * Math.cos(c.w * tHours - c.phase);
+  }
+  return h;
+}
+
+function getHarmonicEventsForDate(startOfDay, endOfDay, lonOffsetMs) {
+  const dayStartHours = (startOfDay.getTime() - lonOffsetMs - EPOCH_UTC_MS) / (3600 * 1000);
+  const dayEndHours = (endOfDay.getTime() - lonOffsetMs - EPOCH_UTC_MS) / (3600 * 1000);
+
+  const events = [];
+  const step = 0.25; // búsqueda cada 15 minutos
+  let prevT = dayStartHours - 1.0;
+  let prevD = evalHarmonicDeriv(prevT);
+
+  for (let t = dayStartHours - 0.75; t <= dayEndHours + 1.0; t += step) {
+    const curD = evalHarmonicDeriv(t);
+    if ((prevD < 0 && curD > 0) || (prevD > 0 && curD < 0)) {
+      let root = (prevT + t) / 2;
+      for (let it = 0; it < 6; it++) {
+        const f = evalHarmonicDeriv(root);
+        const df = evalHarmonicD2(root);
+        if (Math.abs(df) < 1e-6) break;
+        root = root - f / df;
+      }
+      if (root >= dayStartHours && root < dayEndHours) {
+        const isHigh = evalHarmonicD2(root) < 0;
+        const height = +evalHarmonicHeight(root).toFixed(2);
+        const eventTs = EPOCH_UTC_MS + root * 3600 * 1000 + lonOffsetMs;
+        const d = new Date(eventTs);
+        const hrs = d.getHours();
+        const mins = d.getMinutes();
+        events.push({
+          type: isHigh ? 'high' : 'low',
+          name: isHigh ? 'Pleamar' : 'Bajamar',
+          timeHours: hrs + mins / 60,
+          timeStr: `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}`,
+          timestamp: eventTs,
+          height
+        });
+      }
+    }
+    prevT = t;
+    prevD = curD;
+  }
+  events.sort((a, b) => a.timestamp - b.timestamp);
+  return events;
 }
 
 /**
