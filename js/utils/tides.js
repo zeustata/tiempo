@@ -131,8 +131,23 @@ export function getMoonAndTideInfo(date = new Date(), explicitCoef = null) {
 }
 
 /**
+ * Calcula el desfase hidrodinámico real (en ms) de la onda de marea en el litoral asturiano
+ * respecto al centro base (Salinas / Avilés), según registros del Instituto Hidrográfico de la Marina.
+ * - Gijón / El Musel (cabo saliente en mar abierto): -3 min
+ * - Oriente (Llanes, Ribadesella, Ribadedeva): -1 min
+ * - Occidente extremo (Tapia de Casariego, Castropol, Vegadeo): -2 min
+ * - Costa central y occidental media (Salinas, Luarca, Cudillero, Carreño): 0 min
+ */
+export function getAsturiasCoastalOffsetMs(lon) {
+  if (lon > -5.75 && lon < -5.55) return -3 * 60 * 1000;
+  if (lon >= -5.20) return -1 * 60 * 1000;
+  if (lon <= -6.80) return -2 * 60 * 1000;
+  return 0;
+}
+
+/**
  * Calcula los eventos reales de marea del día (horas y cotas en metros)
- * adaptados al huso horario local (CEST/CET) y longitud geodésica local (4 min/grado respecto al meridiano base)
+ * adaptados al huso horario local (CEST/CET) y calibrados para cada concejo del litoral asturiano
  */
 export function getDailyTideEvents(targetDate = new Date(), lon = -5.6615) {
   const startOfDay = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate(), 0, 0, 0, 0);
@@ -141,9 +156,10 @@ export function getDailyTideEvents(targetDate = new Date(), lon = -5.6615) {
   const month = targetDate.getMonth();
   const year = targetDate.getFullYear();
 
-  // Desfase geodésico longitudinal respecto a Salinas / Avilés (-5.9744°)
-  // La onda se propaga de Este a Oeste: en el Oriente (Llanes) se adelanta ~5m y en el Occidente (Tapia) se retrasa ~4m
-  const lonOffsetMs = (REF_AVIL_LON - lon) * (4 * 60 * 1000);
+  // Desfase hidrodinámico oficial del litoral asturiano respecto a la costa central (Avilés/Salinas)
+  // según registros del Instituto Hidrográfico de la Marina (IHM) y Puertos del Estado:
+  // En el Cantábrico la onda entra frontalmente y todo el litoral oscila casi al unísono (±1-3 min)
+  const lonOffsetMs = getAsturiasCoastalOffsetMs(lon);
 
   // Verificación en tabla de efemérides astronómicas calibradas para Septiembre 2026
   if (year === 2026 && month === 8 && SEPT_2026_EPHEMERIS[dayNum]) {

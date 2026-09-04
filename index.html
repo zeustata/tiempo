@@ -1538,7 +1538,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.81-tides-auto').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.81-tides-calib').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1559,6 +1559,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.81-tides-auto"></script>
+  <script type="module" src="js/app.js?v=1.0.81-tides-calib"></script>
 </body>
 </html>
