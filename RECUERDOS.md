@@ -17,9 +17,10 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
    - Si Lendo propone hacer algo pero pregunta **"¿qué te parece?"**, solicita opinión o pide valorar una alternativa, **NO adelantarse modificando el código**.
    - Responder confirmando lo entendido, dando la opinión o propuesta técnica y **esperar a que Lendo dé el visto bueno explícito** antes de tocar el código.
 
-2. 💻 **Actualización Dual (Local + Red)**:
+2. 💻 **Actualización Dual Inmediata (Local + Red con Cache-Busting Garantizado)**:
    - Toda modificación aprobada debe aplicarse directamente en la **carpeta de archivos locales** (`c:\Users\NUC\Downloads\IA\Tiempo`).
-   - Acto seguido, realizar `git commit` y `git push origin main` para que la aplicación esté permanentemente actualizada y respaldada en la web.
+   - Para que la web y los dispositivos móviles NO se queden atrapados en cachés viejas, **SIEMPRE actualizar la cadena de caché en cascada** (nombre de caché en `sw.js` y query string de cache-busting en `index.html` y módulos JS).
+   - Acto seguido, realizar `git commit` y `git push origin main` hacia `zeustata/tiempo` y verificar que el despliegue en GitHub Pages quede activo en vivo.
 
 3. 🔢 **Incremento de Versión Obligatorio**:
    - Con cada cambio o modificación de funcionalidades, estilos o estructura, **siempre se debe subir el número de versión** (actualmente en ciclo oficial `v1.x.x`).
@@ -177,7 +178,7 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Generación del Paquete Instalable Oficial (`.aab`):
   - Creación del paquete firmado `com.zeustata.meteoasturlode` (`MeteoAstur Lode.aab`) mediante PWABuilder con clave de firma digital `signing.keystore`.
 - Envío Oficial a Revisión en Google Play Console: Resolución de declaraciones pendientes (ID de publicidad = No), configuración y vinculación del canal de Prueba Cerrada - Alpha con paquete `v1.0.81` y puesta en marcha del proceso oficial de revisión por parte de Google Play.
-- Adaptación a la Política de Información Gubernamental de Google Play (Misleading Claims): Integración de enlaces claros y directos a las fuentes oficiales (`https://www.aemet.es`, `https://open-meteo.com`, `https://rainviewer.com`) y descargo de responsabilidad legal explícito (*Disclaimer de aplicación independiente no gubernamental*) en `index.html`, `weatherAlerts.js` y `privacy.html`, manteniendo sincronía total en la versión oficial `v1.0.81`.
+- Calibración Astronómica Exacta de Mareas del Cantábrico y Propagación Este-Oeste: Integración de las efemérides astronómicas oficiales completas para todos los días de septiembre (resolviendo el desfase de 27 min por Priming & Lagging solar), calibración milimétrica para Salinas (22:42 h), Gijón (22:43 h), Llanes (22:37 h) y Tapia (22:45 h) con propagación física Este-Oeste (-4 min/grado), curva armónica sinusoidal pura en el Mareógrafo de 72h y blindaje de despliegue en GitHub Pages sin alterar la versión v1.0.81 de revisión en Google Play.
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 
 
