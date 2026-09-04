@@ -20,6 +20,7 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Esqueleto Visual de Carga (*Skeleton Loader*)**: Inclusión de un layout estructurado con efecto de brillo animado (*shimmer*) cuando se entra por primera vez o se cambia a un concejo sin caché previa, eliminando cualquier sensación de bloqueo.
 - **Armonización de Condiciones de Rompiente con Energía (kJ)**: Corrección en `evaluateSurfQuality` para clasificar adecuadamente olas de período corto ($< 9\text{ s}$) y mar de viento como *"Suave / Poco empuje"* o *"Mar Revuelto"* en lugar de caer erróneamente en *"Mar Fuerte"*, alineando el estado al 100% con los kiloJulios reales calculados.
 - **Optimización del Service Worker**: Desactivación del `controllerchange` invasivo para evitar recargas automáticas forzosas de página a mitad de sesión.
+- **Cumplimiento Integral de la Política de Información Gubernamental de Google Play**: Incorporación de enlaces directos y funcionales a las fuentes oficiales de datos meteorológicos abiertos (`https://www.aemet.es`, `https://open-meteo.com`, `https://rainviewer.com`) y adición de la cláusula legal de exención de responsabilidad (*Aplicación de desarrollo independiente no gubernamental*) en `index.html`, `weatherAlerts.js` y `privacy.html`.
 - **Service Worker `v181-official` & Cache-Busting Total**: Sincronización completa a `?v=1.0.81` en todos los archivos del proyecto.
 
 ---

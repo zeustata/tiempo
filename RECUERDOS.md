@@ -177,6 +177,7 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Generación del Paquete Instalable Oficial (`.aab`):
   - Creación del paquete firmado `com.zeustata.meteoasturlode` (`MeteoAstur Lode.aab`) mediante PWABuilder con clave de firma digital `signing.keystore`.
 - Envío Oficial a Revisión en Google Play Console: Resolución de declaraciones pendientes (ID de publicidad = No), configuración y vinculación del canal de Prueba Cerrada - Alpha con paquete `v1.0.81` y puesta en marcha del proceso oficial de revisión por parte de Google Play.
+- Adaptación a la Política de Información Gubernamental de Google Play (Misleading Claims): Integración de enlaces claros y directos a las fuentes oficiales (`https://www.aemet.es`, `https://open-meteo.com`, `https://rainviewer.com`) y descargo de responsabilidad legal explícito (*Disclaimer de aplicación independiente no gubernamental*) en `index.html`, `weatherAlerts.js` y `privacy.html`, manteniendo sincronía total en la versión oficial `v1.0.81`.
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 
 
