@@ -30,3 +30,8 @@
 
 ## 5. Memoria y Recuerdos del Proyecto
 - Cuando Lendo indique *"lee tus recuerdos"* o pida repasar decisiones previas de diseño o arquitectura, consultar los archivos `RECUERDOS.md` y `CHANGELOG.md`.
+
+## 6. Formato de Comunicación Limpio (Cero Caracteres Raros / Sin LaTeX)
+- **JAMÁS usar sintaxis de fórmulas matemáticas (LaTeX/KaTeX)** como `$12\text{ h }...$` o `\frac{...}{...}` en respuestas o tablas.
+- El visor de chat de la IDE no renderiza LaTeX y muestra caracteres rotos y molestos con dólares, barras y llaves.
+- Escribir **SIEMPRE texto natural, claro y limpio** (ejemplo: `12 h 41 min`, `4,05 metros`, `3 minutos`, `E = 11 * H^2 * T`).
