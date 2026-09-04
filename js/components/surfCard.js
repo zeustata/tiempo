@@ -6,7 +6,7 @@ import {
   getSurfWindCondition,
   getBeachSpecificWindCondition,
   getSeaWaterTemperature
-} from './marineCard.js?v=1.0.81';
+} from './marineCard.js?v=1.0.81-tides';
 
 /**
  * Calcula la escala de Douglas a partir de la altura significativa de ola
