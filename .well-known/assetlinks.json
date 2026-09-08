@@ -1,0 +1,14 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.zeustata.meteoasturlode",
+      "sha256_cert_fingerprints": [
+        "D4:24:3E:CB:E1:02:9B:52:11:98:F6:32:C8:AB:0A:D9:4D:F7:D1:2B:EB:59:D2:E0:95:3D:FB:BC:25:98:0B:72",
+        "29:35:2D:4C:0C:52:82:66:CA:14:23:F3:1A:9A:68:E0:91:48:60:A4:98:2E:AF:6B:A1:3F:9C:0E:70:8A:83:0A",
+        "3A:C4:04:75:7E:AD:BD:19:05:F9:81:3E:CC:10:A0:0D:A6:28:EF:40:4A:10:17:04:28:E8:F4:7B:AC:7F:AF:62"
+      ]
+    }
+  }
+]
