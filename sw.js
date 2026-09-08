@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v181-calib';
+const CACHE_NAME = 'meteoasturlode-v181-rain-sync';
 const STATIC_ASSETS = [
   './',
   './index.html',

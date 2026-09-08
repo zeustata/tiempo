@@ -58,11 +58,16 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
   // 2. Graduación y coherencia inteligente de lluvia (REGLA DE ORO DE PROBABILIDAD)
   if (precipitation !== null || pop !== null) {
     const p = precipitation != null ? Math.max(0, parseFloat(precipitation)) : 0;
-    const prob = pop != null ? Math.max(0, parseFloat(pop)) : 0;
+    const hasPop = pop !== null && pop !== undefined;
+    const prob = hasPop ? Math.max(0, parseFloat(pop)) : null;
 
-    // REGLA DE ORO 1: Si la probabilidad es < 20%, NUNCA ES LLUVIA (Riesgo nulo/residual)
-    if (prob < 20) {
-      if (base.isRain || base.svgKey === 'drizzle' || base.svgKey === 'rain' || base.svgKey === 'storm') {
+    // Si ya está cayendo precipitación física cuantificable (p >= 0.1 mm) o el código es de lluvia
+    const isPhysicallyRaining = p >= 0.1;
+    const isExplicitRainCode = base.isRain || base.svgKey === 'drizzle' || base.svgKey === 'rain' || base.svgKey === 'storm';
+
+    // REGLA DE ORO 1: Solo anulamos a 'Nublado' si hay probabilidad explícita < 20% Y no hay lluvia física (p < 0.1) Y no es código de lluvia moderada/fuerte
+    if (hasPop && prob < 20 && !isPhysicallyRaining && code !== 61 && code !== 63 && code !== 65 && code !== 81 && code !== 82 && code !== 95 && code !== 96 && code !== 99) {
+      if (isExplicitRainCode) {
         base = {
           label: isNight ? 'Nublado de noche' : 'Nublado / Cubiertu',
           icon: '☁️',
@@ -74,10 +79,10 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
         };
       }
     }
-    // REGLA DE ORO 2: Si la probabilidad es >= 20%, graduamos la lluvia por intensidad real
-    else {
+    // REGLA DE ORO 2: Si hay probabilidad apreciable (>= 20%) o hay lluvia física o código de lluvia
+    else if ((hasPop && prob >= 20) || isPhysicallyRaining || isExplicitRainCode) {
       // Caso 3: Lluvia fuerte / Bastinazu / Tormenta (prob >= 75% o p >= 2.0 mm o código de tormenta)
-      if (prob >= 75 || p >= 2.0 || code === 65 || code === 82 || code === 95 || code === 96 || code === 99) {
+      if ((hasPop && prob >= 75) || p >= 2.0 || code === 65 || code === 82 || code === 95 || code === 96 || code === 99) {
         const isStorm = code === 95 || code === 96 || code === 99;
         base = {
           label: isStorm ? 'Tormenta eléctrica' : 'Lluvia fuerte / Bastinazu',
@@ -89,8 +94,8 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
           isSnow: false
         };
       }
-      // Caso 2: Lluvia moderada (prob >= 45% o p >= 0.5 mm)
-      else if (prob >= 45 || p >= 0.5 || code === 61 || code === 63 || code === 81) {
+      // Caso 2: Lluvia moderada (prob >= 45% o p >= 0.5 mm o códigos 61/63/81)
+      else if ((hasPop && prob >= 45) || p >= 0.5 || code === 61 || code === 63 || code === 81) {
         base = {
           label: 'Lluvia moderada',
           icon: '🌧️',
@@ -101,7 +106,7 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
           isSnow: false
         };
       }
-      // Caso 1: Orbayu / Llovizna ligera (prob 20-44% o p >= 0.1 mm)
+      // Caso 1: Orbayu / Llovizna ligera (prob 20-44% o p >= 0.1 mm o códigos 51/53/55/80)
       else {
         base = {
           label: isNight ? 'Orbayu nocturno ligero' : 'Orbayu / Llovizna ligera',

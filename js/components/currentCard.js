@@ -10,7 +10,9 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   const daily = data.weather.daily;
   const aqi = data.aqi?.current;
   
-  const weatherInfo = getWeatherInfo(current.weather_code, current.is_day, current.precipitation);
+  const currentHour = new Date().getHours();
+  const currentPop = (hourly && hourly.precipitation_probability && hourly.precipitation_probability[currentHour] != null) ? hourly.precipitation_probability[currentHour] : null;
+  const weatherInfo = getWeatherInfo(current.weather_code, current.is_day, current.precipitation, currentPop);
   const windDir = getWindDirection(current.wind_direction_10m || 0);
   const uvVal = (daily.uv_index_max && daily.uv_index_max[0] != null) ? daily.uv_index_max[0] : (hourly.uv_index && hourly.uv_index[new Date().getHours()] != null ? hourly.uv_index[new Date().getHours()] : null);
   const uvInfo = getUVDescription(uvVal);

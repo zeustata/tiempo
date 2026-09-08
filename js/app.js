@@ -1313,7 +1313,11 @@ class MeteoAsturiasApp {
   }
 
   applyDynamicWeatherTheme(weatherCode, isDay = 1) {
-    const info = getWeatherInfo(weatherCode, isDay);
+    const cur = this.weatherData?.weather?.current;
+    const hourly = this.weatherData?.weather?.hourly;
+    const currentHour = new Date().getHours();
+    const currentPop = (hourly && hourly.precipitation_probability && hourly.precipitation_probability[currentHour] != null) ? hourly.precipitation_probability[currentHour] : null;
+    const info = getWeatherInfo(weatherCode, isDay, cur?.precipitation, currentPop);
     const bgType = info ? info.bg : 'cloudy';
     let themeKey = bgType;
 
