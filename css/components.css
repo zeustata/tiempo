@@ -1028,6 +1028,27 @@
 
 .live-hourly-block {
   margin-bottom: 20px;
+  padding: 16px 20px;
+}
+
+.live-hourly-block .section-title-wrap {
+  margin-bottom: 12px;
+}
+
+.live-hourly-block .section-heading,
+.live-hourly-heading {
+  font-size: 1.05rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.2px;
+  line-height: 1.25;
+  color: var(--text-main);
+}
+
+.live-hourly-block .section-subtitle {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  margin-top: 2px;
+  display: block;
 }
 
 .hourly-scroll-container {

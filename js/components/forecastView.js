@@ -135,7 +135,7 @@ export function renderHourlyForecastBlock(data, units = 'metric', iconTheme = 'a
     <div class="forecast-block live-hourly-block">
       <div class="section-title-wrap">
         <div>
-          <h3 class="section-heading">⏱️ Pronóstico Horario Detallado (72 Horas / 3 Días)</h3>
+          <h3 class="section-heading live-hourly-heading">⏱️ Pronóstico Horario (72 Horas)</h3>
           <span class="section-subtitle">Desliza horizontalmente para ver la evolución hora a hora</span>
         </div>
       </div>
