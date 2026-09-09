@@ -53,16 +53,16 @@ function getDaypartWeather(hourly, dayDateStr, startHour, endHour, fallbackCode,
 }
 
 /**
- * Renderiza el pronóstico por horas (24h) y las tarjetas enriquecidas a 10 días
+ * Renderiza el bloque de pronóstico horario por horas (72h / 3 días) con separadores de días
  */
-export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
-  const hourly = data.weather.hourly;
-  const daily = data.weather.daily;
+export function renderHourlyForecastBlock(data, units = 'metric', iconTheme = 'astur') {
+  const hourly = data.weather ? data.weather.hourly : null;
+  if (!hourly || !hourly.time) return '';
+
   const now = new Date();
   const currentHour = now.getHours();
   const unitLabel = units === 'knots' ? 'kt' : 'km/h';
 
-  // 1. Horas (próximas 72 horas con separadores de días)
   let hourlyCards = '';
   let lastDayDateStr = null;
 
@@ -131,7 +131,33 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
     `;
   }
 
-  // 2. Pronóstico Diario (Tarjetas Visuales a 10 Días con desglose Mañana / Tarde)
+  return `
+    <div class="forecast-block live-hourly-block">
+      <div class="section-title-wrap">
+        <div>
+          <h3 class="section-heading">⏱️ Pronóstico Horario Detallado (72 Horas / 3 Días)</h3>
+          <span class="section-subtitle">Desliza horizontalmente para ver la evolución hora a hora</span>
+        </div>
+      </div>
+      <div class="hourly-scroll-container">
+        ${hourlyCards}
+      </div>
+    </div>
+  `;
+}
+
+/**
+ * Renderiza el pronóstico extendido a 10 días con desglose mañana y tarde
+ */
+export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
+  const hourly = data.weather ? data.weather.hourly : null;
+  const daily = data.weather ? data.weather.daily : null;
+  if (!daily || !daily.time) return '';
+
+  const now = new Date();
+  const unitLabel = units === 'knots' ? 'kt' : 'km/h';
+
+  // Pronóstico Diario (Tarjetas Visuales a 10 Días con desglose Mañana / Tarde)
   let dailyCards = '';
 
   for (let d = 0; d < daily.time.length; d++) {
@@ -264,24 +290,11 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
 
   return `
     <div class="forecast-section">
-      <!-- 72H HORAS CON SEPARADOR DE DÍAS -->
-      <div class="forecast-block">
-        <div class="section-title-wrap">
-          <div>
-            <h3 class="section-heading">⏱️ Pronóstico Horario Detallado (72 Horas / 3 Días)</h3>
-            <span class="section-subtitle">Desliza horizontalmente para ver la evolución hora a hora</span>
-          </div>
-        </div>
-        <div class="hourly-scroll-container">
-          ${hourlyCards}
-        </div>
-      </div>
-
       <!-- 10 DÍAS (TARJETAS ENRIQUECIDAS VERTICALES) -->
       <div class="forecast-block">
         <div class="section-title-wrap">
           <div>
-            <h3 class="section-heading">📅 Pronóstico a 10 Días</h3>
+            <h3 class="section-heading">📅 Pronóstico Extendido a 10 Días</h3>
             <span class="section-subtitle">Evolución diaria completa • Modelo ECMWF / ICON</span>
           </div>
         </div>

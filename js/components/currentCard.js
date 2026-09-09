@@ -1,5 +1,6 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.0.81';
-import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.0.81';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.0.81-live-hourly';
+import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.0.81-live-hourly';
+import { renderHourlyForecastBlock } from './forecastView.js?v=1.0.81-live-hourly';
 
 /**
  * Renderiza el dashboard principal con alineación uniforme y todos los sensores de la estación
@@ -47,6 +48,9 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   const aemetStatus = getAemetAlertStatus(data, concejo);
   const aemetCardMarkup = renderAemetAlertCard(aemetStatus, concejo);
 
+  // Pronóstico Horario Detallado (72 Horas / 3 Días) en Vivo
+  const hourlyForecastMarkup = renderHourlyForecastBlock(data, units, iconTheme);
+
   return `
     <!-- HERO WEATHER CARD (Tiempo, Ubicación y Temperatura) -->
     <div class="hero-weather-card ${weatherInfo.bg}">
@@ -76,6 +80,9 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
         </div>
       </div>
     </div>
+
+    <!-- PRONÓSTICO HORARIO 72H / 3 DÍAS (SOLICITADO POR BETA TESTERS) -->
+    ${hourlyForecastMarkup}
 
     <!-- TARJETA OFICIAL DE ALERTAS Y AVISOS AEMET -->
     ${aemetCardMarkup}

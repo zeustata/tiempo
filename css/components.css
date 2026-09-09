@@ -1026,6 +1026,10 @@
   box-shadow: var(--shadow-card);
 }
 
+.live-hourly-block {
+  margin-bottom: 20px;
+}
+
 .hourly-scroll-container {
   display: flex;
   gap: 14px;

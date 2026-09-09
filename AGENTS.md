@@ -20,9 +20,10 @@
 - Si una modificación produce fallos, errores imprevistos o no queda a gusto de Lendo, se debe poder volver de inmediato al estado funcional previo sin pérdida de datos ni configuraciones.
 - Los commits en Git deben ser limpios y atómicos para facilitar cualquier reversión si fuera necesario.
 
-### 3. Actualización Dual (Local + Red)
-- Toda modificación aprobada por Lendo se aplica en los **archivos locales del proyecto**.
-- Acto seguido, realizar `git commit` descriptivo y `git push origin main` para mantener sincronizado el repositorio en GitHub (`zeustata`).
+### 3. Ciclo Seguro: Modificación Local, Verificación Previa y Despliegue Dual
+- **Modificación en Local:** Todo cambio aprobado previamente por Lendo se aplica en primer lugar exclusivamente en los archivos locales del proyecto.
+- **Blindaje y Verificación Previa Obligatoria:** Antes de cualquier commit o subida a la red, es obligatorio realizar un chequeo técnico riguroso en local (levantamiento de servidor de pruebas, inspección de errores en consola de JavaScript, validación de sintaxis y respuesta de la interfaz). Estando la app en uso por beta testers o en producción, queda terminantemente prohibido hacer push sin haber comprobado localmente que todo funciona al 100% y no interrumpe el servicio.
+- **Despliegue Remoto Sincronizado:** Solo tras superar el chequeo local y recibir el visto bueno explícito de Lendo, se realizará `git commit` descriptivo y `git push origin main` hacia la cuenta `zeustata`.
 
 ### 4. Anti-Caché Obligatorio (Cache-Busting Garantizado)
 - Con cada cambio que afecte a la interfaz web o PWA, es **obligatorio actualizar la cadena de caché** (nombre en `sw.js` y query strings de versión en `index.html` y módulos JS) para que los navegadores y dispositivos móviles nunca queden atrapados en cachés viejas.
