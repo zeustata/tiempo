@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.81-hourly-compact">
-  <link rel="stylesheet" href="css/components.css?v=1.0.81-hourly-compact">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.81-hourly-compact">
+  <link rel="stylesheet" href="css/main.css?v=1.0.81-exit-power">
+  <link rel="stylesheet" href="css/components.css?v=1.0.81-exit-power">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.81-exit-power">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -1425,6 +1425,13 @@
         </button>
       </div>
       <div class="modal-body nav-modal-body" id="nav-modal-grid"></div>
+      <!-- Botón Salir / Cerrar Aplicación dentro del Menú -->
+      <div class="nav-modal-footer-exit">
+        <button class="btn-app-exit btn-app-exit-menu" id="btn-exit-app-menu" title="Cerrar y salir de MeteoAstur Lode">
+          <span class="btn-app-exit-icon">⏻</span>
+          <span class="btn-app-exit-text">Cerrar Aplicación</span>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -1538,7 +1545,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.81-hourly-compact').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.81-exit-power').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1559,6 +1566,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.81-hourly-compact"></script>
+  <script type="module" src="js/app.js?v=1.0.81-exit-power"></script>
 </body>
 </html>
