@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v181-exit-power';
+const CACHE_NAME = 'meteoasturlode-v181-nav-clean';
 const STATIC_ASSETS = [
   './',
   './index.html',

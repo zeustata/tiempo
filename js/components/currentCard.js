@@ -1,6 +1,6 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.0.81-exit-power';
-import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.0.81-exit-power';
-import { renderHourlyForecastBlock } from './forecastView.js?v=1.0.81-exit-power';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.0.81-nav-clean';
+import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.0.81-nav-clean';
+import { renderHourlyForecastBlock } from './forecastView.js?v=1.0.81-nav-clean';
 
 /**
  * Renderiza el dashboard principal con alineación uniforme y todos los sensores de la estación
@@ -231,14 +231,6 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- BOTÓN DE SALIDA / APAGADO DE LA APLICACIÓN AL FINAL DE LAS TARJETAS -->
-    <div class="app-exit-section">
-      <button class="btn-app-exit" id="btn-exit-app-cards" title="Cerrar y salir de MeteoAstur Lode">
-        <span class="btn-app-exit-icon">⏻</span>
-        <span class="btn-app-exit-text">Cerrar Aplicación</span>
-      </button>
     </div>
   `;
 }

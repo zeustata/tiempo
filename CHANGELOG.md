@@ -22,8 +22,8 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Optimización del Service Worker**: Desactivación del `controllerchange` invasivo para evitar recargas automáticas forzosas de página a mitad de sesión.
 - **Cumplimiento Integral de la Política de Información Gubernamental de Google Play**: Incorporación de enlaces directos y funcionales a las fuentes oficiales de datos meteorológicos abiertos (`https://www.aemet.es`, `https://open-meteo.com`, `https://rainviewer.com`) y adición de la cláusula legal de exención de responsabilidad (*Aplicación de desarrollo independiente no gubernamental*) en `index.html`, `weatherAlerts.js` y `privacy.html`.
 - **Pronóstico Horario 72h en "Estación en Vivo" (Feedback 17 Beta Testers)**: Reubicación del carrusel interactivo hora a hora (próximas 72 horas / 3 días con separadores diarios) en la pantalla principal entre la tarjeta Hero y los avisos de la AEMET con título compacto y jerarquía visual armonizada. La pestaña "Pronósticos" queda centrada exclusivamente en el pronóstico extendido a 10 días.
-- **Botón Universal de Salida / Apagado (⏻) & Optimización de Memoria**: Incorporación de botón de cierre de aplicación al final de las tarjetas y en el selector de Menú para facilitar la salida en teléfonos con modo inmersivo de pantalla completa. Pausa instantánea del motor de partículas cuando la app pasa a segundo plano para ahorrar batería y memoria en reposo.
-- **Service Worker `v181-exit-power` & Cache-Busting**: Actualización a `?v=1.0.81-exit-power` manteniendo la versión pública `v1.0.81` para Google Play Console.
+- **Preservación Total de la Barra de Navegación de Android & Optimización de Reposo**: Supresión del auto-fullscreen invasivo para que los botones nativos del teléfono (Atrás, Inicio y Apps recientes) permanezcan permanentemente visibles y accesibles en cualquier teléfono. Pausa instantánea del motor gráfico de partículas en segundo plano sin alterar la máxima calidad visual de la app.
+- **Service Worker `v181-nav-clean` & Cache-Busting**: Actualización a `?v=1.0.81-nav-clean` manteniendo la versión pública `v1.0.81` para Google Play Console.
 
 ---
 

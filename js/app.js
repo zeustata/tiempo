@@ -1,11 +1,11 @@
 import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.0.81';
 import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.0.81';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.0.81';
-import { renderCurrentWeather } from './components/currentCard.js?v=1.0.81-exit-power';
+import { renderCurrentWeather } from './components/currentCard.js?v=1.0.81-nav-clean';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.0.81-tides';
 import { renderSurfCard } from './components/surfCard.js?v=1.0.81-tides';
 import { renderMountainCard } from './components/mountainCard.js?v=1.0.81';
-import { renderForecast } from './components/forecastView.js?v=1.0.81-exit-power';
+import { renderForecast } from './components/forecastView.js?v=1.0.81-nav-clean';
 import { renderWeatherChart } from './components/chartsView.js?v=1.0.81';
 import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.81';
 import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.0.81';
@@ -96,9 +96,6 @@ class MeteoAsturiasApp {
 
     // Auto-refresco instantáneo cada vez que abres o desbloqueas la App
     this.setupAutoRefreshOnResume();
-
-    // Botones de salida / apagado de la app (feedback de beta tester)
-    this.setupExitButtons();
   }
 
   setupAutoRefreshOnResume() {
@@ -133,65 +130,6 @@ class MeteoAsturiasApp {
 
     window.addEventListener('focus', () => {
       refreshIfStale();
-    });
-  }
-
-  setupExitButtons() {
-    const handleExit = () => {
-      this.triggerHaptic();
-
-      // Cerrar modal de navegación si estuviera abierto
-      const navModal = document.getElementById('nav-modal');
-      if (navModal) this.closeModal(navModal);
-
-      // Feedback visual de apagado elegante
-      const overlay = document.createElement('div');
-      overlay.className = 'app-exit-overlay';
-      overlay.innerHTML = `
-        <div class="app-exit-box">
-          <span class="app-exit-box-icon">⏻</span>
-          <span class="app-exit-box-text">Cerrando MeteoAstur Lode...</span>
-        </div>
-      `;
-      document.body.appendChild(overlay);
-
-      setTimeout(() => {
-        // En Android TWA/PWA, window.close() cierra la Activity
-        try {
-          window.close();
-        } catch (e) {}
-
-        try {
-          window.open('', '_self', '');
-          window.close();
-        } catch (e) {}
-
-        // En caso de que el navegador mantenga la pestaña por políticas de seguridad
-        setTimeout(() => {
-          if (overlay && document.body.contains(overlay)) {
-            overlay.innerHTML = `
-              <div class="app-exit-box">
-                <span class="app-exit-box-icon" style="color: #10b981;">✓</span>
-                <span class="app-exit-box-text">Sesión finalizada</span>
-                <span class="app-exit-box-sub">En este navegador puedes cerrar la pestaña o pulsar el botón Inicio en tu teléfono.</span>
-                <button class="btn-exit-return" id="btn-exit-return">Volver a la app</button>
-              </div>
-            `;
-            const returnBtn = document.getElementById('btn-exit-return');
-            if (returnBtn) {
-              returnBtn.addEventListener('click', () => {
-                overlay.remove();
-              });
-            }
-          }
-        }, 350);
-      }, 300);
-    };
-
-    document.addEventListener('click', (e) => {
-      if (e.target.closest('#btn-exit-app-cards') || e.target.closest('#btn-exit-app-menu')) {
-        handleExit();
-      }
     });
   }
 
@@ -1083,29 +1021,6 @@ class MeteoAsturiasApp {
     document.addEventListener('fullscreenchange', updateBtn);
     document.addEventListener('webkitfullscreenchange', updateBtn);
     updateBtn();
-
-    const tryEnterFullscreen = () => {
-      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-        const el = document.documentElement;
-        const requestMethod = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
-        if (requestMethod) {
-          requestMethod.call(el).catch(() => {});
-        }
-      }
-    };
-
-    tryEnterFullscreen();
-
-    const onUserInteraction = () => {
-      tryEnterFullscreen();
-      ['click', 'touchstart', 'pointerdown', 'keydown'].forEach(evt => {
-        window.removeEventListener(evt, onUserInteraction);
-      });
-    };
-
-    ['click', 'touchstart', 'pointerdown', 'keydown'].forEach(evt => {
-      window.addEventListener(evt, onUserInteraction, { passive: true });
-    });
   }
 
   toggleFullscreen() {
