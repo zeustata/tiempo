@@ -12,6 +12,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.82] - 2026-09-11
+
+### 📱 Navegación Táctil por Deslizamiento (Swipe Gestures) & Fluidez Móvil
+- **Navegación Horizontal por Gestos Táctiles**: Soporte completo para deslizar el dedo (swipe) hacia la izquierda o derecha en teléfonos inteligentes y tabletas (o arrastrar con ratón en escritorio), alternando suavemente entre los 9 módulos de la aplicación (*Hoy ➔ Pronósticos ➔ Live ➔ Mareas ➔ Surf ➔ Montaña ➔ Radar ➔ Avisos ➔ Gráficos*).
+- **Blindaje Inteligente de Zonas con Scroll Propio**: Detección automática y aislamiento estricto de elementos interactivos horizontales (carrusel horario de 72h, visor de gráficas climáticas, mapas interactivos de lluvia de RainViewer/Leaflet, tablas, modales y botones) para permitir desplazamiento nativo sin disparar transiciones de pestañas accidentales.
+- **Micro-Vibración Háptica Nativa**: Activación de retroalimentación por vibración táctil al cambiar de módulo mediante `triggerHaptic()`.
+- **Cero Impacto en Pantalla**: Máxima ergonomía y aprovechamiento del espacio visual móvil sin añadir botones ni barras adicionales que recarguen la interfaz.
+- **Service Worker `v182-swipe` & Anti-Caché**: Actualización de cadenas de caché en `sw.js` e `index.html`.
+
+---
+
 ## [1.0.81] - 2026-09-02
 
 ### ⚡ Carga Instantánea en 0 ms (Stale-While-Revalidate) & Skeleton Loader

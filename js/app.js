@@ -54,6 +54,7 @@ class MeteoAsturiasApp {
     this.setupQuickSearch();
     this.setupPwaInstall();
     this.setupKeyboardShortcuts();
+    this.setupSwipeNavigation();
     this.setupLiveClock();
     this.setupNetworkMonitor();
     this.setupFullscreen();
@@ -972,6 +973,121 @@ class MeteoAsturiasApp {
         if (iconThemesModal) iconThemesModal.style.display = 'none';
         const explainModal = document.getElementById('explain-modal');
         if (explainModal) explainModal.style.display = 'none';
+      }
+    });
+  }
+
+  setupSwipeNavigation() {
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchStartTime = 0;
+
+    let mouseStartX = 0;
+    let mouseStartY = 0;
+    let mouseStartTime = 0;
+    let isMouseDown = false;
+
+    const tabList = APP_MODULES.map(m => m.id);
+
+    const isInteractiveZone = (target) => {
+      if (!target) return false;
+      return target.closest(
+        '.hourly-forecast-scroll, .chart-scroll-viewport, #map-container, .leaflet-container, .tide-timeline-scroll, .marine-timeline-scroll, .modal-overlay, input, textarea, select, button, a'
+      );
+    };
+
+    // 1. GESTOS TÁCTILES MÓVILES NATIVOS (Smartphone / Tablet)
+    document.addEventListener('touchstart', (e) => {
+      if (e.touches.length !== 1) return;
+      if (isInteractiveZone(e.target)) {
+        touchStartX = 0;
+        touchStartY = 0;
+        return;
+      }
+
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchStartTime = Date.now();
+    }, { passive: true });
+
+    document.addEventListener('touchend', (e) => {
+      if (touchStartX === 0 && touchStartY === 0) return;
+      if (e.changedTouches.length !== 1) return;
+      if (isInteractiveZone(e.target)) {
+        touchStartX = 0;
+        touchStartY = 0;
+        return;
+      }
+
+      const touchEndX = e.changedTouches[0].clientX;
+      const touchEndY = e.changedTouches[0].clientY;
+      const duration = Date.now() - touchStartTime;
+
+      const diffX = touchEndX - touchStartX;
+      const diffY = touchEndY - touchStartY;
+
+      touchStartX = 0;
+      touchStartY = 0;
+
+      // Criterios de swipe móvil limpio:
+      // - Duración < 600ms
+      // - Desplazamiento horizontal mínimo de 45px
+      // - Trayectoria predominantemente horizontal (diffX > diffY * 1.6)
+      if (duration < 600 && Math.abs(diffX) >= 45 && Math.abs(diffX) > Math.abs(diffY) * 1.6) {
+        const currentIndex = tabList.indexOf(this.activeTab);
+        if (currentIndex === -1) return;
+
+        if (diffX < 0) {
+          // Deslizar hacia la izquierda -> Avanza al siguiente módulo
+          if (currentIndex < tabList.length - 1) {
+            this.triggerHaptic();
+            this.switchTab(tabList[currentIndex + 1]);
+          }
+        } else {
+          // Deslizar hacia la derecha -> Vuelve al módulo anterior
+          if (currentIndex > 0) {
+            this.triggerHaptic();
+            this.switchTab(tabList[currentIndex - 1]);
+          }
+        }
+      }
+    }, { passive: true });
+
+    // 2. SOPORTE DE ARRASTRE CON RATÓN (PC / Escritorio)
+    document.addEventListener('mousedown', (e) => {
+      if (e.button !== 0) return;
+      if (isInteractiveZone(e.target)) return;
+
+      mouseStartX = e.clientX;
+      mouseStartY = e.clientY;
+      mouseStartTime = Date.now();
+      isMouseDown = true;
+    });
+
+    document.addEventListener('mouseup', (e) => {
+      if (!isMouseDown) return;
+      isMouseDown = false;
+      if (isInteractiveZone(e.target)) return;
+
+      const diffX = e.clientX - mouseStartX;
+      const diffY = e.clientY - mouseStartY;
+      const duration = Date.now() - mouseStartTime;
+
+      if (duration < 600 && Math.abs(diffX) >= 60 && Math.abs(diffX) > Math.abs(diffY) * 1.6) {
+        const currentIndex = tabList.indexOf(this.activeTab);
+        if (currentIndex === -1) return;
+
+        if (diffX < 0) {
+          if (currentIndex < tabList.length - 1) {
+            this.triggerHaptic();
+            this.switchTab(tabList[currentIndex + 1]);
+          }
+        } else {
+          if (currentIndex > 0) {
+            this.triggerHaptic();
+            this.switchTab(tabList[currentIndex - 1]);
+          }
+        }
       }
     });
   }
