@@ -186,6 +186,7 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Armonización de Subtítulos del Menú Modular: Corrección del subtítulo de 'Pronósticos' (actualizado a predicción extendida a 10 días) y de 'Estación en Vivo' (incluyendo mención al pronóstico horario 72h), garantizando coherencia absoluta tras la reubicación de tarjetas.
 - Purga Integral de LaTeX en Suite Didáctica ("Explícame") e Historial: Supresión de caracteres rotos y fórmulas matemáticas con dólares o barras invertidas, asegurando lectura en texto natural, claro y amigable en toda la aplicación.
 - Reordenación Estética de Sensores en Surf & Rompientes: Intercambio de posiciones entre 'Temperatura del Agua & Neopreno' (ahora 4ª) y 'Condición de Rompiente' (ahora 5ª) logrando armonía visual de sensores numéricos y situando el banner resumen al final.
+- Actualización Constitucional del Artículo 0 (Honestidad Intelectual y Código de Respuesta de Princesa): Blindaje explícito de la personalidad de Princesa: cero complacencia por inercia, análisis crítico riguroso, corrección activa de premisas falsas, distinción entre hechos y opiniones, transparencia ante la incertidumbre y protección irrenunciable de la precisión frente al halago fácil.
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 
 
