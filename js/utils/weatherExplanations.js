@@ -468,6 +468,50 @@ export const WEATHER_EXPLANATIONS = {
         text: 'Cuando el tren de olas entra en aguas poco profundas, la parte de la ola que toca antes el fondo submarino se frena, haciendo que la cresta gire (<strong>refracción</strong>) adaptándose a la silueta de la costa. Por eso playas resguardadas como <em>Luanco, Candás o San Lorenzo</em> pueden recibir olas perfectamente ordenadas aunque el oleaje en mar abierto sea de Noroeste.'
       }
     ]
+  },
+
+  weather_models: {
+    icon: '🛰️',
+    title: '¿Cómo elegir el Modelo Meteorológico adecuado?',
+    subtitle: 'Aprende qué diferencia a cada motor numérico y cuál elegir según el día en Asturias',
+    badge: 'Resolución de 1.3 km a 13 km',
+    sections: [
+      {
+        icon: '🧮',
+        heading: '1. ¿Qué es un modelo numérico y qué es la resolución?',
+        text: 'Los modelos meteorológicos son simulaciones matemáticas globales ejecutadas en supercomputadores. Dividen la atmósfera en una cuadrícula tridimensional. La <strong>resolución</strong> indica el tamaño de cada celda: cuanto menor sea el número (ej. 1.3 km frente a 13 km), con mayor fidelidad se representarán montañas, valles y la línea de costa.'
+      },
+      {
+        icon: '🏔️',
+        heading: '2. El relieve asturiano: La clave de la resolución',
+        text: 'Asturias pasa del nivel del mar a más de 2.500 metros en apenas 35 kilómetros. Los modelos globales de resolución amplia (como GFS de 13 km o ECMWF de 9 km) promedian la altura del terreno. En cambio, modelos de alta resolución como <strong>AROME (1.3 km)</strong> o el algoritmo <strong>Auto Multi-Modelo</strong> detectan microclimas concretos, nieblas costeras y precipitaciones encajonadas en valles.'
+      },
+      {
+        icon: '🌟',
+        heading: '3. Auto Multi-Modelo (Recomendado por defecto)',
+        text: 'Nuestro algoritmo inteligente selecciona y combina de forma óptima los mejores datos de cada modelo para las coordenadas exactas de cada concejo. Es la opción idónea para el 95% de las consultas diarias.'
+      },
+      {
+        icon: '🇪🇺',
+        heading: '4. ECMWF IFS (Centro Europeo)',
+        text: 'Considerado unánimemente el modelo más fiable del mundo a medio plazo (de 3 a 10 días). Es la mejor herramienta para anticipar la llegada de borrascas atlánticas, ciclogénesis y tendencias semanales.'
+      },
+      {
+        icon: '🇫🇷',
+        heading: '5. AROME Cantábrico (Météo-France - 1.3 km)',
+        text: 'Hiper-resolución a corto plazo (48 horas). Imprescindible para consultar si una niebla marina entrará en la costa o cómo descargará una tormenta en la Cordillera Cantábrica y Picos de Europa.'
+      },
+      {
+        icon: '🇩🇪',
+        heading: '6. DWD ICON (Servicio Alemán) & NOAA GFS (EE. UU.)',
+        text: `
+          <ul class="explain-list">
+            <li><strong>ICON-EU (7 km):</strong> Se actualiza cada 3 horas con gran agilidad y tiene un cálculo extraordinario de rachas de viento y nubosidad.</li>
+            <li><strong>NOAA GFS (13 km):</strong> El clásico modelo estadounidense, muy útil para contrastar si las previsiones americanas coinciden con las europeas.</li>
+          </ul>
+        `
+      }
+    ]
   }
 };
 

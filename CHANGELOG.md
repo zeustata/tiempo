@@ -14,12 +14,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ## [1.0.81] - 2026-09-02
 
+### 🛰️ Guía Didáctica en el Selector de Modelos Meteorológicos ("Explícame")
+- **Píldora Didáctica Interactiva**: Incorporación del botón *💡 Explícame: ¿Cómo elegir el mejor modelo?* en la cabecera del modal de selección de modelos numéricos.
+- **Divulgación Meteorológica Calibrada para Asturias**: Guía didáctica detallada sobre qué es un modelo numérico, qué mide la resolución espacial (1.3 km frente a 13 km) y por qué el pronunciado relieve asturiano exige modelos hiperlocales como AROME (1.3 km) o el algoritmo Auto Multi-Modelo frente a modelos globales más abiertos.
+- **Tarjetas de Modelos Mejoradas**: Clarificación pedagógica de nombres, países, agencias y recomendaciones de uso (ECMWF para tendencias a 3-7 días, AROME para valles y costa cantábrica, DWD ICON para viento repentino y NOAA GFS para contraste sinóptico).
+- **Service Worker `v181-models` & Anti-Caché**: Actualización de cadenas de caché en `sw.js` e `index.html`.
+
 ### 📱 Navegación Táctil por Deslizamiento (Swipe Gestures) & Fluidez Móvil
 - **Navegación Horizontal por Gestos Táctiles**: Soporte completo para deslizar el dedo (swipe) hacia la izquierda o derecha en teléfonos inteligentes y tabletas (o arrastrar con ratón en escritorio), alternando suavemente entre los 9 módulos de la aplicación (*Hoy ➔ Pronósticos ➔ Live ➔ Mareas ➔ Surf ➔ Montaña ➔ Radar ➔ Avisos ➔ Gráficos*).
 - **Blindaje Inteligente de Zonas con Scroll Propio**: Detección automática y aislamiento estricto de elementos interactivos horizontales (carrusel horario de 72h, visor de gráficas climáticas, mapas interactivos de lluvia de RainViewer/Leaflet, tablas, modales y botones) para permitir desplazamiento nativo sin disparar transiciones de pestañas accidentales.
 - **Micro-Vibración Háptica Nativa**: Activación de retroalimentación por vibración táctil al cambiar de módulo mediante `triggerHaptic()`.
 - **Cero Impacto en Pantalla**: Máxima ergonomía y aprovechamiento del espacio visual móvil sin añadir botones ni barras adicionales que recarguen la interfaz.
-- **Service Worker `v181-swipe` & Anti-Caché**: Actualización de cadenas de caché en `sw.js` e `index.html`.
 
 ### ⚡ Carga Instantánea en 0 ms (Stale-While-Revalidate) & Skeleton Loader
 - **Renderizado Inmediato desde Memoria Local (0 ms)**: Guardado y lectura instantánea de la última previsión en `localStorage` (`getCachedWeather` / `saveCachedWeather`). Al abrir la aplicación o pulsar "Actualizar", todos los paneles, tarjetas, sensores y botones didácticos aparecen al instante en pantalla sin parpadeos, huecos en blanco ni tiempos de espera.

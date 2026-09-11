@@ -6,56 +6,56 @@ export const WEATHER_MODELS = [
     id: 'best_match',
     apiModel: '',
     name: 'Auto Multi-Modelo',
-    agency: 'Combinación Óptima Multi-Fuente',
+    agency: 'Combinación Inteligente Multi-Fuente',
     flag: '🌟',
     resolution: '1 - 3 km',
-    tag: 'Recomendado',
+    tag: '⭐ Recomendado',
     description: 'Algoritmo inteligente que selecciona y combina automáticamente el mejor modelo meteorológico para cada punto de Asturias.',
-    bestFor: 'Máxima precisión general y uso diario.'
+    bestFor: 'Máxima precisión general y uso diario en cualquier concejo.'
   },
   {
     id: 'ecmwf_ifs025',
     apiModel: 'ecmwf_ifs025',
-    name: 'ECMWF IFS',
-    agency: 'Centro Europeo de Predicción (Reading)',
+    name: 'ECMWF IFS (Europa)',
+    agency: 'Centro Europeo de Predicción a Plazo Medio',
     flag: '🇪🇺',
     resolution: '9 km',
     tag: 'Referencia Mundial',
     description: 'El modelo numérico global más prestigioso, robusto y fiable del mundo para medio y corto plazo.',
-    bestFor: 'Evolución de frentes atlánticos, presiones y tendencias semanales.'
+    bestFor: 'Evolución de frentes atlánticos, presiones y tendencias a 3-7 días.'
   },
   {
     id: 'meteofrance_seamless',
     apiModel: 'meteofrance_seamless',
-    name: 'AROME Cantábrico',
-    agency: 'Météo-France',
+    name: 'AROME Cantábrico (Francia/España)',
+    agency: 'Météo-France (Consorcio ALADIN)',
     flag: '🇫🇷',
     resolution: '1.3 km',
-    tag: 'Hiper-resolución',
+    tag: 'Hiper-Resolución',
     description: 'Modelo de altísima resolución adaptado al Cantábrico. Modela con enorme fidelidad microclimas, valles y brisas de costa.',
-    bestFor: 'Valles profundos, cordillera asturiana y microclimas de costa.'
+    bestFor: 'Valles profundos, nieblas costeras y orografía de Picos de Europa.'
   },
   {
     id: 'icon_seamless',
     apiModel: 'icon_seamless',
-    name: 'DWD ICON-EU',
-    agency: 'Servicio Alemán (DWD)',
+    name: 'DWD ICON-EU (Alemania)',
+    agency: 'Servicio Meteorológico Alemán (DWD)',
     flag: '🇩🇪',
     resolution: '7 km',
     tag: 'Rápida Actualización',
     description: 'Modelo europeo de alta frecuencia con excelente tratamiento de nubosidad, chubascos y rachas de viento.',
-    bestFor: 'Llegada de borrascas, chubascos repentinos y viento.'
+    bestFor: 'Detección de rachas súbitas de viento y chubascos rápidos.'
   },
   {
     id: 'gfs_seamless',
     apiModel: 'gfs_seamless',
-    name: 'NOAA GFS',
-    agency: 'NOAA (Estados Unidos)',
+    name: 'NOAA GFS (EE. UU.)',
+    agency: 'Administración Nacional Oceánica y Atmosférica (EE. UU.)',
     flag: '🇺🇸',
     resolution: '13 km',
     tag: 'Global Clásico',
     description: 'El modelo numérico global de referencia de la Administración Nacional Oceánica y Atmosférica de EE. UU.',
-    bestFor: 'Comparativa sinóptica y contraste internacional.'
+    bestFor: 'Comparativa sinóptica y contraste internacional entre modelos.'
   }
 ];
 

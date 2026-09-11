@@ -227,6 +227,7 @@
             <span class="release-date">02 Sep 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> <strong>Guía Didáctica de Modelos Meteorológicos ("Explícame")</strong>: Incorporación del botón interactivo <em>💡 Explícame: ¿Cómo elegir el mejor modelo?</em> en el selector de modelos numéricos, explicando de forma accesible qué es la resolución (1.3 km frente a 13 km), el impacto del relieve asturiano y cuándo consultar ECMWF, AROME Cantábrico, DWD ICON o NOAA GFS.</li>
             <li><span class="tag tag-new">Nuevo</span> <strong>Navegación Táctil por Deslizamiento (Swipe Gestures)</strong>: Desplazamiento horizontal fluido e intuitivo entre todos los módulos de la aplicación (Hoy, Pronósticos, Live, Mareas, Surf, Montaña, Radar, Avisos, Gráficos) deslizando con el dedo en móviles y tablets o arrastrando con el ratón en escritorio. Incorpora blindaje inteligente contra toques accidentales en zonas con scroll propio (carrusel horario, mapas del radar y gráficos) y respuesta háptica nativa.</li>
             <li><span class="tag tag-new">Nuevo</span> <strong>Carga Instantánea en 0 ms y Skeleton Loader</strong>: Implementación de la estrategia <em>Stale-While-Revalidate</em> con memoria local para que todos los botones, tarjetas y sensores se pinten de inmediato al abrir la web o recargar sin retardos ni parpadeos, actualizando en segundo plano, acompañado de un esqueleto animado de carga suave.</li>
           </ul>
@@ -1401,6 +1402,13 @@
         </div>
         <button id="btn-close-model" class="btn-close" aria-label="Cerrar modal">&times;</button>
       </div>
+      <!-- Guía Didáctica Rápida ("Explícame") -->
+      <div class="model-explain-entry" style="padding: 0 0 10px 0;">
+        <button class="btn-explain-sensor btn-explain-model-pill" data-explain="weather_models" title="Aprende a elegir el modelo adecuado">
+          <span>💡 Explícame: ¿Cómo elegir el mejor modelo?</span>
+          <span style="opacity: 0.7; font-size: 0.72rem;">➔</span>
+        </button>
+      </div>
       <div class="modal-body nav-modal-body" id="model-modal-grid"></div>
     </div>
   </div>
@@ -1539,7 +1547,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.81-swipe').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.81-models').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1560,6 +1568,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.81-swipe"></script>
+  <script type="module" src="js/app.js?v=1.0.81-models"></script>
 </body>
 </html>
