@@ -484,6 +484,14 @@ export function renderSurfCard(data, concejo) {
           </div>
         </div>
 
+        <!-- Temperatura Marina y Traje Recomendado -->
+        <div class="marine-widget">
+          <div class="widget-label">Temperatura del Agua & Neopreno</div>
+          <div class="widget-value">${seaTemp} <span class="unit">°C</span></div>
+          <div class="widget-detail">${wetsuit.icon} Traje sugerido: <strong>${wetsuit.suit}</strong></div>
+          <div class="widget-detail">Sensación marina: <strong>Agua ${wetsuit.tag}</strong></div>
+        </div>
+
         <!-- Aptitud y Calidad de la Rompiente -->
         <div class="marine-widget surf-turismo-visual-widget">
           <div class="surf-widget-top">
@@ -505,14 +513,6 @@ export function renderSurfCard(data, concejo) {
           <div style="font-size: 0.76rem; color: #cbd5e1; margin-top: 6px; line-height: 1.3;">
             ${surfQuality.desc}
           </div>
-        </div>
-
-        <!-- Temperatura Marina y Traje Recomendado -->
-        <div class="marine-widget">
-          <div class="widget-label">Temperatura del Agua & Neopreno</div>
-          <div class="widget-value">${seaTemp} <span class="unit">°C</span></div>
-          <div class="widget-detail">${wetsuit.icon} Traje sugerido: <strong>${wetsuit.suit}</strong></div>
-          <div class="widget-detail">Sensación marina: <strong>Agua ${wetsuit.tag}</strong></div>
         </div>
       </div>
 
