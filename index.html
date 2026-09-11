@@ -263,7 +263,7 @@
             <span class="release-date">02 Sep 2026</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-new">Nuevo</span> <strong>Inteligencia Multi-Swell & Energía Combinada Total (Estándar Surf-Forecast)</strong>: Soporte completo para múltiples trenes de olas simultáneos (Swell 1 Principal + Swell 2 Secundario con alturas, períodos y rumbos independientes) y cálculo físico de la Energía Combinada Total ($E_{\text{total}} = E_1 + E_2$) en tarjeta de sensores y cronograma a 3 horas.</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Inteligencia Multi-Swell & Energía Combinada Total (Estándar Surf-Forecast)</strong>: Soporte completo para múltiples trenes de olas simultáneos (Swell 1 Principal + Swell 2 Secundario con alturas, períodos y rumbos independientes) y cálculo físico de la Energía Combinada Total (Energía Total = E1 + E2) en tarjeta de sensores y cronograma a 3 horas.</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -272,7 +272,7 @@
             <span class="release-date">02 Sep 2026</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-new">Nuevo</span> <strong>Suite Didáctica de Olas y Swell ("Explícame")</strong>: Incorporación de los botones educativos interactivos <em>💡 Explícame</em> en las tarjetas de <em>Altura del Oleaje</em> y <em>Período y Dirección del Swell</em> (Surf & Rompientes) y <em>Estado de la Mar (Douglas)</em> (Playas & Mareas), explicando qué es la altura significativa ($H_s$), mar de fondo vs mar de viento, escala Douglas, período ($T$) y refracción marina cantábrica.</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Suite Didáctica de Olas y Swell ("Explícame")</strong>: Incorporación de los botones educativos interactivos <em>💡 Explícame</em> en las tarjetas de <em>Altura del Oleaje</em> y <em>Período y Dirección del Swell</em> (Surf & Rompientes) y <em>Estado de la Mar (Douglas)</em> (Playas & Mareas), explicando qué es la altura significativa (Hs), mar de fondo vs mar de viento, escala Douglas, período (T) y refracción marina cantábrica.</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -290,7 +290,7 @@
             <span class="release-date">01 Sep 2026</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-new">Nuevo</span> <strong>Calibración Fiel de Energía de la Ola (kJ)</strong>: Ajuste del cálculo de energía de oleaje al estándar oceanográfico de <em>Surf-Forecast</em> ($E = 11 \cdot H_{\text{swell}}^2 \cdot T$) y cálculo sobre mar de fondo (*Swell*), corrigiendo la sobreestimación en olas de período corto detectada por Edu (1.3m y 8s = 148 kJ 🟢 Suave).</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Calibración Fiel de Energía de la Ola (kJ)</strong>: Ajuste del cálculo de energía de oleaje al estándar oceanográfico de <em>Surf-Forecast</em> (E = 11 * H_swell² * T) y cálculo sobre mar de fondo (*Swell*), corrigiendo la sobreestimación en olas de período corto detectada por Edu (1.3m y 8s = 148 kJ 🟢 Suave).</li>
           </ul>
         </div>
         <div class="changelog-release">
@@ -299,7 +299,7 @@
             <span class="release-date">01 Sep 2026</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-new">Nuevo</span> <strong>Inteligencia de Energía de la Ola (kJ)</strong>: Cálculo de la potencia real de ola en kiloJulios ($E \propto H_s^2 \cdot T$) con código de color (Suave 🟢, Óptima 🟡, Potente 🟠, Pesada 🔴) y botón didáctico <em>💡 Explícame</em> en el módulo de Surf & Rompientes.</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Inteligencia de Energía de la Ola (kJ)</strong>: Cálculo de la potencia real de ola en kiloJulios (E = Hs² * T) con código de color (Suave 🟢, Óptima 🟡, Potente 🟠, Pesada 🔴) y botón didáctico <em>💡 Explícame</em> en el módulo de Surf & Rompientes.</li>
             <li><span class="tag tag-new">Nuevo</span> <strong>Cronograma de Surf a 3 Horas</strong>: Previsión especializada inspirada en Surf-Forecast y Windguru con franjas horarias clave (08h, 11h, 14h, 17h, 20h) para Hoy y Mañana, combinando altura, swell, período, energía (kJ), viento offshore/onshore y nivel de marea en vivo.</li>
           </ul>
         </div>
@@ -1538,7 +1538,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.81-fullscreen').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.81-cleantext-v2').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1559,6 +1559,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.81-fullscreen"></script>
+  <script type="module" src="js/app.js?v=1.0.81-cleantext-v2"></script>
 </body>
 </html>

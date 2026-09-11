@@ -363,12 +363,12 @@ export const WEATHER_EXPLANATIONS = {
       {
         icon: '🧮',
         heading: '3. La Física del Mar: ¿Cómo se calcula?',
-        text: 'La física oceanográfica demuestra que la energía es proporcional al <strong>cuadrado de la altura del mar de fondo ($H_{\\text{swell}}^2$) multiplicado por el período ($T$)</strong>. Duplicar la altura cuadruplica la fuerza del impacto, y un período largo compacta la energía en trenes de olas muy organizados.'
+        text: 'La física oceanográfica demuestra que la energía es proporcional al <strong>cuadrado de la altura del mar de fondo (Hs²) multiplicado por el período (T)</strong>. Duplicar la altura cuadruplica la fuerza del impacto, y un período largo compacta la energía en trenes de olas muy organizados.'
       },
       {
         icon: '🌊',
         heading: '4. Multi-Swell y Energía Combinada Total',
-        text: 'En el océano a menudo coexisten <strong>dos o más trenes de olas simultáneos</strong> (ej. un <em>Swell Primario</em> del NW de borrascas lejanas y un <em>Swell Secundario</em> del WNW o Norte). Siguiendo el estándar de <em>Surf-Forecast</em>, la <strong>Energía Combinada Total</strong> suma la potencia de ambos trenes ($E_{\\text{total}} = E_1 + E_2$), ofreciendo una radiografía exacta del empuje total que llega a la orilla.'
+        text: 'En el océano a menudo coexisten <strong>dos o más trenes de olas simultáneos</strong> (ej. un <em>Swell Primario</em> del NW de borrascas lejanas y un <em>Swell Secundario</em> del WNW o Norte). Siguiendo el estándar de <em>Surf-Forecast</em>, la <strong>Energía Combinada Total</strong> suma la potencia de ambos trenes <strong>(Energía Total = E1 + E2)</strong>, ofreciendo una radiografía exacta del empuje total que llega a la orilla.'
       },
       {
         icon: '🏄‍♂️',
@@ -393,7 +393,7 @@ export const WEATHER_EXPLANATIONS = {
       {
         icon: '📏',
         heading: '1. ¿Qué es la Altura Significativa (Hs)?',
-        text: 'La altura que ves (ej. 1,5 m) es la <strong>Altura Significativa ($H_s$)</strong>: el promedio del tercio más alto ($1/3$) de todas las olas observadas. <em>¡Ojo!</em> Esto significa que <strong>1 de cada 10 olas puede ser hasta un 30% más grande</strong> que el valor medio indicado, y olas aisladas pueden alcanzar casi el doble.'
+        text: 'La altura que ves (ej. 1,5 m) es la <strong>Altura Significativa (Hs)</strong>: el promedio del tercio más alto (un tercio) de todas las olas observadas. <em>¡Ojo!</em> Esto significa que <strong>1 de cada 10 olas puede ser hasta un 30% más grande</strong> que el valor medio indicado, y olas aisladas pueden alcanzar casi el doble.'
       },
       {
         icon: '🌊',
