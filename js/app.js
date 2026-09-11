@@ -1103,14 +1103,28 @@ class MeteoAsturiasApp {
     const clockEl = document.getElementById('live-clock');
     if (!clockEl) return;
 
-    const updateClock = () => {
-      const now = new Date();
-      const timeStr = now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-      clockEl.textContent = '🕒 ' + timeStr;
+    this.updateClock = () => {
+      if (!navigator.onLine) {
+        const syncDate = this.lastSyncTime || (this.weatherData?.timestamp ? new Date(this.weatherData.timestamp) : null);
+        const syncStr = syncDate ? syncDate.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) : '--:--';
+        clockEl.textContent = '❄️ ' + syncStr;
+        clockEl.classList.add('offline');
+        clockEl.title = `Modo Offline: Previsión guardada a las ${syncStr}`;
+      } else {
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        clockEl.textContent = '🕒 ' + timeStr;
+        clockEl.classList.remove('offline');
+        clockEl.title = 'Hora y fecha en tiempo real';
+      }
     };
 
-    updateClock();
-    setInterval(updateClock, 1000);
+    this.updateClock();
+    setInterval(() => {
+      if (navigator.onLine) {
+        this.updateClock();
+      }
+    }, 1000);
   }
 
   setupNetworkMonitor() {
@@ -1120,10 +1134,18 @@ class MeteoAsturiasApp {
     const updateStatus = () => {
       if (navigator.onLine) {
         statusEl.className = 'network-badge online';
-        statusEl.textContent = '🟢 En línea';
+        statusEl.textContent = '🟢 Online';
+        this.triggerHaptic();
+        if (this.currentConcejo) {
+          this.loadWeather(this.currentConcejo.id);
+        }
       } else {
         statusEl.className = 'network-badge offline';
-        statusEl.textContent = '🔴 Modo Offline';
+        statusEl.textContent = '🔴 Offline';
+        this.triggerHaptic();
+      }
+      if (this.updateClock) {
+        this.updateClock();
       }
     };
 
@@ -1319,10 +1341,15 @@ class MeteoAsturiasApp {
   }
 
   updateLastUpdatedTime(date) {
+    if (date) {
+      this.lastSyncTime = date instanceof Date ? date : new Date(date);
+    }
     const el = document.getElementById('last-updated');
-    if (el && date) {
-      const d = date instanceof Date ? date : new Date(date);
-      el.textContent = `Actualizado: ${d.toLocaleTimeString('es-ES')}`;
+    if (el && this.lastSyncTime) {
+      el.textContent = `Actualizado: ${this.lastSyncTime.toLocaleTimeString('es-ES')}`;
+    }
+    if (this.updateClock) {
+      this.updateClock();
     }
   }
 
@@ -1569,11 +1596,33 @@ class MeteoAsturiasApp {
     this.reinitParticles = createParticlesForMode;
     createParticlesForMode('clouds-day');
 
-    function animate() {
+    let lastFrameTime = 0;
+    let isLowPowerMode = false;
+
+    if ('getBattery' in navigator) {
+      navigator.getBattery().then(battery => {
+        const checkBattery = () => {
+          isLowPowerMode = (battery.level <= 0.20 && !battery.charging);
+        };
+        checkBattery();
+        battery.addEventListener('levelchange', checkBattery);
+        battery.addEventListener('chargingchange', checkBattery);
+      }).catch(() => {});
+    }
+
+    function animate(timestamp = 0) {
       if (document.hidden) {
         requestAnimationFrame(animate);
         return;
       }
+
+      // Si la batería es baja (< 20%), limitamos a 25 FPS para alargar la autonomía
+      if (isLowPowerMode && timestamp - lastFrameTime < 40) {
+        requestAnimationFrame(animate);
+        return;
+      }
+      lastFrameTime = timestamp;
+
       ctx.clearRect(0, 0, width, height);
 
       // Destello sutil de relámpago ocasional en modo tormenta

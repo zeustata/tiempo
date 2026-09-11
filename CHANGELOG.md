@@ -14,6 +14,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ## [1.0.81] - 2026-09-02
 
+### 📶 Blindaje Offline & Modo Batería Inteligente
+- **Estado de Red Universal (Online / Offline)**: Modernización del indicador de cabecera a *🟢 Online* (más limpio y ergonómico) y *🔴 Offline*.
+- **Reloj Congelado Inteligente en Modo Offline**: Al entrar en modo avión o perder cobertura en montaña o calas, el reloj principal cambia automáticamente a un tono gélido/escarchado indicando con precisión la hora exacta de la última previsión meteorológica recibida (*❄️ HH:MM*), deteniendo el segundero. Al recuperar señal, retorna al azul celeste vibrante en tiempo real y refresca los datos meteorológicos en segundo plano.
+- **Mareas Autónomas sin Cobertura**: Garantía de cálculo continuo e ininterrumpido de las mareas astronómicas del Cantábrico sin conexión a internet.
+- **Optimización de Batería en Partículas**: Reducción automática de la tasa de refresco del lienzo de cielo si el nivel de batería desciende del 20% en ruta o exteriores.
+- **Service Worker `v181-offline` & Anti-Caché**: Sincronización de caché en `sw.js` e `index.html`.
+
 ### 🛰️ Guía Didáctica en el Selector de Modelos Meteorológicos ("Explícame")
 - **Píldora Didáctica Interactiva**: Incorporación del botón *💡 Explícame: ¿Cómo elegir el mejor modelo?* en la cabecera del modal de selección de modelos numéricos.
 - **Divulgación Meteorológica Calibrada para Asturias**: Guía didáctica detallada sobre qué es un modelo numérico, qué mide la resolución espacial (1.3 km frente a 13 km) y por qué el pronunciado relieve asturiano exige modelos hiperlocales como AROME (1.3 km) o el algoritmo Auto Multi-Modelo frente a modelos globales más abiertos.

@@ -369,6 +369,15 @@ body {
   border: 1px solid rgba(56, 189, 248, 0.3);
   border-radius: 6px;
   white-space: nowrap;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.live-clock-badge.offline {
+  background: rgba(148, 163, 184, 0.16);
+  color: #cbd5e1;
+  border: 1px solid rgba(203, 213, 225, 0.35);
+  box-shadow: 0 0 10px rgba(148, 163, 184, 0.15);
+  letter-spacing: 0.02em;
 }
 
 .network-badge {
