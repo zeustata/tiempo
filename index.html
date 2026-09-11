@@ -31,7 +31,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.81-fullscreen">
+  <link rel="stylesheet" href="css/main.css?v=1.0.81-slide">
   <link rel="stylesheet" href="css/components.css?v=1.0.81-fullscreen">
   <link rel="stylesheet" href="css/weather-themes.css?v=1.0.81-fullscreen">
 </head>
@@ -229,7 +229,7 @@
           <ul class="changelog-list">
             <li><span class="tag tag-new">Nuevo</span> <strong>Blindaje Offline & Modo Batería Inteligente</strong>: Actualización del estado de conexión a <em>🟢 Online</em> / <em>🔴 Offline</em>. Al perder cobertura o activar modo avión, el reloj se congela en tono gélido/escarchado mostrando la hora exacta de la última previsión guardada (<em>❄️ HH:MM</em>), preservando intactos todos los paneles del tiempo y las mareas astronómicas en memoria. Incorpora optimización automática de fotogramas del lienzo de partículas si la batería desciende del 20%.</li>
             <li><span class="tag tag-new">Nuevo</span> <strong>Guía Didáctica de Modelos Meteorológicos ("Explícame")</strong>: Incorporación del botón interactivo <em>💡 Explícame: ¿Cómo elegir el mejor modelo?</em> en el selector de modelos numéricos, explicando de forma accesible qué es la resolución (1.3 km frente a 13 km), el impacto del relieve asturiano y cuándo consultar ECMWF, AROME Cantábrico, DWD ICON o NOAA GFS.</li>
-            <li><span class="tag tag-new">Nuevo</span> <strong>Navegación Táctil por Deslizamiento (Swipe Gestures)</strong>: Desplazamiento horizontal fluido e intuitivo entre todos los módulos de la aplicación (Hoy, Pronósticos, Live, Mareas, Surf, Montaña, Radar, Avisos, Gráficos) deslizando con el dedo en móviles y tablets o arrastrando con el ratón en escritorio. Incorpora blindaje inteligente contra toques accidentales en zonas con scroll propio (carrusel horario, mapas del radar y gráficos) y respuesta háptica nativa.</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Navegación Táctil por Deslizamiento Lateral (Slide Gestures - Feedback Beta Tester)</strong>: Evolución del fundido estático a una animación de deslizamiento horizontal fluido en la dirección del gesto táctil (las pantallas entran con desplazamiento lateral suave según se avance o retroceda), manteniendo el blindaje estricto en el carrusel de 72 horas, mareas y gráficas con respuesta háptica nativa.</li>
             <li><span class="tag tag-new">Nuevo</span> <strong>Carga Instantánea en 0 ms y Skeleton Loader</strong>: Implementación de la estrategia <em>Stale-While-Revalidate</em> con memoria local para que todos los botones, tarjetas y sensores se pinten de inmediato al abrir la web o recargar sin retardos ni parpadeos, actualizando en segundo plano, acompañado de un esqueleto animado de carga suave.</li>
           </ul>
         </div>
@@ -1548,7 +1548,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.81-offline').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.81-slide').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1569,6 +1569,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.81-offline"></script>
+  <script type="module" src="js/app.js?v=1.0.81-slide"></script>
 </body>
 </html>

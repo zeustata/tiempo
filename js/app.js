@@ -852,8 +852,17 @@ class MeteoAsturiasApp {
     });
   }
 
-  switchTab(targetTab) {
+  switchTab(targetTab, direction = null) {
+    const tabList = APP_MODULES.map(m => m.id);
+    const oldIndex = tabList.indexOf(this.activeTab);
+    const newIndex = tabList.indexOf(targetTab);
     const mod = APP_MODULES.find(m => m.id === targetTab) || APP_MODULES[0];
+
+    // Determinar dirección del deslizamiento lateral
+    let animClass = 'slide-from-right';
+    if (direction === 'backward' || (direction === null && newIndex < oldIndex && newIndex !== -1)) {
+      animClass = 'slide-from-left';
+    }
 
     // Actualizar indicador de sección activa
     const iconEl = document.getElementById('current-section-icon');
@@ -861,9 +870,13 @@ class MeteoAsturiasApp {
     if (iconEl) iconEl.textContent = mod.icon;
     if (titleEl) titleEl.textContent = mod.title;
 
-    // Actualizar paneles de contenido
+    // Actualizar paneles de contenido con animación de deslizamiento
     document.querySelectorAll('.tab-panel').forEach(p => {
-      p.classList.toggle('active', p.id === 'panel-' + targetTab);
+      const isTarget = p.id === 'panel-' + targetTab;
+      p.classList.remove('active', 'slide-from-right', 'slide-from-left');
+      if (isTarget) {
+        p.classList.add('active', animClass);
+      }
     });
 
     this.activeTab = targetTab;
@@ -871,6 +884,7 @@ class MeteoAsturiasApp {
 
     if (targetTab === 'radar') {
       setTimeout(() => resizeMap(), 50);
+      setTimeout(() => resizeMap(), 280);
     }
 
     if (targetTab === 'charts' && this.weatherData) {
@@ -1045,16 +1059,16 @@ class MeteoAsturiasApp {
         if (currentIndex === -1) return;
 
         if (diffX < 0) {
-          // Deslizar hacia la izquierda -> Avanza al siguiente módulo
+          // Deslizar hacia la izquierda -> Avanza al siguiente módulo (entra desde la derecha)
           if (currentIndex < tabList.length - 1) {
             this.triggerHaptic();
-            this.switchTab(tabList[currentIndex + 1]);
+            this.switchTab(tabList[currentIndex + 1], 'forward');
           }
         } else {
-          // Deslizar hacia la derecha -> Vuelve al módulo anterior
+          // Deslizar hacia la derecha -> Vuelve al módulo anterior (entra desde la izquierda)
           if (currentIndex > 0) {
             this.triggerHaptic();
-            this.switchTab(tabList[currentIndex - 1]);
+            this.switchTab(tabList[currentIndex - 1], 'backward');
           }
         }
       }
@@ -1087,12 +1101,12 @@ class MeteoAsturiasApp {
         if (diffX < 0) {
           if (currentIndex < tabList.length - 1) {
             this.triggerHaptic();
-            this.switchTab(tabList[currentIndex + 1]);
+            this.switchTab(tabList[currentIndex + 1], 'forward');
           }
         } else {
           if (currentIndex > 0) {
             this.triggerHaptic();
-            this.switchTab(tabList[currentIndex - 1]);
+            this.switchTab(tabList[currentIndex - 1], 'backward');
           }
         }
       }

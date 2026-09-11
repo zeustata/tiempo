@@ -27,11 +27,11 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Tarjetas de Modelos Mejoradas**: Clarificación pedagógica de nombres, países, agencias y recomendaciones de uso (ECMWF para tendencias a 3-7 días, AROME para valles y costa cantábrica, DWD ICON para viento repentino y NOAA GFS para contraste sinóptico).
 - **Service Worker `v181-models` & Anti-Caché**: Actualización de cadenas de caché en `sw.js` e `index.html`.
 
-### 📱 Navegación Táctil por Deslizamiento (Swipe Gestures) & Fluidez Móvil
-- **Navegación Horizontal por Gestos Táctiles**: Soporte completo para deslizar el dedo (swipe) hacia la izquierda o derecha en teléfonos inteligentes y tabletas (o arrastrar con ratón en escritorio), alternando suavemente entre los 9 módulos de la aplicación (*Hoy ➔ Pronósticos ➔ Live ➔ Mareas ➔ Surf ➔ Montaña ➔ Radar ➔ Avisos ➔ Gráficos*).
-- **Blindaje Inteligente de Zonas con Scroll Propio**: Detección automática y aislamiento estricto de elementos interactivos horizontales (carrusel horario de 72h, visor de gráficas climáticas, mapas interactivos de lluvia de RainViewer/Leaflet, tablas, modales y botones) para permitir desplazamiento nativo sin disparar transiciones de pestañas accidentales.
-- **Micro-Vibración Háptica Nativa**: Activación de retroalimentación por vibración táctil al cambiar de módulo mediante `triggerHaptic()`.
-- **Cero Impacto en Pantalla**: Máxima ergonomía y aprovechamiento del espacio visual móvil sin añadir botones ni barras adicionales que recarguen la interfaz.
+### 📱 Navegación Táctil por Deslizamiento Lateral (Slide Gestures - Feedback Beta Tester)
+- **Deslizamiento Horizontal Cinemático (Slide en vez de Fade)**: Evolución del fundido estático previo a una transición lateral direccional fluida y acelerada por GPU (`translateX`). Al deslizar hacia la izquierda para avanzar de módulo, la pantalla entrante se desplaza suavemente desde la derecha; al retroceder, entra desde la izquierda, sincronizándose de forma natural con el gesto del dedo.
+- **Blindaje Total de Zonas con Scroll**: Se mantiene intacto el aislamiento absoluto del carrusel de 72 horas hora por hora, el visor de gráficas, las mareas de 72h y el mapa del radar, permitiendo desplazarse horizontalmente dentro de ellos sin provocar saltos de pantalla.
+- **Micro-Vibración Háptica Nativa**: Retroalimentación táctil suave en el dispositivo al completar el cambio de sección.
+- **Service Worker `v181-slide` & Anti-Caché**: Actualización de cadenas de caché.
 
 ### ⚡ Carga Instantánea en 0 ms (Stale-While-Revalidate) & Skeleton Loader
 - **Renderizado Inmediato desde Memoria Local (0 ms)**: Guardado y lectura instantánea de la última previsión en `localStorage` (`getCachedWeather` / `saveCachedWeather`). Al abrir la aplicación o pulsar "Actualizar", todos los paneles, tarjetas, sensores y botones didácticos aparecen al instante en pantalla sin parpadeos, huecos en blanco ni tiempos de espera.
