@@ -1547,7 +1547,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.81-models').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.81-swipefix').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1568,6 +1568,6 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.81-models"></script>
+  <script type="module" src="js/app.js?v=1.0.81-swipefix"></script>
 </body>
 </html>

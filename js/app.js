@@ -992,7 +992,14 @@ class MeteoAsturiasApp {
     const isInteractiveZone = (target) => {
       if (!target) return false;
       return target.closest(
-        '.hourly-forecast-scroll, .chart-scroll-viewport, #map-container, .leaflet-container, .tide-timeline-scroll, .marine-timeline-scroll, .modal-overlay, input, textarea, select, button, a'
+        '.hourly-scroll-container, .live-hourly-block, .hourly-card, .hourly-day-divider, ' +
+        '.chart-scroll-viewport, #chart-canvas-wrapper, #meteo-chart-canvas, ' +
+        '.tide-scroll-viewport, .tide-svg-chart, ' +
+        '.surf-timeline-grid, .surf-dayparts-list, ' +
+        '.favorites-pills, .view-tabs, ' +
+        '#map-container, .leaflet-container, ' +
+        '.modal-overlay, .modal-card, ' +
+        'input, textarea, select, button, a'
       );
     };
 
