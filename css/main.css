@@ -1468,28 +1468,28 @@ body {
   margin-left: 4px;
 }
 
-/* --- TAB CONTENT PANELS (Deslizamiento Lateral Fluido) --- */
+/* --- TAB CONTENT PANELS (Deslizamiento Lateral Sedoso / Silk Slide) --- */
 .tab-panel {
   display: none;
 }
 
 .tab-panel.active {
   display: block;
-  animation: slideInFromRight 0.26s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation: slideInFromRight 0.38s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
 }
 
 .tab-panel.active.slide-from-right {
-  animation: slideInFromRight 0.26s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation: slideInFromRight 0.38s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
 }
 
 .tab-panel.active.slide-from-left {
-  animation: slideInFromLeft 0.26s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation: slideInFromLeft 0.38s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
 }
 
 @keyframes slideInFromRight {
   from {
-    opacity: 0.15;
-    transform: translateX(38px);
+    opacity: 0;
+    transform: translateX(70px);
   }
   to {
     opacity: 1;
@@ -1499,8 +1499,8 @@ body {
 
 @keyframes slideInFromLeft {
   from {
-    opacity: 0.15;
-    transform: translateX(-38px);
+    opacity: 0;
+    transform: translateX(-70px);
   }
   to {
     opacity: 1;

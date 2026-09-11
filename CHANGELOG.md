@@ -27,11 +27,11 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Tarjetas de Modelos Mejoradas**: Clarificación pedagógica de nombres, países, agencias y recomendaciones de uso (ECMWF para tendencias a 3-7 días, AROME para valles y costa cantábrica, DWD ICON para viento repentino y NOAA GFS para contraste sinóptico).
 - **Service Worker `v181-models` & Anti-Caché**: Actualización de cadenas de caché en `sw.js` e `index.html`.
 
-### 📱 Navegación Táctil por Deslizamiento Lateral (Slide Gestures - Feedback Beta Tester)
-- **Deslizamiento Horizontal Cinemático (Slide en vez de Fade)**: Evolución del fundido estático previo a una transición lateral direccional fluida y acelerada por GPU (`translateX`). Al deslizar hacia la izquierda para avanzar de módulo, la pantalla entrante se desplaza suavemente desde la derecha; al retroceder, entra desde la izquierda, sincronizándose de forma natural con el gesto del dedo.
+### 📱 Navegación Táctil por Deslizamiento Lateral (Silk Slide - Feedback Beta Tester)
+- **Deslizamiento Lateral Sedoso (*Silk Slide*)**: Evolución del fundido estático a un deslizamiento horizontal direccional cinemático y suave (`translateX`). Afinada la curva de aceleración física (`cubic-bezier(0.2, 0.9, 0.3, 1)` a 0.38s con desplazamiento amortiguado de 70px) para eliminar cualquier corte brusco y ofrecer una transición sedosa y natural idéntica a las aplicaciones nativas.
 - **Blindaje Total de Zonas con Scroll**: Se mantiene intacto el aislamiento absoluto del carrusel de 72 horas hora por hora, el visor de gráficas, las mareas de 72h y el mapa del radar, permitiendo desplazarse horizontalmente dentro de ellos sin provocar saltos de pantalla.
 - **Micro-Vibración Háptica Nativa**: Retroalimentación táctil suave en el dispositivo al completar el cambio de sección.
-- **Service Worker `v181-slide` & Anti-Caché**: Actualización de cadenas de caché.
+- **Service Worker `v181-silkslide` & Anti-Caché**: Actualización de cadenas de caché en `sw.js` e `index.html`.
 
 ### ⚡ Carga Instantánea en 0 ms (Stale-While-Revalidate) & Skeleton Loader
 - **Renderizado Inmediato desde Memoria Local (0 ms)**: Guardado y lectura instantánea de la última previsión en `localStorage` (`getCachedWeather` / `saveCachedWeather`). Al abrir la aplicación o pulsar "Actualizar", todos los paneles, tarjetas, sensores y botones didácticos aparecen al instante en pantalla sin parpadeos, huecos en blanco ni tiempos de espera.
