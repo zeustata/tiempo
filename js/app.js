@@ -882,6 +882,11 @@ class MeteoAsturiasApp {
     this.activeTab = targetTab;
     window.location.hash = targetTab;
 
+    // Reset de seguridad horizontal para blindar el viewport
+    if (window.scrollX !== 0) {
+      window.scrollTo({ left: 0, top: window.scrollY, behavior: 'instant' });
+    }
+
     if (targetTab === 'radar') {
       setTimeout(() => resizeMap(), 50);
       setTimeout(() => resizeMap(), 280);
