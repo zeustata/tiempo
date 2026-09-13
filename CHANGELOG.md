@@ -14,7 +14,9 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ## [1.0.81] - 2026-09-02
 
-### 📶 Blindaje Offline & Modo Batería Inteligente
+### 🧭 Clarificación Aerodinámica en Anemómetro (Racha Actual vs Máxima Prevista)
+- **Desglose Riguroso de Rachas**: Corrección de la etiqueta ambigua *"Racha máx hoy"* en el sensor de viento de la Estación en Vivo. Ahora se muestra de forma transparente la **Racha actual** en tiempo real (`current.wind_gusts_10m`) y la **Racha máx. prevista** para la totalidad de la jornada (`daily.wind_gusts_10m_max[0]`), eliminando cualquier posible confusión para el usuario.
+- **Service Worker `v181-windfix` & Anti-Caché**: Actualización sincronizada en `sw.js`, `index.html` y `app.js`.
 - **Estado de Red Universal (Online / Offline)**: Modernización del indicador de cabecera a *🟢 Online* (más limpio y ergonómico) y *🔴 Offline*.
 - **Reloj Congelado Inteligente en Modo Offline**: Al entrar en modo avión o perder cobertura en montaña o calas, el reloj principal cambia automáticamente a un tono gélido/escarchado indicando con precisión la hora exacta de la última previsión meteorológica recibida (*❄️ HH:MM*), deteniendo el segundero. Al recuperar señal, retorna al azul celeste vibrante en tiempo real y refresca los datos meteorológicos en segundo plano.
 - **Mareas Autónomas sin Cobertura**: Garantía de cálculo continuo e ininterrumpido de las mareas astronómicas del Cantábrico sin conexión a internet.

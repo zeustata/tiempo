@@ -33,8 +33,10 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   // Conversión de viento a nudos si se solicita
   const rawSpeed = current.wind_speed_10m != null ? current.wind_speed_10m : 0;
   const rawGusts = current.wind_gusts_10m != null ? current.wind_gusts_10m : rawSpeed;
+  const rawMaxGustToday = (daily.wind_gusts_10m_max && daily.wind_gusts_10m_max[0] != null) ? daily.wind_gusts_10m_max[0] : rawGusts;
   const windSpeed = units === 'knots' ? (rawSpeed * 0.539957).toFixed(1) : rawSpeed.toFixed(1);
   const windGusts = units === 'knots' ? (rawGusts * 0.539957).toFixed(1) : rawGusts.toFixed(1);
+  const windMaxGustToday = units === 'knots' ? (rawMaxGustToday * 0.539957).toFixed(1) : rawMaxGustToday.toFixed(1);
   const windUnit = units === 'knots' ? 'kt' : 'km/h';
 
   // Punto de rocío actual (aproximado por Magnus-Tetens)
@@ -125,7 +127,8 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
             <div class="sensor-val">${windSpeed} <small>${windUnit}</small></div>
             <div class="sensor-sub">Dirección: <strong>${windDir.name} (${current.wind_direction_10m}°)</strong></div>
             <div class="sensor-sub wind-flow-tag">Viene del <strong>${windDir.short}</strong> ➔ sopla al <strong>${windDir.to}</strong></div>
-            <div class="sensor-sub">Racha máx hoy: <strong>${windGusts} ${windUnit}</strong></div>
+            <div class="sensor-sub">Racha actual: <strong>${windGusts} ${windUnit}</strong></div>
+            <div class="sensor-sub">Racha máx. prevista: <strong>${windMaxGustToday} ${windUnit}</strong></div>
           </div>
         </div>
       </div>
