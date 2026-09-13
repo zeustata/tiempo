@@ -12,7 +12,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.82] - 2026-09-13
+
+### 🛰️ Marcador Radar GPS Sutil & Despeje Total de Chubascos (Feedback Tester)
+- **Despeje Visual del Radar de Lluvia**: Sustitución de la cápsula flotante opaca con texto central por un marcador circular sutil tipo GPS pulsante con halo translúcido (`.radar-gps-marker`). El centro de 12px y su halo expansivo permiten visualizar con nitidez milimétrica cualquier frente, borrasca o pequeño chubasco sobrevolando la localidad sin obstáculos ni puntos ciegos.
+- **Identificación Ergonómica del Concejo**: El nombre del concejo seleccionado se muestra de forma fija y limpia en la barra de controles superior del radar (`#radar-active-location`) y en un *tooltip* táctil de Leaflet al posar o pulsar sobre el punto.
+- **Sincronización Inicial de Coordenadas**: Invocación automática de `focusConcejoOnMap` tras la inicialización del lienzo para garantizar la posición inmediata del marcador sin esperas.
+- **Service Worker `v182-radarpin` & Cache-Busting Garantizado**: Actualización de cadenas de caché en `sw.js`, `index.html`, `mapRadar.js` y `app.js`.
+
+---
+
 ## [1.0.81] - 2026-09-02
+
 
 ### 🧭 Clarificación Aerodinámica en Anemómetro (Racha Actual vs Máxima Prevista)
 - **Desglose Riguroso de Rachas**: Corrección de la etiqueta ambigua *"Racha máx hoy"* en el sensor de viento de la Estación en Vivo. Ahora se muestra de forma transparente la **Racha actual** en tiempo real (`current.wind_gusts_10m`) y la **Racha máx. prevista** para la totalidad de la jornada (`daily.wind_gusts_10m_max[0]`), eliminando cualquier posible confusión para el usuario.

@@ -1,4 +1,4 @@
-import { fetchRainViewerRadar } from '../services/radarService.js?v=1.0.81';
+import { fetchRainViewerRadar } from '../services/radarService.js?v=1.0.82';
 
 let asturiasMap = null;
 let radarTileLayer = null;
@@ -188,22 +188,41 @@ export function focusConcejoOnMap(lat, lon, concejoName) {
     const targetZoom = Math.min(asturiasMap.getZoom() || ASTURIAS_DEFAULT_ZOOM, 7.5);
     asturiasMap.setView([lat, lon], targetZoom, { animate: true });
 
-    // Actualizar o poner un único marcador elegante y discreto en el concejo actual
+    // Actualizar o poner un marcador de pulso GPS sutil y minimalista (sin tapar los ecos de lluvia)
     if (activeConcejoMarker) {
       asturiasMap.removeLayer(activeConcejoMarker);
       activeConcejoMarker = null;
     }
 
     if (lat && lon && concejoName) {
-      const singlePin = L.divIcon({
-        className: 'single-active-pin',
-        html: `<div class="pulse-pin-badge">📍 ${concejoName.split('/')[0]}</div>`,
-        iconSize: [120, 30],
-        iconAnchor: [60, 15]
+      const cleanName = concejoName.split('/')[0].trim();
+      const gpsPulsePin = L.divIcon({
+        className: 'radar-gps-marker',
+        html: `
+          <div class="radar-pulse-ring"></div>
+          <div class="radar-pulse-dot" title="${cleanName}"></div>
+        `,
+        iconSize: [24, 24],
+        iconAnchor: [12, 12],
+        popupAnchor: [0, -12]
       });
-      activeConcejoMarker = L.marker([lat, lon], { icon: singlePin }).addTo(asturiasMap);
+
+      activeConcejoMarker = L.marker([lat, lon], { icon: gpsPulsePin })
+        .addTo(asturiasMap)
+        .bindTooltip(`📍 ${cleanName}`, {
+          direction: 'top',
+          offset: [0, -10],
+          className: 'radar-concejo-tooltip'
+        });
+    }
+
+    // Actualizar indicador del concejo activo en la cabecera del radar
+    const locationEl = document.getElementById('radar-active-location');
+    if (locationEl && concejoName) {
+      locationEl.textContent = `📍 ${concejoName.split('/')[0].trim()}`;
     }
 
     resizeMap();
   }
 }
+

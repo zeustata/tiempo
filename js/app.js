@@ -8,7 +8,7 @@ import { renderMountainCard } from './components/mountainCard.js?v=1.0.81';
 import { renderForecast } from './components/forecastView.js?v=1.0.81-nav-clean';
 import { renderWeatherChart } from './components/chartsView.js?v=1.0.81';
 import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.81';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.0.81';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.0.82-radarpin';
 import { getWeatherInfo } from './utils/weatherIcons.js?v=1.0.81';
 import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.0.81';
 import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.0.81';
@@ -84,9 +84,13 @@ class MeteoAsturiasApp {
       initAsturiasMap('map-container', (concejoId) => {
         this.switchConcejo(concejoId);
       });
+      if (this.currentConcejo) {
+        focusConcejoOnMap(this.currentConcejo.lat, this.currentConcejo.lon, this.currentConcejo.name);
+      }
     } catch (e) {
       console.warn('[MeteoAstur] Error inicializando mapa:', e);
     }
+
 
     // Auto-refresco cada 10 minutos en segundo plano
     if (this.prefs.autoRefresh) {

@@ -120,9 +120,13 @@
         <div class="radar-wrapper">
           <div class="radar-controls-bar">
             <div>
-              <h3 class="section-heading">📡 Radar Meteorológico en Directo sobre Asturias</h3>
-              <span id="radar-time-display" style="font-size: 0.9rem; color: var(--primary);">Cargando satélite...</span>
+              <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                <h3 class="section-heading" style="margin-bottom: 0;">📡 Radar Meteorológico en Directo sobre Asturias</h3>
+                <span id="radar-active-location" class="radar-concejo-badge">📍 Asturias</span>
+              </div>
+              <span id="radar-time-display" style="font-size: 0.9rem; color: var(--primary); display: block; margin-top: 4px;">Cargando satélite...</span>
             </div>
+
             <div style="display: flex; gap: 8px; flex-wrap: wrap;">
               <button id="btn-radar-center" class="btn-header" title="Centrar mapa en Asturias">🎯 Centrar Asturias</button>
               <button id="btn-radar-play" class="btn-header">▶️ Reproducir Radar</button>
@@ -172,7 +176,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.81 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.82 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -223,8 +227,17 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.81 🚀</span>
-            <span class="release-date">02 Sep 2026 (Actual)</span>
+            <span class="release-version">v1.0.82 🚀</span>
+            <span class="release-date">13 Sep 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> <strong>Marcador Radar GPS Sutil & Despeje Total de Chubascos (Feedback Tester)</strong>: Sustitución de la pastilla flotante opaca central por un marcador circular sutil tipo pulso GPS/radar con halo animado translúcido. Elimina cualquier bloqueo u ocultación visual de borrascas, frentes marinos y pequeños chubascos en la localidad enfocada. El nombre del concejo se traslada limpiamente a un chip indicador en la cabecera del radar y en un tooltip táctil sobre el punto.</li>
+          </ul>
+        </div>
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.0.81</span>
+            <span class="release-date">02 Sep 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-new">Nuevo</span> <strong>Blindaje Offline & Modo Batería Inteligente</strong>: Actualización del estado de conexión a <em>🟢 Online</em> / <em>🔴 Offline</em>. Al perder cobertura o activar modo avión, el reloj se congela en tono gélido/escarchado mostrando la hora exacta de la última previsión guardada (<em>❄️ HH:MM</em>), preservando intactos todos los paneles del tiempo y las mareas astronómicas en memoria. Incorpora optimización automática de fotogramas del lienzo de partículas si la batería desciende del 20%.</li>
@@ -233,6 +246,7 @@
             <li><span class="tag tag-new">Nuevo</span> <strong>Carga Instantánea en 0 ms y Skeleton Loader</strong>: Implementación de la estrategia <em>Stale-While-Revalidate</em> con memoria local para que todos los botones, tarjetas y sensores se pinten de inmediato al abrir la web o recargar sin retardos ni parpadeos, actualizando en segundo plano, acompañado de un esqueleto animado de carga suave.</li>
           </ul>
         </div>
+
         <div class="changelog-release">
           <div class="release-header">
             <span class="release-version">v1.0.80</span>
@@ -1548,7 +1562,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.81-windfix').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.82-radarpin').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1569,6 +1583,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.81-windfix"></script>
+  <script type="module" src="js/app.js?v=1.0.82-radarpin"></script>
+
 </body>
 </html>
