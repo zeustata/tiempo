@@ -1,4 +1,4 @@
-import { fetchRainViewerRadar } from '../services/radarService.js?v=1.0.82';
+import { fetchRainViewerRadar } from '../services/radarService.js?v=1.0.81-radar';
 
 let asturiasMap = null;
 let radarTileLayer = null;
