@@ -3436,12 +3436,13 @@
 
 .astronomy-moon-details-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
   margin-top: 18px;
   padding-top: 14px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
+
 
 .moon-metric-pill {
   background: rgba(15, 23, 42, 0.5);

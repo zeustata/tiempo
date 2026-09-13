@@ -324,12 +324,9 @@ export function renderAstronomyView(containerId, currentFilter = 'all') {
             <span class="metric-label">🌕 Próxima Luna Llena</span>
             <span class="metric-val">${moon.daysToFullMoon === 0 ? '¡Hoy!' : 'En ' + moon.daysToFullMoon + ' días'}</span>
           </div>
-          <div class="moon-metric-pill">
-            <span class="metric-label">🌌 Estado del Cielo</span>
-            <span class="metric-val">${moon.illumination > 70 ? 'Luz Brillante' : 'Cielo Oscuro'}</span>
-          </div>
         </div>
       </div>
+
 
       <!-- BARRA DE SEMÁFORO Y FILTROS -->
       <div class="astronomy-filter-bar">
