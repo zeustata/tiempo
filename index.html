@@ -231,7 +231,9 @@
             <span class="release-date">02 Sep 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> <strong>Observatorio Astronómico Filtrado & Calendario Completo 2026-2027</strong>: Exclusión automática de acontecimientos culminados en el pasado para mostrar con nitidez exclusivamente los fenómenos celestes activos y futuros. Ampliación del catálogo astronómico hasta finales de 2027 (Cuadrántidas, Líridas, el Gran Eclipse Solar del 2 de Agosto de 2027 con oscurecimiento ~85% en Asturias, Perseidas 2027 y Superluna) con conteo dinámico de días y semáforo de visibilidad cantábrica.</li>
             <li><span class="tag tag-new">Nuevo</span> <strong>Marcador Radar GPS Sutil & Despeje Total de Chubascos (Feedback Tester)</strong>: Sustitución de la pastilla flotante opaca central por un marcador circular sutil tipo pulso GPS/radar con halo animado translúcido. Elimina cualquier bloqueo u ocultación visual de borrascas, frentes marinos y pequeños chubascos en la localidad enfocada. El nombre del concejo se traslada limpiamente a un chip indicador en la cabecera del radar y en un tooltip táctil sobre el punto.</li>
+
             <li><span class="tag tag-new">Nuevo</span> <strong>Blindaje Offline & Modo Batería Inteligente</strong>: Actualización del estado de conexión a <em>🟢 Online</em> / <em>🔴 Offline</em>. Al perder cobertura o activar modo avión, el reloj se congela en tono gélido/escarchado mostrando la hora exacta de la última previsión guardada (<em>❄️ HH:MM</em>), preservando intactos todos los paneles del tiempo y las mareas astronómicas en memoria. Incorpora optimización automática de fotogramas del lienzo de partículas si la batería desciende del 20%.</li>
             <li><span class="tag tag-new">Nuevo</span> <strong>Guía Didáctica de Modelos Meteorológicos ("Explícame")</strong>: Incorporación del botón interactivo <em>💡 Explícame: ¿Cómo elegir el mejor modelo?</em> en el selector de modelos numéricos, explicando de forma accesible qué es la resolución (1.3 km frente a 13 km), el impacto del relieve asturiano y cuándo consultar ECMWF, AROME Cantábrico, DWD ICON o NOAA GFS.</li>
             <li><span class="tag tag-new">Nuevo</span> <strong>Navegación Táctil por Deslizamiento Lateral (Slide Gestures - Feedback Beta Tester)</strong>: Evolución del fundido estático a una animación de deslizamiento horizontal fluido en la dirección del gesto táctil (las pantallas entran con desplazamiento lateral suave según se avance o retroceda), manteniendo el blindaje estricto en el carrusel de 72 horas, mareas y gráficas con respuesta háptica nativa.</li>
@@ -1555,7 +1557,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.81-radarpin').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.81-astroupdate').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1576,7 +1578,8 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.81-radarpin"></script>
+  <script type="module" src="js/app.js?v=1.0.81-astroupdate"></script>
+
 
 
 </body>

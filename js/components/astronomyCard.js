@@ -4,39 +4,9 @@
  */
 
 // Catálogo de eventos astronómicos destacados (2026 - 2027)
+// Catálogo de eventos astronómicos destacados (2026 - 2027)
 export const ASTRONOMICAL_EVENTS = [
-  {
-    id: 'perseidas-2026',
-    title: 'Lluvia de Estrellas Perseidas (Lágrimas de San Lorenzo)',
-    type: 'meteor_shower',
-    typeLabel: '🌠 Lluvia de Meteoros',
-    dateStart: '2026-08-11T22:00:00',
-    datePeak: '2026-08-12T23:30:00',
-    dateEnd: '2026-08-13T05:30:00',
-    displayDate: '11 - 13 de Agosto de 2026',
-    visibility: 'asturias', // 'asturias' | 'spain' | 'global'
-    visibilityLabel: 'Visible en Asturias',
-    visibilityDesc: 'Visibilidad óptima en toda Asturias en cielos despejados. Pico de hasta 100 meteoros/hora.',
-    asturiasTip: 'Recomendado subir a zonas de montaña como Somiedo, Puerto Ventana, Pajares o Picos de Europa para evitar la niebla y la contaminación lumínica.',
-    equipment: '👁️ A simple vista (no requiere telescopio)',
-    icon: '✨'
-  },
-  {
-    id: 'eclipse-total-2026',
-    title: 'Gran Eclipse Solar Total del 12 de Agosto de 2026',
-    type: 'eclipse',
-    typeLabel: '🌑 Eclipse Solar Total',
-    dateStart: '2026-08-12T19:30:00',
-    datePeak: '2026-08-12T20:27:00',
-    dateEnd: '2026-08-12T20:30:00',
-    displayDate: '12 de Agosto de 2026 (19:30 - 20:30 h)',
-    visibility: 'asturias',
-    visibilityLabel: 'Visible en Asturias (Zona de Totalidad)',
-    visibilityDesc: '¡Acontecimiento histórico único en un siglo! La franja de totalidad del eclipse solar cruza directamente sobre Asturias.',
-    asturiasTip: 'El sol se ocultará al 100% oscureciendo el cielo en pleno día durante casi 2 minutos. Mirar hacia el oeste/noroeste en zonas con horizonte despejado.',
-    equipment: '🕶️ Gafas especiales homologadas con filtro solar ISO 12312-2',
-    icon: '☀️'
-  },
+  // --- 2026 ---
   {
     id: 'superluna-sept-2026',
     title: 'Superluna de la Cosecha',
@@ -52,6 +22,22 @@ export const ASTRONOMICAL_EVENTS = [
     asturiasTip: 'Impresionante vista sobre la línea de costa del Cantábrico y reflectando en las playas asturianas al anochecer.',
     equipment: '👁️ A simple vista / 🔭 Prismáticos',
     icon: '🌕'
+  },
+  {
+    id: 'aurora-boreal-espana',
+    title: 'Pico Solar y Posibles Auroras Boreales',
+    type: 'aurora',
+    typeLabel: '🌌 Actividad Geomagnética',
+    dateStart: '2026-09-01T00:00:00',
+    datePeak: '2026-10-15T00:00:00',
+    dateEnd: '2026-11-30T23:59:59',
+    displayDate: 'Otoño 2026 (Pico Ciclo Solar 25)',
+    visibility: 'spain',
+    visibilityLabel: 'Visible en España / Cantábrico (Kp > 7)',
+    visibilityDesc: 'El ciclo solar 25 alcanza su máximo. En tormentas geomagnéticas severas (Kp 7-9), las auroras descienden al litoral cantábrico.',
+    asturiasTip: 'Mirar hacia el horizonte norte en la costa o cumbres asturianas sin luces de ciudades en noches de alerta geomagnética.',
+    equipment: '👁️ A simple vista / 📷 Cámara en exposición nocturna',
+    icon: '🌌'
   },
   {
     id: 'orionidas-2026',
@@ -101,21 +87,22 @@ export const ASTRONOMICAL_EVENTS = [
     equipment: '👁️ A simple vista',
     icon: '✨'
   },
+  // --- 2027 ---
   {
-    id: 'aurora-boreal-espana',
-    title: 'Pico Solar y Posibles Auroras Boreales',
-    type: 'aurora',
-    typeLabel: '🌌 Actividad Geomagnética',
-    dateStart: '2026-09-01T00:00:00',
-    datePeak: '2026-10-15T00:00:00',
-    dateEnd: '2026-11-30T00:00:00',
-    displayDate: 'Otoño 2026 (Pico Ciclo Solar 25)',
-    visibility: 'spain',
-    visibilityLabel: 'Visible en España / Cantábrico (Kp > 7)',
-    visibilityDesc: 'El ciclo solar 25 alcanza su máximo. En tormentas geomagnéticas severas (Kp 7-9), las auroras descienden al litoral cantábrico.',
-    asturiasTip: 'Mirar hacia el horizonte norte en la costa o cumbres asturianas sin luces de ciudades en noches de alerta geomagnética.',
-    equipment: '👁️ A simple vista / 📷 Cámara en exposición nocturna',
-    icon: '🌌'
+    id: 'cuadrantidas-2027',
+    title: 'Lluvia de Meteoros Cuadrántidas',
+    type: 'meteor_shower',
+    typeLabel: '🌠 Lluvia de Meteoros',
+    dateStart: '2027-01-03T22:00:00',
+    datePeak: '2027-01-04T03:30:00',
+    dateEnd: '2027-01-04T07:00:00',
+    displayDate: '3 - 4 de Enero de 2027',
+    visibility: 'asturias',
+    visibilityLabel: 'Visible en Asturias',
+    visibilityDesc: 'Primera gran lluvia del año. Pico muy concentrado de meteoros brillantes y bólidos de fuego con hasta 110 trazas por hora.',
+    asturiasTip: 'Observación óptima en las horas previas al amanecer mirando hacia el norte/noreste en zonas libres de bruma.',
+    equipment: '👁️ A simple vista (ropa de abrigo extremo)',
+    icon: '❄️'
   },
   {
     id: 'eclipse-anular-2027-sur',
@@ -128,10 +115,90 @@ export const ASTRONOMICAL_EVENTS = [
     displayDate: '6 de Febrero de 2027',
     visibility: 'global',
     visibilityLabel: 'Hemisferio Sur (No visible en Asturias)',
-    visibilityDesc: 'Espectacular eclipse anular donde la luna no cubre por completo al Sol, formando un anillo brillante. Visible en Sudamérica y la Antártida.',
+    visibilityDesc: 'Espectacular eclipse anular donde la Luna no cubre por completo al Sol, formando un anillo brillante. Visible en Sudamérica y la Antártida.',
     asturiasTip: 'No visible geográficamente desde Asturias ni la Península Ibérica. Seguimiento recomendado por retransmisión astronómica online.',
     equipment: '📡 Retransmisión web oficial',
     icon: '⭕'
+  },
+  {
+    id: 'liridas-2027',
+    title: 'Lluvia de Meteoros Líridas',
+    type: 'meteor_shower',
+    typeLabel: '🌠 Lluvia de Meteoros',
+    dateStart: '2027-04-21T22:00:00',
+    datePeak: '2027-04-22T04:00:00',
+    dateEnd: '2027-04-23T06:00:00',
+    displayDate: '21 - 23 de Abril de 2027',
+    visibility: 'asturias',
+    visibilityLabel: 'Visible en Asturias',
+    visibilityDesc: 'Partículas de polvo del cometa Thatcher. Famosas por sus trenes de polvo persistentes que brillan varios segundos.',
+    asturiasTip: 'Buscar cielos despejados de primavera en valles interiores o zonas altas costeras orientadas al este.',
+    equipment: '👁️ A simple vista',
+    icon: '✨'
+  },
+  {
+    id: 'eclipse-total-espana-2027',
+    title: 'Gran Eclipse Solar del 2 de Agosto de 2027',
+    type: 'eclipse',
+    typeLabel: '🌑 Eclipse Solar Histórico',
+    dateStart: '2027-08-02T09:30:00',
+    datePeak: '2027-08-02T10:45:00',
+    dateEnd: '2027-08-02T12:00:00',
+    displayDate: '2 de Agosto de 2027 (Mañana)',
+    visibility: 'spain',
+    visibilityLabel: 'Visible en España (Gran Parcial en Asturias ~85%)',
+    visibilityDesc: '¡Uno de los mayores eclipses solares de Europa! En el sur de España la totalidad supera los 4 minutos y medio. En Asturias se apreciará un oscurecimiento superior al 84% del disco solar.',
+    asturiasTip: 'El sol quedará reducido a una finísima medialuna a media mañana. Notable bajada de temperatura y cambio de tono ambiental.',
+    equipment: '🕶️ Gafas especiales homologadas con filtro solar ISO 12312-2',
+    icon: '☀️'
+  },
+  {
+    id: 'perseidas-2027',
+    title: 'Lluvia de Estrellas Perseidas 2027',
+    type: 'meteor_shower',
+    typeLabel: '🌠 Lluvia de Meteoros',
+    dateStart: '2027-08-11T22:00:00',
+    datePeak: '2027-08-12T23:30:00',
+    dateEnd: '2027-08-13T05:30:00',
+    displayDate: '11 - 13 de Agosto de 2027',
+    visibility: 'asturias',
+    visibilityLabel: 'Visible en Asturias',
+    visibilityDesc: 'Las Lágrimas de San Lorenzo de 2027 se presentan con excelentes condiciones lunares (creciente temprana), permitiendo ver hasta 100 meteoros/hora.',
+    asturiasTip: 'Cumbres de la Cordillera Cantábrica (Somiedo, Pajares, Picos de Europa) y cabos costeros oscuros (Cabo Vidio, Peñas).',
+    equipment: '👁️ A simple vista',
+    icon: '✨'
+  },
+  {
+    id: 'superluna-sept-2027',
+    title: 'Superluna Llena de Otoño 2027',
+    type: 'supermoon',
+    typeLabel: '🌕 Superluna',
+    dateStart: '2027-09-15T19:00:00',
+    datePeak: '2027-09-16T03:15:00',
+    dateEnd: '2027-09-16T08:00:00',
+    displayDate: '15 - 16 de Septiembre de 2027',
+    visibility: 'asturias',
+    visibilityLabel: 'Visible en Asturias',
+    visibilityDesc: 'Perigeo lunar de máximo acercamiento del año 2027, generando mareas vivas extremas (mareonas) en las rías asturianas.',
+    asturiasTip: 'Salida de la Luna sobre el mar Cantábrico visible desde paseos marítimos y acantilados al atardecer.',
+    equipment: '👁️ A simple vista / 🔭 Prismáticos',
+    icon: '🌕'
+  },
+  {
+    id: 'geminidas-2027',
+    title: 'Lluvia de Meteoros Gemínidas 2027',
+    type: 'meteor_shower',
+    typeLabel: '🌠 Lluvia de Meteoros',
+    dateStart: '2027-12-13T21:00:00',
+    datePeak: '2027-12-14T02:30:00',
+    dateEnd: '2027-12-14T06:30:00',
+    displayDate: '13 - 14 de Diciembre de 2027',
+    visibility: 'asturias',
+    visibilityLabel: 'Visible en Asturias',
+    visibilityDesc: 'Cierre del calendario astronómico con el mayor espectáculo invernal del cielo: meteoros lentos, brillantes y coloridos.',
+    asturiasTip: 'Buscar zonas altas por encima de la niebla de los valles centrales asturianos.',
+    equipment: '👁️ A simple vista',
+    icon: '✨'
   }
 ];
 
@@ -209,11 +276,22 @@ export function renderAstronomyView(containerId, currentFilter = 'all') {
   const moon = getMoonPhaseDetails();
   const now = new Date();
 
-  // Filtrar eventos según la selección
-  const filteredEvents = ASTRONOMICAL_EVENTS.filter(evt => {
+  // Filtrar exclusivamente los eventos activos o futuros (excluir fenómenos culminados en el pasado)
+  const activeEvents = ASTRONOMICAL_EVENTS.filter(evt => {
+    const endDate = new Date(evt.dateEnd || evt.datePeak);
+    return endDate >= now;
+  });
+
+  // Filtrar eventos según la selección del semáforo
+  const filteredEvents = activeEvents.filter(evt => {
     if (currentFilter === 'all') return true;
     return evt.visibility === currentFilter;
   });
+
+  const countAll = activeEvents.length;
+  const countAsturias = activeEvents.filter(e => e.visibility === 'asturias').length;
+  const countSpain = activeEvents.filter(e => e.visibility === 'spain').length;
+  const countGlobal = activeEvents.filter(e => e.visibility === 'global').length;
 
   const html = `
     <div class="astronomy-view-container">
@@ -225,7 +303,7 @@ export function renderAstronomyView(containerId, currentFilter = 'all') {
             <span class="astronomy-hero-icon">🔭</span>
             <div>
               <h3>Observatorio Astronómico & Cosmos</h3>
-              <span class="astronomy-subtitle">Acontecimientos celestes y semáforo de visibilidad en Asturias</span>
+              <span class="astronomy-subtitle">Acontecimientos celestes y semáforo de visibilidad en Asturias (2026 - 2027)</span>
             </div>
           </div>
           <div class="astronomy-moon-badge">
@@ -260,36 +338,40 @@ export function renderAstronomyView(containerId, currentFilter = 'all') {
         </div>
         <div class="astronomy-filter-chips">
           <button class="astro-chip ${currentFilter === 'all' ? 'active' : ''}" data-filter="all">
-            🌟 Todos (${ASTRONOMICAL_EVENTS.length})
+            🌟 Próximos (${countAll})
           </button>
           <button class="astro-chip chip-green ${currentFilter === 'asturias' ? 'active' : ''}" data-filter="asturias">
-            🟢 Visible en Asturias (${ASTRONOMICAL_EVENTS.filter(e => e.visibility === 'asturias').length})
+            🟢 Visible en Asturias (${countAsturias})
           </button>
           <button class="astro-chip chip-yellow ${currentFilter === 'spain' ? 'active' : ''}" data-filter="spain">
-            🟡 España / Europa (${ASTRONOMICAL_EVENTS.filter(e => e.visibility === 'spain').length})
+            🟡 España / Europa (${countSpain})
           </button>
           <button class="astro-chip chip-red ${currentFilter === 'global' ? 'active' : ''}" data-filter="global">
-            🔴 Global / Lejano (${ASTRONOMICAL_EVENTS.filter(e => e.visibility === 'global').length})
+            🔴 Global / Lejano (${countGlobal})
           </button>
         </div>
       </div>
 
       <!-- LISTADO DE EVENTOS ASTRONÓMICOS -->
       <div class="astronomy-events-grid">
-        ${filteredEvents.map(evt => {
+        ${filteredEvents.length === 0 ? `
+          <div class="astro-empty-state" style="grid-column: 1 / -1; padding: 30px 20px; text-align: center; color: var(--text-dim);">
+            <span style="font-size: 2rem; display: block; margin-bottom: 8px;">🌌</span>
+            <p>No hay eventos próximos para el filtro seleccionado.</p>
+          </div>
+        ` : filteredEvents.map(evt => {
           const eventDate = new Date(evt.datePeak);
           const diffDays = Math.ceil((eventDate - now) / (1000 * 60 * 60 * 24));
           
           let countdownText = '';
-          if (diffDays < 0) {
-            countdownText = '✨ Fenómeno culminado';
-          } else if (diffDays === 0) {
-            countdownText = '🔥 ¡Sucediendo Hoy!';
+          if (diffDays <= 0) {
+            countdownText = '🔥 ¡Sucediendo Ahora!';
           } else if (diffDays === 1) {
             countdownText = '⏳ ¡Mañana!';
           } else {
             countdownText = `⏳ En ${diffDays} días`;
           }
+
 
           let semaforoClass = 'badge-green';
           let semaforoIcon = '🟢';

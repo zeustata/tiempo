@@ -14,11 +14,21 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ## [1.0.81] - 2026-09-02
 
+### 🔭 Observatorio Astronómico Filtrado & Calendario Completo 2026-2027
+- **Filtro Automático de Fenómenos Pasados**: Exclusión rigurosa en tiempo real de los acontecimientos astronómicos cuya fecha de finalización ya ha culminado respecto al momento actual (`endDate >= now`), eliminando el ruido visual de eventos obsoletos.
+- **Ampliación Integral del Calendario Celeste (2026 - 2027)**: Registro exhaustivo de los mayores acontecimientos astronómicos visibles desde Asturias y España:
+  - *Lluvias de meteoros*: Oriónidas 2026, Gemínidas 2026, Cuadrántidas 2027, Líridas 2027, Perseidas 2027 (con condiciones lunares óptimas) y Gemínidas 2027.
+  - *Eclipses históricos*: El Gran Eclipse Solar del 2 de Agosto de 2027 (¡más del 84% de oscurecimiento en Asturias y totalidad en Andalucía!) y Eclipse Solar Anular de Febrero de 2027 (seguimiento web).
+  - *Superlunas*: Superluna de la Cosecha (Septiembre 2026) y Superluna Llena de Otoño 2027 (máximo perigeo y mareonas vivas).
+  - *Planetas y Auroras*: Acercamiento extremo Júpiter-Venus y seguimiento del pico del Ciclo Solar 25 en el Cantábrico.
+- **Sincronización Dinámica de Contadores del Semáforo**: Actualización en vivo de los chips del semáforo de visibilidad (`🟢 Visible en Asturias`, `🟡 España`, `🔴 Global / Lejano`) computando exclusivamente los fenómenos que están por llegar.
+- **Service Worker `v181-astroupdate` & Anti-Caché**: Actualización de cadenas de caché en `sw.js`, `index.html`, `app.js` y `astronomyCard.js`.
+
 ### 🛰️ Marcador Radar GPS Sutil & Despeje Total de Chubascos (Feedback Tester)
 - **Despeje Visual del Radar de Lluvia**: Sustitución de la cápsula flotante opaca con texto central por un marcador circular sutil tipo GPS pulsante con halo translúcido (`.radar-gps-marker`). El centro de 12px y su halo expansivo permiten visualizar con nitidez milimétrica cualquier frente, borrasca o pequeño chubasco sobrevolando la localidad sin obstáculos ni puntos ciegos.
 - **Identificación Ergonómica del Concejo**: El nombre del concejo seleccionado se muestra de forma fija y limpia en la barra de controles superior del radar (`#radar-active-location`) y en un *tooltip* táctil de Leaflet al posar o pulsar sobre el punto.
 - **Sincronización Inicial de Coordenadas**: Invocación automática de `focusConcejoOnMap` tras la inicialización del lienzo para garantizar la posición inmediata del marcador sin esperas.
-- **Service Worker `v181-radarpin` & Cache-Busting Garantizado**: Actualización de cadenas de caché en `sw.js`, `index.html`, `mapRadar.js` y `app.js` preservando el ciclo oficial v1.0.81 bajo examen.
+
 
 
 ### 🧭 Clarificación Aerodinámica en Anemómetro (Racha Actual vs Máxima Prevista)
