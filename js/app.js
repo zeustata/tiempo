@@ -1,15 +1,15 @@
 import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.0.81';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.0.81-solarcalib';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.0.81-triplesolar';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.0.81';
-import { renderCurrentWeather } from './components/currentCard.js?v=1.0.81-solarcalib2';
+import { renderCurrentWeather } from './components/currentCard.js?v=1.0.81-triplesolar2';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.0.81-tides';
 import { renderSurfCard } from './components/surfCard.js?v=1.0.81-surflayout';
 import { renderMountainCard } from './components/mountainCard.js?v=1.0.81';
-import { renderForecast } from './components/forecastView.js?v=1.0.81-solarcalib';
-import { renderWeatherChart } from './components/chartsView.js?v=1.0.81';
+import { renderForecast } from './components/forecastView.js?v=1.0.81-triplesolar2';
+import { renderWeatherChart } from './components/chartsView.js?v=1.0.81-triplesolar';
 import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.81-astromoon2';
 import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.0.81-radarpin';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=1.0.81-solarcalib';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=1.0.81-triplesolar';
 import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.0.81';
 import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.0.81';
 import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.0.81';
@@ -1468,7 +1468,9 @@ class MeteoAsturiasApp {
     const currentHour = new Date().getHours();
     const currentPop = (hourly && hourly.precipitation_probability && hourly.precipitation_probability[currentHour] != null) ? hourly.precipitation_probability[currentHour] : null;
     const directIrr = cur?.direct_normal_irradiance != null ? cur.direct_normal_irradiance : null;
-    const info = getWeatherInfo(weatherCode, isDay, cur?.precipitation, currentPop, directIrr);
+    const currentUv = cur?.uv_index != null ? cur.uv_index : (hourly?.uv_index && hourly.uv_index[currentHour] != null ? hourly.uv_index[currentHour] : null);
+    const currentSw = cur?.shortwave_radiation != null ? cur.shortwave_radiation : null;
+    const info = getWeatherInfo(weatherCode, isDay, cur?.precipitation, currentPop, directIrr, currentUv, currentSw);
     const bgType = info ? info.bg : 'cloudy';
     let themeKey = bgType;
 

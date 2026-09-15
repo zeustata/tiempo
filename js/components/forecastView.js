@@ -1,4 +1,4 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection } from '../utils/weatherIcons.js?v=1.0.81';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection } from '../utils/weatherIcons.js?v=1.0.81-triplesolar';
 
 /**
  * Calcula la condición meteorológica representativa para un tramo horario (ej. mañana o tarde)
@@ -61,6 +61,10 @@ export function renderHourlyForecastBlock(data, units = 'metric', iconTheme = 'a
 
   const now = new Date();
   const currentHour = now.getHours();
+  const cur = data.weather ? data.weather.current : null;
+  const liveDirectIrr = cur?.direct_normal_irradiance != null ? cur.direct_normal_irradiance : null;
+  const liveUv = cur?.uv_index != null ? cur.uv_index : (hourly?.uv_index && hourly.uv_index[currentHour] != null ? hourly.uv_index[currentHour] : null);
+  const liveSw = cur?.shortwave_radiation != null ? cur.shortwave_radiation : null;
   const unitLabel = units === 'knots' ? 'kt' : 'km/h';
 
   let hourlyCards = '';
@@ -104,8 +108,14 @@ export function renderHourlyForecastBlock(data, units = 'metric', iconTheme = 'a
     const pop = hourly.precipitation_probability ? (hourly.precipitation_probability[i] || 0) : 0;
     const precipMm = hourly.precipitation ? (hourly.precipitation[i] || 0) : 0;
     const code = hourly.weather_code[i];
+    // Calibración Solar en Nowcasting: se aplica exclusivamente a la hora en curso y a la siguiente hora inmediata,
+    // preservando al 100% la previsión general del modelo numérico para el resto de horas y días.
+    const isImmediateNextHour = (i === currentHour || i === currentHour + 1);
+    const useDirectIrr = isImmediateNextHour ? liveDirectIrr : null;
+    const useUv = isImmediateNextHour ? liveUv : null;
+    const useSw = isImmediateNextHour ? liveSw : null;
 
-    const weather = getWeatherInfo(code, isDay, precipMm, pop);
+    const weather = getWeatherInfo(code, isDay, precipMm, pop, useDirectIrr, useUv, useSw);
     const temp = Math.round(hourly.temperature_2m[i]);
     const windSpeed = units === 'knots' ? (hourly.wind_speed_10m[i] * 0.539957).toFixed(0) : Math.round(hourly.wind_speed_10m[i]);
     const windDeg = (hourly.wind_direction_10m && hourly.wind_direction_10m[i] != null) ? hourly.wind_direction_10m[i] : 0;

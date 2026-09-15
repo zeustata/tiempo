@@ -1,4 +1,4 @@
-import { getWeatherInfo } from '../utils/weatherIcons.js?v=1.0.81';
+import { getWeatherInfo } from '../utils/weatherIcons.js?v=1.0.81-triplesolar';
 
 /**
  * Generador de gráficos de evolución horaria (48h) con scroll horizontal interactivo en móviles
@@ -55,7 +55,13 @@ export function renderWeatherChart(canvasId, hourlyData, hoursCount = 48) {
     const precipMm = hourlyData.precipitation ? (hourlyData.precipitation[i] || 0) : 0;
     const wCode = weatherCodes[i] != null ? weatherCodes[i] : 0;
 
-    const wInfo = getWeatherInfo(wCode, isDay, precipMm, pop);
+    // Nowcasting en la gráfica: solo para hora actual y siguiente hora inmediata
+    const isImmediateNextHour = (i === currentHour || i === currentHour + 1);
+    const useUv = (isImmediateNextHour && hourlyData.uv_index && hourlyData.uv_index[i] != null) ? hourlyData.uv_index[i] : null;
+    const useDirectIrr = (isImmediateNextHour && hourlyData.direct_normal_irradiance && hourlyData.direct_normal_irradiance[i] != null) ? hourlyData.direct_normal_irradiance[i] : null;
+    const useSw = (isImmediateNextHour && hourlyData.shortwave_radiation && hourlyData.shortwave_radiation[i] != null) ? hourlyData.shortwave_radiation[i] : null;
+
+    const wInfo = getWeatherInfo(wCode, isDay, precipMm, pop, useDirectIrr, useUv, useSw);
     weatherDescriptions.push(`${wInfo.icon} ${wInfo.label}${precipMm >= 0.1 ? ` (${precipMm.toFixed(1)} mm)` : ''}`);
 
     temps.push(hourlyData.temperature_2m[i]);

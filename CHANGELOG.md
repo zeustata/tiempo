@@ -14,11 +14,11 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ## [1.0.81] - 2026-09-02
 
-### ☀️ Calibración Solar Inteligente de Nubosidad (Desempate Físico)
-- **Desempate Óptico de Cobertura Nubosa**: Corrección de la discrepancia de supercomputador cuando los modelos numéricos devuelven código WMO 3 (*Cubiertu / Nublado al 100%*) en jornadas donde la realidad en superficie es de amplios claros de sol o nubes altas translúcidas (ej. rasa costera de Castrillón y valles asturianos).
-- **Asimilación de Radiación Solar Directa (`direct_normal_irradiance`)**: Consulta en tiempo real del haz de radiación directa solar perpendicular en superficie tanto en `current` como en `hourly`. Si es de día, no hay lluvia registrada ni inminente (`precipitation < 0.1 mm` y `pop < 35%`) y la radiación solar directa supera los **100 W/m²**, el estado del cielo y el tema visual se reclasifican automáticamente a **`⛅ Parcialmente nublado / Claros`**.
-- **Coherencia Integral en Dashboard y Gráficas**: Sincronización en la tarjeta Hero de la Estación en Vivo, en el fondo dinámico de atmósfera y en el carrusel de pronóstico horario de 72 horas.
-- **Service Worker `v181-solarcalib` & Anti-Caché**: Actualización de cadenas de caché en `sw.js`, `index.html`, `app.js`, `currentCard.js`, `forecastView.js` y `weatherIcons.js`.
+### ☀️ Calibración Solar Inteligente de Nubosidad & Triple Sensor en Nowcasting
+- **Triple Sensor Físico de Energía Lumínica**: Superación definitiva del punto ciego de modelos numéricos donde una nube teórica desploma la radiación directa a cero. Si el modelo devuelve WMO 3 (*Cubiertu*) de día sin lluvia, se rescata a **`⛅ Parcialmente nublado / Claros`** ante cualquiera de 3 evidencias físicas: radiación directa `>= 80 W/m²`, Índice UV `>= 2.5` o radiación global de onda corta `>= 120 W/m²`.
+- **Nowcasting Estricto en Pronóstico a Corto Plazo**: La calibración se aplica al tiempo en vivo (Hero card y fondo interactivo) y exclusivamente a la hora en curso y siguiente hora inmediata en el pronóstico horario (72h) y gráfico (48h).
+- **Previsión General y Sinóptica Intacta**: Preservación al 100% de los pronósticos del supercomputador para las horas posteriores (`+2h` en adelante) y el pronóstico extendido a 10 días, garantizando que frentes y precipitaciones nocturnas se visualicen sin enmascaramiento.
+- **Service Worker `v181-triplesolar2` & Anti-Caché**: Actualización sincronizada de cadenas de caché en `sw.js`, `index.html`, `app.js`, `currentCard.js`, `forecastView.js` y `chartsView.js`.
 
 ### 🔭 Observatorio Astronómico Filtrado & Calendario Completo 2026-2027
 - **Filtro Automático de Fenómenos Pasados**: Exclusión rigurosa en tiempo real de los acontecimientos astronómicos cuya fecha de finalización ya ha culminado respecto al momento actual (`endDate >= now`), eliminando el ruido visual de eventos obsoletos.

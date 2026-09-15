@@ -79,5 +79,6 @@
    - Tarjetas translúcidas puras sin filtros gaussianos `backdrop-filter: blur` que tapen o destruyan la visualización de las partículas vivas de lluvia, nieve, niebla o sol en movimiento de fondo.
 6. **Frase de Despegue:**
    - La orden oficial para iniciar tareas aprobadas es *"¡Písale!"* (en honor a Star Trek).
-7. **Calibración Solar Inteligente de Nubosidad:**
-   - Desempate físico de cobertura nubosa: si los modelos numéricos devuelven código WMO 3 (Cubierto) de día sin lluvia, pero la radiación solar directa en superficie supera los 100 W/m² (`direct_normal_irradiance >= 100`), se reclasifica automáticamente a *Parcialmente nublado / Claros de sol* para respetar la realidad lumínica observable en el Principado.
+7. **Calibración Solar Inteligente de Nubosidad & Triple Sensor en Nowcasting:**
+   - Desempate físico de cobertura nubosa: si los modelos numéricos devuelven código WMO 3 (Cubierto) de día sin lluvia, pero cualquiera de los 3 sensores físicos confirma sol activo (radiación directa `>= 80 W/m²`, Índice UV `>= 2.5` o radiación global de onda corta `>= 120 W/m²`), se reclasifica automáticamente a *Parcialmente nublado / Claros de sol*.
+   - Principio de Nowcasting estricto: la calibración se aplica al tiempo en vivo y exclusivamente a la hora en curso y siguiente hora inmediata en el pronóstico horario (72h) y gráfico (48h), preservando al 100% la predicción sinóptica general del modelo para las horas posteriores y el pronóstico extendido a 10 días.

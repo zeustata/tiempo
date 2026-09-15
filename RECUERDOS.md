@@ -188,6 +188,7 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - Reordenación Estética de Sensores en Surf & Rompientes: Intercambio de posiciones entre 'Temperatura del Agua & Neopreno' (ahora 4ª) y 'Condición de Rompiente' (ahora 5ª) logrando armonía visual de sensores numéricos y situando el banner resumen al final.
 - Actualización Constitucional del Artículo 0 (Honestidad Intelectual y Código de Respuesta de Princesa): Blindaje explícito de la personalidad de Princesa: cero complacencia por inercia, análisis crítico riguroso, corrección activa de premisas falsas, distinción entre hechos y opiniones, transparencia ante la incertidumbre y protección irrenunciable de la precisión frente al halago fácil.
 - Incorporación del Artículo 8 a la Constitución Suprema (Candado de Seguridad y PIN Maestro de Acceso y Reforma Constitucional): Blindaje con PIN de 4 cifras (verificado mediante huella SHA-256) requerido obligatoriamente para consultar o modificar las leyes constitucionales en el chat.
+- Calibración Solar Inteligente con Triple Sensor Físico (Radiación Directa >= 80, Índice UV >= 2.5, Radiación Global >= 120 W/m²) & Nowcasting a Corto Plazo: Desempate óptico ante nubes teóricas del modelo en la Estación en Vivo y limitación estricta a la hora en curso y siguiente hora inmediata en el pronóstico horario (72h) y gráfico (48h), preservando intacta la predicción sinóptica general a 10 días y frentes nocturnos con versión oficial v1.0.81 (SW `v181-triplesolar2`).
 - Subidas continuas a GitHub (`zeustata/tiempo`).
 
 
