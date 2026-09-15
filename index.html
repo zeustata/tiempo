@@ -231,6 +231,7 @@
             <span class="release-date">02 Sep 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> <strong>Calibración Solar Inteligente (Desempate Físico en Vivo)</strong>: Corrección en tiempo real de la discrepancia de los supercomputadores cuando calculan cielo cubierto al 100% (código WMO 3) pero el satélite en directo detecta radiación solar directa perpendicular en superficie (> 100 W/m²) sin lluvia. La tarjeta principal de la Estación en Vivo y el cielo ambiental se reclasifican automáticamente a <em>Sol y Nubes / Claros</em> respetando la realidad visible en Asturias.</li>
             <li><span class="tag tag-new">Nuevo</span> <strong>Observatorio Astronómico Filtrado & Calendario Completo 2026-2027</strong>: Exclusión automática de acontecimientos culminados en el pasado para mostrar con nitidez exclusivamente los fenómenos celestes activos y futuros. Ampliación del catálogo astronómico hasta finales de 2027 (Cuadrántidas, Líridas, el Gran Eclipse Solar del 2 de Agosto de 2027 con oscurecimiento ~85% en Asturias, Perseidas 2027 y Superluna) con conteo dinámico de días y semáforo de visibilidad cantábrica.</li>
             <li><span class="tag tag-new">Nuevo</span> <strong>Marcador Radar GPS Sutil & Despeje Total de Chubascos (Feedback Tester)</strong>: Sustitución de la pastilla flotante opaca central por un marcador circular sutil tipo pulso GPS/radar con halo animado translúcido. Elimina cualquier bloqueo u ocultación visual de borrascas, frentes marinos y pequeños chubascos en la localidad enfocada. El nombre del concejo se traslada limpiamente a un chip indicador en la cabecera del radar y en un tooltip táctil sobre el punto.</li>
 
@@ -1557,7 +1558,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.81-solarcalib').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.81-solarcalib2').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1578,7 +1579,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.81-solarcalib"></script>
+  <script type="module" src="js/app.js?v=1.0.81-solarcalib2"></script>
 
 
 
