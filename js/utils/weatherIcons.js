@@ -37,7 +37,7 @@ export const WMO_CODES = {
   99: { label: 'Tormenta con granizo fuerte', icon: '⛈️', svgKey: 'storm', lucide: 'cloud-lightning', bg: 'storm', isRain: true, isSnow: false }
 };
 
-export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null) {
+export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null, directIrradiance = null) {
   let base = WMO_CODES[code] || { label: 'Variable', icon: '⛅', svgKey: 'cloudy', lucide: 'cloud', bg: 'cloudy', isRain: false, isSnow: false };
 
   const isNight = isDay === 0 || isDay === false;
@@ -131,6 +131,29 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
           isSnow: false
         };
       }
+    }
+  }
+
+  // 3. Calibración Solar Inteligente (Desempate Físico de Cobertura Nubosa en Asturias)
+  // Si el modelo numérico predijo cielo "Cubiertu / Nublado" (código 3 o svgKey 'cloudy'), es de día, no llueve
+  // y la radiación solar directa supera los 100 W/m² (demostrando que el haz solar directo atraviesa la atmósfera
+  // y proyecta sombra en el suelo): reclasificar automáticamente a "Parcialmente nublado / Claros de sol".
+  if (!isNight && !base.isRain && (base.svgKey === 'cloudy' || code === 3)) {
+    const irr = directIrradiance != null ? parseFloat(directIrradiance) : 0;
+    const p = precipitation != null ? Math.max(0, parseFloat(precipitation)) : 0;
+    const prob = (pop !== null && pop !== undefined) ? Math.max(0, parseFloat(pop)) : 0;
+
+    if (p < 0.1 && prob < 35 && irr >= 100) {
+      base = {
+        label: 'Parcialmente nublado / Claros',
+        icon: '⛅',
+        svgKey: 'partly-cloudy-day',
+        lucide: 'cloud-sun',
+        bg: 'partly-cloudy',
+        isRain: false,
+        isSnow: false,
+        isSolarCalibrated: true
+      };
     }
   }
 

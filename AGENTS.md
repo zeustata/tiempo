@@ -79,3 +79,5 @@
    - Tarjetas translúcidas puras sin filtros gaussianos `backdrop-filter: blur` que tapen o destruyan la visualización de las partículas vivas de lluvia, nieve, niebla o sol en movimiento de fondo.
 6. **Frase de Despegue:**
    - La orden oficial para iniciar tareas aprobadas es *"¡Písale!"* (en honor a Star Trek).
+7. **Calibración Solar Inteligente de Nubosidad:**
+   - Desempate físico de cobertura nubosa: si los modelos numéricos devuelven código WMO 3 (Cubierto) de día sin lluvia, pero la radiación solar directa en superficie supera los 100 W/m² (`direct_normal_irradiance >= 100`), se reclasifica automáticamente a *Parcialmente nublado / Claros de sol* para respetar la realidad lumínica observable en el Principado.

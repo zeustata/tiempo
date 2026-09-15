@@ -14,6 +14,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ## [1.0.81] - 2026-09-02
 
+### ☀️ Calibración Solar Inteligente de Nubosidad (Desempate Físico)
+- **Desempate Óptico de Cobertura Nubosa**: Corrección de la discrepancia de supercomputador cuando los modelos numéricos devuelven código WMO 3 (*Cubiertu / Nublado al 100%*) en jornadas donde la realidad en superficie es de amplios claros de sol o nubes altas translúcidas (ej. rasa costera de Castrillón y valles asturianos).
+- **Asimilación de Radiación Solar Directa (`direct_normal_irradiance`)**: Consulta en tiempo real del haz de radiación directa solar perpendicular en superficie tanto en `current` como en `hourly`. Si es de día, no hay lluvia registrada ni inminente (`precipitation < 0.1 mm` y `pop < 35%`) y la radiación solar directa supera los **100 W/m²**, el estado del cielo y el tema visual se reclasifican automáticamente a **`⛅ Parcialmente nublado / Claros`**.
+- **Coherencia Integral en Dashboard y Gráficas**: Sincronización en la tarjeta Hero de la Estación en Vivo, en el fondo dinámico de atmósfera y en el carrusel de pronóstico horario de 72 horas.
+- **Service Worker `v181-solarcalib` & Anti-Caché**: Actualización de cadenas de caché en `sw.js`, `index.html`, `app.js`, `currentCard.js`, `forecastView.js` y `weatherIcons.js`.
+
 ### 🔭 Observatorio Astronómico Filtrado & Calendario Completo 2026-2027
 - **Filtro Automático de Fenómenos Pasados**: Exclusión rigurosa en tiempo real de los acontecimientos astronómicos cuya fecha de finalización ya ha culminado respecto al momento actual (`endDate >= now`), eliminando el ruido visual de eventos obsoletos.
 - **Ampliación Integral del Calendario Celeste (2026 - 2027)**: Registro exhaustivo de los mayores acontecimientos astronómicos visibles desde Asturias y España:
