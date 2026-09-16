@@ -55,18 +55,24 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     }
   }
 
-  // 2. Graduación y coherencia inteligente de lluvia (REGLA DE ORO DE PROBABILIDAD)
+  // 2. Graduación y coherencia de lluvia física (LA PROBABILIDAD NUNCA INVENTA LLUVIA)
   if (precipitation !== null || pop !== null) {
     const p = precipitation != null ? Math.max(0, parseFloat(precipitation)) : 0;
     const hasPop = pop !== null && pop !== undefined;
     const prob = hasPop ? Math.max(0, parseFloat(pop)) : null;
 
-    // Si ya está cayendo precipitación física cuantificable (p >= 0.1 mm) o el código es de lluvia
+    // Lluvia física real medible en pluviómetro (>= 0.1 mm) o código WMO explícito de lluvia
     const isPhysicallyRaining = p >= 0.1;
     const isExplicitRainCode = base.isRain || base.svgKey === 'drizzle' || base.svgKey === 'rain' || base.svgKey === 'storm';
 
-    // REGLA DE ORO 1: Solo anulamos a 'Nublado' si hay probabilidad explícita < 20% Y no hay lluvia física (p < 0.1) Y no es código de lluvia moderada/fuerte
-    if (hasPop && prob < 20 && !isPhysicallyRaining && code !== 61 && code !== 63 && code !== 65 && code !== 81 && code !== 82 && code !== 95 && code !== 96 && code !== 99) {
+    // REGLA 1: Si el código base es de tiempo seco (sol, claros, nublado) y no cae lluvia física (p < 0.1 mm),
+    // la probabilidad estadística jamás transforma el cielo en lluvia. Se respeta el estado del cielo.
+    if (!isPhysicallyRaining && !isExplicitRainCode) {
+      // El estado base (despejado, parcialmente nublado, cubierto, etc.) se preserva intacto
+    }
+    // REGLA 2: Si el modelo traía un código de lluvia pero la probabilidad es ínfima (< 20%) y no cae lluvia física (p < 0.1):
+    // anular a 'Nublado' para evitar falsas alarmas
+    else if (hasPop && prob < 20 && !isPhysicallyRaining && code !== 61 && code !== 63 && code !== 65 && code !== 81 && code !== 82 && code !== 95 && code !== 96 && code !== 99) {
       if (isExplicitRainCode) {
         base = {
           label: isNight ? 'Nublado de noche' : 'Nublado / Cubiertu',
@@ -79,8 +85,8 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
         };
       }
     }
-    // REGLA DE ORO 2: Si hay probabilidad apreciable (>= 20%) o hay lluvia física o código de lluvia
-    else if ((hasPop && prob >= 20) || isPhysicallyRaining || isExplicitRainCode) {
+    // REGLA 3: Solo se califica como lluvia si hay agua física cayendo (p >= 0.1 mm) o el código es de lluvia confirmado
+    else if (isPhysicallyRaining || isExplicitRainCode) {
       const isStorm = code === 95 || code === 96 || code === 99;
 
       // Caso A: Tormenta eléctrica real (códigos WMO 95, 96, 99) -> ÚNICO caso con rayo
@@ -107,8 +113,8 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
           isSnow: false
         };
       }
-      // Caso C: Lluvia moderada (prob >= 45% o p >= 0.5 mm o códigos 61/63/81) -> Gotas alegres, SIN RAYO
-      else if ((hasPop && prob >= 45) || p >= 0.5 || code === 61 || code === 63 || code === 81) {
+      // Caso C: Lluvia moderada (p >= 0.5 mm o códigos 63 / 81 o código 61 con lluvia física >= 0.2 mm)
+      else if (p >= 0.5 || code === 63 || code === 81 || (code === 61 && p >= 0.2)) {
         base = {
           label: 'Lluvia moderada',
           icon: '🌧️',
@@ -119,7 +125,7 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
           isSnow: false
         };
       }
-      // Caso D: Orbayu / Llovizna ligera (prob 20-44% o p >= 0.1 mm o códigos 51/53/55/80)
+      // Caso D: Orbayu / Llovizna ligera (p >= 0.1 mm o códigos 51/53/55/56/57/80/61)
       else {
         base = {
           label: isNight ? 'Orbayu nocturno ligero' : 'Orbayu / Llovizna ligera',
@@ -134,20 +140,19 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     }
   }
 
-  // 3. Calibración Solar Inteligente (Triple Sensor Físico de Cobertura Nubosa en Asturias)
-  // Si el modelo numérico predijo cielo "Cubiertu / Nublado" (código 3 o svgKey 'cloudy'), es de día, no llueve
-  // y cualquiera de los 3 sensores solares físicos confirma luz activa (radiación directa >= 80 W/m²,
-  // o índice UV >= 2.5, o radiación global de onda corta >= 120 W/m²): reclasificar a "Parcialmente nublado / Claros".
-  if (!isNight && !base.isRain && (base.svgKey === 'cloudy' || code === 3)) {
+  // 3. Calibración Solar Inteligente (Triple Sensor Físico de Radiación en Asturias)
+  // Si es de día, no cae precipitación física en el suelo (p < 0.1 mm) y cualquiera de los 3 sensores físicos
+  // confirma luz solar activa (radiación directa >= 80 W/m², índice UV >= 2.5 o radiación global >= 120 W/m²):
+  // prevalece la realidad física del cielo: reclasificar a "Parcialmente nublado / Claros"
+  if (!isNight) {
     const irr = directIrradiance != null ? parseFloat(directIrradiance) : 0;
     const uv = uvIndex != null ? parseFloat(uvIndex) : 0;
     const sw = shortwaveRadiation != null ? parseFloat(shortwaveRadiation) : 0;
     const p = precipitation != null ? Math.max(0, parseFloat(precipitation)) : 0;
-    const prob = (pop !== null && pop !== undefined) ? Math.max(0, parseFloat(pop)) : 0;
 
     const hasRealSolarLight = irr >= 80 || uv >= 2.5 || sw >= 120;
 
-    if (p < 0.1 && prob < 35 && hasRealSolarLight) {
+    if (p < 0.1 && hasRealSolarLight && (base.isRain || base.svgKey === 'cloudy' || code === 3 || base.svgKey === 'fog')) {
       base = {
         label: 'Parcialmente nublado / Claros',
         icon: '⛅',
