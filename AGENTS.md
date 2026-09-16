@@ -62,13 +62,16 @@
 - **Activación Exclusiva para Pruebas Previas:** El servidor local y su enlace directo a `localhost` (ejemplo: `👉 [http://localhost:8080](http://localhost:8080)`) se habilitarán **única y exclusivamente para el proyecto que se esté modificando y probando en ese momento, antes de subirlo a la red**.
 - **Inspección sin Servidores Residuales:** Su finalidad es que Lendo compruebe en su propio navegador el resultado real de los cambios antes de dar el visto bueno de despliegue. Una vez aprobado y subido a GitHub (o cerrada la tarea), se detiene el servicio para no dejar procesos ni puertos residuales en la máquina.
 
+### 10. Memoria Permanente y Actualización Obligatoria de Recuerdos (`RECUERDOS.md`)
+- **Registro Técnico Exhaustivo Obligatorio:** Con cada actualización, mejora, corrección de errores o despliegue en cualquier proyecto, es obligatorio actualizar con el máximo rigor y detalle técnico el archivo de memoria permanente (`RECUERDOS.md` y/o `CHANGELOG.md`).
+- **Inclusión en el Commit y Despliegue:** La memoria actualizada debe incluirse siempre en el `git commit` y subirse a GitHub (`zeustata/[nombre-proyecto]`) en cada sincronización. Ninguna tarea o actualización se dará por finalizada sin haber guardado y subido su correspondiente recuerdo técnico.
 
 ---
 
 ## 📑 PARTE II: LEYES ESPECÍFICAS DEL PROYECTO: METEOASTUR LODE (TIEMPO)
 
 1. **Versionado y Registro de Cambios:**
-   - Incrementar obligatoriamente el número de versión (ej. ciclo oficial `v1.x.x`) en el badge del pie (`#app-version-badge` en `index.html`), en el modal de historial y en `CHANGELOG.md` *(salvo en fases de revisión de tiendas de apps como Google Play donde deba preservarse la versión bajo examen)*.
+   - Incrementar obligatoriamente el número de versión (ej. ciclo oficial `v1.x.x`) en el badge del pie (`#app-version-badge` en `index.html`), en el modal de historial, en `CHANGELOG.md` y en `RECUERDOS.md` *(salvo en fases de revisión de tiendas de apps como Google Play donde deba preservarse la versión bajo examen)*.
 2. **Catálogo de Concejos Inmutable:**
    - Los **78 concejos oficiales de Asturias** deben estar permanentemente disponibles con búsqueda insensible a acentos y sus puntos estratégicos.
 3. **Motor Armónico Autónomo de Mareas del Cantábrico:**

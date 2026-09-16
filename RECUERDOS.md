@@ -28,6 +28,7 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
      - El badge del pie de página (`#app-version-badge` en `index.html`).
      - El historial del modal de versiones (`#version-modal` en `index.html`).
      - El archivo `CHANGELOG.md`.
+     - El archivo de memoria permanente `RECUERDOS.md` (Constitución Suprema, Art. 10).
 
 4. 🚀 **Versión Oficial 1.0.0**:
    - Culminación de la fase beta y publicación de la versión oficial `1.0.0` para su despliegue y lanzamiento en Google Play Store.
@@ -197,6 +198,9 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - Preservación de Versión Oficial y Novedades del Modal: Se mantiene la versión oficial `v1.0.81 🚀` en el pie de página y cabecera del historial por encontrarse en fase de revisión de Google Play / pruebas beta, actualizando la fecha al 15 Sep 2026 y encabezando el modal de historial con la explicación pedagógica del Triple Sensor y Nowcasting.
   - Anti-Caché Garantizado: Cadena de caché renovada a `v181-triplesolar3` en `sw.js` e `index.html`.
 - Subidas continuas a GitHub (`zeustata/tiempo`).
+- **Incorporación del Artículo 10 a la Constitución Suprema (Memoria Permanente y Actualización Obligatoria de Recuerdos - `RECUERDOS.md`)**:
+  - Reforma constitucional universal aprobada por Lendo mediante verificación con PIN de seguridad de 4 cifras.
+  - Obligatoriedad de registrar con máximo rigor y detalle técnico cada mejora, ajuste o versión en `RECUERDOS.md` e incluirlo en el commit y despliegue a GitHub (`zeustata/[nombre-proyecto]`). Ninguna tarea se da por cerrada sin haber guardado y subido su recuerdo.
 
 
 
