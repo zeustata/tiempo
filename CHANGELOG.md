@@ -12,6 +12,23 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ---
 
+## [1.0.82] - 2026-09-16
+
+### 🌧️ Armonización Hidrometeorológica Coherente (QPF-PoP)
+- **Eliminación de la Paradoja Estadística (PoP vs QPF)**: Corrección del fallo clásico de modelos numéricos donde el ensamble probabilístico global arrojaba 0% de probabilidad en una celda puntual a pesar de que el modelo determinista de alta resolución preveía acumulación cuantitativa apreciable (ej. 0.7 mm con WMO 55 de llovizna densa / *orvayu* en Castrillón).
+- **Filtro de Coherencia Física y Estadística (Estilo AccuWeather / Pelmorex)**:
+  - Implementación de la escala de suelo mínimo de probabilidad según el volumen acumulado:
+    - `>= 2.0 mm` (lluvia fuerte): suelo mínimo del 85%.
+    - `>= 1.0 mm` (lluvia moderada): suelo mínimo del 75%.
+    - `>= 0.5 mm` (chubasco / orvayu denso): suelo mínimo del 65%.
+    - `>= 0.2 mm` (llovizna constante): suelo mínimo del 45%.
+    - `>= 0.1 mm` o código WMO de llovizna/lluvia/nieve (51-67, 71-77, 80-86, 95-99): suelo mínimo del 30%.
+    - `0.0 mm`: preserva al 100% la probabilidad original devuelta por el ensamble.
+- **Sincronización Transversal**: Procesamiento centralizado en `weatherApi.js` (`harmonizeWeatherPrecipitation`), propagando los valores armonizados al pronóstico horario de 72 horas, gráficos evolutivos de 48 horas, tarjeta en vivo (Nowcasting) y resúmenes diarios a 10 días.
+- **Service Worker `v182-harmony` & Anti-Caché**: Actualización de cadenas en `sw.js` e `index.html`.
+
+---
+
 ## [1.0.81] - 2026-09-02
 
 ### ☀️ Calibración Solar Inteligente de Nubosidad & Triple Sensor en Nowcasting

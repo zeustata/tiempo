@@ -94,6 +94,10 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
 
     const [weather, aqi, marine] = await Promise.all([weatherPromise, aqiPromise, marinePromise]);
 
+    if (weather) {
+      harmonizeWeatherPrecipitation(weather);
+    }
+
     return {
       success: true,
       weather,
@@ -109,3 +113,70 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
     };
   }
 }
+
+/**
+ * Armonización Hidrometeorológica Coherente (QPF-PoP):
+ * Filtro de coherencia física y estadística similar al empleado por AccuWeather y eltiempo.es (Pelmorex).
+ * Evita la paradoja visual de mostrar 0% de probabilidad cuando el modelo
+ * determinista cuantitativo (QPF) prevé lluvia o llovizna apreciable (>= 0.1 mm)
+ * o códigos WMO de precipitación activa en Asturias.
+ */
+function harmonizeWeatherPrecipitation(weather) {
+  if (!weather || !weather.hourly || !weather.hourly.time) return;
+
+  const hourly = weather.hourly;
+  const hasPop = Array.isArray(hourly.precipitation_probability);
+  const hasPrecip = Array.isArray(hourly.precipitation);
+  const hasCodes = Array.isArray(hourly.weather_code);
+
+  if (!hasPop || !hasPrecip) return;
+
+  for (let i = 0; i < hourly.time.length; i++) {
+    const rawPop = hourly.precipitation_probability[i] || 0;
+    const precip = hourly.precipitation[i] || 0;
+    const code = hasCodes ? hourly.weather_code[i] : null;
+
+    // Códigos WMO de precipitación: lloviznas, lluvias, nieve, granizo, chubascos, tormentas
+    const isPrecipCode = (
+      (code >= 51 && code <= 67) ||
+      (code >= 71 && code <= 77) ||
+      (code >= 80 && code <= 86) ||
+      (code >= 95 && code <= 99)
+    );
+
+    let minPop = 0;
+    if (precip >= 2.0) {
+      minPop = 85;
+    } else if (precip >= 1.0) {
+      minPop = 75;
+    } else if (precip >= 0.5) {
+      minPop = 65;
+    } else if (precip >= 0.2) {
+      minPop = 45;
+    } else if (precip >= 0.1) {
+      minPop = 30;
+    } else if (isPrecipCode) {
+      minPop = 30;
+    }
+
+    if (minPop > 0) {
+      hourly.precipitation_probability[i] = Math.max(rawPop, minPop);
+    }
+  }
+
+  // Sincronizar daily.precipitation_probability_max si existe
+  if (weather.daily && Array.isArray(weather.daily.time) && Array.isArray(weather.daily.precipitation_probability_max)) {
+    const daily = weather.daily;
+    for (let d = 0; d < daily.time.length; d++) {
+      const dayDateStr = daily.time[d];
+      let dayMaxPop = 0;
+      for (let i = 0; i < hourly.time.length; i++) {
+        if (hourly.time[i].startsWith(dayDateStr)) {
+          const p = hourly.precipitation_probability[i] || 0;
+          if (p > dayMaxPop) dayMaxPop = p;
+        }
+      }
+      daily.precipitation_probability_max[d] = Math.max(daily.precipitation_probability_max[d] || 0, dayMaxPop);
+    }
+  }
+}

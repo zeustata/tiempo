@@ -215,4 +215,18 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - *Cadena Anti-Caché*: Actualizada a `v181-reallight` en `sw.js`, `index.html` y módulos JS.
   - *Preservación de Versión*: Mantenida la versión pública en `v1.0.81 🚀` por revisión de Google Play Console.
   - *Validación*: Probado unitariamente en Node.js y levantado servidor local en puerto 8080 para comprobación visual directa por Lendo.
-
+- **Armonización Hidrometeorológica Coherente (QPF-PoP - Corrección de Paradoja de Lluvia en Pronóstico Horario)**:
+  - *Contexto y Observación de Lendo*: Al consultar el pronóstico horario de 72 horas para Castrillón a las 17:00 h, se visualizaba una paradoja meteorológica evidente: un `0%` de probabilidad de lluvia junto a un volumen previsto de `0.7 mm` y código WMO de precipitación.
+  - *Diagnóstico Científico*: Open-Meteo entrega dos fuentes de cómputo distintas. La probabilidad (PoP) procede del modelo por conjuntos (*ensemble* de 30-50 miembros a escala global de 15-25 km de cuadrícula), donde ligeras desviaciones espaciales sitúan los chubascos fuera de la celda puntual dando 0% estadístico. En cambio, el volumen cuantitativo (QPF, 0.7 mm) procede de la simulación determinista de alta resolución (1-2 km), que modela con precisión la orografía costera asturiana y detecta la condensación real (código WMO 55: llovizna densa / *orvayu*).
+  - *Solución Meteorológica Inspirada en AccuWeather y Pelmorex/eltiempo.es*:
+    - Implementación de la función `harmonizeWeatherPrecipitation` en `js/services/weatherApi.js`.
+    - Escala de coherencia física progresiva:
+      * `precip >= 2.0 mm`: suelo mínimo de probabilidad del 85%.
+      * `precip >= 1.0 mm`: suelo mínimo de probabilidad del 75%.
+      * `precip >= 0.5 mm` (chubasco u orvayu notable): suelo mínimo de probabilidad del 65%.
+      * `precip >= 0.2 mm` (llovizna constante): suelo mínimo de probabilidad del 45%.
+      * `precip >= 0.1 mm` o código WMO de precipitación activa (51-67, 71-77, 80-86, 95-99): suelo mínimo del 30%.
+      * `precip == 0.0 mm`: se respeta al 100% el valor original devuelto por el ensemble.
+    - Se recalcula `hourly.precipitation_probability` con `Math.max(rawPop, minPop)` y se sincroniza automáticamente `daily.precipitation_probability_max`.
+    - Se beneficia todo el ecosistema de visualización de forma unificada: Pronóstico 72h (`forecastView.js`), Gráficos 48h (`chartsView.js`), Tarjeta en Vivo y Pluviómetro (`currentCard.js`), Comparador y Avisos.
+  - *Versionado & Anti-Caché*: Incremento a `v1.0.82 🚀` en badge del footer, modal de novedades y `CHANGELOG.md`. Cadena de caché renovada a `meteoasturlode-v182-harmony` en `sw.js` e `index.html`.

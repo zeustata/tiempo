@@ -21,7 +21,7 @@
   <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
 
   <!-- Manifest PWA (Cross-platform Android / Windows / iOS) -->
-  <link rel="manifest" href="manifest.json?v=1.0.81-fullscreen">
+  <link rel="manifest" href="manifest.json?v=1.0.82-harmony">
 
   <!-- Leaflet CSS & JS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.81-silklock">
-  <link rel="stylesheet" href="css/components.css?v=1.0.81-fullscreen">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.81-fullscreen">
+  <link rel="stylesheet" href="css/main.css?v=1.0.82-harmony">
+  <link rel="stylesheet" href="css/components.css?v=1.0.82-harmony">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.82-harmony">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -176,7 +176,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.81 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.0.82 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -227,8 +227,18 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.81 🚀</span>
-            <span class="release-date">15 Sep 2026 (Actual)</span>
+            <span class="release-version">v1.0.82 🚀</span>
+            <span class="release-date">16 Sep 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> <strong>Armonización Hidrometeorológica Coherente (QPF-PoP)</strong>: Eliminación de la paradoja visual clásica de los modelos numéricos que mostraba 0% de probabilidad con lluvia o llovizna apreciable prevista (ej. 0.7 mm en Castrillón). Implementación de un filtro de coherencia física y estadística inspirado en AccuWeather y Pelmorex/eltiempo.es: cuando el modelo determinista de alta resolución calcula acumulación o detecta orvayu/llovizna densa (WMO 51-67, 80-86), la probabilidad se armoniza progresivamente asegurando una lectura limpia y fidedigna en las 72h, gráficas de 48h y tarjetas diarias.</li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.0.81</span>
+            <span class="release-date">15 Sep 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-new">Nuevo</span> <strong>Calibración Solar Inteligente (Triple Sensor & Nowcasting)</strong>: Detección física real de sol ante nubes teóricas del modelo en la Estación en Vivo mediante 3 vías independientes (radiación directa >= 80 W/m², Índice UV >= 2.5 o radiación global de onda corta >= 120 W/m²) sin lluvia. Se aplica al tiempo en vivo y exclusivamente a la siguiente hora inmediata del pronóstico horario (72h) y gráfico (48h), preservando intacta la predicción sinóptica general a 10 días y frentes futuros.</li>
@@ -1558,7 +1568,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.81-reallight').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.82-harmony').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1579,7 +1589,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.81-reallight"></script>
+  <script type="module" src="js/app.js?v=1.0.82-harmony"></script>
 
 
 
