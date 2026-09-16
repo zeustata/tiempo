@@ -198,10 +198,13 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - Preservación de Versión Oficial y Novedades del Modal: Se mantiene la versión oficial `v1.0.81 🚀` en el pie de página y cabecera del historial por encontrarse en fase de revisión de Google Play / pruebas beta, actualizando la fecha al 15 Sep 2026 y encabezando el modal de historial con la explicación pedagógica del Triple Sensor y Nowcasting.
   - Anti-Caché Garantizado: Cadena de caché renovada a `v181-triplesolar3` en `sw.js` e `index.html`.
 - Subidas continuas a GitHub (`zeustata/tiempo`).
+- **Volumen de Precipitación Horario (mm) en Pronóstico 72 Horas**:
+  - *Contexto y Necesidad*: Observado por Lendo que el pluviómetro solo mostraba el acumulado general del día en la estación de sensores, faltando ver el volumen esperado hora a hora bajo el porcentaje de probabilidad de lluvia.
+  - *Implementación Técnica*: En `js/components/forecastView.js`, se integra bajo el contenedor de probabilidad (`.h-pop`) el nuevo indicador `.h-precip` que muestra el volumen físico en milímetros previsto para cada una de las 72 horas (`precipMm.toFixed(1) + ' mm'`). Si no llueve (`< 0.1 mm`), se muestra un discreto `0.0 mm` en tono atenuado; si llueve (`>= 0.1 mm`), se destaca en cian con fondo translúcido (`.precip-active`) y en bastinazu (`>= 2.0 mm`) con halo cian intenso (`.precip-heavy`).
+  - *Ajuste Estético Compacto*: En `css/components.css`, se ajusta sutilmente el espaciado interior (`padding: 13px 10px`) y entre elementos (`gap: 7px`) de `.hourly-card`, manteniendo la altura uniforme y compacta de las tarjetas en móviles y escritorio.
+  - *Preservación de Versión*: Por indicación expresa de Lendo debido a la fase de pruebas y revisión de tienda en curso, se preserva la versión pública en `v1.0.81 🚀` sin saltar a la 82, actualizando la cadena de caché anti-obsolescencia a `v181-hourlyprecip` en `sw.js`, `index.html` y módulos JS correspondientes.
+  - *Validación Local*: Servidor local levantado en puerto 8080 para comprobación visual directa previa.
 - **Incorporación del Artículo 10 a la Constitución Suprema (Memoria Permanente y Actualización Obligatoria de Recuerdos - `RECUERDOS.md`)**:
   - Reforma constitucional universal aprobada por Lendo mediante verificación con PIN de seguridad de 4 cifras.
   - Obligatoriedad de registrar con máximo rigor y detalle técnico cada mejora, ajuste o versión en `RECUERDOS.md` e incluirlo en el commit y despliegue a GitHub (`zeustata/[nombre-proyecto]`). Ninguna tarea se da por cerrada sin haber guardado y subido su recuerdo.
-
-
-
 

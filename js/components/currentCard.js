@@ -1,6 +1,6 @@
 import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.0.81-triplesolar';
 import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.0.81-nav-clean';
-import { renderHourlyForecastBlock } from './forecastView.js?v=1.0.81-triplesolar2';
+import { renderHourlyForecastBlock } from './forecastView.js?v=1.0.81-hourlyprecip';
 
 /**
  * Renderiza el dashboard principal con alineación uniforme y todos los sensores de la estación
