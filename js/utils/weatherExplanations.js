@@ -23,7 +23,7 @@ export const WEATHER_EXPLANATIONS = {
       {
         icon: '🌧️',
         heading: '3. Borrasca (< 1013 hPa) • Bajas Presiones',
-        text: 'El aire "pesa poco" y asciende rápidamente. Al subir, se enfría, se condensa y genera <strong>frentes de nubes densas, lluvias, viento y tormentas</strong>.'
+        text: 'El aire "pesa poco" y asciende rápidamente. Al subir, se enfría, se condensa y genera <strong>frentes de nubes densas, lluvias, viento y tormentas</strong>.<br><button class="link-open-phenomena" data-phenomenon="vaguada">📖 ¿Diferencia entre Borrasca, Vaguada y DANA?</button>'
       },
       {
         icon: '📈',

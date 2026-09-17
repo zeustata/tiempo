@@ -230,3 +230,30 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     - Se recalcula `hourly.precipitation_probability` con `Math.max(rawPop, minPop)` y se sincroniza automáticamente `daily.precipitation_probability_max`.
     - Se beneficia todo el ecosistema de visualización de forma unificada: Pronóstico 72h (`forecastView.js`), Gráficos 48h (`chartsView.js`), Tarjeta en Vivo y Pluviómetro (`currentCard.js`), Comparador y Avisos.
   - *Versionado & Anti-Caché*: Incremento a `v1.0.82 🚀` en badge del footer, modal de novedades y `CHANGELOG.md`. Cadena de caché renovada a `meteoasturlode-v182-harmony` en `sw.js` e `index.html`.
+- **Diccionario Didáctico de Fenómenos Meteorológicos (Vaguada, Borrasca, DANA, Galerna y Dinámica Cantábrica - v1.0.83)**:
+  - *Génesis de la Necesidad (Propuesta de Lendo)*: Lendo observó en las noticias y partes del tiempo cómo se mencionaba reiteradamente el término "vaguada", constatando la confusión generalizada en la sociedad entre vaguada, borrasca, DANA y otros conceptos meteorológicos clave. Propuso integrar en la app un menú/glosario específico para explicar y diferenciar de forma nítida estos fenómenos.
+  - *Arquitectura del Módulo (`js/utils/weatherPhenomena.js`)*:
+    - Creación de un catálogo didáctico con 10 fenómenos fundamentales clasificados en 3 categorías temáticas (*Grandes Sistemas*, *Asturias & Cantábrico*, *Frentes & Nubes*):
+      1. **Vaguada**: Ondulación en 'V' en niveles medios/altos (~5.500 m / 500 hPa). No es una borrasca en superficie, sino una chimenea de inestabilidad que fuerza el ascenso y disparo convectivo.
+      2. **Borrasca**: Centro cerrado de bajas presiones (< 1013 hPa) con giro ciclónico antihorario y frentes asociados.
+      3. **DANA (Gota Fría)**: Depresión Aislada en Niveles Altos originada por el estrangulamiento de una vaguada por el *jet stream*, quedando como bolsa fría errática.
+      4. **Ciclogénesis Explosiva**: Borrasca con caída barométrica vertiginosa (>= 18-24 hPa en 24 horas) apodada "bomba meteorológica".
+      5. **Galerna Cantábrica**: Fenómeno brusco y letal del litoral cantábrico con giro súbito a viento del NO de 80-100+ km/h y caída térmica de 10 °C en minutos.
+      6. **Frentes Atmosféricos**: Choque entre masas de aire; explicación detallada de frente frío (azul/triángulos), frente cálido (rojo/semicírculos) y frente ocluido (morado).
+      7. **Anticiclón y Dorsal**: Región de altas presiones con subsidencia (aire descendente que disipa nubosidad y asegura estabilidad).
+      8. **Viento Sur (Efecto Foehn)**: Ábrego recalentado y seco que baja por la vertiente norte de la Cordillera Cantábrica a razón de 1 °C por cada 100 m, disparando el termómetro y el riesgo de incendios.
+      9. **Niebla Marina ("Borrina")**: Advección costera sobre aguas frías que invade arenales cantábricos en verano bajando bruscamente la temperatura.
+      10. **Inversión Térmica & Mar de Nubes**: Inversión vertical donde los fondos de valle amanecen gélidos bajo niebla cerrada mientras los puertos de montaña registran sol radiante y temperaturas templadas.
+    - Cada ficha contiene 4 campos obligatorios: *💡 ¿Qué es exactamente?*, *⚙️ ¿Cómo se forma?*, *🏔️ ¿Qué tiempo deja en Asturias?* y *🔍 Astucia y Curiosidad*.
+  - *Diseño UI & Experiencia de Usuario*:
+    - Modal Liquid Glass `#phenomena-modal` con diseño limpio directo sin sobrecarga (omisión de buscador y pastillas de filtro por decisión de diseño de Lendo), maximizando el espacio vertical para una lectura clara de las tarjetas.
+    - Acordeón interactivo fluido: clic en la cabecera despliega/contrae la tarjeta con microanimaciones, abriendo por defecto la *Vaguada* al iniciarse.
+  - *Integración y Puntos de Entrada*:
+    - Acceso prioritario en el modal de Menú principal (`#nav-modal`) mediante botón de acceso rápido `📖 Diccionario de Fenómenos`.
+    - Botón `📖 Fenómenos` en la barra de herramientas del *Radar Cantábrico* (`#panel-radar`).
+    - Enlace cruzado interactivo dentro de la explicación del barómetro (`weatherExplanations.js`) para resolver la duda en un clic.
+  - *Preservación Estricta de Versión Pública (v1.0.81 🚀) & Anti-Caché*:
+    - Por indicación directa y expresa de Lendo por encontrarse la aplicación en fase de pruebas activas y revisión de tienda (Google Play Store), se preserva de forma estricta la versión pública oficial en `v1.0.81 🚀` en el badge del pie (`#app-version-badge`), en el modal de novedades y en `CHANGELOG.md` sin saltar de versión.
+    - Se garantiza el refresco anti-obsolescencia mediante la cadena de caché `v181-clean` en `sw.js` (`meteoasturlode-v181-clean`), `index.html` y módulos ES.
+    - Corrección arquitectónica del modal de fenómenos: ajuste de `.modal-phenomena-card` con `padding: 0 !important`, `.phenomena-modal-body` con `flex: 1 1 auto; min-height: 0; overflow-y: auto;` y `.phenomena-card` con `flex-shrink: 0; min-height: 56px;` para eliminar el colapso vertical en navegadores de escritorio y móvil.
+

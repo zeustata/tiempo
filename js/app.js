@@ -14,7 +14,8 @@ import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.0.81';
 import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.0.81';
 import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.0.81';
 import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.0.81';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.81-models';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.83-phenomena';
+import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.0.83-phenomena';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, pronóstico horario 72h y alertas', key: '1' },
@@ -50,6 +51,7 @@ class MeteoAsturiasApp {
     this.setupIconThemesModal();
     this.setupModelModal();
     this.setupExplainModal();
+    this.setupPhenomenaModal();
     this.setupEventListeners();
     this.setupQuickSearch();
     this.setupPwaInstall();
@@ -827,6 +829,18 @@ class MeteoAsturiasApp {
       }
     });
 
+    // Enlace directo desde las explicaciones hacia el Diccionario de Fenómenos
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('.link-open-phenomena');
+      if (!link) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const targetId = link.dataset.phenomenon || null;
+      if (this.openPhenomenaModal) {
+        this.openPhenomenaModal(targetId);
+      }
+    });
+
     // Delegación global para interruptor deslizante segmentado de previsión de surf (Horario 3h vs Extendido 7 Días)
     document.addEventListener('click', (e) => {
       const switchOption = e.target.closest('.surf-switch-option');
@@ -854,6 +868,131 @@ class MeteoAsturiasApp {
         }
       }
     });
+  }
+
+  setupPhenomenaModal() {
+    const modal = document.getElementById('phenomena-modal');
+    const closeBtn = document.getElementById('btn-close-phenomena');
+    const listContainer = document.getElementById('phenomena-list-container');
+    const triggerInNav = document.getElementById('btn-open-phenomena');
+    const triggerInRadar = document.getElementById('btn-radar-phenomena');
+
+    if (!modal || !listContainer) return;
+
+    let expandedId = null;
+
+    // Renderizado directo de las tarjetas con acordeón interactivo
+    const renderList = () => {
+      listContainer.innerHTML = WEATHER_PHENOMENA.map(p => {
+        const isExpanded = p.id === expandedId;
+        return `
+          <div class="phenomena-card ${isExpanded ? 'expanded' : ''}" id="phenomenon-card-${p.id}" data-id="${p.id}">
+            <div class="phenomena-header">
+              <div class="phenomena-header-left">
+                <span class="phenomena-icon">${p.icon}</span>
+                <div class="phenomena-header-info">
+                  <div class="phenomena-title-row">
+                    <h4 class="phenomena-title">${p.title}</h4>
+                    <span class="phenomena-tag">${p.tag}</span>
+                  </div>
+                  <p class="phenomena-summary">${p.summary}</p>
+                </div>
+              </div>
+              <span class="phenomena-chevron">▶</span>
+            </div>
+            <div class="phenomena-details">
+              <div class="phenomena-section-box">
+                <h5 class="phenomena-section-title">💡 ¿Qué es exactamente?</h5>
+                <div class="phenomena-section-body">${p.whatIs}</div>
+              </div>
+              <div class="phenomena-section-box">
+                <h5 class="phenomena-section-title">⚙️ ¿Cómo se forma?</h5>
+                <div class="phenomena-section-body">${p.howItForms}</div>
+              </div>
+              <div class="phenomena-section-box">
+                <h5 class="phenomena-section-title">🏔️ ¿Qué tiempo deja en Asturias?</h5>
+                <div class="phenomena-section-body">${p.asturiasEffect}</div>
+              </div>
+              <div class="phenomena-section-box">
+                <h5 class="phenomena-section-title">🔍 Astucia y Curiosidad</h5>
+                <div class="phenomena-section-body">${p.curiosity}</div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Delegación de eventos para acordeón al hacer clic en el encabezado
+      listContainer.querySelectorAll('.phenomena-header').forEach(header => {
+        header.addEventListener('click', () => {
+          this.triggerHaptic();
+          const card = header.closest('.phenomena-card');
+          const id = card.dataset.id;
+          expandedId = expandedId === id ? null : id;
+          renderList();
+          if (expandedId) {
+            const el = document.getElementById(`phenomenon-card-${expandedId}`);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+        });
+      });
+    };
+
+    // Función de apertura unificada (puede abrir con un fenómeno preseleccionado)
+    const openPhenomena = (targetId = null) => {
+      this.triggerHaptic();
+      expandedId = targetId || null; // Todas cerradas por defecto salvo que se pase una específica
+      renderList();
+      this.openModal(modal);
+      if (expandedId) {
+        setTimeout(() => {
+          const el = document.getElementById(`phenomenon-card-${expandedId}`);
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 120);
+      }
+    };
+
+    this.openPhenomenaModal = openPhenomena;
+
+    if (triggerInNav) {
+      triggerInNav.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        openPhenomena();
+      });
+    }
+
+    if (triggerInRadar) {
+      triggerInRadar.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        openPhenomena();
+      });
+    }
+
+    // Delegación global para botones con .btn-open-phenomena o .link-open-phenomena
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.btn-open-phenomena, .link-open-phenomena');
+      if (!btn) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const id = btn.dataset.phenomenon || null;
+      openPhenomena(id);
+    });
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        this.closeModal(modal);
+      });
+    }
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        this.closeModal(modal);
+      }
+    });
+
+    renderList();
   }
 
   switchTab(targetTab, direction = null) {

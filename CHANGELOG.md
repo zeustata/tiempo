@@ -10,16 +10,29 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
----
+## [1.0.81] - 2026-09-17 (Fase de Pruebas Activa)
 
-## [1.0.82] - 2026-09-16
-
-### 🌧️ Armonización Hidrometeorológica Coherente (QPF-PoP)
-- **Eliminación de la Paradoja Estadística (PoP vs QPF)**: Corrección del fallo clásico de modelos numéricos donde el ensamble probabilístico global arrojaba 0% de probabilidad en una celda puntual a pesar de que el modelo determinista de alta resolución preveía acumulación cuantitativa apreciable (ej. 0.7 mm con WMO 55 de llovizna densa / *orvayu* en Castrillón).
-- **Filtro de Coherencia Física y Estadística (Estilo AccuWeather / Pelmorex)**:
-  - Implementación de la escala de suelo mínimo de probabilidad según el volumen acumulado:
-    - `>= 2.0 mm` (lluvia fuerte): suelo mínimo del 85%.
-    - `>= 1.0 mm` (lluvia moderada): suelo mínimo del 75%.
+### 📖 Diccionario Didáctico de Fenómenos Meteorológicos (Vaguada, Borrasca, DANA, Galerna y más)
+- **Nuevo Módulo Didáctico e Interactivo**: Creación de un diccionario especializado (`js/utils/weatherPhenomena.js`) con 10 grandes fenómenos atmosféricos explicados en lenguaje claro, riguroso y adaptado al clima asturiano:
+  - *Vaguada*: Inestabilidad en altura y chimenea de tormentas.
+  - *Borrasca*: Centro cerrado de bajas presiones en superficie y frentes.
+  - *DANA (Gota Fría)*: Depresión aislada en niveles altos descolgada del chorro polar.
+  - *Ciclogénesis Explosiva*: La "bomba" meteorológica con caída rápida de presión.
+  - *Galerna Cantábrica*: El zarpazo súbito del Noroeste, desplome térmico y galernazo.
+  - *Frentes Atmosféricos*: Líneas de choque frío, cálido y ocluido.
+  - *Anticiclón y Dorsal*: Muro de estabilidad, subsidencia y sol.
+  - *Viento Sur / Efecto Foehn*: El Ábrego seco y cálido que recalienta la vertiente norte asturiana.
+  - *Niebla Marina ("Borrina")*: Advección costera veraniega en las playas.
+  - *Inversión Térmica & Mar de Nubes*: El mundo al revés en los valles asturianos.
+- **Ventana Modal Liquid Glass y Acordeón Limpio**:
+  - Modal interactivo `#phenomena-modal` sin elementos de saturación visual (sin buscador ni pastillas de filtro), centrado directamente en las 10 tarjetas didácticas con diseño limpio y máxima visibilidad.
+  - Tarjetas desplegables con estructura fija en 4 bloques didácticos: *¿Qué es exactamente?*, *¿Cómo se forma?*, *¿Qué tiempo deja en Asturias?* y *Astucia y Curiosidad*.
+- **Puntos de Entrada Estratégicos**:
+  - Acceso directo en el Menú principal de la app (`#nav-modal`) con botón de acceso destacado.
+  - Botón directo `📖 Fenómenos` en la barra de herramientas del *Radar Cantábrico*.
+  - Enlace contextual dentro de la explicación del barómetro (`weatherExplanations.js`) para resolver la duda común entre Borrasca, Vaguada y DANA.
+- **Armonización Hidrometeorológica Coherente (QPF-PoP)**: Corrección del fallo clásico de modelos numéricos donde el ensamble probabilístico global arrojaba 0% de probabilidad con lluvia o llovizna apreciable prevista (ej. 0.7 mm en Castrillón). Implementación de filtro físico progresivo (suelo del 30% al 85% de probabilidad según volumen o código WMO de precipitación).
+- **Anti-Caché & Service Worker `v181-clean`**: Sincronización de cadenas de versión en `sw.js`, `index.html` y módulos ES preservando la versión pública v1.0.81 bajo examen.
     - `>= 0.5 mm` (chubasco / orvayu denso): suelo mínimo del 65%.
     - `>= 0.2 mm` (llovizna constante): suelo mínimo del 45%.
     - `>= 0.1 mm` o código WMO de llovizna/lluvia/nieve (51-67, 71-77, 80-86, 95-99): suelo mínimo del 30%.
