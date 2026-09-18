@@ -37,7 +37,7 @@ export const WMO_CODES = {
   99: { label: 'Tormenta con granizo fuerte', icon: '⛈️', svgKey: 'storm', lucide: 'cloud-lightning', bg: 'storm', isRain: true, isSnow: false }
 };
 
-export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null, directIrradiance = null, uvIndex = null, shortwaveRadiation = null) {
+export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null, directIrradiance = null, uvIndex = null, shortwaveRadiation = null, cloudCover = null) {
   let base = WMO_CODES[code] || { label: 'Variable', icon: '⛅', svgKey: 'cloudy', lucide: 'cloud', bg: 'cloudy', isRain: false, isSnow: false };
 
   const isNight = isDay === 0 || isDay === false;
@@ -140,17 +140,31 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     }
   }
 
-  // 3. Calibración Solar Inteligente (Triple Sensor Físico de Radiación en Asturias)
-  // Si es de día, no cae precipitación física en el suelo (p < 0.1 mm) y cualquiera de los 3 sensores físicos
-  // confirma luz solar activa (radiación directa >= 80 W/m², índice UV >= 2.5 o radiación global >= 120 W/m²):
-  // prevalece la realidad física del cielo: reclasificar a "Parcialmente nublado / Claros"
+  // 3. Calibración Solar Inteligente (Triple Sensor Físico de Radiación & Protección de Cobertura Nubosa 100%)
+  // Si es de día y no cae precipitación física en el suelo (p < 0.1 mm):
+  // - Si el cielo está sellado al 100% de nubes (cloud_cover === 100): la luz diurna difusa del mediodía
+  //   (UV 2-3, SW 400-500) NO falsea sol si el disco solar está oculto. Solo reclasifica si el UV es demoledor (>= 4.5),
+  //   demostrando sol real que quema.
+  // - Si la cobertura nubosa es muy alta (90-99%): exige radiación directa potente (>= 150 W/m²) o UV alto (>= 4.0).
+  // - Si la cobertura es < 90%: basta con radiación directa activa (>= 80 W/m²), UV alto (>= 4.0) o radiación global (> 550 W/m²).
   if (!isNight) {
     const irr = directIrradiance != null ? parseFloat(directIrradiance) : 0;
     const uv = uvIndex != null ? parseFloat(uvIndex) : 0;
     const sw = shortwaveRadiation != null ? parseFloat(shortwaveRadiation) : 0;
     const p = precipitation != null ? Math.max(0, parseFloat(precipitation)) : 0;
+    const cc = cloudCover != null ? parseFloat(cloudCover) : null;
 
-    const hasRealSolarLight = irr >= 80 || uv >= 2.5 || sw >= 120;
+    let hasRealSolarLight = false;
+    if (cc !== null && cc >= 100) {
+      // 100% cubierto: solo desempata si la radiación UV confirma sol directo que quema (sol real)
+      hasRealSolarLight = (uv >= 4.5);
+    } else if (cc !== null && cc >= 90) {
+      // Cobertura 90-99%: requiere radiación directa perceptible o UV alto
+      hasRealSolarLight = (irr >= 150 || uv >= 4.0 || (irr >= 80 && sw >= 500));
+    } else {
+      // Cobertura < 90% o sin dato de nubosidad: desempate por sensores de radiación
+      hasRealSolarLight = (irr >= 80 || uv >= 4.0 || sw >= 550);
+    }
 
     if (p < 0.1 && hasRealSolarLight && (base.isRain || base.svgKey === 'cloudy' || code === 3 || base.svgKey === 'fog')) {
       base = {

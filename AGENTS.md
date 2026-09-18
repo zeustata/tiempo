@@ -82,8 +82,11 @@
    - Tarjetas translúcidas puras sin filtros gaussianos `backdrop-filter: blur` que tapen o destruyan la visualización de las partículas vivas de lluvia, nieve, niebla o sol en movimiento de fondo.
 6. **Frase de Despegue:**
    - La orden oficial para iniciar tareas aprobadas es *"¡Písale!"* (en honor a Star Trek).
-7. **Calibración Solar Inteligente de Nubosidad & Triple Sensor en Nowcasting:**
-   - Desempate físico de cobertura nubosa: si los modelos numéricos devuelven código WMO 3 (Cubierto) de día sin lluvia, pero cualquiera de los 3 sensores físicos confirma sol activo (radiación directa `>= 80 W/m²`, Índice UV `>= 2.5` o radiación global de onda corta `>= 120 W/m²`), se reclasifica automáticamente a *Parcialmente nublado / Claros de sol*.
+7. **Calibración Solar Inteligente de Nubosidad & Triple Sensor con Blindaje Anti-Nublado 100%:**
+   - Desempate físico de cobertura nubosa: si los modelos numéricos devuelven código WMO 3 (Cubierto) de día sin lluvia, se evalúa la radiación real con protección de cobertura nubosa:
+     - Si el cielo está sellado al 100% de nubes (`cloud_cover === 100`): la luz diurna difusa del mediodía cantábrico NO falsea sol; solo se reclasifica a claros si el Índice UV es demoledor (`>= 4.5`), confirmando sol directo real que quema.
+     - Si la cobertura es de 90-99%: se exige radiación directa potente (`>= 150 W/m²`), UV alto (`>= 4.0`) o radiación global intensa con directa (`>= 80 W/m²` y SW `>= 500 W/m²`).
+     - Si la cobertura es menor de 90%: desempata con radiación directa activa (`>= 80 W/m²`), UV alto (`>= 4.0`) o SW `> 550 W/m²`.
    - Principio de Nowcasting estricto: la calibración se aplica al tiempo en vivo y exclusivamente a la hora en curso y siguiente hora inmediata en el pronóstico horario (72h) y gráfico (48h), preservando al 100% la predicción sinóptica general del modelo para las horas posteriores y el pronóstico extendido a 10 días.
 8. **Armonización Hidrometeorológica Coherente (QPF-PoP):**
    - Eliminación de la paradoja física entre la probabilidad estadística por conjuntos (PoP) y el volumen determinista (QPF): si el modelo cuantitativo prevé lluvia apreciable (`>= 0.1 mm`) o códigos WMO de precipitación (51-67, 71-77, 80-86, 95-99), la probabilidad de precipitación nunca puede ser 0% ni inferior al suelo de coherencia progresivo (30% a 85% según los mm acumulados). Esta regla asegura consistencia visual fidedigna e inequívoca en las 72h, gráficos de 48h y tarjetas diarias en toda Asturias.

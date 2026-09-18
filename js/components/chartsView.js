@@ -1,4 +1,4 @@
-import { getWeatherInfo } from '../utils/weatherIcons.js?v=1.0.81-reallight';
+import { getWeatherInfo } from '../utils/weatherIcons.js?v=1.0.81-solarcalibrate';
 
 /**
  * Generador de gráficos de evolución horaria (48h) con scroll horizontal interactivo en móviles
@@ -61,7 +61,8 @@ export function renderWeatherChart(canvasId, hourlyData, hoursCount = 48) {
     const useDirectIrr = (isImmediateNextHour && hourlyData.direct_normal_irradiance && hourlyData.direct_normal_irradiance[i] != null) ? hourlyData.direct_normal_irradiance[i] : null;
     const useSw = (isImmediateNextHour && hourlyData.shortwave_radiation && hourlyData.shortwave_radiation[i] != null) ? hourlyData.shortwave_radiation[i] : null;
 
-    const wInfo = getWeatherInfo(wCode, isDay, precipMm, pop, useDirectIrr, useUv, useSw);
+    const cloudCoverHour = (hourlyData.cloud_cover && hourlyData.cloud_cover[i] != null) ? hourlyData.cloud_cover[i] : null;
+    const wInfo = getWeatherInfo(wCode, isDay, precipMm, pop, useDirectIrr, useUv, useSw, cloudCoverHour);
     weatherDescriptions.push(`${wInfo.icon} ${wInfo.label}${precipMm >= 0.1 ? ` (${precipMm.toFixed(1)} mm)` : ''}`);
 
     temps.push(hourlyData.temperature_2m[i]);

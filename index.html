@@ -234,7 +234,7 @@
           <ul class="changelog-list">
             <li><span class="tag tag-new">Nuevo</span> <strong>Diccionario Didáctico de Fenómenos Meteorológicos</strong>: Acceso interactivo en el Menú principal y en la barra del Radar Cantábrico para aprender a diferenciar con claridad y rigor científico los grandes fenómenos del tiempo: <em>Vaguada</em> (inestabilidad en altura y chimenea de tormentas), <em>Borrasca</em> (baja presión cerrada con frentes), <em>DANA / Gota Fría</em> (bolsa aislada errática), <em>Ciclogénesis Explosiva</em> ("bomba" meteorológica), <em>Galerna Cantábrica</em> (el zarpazo súbito del Noroeste), <em>Frentes</em> (frío, cálido, ocluido), <em>Anticiclón y Dorsal</em>, <em>Viento Sur / Efecto Foehn</em>, <em>Niebla Marina ("Borrina")</em> e <em>Inversión Térmica & Mar de Nubes</em>. Incluye buscador en vivo, filtros temáticos por categoría y explicaciones adaptadas al relieve y clima de Asturias.</li>
             <li><span class="tag tag-new">Nuevo</span> <strong>Armonización Hidrometeorológica Coherente (QPF-PoP)</strong>: Eliminación de la paradoja visual clásica de los modelos numéricos que mostraba 0% de probabilidad con lluvia o llovizna apreciable prevista (ej. 0.7 mm en Castrillón). Implementación de un filtro de coherencia física y estadística inspirado en AccuWeather y Pelmorex/eltiempo.es: cuando el modelo determinista de alta resolución calcula acumulación o detecta orvayu/llovizna densa (WMO 51-67, 80-86), la probabilidad se armoniza progresivamente asegurando una lectura limpia y fidedigna en las 72h, gráficas de 48h y tarjetas diarias.</li>
-            <li><span class="tag tag-new">Nuevo</span> <strong>Calibración Solar Inteligente (Triple Sensor & Nowcasting)</strong>: Detección física real de sol ante nubes teóricas del modelo en la Estación en Vivo mediante 3 vías independientes (radiación directa >= 80 W/m², Índice UV >= 2.5 o radiación global de onda corta >= 120 W/m²) sin lluvia. Se aplica al tiempo en vivo y exclusivamente a la siguiente hora inmediata del pronóstico horario (72h) y gráfico (48h), preservando intacta la predicción sinóptica general a 10 días y frentes futuros.</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Calibración Solar Inteligente con Blindaje Anti-Nublado 100%</strong>: Detección física real de sol ante nubes teóricas del modelo en la Estación en Vivo con protección estricta ante cielos 100% cubiertos (solo desempata si la radiación ultravioleta confirma sol directo real con UV >= 4.5) y elevación del umbral diurno a UV >= 4.0 para evitar falsos claros por mera dispersión de nubes blancas al mediodía cantábrico. En pronóstico horario (72h) y gráfico (48h) se aplica bajo principio de Nowcasting preservando la previsión general a 10 días.</li>
             <li><span class="tag tag-new">Nuevo</span> <strong>Observatorio Astronómico Filtrado & Calendario Completo 2026-2027</strong>: Exclusión automática de acontecimientos culminados en el pasado para mostrar con nitidez exclusivamente los fenómenos celestes activos y futuros. Ampliación del catálogo astronómico hasta finales de 2027 (Cuadrántidas, Líridas, el Gran Eclipse Solar del 2 de Agosto de 2027 con oscurecimiento ~85% en Asturias, Perseidas 2027 y Superluna) con conteo dinámico de días y semáforo de visibilidad cantábrica.</li>
             <li><span class="tag tag-new">Nuevo</span> <strong>Marcador Radar GPS Sutil & Despeje Total de Chubascos (Feedback Tester)</strong>: Sustitución de la pastilla flotante opaca central por un marcador circular sutil tipo pulso GPS/radar con halo animado translúcido. Elimina cualquier bloqueo u ocultación visual de borrascas, frentes marinos y pequeños chubascos en la localidad enfocada. El nombre del concejo se traslada limpiamente a un chip indicador en la cabecera del radar y en un tooltip táctil sobre el punto.</li>
             <li><span class="tag tag-new">Nuevo</span> <strong>Blindaje Offline & Modo Batería Inteligente</strong>: Actualización del estado de conexión a <em>🟢 Online</em> / <em>🔴 Offline</em>. Al perder cobertura o activar modo avión, el reloj se congela en tono gélido/escarchado mostrando la hora exacta de la última previsión guardada (<em>❄️ HH:MM</em>), preservando intactos todos los paneles del tiempo y las mareas astronómicas en memoria. Incorpora optimización automática de fotogramas del lienzo de partículas si la batería desciende del 20%.</li>
@@ -1582,7 +1582,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.81-collapsed').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.81-solarcalibrate').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1603,7 +1603,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.81-collapsed"></script>
+  <script type="module" src="js/app.js?v=1.0.81-solarcalibrate"></script>
 
 
 

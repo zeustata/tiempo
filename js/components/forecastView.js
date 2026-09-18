@@ -1,4 +1,4 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection } from '../utils/weatherIcons.js?v=1.0.81-reallight';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection } from '../utils/weatherIcons.js?v=1.0.81-solarcalibrate';
 
 /**
  * Calcula la condición meteorológica representativa para un tramo horario (ej. mañana o tarde)
@@ -115,7 +115,8 @@ export function renderHourlyForecastBlock(data, units = 'metric', iconTheme = 'a
     const useUv = isImmediateNextHour ? liveUv : null;
     const useSw = isImmediateNextHour ? liveSw : null;
 
-    const weather = getWeatherInfo(code, isDay, precipMm, pop, useDirectIrr, useUv, useSw);
+    const cloudCoverHour = (hourly.cloud_cover && hourly.cloud_cover[i] != null) ? hourly.cloud_cover[i] : null;
+    const weather = getWeatherInfo(code, isDay, precipMm, pop, useDirectIrr, useUv, useSw, cloudCoverHour);
     const temp = Math.round(hourly.temperature_2m[i]);
     const windSpeed = units === 'knots' ? (hourly.wind_speed_10m[i] * 0.539957).toFixed(0) : Math.round(hourly.wind_speed_10m[i]);
     const windDeg = (hourly.wind_direction_10m && hourly.wind_direction_10m[i] != null) ? hourly.wind_direction_10m[i] : 0;

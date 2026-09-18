@@ -1,6 +1,6 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.0.81-reallight';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.0.81-solarcalibrate';
 import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.0.81-nav-clean';
-import { renderHourlyForecastBlock } from './forecastView.js?v=1.0.81-hourlyprecip';
+import { renderHourlyForecastBlock } from './forecastView.js?v=1.0.81-solarcalibrate';
 
 /**
  * Renderiza el dashboard principal con alineación uniforme y todos los sensores de la estación
@@ -16,7 +16,8 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   const directIrr = current.direct_normal_irradiance != null ? current.direct_normal_irradiance : null;
   const currentUv = current.uv_index != null ? current.uv_index : (hourly?.uv_index && hourly.uv_index[currentHour] != null ? hourly.uv_index[currentHour] : null);
   const currentSw = current.shortwave_radiation != null ? current.shortwave_radiation : null;
-  const weatherInfo = getWeatherInfo(current.weather_code, current.is_day, current.precipitation, currentPop, directIrr, currentUv, currentSw);
+  const currentCloud = current.cloud_cover != null ? current.cloud_cover : (hourly?.cloud_cover && hourly.cloud_cover[currentHour] != null ? hourly.cloud_cover[currentHour] : null);
+  const weatherInfo = getWeatherInfo(current.weather_code, current.is_day, current.precipitation, currentPop, directIrr, currentUv, currentSw, currentCloud);
   const windDir = getWindDirection(current.wind_direction_10m || 0);
   const uvVal = (daily.uv_index_max && daily.uv_index_max[0] != null) ? daily.uv_index_max[0] : (hourly.uv_index && hourly.uv_index[new Date().getHours()] != null ? hourly.uv_index[new Date().getHours()] : null);
   const uvInfo = getUVDescription(uvVal);

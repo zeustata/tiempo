@@ -256,4 +256,19 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     - Por indicación directa y expresa de Lendo por encontrarse la aplicación en fase de pruebas activas y revisión de tienda (Google Play Store), se preserva de forma estricta la versión pública oficial en `v1.0.81 🚀` en el badge del pie (`#app-version-badge`), en el modal de novedades y en `CHANGELOG.md` sin saltar de versión.
     - Se garantiza el refresco anti-obsolescencia mediante la cadena de caché `v181-clean` en `sw.js` (`meteoasturlode-v181-clean`), `index.html` y módulos ES.
     - Corrección arquitectónica del modal de fenómenos: ajuste de `.modal-phenomena-card` con `padding: 0 !important`, `.phenomena-modal-body` con `flex: 1 1 auto; min-height: 0; overflow-y: auto;` y `.phenomena-card` con `flex-shrink: 0; min-height: 56px;` para eliminar el colapso vertical en navegadores de escritorio y móvil.
+- **Calibración Solar Inteligente con Blindaje Anti-Nublado 100% (Corrección de Falsos Claros al Mediodía - 18 Sep 2026)**:
+  - *Contexto & Diagnóstico en Directo*: Lendo constató desde Piedras Blancas (Castrillón) que, tras llevar nublado varias horas con cielo estratiforme blanquecino y sin rastro del sol ("la verdad es que está bastante claro el cielo pero sin rastro del sol"), la app mostraba sol y nubes (icono de sol tras nube grande `⛅`, Parcialmente nublado / Claros).
+  - *Investigación de Modelos & Datos Físicos*:
+    - Todos los modelos numéricos de Open-Meteo (AROME, ICON, GFS y ECMWF) coincidían de forma unánime en WMO 3 (Cubierto) y cobertura nubosa del 100% (`cloud_cover: 100`).
+    - Sin embargo, el filtro de Calibración Solar Inteligente (creado el 15 de septiembre) se disparaba porque los cálculos del modelo daban `direct_normal_irradiance: 473.5 W/m²`, `uv_index: 2.80` y `shortwave_radiation: 504.6 W/m²`, superando los umbrales permisivos previos (`uv >= 2.5` o `sw >= 120`).
+    - Se comprobó que al mediodía cantábrico en verano/septiembre, una capa de nubes blancas finas genera suficiente radiación difusa para dar UV de 2.5-3.0 sin que exista sol directo en superficie.
+  - *Blindaje Físico y Solución Algorítmica*:
+    - En `js/utils/weatherIcons.js`, `getWeatherInfo` asimila el parámetro `cloudCover`.
+    - Blindaje de Cobertura 100%: si el modelo marca un cielo sellado al 100% de nubes (`cloud_cover >= 100`), la radiación difusa queda bloqueada y solo se permite reclasificar a claros si el Índice UV es demoledor (`uv >= 4.5`), demostrando sol real que quema en superficie (como el 5.85 UV registrado el 15 Sep en Salinas).
+    - Para coberturas casi totales (90-99%): se exige radiación directa potente (`irr >= 150 W/m²`) o UV alto (`uv >= 4.0`).
+    - Para coberturas inferiores a 90%: se eleva el umbral diurno a `uv >= 4.0` o `sw >= 550 W/m²`.
+    - Sincronización completa en componentes: `currentCard.js` pasa `current.cloud_cover`, `forecastView.js` y `chartsView.js` pasan `hourly.cloud_cover[i]`, y `app.js` en `applyDynamicWeatherTheme`.
+  - *Preservación de Versión Pública (v1.0.81 🚀) & Anti-Caché*:
+    - Se mantiene la versión pública oficial `v1.0.81 🚀` en badge del footer y cabecera del historial por fase de revisión de Google Play Store.
+    - Cadena de caché renovada a `v181-solarcalibrate` en `sw.js` (`meteoasturlode-v181-solarcalibrate`), `index.html` y query strings de submódulos JavaScript.
 
