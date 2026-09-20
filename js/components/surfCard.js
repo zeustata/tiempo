@@ -61,27 +61,34 @@ export function calculateWaveEnergy(heightM, periodS, secondaryHeightM = 0, seco
   let icon = '🟢';
   let desc = 'Olas dóciles con poco empuje. Excelente para escuelas, principiantes y longboard.';
 
-  if (rawKj >= 1200) {
-    label = 'Pesada (Solo Expertos)';
+  if (rawKj >= 1100) {
+    label = 'Pesada (Extrema / Solo Expertos)';
     shortLabel = 'Pesada';
     badgeClass = 'energy-extreme';
     color = '#ef4444';
     icon = '🔴';
-    desc = 'Gran potencia y masa de agua con fuertes corrientes. Solo surfistas expertos.';
-  } else if (rawKj >= 500) {
-    label = 'Potente (Tubos / Consistente)';
-    shortLabel = 'Potente';
+    desc = 'Gran potencia y masa de agua con fuertes corrientes y resacas. Rompientes mayores.';
+  } else if (rawKj >= 650) {
+    label = 'Muy Potente (Tubos / Nivel Alto)';
+    shortLabel = 'Muy Potente';
     badgeClass = 'energy-high';
+    color = '#a855f7';
+    icon = '🟣';
+    desc = 'Mucha masa de agua y velocidad. Fondos que rompen con decisión y tubos huecos.';
+  } else if (rawKj >= 350) {
+    label = 'Sólida (Exigente / Buen Tamaño)';
+    shortLabel = 'Sólida';
+    badgeClass = 'energy-solid';
     color = '#f97316';
     icon = '🟠';
-    desc = 'Mucha fuerza y empuje. Paredes consistentes, huecas y tubulares.';
-  } else if (rawKj >= 200) {
-    label = 'Óptima (Divertida / Shortboard)';
-    shortLabel = 'Óptima';
+    desc = 'Olas consistentes y de gran empuje. Exige remada, experiencia y buena colocación.';
+  } else if (rawKj >= 180) {
+    label = 'Divertida (Shortboard & Evolutiva)';
+    shortLabel = 'Divertida';
     badgeClass = 'energy-optimal';
     color = '#fbbf24';
     icon = '🟡';
-    desc = 'Potencia ideal y buen empuje para maniobras con tabla corta y evolutiva.';
+    desc = 'Zona dulce de arenales para olas nobles (1.0m a 1.5m). Buen empuje para maniobras.';
   }
 
   return {
@@ -120,8 +127,8 @@ function evaluateSurfQuality(waveHeight, wavePeriod, windCondition, waveEnergy =
     };
   }
 
-  // 2. Mar realmente duro / Temporal / Oleaje masivo (> 3m o > 1200 kJ)
-  if (h >= 3.0 || energyKj >= 1200) {
+  // 2. Mar realmente duro / Temporal / Oleaje masivo (> 3m o > 1100 kJ)
+  if (h >= 3.0 || energyKj >= 1100) {
     return {
       status: '⚠️ Mar Fuerte / Oleaje Duro y Masivo',
       badge: 'Mar Duro / Pro',
@@ -132,8 +139,21 @@ function evaluateSurfQuality(waveHeight, wavePeriod, windCondition, waveEnergy =
     };
   }
 
-  // 3. Sesión Épica (Mar de fondo de calidad, período largo y viento peinando la ola)
-  if (h >= 0.8 && h <= 2.5 && p >= 11 && isOffshoreOrGlassy) {
+  // 3. Saturación / Mar Pasado en Arenales Abiertos (>= 1.9m o >= 400 kJ con >= 1.8m)
+  // Caso de Edu en Salinas: 2.1m y 486 kJ donde la barra revienta de golpe
+  if (h >= 1.9 || (energyKj >= 400 && h >= 1.8)) {
+    return {
+      status: '⚠️ Mar Pasado en Arenales / Barras Cerronas',
+      badge: 'Mar Pasado / Fuerte',
+      color: '#f97316',
+      bg: '#f9731622',
+      border: '#f97316',
+      desc: 'Oleaje desfasado para arenales abiertos (como Salinas o San Lorenzo). Las series cierran en bloque con fuertes corrientes de resaca. Recomendado buscar calas o esquinas al abrigo (ej. El Espartal, Luanco) o surfistas expertos.'
+    };
+  }
+
+  // 4. Sesión Épica (Mar de fondo de calidad, período largo y viento peinando la ola)
+  if (h >= 0.8 && h <= 1.8 && p >= 11 && isOffshoreOrGlassy) {
     return {
       status: '🔥 Sesión Épica / Olas Excelentes',
       badge: 'Excelente',
@@ -144,7 +164,7 @@ function evaluateSurfQuality(waveHeight, wavePeriod, windCondition, waveEnergy =
     };
   }
 
-  // 4. Buenas condiciones con período medio/largo (p >= 9s)
+  // 5. Buenas condiciones con período medio/largo (p >= 9s)
   if (p >= 9) {
     if (isOnshore) {
       return {
@@ -412,6 +432,7 @@ export function renderSurfCard(data, concejo) {
 
   // Calidad global del swell
   const surfQuality = evaluateSurfQuality(waveHeight, wavePeriod, surfWind, waveEnergy);
+  const isBeachBreakOverload = (parseFloat(waveHeight) >= 1.9) || (parseFloat(swellHeight) >= 1.9) || (waveEnergy.kj >= 400 && parseFloat(waveHeight) >= 1.8);
 
   // Temperatura del mar y traje unificada
   const seaTemp = getSeaWaterTemperature(marine);
@@ -482,6 +503,11 @@ export function renderSurfCard(data, concejo) {
               ? `⚡ Energía Combinada: <strong>${waveEnergy.primaryKj} kJ</strong> (Swell 1) + <strong>${waveEnergy.secondaryKj} kJ</strong> (Swell 2)` 
               : waveEnergy.desc}
           </div>
+          ${isBeachBreakOverload ? `
+            <div style="margin-top: 8px; padding: 7px 11px; background: rgba(249, 115, 22, 0.15); border: 1px solid rgba(249, 115, 22, 0.4); border-radius: 8px; font-size: 0.74rem; color: #fdba74; line-height: 1.35;">
+              ⚠️ <strong>Aviso para Arenales Abiertos:</strong> Con ${waveHeight}m y ${waveEnergy.kj} kJ, playas abiertas como Salinas o San Lorenzo suelen saturarse en barras cerronas continuas con fuertes corrientes. Recomendado buscar calas o esquinas al abrigo.
+            </div>
+          ` : ''}
         </div>
 
         <!-- Temperatura Marina y Traje Recomendado -->

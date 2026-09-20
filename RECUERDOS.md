@@ -268,7 +268,22 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     - Para coberturas casi totales (90-99%): se exige radiación directa potente (`irr >= 150 W/m²`) o UV alto (`uv >= 4.0`).
     - Para coberturas inferiores a 90%: se eleva el umbral diurno a `uv >= 4.0` o `sw >= 550 W/m²`.
     - Sincronización completa en componentes: `currentCard.js` pasa `current.cloud_cover`, `forecastView.js` y `chartsView.js` pasan `hourly.cloud_cover[i]`, y `app.js` en `applyDynamicWeatherTheme`.
+- **Calibración Fiel de Rompiente & Detector de Mar Pasado en Arenales Abiertos (Feedback Edu - Salinas 20 Sep 2026)**:
+  - *Contexto & Detección de Edu*: En Salinas (Castrillón), con condiciones marítimas reales de 2,1 metros de altura de ola, 10 segundos de período y 486 kJ de energía combinada, la aplicación mostraba la etiqueta '🟡 Óptima (Divertida / Shortboard)'. Edu alertó a Lendo con fotografía del rompiente mostrando cómo la playa estaba completamente pasada de olas, con barras cerronas masivas y fuertes corrientes de resaca, resultando engañoso calificarla como 'divertida/óptima'.
+  - *Diagnóstico Físico*: La escala anterior agrupaba de 200 a 500 kJ como 'Óptima (Divertida)', por lo que 486 kJ (producidos por 2,1 m y 10 s) quedaba encasillada como accesible. En arenales abiertos cantábricos (beach breaks como Salinas o San Lorenzo), cuando el mar sobrepasa los 1,8-2,0 metros, las barras de arena se saturan, cerrando en bloque de extremo a extremo e imposibilitando el surfing recreativo noble.
+  - *Solución Algorítmica y Reajuste Escalonado (`js/components/surfCard.js`)*:
+    1. Reajuste de los escalones de energía (kJ) a 5 niveles fisiológicos y oceanográficos reales:
+       - `< 180 kJ`: 🟢 Suave (Iniciación / Longboard / Poca fuerza).
+       - `180 a 349 kJ`: 🟡 Divertida (Shortboard & Evolutiva / Zona dulce de olas nobles de 1,0 m a 1,5 m).
+       - `350 a 649 kJ`: 🟠 Sólida (Exigente / Buen tamaño / 1,6 m a 2,2 m / Remada y experiencia; reclasifica los 486 kJ de Salinas).
+       - `650 a 1099 kJ`: 🟣 Muy Potente (Tubos / Nivel alto / Velocidad y fondos huecos).
+       - `>= 1100 kJ`: 🔴 Pesada (Extrema / Solo expertos / Rompientes mayores y corrientes intensas).
+    2. Detector Inteligente de Saturación en Arenales Abiertos (`evaluateSurfQuality`):
+       - Condición: `h >= 1.9 m` o `(energyKj >= 400 && h >= 1.8 m)`.
+       - Reclasificación automática de la rompiente a: `⚠️ Mar Pasado en Arenales / Barras Cerronas` (Badge: `Mar Pasado / Fuerte`), informando al surfista de series cerronas y resacas, recomendando esquinas abrigadas (El Espartal, Luanco).
+       - Aviso contextual visual integrado en la tarjeta de energía (`surf-energy-widget`).
+  - *Suite Didáctica Sincronizada (`js/utils/weatherExplanations.js`)*:
+    - Actualización de los 5 niveles en la explicación de kiloJulios (`surf_energy`) y adición de la pauta de saturación en arenales dentro de 'Astucia en los Picos de Asturias'.
   - *Preservación de Versión Pública (v1.0.81 🚀) & Anti-Caché*:
-    - Se mantiene la versión pública oficial `v1.0.81 🚀` en badge del footer y cabecera del historial por fase de revisión de Google Play Store.
-    - Cadena de caché renovada a `v181-solarcalibrate` en `sw.js` (`meteoasturlode-v181-solarcalibrate`), `index.html` y query strings de submódulos JavaScript.
-
+    - Mantenida la versión pública en `v1.0.81 🚀` en el badge del footer y en el modal de novedades para no interferir en la revisión de Google Play Store.
+    - Cadena de caché renovada a `meteoasturlode-v181-edusurf` en `sw.js`, `index.html` y query strings de submódulos JavaScript.

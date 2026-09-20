@@ -12,6 +12,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ## [1.0.81] - 2026-09-17 (Fase de Pruebas Activa)
 
+### 🏄‍♂️ Calibración de Oleaje & Detector de Mar Pasado en Arenales (Feedback Edu)
+- **Reajuste de Escalones de Energía (kJ)**: Ampliación de la escala a 5 escalones precisos para evitar clasificar como "divertidas" olas de más de 2 metros:
+  - *< 180 kJ*: 🟢 **Suave** (Iniciación / Longboard / Poca fuerza).
+  - *180 a 349 kJ*: 🟡 **Divertida** (Shortboard & Evolutiva / Zona dulce de arenales nobles de 1,0 m a 1,5 m).
+  - *350 a 649 kJ*: 🟠 **Sólida** (Exigente / Buen tamaño / 1,6 m a 2,2 m / Remada y experiencia).
+  - *650 a 1.099 kJ*: 🟣 **Muy Potente** (Tubos / Nivel alto / Fondos huecos y velocidad).
+  - *≥ 1.100 kJ*: 🔴 **Pesada** (Extrema / Solo expertos / Rompientes mayores y fuertes resacas).
+- **Detector de Saturación en Arenales Abiertos (Beach Break Overload)**:
+  - Detección en vivo cuando las olas superan los **1,9 metros** o la energía supera los **400 kJ** con alturas $\ge$ **1,8 metros** (ej. Salinas con 2,1 m y 486 kJ).
+  - La condición de rompiente pasa automáticamente a `⚠️ Mar Pasado en Arenales / Barras Cerronas` (Badge: `Mar Pasado / Fuerte`), informando de barras cerronas continuas y fuertes corrientes de resaca, recomendando esquinas al abrigo (El Espartal, Luanco) o surfistas expertos.
+  - Alerta contextual visible en la tarjeta principal de energía del oleaje.
+- **Suite Didáctica Actualizada**: Sincronización en `weatherExplanations.js` de la escala de energía y notas de saturación para arenales asturianos en *Astucia en los Picos de Asturias*.
+- **Anti-Caché Garantizado**: Cadena `meteoasturlode-v181-edusurf` en `sw.js`, `index.html` y módulos ES.
+
 ### 📖 Diccionario Didáctico de Fenómenos Meteorológicos (Vaguada, Borrasca, DANA, Galerna y más)
 - **Nuevo Módulo Didáctico e Interactivo**: Creación de un diccionario especializado (`js/utils/weatherPhenomena.js`) con 10 grandes fenómenos atmosféricos explicados en lenguaje claro, riguroso y adaptado al clima asturiano:
   - *Vaguada*: Inestabilidad en altura y chimenea de tormentas.

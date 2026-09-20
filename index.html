@@ -232,6 +232,7 @@
             <span class="release-date">17 Sep 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> <strong>Calibración de Oleaje & Detector de Mar Pasado en Arenales (Feedback Edu)</strong>: Reajuste integral de los escalones de energía (kJ) a 5 niveles (<em>Suave &lt; 180 kJ</em>, <em>Divertida 180-349 kJ</em>, <em>Sólida / Exigente 350-649 kJ</em>, <em>Muy Potente 650-1099 kJ</em>, <em>Pesada ≥ 1100 kJ</em>), evitando que olas de más de 2 metros se clasifiquen engañosamente como "divertidas". Incorporación del detector de saturación en arenales abiertos (como Salinas o San Lorenzo): cuando el oleaje supera 1,9 m o los 400 kJ con olas &ge; 1,8 m, el sistema alerta de mar pasado en barras cerronas con fuertes corrientes de resaca y aconseja buscar esquinas al abrigo (El Espartal, Luanco).</li>
             <li><span class="tag tag-new">Nuevo</span> <strong>Diccionario Didáctico de Fenómenos Meteorológicos</strong>: Acceso interactivo en el Menú principal y en la barra del Radar Cantábrico para aprender a diferenciar con claridad y rigor científico los grandes fenómenos del tiempo: <em>Vaguada</em> (inestabilidad en altura y chimenea de tormentas), <em>Borrasca</em> (baja presión cerrada con frentes), <em>DANA / Gota Fría</em> (bolsa aislada errática), <em>Ciclogénesis Explosiva</em> ("bomba" meteorológica), <em>Galerna Cantábrica</em> (el zarpazo súbito del Noroeste), <em>Frentes</em> (frío, cálido, ocluido), <em>Anticiclón y Dorsal</em>, <em>Viento Sur / Efecto Foehn</em>, <em>Niebla Marina ("Borrina")</em> e <em>Inversión Térmica & Mar de Nubes</em>. Incluye buscador en vivo, filtros temáticos por categoría y explicaciones adaptadas al relieve y clima de Asturias.</li>
             <li><span class="tag tag-new">Nuevo</span> <strong>Armonización Hidrometeorológica Coherente (QPF-PoP)</strong>: Eliminación de la paradoja visual clásica de los modelos numéricos que mostraba 0% de probabilidad con lluvia o llovizna apreciable prevista (ej. 0.7 mm en Castrillón). Implementación de un filtro de coherencia física y estadística inspirado en AccuWeather y Pelmorex/eltiempo.es: cuando el modelo determinista de alta resolución calcula acumulación o detecta orvayu/llovizna densa (WMO 51-67, 80-86), la probabilidad se armoniza progresivamente asegurando una lectura limpia y fidedigna en las 72h, gráficas de 48h y tarjetas diarias.</li>
             <li><span class="tag tag-new">Nuevo</span> <strong>Calibración Solar Inteligente con Blindaje Anti-Nublado 100%</strong>: Detección física real de sol ante nubes teóricas del modelo en la Estación en Vivo con protección estricta ante cielos 100% cubiertos (solo desempata si la radiación ultravioleta confirma sol directo real con UV >= 4.5) y elevación del umbral diurno a UV >= 4.0 para evitar falsos claros por mera dispersión de nubes blancas al mediodía cantábrico. En pronóstico horario (72h) y gráfico (48h) se aplica bajo principio de Nowcasting preservando la previsión general a 10 días.</li>
@@ -1582,7 +1583,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.81-solarcalibrate').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.81-edusurf').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1603,7 +1604,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.81-solarcalibrate"></script>
+  <script type="module" src="js/app.js?v=1.0.81-edusurf"></script>
 
 
 

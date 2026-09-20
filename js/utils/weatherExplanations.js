@@ -353,10 +353,11 @@ export const WEATHER_EXPLANATIONS = {
         heading: '2. Escala de Potencia y Zona de Confort',
         text: `
           <ul class="explain-list">
-            <li><strong>🟢 50 a 200 kJ (Suave / Iniciación / Poca Fuerza):</strong> Olas dóciles con poco empuje. Ideal para escuelas de surf, principiantes o tablas tipo Longboard y Foam.</li>
-            <li><strong>🟡 200 a 500 kJ (Divertida / Óptima):</strong> La zona dulce para la mayoría de surfistas. Olas con buen empuje para acelerar y hacer maniobras con tabla corta (shortboard) o evolutiva.</li>
-            <li><strong>🟠 500 a 1.200 kJ (Potente / Consistente):</strong> Mucha masa de agua y velocidad. Olas huecas, secciones tubulares y fondos que rompen con decisión. Exige remada y nivel intermedio-avanzado.</li>
-            <li><strong>🔴 > 1.200 kJ (Pesada / Solo Expertos):</strong> Rompientes mayores, fondos de roca exigentes o temporales cantábricos de gran calibre. Precaución con corrientes de fondo.</li>
+            <li><strong>🟢 &lt; 180 kJ (Suave / Iniciación / Poca Fuerza):</strong> Olas dóciles con poco empuje. Ideal para escuelas de surf, principiantes o tablas tipo Longboard y Foam.</li>
+            <li><strong>🟡 180 a 349 kJ (Divertida / Shortboard & Evolutiva):</strong> La verdadera zona dulce para la mayoría de surfistas en arenales. Olas nobles de 1,0 m a 1,5 m con buen empuje para maniobras.</li>
+            <li><strong>🟠 350 a 649 kJ (Sólida / Exigente / Buen Tamaño):</strong> Olas consistentes y de gran empuje (1,6 m a 2,2 m). Exige buen nivel físico, remada potente y saber colocarse en el pico.</li>
+            <li><strong>🟣 650 a 1.099 kJ (Muy Potente / Tubos / Nivel Alto):</strong> Mucha masa de agua y velocidad. Olas huecas, secciones tubulares y fondos que rompen con decisión para surfistas experimentados.</li>
+            <li><strong>🔴 ≥ 1.100 kJ (Pesada / Extrema / Solo Expertos):</strong> Rompientes mayores, olas pesadas con fuertes corrientes y resacas continuas. Solo apto para especialistas en picos resguardados o calas abrigadas.</li>
           </ul>
         `
       },
@@ -375,9 +376,9 @@ export const WEATHER_EXPLANATIONS = {
         heading: 'Astucia en los Picos de Asturias',
         text: `
           <ul class="explain-list">
-            <li><strong>Salinas y San Lorenzo:</strong> Con 200-450 kJ y viento Offshore (Sur), los arenales ofrecen picos constantes de izquierda y derecha en casi cualquier marea.</li>
-            <li><strong>La Barra de Rodiles:</strong> Suele necesitar más de <strong>400-700 kJ</strong> y período > 12s con marea bajando para que la mítica izquierda rompa con su característico tubo a lo largo de la ría.</li>
-            <li><strong>Días de poco mar (< 150 kJ):</strong> Aprovecha arenales expuestos y abiertos como <strong>Xagó o Verdicio</strong>, que exprimen cualquier rastro de energía atlántica.</li>
+            <li><strong>Salinas y San Lorenzo (Arenales abiertos):</strong> Su zona dorada está entre <strong>180 y 350 kJ</strong>. Cuando el mar supera los <strong>400 kJ o los 1,8-2,0 metros</strong>, la barra de arena suele saturarse ("mar pasado"), cerrando en bloque con series continuas de espuma y fuertes corrientes. En esos días conviene buscar rincones al abrigo como El Espartal, Luanco o calas resguardadas.</li>
+            <li><strong>La Barra de Rodiles:</strong> Suele necesitar más de <strong>450-750 kJ</strong> y período > 12s con marea bajando para que la mítica izquierda rompa con su característico tubo a lo largo de la ría.</li>
+            <li><strong>Días de poco mar (&lt; 150 kJ):</strong> Aprovecha arenales expuestos y abiertos como <strong>Xagó o Verdicio</strong>, que exprimen cualquier rastro de energía atlántica.</li>
           </ul>
         `
       }
