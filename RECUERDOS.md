@@ -287,3 +287,12 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - *Preservación de Versión Pública (v1.0.81 🚀) & Anti-Caché*:
     - Mantenida la versión pública en `v1.0.81 🚀` en el badge del footer y en el modal de novedades para no interferir en la revisión de Google Play Store.
     - Cadena de caché renovada a `meteoasturlode-v181-edusurf` en `sw.js`, `index.html` y query strings de submódulos JavaScript.
+- **⚔️ El Gran Desafío de Precisión: MeteoAstur Lode vs. 'eltiempo.es' (El Duelo Maldonado - 23 Sep 2026)**:
+  - *La Misión de Lendo & Princesa*: Convertir a MeteoAstur Lode en la aplicación con mayor tasa de acierto y fidelidad meteorológica de Asturias, superando abiertamente a los gigantes comerciales generalistas (eltiempo.es / Pelmorex).
+  - *Diagnóstico del Talón de Aquiles Generalista*:
+    - Las grandes apps aplican un modelo global (ECMWF/GFS) a 9-14 km con cortes matemáticos de medianoche (00:00 a 23:59 h). Cuando un frente atlántico llega al atardecer/noche, o bien lo diluyen, o asignan los litros al día siguiente, fallándole a la gente en sus planes de tarde.
+  - *La Doctrina de Victoria de MeteoAstur*:
+    - **Medio plazo (72-96h)**: Diagnóstico de tendencia con Auto Multi-Modelo y ECMWF, identificando la borrasca sin casarse prematuramente con minutos falsos.
+    - **Corto plazo (<48h)**: Entrada demoledora de **AROME (1.3 km)**, resolviendo al milímetro la interacción orográfica de los montes asturianos, el Cabo Peñas y las rías cantábricas.
+    - **Blindajes Propios**: Armonización QPF-PoP (cero paradojas de lluvia con 0%), calibración solar anti-falsos nublados y alertas de mar pasado en arenales.
+  - *Estrategia de Despliegue*: Esperar a la publicación y subida definitiva en Google Play Store para arrancar con toda la fuerza, validar en vivo frente a Maldonado y demostrar la superioridad en cada rincón del Principado.

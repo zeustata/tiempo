@@ -93,4 +93,7 @@
 9. **Calibración Fiel de Rompiente & Detector de Mar Pasado en Arenales:**
    - La clasificación de energía de oleaje (kJ) se estructura estrictamente en 5 niveles fisiológicos y oceanográficos reales: Suave (`< 180 kJ`), Divertida (`180-349 kJ`), Sólida/Exigente (`350-649 kJ`), Muy Potente (`650-1099 kJ`) y Pesada (`>= 1100 kJ`), impidiendo que olas de más de 2 metros se etiqueten engañosamente como "divertidas".
    - En arenales abiertos (beach breaks como Salinas o San Lorenzo), si el oleaje es `>= 1.9 m` o la energía supera `400 kJ` con altura `>= 1.8 m`, el sistema activa el estado de saturación (`⚠️ Mar Pasado en Arenales / Barras Cerronas`), advirtiendo de series cerronas y resacas, y recomendando esquinas abrigadas (El Espartal, Luanco) o surfistas expertos.
+10. **Doctrina de Precisión Frente a Plataformas Generalistas (Duelo Maldonado):**
+    - Búsqueda de la máxima fidelidad y veracidad en Asturias frente a los modelos globales simplificados de apps generalistas (*eltiempo.es*).
+    - Protocolo de doble escala temporal: a medio plazo (72 a 96 h) se evalúa la tendencia sinóptica con **Auto Multi-Modelo** y **ECMWF** sin forzar horarios prematuros; en corto plazo (< 48 h) se aplica la hiper-resolución de **AROME (1.3 km)** para capturar con precisión la interacción del frente con el Cabo Peñas, valles y la Cordillera Cantábrica, evitando la trampa del desfase de medianoche.
 
