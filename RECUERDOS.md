@@ -296,3 +296,16 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     - **Corto plazo (<48h)**: Entrada demoledora de **AROME (1.3 km)**, resolviendo al milímetro la interacción orográfica de los montes asturianos, el Cabo Peñas y las rías cantábricas.
     - **Blindajes Propios**: Armonización QPF-PoP (cero paradojas de lluvia con 0%), calibración solar anti-falsos nublados y alertas de mar pasado en arenales.
   - *Estrategia de Despliegue*: Esperar a la publicación y subida definitiva en Google Play Store para arrancar con toda la fuerza, validar en vivo frente a Maldonado y demostrar la superioridad en cada rincón del Principado.
+- **Calibración Fiel de Rompiente, Supresión del Sesgo Permisivo & Detector de Mar Pasado en Arenales (Feedback Edu / Surf-Forecast - 24 Sep 2026)**:
+  - *Contexto & Detección de Edu*: Edu trasladó a Lendo que la aplicación seguía mostrándose excesivamente permisiva en Salinas. Aportó enlace a Surf-Forecast donde se contrastó que en condiciones de 1,2 m a 1,3 m con 12 s de período, Surf-Forecast otorgaba un rating modesto de 1 a 3 estrellas sobre 10, mientras que la app las catalogaba de forma inflada como '🔥 Sesión Épica / Olas Excelentes'. Además, ante la entrada de swells largos de 17-19 s con 1,5 m (más de 1.500 kJ de energía), la app no activaba la alerta de mar pasado porque el umbral de altura previo estaba en 1,8-1,9 m.
+  - *Solución Algorítmica en Local (`js/components/surfCard.js`)*:
+    1. **Ajuste del Detector de Saturación en Arenales (`isBeachBreakOverload` & `evaluateSurfQuality`)**:
+       - Salto inmediato a `⚠️ Mar Pasado en Arenales / Barras Cerronas` (Badge: `Mar Pasado / Fuerte`) si la altura es `>= 1.7 m`, o bien `>= 1.5 m` con energía `>= 350 kJ` o período largo `>= 13 s`.
+    2. **Blindaje Estricto de la Sesión Épica**:
+       - La etiqueta `🔥 Sesión Épica / Calidad Top` se reserva únicamente para condiciones verdaderamente excepcionales de revista: altura dulce `1.0 m a 1.5 m`, período largo `>= 12 s`, viento **estrictamente terral (`offshore`)** y energía dulce `160 a 349 kJ`.
+    3. **Sinceridad y Fidelidad con Viento Onshore y Días Normales**:
+       - Viento de mar (`onshore` / `cross-on`) reclasifica a `🌊 Olas con Viento de Mar (Chop / Desordenado)`.
+       - Días buenos normales (como 1,2 m con 12 s) se clasifican como `🏄‍♂️ Buenas Condiciones / Olas Limpias` o `Baño Entretenido` (equivalente a 3-5 estrellas), eliminando cualquier permisividad.
+  - *Preservación Estricta de Producción & Verificación Exclusiva en Localhost*:
+    - Para no comprometer la evaluación en curso de Google Play Store, los cambios se aplican exclusivamente en local y se prueba en `http://localhost:8080` sin realizar git push hasta la aprobación oficial de la tienda.
+

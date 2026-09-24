@@ -111,7 +111,9 @@ export function calculateWaveEnergy(heightM, periodS, secondaryHeightM = 0, seco
 function evaluateSurfQuality(waveHeight, wavePeriod, windCondition, waveEnergy = null) {
   const h = parseFloat(waveHeight) || 1.2;
   const p = parseInt(wavePeriod, 10) || 10;
-  const isOffshoreOrGlassy = windCondition && (windCondition.type === 'offshore' || windCondition.type === 'glassy');
+  const isOffshore = windCondition && windCondition.type === 'offshore';
+  const isGlassy = windCondition && windCondition.type === 'glassy';
+  const isOffshoreOrGlassy = isOffshore || isGlassy;
   const isOnshore = windCondition && (windCondition.type === 'onshore' || windCondition.type === 'cross-onshore');
   const energyKj = waveEnergy?.kj || Math.round(11 * (h * h) * p);
 
@@ -139,71 +141,75 @@ function evaluateSurfQuality(waveHeight, wavePeriod, windCondition, waveEnergy =
     };
   }
 
-  // 3. Saturación / Mar Pasado en Arenales Abiertos (>= 1.9m o >= 400 kJ con >= 1.8m)
-  // Caso de Edu en Salinas: 2.1m y 486 kJ donde la barra revienta de golpe
-  if (h >= 1.9 || (energyKj >= 400 && h >= 1.8)) {
+  // 3. Saturación / Mar Pasado en Arenales Abiertos (>= 1.7m, o >= 1.5m con energía >= 350 kJ o período >= 13s)
+  // Caso de Edu en Salinas: arenales abiertos con 1.5m y período largo rompen en bloque con cerrones inaguantables
+  if (h >= 1.7 || (energyKj >= 350 && h >= 1.5) || (p >= 13 && h >= 1.5)) {
     return {
       status: '⚠️ Mar Pasado en Arenales / Barras Cerronas',
       badge: 'Mar Pasado / Fuerte',
       color: '#f97316',
       bg: '#f9731622',
       border: '#f97316',
-      desc: 'Oleaje desfasado para arenales abiertos (como Salinas o San Lorenzo). Las series cierran en bloque con fuertes corrientes de resaca. Recomendado buscar calas o esquinas al abrigo (ej. El Espartal, Luanco) o surfistas expertos.'
+      desc: 'Oleaje saturado para arenales abiertos (como Salinas o San Lorenzo). Las series cierran en bloque con fuertes corrientes de resaca. Recomendado buscar calas o esquinas al abrigo (ej. El Espartal, Luanco) o surfistas expertos.'
     };
   }
 
-  // 4. Sesión Épica (Mar de fondo de calidad, período largo y viento peinando la ola)
-  if (h >= 0.8 && h <= 1.8 && p >= 11 && isOffshoreOrGlassy) {
-    return {
-      status: '🔥 Sesión Épica / Olas Excelentes',
-      badge: 'Excelente',
-      color: '#10b981',
-      bg: '#10b98122',
-      border: '#10b981',
-      desc: 'Mar de fondo largo con período de gran calidad y viento favorable que peina la rompiente.'
-    };
-  }
-
-  // 5. Buenas condiciones con período medio/largo (p >= 9s)
-  if (p >= 9) {
-    if (isOnshore) {
-      return {
-        status: '🌊 Olas con Mar Picado (Chop)',
-        badge: 'Chop / Desordenado',
-        color: '#f59e0b',
-        bg: '#f59e0b22',
-        border: '#f59e0b',
-        desc: 'Hay fuerza y tamaño de ola, pero el viento de mar genera espuma y textura rizada.'
-      };
-    }
-    return {
-      status: '🏄‍♂️ Buenas Condiciones para Surfear',
-      badge: 'Buenas Olas',
-      color: '#38bdf8',
-      bg: '#38bdf822',
-      border: '#38bdf8',
-      desc: 'Buen tamaño de ola, empuje consistente y paredes definidas en rompientes expuestas.'
-    };
-  }
-
-  // 5. Período corto (p < 9s): Mar de viento o swell joven (olas fofas de poco empuje)
+  // 4. Viento Onshore / Chop desordenado (Sinceridad de Surf-Forecast: 1-2 estrellas)
   if (isOnshore) {
     return {
-      status: '💨 Mar de Viento / Olas Revueltas',
-      badge: 'Mar Revuelto',
+      status: '🌊 Olas con Viento de Mar (Chop / Desordenado)',
+      badge: 'Chop / Desordenado',
       color: '#f59e0b',
       bg: '#f59e0b22',
       border: '#f59e0b',
-      desc: 'Período corto con viento desfavorable. Olas fofas y revueltas con poco empuje de fondo.'
+      desc: 'El viento de mar pica y rompe las secciones de la ola, generando espuma revuelta y dificultando la pared limpia.'
     };
   }
 
+  // 5. Sesión Épica / Calidad Top (¡Exclusiva para condiciones excepcionales!)
+  // Tamaño dulce (1.0m a 1.5m), período largo (>= 12s), viento ESTRICTAMENTE TERRAL (offshore) peinando la ola y energía noble (160 - 349 kJ)
+  if (h >= 1.0 && h <= 1.5 && p >= 12 && isOffshore && energyKj >= 160 && energyKj < 350) {
+    return {
+      status: '🔥 Sesión Épica / Calidad Top',
+      badge: 'Épica / Top',
+      color: '#10b981',
+      bg: '#10b98122',
+      border: '#10b981',
+      desc: 'Condiciones excepcionales de revista: mar de fondo largo y limpio, energía perfecta sin saturar la barra y viento terral que ahueca tubos y paredes.'
+    };
+  }
+
+  // 6. Buenas Condiciones / Olas Limpias (Offshore o Glassy con buen período)
+  if (h >= 0.8 && h <= 1.6 && p >= 10 && isOffshoreOrGlassy && energyKj < 350) {
+    return {
+      status: '🏄‍♂️ Buenas Condiciones / Olas Limpias',
+      badge: 'Buenas Olas',
+      color: '#06b6d4',
+      bg: '#06b6d422',
+      border: '#06b6d4',
+      desc: 'Mar ordenado con buen período y viento favorable. Olas con recorrido y paredes aprovechables en rompientes expuestas.'
+    };
+  }
+
+  // 7. Baño Entretenido / Condiciones Medias (Período medio o glassy suave)
+  if (h >= 0.7 && p >= 8) {
+    return {
+      status: '🏄‍♂️ Baño Entretenido / Olas Medias',
+      badge: 'Entretenido',
+      color: '#38bdf8',
+      bg: '#38bdf822',
+      border: '#38bdf8',
+      desc: 'Olas de empuje moderado y altura accesible. Muy divertido para tablas evolutivas, longboard o shortboard en picos nobles.'
+    };
+  }
+
+  // 8. Olas Suaves / Swell Corto
   return {
-    status: '🏄‍♂️ Olas Suaves / Período Corto',
+    status: '🏄‍♂️ Olas Suaves / Swell Corto',
     badge: 'Suave / Iniciación',
-    color: '#0ea5e9',
-    bg: '#0ea5e922',
-    border: '#0ea5e9',
+    color: '#94a3b8',
+    bg: '#94a3b822',
+    border: '#94a3b8',
     desc: 'Olas con ritmo rápido y empuje suave. Muy buenas para tablas evolutivas, longboard e iniciación.'
   };
 }
@@ -432,7 +438,10 @@ export function renderSurfCard(data, concejo) {
 
   // Calidad global del swell
   const surfQuality = evaluateSurfQuality(waveHeight, wavePeriod, surfWind, waveEnergy);
-  const isBeachBreakOverload = (parseFloat(waveHeight) >= 1.9) || (parseFloat(swellHeight) >= 1.9) || (waveEnergy.kj >= 400 && parseFloat(waveHeight) >= 1.8);
+  const isBeachBreakOverload = (parseFloat(waveHeight) >= 1.7) || 
+                               (parseFloat(swellHeight) >= 1.7) || 
+                               (waveEnergy.kj >= 350 && (parseFloat(waveHeight) >= 1.5 || parseFloat(swellHeight) >= 1.5)) ||
+                               (wavePeriod >= 13 && (parseFloat(waveHeight) >= 1.5 || parseFloat(swellHeight) >= 1.5));
 
   // Temperatura del mar y traje unificada
   const seaTemp = getSeaWaterTemperature(marine);
