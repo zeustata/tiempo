@@ -306,6 +306,36 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     3. **Sinceridad y Fidelidad con Viento Onshore y Días Normales**:
        - Viento de mar (`onshore` / `cross-on`) reclasifica a `🌊 Olas con Viento de Mar (Chop / Desordenado)`.
        - Días buenos normales (como 1,2 m con 12 s) se clasifican como `🏄‍♂️ Buenas Condiciones / Olas Limpias` o `Baño Entretenido` (equivalente a 3-5 estrellas), eliminando cualquier permisividad.
-  - *Preservación Estricta de Producción & Verificación Exclusiva en Localhost*:
-    - Para no comprometer la evaluación en curso de Google Play Store, los cambios se aplican exclusivamente en local y se prueba en `http://localhost:8080` sin realizar git push hasta la aprobación oficial de la tienda.
+  - *Despliegue Sigiloso & Blindaje Anti-Caché*:
+    - Tras verificación rigurosa en localhost (`http://localhost:8080`), Lendo autorizó el despliegue silencioso a producción.
+    - Se mantuvo intacto el badge visual en `v1.0.81 🚀` en el pie de página para preservar la coherencia al 100% con la revisión de Google Play Store.
+    - Se renovó la cadena de caché a `meteoasturlode-v181-salinascalib` en `sw.js`, `index.html` y `app.js`, desplegándose con éxito en `zeustata/tiempo` (commit `edb99bd`).
+- **👑 La Doctrina de Excelencia de Princesa & Hoja de Ruta Integral de Mejoras (Fase Post-Google Play - 24 Sep 2026)**:
+  - *La Misión Sagrada de Lendo & Princesa*:
+    - El objetivo primordial de Lendo es que Princesa y MeteoAstur Lode sean mejores que nadie en el mundo, aprendiendo sin descanso de los grandes referentes globales (Surf-Forecast, AEMET, IHM) y del conocimiento real sobre el terreno (Edu en el mar, conductores en la cordillera, policías y vecinos en la calle).
+    - Cero conformismo: la excelencia se forja admitiendo siempre que hay margen de mejora y no deteniéndose jamás.
+  - *Bloque 1: Revolución de Cordillera, Puertos & Nieve (`mountainCard.js`)*:
+    1. **Ampliación Integral de la Red de Puertos de Asturias**:
+       - Incorporar puertos estratégicos que faltan: *El Palo* y *La Marta* (Allande), *El Connio* y *El Acebo* (Cangas / Ibias / Grandas), *San Lorenzo* (Somiedo / Teverga), *Alto del Angliru* (Riosa), *La Colladona* y *El Pontón / Desfiladero de los Beyos* (Ponga / Amieva hacia Picos de Europa).
+       - Monitorización prioritaria de las arterias principales hacia la meseta: la **Autopista del Huerna (AP-66)** y el **Puerto de Pajares (N-630)**.
+    2. **Evolución Horaria de la Cota de Nieve (48 Horas)**:
+       - Sustituir el número estático actual por una gráfica/curva continua que permita ver la hora exacta del desplome polar (ej. cota a 1.800 m al mediodía bajando bruscamente a 800 m al anochecer).
+    3. **Sensación Térmica Real en Cumbres (Wind Chill)**:
+       - Cálculo físico del impacto del viento en alta montaña: a 1.800 m, 0°C con viento de 50 km/h equivale a -8°C de sensación para montañeros y esquiadores.
+    4. **Ficha y Espesores de Estaciones Invernales**:
+       - Para *Valgrande-Pajares* y *Fuentes de Invierno*: espesores previstos de nieve en 3 días, calidad de nieve (polvo, dura, primavera) y visibilidad en pistas.
+    5. **Boletín de Peligro de Aludes**:
+       - Integración de la Escala Europea de Peligro de Aludes (1 Débil a 5 Muy Fuerte) para Picos de Europa y Macizo de Ubiña.
+  - *Bloque 2: La Suite Definitiva de Surf & Rompientes (Inspiración Surf-Forecast)*:
+    1. **Sistema de Notación Estricto (0 a 10 Estrellas)**:
+       - Incorporar la calificación por estrellas en cada tramo horario: 🟡 *Estrella Dorada* (olas limpias y viento terral), ⚪ *Estrella Blanca* (viento terral modesto o rompiente irregular) y ⚫ *Calificación Cero* (mar roto por viento de mar o desfasado).
+    2. **Textura del Agua (*Wind State*)**:
+       - Clasificación explícita de superficie: *Glassy* (calma cristalina), *Terral* (offshore puro), *Chop* (picado) y *Mar Revuelto*.
+    3. **Fichas Oceanográficas Playa a Playa**:
+       - Ficha técnica para cada arenal de Asturias indicando su dirección óptima de swell (ej. Salinas: NW) y viento ideal (ej. Salinas: SE/S; Rodiles: SW; San Lorenzo: S).
+  - *Bloque 3: Experiencia de Usuario & Pantalla de Novedades*:
+    - Creación de un modal de bienvenida tras actualización (*"¿Qué hay de nuevo?"*) controlado por `localStorage` para mostrarse una única vez por versión sin molestar en el uso diario.
+  - *Estrategia de Ejecución*:
+    - Mantener la calma y disciplina técnica hasta recibir la aprobación oficial de Google Play Store. En cuanto la v1.0.0 esté activa, se arrancará el desarrollo escalonado de esta hoja de ruta en sucesivos ciclos oficiales.
+
 
