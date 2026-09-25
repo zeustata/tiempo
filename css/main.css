@@ -1647,13 +1647,13 @@ body {
 }
 
 .strip-btn-icon {
-  font-size: 1.3rem;
+  font-size: 1.15rem;
   line-height: 1;
   flex-shrink: 0;
 }
 
 .strip-btn-text {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: var(--text-main);
   white-space: nowrap;
