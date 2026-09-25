@@ -1625,8 +1625,8 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
-  padding: 11px 10px;
+  gap: 8px;
+  padding: 14px 12px;
   background: rgba(30, 41, 59, 0.65);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-sm);
@@ -1646,13 +1646,13 @@ body {
 }
 
 .strip-btn-icon {
-  font-size: 1.2rem;
+  font-size: 1.35rem;
   line-height: 1;
   flex-shrink: 0;
 }
 
 .strip-btn-text {
-  font-size: 0.875rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: var(--text-main);
   white-space: nowrap;
