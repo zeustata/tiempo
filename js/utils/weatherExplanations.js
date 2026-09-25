@@ -570,6 +570,60 @@ export const WEATHER_EXPLANATIONS = {
         `
       }
     ]
+  },
+
+  ski_mountain: {
+    icon: '🎿',
+    title: 'Guía de Esquí, Cotas de Nieve & Puertos',
+    subtitle: 'Aprende a interpretar el desglose en 3 cotas, sensación térmica, calidad de nieve y riesgo de aludes',
+    badge: 'Estándar Snow-Forecast • Cordillera Cantábrica',
+    sections: [
+      {
+        icon: '🏔️',
+        heading: '1. Desglose en 3 Cotas (Cumbre, Media y Base)',
+        text: `
+          En la Cordillera Cantábrica el tiempo cambia drásticamente en pocos metros de desnivel:
+          <ul class="explain-list">
+            <li><strong>Cumbre / Top (1.800 - 2.000m):</strong> Zona más expuesta al viento atlántico y heladas severas. Si hay precipitación, es nieve virgen constante.</li>
+            <li><strong>Media Estación (1.650 - 1.750m):</strong> Eje neurálgico del dominio esquiable y pistas de enlace.</li>
+            <li><strong>Base / Párking (1.480 - 1.520m):</strong> Donde aparcas y compras forfait. Puede haber aguanieve o lluvia mientras en cumbre cae un paquetón.</li>
+          </ul>
+        `
+      },
+      {
+        icon: '🥶',
+        heading: '2. Sensación Térmica (Wind Chill) en Cumbres',
+        text: 'A gran altitud, el viento acelera el enfriamiento del cuerpo humano. Calculada con la fórmula oficial NOAA/JAG, una temperatura de <strong>-2 °C con viento de 45 km/h</strong> equivale a una sensación real en piel de <strong>-10 °C</strong>. Imprescindible ropa térmica técnica cortavientos y protección facial.'
+      },
+      {
+        icon: '🚡',
+        heading: '3. Semáforo de Remontes por Viento en Crestas',
+        text: `
+          <ul class="explain-list">
+            <li><strong>🟢 Remontes Operativos (< 35 km/h):</strong> Operación normal y segura de telesillas y telecabinas.</li>
+            <li><strong>🟡 Precaución (35 a 50 km/h):</strong> Balanceo en sillas altas expuestas; pueden ralentizar la velocidad de la línea.</li>
+            <li><strong>🔴 Riesgo Cierre Remontes (≥ 50 km/h):</strong> Cierre preventivo obligatorio de telesillas de cumbre por seguridad frente a descarrilamientos de cable.</li>
+          </ul>
+        `
+      },
+      {
+        icon: '❄️',
+        heading: '4. Tipos y Calidad de Nieve en Pistas',
+        text: `
+          <ul class="explain-list">
+            <li><strong>❄️ Nieve Polvo (Powder):</strong> Frío seco (≤ -2 °C). Nieve suelta, ligera y sedosa. La más buscada.</li>
+            <li><strong>🎿 Nieve Dura / Pisada:</strong> Helada nocturna tras pisado de máquinas (-2 °C a 1.5 °C). Rápida y técnica.</li>
+            <li><strong>💧 Nieve Primavera / Húmeda:</strong> Con temperaturas positivas (> 2 °C) al mediodía. Pesada y fofa.</li>
+            <li><strong>⚠️ Ventisca / Whiteout:</strong> Nieve con viento fuerte y niebla. Pérdida total del horizonte y relieve.</li>
+          </ul>
+        `
+      },
+      {
+        icon: '🚗',
+        heading: '5. Astucia en Carreteras y Puertos de Asturias',
+        text: 'Para cruzar a la meseta, la <strong>Autopista del Huerna (AP-66)</strong> suele mantenerse abierta con quitanieves en convoyes, mientras que el <strong>Puerto de Pajares (N-630)</strong> exige cadenas o se cierra antes por sus fuertes pendientes y curvas cerradas. En San Isidro y Leitariegos, lleva siempre cadenas en el maletero o neumáticos de invierno (M+S / 3PMSF).'
+      }
+    ]
   }
 };
 

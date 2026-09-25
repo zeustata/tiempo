@@ -356,6 +356,30 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - Explicación pedagógica de estrellas doradas y blancas, viento terral cantábrico, textura marina y alternativas de abrigo (El Espartal, Luanco, Candás).
     6. **Anti-Caché Obligatorio (Regla 4)**:
        - Actualización en cascada de `sw.js` (`meteoasturlode-v182-surfarrows`), `index.html` (`v=1.0.82-surfarrows`) y `app.js` (`v=1.0.82-surfarrows`).
+- **⛷️ Hito Técnico Cumplido: Revolución de Cordillera, Visor Dual Snow-Forecast (Feedback Cefe) y Red Integral de Puertos (25 Sep 2026)**:
+  - *Contexto & Feedback de Cefe*: Cefe (amigo esquiador de Lendo) compartió el referente mundial `https://www.snow-forecast.com/`. Lendo aprobó implementar la Opción 1 ("Visor Dual con Desglose en 3 Altitudes y Red Integral de Puertos y Arterias").
+  - *Arquitectura Implementada en Local (`js/components/mountainCard.js`, `css/components.css`, `js/app.js`)*:
+    1. **Interruptor Deslizante Segmentado Liquid Glass**:
+       - Selector fluido `.mountain-sliding-segmented-switch` para conmutar entre `[ ⛷️ Estaciones & Esquí ]` y `[ 🚗 Puertos & Carreteras ]` con pastilla deslizante animada.
+    2. **Módulo de Estaciones & Esquí (Estándar Snow-Forecast)**:
+       - Pastillas interactivas para *Valgrande-Pajares*, *Fuentes de Invierno*, *San Isidro* y *Leitariegos*.
+       - **Semáforo de Operatividad de Remontes por Viento en Cumbre** (🟢 Operativos < 35 km/h, 🟡 Precaución 35-50 km/h, 🔴 Riesgo Cierre ≥ 50 km/h).
+       - **Desglose en 3 Altitudes (Cumbre / Media Estación / Base)**:
+         - Temperatura calculada según gradiente vertical (`0.0065 °C/m`).
+         - Sensación térmica por viento en cumbres (**Wind Chill** con fórmula oficial JAG/NOAA).
+         - Estado de precipitación (Nieve, Aguanieve, Lluvia fría, Despejado).
+         - Velocidad y vector dinámico de viento con flecha aerodinámica SVG (`(windDeg + 180) % 360`) y aceleración en cumbres (factor 1.55x).
+         - Calidad de nieve estimada (*Polvo de Alta Cota*, *Pisada / Húmeda*, *Primavera*, *Dura / Hielo*, *Ventisca / Whiteout*).
+       - Previsión de nieve acumulada a 3 días (Hoy, Mañana, Pasado Mañana y Total 3 Días) y enlace directo a webcams oficiales.
+    3. **Módulo de Puertos & Carreteras**:
+       - Arterias principales a la Meseta: **Autopista del Huerna (AP-66)** y **Puerto de Pajares (N-630)**.
+       - Red ampliada de 16 puertos de montaña asturianos con monitorización de viabilidad invernal (*Abierto*, *Precaución*, *Cadenas Obligatorias*, *Cerrado*).
+    4. **Sensores de Cabecera & Aludes**:
+       - Cota de nieve / Isoterma 0°C, acumulación a 3 días y Escala Europea de Riesgo de Aludes (EAWS 1 a 5).
+    5. **Módulo Didáctico "Explícame" (`ski_mountain` en `weatherExplanations.js`)**:
+       - Guía técnica interactiva con botón `[ 💡 Explícame ]` en la tarjeta de cordillera.
+    6. **Anti-Caché & Service Worker `v183-snowforecast`**:
+       - Actualización en `sw.js`, `index.html` y llamadas de versión.
 
 
 

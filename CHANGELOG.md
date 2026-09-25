@@ -10,6 +10,42 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.0.83-snowforecast] - 2026-09-25 (Fase de Pruebas Activa)
+
+### ⛷️ Rediseño de Cordillera & Nieve: Visor Dual Estilo Snow-Forecast (Feedback Cefe) & Red Integral de Puertos
+- **Arquitectura de Doble Visor con Switch Segmentado Liquid Glass**:
+  - Incorporación del interruptor deslizante `.mountain-sliding-segmented-switch` para alternar fluidamente entre:
+    - **[ ⛷️ Estaciones & Esquí ]**: Visor de estaciones invernales con desglose altitudinal idéntico al estándar de *Snow-Forecast*.
+    - **[ 🚗 Puertos & Carreteras ]**: Monitorización de arterias críticas de conexión con la Meseta y red de 16 puertos de montaña asturianos.
+- **Módulo de Esquí & Estaciones de Montaña (Estándar Snow-Forecast)**:
+  - **Selector de Estaciones**: Pastillas interactivas para *Valgrande-Pajares*, *Fuentes de Invierno*, *San Isidro* y *Leitariegos*.
+  - **Semáforo de Operatividad de Remontes por Viento en Cumbre**:
+    - 🟢 *Remontes Operativos* (< 35 km/h): Telesillas y remontes en servicio normal.
+    - 🟡 *Precaución / Posibles Cierres Parciales* (35-50 km/h): Viento fuerte en cotas altas que puede afectar a remontes desenganchables.
+    - 🔴 *Riesgo Alto de Cierre de Remontes* (≥ 50 km/h): Viento muy fuerte/rachas severas con alta probabilidad de paro por seguridad.
+  - **Desglose en 3 Niveles Altitudinales (Cumbre / Media Estación / Base)**:
+    - Estimación de temperatura en cada cota mediante gradiente vertical real (`0.0065 °C/m`).
+    - Sensación térmica por viento en cumbres (**Wind Chill** según fórmula oficial JAG/NOAA).
+    - Estado de precipitación por cota (Nieve continua, Aguanieve, Lluvia fría, Despejado).
+    - Velocidad y vector dinámico de viento con flecha aerodinámica SVG (`(windDeg + 180) % 360`) y aceleración orográfica en cumbres (factor 1.55x).
+    - Diagnóstico de calidad de nieve (*Polvo de Alta Cota*, *Pisada / Húmeda*, *Primavera*, *Dura / Hielo*, *Ventisca / Whiteout*).
+  - **Previsión de Nieve Acumulada a 3 Días (Hoy, Mañana, Pasado Mañana y Total 3 Días)** en cm.
+  - **Enlace Directo a Webcams Oficiales** en tiempo real de cada estación.
+- **Módulo de Puertos & Carreteras de la Cordillera**:
+  - **Arterias Principales de la Meseta**: Monitorización destacada de la **Autopista del Huerna (AP-66)** y el **Puerto de Pajares (N-630)**.
+  - **Red Ampliada de 16 Puertos de Montaña**: *San Isidro*, *Tarna*, *Somiedo*, *Ventana*, *San Lorenzo*, *Leitariegos*, *El Palo*, *La Marta*, *El Connio*, *El Acebo*, *Alto del Angliru*, *La Colladona*, *La Cobertoria*, *El Cordal*, *El Fito* y *El Pontón*.
+  - **Evaluación Dinámica de Viabilidad Invernal**: Detección de *🟢 Abierto / Limpio*, *🟡 Precaución Nieve / Hielo*, *🟠 Cadenas Obligatorias / Desaconsejado*, *🔴 Cerrado por Nieve* o *⚠️ Riesgo de Heladas Nocturnas*.
+- **Sensores de Cabecera & Boletín de Aludes**:
+  - Indicador de **Isoterma 0°C (Cota de Nieve)** en vivo con rango estimado.
+  - **Acumulación de Nieve a 3 Días** en cumbres cantábricas.
+  - **Riesgo de Aludes EAWS** (Escala Europea de 1 Débil a 5 Muy Fuerte) con recomendaciones de seguridad.
+- **Módulo Didáctico "💡 Explícame" de Esquí y Cordillera (`ski_mountain`)**:
+  - Nueva temática didáctica en `weatherExplanations.js` explicando la importancia del desglose en 3 cotas, la fórmula del Wind Chill, el semáforo de remontes, los tipos de nieve y la viabilidad de puertos.
+- **Anti-Caché Obligatorio (Regla 4)**:
+  - Cache-busting actualizado a `meteoasturlode-v183-snowforecast` en `sw.js`, `index.html` y módulos ES.
+
+---
+
 ## [1.0.82-surfarrows] - 2026-09-25 (Fase de Pruebas Activa)
 
 ### 🏄‍♂️ Evolución de Surf: Estrellas (0 a 10★), Textura Marina, Flechas de Dirección y Guía Didáctica

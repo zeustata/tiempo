@@ -4,7 +4,7 @@ import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedW
 import { renderCurrentWeather } from './components/currentCard.js?v=1.0.81-solarcalibrate';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.0.82-surfarrows';
 import { renderSurfCard } from './components/surfCard.js?v=1.0.82-surfarrows';
-import { renderMountainCard } from './components/mountainCard.js?v=1.0.81';
+import { renderMountainCard } from './components/mountainCard.js?v=1.0.83-snowforecast';
 import { renderForecast } from './components/forecastView.js?v=1.0.81-solarcalibrate';
 import { renderWeatherChart } from './components/chartsView.js?v=1.0.81-solarcalibrate';
 import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.81-astromoon2';
@@ -14,7 +14,7 @@ import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.0.81';
 import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.0.81';
 import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.0.81';
 import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.0.81';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.82-surfarrows';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.83-snowforecast';
 import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.0.83-phenomena';
 
 const APP_MODULES = [
@@ -867,6 +867,53 @@ class MeteoAsturiasApp {
           dailyView.style.display = 'none';
         }
       }
+    });
+
+    // Delegación global para interruptor deslizante de Cordillera (Estaciones & Esquí vs Puertos & Carreteras)
+    document.addEventListener('click', (e) => {
+      const switchOption = e.target.closest('.mountain-switch-option');
+      if (!switchOption) return;
+
+      this.triggerHaptic();
+      const targetTab = switchOption.dataset.mountainTab;
+      const segmentedSwitch = document.getElementById('mountain-segmented-switch');
+      if (segmentedSwitch) {
+        segmentedSwitch.dataset.active = targetTab;
+      }
+
+      document.querySelectorAll('.mountain-switch-option').forEach(b => b.classList.remove('active'));
+      switchOption.classList.add('active');
+
+      const skiView = document.getElementById('mountain-ski-view');
+      const passesView = document.getElementById('mountain-passes-view');
+      if (skiView && passesView) {
+        if (targetTab === 'passes') {
+          skiView.style.display = 'none';
+          passesView.style.display = 'block';
+        } else {
+          skiView.style.display = 'block';
+          passesView.style.display = 'none';
+        }
+      }
+    });
+
+    // Delegación global para selector de Estaciones de Esquí (Pills/Chips)
+    document.addEventListener('click', (e) => {
+      const resortPill = e.target.closest('.resort-select-pill');
+      if (!resortPill) return;
+
+      this.triggerHaptic();
+      const resortId = resortPill.dataset.resortId;
+
+      document.querySelectorAll('.resort-select-pill').forEach(b => b.classList.remove('active'));
+      resortPill.classList.add('active');
+
+      document.querySelectorAll('.resort-forecast-card').forEach(card => {
+        const isMatch = card.id === `resort-panel-${resortId}`;
+        card.style.display = isMatch ? 'block' : 'none';
+        if (isMatch) card.classList.add('active');
+        else card.classList.remove('active');
+      });
     });
   }
 
