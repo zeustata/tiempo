@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.0.87-snowvert] - 2026-09-25 (Fase de Pruebas Activa)
+
+### ❄️ Disposición Vertical Anti-Desborde en Nieve Prevista (Feedback Lendo)
+- **Apilado Vertical de Etiquetas y Espesores (Hoy, Mañana, Pasado y Total 3 Días)**:
+  - Transformación del diseño interno de cada pastilla de la cuadrícula 2x2 a disposición vertical (`flex-direction: column; align-items: center; justify-content: center; gap: 4px;`):
+    - Etiqueta centrada en la parte superior (`📅 Hoy`, `📅 Mañana`, `📅 Pasado`, `❄️ Total 3 Días`).
+    - Espesor destacado en tipografía monoespaciada en la parte inferior (`0.0 cm`).
+  - Reducción del ancho mínimo necesario a menos de la mitad (~75px frente a los ~140px requeridos en línea horizontal), proporcionando un margen de seguridad de más de 50px libres por columna en cualquier teléfono móvil.
+  - Blindaje con `box-sizing: border-box`, `max-width: 100%` y `overflow: hidden` en `.resort-forecast-card` y `.ski-resort-snowfall-row` para imposibilitar físicamente cualquier salida del marco.
+- **Anti-Caché & Service Worker `v187-snowvert`**:
+  - Sincronización en `sw.js`, `index.html` y módulos ES.
+
+---
+
 ## [1.0.86-snowgrid] - 2026-09-25 (Fase de Pruebas Activa)
 
 ### ❄️ Corrección de Desborde en Nieve Prevista a 3 Días (Feedback Visual Lendo)

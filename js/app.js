@@ -4,7 +4,7 @@ import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedW
 import { renderCurrentWeather } from './components/currentCard.js?v=1.0.81-solarcalibrate';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.0.82-surfarrows';
 import { renderSurfCard } from './components/surfCard.js?v=1.0.82-surfarrows';
-import { renderMountainCard } from './components/mountainCard.js?v=1.0.86-snowgrid';
+import { renderMountainCard } from './components/mountainCard.js?v=1.0.87-snowvert';
 import { renderForecast } from './components/forecastView.js?v=1.0.81-solarcalibrate';
 import { renderWeatherChart } from './components/chartsView.js?v=1.0.81-solarcalibrate';
 import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.81-astromoon2';

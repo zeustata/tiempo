@@ -418,6 +418,18 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - Cada pastilla muestra la etiqueta a la izquierda y el valor (`0.0 cm`) a la derecha en una sola línea horizontal sin cortes ni desbordes.
     2. **Anti-Caché & Despliegue Dual `v1.0.86-snowgrid`**:
        - Sincronización en `sw.js`, `index.html`, `components.css` y `app.js`.
+- **❄️ Hito Técnico Cumplido: Disposición Vertical Anti-Desborde en Nieve Prevista (Feedback Lendo - 25 Sep 2026)**:
+  - *Contexto & Detección de Lendo*: Tras el paso a 2x2, la disposición horizontal de título largo (`Total 3 Días`) + valor (`0.0 cm`) en una misma línea seguía excediendo el ancho de la columna en móviles estrechos, desbordando la pastilla por el margen derecho.
+  - *Solución Definitiva en Local (`css/components.css`)*:
+    1. **Apilado Vertical Interno (`.snow-day-pill`)**:
+       - Reorganización con `flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 8px 6px; text-align: center;`.
+       - Etiqueta arriba (`.snow-day-label` a 0.72rem) y valor numérico monoespaciado abajo (`.snow-day-val` a 1.05rem).
+       - Reducción del ancho horizontal requerido de ~140px a ~75px, garantizando más de 50px de holgura por celda en pantallas móviles.
+    2. **Blindaje de Desborde**:
+       - Inclusión de `box-sizing: border-box`, `max-width: 100%` y `overflow: hidden` en `.resort-forecast-card` y `.ski-resort-snowfall-row`.
+    3. **Anti-Caché & Despliegue Dual `v1.0.87-snowvert`**:
+       - Sincronización en `sw.js`, `index.html`, `components.css` y `app.js`.
+
 
 
 
