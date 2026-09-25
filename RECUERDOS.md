@@ -4,7 +4,15 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🔧 Última Actualización: v1.0.95-fixaludes — 2026-09-25
+## 🔧 Última Actualización: v1.0.96-navbtnsize — 2026-09-25
+
+- **Mejora visual:** Botones `Fenómenos` e `Iconos` de la mini-tira del menú de navegación demasiado pequeños en móvil (feedback Lendo).
+- **Cambios en `css/main.css`:** `padding` de `7px 8px` → `11px 10px`; `font-size` del texto de `0.8rem` → `0.875rem`; `font-size` del icono de `1.05rem` → `1.2rem`; `gap` de `6px` → `7px`.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v196-navbtnsize`.
+
+---
+
+## 🔧 v1.0.95-fixaludes — 2026-09-25
 
 - **Bug corregido:** Botón `💡 Explícame` en la fila *Peligro de Aludes (EAWS)* del módulo Cordillera & Nieve no abría el modal didáctico al pulsarlo.
 - **Causa raíz:** El botón en `mountainCard.js` tiene clase `btn-explain-sensor-compact`, pero el listener global de delegación de eventos en `app.js` (L806) solo capturaba la clase `btn-explain-sensor`. El selector `closest()` no matcheaba el botón de aludes y el evento era ignorado silenciosamente.

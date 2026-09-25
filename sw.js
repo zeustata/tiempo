@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v195-fixaludes';
+const CACHE_NAME = 'meteoasturlode-v196-navbtnsize';
 const STATIC_ASSETS = [
   './',
   './index.html',

@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.0.96-navbtnsize] - 2026-09-25
+
+### 🎮 Botones Fenómenos e Iconos del Menú Más Grandes (Feedback Lendo)
+
+- **Problema:** Los botones `🌊 Fenómenos` e `🌈 Iconos` de la mini-tira del menú de navegación resultaban demasiado pequeños y poco ergonómicos en móvil.
+- **Cambios en `css/main.css`** (clase `.nav-tool-strip-btn` y auxiliares):
+  - `padding`: `7px 8px` → `11px 10px` (mayor área táctil).
+  - `.strip-btn-text` `font-size`: `0.8rem` → `0.875rem` (texto más legible).
+  - `.strip-btn-icon` `font-size`: `1.05rem` → `1.2rem` (icono más visible).
+  - `gap`: `6px` → `7px` (separación icon‑texto más natural).
+- **Cache-bust:** `sw.js` → `meteoasturlode-v196-navbtnsize`.
+
+---
+
 ## [1.0.95-fixaludes] - 2026-09-25
 
 ### 🔧 Corrección del Botón Explícame en Peligro de Aludes (Feedback Lendo)
