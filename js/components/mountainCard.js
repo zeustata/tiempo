@@ -32,6 +32,7 @@ export const ESTACIONES_ESQUI = [
   {
     id: 'pajares',
     name: 'Valgrande-Pajares',
+    shortName: 'Pajares',
     concejo: 'Lena (Asturias)',
     baseAlt: 1480,
     midAlt: 1680,
@@ -47,6 +48,7 @@ export const ESTACIONES_ESQUI = [
   {
     id: 'fuentes',
     name: 'Fuentes de Invierno',
+    shortName: 'Fuentes',
     concejo: 'Aller (Asturias)',
     baseAlt: 1500,
     midAlt: 1720,
@@ -62,6 +64,7 @@ export const ESTACIONES_ESQUI = [
   {
     id: 'san_isidro',
     name: 'San Isidro (Puebla de Lillo)',
+    shortName: 'San Isidro',
     concejo: 'Aller / León (Frontera)',
     baseAlt: 1500,
     midAlt: 1800,
@@ -77,6 +80,7 @@ export const ESTACIONES_ESQUI = [
   {
     id: 'leitariegos',
     name: 'Leitariegos (Valle de Laciana)',
+    shortName: 'Leitariegos',
     concejo: 'Cangas del Narcea / León',
     baseAlt: 1525,
     midAlt: 1660,
@@ -404,63 +408,65 @@ export function renderMountainCard(data, concejo) {
         </div>
       </div>
 
-      <!-- 1. BARRA UNIFICADA ULTRA-COMPACTA DE SENSORES DE ALTA MONTAÑA -->
+      <!-- 1. BARRA UNIFICADA DE SENSORES DE ALTA MONTAÑA (2 PISOS ANTI-COLISIÓN) -->
       <div class="mountain-top-unified-bar">
-        <!-- Columna 1: Cota de Nieve -->
-        <div class="mountain-top-col">
-          <div class="mountain-top-label">🏔️ Cota Nieve 0°C</div>
-          <div class="mountain-top-val">${freezingLevel} <span class="unit">m</span></div>
-          <div class="mountain-top-sub">${concejo.altitude >= freezingLevel ? '❄️ En tu cota' : 'Por encima'}</div>
+        <!-- Piso 1: Cota de Nieve y Nieve 3 Días (50% cada una con divisor vertical) -->
+        <div class="m-top-split-row">
+          <div class="m-top-col">
+            <span class="m-top-label">🏔️ Cota Nieve 0°C</span>
+            <div class="m-top-val">${freezingLevel} <span class="unit">m</span></div>
+            <span class="m-top-sub">${concejo.altitude >= freezingLevel ? '❄️ En tu cota' : 'Por encima'}</span>
+          </div>
+
+          <div class="m-top-v-divider"></div>
+
+          <div class="m-top-col">
+            <span class="m-top-label">❄️ Nieve (3 Días)</span>
+            <div class="m-top-val highlight">${totalSnow3Days} <span class="unit">cm</span></div>
+            <span class="m-top-sub">Hoy: <strong>${snowAccumToday} cm</strong></span>
+          </div>
         </div>
 
-        <div class="mountain-top-divider"></div>
+        <div class="m-top-h-divider"></div>
 
-        <!-- Columna 2: Nieve 3 Días -->
-        <div class="mountain-top-col">
-          <div class="mountain-top-label">❄️ Nieve (3 Días)</div>
-          <div class="mountain-top-val highlight">${totalSnow3Days} <span class="unit">cm</span></div>
-          <div class="mountain-top-sub">Hoy: ${snowAccumToday} cm</div>
-        </div>
-
-        <div class="mountain-top-divider"></div>
-
-        <!-- Columna 3: Peligro de Aludes -->
-        <div class="mountain-top-col">
-          <div class="mountain-top-label-row">
-            <span class="mountain-top-label">⚠️ Aludes EAWS</span>
-            <button class="btn-explain-sensor-compact" data-explain="ski_mountain" title="Escala europea de riesgo de aludes y guía didáctica">💡</button>
+        <!-- Piso 2: Peligro de Aludes a todo lo ancho -->
+        <div class="m-top-avalanche-row">
+          <div class="m-avalanche-info">
+            <span class="m-avalanche-title">⚠️ Peligro Aludes (EAWS):</span>
+            <span class="m-avalanche-badge" style="color: ${avalanche.color};">
+              ${avalanche.icon} <strong>Nivel ${avalanche.level} (${avalanche.name})</strong>
+            </span>
           </div>
-          <div class="mountain-top-val" style="color: ${avalanche.color};">
-            ${avalanche.icon} Nivel ${avalanche.level}
-          </div>
-          <div class="mountain-top-sub">${avalanche.name}</div>
+          <button class="btn-explain-sensor-compact" data-explain="ski_mountain" title="Escala europea de riesgo de aludes y guía didáctica">
+            💡 Explícame
+          </button>
         </div>
       </div>
 
-      <!-- 2. INTERRUPTOR DESLIZANTE SEGMENTADO TÁCTIL LIQUID GLASS (OPTIMIZADO MÓVIL) -->
+      <!-- 2. INTERRUPTOR DESLIZANTE SEGMENTADO TÁCTIL (ETIQUETAS CORTAS DE 1 PALABRA) -->
       <div class="mountain-toggle-container">
         <div class="mountain-sliding-segmented-switch" id="mountain-segmented-switch" data-active="ski">
           <div class="mountain-switch-glider"></div>
           <button class="mountain-switch-option active" data-mountain-tab="ski" id="btn-mountain-tab-ski" aria-label="Ver previsión de esquí estilo Snow-Forecast">
             <span class="mountain-switch-icon">⛷️</span>
-            <span class="mountain-switch-label">Esquí y Pistas</span>
+            <span class="mountain-switch-label">Esquí</span>
           </button>
           <button class="mountain-switch-option" data-mountain-tab="passes" id="btn-mountain-tab-passes" aria-label="Ver estado de puertos de montaña y conexiones a la meseta">
             <span class="mountain-switch-icon">🚗</span>
-            <span class="mountain-switch-label">Puertos y Huerna</span>
+            <span class="mountain-switch-label">Puertos</span>
           </button>
         </div>
       </div>
 
       <!-- VISTA A: ⛷️ ESTACIONES DE ESQUÍ (ESTÁNDAR SNOW-FORECAST COMPACTO) -->
       <div id="mountain-ski-view" class="mountain-tab-content active">
-        <!-- Selector de Estación por Chips/Pills Cortos -->
+        <!-- Selector de Estaciones en Cuadrícula 2x2 Táctil -->
         <div class="resorts-selector-bar">
-          <div class="resorts-pills-row">
+          <div class="resorts-pills-grid">
             ${resortsData.map((r, i) => `
               <button class="resort-select-pill ${i === 0 ? 'active' : ''}" data-resort-id="${r.id}">
                 <span class="pill-icon">⛷️</span>
-                <span class="pill-name">${r.name.includes('Valgrande') ? 'Pajares' : r.name.includes('Fuentes') ? 'Fuentes' : r.name}</span>
+                <span class="pill-name">${r.shortName}</span>
               </button>
             `).join('')}
           </div>
@@ -482,62 +488,47 @@ export function renderMountainCard(data, concejo) {
                 </div>
               </div>
 
-              <!-- TABLA COMPARATIVA DE 3 COTAS (ESTÁNDAR SNOW-FORECAST) -->
-              <div class="ski-levels-table">
-                <!-- 1. CUMBRE (TOP) -->
-                <div class="ski-level-row top-row">
-                  <div class="ski-row-cota">
-                    <span class="cota-badge top-badge">🏔️ Cumbre (${r.top.alt}m)</span>
-                    <span class="cota-sub">${r.top.name}</span>
+              <!-- LAS 3 COTAS ALTITUDINALES (ESTILO SNOW-FORECAST EN TIRAS DE 2 LÍNEAS) -->
+              <div class="ski-levels-list">
+                <!-- 1. CUMBRE -->
+                <div class="ski-level-strip top-strip">
+                  <div class="ski-strip-header">
+                    <span class="cota-badge top-badge">🏔️ CUMBRE (${r.top.alt}m)</span>
+                    <span class="cota-peak-name">${r.top.name}</span>
                   </div>
-                  <div class="ski-row-temp">
-                    <span class="cota-temp">${r.top.temp}°</span>
-                    <span class="cota-chill" title="Sensación térmica con viento">🥶 ${r.top.windChill}°</span>
-                  </div>
-                  <div class="ski-row-wind">
-                    ${getMountainWindArrowSvg(windDeg, '#38bdf8', 12)}
-                    <span>${r.top.windSpd} km/h</span>
-                  </div>
-                  <div class="ski-row-quality" style="color: ${r.top.quality.color};">
-                    <span>${r.top.quality.icon} ${r.top.quality.label}</span>
+                  <div class="ski-strip-metrics">
+                    <span class="cota-temp-val">${r.top.temp}°C</span>
+                    <span class="cota-chill-pill" title="Sensación térmica con viento">🥶 Siente ${r.top.windChill}°C</span>
+                    <span class="cota-wind-val">${getMountainWindArrowSvg(windDeg, '#38bdf8', 12)} ${r.top.windSpd} km/h</span>
+                    <span class="cota-quality-pill" style="color: ${r.top.quality.color};">${r.top.quality.icon} ${r.top.quality.label}</span>
                   </div>
                 </div>
 
-                <!-- 2. MEDIA ESTACIÓN (MID) -->
-                <div class="ski-level-row mid-row">
-                  <div class="ski-row-cota">
-                    <span class="cota-badge mid-badge">🚠 Media (${r.mid.alt}m)</span>
-                    <span class="cota-sub">Zona Central</span>
+                <!-- 2. MEDIA ESTACIÓN -->
+                <div class="ski-level-strip mid-strip">
+                  <div class="ski-strip-header">
+                    <span class="cota-badge mid-badge">🚠 MEDIA ESTACIÓN (${r.mid.alt}m)</span>
+                    <span class="cota-peak-name">Zona Central</span>
                   </div>
-                  <div class="ski-row-temp">
-                    <span class="cota-temp">${r.mid.temp}°</span>
-                    <span class="cota-chill" title="Sensación térmica con viento">🥶 ${r.mid.windChill}°</span>
-                  </div>
-                  <div class="ski-row-wind">
-                    ${getMountainWindArrowSvg(windDeg, '#38bdf8', 12)}
-                    <span>${r.mid.windSpd} km/h</span>
-                  </div>
-                  <div class="ski-row-quality" style="color: ${r.mid.quality.color};">
-                    <span>${r.mid.quality.icon} ${r.mid.quality.label}</span>
+                  <div class="ski-strip-metrics">
+                    <span class="cota-temp-val">${r.mid.temp}°C</span>
+                    <span class="cota-chill-pill" title="Sensación térmica con viento">🥶 Siente ${r.mid.windChill}°C</span>
+                    <span class="cota-wind-val">${getMountainWindArrowSvg(windDeg, '#38bdf8', 12)} ${r.mid.windSpd} km/h</span>
+                    <span class="cota-quality-pill" style="color: ${r.mid.quality.color};">${r.mid.quality.icon} ${r.mid.quality.label}</span>
                   </div>
                 </div>
 
-                <!-- 3. BASE (BOTTOM) -->
-                <div class="ski-level-row bot-row">
-                  <div class="ski-row-cota">
-                    <span class="cota-badge bot-badge">🎿 Base (${r.base.alt}m)</span>
-                    <span class="cota-sub">Parking / Taquillas</span>
+                <!-- 3. BASE -->
+                <div class="ski-level-strip bot-strip">
+                  <div class="ski-strip-header">
+                    <span class="cota-badge bot-badge">🎿 BASE / PARKING (${r.base.alt}m)</span>
+                    <span class="cota-peak-name">Taquillas</span>
                   </div>
-                  <div class="ski-row-temp">
-                    <span class="cota-temp">${r.base.temp}°</span>
-                    <span class="cota-chill" title="Sensación térmica">🥶 ${r.base.windChill}°</span>
-                  </div>
-                  <div class="ski-row-wind">
-                    ${getMountainWindArrowSvg(windDeg, '#38bdf8', 12)}
-                    <span>${r.base.windSpd} km/h</span>
-                  </div>
-                  <div class="ski-row-quality" style="color: #38bdf8;">
-                    <span>${r.base.precipType}</span>
+                  <div class="ski-strip-metrics">
+                    <span class="cota-temp-val">${r.base.temp}°C</span>
+                    <span class="cota-chill-pill" title="Sensación térmica">🥶 Siente ${r.base.windChill}°C</span>
+                    <span class="cota-wind-val">${getMountainWindArrowSvg(windDeg, '#38bdf8', 12)} ${r.base.windSpd} km/h</span>
+                    <span class="cota-quality-pill" style="color: #38bdf8;">${r.base.precipType}</span>
                   </div>
                 </div>
               </div>
@@ -567,7 +558,7 @@ export function renderMountainCard(data, concejo) {
               <!-- Enlace Oficial a Webcams y Partes de Nieve -->
               <div class="resort-web-link-row">
                 <a href="${r.web}" target="_blank" rel="noopener noreferrer" class="btn-resort-link">
-                  📷 Webcams y Parte Oficial de ${r.name.includes('Valgrande') ? 'Pajares' : r.name.includes('Fuentes') ? 'Fuentes' : r.name} ↗
+                  📷 Webcams y Parte Oficial de ${r.shortName} ↗
                 </a>
               </div>
             </div>

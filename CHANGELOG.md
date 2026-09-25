@@ -10,6 +10,23 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.0.85-snowclean] - 2026-09-25 (Fase de Pruebas Activa)
+
+### 📱 Erradicación de Cortes y Superposiciones en Cordillera (Feedback Visual Lendo)
+- **Barra de Sensores en 2 Pisos Anti-Colisión**:
+  - *Piso 1 (50% / 50%)*: Cota de Nieve (0°C) y Nieve Prevista (3 Días) con divisor vertical propio, eliminando cualquier roce o solapamiento numérico.
+  - *Piso 2 (Ancho completo)*: Peligro de Aludes EAWS desplegado a todo lo ancho con nivel legible sin cortes y botón `💡 Explícame`.
+- **Interruptor de 1 Palabra Limpia**:
+  - Conmutador directo: **`[ ⛷️ Esquí ]`** y **`[ 🚗 Puertos ]`**, erradicando puntos suspensivos (`...`) en pantallas estrechas.
+- **Selector de Estaciones en Cuadrícula 2x2 Táctil**:
+  - Distribución ergonómica con pastillas amplias para el dedo: `[ ⛷️ Pajares ]`, `[ ⛷️ Fuentes ]`, `[ ⛷️ San Isidro ]` y `[ ⛷️ Leitariegos ]`, suprimiendo paréntesis largos desbordados.
+- **Cotas Altitudinales en Tiras de 2 Líneas 100% Legibles**:
+  - Cada nivel (Cumbre, Media Estación y Base) se presenta en 2 líneas holgadas (Línea 1: Cota y nombre del pico; Línea 2: Temperatura, Sensación Wind Chill, Viento vectorial y Calidad de nieve) con capacidad de ajuste flexible, erradicando los cortes de texto (`Cu...`, `Me...`, `Niev...`).
+- **Anti-Caché & Service Worker `v185-snowclean`**:
+  - Sincronización en `sw.js`, `index.html` y módulos ES.
+
+---
+
 ## [1.0.84-snowmobile] - 2026-09-25 (Fase de Pruebas Activa)
 
 ### 📱 Optimización Móvil Ergonómica en Cordillera (Feedback Visual Lendo)

@@ -395,6 +395,21 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - Presentación horizontal simétrica para Hoy, Mañana, Pasado y Total 3 Días.
     6. **Anti-Caché & Despliegue `v1.0.84-snowmobile`**:
        - Sincronización en `sw.js`, `index.html`, `components.css` y `app.js`.
+- **📱 Hito Técnico Cumplido: Erradicación de Cortes y Superposiciones en Móvil (Feedback Lendo "fuera de plano" - 25 Sep 2026)**:
+  - *Contexto & Detección de Lendo*: Lendo envió nueva captura real mostrando que en 360 px los textos salían truncados con elipsis (`Cu...`, `Me...`, `Niev...`, `Puertos y Hu...`, `San Isidro (Pueb...`) y los 3 sensores colisionaban entre sí con el nivel de aludes pisando los centímetros de nieve.
+  - *Solución Definitiva en Local (`js/components/mountainCard.js`, `css/components.css`)*:
+    1. **Panel Superior en 2 Pisos Anti-Colisión**:
+       - *Piso 1 (50% / 50%)*: Cota de Nieve y Nieve 3 Días con divisor vertical, con holgura para números grandes.
+       - *Piso 2 (Ancho completo)*: Peligro de Aludes EAWS desplegado a todo lo ancho con nivel legible y botón `💡 Explícame`.
+    2. **Interruptor de 1 Palabra Limpia**:
+       - Conmutador directo: `[ ⛷️ Esquí ]` y `[ 🚗 Puertos ]`, eliminando cualquier corte o punto suspensivo.
+    3. **Selector de Estaciones en Cuadrícula 2x2 Táctil**:
+       - Pastillas simétricas: `[ ⛷️ Pajares ]`, `[ ⛷️ Fuentes ]`, `[ ⛷️ San Isidro ]` y `[ ⛷️ Leitariegos ]`.
+    4. **Cotas en Tiras de 2 Líneas 100% Legibles**:
+       - Sustitución de la tabla de 4 columnas estrechas por tiras horizontales donde caben todos los textos completos: Cota, pico, temperatura, sensación térmica Wind Chill, viento vectorial y calidad de nieve sin truncamientos.
+    5. **Anti-Caché & Despliegue Dual `v1.0.85-snowclean`**:
+       - Sincronización en `sw.js`, `index.html`, `components.css` y `app.js`.
+
 
 
 
