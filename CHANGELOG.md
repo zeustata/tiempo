@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.0.86-snowgrid] - 2026-09-25 (Fase de Pruebas Activa)
+
+### ❄️ Corrección de Desborde en Nieve Prevista a 3 Días (Feedback Visual Lendo)
+- **Cuadrícula 2x2 Simétrica y Amplia para Nieve en Pistas**:
+  - Reestructuración de la fila de 4 pastillas comprimidas en una cuadrícula simétrica de 2 filas por 2 columnas (Fila 1: `📅 Hoy` y `📅 Mañana` • Fila 2: `📅 Pasado` y `❄️ Total 3 Días`), otorgando un 50% de ancho a cada celda y erradicando el desborde por la derecha fuera del marco de la tarjeta.
+  - Formato en una sola línea por celda (etiqueta a la izquierda y `0.0 cm` a la derecha sin saltos de línea verticales).
+- **Anti-Caché & Service Worker `v186-snowgrid`**:
+  - Sincronización en `sw.js`, `index.html` y módulos ES.
+
+---
+
 ## [1.0.85-snowclean] - 2026-09-25 (Fase de Pruebas Activa)
 
 ### 📱 Erradicación de Cortes y Superposiciones en Cordillera (Feedback Visual Lendo)

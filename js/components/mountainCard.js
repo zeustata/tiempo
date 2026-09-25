@@ -533,23 +533,23 @@ export function renderMountainCard(data, concejo) {
                 </div>
               </div>
 
-              <!-- PREVISIÓN DE NIEVE FRESCA A 3 DÍAS -->
+              <!-- PREVISIÓN DE NIEVE FRESCA A 3 DÍAS (CUADRÍCULA 2X2 ANTI-DESBORDE) -->
               <div class="ski-resort-snowfall-row">
-                <div class="snowfall-pills-wrap">
+                <div class="snowfall-pills-grid">
                   <div class="snow-day-pill">
-                    <span class="snow-day-label">Hoy</span>
+                    <span class="snow-day-label">📅 Hoy</span>
                     <span class="snow-day-val">${snowAccumToday} cm</span>
                   </div>
                   <div class="snow-day-pill">
-                    <span class="snow-day-label">Mañana</span>
+                    <span class="snow-day-label">📅 Mañana</span>
                     <span class="snow-day-val">${snowAccumTomorrow} cm</span>
                   </div>
                   <div class="snow-day-pill">
-                    <span class="snow-day-label">Pasado</span>
+                    <span class="snow-day-label">📅 Pasado</span>
                     <span class="snow-day-val">${snowAccumDay3} cm</span>
                   </div>
                   <div class="snow-day-pill total-pill">
-                    <span class="snow-day-label">Total 3 Días</span>
+                    <span class="snow-day-label">❄️ Total 3 Días</span>
                     <span class="snow-day-val highlight">${totalSnow3Days} cm</span>
                   </div>
                 </div>

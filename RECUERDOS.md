@@ -409,6 +409,16 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - Sustitución de la tabla de 4 columnas estrechas por tiras horizontales donde caben todos los textos completos: Cota, pico, temperatura, sensación térmica Wind Chill, viento vectorial y calidad de nieve sin truncamientos.
     5. **Anti-Caché & Despliegue Dual `v1.0.85-snowclean`**:
        - Sincronización en `sw.js`, `index.html`, `components.css` y `app.js`.
+- **❄️ Hito Técnico Cumplido: Cuadrícula 2x2 para Nieve Prevista sin Desborde (Feedback Lendo - 25 Sep 2026)**:
+  - *Contexto & Detección de Lendo*: Lendo envió captura confirmando la excelente legibilidad de las 3 cotas, pero detectando que en la pastilla de *Total 3 Días* el borde sobresalía por la derecha atravesando el marco de la tarjeta, debido a la compresión de 4 columnas en pantallas estrechas.
+  - *Solución Definitiva en Local (`js/components/mountainCard.js`, `css/components.css`)*:
+    1. **Cuadrícula 2x2 para Espesores de Nieve (`.snowfall-pills-grid`)**:
+       - Fila 1: `📅 Hoy` y `📅 Mañana` (50% de ancho cada una).
+       - Fila 2: `📅 Pasado` y `❄️ Total 3 Días` (50% de ancho cada una).
+       - Cada pastilla muestra la etiqueta a la izquierda y el valor (`0.0 cm`) a la derecha en una sola línea horizontal sin cortes ni desbordes.
+    2. **Anti-Caché & Despliegue Dual `v1.0.86-snowgrid`**:
+       - Sincronización en `sw.js`, `index.html`, `components.css` y `app.js`.
+
 
 
 

@@ -4,7 +4,7 @@ import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedW
 import { renderCurrentWeather } from './components/currentCard.js?v=1.0.81-solarcalibrate';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.0.82-surfarrows';
 import { renderSurfCard } from './components/surfCard.js?v=1.0.82-surfarrows';
-import { renderMountainCard } from './components/mountainCard.js?v=1.0.85-snowclean';
+import { renderMountainCard } from './components/mountainCard.js?v=1.0.86-snowgrid';
 import { renderForecast } from './components/forecastView.js?v=1.0.81-solarcalibrate';
 import { renderWeatherChart } from './components/chartsView.js?v=1.0.81-solarcalibrate';
 import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.81-astromoon2';
@@ -14,7 +14,7 @@ import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.0.81';
 import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.0.81';
 import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.0.81';
 import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.0.81';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.85-snowclean';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.86-snowgrid';
 import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.0.83-phenomena';
 
 const APP_MODULES = [

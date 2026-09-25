@@ -2646,44 +2646,50 @@
   gap: 3px;
 }
 
-/* --- NIEVE ACUMULADA 3 DÍAS --- */
+/* --- NIEVE ACUMULADA 3 DÍAS (CUADRÍCULA 2X2 ANTI-DESBORDE) --- */
 .ski-resort-snowfall-row {
   background: rgba(56, 189, 248, 0.06);
   border: 1px solid rgba(56, 189, 248, 0.2);
   border-radius: var(--radius-sm);
-  padding: 10px 14px;
+  padding: 10px 12px;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  box-sizing: border-box;
+  width: 100%;
 }
 
-.snowfall-title {
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: #38bdf8;
-}
-
-.snowfall-pills-wrap {
+.snowfall-pills-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 6px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .snow-day-pill {
-  background: rgba(15, 23, 42, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 6px;
-  padding: 6px 8px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 8px 12px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 2px;
+  justify-content: space-between;
+  gap: 6px;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.snow-day-pill.total-pill {
+  background: rgba(56, 189, 248, 0.1);
+  border-color: rgba(56, 189, 248, 0.3);
 }
 
 .snow-day-label {
-  font-size: 0.68rem;
+  font-size: 0.74rem;
+  font-weight: 700;
   color: #94a3b8;
-  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .snow-day-val {
@@ -2691,6 +2697,7 @@
   font-weight: 800;
   font-family: 'JetBrains Mono', monospace;
   color: #ffffff;
+  white-space: nowrap;
 }
 
 .snow-day-val.highlight {
