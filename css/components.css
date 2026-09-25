@@ -2267,10 +2267,102 @@
   letter-spacing: -0.2px;
 }
 
+/* --- BARRA UNIFICADA ULTRA-COMPACTA DE SENSORES DE MONTAÑA --- */
+.mountain-top-unified-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.mountain-top-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 2px;
+  min-width: 0;
+}
+
+.mountain-top-label-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: center;
+}
+
+.mountain-top-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.btn-explain-sensor-compact {
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 9999px;
+  padding: 1px 5px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.btn-explain-sensor-compact:hover {
+  background: rgba(56, 189, 248, 0.3);
+  border-color: #38bdf8;
+}
+
+.mountain-top-val {
+  font-size: 1.15rem;
+  font-weight: 800;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-main);
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+.mountain-top-val.highlight {
+  color: #38bdf8;
+}
+
+.mountain-top-val .unit {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+.mountain-top-sub {
+  font-size: 0.65rem;
+  color: #94a3b8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.mountain-top-divider {
+  width: 1px;
+  height: 34px;
+  background: rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+
 /* --- INTERRUPTOR DESLIZANTE SEGMENTADO PARA CORDILLERA (ESQUÍ VS PUERTOS) --- */
 .mountain-toggle-container {
   width: 100%;
-  margin: 14px 0 16px 0;
+  margin: 0 0 12px 0;
 }
 
 .mountain-sliding-segmented-switch {
@@ -2280,7 +2372,7 @@
   background: rgba(15, 23, 42, 0.65);
   border: 1px solid var(--border-glass);
   border-radius: 9999px;
-  padding: 4px;
+  padding: 3px;
   box-sizing: border-box;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -2288,10 +2380,10 @@
 
 .mountain-switch-glider {
   position: absolute;
-  top: 4px;
-  bottom: 4px;
-  left: 4px;
-  width: calc(50% - 4px);
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
   background: #38bdf8;
   border-radius: 9999px;
   transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
@@ -2308,12 +2400,13 @@
   position: relative;
   z-index: 2;
   flex: 1;
+  min-width: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 8px 10px;
-  font-size: 0.85rem;
+  gap: 5px;
+  padding: 7px 6px;
+  font-size: 0.8rem;
   font-weight: 700;
   color: #94a3b8;
   background: transparent;
@@ -2324,6 +2417,8 @@
   text-align: center;
   white-space: nowrap;
   user-select: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .mountain-switch-option:hover {
@@ -2336,56 +2431,47 @@
 }
 
 .mountain-switch-icon {
-  font-size: 1rem;
+  font-size: 0.95rem;
   line-height: 1;
+  flex-shrink: 0;
 }
 
 .mountain-switch-label {
   letter-spacing: -0.2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* --- SELECTOR DE ESTACIONES POR PILLS/CHIPS --- */
+/* --- SELECTOR DE ESTACIONES POR PILLS/CHIPS COMPACTOS --- */
 .resorts-selector-bar {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-
-.resorts-selector-label {
-  font-size: 0.76rem;
-  font-weight: 700;
-  color: #94a3b8;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  margin-bottom: 12px;
 }
 
 .resorts-pills-row {
   display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 4px;
-  scrollbar-width: none;
-}
-
-.resorts-pills-row::-webkit-scrollbar {
-  display: none;
+  gap: 6px;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .resort-select-pill {
+  flex: 1;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 7px 14px;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px 4px;
   background: rgba(15, 23, 42, 0.6);
   border: 1px solid var(--border-glass);
   border-radius: 9999px;
   color: #cbd5e1;
-  font-size: 0.82rem;
-  font-weight: 600;
+  font-size: 0.76rem;
+  font-weight: 700;
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.2s ease;
+  text-align: center;
 }
 
 .resort-select-pill:hover {
@@ -2399,7 +2485,7 @@
   border-color: #38bdf8;
   color: #ffffff;
   font-weight: 800;
-  box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.35);
 }
 
 /* --- FICHA Y PANELES DE ESTACIONES DE ESQUÍ --- */
@@ -2407,133 +2493,138 @@
   background: var(--bg-surface-elevated);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
-  padding: 16px 16px;
+  padding: 14px 14px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
   transition: transform 0.2s ease;
 }
 
 .resort-card-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
+  align-items: center;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
 .resort-name-main {
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 800;
   color: var(--text-main);
   margin: 0;
 }
 
 .resort-sub {
-  font-size: 0.76rem;
+  font-size: 0.72rem;
   color: #94a3b8;
   display: block;
-  margin-top: 2px;
+  margin-top: 1px;
 }
 
 .lift-status-pill {
-  padding: 4px 10px;
+  padding: 3px 8px;
   border-radius: 9999px;
-  font-size: 0.76rem;
+  font-size: 0.72rem;
   font-weight: 700;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
+  white-space: nowrap;
 }
 
-.resort-desc-hint {
-  font-size: 0.78rem;
-  color: #cbd5e1;
-  line-height: 1.4;
-  background: rgba(255, 255, 255, 0.03);
-  padding: 8px 12px;
-  border-radius: 8px;
-  border-left: 3px solid #38bdf8;
-}
-
-/* --- DESGLOSE EN 3 NIVELES ALTITUDINALES --- */
-.ski-alt-levels-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px;
-}
-
-.ski-level-card {
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid var(--border-glass);
-  border-radius: var(--radius-sm);
-  padding: 12px 14px;
+/* --- TABLA COMPARATIVA DE 3 COTAS (ESTÁNDAR SNOW-FORECAST) --- */
+.ski-levels-table {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
+  background: rgba(15, 23, 42, 0.45);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-sm);
+  padding: 8px;
 }
 
-.ski-level-badge {
-  display: flex;
-  justify-content: space-between;
+.ski-level-row {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr 1.1fr;
   align-items: center;
-  font-size: 0.78rem;
+  gap: 6px;
+  padding: 7px 8px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.ski-level-row:last-child {
+  border-bottom: none;
+}
+
+.ski-row-cota {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.cota-badge {
+  font-size: 0.74rem;
   font-weight: 800;
-  padding-bottom: 6px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .top-badge { color: #38bdf8; }
 .mid-badge { color: #818cf8; }
 .bot-badge { color: #34d399; }
 
-.level-sub-tag {
-  font-size: 0.7rem;
+.cota-sub {
+  font-size: 0.65rem;
   color: #94a3b8;
-  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.ski-level-temp-row {
+.ski-row-temp {
   display: flex;
-  align-items: baseline;
-  gap: 10px;
+  flex-direction: column;
+  gap: 1px;
 }
 
-.ski-temp-val {
-  font-size: 1.4rem;
+.cota-temp {
+  font-size: 0.95rem;
   font-weight: 800;
   font-family: 'JetBrains Mono', monospace;
   color: var(--text-main);
   line-height: 1;
 }
 
-.ski-chill-val {
-  font-size: 0.8rem;
+.cota-chill {
+  font-size: 0.68rem;
   font-weight: 700;
   color: #38bdf8;
-  background: rgba(56, 189, 248, 0.12);
-  padding: 2px 7px;
-  border-radius: 6px;
+  white-space: nowrap;
 }
 
-.ski-level-wind-row,
-.ski-level-precip-row {
-  font-size: 0.78rem;
+.ski-row-wind {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
   color: #cbd5e1;
+  white-space: nowrap;
 }
 
-.ski-level-quality-row {
-  font-size: 0.8rem;
+.ski-row-quality {
+  font-size: 0.72rem;
   font-weight: 700;
   display: flex;
   align-items: center;
-  gap: 5px;
-}
-
-.ski-level-desc {
-  font-size: 0.72rem;
-  color: #94a3b8;
-  line-height: 1.3;
+  gap: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* --- NIEVE ACUMULADA 3 DÍAS --- */
@@ -2555,8 +2646,8 @@
 
 .snowfall-pills-wrap {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
 }
 
 .snow-day-pill {

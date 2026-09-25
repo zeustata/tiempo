@@ -380,6 +380,22 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - Guía técnica interactiva con botón `[ 💡 Explícame ]` en la tarjeta de cordillera.
     6. **Anti-Caché & Service Worker `v183-snowforecast`**:
        - Actualización en `sw.js`, `index.html` y llamadas de versión.
+- **📱 Hito Técnico Cumplido: Optimización Móvil y Ergonómica de Cordillera (Feedback Visual Lendo - 25 Sep 2026)**:
+  - *Contexto & Detección de Lendo*: Tras el despliegue de la versión 1.0.83, Lendo compartió captura real de su teléfono señalando que la distribución quedaba desordenada ("queda mal ordenado"): los 3 sensores superiores se apilaban verticalmente desaprovechando espacio, el texto de Aludes saltaba de línea, el botón derecho del interruptor se cortaba (`🚗 Puertos & (`), y las estaciones de esquí tenían cajones verticales gigantescos con textos decorativos largos.
+  - *Solución Algorítmica y Visual en Local (`js/components/mountainCard.js`, `css/components.css`)*:
+    1. **Barra Unificada de Sensores de Alta Montaña**:
+       - Agrupación en 1 sola cápsula de cristal con 3 columnas simétricas: *Cota 0°C*, *Nieve 3 Días* y *Aludes EAWS* (con icono didáctico compacto `💡`), ahorrando el 65% de altura en móvil.
+    2. **Interruptor Deslizante Anti-Desborde**:
+       - Textos calibrados a `[ ⛷️ Esquí y Pistas ]` y `[ 🚗 Puertos y Huerna ]` con `min-width: 0` y ajuste elástico total.
+    3. **Matriz Comparativa de 3 Cotas (Estilo Snow-Forecast Puro)**:
+       - 3 filas horizontales limpias (*Cumbre*, *Media Estación*, *Base*) mostrando altitud, temperatura, Wind Chill, flecha vectorial de viento y calidad de nieve (*Polvo*, *Primavera*, *Dura*), suprimiendo la parrafada descriptiva del dominio esquiable.
+    4. **Selector Compacto de Estaciones**:
+       - Pastillas simétricas: `[ Pajares ]`, `[ Fuentes ]`, `[ San Isidro ]`, `[ Leitariegos ]`.
+    5. **Cuadrícula de Nieve Fresca a 4 Columnas**:
+       - Presentación horizontal simétrica para Hoy, Mañana, Pasado y Total 3 Días.
+    6. **Anti-Caché & Despliegue `v1.0.84-snowmobile`**:
+       - Sincronización en `sw.js`, `index.html`, `components.css` y `app.js`.
+
 
 
 

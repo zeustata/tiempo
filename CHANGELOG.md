@@ -10,6 +10,25 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.0.84-snowmobile] - 2026-09-25 (Fase de Pruebas Activa)
+
+### 📱 Optimización Móvil Ergonómica en Cordillera (Feedback Visual Lendo)
+- **Barra Unificada de Sensores de Alta Montaña**:
+  - Fusión de las 3 tarjetas apiladas en una sola barra de cristal horizontal con 3 columnas simétricas: **Cota de Nieve (0°C)**, **Nieve Acumulada (3 Días)** y **Peligro de Aludes EAWS** con botón didáctico compacto `💡`, erradicando el salto de línea y ahorrando un 65% de altura en pantallas móviles.
+- **Interruptor Deslizante Segmentado Anti-Corte**:
+  - Etiquetas compactadas a **`[ ⛷️ Esquí y Pistas ]`** y **`[ 🚗 Puertos y Huerna ]`** con `min-width: 0` y ajuste elástico para impedir cualquier desborde o recorte de texto en dispositivos móviles.
+- **Matriz Comparativa de 3 Cotas estilo Snow-Forecast**:
+  - Sustitución de los 3 cajones verticales por una tabla comparativa de 3 filas compactas (**Cumbre**, **Media Estación** y **Base**) mostrando en una sola línea altitud, temperatura, sensación térmica con viento, racha/rumbo y calidad de nieve (*Polvo*, *Primavera*, *Dura*).
+  - Supresión de la parrafada descriptiva del dominio para centrar la experiencia 100% en las condiciones de nieve y pistas.
+- **Selector de Estaciones Compacto**:
+  - Pastillas directas: `[ Pajares ]`, `[ Fuentes ]`, `[ San Isidro ]` y `[ Leitariegos ]` distribuidas uniformemente.
+- **Cuadrícula de Nieve Fresca a 4 Columnas**:
+  - Distribución horizontal completa de los espesores para Hoy, Mañana, Pasado y Total 3 Días.
+- **Anti-Caché & Service Worker `v184-snowmobile`**:
+  - Sincronización en `sw.js`, `index.html` y módulos ES.
+
+---
+
 ## [1.0.83-snowforecast] - 2026-09-25 (Fase de Pruebas Activa)
 
 ### ⛷️ Rediseño de Cordillera & Nieve: Visor Dual Estilo Snow-Forecast (Feedback Cefe) & Red Integral de Puertos
