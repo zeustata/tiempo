@@ -66,6 +66,11 @@
 - **Registro Técnico Exhaustivo Obligatorio:** Con cada actualización, mejora, corrección de errores o despliegue en cualquier proyecto, es obligatorio actualizar con el máximo rigor y detalle técnico el archivo de memoria permanente (`RECUERDOS.md` y/o `CHANGELOG.md`).
 - **Inclusión en el Commit y Despliegue:** La memoria actualizada debe incluirse siempre en el `git commit` y subirse a GitHub (`zeustata/[nombre-proyecto]`) en cada sincronización. Ninguna tarea o actualización se dará por finalizada sin haber guardado y subido su correspondiente recuerdo técnico.
 
+### 11. Doctrina de Blindaje Anti-Desborde y Ergonomía Móvil Estricta
+- **Inmunidad Estricta al Desborde en Pantallas Móviles:** Toda tarjeta, modal, fila o componente de interfaz en cualquier proyecto zeustata debe respetar rigurosamente el ancho útil disponible en teléfonos móviles (ancho estándar de 320px a 380px).
+- **Prohibición de Sobrecarga en Cabeceras:** Queda terminantemente prohibido acumular más de un elemento de acción (como el botón de cerrar `[ ✕ ]`) en la misma fila horizontal junto a títulos modales o secciones que contengan subtítulos o textos largos, para impedir que los botones colisionen o sean expulsados fuera del marco de la tarjeta.
+- **Canalización en Filas Secundarias o Barras de Herramientas:** Si una vista requiere acciones secundarias, didácticas o de configuración (como selectores de temas, diccionarios o filtros), estas deben situarse en una fila secundaria compacta o pastillas ergonómicas dedicadas al 50%, con `box-sizing: border-box`, `max-width: 100%` y holgura visual garantizada en cualquier resolución.
+
 ---
 
 ## 📑 PARTE II: LEYES ESPECÍFICAS DEL PROYECTO: METEOASTUR LODE (TIEMPO)

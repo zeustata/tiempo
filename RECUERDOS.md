@@ -448,6 +448,18 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - Dimensiones táctiles simétricas (`42px x 42px`) con escala adaptativa (`36px x 36px` en `<= 400px`), dejando el menú 100% despejado y visible sin scroll.
     2. **Anti-Caché & Despliegue Dual `v1.0.89-menuicons`**:
        - Sincronización en `sw.js`, `index.html` y `css/main.css`.
+- **🏛️ Hito Técnico Cumplido: Blindaje Anti-Desborde & Consagración Constitucional Ley 11 (Feedback Lendo - 25 Sep 2026)**:
+  - *Contexto & Detección de Lendo*: Tras colocar los 3 botones en la cabecera modal, el botón de cierre `[ ✕ ]` sobresalía por la derecha fuera de la tarjeta en móviles estrechos. Lendo envió captura evidenciando el desborde y solicitó elevarlo a la Constitución Suprema para blindar que nunca más vuelva a ocurrir en ningún proyecto.
+  - *Autorización Constitucional (PIN 2796)*:
+    - Verificación matemática SHA-256 de la identidad de Lendo autorizando la creación del **Artículo 11 (Doctrina de Blindaje Anti-Desborde y Ergonomía Móvil Estricta)** en la Constitución Suprema (Parte I) en `AGENTS.md`.
+  - *Solución Definitiva en Local (`index.html`, `css/main.css`)*:
+    1. **Cabecera Limpia con Botón Cerrar Protegido**:
+       - Eliminación de la sobrecarga horizontal: la cabecera modal vuelve a tener exclusivamente el título y el botón `[ ✕ ]` a la derecha sin rozar el marco.
+    2. **Mini-Tira Horizontal `.nav-modal-tools-strip`**:
+       - Tira compacta de 32px de alto con dos botones simétricos al 50%: `[ 📖 Fenómenos ]` y `[ 🎨 Estilos Iconos ]`, con margen de seguridad superior a 40px por celda.
+    3. **Anti-Caché & Despliegue Dual `v1.0.90-navstrip`**:
+       - Sincronización en `sw.js`, `index.html`, `css/main.css` y `AGENTS.md`.
+
 
 
 

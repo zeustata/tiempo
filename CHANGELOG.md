@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.0.90-navstrip] - 2026-09-25 (Fase de Pruebas Activa)
+
+### 🏛️ Blindaje Anti-Desborde y Mini-Tira Simétrica en Menú (Doctrina Constitucional Ley 11)
+- **Despeje de Cabecera y Protección de Botón Cerrar (`[ ✕ ]`)**:
+  - Restitución de la cabecera modal para albergar exclusivamente el título `📑 Módulos Meteorológicos` y el botón de cierre `[ ✕ ]` en el extremo derecho, eliminando la sobrecarga horizontal que expulsaba el botón fuera del marco de la tarjeta en móviles estrechos.
+  - Creación de la mini-tira horizontal `.nav-modal-tools-strip` de 32px de alto con dos pastillas al 50%:
+    - `[ 📖 Fenómenos ]` y `[ 🎨 Estilos Iconos ]` con holgura garantizada y margen de seguridad superior a 40px por celda.
+- **Consagración de la Ley 11 en la Constitución Suprema (Parte I)**:
+  - Autorización mediante PIN maestro 2796 de la *Doctrina de Blindaje Anti-Desborde y Ergonomía Móvil Estricta*, prohibiendo sobrecargar cabeceras con múltiples acciones en todos los proyectos zeustata.
+- **Anti-Caché & Service Worker `v190-navstrip`**:
+  - Sincronización en `sw.js`, `index.html` y módulos ES.
+
+---
+
 ## [1.0.89-menuicons] - 2026-09-25 (Fase de Pruebas Activa)
 
 ### 📑 Rediseño Minimalista de Herramientas en Menú (Feedback Lendo)

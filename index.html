@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.89-menuicons">
-  <link rel="stylesheet" href="css/components.css?v=1.0.89-menuicons">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.89-menuicons">
+  <link rel="stylesheet" href="css/main.css?v=1.0.90-navstrip">
+  <link rel="stylesheet" href="css/components.css?v=1.0.90-navstrip">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.90-navstrip">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -1432,11 +1432,18 @@
           <h3>📑 Módulos Meteorológicos</h3>
           <span class="modal-subtitle">Elige la sección que deseas consultar</span>
         </div>
-        <div class="modal-header-actions">
-          <button id="btn-open-phenomena" class="btn-header-tool" title="Diccionario Didáctico de Fenómenos (Vaguada, DANA, Galerna...)" aria-label="Diccionario de Fenómenos">📖</button>
-          <button id="btn-open-icon-themes" class="btn-header-tool" title="Cambiar estilo visual de los iconos" aria-label="Estilos de Iconos">🎨</button>
-          <button id="btn-close-nav" class="btn-close" aria-label="Cerrar menú">&times;</button>
-        </div>
+        <button id="btn-close-nav" class="btn-close" aria-label="Cerrar menú">&times;</button>
+      </div>
+      <!-- Mini-Tira Compacta: Fenómenos y Estilos de Iconos -->
+      <div class="nav-modal-tools-strip">
+        <button id="btn-open-phenomena" class="nav-tool-strip-btn" title="Diccionario Didáctico de Fenómenos">
+          <span class="strip-btn-icon">📖</span>
+          <span class="strip-btn-text">Fenómenos</span>
+        </button>
+        <button id="btn-open-icon-themes" class="nav-tool-strip-btn" title="Cambiar estilo visual de los iconos">
+          <span class="strip-btn-icon">🎨</span>
+          <span class="strip-btn-text">Estilos Iconos</span>
+        </button>
       </div>
       <div class="modal-body nav-modal-body" id="nav-modal-grid"></div>
     </div>
@@ -1570,7 +1577,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.89-menuicons').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.90-navstrip').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1591,7 +1598,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.89-menuicons"></script>
+  <script type="module" src="js/app.js?v=1.0.90-navstrip"></script>
 
 
 
