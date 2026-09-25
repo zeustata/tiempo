@@ -10,6 +10,19 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.0.89-menuicons] - 2026-09-25 (Fase de Pruebas Activa)
+
+### 📑 Rediseño Minimalista de Herramientas en Menú (Feedback Lendo)
+- **Integración de Fenómenos y Estilos de Iconos en Cabecera (`modal-header-actions`)**:
+  - Supresión de los dos bloques gigantes apilados verticalmente que ocupaban más de 120px de altura y desplazaban los módulos climáticos.
+  - Creación de dos botones de icono de cristal discretos y táctiles (`[ 📖 ]` y `[ 🎨 ]`) situados en la cabecera superior del menú junto a la `[ ✕ ]` de cerrar.
+  - Ahorro de espacio del 100%: los 8 módulos meteorológicos quedan accesibles en la parte superior sin necesidad de scroll forzado.
+  - Adaptabilidad táctil garantizada con escala responsiva para teléfonos de pantalla estrecha (`<= 400px`).
+- **Anti-Caché & Service Worker `v189-menuicons`**:
+  - Sincronización en `sw.js`, `index.html` y módulos ES.
+
+---
+
 ## [1.0.88-sunhours] - 2026-09-25 (Fase de Pruebas Activa)
 
 ### 🌅 Igualación y Cromatismo Solar en Salida y Puesta de Sol (Feedback Tester / Lendo)

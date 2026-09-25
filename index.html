@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.0.88-sunhours">
-  <link rel="stylesheet" href="css/components.css?v=1.0.88-sunhours">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.88-sunhours">
+  <link rel="stylesheet" href="css/main.css?v=1.0.89-menuicons">
+  <link rel="stylesheet" href="css/components.css?v=1.0.89-menuicons">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.0.89-menuicons">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -1432,24 +1432,11 @@
           <h3>📑 Módulos Meteorológicos</h3>
           <span class="modal-subtitle">Elige la sección que deseas consultar</span>
         </div>
-        <button id="btn-close-nav" class="btn-close" aria-label="Cerrar menú">&times;</button>
-      </div>
-      <!-- Accesos Directos Didácticos y de Personalización -->
-      <div class="nav-menu-quick-tools">
-        <button class="btn-menu-tool-entry" id="btn-open-phenomena" title="Aprende a diferenciar Vaguada, Borrasca, DANA, Galerna y más">
-          <div class="btn-menu-tool-left">
-            <span class="tool-entry-title">📖 Diccionario de Fenómenos</span>
-            <span class="badge-phenomena-entry">Vaguada, Borrasca, DANA, Galerna...</span>
-          </div>
-          <span class="tool-chevron">➔</span>
-        </button>
-        <button class="btn-open-icon-theme-modal" id="btn-open-icon-themes" title="Cambiar estilo visual de los iconos">
-          <div class="btn-theme-modal-left">
-            <span class="theme-title">🎨 Estilo de Iconos</span>
-            <span class="badge-active-theme" id="badge-active-icon-theme">📱 Emojis Clásicos</span>
-          </div>
-          <span class="theme-chevron">➔</span>
-        </button>
+        <div class="modal-header-actions">
+          <button id="btn-open-phenomena" class="btn-header-tool" title="Diccionario Didáctico de Fenómenos (Vaguada, DANA, Galerna...)" aria-label="Diccionario de Fenómenos">📖</button>
+          <button id="btn-open-icon-themes" class="btn-header-tool" title="Cambiar estilo visual de los iconos" aria-label="Estilos de Iconos">🎨</button>
+          <button id="btn-close-nav" class="btn-close" aria-label="Cerrar menú">&times;</button>
+        </div>
       </div>
       <div class="modal-body nav-modal-body" id="nav-modal-grid"></div>
     </div>
@@ -1583,7 +1570,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.0.88-sunhours').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.0.89-menuicons').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1604,7 +1591,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.0.88-sunhours"></script>
+  <script type="module" src="js/app.js?v=1.0.89-menuicons"></script>
 
 
 

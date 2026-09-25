@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v188-sunhours';
+const CACHE_NAME = 'meteoasturlode-v189-menuicons';
 const STATIC_ASSETS = [
   './',
   './index.html',

@@ -1608,6 +1608,53 @@ body {
   transform: scale(1.05);
 }
 
+.modal-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.btn-header-tool {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-sm);
+  font-size: 1.25rem;
+  color: var(--text-main);
+  cursor: pointer;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-header-tool:hover,
+.btn-header-tool:active {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: #38bdf8;
+  transform: scale(1.05);
+}
+
+@media (max-width: 400px) {
+  .modal-header-actions {
+    gap: 5px;
+  }
+  .btn-header-tool,
+  .modal-header-actions .btn-close {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    font-size: 1.1rem;
+  }
+}
+
 .modal-body {
   display: flex;
   flex-direction: column;
@@ -1916,75 +1963,6 @@ body:-webkit-full-screen .app-container {
   #btn-fullscreen {
     display: none !important;
   }
-}
-
-/* --- ACCESOS DIRECTOS EN EL MENÚ DE NAVEGACIÓN --- */
-.icon-theme-menu-entry,
-.nav-menu-quick-tools {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  padding: 10px 18px 12px;
-  background: rgba(15, 23, 42, 0.45);
-  border-bottom: 1px solid var(--border-glass);
-}
-
-.btn-open-icon-theme-modal,
-.btn-menu-tool-entry {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 14px;
-  background: rgba(30, 41, 59, 0.65);
-  border: 1px solid var(--border-glass);
-  border-radius: var(--radius-md);
-  color: var(--text-main);
-  cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  text-align: left;
-}
-
-.btn-open-icon-theme-modal:hover,
-.btn-menu-tool-entry:hover {
-  background: rgba(51, 65, 85, 0.85);
-  border-color: rgba(56, 189, 248, 0.45);
-  transform: translateY(-1px);
-}
-
-.btn-theme-modal-left,
-.btn-menu-tool-left {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.theme-title,
-.tool-entry-title {
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: var(--text-main);
-}
-
-.badge-active-theme,
-.badge-phenomena-entry {
-  font-size: 0.76rem;
-  font-weight: 600;
-  color: #38bdf8;
-}
-
-.theme-chevron,
-.tool-chevron {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-}
-  color: var(--text-dim);
-  transition: transform 0.2s ease;
-}
-
-.btn-open-icon-theme-modal:hover .theme-chevron {
-  transform: translateX(3px);
-  color: var(--primary);
 }
 
 /* --- MODAL DE COLECCIÓN DE ESTILOS DE ICONOS --- */

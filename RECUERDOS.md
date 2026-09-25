@@ -439,6 +439,16 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - **Puesta del Sol (Ocaso)**: Icono `🌇` y hora en **Naranja Crepuscular / Atardecer Cálido** (`#f97316`).
     2. **Anti-Caché & Despliegue Dual `v1.0.88-sunhours`**:
        - Sincronización en `sw.js`, `index.html`, `components.css`, `forecastView.js` y `app.js`.
+- **📑 Hito Técnico Cumplido: Rediseño Minimalista de Herramientas en Menú (Feedback Lendo - 25 Sep 2026)**:
+  - *Contexto & Detección de Lendo*: Lendo señaló que al abrir el Menú de módulos, los botones didácticos de Diccionario de Fenómenos y Estilos de Iconos ocupaban demasiado espacio vertical en la parte superior, empujando la cuadrícula de módulos hacia abajo. Solicitó que fueran "dos iconos sin más".
+  - *Solución Definitiva en Local (`index.html`, `css/main.css`)*:
+    1. **Integración en la Cabecera del Modal (`.modal-header-actions`)**:
+       - Supresión completa de la barra `.nav-menu-quick-tools` con sus bloques y subtítulos.
+       - Reubicación de ambos accesos como botones de icono de cristal discretos (`[ 📖 ]` y `[ 🎨 ]`) en la cabecera superior del menú junto al botón de cerrar `[ ✕ ]`.
+       - Dimensiones táctiles simétricas (`42px x 42px`) con escala adaptativa (`36px x 36px` en `<= 400px`), dejando el menú 100% despejado y visible sin scroll.
+    2. **Anti-Caché & Despliegue Dual `v1.0.89-menuicons`**:
+       - Sincronización en `sw.js`, `index.html` y `css/main.css`.
+
 
 
 
