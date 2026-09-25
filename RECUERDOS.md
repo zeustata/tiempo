@@ -429,6 +429,17 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - Inclusión de `box-sizing: border-box`, `max-width: 100%` y `overflow: hidden` en `.resort-forecast-card` y `.ski-resort-snowfall-row`.
     3. **Anti-Caché & Despliegue Dual `v1.0.87-snowvert`**:
        - Sincronización en `sw.js`, `index.html`, `components.css` y `app.js`.
+- **🌅 Hito Técnico Cumplido: Simetría Tipográfica y Cromatismo Solar (Feedback Tester / Lendo - 25 Sep 2026)**:
+  - *Contexto & Detección*: Feedback de beta tester trasladado por Lendo: en la tarjeta de pronóstico extendido a 10 días, la salida del sol se veía muy bien pero el ocaso se leía mal, apagado y diminuto.
+  - *Diagnóstico*: La salida del sol usaba `.u-m-val` (blanco brillante y tamaño grande) mientras que el ocaso estaba en `.u-m-sub` (subtítulo secundario a 0.68rem en gris apagado).
+  - *Solución Definitiva en Local (`js/components/forecastView.js`, `css/components.css`)*:
+    1. **Contenedor Vertical Simétrico (`.u-sun-times-column`)**:
+       - Ambas horas igualadas con exactitud milimétrica a `font-size: 0.78rem`, negrita `800` y tipografía monoespaciada `JetBrains Mono`.
+       - **Salida del Sol (Orto)**: Icono `🌅` y hora en **Dorado Solar / Ámbar Amanecer** (`#fbbf24`).
+       - **Puesta del Sol (Ocaso)**: Icono `🌇` y hora en **Naranja Crepuscular / Atardecer Cálido** (`#f97316`).
+    2. **Anti-Caché & Despliegue Dual `v1.0.88-sunhours`**:
+       - Sincronización en `sw.js`, `index.html`, `components.css`, `forecastView.js` y `app.js`.
+
 
 
 

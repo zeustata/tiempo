@@ -289,11 +289,16 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
             </div>
             ` : ''}
 
-            <div class="u-metric-item" title="Salida y Puesta de Sol">
-              <span class="u-m-icon">🌅</span>
-              <div class="u-m-info">
-                <span class="u-m-val">${sunriseStr}</span>
-                <span class="u-m-sub">${sunsetStr}</span>
+            <div class="u-metric-item u-metric-sun" title="Salida (Orto) y Puesta de Sol (Ocaso)">
+              <div class="u-sun-times-column">
+                <div class="u-sun-item sunrise">
+                  <span class="u-sun-icon">🌅</span>
+                  <span class="u-sun-val">${sunriseStr}</span>
+                </div>
+                <div class="u-sun-item sunset">
+                  <span class="u-sun-icon">🌇</span>
+                  <span class="u-sun-val">${sunsetStr}</span>
+                </div>
               </div>
             </div>
           </div>

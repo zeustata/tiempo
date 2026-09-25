@@ -1568,6 +1568,50 @@
   }
 }
 
+/* --- MÉTRICA DE SALIDA Y PUESTA DE SOL EN PRONÓSTICO EXTENDIDO --- */
+.u-metric-item.u-metric-sun {
+  padding: 5px 6px;
+}
+
+.u-sun-times-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  width: 100%;
+  min-width: 0;
+}
+
+.u-sun-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  line-height: 1;
+}
+
+.u-sun-icon {
+  font-size: 0.92rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.u-sun-val {
+  font-size: 0.78rem;
+  font-weight: 800;
+  font-family: 'JetBrains Mono', monospace;
+  white-space: nowrap;
+  letter-spacing: -0.2px;
+  line-height: 1;
+}
+
+.u-sun-item.sunrise .u-sun-val {
+  color: #fbbf24; /* Dorado solar para la salida del sol */
+}
+
+.u-sun-item.sunset .u-sun-val {
+  color: #f97316; /* Naranja crepuscular para la puesta de sol */
+}
+
 /* --- RADAR & MAPS --- */
 .radar-wrapper {
   background: var(--bg-surface);

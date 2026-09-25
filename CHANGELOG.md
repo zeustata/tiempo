@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.0.88-sunhours] - 2026-09-25 (Fase de Pruebas Activa)
+
+### 🌅 Igualación y Cromatismo Solar en Salida y Puesta de Sol (Feedback Tester / Lendo)
+- **Simetría Tipográfica y Cromatismo Atmosférico en Tarjeta de Pronóstico Extendido**:
+  - Corrección de la disparidad visual donde el ocaso aparecía relegado a subtítulo diminuto y gris apagado frente a la salida del sol en blanco brillante.
+  - Implementación de contenedor vertical simétrico (`.u-sun-times-column`):
+    - **Salida del Sol (Orto)**: Icono `🌅` con hora destacada en **Dorado Solar / Ámbar Amanecer** (`#fbbf24`).
+    - **Puesta del Sol (Ocaso)**: Icono `🌇` con hora destacada en **Naranja Crepuscular / Atardecer Cálido** (`#f97316`).
+    - Ambas cifras al **mismo tamaño exacto (`0.78rem`)**, peso negrita `800` y tipografía monoespaciada JetBrains Mono, garantizando legibilidad perfecta e idéntica jerarquía visual.
+- **Anti-Caché & Service Worker `v188-sunhours`**:
+  - Sincronización en `sw.js`, `index.html` y módulos ES.
+
+---
+
 ## [1.0.87-snowvert] - 2026-09-25 (Fase de Pruebas Activa)
 
 ### ❄️ Disposición Vertical Anti-Desborde en Nieve Prevista (Feedback Lendo)
