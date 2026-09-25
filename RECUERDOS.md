@@ -459,6 +459,15 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - Tira compacta de 32px de alto con dos botones simétricos al 50%: `[ 📖 Fenómenos ]` y `[ 🎨 Estilos Iconos ]`, con margen de seguridad superior a 40px por celda.
     3. **Anti-Caché & Despliegue Dual `v1.0.90-navstrip`**:
        - Sincronización en `sw.js`, `index.html`, `css/main.css` y `AGENTS.md`.
+- **🎨 Hito Técnico Cumplido: Síntesis de Etiqueta y Acolchado Anti-Desborde (Feedback Lendo - 25 Sep 2026)**:
+  - *Contexto & Detección de Lendo*: Tras la creación de la mini-tira, Lendo detectó que la etiqueta *"Estilos Iconos"* (dos palabras) rozaba ligeramente el margen derecho en pantallas muy estrechas, sugiriendo llamarla simplemente *"Iconos"*.
+  - *Solución Definitiva en Local (`index.html`, `css/main.css`)*:
+    1. **Nombre Conciso Simétrico (`[ 🎨 Iconos ]`)**:
+       - Compactación a una sola palabra *"Iconos"*, a la par que *"Fenómenos"*.
+       - Ajuste de padding a `7px 8px` con `max-width: 100%` y `overflow: hidden`, asegurando más de 50px de holgura por celda en móviles.
+    2. **Anti-Caché & Despliegue Dual `v1.0.91-navclean`**:
+       - Sincronización en `sw.js`, `index.html` y `css/main.css`.
+
 
 
 

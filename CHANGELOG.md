@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.0.91-navclean] - 2026-09-25 (Fase de Pruebas Activa)
+
+### 🎨 Síntesis de Etiqueta y Acolchado Anti-Desborde en Menú (Feedback Lendo)
+- **Compactación a 1 Sola Palabra (`[ 🎨 Iconos ]`)**:
+  - Sustitución de *"Estilos Iconos"* por la palabra única y rotunda *"Iconos"*, garantizando simetría perfecta con *"Fenómenos"*.
+  - Ajuste ergonómico de acolchado a `padding: 7px 8px` con `overflow: hidden; max-width: 100%;` en la mini-tira `.nav-modal-tools-strip`, blindando una holgura visual superior a 50px libres por celda en cualquier resolución móvil.
+- **Anti-Caché & Service Worker `v191-navclean`**:
+  - Sincronización en `sw.js`, `index.html` y módulos ES.
+
+---
+
 ## [1.0.90-navstrip] - 2026-09-25 (Fase de Pruebas Activa)
 
 ### 🏛️ Blindaje Anti-Desborde y Mini-Tira Simétrica en Menú (Doctrina Constitucional Ley 11)
