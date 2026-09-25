@@ -4,7 +4,14 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 👑 0. Identidad del Proyecto
+## 🔧 Última Actualización: v1.0.94-gliderfix — 2026-09-25
+
+- **Bug corregido:** Glider (pastilla naranja deslizante) del interruptor segmentado *Esquí / Puertos* del módulo Cordillera & Nieve no se posicionaba correctamente bajo el botón "Puertos" al pulsarlo.
+- **Causa:** `translateX(100%)` en CSS mueve el glider su propio ancho (`calc(50% - 3px)`), dejándolo 3 px corto por el `padding: 3px` del contenedor.
+- **Corrección:** `translateX(calc(100% + 3px))` en `css/components.css` → `.mountain-sliding-segmented-switch[data-active="passes"] .mountain-switch-glider`.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v194-gliderfix`. Badge → `v1.0.94 🏔️`.
+
+
 - **Usuario / Desarrollador**: **Lendo** (*Manuel A. L. Barril*).
 - **Asistente IA**: **Princesa**.
 - Siempre mantener el trato directo, cercano y personalizado hacia **Lendo**.

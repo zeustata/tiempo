@@ -10,7 +10,19 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.0.94-gliderfix] - 2026-09-25
+
+### 🔧 Corrección del Glider del Interruptor Esquí / Puertos (Feedback Lendo)
+- **Bug visual:** El glider (pastilla deslizante naranja) del selector segmentado del módulo *Cordillera & Nieve* no se desplazaba correctamente al pulsar "Puertos". Visualmente quedaba centrado bajo "Esquí" aunque la pestaña activa fuera "Puertos".
+- **Causa raíz:** `translateX(100%)` desplaza el elemento su propio ancho (`calc(50% - 3px)`), quedando exactamente **3 px corto** respecto al botón "Puertos" (el padding interior del contenedor no estaba incluido).
+- **Solución:** Cambiado a `translateX(calc(100% + 3px))` en `[data-active="passes"] .mountain-switch-glider`, que suma el `padding: 3px` del contenedor y hace que el glider caiga con precisión milimétrica bajo el segundo botón.
+- **Archivo:** `css/components.css` (línea 2519).
+- **Anti-Caché & Service Worker `v194-gliderfix`**: sincronización en `sw.js` e `index.html`.
+
+---
+
 ## [1.0.92-mountainorder] - 2026-09-25 (Fase de Pruebas Activa)
+
 
 ### 🏔️ Reorganización Geográfica por Sectores y Cabecera Operacional en Cordillera (Feedback Lendo)
 - **Cabecera Operacional Diferenciada (`🎿🚗 Servicios en Ruta`)**:
