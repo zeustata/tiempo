@@ -4,14 +4,14 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🔧 Última Actualización: v1.1.01-navbtnsize — 2026-09-25
+## 🔧 Última Actualización: v1.1.02-navbtnsize — 2026-09-25
 
 - **Ajuste ergonómico (Iteración final de botones menú):** Solución a tres problemas encadenados al intentar aumentar la zona táctil (min-height 52px) de los botones `Fenómenos` e `Iconos` de la mini-tira:
   1. *Guillotinado superior:* Se eliminó el `overflow: hidden` del contenedor padre que los cortaba (v1.0.99).
   2. *Aplastamiento flexbox:* Se forzó `flex-shrink: 0` para impedir que la lista inferior aplastase la botonera en móviles bajos (v1.1.00).
-  3. *Desbordamiento horizontal:* Al ser muy estrechos, "Fenómenos" no cabía. Se redujo el `padding` lateral a 4px, el `gap` a 6px, y se bajó levemente la fuente a `0.95rem` (v1.1.01).
-- **Cache-bust crítico:** Se implementó `?v=1.1.01` directo a los `.css` en el `<head>` de `index.html`.
-- **Cache-bust general:** `sw.js` → `meteoasturlode-v201-navbtnsize-fix3`.
+  3. *Desbordamiento y Proporción:* Al ser muy estrechos, "Fenómenos" no cabía. Se redujo el `padding` lateral a 4px, el `gap` a 6px, y finalmente se ajustó la fuente a proporciones elegantes (`0.85rem` texto, `1.15rem` icono) (v1.1.01 - v1.1.02).
+- **Cache-bust crítico:** Se implementó `?v=1.1.02` directo a los `.css` en el `<head>` de `index.html`.
+- **Cache-bust general:** `sw.js` → `meteoasturlode-v202-navbtnsize-fix4`.
 
 ---
 

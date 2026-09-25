@@ -10,6 +10,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.02] - 2026-09-25
+
+### 🔧 Fix Ergonómico: Ajuste visual de texto e iconos
+- **Problema:** En la v1.1.01 los caracteres de los botones "Fenómenos" e "Iconos" se veían desproporcionadamente grandes en comparación con el resto de la interfaz.
+- **Solución en `css/main.css`**: Se ha reducido la fuente del texto (`0.95rem` → `0.85rem`) y del icono (`1.3rem` → `1.15rem`) para lograr una estética elegante y proporcionada, manteniendo la altura táctil ergonómica de 52px.
+
+---
+
 ## [1.1.01] - 2026-09-25
 
 ### 🔧 Fix Ergonómico: Desbordamiento Texto en Móvil Estrecho
