@@ -4,7 +4,17 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🔧 Última Actualización: v1.0.94-gliderfix — 2026-09-25
+## 🔧 Última Actualización: v1.0.95-fixaludes — 2026-09-25
+
+- **Bug corregido:** Botón `💡 Explícame` en la fila *Peligro de Aludes (EAWS)* del módulo Cordillera & Nieve no abría el modal didáctico al pulsarlo.
+- **Causa raíz:** El botón en `mountainCard.js` tiene clase `btn-explain-sensor-compact`, pero el listener global de delegación de eventos en `app.js` (L806) solo capturaba la clase `btn-explain-sensor`. El selector `closest()` no matcheaba el botón de aludes y el evento era ignorado silenciosamente.
+- **Corrección:** Una sola línea en `js/app.js` — el selector se amplía a `'.btn-explain-sensor, .btn-explain-sensor-compact'` para capturar ambas variantes del botón didáctico.
+- **Archivos modificados:** `js/app.js` (L806), `sw.js` (CACHE_NAME).
+- **Cache-bust:** `sw.js` → `meteoasturlode-v195-fixaludes`.
+
+---
+
+## 🔧 v1.0.94-gliderfix — 2026-09-25
 
 - **Bug corregido:** Glider (pastilla naranja deslizante) del interruptor segmentado *Esquí / Puertos* del módulo Cordillera & Nieve no se posicionaba correctamente bajo el botón "Puertos" al pulsarlo.
 - **Causa:** `translateX(100%)` en CSS mueve el glider su propio ancho (`calc(50% - 3px)`), dejándolo 3 px corto por el `padding: 3px` del contenedor.

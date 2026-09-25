@@ -10,6 +10,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.0.95-fixaludes] - 2026-09-25
+
+### 🔧 Corrección del Botón Explícame en Peligro de Aludes (Feedback Lendo)
+
+- **Bug:** El botón `💡 Explícame` en la fila *Peligro Aludes (EAWS)* del módulo Cordillera & Nieve no abría el modal didáctico al pulsarlo en ninguna plataforma (móvil o escritorio).
+- **Causa raiz:** El botón en `mountainCard.js` usa la clase CSS `btn-explain-sensor-compact` (variante compacta para fila de aludes), pero el listener global de delegación de clicks en `app.js` solo escuchaba la clase `btn-explain-sensor` mediante `e.target.closest('.btn-explain-sensor')`. El selector fallaba silenciosamente para el botón de aludes.
+- **Solución:** Cambio mínimo de una sola línea en `js/app.js` (L806): selector ampliado a `'.btn-explain-sensor, .btn-explain-sensor-compact'` para capturar ambas variantes sin modificar el HTML ni los estilos.
+- **Verificado:** Funcionamiento confirmado en local por Lendo antes de despliegue.
+- **Archivos:** `js/app.js`, `sw.js`.
+
+---
+
 ## [1.0.94-gliderfix] - 2026-09-25
 
 ### 🔧 Corrección del Glider del Interruptor Esquí / Puertos (Feedback Lendo)

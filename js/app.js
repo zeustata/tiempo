@@ -803,7 +803,7 @@ class MeteoAsturiasApp {
 
     // Delegación global de evento para cualquier botón .btn-explain-sensor en la app
     document.addEventListener('click', (e) => {
-      const btn = e.target.closest('.btn-explain-sensor');
+      const btn = e.target.closest('.btn-explain-sensor, .btn-explain-sensor-compact');
       if (!btn) return;
 
       this.triggerHaptic();
