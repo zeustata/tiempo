@@ -10,8 +10,44 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
-## [1.0.96-navbtnsize] - 2026-09-25
+## [1.1.01] - 2026-09-25
 
+### 🔧 Fix Ergonómico: Desbordamiento Texto en Móvil Estrecho
+- **Problema:** Tras el aumento de tamaño en v1.1.00, la palabra "Fenómenos" era muy larga y se desbordaba horizontalmente en móviles estrechos.
+- **Solución en `css/main.css`**: 
+  - Reducido el padding horizontal (`14px 12px` → `12px 4px`).
+  - Reducido el gap (`8px` → `6px`).
+  - Ajustada fuente texto (`1rem` → `0.95rem`) e icono (`1.5rem` → `1.3rem`).
+- Mantenido el alto de `52px` por pura ergonomía táctil.
+- **Cache-bust:** Implementado parámetro `?v=1.1.01` directo en las hojas de estilo CSS en `index.html` para romper cachés duras de PWA en iOS/Android de forma inmediata.
+
+---
+
+## [1.1.00] - 2026-09-25
+
+### 🔧 Fix Estructural: Evitar aplastamiento Flexbox
+- **Problema:** En móviles de poca altura, el contenedor de la lista inferior (`nav-modal-body`) intentaba ocupar todo el espacio, aplastando la tira de herramientas.
+- **Solución en `css/main.css`**: Se añade regla inquebrantable `flex-shrink: 0` a `.nav-modal-tools-strip` para forzar a que respete sus 52px de altura.
+
+---
+
+## [1.0.99] - 2026-09-25
+
+### 🔧 Fix Estructural: Botones "Guillotinados" (overflow)
+- **Problema:** El contenedor de la tira tenía `overflow: hidden`, cortando los botones cuando se aumentaba su `min-height`.
+- **Solución en `css/main.css`**: Eliminada la propiedad `overflow: hidden` de `.nav-modal-tools-strip`.
+
+---
+
+## [1.0.98] - 2026-09-25
+
+### 🎮 Iteración 3 de Botones (Más Grandes)
+- Aumento drástico de altura mínima a `min-height: 52px`.
+- Área táctil masiva garantizada.
+
+---
+
+## [1.0.96-navbtnsize] - 2026-09-25
 ### 🎮 Botones Fenómenos e Iconos del Menú Más Grandes (Feedback Lendo)
 
 - **Problema:** Los botones `🌊 Fenómenos` e `🌈 Iconos` de la mini-tira del menú de navegación resultaban demasiado pequeños y poco ergonómicos en móvil.
