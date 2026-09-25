@@ -4,24 +4,28 @@
  */
 export const PUERTOS_MONTANA_ASTURIAS = [
   // --- ARTERIAS PRINCIPALES DE CONEXIÓN CON LA MESETA ---
-  { id: 'huerna', name: 'Autopista del Huerna (AP-66)', alt: 1229, concejo: 'Lena / León', road: 'AP-66', isArtery: true, desc: 'Vía de alta capacidad principal entre Asturias y la Meseta (Túnel del Negrón).' },
-  { id: 'pajares', name: 'Puerto de Pajares (N-630)', alt: 1378, concejo: 'Lena / León', road: 'N-630', isArtery: true, desc: 'Paso histórico nacional alternativo al Huerna con fuertes pendientes.' },
+  { id: 'huerna', name: 'Autopista del Huerna (AP-66)', alt: 1229, concejo: 'Lena / León', road: 'AP-66', sector: 'arterias', isArtery: true, desc: 'Vía de alta capacidad principal entre Asturias y la Meseta (Túnel del Negrón).' },
+  { id: 'pajares', name: 'Puerto de Pajares (N-630)', alt: 1378, concejo: 'Lena / León', road: 'N-630', sector: 'arterias', isArtery: true, desc: 'Paso histórico nacional alternativo al Huerna con fuertes pendientes.' },
 
-  // --- PUERTOS DE ACCESO A ESTACIONES Y PASOS DEL ORIENTE, CENTRO Y OCCIDENTE ---
-  { id: 'san_isidro', name: 'Puerto de San Isidro', alt: 1520, concejo: 'Aller / León', road: 'AS-112 / LE-331', desc: 'Acceso a Fuentes de Invierno y San Isidro.' },
-  { id: 'leitariegos', name: 'Puerto de Leitariegos', alt: 1525, concejo: 'Cangas del Narcea / León', road: 'AS-213 / LE-497', desc: 'Acceso a la estación invernal de Leitariegos.' },
-  { id: 'tarna', name: 'Puerto de Tarna', alt: 1490, concejo: 'Caso / León', road: 'AS-117 / CL-635', desc: 'Paso por el Parque Natural de Redes.' },
-  { id: 'somiedo', name: 'Puerto de Somiedo', alt: 1486, concejo: 'Somiedo / León', road: 'AS-227 / LE-495', desc: 'Corazón del Parque Natural de Somiedo hacia Laciana.' },
-  { id: 'ventana', name: 'Puerto de Ventana', alt: 1587, concejo: 'Teverga / León', road: 'AS-228 / LE-481', desc: 'Paso de alta montaña entre Teverga y Babia.' },
-  { id: 'san_lorenzo', name: 'Puerto de San Lorenzo', alt: 1349, concejo: 'Somiedo / Teverga', road: 'AS-265', desc: 'Conexión entre valles occidentales con rampas exigentes.' },
-  { id: 'cobertoria', name: 'Alto de la Cobertoria', alt: 1173, concejo: 'Quirós / Lena', road: 'AS-230', desc: 'Paso interior central que enlaza Quirós y Pola de Lena.' },
-  { id: 'angliru', name: 'Alto del Angliru', alt: 1570, concejo: 'Riosa', road: 'RI-5', desc: 'Cima mítica ciclista de rampas extremas en la Sierra del Aramo.' },
-  { id: 'el_palo', name: 'Puerto del Palo', alt: 1146, concejo: 'Allande / Grandas', road: 'AS-14', desc: 'Paso clave del Camino Primitivo y el occidente asturiano.' },
-  { id: 'la_marta', name: 'Puerto de la Marta', alt: 1105, concejo: 'Allande', road: 'ALL-4', desc: 'Paso montañoso solitario y expuesto del occidente.' },
-  { id: 'el_connio', name: 'Puerto del Connio', alt: 1315, concejo: 'Cangas del Narcea / Ibias', road: 'AS-348', desc: 'Atraviesa la Reserva Integral de Muniellos.' },
-  { id: 'mujeres_muertas', name: 'Pozo de las Mujeres Muertas', alt: 1117, concejo: 'Allande / Ibias', road: 'AS-29', desc: 'Conexión de la cuenca del Navia hacia San Antolín de Ibias.' },
-  { id: 'ponton', name: 'Puerto del Pontón / Desfiladero', alt: 1280, concejo: 'Amieva / Ponga hacia León', road: 'N-625', desc: 'Paso por el Desfiladero de los Beyos hacia Picos de Europa.' },
-  { id: 'lagos_covadonga', name: 'Lagos de Covadonga', alt: 1134, concejo: 'Cangas de Onís', road: 'CO-4', desc: 'Enclave icónico del Parque Nacional de Picos de Europa.' }
+  // --- SECTOR CENTRO Y VALLES MINEROS (Caudal, Aller, Quirós, Riosa) ---
+  { id: 'san_isidro', name: 'Puerto de San Isidro', alt: 1520, concejo: 'Aller / León', road: 'AS-112 / LE-331', sector: 'centro', desc: 'Acceso a Fuentes de Invierno y San Isidro.' },
+  { id: 'cobertoria', name: 'Alto de la Cobertoria', alt: 1173, concejo: 'Quirós / Lena', road: 'AS-230', sector: 'centro', desc: 'Paso interior central que enlaza Quirós y Pola de Lena.' },
+  { id: 'angliru', name: 'Alto del Angliru', alt: 1570, concejo: 'Riosa', road: 'RI-5', sector: 'centro', desc: 'Cima mítica ciclista de rampas extremas en la Sierra del Aramo.' },
+  { id: 'ventana', name: 'Puerto de Ventana', alt: 1587, concejo: 'Teverga / León', road: 'AS-228 / LE-481', sector: 'centro', desc: 'Paso de alta montaña entre Teverga y Babia.' },
+
+  // --- SECTOR ORIENTE Y PICOS DE EUROPA (Caso, Ponga, Cangas de Onís) ---
+  { id: 'tarna', name: 'Puerto de Tarna', alt: 1490, concejo: 'Caso / León', road: 'AS-117 / CL-635', sector: 'oriente', desc: 'Paso por el Parque Natural de Redes hacia Riaño.' },
+  { id: 'ponton', name: 'Puerto del Pontón / Desfiladero', alt: 1280, concejo: 'Amieva / Ponga hacia León', road: 'N-625', sector: 'oriente', desc: 'Paso por el Desfiladero de los Beyos hacia Riaño y Picos de Europa.' },
+  { id: 'lagos_covadonga', name: 'Lagos de Covadonga', alt: 1134, concejo: 'Cangas de Onís', road: 'CO-4', sector: 'oriente', desc: 'Enclave icónico del Parque Nacional de Picos de Europa.' },
+
+  // --- SECTOR OCCIDENTE (Somiedo, Narcea, Allande, Ibias) ---
+  { id: 'somiedo', name: 'Puerto de Somiedo', alt: 1486, concejo: 'Somiedo / León', road: 'AS-227 / LE-495', sector: 'occidente', desc: 'Corazón del Parque Natural de Somiedo hacia Laciana.' },
+  { id: 'san_lorenzo', name: 'Puerto de San Lorenzo', alt: 1349, concejo: 'Somiedo / Teverga', road: 'AS-265', sector: 'occidente', desc: 'Conexión entre valles occidentales con rampas exigentes.' },
+  { id: 'leitariegos', name: 'Puerto de Leitariegos', alt: 1525, concejo: 'Cangas del Narcea / León', road: 'AS-213 / LE-497', sector: 'occidente', desc: 'Acceso a la estación invernal de Leitariegos.' },
+  { id: 'el_connio', name: 'Puerto del Connio', alt: 1315, concejo: 'Cangas del Narcea / Ibias', road: 'AS-348', sector: 'occidente', desc: 'Atraviesa la Reserva Integral de Muniellos.' },
+  { id: 'el_palo', name: 'Puerto del Palo', alt: 1146, concejo: 'Allande / Grandas', road: 'AS-14', sector: 'occidente', desc: 'Paso clave del Camino Primitivo y el occidente asturiano.' },
+  { id: 'la_marta', name: 'Puerto de la Marta', alt: 1105, concejo: 'Allande', road: 'ALL-4', sector: 'occidente', desc: 'Paso montañoso solitario y expuesto del occidente.' },
+  { id: 'mujeres_muertas', name: 'Pozo de las Mujeres Muertas', alt: 1117, concejo: 'Allande / Ibias', road: 'AS-29', sector: 'occidente', desc: 'Conexión de la cuenca del Navia hacia San Antolín de Ibias.' }
 ];
 
 /**
@@ -217,7 +221,7 @@ export function evaluateAvalancheRisk(snowfallSumToday, windSpeedKmH, freezingLe
   if (snow >= 25 || (snow >= 15 && wind >= 50)) {
     return {
       level: 4,
-      name: 'Fuerte (Nivel 4)',
+      name: 'Fuerte',
       icon: '🔴',
       color: '#ef4444',
       desc: 'Manto nival débilmente estabilizado en la mayoría de laderas. Salidas fuera de pista altamente desaconsejadas.'
@@ -226,7 +230,7 @@ export function evaluateAvalancheRisk(snowfallSumToday, windSpeedKmH, freezingLe
   if (snow >= 10 || (snow >= 5 && wind >= 35)) {
     return {
       level: 3,
-      name: 'Notable (Nivel 3)',
+      name: 'Notable',
       icon: '🟠',
       color: '#f97316',
       desc: 'Inestabilidad en pendientes empinadas por sobrecarga de nieve reciente y placas de viento.'
@@ -235,7 +239,7 @@ export function evaluateAvalancheRisk(snowfallSumToday, windSpeedKmH, freezingLe
   if (snow > 0 || freezingLevel <= 1400) {
     return {
       level: 2,
-      name: 'Limitado (Nivel 2)',
+      name: 'Limitado',
       icon: '🟡',
       color: '#eab308',
       desc: 'Manto moderadamente consolidado. Precaución en laderas pronunciadas umbrías.'
@@ -243,7 +247,7 @@ export function evaluateAvalancheRisk(snowfallSumToday, windSpeedKmH, freezingLe
   }
   return {
     level: 1,
-    name: 'Débil (Nivel 1)',
+    name: 'Débil',
     icon: '🟢',
     color: '#10b981',
     desc: 'Manto nival bien estabilizado en general. Condiciones seguras en montaña.'
@@ -393,8 +397,11 @@ export function renderMountainCard(data, concejo) {
     };
   });
 
-  const arteryPasses = passesWithStatus.filter(p => p.isArtery);
-  const generalPasses = passesWithStatus.filter(p => !p.isArtery);
+  // Clasificación de puertos por sectores geográficos naturales de Asturias
+  const arteryPasses = passesWithStatus.filter(p => p.sector === 'arterias');
+  const centroPasses = passesWithStatus.filter(p => p.sector === 'centro');
+  const orientePasses = passesWithStatus.filter(p => p.sector === 'oriente');
+  const occidentePasses = passesWithStatus.filter(p => p.sector === 'occidente');
 
   return `
     <div class="mountain-card">
@@ -443,18 +450,28 @@ export function renderMountainCard(data, concejo) {
         </div>
       </div>
 
-      <!-- 2. INTERRUPTOR DESLIZANTE SEGMENTADO TÁCTIL (ETIQUETAS CORTAS DE 1 PALABRA) -->
-      <div class="mountain-toggle-container">
-        <div class="mountain-sliding-segmented-switch" id="mountain-segmented-switch" data-active="ski">
-          <div class="mountain-switch-glider"></div>
-          <button class="mountain-switch-option active" data-mountain-tab="ski" id="btn-mountain-tab-ski" aria-label="Ver previsión de esquí estilo Snow-Forecast">
-            <span class="mountain-switch-icon">⛷️</span>
-            <span class="mountain-switch-label">Esquí</span>
-          </button>
-          <button class="mountain-switch-option" data-mountain-tab="passes" id="btn-mountain-tab-passes" aria-label="Ver estado de puertos de montaña y conexiones a la meseta">
-            <span class="mountain-switch-icon">🚗</span>
-            <span class="mountain-switch-label">Puertos</span>
-          </button>
+      <!-- 2. SERVICIOS EN RUTA Y VIALIDAD INVERNAL (DIFERENCIADO DE SENSORES DE COTA/ALUDES) -->
+      <div class="mountain-operational-section">
+        <div class="mountain-operational-header">
+          <div class="m-op-title-row">
+            <span class="m-op-badge">🎿🚗 Servicios en Ruta</span>
+            <span class="m-op-sub">Selecciona el módulo de previsión que deseas consultar:</span>
+          </div>
+        </div>
+
+        <!-- INTERRUPTOR DESLIZANTE SEGMENTADO TÁCTIL (ETIQUETAS CORTAS DE 1 PALABRA) -->
+        <div class="mountain-toggle-container">
+          <div class="mountain-sliding-segmented-switch" id="mountain-segmented-switch" data-active="ski">
+            <div class="mountain-switch-glider"></div>
+            <button class="mountain-switch-option active" data-mountain-tab="ski" id="btn-mountain-tab-ski" aria-label="Ver previsión de esquí estilo Snow-Forecast">
+              <span class="mountain-switch-icon">⛷️</span>
+              <span class="mountain-switch-label">Esquí</span>
+            </button>
+            <button class="mountain-switch-option" data-mountain-tab="passes" id="btn-mountain-tab-passes" aria-label="Ver estado de puertos de montaña y conexiones a la meseta">
+              <span class="mountain-switch-icon">🚗</span>
+              <span class="mountain-switch-label">Puertos</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -572,7 +589,7 @@ export function renderMountainCard(data, concejo) {
         <div class="passes-group-block">
           <div class="passes-group-title">
             <span>🛣️ Arterias Principales hacia la Meseta (Asturias - León)</span>
-            <span class="passes-group-sub">Vías neurálgicas de comunicación y transporte</span>
+            <span class="passes-group-sub">Vías neurálgicas de alta capacidad y comunicación nacional</span>
           </div>
 
           <div class="passes-arteries-grid">
@@ -581,7 +598,7 @@ export function renderMountainCard(data, concejo) {
                 <div class="pass-artery-top">
                   <div>
                     <h5 class="pass-artery-name">${p.name}</h5>
-                    <span class="pass-artery-meta">${p.road} • Altitud máxima: <strong>${p.alt} m</strong> • ${p.concejo}</span>
+                    <span class="pass-artery-meta">${p.road} • Altitud: <strong>${p.alt} m</strong> • ${p.concejo}</span>
                   </div>
                   <div class="pass-badge" style="background: ${p.color}22; color: ${p.color}; border: 1px solid ${p.color}88;">
                     ${p.icon} ${p.status}
@@ -593,15 +610,56 @@ export function renderMountainCard(data, concejo) {
           </div>
         </div>
 
-        <!-- RED COMPLETA DE PUERTOS Y PASOS DE ASTURIAS -->
-        <div class="passes-group-block" style="margin-top: 20px;">
-          <div class="passes-group-title">
-            <span>🚗 Red de Puertos de Montaña de Asturias (16 Pasos)</span>
-            <span class="passes-group-sub">Estado dinámico según cota de nieve e isoterma de 0°C</span>
+        <!-- SECTOR CENTRO Y VALLES MINEROS -->
+        <div class="passes-sector-block">
+          <div class="passes-sector-header">
+            <span class="passes-sector-title">📍 Sector Centro y Valles Mineros (Caudal, Aller, Quirós, Riosa)</span>
+            <span class="passes-sector-count">${centroPasses.length} pasos</span>
           </div>
-
           <div class="passes-grid">
-            ${generalPasses.map(p => `
+            ${centroPasses.map(p => `
+              <div class="pass-card ${p.statusClass}" style="border-left: 3px solid ${p.color};">
+                <div class="pass-main">
+                  <span class="pass-name">${p.name}</span>
+                  <span class="pass-alt"><strong>${p.road}</strong> • ${p.alt} m • ${p.concejo}</span>
+                </div>
+                <div class="pass-badge" style="color: ${p.color};">
+                  <span>${p.icon} ${p.status}</span>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- SECTOR ORIENTE Y PICOS DE EUROPA -->
+        <div class="passes-sector-block">
+          <div class="passes-sector-header">
+            <span class="passes-sector-title">🏔️ Sector Oriente y Picos de Europa (Caso, Ponga, Cangas de Onís)</span>
+            <span class="passes-sector-count">${orientePasses.length} pasos</span>
+          </div>
+          <div class="passes-grid">
+            ${orientePasses.map(p => `
+              <div class="pass-card ${p.statusClass}" style="border-left: 3px solid ${p.color};">
+                <div class="pass-main">
+                  <span class="pass-name">${p.name}</span>
+                  <span class="pass-alt"><strong>${p.road}</strong> • ${p.alt} m • ${p.concejo}</span>
+                </div>
+                <div class="pass-badge" style="color: ${p.color};">
+                  <span>${p.icon} ${p.status}</span>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- SECTOR OCCIDENTE -->
+        <div class="passes-sector-block">
+          <div class="passes-sector-header">
+            <span class="passes-sector-title">🌲 Sector Occidente (Somiedo, Narcea, Allande, Ibias)</span>
+            <span class="passes-sector-count">${occidentePasses.length} pasos</span>
+          </div>
+          <div class="passes-grid">
+            ${occidentePasses.map(p => `
               <div class="pass-card ${p.statusClass}" style="border-left: 3px solid ${p.color};">
                 <div class="pass-main">
                   <span class="pass-name">${p.name}</span>

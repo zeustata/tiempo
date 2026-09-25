@@ -2433,10 +2433,59 @@
   color: #ffffff;
 }
 
+/* --- SECCIÓN OPERACIONAL DE SERVICIOS EN RUTA (ESQUÍ Y PUERTOS) --- */
+.mountain-operational-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+  margin-bottom: 12px;
+  padding: 12px 14px;
+  background: rgba(15, 23, 42, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.mountain-operational-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.m-op-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.m-op-badge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 3px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.m-op-sub {
+  font-size: 0.74rem;
+  color: #94a3b8;
+}
+
 /* --- INTERRUPTOR DESLIZANTE SEGMENTADO PARA CORDILLERA (ESQUÍ VS PUERTOS) --- */
 .mountain-toggle-container {
   width: 100%;
-  margin: 0 0 12px 0;
+  margin: 0;
 }
 
 .mountain-sliding-segmented-switch {
@@ -2845,6 +2894,39 @@
   color: #94a3b8;
   margin: 0;
   line-height: 1.35;
+}
+
+.passes-sector-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.passes-sector-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.passes-sector-title {
+  font-size: 0.84rem;
+  font-weight: 800;
+  color: #e2e8f0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.passes-sector-count {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 2px 7px;
+  border-radius: 10px;
+  font-weight: 600;
 }
 
 .passes-grid {

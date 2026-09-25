@@ -467,6 +467,22 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - Ajuste de padding a `7px 8px` con `max-width: 100%` y `overflow: hidden`, asegurando más de 50px de holgura por celda en móviles.
     2. **Anti-Caché & Despliegue Dual `v1.0.91-navclean`**:
        - Sincronización en `sw.js`, `index.html` y `css/main.css`.
+- **🏔️ Hito Técnico Cumplido: Reorganización Geográfica de Puertos y Cabecera Operacional (Feedback Lendo - 25 Sep 2026)**:
+  - *Contexto & Detección de Lendo*: Lendo detectó que en el módulo de Cordillera, Esquí y Puertos (`mountainCard.js`), era necesario diferenciar nítidamente Esquí y Puertos de la monitorización general de alta montaña, y que la red de puertos aparecía desordenada geográficamente a lo largo de Asturias.
+  - *Diagnóstico*: Los puertos saltaban erráticamente entre concejos sin estructuración comarcal, y el interruptor táctil de Esquí/Puertos carecía de una cabecera que explicara su propósito frente a los sensores climáticos de cumbre (Cota 0°C, Espesores 3 Días y Aludes EAWS).
+  - *Solución Definitiva en Local (`js/components/mountainCard.js`, `css/components.css`)*:
+    1. **Cabecera Operacional Diferenciada (`.mountain-operational-section`)**:
+       - Bloque visualmente delimitado con badge `🎿🚗 Servicios en Ruta` y subtítulo explicativo, albergando el interruptor deslizante táctil.
+    2. **Estructuración Geográfica en 4 Sectores Naturales de Asturias**:
+       - **🛣️ Arterias Principales (Asturias - León)**: Autopista del Huerna (AP-66) y Puerto de Pajares (N-630) con tarjetas destacadas.
+       - **📍 Sector Centro y Valles Mineros (Caudal, Aller, Quirós, Riosa)**: San Isidro (AS-112), Cobertoria (AS-230), Angliru (RI-5), Ventana (AS-228).
+       - **🏔️ Sector Oriente y Picos de Europa (Caso, Ponga, Cangas de Onís)**: Tarna (AS-117), Pontón / Desfiladero (N-625), Lagos de Covadonga (CO-4).
+       - **🌲 Sector Occidente (Somiedo, Narcea, Allande, Ibias)**: Somiedo (AS-227), San Lorenzo (AS-265), Leitariegos (AS-213), Connio (AS-348), El Palo (AS-14), La Marta (ALL-4), Mujeres Muertas (AS-29).
+    3. **Depuración de Badge de Aludes EAWS**:
+       - Eliminación de la redundancia textual (`Nivel 1 (Débil)`).
+    4. **Anti-Caché & Despliegue Dual `v1.0.92-mountainorder`**:
+       - Sincronización en `sw.js`, `index.html`, `components.css` y `mountainCard.js`.
+
 
 
 

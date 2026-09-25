@@ -10,6 +10,24 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.0.92-mountainorder] - 2026-09-25 (Fase de Pruebas Activa)
+
+### 🏔️ Reorganización Geográfica por Sectores y Cabecera Operacional en Cordillera (Feedback Lendo)
+- **Cabecera Operacional Diferenciada (`🎿🚗 Servicios en Ruta`)**:
+  - Incorporación del bloque `.mountain-operational-section` con cabecera dedicada y badge de alta legibilidad encima del selector táctil, separando de manera inequívoca los sensores de cumbre (Cota de Nieve 0°C, Nieve 3 Días y Peligro de Aludes EAWS) de las operaciones de transporte, esquí y vialidad.
+- **Estructuración Geográfica Natural de la Red de Puertos (16 Pasos)**:
+  - Clasificación en 4 sectores asturianos con títulos de sección, conteo de pasos y fichas ordenadas:
+    - **🛣️ Arterias Principales hacia la Meseta (Asturias - León)**: Autopista del Huerna (AP-66) y Puerto de Pajares (N-630) con tarjetas destacadas de vía rápida.
+    - **📍 Sector Centro y Valles Mineros (Caudal, Aller, Quirós, Riosa)**: San Isidro, Cobertoria, Angliru, Ventana.
+    - **🏔️ Sector Oriente y Picos de Europa (Caso, Ponga, Cangas de Onís)**: Tarna, Pontón / Desfiladero, Lagos de Covadonga.
+    - **🌲 Sector Occidente (Somiedo, Narcea, Allande, Ibias)**: Somiedo, San Lorenzo, Leitariegos, Connio, El Palo, La Marta, Pozo de las Mujeres Muertas.
+- **Corrección de Redundancia en Badge de Aludes**:
+  - Corrección de la escala textual EAWS para evitar duplicidades tipográficas (`Nivel 1 (Débil)`).
+- **Anti-Caché & Service Worker `v192-mountainorder`**:
+  - Actualización atómica en `sw.js`, `index.html` y hojas CSS.
+
+---
+
 ## [1.0.91-navclean] - 2026-09-25 (Fase de Pruebas Activa)
 
 ### 🎨 Síntesis de Etiqueta y Acolchado Anti-Desborde en Menú (Feedback Lendo)
