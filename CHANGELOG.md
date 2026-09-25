@@ -10,6 +10,30 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.0.82-surfarrows] - 2026-09-25 (Fase de Pruebas Activa)
+
+### 🏄‍♂️ Evolución de Surf: Estrellas (0 a 10★), Textura Marina, Flechas de Dirección y Guía Didáctica
+- **Sistema de Calificación por Estrellas (Estándar Surf-Forecast)**:
+  - Implementación del algoritmo oficial de 0 a 10 estrellas (`getSurfStarRating`):
+    - ⭐ **Estrellas Doradas (1 a 10★)**: Viento terral puro (*offshore*) combinado con swell noble y energía armónica sin saturar la barra.
+    - ⚪ **Estrellas Blancas (1 a 5★)**: Baño noble y divertido con olas más justas (< 0,9 m) o condiciones *glassy*.
+    - 🚫 **Calificación Cero (0★)**: Viento de mar (*onshore / chop*), mar revuelto o barras cerronas por mar pasado en arenales abiertos.
+  - Insignia destacada en el widget principal de *Calificación & Estrellas* y en cada celda del cronograma horario y diario.
+- **Indicador de Textura de Superficie Marina (Wind State)**:
+  - Clasificación oceanográfica dinámica de la lámina de agua: *Glassy (Espejo)*, *Limpio (Terral / Offshore)*, *Semi-Limpio (Cruzado Terral)*, *Picado (Cruzado Onshore)*, *Chop / Desordenado (Onshore)* y *Brisa Ligera*.
+- **Flechas Vectoriales Dinámicas de Dirección (Viento y Swell)**:
+  - **Flecha de Viento**: Rotación vectorial matemática continua en SVG (`(windDeg + 180) % 360`) siguiendo el estándar náutico/surf internacional (apunta hacia donde sopla el aire) con colores adaptativos según sea terral, glassy u onshore.
+  - **Flecha de Swell**: Rotación continua en SVG (`(swellDeg + 180) % 360`) con tono azul turquesa indicando la trayectoria de entrada de las olas hacia la costa asturiana.
+  - Integración en: sensor principal de *Período y Dirección del Swell*, **Cronograma de 3 Horas** (Hoy y Mañana) y previsión extendida a **7 Días** (Mañana y Tarde).
+- **Fichas Oceanográficas y Secretos de Rompientes por Concejo**:
+  - Incorporación en el catálogo costero (`marineCard.js`) de las condiciones ideales (`bestSwell`, `bestWind`) y advertencias de seguridad (`hazards`) para arenales y picos de Salinas, San Lorenzo, Peñarrubia, Rodiles, Xagó, Verdicio, Santa Marina, Vega, Tapia, San Antolín y Andrín.
+- **Módulo Didáctico "💡 Explícame" de Surf & Estrellas (`surf_stars`)**:
+  - Nueva temática didáctica en `weatherExplanations.js` explicando la escala de estrellas doradas y blancas, el efecto peinado del viento Sur asturiano, la escala de textura marina y consejos de esquinas al abrigo (El Espartal, Luanco, Candás).
+- **Anti-Caché & Service Worker `v182-surfarrows`**:
+  - Renovación de cadenas de versión en `sw.js`, `index.html` y módulos ES (`app.js`, `surfCard.js`, `marineCard.js`, `weatherExplanations.js`).
+
+---
+
 ## [1.0.81] - 2026-09-17 (Fase de Pruebas Activa)
 
 ### 🏄‍♂️ Calibración de Oleaje & Detector de Mar Pasado en Arenales (Feedback Edu)
@@ -20,7 +44,7 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
   - *650 a 1.099 kJ*: 🟣 **Muy Potente** (Tubos / Nivel alto / Fondos huecos y velocidad).
   - *≥ 1.100 kJ*: 🔴 **Pesada** (Extrema / Solo expertos / Rompientes mayores y fuertes resacas).
 - **Detector de Saturación en Arenales Abiertos (Beach Break Overload)**:
-  - Detección en vivo cuando las olas superan los **1,9 metros** o la energía supera los **400 kJ** con alturas $\ge$ **1,8 metros** (ej. Salinas con 2,1 m y 486 kJ).
+  - Detección en vivo cuando las olas superan los **1,9 metros** o la energía supera los **400 kJ** con alturas >= **1,8 metros** (ej. Salinas con 2,1 m y 486 kJ).
   - La condición de rompiente pasa automáticamente a `⚠️ Mar Pasado en Arenales / Barras Cerronas` (Badge: `Mar Pasado / Fuerte`), informando de barras cerronas continuas y fuertes corrientes de resaca, recomendando esquinas al abrigo (El Espartal, Luanco) o surfistas expertos.
   - Alerta contextual visible en la tarjeta principal de energía del oleaje.
 - **Suite Didáctica Actualizada**: Sincronización en `weatherExplanations.js` de la escala de energía y notas de saturación para arenales asturianos en *Astucia en los Picos de Asturias*.

@@ -26,7 +26,10 @@ export const PLAYAS_POR_CONCEJO = {
         bottom: '🏖️ Arena (Beach Break)',
         waveType: '↔️ Picos A-Frame (Izquierda y Derecha)',
         bestTide: 'Media Marea a Pleamar',
-        surfLevel: 'Todos los niveles'
+        surfLevel: 'Todos los niveles',
+        bestSwell: 'Noroeste (NW / ONO)',
+        bestWind: 'Sur, Sureste (Terral / Offshore)',
+        hazards: 'Corrientes en escalera 10 (Piles), rocas en El Peñón con pleamar viva'
       },
       { 
         name: 'Playa de Peñarrubia', 
@@ -38,7 +41,10 @@ export const PLAYAS_POR_CONCEJO = {
         bottom: '🪨 Roca / Losa (Point & Reef Break)',
         waveType: '➡️ Derecha potente y rápida',
         bestTide: 'Pleamar / Coeficiente vivo',
-        surfLevel: 'Avanzado - Experto'
+        surfLevel: 'Avanzado - Experto',
+        bestSwell: 'Norte, Noroeste (N / NW con fuerza)',
+        bestWind: 'Sur, Suroeste (Terral / Offshore)',
+        hazards: 'Fondo somero de losa cortante y corrientes contra el acantilado'
       },
       { 
         name: 'Playa de Poniente', 
@@ -104,7 +110,10 @@ export const PLAYAS_POR_CONCEJO = {
         bottom: '🏖️ Arena (Beach Break constante)',
         waveType: '↔️ Múltiples Picos (Izquierdas y Derechas)',
         bestTide: 'Todas las mareas (óptimo media subiendo)',
-        surfLevel: 'Iniciación a Experto'
+        surfLevel: 'Iniciación a Experto',
+        bestSwell: 'Noroeste (NW / ONO)',
+        bestWind: 'Sur, Sureste (Terral / Offshore puro)',
+        hazards: 'Corrientes de resaca y barras cerronas con mar > 1.7m, rocas en El Espartal'
       },
       { 
         name: 'Playa de San Juan de Nieva', 
@@ -116,7 +125,10 @@ export const PLAYAS_POR_CONCEJO = {
         bottom: '🏖️ Arena (Barras de ría)',
         waveType: '↔️ Derechas e Izquierdas rápidas y tubulares',
         bestTide: 'Media Marea',
-        surfLevel: 'Intermedio a Pro'
+        surfLevel: 'Intermedio a Pro',
+        bestSwell: 'Oeste, Noroeste (W / NW)',
+        bestWind: 'Sur, Sureste (Terral / Offshore)',
+        hazards: 'Corrientes de la bocana de la ría y tráfico de buques en el canal exterior'
       },
       { 
         name: 'Playa de Bayas / El Sablón', 
@@ -128,7 +140,10 @@ export const PLAYAS_POR_CONCEJO = {
         bottom: '🏖️ Arena dorada',
         waveType: '↔️ Olas con mucha fuerza de mar abierto',
         bestTide: 'Media Marea a Bajamar',
-        surfLevel: 'Intermedio'
+        surfLevel: 'Intermedio',
+        bestSwell: 'Oeste, Noroeste (W / NW)',
+        bestWind: 'Sur, Este (Terral / Offshore)',
+        hazards: 'Fuerte resaca oceánica desprotegida y fondos cambiantes'
       },
       { 
         name: 'Playa de Arnao', 
@@ -170,7 +185,10 @@ export const PLAYAS_POR_CONCEJO = {
         bottom: '🏖️ Arena sobre barra de ría (Beach Break)',
         waveType: '⬅️ Izquierda perfecta, tubular y kilométrica',
         bestTide: 'Media Marea a Bajamar',
-        surfLevel: 'Avanzado - Pro (La Barra) / Todos (Arenal)'
+        surfLevel: 'Avanzado - Pro (La Barra) / Todos (Arenal)',
+        bestSwell: 'Noroeste (NW con mar de fondo sólido)',
+        bestWind: 'Suroeste (SW terral puro / offshore)',
+        hazards: 'Fuertes corrientes de vaciante en la ría, fondo somero a bajamar y localismo'
       },
       { 
         name: 'Playa del Puntal', 
@@ -224,7 +242,10 @@ export const PLAYAS_POR_CONCEJO = {
         bottom: '🏖️ Arena (Beach Break potente)',
         waveType: '↔️ Picos A-Frame consistentes todo el año',
         bestTide: 'Bajamar a Media Marea',
-        surfLevel: 'Iniciación a Intermedio'
+        surfLevel: 'Iniciación a Intermedio',
+        bestSwell: 'Oeste, Noroeste (W / NW)',
+        bestWind: 'Este, Sureste (Terral / Offshore en El Escamplero)',
+        hazards: 'Fuertes corrientes de resaca e intensos vientos en arenal abierto'
       },
       { 
         name: 'Playa de Verdicio (Tenrero)', 
@@ -236,7 +257,10 @@ export const PLAYAS_POR_CONCEJO = {
         bottom: '🪨🏖️ Mixto (Arena y Laja rocosa)',
         waveType: '↔️ Olas rápidas con fuerza',
         bestTide: 'Media Marea a Bajamar',
-        surfLevel: 'Intermedio a Experto'
+        surfLevel: 'Intermedio a Experto',
+        bestSwell: 'Noroeste (NW)',
+        bestWind: 'Sur, Suroeste (Terral / Offshore)',
+        hazards: 'Lajas rocosas sumergidas y fuerte succión oceánica'
       },
       { 
         name: 'Playa de Luanco', 
@@ -278,7 +302,10 @@ export const PLAYAS_POR_CONCEJO = {
         bottom: '🏖️ Arena (Beach Break)',
         waveType: '↔️ Picos protegidos con temporales de mar grande',
         bestTide: 'Media Marea a Pleamar',
-        surfLevel: 'Iniciación y Longboard'
+        surfLevel: 'Iniciación y Longboard',
+        bestSwell: 'Norte, Noroeste (N / NW con mar grande)',
+        bestWind: 'Sur, Suroeste (Terral / Offshore)',
+        hazards: 'Corrientes de la ría del Sella y troncos flotantes tras lluvias intensas'
       },
       { 
         name: 'Playa de Vega', 
@@ -290,7 +317,10 @@ export const PLAYAS_POR_CONCEJO = {
         bottom: '🪨🏖️ Mixto (Arena con lajas y cantos)',
         waveType: '↔️ Olas huecas y con mucha fuerza',
         bestTide: 'Media Marea',
-        surfLevel: 'Intermedio a Pro'
+        surfLevel: 'Intermedio a Pro',
+        bestSwell: 'Noroeste (NW)',
+        bestWind: 'Sur, Sureste (Terral / Offshore)',
+        hazards: 'Corrientes de retorno muy fuertes y piedras aisladas en bajamar'
       },
       { 
         name: 'Playa de Guadamía', 
@@ -320,7 +350,10 @@ export const PLAYAS_POR_CONCEJO = {
         bottom: '🪨🏖️ Mixto (Losa rocosa y arena)',
         waveType: '↔️ Izquierdas y Derechas tubulares y rápidas',
         bestTide: 'Media Marea a Bajamar',
-        surfLevel: 'Todos los niveles'
+        surfLevel: 'Todos los niveles',
+        bestSwell: 'Noroeste (NW / ONO consistente)',
+        bestWind: 'Sur, Sureste (Terral / Offshore puro)',
+        hazards: 'Fondo de losa cortante y corrientes contra el espigón del puerto'
       },
       { 
         name: 'Playa del Murallón', 
@@ -362,7 +395,10 @@ export const PLAYAS_POR_CONCEJO = {
         bottom: '🏖️ Arena y cantos',
         waveType: '↔️ Olas orilleras rápidas y potentes',
         bestTide: 'Media Marea a Bajamar',
-        surfLevel: 'Intermedio a Experto'
+        surfLevel: 'Intermedio a Experto',
+        bestSwell: 'Noroeste (NW)',
+        bestWind: 'Sur (Terral / Offshore)',
+        hazards: 'Resaca violenta en el centro y fuerte corriente de la desembocadura'
       },
       { 
         name: 'Playa de Andrín', 
@@ -374,7 +410,10 @@ export const PLAYAS_POR_CONCEJO = {
         bottom: '🏖️ Arena (Fuerte desnivel)',
         waveType: '↔️ Rompiente orillera potente (Shorebreak)',
         bestTide: 'Media Marea',
-        surfLevel: 'Experto'
+        surfLevel: 'Experto',
+        bestSwell: 'Noroeste (NW)',
+        bestWind: 'Sur, Suroeste (Terral / Offshore)',
+        hazards: 'Shorebreak violento contra la orilla y corrientes muy traicioneras'
       },
       { 
         name: 'Playa de Torimbia', 

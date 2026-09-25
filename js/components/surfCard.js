@@ -215,6 +215,227 @@ function evaluateSurfQuality(waveHeight, wavePeriod, windCondition, waveEnergy =
 }
 
 /**
+ * Calcula la calificación de surf por estrellas (0 a 10) inspirada en los estándares de Surf-Forecast
+ * - 🌟 Estrellas Doradas: Viento terral puro (offshore) con swell ordenado y energía noble
+ * - ⚪ Estrellas Blancas: Viento terral / glassy con mar pequeño, período moderado o brisa cruzada
+ * - 🚫 Cero Estrellas: Viento onshore (mar picado/chop), arenal saturado por mar pasado o calma chicha
+ */
+export function getSurfStarRating(waveHeight, wavePeriod, windCondition, waveEnergy = null, isBeachBreakOverload = false) {
+  const h = parseFloat(waveHeight) || 1.2;
+  const p = parseInt(wavePeriod, 10) || 10;
+  const energyKj = waveEnergy?.kj || Math.round(11 * (h * h) * p);
+  const isOffshore = windCondition && windCondition.type === 'offshore';
+  const isGlassy = windCondition && windCondition.type === 'glassy';
+  const isSemiOffshore = windCondition && windCondition.type === 'cross-offshore';
+  const isOnshore = windCondition && (windCondition.type === 'onshore' || windCondition.type === 'cross-onshore');
+
+  // 1. Caso de sobrecarga o temporal (mar pasado en arenales o peligro extremo)
+  if (isBeachBreakOverload || h >= 2.6 || energyKj >= 900) {
+    return {
+      stars: 0,
+      maxStars: 10,
+      type: 'none',
+      badgeClass: 'rating-zero',
+      starIcons: '0 Estrellas (Cerrones)',
+      shortIcons: '0★ Cerrón',
+      summary: '0/10 • Mar Pasado en Arenales',
+      desc: 'Barras cerronas masivas y corrientes de resaca intensas. No apto para arenales abiertos.',
+      color: '#ef4444'
+    };
+  }
+
+  // 2. Mar plato o sin tamaño
+  if (h < 0.6 || energyKj < 45) {
+    return {
+      stars: 0,
+      maxStars: 10,
+      type: 'none',
+      badgeClass: 'rating-zero',
+      starIcons: '0 Estrellas (Plato)',
+      shortIcons: '0★ Plato',
+      summary: '0/10 • Sin Fuerza',
+      desc: 'Olas insuficientes o sin empuje para surf convencional.',
+      color: '#94a3b8'
+    };
+  }
+
+  // 3. Viento de mar directo (Onshore / Chop revuelto)
+  if (isOnshore) {
+    return {
+      stars: 0,
+      maxStars: 10,
+      type: 'none',
+      badgeClass: 'rating-zero',
+      starIcons: '0 Estrellas (Chop)',
+      shortIcons: '0★ Chop',
+      summary: '0/10 • Viento de Mar',
+      desc: 'El viento de mar desordena las secciones de la ola e impide paredes limpias.',
+      color: '#f59e0b'
+    };
+  }
+
+  // 4. Condiciones Faborables (Offshore, Glassy o Semi-Offshore)
+  let score = 0;
+  let isGold = isOffshore;
+
+  // Aportación por Altura de Ola (zona dulce cantábrica: 1.0m a 1.6m)
+  if (h >= 1.0 && h <= 1.6) {
+    score += 4;
+  } else if (h >= 0.8 && h < 1.0) {
+    score += 2;
+  } else if (h > 1.6 && h < 2.0) {
+    score += 3;
+  } else {
+    score += 1;
+  }
+
+  // Aportación por Período
+  if (p >= 14) {
+    score += 4;
+  } else if (p >= 12) {
+    score += 3;
+  } else if (p >= 10) {
+    score += 2;
+  } else {
+    score += 1;
+  }
+
+  // Aportación por Energía dulce (160 - 350 kJ)
+  if (energyKj >= 160 && energyKj <= 350) {
+    score += 2;
+  } else if (energyKj >= 351 && energyKj <= 500) {
+    score += 1;
+  }
+
+  // Calificación del tipo de estrella
+  if (isOffshore) {
+    isGold = true;
+  } else if (isGlassy) {
+    // Glassy con período largo y buena ola da estrella dorada, si no blanca
+    isGold = p >= 11 && h >= 1.0;
+  } else {
+    isGold = false;
+    score = Math.max(1, score - 2);
+  }
+
+  const finalStars = Math.min(10, Math.max(1, score));
+  const starType = isGold ? 'gold' : 'white';
+  const starSymbol = isGold ? '⭐' : '⚪';
+  const starColor = isGold ? '#fbbf24' : '#e2e8f0';
+  const starLabel = isGold ? 'Estrellas Doradas' : 'Estrellas Blancas';
+
+  // Mostrar hasta 5 estrellas visuales para evitar desbordes en móviles, con badge numérico
+  const visualCount = Math.min(5, finalStars);
+  const visualIcons = starSymbol.repeat(visualCount);
+
+  return {
+    stars: finalStars,
+    maxStars: 10,
+    type: starType,
+    badgeClass: isGold ? 'rating-gold' : 'rating-white',
+    starIcons: `${visualIcons} ${finalStars}/10`,
+    shortIcons: `${starSymbol}${finalStars}`,
+    summary: `${finalStars}/10 ${starLabel}`,
+    desc: isGold
+      ? 'Condiciones limpias con viento terral peinando la pared y swell bien formado.'
+      : 'Condiciones nobles: mar ordenado o glassy ideal para tablas con volumen y baño entretenido.',
+    color: starColor
+  };
+}
+
+/**
+ * Determina la textura de la lámina de agua (Superficie / Wind State)
+ */
+export function getWaterTexture(windSpeedKmH, windCondition) {
+  const spd = Math.round(windSpeedKmH || 0);
+  const type = windCondition?.type || 'variable';
+
+  if (spd <= 6) {
+    return {
+      type: 'glassy',
+      icon: '🪞',
+      label: 'Glassy (Espejo)',
+      badge: 'Superficie Glassy',
+      desc: 'Calma total. La lámina de agua parece un espejo perfecto.',
+      color: '#38bdf8'
+    };
+  }
+
+  if (type === 'offshore') {
+    return {
+      type: 'clean',
+      icon: '💨',
+      label: 'Limpio (Terral / Offshore)',
+      badge: 'Superficie Limpia',
+      desc: 'El viento de tierra alisa la pared y frena el labio, abriendo el tubo.',
+      color: '#10b981'
+    };
+  }
+
+  if (type === 'cross-offshore') {
+    return {
+      type: 'semi-clean',
+      icon: '✨',
+      label: 'Semi-Limpio (Cruzado Terral)',
+      badge: 'Brisa Favorable',
+      desc: 'Brisa diagonal con componente terral, paredes aprovechables.',
+      color: '#34d399'
+    };
+  }
+
+  if (type === 'cross-onshore') {
+    return {
+      type: 'cross-chop',
+      icon: '〰️',
+      label: 'Picado (Cruzado Onshore)',
+      badge: 'Superficie Rizada',
+      desc: 'Brisa diagonal de mar que pica la cara de la ola.',
+      color: '#fbbf24'
+    };
+  }
+
+  if (type === 'onshore') {
+    return {
+      type: 'chop',
+      icon: '🌊',
+      label: 'Chop / Desordenado (Onshore)',
+      badge: 'Superficie Picada',
+      desc: 'Viento de mar directo picando y rompiendo las secciones de la ola.',
+      color: '#f97316'
+    };
+  }
+
+  return {
+    type: 'variable',
+    icon: '〰️',
+    label: 'Brisa Ligera',
+    badge: 'Superficie Variable',
+    desc: 'Viento suave variable en la orilla.',
+    color: '#94a3b8'
+  };
+}
+
+/**
+ * Genera el SVG interactivo de la flecha de viento (apunta hacia donde viaja el aire en estándar náutico)
+ */
+export function getSurfWindArrowSvg(deg, color = '#38bdf8', size = 12) {
+  const rotation = Math.round((deg + 180) % 360);
+  return `<svg class="surf-wind-arrow" style="transform: rotate(${rotation}deg);" viewBox="0 0 24 24" width="${size}" height="${size}" aria-hidden="true" title="Viento soplando hacia el ${(deg + 180) % 360}°">
+    <path d="M12 2L5 13h4.5v9h5v-9H19L12 2z" fill="${color}"/>
+  </svg>`;
+}
+
+/**
+ * Genera el SVG interactivo de la flecha de swell / oleaje (apunta hacia donde viajan las olas hacia la costa)
+ */
+export function getSurfSwellArrowSvg(deg, color = '#38bdf8', size = 12) {
+  const rotation = Math.round((deg + 180) % 360);
+  return `<svg class="surf-swell-arrow" style="transform: rotate(${rotation}deg);" viewBox="0 0 24 24" width="${size}" height="${size}" aria-hidden="true" title="Swell avanzando hacia el ${(deg + 180) % 360}°">
+    <path d="M12 2L4 13h4.5v9h7v-9H20L12 2z" fill="${color}"/>
+  </svg>`;
+}
+
+/**
  * Genera los tramos de previsión cada 3 horas para Hoy y Mañana (estilo Surf-Forecast / Windguru)
  */
 function getSurfTimelineSlots(data, concejo) {
@@ -254,6 +475,10 @@ function getSurfTimelineSlots(data, concejo) {
       const rawPeriod = marineHourly?.swell_wave_period ? marineHourly.swell_wave_period[idx] : (marineHourly?.wave_period ? marineHourly.wave_period[idx] : null);
       const period = (typeof rawPeriod === 'number') ? Math.round(rawPeriod) : 11;
 
+      const rawSwellDeg = marineHourly?.swell_wave_direction ? marineHourly.swell_wave_direction[idx] : (marineHourly?.wave_direction ? marineHourly.wave_direction[idx] : 315);
+      const swellDeg = (typeof rawSwellDeg === 'number') ? Math.round(rawSwellDeg) : 315;
+      const swellDirObj = getWindDirection(swellDeg);
+
       const rawSecH = marineHourly?.secondary_swell_wave_height ? marineHourly.secondary_swell_wave_height[idx] : null;
       const secH = (typeof rawSecH === 'number') ? rawSecH.toFixed(1) : '0';
 
@@ -271,6 +496,15 @@ function getSurfTimelineSlots(data, concejo) {
       // Estado de marea
       const tideStatus = getRealtimeTideStatus(targetDate, concejo.lon || -5.6615);
 
+      // Sobrecarga / mar pasado en arenales para este slot horario
+      const isSlotOverload = (parseFloat(h) >= 1.7) || 
+                             (parseFloat(swellH) >= 1.7) || 
+                             (energy.kj >= 350 && (parseFloat(h) >= 1.5 || parseFloat(swellH) >= 1.5)) ||
+                             (period >= 13 && (parseFloat(h) >= 1.5 || parseFloat(swellH) >= 1.5));
+
+      const starRating = getSurfStarRating(swellH, period, surfWind, energy, isSlotOverload);
+      const waterTexture = getWaterTexture(windSpd, surfWind);
+
       slots.push({
         dayOffset,
         dayLabel,
@@ -281,12 +515,16 @@ function getSurfTimelineSlots(data, concejo) {
         h,
         swellH,
         period,
+        swellDeg,
+        swellDirObj,
         energy,
         windSpd,
         windDeg,
         windDirObj,
         surfWind,
-        tideStatus
+        tideStatus,
+        starRating,
+        waterTexture
       });
     });
   });
@@ -326,7 +564,8 @@ function getSurfDailyForecast(data, concejo) {
     const mH = (typeof marineHourly.wave_height[morningIdx] === 'number') ? marineHourly.wave_height[morningIdx].toFixed(1) : '1.2';
     const mSwellH = (typeof marineHourly.swell_wave_height?.[morningIdx] === 'number') ? marineHourly.swell_wave_height[morningIdx].toFixed(1) : mH;
     const mPeriod = (typeof marineHourly.swell_wave_period?.[morningIdx] === 'number') ? Math.round(marineHourly.swell_wave_period[morningIdx]) : ((typeof marineHourly.wave_period?.[morningIdx] === 'number') ? Math.round(marineHourly.wave_period[morningIdx]) : 10);
-    const mWaveDir = (typeof marineHourly.swell_wave_direction?.[morningIdx] === 'number') ? getWindDirection(marineHourly.swell_wave_direction[morningIdx]) : { name: 'NW', short: 'NW' };
+    const mWaveDeg = (typeof marineHourly.swell_wave_direction?.[morningIdx] === 'number') ? Math.round(marineHourly.swell_wave_direction[morningIdx]) : ((typeof marineHourly.wave_direction?.[morningIdx] === 'number') ? Math.round(marineHourly.wave_direction[morningIdx]) : 315);
+    const mWaveDir = getWindDirection(mWaveDeg);
     
     const mSecH = (typeof marineHourly.secondary_swell_wave_height?.[morningIdx] === 'number') ? marineHourly.secondary_swell_wave_height[morningIdx].toFixed(1) : '0';
     const mSecPeriod = (typeof marineHourly.secondary_swell_wave_period?.[morningIdx] === 'number') ? Math.round(marineHourly.secondary_swell_wave_period[morningIdx]) : 0;
@@ -337,6 +576,9 @@ function getSurfDailyForecast(data, concejo) {
     const mWindDirObj = getWindDirection(mWindDeg);
     const mSurfWind = getSurfWindCondition(mWindDeg, mWindSpd);
     const mQuality = evaluateSurfQuality(mH, mPeriod, mSurfWind, mEnergy);
+    const mOverload = (parseFloat(mH) >= 1.7) || (parseFloat(mSwellH) >= 1.7) || (mEnergy.kj >= 350 && (parseFloat(mH) >= 1.5 || parseFloat(mSwellH) >= 1.5)) || (mPeriod >= 13 && (parseFloat(mH) >= 1.5 || parseFloat(mSwellH) >= 1.5));
+    const mStarRating = getSurfStarRating(mSwellH, mPeriod, mSurfWind, mEnergy, mOverload);
+    const mWaterTexture = getWaterTexture(mWindSpd, mSurfWind);
 
     // 2. TRAMO TARDE (Índice representativo: 17:00)
     const afternoonHour = 17;
@@ -347,7 +589,8 @@ function getSurfDailyForecast(data, concejo) {
     const aH = (typeof marineHourly.wave_height[afternoonIdx] === 'number') ? marineHourly.wave_height[afternoonIdx].toFixed(1) : '1.2';
     const aSwellH = (typeof marineHourly.swell_wave_height?.[afternoonIdx] === 'number') ? marineHourly.swell_wave_height[afternoonIdx].toFixed(1) : aH;
     const aPeriod = (typeof marineHourly.swell_wave_period?.[afternoonIdx] === 'number') ? Math.round(marineHourly.swell_wave_period[afternoonIdx]) : ((typeof marineHourly.wave_period?.[afternoonIdx] === 'number') ? Math.round(marineHourly.wave_period[afternoonIdx]) : 10);
-    const aWaveDir = (typeof marineHourly.swell_wave_direction?.[afternoonIdx] === 'number') ? getWindDirection(marineHourly.swell_wave_direction[afternoonIdx]) : { name: 'NW', short: 'NW' };
+    const aWaveDeg = (typeof marineHourly.swell_wave_direction?.[afternoonIdx] === 'number') ? Math.round(marineHourly.swell_wave_direction[afternoonIdx]) : ((typeof marineHourly.wave_direction?.[afternoonIdx] === 'number') ? Math.round(marineHourly.wave_direction[afternoonIdx]) : 315);
+    const aWaveDir = getWindDirection(aWaveDeg);
     
     const aSecH = (typeof marineHourly.secondary_swell_wave_height?.[afternoonIdx] === 'number') ? marineHourly.secondary_swell_wave_height[afternoonIdx].toFixed(1) : '0';
     const aSecPeriod = (typeof marineHourly.secondary_swell_wave_period?.[afternoonIdx] === 'number') ? Math.round(marineHourly.secondary_swell_wave_period[afternoonIdx]) : 0;
@@ -358,6 +601,9 @@ function getSurfDailyForecast(data, concejo) {
     const aWindDirObj = getWindDirection(aWindDeg);
     const aSurfWind = getSurfWindCondition(aWindDeg, aWindSpd);
     const aQuality = evaluateSurfQuality(aH, aPeriod, aSurfWind, aEnergy);
+    const aOverload = (parseFloat(aH) >= 1.7) || (parseFloat(aSwellH) >= 1.7) || (aEnergy.kj >= 350 && (parseFloat(aH) >= 1.5 || parseFloat(aSwellH) >= 1.5)) || (aPeriod >= 13 && (parseFloat(aH) >= 1.5 || parseFloat(aSwellH) >= 1.5));
+    const aStarRating = getSurfStarRating(aSwellH, aPeriod, aSurfWind, aEnergy, aOverload);
+    const aWaterTexture = getWaterTexture(aWindSpd, aSurfWind);
 
     dailyForecast.push({
       dayIndex: d,
@@ -367,25 +613,31 @@ function getSurfDailyForecast(data, concejo) {
         h: mH,
         swellH: mSwellH,
         period: mPeriod,
+        waveDeg: mWaveDeg,
         waveDir: mWaveDir,
         energy: mEnergy,
         windSpd: mWindSpd,
         windDeg: mWindDeg,
         windDirObj: mWindDirObj,
         surfWind: mSurfWind,
-        quality: mQuality
+        quality: mQuality,
+        starRating: mStarRating,
+        waterTexture: mWaterTexture
       },
       afternoon: {
         h: aH,
         swellH: aSwellH,
         period: aPeriod,
+        waveDeg: aWaveDeg,
         waveDir: aWaveDir,
         energy: aEnergy,
         windSpd: aWindSpd,
         windDeg: aWindDeg,
         windDirObj: aWindDirObj,
         surfWind: aSurfWind,
-        quality: aQuality
+        quality: aQuality,
+        starRating: aStarRating,
+        waterTexture: aWaterTexture
       }
     });
   }
@@ -411,13 +663,16 @@ export function renderSurfCard(data, concejo) {
   const waveHeight = (marine && typeof marine.wave_height === 'number') ? marine.wave_height.toFixed(1) : (isCoasting ? '1.4' : '1.3');
   const swellHeight = (marine && typeof marine.swell_wave_height === 'number') ? marine.swell_wave_height.toFixed(1) : ((marine && typeof marine.wave_height === 'number') ? marine.wave_height.toFixed(1) : '1.2');
   const wavePeriod = (marine && typeof marine.swell_wave_period === 'number') ? Math.round(marine.swell_wave_period) : ((marine && typeof marine.wave_period === 'number') ? Math.round(marine.wave_period) : 11);
-  const waveDir = (marine && typeof marine.swell_wave_direction === 'number') ? getWindDirection(marine.swell_wave_direction) : ((marine && typeof marine.wave_direction === 'number') ? getWindDirection(marine.wave_direction) : { name: 'Noroeste (NW)' });
+  const rawWaveDeg = (marine && typeof marine.swell_wave_direction === 'number') ? marine.swell_wave_direction : ((marine && typeof marine.wave_direction === 'number') ? marine.wave_direction : 315);
+  const waveDirDeg = Math.round(rawWaveDeg);
+  const waveDir = getWindDirection(waveDirDeg);
   const windWaveH = (marine && typeof marine.wind_wave_height === 'number') ? marine.wind_wave_height.toFixed(1) : '0.6';
 
   // Swell Secundario
   const secSwellH = (marine && typeof marine.secondary_swell_wave_height === 'number') ? marine.secondary_swell_wave_height.toFixed(1) : '0.0';
   const secSwellPeriod = (marine && typeof marine.secondary_swell_wave_period === 'number') ? Math.round(marine.secondary_swell_wave_period) : 0;
-  const secSwellDir = (marine && typeof marine.secondary_swell_wave_direction === 'number') ? getWindDirection(marine.secondary_swell_wave_direction) : null;
+  const secSwellDeg = (marine && typeof marine.secondary_swell_wave_direction === 'number') ? Math.round(marine.secondary_swell_wave_direction) : 315;
+  const secSwellDir = (marine && typeof marine.secondary_swell_wave_direction === 'number') ? getWindDirection(secSwellDeg) : null;
   const hasSecondary = parseFloat(secSwellH) >= 0.2;
   
   // Viento actual
@@ -443,6 +698,10 @@ export function renderSurfCard(data, concejo) {
                                (waveEnergy.kj >= 350 && (parseFloat(waveHeight) >= 1.5 || parseFloat(swellHeight) >= 1.5)) ||
                                (wavePeriod >= 13 && (parseFloat(waveHeight) >= 1.5 || parseFloat(swellHeight) >= 1.5));
 
+  // Calificación Oficial por Estrellas (0 a 10) y Textura del Agua (Estándar Surf-Forecast)
+  const surfStarRating = getSurfStarRating(swellHeight || waveHeight, wavePeriod, surfWind, waveEnergy, isBeachBreakOverload);
+  const waterTexture = getWaterTexture(windSpeed, surfWind);
+
   // Temperatura del mar y traje unificada
   const seaTemp = getSeaWaterTemperature(marine);
   const wetsuit = getWetsuitRecommendation(parseFloat(seaTemp));
@@ -463,8 +722,8 @@ export function renderSurfCard(data, concejo) {
             }
           </span>
         </div>
-        <div class="sea-state-pill" style="background: ${surfQuality.bg}; color: ${surfQuality.color}; border: 1px solid ${surfQuality.border};">
-          Grado ${douglasDegree} • ${douglasName} (${waveHeight}m)
+        <div class="sea-state-pill" style="background: ${surfStarRating.color}22; color: ${surfStarRating.color}; border: 1px solid ${surfStarRating.color}66;">
+          ${surfStarRating.shortIcons} • ${surfStarRating.summary}
         </div>
       </div>
 
@@ -488,10 +747,10 @@ export function renderSurfCard(data, concejo) {
             <button class="btn-explain-sensor" data-explain="swell" title="¿Qué es el período en segundos y la dirección del swell? Pulsa para aprender">💡 Explícame</button>
           </div>
           <div class="widget-value">${wavePeriod} <span class="unit">segundos</span></div>
-          <div class="widget-detail">🌊 Swell 1 (Principal): <strong>${swellHeight}m · ${wavePeriod}s (${waveDir.name})</strong></div>
+          <div class="widget-detail">🌊 Swell 1 (Principal): ${getSurfSwellArrowSvg(waveDirDeg, '#38bdf8', 13)} <strong>${swellHeight}m · ${wavePeriod}s (${waveDir.name})</strong></div>
           ${hasSecondary && secSwellDir 
-            ? `<div class="widget-detail" style="color: #7dd3fc;">🌊 Swell 2 (Secundario): <strong>${secSwellH}m · ${secSwellPeriod}s (${secSwellDir.name})</strong></div>` 
-            : `<div class="widget-detail">Viento en costa: <strong>${windSpeed} km/h (${windDirObj.name})</strong></div>`
+            ? `<div class="widget-detail" style="color: #7dd3fc;">🌊 Swell 2 (Secundario): ${getSurfSwellArrowSvg(secSwellDeg, '#7dd3fc', 13)} <strong>${secSwellH}m · ${secSwellPeriod}s (${secSwellDir.name})</strong></div>` 
+            : `<div class="widget-detail">Viento en costa: ${getSurfWindArrowSvg(windDeg, surfWind.color, 13)} <strong>${windSpeed} km/h (${windDirObj.name})</strong></div>`
           }
         </div>
 
@@ -527,25 +786,42 @@ export function renderSurfCard(data, concejo) {
           <div class="widget-detail">Sensación marina: <strong>Agua ${wetsuit.tag}</strong></div>
         </div>
 
-        <!-- Aptitud y Calidad de la Rompiente -->
+        <!-- Aptitud y Calidad de la Rompiente (Rating de Estrellas, Textura Marina y Condición) -->
         <div class="marine-widget surf-turismo-visual-widget">
           <div class="surf-widget-top">
             <div class="surf-title-row">
               <span class="surf-title-icon">🏄‍♂️</span>
               <div>
-                <div class="surf-title-main">Condición de Rompiente</div>
-                <div class="surf-title-sub">${isCoasting ? `Playas de ${concejo.name}` : `Costa de ${interiorRef.name}`}</div>
+                <div class="surf-title-main" style="display: flex; align-items: center; gap: 8px;">
+                  <span>Calificación & Estrellas</span>
+                  <button class="btn-explain-sensor" data-explain="surf_stars" title="¿Cómo funciona el rating de estrellas doradas y blancas? Pulsa para aprender">💡 Explícame</button>
+                </div>
+                <div class="surf-title-sub">${isCoasting ? `Playas de ${concejo.name}` : `Costa de ${interiorRef.name}`} • Estándar Surf-Forecast</div>
               </div>
             </div>
-            <div class="surf-flag-badge" style="background: ${surfQuality.bg}; color: ${surfQuality.color}; border: 1px solid ${surfQuality.border};">
-              ${surfQuality.badge}
+            <div class="surf-flag-badge ${surfStarRating.badgeClass}" style="background: ${surfStarRating.color}22; color: ${surfStarRating.color}; border: 1px solid ${surfStarRating.color}88;">
+              ${surfStarRating.starIcons}
             </div>
           </div>
 
-          <div class="surf-status-banner" style="color: ${surfQuality.color};">
+          <!-- Leyenda Rápida de Estrellas -->
+          <div class="surf-stars-legend-hint">
+            ⭐ <strong>Doradas:</strong> Terral puro & Swell noble • ⚪ <strong>Blancas:</strong> Olas justas / Glassy • 🚫 <strong>0★:</strong> Chop o Cerrón
+          </div>
+
+          <!-- Indicador de Textura de la Superficie Marina -->
+          <div class="surf-texture-row" style="margin-top: 8px; display: flex; align-items: center; justify-content: space-between; padding: 6px 10px; background: rgba(15, 23, 42, 0.65); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.08);">
+            <div style="display: flex; align-items: center; gap: 7px;">
+              <span style="font-size: 1.1rem;">${waterTexture.icon}</span>
+              <span style="font-size: 0.82rem; font-weight: 700; color: ${waterTexture.color};">${waterTexture.badge}</span>
+            </div>
+            <span style="font-size: 0.72rem; color: #cbd5e1;">${waterTexture.desc}</span>
+          </div>
+
+          <div class="surf-status-banner" style="color: ${surfQuality.color}; margin-top: 8px;">
             ${surfQuality.status}
           </div>
-          <div style="font-size: 0.76rem; color: #cbd5e1; margin-top: 6px; line-height: 1.3;">
+          <div style="font-size: 0.76rem; color: #cbd5e1; margin-top: 4px; line-height: 1.3;">
             ${surfQuality.desc}
           </div>
         </div>
@@ -558,7 +834,7 @@ export function renderSurfCard(data, concejo) {
             <span class="surf-timeline-icon">🏄‍♂️</span>
             <div>
               <div class="surf-timeline-title">Previsión de Surf & Rompiente</div>
-              <div class="surf-timeline-subtitle">Evolución de oleaje, swell, energía kJ y viento en ${concejo.name}</div>
+              <div class="surf-timeline-subtitle">Evolución de oleaje, swell, estrellas, energía kJ y viento en ${concejo.name}</div>
             </div>
           </div>
         </div>
@@ -592,11 +868,19 @@ export function renderSurfCard(data, concejo) {
                     <span class="slot-hour">${slot.timeStr}</span>
                   </div>
 
+                  <!-- Calificación por Estrellas y Textura -->
+                  <div class="slot-rating-row" style="display: flex; justify-content: space-between; align-items: center; padding: 4px 7px; background: ${slot.starRating.color}15; border: 1px solid ${slot.starRating.color}44; border-radius: 6px;">
+                    <span style="font-size: 0.75rem; font-weight: 800; color: ${slot.starRating.color};">${slot.starRating.starIcons}</span>
+                    <span style="font-size: 0.7rem; color: ${slot.waterTexture.color}; font-weight: 600;">${slot.waterTexture.icon} ${slot.waterTexture.label.split(' ')[0]}</span>
+                  </div>
+
                   <!-- Ola y Swell -->
                   <div class="slot-metric-row">
                     <div class="slot-metric-main">
                       <span class="slot-wave-val">${slot.h}m</span>
-                      <span class="slot-swell-sub">Swell: ${slot.swellH}m</span>
+                      <span class="slot-swell-sub" style="display: flex; align-items: center; gap: 4px;">
+                        ${getSurfSwellArrowSvg(slot.swellDeg, '#38bdf8', 11)} Swell: ${slot.swellH}m · ${slot.swellDirObj.short}
+                      </span>
                     </div>
                     <div class="slot-period-badge">
                       <span class="period-num">${slot.period}s</span>
@@ -616,7 +900,9 @@ export function renderSurfCard(data, concejo) {
                   <div class="slot-wind-box ${slot.surfWind.statusClass}" style="border: 1px solid ${slot.surfWind.color}55;">
                     <div class="slot-wind-top">
                       <span class="slot-wind-badge" style="color: ${slot.surfWind.color};">${slot.surfWind.badge}</span>
-                      <span class="slot-wind-speed">${slot.windSpd} km/h</span>
+                      <span class="slot-wind-speed" style="display: flex; align-items: center; gap: 3px;">
+                        ${getSurfWindArrowSvg(slot.windDeg, slot.surfWind.color, 11)} ${slot.windSpd} km/h
+                      </span>
                     </div>
                     <div class="slot-wind-dir">${slot.windDirObj.name}</div>
                   </div>
@@ -648,6 +934,9 @@ export function renderSurfCard(data, concejo) {
                   <div class="surf-daypart-row-item morning-item">
                     <div class="surf-dp-top-row">
                       <span class="surf-daypart-tag morning-tag">🌅 Mañana (08h - 14h)</span>
+                      <span class="surf-dp-stars-badge" style="background: ${day.morning.starRating.color}22; color: ${day.morning.starRating.color}; border: 1px solid ${day.morning.starRating.color}66; border-radius: 6px; padding: 2px 7px; font-size: 0.74rem; font-weight: 700;">
+                        ${day.morning.starRating.starIcons}
+                      </span>
                       <div class="surf-dp-energy-pill" style="background: ${day.morning.energy.color}22; color: ${day.morning.energy.color}; border: 1px solid ${day.morning.energy.color}66;">
                         ⚡ ${day.morning.energy.kj} kJ • ${day.morning.energy.shortLabel}
                       </div>
@@ -656,11 +945,15 @@ export function renderSurfCard(data, concejo) {
                     <div class="surf-dp-grid-row">
                       <div class="surf-dp-wave-col">
                         <span class="surf-dp-val">${day.morning.h}m</span>
-                        <span class="surf-dp-swell">Swell: ${day.morning.swellH}m · ${day.morning.period}s (${day.morning.waveDir.short})</span>
+                        <span class="surf-dp-swell" style="display: flex; align-items: center; gap: 4px;">
+                          ${getSurfSwellArrowSvg(day.morning.waveDeg, '#38bdf8', 11)} Swell: ${day.morning.swellH}m · ${day.morning.period}s (${day.morning.waveDir.short})
+                        </span>
                       </div>
                       <div class="surf-dp-wind-col ${day.morning.surfWind.statusClass}">
                         <span class="surf-dp-wind-badge" style="color: ${day.morning.surfWind.color};">${day.morning.surfWind.badge}</span>
-                        <span class="surf-dp-wind-spd">${day.morning.windSpd} km/h (${day.morning.windDirObj.short})</span>
+                        <span class="surf-dp-wind-spd" style="display: flex; align-items: center; gap: 4px;">
+                          ${getSurfWindArrowSvg(day.morning.windDeg, day.morning.surfWind.color, 11)} ${day.morning.windSpd} km/h (${day.morning.windDirObj.short})
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -669,6 +962,9 @@ export function renderSurfCard(data, concejo) {
                   <div class="surf-daypart-row-item afternoon-item">
                     <div class="surf-dp-top-row">
                       <span class="surf-daypart-tag afternoon-tag">🌇 Tarde (14h - 20h)</span>
+                      <span class="surf-dp-stars-badge" style="background: ${day.afternoon.starRating.color}22; color: ${day.afternoon.starRating.color}; border: 1px solid ${day.afternoon.starRating.color}66; border-radius: 6px; padding: 2px 7px; font-size: 0.74rem; font-weight: 700;">
+                        ${day.afternoon.starRating.starIcons}
+                      </span>
                       <div class="surf-dp-energy-pill" style="background: ${day.afternoon.energy.color}22; color: ${day.afternoon.energy.color}; border: 1px solid ${day.afternoon.energy.color}66;">
                         ⚡ ${day.afternoon.energy.kj} kJ • ${day.afternoon.energy.shortLabel}
                       </div>
@@ -677,11 +973,15 @@ export function renderSurfCard(data, concejo) {
                     <div class="surf-dp-grid-row">
                       <div class="surf-dp-wave-col">
                         <span class="surf-dp-val">${day.afternoon.h}m</span>
-                        <span class="surf-dp-swell">Swell: ${day.afternoon.swellH}m · ${day.afternoon.period}s (${day.afternoon.waveDir.short})</span>
+                        <span class="surf-dp-swell" style="display: flex; align-items: center; gap: 4px;">
+                          ${getSurfSwellArrowSvg(day.afternoon.waveDeg, '#38bdf8', 11)} Swell: ${day.afternoon.swellH}m · ${day.afternoon.period}s (${day.afternoon.waveDir.short})
+                        </span>
                       </div>
                       <div class="surf-dp-wind-col ${day.afternoon.surfWind.statusClass}">
                         <span class="surf-dp-wind-badge" style="color: ${day.afternoon.surfWind.color};">${day.afternoon.surfWind.badge}</span>
-                        <span class="surf-dp-wind-spd">${day.afternoon.windSpd} km/h (${day.afternoon.windDirObj.short})</span>
+                        <span class="surf-dp-wind-spd" style="display: flex; align-items: center; gap: 4px;">
+                          ${getSurfWindArrowSvg(day.afternoon.windDeg, day.afternoon.surfWind.color, 11)} ${day.afternoon.windSpd} km/h (${day.afternoon.windDirObj.short})
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -696,7 +996,7 @@ export function renderSurfCard(data, concejo) {
       <div class="marine-widget surf-intelligence-card" style="margin-top: 20px; margin-bottom: 20px;">
         <div class="surf-intel-header">
           <div class="surf-intel-title-wrap">
-            <span class="surf-intel-icon">🧭</span>
+            <span class="surf-intel-icon">💨</span>
             <div>
               <div class="surf-intel-title">Calidad de Viento para Surf (Offshore / Onshore)</div>
               <div class="surf-intel-subtitle">Análisis aerodinámico en vivo cruzando viento y orientación cantábrica</div>
@@ -789,6 +1089,20 @@ export function renderSurfCard(data, concejo) {
                     </span>
                   </div>
 
+                  ${p.bestSwell ? `
+                    <div class="beach-spec-row" style="background: rgba(56, 189, 248, 0.08); border-left: 3px solid #38bdf8;">
+                      <span class="spec-label">🌊 Swell Óptimo:</span>
+                      <span class="spec-value" style="color: #38bdf8; font-weight: 700;">${p.bestSwell}</span>
+                    </div>
+                  ` : ''}
+
+                  ${p.bestWind ? `
+                    <div class="beach-spec-row" style="background: rgba(16, 185, 129, 0.08); border-left: 3px solid #10b981;">
+                      <span class="spec-label">🧭 Viento Favorable (Terral):</span>
+                      <span class="spec-value" style="color: #34d399; font-weight: 700;">${p.bestWind}</span>
+                    </div>
+                  ` : ''}
+
                   <div class="beach-spec-row">
                     <span class="spec-label">🪨 Fondo Marino:</span>
                     <span class="spec-value">${p.bottom || '🏖️ Arena (Beach Break)'}</span>
@@ -808,6 +1122,13 @@ export function renderSurfCard(data, concejo) {
                     <span class="spec-label">🎯 Nivel Técnico:</span>
                     <span class="spec-value level-badge">${p.surfLevel || 'Todos'}</span>
                   </div>
+
+                  ${p.hazards ? `
+                    <div class="beach-spec-row" style="background: rgba(239, 68, 68, 0.06); border-left: 3px solid #ef4444;">
+                      <span class="spec-label">⚠️ Precaución / Peligros:</span>
+                      <span class="spec-value" style="color: #fca5a5; font-size: 0.72rem;">${p.hazards}</span>
+                    </div>
+                  ` : ''}
                 </div>
               </div>
             `;

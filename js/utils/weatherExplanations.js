@@ -471,6 +471,63 @@ export const WEATHER_EXPLANATIONS = {
     ]
   },
 
+  surf_stars: {
+    icon: '⭐',
+    title: '¿Cómo funciona el Rating de Estrellas y la Textura Marina?',
+    subtitle: 'Aprende a interpretar las Estrellas Doradas vs Blancas (0 a 10★), la textura del agua y el viento en Asturias',
+    badge: 'Rating 0 a 10★ • Estándar Surf-Forecast',
+    sections: [
+      {
+        icon: '⭐',
+        heading: '1. Estrellas Doradas (1 a 10★) • Excelencia y Viento Terral',
+        text: `
+          <ul class="explain-list">
+            <li><strong>El estándar de oro:</strong> Solo se encienden cuando coincide <strong>viento terral puro (offshore)</strong> soplando contra la ola con un swell de período largo (&gt; 11s) y tamaño noble (1,0 m a 1,6 m).</li>
+            <li><strong>¿Qué indican?:</strong> La pared de la ola se mantiene lisa y limpia, retrasando la rotura para ofrecer secciones tubulares y maniobras perfectas. Cuantas más estrellas doradas, mayor es la calidad de la sesión.</li>
+          </ul>
+        `
+      },
+      {
+        icon: '⚪',
+        heading: '2. Estrellas Blancas (1 a 5★) • Baño Noble y Divertido',
+        text: `
+          <ul class="explain-list">
+            <li><strong>Condiciones buenas pero modestas:</strong> El viento es favorable (terral suave, brisa diagonal o glassy), pero la ola tiene menor tamaño (&lt; 0,9 m) o el período es intermedio (8-10 s).</li>
+            <li><strong>Aprovechamiento:</strong> Sesiones muy entretenidas y seguras, perfectas para tablas evolutivas, longboard o aprendizaje en picos nobles.</li>
+          </ul>
+        `
+      },
+      {
+        icon: '🚫',
+        heading: '3. Calificación Cero (0★) • Sin Condiciones o Peligro',
+        text: `
+          <ul class="explain-list">
+            <li><strong>Viento Onshore (de mar):</strong> Aplasta la cresta de la ola, generando mar picado (chop) y espuma desordenada.</li>
+            <li><strong>⚠️ Mar Pasado en Arenales Abiertos:</strong> Cuando el mar supera 1,7 m o 350-400 kJ en playas como Salinas o San Lorenzo, las barras cierran en bloque ("cerrotes") con fortísimas corrientes de resaca.</li>
+            <li><strong>Calma chicha:</strong> Sin altura ni energía suficiente para deslizar una tabla.</li>
+          </ul>
+        `
+      },
+      {
+        icon: '🪞',
+        heading: '4. Textura del Agua (Wind State)',
+        text: `
+          <ul class="explain-list">
+            <li><strong>🪞 Glassy (Espejo):</strong> Viento nulo o casi imperceptible (&lt; 7 km/h). La superficie del agua es un cristal puro y las olas rompen en silencio.</li>
+            <li><strong>💨 Limpio (Terral / Offshore):</strong> Viento de tierra que peina la cara de la ola y ahueca el labio.</li>
+            <li><strong>〰️ Picado (Cross / Onshore suave):</strong> Pequeñas arrugas en la superficie que restan velocidad.</li>
+            <li><strong>🌊 Chop / Desordenado:</strong> Viento de mar directo picando y rompiendo las secciones de la ola.</li>
+          </ul>
+        `
+      },
+      {
+        icon: '🏔️',
+        heading: '5. Astucia Local en los Arenales de Asturias',
+        text: 'Cuando una playa abierta como Salinas o San Lorenzo marque 0★ por mar pasado o viento de mar, busca esquinas al abrigo (como <strong>El Espartal</strong> al pie del peñón de San Juan de Nieva) o ensenadas resguardadas al otro lado del Cabo Peñas (<strong>Luanco o Candás</strong>).'
+      }
+    ]
+  },
+
   weather_models: {
     icon: '🛰️',
     title: '¿Cómo elegir el Modelo Meteorológico adecuado?',

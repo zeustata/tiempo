@@ -2,8 +2,8 @@ import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/
 import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.0.81-triplesolar';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.0.81';
 import { renderCurrentWeather } from './components/currentCard.js?v=1.0.81-solarcalibrate';
-import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.0.81-tides';
-import { renderSurfCard } from './components/surfCard.js?v=1.0.81-salinascalib';
+import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.0.82-surfarrows';
+import { renderSurfCard } from './components/surfCard.js?v=1.0.82-surfarrows';
 import { renderMountainCard } from './components/mountainCard.js?v=1.0.81';
 import { renderForecast } from './components/forecastView.js?v=1.0.81-solarcalibrate';
 import { renderWeatherChart } from './components/chartsView.js?v=1.0.81-solarcalibrate';
@@ -14,7 +14,7 @@ import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.0.81';
 import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.0.81';
 import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.0.81';
 import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.0.81';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.81-edusurf';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.82-surfarrows';
 import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.0.83-phenomena';
 
 const APP_MODULES = [

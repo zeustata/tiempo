@@ -2130,6 +2130,66 @@
   font-weight: 700;
 }
 
+/* --- CALIFICACIÓN DE SURF POR ESTRELLAS Y TEXTURA (ESTÁNDAR SURF-FORECAST) --- */
+.rating-gold {
+  color: #fbbf24 !important;
+  background: rgba(251, 191, 36, 0.15) !important;
+  border: 1px solid rgba(251, 191, 36, 0.45) !important;
+}
+
+.rating-white {
+  color: #e2e8f0 !important;
+  background: rgba(226, 232, 240, 0.12) !important;
+  border: 1px solid rgba(226, 232, 240, 0.3) !important;
+}
+
+.rating-zero {
+  color: #94a3b8 !important;
+  background: rgba(148, 163, 184, 0.1) !important;
+  border: 1px solid rgba(148, 163, 184, 0.25) !important;
+}
+
+.slot-rating-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 7px;
+  border-radius: 6px;
+  font-size: 0.74rem;
+}
+
+.surf-texture-row {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: rgba(15, 23, 42, 0.65);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.surf-dp-stars-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.surf-stars-legend-hint {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  margin: 6px 0 2px 0;
+  line-height: 1.35;
+}
+
+.surf-wind-arrow,
+.surf-swell-arrow {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
 /* --- INTERRUPTOR DESLIZANTE SEGMENTADO PARA PREVISIÓN DE SURF --- */
 .surf-toggle-container {
   width: 100%;

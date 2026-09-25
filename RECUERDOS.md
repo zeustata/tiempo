@@ -337,5 +337,25 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     - Creación de un modal de bienvenida tras actualización (*"¿Qué hay de nuevo?"*) controlado por `localStorage` para mostrarse una única vez por versión sin molestar en el uso diario.
   - *Estrategia de Ejecución*:
     - Mantener la calma y disciplina técnica hasta recibir la aprobación oficial de Google Play Store. En cuanto la v1.0.0 esté activa, se arrancará el desarrollo escalonado de esta hoja de ruta en sucesivos ciclos oficiales.
+- **🏄‍♂️ Hito Técnico Cumplido: Suite de Surf, Estrellas (0 a 10★), Textura Marina, Flechas Visuales Dinámicas y Modal Didáctico (25 Sep 2026)**:
+  - *Contexto & Solicitud de Lendo*: Integración completa de la suite de surf inspirada en el estándar de Surf-Forecast para Salinas (`https://es.surf-forecast.com/breaks/Salinas/forecasts/latest`). Incorporación de priorización visual de flechas de dirección solicitada por Lendo ("la gente se fija mucho en flechas tanto en el viento como en las olas").
+  - *Arquitectura Implementada en Local*:
+    1. **Sistema de Calificación por Estrellas (0 a 10★)** (`getSurfStarRating` en `surfCard.js`):
+       - ⭐ *Estrellas Doradas (1 a 10★)*: Viento terral estricto (`offshore`) + swell ordenado y energía noble (160 - 349 kJ).
+       - ⚪ *Estrellas Blancas (1 a 5★)*: Baño noble y aprovechable con olas justas (< 0,9 m) o condiciones *glassy*.
+       - 🚫 *0★ (Cerrón / Chop)*: Viento onshore (mar picado) o mar pasado en arenales abiertos.
+    2. **Indicador de Textura de la Superficie Marina (Wind State)** (`getWaterTexture` en `surfCard.js`):
+       - *Glassy (Espejo)*, *Limpio (Terral)*, *Semi-Limpio (Cruzado Terral)*, *Picado (Cruzado Onshore)*, *Chop (Onshore)* y *Brisa Ligera*.
+    3. **Flechas Vectoriales Dinámicas de Dirección en SVG**:
+       - `getSurfWindArrowSvg(deg, color, size)`: Rotación matemática continua `(windDeg + 180) % 360` (apunta hacia donde sopla el aire) con colores adaptativos (verde terral, cian glassy, naranja onshore).
+       - `getSurfSwellArrowSvg(deg, color, size)`: Rotación continua `(swellDeg + 180) % 360` en tono turquesa indicando trayectoria de entrada del tren de olas.
+       - Presentes en Widget 2 (sensores principales), Cronograma 3 Horas (Hoy y Mañana) y Previsión 7 Días (Mañana y Tarde).
+    4. **Fichas Técnicas de Arenales en Asturias (`marineCard.js`)**:
+       - Integración de `bestSwell`, `bestWind` y `hazards` para Salinas, San Lorenzo, Peñarrubia, Rodiles, Xagó, Verdicio, Santa Marina, Vega, Tapia, San Antolín y Andrín.
+    5. **Modal Didáctico "Explícame" (`surf_stars` en `weatherExplanations.js`)**:
+       - Explicación pedagógica de estrellas doradas y blancas, viento terral cantábrico, textura marina y alternativas de abrigo (El Espartal, Luanco, Candás).
+    6. **Anti-Caché Obligatorio (Regla 4)**:
+       - Actualización en cascada de `sw.js` (`meteoasturlode-v182-surfarrows`), `index.html` (`v=1.0.82-surfarrows`) y `app.js` (`v=1.0.82-surfarrows`).
+
 
 
