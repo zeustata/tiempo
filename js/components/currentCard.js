@@ -1,6 +1,7 @@
 import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.0.81-solarcalibrate';
 import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.0.81-nav-clean';
 import { renderHourlyForecastBlock } from './forecastView.js?v=1.0.81-solarcalibrate';
+import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.06';
 
 /**
  * Renderiza el dashboard principal con alineación uniforme y todos los sensores de la estación
@@ -54,6 +55,10 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   const aemetStatus = getAemetAlertStatus(data, concejo);
   const aemetCardMarkup = renderAemetAlertCard(aemetStatus, concejo);
 
+  // Detección de Efecto Foehn ("Vientu les Castañes")
+  const foehn = detectFoehnEffect(current);
+  const foehnMarkup = renderFoehnBanner(foehn);
+
   // Pronóstico Horario Detallado (72 Horas / 3 Días) en Vivo
   const hourlyForecastMarkup = renderHourlyForecastBlock(data, units, iconTheme);
 
@@ -86,6 +91,9 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
         </div>
       </div>
     </div>
+
+    <!-- BANNER DINÁMICO DE EFECTO FOEHN ("VIENTU LES CASTAÑES") -->
+    ${foehnMarkup}
 
     <!-- PRONÓSTICO HORARIO 72H / 3 DÍAS (SOLICITADO POR BETA TESTERS) -->
     ${hourlyForecastMarkup}
@@ -131,6 +139,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
             <div class="sensor-val">${windSpeed} <small>${windUnit}</small></div>
             <div class="sensor-sub">Dirección: <strong>${windDir.name} (${current.wind_direction_10m}°)</strong></div>
             <div class="sensor-sub wind-flow-tag">Viene del <strong>${windDir.short}</strong> ➔ sopla al <strong>${windDir.to}</strong></div>
+            ${foehn ? `<div class="sensor-sub foehn-sensor-indicator">🔥 Viento Sur: Efecto Foehn Activo</div>` : ''}
             <div class="sensor-sub">Racha actual: <strong>${windGusts} ${windUnit}</strong></div>
             <div class="sensor-sub">Racha máx. prevista: <strong>${windMaxGustToday} ${windUnit}</strong></div>
           </div>

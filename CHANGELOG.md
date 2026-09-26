@@ -10,6 +10,21 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.06] - 2026-09-26
+
+### 🌬️ Detector de Efecto Foehn ("Vientu les Castañes")
+- **Motor Científico de Detección Termodinámica en Vivo (`js/utils/foehnDetector.js`):**
+  - Evalúa en tiempo real las 3 variables definitorias del Foehn asturiano:
+    1. Viento de componente Sur estricto (135° SSE a 225° SSO).
+    2. Caída anómala de la humedad relativa por debajo del 52% (moderado) o del 38% (severo/extremo), frente a la media cantábrica habitual del 75-95%.
+    3. Rachas activas aceleradas por compresión adiabática y canalización orográfica desde la Cordillera Cantábrica hacia los valles y la costa (rachas >= 28 km/h o sostenido >= 16 km/h).
+- **Banner Dinámico Acristalado en Tarjeta "En Vivo" (`currentCard.js`):**
+  - Muestra un banner ámbar/naranja con resplandor cálido (`.foehn-banner`), diagnóstico en vivo de humedad y racha, y botón didáctico `💡 ¿Por qué ocurre?` con enlace directo al modal de divulgación meteorológica (`#phenomenon-card-foehn`).
+  - Indicador específico de Viento Sur activo integrado en la tarjeta del anemómetro y rosa de los vientos.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v206-foehn`, query strings actualizadas a `v=1.1.06-foehn` y `css/components.css?v=1.1.06`.
+
+---
+
 ## [1.1.05] - 2026-09-26
 
 ### 🧹 Limpieza Minimalista del Radar Cantábrico: Supresión de Botones Redundantes

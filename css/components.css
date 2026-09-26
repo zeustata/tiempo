@@ -4328,6 +4328,127 @@
   margin: 0;
 }
 
+/* --- BANNER DINÁMICO EFECTO FOEHN (VIENTU LES CASTAÑES) --- */
+.foehn-banner {
+  background: linear-gradient(135deg, rgba(234, 88, 12, 0.16) 0%, rgba(180, 83, 9, 0.25) 100%);
+  border: 1px solid rgba(249, 115, 22, 0.45);
+  border-radius: var(--radius-lg);
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 20px rgba(234, 88, 12, 0.15), inset 0 0 14px rgba(249, 115, 22, 0.08);
+  position: relative;
+  overflow: hidden;
+  animation: foehnWarmGlow 3.5s ease-in-out infinite alternate;
+}
+
+.foehn-banner.severe {
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.20) 0%, rgba(234, 88, 12, 0.30) 100%);
+  border-color: rgba(239, 68, 68, 0.6);
+  box-shadow: 0 4px 24px rgba(220, 38, 38, 0.25), inset 0 0 16px rgba(239, 68, 68, 0.12);
+}
+
+@keyframes foehnWarmGlow {
+  0% { border-color: rgba(249, 115, 22, 0.35); box-shadow: 0 4px 15px rgba(234, 88, 12, 0.12); }
+  100% { border-color: rgba(249, 115, 22, 0.65); box-shadow: 0 4px 25px rgba(234, 88, 12, 0.26); }
+}
+
+.foehn-banner-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.foehn-header-left {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.foehn-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.foehn-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffedd5;
+  letter-spacing: -0.2px;
+}
+
+.foehn-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  background: rgba(249, 115, 22, 0.25);
+  border: 1px solid rgba(249, 115, 22, 0.5);
+  color: #fed7aa;
+}
+
+.foehn-banner.severe .foehn-badge {
+  background: rgba(239, 68, 68, 0.25);
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #fca5a5;
+}
+
+.foehn-desc {
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: #ffedd5;
+  margin: 0 0 10px 0;
+}
+
+.foehn-desc strong {
+  color: #fdba74;
+}
+
+.foehn-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.foehn-metric-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(15, 23, 42, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  color: #cbd5e1;
+}
+
+.foehn-metric-pill strong {
+  color: #ffedd5;
+}
+
+.foehn-sensor-indicator {
+  color: #f97316 !important;
+  font-weight: 700 !important;
+}
+
+@media (max-width: 650px) {
+  .foehn-banner {
+    padding: 12px 14px;
+    margin-bottom: 14px;
+  }
+  .foehn-title {
+    font-size: 0.92rem;
+  }
+  .foehn-desc {
+    font-size: 0.84rem;
+  }
+}
+
 .alert-item-meta-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));

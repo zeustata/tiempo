@@ -32,7 +32,7 @@
 
   <!-- Estilos de la Aplicación con Cache Busting -->
   <link rel="stylesheet" href="css/main.css?v=1.1.02">
-  <link rel="stylesheet" href="css/components.css?v=1.1.05">
+  <link rel="stylesheet" href="css/components.css?v=1.1.06">
   <link rel="stylesheet" href="css/weather-themes.css?v=1.1.02">
 </head>
 <body>
@@ -1576,7 +1576,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.1.05-radarmarkupclean').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.1.06-foehn').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1597,7 +1597,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.05-radarmarkupclean"></script>
+  <script type="module" src="js/app.js?v=1.1.06-foehn"></script>
 
 
 

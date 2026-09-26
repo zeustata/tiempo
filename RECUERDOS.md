@@ -4,7 +4,17 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🔧 Última Actualización: v1.1.05-radarmarkupclean — 2026-09-26
+## 🔧 Última Actualización: v1.1.06-foehn — 2026-09-26
+
+- **Detector Científico de Efecto Foehn ("Vientu les Castañes"):**
+  1. *Física Termodinámica en Vivo (`js/utils/foehnDetector.js`):* Detección en tiempo real de compresión adiabática del aire al descender de la Cordillera Cantábrica hacia los valles y la costa (Viento sector Sur 135°-225°, caída de humedad relativa < 52% / < 38% severo, y rachas aceleradas >= 28 km/h).
+  2. *Banner Dinámico y Divulgativo (`currentCard.js`):* Banner visual acristalado ámbar/naranja con diagnóstico en vivo de racha y humedad desplomada, botón directo `💡 ¿Por qué ocurre?` conectado al modal didáctico de fenómenos meteorológicos (`#phenomenon-card-foehn`), e indicador activo en la rosa de los vientos del anemómetro.
+  3. *Reposo Silencioso:* En condiciones climáticas normales del Cantábrico (humedad 75-95% o viento no Sur), el detector permanece en reposo total sin mostrar ningún elemento que sobrecargue la interfaz.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v206-foehn`, query strings `v=1.1.06-foehn` y `css/components.css?v=1.1.06`.
+
+---
+
+## 🔧 v1.1.05-radarmarkupclean — 2026-09-26
 
 - **Limpieza Minimalista del Radar Cantábrico (Supresión de Botones Redundantes):**
   1. *Eliminación de controles duplicados:* Retirados los botones `📊 Menú` y `📖 Fenómenos` de la botonera superior del radar al encontrarse ya disponibles de forma fija y global en la cabecera principal y en el modal de menú de la app.
