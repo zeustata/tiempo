@@ -4,7 +4,17 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🔧 Última Actualización: v1.1.04-radarmobile — 2026-09-26
+## 🔧 Última Actualización: v1.1.05-radarmarkupclean — 2026-09-26
+
+- **Limpieza Minimalista del Radar Cantábrico (Supresión de Botones Redundantes):**
+  1. *Eliminación de controles duplicados:* Retirados los botones `📊 Menú` y `📖 Fenómenos` de la botonera superior del radar al encontrarse ya disponibles de forma fija y global en la cabecera principal y en el modal de menú de la app.
+  2. *Supresión del botón inferior:* Eliminado el botón `🔝 Subir al Menú Principal` bajo el mapa, ya que la altura cuadrada de 380px permite navegar y hacer scroll táctil sin obstáculos ni capturas de Leaflet.
+  3. *Enfoque en acciones esenciales:* La tarjeta queda despejada, limpia y centrada exclusivamente en sus dos acciones clave: `🎯 Centrar Asturias` y `▶️ Reproducir Radar`.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v205-radarmarkupclean`, query strings `v=1.1.05-radarmarkupclean` y `css/components.css?v=1.1.05`.
+
+---
+
+## 🔧 v1.1.04-radarmobile — 2026-09-26
 
 - **Radar Cantábrico en Móviles (Ergonomía Cuadrada y Erradicación del Secuestro Táctil):**
   1. *Formato Cuadrado Adaptativo en Móvil (`@media (max-width: 650px)`):* Se sustituyó la altura fija desmesurada de `620px` por `380px` (`max-height: 52vh; min-height: 320px`). El mapa vuelve a ser cuadrado y cómodo como en tablet/PC, adaptándose fielmente a la morfología geográfica de Asturias.

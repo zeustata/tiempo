@@ -8,7 +8,7 @@ import { renderMountainCard } from './components/mountainCard.js?v=1.0.87-snowve
 import { renderForecast } from './components/forecastView.js?v=1.0.88-sunhours';
 import { renderWeatherChart } from './components/chartsView.js?v=1.0.81-solarcalibrate';
 import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.81-astromoon2';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.04-radarmobile';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.05-radarmarkupclean';
 import { getWeatherInfo } from './utils/weatherIcons.js?v=1.0.81-solarcalibrate';
 import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.0.81';
 import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.0.81';
@@ -429,22 +429,6 @@ class MeteoAsturiasApp {
       });
     }
 
-    // Acceso directo al selector de módulos desde el radar
-    const radarTopMenuBtn = document.getElementById('btn-radar-top-menu');
-    if (radarTopMenuBtn) {
-      radarTopMenuBtn.addEventListener('click', () => {
-        const navModalBtn = document.getElementById('btn-open-nav-modal');
-        if (navModalBtn) navModalBtn.click();
-      });
-    }
-
-    // Botón de rescate para subir al menú principal
-    const radarBackTopBtn = document.getElementById('btn-radar-back-top');
-    if (radarBackTopBtn) {
-      radarBackTopBtn.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-    }
   }
 
   setupQuickSearch() {

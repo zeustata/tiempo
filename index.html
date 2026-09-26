@@ -32,7 +32,7 @@
 
   <!-- Estilos de la Aplicación con Cache Busting -->
   <link rel="stylesheet" href="css/main.css?v=1.1.02">
-  <link rel="stylesheet" href="css/components.css?v=1.1.04">
+  <link rel="stylesheet" href="css/components.css?v=1.1.05">
   <link rel="stylesheet" href="css/weather-themes.css?v=1.1.02">
 </head>
 <body>
@@ -128,16 +128,11 @@
             </div>
 
             <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-              <button id="btn-radar-top-menu" class="btn-header" title="Abrir selector de módulos">📊 Menú</button>
-              <button id="btn-radar-phenomena" class="btn-header" title="Aprende a diferenciar Vaguadas, Borrascas y DANA">📖 Fenómenos</button>
               <button id="btn-radar-center" class="btn-header" title="Centrar mapa en Asturias">🎯 Centrar Asturias</button>
               <button id="btn-radar-play" class="btn-header">▶️ Reproducir Radar</button>
             </div>
           </div>
           <div id="map-container"></div>
-          <div class="radar-footer-bar">
-            <button id="btn-radar-back-top" class="btn-radar-rescue" title="Volver a la cabecera principal">🔝 Subir al Menú Principal</button>
-          </div>
         </div>
       </div>
 
@@ -1581,7 +1576,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.1.04-radarmobile').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.1.05-radarmarkupclean').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1602,7 +1597,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.04-radarmobile"></script>
+  <script type="module" src="js/app.js?v=1.1.05-radarmarkupclean"></script>
 
 
 

@@ -10,6 +10,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.05] - 2026-09-26
+
+### 🧹 Limpieza Minimalista del Radar Cantábrico: Supresión de Botones Redundantes
+- **Eliminación de controles duplicados:**
+  - Se eliminan los botones `📊 Menú` y `📖 Fenómenos` de la botonera superior del radar, al estar ya integrados y permanentemente accesibles en la cabecera principal y en la barra de herramientas del menú de la app.
+  - Se elimina el botón redundante `🔝 Subir al Menú Principal` al pie del mapa, dejando el marco inferior completamente limpio y despejado.
+- **Enfoque en acciones esenciales:**
+  - La tarjeta del radar conserva de forma minimalista únicamente las dos acciones nucleares: `🎯 Centrar Asturias` y `▶️ Reproducir Radar`.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v205-radarmarkupclean`, query strings actualizadas a `v=1.1.05-radarmarkupclean` y `css/components.css?v=1.1.05`.
+
+---
+
 ## [1.1.04] - 2026-09-26
 
 ### 📱 Radar Móvil: Ergonomía Cuadrada y Erradicación del Secuestro Táctil
