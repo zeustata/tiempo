@@ -1603,7 +1603,16 @@
         }).catch(err => console.log('SW error:', err));
 
         let refreshing = false;
+        let hadController = Boolean(navigator.serviceWorker.controller);
         navigator.serviceWorker.addEventListener('controllerchange', () => {
+          if (!hadController) {
+            hadController = true;
+            return;
+          }
+          const changelog = document.getElementById('changelog-modal');
+          if (changelog && changelog.style.display === 'flex') {
+            return;
+          }
           if (!refreshing) {
             refreshing = true;
             window.location.reload();

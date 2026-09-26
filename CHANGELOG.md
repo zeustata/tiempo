@@ -16,8 +16,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Salto Oficial de Versión a v1.1**:
   - Actualización del badge del footer (`#app-version-badge`) a `v1.1 🚀`.
   - Actualización completa del modal de Novedades (`#changelog-modal`) reuniendo todos los avances desde v1.0.81 (17 de septiembre).
-  - **Aviso Automático de Novedades (`checkChangelogAutoPrompt`)**: Al abrir la aplicación por primera vez tras la actualización, se despliega automáticamente el modal de cambios informando al usuario de todas las mejoras introducidas, guardando la bandera en `localStorage` (`meteoastur_changelog_seen = '1.1'`) para no ser intrusivo en visitas posteriores.
-  - Sincronización de caché PWA en `sw.js` (`meteoasturlode-v210-v1.1`) y parámetros de cache-busting en CSS y JS (`?v=1.1`).
+  - **Aviso Automático de Novedades (`checkChangelogAutoPrompt`)**: Despliegue del modal de cambios informando al usuario de todas las mejoras introducidas.
+  - **Blindaje Anti-Cierre Prematuro en Arranque**:
+    - Supresión de `history.pushState` en la apertura automática en frío para neutralizar eventos `popstate` durante la inicialización del navegador.
+    - Guarda en el listener de `popstate` (`if (e.state?.modalOpen) return;`) para evitar cierres accidentales.
+    - Registro en `localStorage` únicamente tras el cierre explícito del usuario (`[ ✕ ]` o clic exterior), asegurando que si la app recarga por actualización de caché no se pierda el aviso.
+    - Protección en `controllerchange` de Service Worker para no recargar bruscamente la página mientras el usuario lee el modal de novedades.
+  - Sincronización de caché PWA en `sw.js` (`meteoasturlode-v211-v1.1`) y parámetros de cache-busting en CSS y JS (`?v=1.1`).
 
 ---
 

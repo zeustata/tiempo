@@ -231,6 +231,11 @@ class MeteoAsturiasApp {
   closeModal(modal) {
     if (!modal || modal.style.display === 'none') return;
     modal.style.display = 'none';
+    if (modal.id === 'changelog-modal') {
+      try {
+        localStorage.setItem('meteoastur_changelog_seen', '1.1');
+      } catch (e) {}
+    }
     if (history.state?.modalOpen) {
       try {
         history.back();
@@ -277,11 +282,17 @@ class MeteoAsturiasApp {
     });
 
     // Soporte para botón o gesto "Atrás" de Android / Navegador
-    window.addEventListener('popstate', () => {
+    window.addEventListener('popstate', (e) => {
+      if (e.state?.modalOpen) return;
       const modals = document.querySelectorAll('.modal-overlay');
       modals.forEach(m => {
         if (m.style.display === 'flex') {
           m.style.display = 'none';
+          if (m.id === 'changelog-modal') {
+            try {
+              localStorage.setItem('meteoastur_changelog_seen', '1.1');
+            } catch (err) {}
+          }
         }
       });
     });
@@ -440,12 +451,12 @@ class MeteoAsturiasApp {
     try {
       const lastSeen = localStorage.getItem(STORAGE_KEY);
       if (lastSeen !== CURRENT_CHANGELOG_VERSION) {
-        localStorage.setItem(STORAGE_KEY, CURRENT_CHANGELOG_VERSION);
         const changelogModal = document.getElementById('changelog-modal');
         if (changelogModal) {
           setTimeout(() => {
-            this.openModal(changelogModal);
-          }, 700);
+            // Mostrar modal directamente sin alterar historial en el arranque para evitar que popstate lo cierre
+            changelogModal.style.display = 'flex';
+          }, 800);
         }
       }
     } catch (e) {

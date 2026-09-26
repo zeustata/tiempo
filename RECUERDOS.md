@@ -15,8 +15,12 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
      - Revolución de Cordillera & Nieve: Visor dual Snow-Forecast con cotas altitudinales en 3 niveles, Wind Chill, semáforo de remontes, nieve a 3 días y reorganización geográfica de los 16 puertos de montaña asturianos en 4 sectores.
      - Surf & Rompientes: Sistema de estrellas (0-10★), textura marina, flechas vectoriales SVG de 360° para viento y mar de fondo, y advertencias para arenales abiertos.
      - Menú de herramientas anti-desborde (Doctrina Constitucional Ley 11).
-  3. *Aviso Automático de Novedades (`checkChangelogAutoPrompt`):* Despliegue automático y no intrusivo del modal informativo tras 700ms en la primera apertura tras actualizar a la versión 1.1 mediante `localStorage.getItem('meteoastur_changelog_seen')`, preservando la consulta manual en cualquier momento desde el pie.
-- **Cache-bust:** `sw.js` → `meteoasturlode-v210-v1.1`, query strings `v=1.1` en `index.html` y módulos ES.
+  3. *Aviso Automático de Novedades (`checkChangelogAutoPrompt`) y Blindaje Anti-Cierre:*
+     - Despliegue automático tras 800ms sin alterar el historial (`history.pushState`) para impedir que los eventos `popstate` de finalización de carga del navegador cierren la ventana.
+     - Guarda en `popstate` (`if (e.state?.modalOpen) return;`).
+     - Almacenamiento en `localStorage` únicamente tras el cierre explícito por el usuario (`[ ✕ ]` o clic fuera).
+     - Protección en `controllerchange` del Service Worker para no forzar recarga si el modal de novedades está activo en pantalla.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v211-v1.1`, query strings `v=1.1` en `index.html` y módulos ES.
 
 ---
 
