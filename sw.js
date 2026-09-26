@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v213-v1.1.1-webcams-fixed';
+const CACHE_NAME = 'meteoasturlode-v215-v1.1.1-navfix';
 const STATIC_ASSETS = [
   './',
   './index.html',

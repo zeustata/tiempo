@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.1">
-  <link rel="stylesheet" href="css/components.css?v=1.1.1">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.1">
+  <link rel="stylesheet" href="css/main.css?v=1.1.1-fix2">
+  <link rel="stylesheet" href="css/components.css?v=1.1.1-fix2">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.1-fix2">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -1474,10 +1474,10 @@
         </button>
       </div>
       <!-- Fila 2 de Herramientas: Webcams de Asturias en Vivo -->
-      <div class="nav-modal-tools-strip" style="margin-top: 6px;">
-        <button id="btn-open-webcams" class="nav-tool-strip-btn" style="width: 100%; justify-content: center; gap: 8px;" title="Webcams Oficiales en Directo de Asturias">
+      <div class="nav-modal-tools-strip nav-modal-tools-strip-single" style="margin-top: 6px;">
+        <button id="btn-open-webcams" class="nav-tool-strip-btn nav-tool-strip-btn-full" title="Webcams Oficiales en Directo de Asturias">
           <span class="strip-btn-icon">📹</span>
-          <span class="strip-btn-text">Webcams en Directo (Playas y Puertos)</span>
+          <span class="strip-btn-text">Webcams en Directo</span>
         </button>
       </div>
       <div class="modal-body nav-modal-body" id="nav-modal-grid"></div>
@@ -1613,22 +1613,22 @@
     <div class="modal-card modal-webcams-card">
       <div class="modal-header">
         <div class="explain-modal-header-text">
-          <h3 id="webcams-modal-title">📹 Webcams en Directo de Asturias</h3>
-          <span id="webcams-modal-subtitle" class="modal-subtitle">Comprueba el cielo real en arenales, puertos y cumbres</span>
+          <h3 id="webcams-modal-title">📹 Webcams de Asturias</h3>
+          <span id="webcams-modal-subtitle" class="modal-subtitle">Cámaras en arenales, puertos y cumbres</span>
         </div>
         <button id="btn-close-webcams" class="btn-close" aria-label="Cerrar modal">&times;</button>
       </div>
 
-      <!-- Selector de categoría: Playas / Puertos -->
+      <!-- Selector de categoría: Playas / Montaña -->
       <div class="webcams-filter-bar">
         <div class="webcams-segmented-switch" id="webcams-switch" data-active="playas">
           <button class="webcam-switch-btn active" data-category="playas" id="btn-webcam-cat-playas">
             <span class="webcam-btn-icon">🏖️</span>
-            <span class="webcam-btn-label">Playas y Costa</span>
+            <span class="webcam-btn-label">Playas</span>
           </button>
           <button class="webcam-switch-btn" data-category="montana" id="btn-webcam-cat-montana">
             <span class="webcam-btn-icon">🏔️</span>
-            <span class="webcam-btn-label">Puertos y Montaña</span>
+            <span class="webcam-btn-label">Montaña</span>
           </button>
         </div>
       </div>
@@ -1637,7 +1637,7 @@
       <div class="webcams-search-container">
         <div class="webcam-search-input-wrapper">
           <span class="webcam-search-icon">🔍</span>
-          <input type="text" id="webcam-search-input" placeholder="Buscar playa, puerto o concejo (ej. Salinas, Pajares)..." aria-label="Buscar webcam">
+          <input type="text" id="webcam-search-input" placeholder="Buscar playa, puerto o concejo..." aria-label="Buscar webcam">
           <button id="btn-clear-webcam-search" class="btn-clear-search" style="display: none;" aria-label="Borrar búsqueda">&times;</button>
         </div>
       </div>
@@ -1655,7 +1655,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.1.1').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.1.1-fix2').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1685,7 +1685,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.1"></script>
+  <script type="module" src="js/app.js?v=1.1.1-fix2"></script>
 
 
 

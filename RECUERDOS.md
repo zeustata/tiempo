@@ -20,7 +20,7 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
      - Botones contextuales dedicados e integrados ergonómicamente en la cabecera de las tarjetas de `Mar & Surf` (`📹 Ver Webcams de Playas en Directo`) y `Cordillera & Nieve` (`📹 Ver Webcams de Puertos y Pistas en Vivo`), abriendo el modal directamente prefiltrado en su categoría correspondiente.
   4. *Blindaje PWA y Anti-Caché:*
      - Incorporación de `js/utils/webcamsData.js` a la caché estática de `sw.js`.
-     - Actualización de `CACHE_NAME` a `meteoasturlode-v213-v1.1.1-webcams-fixed`.
+     - Actualización de CACHE_NAME a meteoasturlode-v214-v1.1.1-overflowfix.
      - Actualización de query strings a `v=1.1.1` en `index.html` y módulos ES.
      - Actualización del badge a `v1.1.1 📹` y registro detallado en `CHANGELOG.md`.
 

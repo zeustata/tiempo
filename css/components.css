@@ -5293,19 +5293,36 @@
   max-height: 85vh;
   display: flex;
   flex-direction: column;
-  padding: 0;
+  padding: 0 !important;
   overflow: hidden;
   background: rgba(15, 23, 42, 0.94);
   border: 1px solid rgba(255, 255, 255, 0.16);
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.65);
   border-radius: var(--radius-lg);
   backdrop-filter: blur(16px);
+  box-sizing: border-box;
+}
+
+.modal-webcams-card .modal-header {
+  padding: 16px 20px 14px;
+  margin-bottom: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
 }
 
 .webcams-filter-bar {
   padding: 8px 16px;
   background: rgba(15, 23, 42, 0.4);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .webcams-segmented-switch {
@@ -5316,15 +5333,17 @@
   padding: 4px;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .webcam-switch-btn {
   background: transparent;
   border: none;
   color: #94a3b8;
-  padding: 9px 12px;
+  padding: 9px 8px;
   border-radius: 8px;
-  font-size: 0.85rem;
+  font-size: 0.84rem;
   font-weight: 700;
   cursor: pointer;
   display: flex;
@@ -5333,6 +5352,9 @@
   gap: 6px;
   transition: all 0.2s ease;
   white-space: nowrap;
+  min-width: 0;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .webcam-switch-btn.active {
@@ -5342,10 +5364,24 @@
   box-shadow: 0 2px 8px rgba(56, 189, 248, 0.15);
 }
 
+.webcam-btn-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.webcam-btn-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
 .webcams-search-container {
   padding: 8px 16px;
   background: rgba(15, 23, 42, 0.3);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .webcam-search-input-wrapper {
