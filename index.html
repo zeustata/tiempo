@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.02">
-  <link rel="stylesheet" href="css/components.css?v=1.1.06">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.02">
+  <link rel="stylesheet" href="css/main.css?v=1.1">
+  <link rel="stylesheet" href="css/components.css?v=1.1">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -176,7 +176,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.02 🏔️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -227,8 +227,25 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.0.81 🚀</span>
-            <span class="release-date">17 Sep 2026 (Actual)</span>
+            <span class="release-version">v1.1 🚀</span>
+            <span class="release-date">26 Sep 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> <strong>Detector de Efecto Foehn ("Vientu les Castañes")</strong>: Motor científico termodinámico en tiempo real (`foehnDetector.js`) que analiza las 3 variables del Foehn asturiano: viento de componente Sur estricto (SSE a SSO), desplome súbito de la humedad relativa (&lt; 52% o severo &lt; 38%) y aceleración orográfica de rachas desde la Cordillera Cantábrica hacia los valles y la costa. Despliega un banner acristalado dinámico en la estación en vivo con diagnóstico y botón didáctico explicativo.</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Radar Cantábrico HD & Satélite Real por Defecto</strong>: Activación de <em>Esri World Imagery HD</em> como capa base principal al cargar el radar. Blindaje de alejamiento a nivel 6 para impedir pantallas grises o blancas en el Cantábrico y fijación de teselas nativas a nivel 7 (`maxNativeZoom: 7`), erradicando por completo el mensaje de error <em>"Zoom Level not supported"</em> al acercar.</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Ergonomía Móvil Cuadrada y Erradicación del Secuestro Táctil en Radar</strong>: Altura adaptada a 380px en pantallas móviles para dejar bandas libres de deslizamiento con el pulgar, scroll suave automático al entrar al radar y supresión de botones redundantes, manteniendo únicamente los controles esenciales.</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Cordillera & Nieve: Visor Dual Estilo Snow-Forecast y Red Integral de 16 Puertos</strong>: Selector segmentado Liquid Glass para alternar entre estaciones de esquí (Pajares, Fuentes, San Isidro, Leitariegos) y puertos de montaña. Incorpora cotas altitudinales en 3 niveles (Cumbre, Media, Base) con gradiente térmico vertical y sensación Wind Chill, semáforo de remontes por viento en cumbre, previsión de nieve acumulada a 3 días y estructuración de 16 puertos en 4 sectores geográficos (Arterias Meseta, Valles Mineros, Picos de Europa y Occidente).</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Surf & Rompientes: Sistema de Estrellas (0-10★), Textura Marina y Flechas Vectoriales</strong>: Algoritmo de calificación con estrellas doradas (terral offshore) y blancas, evaluación de lámina marina (<em>Glassy</em>, <em>Limpio</em>, <em>Chop</em>), flechas vectoriales SVG de 360° para viento y mar de fondo (Swell), y fichas de secretos de rompientes con detector de mar pasado en arenales abiertos.</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Menú de Herramientas Anti-Desborde (Doctrina Constitucional Ley 11)</strong>: Mini-tira ergonómica al 50% para acceso instantáneo a <em>Fenómenos</em> e <em>Iconos</em>, despejando la cabecera modal y blindando la visualización en teléfonos móviles de pantalla estrecha.</li>
+            <li><span class="tag tag-new">Fix</span> <strong>Corrección de Glider y Botones Didácticos</strong>: Ajuste milimétrico del deslizador en el interruptor de Puertos/Esquí y corrección del enlace interactivo <em>💡 Explícame</em> en la fila de Peligro de Aludes (EAWS).</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Aviso Automático de Novedades</strong>: Despliegue automático de esta ventana informativa al abrir por primera vez la app tras actualizar a una nueva versión para no perderse ninguna mejora.</li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.0.81</span>
+            <span class="release-date">17 Sep 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-new">Nuevo</span> <strong>Calibración de Oleaje & Detector de Mar Pasado en Arenales (Feedback Edu)</strong>: Reajuste integral de los escalones de energía (kJ) a 5 niveles (<em>Suave &lt; 180 kJ</em>, <em>Divertida 180-349 kJ</em>, <em>Sólida / Exigente 350-649 kJ</em>, <em>Muy Potente 650-1099 kJ</em>, <em>Pesada ≥ 1100 kJ</em>), evitando que olas de más de 2 metros se clasifiquen engañosamente como "divertidas". Incorporación del detector de saturación en arenales abiertos (como Salinas o San Lorenzo): cuando el oleaje supera 1,9 m o los 400 kJ con olas &ge; 1,8 m, el sistema alerta de mar pasado en barras cerronas con fuertes corrientes de resaca y aconseja buscar esquinas al abrigo (El Espartal, Luanco).</li>
@@ -1576,7 +1593,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.1.06-foehn').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.1').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1597,7 +1614,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.06-foehn"></script>
+  <script type="module" src="js/app.js?v=1.1"></script>
 
 
 

@@ -4,7 +4,23 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🔧 Última Actualización: v1.1.06-foehn — 2026-09-26
+## 🚀 Última Actualización Oficial: v1.1 — 2026-09-26
+
+- **Lanzamiento Mayor Oficial v1.1 y Aviso de Novedades en Primera Apertura:**
+  1. *Actualización de Versión:* Badge del pie de página actualizado a `v1.1 🚀`.
+  2. *Changelog Unificado:* Inclusión de todas las innovaciones desarrolladas desde el 17 de septiembre (v1.0.81) en `#changelog-modal`:
+     - Detector termodinámico de Efecto Foehn ("Vientu les Castañes").
+     - Radar Cantábrico en Satélite Real Esri HD por defecto con blindaje de alejamiento (minZoom 6) y resolución de teselas nativas RainViewer (fin del error "Zoom Level not supported").
+     - Ergonomía móvil cuadrada (380px) en radar eliminando el secuestro táctil de Leaflet y limpieza de controles redundantes.
+     - Revolución de Cordillera & Nieve: Visor dual Snow-Forecast con cotas altitudinales en 3 niveles, Wind Chill, semáforo de remontes, nieve a 3 días y reorganización geográfica de los 16 puertos de montaña asturianos en 4 sectores.
+     - Surf & Rompientes: Sistema de estrellas (0-10★), textura marina, flechas vectoriales SVG de 360° para viento y mar de fondo, y advertencias para arenales abiertos.
+     - Menú de herramientas anti-desborde (Doctrina Constitucional Ley 11).
+  3. *Aviso Automático de Novedades (`checkChangelogAutoPrompt`):* Despliegue automático y no intrusivo del modal informativo tras 700ms en la primera apertura tras actualizar a la versión 1.1 mediante `localStorage.getItem('meteoastur_changelog_seen')`, preservando la consulta manual en cualquier momento desde el pie.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v210-v1.1`, query strings `v=1.1` en `index.html` y módulos ES.
+
+---
+
+## 🔧 v1.1.06-foehn — 2026-09-26
 
 - **Detector Científico de Efecto Foehn ("Vientu les Castañes"):**
   1. *Física Termodinámica en Vivo (`js/utils/foehnDetector.js`):* Detección en tiempo real de compresión adiabática del aire al descender de la Cordillera Cantábrica hacia los valles y la costa (Viento sector Sur 135°-225°, caída de humedad relativa < 52% / < 38% severo, y rachas aceleradas >= 28 km/h).

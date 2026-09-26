@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.0] - 2026-09-26 (Lanzamiento Mayor v1.1)
+
+### 🚀 Consolidación de Versión v1.1 y Sistema de Novedades Automáticas
+- **Salto Oficial de Versión a v1.1**:
+  - Actualización del badge del footer (`#app-version-badge`) a `v1.1 🚀`.
+  - Actualización completa del modal de Novedades (`#changelog-modal`) reuniendo todos los avances desde v1.0.81 (17 de septiembre).
+  - **Aviso Automático de Novedades (`checkChangelogAutoPrompt`)**: Al abrir la aplicación por primera vez tras la actualización, se despliega automáticamente el modal de cambios informando al usuario de todas las mejoras introducidas, guardando la bandera en `localStorage` (`meteoastur_changelog_seen = '1.1'`) para no ser intrusivo en visitas posteriores.
+  - Sincronización de caché PWA en `sw.js` (`meteoasturlode-v210-v1.1`) y parámetros de cache-busting en CSS y JS (`?v=1.1`).
+
+---
+
 ## [1.1.06] - 2026-09-26
 
 ### 🌬️ Detector de Efecto Foehn ("Vientu les Castañes")

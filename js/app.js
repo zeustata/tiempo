@@ -1,21 +1,21 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.0.81';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.0.81-triplesolar';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.0.81';
-import { renderCurrentWeather } from './components/currentCard.js?v=1.1.06-foehn';
-import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.0.82-surfarrows';
-import { renderSurfCard } from './components/surfCard.js?v=1.0.82-surfarrows';
-import { renderMountainCard } from './components/mountainCard.js?v=1.0.87-snowvert';
-import { renderForecast } from './components/forecastView.js?v=1.0.88-sunhours';
-import { renderWeatherChart } from './components/chartsView.js?v=1.0.81-solarcalibrate';
-import { renderAstronomyView } from './components/astronomyCard.js?v=1.0.81-astromoon2';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.05-radarmarkupclean';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=1.0.81-solarcalibrate';
-import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.0.81';
-import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.0.81';
-import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.0.81';
-import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.0.81';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.0.86-snowgrid';
-import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.0.83-phenomena';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.1';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.1';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.1';
+import { renderCurrentWeather } from './components/currentCard.js?v=1.1';
+import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.1';
+import { renderSurfCard } from './components/surfCard.js?v=1.1';
+import { renderMountainCard } from './components/mountainCard.js?v=1.1';
+import { renderForecast } from './components/forecastView.js?v=1.1';
+import { renderWeatherChart } from './components/chartsView.js?v=1.1';
+import { renderAstronomyView } from './components/astronomyCard.js?v=1.1';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1';
+import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1';
+import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1';
+import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1';
+import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1';
+import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, pronóstico horario 72h y alertas', key: '1' },
@@ -103,6 +103,9 @@ class MeteoAsturiasApp {
 
     // Auto-refresco instantáneo cada vez que abres o desbloqueas la App
     this.setupAutoRefreshOnResume();
+
+    // Auto-apertura del modal de Novedades si es la primera vez que se abre la v1.1
+    this.checkChangelogAutoPrompt();
   }
 
   setupAutoRefreshOnResume() {
@@ -429,6 +432,25 @@ class MeteoAsturiasApp {
       });
     }
 
+  }
+
+  checkChangelogAutoPrompt() {
+    const CURRENT_CHANGELOG_VERSION = '1.1';
+    const STORAGE_KEY = 'meteoastur_changelog_seen';
+    try {
+      const lastSeen = localStorage.getItem(STORAGE_KEY);
+      if (lastSeen !== CURRENT_CHANGELOG_VERSION) {
+        localStorage.setItem(STORAGE_KEY, CURRENT_CHANGELOG_VERSION);
+        const changelogModal = document.getElementById('changelog-modal');
+        if (changelogModal) {
+          setTimeout(() => {
+            this.openModal(changelogModal);
+          }, 700);
+        }
+      }
+    } catch (e) {
+      console.warn('[MeteoAstur] No se pudo verificar versión del changelog en almacenamiento local:', e);
+    }
   }
 
   setupQuickSearch() {
