@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v211-v1.1';
+const CACHE_NAME = 'meteoasturlode-v213-v1.1.1-webcams-fixed';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -33,6 +33,7 @@ const STATIC_ASSETS = [
   './js/utils/weatherAlerts.js',
   './js/utils/weatherExplanations.js',
   './js/utils/weatherPhenomena.js',
+  './js/utils/webcamsData.js',
   './js/utils/foehnDetector.js',
   './js/utils/storage.js',
   './js/utils/tides.js'

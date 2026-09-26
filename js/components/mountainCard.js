@@ -473,6 +473,14 @@ export function renderMountainCard(data, concejo) {
             </button>
           </div>
         </div>
+
+        <!-- Botón de Webcams de Puertos y Pistas -->
+        <div style="margin: 8px 0 4px 0;">
+          <button class="btn-open-webcams-mountain" data-webcam-cat="montana" title="Ver cámaras en directo de puertos de montaña y estaciones">
+            <span>📹</span>
+            <span>Ver Webcams de Puertos y Pistas en Vivo</span>
+          </button>
+        </div>
       </div>
 
       <!-- VISTA A: ⛷️ ESTACIONES DE ESQUÍ (ESTÁNDAR SNOW-FORECAST COMPACTO) -->

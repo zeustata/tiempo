@@ -4,7 +4,29 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1 — 2026-09-26
+## 🚀 Última Actualización Oficial: v1.1.1 — 2026-09-26
+
+- **Webcams Oficiales en Directo de Asturias (Playas y Puertos de Montaña):**
+  1. *Directorio Oficial Curado y Validado Punto a Punto (`js/utils/webcamsData.js`):*
+     - Corrección y validación automatizada mediante script en tiempo real contra los servidores de *Webcams de Asturias*, DGT y 112 Asturias, garantizando **HTTP 200** y correspondencia al 100% entre el título, concejo y cámara exacta (eliminados identificadores genéricos que provocaban desvíos).
+     - Catálogo ampliado a 40 cámaras estratégicas y de máxima resolución:
+       - **Playas y Surf:** Salinas (Central y Rompiente de El Espartal), Gijón (San Lorenzo La Escalerona, El Tostaderu/Piles, Panorámica de la Bahía, El Rinconín, Poniente y Puerto Deportivo), Gozón (Playa de Xagó, Luanco Playa de La Ribera y Muelle Pesquero), Carreño (Candás Paseo Marítimo y Playa), Villaviciosa (Rodiles Barra de Surf mundial, Playa/Pinar de Rodiles, Playa España y Playa de La Ñora), Ribadesella (Santa Marina y Playa de Vega), Llanes (Barro, Celorio Palombina, Andrín y San Antolín de Bedón), Muros de Nalón (Aguilar), Soto del Barco (Los Quebrantos / San Juan de La Arena), Tapia de Casariego (Anguileiro / La Grande) y Castropol (Peñarronda).
+       - **Puertos de Montaña, Cumbres y Esquí:** Valgrande-Pajares (Cuitu Negru 1.850 m, Panorámica Ubiñas y Brañillín/Zona Baja), San Isidro / Fuentes de Invierno (La Raya 1.520 m en cumbre y Felechosa), Caso (Puerto de Tarna 1.490 m), Degaña (Puerto de Cerredo 1.290 m), Somiedo (Pola de Somiedo y Caunedo/Subida al Puerto), Picos de Europa (Lagos de Covadonga Lago Enol 1.070 m, Picu Urriellu / Camarmeña, Refugio de Bulnes, Sotres / Pandébano y Vega de Ario 1.630 m), Ponga (San Juan de Beleño / Tiatordos), Todas con apertura directa a imagen/stream en vivo sin portales intermedios.
+  2. *Cumplimiento Legal y Google Play Store (TWA):*
+     - Acceso directo mediante enlaces a fuentes oficiales y públicas autorizadas con atributos seguros `target="_blank" rel="noopener noreferrer"`. Cero scraping indebido de streams comerciales, cero bloqueos CORS, máxima velocidad y nulo consumo residual de datos móviles.
+  3. *Interfaz y Ergonomía Móvil (Doctrina Constitucional Ley 11):*
+     - Modal `#webcams-modal` con interruptor segmentado animado con glider (`🏖️ Playas y Surf` vs `🏔️ Puertos y Pistas`), buscador dinámico en tiempo real (`#webcam-search-input`) que filtra al instante por nombre, concejo, altitud o descripción.
+     - Botón de acceso general en el menú de navegación (`#nav-modal`).
+     - Botones contextuales dedicados e integrados ergonómicamente en la cabecera de las tarjetas de `Mar & Surf` (`📹 Ver Webcams de Playas en Directo`) y `Cordillera & Nieve` (`📹 Ver Webcams de Puertos y Pistas en Vivo`), abriendo el modal directamente prefiltrado en su categoría correspondiente.
+  4. *Blindaje PWA y Anti-Caché:*
+     - Incorporación de `js/utils/webcamsData.js` a la caché estática de `sw.js`.
+     - Actualización de `CACHE_NAME` a `meteoasturlode-v213-v1.1.1-webcams-fixed`.
+     - Actualización de query strings a `v=1.1.1` en `index.html` y módulos ES.
+     - Actualización del badge a `v1.1.1 📹` y registro detallado en `CHANGELOG.md`.
+
+---
+
+## 🚀 Versión Anterior Oficial: v1.1 — 2026-09-26
 
 - **Lanzamiento Mayor Oficial v1.1 y Aviso de Novedades en Primera Apertura:**
   1. *Actualización de Versión:* Badge del pie de página actualizado a `v1.1 🚀`.

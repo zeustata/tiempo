@@ -16,6 +16,7 @@ import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1';
 import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1';
 import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1';
 import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1';
+import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, pronóstico horario 72h y alertas', key: '1' },
@@ -52,6 +53,7 @@ class MeteoAsturiasApp {
     this.setupModelModal();
     this.setupExplainModal();
     this.setupPhenomenaModal();
+    this.setupWebcamsModal();
     this.setupEventListeners();
     this.setupQuickSearch();
     this.setupPwaInstall();
@@ -233,7 +235,7 @@ class MeteoAsturiasApp {
     modal.style.display = 'none';
     if (modal.id === 'changelog-modal') {
       try {
-        localStorage.setItem('meteoastur_changelog_seen', '1.1');
+        localStorage.setItem('meteoastur_changelog_seen', '1.1.1');
       } catch (e) {}
     }
     if (history.state?.modalOpen) {
@@ -290,7 +292,7 @@ class MeteoAsturiasApp {
           m.style.display = 'none';
           if (m.id === 'changelog-modal') {
             try {
-              localStorage.setItem('meteoastur_changelog_seen', '1.1');
+              localStorage.setItem('meteoastur_changelog_seen', '1.1.1');
             } catch (err) {}
           }
         }
@@ -417,6 +419,19 @@ class MeteoAsturiasApp {
       });
     }
 
+    // Delegación global de botones de apertura de Webcams (playas y montaña)
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.btn-open-webcams-beach, .btn-open-webcams-mountain');
+      if (btn) {
+        e.preventDefault();
+        e.stopPropagation();
+        const cat = btn.dataset.webcamCat || 'playas';
+        if (this.openWebcamsModal) {
+          this.openWebcamsModal(cat);
+        }
+      }
+    });
+
     // Tabs de navegación
     document.querySelectorAll('.tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -446,7 +461,7 @@ class MeteoAsturiasApp {
   }
 
   checkChangelogAutoPrompt() {
-    const CURRENT_CHANGELOG_VERSION = '1.1';
+    const CURRENT_CHANGELOG_VERSION = '1.1.1';
     const STORAGE_KEY = 'meteoastur_changelog_seen';
     try {
       const lastSeen = localStorage.getItem(STORAGE_KEY);
@@ -1076,6 +1091,134 @@ class MeteoAsturiasApp {
     renderList();
   }
 
+  setupWebcamsModal() {
+    const modal = document.getElementById('webcams-modal');
+    const closeBtn = document.getElementById('btn-close-webcams');
+    const listContainer = document.getElementById('webcams-list-container');
+    const searchInput = document.getElementById('webcam-search-input');
+    const clearSearchBtn = document.getElementById('btn-clear-webcam-search');
+    const switchContainer = document.getElementById('webcams-switch');
+    const triggerInNav = document.getElementById('btn-open-webcams');
+
+    if (!modal || !listContainer) return;
+
+    let activeCategory = 'playas';
+    let searchQuery = '';
+
+    const normalize = (str) => String(str || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+
+    const renderList = () => {
+      const q = normalize(searchQuery);
+      const filtered = WEBCAMS_ASTURIAS.filter(w => {
+        const matchesCategory = q.length > 0 ? true : w.category === activeCategory;
+        const matchesQuery = !q || (
+          normalize(w.name).includes(q) ||
+          normalize(w.concejo).includes(q) ||
+          normalize(w.location).includes(q) ||
+          normalize(w.desc).includes(q) ||
+          normalize(w.type).includes(q)
+        );
+        return matchesCategory && matchesQuery;
+      });
+
+      if (filtered.length === 0) {
+        listContainer.innerHTML = `
+          <div class="search-empty" style="text-align: center; padding: 24px; color: #94a3b8;">
+            <span style="font-size: 2rem; display: block; margin-bottom: 6px;">📹</span>
+            No se encontraron cámaras para "<strong>${searchQuery}</strong>"
+          </div>
+        `;
+        return;
+      }
+
+      listContainer.innerHTML = filtered.map(w => `
+        <div class="webcam-card-item">
+          <div class="webcam-card-left">
+            <span class="webcam-card-icon">${w.icon}</span>
+            <div class="webcam-card-info">
+              <div class="webcam-card-title-row">
+                <span class="webcam-card-name">${w.name}</span>
+                <span class="webcam-badge-tag">${w.type}</span>
+              </div>
+              <div class="webcam-card-meta">${w.location} • <em>${w.desc}</em></div>
+              <div class="webcam-card-source">Fuente: <strong>${w.provider}</strong></div>
+            </div>
+          </div>
+          <a href="${w.url}" target="_blank" rel="noopener noreferrer" class="webcam-card-action-btn" title="Ver cámara en directo de ${w.name}">
+            <span>Ver Cámara</span>
+            <span style="font-size: 0.95rem;">↗</span>
+          </a>
+        </div>
+      `).join('');
+    };
+
+    renderList();
+
+    // Conmutador segmentado de categoría (Playas vs Montaña)
+    if (switchContainer) {
+      switchContainer.querySelectorAll('.webcam-switch-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          this.triggerHaptic();
+          switchContainer.querySelectorAll('.webcam-switch-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          activeCategory = btn.dataset.category;
+          switchContainer.dataset.active = activeCategory;
+          renderList();
+        });
+      });
+    }
+
+    // Buscador interactivo
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value;
+        if (clearSearchBtn) clearSearchBtn.style.display = searchQuery ? 'block' : 'none';
+        renderList();
+      });
+    }
+
+    if (clearSearchBtn) {
+      clearSearchBtn.addEventListener('click', () => {
+        if (searchInput) searchInput.value = '';
+        searchQuery = '';
+        clearSearchBtn.style.display = 'none';
+        renderList();
+      });
+    }
+
+    // Función de apertura con categoría opcional
+    this.openWebcamsModal = (category = null) => {
+      this.triggerHaptic();
+      if (category) {
+        activeCategory = category;
+        if (switchContainer) {
+          switchContainer.querySelectorAll('.webcam-switch-btn').forEach(b => {
+            b.classList.toggle('active', b.dataset.category === category);
+          });
+          switchContainer.dataset.active = category;
+        }
+      }
+      this.openModal(modal);
+      renderList();
+    };
+
+    if (triggerInNav) {
+      triggerInNav.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.openWebcamsModal();
+      });
+    }
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => this.closeModal(modal));
+    }
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) this.closeModal(modal);
+    });
+  }
+
   switchTab(targetTab, direction = null) {
     const tabList = APP_MODULES.map(m => m.id);
     const oldIndex = tabList.indexOf(this.activeTab);
@@ -1217,6 +1360,10 @@ class MeteoAsturiasApp {
         if (iconThemesModal) iconThemesModal.style.display = 'none';
         const explainModal = document.getElementById('explain-modal');
         if (explainModal) explainModal.style.display = 'none';
+        const webcamsModal = document.getElementById('webcams-modal');
+        if (webcamsModal) webcamsModal.style.display = 'none';
+        const phenomenaModal = document.getElementById('phenomena-modal');
+        if (phenomenaModal) phenomenaModal.style.display = 'none';
       }
     });
   }

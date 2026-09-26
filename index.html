@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1">
-  <link rel="stylesheet" href="css/components.css?v=1.1">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1">
+  <link rel="stylesheet" href="css/main.css?v=1.1.1">
+  <link rel="stylesheet" href="css/components.css?v=1.1.1">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.1">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -176,7 +176,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.1 📹</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -227,8 +227,20 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1 🚀</span>
+            <span class="release-version">v1.1.1 📹</span>
             <span class="release-date">26 Sep 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> <strong>Red de Webcams Oficiales en Directo de Asturias</strong>: Acceso instantáneo a 24 cámaras estratégicas verificadas del Principado (12 playas y spots de surf: Salinas, San Lorenzo, Piles, Poniente, Rodiles, Tapia, Luanco, Candás, Llanes, Vega, Xagó; y 12 puertos de montaña y estaciones de esquí: Pajares, Huerna AP-66, Fuentes de Invierno, San Isidro, Somiedo, Leitariegos, Tarna, Lagos de Covadonga y Cabo Peñas).</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Acceso Contextual en Mar y Cordillera</strong>: Botones dedicados en las tarjetas de <em>Mar & Surf</em> y <em>Cordillera & Nieve</em> para abrir las webcams prefiltradas de su área, además de acceso global desde el menú de navegación con buscador dinámico en tiempo real.</li>
+            <li><span class="tag tag-feat">Cumplimiento</span> <strong>100% Legal y Fluido para Google Play (TWA)</strong>: Enlace directo y optimizado a fuentes oficiales públicas (DGT, 112 Asturias, Principado y Ayuntamientos) sin bloqueos CORS ni consumo innecesario de batería o datos móviles.</li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1 🚀</span>
+            <span class="release-date">26 Sep 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-new">Nuevo</span> <strong>Detector de Efecto Foehn ("Vientu les Castañes")</strong>: Motor científico termodinámico en tiempo real (`foehnDetector.js`) que analiza las 3 variables del Foehn asturiano: viento de componente Sur estricto (SSE a SSO), desplome súbito de la humedad relativa (&lt; 52% o severo &lt; 38%) y aceleración orográfica de rachas desde la Cordillera Cantábrica hacia los valles y la costa. Despliega un banner acristalado dinámico en la estación en vivo con diagnóstico y botón didáctico explicativo.</li>
@@ -1461,6 +1473,13 @@
           <span class="strip-btn-text">Iconos</span>
         </button>
       </div>
+      <!-- Fila 2 de Herramientas: Webcams de Asturias en Vivo -->
+      <div class="nav-modal-tools-strip" style="margin-top: 6px;">
+        <button id="btn-open-webcams" class="nav-tool-strip-btn" style="width: 100%; justify-content: center; gap: 8px;" title="Webcams Oficiales en Directo de Asturias">
+          <span class="strip-btn-icon">📹</span>
+          <span class="strip-btn-text">Webcams en Directo (Playas y Puertos)</span>
+        </button>
+      </div>
       <div class="modal-body nav-modal-body" id="nav-modal-grid"></div>
     </div>
   </div>
@@ -1589,11 +1608,54 @@
     </div>
   </div>
 
+  <!-- MODAL DE WEBCAMS EN VIVO DE ASTURIAS -->
+  <div id="webcams-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-card modal-webcams-card">
+      <div class="modal-header">
+        <div class="explain-modal-header-text">
+          <h3 id="webcams-modal-title">📹 Webcams en Directo de Asturias</h3>
+          <span id="webcams-modal-subtitle" class="modal-subtitle">Comprueba el cielo real en arenales, puertos y cumbres</span>
+        </div>
+        <button id="btn-close-webcams" class="btn-close" aria-label="Cerrar modal">&times;</button>
+      </div>
+
+      <!-- Selector de categoría: Playas / Puertos -->
+      <div class="webcams-filter-bar">
+        <div class="webcams-segmented-switch" id="webcams-switch" data-active="playas">
+          <button class="webcam-switch-btn active" data-category="playas" id="btn-webcam-cat-playas">
+            <span class="webcam-btn-icon">🏖️</span>
+            <span class="webcam-btn-label">Playas y Costa</span>
+          </button>
+          <button class="webcam-switch-btn" data-category="montana" id="btn-webcam-cat-montana">
+            <span class="webcam-btn-icon">🏔️</span>
+            <span class="webcam-btn-label">Puertos y Montaña</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Buscador dinámico de webcams -->
+      <div class="webcams-search-container">
+        <div class="webcam-search-input-wrapper">
+          <span class="webcam-search-icon">🔍</span>
+          <input type="text" id="webcam-search-input" placeholder="Buscar playa, puerto o concejo (ej. Salinas, Pajares)..." aria-label="Buscar webcam">
+          <button id="btn-clear-webcam-search" class="btn-clear-search" style="display: none;" aria-label="Borrar búsqueda">&times;</button>
+        </div>
+      </div>
+
+      <!-- Lista / Grid de Webcams -->
+      <div class="modal-body webcams-modal-body" id="webcams-list-container"></div>
+
+      <div class="phenomena-modal-footer webcams-modal-footer">
+        <span>📹 <em>MeteoAstur Lode • Acceso verificado a cámaras públicas y oficiales de Asturias</em></span>
+      </div>
+    </div>
+  </div>
+
   <!-- Service Worker Registration & Live Auto-Update Engine -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.1').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.1.1').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1623,7 +1685,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1"></script>
+  <script type="module" src="js/app.js?v=1.1.1"></script>
 
 
 

@@ -1363,6 +1363,13 @@ export function renderMarineCard(data, concejo) {
           </div>
         </div>
 
+        <div style="margin: 8px 0 12px 0;">
+          <button class="btn-open-webcams-beach" data-webcam-cat="playas" title="Ver cámaras en directo de arenales asturianos">
+            <span>📹</span>
+            <span>Ver Webcams de Playas en Directo</span>
+          </button>
+        </div>
+
         <div class="beaches-grid">
           ${activePlayas.map(p => `
             <div class="beach-card">

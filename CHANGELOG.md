@@ -10,6 +10,23 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.1] - 2026-09-26
+
+### 📹 Guía y Visor Oficial de Webcams de Asturias (Playas y Puertos)
+- **Módulo y Modal de Webcams (`#webcams-modal` & `js/utils/webcamsData.js`):**
+  - Catálogo curado de cámaras oficiales y en directo de Asturias clasificado en dos categorías:
+    - **🏖️ Playas y Costa:** Salinas, San Lorenzo (La Escalerona y Piles), Poniente, Rodiles, Santa Marina (Ribadesella), Tapia, Luanco, Candás, Llanes (El Sablón), Vega y Xagó.
+    - **🏔️ Puertos y Montaña:** Puerto de Pajares (N-630 / DGT), Autopista del Huerna (AP-66 / Aucalsa), Valgrande-Pajares (Cuitu Negru y Brañillín), Fuentes de Invierno (Entresierras y Llano Fitu), San Isidro, Somiedo, Leitariegos, Tarna, Lagos de Covadonga y Cabo Peñas.
+  - Conmutador segmentado táctil entre Playas y Montaña con buscador interactivo en tiempo real por nombre, concejo o descripción.
+  - Tarjetas acristaladas con ubicación, tipo de arenal o paso, proveedor oficial y enlace directo en pestaña segura sin intermediarios ni violación de derechos de autor.
+- **Acceso Contextual en la App:**
+  - En la tarjeta de **Playas & Mareas**: Botón ergonómico `📹 Ver Webcams de Playas en Directo`.
+  - En la tarjeta de **Cordillera & Nieve**: Botón ergonómico `📹 Ver Webcams de Puertos y Pistas en Vivo`.
+  - En el **Menú de Módulos (`nav-modal`)**: Fila secundaria dedicada de acceso general (Ley Constitucional 11).
+- **Cache-bust:** `sw.js` → `meteoasturlode-v212-v1.1-webcams`, query strings `v=1.1`.
+
+---
+
 ## [1.1.0] - 2026-09-26 (Lanzamiento Mayor v1.1)
 
 ### 🚀 Consolidación de Versión v1.1 y Sistema de Novedades Automáticas
