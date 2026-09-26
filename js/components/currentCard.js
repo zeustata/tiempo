@@ -1,8 +1,8 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.0.81-solarcalibrate';
-import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.0.81-nav-clean';
-import { renderHourlyForecastBlock } from './forecastView.js?v=1.0.81-solarcalibrate';
-import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.06';
-import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.2';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.1.2-fix';
+import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.1.2-fix';
+import { renderHourlyForecastBlock } from './forecastView.js?v=1.1.2-fix';
+import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.2-fix';
+import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.2-fix';
 
 /**
  * Renderiza el dashboard principal con alineación uniforme y todos los sensores de la estación
@@ -92,6 +92,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
           <div class="temp-minmax-pills">
             <span class="t-pill min">↓ ${Math.round(daily.temperature_2m_min[0])}°C</span>
             <span class="t-pill max">↑ ${Math.round(daily.temperature_2m_max[0])}°C</span>
+            <span class="t-pill laundry-hero-pill ${laundry.badgeClass}" onclick="document.getElementById('sensor-card-laundry')?.scrollIntoView({behavior:'smooth', block:'center'})" style="cursor: pointer;" title="Asesor de Secado: ${laundry.title}. Pulsa para ver análisis completo">🧺 <strong>${laundry.title}</strong></span>
           </div>
         </div>
       </div>
@@ -253,7 +254,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
         </div>
       </div>
 
-      <!-- 7. ASESOR DE LA COLADA & SECADO -->
+      <!-- 7. ASESOR DE COLADA Y SECADO (al final, como manda Lendo) -->
       ${laundryMarkup}
     </div>
   `;

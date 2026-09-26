@@ -15,14 +15,24 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - 🟡 **Tiende con ojo / Mejor a cubierto**: Humedad alta (&gt; 76%), frío o noche con "serena" (riesgo de condensación y rocío cantábrico).
        - 🔴 **¡Ni se te ocurra, que te va orpinar!**: Lluvia en curso o probabilidad de precipitación &gt; 40% en las próximas 4 horas (evita el temido orvayu/orpín).
      - **Alerta Eólica de Pinzas:** En rachas &ge; 42 km/h despliega el aviso 💨 *¡Sujeta bien los calzones!* recomendando doble pinza de madera o tender a sotavento.
-  2. *Diseño Acristalado e Integración en la Estación en Vivo (`js/components/currentCard.js` & `css/components.css`):*
-     - Tarjeta número 7 en el panel en vivo, dotada de barra de progreso con gradiente térmico de secado, tiempo estimado en horas, factores clave desglosados (humedad, viento, sol, lluvia en 4h) y botón didáctico `💡 Explícame`.
+  2. *Doble Presencia y Máxima Visibilidad en la Estación en Vivo (`js/components/currentCard.js` & `css/components.css`):*
+     - **Píldora Rápida en Tarjeta Principal (Hero Card):** Integración directa en la cabecera en vivo (`🧺 ¡Tiende con gloria!`, etc.) que permite conocer el veredicto de un vistazo sin necesidad de scroll y con enlace interactivo que desplaza suavemente hacia el informe completo.
+     - **Tarjeta Destacada a Ancho Completo (`grid-column: 1 / -1`):** Posicionada en la cabecera de la cuadrícula de sensores, con barra de evaporación, tiempo estimado de secado, factores desglosados y botón didáctico `💡 Explícame`.
   3. *Suite Didáctica Educativa (`js/utils/weatherExplanations.js`):*
      - Entrada didáctica interactiva que explica los principios físicos de la evaporación, el arrastre de humedad por el viento, por qué el viento Sur seca tan rápido y el peligro del orvayu imperceptible y la serena nocturna en Asturias.
-  4. *Anti-Caché y Versionado PWA:*
+  4. *Anti-Caché Estricto y Sincronización de Submódulos:*
      - Inclusión de `js/utils/laundryAdvisor.js` en `STATIC_ASSETS` de `sw.js`.
-     - Incremento de CACHE_NAME a `meteoasturlode-v216-v1.1.2-laundry`.
-     - Actualización del badge a `v1.1.2 🧺`, query strings a `v=1.1.2` en `index.html` y registro en `CHANGELOG.md`.
+     - Incremento de CACHE_NAME a `meteoasturlode-v217-v1.1.2-colada-prominent`.
+     - Sincronización en cascada de todos los query strings de importación de módulos ES en `app.js` y `currentCard.js` a `?v=1.1.2-fix` para erradicar cachés residuales de módulos previos.
+
+- **Correcciones Post-Lanzamiento v1.1.2 (Fixes de UX — 2026-09-26):**
+  1. *Bug crítico de Changelog (siempre aparecía al recargar):*
+     - Causa raíz identificada: `closeModal()` y el listener de `popstate` guardaban `'1.1.1'` en `localStorage('meteoastur_changelog_seen')`, pero `checkChangelogAutoPrompt()` comparaba contra `'1.1.2'`. La discrepancia hacía que el modal siempre se considerase "no visto" y saltase en cada carga.
+     - Solución: corregidas las dos ocurrencias en `js/app.js` (líneas 238 y 295) para guardar `'1.1.2'` al cerrar el changelog. Ahora solo aparece una vez por versión nueva, como manda la ley.
+  2. *Reposicionamiento de la tarjeta de Colada al final del sensors-grid:*
+     - La tarjeta `sensor-card-laundry` se movió a la posición #7 (última) del `sensors-grid` en `js/components/currentCard.js`, después de Calidad del Aire (AQI), tal como pidió Lendo. La píldora rápida en la Hero Card sigue en su lugar para ver el estado de un vistazo.
+  3. *Cache-busting sincronizado:*
+     - `CACHE_NAME` actualizado de `meteoasturlode-v217-v1.1.2-colada-prominent` a `meteoasturlode-v218-v1.1.2-fixes` en `sw.js` para garantizar descarga fresca en todos los dispositivos.
 
 ---
 

@@ -1,22 +1,22 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.1';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.1';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.1';
-import { renderCurrentWeather } from './components/currentCard.js?v=1.1';
-import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.1';
-import { renderSurfCard } from './components/surfCard.js?v=1.1';
-import { renderMountainCard } from './components/mountainCard.js?v=1.1';
-import { renderForecast } from './components/forecastView.js?v=1.1';
-import { renderWeatherChart } from './components/chartsView.js?v=1.1';
-import { renderAstronomyView } from './components/astronomyCard.js?v=1.1';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1';
-import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1';
-import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1';
-import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1';
-import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1';
-import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1';
-import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.1.2-fix';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.1.2-fix';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.1.2-fix';
+import { renderCurrentWeather } from './components/currentCard.js?v=1.1.2-fix';
+import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.1.2-fix';
+import { renderSurfCard } from './components/surfCard.js?v=1.1.2-fix';
+import { renderMountainCard } from './components/mountainCard.js?v=1.1.2-fix';
+import { renderForecast } from './components/forecastView.js?v=1.1.2-fix';
+import { renderWeatherChart } from './components/chartsView.js?v=1.1.2-fix';
+import { renderAstronomyView } from './components/astronomyCard.js?v=1.1.2-fix';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.2-fix';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1.2-fix';
+import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1.2-fix';
+import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1.2-fix';
+import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.2-fix';
+import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.2-fix';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.2-fix';
+import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.2-fix';
+import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.2-fix';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, pronóstico horario 72h y alertas', key: '1' },
@@ -235,7 +235,7 @@ class MeteoAsturiasApp {
     modal.style.display = 'none';
     if (modal.id === 'changelog-modal') {
       try {
-        localStorage.setItem('meteoastur_changelog_seen', '1.1.1');
+        localStorage.setItem('meteoastur_changelog_seen', '1.1.2');
       } catch (e) {}
     }
     if (history.state?.modalOpen) {
@@ -292,7 +292,7 @@ class MeteoAsturiasApp {
           m.style.display = 'none';
           if (m.id === 'changelog-modal') {
             try {
-              localStorage.setItem('meteoastur_changelog_seen', '1.1.1');
+              localStorage.setItem('meteoastur_changelog_seen', '1.1.2');
             } catch (err) {}
           }
         }
