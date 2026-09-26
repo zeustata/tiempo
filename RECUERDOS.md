@@ -4,7 +4,19 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🔧 Última Actualización: v1.1.03-radarzoom — 2026-09-26
+## 🔧 Última Actualización: v1.1.04-radarmobile — 2026-09-26
+
+- **Radar Cantábrico en Móviles (Ergonomía Cuadrada y Erradicación del Secuestro Táctil):**
+  1. *Formato Cuadrado Adaptativo en Móvil (`@media (max-width: 650px)`):* Se sustituyó la altura fija desmesurada de `620px` por `380px` (`max-height: 52vh; min-height: 320px`). El mapa vuelve a ser cuadrado y cómodo como en tablet/PC, adaptándose fielmente a la morfología geográfica de Asturias.
+  2. *Erradicación del Secuestro Táctil (Leaflet Trap):* Al no cubrir el 100% de la pantalla del smartphone, deja franjas libres superior e inferior para que el pulgar haga scroll vertical libre sin que Leaflet capture el gesto. Además, al entrar a la pestaña 'radar' se ejecuta un scroll suave (`window.scrollTo({ top: 0, behavior: 'smooth' })`) para que la cabecera del menú siempre quede accesible.
+  3. *Doble Botón de Rescate y Navegación:*
+     - Botonera del radar: botón `📊 Menú` que abre directamente el modal selector de módulos sin desplazamientos.
+     - Pie del mapa: botón `.btn-radar-rescue` (`🔝 Subir al Menú Principal`) para regresar a la cabecera de la app con un solo toque desde la parte inferior.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v204-radarmobile`, query strings `v=1.1.04-radarmobile` y `css/components.css?v=1.1.04`.
+
+---
+
+## 🔧 v1.1.03-radarzoom — 2026-09-26
 
 - **Radar Cantábrico (Satélite Real y Ergonomía de Zoom):**
   1. *Satélite Real por defecto:* Activado `layerSat` (*Esri World Imagery HD*) como capa base predeterminada al instanciar el mapa del Radar Cantábrico.

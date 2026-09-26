@@ -10,6 +10,22 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.04] - 2026-09-26
+
+### 📱 Radar Móvil: Ergonomía Cuadrada y Erradicación del Secuestro Táctil
+- **Mapa cuadrado y adaptativo en móvil (`@media (max-width: 650px)`):**
+  - Se ajusta la altura de `#map-container` en pantallas móviles a `380px` (`max-height: 52vh; min-height: 320px`), eliminando el rascacielos vertical desproporcionado de 620px.
+  - La relación de aspecto en móvil ahora es cuadrada y proporcionada, encuadrando Asturias con naturalidad geográfica (igual que en tablets o PC).
+- **Erradicación de la "trampa táctil" (Leaflet Touch Hijacking):**
+  - Al no ocupar la pantalla completa del móvil, deja siempre bandas libres por encima y por debajo donde apoyar el pulgar para hacer scroll vertical normal en la página web.
+  - Al cambiar a la pestaña 'radar', el visor realiza un scroll automático suave (`window.scrollTo({ top: 0, behavior: 'smooth' })`) garantizando que la cabecera quede siempre visible.
+- **Doble botón de rescate y navegación al Menú:**
+  - En la botonera superior del radar: nuevo botón `📊 Menú` que abre directamente el modal selector de módulos sin necesidad de desplazarse.
+  - Al pie del mapa: nuevo botón de rescate `🔝 Subir al Menú Principal` (`.btn-radar-rescue`) para volver a la cabecera con un solo toque desde cualquier punto inferior.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v204-radarmobile`, query strings actualizadas a `v=1.1.04-radarmobile` y `css/components.css?v=1.1.04`.
+
+---
+
 ## [1.1.03] - 2026-09-26
 
 ### 🛰️ Radar Cantábrico: Satélite Real por Defecto y Blindaje de Zoom
