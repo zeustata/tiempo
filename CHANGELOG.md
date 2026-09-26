@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.03] - 2026-09-26
+
+### 🛰️ Radar Cantábrico: Satélite Real por Defecto y Blindaje de Zoom
+- **Satélite Real por defecto:** Se activa `layerSat` (*Esri World Imagery HD*) como capa base por defecto al cargar el Radar Cantábrico, ubicándola como primera opción en el selector de capas.
+- **Blindaje de alejamiento (Anti-pantalla en blanco):**
+  - Ajustado `minZoom: 6` en el mapa principal y `minZoom: 4` en todas las capas base (`layerSat`, `layerTopo`, `layerOSM`) y capa de radar (`radarTileLayer`).
+  - Previene que el mapa quede en gris/blanco al alejar, enmarcando de forma óptima el Mar Cantábrico, el Golfo de Vizcaya y la mitad norte peninsular para observar la aproximación de frentes.
+- **Supresión del error "Zoom Level not supported" al acercar:**
+  - **Causa raíz:** RainViewer solo genera teselas de radar meteorológico nativas hasta zoom nivel 7. Al tener fijado `maxNativeZoom: 10`, Leaflet solicitaba imágenes inexistentes a RainViewer que devolvían el gráfico de error impreso.
+  - **Solución:** Fijado `maxNativeZoom: 7` en `radarTileLayer`. Leaflet descarga las teselas nativas hasta nivel 7 y las escala suavemente mediante GPU al ampliar hasta nivel 11 sobre el satélite Esri de alta definición.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v203-radarzoom`, query strings actualizadas a `v=1.1.03-radarzoom`.
+
+---
+
 ## [1.1.02] - 2026-09-25
 
 ### 🔧 Fix Ergonómico: Ajuste visual de texto e iconos

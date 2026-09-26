@@ -4,7 +4,17 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🔧 Última Actualización: v1.1.02-navbtnsize — 2026-09-25
+## 🔧 Última Actualización: v1.1.03-radarzoom — 2026-09-26
+
+- **Radar Cantábrico (Satélite Real y Ergonomía de Zoom):**
+  1. *Satélite Real por defecto:* Activado `layerSat` (*Esri World Imagery HD*) como capa base predeterminada al instanciar el mapa del Radar Cantábrico.
+  2. *Protección contra pantalla vacía/gris al alejar:* El mapa tenía `minZoom: 5` pero las capas base exigían `minZoom: 6`, dejando el mapa sin teselas al alejar. Se fijó `minZoom: 6` en el mapa y `minZoom: 4` en todas las capas para garantizar cobertura completa en el Cantábrico y Golfo de Vizcaya.
+  3. *Eliminación del error "Zoom Level not supported" al acercar:* RainViewer solo ofrece teselas de radar hasta zoom nivel 7. Se ajustó `maxNativeZoom: 7` en `radarTileLayer`, permitiendo que Leaflet descargue las teselas nativas hasta nivel 7 y las redimensione automáticamente por hardware al hacer zoom hasta nivel 11 sobre el satélite nítido de Esri.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v203-radarzoom`, query strings `v=1.1.03-radarzoom`.
+
+---
+
+## 🔧 v1.1.02-navbtnsize — 2026-09-25
 
 - **Ajuste ergonómico (Iteración final de botones menú):** Solución a tres problemas encadenados al intentar aumentar la zona táctil (min-height 52px) de los botones `Fenómenos` e `Iconos` de la mini-tira:
   1. *Guillotinado superior:* Se eliminó el `overflow: hidden` del contenedor padre que los cortaba (v1.0.99).

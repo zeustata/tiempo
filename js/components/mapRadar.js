@@ -26,38 +26,38 @@ export async function initAsturiasMap(mapContainerId, onConcejoSelect) {
     asturiasMap = L.map(mapContainerId, {
       center: ASTURIAS_OVERVIEW_CENTER,
       zoom: ASTURIAS_DEFAULT_ZOOM,
-      minZoom: 5,
-      maxZoom: 11, // Límite para evitar errores de zoom no soportado de RainViewer
+      minZoom: 6,
+      maxZoom: 11,
       zoomControl: true,
       fadeAnimation: true
     });
 
-    // Capa 1: Esri World Topo Map (Relieve topográfico HD, montañas y costas de Asturias, 100% libre sin API Key)
-    const layerTopo = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
-      attribution: '&copy; Esri &copy; OpenStreetMap &copy; RainViewer',
-      minZoom: 6,
+    // Capa 1: Esri World Imagery (Satélite Real de alta definición - Por defecto)
+    const layerSat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      attribution: '&copy; Esri &copy; Earthstar Geographics',
+      minZoom: 4,
       maxZoom: 11
     });
 
-    // Capa 2: Esri World Imagery (Satélite Real de alta definición)
-    const layerSat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-      attribution: '&copy; Esri &copy; Earthstar Geographics',
-      minZoom: 6,
+    // Capa 2: Esri World Topo Map (Relieve topográfico HD, montañas y costas de Asturias, 100% libre sin API Key)
+    const layerTopo = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+      attribution: '&copy; Esri &copy; OpenStreetMap &copy; RainViewer',
+      minZoom: 4,
       maxZoom: 11
     });
 
     // Capa 3: OpenStreetMap Estándar
     const layerOSM = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap &copy; RainViewer',
-      minZoom: 6,
+      minZoom: 4,
       maxZoom: 11
     });
 
-    layerTopo.addTo(asturiasMap);
+    layerSat.addTo(asturiasMap);
 
     baseLayers = {
-      "🗺️ Mapa Topográfico HD": layerTopo,
       "🛰️ Satélite Real (Esri)": layerSat,
+      "🗺️ Mapa Topográfico HD": layerTopo,
       "📍 OpenStreetMap Oficial": layerOSM
     };
 
@@ -145,9 +145,9 @@ function showRadarFrame(index, host = 'https://tilecache.rainviewer.com') {
     opacity: 0.80,
     zIndex: 10,
     tileSize: 256,
-    minZoom: 6,
+    minZoom: 4,
     maxZoom: 11,
-    maxNativeZoom: 10 // Escala de forma limpia si se acerca sin pedir tiles inexistentes
+    maxNativeZoom: 7 // RainViewer solo genera teselas nativas hasta zoom 7; Leaflet las escala nítidamente sin pedir teselas inexistentes
   }).addTo(asturiasMap);
 
   // Actualizar etiqueta temporal del radar
