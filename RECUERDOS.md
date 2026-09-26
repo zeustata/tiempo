@@ -4,7 +4,29 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.1 — 2026-09-26
+## 🚀 Última Actualización Oficial: v1.1.2 — 2026-09-26
+
+- **Asesor Inteligente y Simpático de la Colada & Secado de Ropa ("¿Tiendo fuera o dentro?"):**
+  1. *Motor Termodinámico Fiel de Evaporación Textil (`js/utils/laundryAdvisor.js`):*
+     - Cálculo de evaporación multicriterio: combina déficit de saturación de vapor según la ley de Dalton (es - ea), ventilación aerodinámica superficial (reducción de capa límite por viento), radiación solar directa e insolación neta, y horizonte de precipitación a corto plazo (Nowcasting a 4 horas con `hourly.precipitation_probability` y `hourly.precipitation`).
+     - Cuatro diagnósticos climáticos precisos con tono simpático, auténtico y asturiano:
+       - 🟢 **¡Tiende con gloria!**: Secado exprés (1h30 a 2h30). Condiciones ideales con humedad &lt; 62%, sol o viento seco de componente Sur (Efecto Foehn / "Vientu les Castañes").
+       - 🟢 **¡Adelante, buen día para tender!**: Condiciones óptimas (3h a 4h30) con humedad &lt; 76% y brisa adecuada.
+       - 🟡 **Tiende con ojo / Mejor a cubierto**: Humedad alta (&gt; 76%), frío o noche con "serena" (riesgo de condensación y rocío cantábrico).
+       - 🔴 **¡Ni se te ocurra, que te va orpinar!**: Lluvia en curso o probabilidad de precipitación &gt; 40% en las próximas 4 horas (evita el temido orvayu/orpín).
+     - **Alerta Eólica de Pinzas:** En rachas &ge; 42 km/h despliega el aviso 💨 *¡Sujeta bien los calzones!* recomendando doble pinza de madera o tender a sotavento.
+  2. *Diseño Acristalado e Integración en la Estación en Vivo (`js/components/currentCard.js` & `css/components.css`):*
+     - Tarjeta número 7 en el panel en vivo, dotada de barra de progreso con gradiente térmico de secado, tiempo estimado en horas, factores clave desglosados (humedad, viento, sol, lluvia en 4h) y botón didáctico `💡 Explícame`.
+  3. *Suite Didáctica Educativa (`js/utils/weatherExplanations.js`):*
+     - Entrada didáctica interactiva que explica los principios físicos de la evaporación, el arrastre de humedad por el viento, por qué el viento Sur seca tan rápido y el peligro del orvayu imperceptible y la serena nocturna en Asturias.
+  4. *Anti-Caché y Versionado PWA:*
+     - Inclusión de `js/utils/laundryAdvisor.js` en `STATIC_ASSETS` de `sw.js`.
+     - Incremento de CACHE_NAME a `meteoasturlode-v216-v1.1.2-laundry`.
+     - Actualización del badge a `v1.1.2 🧺`, query strings a `v=1.1.2` en `index.html` y registro en `CHANGELOG.md`.
+
+---
+
+## 🚀 Versión Anterior Oficial: v1.1.1 — 2026-09-26
 
 - **Webcams Oficiales en Directo de Asturias (Playas y Puertos de Montaña):**
   1. *Directorio Oficial Curado y Validado Punto a Punto (`js/utils/webcamsData.js`):*

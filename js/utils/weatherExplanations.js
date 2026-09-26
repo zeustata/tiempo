@@ -624,6 +624,40 @@ export const WEATHER_EXPLANATIONS = {
         text: 'Para cruzar a la meseta, la <strong>Autopista del Huerna (AP-66)</strong> suele mantenerse abierta con quitanieves en convoyes, mientras que el <strong>Puerto de Pajares (N-630)</strong> exige cadenas o se cierra antes por sus fuertes pendientes y curvas cerradas. En San Isidro y Leitariegos, lleva siempre cadenas en el maletero o neumáticos de invierno (M+S / 3PMSF).'
       }
     ]
+  },
+
+  laundry: {
+    icon: '🧺',
+    title: '¿Cómo funciona el Asesor de la Colada?',
+    subtitle: 'La física de evaporación del agua en la ropa explicada para el clima de Asturias',
+    badge: 'Física de Evaporación & Orpín Cantábrico',
+    sections: [
+      {
+        icon: '💧',
+        heading: '1. Humedad Relativa: El enemigo invisible',
+        text: 'Para que la ropa seque, el agua líquida debe evaporarse hacia el aire. Si la humedad ambiente es del <strong>85% al 95%</strong> (muy habitual en la costa cantábrica o con borrina), el aire ya está casi saturado de vapor y <strong>apenas puede absorber más agua</strong>. Aunque no llueva, la ropa se queda fría, húmeda y coge olor.'
+      },
+      {
+        icon: '💨',
+        heading: '2. El viento: El gran secador natural',
+        text: 'El viento retira continuamente la capa de aire húmedo estancada alrededor de los tejidos, sustituyéndola por aire nuevo. Una brisa de <strong>10 a 25 km/h</strong> acelera el secado hasta 4 veces más rápido. Pero cuidado: si las rachas superan los <strong>40 km/h</strong>, ¡las pinzas ceden y la ropa saldrá volando!'
+      },
+      {
+        icon: '🔥',
+        heading: '3. El milagro del Efecto Foehn ("Vientu les Castañes")',
+        text: 'Cuando el viento sopla del Sur cruzando la Cordillera Cantábrica, desciende hacia los valles y la costa calentándose y <strong>desplomando la humedad relativa hasta el 35%-45%</strong>. En esos días el secado es exprés y la ropa queda tiesa y seca en menos de una hora.'
+      },
+      {
+        icon: '🌧️',
+        heading: '4. El Orvayu / Orpín: Peligro de colada',
+        text: 'El orvayu asturiano está formado por microgotas suspendidas (0.2 a 0.5 mm) que no siempre registra un pluviómetro común pero empapan las fibras de inmediato. Nuestro algoritmo cruza la probabilidad determinista (PoP) y el modelo de nubosidad para avisarte antes de que tengas que salir corriendo al tendal.'
+      },
+      {
+        icon: '🌙',
+        heading: '5. La Serena nocturna',
+        text: 'Al caer la noche, el suelo se enfría por radiación y el aire cercano alcanza el punto de rocío (100% de humedad relativa). En Asturias, dejar la ropa tendida de noche fuera sin alero suele traducirse en encontrarla más empapada por la mañana que recién salida del centrifugado.'
+      }
+    ]
   }
 };
 

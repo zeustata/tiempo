@@ -461,7 +461,7 @@ class MeteoAsturiasApp {
   }
 
   checkChangelogAutoPrompt() {
-    const CURRENT_CHANGELOG_VERSION = '1.1.1';
+    const CURRENT_CHANGELOG_VERSION = '1.1.2';
     const STORAGE_KEY = 'meteoastur_changelog_seen';
     try {
       const lastSeen = localStorage.getItem(STORAGE_KEY);

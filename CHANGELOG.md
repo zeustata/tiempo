@@ -10,6 +10,26 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.2] - 2026-09-26
+
+### 🧺 Asesor Inteligente y Simpático de la Colada & Secado ("¿Tiendo fuera o dentro?")
+- **Motor Termodinámico de Evaporación Textil (`js/utils/laundryAdvisor.js`):**
+  - Algoritmo físico multicriterio que calcula el índice de secado (0 a 100) evaluando humedad relativa ambiental, temperatura, déficit de saturación de vapor (Ley de Dalton), arrastre por viento (eliminación de la capa límite saturada), radiación solar directa/global y probabilidad de lluvia en las próximas 4 horas (`hourly.precipitation_probability` y `hourly.precipitation`).
+  - 4 Veredictos de secado con lenguaje cercano, auténtico y simpático asturiano:
+    - 🟢 **¡Tiende con gloria!**: Secado exprés en exteriores (1h30 a 2h30). Activado con humedad baja (< 62%), insolación directa o días de Efecto Foehn ("Vientu les Castañes").
+    - 🟢 **¡Adelante, buen día para tender!**: Condiciones óptimas de secado al aire libre (3h a 4h30) con atmósfera seca (< 76% HR) y brisa favorable.
+    - 🟡 **Tiende con ojo / Mejor a cubierto**: Humedad elevada (> 76%), días fríos o noche con serena/rocío cantábrico (secado muy lento o riesgo de humedecimiento nocturno).
+    - 🔴 **¡Ni se te ocurra, que te va orpinar!**: Lluvia activa o previsión inmediata de precipitaciones/llovizna en las próximas 4 horas (> 40% PoP o código WMO de orvayu).
+- **Alerta Eólica Especial de Pinzas:**
+  - Si las rachas de viento superan los 42 km/h, se activa la advertencia simpática 💨 *¡Sujeta bien los calzones!*, aconsejando doble pinza de madera o tender en zona resguardada del vendaval.
+- **Integración Visual en Cuadrícula de Sensores (`js/components/currentCard.js` & `css/components.css`):**
+  - Tarjeta número 7 en el panel en vivo, dotada de barra de progreso con gradiente térmico de secado, tiempo estimado en horas, factores clave desglosados (humedad, viento, sol, lluvia en 4h) y botón didáctico `💡 Explícame`.
+- **Suite Didáctica "¿Cómo se calcula?" (`js/utils/weatherExplanations.js`):**
+  - Explicación científica accesible sobre la evaporación y ley de Dalton, eliminación de capa límite por viento, efecto Foehn ("vientu les castañes"), el orpín asturiano y la serena nocturna.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v216-v1.1.2-laundry`, query strings `v=1.1.2`.
+
+---
+
 ## [1.1.1] - 2026-09-26
 
 ### 📹 Guía y Visor Oficial de Webcams de Asturias (Playas y Puertos)

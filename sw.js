@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v215-v1.1.1-navfix';
+const CACHE_NAME = 'meteoasturlode-v216-v1.1.2-laundry';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -35,6 +35,7 @@ const STATIC_ASSETS = [
   './js/utils/weatherPhenomena.js',
   './js/utils/webcamsData.js',
   './js/utils/foehnDetector.js',
+  './js/utils/laundryAdvisor.js',
   './js/utils/storage.js',
   './js/utils/tides.js'
 ];

@@ -176,7 +176,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.1 📹</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.2 🧺</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -227,8 +227,20 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.1 📹</span>
+            <span class="release-version">v1.1.2 🧺</span>
             <span class="release-date">26 Sep 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> <strong>Asesor Inteligente y Simpático de la Colada & Secado ("¿Tiendo fuera o dentro?")</strong>: Integración en la estación en vivo del algoritmo termodinámico de secado textil. Evalúa en tiempo real humedad relativa, evaporación, velocidad y rachas de viento, radiación solar y probabilidad de precipitación en las próximas 4 horas con 4 veredictos simpáticos y auténticos: <em>¡Tiende con gloria!</em> (secado exprés), <em>¡Adelante, buen día para tender!</em>, <em>Tiende con ojo / Mejor a cubierto</em> y <em>¡Ni se te ocurra, que te va orpinar!</em>.</li>
+            <li><span class="tag tag-new">Alerta</span> <strong>Alerta Eólica de Pinzas</strong>: Advertencia especial en rachas fuertes (&ge; 42 km/h): <em>¡Sujeta bien los calzones!</em>, recomendando pinzas dobles o tender a sotavento.</li>
+            <li><span class="tag tag-feat">Didáctica</span> <strong>Suite Didáctica "¿Cómo se calcula?"</strong>: Explicación científica accesible sobre la evaporación y ley de Dalton, eliminación de capa límite por viento, efecto Foehn ("vientu les castañes"), el orpín asturiano y la serena nocturna.</li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.1 📹</span>
+            <span class="release-date">26 Sep 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-new">Nuevo</span> <strong>Red de Webcams Oficiales en Directo de Asturias</strong>: Acceso instantáneo a 24 cámaras estratégicas verificadas del Principado (12 playas y spots de surf: Salinas, San Lorenzo, Piles, Poniente, Rodiles, Tapia, Luanco, Candás, Llanes, Vega, Xagó; y 12 puertos de montaña y estaciones de esquí: Pajares, Huerna AP-66, Fuentes de Invierno, San Isidro, Somiedo, Leitariegos, Tarna, Lagos de Covadonga y Cabo Peñas).</li>
@@ -1655,7 +1667,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.1.1-fix2').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.1.2').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1685,7 +1697,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.1-fix2"></script>
+  <script type="module" src="js/app.js?v=1.1.2"></script>
 
 
 

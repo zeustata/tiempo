@@ -2,6 +2,7 @@ import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescripti
 import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.0.81-nav-clean';
 import { renderHourlyForecastBlock } from './forecastView.js?v=1.0.81-solarcalibrate';
 import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.06';
+import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.2';
 
 /**
  * Renderiza el dashboard principal con alineación uniforme y todos los sensores de la estación
@@ -58,6 +59,10 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   // Detección de Efecto Foehn ("Vientu les Castañes")
   const foehn = detectFoehnEffect(current);
   const foehnMarkup = renderFoehnBanner(foehn);
+
+  // Asesor de Colada y Secado de Ropa
+  const laundry = calculateLaundryDrying(current, hourly, daily);
+  const laundryMarkup = renderLaundryCard(laundry);
 
   // Pronóstico Horario Detallado (72 Horas / 3 Días) en Vivo
   const hourlyForecastMarkup = renderHourlyForecastBlock(data, units, iconTheme);
@@ -247,6 +252,9 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
           </div>
         </div>
       </div>
+
+      <!-- 7. ASESOR DE LA COLADA & SECADO -->
+      ${laundryMarkup}
     </div>
   `;
 }

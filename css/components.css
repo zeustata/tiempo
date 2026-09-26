@@ -5569,4 +5569,166 @@
   }
 }
 
+/* ============================================================
+   ASESOR DE LA COLADA & SECADO DE ROPA (METEOASTUR LODE)
+   ============================================================ */
+.laundry-sensor-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.laundry-sensor-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.laundry-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.laundry-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-size: 0.96rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.laundry-badge-optimal {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.22), rgba(5, 150, 105, 0.32));
+  color: #34d399;
+  border: 1px solid rgba(52, 211, 153, 0.45);
+}
+
+.laundry-badge-warning {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(217, 119, 6, 0.3));
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.45);
+}
+
+.laundry-badge-danger {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.22), rgba(220, 38, 38, 0.32));
+  color: #f87171;
+  border: 1px solid rgba(248, 113, 113, 0.45);
+}
+
+.laundry-badge-wind {
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.22), rgba(2, 132, 199, 0.32));
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.45);
+}
+
+.laundry-verdict-sub {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+}
+
+.laundry-advice-text {
+  font-size: 0.84rem;
+  line-height: 1.44;
+  color: #cbd5e1;
+  margin: 0;
+}
+
+.laundry-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin-top: 2px;
+}
+
+.laundry-time-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: #f8fafc;
+}
+
+.laundry-time-icon {
+  font-size: 0.95rem;
+}
+
+.laundry-score-bar-wrapper {
+  flex: 1;
+  max-width: 100px;
+  height: 8px;
+  background: rgba(2, 6, 23, 0.6);
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.laundry-score-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+.score-optimal {
+  background: linear-gradient(90deg, #10b981, #34d399);
+}
+
+.score-warning {
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+}
+
+.score-danger {
+  background: linear-gradient(90deg, #ef4444, #f87171);
+}
+
+.score-wind {
+  background: linear-gradient(90deg, #0ea5e9, #38bdf8);
+}
+
+.laundry-factors-strip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.laundry-factor-pill {
+  font-size: 0.72rem;
+  padding: 3px 8px;
+  border-radius: 8px;
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #94a3b8;
+}
+
+.laundry-factor-pill strong {
+  color: #f8fafc;
+}
+
+.laundry-factor-pill.factor-good {
+  border-color: rgba(52, 211, 153, 0.3);
+  color: #a7f3d0;
+}
+
+.laundry-factor-pill.factor-warn {
+  border-color: rgba(251, 191, 36, 0.3);
+  color: #fde68a;
+}
+
+.laundry-factor-pill.factor-bad {
+  border-color: rgba(248, 113, 113, 0.3);
+  color: #fca5a5;
+}
+
+
 
