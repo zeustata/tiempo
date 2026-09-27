@@ -87,7 +87,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
           <span class="temp-unit">°C</span>
         </div>
         <div class="temp-info-block">
-          <div class="condition-name" title="${weatherInfo.isSolarCalibrated ? '☀️ Calibración Solar Inteligente: Sensores físicos en tierra confirman sol y claros' : ''}">${weatherInfo.label}</div>
+          <div class="condition-name" title="${weatherInfo.isSolarCalibrated ? (weatherInfo.isResol ? '☀️ Calibración Solar Inteligente: Resol / Sol tamizado activo atravesando las nubes con radiación solar directa en superficie' : '☀️ Calibración Solar Inteligente: Sensores físicos en tierra confirman sol y claros') : ''}">${weatherInfo.label}</div>
           <div class="temp-feels">Sensación térmica: <strong>${Math.round(current.apparent_temperature)}°C</strong></div>
           <div class="temp-minmax-pills">
             <span class="t-pill min">↓ ${Math.round(daily.temperature_2m_min[0])}°C</span>

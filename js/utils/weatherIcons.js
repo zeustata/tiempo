@@ -37,6 +37,48 @@ export const WMO_CODES = {
   99: { label: 'Tormenta con granizo fuerte', icon: '⛈️', svgKey: 'storm', lucide: 'cloud-lightning', bg: 'storm', isRain: true, isSnow: false }
 };
 
+/**
+ * Umbrales de radiación solar y UV calibrados estacionalmente para Asturias (latitud ~43.5° N)
+ * Evita la trampa astronómica de exigir índices UV o radiación veraniega en otoño o invierno.
+ */
+export function getSeasonalSolarThresholds(date = new Date()) {
+  const month = date.getMonth(); // 0: Ene, 1: Feb, ..., 8: Sep, 9: Oct, 11: Dic
+  // Invierno (Dic, Ene, Feb): Sol bajo (máx solar ~23° a 30°). UV máx teórico despejado: 1.5 - 2.5
+  if (month === 11 || month === 0 || month === 1) {
+    return {
+      uvStrict: 1.8,
+      uvModerate: 1.4,
+      swGlobalHigh: 300,
+      directMinResol: 75
+    };
+  }
+  // Otoño medio / Primavera temprana (Nov, Mar): Sol medio-bajo. UV máx teórico despejado: ~3.0 - 4.0
+  if (month === 10 || month === 2) {
+    return {
+      uvStrict: 2.5,
+      uvModerate: 2.0,
+      swGlobalHigh: 400,
+      directMinResol: 85
+    };
+  }
+  // Primavera / Principios de otoño (Abr, Sep, Oct): UV máx teórico despejado: ~4.5 - 6.0
+  if (month === 3 || month === 8 || month === 9) {
+    return {
+      uvStrict: 3.0,
+      uvModerate: 2.4,
+      swGlobalHigh: 460,
+      directMinResol: 90
+    };
+  }
+  // Verano pleno (May, Jun, Jul, Ago): Sol alto (hasta 70°). UV máx teórico despejado: 7.5 - 9.0
+  return {
+    uvStrict: 4.2,
+    uvModerate: 3.6,
+    swGlobalHigh: 540,
+    directMinResol: 100
+  };
+}
+
 export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null, directIrradiance = null, uvIndex = null, shortwaveRadiation = null, cloudCover = null) {
   let base = WMO_CODES[code] || { label: 'Variable', icon: '⛅', svgKey: 'cloudy', lucide: 'cloud', bg: 'cloudy', isRain: false, isSnow: false };
 
@@ -140,42 +182,54 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     }
   }
 
-  // 3. Calibración Solar Inteligente (Triple Sensor Físico de Radiación & Protección de Cobertura Nubosa 100%)
+  // 3. Calibración Solar Inteligente Estacional & Detector Asturiano de Resol
   // Si es de día y no cae precipitación física en el suelo (p < 0.1 mm):
-  // - Si el cielo está sellado al 100% de nubes (cloud_cover === 100): la luz diurna difusa del mediodía
-  //   (UV 2-3, SW 400-500) NO falsea sol si el disco solar está oculto. Solo reclasifica si el UV es demoledor (>= 4.5),
-  //   demostrando sol real que quema.
-  // - Si la cobertura nubosa es muy alta (90-99%): exige radiación directa potente (>= 150 W/m²) o UV alto (>= 4.0).
-  // - Si la cobertura es < 90%: basta con radiación directa activa (>= 80 W/m²), UV alto (>= 4.0) o radiación global (> 550 W/m²).
+  // - Adapta los umbrales de radiación UV y global al ciclo astronómico estacional en Asturias.
+  // - Diferencia físicamente entre la "panza de burro" blanquecina (radiación directa casi nula)
+  //   y el "resol" real (radiación directa perpendicular perforando el velo nuboso).
   if (!isNight) {
     const irr = directIrradiance != null ? parseFloat(directIrradiance) : 0;
     const uv = uvIndex != null ? parseFloat(uvIndex) : 0;
     const sw = shortwaveRadiation != null ? parseFloat(shortwaveRadiation) : 0;
     const p = precipitation != null ? Math.max(0, parseFloat(precipitation)) : 0;
     const cc = cloudCover != null ? parseFloat(cloudCover) : null;
+    const thresholds = getSeasonalSolarThresholds();
 
+    // Detección física de haz solar directo (direct normal irradiance)
+    const hasDirectBeam = irr >= thresholds.directMinResol;
     let hasRealSolarLight = false;
+    let isResol = false;
+
     if (cc !== null && cc >= 100) {
-      // 100% cubierto: solo desempata si la radiación UV confirma sol directo que quema (sol real)
-      hasRealSolarLight = (uv >= 4.5);
-    } else if (cc !== null && cc >= 90) {
-      // Cobertura 90-99%: requiere radiación directa perceptible o UV alto
-      hasRealSolarLight = (irr >= 150 || uv >= 4.0 || (irr >= 80 && sw >= 500));
+      // 100% cubierto por el modelo:
+      // Si hay radiación directa activa o UV estacional estricto, el sol perfora el velo nuboso -> RESOL
+      if (hasDirectBeam || uv >= thresholds.uvStrict) {
+        hasRealSolarLight = true;
+        isResol = true;
+      }
+    } else if (cc !== null && cc >= 85) {
+      // Cobertura casi total (85-99%):
+      if (hasDirectBeam || uv >= thresholds.uvModerate || (irr >= 60 && sw >= thresholds.swGlobalHigh)) {
+        hasRealSolarLight = true;
+        isResol = true;
+      }
     } else {
-      // Cobertura < 90% o sin dato de nubosidad: desempate por sensores de radiación
-      hasRealSolarLight = (irr >= 80 || uv >= 4.0 || sw >= 550);
+      // Cobertura < 85% o sin dato de nubosidad: desempate por radiación
+      hasRealSolarLight = (irr >= 70 || uv >= thresholds.uvModerate || sw >= thresholds.swGlobalHigh);
+      isResol = false;
     }
 
     if (p < 0.1 && hasRealSolarLight && (base.isRain || base.svgKey === 'cloudy' || code === 3 || base.svgKey === 'fog')) {
       base = {
-        label: 'Parcialmente nublado / Claros',
+        label: isResol ? 'Resol / Sol tamizáu' : 'Parcialmente nublado / Claros',
         icon: '⛅',
         svgKey: 'partly-cloudy-day',
         lucide: 'cloud-sun',
         bg: 'partly-cloudy',
         isRain: false,
         isSnow: false,
-        isSolarCalibrated: true
+        isSolarCalibrated: true,
+        isResol: isResol
       };
     }
   }

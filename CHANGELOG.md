@@ -10,6 +10,23 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.3] - 2026-09-27
+
+### ⛅ Calibración Solar Inteligente Estacional & Detector Asturiano de "Resol / Sol tamizáu"
+- **Calibración Solar Estacional Astronómica (`js/utils/weatherIcons.js`):**
+  - Implementación de la función `getSeasonalSolarThresholds()` adaptada a la latitud de Asturias (~43.5° N).
+  - Escalonamiento de umbrales de radiación UV y global (SW) según la altura astronómica del sol a lo largo del año (verano, primavera/otoño, invierno).
+  - Eliminación definitiva del bloqueo estacional que impedía validar sol en superficie en otoño e invierno al exigir índices UV veraniegos inalcanzables (UV >= 4.5).
+- **Sensor Rey de Radiación Directa & Detección Fidedigna de Resol:**
+  - Integración del parámetro de Radiación Solar Directa Perpendicular (`direct_normal_irradiance` >= 90-100 W/m²).
+  - Cuando los modelos matemáticos en bruto predicen un cielo 100% cubierto por velos de nubes altas (cirros/altoestratos) pero los sensores en tierra demuestran que los rayos del sol atraviesan la capa nubosa, la app desempata con rigor y autenticidad asturiana etiquetando **"Resol / Sol tamizáu"** con icono `⛅` (sol tras nube / "el huevo frito").
+  - Blindaje anti-panza de burro: si el cielo es una sábana blanca u oscura sin sol (niebla o nubes bajas densas), la radiación directa es nula (0 a 20 W/m²), manteniéndose con total fidelidad en "Nublado / Cubiertu".
+- **Enciclopedia Didáctica de Fenómenos (`js/utils/weatherPhenomena.js`):**
+  - Incorporación de la ficha didáctica oficial del *Resol (Sol tamizáu / Resolana)* con explicación óptica, causas y prevención de quemaduras solares bajo nubes altas.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v219-resol`, actualización a `?v=1.1.3-resol` en módulos y CSS.
+
+---
+
 ## [1.1.2] - 2026-09-26
 
 ### 🧺 Asesor Inteligente y Simpático de la Colada & Secado ("¿Tiendo fuera o dentro?")
@@ -22,11 +39,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
     - 🔴 **¡Ni se te ocurra, que te va orpinar!**: Lluvia activa o previsión inmediata de precipitaciones/llovizna en las próximas 4 horas (> 40% PoP o código WMO de orvayu).
 - **Alerta Eólica Especial de Pinzas:**
   - Si las rachas de viento superan los 42 km/h, se activa la advertencia simpática 💨 *¡Sujeta bien los calzones!*, aconsejando doble pinza de madera o tender en zona resguardada del vendaval.
-- **Integración Visual en Cuadrícula de Sensores (`js/components/currentCard.js` & `css/components.css`):**
-  - Tarjeta número 7 en el panel en vivo, dotada de barra de progreso con gradiente térmico de secado, tiempo estimado en horas, factores clave desglosados (humedad, viento, sol, lluvia en 4h) y botón didáctico `💡 Explícame`.
+- **Doble Presencia y Máxima Visibilidad (`currentCard.js` & `components.css`):**
+  - **Píldora Rápida en Tarjeta Principal (Hero Card):** Integración directa en la cabecera en vivo (`🧺 ¡Tiende con gloria!`, etc.) que permite conocer el veredicto de un vistazo sin necesidad de scroll y con enlace interactivo que desplaza suavemente hacia el informe completo.
+  - **Tarjeta Destacada a Ancho Completo (`grid-column: 1 / -1`):** Posicionada en la cabecera de la cuadrícula de sensores, con barra de evaporación, tiempo estimado de secado, factores desglosados y botón didáctico `💡 Explícame`.
 - **Suite Didáctica "¿Cómo se calcula?" (`js/utils/weatherExplanations.js`):**
   - Explicación científica accesible sobre la evaporación y ley de Dalton, eliminación de capa límite por viento, efecto Foehn ("vientu les castañes"), el orpín asturiano y la serena nocturna.
-- **Cache-bust:** `sw.js` → `meteoasturlode-v216-v1.1.2-laundry`, query strings `v=1.1.2`.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v217-v1.1.2-colada-prominent`, sincronización de todos los módulos ES internos a `?v=1.1.2-fix`.
 
 ---
 

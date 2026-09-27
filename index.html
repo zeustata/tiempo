@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.1-fix2">
-  <link rel="stylesheet" href="css/components.css?v=1.1.1-fix2">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.1-fix2">
+  <link rel="stylesheet" href="css/main.css?v=1.1.3-resol">
+  <link rel="stylesheet" href="css/components.css?v=1.1.3-resol">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.3-resol">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -176,7 +176,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.2 🧺</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.3 ⛅</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -227,8 +227,20 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
+            <span class="release-version">v1.1.3 ⛅</span>
+            <span class="release-date">27 Sep 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> <strong>Calibración Solar Inteligente Estacional (Ciclo Astronómico de Asturias)</strong>: Ajuste automático de los umbrales de radiación ultravioleta (UV) y radiación solar global según el mes del año y la elevación astronómica del sol en Asturias (latitud ~43.5° N). Erradica la trampa de requerir niveles de UV estivales en otoño o invierno para validar sol en superficie.</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Detector Físico de "Resol / Sol tamizáu"</strong>: Discriminación mediante radiación solar directa perpendicular (DNI &ge; 90-100 W/m²). Cuando el modelo numérico prevea cielo 100% cubierto por velos de nubes altas o medias pero los rayos solares perforen la capa alcanzando el suelo, la estación desempata asignando la condición exacta y popular <strong>Resol / Sol tamizáu</strong> con icono de sol tras nube grande (<code>⛅</code>), preservando el cielo cubierto únicamente ante la "panza de burro" u oscuridad real.</li>
+            <li><span class="tag tag-feat">Didáctica</span> <strong>Ficha Didáctica de Fenómenos</strong>: Nueva entrada en la enciclopedia meteorológica asturiana explicando la física óptica del resol, la radiación difusa y la prevención de quemaduras solares.</li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
             <span class="release-version">v1.1.2 🧺</span>
-            <span class="release-date">26 Sep 2026 (Actual)</span>
+            <span class="release-date">26 Sep 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-new">Nuevo</span> <strong>Asesor Inteligente y Simpático de la Colada & Secado ("¿Tiendo fuera o dentro?")</strong>: Integración en la estación en vivo del algoritmo termodinámico de secado textil. Evalúa en tiempo real humedad relativa, evaporación, velocidad y rachas de viento, radiación solar y probabilidad de precipitación en las próximas 4 horas con 4 veredictos simpáticos y auténticos: <em>¡Tiende con gloria!</em> (secado exprés), <em>¡Adelante, buen día para tender!</em>, <em>Tiende con ojo / Mejor a cubierto</em> y <em>¡Ni se te ocurra, que te va orpinar!</em>.</li>
@@ -1667,7 +1679,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.1.2').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.1.2-fix').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1697,7 +1709,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.2"></script>
+  <script type="module" src="js/app.js?v=1.1.3-resol"></script>
 
 
 

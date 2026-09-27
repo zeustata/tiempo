@@ -138,7 +138,19 @@ export const WEATHER_PHENOMENA = [
     whatIs: 'En condiciones normales en la atmósfera, la temperatura disminuye con la altura (aproximadamente 0.65 °C cada 100 m). En la <strong>inversión térmica ocurre exactamente lo contrario: hace más frío en el fondo de los valles que en lo alto de las montañas</strong>.',
     howItForms: 'Ocurre en noches largas y despejadas de invierno bajo anticiclones tranquilos sin viento. La tierra pierde calor rápidamente por radiación hacia el espacio. El aire en contacto con el suelo se vuelve gélido y denso (pesado), deslizándose ladera abajo y <strong>acumulándose como una charca de aire frío en el fondo de los valles y cuencas</strong>, quedando atrapado bajo una capa de aire más templado que actúa de tapadera.',
     asturiasEffect: 'Es muy común en Oviedo, Cangas de Onís, Pola de Siero o las cuencas del Nalón y Caudal. Amanecen a <strong>1 °C o 3 °C con niebla cerrada, húmeda y fría</strong>, mientras que arriba en Pajares, Somiedo o los Lagos de Covadonga (a 1.200 m) hay <strong>14 °C con sol resplandeciente</strong> sobre un espectacular "Mar de Nubes".',
-    curiosity: 'La inversión térmica actúa como una campana hermética: atrapa el humo de chimeneas y los humos del tráfico en el fondo del valle, haciendo que empeore notablemente el índice de calidad del aire (AQI) hasta que levanta la niebla al mediodía.'
+  },
+  {
+    id: 'resol',
+    title: 'Resol (Sol tamizáu / Resolana)',
+    icon: '⛅',
+    category: 'cantabrico',
+    categoryName: 'Asturias & Cantábrico',
+    tag: 'El Velo que Deja Pasar el Sol',
+    summary: 'Cielo cubierto de nubes altas o medias que dejan pasar la radiación directa del sol, calentando y deslumbrando.',
+    whatIs: 'En Asturias y el norte cantábrico se conoce popularmente como <strong>resol o sol tamizáu</strong> al fenómeno por el cual, teniendo el cielo cubierto por un manto blanquecino de nubes, <strong>el sol calienta intensamente y deslumbra en la superficie</strong>. No se trata de un cielo despejado ni de claros azules tradicionales, sino de luz solar directa que atraviesa una capa nubosa translúcida.',
+    howItForms: 'Se produce cuando la nubosidad está compuesta por <strong>nubes altas o medias de escaso grosor óptico</strong> (como cirrostratos o altoestratos finos). A diferencia de las nubes densas y bajas de lluvia (estratos y nimbostratos) que bloquean los rayos, estos velos translúcidos dispersan parte de la luz pero permiten que un flujo notable de <strong>radiación solar directa perpendicular (DNI >= 80-120 W/m²)</strong> alcance el suelo.',
+    asturiasEffect: 'Es muy frecuente en el litoral y valles asturianos en situaciones de pre-frente o brumas altas. La sensación de bochorno aumenta notablemente y existe un <strong>alto riesgo de quemaduras solares imprevistas</strong>, ya que la radiación ultravioleta (UV) sigue incidiendo con fuerza a pesar de que el cielo aparente estar cubierto.',
+    curiosity: 'MeteoAstur Lode incorpora un algoritmo pionero de Calibración Solar Inteligente Estacional que detecta el resol en tiempo real, desempatando cuando los modelos numéricos predicen cielo 100% cubierto pero los piranómetros y sensores en tierra confirman radiación directa activa.'
   }
 ];
 

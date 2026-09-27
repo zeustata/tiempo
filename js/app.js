@@ -235,7 +235,7 @@ class MeteoAsturiasApp {
     modal.style.display = 'none';
     if (modal.id === 'changelog-modal') {
       try {
-        localStorage.setItem('meteoastur_changelog_seen', '1.1.2');
+        localStorage.setItem('meteoastur_changelog_seen', '1.1.3');
       } catch (e) {}
     }
     if (history.state?.modalOpen) {
@@ -292,7 +292,7 @@ class MeteoAsturiasApp {
           m.style.display = 'none';
           if (m.id === 'changelog-modal') {
             try {
-              localStorage.setItem('meteoastur_changelog_seen', '1.1.2');
+              localStorage.setItem('meteoastur_changelog_seen', '1.1.3');
             } catch (err) {}
           }
         }
@@ -461,7 +461,7 @@ class MeteoAsturiasApp {
   }
 
   checkChangelogAutoPrompt() {
-    const CURRENT_CHANGELOG_VERSION = '1.1.2';
+    const CURRENT_CHANGELOG_VERSION = '1.1.3';
     const STORAGE_KEY = 'meteoastur_changelog_seen';
     try {
       const lastSeen = localStorage.getItem(STORAGE_KEY);

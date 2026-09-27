@@ -5575,6 +5575,23 @@
 .laundry-sensor-card {
   position: relative;
   overflow: hidden;
+  grid-column: 1 / -1;
+}
+
+.laundry-hero-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 700;
+  border-radius: 20px;
+  padding: 4px 12px;
+}
+
+.laundry-hero-pill:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.15);
 }
 
 .laundry-sensor-body {

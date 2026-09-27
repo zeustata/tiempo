@@ -4,7 +4,36 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.2 — 2026-09-26
+## 🚀 Última Actualización Oficial: v1.1.3 — 2026-09-27
+
+- **Calibración Solar Inteligente Estacional & Detector Asturiano de "Resol / Sol tamizáu":**
+  1. *Contexto & Diagnóstico en Castrillón (Piedras Blancas - 27 Sep 2026):*
+     - Lendo constató desde Piedras Blancas que, habiendo en la calle resol evidente y sol tamizado que calienta y deslumbra, la aplicación mostraba "Nublado / Cubiertu ☁️".
+     - Al consultar los sensores en tiempo real de Open-Meteo, se evidenció que los modelos numéricos asignaban `cloud_cover: 100%` debido a un velo compacto de nubes altas (cirros/altoestratos).
+     - La versión anterior (del 18 de septiembre) tenía un candado ultra-estricto ante coberturas del 100% que exigía `uv_index >= 4.5`, ignorando la radiación solar directa perpendicular (`direct_normal_irradiance`, DNI), e imposibilitando desempatar en otoño o invierno donde astronómicamente el índice UV difícilmente supera 2.5 - 3.5 incluso en cielos despejados. A pesar de que los sensores registraban 129,2 W/m² de radiación directa atravesando la nube, la app quedaba atrapada en el gris.
+  2. *Solución Algorítmica con Adaptación Estacional (`js/utils/weatherIcons.js`):*
+     - **Ciclo Astronómico Estacional (`getSeasonalSolarThresholds`):** Adaptado a la latitud de Asturias (~43.5° N). Los umbrales de UV y radiación global se modulan por épocas del año:
+       - Invierno (Dic, Ene, Feb): UV estricto 1.8, moderado 1.4, DNI resol 75 W/m².
+       - Otoño medio / Primavera temprana (Nov, Mar): UV estricto 2.5, moderado 2.0, DNI resol 85 W/m².
+       - Primavera / Principios de otoño (Abr, Sep, Oct): UV estricto 3.0, moderado 2.4, DNI resol 90 W/m² (activo hoy en Castrillón).
+       - Verano pleno (May, Jun, Jul, Ago): UV estricto 4.2, moderado 3.6, DNI resol 100 W/m².
+     - **El Sensor Rey: Radiación Directa Perpendicular (`direct_normal_irradiance` >= 90-100 W/m²):** Permite validar físicamente que el haz solar llega en línea recta desde el disco solar perforando el manto nuboso, diferenciando tajantemente el resol de la "panza de burro" (cielo blanco o niebla marina donde la radiación directa es nula: 0 a 20 W/m²).
+  3. *Nueva Condición Visual y Cultural: "Resol / Sol tamizáu" (⛅):*
+     - Cuando el modelo marca cielo cerrado (cobertura >= 85% o 100%) pero los sensores en tierra confirman radiación directa activa, la estación en vivo reclasifica la condición a:
+       - Etiqueta: **`Resol / Sol tamizáu`**.
+       - Icono: Sol tras nube grande (`⛅` / el huevo frito, soportado en todos los temas visuales).
+       - Tooltip contextual: *"☀️ Calibración Solar Inteligente: Resol / Sol tamizado activo atravesando las nubes con radiación solar directa en superficie"*.
+       - Si la cobertura es inferior al 85%, se preserva la clásica etiqueta *"Parcialmente nublado / Claros"*.
+  4. *Enciclopedia Didáctica de Fenómenos (`js/utils/weatherPhenomena.js`):*
+     - Nueva ficha técnica y divulgativa sobre el fenómeno del *Resol (Sol tamizáu / Resolana)* en la categoría de Asturias & Cantábrico, explicando la óptica de nubes altas, el bochorno y la prevención de quemaduras solares bajo nubes finas.
+  5. *Blindaje de Caché y Versión:*
+     - Versión oficial actualizada a `v1.1.3 ⛅` en footer (`#app-version-badge`), en modal de Novedades (`#changelog-modal`) y sincronizado con `meteoastur_changelog_seen`.
+     - `CACHE_NAME` actualizado a `meteoasturlode-v219-resol` en `sw.js`.
+     - Query strings de scripts y CSS sincronizados a `?v=1.1.3-resol`.
+
+---
+
+## 🚀 Versión Anterior Oficial: v1.1.2 — 2026-09-26
 
 - **Asesor Inteligente y Simpático de la Colada & Secado de Ropa ("¿Tiendo fuera o dentro?"):**
   1. *Motor Termodinámico Fiel de Evaporación Textil (`js/utils/laundryAdvisor.js`):*
