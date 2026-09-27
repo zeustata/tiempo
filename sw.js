@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v239-liquid-glass';
+const CACHE_NAME = 'meteoasturlode-v240-all-glass';
 const STATIC_ASSETS = [
   './',
   './index.html',

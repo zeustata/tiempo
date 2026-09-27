@@ -1,11 +1,17 @@
-/* --- HERO WEATHER CARD (APPLE LIQUID GLASS GYROSCOPE) --- */
-.hero-weather-card {
+/* --- APPLE LIQUID GLASS UNIFIED ENGINE (ALL MAIN CARDS) --- */
+.hero-weather-card,
+.forecast-block,
+.sensor-card,
+.chart-card,
+.marine-card,
+.mountain-card,
+.astronomy-card,
+.surf-card,
+.laundry-card {
   background: var(--bg-surface);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
-  padding: 24px 28px;
   box-shadow: inset calc(var(--glass-tilt-y-num, 0) * -1.8px) calc(var(--glass-tilt-x-num, 0) * -1.8px) 24px 0 rgba(255, 255, 255, 0.32), inset 0 1px 1px 0 rgba(255, 255, 255, 0.45), var(--shadow-card), 0 16px 40px 0 rgba(0, 0, 0, 0.40);
-  margin-bottom: 20px;
   position: relative;
   overflow: hidden;
   backdrop-filter: blur(24px) saturate(190%);
@@ -14,7 +20,20 @@
   transition: transform 0.12s ease-out, box-shadow 0.15s ease-out, border-color 0.3s ease;
 }
 
-.hero-weather-card::after {
+.hero-weather-card {
+  padding: 24px 28px;
+  margin-bottom: 20px;
+}
+
+.hero-weather-card::after,
+.forecast-block::after,
+.sensor-card::after,
+.chart-card::after,
+.marine-card::after,
+.mountain-card::after,
+.astronomy-card::after,
+.surf-card::after,
+.laundry-card::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -361,40 +380,7 @@
 }
 
 .sensor-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-glass);
-  border-radius: var(--radius-lg);
   padding: 20px 24px;
-  box-shadow: inset calc(var(--glass-tilt-y-num, 0) * -1.2px) calc(var(--glass-tilt-x-num, 0) * -1.2px) 18px 0 rgba(255, 255, 255, 0.25), inset 0 1px 1px 0 rgba(255, 255, 255, 0.35), var(--shadow-card);
-  position: relative;
-  overflow: hidden;
-  backdrop-filter: blur(18px) saturate(180%);
-  -webkit-backdrop-filter: blur(18px) saturate(180%);
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.15s ease-out;
-}
-
-.sensor-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background:
-    linear-gradient(
-      var(--glass-angle, 115deg),
-      transparent calc(var(--glass-x, 50%) - 40%),
-      rgba(56, 189, 248, 0.12) calc(var(--glass-x, 50%) - 20%),
-      rgba(255, 255, 255, 0.38) var(--glass-x, 50%),
-      rgba(192, 132, 252, 0.14) calc(var(--glass-x, 50%) + 20%),
-      transparent calc(var(--glass-x, 50%) + 40%)
-    ),
-    radial-gradient(
-      circle 320px at var(--glass-x, 50%) var(--glass-y, 25%),
-      rgba(255, 255, 255, calc(0.12 + var(--glass-mist, 0) * 0.14)) 0%,
-      rgba(186, 230, 253, 0.06) 40%,
-      transparent 70%
-    );
-  pointer-events: none;
-  z-index: 5;
 }
 
 .sensor-card:hover {

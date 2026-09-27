@@ -4,7 +4,22 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.13 — 2026-09-27
+## 🚀 Última Actualización Oficial: v1.1.14 — 2026-09-27
+ 
+- **Panel Unificado Apple Liquid Glass en Todas las Tarjetas:**
+  1. *Feedback y Resolución Universal:*
+     - Lendo apreció la calidad del efecto Liquid Glass ("precioso"), pero detectó con precisión que solo afectaba a la primera tarjeta (`.hero-weather-card`).
+     - Se unificó el motor de estilos en `css/components.css` y `css/main.css` aplicando el conjunto de refracción líquida, barrido diagonal prismático, manto de dispersión esmerilada (`--glass-mist`), bisel interno dinámico (`Edge Bloom`) y micro-paralaje 2D a todas las tarjetas de la app: `.app-header`, `.hero-weather-card`, `.forecast-block`, `.sensor-card`, `.chart-card`, `.marine-card`, `.mountain-card`, `.astronomy-card`, `.surf-card` y `.laundry-card`.
+  2. *Sincronía Óptica Coherente:*
+     - Todas las tarjetas reaccionan coordinadas al unísono con el giroscopio y el deslizamiento táctil, creando una experiencia inmersiva fluida en toda la navegación.
+  3. *Blindaje de Caché y Versión:*
+     - Versión oficial `v1.1.14 📱✨`.
+     - `CACHE_NAME` actualizado a `meteoasturlode-v240-all-glass` en `sw.js`.
+     - Query strings de scripts, módulos y CSS sincronizados a `?v=1.1.14-all-glass-v240`.
+ 
+---
+ 
+## 🚀 Versión Anterior Oficial: v1.1.13 — 2026-09-27
 
 - **Barrido Óptico de Refracción Líquida & Halo Reactivo (Apple Liquid Glass):**
   1. *Fidelidad al Lenguaje Apple Liquid Glass:*

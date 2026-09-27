@@ -10,6 +10,23 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.14] - 2026-09-27
+ 
+### 💎 Panel Unificado Apple Liquid Glass en Todas las Tarjetas
+- **Extensión Universal del Motor Óptico (`css/components.css` & `css/main.css`):**
+  - El efecto Apple Liquid Glass (barrido diagonal prismático de 115°, manto esmerilado de dispersión `--glass-mist` y halo de borde interior reactivo *Edge Bloom*) se extiende al 100% de los bloques y tarjetas de la aplicación:
+    - Cabecera compacta y navegación unificada (`.app-header`).
+    - Tarjeta maestra de tiempo actual (`.hero-weather-card`).
+    - Bloque de pronóstico horario 72h continuo (`.forecast-block`).
+    - Cuadrícula de sensores de viento, humedad, UV, presión y polen (`.sensor-card`).
+    - Gráficos interactivos 48h (`.chart-card`).
+    - Tarjetas de módulos especializados: Playas & Mareas (`.marine-card`), Surf & Rompientes (`.surf-card`), Cordillera & Nieve (`.mountain-card`), Cosmos & Astronomía (`.astronomy-card`) y Tendero Asturiano (`.laundry-card`).
+- **Micro-Paralaje Óptico Reactivo 2D Sincronizado:**
+  - Todas las tarjetas se mueven y refractan armónicamente en bloque según la inclinación del terminal o la interacción táctil, preservando íntegra la aceleración GPU y el desenfoque `backdrop-filter: blur(24px) saturate(190%)`.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v240-all-glass`, actualización a `?v=1.1.14-all-glass-v240` en módulos, scripts y hojas de estilo.
+
+---
+
 ## [1.1.13] - 2026-09-27
 
 ### 🌊 Motor Óptico de Refracción Líquida & Barrido Prismático (Apple Liquid Glass)
