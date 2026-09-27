@@ -59,6 +59,38 @@ export function getSketchWeatherSvg(iconKey, size = 32) {
         </svg>
       `;
 
+    case 'resol':
+      // 🌤️ RESOL DIBUJADO A MANO / ACUARELA (Sol con rayos dorados cruzando velo de nube)
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon sketch-icon" aria-label="Resol Dibujo">
+          <!-- Halo de acuarela dorada -->
+          <circle cx="20" cy="18" r="11" fill="#fef08a" opacity="0.85" />
+          <circle cx="20" cy="18" r="7" fill="#fde047" opacity="0.9" />
+          <!-- Trazos de tinta para los rayos solares del resol -->
+          <g stroke="#d97706" stroke-width="2" stroke-linecap="round" fill="none">
+            <line x1="20" y1="4" x2="20" y2="8" />
+            <line x1="9" y1="9" x2="12" y2="12" />
+            <line x1="5" y1="19" x2="9" y2="19" />
+            <line x1="31" y1="9" x2="28" y2="12" />
+            <line x1="35" y1="19" x2="31" y2="19" />
+            <!-- Rayos que atraviesan la nube hacia abajo -->
+            <line x1="13" y1="25" x2="10" y2="37" stroke-dasharray="3,3" opacity="0.7" />
+            <line x1="27" y1="25" x2="30" y2="37" stroke-dasharray="3,3" opacity="0.7" />
+          </g>
+          <!-- Contorno del sol a tinta -->
+          <path d="M 19,8 C 25,7.8 29.5,12.5 29,19" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" />
+          <!-- Nube acuarela suave translúcida -->
+          <path d="M 40,38 H 15 C 10.5,38 9,31 13,27 C 12,20 21,18 25,21 C 29,17 39,20 38,28 C 42,30 42.5,38 40,38 Z" fill="#f8fafc" opacity="0.88" />
+          <!-- Contorno de pluma / tinta de la nube -->
+          <path d="M 14.5,37.5 C 10.5,37.5 8.5,32 12.5,28.5 C 11.5,22 19.5,19 24,22 C 27.5,18 37,20 37,27.5 C 41.5,29 42,37 37.5,37.5 Z" fill="none" stroke="#475569" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" />
+          <!-- Rayitas de luz y sombra -->
+          <g stroke="#f59e0b" stroke-width="1.3" stroke-linecap="round" opacity="0.75">
+            <line x1="18" y1="31" x2="22" y2="35" />
+            <line x1="26" y1="31" x2="30" y2="35" />
+          </g>
+        </svg>
+      `;
+
     case 'partly-cloudy-day':
     case 'cloud-sun':
       // ⛅ SOL Y NUBE DIBUJADOS A MANO

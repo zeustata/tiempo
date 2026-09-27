@@ -59,6 +59,32 @@ export function getPixelWeatherSvg(iconKey, size = 32) {
         </svg>
       `;
 
+    case 'resol':
+      // 🌤️ RESOL PIXEL ART (Sol radiante proyectando rayos a través de nube pixelada)
+      return `
+        <svg viewBox="0 0 24 24" width="${sz}" height="${sz}" class="astur-svg-icon pixel-icon" shape-rendering="crispEdges" aria-label="Resol Pixel">
+          <!-- Corona de rayos del sol -->
+          <rect x="9" y="1" width="2" height="2" fill="#f59e0b" />
+          <rect x="3" y="3" width="2" height="2" fill="#f59e0b" />
+          <rect x="15" y="3" width="2" height="2" fill="#f59e0b" />
+          <rect x="1" y="8" width="2" height="2" fill="#f59e0b" />
+          <rect x="17" y="8" width="2" height="2" fill="#f59e0b" />
+          <!-- Sol dorado de fondo -->
+          <rect x="6" y="3" width="8" height="8" fill="#facc15" />
+          <rect x="7" y="4" width="6" height="6" fill="#fef08a" />
+          <!-- Rayos solares pixelados que perforan -->
+          <rect x="4" y="14" width="2" height="4" fill="#f59e0b" opacity="0.75" />
+          <rect x="16" y="14" width="2" height="4" fill="#f59e0b" opacity="0.75" />
+          <!-- Nube pixelada al frente -->
+          <rect x="8" y="9" width="10" height="3" fill="#ffffff" />
+          <rect x="5" y="12" width="16" height="7" fill="#ffffff" />
+          <rect x="3" y="14" width="20" height="5" fill="#ffffff" />
+          <!-- Sombras de nube pixel -->
+          <rect x="4" y="18" width="18" height="2" fill="#94a3b8" />
+          <rect x="18" y="13" width="3" height="5" fill="#cbd5e1" />
+        </svg>
+      `;
+
     case 'partly-cloudy-day':
     case 'cloud-sun':
       // ⛅ SOL Y NUBE PIXEL ART

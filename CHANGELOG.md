@@ -26,7 +26,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Blindaje Anti-Desborde y Ergonomía Móvil Estricta (Ley Constitucional 11):**
   - Supresión de la pastilla redundante de colada en la Hero Weather Card: la recomendación de secado se preserva en su tarjeta dedicada de ancho completo (#7) al final de la cuadrícula de sensores, eliminando la sobrecarga horizontal que provocaba desbordes en teléfonos móviles de 320px-380px.
   - La fila de temperatura principal recupera holgura total: la condición meteorológica, sensación térmica y pastillas térmicas `[↓ 15°C]` y `[↑ 22°C]` lucen sin cortes ni colisiones.
-- **Cache-bust:** `sw.js` → `meteoasturlode-v220-cleanhero`, actualización a `?v=1.1.3-cleanhero` en módulos y CSS.
+- **Suite de Iconos Exclusivos de Resol en Todos los Temas Visuales:**
+  - Nueva clave visual `svgKey: 'resol'` con emoji nativo `🌤️`.
+  - **Tema Astur:** Sol sonriente con gafas de sol oscuras (el sol que deslumbra) y rayos atravesando la nube.
+  - **Tema Neón:** Sol dorado central con halo resplandeciente (`#neon-glow-resol`) y rayos penetrando la nube cian.
+  - **Tema Pixel Art:** Sol radiante en 8-bits con corona de rayos filtrándose entre los bloques de la nube.
+  - **Tema Sketch:** Sol en acuarela dorada y trazos de pluma con rayos cruzando el velo nuboso.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v221-resol-icons`, actualización a `?v=1.1.3-resolicon` en módulos y CSS.
 
 ---
 

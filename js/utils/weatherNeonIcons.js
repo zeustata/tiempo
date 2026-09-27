@@ -60,6 +60,37 @@ export function getNeonWeatherSvg(iconKey, size = 32) {
         </svg>
       `;
 
+    case 'resol':
+      // 🌤️ RESOL NEÓN (Sol brillante irradiando haces a través de nube neón)
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon neon-icon" aria-label="Resol Neón">
+          <defs>
+            <filter id="neon-glow-resol" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="2.2" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <!-- Rayos solares neón penetrantes -->
+          <g stroke="#f59e0b" stroke-width="2" stroke-linecap="round" filter="url(#neon-glow-resol)">
+            <line x1="20" y1="3" x2="20" y2="7" />
+            <line x1="8" y1="8" x2="11" y2="11" />
+            <line x1="4" y1="20" x2="8" y2="20" />
+            <line x1="32" y1="8" x2="29" y2="11" />
+            <line x1="36" y1="20" x2="32" y2="20" />
+            <!-- Haces de luz perforando hacia abajo -->
+            <line x1="14" y1="27" x2="10" y2="39" stroke-dasharray="3,3" opacity="0.8" />
+            <line x1="26" y1="27" x2="30" y2="39" stroke-dasharray="3,3" opacity="0.8" />
+          </g>
+          <!-- Sol Neón Dorado Central -->
+          <circle cx="20" cy="18" r="9" stroke="#fbbf24" stroke-width="2.4" fill="none" filter="url(#neon-glow-resol)" />
+          <!-- Nube Neón Cian translúcida -->
+          <path d="M 40,38 H 15 A 7.5,7.5 0 0 1 13.5,24.5 A 10.5,10.5 0 0 1 35.5,25 A 7.5,7.5 0 0 1 40,38 Z" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.95" />
+        </svg>
+      `;
+
     case 'partly-cloudy-day':
     case 'cloud-sun':
       // ⛅ SOL Y NUBE NEÓN

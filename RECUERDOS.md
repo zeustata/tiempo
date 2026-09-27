@@ -29,10 +29,16 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   5. *Blindaje Anti-Desborde y Ergonomía Móvil Estricta (Ley Constitucional 11):*
      - Erradicación del desborde horizontal en la Hero Weather Card en pantallas móviles: se suprime la pastilla redundante de colada de la fila de mínimas y máximas (`.temp-minmax-pills`), dejando la información de colada exclusivamente en su tarjeta dedicada de ancho completo al final del panel de sensores (#7).
      - La fila principal de la tarjeta recupera todo su espacio visual: `Resol / Sol tamizáu`, la sensación térmica y las pastillas térmicas `[↓ 15°C]` y `[↑ 22°C]` cuentan con `min-width: 0` y `word-break: break-word`, garantizando holgura perfecta sin cortes de texto en teléfonos estrechos (320px - 380px).
-  6. *Blindaje de Caché y Versión:*
+  6. *Suite de Iconos Exclusivos de Resol en Todos los Temas Visuales:*
+     - Diseño e implementación de la clave `svgKey: 'resol'` con emoji nativo `🌤️`.
+     - **Tema Astur (`weatherAsturIcons.js`):** Sol sonriente con gafas de sol oscuras molonas (deslumbramiento del resol) irradiando rayos que atraviesan la nube translúcida.
+     - **Tema Neón (`weatherNeonIcons.js`):** Sol dorado central con halo glow resplandeciente (`#neon-glow-resol`) y haces de luz perforando la nube neón cian.
+     - **Tema Pixel Art (`weatherPixelIcons.js`):** Sol pixelado en oro y ámbar con corona de rayos penetrantes entre los bloques de la nube blanca.
+     - **Tema Sketch (`weatherSketchIcons.js`):** Sol en acuarela dorada y trazo de pluma proyectando rayos que cruzan el velo acuarelado de la nube.
+  7. *Blindaje de Caché y Versión:*
      - Versión oficial actualizada a `v1.1.3 ⛅` en footer (`#app-version-badge`), en modal de Novedades (`#changelog-modal`) y sincronizado con `meteoastur_changelog_seen`.
-     - `CACHE_NAME` actualizado a `meteoasturlode-v220-cleanhero` en `sw.js`.
-     - Query strings de scripts y CSS sincronizados a `?v=1.1.3-cleanhero`.
+     - `CACHE_NAME` actualizado a `meteoasturlode-v221-resol-icons` en `sw.js`.
+     - Query strings de scripts y CSS sincronizados a `?v=1.1.3-resolicon`.
 
 ---
 

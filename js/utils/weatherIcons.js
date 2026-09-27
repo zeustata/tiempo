@@ -222,8 +222,8 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     if (p < 0.1 && hasRealSolarLight && (base.isRain || base.svgKey === 'cloudy' || code === 3 || base.svgKey === 'fog')) {
       base = {
         label: isResol ? 'Resol / Sol tamizáu' : 'Parcialmente nublado / Claros',
-        icon: '⛅',
-        svgKey: 'partly-cloudy-day',
+        icon: isResol ? '🌤️' : '⛅',
+        svgKey: isResol ? 'resol' : 'partly-cloudy-day',
         lucide: 'cloud-sun',
         bg: 'partly-cloudy',
         isRain: false,

@@ -67,6 +67,40 @@ export function getAsturWeatherSvg(iconKey, size = 32) {
         </svg>
       `;
 
+    case 'resol':
+      // 🌤️ RESOL / SOL TAMIZÁU (Sol con gafas y rayos penetrando la nube)
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon icon-comic-resol" aria-label="Resol y Sol Tamizado">
+          <!-- Rayos solares resplandecientes -->
+          <g stroke="#f59e0b" stroke-width="2" stroke-linecap="round" opacity="0.9">
+            <line x1="20" y1="4" x2="20" y2="8" />
+            <line x1="10" y1="8" x2="13" y2="11" />
+            <line x1="6" y1="18" x2="10" y2="18" />
+            <line x1="30" y1="8" x2="27" y2="11" />
+            <line x1="34" y1="18" x2="30" y2="18" />
+            <!-- Rayos que bajan atravesando -->
+            <line x1="14" y1="24" x2="11" y2="34" stroke-dasharray="2,2" stroke="#eab308" />
+            <line x1="26" y1="24" x2="29" y2="34" stroke-dasharray="2,2" stroke="#eab308" />
+          </g>
+          <!-- Sol sonriente con gafas de sol -->
+          <circle cx="20" cy="18" r="10" fill="#facc15" stroke="#eab308" stroke-width="1.8" />
+          <!-- Gafas de sol oscuras (resol / sol que deslumbra) -->
+          <path d="M 12,16 Q 16,15 20,16 Q 24,15 28,16 L 27,20 Q 24,22 21,20 L 20,17 L 19,20 Q 16,22 13,20 Z" fill="#1e293b" />
+          <path d="M 14,17.5 L 18,17.5" stroke="#ffffff" stroke-width="0.8" stroke-linecap="round" opacity="0.7" />
+          <path d="M 22,17.5 L 26,17.5" stroke="#ffffff" stroke-width="0.8" stroke-linecap="round" opacity="0.7" />
+          <!-- Sonrisa picarona del sol -->
+          <path d="M 17,23 Q 20,25.5 23,23" stroke="#991b1b" stroke-width="1.4" fill="none" stroke-linecap="round" />
+          <!-- Nube translúcida que deja pasar los rayos -->
+          <path d="M 40,40 H 16 A 8,8 0 0 1 14.5,25 A 10.5,10.5 0 0 1 36,25.5 A 7.5,7.5 0 0 1 40,40 Z" fill="rgba(255, 255, 255, 0.88)" stroke="#94a3b8" stroke-width="1.8" />
+          <!-- Carita relajada de la nube recibiendo el calor -->
+          <ellipse cx="23" cy="32" rx="1.6" ry="2.2" fill="#1e293b" />
+          <ellipse cx="31" cy="32" rx="1.6" ry="2.2" fill="#1e293b" />
+          <ellipse cx="19" cy="34" rx="2" ry="1.2" fill="#f59e0b" opacity="0.6" />
+          <ellipse cx="35" cy="34" rx="2" ry="1.2" fill="#f59e0b" opacity="0.6" />
+          <path d="M 25,35 Q 27,37 29,35" stroke="#1e293b" stroke-width="1.3" fill="none" stroke-linecap="round" />
+        </svg>
+      `;
+
     case 'partly-cloudy-day':
     case 'cloud-sun':
       // ⛅ SOL Y NUBE AMIGOS SALUDANDO
