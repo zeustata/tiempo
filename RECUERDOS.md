@@ -4,7 +4,22 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.12 — 2026-09-27
+## 🚀 Última Actualización Oficial: v1.1.13 — 2026-09-27
+
+- **Barrido Óptico de Refracción Líquida & Halo Reactivo (Apple Liquid Glass):**
+  1. *Fidelidad al Lenguaje Apple Liquid Glass:*
+     - Lendo precisó la dinámica visual observada en iOS: un barrido óptico que emerge al girar y simula el desenfoque y la refracción de una lente de cristal físico.
+     - Se sustituyó el antiguo foco circular estático por una franja diagonal ancha de refracción prismática (115° con espectro cian, blanco puro y violeta) que barre suavemente toda la tarjeta (-10% a 110%) interactuando con el giroscopio y el tacto.
+  2. *Bisel de Borde Interior Reactivo (Edge Bloom):*
+     - Desplazamiento dinámico del `box-shadow: inset` en tiempo real según los ejes de inclinación: al girar hacia un lateral, el bisel proyecta un halo de 24px de desenfoque de luz hacia el interior, creando la sensación de grosor y corte pulido de un zafiro físico.
+  3. *Blindaje de Caché y Versión:*
+     - Versión oficial `v1.1.13 📱✨`.
+     - `CACHE_NAME` actualizado a `meteoasturlode-v239-liquid-glass` en `sw.js`.
+     - Query strings de scripts, módulos y CSS sincronizados a `?v=1.1.13-liquid-glass-v239`.
+
+---
+
+## 🚀 Versión Anterior Oficial: v1.1.12 — 2026-09-27
 
 - **Cristal Líquido & Dispersión Esmerilada Reactiva (Frosted Glass Sheen):**
   1. *Diagnóstico & Desbloqueo GPU:*

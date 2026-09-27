@@ -1,11 +1,11 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.1.12-glass-v238';
-import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.1.12-glass-v238';
-import { renderHourlyForecastBlock } from './forecastView.js?v=1.1.12-glass-v238';
-import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.12-glass-v238';
-import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=1.1.12-glass-v238';
-import { detectXeluEffect, renderXeluBanner } from '../utils/xeluDetector.js?v=1.1.12-glass-v238';
-import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.12-glass-v238';
-import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=1.1.12-glass-v238';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.1.13-liquid-glass-v239';
+import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.1.13-liquid-glass-v239';
+import { renderHourlyForecastBlock } from './forecastView.js?v=1.1.13-liquid-glass-v239';
+import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.13-liquid-glass-v239';
+import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=1.1.13-liquid-glass-v239';
+import { detectXeluEffect, renderXeluBanner } from '../utils/xeluDetector.js?v=1.1.13-liquid-glass-v239';
+import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.13-liquid-glass-v239';
+import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=1.1.13-liquid-glass-v239';
 
 /**
  * Formatea el título del concejo subordinando las localidades entre paréntesis (ej. Piedras Blancas / Salinas)

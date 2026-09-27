@@ -10,6 +10,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.13] - 2026-09-27
+
+### 🌊 Motor Óptico de Refracción Líquida & Barrido Prismático (Apple Liquid Glass)
+- **Onda Diagonal de Barrido Óptico Líquido (`js/utils/gyroGlass.js` & `css/components.css`):**
+  - Implementación del barrido de lente líquida auténtico de Apple iOS: una franja diagonal ancha de refracción prismática (cian `0.18`, destello blanco cristalino `0.48` y violeta difuso `0.20`) que barre de lado a lado (-10% a 110%) al girar el móvil o deslizar el dedo.
+  - Al inclinarse el terminal, la onda de luz resbala por encima de la tarjeta simulando la refracción y el desenfoque de una lente física en movimiento.
+- **Halo de Borde Interior Reactivo (*Internal Edge Bloom*):**
+  - Bisel interior de profundidad (`box-shadow: inset`) que se desplaza en tiempo real: al inclinar a la derecha o izquierda, el borde correspondiente proyecta un halo de luz y desenfoque de 24px hacia el interior de la tarjeta, otorgando sensación de grosor y bisel tallado.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v239-liquid-glass`, actualización a `?v=1.1.13-liquid-glass-v239` en módulos, scripts y hojas de estilo.
+
+---
+
 ## [1.1.12] - 2026-09-27
 
 ### 💎 Cristal Líquido & Dispersión Esmerilada Reactiva (Frosted Glass Sheen)
