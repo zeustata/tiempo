@@ -20,7 +20,7 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
   - Incorporación en el modal didáctico [💡 Explícame] de tablas ergonómicas adaptadas a móvil que desglosan con total transparencia los tres pilares de la nota (altura hasta 4 pts, período hasta 4 pts, energía hasta 2 pts = 10 pts máx.).
   - Tabla comparativa intuitiva para entender de un vistazo la condición física de estrellas doradas (terral offshore), blancas (calma glassy / olas nobles) y 0★ (chop onshore o mar pasado).
   - Blindaje CSS responsive contra desbordes en teléfonos móviles (`.explain-table-container` con scroll táctil suave y badges de puntos).
-- **Cache-bust:** `sw.js` → `meteoasturlode-v223-surf-explain-table`, actualización a `?v=1.1.4-table` en módulos y CSS.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v224-surf-tables-live`, actualización a `?v=1.1.4-tables-live` en módulos y CSS.
 
 ---
 

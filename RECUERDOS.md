@@ -19,9 +19,10 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - Tabla 1 (Baremos Físicos): desglosa la contribución de altura (hasta 4 pts), período swell (hasta 4 pts) y energía (hasta 2 pts) para sumar la nota 1 al 10.
        - Tabla 2 (Color de Estrellas): relación directa entre viento terral offshore (doradas), calma glassy/brisa (blancas) y viento de mar/mar pasado (0★).
      - Diseño responsive blindado con `.explain-table-container` y badges visuales para evitar desbordes en móviles estrechos (320px–380px, Ley Constitucional 11).
-  4. *Blindaje de Caché y Versión:*
-     - Versión oficial mantenida en `v1.1.4 🏄` con subida a cache-busting `meteoasturlode-v223-surf-explain-table` en `sw.js`.
-     - Query strings de scripts y hojas de estilo actualizados a `?v=1.1.4-table`.
+  4. *Blindaje de Caché, Auto-Prompt y Versión:*
+     - Corrección crítica en `js/app.js`: actualización de `CURRENT_CHANGELOG_VERSION` a `'1.1.4'` y purga de cadenas duras `?v=1.1.2-fix` en las importaciones de módulos hacia `?v=1.1.4-table`.
+     - Subida de cache-busting a `meteoasturlode-v224-surf-tables-live` en `sw.js`.
+     - Query strings de scripts y hojas de estilo actualizados a `?v=1.1.4-tables-live`.
 
 ---
 

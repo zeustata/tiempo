@@ -1690,7 +1690,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.1.4-table').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.1.4-tables-live').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1720,7 +1720,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.4-table"></script>
+  <script type="module" src="js/app.js?v=1.1.4-tables-live"></script>
 
 
 
