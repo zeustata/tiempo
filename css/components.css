@@ -160,6 +160,142 @@
   border: 1px solid rgba(248, 113, 113, 0.25);
 }
 
+/* --- FRANJA DE TIEMPO HABITUAL / CLIMATOLOGÍA 30 AÑOS AEMET --- */
+.climatology-strip {
+  margin-top: 14px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  box-sizing: border-box;
+  width: 100%;
+  transition: all 0.25s ease;
+}
+
+.climatology-strip:hover {
+  background: rgba(15, 23, 42, 0.70);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.climatology-strip.clima-warm {
+  border-left: 3px solid #ef4444;
+}
+
+.climatology-strip.clima-cool {
+  border-left: 3px solid #38bdf8;
+}
+
+.climatology-strip.clima-normal {
+  border-left: 3px solid #10b981;
+}
+
+.climatology-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.climatology-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.climatology-text-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  min-width: 0;
+}
+
+.climatology-badge {
+  display: inline-block;
+  font-size: 0.76rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 5px;
+  letter-spacing: -0.2px;
+  white-space: nowrap;
+}
+
+.clima-warm .climatology-badge {
+  color: #f87171;
+  background: rgba(239, 68, 68, 0.16);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.clima-cool .climatology-badge {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.16);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+}
+
+.clima-normal .climatology-badge {
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.16);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.climatology-desc {
+  font-size: 0.80rem;
+  color: #cbd5e1;
+  line-height: 1.3;
+}
+
+.climatology-desc strong {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.btn-explain-clima {
+  background: rgba(56, 189, 248, 0.12);
+  color: #7dd3fc;
+  border: 1px solid rgba(56, 189, 248, 0.30);
+  padding: 5px 11px;
+  border-radius: 8px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s ease;
+}
+
+.btn-explain-clima:hover {
+  background: rgba(56, 189, 248, 0.24);
+  color: #ffffff;
+  border-color: #38bdf8;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 480px) {
+  .climatology-strip {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+  .climatology-left {
+    width: 100%;
+  }
+  .btn-explain-clima {
+    align-self: flex-start;
+    width: 100%;
+    justify-content: center;
+    padding: 6px 10px;
+  }
+}
+
 .foehn-alert {
   margin-top: 16px;
   padding: 12px 16px;

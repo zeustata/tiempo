@@ -1,9 +1,10 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.1.4-tables-live';
-import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.1.4-tables-live';
-import { renderHourlyForecastBlock } from './forecastView.js?v=1.1.4-tables-live';
-import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.4-tables-live';
-import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=1.1.4-tables-live';
-import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.4-tables-live';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.1.6-clima';
+import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.1.6-clima';
+import { renderHourlyForecastBlock } from './forecastView.js?v=1.1.6-clima';
+import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.6-clima';
+import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=1.1.6-clima';
+import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.6-clima';
+import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=1.1.6-clima';
 
 /**
  * Renderiza el dashboard principal con alineación uniforme y todos los sensores de la estación
@@ -69,6 +70,10 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   const laundry = calculateLaundryDrying(current, hourly, daily);
   const laundryMarkup = renderLaundryCard(laundry);
 
+  // Cálculo Climatológico de "Tiempo Habitual" (Normales Oficiales AEMET 1991-2020)
+  const clima = getClimatologyContext(concejo, current, daily);
+  const climaStripMarkup = renderClimatologyStrip(clima);
+
   // Pronóstico Horario Detallado (72 Horas / 3 Días) en Vivo
   const hourlyForecastMarkup = renderHourlyForecastBlock(data, units, iconTheme);
 
@@ -100,6 +105,9 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
           </div>
         </div>
       </div>
+
+      <!-- FRANJA ERGONÓMICA DE TIEMPO HABITUAL (ANOMALÍA CLIMATOLÓGICA 30 AÑOS AEMET) -->
+      ${climaStripMarkup}
     </div>
 
     <!-- BANNER DINÁMICO DE EFECTO FOEHN ("VIENTU LES CASTAÑES") -->

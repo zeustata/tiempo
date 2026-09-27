@@ -1,22 +1,22 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.1.5-galerna';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.1.5-galerna';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.1.5-galerna';
-import { renderCurrentWeather } from './components/currentCard.js?v=1.1.5-galerna';
-import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.1.5-galerna';
-import { renderSurfCard } from './components/surfCard.js?v=1.1.5-galerna';
-import { renderMountainCard } from './components/mountainCard.js?v=1.1.5-galerna';
-import { renderForecast } from './components/forecastView.js?v=1.1.5-galerna';
-import { renderWeatherChart } from './components/chartsView.js?v=1.1.5-galerna';
-import { renderAstronomyView } from './components/astronomyCard.js?v=1.1.5-galerna';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.5-galerna';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1.5-galerna';
-import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1.5-galerna';
-import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1.5-galerna';
-import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.5-galerna';
-import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.5-galerna';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.5-galerna';
-import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.5-galerna';
-import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.5-galerna';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.1.6-clima';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.1.6-clima';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.1.6-clima';
+import { renderCurrentWeather } from './components/currentCard.js?v=1.1.6-clima';
+import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.1.6-clima';
+import { renderSurfCard } from './components/surfCard.js?v=1.1.6-clima';
+import { renderMountainCard } from './components/mountainCard.js?v=1.1.6-clima';
+import { renderForecast } from './components/forecastView.js?v=1.1.6-clima';
+import { renderWeatherChart } from './components/chartsView.js?v=1.1.6-clima';
+import { renderAstronomyView } from './components/astronomyCard.js?v=1.1.6-clima';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.6-clima';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1.6-clima';
+import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1.6-clima';
+import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1.6-clima';
+import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.6-clima';
+import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.6-clima';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.6-clima';
+import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.6-clima';
+import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.6-clima';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, pronóstico horario 72h y alertas', key: '1' },
@@ -852,7 +852,7 @@ class MeteoAsturiasApp {
 
     // Delegación global de evento para cualquier botón .btn-explain-sensor en la app
     document.addEventListener('click', (e) => {
-      const btn = e.target.closest('.btn-explain-sensor, .btn-explain-sensor-compact');
+      const btn = e.target.closest('.btn-explain-sensor, .btn-explain-sensor-compact, .btn-explain-clima');
       if (!btn) return;
 
       this.triggerHaptic();

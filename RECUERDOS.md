@@ -4,7 +4,34 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.5 — 2026-09-27
+## 🚀 Última Actualización Oficial: v1.1.6 — 2026-09-27
+
+- **Métricas de "Tiempo Habitual" & Normales Climatológicas 1991–2020 (AEMET / OMM):**
+  1. *Inspiración & Requerimiento de Lendo:*
+     - Lendo observó en *eltiempo.es* la incorporación de la comparativa de "Tiempo habitual" frente al tiempo actual y encomendó investigar e implementar la mejor solución para MeteoAstur Lode.
+     - Lendo seleccionó la **Opción 1**: Franja ergonómica y sutil en la cabecera del Hero Weather Card mostrando la anomalía térmica diaria (ej. `+2.8 °C sobre lo habitual de finales de septiembre`) acompañada del botón didáctico `[ 📊 Tiempo Habitual ]`.
+     - Lendo exigió expresamente verificar la gratuidad y el cumplimiento normativo con Google Play Store (TWA) antes de tocar el código.
+  2. *Marco Legal & Cero Coste de API (100% Gratuito y Abierto):*
+     - Basado estrictamente en las **Normales Climatológicas Estándar Oficiales de 30 años (período 1991–2020)** publicadas por AEMET OpenData (Resolución de 30/11/2015).
+     - Datos de dominio público estatal bajo la **Ley 37/2007 de Reutilización de la Información del Sector Público**.
+     - El cálculo se ejecuta al 100% de forma estática y matemática en local en el dispositivo del usuario (`js/utils/climatologyData.js`): cero peticiones de red externas, cero latencia, cero consumo de cuota de API y total compatibilidad offline.
+  3. *Microclimatología Asturiana & Gradiente Térmico por Altitud:*
+     - Zonificación de los 78 concejos en 4 áreas microclimáticas homogéneas: Costa y Litoral Cantábrico, Valles Centrales y Cuencas, Occidente y Suroccidente, y Montaña / Cordillera Cantábrica.
+     - Aplicación de un gradiente adiabático vertical de **-0.6 °C por cada 100 metros** de elevación sobre el nivel del mar según la altitud de la estación de referencia.
+     - Ponderación quincenal continua para modelar suavemente la transición térmica entre meses contiguos.
+  4. *Ergonomía Móvil (Constitución Ley 11) & Diseño Liquid Glass:*
+     - La franja `.climatology-strip` se integra de forma compacta en la base de la tarjeta meteorológica principal, evitando sobrecargar la fila de mínimas y máximas.
+     - Código visual de 3 estados: 🔥 *Más cálido de lo habitual* (anomalía > +1.5 °C), 🌿 *Acorde a lo habitual* (entre -1.5 °C y +1.5 °C), y ❄️ *Más fresco / frío* (< -1.5 °C).
+     - Botón táctil interactivo `[ 📊 Tiempo Habitual ]` que activa el modal divulgativo con la suite didáctica (`js/utils/weatherExplanations.js`).
+  5. *Blindaje de Caché y Versión:*
+     - Versión oficial actualizada a `v1.1.6 📊` en badge del pie (`#app-version-badge`), modal de novedades y registros.
+     - `CACHE_NAME` actualizado a `meteoasturlode-v226-clima-habitual` en `sw.js`.
+     - Inclusión de `./js/utils/climatologyData.js` en `STATIC_ASSETS` de `sw.js`.
+     - Query strings de scripts sincronizados a `?v=1.1.6-clima`.
+
+---
+
+## 🚀 Versión Anterior Oficial: v1.1.5 — 2026-09-27
 
 - **Detector Silencioso de Galerna Cantábrica en Tiempo Real:**
   1. *Concepto & Propuesta Técnica de Lendo:*

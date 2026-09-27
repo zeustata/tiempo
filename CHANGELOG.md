@@ -10,6 +10,24 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.6] - 2026-09-27
+
+### 📊 Tiempo Habitual & Normales Climatológicas 1991–2020 (AEMET / OMM)
+- **Motor Climatológico Autónomo (`js/utils/climatologyData.js`):**
+  - Incorporación de las tablas de normales climatológicas de la serie oficial estándar de 30 años (1991–2020) de AEMET OpenData (Resolución de 30/11/2015, datos públicos abiertos bajo Ley 37/2007).
+  - Cálculo 100% en local en el dispositivo del usuario: cero peticiones de red adicionales, cero consumo de cuota de API y 100% de cumplimiento estricto con las políticas de Google Play Store (TWA).
+  - Algoritmo de ponderación quincenal para transiciones suaves en cambios de mes (ej. finales de septiembre pondera con inicios de octubre).
+- **Zonificación Asturiana & Gradiente de Altitud:**
+  - Clasificación de los 78 concejos en 4 áreas microclimáticas homogéneas: Costa y Litoral Cantábrico, Valles Centrales y Cuencas, Occidente y Suroccidente, y Montaña / Cordillera Cantábrica.
+  - Corrección térmica vertical automática por gradiente adiabático estándar (-0.6 °C por cada 100 metros de elevación sobre el nivel del mar).
+- **Franja Ergonómica de Tiempo Habitual (`css/components.css` & `js/components/currentCard.js`):**
+  - Tira integrada al pie de la *Hero Weather Card* con diseño Liquid Glass, microanimación hover e inmunidad total a desbordes en teléfonos móviles (Constitución Ley 11).
+  - Códigos de color y badges temáticos: 🔥 *Más cálido de lo habitual* (anomalía > +1.5 °C), 🌿 *Acorde a lo habitual* (entre -1.5 °C y +1.5 °C), y ❄️ *Más fresco / frío* (< -1.5 °C).
+  - Botón táctil ergonómico `[ 📊 Tiempo Habitual ]` que abre la nueva guía didáctica interactiva en el modal educativo (`js/utils/weatherExplanations.js`).
+- **Cache-bust:** `sw.js` → `meteoasturlode-v226-clima-habitual`, actualización a `?v=1.1.6-clima` en módulos y scripts.
+
+---
+
 ## [1.1.5] - 2026-09-27
 
 ### 🌊 Detector Silencioso de Galerna Cantábrica en Tiempo Real

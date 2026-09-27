@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v225-galerna-detector';
+const CACHE_NAME = 'meteoasturlode-v226-clima-habitual';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -37,6 +37,7 @@ const STATIC_ASSETS = [
   './js/utils/foehnDetector.js',
   './js/utils/galernaDetector.js',
   './js/utils/laundryAdvisor.js',
+  './js/utils/climatologyData.js',
   './js/utils/storage.js',
   './js/utils/tides.js'
 ];

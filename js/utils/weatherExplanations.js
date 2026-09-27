@@ -730,6 +730,40 @@ export const WEATHER_EXPLANATIONS = {
         text: 'Al caer la noche, el suelo se enfría por radiación y el aire cercano alcanza el punto de rocío (100% de humedad relativa). En Asturias, dejar la ropa tendida de noche fuera sin alero suele traducirse en encontrarla más empapada por la mañana que recién salida del centrifugado.'
       }
     ]
+  },
+
+  climatology: {
+    icon: '📊',
+    title: '¿Qué es el "Tiempo Habitual" y las Normales Climáticas?',
+    subtitle: 'Comparación histórica entre el tiempo de hoy y la serie oficial de 30 años (1991–2020) de AEMET',
+    badge: 'Serie Estándar OMM / AEMET 1991–2020',
+    sections: [
+      {
+        icon: '📅',
+        heading: '1. ¿Qué significa "Tiempo Habitual"?',
+        text: 'En meteorología y climatología, lo "habitual" no es una estimación a ojo, sino la <strong>media estadística rigurosa calculada a lo largo de un período estándar de 30 años</strong> (actualmente el período de referencia internacional 1991–2020 fijado por la Organización Meteorológica Mundial y AEMET).'
+      },
+      {
+        icon: '🌡️',
+        heading: '2. Anomalía Térmica: ¿Por qué es útil?',
+        text: 'Comparar la temperatura prevista con la normal histórica permite saber si estamos viviendo una jornada inusualmente cálida, gélida o típica de la época:' +
+          '<ul class="explain-list" style="margin-top: 8px;">' +
+            '<li><strong style="color: #ef4444;">🔥 Más cálido de lo habitual:</strong> La máxima supera en más de 1.5 °C el promedio climatológico de esta quincena (típico de veranillos, entradas cálidas subtropicales o Viento Sur).</li>' +
+            '<li><strong style="color: #10b981;">🌿 Acorde a lo habitual:</strong> La temperatura se sitúa en el intervalo normal (entre -1.5 °C y +1.5 °C de la media de 30 años).</li>' +
+            '<li><strong style="color: #38bdf8;">❄️ Más fresco / frío de lo habitual:</strong> La máxima queda más de 1.5 °C por debajo del promedio histórico (entradas marítimas polares, nortadas o frentes fríos).</li>' +
+          '</ul>'
+      },
+      {
+        icon: '🏔️',
+        heading: '3. Las 4 Regiones Climáticas de Asturias y la Altitud',
+        text: 'Asturias tiene una orografía abrupta única. Nuestro motor clasifica los 78 concejos en 4 zonas climáticas diferenciadas (<strong>Costa Cantábrica, Valles Centrales, Suroccidente y Montaña / Cordillera</strong>) y aplica una corrección barométrica por altitud de <strong>-0.6 °C por cada 100 metros</strong> de elevación respecto al nivel del mar.'
+      },
+      {
+        icon: '⚖️',
+        heading: '4. Datos 100% Públicos, Gratuitos y Abiertos',
+        text: 'Esta función utiliza exclusivamente las tablas oficiales de <em>AEMET OpenData</em> publicadas bajo licencia de datos abiertos del Estado Español (Ley 37/2007). Se calcula de forma <strong>autónoma e instantánea en tu dispositivo sin llamadas de red externas, sin cookies ni costes de API</strong>.'
+      }
+    ]
   }
 };
 
