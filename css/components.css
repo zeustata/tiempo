@@ -4714,6 +4714,233 @@
   }
 }
 
+/* --- BANNER DINÁMICO DETECTOR DE XELU Y PLACAS DE HIELO (CÓDIGO SEMAFÓRICO VIAL) --- */
+.xelu-banner {
+  border-radius: var(--radius-lg);
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* 🟡 NIVEL 1 PREVENTIVO: RIESGO DE HELADA (AMARILLO ÁMBAR) */
+.xelu-banner.moderate,
+.xelu-banner:not(.severe) {
+  background: linear-gradient(135deg, rgba(234, 179, 8, 0.16) 0%, rgba(30, 41, 59, 0.75) 100%);
+  border: 1.5px solid rgba(234, 179, 8, 0.85);
+  box-shadow: 0 4px 22px rgba(234, 179, 8, 0.25), inset 0 0 16px rgba(234, 179, 8, 0.10);
+  animation: xeluAmberGlow 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes xeluAmberGlow {
+  0% { border-color: rgba(234, 179, 8, 0.60); box-shadow: 0 4px 16px rgba(234, 179, 8, 0.20); }
+  100% { border-color: rgba(234, 179, 8, 1); box-shadow: 0 4px 26px rgba(234, 179, 8, 0.38); }
+}
+
+.xelu-banner.moderate .xelu-title,
+.xelu-banner:not(.severe) .xelu-title {
+  color: #fef9c3;
+}
+
+.xelu-banner.moderate .xelu-badge,
+.xelu-banner:not(.severe) .xelu-badge {
+  background: rgba(234, 179, 8, 0.25);
+  border: 1px solid rgba(234, 179, 8, 0.65);
+  color: #fef08a;
+}
+
+.xelu-banner.moderate .xelu-desc strong,
+.xelu-banner:not(.severe) .xelu-desc strong {
+  color: #fde047;
+}
+
+.xelu-banner.moderate .xelu-metric-pill strong,
+.xelu-banner:not(.severe) .xelu-metric-pill strong {
+  color: #fef08a;
+}
+
+/* 🔴 NIVEL 2 GRAVE: PLACAS DE HIELO NEGRO (ROJO ALERTA MÁXIMA) */
+.xelu-banner.severe {
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.32) 0%, rgba(15, 23, 42, 0.90) 100%);
+  border: 1.5px solid rgba(239, 68, 68, 0.95);
+  box-shadow: 0 4px 30px rgba(220, 38, 38, 0.50), inset 0 0 20px rgba(239, 68, 68, 0.25);
+  animation: xeluRedGlow 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes xeluRedGlow {
+  0% { border-color: rgba(239, 68, 68, 0.60); box-shadow: 0 4px 18px rgba(220, 38, 38, 0.25); }
+  100% { border-color: rgba(239, 68, 68, 1); box-shadow: 0 4px 28px rgba(220, 38, 38, 0.50); }
+}
+
+.xelu-banner.severe .xelu-title {
+  color: #fff1f2;
+}
+
+.xelu-banner.severe .xelu-badge {
+  background: rgba(220, 38, 38, 0.35);
+  border-color: rgba(239, 68, 68, 0.85);
+  color: #ffffff;
+}
+
+.xelu-banner.severe .xelu-desc strong {
+  color: #fca5a5;
+}
+
+.xelu-banner.severe .xelu-metric-pill strong {
+  color: #fecdd3;
+}
+
+.xelu-banner-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.xelu-header-left {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.xelu-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.xelu-title {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+}
+
+.xelu-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.xelu-desc {
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: #f1f5f9;
+  margin: 0 0 10px 0;
+}
+
+.xelu-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.xelu-metric-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(15, 23, 42, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  color: #cbd5e1;
+}
+
+@media (max-width: 650px) {
+  .xelu-banner {
+    padding: 12px 14px;
+    margin-bottom: 14px;
+  }
+  .xelu-title {
+    font-size: 0.92rem;
+  }
+  .xelu-desc {
+    font-size: 0.84rem;
+  }
+}
+
+/* --- SECCIÓN DE POLEN EN CALIDAD DEL AIRE (AQI) --- */
+.aqi-pollen-section {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pollen-section-title {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: -0.2px;
+}
+
+.pollen-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pollen-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  background: rgba(15, 23, 42, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+}
+
+.pollen-chip strong {
+  font-weight: 800;
+}
+
+.pollen-chip.pollen-zero {
+  border-color: rgba(16, 185, 129, 0.25);
+  color: #a7f3d0;
+}
+
+.pollen-chip.pollen-low {
+  border-color: rgba(16, 185, 129, 0.35);
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.pollen-chip.pollen-mod {
+  border-color: rgba(245, 158, 11, 0.4);
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.12);
+}
+
+.pollen-chip.pollen-high {
+  border-color: rgba(239, 68, 68, 0.45);
+  color: #f87171;
+  background: rgba(239, 68, 68, 0.15);
+}
+
+@media (max-width: 650px) {
+  .xelu-banner {
+    padding: 12px 14px;
+    margin-bottom: 14px;
+  }
+  .xelu-title {
+    font-size: 0.94rem;
+  }
+  .xelu-advice {
+    font-size: 0.80rem;
+  }
+}
+
 .alert-item-meta-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));

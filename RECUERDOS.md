@@ -4,7 +4,33 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.8 — 2026-09-27
+## 🚀 Última Actualización Oficial: v1.1.9 — 2026-09-27
+
+- **Detector de Heladas y Placas de Hielo en Asfalto ("Alerta Xelu") & Monitor de Polen (AQI):**
+  1. *Concepto & Solicitud de Lendo:*
+     - Lendo aprobó abordar simultáneamente dos funciones de alto valor: el detector de heladas/hielo en carretera para la seguridad vial y el enriquecimiento de la tarjeta de Calidad del Aire con el monitor polínico.
+     - En el afinado de diseño, Lendo instruyó prescindir de la palabra "escarcha" (centrándose en "Riesgo de Helada") e ideó una diferenciación semafórica vial: **amarillo ámbar para el riesgo de helada preventivo** y **rojo de emergencia para las placas de hielo severas**.
+  2. *Motor Físico del Xelu (`js/utils/xeluDetector.js`):*
+     - Variables termodinámicas: T <= 2.5 °C, depresión del punto de rocío <= 2.0 °C, calma de viento (<= 12 km/h) en horario nocturno y matinal (21h a 10h), o mínima prevista <= 2.0 °C.
+     - Diagnósticos: 🟡 ❄️ *Riesgo de Helada • Alerta Xelu* (firme húmedo y asfalto deslizante en marco amarillo ámbar pulsante) y 🔴 🧊 *Alerta de Placas de Hielo en Asfalto* (hielo negro invisible en calzada en marco rojo de peligro crítico).
+     - Consejos específicos de conducción vial en zonas umbrías, puentes y curvas sombrías.
+     - Diseño semafórico vial (`.xelu-banner.moderate` en ámbar y `.xelu-banner.severe` en rojo): bordes translúcidos de 1.5px, pastillas métricas ergonómicas redondas a 999px y botón didáctico `💡 ¿Por qué ocurre?`.
+     - Cumplimiento de la **Doctrina Constitucional 12** con soporte de simulacro controlado (`?test=xelu`, `?test=helada` y `?test=hielo`).
+  3. *Monitor de Polen en Calidad del Aire (`js/services/weatherApi.js` & `js/components/currentCard.js`):*
+     - Ampliación de la consulta a Copernicus CAMS Open-Meteo con alérgenos: Gramíneas, Abedul, Aliso, Olivo y Ambrosía sin coste de API ni llamadas extra.
+     - Fila compacta integrada dentro de la tarjeta de Calidad del Aire con semáforo por concentración (Nulo 🟢, Bajo 🟢, Moderado 🟡, Alto 🔴).
+     - Sin saturar la pantalla con nuevas tarjetas sueltas (Doctrina Constitucional 11).
+  4. *Suite Didáctica de Salud Ambiental & Heladas (`js/utils/weatherExplanations.js`):*
+     - Nuevas guías didácticas completas para `xelu` (física de la helada, inversión térmica en valles asturianos, hielo negro y precauciones al volante) y `aqi` (partículas finas y aerobiología).
+  5. *Blindaje de Caché y Versión:*
+     - Versión oficial actualizada a `v1.1.9 ❄️🌿` en badge del pie (`#app-version-badge`), modal de novedades y registros.
+     - `CACHE_NAME` actualizado a `meteoasturlode-v233-semaforo` en `sw.js`.
+     - Inclusión de `./js/utils/xeluDetector.js` en `STATIC_ASSETS`.
+     - Query strings de scripts y CSS sincronizados a `?v=1.1.9-semaforo-v233`.
+
+---
+
+## 🚀 Versión Anterior Oficial: v1.1.8 — 2026-09-27
 
 - **Jerarquía Visual & Tipografía en Ubicaciones y Parroquias:**
   1. *Apreciación & Petición de Lendo:*

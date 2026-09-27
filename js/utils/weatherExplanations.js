@@ -764,6 +764,98 @@ export const WEATHER_EXPLANATIONS = {
         text: 'Esta función utiliza exclusivamente las tablas oficiales de <em>AEMET OpenData</em> publicadas bajo licencia de datos abiertos del Estado Español (Ley 37/2007). Se calcula de forma <strong>autónoma e instantánea en tu dispositivo sin llamadas de red externas, sin cookies ni costes de API</strong>.'
       }
     ]
+  },
+
+  xelu: {
+    icon: '❄️',
+    title: '¿Cómo se forma el Xelu y las Placas de Hielo?',
+    subtitle: 'Física de la escarcha, la inversión térmica en los valles y el peligro del hielo negro en carretera',
+    badge: 'Termodinámica Vial & Inversión Térmica Asturiana',
+    sections: [
+      {
+        icon: '🌙',
+        heading: '1. Enfriamiento Radiativo Nocturno',
+        text: 'Durante las noches despejadas de otoño e invierno, el suelo terrestre pierde calor rápidamente por radiación infrarroja hacia el espacio exterior. Al no haber nubes que actúen como "manta térmica", la capa de aire en contacto con el asfalto <strong>puede estar entre 2 °C y 4 °C más fría</strong> que la temperatura del aire medida por las estaciones a 2 metros de altura.'
+      },
+      {
+        icon: '❄️',
+        heading: '2. Escarcha blanca ("El Xelu") vs Hielo Negro',
+        text: 'Si la humedad es alta y el punto de rocío desciende de 0 °C, el vapor de agua pasa directamente a cristales de hielo formando la <strong>escarcha o xelu</strong> sobre la hierba y la calzada. Pero el más peligroso es el <strong>hielo negro</strong>: se forma cuando el asfalto frío y húmedo se congela súbitamente creando una lámina transparente que parece simple suelo mojado, eliminando por completo la adherencia del neumático.'
+      },
+      {
+        icon: '🏔️',
+        heading: '3. Inversión Térmica en Cuencas y Valles Fluviales',
+        text: 'El aire frío es más denso y "pesa más" que el aire templado. En Asturias, se desliza por las laderas de las montañas y se embalsa en los fondos de valle (Caudal, Nalón, Narcea, Sella) y hondonadas costeras. En esos días, <strong>puede haber 0 °C en el fondo del valle con helada severa</strong> mientras que a 800 metros de altitud la temperatura es de 8 °C con sol.'
+      },
+      {
+        icon: '🚗',
+        heading: '4. Zonas Críticas para la Conducción',
+        text: 'En carretera, los puntos de mayor riesgo son: <strong>puentes y pasos elevados</strong> (el aire frío circula por arriba y por abajo enfriando la losa el doble de rápido), <strong>tramos en sombra perpetua</strong> entre desfiladeros, curvas orientadas al norte y rotondas cercanas a ríos o marismas donde la humedad residual es máxima.'
+      }
+    ]
+  },
+
+  aqi: {
+    icon: '🍃',
+    title: 'Calidad del Aire y Niveles de Polen en Asturias',
+    subtitle: 'Índice de Calidad del Aire Europeo (AQI), partículas en suspensión y monitor polínico para alérgicos',
+    badge: 'Copernicus CAMS & Red Aerobiológica',
+    sections: [
+      {
+        icon: '📊',
+        heading: '1. ¿Qué mide el Índice Europeo de Calidad del Aire (AQI)?',
+        text: 'El AQI europeo clasifica la pureza del aire en 5 niveles: <strong>Buena (verde), Razonablemente Buena (azul), Regular (amarillo), Desfavorable (naranja) y Muy Desfavorable (rojo)</strong>. Mide simultáneamente partículas finas (PM2.5 y PM10), ozono troposférico (O3) y dióxido de nitrógeno (NO2).'
+      },
+      {
+        icon: '🔬',
+        heading: '2. Partículas PM2.5 y PM10: ¿Qué son?',
+        text: 'Las partículas <strong>PM10</strong> (polvo, polen, sales marinas) tienen un diámetro menor a 10 micras y son filtradas en la nariz y garganta. Las <strong>PM2.5</strong> (humo de combustión, tráfico, emisiones industriales) miden menos de 2.5 micras, penetran directamente en los bronquios y alvéolos pulmonares y son el indicador principal de salud cardiovascular.'
+      },
+      {
+        icon: '🌿',
+        heading: '3. Monitor de Polen y Especies en Asturias',
+        text: 'Nuestro sistema monitoriza en tiempo real los principales alérgenos respiratorios gracias al servicio europeo <em>Copernicus Atmosphere</em>:' +
+          '<ul class="explain-list" style="margin-top: 8px;">' +
+            '<li><strong>🌾 Gramíneas:</strong> El alérgeno más extendido en praderías asturianas, con picos principales entre mayo y julio.</li>' +
+            '<li><strong>🌳 Abedul y Aliso:</strong> Árboles autóctonos de riberas y bosques del norte, con polinización activa entre febrero y abril.</li>' +
+            '<li><strong>🌿 Ambrosía y Plantas Herbáceas:</strong> Malezas que liberan polen a finales de verano y comienzos de otoño.</li>' +
+          '</ul>'
+      },
+      {
+        icon: '💡',
+        heading: '4. Consejos para Días de Concentración Elevada',
+        text: 'Si sufres de asma o rinitis alérgica: ventila la vivienda a primera hora de la mañana o última de la noche (las horas centrales y de viento concentran más polen), utiliza gafas de sol al aire libre para proteger la conjuntiva ocular y evita tender sábanas en el exterior durante picos de polinización.'
+      }
+    ]
+  },
+
+  xelu: {
+    icon: '🧊',
+    title: '¿Cómo se forman las Heladas y las Placas de Hielo en Asfalto?',
+    subtitle: 'Enfriamiento radiativo nocturno, inversión térmica y el peligro del hielo negro en Asturias',
+    badge: 'Alerta Xelu • Seguridad Vial • Inversión Térmica',
+    sections: [
+      {
+        icon: '🌌',
+        heading: '1. Enfriamiento Radiativo Nocturno',
+        text: 'Durante las noches de invierno despejadas y sin viento, el calor del suelo escapa directamente hacia el espacio exterior. Al no haber nubes que actúen como manta reflectora, la superficie del asfalto se enfría mucho más rápido que el aire circundante, pudiendo estar a 0 °C o bajo cero cuando el termómetro del coche aún marca 2 °C o 3 °C.'
+      },
+      {
+        icon: '🏔️',
+        heading: '2. Inversión Térmica en Valles Asturianos',
+        text: 'El aire frío es más denso y pesado que el caliente, por lo que desciende por las laderas montañosas y se estanca en los fondos de valle (Cangas del Narcea, Aller, Lena, Trubia, etc.). Esto provoca que el fondo del valle amanezca congelado mientras en cotas más altas la temperatura es suave.'
+      },
+      {
+        icon: '⚠️',
+        heading: '3. El Peligro del Hielo Negro Invisible',
+        text: 'Cuando la humedad ambiental es baja o el asfalto retiene humedad de lluvias previas, el agua se congela formando una película transparente y brillante sin burbujas de aire. Es prácticamente invisible a la vista del conductor y provoca una pérdida total de adherencia en frenada y curva.'
+      },
+      {
+        icon: '🚗',
+        heading: '4. Precaución Vial en Puntos Críticos',
+        text: 'Los pasos elevados, puentes y curvas umbrías (orientadas al norte o tapadas por arbolado y taludes) son los primeros en helarse y los últimos en descongelarse al no recibir radiación solar directa. Modera la velocidad, aumenta la distancia de seguridad y frena con extrema suavidad.'
+      }
+    ]
   }
 };
 

@@ -82,8 +82,8 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
       return r.json();
     });
 
-    // 2. Calidad del Aire
-    const aqiUrl = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&current=european_aqi,pm10,pm2_5,nitrogen_dioxide,ozone,sulphur_dioxide&timezone=Europe%2FMadrid`;
+    // 2. Calidad del Aire y Pólenes (Copernicus CAMS Open-Meteo)
+    const aqiUrl = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&current=european_aqi,pm10,pm2_5,nitrogen_dioxide,ozone,sulphur_dioxide,alder_pollen,birch_pollen,grass_pollen,mugwort_pollen,olive_pollen,ragweed_pollen&timezone=Europe%2FMadrid`;
     const aqiPromise = fetch(aqiUrl).then(r => r.json()).catch(() => null);
 
     // 3. Datos Marinos y Temperatura del Agua (en costa o referencia cantábrica)

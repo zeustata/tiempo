@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v228-location-locality';
+const CACHE_NAME = 'meteoasturlode-v233-semaforo';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -36,6 +36,7 @@ const STATIC_ASSETS = [
   './js/utils/webcamsData.js',
   './js/utils/foehnDetector.js',
   './js/utils/galernaDetector.js',
+  './js/utils/xeluDetector.js',
   './js/utils/laundryAdvisor.js',
   './js/utils/climatologyData.js',
   './js/utils/storage.js',

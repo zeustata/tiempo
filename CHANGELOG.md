@@ -10,6 +10,23 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.9] - 2026-09-27
+
+### ❄️ Detector de Heladas y Placas de Hielo ("Alerta Xelu") & 🌿 Monitor de Polen (AQI)
+- **Detector Silencioso de Heladas y Placas de Hielo en Firme (`js/utils/xeluDetector.js`):**
+  - Motor termodinámico que evalúa subenfriamiento superficial (&le; 2.5 °C), punto de rocío (&le; 0.5 °C) y enfriamiento radiativo nocturno/matinal (21h a 10h) bajo calma de viento (&le; 12 km/h).
+  - Dos estados de severidad con código semafórico vial internacional: 🟡 ❄️ *Riesgo de Helada • Alerta Xelu* (firme húmedo y asfalto resbaladizo preventivo en marco amarillo ámbar pulsante) y 🔴 🧊 *Alerta de Placas de Hielo en Asfalto* (hielo negro invisible en calzada con marco rojo de emergencia idéntico a la Galerna Severa).
+  - Cápsulas métricas a 999px y botón didáctico `💡 ¿Por qué ocurre?`.
+  - Integración estricta con la **Doctrina Constitucional 12** (conmutador de simulacro controlado `?test=xelu`, `?test=helada` y `?test=hielo`).
+- **Monitor de Polen Activo en Calidad del Aire (`js/services/weatherApi.js` & `js/components/currentCard.js`):**
+  - Consulta en tiempo real de alérgenos clave en Europa vía *Copernicus CAMS Open-Meteo*: Gramíneas, Abedul, Aliso, Olivo y Ambrosía sin coste de API ni peticiones adicionales.
+  - Fila ergonómica integrada en el sensor de Calidad del Aire con pastillas semafóricas (Nulo 🟢, Bajo 🟢, Moderado 🟡, Alto 🔴) y blindaje anti-desborde (Doctrina 11).
+- **Suite Didáctica Ampliada (`js/utils/weatherExplanations.js`):**
+  - Nuevas entradas educativas completas en el modal didáctico para `xelu` (física de la helada, inversión térmica en valles asturianos, hielo negro y seguridad vial) y `aqi` (partículas PM2.5/PM10 y aerobiología).
+- **Cache-bust:** `sw.js` → `meteoasturlode-v233-semaforo`, actualización a `?v=1.1.9-semaforo-v233` en módulos, scripts y hojas de estilo.
+
+---
+
 ## [1.1.8] - 2026-09-27
 
 ### 📍 Jerarquía Visual & Tipografía en Ubicaciones y Parroquias

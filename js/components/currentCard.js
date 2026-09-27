@@ -1,10 +1,11 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.1.8-loc';
-import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.1.8-loc';
-import { renderHourlyForecastBlock } from './forecastView.js?v=1.1.8-loc';
-import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.8-loc';
-import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=1.1.8-loc';
-import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.8-loc';
-import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=1.1.8-loc';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.1.9-semaforo-v233';
+import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.1.9-semaforo-v233';
+import { renderHourlyForecastBlock } from './forecastView.js?v=1.1.9-semaforo-v233';
+import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.9-semaforo-v233';
+import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=1.1.9-semaforo-v233';
+import { detectXeluEffect, renderXeluBanner } from '../utils/xeluDetector.js?v=1.1.9-semaforo-v233';
+import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.9-semaforo-v233';
+import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=1.1.9-semaforo-v233';
 
 /**
  * Formatea el título del concejo subordinando las localidades entre paréntesis (ej. Piedras Blancas / Salinas)
@@ -16,6 +17,26 @@ function formatLocationTitle(name) {
     return `${match[1]} <span class="location-locality">${match[2]}</span>`;
   }
   return name;
+}
+
+/**
+ * Determina la clase CSS de la pastilla según la concentración de polen (granos/m³)
+ */
+function getPollenBadgeClass(val, lowLimit = 10, highLimit = 50) {
+  if (val == null || val <= 0.2) return 'pollen-zero';
+  if (val < lowLimit) return 'pollen-low';
+  if (val < highLimit) return 'pollen-mod';
+  return 'pollen-high';
+}
+
+/**
+ * Etiqueta legible con semáforo para el nivel de polen
+ */
+function getPollenLabel(val, lowLimit = 10, highLimit = 50) {
+  if (val == null || val <= 0.2) return 'Nulo 🟢';
+  if (val < lowLimit) return 'Bajo 🟢';
+  if (val < highLimit) return 'Moderado 🟡';
+  return 'Alto 🔴';
 }
 
 /**
@@ -78,6 +99,10 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   const galerna = detectGalernaEffect(current, hourly, concejo);
   const galernaMarkup = renderGalernaBanner(galerna);
 
+  // Detección Silenciosa de Escarcha y Placas de Hielo ("Alerta Xelu")
+  const xelu = detectXeluEffect(current, daily, concejo);
+  const xeluMarkup = renderXeluBanner(xelu);
+
   // Asesor de Colada y Secado de Ropa
   const laundry = calculateLaundryDrying(current, hourly, daily);
   const laundryMarkup = renderLaundryCard(laundry);
@@ -127,6 +152,9 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
 
     <!-- BANNER DINÁMICO DE DETECTOR DE GALERNA CANTÁBRICA -->
     ${galernaMarkup}
+
+    <!-- BANNER DINÁMICO DE DETECTOR DE ESCARCHA Y PLACAS DE HIELO ("ALERTA XELU") -->
+    ${xeluMarkup}
 
     <!-- PRONÓSTICO HORARIO 72H / 3 DÍAS (SOLICITADO POR BETA TESTERS) -->
     ${hourlyForecastMarkup}
@@ -262,14 +290,14 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
         </div>
       </div>
 
-      <!-- 6. CALIDAD DEL AIRE -->
+      <!-- 6. CALIDAD DEL AIRE & PÓLENES -->
       <div class="sensor-card">
         <div class="sensor-header">
           <div class="sensor-header-left">
             <span class="sensor-icon">🍃</span>
-            <span class="sensor-title">Calidad del Aire (AQI)</span>
+            <span class="sensor-title">Calidad del Aire & Polen</span>
           </div>
-          <button class="btn-explain-sensor" data-explain="aqi" title="¿Qué mide el índice de calidad del aire? Pulsa para aprender">💡 Explícame</button>
+          <button class="btn-explain-sensor" data-explain="aqi" title="¿Qué mide el índice de calidad del aire y los niveles de polen? Pulsa para aprender">💡 Explícame</button>
         </div>
         <div class="sensor-body">
           <div class="sensor-val" style="color: ${aqiInfo.color};">${aqi?.european_aqi ?? 'Óptimo'} <small>(${aqiInfo.level})</small></div>
@@ -277,6 +305,20 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
           <div class="aqi-particles">
             <span>PM2.5: <strong>${typeof aqi?.pm2_5 === 'number' ? aqi.pm2_5.toFixed(1) : '8.2'} µg/m³</strong></span>
             <span>PM10: <strong>${typeof aqi?.pm10 === 'number' ? aqi.pm10.toFixed(1) : '14.1'} µg/m³</strong></span>
+          </div>
+          <div class="aqi-pollen-section">
+            <div class="pollen-section-title">🌾 Monitor de Polen Activo:</div>
+            <div class="pollen-chips">
+              <span class="pollen-chip ${getPollenBadgeClass(aqi?.grass_pollen, 10, 50)}" title="Polen de gramíneas y pastizales asturianos">
+                🌾 Gramíneas: <strong>${getPollenLabel(aqi?.grass_pollen, 10, 50)}</strong>
+              </span>
+              <span class="pollen-chip ${getPollenBadgeClass(aqi?.birch_pollen, 15, 75)}" title="Polen de abedul de montaña y bosque">
+                🌳 Abedul: <strong>${getPollenLabel(aqi?.birch_pollen, 15, 75)}</strong>
+              </span>
+              <span class="pollen-chip ${getPollenBadgeClass(aqi?.alder_pollen, 15, 75)}" title="Polen de aliso de riberas fluviales">
+                🌿 Aliso: <strong>${getPollenLabel(aqi?.alder_pollen, 15, 75)}</strong>
+              </span>
+            </div>
           </div>
         </div>
       </div>
