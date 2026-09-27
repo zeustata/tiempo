@@ -4,12 +4,12 @@
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
   padding: 24px 28px;
-  box-shadow: var(--shadow-card), 0 8px 32px 0 rgba(0, 0, 0, 0.28);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.05), var(--shadow-card), 0 12px 36px 0 rgba(0, 0, 0, 0.35);
   margin-bottom: 20px;
   position: relative;
   overflow: hidden;
-  backdrop-filter: blur(6px) saturate(135%);
-  -webkit-backdrop-filter: blur(6px) saturate(135%);
+  backdrop-filter: blur(12px) saturate(145%);
+  -webkit-backdrop-filter: blur(12px) saturate(145%);
   transform: perspective(1000px) rotateX(var(--glass-tilt-x, 0deg)) rotateY(var(--glass-tilt-y, 0deg));
   transition: transform 0.1s ease-out, box-shadow 0.3s ease, border-color 0.3s ease;
 }
@@ -20,13 +20,13 @@
   inset: 0;
   border-radius: inherit;
   background: radial-gradient(
-    circle 380px at var(--glass-x, 50%) var(--glass-y, 25%),
-    rgba(255, 255, 255, 0.18) 0%,
-    rgba(56, 189, 248, 0.08) 45%,
-    transparent 75%
+    circle 340px at var(--glass-x, 50%) var(--glass-y, 25%),
+    rgba(255, 255, 255, 0.32) 0%,
+    rgba(147, 197, 253, 0.15) 35%,
+    transparent 70%
   );
   pointer-events: none;
-  mix-blend-mode: overlay;
+  z-index: 5;
   transition: opacity 0.3s ease;
 }
 
@@ -354,11 +354,11 @@
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
   padding: 20px 24px;
-  box-shadow: var(--shadow-card);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.28), var(--shadow-card);
   position: relative;
   overflow: hidden;
-  backdrop-filter: blur(5px) saturate(130%);
-  -webkit-backdrop-filter: blur(5px) saturate(130%);
+  backdrop-filter: blur(10px) saturate(135%);
+  -webkit-backdrop-filter: blur(10px) saturate(135%);
   transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
@@ -368,12 +368,13 @@
   inset: 0;
   border-radius: inherit;
   background: radial-gradient(
-    circle 240px at var(--glass-x, 50%) var(--glass-y, 25%),
-    rgba(255, 255, 255, 0.08) 0%,
-    transparent 65%
+    circle 260px at var(--glass-x, 50%) var(--glass-y, 25%),
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(147, 197, 253, 0.1) 38%,
+    transparent 68%
   );
   pointer-events: none;
-  mix-blend-mode: overlay;
+  z-index: 5;
 }
 
 .sensor-card:hover {

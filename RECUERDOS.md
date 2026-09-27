@@ -9,18 +9,19 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - **Cristal Líquido Dinámico (Apple Liquid Glass Giroscopio) & Noche Zafiro Profundo:**
   1. *Apreciación & Petición de Lendo:*
      - Lendo observó que la noche nublada se veía "descolorida y sosa" al pasar todo por los ojos, y propuso implementar el efecto Apple Liquid Glass que reacciona con blur y reflejo especular al girar el móvil.
-  2. *Motor Físico Giroscópico (`js/utils/gyroGlass.js` & `css/components.css`):*
-     - Lectura en tiempo real de `DeviceOrientationEvent` (inclinación lateral `gamma` y frontal `beta` de la mano) y ratón en PC.
-     - Suavizado cinematográfico mediante interpolación lineal (Lerp 0.07 a 60 fps).
-     - Proyección de un reflejo especular líquido dinámico sobre la tarjeta hero y sensores con micro-inclinación tridimensional de ±2.5°.
-     - Micro-blur cristalino de alta transmitancia (`blur(6px) saturate(135%)`), otorgando relieve 3D sin tapar las partículas vivas de lluvia, nieve o estrellas (fiel cumplimiento de la Ley 5).
-  3. *Tema Atmosférico Nocturno `cloudy-night` (`css/weather-themes.css` & `js/app.js`):*
-     - Sustitución del gris diurno descolorido por una cúpula zafiro/cobalto nocturna con halo lunar difuso (`#1e293b` a `#020617`), bordes bioluminiscentes y alto contraste OLED.
+     - En el primer test en móvil, el efecto quedaba enmascarado por la absorción del `mix-blend-mode: overlay` en fondos oscuros y la ausencia de `touchmove`. Lendo autorizó aplicar el perfeccionamiento integral.
+  2. *Motor Físico Giroscópico & Táctil (`js/utils/gyroGlass.js` & `css/components.css`):*
+     - Soporte triple de interacción: lectura en tiempo real de `DeviceOrientationEvent` (inclinación lateral `gamma` y frontal `beta` de la mano), gestos táctiles directos en pantalla (`touchmove`), ratón en PC y respiración ambiental viva en reposo (*idle breathing* oscilatorio cuando el teléfono reposa sobre una mesa).
+     - Manejador de permisos automático para iOS 13+ Safari (`DeviceOrientationEvent.requestPermission`) al primer toque.
+     - Destello especular puro sin modos de fusión sustractivos en capa superior (`z-index: 5; pointer-events: none;`) con bisel interior de luz tallada Apple (`inset 0 1px 1px rgba(255, 255, 255, 0.35)`).
+     - Extensión del efecto a todas las tarjetas de sensores (`.sensor-card`) para una coherencia visual de panel único de zafiro en toda la interfaz.
+     - Micro-blur cristalino de alta transmitancia (`blur(12px) saturate(145%)`), otorgando relieve 3D sin tapar las partículas vivas animadas (fiel cumplimiento de la Ley 5).
+  3. *Tema Atmosférico Nocturno `cloudy-night` con Orbes de Luz (`css/weather-themes.css` & `js/app.js`):*
+     - Sustitución del fondo plano gris por una cúpula zafiro/cobalto nocturna enriquecida con orbes difusos de luz ambiental (luz lunar cian `rgba(56, 189, 248, 0.22)` e índigo `rgba(99, 102, 241, 0.18)`), aportando a la refracción del cristal la textura luminosa típica de Apple visionOS e iOS.
   4. *Blindaje de Caché y Versión:*
-     - Versión oficial actualizada a `v1.1.10 📱✨` en badge del pie, modal de novedades y registros.
-     - `CACHE_NAME` actualizado a `meteoasturlode-v235-gyro-glass` en `sw.js`.
-     - Inclusión de `./js/utils/gyroGlass.js` en `STATIC_ASSETS`.
-     - Query strings de scripts y CSS sincronizados a `?v=1.1.9-gyro-v235`.
+     - Versión oficial `v1.1.10 📱✨`.
+     - `CACHE_NAME` actualizado a `meteoasturlode-v236-apple-glass` en `sw.js`.
+     - Query strings de scripts, módulos y CSS sincronizados a `?v=1.1.10-glass-v236`.
 
 ---
 

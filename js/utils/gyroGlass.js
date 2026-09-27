@@ -3,13 +3,12 @@
  * Desarrollado por Manuel A. L. Barril (Lendo) y Princesa para MeteoAstur Lode
  *
  * Simula el reflejo especular de la luz ambiental sobre un cristal de zafiro
- * interactuando con el giroscopio del móvil (DeviceOrientation) y el cursor en PC.
+ * interactuando con giroscopio, toques táctiles, ratón y respiración ambiental viva.
  */
 
 export function initGyroGlass() {
   if (typeof window === 'undefined') return;
 
-  // Respetar preferencias de accesibilidad de movimiento reducido
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (prefersReducedMotion) return;
 
@@ -23,57 +22,97 @@ export function initGyroGlass() {
   let currentTiltX = 0;
   let currentTiltY = 0;
 
-  let isGyroActive = false;
+  let hasUserInteracted = false;
+  let lastInteractionTime = 0;
 
-  // 1. Manejo del Giroscopio Móvil (Acelerómetro / Orientación de la mano)
+  // 1. Manejo del Giroscopio Móvil (Inclinación de la mano)
   const handleOrientation = (e) => {
-    const gamma = e.gamma; // Inclinación lateral izquierda/derecha (-90 a 90)
-    const beta = e.beta;   // Inclinación frontal adelante/atrás (-180 a 180)
+    const gamma = e.gamma; // Lateral (-90 a 90)
+    const beta = e.beta;   // Frontal (-180 a 180)
 
     if (gamma == null || beta == null) return;
-    isGyroActive = true;
+    hasUserInteracted = true;
+    lastInteractionTime = performance.now();
 
-    // Normalización de la posición habitual de sujeción del móvil (beta ~ 40°-50°, gamma ~ 0°)
-    const clampedGamma = Math.max(-35, Math.min(35, gamma));
-    const clampedBeta = Math.max(15, Math.min(65, beta));
+    // Normalización para postura de sujeción (beta ~ 40°-50°, gamma ~ 0°)
+    const clampedGamma = Math.max(-40, Math.min(40, gamma));
+    const clampedBeta = Math.max(10, Math.min(75, beta));
 
-    // Mapeo a porcentajes de posición del reflejo especular (0% a 100%)
-    targetX = ((clampedGamma + 35) / 70) * 100;
-    targetY = ((clampedBeta - 15) / 50) * 100;
+    // Mapeo dinámico del reflejo especular (10% a 90%)
+    targetX = ((clampedGamma + 40) / 80) * 80 + 10;
+    targetY = ((clampedBeta - 10) / 65) * 80 + 10;
 
-    // Mapeo de micro-inclinación tridimensional suave (máximo ±2.5 grados)
-    targetTiltY = (clampedGamma / 35) * 2.5;
-    targetTiltX = -((clampedBeta - 40) / 25) * 2.5;
+    // Inclinación 3D suave (±4.5 grados)
+    targetTiltY = (clampedGamma / 40) * 4.5;
+    targetTiltX = -((clampedBeta - 42) / 32) * 4.5;
   };
 
-  // 2. Manejo del Cursor en Escritorio (Mouse Parallax)
+  // 2. Manejo Táctil y Puntero
+  const handlePointer = (clientX, clientY) => {
+    hasUserInteracted = true;
+    lastInteractionTime = performance.now();
+
+    const normX = clientX / window.innerWidth;
+    const normY = clientY / window.innerHeight;
+
+    targetX = normX * 80 + 10;
+    targetY = normY * 80 + 10;
+
+    targetTiltY = (normX - 0.5) * 6;
+    targetTiltX = -(normY - 0.5) * 6;
+  };
+
   const handlePointerMove = (e) => {
-    if (isGyroActive) return; // Si hay giroscopio físico, priorizar la mano
-
-    const normX = e.clientX / window.innerWidth;
-    const normY = e.clientY / window.innerHeight;
-
-    targetX = normX * 100;
-    targetY = normY * 100;
-
-    targetTiltY = (normX - 0.5) * 3;
-    targetTiltX = -(normY - 0.5) * 3;
+    handlePointer(e.clientX, e.clientY);
   };
 
-  // Activar listeners
-  if (window.DeviceOrientationEvent) {
-    window.addEventListener('deviceorientation', handleOrientation, { passive: true });
-  }
-  window.addEventListener('pointermove', handlePointerMove, { passive: true });
+  const handleTouchMove = (e) => {
+    if (e.touches && e.touches[0]) {
+      handlePointer(e.touches[0].clientX, e.touches[0].clientY);
+    }
+  };
 
-  // 3. Bucle de Renderizado con Interpolación Suave (Lerp continuo a 60fps)
+  // Solicitar permiso en iOS 13+ al primer toque
+  const setupPermissionsAndListeners = () => {
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+      const requestiOSPermission = () => {
+        DeviceOrientationEvent.requestPermission().then((res) => {
+          if (res === 'granted') {
+            window.addEventListener('deviceorientation', handleOrientation, { passive: true });
+          }
+        }).catch(() => {});
+      };
+      document.addEventListener('pointerdown', requestiOSPermission, { once: true });
+    } else if (window.DeviceOrientationEvent) {
+      window.addEventListener('deviceorientation', handleOrientation, { passive: true });
+    }
+
+    window.addEventListener('pointermove', handlePointerMove, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+  };
+
+  setupPermissionsAndListeners();
+
+  // 3. Bucle de Renderizado con Interpolación Suave y Respiración Viva
   const lerp = (start, end, factor) => start + (end - start) * factor;
 
-  const updateFrame = () => {
-    currentX = lerp(currentX, targetX, 0.07);
-    currentY = lerp(currentY, targetY, 0.07);
-    currentTiltX = lerp(currentTiltX, targetTiltX, 0.07);
-    currentTiltY = lerp(currentTiltY, targetTiltY, 0.07);
+  const updateFrame = (time) => {
+    // Si no ha habido interacción reciente (móvil sobre la mesa), oscilación suave viva
+    if (!hasUserInteracted || (time - lastInteractionTime > 3500)) {
+      const t = time * 0.0012;
+      const idleWaveX = Math.sin(t) * 14;
+      const idleWaveY = Math.cos(t * 0.8) * 12;
+
+      targetX = 50 + idleWaveX;
+      targetY = 32 + idleWaveY;
+      targetTiltY = (idleWaveX / 14) * 1.5;
+      targetTiltX = (idleWaveY / 12) * 1.5;
+    }
+
+    currentX = lerp(currentX, targetX, 0.075);
+    currentY = lerp(currentY, targetY, 0.075);
+    currentTiltX = lerp(currentTiltX, targetTiltX, 0.075);
+    currentTiltY = lerp(currentTiltY, targetTiltY, 0.075);
 
     const root = document.documentElement;
     root.style.setProperty('--glass-x', `${currentX.toFixed(1)}%`);

@@ -13,14 +13,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 ## [1.1.10] - 2026-09-27
 
 ### 📱 Cristal Líquido Dinámico (Apple Liquid Glass Giroscopio) & 🌌 Noche Nublada Zafiro
-- **Efecto de Cristal Líquido Giroscópico (`js/utils/gyroGlass.js` & `css/components.css`):**
-  - Motor físico en tiempo real conectado al giroscopio y acelerómetro del móvil (`DeviceOrientationEvent`: inclinación lateral y frontal) y al cursor del ratón en PC.
-  - Generación de un destello especular líquido dinámico sobre la tarjeta hero y sensores que sigue el movimiento de la muñeca en la mano, como la luz ambiental incidiendo sobre un cristal de zafiro físico.
-  - Micro-inclinación tridimensional sutil (perspectiva 3D con suave tilt de &plusmn;2.5°) suavizado mediante interpolación lineal continua (Lerp 0.07 a 60 fps).
-  - Integración de micro-blur cristalino de alta transmitancia (`blur(6px) saturate(135%)`) que otorga cuerpo y volumen a las tarjetas sin opacar las partículas vivas animadas de fondo (cumplimiento fiel de la Ley 5).
-- **Tema Atmosférico Nocturno Dedicado (`css/weather-themes.css` & `js/app.js`):**
-  - Sustitución del gris diurno descolorido (`#475569`) por el nuevo tema específico **`cloudy-night`**: una cúpula zafiro/cobalto nocturno con halo de luz de luna difuso (`#1e293b` a `#020617`), bordes bioluminiscentes y alto contraste OLED.
-- **Cache-bust:** `sw.js` → `meteoasturlode-v235-gyro-glass`, actualización a `?v=1.1.9-gyro-v235` en módulos, scripts y hojas de estilo.
+- **Efecto de Cristal Líquido Giroscópico & Táctil (`js/utils/gyroGlass.js` & `css/components.css`):**
+  - Motor físico en tiempo real conectado al giroscopio del móvil (`DeviceOrientationEvent`: inclinación lateral y frontal), gestos táctiles (`touchmove`), cursor en PC y respiración ambiental viva en reposo (*idle breathing*).
+  - Destello especular líquido dinámico sobre la tarjeta principal y tarjetas de sensores con bisel de luz interior tallado (`inset 0 1px 1px rgba(255, 255, 255, 0.35)`), sin modos de fusión que apaguen el brillo en fondos oscuros.
+  - Micro-inclinación tridimensional física (perspectiva 3D con suave tilt de hasta 4.5 grados) con suavizado mediante interpolación continua a 60 fps.
+  - Filtro de refracción vítrea (`blur(12px) saturate(145%)`) preservando las partículas animadas de fondo.
+- **Tema Atmosférico Nocturno Dedicado con Orbes de Luz (`css/weather-themes.css` & `js/app.js`):**
+  - Sustitución del gris diurno plano por el nuevo tema específico **`cloudy-night`**: orbes de luz ambiental zafiro/cian difusos que aportan profundidad real a la refracción del cristal, con halo de luna y alto contraste OLED.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v236-apple-glass`, actualización a `?v=1.1.10-glass-v236` en módulos, scripts y hojas de estilo.
 
 ---
 

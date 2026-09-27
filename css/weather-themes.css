@@ -11,11 +11,16 @@ body[data-weather-theme="clear-day"] {
 
 /* 2. Despejado de Noche / Cielo Estrellado (Azul Medianoche + Violeta Profundo) */
 body[data-weather-theme="clear-night"] {
-  background: radial-gradient(ellipse at 50% -10%, #1e1b4b 0%, #0f172a 45%, #020617 100%);
+  background-color: #020617;
+  background-image:
+    radial-gradient(circle 500px at 20% 12%, rgba(129, 140, 248, 0.22) 0%, transparent 70%),
+    radial-gradient(circle 460px at 80% 38%, rgba(56, 189, 248, 0.16) 0%, transparent 70%),
+    radial-gradient(ellipse at 50% -10%, #1e1b4b 0%, #0f172a 45%, #020617 100%);
+  background-attachment: fixed;
   --border-glow: rgba(129, 140, 248, 0.5);
-  --border-glass: rgba(255, 255, 255, 0.18);
-  --bg-surface: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(15, 23, 42, 0.22) 100%);
-  --bg-surface-elevated: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(30, 41, 59, 0.28) 100%);
+  --border-glass: rgba(255, 255, 255, 0.2);
+  --bg-surface: linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(15, 23, 42, 0.32) 100%);
+  --bg-surface-elevated: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(30, 41, 59, 0.42) 100%);
 }
 
 /* 3. Parcialmente Nublado de Día */
@@ -31,11 +36,16 @@ body[data-weather-theme="mostly-clear-day"] {
 /* 4. Parcialmente Nublado de Noche */
 body[data-weather-theme="partly-cloudy-night"],
 body[data-weather-theme="mostly-clear-night"] {
-  background: radial-gradient(ellipse at 50% -10%, #1e293b 0%, #0f172a 50%, #020617 100%);
-  --border-glow: rgba(148, 163, 184, 0.4);
-  --border-glass: rgba(255, 255, 255, 0.16);
-  --bg-surface: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(15, 23, 42, 0.22) 100%);
-  --bg-surface-elevated: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(30, 41, 59, 0.28) 100%);
+  background-color: #020617;
+  background-image:
+    radial-gradient(circle 500px at 15% 15%, rgba(99, 102, 241, 0.2) 0%, transparent 70%),
+    radial-gradient(circle 460px at 85% 35%, rgba(56, 189, 248, 0.16) 0%, transparent 70%),
+    radial-gradient(ellipse at 50% -10%, #1e293b 0%, #0f172a 50%, #020617 100%);
+  background-attachment: fixed;
+  --border-glow: rgba(148, 163, 184, 0.45);
+  --border-glass: rgba(255, 255, 255, 0.2);
+  --bg-surface: linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(15, 23, 42, 0.32) 100%);
+  --bg-surface-elevated: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(30, 41, 59, 0.42) 100%);
 }
 
 /* 5. Nublado / Cubiertu de Día (Gris Pizarra y Grafito Elegante) */
@@ -49,11 +59,16 @@ body[data-weather-theme="cloudy"] {
 
 /* 5b. Nublado de Noche / Cielo Velado (Zafiro Profundo & Halo Lunar) */
 body[data-weather-theme="cloudy-night"] {
-  background: radial-gradient(ellipse at 50% -10%, #1e293b 0%, #0f172a 45%, #060b14 80%, #020617 100%);
-  --border-glow: rgba(56, 189, 248, 0.45);
-  --border-glass: rgba(255, 255, 255, 0.18);
-  --bg-surface: linear-gradient(135deg, rgba(255, 255, 255, 0.09) 0%, rgba(15, 23, 42, 0.32) 100%);
-  --bg-surface-elevated: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(30, 41, 59, 0.42) 100%);
+  background-color: #030712;
+  background-image:
+    radial-gradient(circle 550px at 15% 15%, rgba(56, 189, 248, 0.22) 0%, transparent 70%),
+    radial-gradient(circle 500px at 85% 35%, rgba(99, 102, 241, 0.18) 0%, transparent 70%),
+    radial-gradient(ellipse at 50% -10%, #1e293b 0%, #0f172a 45%, #060b14 80%, #020617 100%);
+  background-attachment: fixed;
+  --border-glow: rgba(56, 189, 248, 0.55);
+  --border-glass: rgba(255, 255, 255, 0.22);
+  --bg-surface: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(15, 23, 42, 0.38) 100%);
+  --bg-surface-elevated: linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(30, 41, 59, 0.48) 100%);
 }
 
 
