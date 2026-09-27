@@ -4,7 +4,27 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.9 — 2026-09-27
+## 🚀 Última Actualización Oficial: v1.1.10 — 2026-09-27
+
+- **Cristal Líquido Dinámico (Apple Liquid Glass Giroscopio) & Noche Zafiro Profundo:**
+  1. *Apreciación & Petición de Lendo:*
+     - Lendo observó que la noche nublada se veía "descolorida y sosa" al pasar todo por los ojos, y propuso implementar el efecto Apple Liquid Glass que reacciona con blur y reflejo especular al girar el móvil.
+  2. *Motor Físico Giroscópico (`js/utils/gyroGlass.js` & `css/components.css`):*
+     - Lectura en tiempo real de `DeviceOrientationEvent` (inclinación lateral `gamma` y frontal `beta` de la mano) y ratón en PC.
+     - Suavizado cinematográfico mediante interpolación lineal (Lerp 0.07 a 60 fps).
+     - Proyección de un reflejo especular líquido dinámico sobre la tarjeta hero y sensores con micro-inclinación tridimensional de ±2.5°.
+     - Micro-blur cristalino de alta transmitancia (`blur(6px) saturate(135%)`), otorgando relieve 3D sin tapar las partículas vivas de lluvia, nieve o estrellas (fiel cumplimiento de la Ley 5).
+  3. *Tema Atmosférico Nocturno `cloudy-night` (`css/weather-themes.css` & `js/app.js`):*
+     - Sustitución del gris diurno descolorido por una cúpula zafiro/cobalto nocturna con halo lunar difuso (`#1e293b` a `#020617`), bordes bioluminiscentes y alto contraste OLED.
+  4. *Blindaje de Caché y Versión:*
+     - Versión oficial actualizada a `v1.1.10 📱✨` en badge del pie, modal de novedades y registros.
+     - `CACHE_NAME` actualizado a `meteoasturlode-v235-gyro-glass` en `sw.js`.
+     - Inclusión de `./js/utils/gyroGlass.js` en `STATIC_ASSETS`.
+     - Query strings de scripts y CSS sincronizados a `?v=1.1.9-gyro-v235`.
+
+---
+
+## 🚀 Versión Anterior Oficial: v1.1.9 — 2026-09-27
 
 - **Detector de Heladas y Placas de Hielo en Asfalto ("Alerta Xelu") & Monitor de Polen (AQI):**
   1. *Concepto & Solicitud de Lendo:*

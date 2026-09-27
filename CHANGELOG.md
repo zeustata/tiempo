@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.10] - 2026-09-27
+
+### 📱 Cristal Líquido Dinámico (Apple Liquid Glass Giroscopio) & 🌌 Noche Nublada Zafiro
+- **Efecto de Cristal Líquido Giroscópico (`js/utils/gyroGlass.js` & `css/components.css`):**
+  - Motor físico en tiempo real conectado al giroscopio y acelerómetro del móvil (`DeviceOrientationEvent`: inclinación lateral y frontal) y al cursor del ratón en PC.
+  - Generación de un destello especular líquido dinámico sobre la tarjeta hero y sensores que sigue el movimiento de la muñeca en la mano, como la luz ambiental incidiendo sobre un cristal de zafiro físico.
+  - Micro-inclinación tridimensional sutil (perspectiva 3D con suave tilt de &plusmn;2.5°) suavizado mediante interpolación lineal continua (Lerp 0.07 a 60 fps).
+  - Integración de micro-blur cristalino de alta transmitancia (`blur(6px) saturate(135%)`) que otorga cuerpo y volumen a las tarjetas sin opacar las partículas vivas animadas de fondo (cumplimiento fiel de la Ley 5).
+- **Tema Atmosférico Nocturno Dedicado (`css/weather-themes.css` & `js/app.js`):**
+  - Sustitución del gris diurno descolorido (`#475569`) por el nuevo tema específico **`cloudy-night`**: una cúpula zafiro/cobalto nocturno con halo de luz de luna difuso (`#1e293b` a `#020617`), bordes bioluminiscentes y alto contraste OLED.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v235-gyro-glass`, actualización a `?v=1.1.9-gyro-v235` en módulos, scripts y hojas de estilo.
+
+---
+
 ## [1.1.9] - 2026-09-27
 
 ### ❄️ Detector de Heladas y Placas de Hielo ("Alerta Xelu") & 🌿 Monitor de Polen (AQI)

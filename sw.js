@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v234-changelog-119';
+const CACHE_NAME = 'meteoasturlode-v235-gyro-glass';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -37,6 +37,7 @@ const STATIC_ASSETS = [
   './js/utils/foehnDetector.js',
   './js/utils/galernaDetector.js',
   './js/utils/xeluDetector.js',
+  './js/utils/gyroGlass.js',
   './js/utils/laundryAdvisor.js',
   './js/utils/climatologyData.js',
   './js/utils/storage.js',

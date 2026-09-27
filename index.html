@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.9-modal-v234">
-  <link rel="stylesheet" href="css/components.css?v=1.1.9-modal-v234">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.9-modal-v234">
+  <link rel="stylesheet" href="css/main.css?v=1.1.9-gyro-v235">
+  <link rel="stylesheet" href="css/components.css?v=1.1.9-gyro-v235">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.9-gyro-v235">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -176,7 +176,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.9 ❄️🌿</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.10 📱✨</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -227,8 +227,19 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.9 ❄️🌿</span>
+            <span class="release-version">v1.1.10 📱✨</span>
             <span class="release-date">27 Sep 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> <strong>Cristal Líquido Dinámico (Apple Liquid Glass Giroscopio)</strong>: Motor físico en tiempo real conectado al giroscopio del móvil y cursor en PC. Al mover el teléfono en la mano, proyecta un destello especular líquido que sigue la inclinación de la muñeca sobre un micro-blur cristalino de alta transmitancia, con micro-perspectiva 3D suave.</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Cielo Nocturno Zafiro & Bruma Lunar</strong>: Sustitución del gris diurno descolorido por el nuevo tema <code>cloudy-night</code> con cúpula zafiro profundo, halo difuso de luz de luna y alto contraste OLED.</li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.9 ❄️🌿</span>
+            <span class="release-date">27 Sep 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-new">Nuevo</span> <strong>Detector de Heladas y Placas de Hielo en Asfalto ("Alerta Xelu")</strong>: Monitor silencioso termodinámico que evalúa subenfriamiento superficial (&le; 2.5 °C), punto de rocío y calma radiativa nocturna en valles y sombras. Código semafórico vial: 🟡 marco amarillo ámbar para riesgo de helada y firme deslizante, y 🔴 marco rojo de emergencia para placas de hielo negro invisible en calzada, con consejos de conducción vial y botón didáctico [💡 ¿Por qué ocurre?].</li>
@@ -1743,7 +1754,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.1.9-modal-v234').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.1.9-gyro-v235').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1773,7 +1784,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.9-modal-v234"></script>
+  <script type="module" src="js/app.js?v=1.1.9-gyro-v235"></script>
 
 
 

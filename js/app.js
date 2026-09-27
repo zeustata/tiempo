@@ -1,22 +1,23 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.1.9-semaforo-v233';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.1.9-semaforo-v233';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.1.9-semaforo-v233';
-import { renderCurrentWeather } from './components/currentCard.js?v=1.1.9-semaforo-v233';
-import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.1.9-semaforo-v233';
-import { renderSurfCard } from './components/surfCard.js?v=1.1.9-semaforo-v233';
-import { renderMountainCard } from './components/mountainCard.js?v=1.1.9-semaforo-v233';
-import { renderForecast } from './components/forecastView.js?v=1.1.9-semaforo-v233';
-import { renderWeatherChart } from './components/chartsView.js?v=1.1.9-semaforo-v233';
-import { renderAstronomyView } from './components/astronomyCard.js?v=1.1.9-semaforo-v233';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.9-semaforo-v233';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1.9-semaforo-v233';
-import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1.9-semaforo-v233';
-import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1.9-semaforo-v233';
-import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.9-semaforo-v233';
-import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.9-semaforo-v233';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.9-semaforo-v233';
-import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.9-semaforo-v233';
-import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.9-semaforo-v233';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.1.9-gyro-v235';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.1.9-gyro-v235';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.1.9-gyro-v235';
+import { renderCurrentWeather } from './components/currentCard.js?v=1.1.9-gyro-v235';
+import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.1.9-gyro-v235';
+import { renderSurfCard } from './components/surfCard.js?v=1.1.9-gyro-v235';
+import { renderMountainCard } from './components/mountainCard.js?v=1.1.9-gyro-v235';
+import { renderForecast } from './components/forecastView.js?v=1.1.9-gyro-v235';
+import { renderWeatherChart } from './components/chartsView.js?v=1.1.9-gyro-v235';
+import { renderAstronomyView } from './components/astronomyCard.js?v=1.1.9-gyro-v235';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.9-gyro-v235';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1.9-gyro-v235';
+import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1.9-gyro-v235';
+import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1.9-gyro-v235';
+import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.9-gyro-v235';
+import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.9-gyro-v235';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.9-gyro-v235';
+import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.9-gyro-v235';
+import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.9-gyro-v235';
+import { initGyroGlass } from './utils/gyroGlass.js?v=1.1.9-gyro-v235';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, pronóstico horario 72h y alertas', key: '1' },
@@ -29,7 +30,7 @@ const APP_MODULES = [
   { id: 'astronomy', icon: '🔭', title: 'Astronomía & Cosmos', desc: 'Eclipses, lluvias de estrellas, fases lunares y semáforo de visibilidad en Asturias', key: '8' }
 ];
 
-export const CURRENT_APP_VERSION = '1.1.9';
+export const CURRENT_APP_VERSION = '1.1.10';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -63,6 +64,7 @@ class MeteoAsturiasApp {
     this.setupSwipeNavigation();
     this.setupLiveClock();
     this.setupNetworkMonitor();
+    initGyroGlass();
     this.setupFullscreen();
     this.initParticleCanvas();
 
@@ -1847,6 +1849,8 @@ class MeteoAsturiasApp {
 
     if (bgType === 'clear' || bgType === 'mostly-clear' || bgType === 'partly-cloudy') {
       themeKey = isDay ? `${bgType}-day` : `${bgType}-night`;
+    } else if (bgType === 'cloudy') {
+      themeKey = isDay ? 'cloudy' : 'cloudy-night';
     }
 
     document.body.setAttribute('data-weather-theme', themeKey);
