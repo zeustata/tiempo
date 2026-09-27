@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.7] - 2026-09-27
+
+### 🌡️ Ergonomía Visual & Legibilidad de Cápsulas Térmicas
+- **Cápsulas de Mínimas y Máximas Diarias (`css/components.css`):**
+  - Ajuste ergonómico en `.t-pill` aumentando el tamaño de fuente de `0.82rem` a `0.92rem` (+12% de superficie visual) y el peso tipográfico a `800` (negrita extra).
+  - Incremento del relleno interior a `4px 10px` con bordes redondeados a `7px` para enmarcar con holgura los extremos térmicos diarios (`↓ Tmin` y `↑ Tmax`).
+  - Totalmente blindado contra desbordes en teléfonos móviles de pantalla estrecha (320px–360px) en cumplimiento de la Doctrina Constitucional 11.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v227-pill-size`, actualización a `?v=1.1.7-pills` en módulos, scripts y hojas de estilo.
+
+---
+
 ## [1.1.6] - 2026-09-27
 
 ### 📊 Tiempo Habitual & Normales Climatológicas 1991–2020 (AEMET / OMM)

@@ -4,7 +4,26 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.6 — 2026-09-27
+## 🚀 Última Actualización Oficial: v1.1.7 — 2026-09-27
+
+- **Ergonomía Visual & Mayor Legibilidad en Cápsulas de Mínimas y Máximas:**
+  1. *Observación de Lendo:*
+     - Lendo apreció que las pastillas de temperaturas mínimas y máximas en la cabecera principal se veían algo pequeñas y solicitó hacerlas un poco más grandes, sin pasarse.
+  2. *Ajuste Tipográfico & Espacial:*
+     - En `css/components.css`, para `.t-pill`:
+       - `font-size`: aumentado de `0.82rem` a `0.92rem` (+12% de tamaño) para una lectura clara de un vistazo.
+       - `font-weight`: elevado de `700` a `800` (negrita con empaque).
+       - `padding`: ampliado de `3px 8px` a `4px 10px` con bordes redondeados a `7px` y `letter-spacing: -0.2px`.
+  3. *Blindaje Anti-Desborde Móvil (Doctrina 11):*
+     - Las dos cápsulas juntas miden apenas ~130px, encajando con holgura total en pantallas estrechas (320px–360px) junto a la sensación térmica.
+  4. *Blindaje de Caché y Versión:*
+     - Versión oficial actualizada a `v1.1.7 🌡️` en el badge del pie (`#app-version-badge`), modal de novedades y registros.
+     - `CACHE_NAME` actualizado a `meteoasturlode-v227-pill-size` en `sw.js`.
+     - Query strings de scripts y CSS sincronizados a `?v=1.1.7-pills`.
+
+---
+
+## 🚀 Versión Anterior Oficial: v1.1.6 — 2026-09-27
 
 - **Métricas de "Tiempo Habitual" & Normales Climatológicas 1991–2020 (AEMET / OMM):**
   1. *Inspiración & Requerimiento de Lendo:*

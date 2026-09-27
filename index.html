@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.5-galerna">
-  <link rel="stylesheet" href="css/components.css?v=1.1.5-galerna">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.5-galerna">
+  <link rel="stylesheet" href="css/main.css?v=1.1.7-pills">
+  <link rel="stylesheet" href="css/components.css?v=1.1.7-pills">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.7-pills">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -176,7 +176,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.6 📊</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.7 🌡️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -227,8 +227,18 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.6 📊</span>
+            <span class="release-version">v1.1.7 🌡️</span>
             <span class="release-date">27 Sep 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-ui">Ergonomía</span> <strong>Mayor Legibilidad en Cápsulas de Mínimas y Máximas</strong>: Incremento armónico del tamaño tipográfico (<code>0.92rem</code> y peso <code>800</code>) y del espaciado interior (<code>4px 10px</code>) en las pastillas térmicas de la tarjeta principal. Aporta una lectura instantánea y nítida de los extremos térmicos del día sin sobrecargar la interfaz móvil.</li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.6 📊</span>
+            <span class="release-date">27 Sep 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-new">Nuevo</span> <strong>Métricas de "Tiempo Habitual" & Anomalía Climática de 30 Años</strong>: Integración en la estación en vivo de la comparación climatológica respecto a las Normales Estándar Oficiales de AEMET / OMM (período 1991–2020). Calcula la anomalía térmica diaria (ej. <em>+2.8 °C sobre lo habitual</em> en veranillos o Viento Sur, o <em>-2.1 °C más fresco</em>) contextualizada según la quincena del mes.</li>
@@ -1712,7 +1722,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.1.6-clima').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.1.7-pills').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1742,7 +1752,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.6-clima"></script>
+  <script type="module" src="js/app.js?v=1.1.7-pills"></script>
 
 
 
