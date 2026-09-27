@@ -1679,7 +1679,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.1.2-fix').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.1.3-resolicon').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
