@@ -10,6 +10,21 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.15] - 2026-09-27
+ 
+### 💎 Cristal Óptico Real & Desenfoque Dinámico Reactivo (Apple True Glass)
+- **Supresión de Rayas Sintéticas & Halo Especular Difuso (`css/components.css` & `css/main.css`):**
+  - Eliminación de los degradados lineales con bandas de color que generaban apariencia de "imagen o pegatina con reflejos dibujados".
+  - Sustitución por un halo especular difuso y puro (`radial-gradient` con `mix-blend-mode: overlay` y `z-index: 1`), integrando la luz en el cristal de forma sedosa sin cubrir textos ni sensores con líneas de color.
+- **Desenfoque Dinámico Reactivo al Giro (`js/utils/gyroGlass.js`):**
+  - Nueva variable `--glass-blur` sincronizada con la inclinación del terminal (oscila en tiempo real de 18px a 36px).
+  - Al girar el móvil, la profundidad de desenfoque del `backdrop-filter` se modula orgánicamente, dando la sensación táctil y visual de que el cristal se vuelve más lechoso y denso en ángulos oblicuos.
+- **Orbes Atmosféricos de Contraste en Fondo (`css/main.css`):**
+  - Inyección de orbes lumínicos (cian, violeta y zafiro) en el fondo del lienzo que se difunden activamente a través del cristal esmerilado de las tarjetas, haciendo visible de inmediato la refracción y el desenfoque real.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v241-real-glass`, actualización a `?v=1.1.15-real-glass-v241` en módulos, scripts y hojas de estilo.
+
+---
+
 ## [1.1.14] - 2026-09-27
  
 ### 💎 Panel Unificado Apple Liquid Glass en Todas las Tarjetas

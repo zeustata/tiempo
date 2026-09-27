@@ -4,7 +4,24 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.14 — 2026-09-27
+## 🚀 Última Actualización Oficial: v1.1.15 — 2026-09-27
+ 
+- **Cristal Óptico Real & Desenfoque Dinámico Reactivo (Apple True Glass):**
+  1. *Diagnóstico Fiel & Erradicación de Bandas Sintéticas:*
+     - Lendo señaló con acierto que el efecto anterior "solo hacía hacer una imagen con reflejos" (una capa gráfica con degradados de color superpuesta).
+     - Se eliminaron por completo las líneas diagonales de color en `::after`. Se sustituyeron por un halo especular puramente difuso en blanco/zafiro suave con `mix-blend-mode: overlay` y `z-index: 1`, evitando que la luz oculte o coloree artificialmente los textos e iconos.
+  2. *Desenfoque Dinámico al Giro (`--glass-blur`):*
+     - Vinculación del factor de inclinación con el radio de desenfoque: el `backdrop-filter: blur(var(--glass-blur))` varía fluidamente de 18px a 36px al mover el móvil, logrando la sensación física real de condensación/esmerilado óptico en ángulos rasantes.
+  3. *Inyección de Orbes de Contraste en Fondo:*
+     - Para que el desenfoque `backdrop-filter` sea visualmente perceptible en pantallas oscuras, se añadieron orbes lumínicos atmosféricos en el fondo (`body`) que se emborronan activamente al quedar bajo las tarjetas, haciendo tangible el volumen del cristal.
+  4. *Blindaje de Caché y Versión:*
+     - Versión oficial `v1.1.15 📱✨`.
+     - `CACHE_NAME` actualizado a `meteoasturlode-v241-real-glass` en `sw.js`.
+     - Query strings de scripts, módulos y CSS sincronizados a `?v=1.1.15-real-glass-v241`.
+ 
+---
+ 
+## 🚀 Versión Anterior Oficial: v1.1.14 — 2026-09-27
  
 - **Panel Unificado Apple Liquid Glass en Todas las Tarjetas:**
   1. *Feedback y Resolución Universal:*

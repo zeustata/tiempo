@@ -130,6 +130,10 @@ export function initGyroGlass() {
     const mistFactor = Math.min(1, Math.max(0, distFromCenter));
     root.style.setProperty('--glass-mist', mistFactor.toFixed(2));
 
+    // Desenfoque óptico reactivo al giro (de 18px a 36px en tiempo real)
+    const dynamicBlur = 18 + mistFactor * 18;
+    root.style.setProperty('--glass-blur', `${dynamicBlur.toFixed(1)}px`);
+
     requestAnimationFrame(updateFrame);
   };
 
