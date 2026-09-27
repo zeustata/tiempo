@@ -120,6 +120,11 @@ export function initGyroGlass() {
     root.style.setProperty('--glass-tilt-x', `${currentTiltX.toFixed(2)}deg`);
     root.style.setProperty('--glass-tilt-y', `${currentTiltY.toFixed(2)}deg`);
 
+    // Dispersión esmerilada reactiva al giro (0 a 1)
+    const distFromCenter = Math.hypot((currentX - 50) / 40, (currentY - 32) / 40);
+    const mistFactor = Math.min(1, Math.max(0, distFromCenter));
+    root.style.setProperty('--glass-mist', mistFactor.toFixed(2));
+
     requestAnimationFrame(updateFrame);
   };
 

@@ -61,14 +61,14 @@ body[data-weather-theme="cloudy"] {
 body[data-weather-theme="cloudy-night"] {
   background-color: #030712;
   background-image:
-    radial-gradient(circle 550px at 15% 15%, rgba(56, 189, 248, 0.22) 0%, transparent 70%),
-    radial-gradient(circle 500px at 85% 35%, rgba(99, 102, 241, 0.18) 0%, transparent 70%),
+    radial-gradient(circle 580px at 25% 220px, rgba(56, 189, 248, 0.32) 0%, transparent 70%),
+    radial-gradient(circle 520px at 80% 480px, rgba(99, 102, 241, 0.28) 0%, transparent 70%),
     radial-gradient(ellipse at 50% -10%, #1e293b 0%, #0f172a 45%, #060b14 80%, #020617 100%);
   background-attachment: fixed;
-  --border-glow: rgba(56, 189, 248, 0.55);
-  --border-glass: rgba(255, 255, 255, 0.22);
-  --bg-surface: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(15, 23, 42, 0.38) 100%);
-  --bg-surface-elevated: linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(30, 41, 59, 0.48) 100%);
+  --border-glow: rgba(56, 189, 248, 0.60);
+  --border-glass: rgba(255, 255, 255, 0.25);
+  --bg-surface: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(15, 23, 42, 0.30) 100%);
+  --bg-surface-elevated: linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(30, 41, 59, 0.40) 100%);
 }
 
 

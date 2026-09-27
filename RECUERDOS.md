@@ -4,7 +4,25 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.11 — 2026-09-27
+## 🚀 Última Actualización Oficial: v1.1.12 — 2026-09-27
+
+- **Cristal Líquido & Dispersión Esmerilada Reactiva (Frosted Glass Sheen):**
+  1. *Diagnóstico & Desbloqueo GPU:*
+     - Lendo constató con precisión que el haz de luz sí funcionaba, pero el desenfoque no se apreciaba en móvil.
+     - Se identificó la incompatibilidad de Chromium y WebKit que cancelaba `backdrop-filter` al tener transformaciones 3D (`perspective` / `rotateX`). Se sustituyó por micro-paralaje suave 2D (`translate`), liberando el desenfoque en la GPU móvil.
+  2. *Manto de Dispersión Esmerilada Reactivo (`--glass-mist`):*
+     - Modulación dinámica de la densidad óptica del cristal: a mayor ángulo de giro del móvil, el cristal dispersa un manto lechoso zafiro más denso (`rgba(255, 255, 255, calc(0.20 + var(--glass-mist) * 0.22))`), recreando fielmente la dispersión interna de la luz de un cristal esmerilado de alta gama.
+     - Incremento del desenfoque base a `blur(24px) saturate(190%)` con bisel de luz tallada Apple (`inset 0 1px 1px rgba(255, 255, 255, 0.45)`).
+  3. *Orbes de Alto Contraste:*
+     - En `cloudy-night`, focos radiales zafiro y cian potenciados y centrados detrás de la tarjeta principal para que el desenfoque refracte luz y volumen reales.
+  4. *Blindaje de Caché y Versión:*
+     - Versión oficial `v1.1.12 📱✨`.
+     - `CACHE_NAME` actualizado a `meteoasturlode-v238-super-glass` en `sw.js`.
+     - Query strings de scripts, módulos y CSS sincronizados a `?v=1.1.12-glass-v238`.
+
+---
+
+## 🚀 Versión Anterior Oficial: v1.1.11 — 2026-09-27
 
 - **Perfeccionamiento Apple Liquid Glass & Disparo Prioritario de Novedades (Changelog Auto-Prompt):**
   1. *Diagnóstico & Corrección del Auto-Prompt:*

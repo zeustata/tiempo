@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.12] - 2026-09-27
+
+### 💎 Cristal Líquido & Dispersión Esmerilada Reactiva (Frosted Glass Sheen)
+- **Desbloqueo GPU del Motor de Desenfoque (`css/components.css`):**
+  - Supresión de perspectivas 3D (`perspective` / `rotateX` / `rotateY`) en las tarjetas principales que provocaban que los navegadores móviles (Chromium Android y WebKit iOS) cancelaran el `backdrop-filter`. Sustitución por micro-paralaje suave 2D (`translate`) 100% compatible.
+  - Incremento del desenfoque base a `blur(24px) saturate(190%)` con marco biselado tallado (`inset 0 1px 1px rgba(255, 255, 255, 0.45)`).
+- **Manto de Dispersión Esmerilada Reactivo al Giro (`js/utils/gyroGlass.js` & `css/components.css`):**
+  - Nueva variable dinámica `--glass-mist` que mide la inclinación respecto al centro. A mayor ángulo de giro del móvil, el cristal dispersa un manto lechoso zafiro más denso, simulando fielmente la refracción física de un vidrio esmerilado de revista.
+- **Orbes Luminosos de Alto Contraste en Temas Nocturnos (`css/weather-themes.css`):**
+  - Focos radiales cian y zafiro de alta potencia situados directamente detrás de las tarjetas para que el desenfoque refracte luz y volumen reales en la noche asturiana.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v238-super-glass`, actualización a `?v=1.1.12-glass-v238` en módulos, scripts y hojas de estilo.
+
+---
+
 ## [1.1.11] - 2026-09-27
 
 ### 📱 Perfeccionamiento Apple Liquid Glass & ⚡ Disparo Prioritario de Novedades
