@@ -4,7 +4,23 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.3 — 2026-09-27
+## 🚀 Última Actualización Oficial: v1.1.4 — 2026-09-27
+
+- **Fidelidad Oceanográfica & Calibración de Superficie Glassy en Rompiente:**
+  1. *Diagnóstico & Observación Técnica de Lendo:*
+     - Lendo detectó que en el módulo de Surf, al mostrar `Superficie Glassy` con viento calmo (&le; 6 km/h), la tarjeta describía: *"Calma total. La lámina de agua parece un espejo perfecto."*.
+     - Esta afirmación resultaba físicamente inadecuada y contradictoria: si hay swell y olas rompiendo activamente en la playa (por ejemplo en Salinas o San Lorenzo), el agua no puede ser "un espejo", pues solo hay ausencia de viento pero la superficie está modulada por el tren de olas.
+  2. *Corrección Fiel y Concisa:*
+     - En `js/components/surfCard.js` se suprime la frase redundante, dejando la descripción limpia y exacta: **"Calma total."** y etiqueta interna `Glassy (Calma)`.
+     - En `js/utils/weatherExplanations.js` se sincroniza la guía didáctica: *"Ausencia total de viento que rice o distorsione la pared de la ola"*.
+  3. *Blindaje de Caché y Versión:*
+     - Versión oficial actualizada a `v1.1.4 🏄` en pie (`#app-version-badge`), modal de novedades y registros.
+     - `CACHE_NAME` actualizado a `meteoasturlode-v222-surf-glassy` en `sw.js`.
+     - Query strings de scripts actualizados a `?v=1.1.4-glassy`.
+
+---
+
+## 🚀 Versión Anterior Oficial: v1.1.3 — 2026-09-27
 
 - **Calibración Solar Inteligente Estacional & Detector Asturiano de "Resol / Sol tamizáu":**
   1. *Contexto & Diagnóstico en Castrillón (Piedras Blancas - 27 Sep 2026):*

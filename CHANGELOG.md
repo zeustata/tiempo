@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.4] - 2026-09-27
+
+### 🏄 Fidelidad Oceanográfica & Calibración de Superficie Glassy
+- **Textura de Lámina de Agua en Calma (`js/components/surfCard.js` & `js/utils/weatherExplanations.js`):**
+  - Corrección física y oceanográfica certera de la descripción de *Superficie Glassy* (viento &le; 6 km/h).
+  - Supresión de la afirmación "La lámina de agua parece un espejo perfecto", físicamente incongruente cuando existe swell u oleaje activo rompiendo en la playa.
+  - Se sustituye por la indicación inequívoca y directa **"Calma total."** y etiqueta `Glassy (Calma)`, manteniendo el rigor frente a las condiciones reales de rompiente.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v222-surf-glassy`, actualización a `?v=1.1.4-glassy` en módulos y CSS.
+
+---
+
 ## [1.1.3] - 2026-09-27
 
 ### ⛅ Calibración Solar Inteligente Estacional & Detector Asturiano de "Resol / Sol tamizáu"

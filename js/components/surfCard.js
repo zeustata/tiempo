@@ -354,9 +354,9 @@ export function getWaterTexture(windSpeedKmH, windCondition) {
     return {
       type: 'glassy',
       icon: '🪞',
-      label: 'Glassy (Espejo)',
+      label: 'Glassy (Calma)',
       badge: 'Superficie Glassy',
-      desc: 'Calma total. La lámina de agua parece un espejo perfecto.',
+      desc: 'Calma total.',
       color: '#38bdf8'
     };
   }

@@ -513,7 +513,7 @@ export const WEATHER_EXPLANATIONS = {
         heading: '4. Textura del Agua (Wind State)',
         text: `
           <ul class="explain-list">
-            <li><strong>🪞 Glassy (Espejo):</strong> Viento nulo o casi imperceptible (&lt; 7 km/h). La superficie del agua es un cristal puro y las olas rompen en silencio.</li>
+            <li><strong>🪞 Glassy (Calma total):</strong> Viento nulo o casi imperceptible (&lt; 7 km/h). Ausencia total de viento que rice o distorsione la pared de la ola.</li>
             <li><strong>💨 Limpio (Terral / Offshore):</strong> Viento de tierra que peina la cara de la ola y ahueca el labio.</li>
             <li><strong>〰️ Picado (Cross / Onshore suave):</strong> Pequeñas arrugas en la superficie que restan velocidad.</li>
             <li><strong>🌊 Chop / Desordenado:</strong> Viento de mar directo picando y rompiendo las secciones de la ola.</li>
