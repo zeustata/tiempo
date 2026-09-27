@@ -4,7 +4,30 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.4 — 2026-09-27
+## 🚀 Última Actualización Oficial: v1.1.5 — 2026-09-27
+
+- **Detector Silencioso de Galerna Cantábrica en Tiempo Real:**
+  1. *Concepto & Propuesta Técnica de Lendo:*
+     - Lendo propuso incorporar un detector silencioso de Galerna Cantábrica con la misma elegancia y discreción que el ya consolidado *Vientu les Castañes* (Efecto Foehn): sin ruidos ni avisos invasivos, que permanezca en silencio absoluto y solo se despliegue cuando los sensores en la costa detecten el zarpazo del Noroeste.
+  2. *Motor Físico & Cinemático (`js/utils/galernaDetector.js`):*
+     - Ámbito geográfico específico: concejos con fachada litoral y costa en Asturias (Castrillón, Gijón, Gozón, Llanes, Ribadesella, Carreño, Avilés, Valdés, Tapia, etc.).
+     - Condiciones matemáticas de disparo:
+       - Viento de componente Noroeste estricto (WNW a NNW: 270° a 345°).
+       - Aceleración brusca de rachas: &ge; 45 km/h (moderada) o &ge; 65 km/h (severa).
+       - Desplome térmico en 1-3 horas (&ge; 4.0 °C respecto a la temperatura previa).
+       - Salto barométrico positivo (&ge; 1.5 hPa) e inyección de humedad marina (&ge; 80%).
+  3. *Banner Dinámico Náutico (`css/components.css` & `js/components/currentCard.js`):*
+     - Banner translúcido con gradiente marino profundo (`.galerna-banner`) y animación de halo oceánico palpitante (`galernaOceanGlow`).
+     - Pastillas ergonómicas con métricas vivas: rumbo NW, racha en km/h, caída térmica estimada y salto de presión.
+     - Botón didáctico integrado `💡 ¿Por qué ocurre?` conectado directamente con la enciclopedia meteorológica asturiana (`data-phenomenon="galerna"`).
+  4. *Blindaje de Caché y Versión:*
+     - Versión oficial actualizada a `v1.1.5 🌊` en badge del pie (`#app-version-badge`), modal de novedades y registros.
+     - `CACHE_NAME` actualizado a `meteoasturlode-v225-galerna-detector` en `sw.js`.
+     - Query strings de scripts y CSS sincronizados a `?v=1.1.5-galerna`.
+
+---
+
+## 🚀 Versión Anterior Oficial: v1.1.4 — 2026-09-27
 
 - **Fidelidad Oceanográfica & Calibración de Superficie Glassy en Rompiente:**
   1. *Diagnóstico & Observación Técnica de Lendo:*

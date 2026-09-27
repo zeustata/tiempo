@@ -72,6 +72,11 @@
 - **Prohibición de Sobrecarga en Cabeceras:** Queda terminantemente prohibido acumular más de un elemento de acción (como el botón de cerrar `[ ✕ ]`) en la misma fila horizontal junto a títulos modales o secciones que contengan subtítulos o textos largos, para impedir que los botones colisionen o sean expulsados fuera del marco de la tarjeta.
 - **Canalización en Filas Secundarias o Barras de Herramientas:** Si una vista requiere acciones secundarias, didácticas o de configuración (como selectores de temas, diccionarios o filtros), estas deben situarse en una fila secundaria compacta o pastillas ergonómicas dedicadas al 50%, con `box-sizing: border-box`, `max-width: 100%` y holgura visual garantizada en cualquier resolución.
 
+### 12. Doctrina de Simulacro y Verificación Previa de Eventos Silenciosos / Condicionales
+- **Protocolo de Simulacro Obligatorio:** Siempre que una actualización, componente o alerta dependa de condiciones climáticas, estados extremos o eventos infrecuentes que no puedan apreciarse en vivo bajo circunstancias meteorológicas ordinarias (como galernas, efecto Foehn, temporales severos, avisos de aludes, etc.), Princesa **DEBE PREGUNTAR PROACTIVAMENTE** a Lendo: *"¿Quieres que iniciemos el simulacro de prueba para comprobar visualmente el componente?"*.
+- **Mecanismo Limpio de Activación:** El módulo debe incorporar un conmutador de prueba controlado (mediante parámetro en URL como `?test=nombre_evento` o flag de depuración local), asegurando que el comportamiento real de producción se preserve intacto.
+- **Detención Obligatoria y Retorno al Modo Silencioso:** Tras la comprobación de Lendo en su navegador, una vez verificado que todo funciona correctamente (o corregidos los posibles fallos) y ante la orden explícita *"detén el simulacro"*, Princesa debe detenerlo de inmediato, garantizando que el sistema quede en su estado real, 100% silencioso y listo para el despliegue final.
+
 ---
 
 ## 📑 PARTE II: LEYES ESPECÍFICAS DEL PROYECTO: METEOASTUR LODE (TIEMPO)

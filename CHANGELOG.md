@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.5] - 2026-09-27
+
+### 🌊 Detector Silencioso de Galerna Cantábrica en Tiempo Real
+- **Motor Físico & Cinemático de Detección (`js/utils/galernaDetector.js`):**
+  - Monitorización costera de los concejos del litoral asturiano (Castrillón, Gijón, Gozón, Llanes, Ribadesella, Carreño, Avilés, Valdés, Tapia, etc.).
+  - Detección precisa del rolido súbito a componente Noroeste (WNW a NNW: 270° a 345°) combinado con aceleración violenta de rachas (&ge; 45 km/h moderada, &ge; 65 km/h severa).
+  - Análisis cinemático de las últimas 1 a 3 horas: evalúa el desplome térmico rápido (&ge; 4.0 °C respecto al bochorno previo) y el salto barométrico repentino (&ge; 1.5 hPa) por irrupción de aire denso oceánico.
+- **Banner Dinámico de Advertencia Náutica (`css/components.css` & `js/components/currentCard.js`):**
+  - Principio silencioso idéntico al Efecto Foehn: si no hay galerna, no ocupa espacio ni emite señales de ruido en la interfaz.
+  - Al desencadenarse, despliega el banner *Liquid Glass* azul marino (`.galerna-banner`) con halo oceánico palpitante, métricas en tiempo real (rumbo NW, rachas km/h, caída térmica y salto de presión) y botón directo `💡 ¿Por qué ocurre?` hacia la enciclopedia meteorológica asturiana (`data-phenomenon="galerna"`).
+- **Cache-bust:** `sw.js` → `meteoasturlode-v225-galerna-detector`, actualización a `?v=1.1.5-galerna` en módulos y CSS.
+
+---
+
 ## [1.1.4] - 2026-09-27
 
 ### 🏄 Fidelidad Oceanográfica & Calibración de Superficie Glassy

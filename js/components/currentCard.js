@@ -1,8 +1,9 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.1.2-fix';
-import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.1.2-fix';
-import { renderHourlyForecastBlock } from './forecastView.js?v=1.1.2-fix';
-import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.2-fix';
-import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.2-fix';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.1.4-tables-live';
+import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.1.4-tables-live';
+import { renderHourlyForecastBlock } from './forecastView.js?v=1.1.4-tables-live';
+import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.4-tables-live';
+import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=1.1.4-tables-live';
+import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.4-tables-live';
 
 /**
  * Renderiza el dashboard principal con alineación uniforme y todos los sensores de la estación
@@ -60,6 +61,10 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   const foehn = detectFoehnEffect(current);
   const foehnMarkup = renderFoehnBanner(foehn);
 
+  // Detección Silenciosa de Galerna Cantábrica
+  const galerna = detectGalernaEffect(current, hourly, concejo);
+  const galernaMarkup = renderGalernaBanner(galerna);
+
   // Asesor de Colada y Secado de Ropa
   const laundry = calculateLaundryDrying(current, hourly, daily);
   const laundryMarkup = renderLaundryCard(laundry);
@@ -99,6 +104,9 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
 
     <!-- BANNER DINÁMICO DE EFECTO FOEHN ("VIENTU LES CASTAÑES") -->
     ${foehnMarkup}
+
+    <!-- BANNER DINÁMICO DE DETECTOR DE GALERNA CANTÁBRICA -->
+    ${galernaMarkup}
 
     <!-- PRONÓSTICO HORARIO 72H / 3 DÍAS (SOLICITADO POR BETA TESTERS) -->
     ${hourlyForecastMarkup}

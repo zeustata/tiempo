@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.4-table">
-  <link rel="stylesheet" href="css/components.css?v=1.1.4-table">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.4-table">
+  <link rel="stylesheet" href="css/main.css?v=1.1.5-galerna">
+  <link rel="stylesheet" href="css/components.css?v=1.1.5-galerna">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.5-galerna">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -176,7 +176,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.4 🏄</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.5 🌊</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -227,8 +227,18 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.4 🏄</span>
+            <span class="release-version">v1.1.5 🌊</span>
             <span class="release-date">27 Sep 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> <strong>Detector Silencioso de Galerna Cantábrica</strong>: Motor físico de alerta náutica para los concejos costeros de Asturias. Monitoriza en tiempo real el zarpazo del Noroeste (NW: 270°-345°), rachas repentinas violentas (&ge; 45-65 km/h), desplome térmico súbito y salto barométrico de inyección marina. Permanece en silencio absoluto cuando no hay galerna y despliega un banner dinámico con métricas en vivo y enlace a la enciclopedia meteorológica asturiana al desatarse.</li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.4 🏄</span>
+            <span class="release-date">27 Sep 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-improved">Surf & Litoral</span> <strong>Fidelidad Oceanográfica en Calificación Glassy</strong>: Corrección rigurosa de la descripción de la textura de la lámina de agua bajo calma de viento (&lt; 7 km/h). Se suprime la mención inadecuada de "mar como un espejo" (incompatible cuando existe rompiente y oleaje activo), dejando la indicación certera <strong>"Calma total."</strong>.</li>
@@ -1690,7 +1700,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.1.4-tables-live').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.1.5-galerna').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1720,7 +1730,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.4-tables-live"></script>
+  <script type="module" src="js/app.js?v=1.1.5-galerna"></script>
 
 
 
