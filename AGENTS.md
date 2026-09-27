@@ -77,6 +77,12 @@
 - **Mecanismo Limpio de Activación:** El módulo debe incorporar un conmutador de prueba controlado (mediante parámetro en URL como `?test=nombre_evento` o flag de depuración local), asegurando que el comportamiento real de producción se preserve intacto.
 - **Detención Obligatoria y Retorno al Modo Silencioso:** Tras la comprobación de Lendo en su navegador, una vez verificado que todo funciona correctamente (o corregidos los posibles fallos) y ante la orden explícita *"detén el simulacro"*, Princesa debe detenerlo de inmediato, garantizando que el sistema quede en su estado real, 100% silencioso y listo para el despliegue final.
 
+### 13. Doctrina del Changelog Universal y Auto-Prompt Obligatorio de Versión
+- **Obligatoriedad del Historial de Novedades:** Toda aplicación o proyecto del ecosistema zeustata debe contar imperativamente con un registro de novedades (`CHANGELOG.md`), su correspondiente modal o vista interactiva en la interfaz de usuario y un badge de versión visible.
+- **Disparo Automático en Arranque (Auto-Prompt):** Cada vez que se publique una nueva versión o actualización, el modal de novedades DEBE saltar automáticamente en pantalla al iniciar la app (con un retardo de cortesía de ~800 ms) si la versión guardada en el cliente (`localStorage`) no coincide con la versión en producción, asegurando que los usuarios y beta testers conozcan al instante todas las mejoras incorporadas.
+- **Centralización Inmutable de Versión:** Queda terminantemente prohibido utilizar cadenas fijas en el código (*hardcoded*) dispersas para la comprobación del changelog. La versión de control debe emanar de una constante centralizada única (ej. `CURRENT_APP_VERSION = 'x.y.z'`) vinculada tanto al comparador de arranque como al evento de cierre.
+- **Registro Silencioso al Cerrar:** Al pulsar el botón de cerrar (`[ ✕ ]`), hacer clic fuera o retroceder con el botón atrás, se actualiza automáticamente el almacenamiento local para que el modal no vuelva a interrumpir hasta el siguiente incremento oficial de versión.
+
 ---
 
 ## 📑 PARTE II: LEYES ESPECÍFICAS DEL PROYECTO: METEOASTUR LODE (TIEMPO)

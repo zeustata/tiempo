@@ -24,9 +24,12 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
      - Nuevas guías didácticas completas para `xelu` (física de la helada, inversión térmica en valles asturianos, hielo negro y precauciones al volante) y `aqi` (partículas finas y aerobiología).
   5. *Blindaje de Caché y Versión:*
      - Versión oficial actualizada a `v1.1.9 ❄️🌿` en badge del pie (`#app-version-badge`), modal de novedades y registros.
-     - `CACHE_NAME` actualizado a `meteoasturlode-v233-semaforo` en `sw.js`.
+     - `CACHE_NAME` actualizado a `meteoasturlode-v234-changelog-119` en `sw.js`.
      - Inclusión de `./js/utils/xeluDetector.js` en `STATIC_ASSETS`.
-     - Query strings de scripts y CSS sincronizados a `?v=1.1.9-semaforo-v233`.
+     - Query strings de scripts y CSS sincronizados a `?v=1.1.9-modal-v234`.
+  6. *Reforma Constitucional - Ley 13 (Doctrina del Changelog Universal y Auto-Prompt Obligatorio):*
+     - Autorizada solemnemente por Lendo mediante PIN criptográfico maestro de 4 cifras (`2796`).
+     - Incorporación del Artículo 13 a la Constitución Suprema: obligación imperativa de modal de changelog interactivo y disparo automático (`checkChangelogAutoPrompt()`) con retardo de 800ms ante cambios de versión, centralizando la variable `CURRENT_APP_VERSION` para erradicar versiones hardcoded.
 
 ---
 
