@@ -83,6 +83,10 @@
 - **Centralización Inmutable de Versión:** Queda terminantemente prohibido utilizar cadenas fijas en el código (*hardcoded*) dispersas para la comprobación del changelog. La versión de control debe emanar de una constante centralizada única (ej. `CURRENT_APP_VERSION = 'x.y.z'`) vinculada tanto al comparador de arranque como al evento de cierre.
 - **Registro Silencioso al Cerrar:** Al pulsar el botón de cerrar (`[ ✕ ]`), hacer clic fuera o retroceder con el botón atrás, se actualiza automáticamente el almacenamiento local para que el modal no vuelva a interrumpir hasta el siguiente incremento oficial de versión.
 
+### 14. Doctrina de Armonía Visual y Acabado Integral en Tarjetas y Componentes
+- **Unificación Estética Rigurosa:** Todo tratamiento de diseño, efecto visual, textura de cristal, gradiente de profundidad o micro-animación aprobado para la interfaz debe extenderse y aplicarse de forma armónica e integral a todas las tarjetas, cabeceras, paneles y componentes interactivos del proyecto.
+- **Prohibición de Aislamiento Estético:** Queda terminantemente prohibido dejar componentes o tarjetas secundarias con estilos visuales obsoletos, disonantes o desalineados respecto a la tarjeta o elemento principal, garantizando una identidad visual uniforme, coherente y de máxima calidad en toda la aplicación.
+
 ---
 
 ## 📑 PARTE II: LEYES ESPECÍFICAS DEL PROYECTO: METEOASTUR LODE (TIEMPO)
