@@ -16,8 +16,11 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Textura de Lámina de Agua en Calma (`js/components/surfCard.js` & `js/utils/weatherExplanations.js`):**
   - Corrección física y oceanográfica certera de la descripción de *Superficie Glassy* (viento &le; 6 km/h).
   - Supresión de la afirmación "La lámina de agua parece un espejo perfecto", físicamente incongruente cuando existe swell u oleaje activo rompiendo en la playa.
-  - Se sustituye por la indicación inequívoca y directa **"Calma total."** y etiqueta `Glassy (Calma)`, manteniendo el rigor frente a las condiciones reales de rompiente.
-- **Cache-bust:** `sw.js` → `meteoasturlode-v222-surf-glassy`, actualización a `?v=1.1.4-glassy` en módulos y CSS.
+- **Suite Didáctica de Surf & Tablas Visuales (`js/utils/weatherExplanations.js` & `css/components.css`):**
+  - Incorporación en el modal didáctico [💡 Explícame] de tablas ergonómicas adaptadas a móvil que desglosan con total transparencia los tres pilares de la nota (altura hasta 4 pts, período hasta 4 pts, energía hasta 2 pts = 10 pts máx.).
+  - Tabla comparativa intuitiva para entender de un vistazo la condición física de estrellas doradas (terral offshore), blancas (calma glassy / olas nobles) y 0★ (chop onshore o mar pasado).
+  - Blindaje CSS responsive contra desbordes en teléfonos móviles (`.explain-table-container` con scroll táctil suave y badges de puntos).
+- **Cache-bust:** `sw.js` → `meteoasturlode-v223-surf-explain-table`, actualización a `?v=1.1.4-table` en módulos y CSS.
 
 ---
 

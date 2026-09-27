@@ -13,10 +13,15 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Corrección Fiel y Concisa:*
      - En `js/components/surfCard.js` se suprime la frase redundante, dejando la descripción limpia y exacta: **"Calma total."** y etiqueta interna `Glassy (Calma)`.
      - En `js/utils/weatherExplanations.js` se sincroniza la guía didáctica: *"Ausencia total de viento que rice o distorsione la pared de la ola"*.
-  3. *Blindaje de Caché y Versión:*
-     - Versión oficial actualizada a `v1.1.4 🏄` en pie (`#app-version-badge`), modal de novedades y registros.
-     - `CACHE_NAME` actualizado a `meteoasturlode-v222-surf-glassy` en `sw.js`.
-     - Query strings de scripts actualizados a `?v=1.1.4-glassy`.
+  3. *Suite Didáctica con Tablas Ergonómicas Visuales:*
+     - Lendo solicitó hacer más intuitiva la comprensión de la nota 1 al 10 y la diferencia entre estrellas doradas y blancas.
+     - Se integran dos tablas visuales en el modal didáctico `💡 Explícame`:
+       - Tabla 1 (Baremos Físicos): desglosa la contribución de altura (hasta 4 pts), período swell (hasta 4 pts) y energía (hasta 2 pts) para sumar la nota 1 al 10.
+       - Tabla 2 (Color de Estrellas): relación directa entre viento terral offshore (doradas), calma glassy/brisa (blancas) y viento de mar/mar pasado (0★).
+     - Diseño responsive blindado con `.explain-table-container` y badges visuales para evitar desbordes en móviles estrechos (320px–380px, Ley Constitucional 11).
+  4. *Blindaje de Caché y Versión:*
+     - Versión oficial mantenida en `v1.1.4 🏄` con subida a cache-busting `meteoasturlode-v223-surf-explain-table` en `sw.js`.
+     - Query strings de scripts y hojas de estilo actualizados a `?v=1.1.4-table`.
 
 ---
 

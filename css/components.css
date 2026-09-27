@@ -4963,6 +4963,80 @@
   margin-top: 8px;
 }
 
+/* Tablas Didácticas Ergonómicas (Blindadas contra desborde móvil) */
+.explain-table-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 10px 0 6px 0;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(15, 23, 42, 0.55);
+  box-sizing: border-box;
+}
+
+.explain-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.80rem;
+  text-align: left;
+  line-height: 1.4;
+}
+
+.explain-table th {
+  background: rgba(255, 255, 255, 0.06);
+  color: #38bdf8;
+  font-weight: 700;
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  white-space: nowrap;
+}
+
+.explain-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: #cbd5e1;
+  vertical-align: middle;
+}
+
+.explain-table tr:last-child td {
+  border-bottom: none;
+}
+
+.explain-table tr:hover td {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.explain-badge-pts {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.76rem;
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  white-space: nowrap;
+}
+
+.explain-badge-gold {
+  background: rgba(251, 191, 36, 0.15);
+  color: #fbbf24;
+  border-color: rgba(251, 191, 36, 0.35);
+}
+
+.explain-badge-white {
+  background: rgba(255, 255, 255, 0.1);
+  color: #f1f5f9;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.explain-badge-zero {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
 /* --- SKELETON LOADER (Carga inicial suave y elegante) --- */
 .skeleton-card {
   background: var(--bg-surface);

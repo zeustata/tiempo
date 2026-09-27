@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.3-resolicon">
-  <link rel="stylesheet" href="css/components.css?v=1.1.3-resolicon">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.3-resolicon">
+  <link rel="stylesheet" href="css/main.css?v=1.1.4-table">
+  <link rel="stylesheet" href="css/components.css?v=1.1.4-table">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.4-table">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -232,6 +232,7 @@
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-improved">Surf & Litoral</span> <strong>Fidelidad Oceanográfica en Calificación Glassy</strong>: Corrección rigurosa de la descripción de la textura de la lámina de agua bajo calma de viento (&lt; 7 km/h). Se suprime la mención inadecuada de "mar como un espejo" (incompatible cuando existe rompiente y oleaje activo), dejando la indicación certera <strong>"Calma total."</strong>.</li>
+            <li><span class="tag tag-new">Didáctica</span> <strong>Tablas Visuales de Puntuación & Estrellas</strong>: Integración en el modal didáctico [💡 Explícame] de tablas ergonómicas adaptadas a móvil que desglosan los 3 pilares físicos de la nota (altura, período, energía hasta 10 pts) y la regla exacta de color para estrellas doradas y blancas.</li>
           </ul>
         </div>
 
@@ -1689,7 +1690,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.1.4-glassy').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.1.4-table').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1719,7 +1720,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.4-glassy"></script>
+  <script type="module" src="js/app.js?v=1.1.4-table"></script>
 
 
 

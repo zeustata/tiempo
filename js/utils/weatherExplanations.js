@@ -474,43 +474,115 @@ export const WEATHER_EXPLANATIONS = {
   surf_stars: {
     icon: '⭐',
     title: '¿Cómo funciona el Rating de Estrellas y la Textura Marina?',
-    subtitle: 'Aprende a interpretar las Estrellas Doradas vs Blancas (0 a 10★), la textura del agua y el viento en Asturias',
+    subtitle: 'Aprende a interpretar la puntuación (1 a 10), las Estrellas Doradas vs Blancas y la textura del agua',
     badge: 'Rating 0 a 10★ • Estándar Surf-Forecast',
     sections: [
       {
-        icon: '⭐',
-        heading: '1. Estrellas Doradas (1 a 10★) • Excelencia y Viento Terral',
+        icon: '📊',
+        heading: '1. ¿Cómo se calcula la nota (1 al 10)? • Baremos Físicos',
         text: `
-          <ul class="explain-list">
-            <li><strong>El estándar de oro:</strong> Solo se encienden cuando coincide <strong>viento terral puro (offshore)</strong> soplando contra la ola con un swell de período largo (&gt; 11s) y tamaño noble (1,0 m a 1,6 m).</li>
-            <li><strong>¿Qué indican?:</strong> La pared de la ola se mantiene lisa y limpia, retrasando la rotura para ofrecer secciones tubulares y maniobras perfectas. Cuantas más estrellas doradas, mayor es la calidad de la sesión.</li>
-          </ul>
+          <p>La nota numérica mide la calidad oceanográfica del mar sumando hasta <strong>10 puntos</strong> a través de tres pilares fundamentales:</p>
+          <div class="explain-table-container">
+            <table class="explain-table">
+              <thead>
+                <tr>
+                  <th>Factor</th>
+                  <th>Rango / Medición</th>
+                  <th style="text-align:center;">Puntos</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td rowspan="4"><strong>🌊 Altura de Ola</strong><br><span style="font-size:0.75rem; color:#94a3b8;">(hasta 4 pts)</span></td>
+                  <td><strong>1,0 m a 1,6 m</strong> (zona dulce ideal)</td>
+                  <td style="text-align:center;"><span class="explain-badge-pts">+4 pts</span></td>
+                </tr>
+                <tr>
+                  <td>1,6 m a 2,0 m (ola potente / seria)</td>
+                  <td style="text-align:center;"><span class="explain-badge-pts">+3 pts</span></td>
+                </tr>
+                <tr>
+                  <td>0,8 m a 1,0 m (ola justa para tablones)</td>
+                  <td style="text-align:center;"><span class="explain-badge-pts">+2 pts</span></td>
+                </tr>
+                <tr>
+                  <td>&lt; 0,8 m (ola pequeña)</td>
+                  <td style="text-align:center;"><span class="explain-badge-pts">+1 pt</span></td>
+                </tr>
+                <tr>
+                  <td rowspan="4"><strong>⏱️ Período Swell</strong><br><span style="font-size:0.75rem; color:#94a3b8;">(hasta 4 pts)</span></td>
+                  <td><strong>&ge; 14 s</strong> (swell atlántico perfecto)</td>
+                  <td style="text-align:center;"><span class="explain-badge-pts">+4 pts</span></td>
+                </tr>
+                <tr>
+                  <td>12 s a 13 s (muy buen período)</td>
+                  <td style="text-align:center;"><span class="explain-badge-pts">+3 pts</span></td>
+                </tr>
+                <tr>
+                  <td>10 s a 11 s (medio cantábrico habitual)</td>
+                  <td style="text-align:center;"><span class="explain-badge-pts">+2 pts</span></td>
+                </tr>
+                <tr>
+                  <td>&lt; 10 s (mar de viento / series juntas)</td>
+                  <td style="text-align:center;"><span class="explain-badge-pts">+1 pt</span></td>
+                </tr>
+                <tr>
+                  <td rowspan="3"><strong>⚡ Energía kJ</strong><br><span style="font-size:0.75rem; color:#94a3b8;">(hasta 2 pts)</span></td>
+                  <td><strong>160 a 350 kJ</strong> (energía dulce y noble)</td>
+                  <td style="text-align:center;"><span class="explain-badge-pts">+2 pts</span></td>
+                </tr>
+                <tr>
+                  <td>351 a 500 kJ (exigente / potente)</td>
+                  <td style="text-align:center;"><span class="explain-badge-pts">+1 pt</span></td>
+                </tr>
+                <tr>
+                  <td>&lt; 160 kJ o &gt; 500 kJ (escasa o excesiva)</td>
+                  <td style="text-align:center;"><span class="explain-badge-pts">0 pts</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="margin-top:6px; font-size:0.80rem; color:#94a3b8;"><em>La suma directa de los tres factores produce la nota final sobre 10.</em></p>
         `
       },
       {
-        icon: '⚪',
-        heading: '2. Estrellas Blancas (1 a 5★) • Baño Noble y Divertido',
+        icon: '🌟',
+        heading: '2. ¿Qué determina el Color de la Estrella? (Doradas vs Blancas)',
         text: `
-          <ul class="explain-list">
-            <li><strong>Condiciones buenas pero modestas:</strong> El viento es favorable (terral suave, brisa diagonal o glassy), pero la ola tiene menor tamaño (&lt; 0,9 m) o el período es intermedio (8-10 s).</li>
-            <li><strong>Aprovechamiento:</strong> Sesiones muy entretenidas y seguras, perfectas para tablas evolutivas, longboard o aprendizaje en picos nobles.</li>
-          </ul>
-        `
-      },
-      {
-        icon: '🚫',
-        heading: '3. Calificación Cero (0★) • Sin Condiciones o Peligro',
-        text: `
-          <ul class="explain-list">
-            <li><strong>Viento Onshore (de mar):</strong> Aplasta la cresta de la ola, generando mar picado (chop) y espuma desordenada.</li>
-            <li><strong>⚠️ Mar Pasado en Arenales Abiertos:</strong> Cuando el mar supera 1,7 m o 350-400 kJ en playas como Salinas o San Lorenzo, las barras cierran en bloque ("cerrotes") con fortísimas corrientes de resaca.</li>
-            <li><strong>Calma chicha:</strong> Sin altura ni energía suficiente para deslizar una tabla.</li>
-          </ul>
+          <p>El color refleja la interacción del viento con la pared de la ola:</p>
+          <div class="explain-table-container">
+            <table class="explain-table">
+              <thead>
+                <tr>
+                  <th style="text-align:center;">Tipo</th>
+                  <th>Condición de Viento y Mar</th>
+                  <th>Resultado en el Agua</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="text-align:center;"><span class="explain-badge-pts explain-badge-gold">⭐ Doradas</span></td>
+                  <td><strong>Viento Terral puro (Offshore)</strong> del Sur soplando contra la ola (o calma glassy con olas &ge; 1,0 m y período &ge; 11s).</td>
+                  <td>Pared peinada y lisa, retrasa la rotura y abre tubos limpios de revista.</td>
+                </tr>
+                <tr>
+                  <td style="text-align:center;"><span class="explain-badge-pts explain-badge-white">⚪ Blancas</span></td>
+                  <td><strong>Calma total (Glassy)</strong> o brisas laterales suaves con olas surfeables pero sin terral.</td>
+                  <td>Baño noble y divertido: olas ordenadas que rompen por inercia pero sin efecto tubo.</td>
+                </tr>
+                <tr>
+                  <td style="text-align:center;"><span class="explain-badge-pts explain-badge-zero">🚫 0★</span></td>
+                  <td><strong>Viento de mar (Onshore)</strong> o <strong>Mar Pasado</strong> (&ge; 1,7 m en arenales abiertos).</td>
+                  <td>Chop que arruga y aplasta la ola o barras cerronas masivas con corrientes peligrosas.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         `
       },
       {
         icon: '🪞',
-        heading: '4. Textura del Agua (Wind State)',
+        heading: '3. Textura del Agua (Wind State)',
         text: `
           <ul class="explain-list">
             <li><strong>🪞 Glassy (Calma total):</strong> Viento nulo o casi imperceptible (&lt; 7 km/h). Ausencia total de viento que rice o distorsione la pared de la ola.</li>
@@ -522,7 +594,7 @@ export const WEATHER_EXPLANATIONS = {
       },
       {
         icon: '🏔️',
-        heading: '5. Astucia Local en los Arenales de Asturias',
+        heading: '4. Astucia Local en los Arenales de Asturias',
         text: 'Cuando una playa abierta como Salinas o San Lorenzo marque 0★ por mar pasado o viento de mar, busca esquinas al abrigo (como <strong>El Espartal</strong> al pie del peñón de San Juan de Nieva) o ensenadas resguardadas al otro lado del Cabo Peñas (<strong>Luanco o Candás</strong>).'
       }
     ]
