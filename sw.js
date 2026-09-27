@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v227-pill-size';
+const CACHE_NAME = 'meteoasturlode-v228-location-locality';
 const STATIC_ASSETS = [
   './',
   './index.html',

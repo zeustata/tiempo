@@ -1,10 +1,22 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.1.6-clima';
-import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.1.6-clima';
-import { renderHourlyForecastBlock } from './forecastView.js?v=1.1.6-clima';
-import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.6-clima';
-import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=1.1.6-clima';
-import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.6-clima';
-import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=1.1.6-clima';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.1.8-loc';
+import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.1.8-loc';
+import { renderHourlyForecastBlock } from './forecastView.js?v=1.1.8-loc';
+import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.8-loc';
+import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=1.1.8-loc';
+import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.8-loc';
+import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=1.1.8-loc';
+
+/**
+ * Formatea el título del concejo subordinando las localidades entre paréntesis (ej. Piedras Blancas / Salinas)
+ */
+function formatLocationTitle(name) {
+  if (!name) return '';
+  const match = name.match(/^(.*?)\s*(\(.*?\))$/);
+  if (match) {
+    return `${match[1]} <span class="location-locality">${match[2]}</span>`;
+  }
+  return name;
+}
 
 /**
  * Renderiza el dashboard principal con alineación uniforme y todos los sensores de la estación
@@ -83,7 +95,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
       <div class="hero-top-row">
         <div class="hero-location-block">
           <span class="location-badge">${concejo.badge}</span>
-          <h2 class="location-title">${concejo.name}</h2>
+          <h2 class="location-title">${formatLocationTitle(concejo.name)}</h2>
           <p class="location-meta">Altitud: ${concejo.altitude} m • ${concejo.region}</p>
         </div>
         <div class="hero-icon-block" title="${weatherInfo.label}">

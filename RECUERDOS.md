@@ -4,7 +4,29 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.7 — 2026-09-27
+## 🚀 Última Actualización Oficial: v1.1.8 — 2026-09-27
+
+- **Jerarquía Visual & Tipografía en Ubicaciones y Parroquias:**
+  1. *Apreciación & Petición de Lendo:*
+     - Lendo observó que en concejos como Castrillón, la cabecera mostraba todo al mismo tamaño: *Castrillón (Piedras Blancas / Salinas)*.
+     - Solicitó mantener el nombre del concejo principal con su tamaño actual, pero hacer que el texto entre paréntesis (las parroquias y núcleos de referencia) fuera más pequeño y subordinado visualmente.
+  2. *Implementación Técnica (`js/components/currentCard.js` & `css/components.css`):*
+     - Creación del parser `formatLocationTitle(name)` que extrae limpiamente cualquier sufijo entre paréntesis envolviéndolo en `<span class="location-locality">`.
+     - Estilizado de `.location-locality`:
+       - `font-size: 0.90rem;` (~33% más reducido que el título noble de `1.35rem`).
+       - `font-weight: 600;` (seminegrita equilibrada frente al `800` del concejo).
+       - `color: #cbd5e1;` (tono atenuado de texto secundario).
+       - `display: inline-block; margin-left: 4px; vertical-align: baseline;`
+  3. *Adaptabilidad Fluida & Anti-Desborde (Doctrina Constitucional 11):*
+     - Si la resolución es de 320px o el nombre es largo, el paréntesis baja suavemente a una segunda línea sin desbordar ni chocar con el icono del tiempo.
+  4. *Blindaje de Caché y Versión:*
+     - Versión oficial actualizada a `v1.1.8 📍` en el badge del pie (`#app-version-badge`), modal de novedades y registros.
+     - `CACHE_NAME` actualizado a `meteoasturlode-v228-location-locality` en `sw.js`.
+     - Query strings de scripts y CSS sincronizados a `?v=1.1.8-loc`.
+
+---
+
+## 🚀 Versión Anterior Oficial: v1.1.7 — 2026-09-27
 
 - **Ergonomía Visual & Mayor Legibilidad en Cápsulas de Mínimas y Máximas:**
   1. *Observación de Lendo:*

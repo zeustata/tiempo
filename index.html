@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.7-pills">
-  <link rel="stylesheet" href="css/components.css?v=1.1.7-pills">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.7-pills">
+  <link rel="stylesheet" href="css/main.css?v=1.1.8-loc">
+  <link rel="stylesheet" href="css/components.css?v=1.1.8-loc">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.8-loc">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -176,7 +176,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.7 🌡️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.8 📍</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -227,8 +227,18 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.7 🌡️</span>
+            <span class="release-version">v1.1.8 📍</span>
             <span class="release-date">27 Sep 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-ui">Diseño & Tipografía</span> <strong>Jerarquía Visual en Ubicaciones y Parroquias</strong>: Subordinación estética de los núcleos y parroquias entre paréntesis (ej. <em>Piedras Blancas / Salinas</em> en Castrillón). El nombre del concejo principal preserva su protagonismo destacado (<code>1.35rem</code> y peso <code>800</code>) mientras que las localidades secundarias se muestran en un tamaño más elegante y sutil (<code>0.90rem</code>, peso <code>600</code> y tono <code>#cbd5e1</code>) con perfecta adaptación fluida en pantallas estrechas.</li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.7 🌡️</span>
+            <span class="release-date">27 Sep 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-ui">Ergonomía</span> <strong>Mayor Legibilidad en Cápsulas de Mínimas y Máximas</strong>: Incremento armónico del tamaño tipográfico (<code>0.92rem</code> y peso <code>800</code>) y del espaciado interior (<code>4px 10px</code>) en las pastillas térmicas de la tarjeta principal. Aporta una lectura instantánea y nítida de los extremos térmicos del día sin sobrecargar la interfaz móvil.</li>
@@ -1722,7 +1732,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.1.7-pills').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.1.8-loc').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1752,7 +1762,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.7-pills"></script>
+  <script type="module" src="js/app.js?v=1.1.8-loc"></script>
 
 
 

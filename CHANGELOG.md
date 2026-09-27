@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.8] - 2026-09-27
+
+### 📍 Jerarquía Visual & Tipografía en Ubicaciones y Parroquias
+- **Subordinación Estética de Localidades Secundarias (`js/components/currentCard.js` & `css/components.css`):**
+  - Implementación de la función `formatLocationTitle()` que identifica automáticamente los núcleos y parroquias entre paréntesis (ej. *(Piedras Blancas / Salinas)* en Castrillón o *(Pola de Allande)* en Allande).
+  - Jerarquía tipográfica refinada: el nombre principal del concejo mantiene su tamaño destacado (`1.35rem`, peso `800` en blanco), mientras que el texto entre paréntesis se estiliza con `.location-locality` (`0.90rem`, peso `600`, tono sutil `#cbd5e1`).
+  - Adaptabilidad fluida garantizada en móviles: si el nombre es extenso en resoluciones estrechas, salta de línea de forma armónica sin forzar desbordes ni cortar la insignia del concejo.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v228-location-locality`, actualización a `?v=1.1.8-loc` en módulos, scripts y hojas de estilo.
+
+---
+
 ## [1.1.7] - 2026-09-27
 
 ### 🌡️ Ergonomía Visual & Legibilidad de Cápsulas Térmicas

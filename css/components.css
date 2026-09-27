@@ -51,8 +51,18 @@
   font-size: 1.35rem;
   font-weight: 800;
   letter-spacing: -0.3px;
-  line-height: 1.2;
+  line-height: 1.25;
   color: var(--text-main);
+}
+
+.location-locality {
+  font-size: 0.90rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  letter-spacing: normal;
+  display: inline-block;
+  margin-left: 4px;
+  vertical-align: baseline;
 }
 
 .location-meta {
