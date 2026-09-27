@@ -92,7 +92,6 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
           <div class="temp-minmax-pills">
             <span class="t-pill min">↓ ${Math.round(daily.temperature_2m_min[0])}°C</span>
             <span class="t-pill max">↑ ${Math.round(daily.temperature_2m_max[0])}°C</span>
-            <span class="t-pill laundry-hero-pill ${laundry.badgeClass}" onclick="document.getElementById('sensor-card-laundry')?.scrollIntoView({behavior:'smooth', block:'center'})" style="cursor: pointer;" title="Asesor de Secado: ${laundry.title}. Pulsa para ver análisis completo">🧺 <strong>${laundry.title}</strong></span>
           </div>
         </div>
       </div>

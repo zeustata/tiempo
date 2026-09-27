@@ -23,7 +23,10 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
   - Blindaje anti-panza de burro: si el cielo es una sábana blanca u oscura sin sol (niebla o nubes bajas densas), la radiación directa es nula (0 a 20 W/m²), manteniéndose con total fidelidad en "Nublado / Cubiertu".
 - **Enciclopedia Didáctica de Fenómenos (`js/utils/weatherPhenomena.js`):**
   - Incorporación de la ficha didáctica oficial del *Resol (Sol tamizáu / Resolana)* con explicación óptica, causas y prevención de quemaduras solares bajo nubes altas.
-- **Cache-bust:** `sw.js` → `meteoasturlode-v219-resol`, actualización a `?v=1.1.3-resol` en módulos y CSS.
+- **Blindaje Anti-Desborde y Ergonomía Móvil Estricta (Ley Constitucional 11):**
+  - Supresión de la pastilla redundante de colada en la Hero Weather Card: la recomendación de secado se preserva en su tarjeta dedicada de ancho completo (#7) al final de la cuadrícula de sensores, eliminando la sobrecarga horizontal que provocaba desbordes en teléfonos móviles de 320px-380px.
+  - La fila de temperatura principal recupera holgura total: la condición meteorológica, sensación térmica y pastillas térmicas `[↓ 15°C]` y `[↑ 22°C]` lucen sin cortes ni colisiones.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v220-cleanhero`, actualización a `?v=1.1.3-cleanhero` en módulos y CSS.
 
 ---
 

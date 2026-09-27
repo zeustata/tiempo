@@ -114,6 +114,7 @@
   gap: 4px;
   align-items: flex-end;
   text-align: right;
+  min-width: 0;
 }
 
 .condition-name {
@@ -121,6 +122,7 @@
   font-weight: 800;
   color: var(--text-main);
   line-height: 1.2;
+  word-break: break-word;
 }
 
 .temp-feels {
