@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.11] - 2026-09-27
+
+### 📱 Perfeccionamiento Apple Liquid Glass & ⚡ Disparo Prioritario de Novedades
+- **Cristal Líquido Dinámico Refinado (`js/utils/gyroGlass.js` & `css/components.css`):**
+  - Reflejo especular puro sin modos de fusión que lo apaguen en fondos oscuros, con bisel de luz interior tallado (`inset 0 1px 1px rgba(255, 255, 255, 0.35)`).
+  - Soporte táctil directo (`touchmove`), giroscopio calibrado para la mano, permisos automáticos en iOS Safari y respiración ambiental viva en reposo (*idle breathing*).
+  - Efecto extendido a todas las tarjetas de sensores (`.sensor-card`) como un panel unificado de zafiro.
+  - Orbes de luz atmosférica de fondo en temas nocturnos (`cloudy-night`, `clear-night`, `partly-cloudy-night`) para refracción con volumen real.
+- **Disparo Prioritario Inmediato de Novedades (`js/app.js`):**
+  - Reubicación de `checkChangelogAutoPrompt()` al inicio instantáneo de la aplicación (400 ms) sin esperar a peticiones asíncronas de red, garantizando el cumplimiento fiel del Auto-Prompt de la Constitución (Ley 13).
+- **Cache-bust:** `sw.js` → `meteoasturlode-v237-apple-glass`, actualización a `?v=1.1.11-glass-v237` en módulos, scripts y hojas de estilo.
+
+---
+
 ## [1.1.10] - 2026-09-27
 
 ### 📱 Cristal Líquido Dinámico (Apple Liquid Glass Giroscopio) & 🌌 Noche Nublada Zafiro

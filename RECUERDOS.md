@@ -4,7 +4,26 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.10 — 2026-09-27
+## 🚀 Última Actualización Oficial: v1.1.11 — 2026-09-27
+
+- **Perfeccionamiento Apple Liquid Glass & Disparo Prioritario de Novedades (Changelog Auto-Prompt):**
+  1. *Diagnóstico & Corrección del Auto-Prompt:*
+     - Lendo constató que el modal de novedades no saltaba al actualizar. La causa radicaba en que el cliente móvil ya había guardado `1.1.10` en `localStorage` en la prueba previa, requiriendo un incremento oficial a `v1.1.11` para que el comparador `lastSeen !== CURRENT_APP_VERSION` forzara el salto automático mandatorio (Ley 13).
+     - Además, se reubicó la llamada `checkChangelogAutoPrompt()` al principio inmediato del arranque (400 ms) sin esperar a las peticiones asíncronas de red de `loadWeather()`.
+  2. *Refinamiento Integral de Cristal Líquido Apple:*
+     - Reflejo especular blanco zafiro en capa superior sin `overlay` que absorba la luz en fondos oscuros.
+     - Bisel de luz interior tallada (`inset 0 1px 1px rgba(255, 255, 255, 0.35)`).
+     - Triple entrada: giroscopio, gestos táctiles directos (`touchmove`), ratón y respiración viva oscilatoria (*idle breathing*).
+     - Extensión del efecto a todas las tarjetas de sensores (`.sensor-card`).
+     - Orbes atmosféricos difusos de luz lunar y zafiro en los fondos nocturnos.
+  3. *Blindaje de Caché y Versión:*
+     - Versión oficial `v1.1.11 📱✨`.
+     - `CACHE_NAME` actualizado a `meteoasturlode-v237-apple-glass` en `sw.js`.
+     - Query strings de scripts, módulos y CSS sincronizados a `?v=1.1.11-glass-v237`.
+
+---
+
+## 🚀 Versión Anterior Oficial: v1.1.10 — 2026-09-27
 
 - **Cristal Líquido Dinámico (Apple Liquid Glass Giroscopio) & Noche Zafiro Profundo:**
   1. *Apreciación & Petición de Lendo:*
