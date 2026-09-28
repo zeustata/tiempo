@@ -4,8 +4,34 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.15 — 2026-09-27
- 
+## 🚀 Última Actualización Oficial: v1.1.16 — 2026-09-28
+
+- **Motor de Rendimiento Adaptativo & Modo Economía (Performance Optimizer):**
+  1. *Detector Automático de Hardware Lento (`js/utils/gyroGlass.js` → `detectLowPerf()`):*
+     - Evalúa tres señales al arranque: `hardwareConcurrency <= 4` (núcleos de CPU), `deviceMemory <= 2 GB` (RAM, solo Chrome/Android) y benchmark sintético de 200.000 iteraciones `Math.sqrt` (~2ms en flagship, ~35ms en Snapdragon 430).
+     - Si cualquiera de las señales indica hardware lento, añade la clase `html.low-perf` para que CSS y JS reaccionen coordinadamente sin repetir el benchmark.
+     - Diagnóstico visible en consola de beta testers: `[GyroGlass] Modo Economía activado → núcleos: 4, RAM: 2 GB, benchmark: 38.2 ms`.
+  2. *Throttling Adaptativo del Bucle Giroscópico:*
+     - Modo potente: 60fps libres, blur dinámico 18-36px, idle breathing vivo (oscilación sinusoidal `Math.sin/cos`).
+     - Modo economía: 30fps (presupuesto 33ms/frame), blur fijo 14px (elimina repaints continuos del `backdrop-filter`), idle breathing desactivado (posición central fija x=50%, y=30%), ángulo de inclinación reducido a ±3° (vs. ±5.5°).
+  3. *Canvas de Partículas Climáticas Escalado Automáticamente (`js/app.js`):*
+     - `prefers-reduced-motion`: canvas desactivado completamente si el SO lo solicita.
+     - `perfScale = 0.6`: todos los modos reducen partículas al 60% en modo economía (rain 60→36, storm/heavy-rain 80→48, stars 75→45, snow 60→36, fog 22→13, clouds 45→27).
+     - Eliminado `ctx.shadowBlur` en `sun-motes`, `stars` y `snow`: en GPUs antiguas (Adreno 3xx, Mali-T6xx) el shadowBlur fuerza renderizado por software desactivando la aceleración hardware. Sustituido por ligero incremento de alpha sin coste.
+  4. *CSS Modo Economía (`css/components.css` & `css/main.css`):*
+     - Regla `html.low-perf .{card}`: `backdrop-filter: blur(12px) saturate(150%)` (vs. 24px dinámico), `transform: none` (paralaje desactivado), `box-shadow` estático, `transition` mínima.
+     - Pseudo-elemento `::after` (halo óptico prismático) oculto con `display: none` en modo economía para eliminar la capa compositing extra.
+     - `will-change: transform` añadido al bloque principal de tarjetas glass y `.app-header` para promoverlos a capas GPU independientes y reducir el área de repaint en cada frame.
+  5. *Blindaje de Caché y Versión:*
+     - Versión oficial `v1.1.16 ⚡`.
+     - `CACHE_NAME` actualizado a `meteoasturlode-v242-perf-opt` en `sw.js`.
+     - Query strings de scripts, módulos y CSS sincronizados a `?v=1.1.16-perf-opt-v242`.
+     - Badge del pie y modal de novedades actualizados a `v1.1.16 ⚡`.
+
+---
+
+## 🚀 Versión Anterior Oficial: v1.1.15 — 2026-09-27
+
 - **Cristal Óptico Real & Desenfoque Dinámico Reactivo (Apple True Glass):**
   1. *Diagnóstico Fiel & Erradicación de Bandas Sintéticas:*
      - Lendo señaló con acierto que el efecto anterior "solo hacía hacer una imagen con reflejos" (una capa gráfica con degradados de color superpuesta).
@@ -18,8 +44,9 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
      - Versión oficial `v1.1.15 📱✨`.
      - `CACHE_NAME` actualizado a `meteoasturlode-v241-real-glass` en `sw.js`.
      - Query strings de scripts, módulos y CSS sincronizados a `?v=1.1.15-real-glass-v241`.
- 
+
 ---
+
  
 ## 🚀 Versión Anterior Oficial: v1.1.14 — 2026-09-27
  

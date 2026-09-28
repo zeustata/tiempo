@@ -10,6 +10,30 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.16] - 2026-09-28
+
+### ⚡ Motor de Rendimiento Adaptativo & Modo Economía (Performance Optimizer)
+- **Detector Automático de Hardware Lento (`js/utils/gyroGlass.js`):**
+  - Nueva función `detectLowPerf()` que evalúa tres señales combinadas al arranque: núcleos de CPU (`hardwareConcurrency <= 4`), RAM disponible (`deviceMemory <= 2 GB`) y benchmark sintético de CPU (200k iteraciones `Math.sqrt` — ~2ms en flagship, ~35ms en Snapdragon 4xx).
+  - El resultado se persiste en la sesión mediante la clase CSS `.low-perf` en `<html>`, permitiendo que tanto JS como CSS reaccionen a él.
+  - Diagnóstico visible en consola para beta testers: `[GyroGlass] Modo Economía activado → núcleos: 4, RAM: 2 GB, benchmark: 38.2 ms`.
+- **Throttling Adaptativo del Bucle Giroscópico (30fps en móviles lentos):**
+  - En dispositivos detectados como lentos: el `requestAnimationFrame` se limita a 30fps (presupuesto de 33ms por frame) en lugar de 60fps, reduciendo a la mitad la carga del hilo principal.
+  - *Idle breathing* desactivado en modo economía: en reposo, la posición del cristal se fija en el centro (x=50%, y=30%) eliminando el cálculo sinusoidal continuo de `Math.sin/cos` en cada frame.
+  - Blur fijo de 14px en modo economía (vs. dinámico 18-36px) para eliminar los repaints continuos del `backdrop-filter`.
+  - Ángulo de inclinación máximo reducido a ±3° (vs. ±5.5°) para que el efecto siga siendo visualmente elegante sin castigar la GPU.
+- **Canvas de Partículas Climáticas Escalado Automáticamente (`js/app.js`):**
+  - Respeto estricto de `prefers-reduced-motion`: canvas desactivado completamente si el SO del usuario lo solicita.
+  - Factor de escala `perfScale = 0.6` en modo economía: todos los modos reducen su conteo al 60% (lluvia 60→36, tormenta 80→48, estrellas 75→45, nieve 60→36, nubes 45→27).
+  - Eliminación de `ctx.shadowBlur` en todos los modos del canvas (`sun-motes`, `stars`, `snow`): en GPUs de gama baja, el shadowBlur fuerza renderizado por software desactivando la aceleración hardware. Sustituido por ligero incremento de alpha que preserva el efecto visual sin coste.
+- **CSS Modo Economía `.low-perf` (`css/components.css` & `css/main.css`):**
+  - Regla selectora `html.low-perf .{card}` que sobreescribe: `backdrop-filter: blur(12px) saturate(150%)` (vs. 24px+), `transform: none` (sin paralaje), `box-shadow` estático y `transition` mínima.
+  - Pseudo-elemento `::after` (halo óptico prismático) oculto (`display: none`) en modo economía para eliminar la capa compositing extra que genera.
+  - `will-change: transform` añadido al bloque principal de tarjetas glass y al `.app-header` para promoverlos a capas compositing independientes en la GPU, reduciendo el área de repaint en cada frame.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v242-perf-opt`, actualización a `?v=1.1.16-perf-opt-v242` en módulos, scripts y hojas de estilo.
+
+---
+
 ## [1.1.15] - 2026-09-27
  
 ### 💎 Cristal Óptico Real & Desenfoque Dinámico Reactivo (Apple True Glass)

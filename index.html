@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.15-real-glass-v241">
-  <link rel="stylesheet" href="css/components.css?v=1.1.15-real-glass-v241">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.15-real-glass-v241">
+  <link rel="stylesheet" href="css/main.css?v=1.1.16-perf-opt-v242">
+  <link rel="stylesheet" href="css/components.css?v=1.1.16-perf-opt-v242">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.16-perf-opt-v242">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -176,7 +176,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.15 📱✨</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.16 ⚡</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -227,11 +227,24 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.15 📱✨</span>
-            <span class="release-date">27 Sep 2026 (Actual)</span>
+            <span class="release-version">v1.1.16 ⚡</span>
+            <span class="release-date">28 Sep 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-new">Nuevo</span> <strong>Cristal Óptico Real & Desenfoque Dinámico Reactivo (Apple True Glass)</strong>: Supresión total de degradados sintéticos rayados. La refracción ahora opera con un halo especular difuso y suave (`mix-blend-mode: overlay`), y un desenfoque físico (`backdrop-filter`) que oscila dinámicamente entre 18px y 36px al inclinar el terminal.</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Motor de Rendimiento Adaptativo (Modo Economía)</strong>: Detector automático de hardware lento basado en núcleos de CPU, RAM y benchmark sintético. En móviles de gama baja activa automáticamente el Modo Economía sin intervención del usuario.</li>
+            <li><span class="tag tag-mejora">Mejora</span> <strong>Throttling del efecto glass a 30fps en móviles lentos</strong>: El bucle del giroscopio se limita a 30fps (vs. 60fps), el idle breathing se desactiva en reposo y el blur se fija a 14px estático eliminando repaints continuos.</li>
+            <li><span class="tag tag-mejora">Mejora</span> <strong>Partículas climáticas reducidas al 60% en hardware limitado</strong>: Todos los modos del canvas (lluvia, nieve, tormenta, estrellas…) escalan automáticamente su conteo. Eliminado <code>ctx.shadowBlur</code> en todos los modos para restaurar la aceleración hardware en GPUs antiguas.</li>
+            <li><span class="tag tag-mejora">Mejora</span> <strong>CSS Modo Economía (<code>html.low-perf</code>)</strong>: Las tarjetas glass reducen su blur a 12px, se desactiva el paralaje y el halo óptico prismático, manteniendo la estética sin saturar la GPU.</li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.15 📱✨</span>
+            <span class="release-date">27 Sep 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> <strong>Cristal Óptico Real &amp; Desenfoque Dinámico Reactivo (Apple True Glass)</strong>: Supresión total de degradados sintéticos rayados. La refracción ahora opera con un halo especular difuso y suave (`mix-blend-mode: overlay`), y un desenfoque físico (`backdrop-filter`) que oscila dinámicamente entre 18px y 36px al inclinar el terminal.</li>
             <li><span class="tag tag-new">Nuevo</span> <strong>Orbes Atmosféricos de Contraste en Fondo</strong>: Inyección de núcleos lumínicos orgánicos en el fondo de la aplicación que se emborronan activamente al quedar bajo las tarjetas, haciendo visible de forma fidedigna e inequívoca el grosor y la translucidez del vidrio esmerilado.</li>
           </ul>
         </div>
@@ -1784,7 +1797,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.15-real-glass-v241"></script>
+  <script type="module" src="js/app.js?v=1.1.16-perf-opt-v242"></script>
 
 
 

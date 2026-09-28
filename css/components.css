@@ -18,7 +18,43 @@
   -webkit-backdrop-filter: blur(var(--glass-blur, 24px)) saturate(190%);
   transform: translate(calc(var(--glass-tilt-y, 0deg) * 0.7), calc(var(--glass-tilt-x, 0deg) * 0.7));
   transition: transform 0.12s ease-out, box-shadow 0.15s ease-out, border-color 0.3s ease;
+  /* GPU hint: promover tarjetas a capas compositing independientes */
+  will-change: transform;
 }
+
+/* --- MODO ECONOMÍA: dispositivos con CPU/RAM limitada ---
+   La clase .low-perf la añade gyroGlass.js al detectar el hardware.
+   Reduce el blur, elimina el box-shadow dinámico y suprime transiciones
+   costosas para ahorrar GPU en móviles antiguos (Snapdragon 4xx, Mali-T6xx). */
+.low-perf .hero-weather-card,
+.low-perf .forecast-block,
+.low-perf .sensor-card,
+.low-perf .chart-card,
+.low-perf .marine-card,
+.low-perf .mountain-card,
+.low-perf .astronomy-card,
+.low-perf .surf-card,
+.low-perf .laundry-card {
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.35), var(--shadow-card);
+  transition: border-color 0.3s ease;
+  transform: none;
+}
+
+/* El pseudo-elemento ::after (halo óptico) también se simplifica en modo economía */
+.low-perf .hero-weather-card::after,
+.low-perf .forecast-block::after,
+.low-perf .sensor-card::after,
+.low-perf .chart-card::after,
+.low-perf .marine-card::after,
+.low-perf .mountain-card::after,
+.low-perf .astronomy-card::after,
+.low-perf .surf-card::after,
+.low-perf .laundry-card::after {
+  display: none;
+}
+
 
 .hero-weather-card {
   padding: 24px 28px;

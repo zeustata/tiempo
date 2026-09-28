@@ -1,23 +1,23 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.1.15-real-glass-v241';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.1.15-real-glass-v241';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.1.15-real-glass-v241';
-import { renderCurrentWeather } from './components/currentCard.js?v=1.1.15-real-glass-v241';
-import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.1.15-real-glass-v241';
-import { renderSurfCard } from './components/surfCard.js?v=1.1.15-real-glass-v241';
-import { renderMountainCard } from './components/mountainCard.js?v=1.1.15-real-glass-v241';
-import { renderForecast } from './components/forecastView.js?v=1.1.15-real-glass-v241';
-import { renderWeatherChart } from './components/chartsView.js?v=1.1.15-real-glass-v241';
-import { renderAstronomyView } from './components/astronomyCard.js?v=1.1.15-real-glass-v241';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.15-real-glass-v241';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1.15-real-glass-v241';
-import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1.15-real-glass-v241';
-import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1.15-real-glass-v241';
-import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.15-real-glass-v241';
-import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.15-real-glass-v241';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.15-real-glass-v241';
-import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.15-real-glass-v241';
-import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.15-real-glass-v241';
-import { initGyroGlass } from './utils/gyroGlass.js?v=1.1.15-real-glass-v241';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.1.16-perf-opt-v242';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.1.16-perf-opt-v242';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.1.16-perf-opt-v242';
+import { renderCurrentWeather } from './components/currentCard.js?v=1.1.16-perf-opt-v242';
+import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.1.16-perf-opt-v242';
+import { renderSurfCard } from './components/surfCard.js?v=1.1.16-perf-opt-v242';
+import { renderMountainCard } from './components/mountainCard.js?v=1.1.16-perf-opt-v242';
+import { renderForecast } from './components/forecastView.js?v=1.1.16-perf-opt-v242';
+import { renderWeatherChart } from './components/chartsView.js?v=1.1.16-perf-opt-v242';
+import { renderAstronomyView } from './components/astronomyCard.js?v=1.1.16-perf-opt-v242';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.16-perf-opt-v242';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1.16-perf-opt-v242';
+import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1.16-perf-opt-v242';
+import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1.16-perf-opt-v242';
+import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.16-perf-opt-v242';
+import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.16-perf-opt-v242';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.16-perf-opt-v242';
+import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.16-perf-opt-v242';
+import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.16-perf-opt-v242';
+import { initGyroGlass } from './utils/gyroGlass.js?v=1.1.16-perf-opt-v242';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, pronóstico horario 72h y alertas', key: '1' },
@@ -30,7 +30,7 @@ const APP_MODULES = [
   { id: 'astronomy', icon: '🔭', title: 'Astronomía & Cosmos', desc: 'Eclipses, lluvias de estrellas, fases lunares y semáforo de visibilidad en Asturias', key: '8' }
 ];
 
-export const CURRENT_APP_VERSION = '1.1.15';
+export const CURRENT_APP_VERSION = '1.1.16';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -1886,6 +1886,13 @@ class MeteoAsturiasApp {
   initParticleCanvas() {
     const canvas = document.getElementById('weather-particles-canvas');
     if (!canvas) return;
+
+    // Respetar prefers-reduced-motion: desactivar canvas de partículas completamente
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      canvas.style.display = 'none';
+      return;
+    }
+
     const ctx = canvas.getContext('2d');
 
     let width = canvas.width = window.innerWidth;
@@ -1898,6 +1905,13 @@ class MeteoAsturiasApp {
       if (this.reinitParticles) this.reinitParticles(this.particleMode || 'clouds-day');
     });
 
+    // Detectar modo economía (reutiliza la clase .low-perf ya marcada por gyroGlass)
+    // Si gyroGlass aún no corrió, hacemos nuestra propia lectura rápida
+    const isLowPerf = document.documentElement.classList.contains('low-perf') ||
+      (navigator.hardwareConcurrency || 8) <= 4;
+    // Factor de reducción de partículas: 60% en móviles lentos
+    const perfScale = isLowPerf ? 0.6 : 1.0;
+
     let particles = [];
     let currentMode = 'clouds-day';
     let lightningFlash = 0;
@@ -1907,7 +1921,7 @@ class MeteoAsturiasApp {
       particles = [];
 
       if (mode === 'sun-motes') {
-        const count = 35;
+        const count = Math.round(35 * perfScale);
         for (let i = 0; i < count; i++) {
           particles.push({
             x: Math.random() * width,
@@ -1921,7 +1935,7 @@ class MeteoAsturiasApp {
           });
         }
       } else if (mode === 'stars') {
-        const count = 75;
+        const count = Math.round(75 * perfScale);
         for (let i = 0; i < count; i++) {
           particles.push({
             x: Math.random() * width,
@@ -1933,7 +1947,7 @@ class MeteoAsturiasApp {
           });
         }
       } else if (mode === 'snow') {
-        const count = 60;
+        const count = Math.round(60 * perfScale);
         for (let i = 0; i < count; i++) {
           particles.push({
             x: Math.random() * width,
@@ -1946,7 +1960,7 @@ class MeteoAsturiasApp {
           });
         }
       } else if (mode === 'storm' || mode === 'heavy-rain') {
-        const count = 80;
+        const count = Math.round(80 * perfScale);
         for (let i = 0; i < count; i++) {
           particles.push({
             x: Math.random() * width,
@@ -1957,7 +1971,7 @@ class MeteoAsturiasApp {
           });
         }
       } else if (mode === 'rain') {
-        const count = 60;
+        const count = Math.round(60 * perfScale);
         for (let i = 0; i < count; i++) {
           particles.push({
             x: Math.random() * width,
@@ -1968,7 +1982,7 @@ class MeteoAsturiasApp {
           });
         }
       } else if (mode === 'fog') {
-        const count = 22;
+        const count = Math.round(22 * perfScale);
         for (let i = 0; i < count; i++) {
           particles.push({
             x: Math.random() * width,
@@ -1980,7 +1994,7 @@ class MeteoAsturiasApp {
         }
       } else {
         // clouds-day / clouds-night / ambient-drift
-        const count = 45;
+        const count = Math.round(45 * perfScale);
         for (let i = 0; i < count; i++) {
           particles.push({
             x: Math.random() * width,
@@ -2044,11 +2058,9 @@ class MeteoAsturiasApp {
           const currentAlpha = p.alpha + Math.sin(p.pulse) * 0.12;
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(251, 191, 36, ${Math.max(0.05, currentAlpha)})`;
-          ctx.shadowColor = 'rgba(245, 158, 11, 0.6)';
-          ctx.shadowBlur = 8;
+          // Sin shadowBlur: alpha más alto compensa el efecto de brillo sin coste de GPU
+          ctx.fillStyle = `rgba(251, 191, 36, ${Math.max(0.07, currentAlpha)})`;
           ctx.fill();
-          ctx.shadowBlur = 0;
 
           p.y += p.speedY;
           p.x += p.speedX;
@@ -2060,25 +2072,21 @@ class MeteoAsturiasApp {
       } else if (currentMode === 'stars') {
         particles.forEach(p => {
           p.pulse += p.twinkleSpeed;
-          const currentAlpha = Math.max(0.1, p.alpha + Math.sin(p.pulse) * 0.35);
+          const currentAlpha = Math.max(0.12, p.alpha + Math.sin(p.pulse) * 0.35);
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          // Sin shadowBlur: alpha compensado para preservar el destello
           ctx.fillStyle = `rgba(224, 242, 254, ${currentAlpha})`;
-          ctx.shadowColor = 'rgba(186, 230, 253, 0.8)';
-          ctx.shadowBlur = 4;
           ctx.fill();
-          ctx.shadowBlur = 0;
         });
       } else if (currentMode === 'snow') {
         particles.forEach(p => {
           p.sway += p.swaySpeed;
           ctx.beginPath();
           ctx.arc(p.x + Math.sin(p.sway) * 8, p.y, p.radius, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
-          ctx.shadowColor = 'rgba(224, 242, 254, 0.7)';
-          ctx.shadowBlur = 5;
+          // Sin shadowBlur: alpha ligeramente aumentado para compensar
+          ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(1, p.alpha + 0.1)})`;
           ctx.fill();
-          ctx.shadowBlur = 0;
 
           p.y += p.speedY;
           if (p.y > height + 10) {
