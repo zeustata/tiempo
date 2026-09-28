@@ -348,9 +348,28 @@ export function getGlassWeatherSvg(iconKey, size = 32) {
         </svg>
       `;
 
+    case 'snow-light':
+      // ❄️ FALISPOS / NIEVE LIGERA GLASS 3D: 1 prisma central sutil
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon glass-icon" aria-label="Falispos Cristal 3D">
+          <defs>
+            <linearGradient id="glass-ice-light-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ffffff" />
+              <stop offset="100%" stop-color="#7dd3fc" />
+            </linearGradient>
+          </defs>
+          <g stroke="url(#glass-ice-light-grad)" stroke-width="1.8" stroke-linecap="round">
+            <line x1="24" y1="12" x2="24" y2="36" />
+            <line x1="12" y1="24" x2="36" y2="24" />
+            <line x1="15" y1="15" x2="33" y2="33" />
+            <line x1="15" y1="33" x2="33" y2="15" />
+          </g>
+          <circle cx="24" cy="24" r="2.8" fill="#ffffff" stroke="#bae6fd" stroke-width="1" />
+        </svg>
+      `;
+
     case 'snow':
-    case 'nevadona':
-      // ❄️ NIEVE CRISTAL DE HIELO 3D
+      // ❄️ NIEVE CRISTAL DE HIELO 3D MODERADA
       return `
         <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon glass-icon" aria-label="Nieve Cristal 3D">
           <defs>
@@ -372,6 +391,74 @@ export function getGlassWeatherSvg(iconKey, size = 32) {
             <polygon points="38,24 33,21 33,27" fill="#38bdf8" />
           </g>
           <circle cx="24" cy="24" r="3.5" fill="#ffffff" stroke="#7dd3fc" stroke-width="1" />
+        </svg>
+      `;
+
+    case 'heavy-snow':
+    case 'nevadona':
+      // ❄️🏔️ NEVADONA FUERTE GLASS 3D: Nube de cristal ártico con múltiples gemas de nieve
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon glass-icon" aria-label="Nevadona Cristal 3D">
+          <defs>
+            <linearGradient id="glass-arctic-cloud" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#e0f2fe" stop-opacity="0.9" />
+              <stop offset="100%" stop-color="#7dd3fc" stop-opacity="0.6" />
+            </linearGradient>
+          </defs>
+          <path d="M 41,22 H 12 A 8,8 0 0 1 10.5,6 A 12,12 0 0 1 36,7 A 7.5,7.5 0 0 1 41,22 Z" fill="url(#glass-arctic-cloud)" stroke="rgba(255,255,255,0.7)" stroke-width="1" />
+          <!-- 5 Cristales de nieve perlados 3D -->
+          <g stroke="#ffffff" stroke-width="1.6" stroke-linecap="round">
+            <line x1="9" y1="28" x2="9" y2="34" /><line x1="6" y1="31" x2="12" y2="31" />
+            <line x1="17" y1="33" x2="17" y2="41" /><line x1="13" y1="37" x2="21" y2="37" />
+            <line x1="25" y1="26" x2="25" y2="34" /><line x1="21" y1="30" x2="29" y2="30" />
+            <line x1="33" y1="33" x2="33" y2="41" /><line x1="29" y1="37" x2="37" y2="37" />
+            <line x1="41" y1="28" x2="41" y2="34" /><line x1="38" y1="31" x2="44" y2="31" />
+          </g>
+        </svg>
+      `;
+
+    case 'sleet':
+      // 🌧️❄️ AGUANIEVE GLASS 3D: Gota de rocío perlada y prisma de hielo cristalino
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon glass-icon" aria-label="Aguanieve Cristal 3D">
+          <defs>
+            <linearGradient id="glass-sleet-drop" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#38bdf8" />
+              <stop offset="100%" stop-color="#0284c7" />
+            </linearGradient>
+          </defs>
+          <path d="M 41,23 H 12 A 8,8 0 0 1 10.5,7 A 12,12 0 0 1 36,8 A 7.5,7.5 0 0 1 41,23 Z" fill="url(#glass-cloud-grad)" stroke="rgba(255,255,255,0.6)" stroke-width="1" />
+          <!-- Gota perlada 1 -->
+          <path d="M 12,28 C 9,33 9,38 12,38 C 15,38 15,33 12,28 Z" fill="url(#glass-sleet-drop)" />
+          <!-- Copo 3D centro -->
+          <g stroke="#ffffff" stroke-width="1.8" stroke-linecap="round">
+            <line x1="25" y1="27" x2="25" y2="41" />
+            <line x1="18" y1="34" x2="32" y2="34" />
+            <line x1="20" y1="29" x2="30" y2="39" />
+            <line x1="20" y1="39" x2="30" y2="29" />
+          </g>
+          <circle cx="25" cy="34" r="2.2" fill="#7dd3fc" />
+          <!-- Gota perlada 2 -->
+          <path d="M 37,28 C 34,33 34,38 37,38 C 40,38 40,33 37,28 Z" fill="url(#glass-sleet-drop)" />
+        </svg>
+      `;
+
+    case 'hail':
+      // 🧊 GRANIZO / PEDRISCU GLASS 3D: Nube de tormenta con esferas facetadas de hielo traslúcido
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon glass-icon" aria-label="Granizo Cristal 3D">
+          <defs>
+            <radialGradient id="glass-hail-stone" cx="35%" cy="35%" r="65%">
+              <stop offset="0%" stop-color="#ffffff" />
+              <stop offset="60%" stop-color="#e0f2fe" />
+              <stop offset="100%" stop-color="#38bdf8" />
+            </radialGradient>
+          </defs>
+          <path d="M 41,22 H 12 A 8,8 0 0 1 10.5,6 A 12,12 0 0 1 36,7 A 7.5,7.5 0 0 1 41,22 Z" fill="url(#glass-storm-cloud)" stroke="rgba(255,255,255,0.4)" stroke-width="1" />
+          <!-- Piedras esféricas/facetadas de hielo 3D -->
+          <polygon points="12,28 16,30 15,35 10,34" fill="url(#glass-hail-stone)" stroke="#ffffff" stroke-width="0.8" />
+          <polygon points="23,30 29,28 31,35 26,39 21,36" fill="url(#glass-hail-stone)" stroke="#ffffff" stroke-width="1.2" />
+          <polygon points="36,29 41,32 38,37 33,35" fill="url(#glass-hail-stone)" stroke="#ffffff" stroke-width="0.8" />
         </svg>
       `;
 

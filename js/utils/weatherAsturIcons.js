@@ -320,35 +320,145 @@ export function getAsturWeatherSvg(iconKey, size = 32) {
         </svg>
       `;
 
-    case 'snow':
-    case 'nevadona':
-      // ❄️ LA NUBE CON GORRITO DE LANA Y COPOS SONRIENTES
+    case 'snow-light':
+      // ❄️ FALISPOS / NEVADA DÉBIL: Nube sonriente con gorrito y 1 solo copito
       return `
-        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon icon-comic-snow" aria-label="Nube con Gorro de Nieve">
-          <!-- Nube de Invierno -->
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon icon-comic-snow-light" aria-label="Falispos y Nieve Ligera">
           <path d="M 40,34 H 13 A 8,8 0 0 1 11.5,19 A 11,11 0 0 1 35.5,19.5 A 7.5,7.5 0 0 1 40,34 Z" fill="#ffffff" stroke="#94a3b8" stroke-width="1.8" />
-          <!-- Gorrito de Lana con Pompón -->
           <g transform="translate(16, 3)">
             <path d="M 3,14 Q 8,4 18,10 Q 14,15 5,16 Z" fill="#3b82f6" stroke="#1d4ed8" stroke-width="1.2" />
             <path d="M 4,14 L 18,10" stroke="#facc15" stroke-width="2.5" stroke-linecap="round" />
-            <!-- Pompón -->
             <circle cx="3" cy="14" r="3.2" fill="#ef4444" stroke="#b91c1c" stroke-width="1" />
           </g>
-          <!-- Carita Sonriente con Frío -->
+          <ellipse cx="20" cy="25" rx="1.8" ry="2.4" fill="#1e293b" />
+          <ellipse cx="30" cy="25" rx="1.8" ry="2.4" fill="#1e293b" />
+          <ellipse cx="16" cy="28" rx="2.2" ry="1.4" fill="#67e8f9" opacity="0.7" />
+          <ellipse cx="34" cy="28" rx="2.2" ry="1.4" fill="#67e8f9" opacity="0.7" />
+          <path d="M 23,28 Q 25,30.5 27,28" stroke="#1e293b" stroke-width="1.3" fill="none" stroke-linecap="round" />
+          <!-- 1 Copito central tierno -->
+          <g stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round">
+            <line x1="25" y1="38" x2="25" y2="44" />
+            <line x1="22" y1="41" x2="28" y2="41" />
+          </g>
+        </svg>
+      `;
+
+    case 'snow':
+      // ❄️ NEVADA MODERADA: Nube con gorrito y 3 copos
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon icon-comic-snow" aria-label="Nevada Moderada">
+          <path d="M 40,34 H 13 A 8,8 0 0 1 11.5,19 A 11,11 0 0 1 35.5,19.5 A 7.5,7.5 0 0 1 40,34 Z" fill="#ffffff" stroke="#94a3b8" stroke-width="1.8" />
+          <g transform="translate(16, 3)">
+            <path d="M 3,14 Q 8,4 18,10 Q 14,15 5,16 Z" fill="#3b82f6" stroke="#1d4ed8" stroke-width="1.2" />
+            <path d="M 4,14 L 18,10" stroke="#facc15" stroke-width="2.5" stroke-linecap="round" />
+            <circle cx="3" cy="14" r="3.2" fill="#ef4444" stroke="#b91c1c" stroke-width="1" />
+          </g>
           <ellipse cx="20" cy="25" rx="1.8" ry="2.4" fill="#1e293b" />
           <ellipse cx="30" cy="25" rx="1.8" ry="2.4" fill="#1e293b" />
           <ellipse cx="16" cy="28" rx="2.5" ry="1.5" fill="#67e8f9" opacity="0.8" />
           <ellipse cx="34" cy="28" rx="2.5" ry="1.5" fill="#67e8f9" opacity="0.8" />
           <path d="M 23,28 Q 25,31 27,28" stroke="#1e293b" stroke-width="1.4" fill="none" stroke-linecap="round" />
-          <!-- Copos de Nieve Bonitos -->
+          <!-- 3 Copos de nieve -->
           <g stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round">
-            <line x1="12" y1="38" x2="12" y2="44" />
-            <line x1="9" y1="41" x2="15" y2="41" />
-            <line x1="26" y1="38" x2="26" y2="44" />
-            <line x1="23" y1="41" x2="29" y2="41" />
-            <line x1="38" y1="38" x2="38" y2="44" />
-            <line x1="35" y1="41" x2="41" y2="41" />
+            <line x1="13" y1="38" x2="13" y2="44" />
+            <line x1="10" y1="41" x2="16" y2="41" />
+            <line x1="25" y1="38" x2="25" y2="44" />
+            <line x1="22" y1="41" x2="28" y2="41" />
+            <line x1="37" y1="38" x2="37" y2="44" />
+            <line x1="34" y1="41" x2="40" y2="41" />
           </g>
+        </svg>
+      `;
+
+    case 'heavy-snow':
+    case 'nevadona':
+      // ❄️🏔️ NEVADONA FUERTE / COPIOSA: Nube con gorro y bufanda roja, tiritando con 5 copos densos
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon icon-comic-heavy-snow" aria-label="Nevadona Fuerte Copiosa">
+          <path d="M 40,32 H 13 A 8,8 0 0 1 11.5,17 A 11,11 0 0 1 35.5,17.5 A 7.5,7.5 0 0 1 40,32 Z" fill="#e0f2fe" stroke="#64748b" stroke-width="1.8" />
+          <!-- Gorrito de Lana -->
+          <g transform="translate(16, 2)">
+            <path d="M 3,13 Q 8,3 18,9 Q 14,14 5,15 Z" fill="#ef4444" stroke="#991b1b" stroke-width="1.2" />
+            <path d="M 4,13 L 18,9" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" />
+            <circle cx="3" cy="13" r="3.2" fill="#ffffff" stroke="#94a3b8" stroke-width="1" />
+          </g>
+          <!-- Bufanda de Lana Abajo -->
+          <path d="M 16,30 Q 25,34 34,30 L 33,33 Q 25,37 17,33 Z" fill="#ef4444" stroke="#991b1b" stroke-width="1.2" />
+          <!-- Carita de Frío Intenso con Boca Tiritona -->
+          <circle cx="20" cy="23" r="1.8" fill="#0f172a" />
+          <circle cx="30" cy="23" r="1.8" fill="#0f172a" />
+          <ellipse cx="15" cy="26" rx="2.5" ry="1.5" fill="#38bdf8" opacity="0.8" />
+          <ellipse cx="35" cy="26" rx="2.5" ry="1.5" fill="#38bdf8" opacity="0.8" />
+          <path d="M 22,26 L 24,28 L 26,26 L 28,28" stroke="#0f172a" stroke-width="1.4" fill="none" stroke-linecap="round" />
+          <!-- 5 Copos Copiosos a Dos Alturas -->
+          <g stroke="#0284c7" stroke-width="1.8" stroke-linecap="round">
+            <line x1="8" y1="36" x2="8" y2="42" /><line x1="5" y1="39" x2="11" y2="39" />
+            <line x1="17" y1="39" x2="17" y2="45" /><line x1="14" y1="42" x2="20" y2="42" />
+            <line x1="25" y1="36" x2="25" y2="42" /><line x1="22" y1="39" x2="28" y2="39" />
+            <line x1="33" y1="39" x2="33" y2="45" /><line x1="30" y1="42" x2="36" y2="42" />
+            <line x1="41" y1="36" x2="41" y2="42" /><line x1="38" y1="39" x2="44" y2="39" />
+          </g>
+        </svg>
+      `;
+
+    case 'sleet':
+      // 🌧️❄️ AGUANIEVE (LLUVIA CON NIEVE): Nube con gotas líquidas y copos de nieve cayendo juntos
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon icon-comic-sleet" aria-label="Aguanieve Lluvia y Nieve">
+          <path d="M 40,33 H 13 A 8,8 0 0 1 11.5,18 A 11,11 0 0 1 35.5,18.5 A 7.5,7.5 0 0 1 40,33 Z" fill="#f0f9ff" stroke="#64748b" stroke-width="1.8" />
+          <!-- Gorro Bicolor -->
+          <g transform="translate(16, 2)">
+            <path d="M 3,14 Q 8,4 18,10 Q 14,15 5,16 Z" fill="#0284c7" stroke="#0369a1" stroke-width="1.2" />
+            <path d="M 4,14 L 18,10" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" />
+            <circle cx="3" cy="14" r="3.2" fill="#ffffff" stroke="#94a3b8" stroke-width="1" />
+          </g>
+          <ellipse cx="20" cy="24" rx="1.8" ry="2.4" fill="#1e293b" />
+          <ellipse cx="30" cy="24" rx="1.8" ry="2.4" fill="#1e293b" />
+          <ellipse cx="16" cy="27" rx="2.5" ry="1.5" fill="#38bdf8" opacity="0.7" />
+          <ellipse cx="34" cy="27" rx="2.5" ry="1.5" fill="#38bdf8" opacity="0.7" />
+          <path d="M 23,27 Q 25,30 27,27" stroke="#1e293b" stroke-width="1.4" fill="none" stroke-linecap="round" />
+          <!-- Gotas de Lluvia y Copo de Nieve Combinados -->
+          <!-- Gota Izquierda -->
+          <path d="M 12,37 Q 10,40 10,42 A 2.2,2.2 0 0 0 14.4,42 Q 14.4,40 12,37 Z" fill="#0284c7" />
+          <!-- Copo Centro -->
+          <g stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round">
+            <line x1="25" y1="36" x2="25" y2="44" />
+            <line x1="21" y1="40" x2="29" y2="40" />
+            <line x1="22" y1="37" x2="28" y2="43" />
+            <line x1="22" y1="43" x2="28" y2="37" />
+          </g>
+          <!-- Gota Derecha -->
+          <path d="M 37,37 Q 35,40 35,42 A 2.2,2.2 0 0 0 39.4,42 Q 39.4,40 37,37 Z" fill="#0284c7" />
+        </svg>
+      `;
+
+    case 'hail':
+      // 🧊 GRANIZO / PEDRISCU: Nube tormentosa con ojos asustados y piedras anguladas de hielo cayendo
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon icon-comic-hail" aria-label="Granizo y Pedriscu">
+          <!-- Nube Tormentosa Oscura -->
+          <path d="M 40,32 H 13 A 8,8 0 0 1 11.5,17 A 11,11 0 0 1 35.5,17.5 A 7.5,7.5 0 0 1 40,32 Z" fill="#334155" stroke="#1e293b" stroke-width="2" />
+          <!-- Ojos de Asombro / Preocupación -->
+          <ellipse cx="20" cy="22" rx="2.5" ry="3.2" fill="#ffffff" />
+          <circle cx="20" cy="22" r="1.3" fill="#0f172a" />
+          <ellipse cx="30" cy="22" rx="2.5" ry="3.2" fill="#ffffff" />
+          <circle cx="30" cy="22" r="1.3" fill="#0f172a" />
+          <!-- Cejas Inclinadas -->
+          <line x1="17" y1="17" x2="22" y2="19" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" />
+          <line x1="33" y1="17" x2="28" y2="19" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" />
+          <!-- Boca Abierta "O" de Sorpresa -->
+          <circle cx="25" cy="26" r="2.2" fill="#0f172a" stroke="#ffffff" stroke-width="0.8" />
+          <!-- Piedras Duras de Granizo con Destello Blanco y Sombra Cian -->
+          <!-- Piedra 1 -->
+          <polygon points="12,35 15,37 14,41 10,40" fill="#ffffff" stroke="#0284c7" stroke-width="1.3" />
+          <!-- Piedra 2 (Grande) -->
+          <polygon points="23,36 28,34 30,39 26,42 22,39" fill="#f8fafc" stroke="#0284c7" stroke-width="1.5" />
+          <!-- Piedra 3 -->
+          <polygon points="36,36 39,39 37,43 33,40" fill="#ffffff" stroke="#0284c7" stroke-width="1.3" />
+          <!-- Líneas de velocidad de impacto -->
+          <line x1="11" y1="42" x2="9" y2="45" stroke="#94a3b8" stroke-width="1.2" stroke-linecap="round" />
+          <line x1="26" y1="43" x2="25" y2="46" stroke="#94a3b8" stroke-width="1.4" stroke-linecap="round" />
+          <line x1="36" y1="44" x2="35" y2="47" stroke="#94a3b8" stroke-width="1.2" stroke-linecap="round" />
         </svg>
       `;
 

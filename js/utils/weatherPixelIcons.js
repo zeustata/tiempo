@@ -253,12 +253,23 @@ export function getPixelWeatherSvg(iconKey, size = 32) {
         </svg>
       `;
 
+    case 'snow-light':
+      // ❄️ FALISPOS / NIEVE LIGERA PIXEL ART: 1 copo pixel central
+      return `
+        <svg viewBox="0 0 24 24" width="${sz}" height="${sz}" class="astur-svg-icon pixel-icon" shape-rendering="crispEdges" aria-label="Falispos Pixel Art">
+          <rect x="7" y="4" width="8" height="3" fill="#ffffff" />
+          <rect x="4" y="7" width="14" height="5" fill="#ffffff" />
+          <rect x="3" y="10" width="16" height="3" fill="#cbd5e1" />
+          <!-- 1 Copo central 8-bits -->
+          <rect x="11" y="16" width="2" height="4" fill="#ffffff" />
+          <rect x="10" y="17" width="4" height="2" fill="#ffffff" />
+        </svg>
+      `;
+
     case 'snow':
-    case 'nevadona':
-      // ❄️ NIEVE PIXEL ART
+      // ❄️ NIEVE MODERADA PIXEL ART: 3 copos en cruz
       return `
         <svg viewBox="0 0 24 24" width="${sz}" height="${sz}" class="astur-svg-icon pixel-icon" shape-rendering="crispEdges" aria-label="Nieve Pixel Art">
-          <!-- Nube Blanca -->
           <rect x="7" y="4" width="8" height="3" fill="#ffffff" />
           <rect x="4" y="7" width="14" height="5" fill="#ffffff" />
           <rect x="3" y="10" width="16" height="3" fill="#cbd5e1" />
@@ -269,6 +280,57 @@ export function getPixelWeatherSvg(iconKey, size = 32) {
           <rect x="11" y="18" width="3" height="1" fill="#ffffff" />
           <rect x="18" y="16" width="1" height="3" fill="#ffffff" />
           <rect x="17" y="17" width="3" height="1" fill="#ffffff" />
+        </svg>
+      `;
+
+    case 'heavy-snow':
+    case 'nevadona':
+      // ❄️🏔️ NEVADONA FUERTE PIXEL ART: 5 copos densos
+      return `
+        <svg viewBox="0 0 24 24" width="${sz}" height="${sz}" class="astur-svg-icon pixel-icon" shape-rendering="crispEdges" aria-label="Nevadona Pixel Art">
+          <rect x="7" y="3" width="8" height="3" fill="#cbd5e1" />
+          <rect x="4" y="6" width="14" height="5" fill="#94a3b8" />
+          <rect x="3" y="9" width="16" height="3" fill="#64748b" />
+          <!-- 5 Copos densos escalonados -->
+          <rect x="4" y="15" width="2" height="2" fill="#ffffff" />
+          <rect x="8" y="18" width="2" height="2" fill="#ffffff" />
+          <rect x="12" y="14" width="2" height="2" fill="#ffffff" />
+          <rect x="16" y="18" width="2" height="2" fill="#ffffff" />
+          <rect x="19" y="15" width="2" height="2" fill="#ffffff" />
+        </svg>
+      `;
+
+    case 'sleet':
+      // 🌧️❄️ AGUANIEVE PIXEL ART: Gota pixel celeste y copo pixel blanco
+      return `
+        <svg viewBox="0 0 24 24" width="${sz}" height="${sz}" class="astur-svg-icon pixel-icon" shape-rendering="crispEdges" aria-label="Aguanieve Pixel Art">
+          <rect x="7" y="4" width="8" height="3" fill="#ffffff" />
+          <rect x="4" y="7" width="14" height="5" fill="#ffffff" />
+          <rect x="3" y="10" width="16" height="3" fill="#94a3b8" />
+          <!-- Gota pixel izquierda -->
+          <rect x="5" y="16" width="2" height="3" fill="#38bdf8" />
+          <!-- Copo cruz blanco centro -->
+          <rect x="12" y="15" width="1" height="3" fill="#ffffff" />
+          <rect x="11" y="16" width="3" height="1" fill="#ffffff" />
+          <!-- Gota pixel derecha -->
+          <rect x="17" y="17" width="2" height="3" fill="#38bdf8" />
+        </svg>
+      `;
+
+    case 'hail':
+      // 🧊 GRANIZO / PEDRISCU PIXEL ART: Bloques duros de hielo angulados
+      return `
+        <svg viewBox="0 0 24 24" width="${sz}" height="${sz}" class="astur-svg-icon pixel-icon" shape-rendering="crispEdges" aria-label="Granizo Pixel Art">
+          <rect x="7" y="3" width="8" height="3" fill="#475569" />
+          <rect x="4" y="6" width="14" height="5" fill="#334155" />
+          <rect x="3" y="9" width="16" height="3" fill="#1e293b" />
+          <!-- Piedras duras de hielo con núcleo blanco y borde cian -->
+          <rect x="5" y="15" width="3" height="3" fill="#ffffff" />
+          <rect x="5" y="17" width="3" height="1" fill="#0284c7" />
+          <rect x="11" y="17" width="3" height="3" fill="#ffffff" />
+          <rect x="11" y="19" width="3" height="1" fill="#0284c7" />
+          <rect x="17" y="14" width="3" height="3" fill="#ffffff" />
+          <rect x="17" y="16" width="3" height="1" fill="#0284c7" />
         </svg>
       `;
 

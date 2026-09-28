@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.17">
-  <link rel="stylesheet" href="css/components.css?v=1.1.17">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.17">
+  <link rel="stylesheet" href="css/main.css?v=1.1.18">
+  <link rel="stylesheet" href="css/components.css?v=1.1.18">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.18">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -176,7 +176,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.17 💧⛅</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.18 ❄️🧊</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -227,8 +227,20 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.17 💧⛅</span>
+            <span class="release-version">v1.1.18 ❄️🧊</span>
             <span class="release-date">28 Sep 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> <strong>Granizo y Pedriscu en la Ecuación Pluviométrica</strong>: Integración iconográfica y física de granizo genérico duro y pesado en los 5 temas visuales, con detección directa de chubascos de granizo (WMO 89, 90), tormentas severas (WMO 96, 99) y granizo menudo (WMO 77), acompañado de su pastilla de alerta en previsiones (<code>.has-hail</code>).</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Aguanieve Fiel (Lluvia con Nieve)</strong>: Representación híbrida de gotas de agua combinadas simultáneamente con copos de nieve en todos los estilos gráficos (WMO 68, 69, 83, 84), con pastilla turquesa dedicada (<code>.has-sleet</code>).</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Graduación de Nieve por Pluviómetro</strong>: La nieve se calibra ahora en 3 niveles físicos según los milímetros equivalentes de agua: <em>Falispos / Nevada ligera</em> (1 solo copo delicado), <em>Nevada moderada</em> (3 copos en cruz) y <em>Nevadona fuerte / Copiosa</em> (cortina densa de 5 copos copiosos con gorro y bufanda de abrigo en cómic astur).</li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.17 💧⛅</span>
+            <span class="release-date">28 Sep 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-new">Nuevo</span> <strong>Escala Hidrológica de Lluvia por mm/h</strong>: Representación fiel del volumen de agua por hora en todos los temas de iconos: <em>Orbayu / Llovizna</em> (0.1 a 0.4 mm/h, 1 gota solitaria), <em>Lluvia moderada</em> (0.5 a 2.4 mm/h, 3 gotas) y <em>Lluvia fuerte / Bastinazu</em> (&gt;= 2.5 mm/h o tramo &gt;= 3.5 mm, nube oscura con cortina densa de 5 gotas sin rayo). El rayo queda reservado con rigor exclusivamente a tormentas eléctricas reales.</li>
@@ -1810,7 +1822,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.17"></script>
+  <script type="module" src="js/app.js?v=1.1.18"></script>
 
 
 

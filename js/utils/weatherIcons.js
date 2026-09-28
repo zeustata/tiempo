@@ -1,8 +1,8 @@
-import { getAsturWeatherSvg } from './weatherAsturIcons.js?v=1.1.17';
-import { getPixelWeatherSvg } from './weatherPixelIcons.js?v=1.1.17';
-import { getNeonWeatherSvg } from './weatherNeonIcons.js?v=1.1.17';
-import { getSketchWeatherSvg } from './weatherSketchIcons.js?v=1.1.17';
-import { getGlassWeatherSvg } from './weatherGlassIcons.js?v=1.1.17';
+import { getAsturWeatherSvg } from './weatherAsturIcons.js?v=1.1.18';
+import { getPixelWeatherSvg } from './weatherPixelIcons.js?v=1.1.18';
+import { getNeonWeatherSvg } from './weatherNeonIcons.js?v=1.1.18';
+import { getSketchWeatherSvg } from './weatherSketchIcons.js?v=1.1.18';
+import { getGlassWeatherSvg } from './weatherGlassIcons.js?v=1.1.18';
 
 /**
  * Mapeo de códigos meteorológicos WMO a descripciones en asturiano/castellano, iconos y clases
@@ -24,18 +24,24 @@ export const WMO_CODES = {
   65: { label: 'Lluvia fuerte / Bastinazu', icon: '🌧️', svgKey: 'heavy-rain', lucide: 'cloud-rain-wind', bg: 'heavy-rain', isRain: true, isSnow: false },
   66: { label: 'Lluvia helada ligera', icon: '🌧️', svgKey: 'rain', lucide: 'cloud-rain', bg: 'rain', isRain: true, isSnow: false },
   67: { label: 'Lluvia helada fuerte', icon: '🌧️', svgKey: 'heavy-rain', lucide: 'cloud-rain-wind', bg: 'heavy-rain', isRain: true, isSnow: false },
-  71: { label: 'Nevada ligera', icon: '🌨️', svgKey: 'snow', lucide: 'snowflake', bg: 'snow', isRain: false, isSnow: true },
+  68: { label: 'Aguanieve ligera (Lluvia con nieve)', icon: '🌨️', svgKey: 'sleet', lucide: 'cloud-sleet', bg: 'rain', isRain: true, isSnow: true },
+  69: { label: 'Aguanieve moderada o fuerte', icon: '🌨️', svgKey: 'sleet', lucide: 'cloud-sleet', bg: 'heavy-rain', isRain: true, isSnow: true },
+  71: { label: 'Nevada ligera / Falispos', icon: '🌨️', svgKey: 'snow-light', lucide: 'snowflake', bg: 'snow', isRain: false, isSnow: true },
   73: { label: 'Nevada moderada', icon: '🌨️', svgKey: 'snow', lucide: 'snowflake', bg: 'snow', isRain: false, isSnow: true },
-  75: { label: 'Nevadona fuerte', icon: '❄️', svgKey: 'snow', lucide: 'snowflake', bg: 'snow', isRain: false, isSnow: true },
-  77: { label: 'Granos de nieve', icon: '🌨️', svgKey: 'snow', lucide: 'snowflake', bg: 'snow', isRain: false, isSnow: true },
+  75: { label: 'Nevadona fuerte / Copiosa', icon: '❄️', svgKey: 'heavy-snow', lucide: 'snowflake', bg: 'snow', isRain: false, isSnow: true },
+  77: { label: 'Granizo menudo / Cinarra', icon: '🌨️', svgKey: 'hail', lucide: 'cloud-hail', bg: 'snow', isRain: false, isSnow: true },
   80: { label: 'Chubascos de orbayu', icon: '🌦️', svgKey: 'drizzle', lucide: 'cloud-drizzle', bg: 'drizzle', isRain: true, isSnow: false },
   81: { label: 'Chubascos moderados', icon: '🌧️', svgKey: 'rain', lucide: 'cloud-rain', bg: 'rain', isRain: true, isSnow: false },
   82: { label: 'Chubascos violentos / Bastinazu', icon: '⛈️', svgKey: 'storm', lucide: 'cloud-lightning', bg: 'heavy-rain', isRain: true, isSnow: false },
-  85: { label: 'Chubascos de nieve débiles', icon: '🌨️', svgKey: 'snow', lucide: 'snowflake', bg: 'snow', isRain: false, isSnow: true },
-  86: { label: 'Chubascos de nieve fuertes', icon: '❄️', svgKey: 'snow', lucide: 'snowflake', bg: 'snow', isRain: false, isSnow: true },
+  83: { label: 'Chubascos de aguanieve ligeros', icon: '🌨️', svgKey: 'sleet', lucide: 'cloud-sleet', bg: 'rain', isRain: true, isSnow: true },
+  84: { label: 'Chubascos de aguanieve fuertes', icon: '🌨️', svgKey: 'sleet', lucide: 'cloud-sleet', bg: 'heavy-rain', isRain: true, isSnow: true },
+  85: { label: 'Chubascos de nieve ligeros', icon: '🌨️', svgKey: 'snow-light', lucide: 'snowflake', bg: 'snow', isRain: false, isSnow: true },
+  86: { label: 'Chubascos de nieve fuertes / Nevadona', icon: '❄️', svgKey: 'heavy-snow', lucide: 'snowflake', bg: 'snow', isRain: false, isSnow: true },
+  89: { label: 'Chubascos de granizo', icon: '🌨️', svgKey: 'hail', lucide: 'cloud-hail', bg: 'heavy-rain', isRain: true, isSnow: false },
+  90: { label: 'Chubascos de pedriscu fuerte', icon: '⛈️', svgKey: 'hail', lucide: 'cloud-hail', bg: 'heavy-rain', isRain: true, isSnow: false },
   95: { label: 'Tormenta', icon: '⛈️', svgKey: 'storm', lucide: 'cloud-lightning', bg: 'storm', isRain: true, isSnow: false },
-  96: { label: 'Tormenta con granizo débil', icon: '⛈️', svgKey: 'storm', lucide: 'cloud-lightning', bg: 'storm', isRain: true, isSnow: false },
-  99: { label: 'Tormenta con granizo fuerte', icon: '⛈️', svgKey: 'storm', lucide: 'cloud-lightning', bg: 'storm', isRain: true, isSnow: false }
+  96: { label: 'Tormenta con granizo', icon: '⛈️', svgKey: 'hail', lucide: 'cloud-lightning', bg: 'storm', isRain: true, isSnow: false },
+  99: { label: 'Tormenta con pedriscu violento', icon: '⛈️', svgKey: 'hail', lucide: 'cloud-lightning', bg: 'storm', isRain: true, isSnow: false }
 };
 
 /**
@@ -128,12 +134,73 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
         };
       }
     }
-    // REGLA 3: Solo se califica como lluvia si hay agua física cayendo (p >= 0.1 mm) o el código es de lluvia confirmado
-    else if (isPhysicallyRaining || isExplicitRainCode) {
-      const isStorm = code === 95 || code === 96 || code === 99;
+    // REGLA 3: Solo se califica como precipitación si hay agua/nieve física cayendo (p >= 0.1 mm) o código confirmado
+    else if (isPhysicallyRaining || isExplicitRainCode || base.isSnow) {
+      const isHail = code === 77 || code === 89 || code === 90 || code === 96 || code === 99 || base.svgKey === 'hail';
+      const isSleet = code === 68 || code === 69 || code === 83 || code === 84 || base.svgKey === 'sleet';
+      const isSnow = (code >= 71 && code <= 75) || code === 85 || code === 86 || base.isSnow;
+      const isStorm = code === 95;
 
-      // Caso A: Tormenta eléctrica real (códigos WMO 95, 96, 99) -> ÚNICO caso con rayo
-      if (isStorm) {
+      // 🧊 Caso A: Granizo / Pedriscu (suele ser siempre fuerte y peligroso)
+      if (isHail) {
+        base = {
+          label: (code === 96 || code === 99) ? 'Tormenta con granizo' : (code === 90 ? 'Chubasco de pedriscu fuerte' : 'Granizo / Pedriscu'),
+          icon: '⛈️',
+          svgKey: 'hail',
+          lucide: 'cloud-hail',
+          bg: (code === 96 || code === 99) ? 'storm' : 'heavy-rain',
+          isRain: true,
+          isSnow: false
+        };
+      }
+      // 🌧️❄️ Caso B: Aguanieve (Lluvia con nieve mezclada)
+      else if (isSleet) {
+        base = {
+          label: 'Aguanieve (Lluvia con nieve)',
+          icon: '🌨️',
+          svgKey: 'sleet',
+          lucide: 'cloud-sleet',
+          bg: p >= 2.5 ? 'heavy-rain' : 'rain',
+          isRain: true,
+          isSnow: true
+        };
+      }
+      // ❄️ Caso C: Nieve graduada por el pluviómetro
+      else if (isSnow) {
+        if (p >= 2.5 || code === 75 || code === 86) {
+          base = {
+            label: 'Nevadona fuerte / Copiosa',
+            icon: '❄️',
+            svgKey: 'heavy-snow',
+            lucide: 'snowflake',
+            bg: 'snow',
+            isRain: false,
+            isSnow: true
+          };
+        } else if (p >= 0.8 || code === 73) {
+          base = {
+            label: 'Nevada moderada',
+            icon: '🌨️',
+            svgKey: 'snow',
+            lucide: 'snowflake',
+            bg: 'snow',
+            isRain: false,
+            isSnow: true
+          };
+        } else {
+          base = {
+            label: 'Nevada ligera / Falispos',
+            icon: '🌨️',
+            svgKey: 'snow-light',
+            lucide: 'snowflake',
+            bg: 'snow',
+            isRain: false,
+            isSnow: true
+          };
+        }
+      }
+      // ⛈️ Caso D: Tormenta eléctrica pura (WMO 95) -> con rayo
+      else if (isStorm) {
         base = {
           label: 'Tormenta eléctrica',
           icon: '⛈️',
@@ -144,7 +211,7 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
           isSnow: false
         };
       }
-      // Caso B: Lluvia fuerte / Bastinazu (precipitación abundante >= 2.5 mm o códigos 65 / 82) -> Gotas abundantes, SIN RAYO
+      // 🌧️🌊 Caso E: Lluvia fuerte / Bastinazu (>= 2.5 mm o códigos 65 / 82) -> 5 gotas densas SIN RAYO
       else if (p >= 2.5 || code === 65 || code === 82) {
         base = {
           label: 'Lluvia fuerte / Bastinazu',
@@ -156,7 +223,7 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
           isSnow: false
         };
       }
-      // Caso C: Lluvia moderada (p >= 0.5 mm o códigos 63 / 81 o código 61 con lluvia física >= 0.2 mm)
+      // 🌧️ Caso F: Lluvia moderada (p >= 0.5 mm o códigos 63 / 81 o código 61 con lluvia física >= 0.2 mm)
       else if (p >= 0.5 || code === 63 || code === 81 || (code === 61 && p >= 0.2)) {
         base = {
           label: 'Lluvia moderada',
@@ -168,7 +235,7 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
           isSnow: false
         };
       }
-      // Caso D: Orbayu / Llovizna ligera (p >= 0.1 mm o códigos 51/53/55/56/57/80/61)
+      // 💧 Caso G: Orbayu / Llovizna ligera (p >= 0.1 mm o códigos 51/53/55/56/57/80/61)
       else {
         base = {
           label: isNight ? 'Orbayu nocturno ligero' : 'Orbayu / Llovizna ligera',

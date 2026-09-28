@@ -314,9 +314,31 @@ export function getNeonWeatherSvg(iconKey, size = 32) {
         </svg>
       `;
 
+    case 'snow-light':
+      // ❄️ FALISPOS / NIEVE LIGERA NEÓN: 1 cristal neón sutil
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon neon-icon" aria-label="Falispos Neón">
+          <defs>
+            <filter id="neon-glow-snow-light" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <g stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" filter="url(#neon-glow-snow-light)">
+            <line x1="24" y1="12" x2="24" y2="36" />
+            <line x1="12" y1="24" x2="36" y2="24" />
+            <line x1="15" y1="15" x2="33" y2="33" />
+            <line x1="15" y1="33" x2="33" y2="15" />
+          </g>
+          <circle cx="24" cy="24" r="2.2" fill="#ffffff" />
+        </svg>
+      `;
+
     case 'snow':
-    case 'nevadona':
-      // ❄️ NIEVE NEÓN CRISTAL
+      // ❄️ NIEVE NEÓN CRISTAL MODERADA
       return `
         <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon neon-icon" aria-label="Nieve Neón">
           <defs>
@@ -342,6 +364,85 @@ export function getNeonWeatherSvg(iconKey, size = 32) {
             <polyline points="37,21 34,24 37,27" fill="none" />
           </g>
           <circle cx="24" cy="24" r="3" fill="#ffffff" />
+        </svg>
+      `;
+
+    case 'heavy-snow':
+    case 'nevadona':
+      // ❄️🏔️ NEVADONA FUERTE NEÓN: Nube cian intensa con cortina de destellos de nieve
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon neon-icon" aria-label="Nevadona Neón">
+          <defs>
+            <filter id="neon-glow-heavy-snow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="2.2" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <path d="M 40,24 H 13 A 7.5,7.5 0 0 1 11.5,9.5 A 10.5,10.5 0 0 1 35.5,10 A 7,7 0 0 1 40,24 Z" stroke="#38bdf8" stroke-width="2.2" fill="none" filter="url(#neon-glow-heavy-snow)" />
+          <!-- 5 Cristales de nieve neón a dos niveles -->
+          <g stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" filter="url(#neon-glow-heavy-snow)">
+            <!-- Copo 1 -->
+            <line x1="10" y1="30" x2="10" y2="36" /><line x1="7" y1="33" x2="13" y2="33" />
+            <!-- Copo 2 -->
+            <line x1="17" y1="35" x2="17" y2="43" /><line x1="13" y1="39" x2="21" y2="39" />
+            <!-- Copo 3 (Central) -->
+            <line x1="25" y1="28" x2="25" y2="36" /><line x1="21" y1="32" x2="29" y2="32" />
+            <!-- Copo 4 -->
+            <line x1="33" y1="35" x2="33" y2="43" /><line x1="29" y1="39" x2="37" y2="39" />
+            <!-- Copo 5 -->
+            <line x1="40" y1="30" x2="40" y2="36" /><line x1="37" y1="33" x2="43" y2="33" />
+          </g>
+        </svg>
+      `;
+
+    case 'sleet':
+      // 🌧️❄️ AGUANIEVE NEÓN: Haz de lluvia cian y cristal de nieve blanco intercalados
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon neon-icon" aria-label="Aguanieve Neón">
+          <defs>
+            <filter id="neon-glow-sleet" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="1.8" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <path d="M 40,24 H 13 A 7.5,7.5 0 0 1 11.5,9.5 A 10.5,10.5 0 0 1 35.5,10 A 7,7 0 0 1 40,24 Z" stroke="#38bdf8" stroke-width="2.2" fill="none" />
+          <!-- Rayas de lluvia líquida cian -->
+          <line x1="14" y1="31" x2="11" y2="40" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" filter="url(#neon-glow-sleet)" />
+          <line x1="36" y1="31" x2="33" y2="40" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" filter="url(#neon-glow-sleet)" />
+          <!-- Copo de nieve neón blanco en el centro -->
+          <g stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" filter="url(#neon-glow-sleet)">
+            <line x1="24" y1="30" x2="24" y2="42" />
+            <line x1="18" y1="36" x2="30" y2="36" />
+            <line x1="20" y1="32" x2="28" y2="40" />
+            <line x1="20" y1="40" x2="28" y2="32" />
+          </g>
+        </svg>
+      `;
+
+    case 'hail':
+      // 🧊 GRANIZO / PEDRISCU NEÓN: Nube violeta con gemas de hielo anguladas en caída dura
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon neon-icon" aria-label="Granizo Neón">
+          <defs>
+            <filter id="neon-glow-hail" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <path d="M 40,24 H 13 A 7.5,7.5 0 0 1 11.5,9.5 A 10.5,10.5 0 0 1 35.5,10 A 7,7 0 0 1 40,24 Z" stroke="#818cf8" stroke-width="2.2" fill="none" />
+          <!-- Diamantes/piedras anguladas de hielo neón -->
+          <polygon points="14,30 18,34 14,38 10,34" fill="#ffffff" stroke="#38bdf8" stroke-width="1.5" filter="url(#neon-glow-hail)" />
+          <polygon points="25,32 30,37 25,43 20,37" fill="#ffffff" stroke="#38bdf8" stroke-width="1.8" filter="url(#neon-glow-hail)" />
+          <polygon points="36,29 40,33 36,37 32,33" fill="#ffffff" stroke="#38bdf8" stroke-width="1.5" filter="url(#neon-glow-hail)" />
         </svg>
       `;
 

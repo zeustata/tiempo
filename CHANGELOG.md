@@ -10,6 +10,26 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.18] - 2026-09-28
+
+### ❄️🧊 Granizo, Aguanieve y Graduación de Nieve en la Ecuación Pluviométrica
+- **🧊 Granizo y Pedriscu en los 5 Temas Gráficos:**
+  - Nube de tormenta amenazante con piedras de hielo duras anguladas cayendo a gran velocidad (`hail`).
+  - Detección física directa de chubascos de granizo (WMO 89, 90), tormentas severas con granizo (WMO 96, 99) y granizo menudo/cinarra (WMO 77).
+  - Pastilla de advertencia en previsiones `.has-hail` con tono perlado/amatista de alerta.
+- **🌧️❄️ Aguanieve Fiel (Lluvia mezclada con Nieve):**
+  - Icono híbrido que combina gotas de lluvia líquida simultáneamente con copos de nieve (`sleet`) en los 5 estilos artísticos.
+  - Detección de WMO 68, 69, 83, 84 y mezcla física en pluviómetro con temperaturas de transición.
+  - Pastilla pluviométrica en previsiones `.has-sleet` con tono turquesa/cian.
+- **❄️ Graduación de Nieve por Pluviómetro (Agua Equivalente):**
+  - **Falispos / Nevada ligera (0.1 a 0.7 mm equiv. o WMO 71/85):** Nube con 1 solo copito delicado (`snow-light`).
+  - **Nevada moderada (0.8 a 2.4 mm equiv. o WMO 73):** Nube con 3 copos regulares (`snow`).
+  - **Nevadona fuerte / Copiosa (>= 2.5 mm equiv. o WMO 75/86):** Nube plomiza de invierno con cortina densa de 5 copos copiosos (`heavy-snow`) y abrigo en cómic astur.
+  - Pastillas en previsiones `.has-snow` y `.heavy-snow` con tonos gélidos y blanco puro con brillo.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v1118-snow-hail`, actualización a `?v=1.1.18` en módulos, scripts y hojas de estilo.
+
+---
+
 ## [1.1.17] - 2026-09-28
 
 ### 🌧️ Escala Hidrológica Visual de Lluvia & Desglose Pluviométrico Mañana/Tarde

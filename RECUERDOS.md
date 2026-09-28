@@ -4,7 +4,27 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.17 💧⛅ — 2026-09-28
+## 🚀 Última Actualización Oficial: v1.1.18 ❄️🧊 — 2026-09-28
+- **Granizo, Aguanieve y Graduación de Nieve en la Ecuación Pluviométrica:**
+  1. *Física de la Precipitación Sólida y Mixta:*
+     - **Granizo / Pedriscu (`hail`):** Tratamiento genérico contundente. Icono con piedras anguladas de hielo cayendo a gran velocidad, respondiendo a códigos WMO 89, 90 (chubascos de granizo), 96, 99 (tormentas con granizo) y 77 (granizo menudo). Pastilla `.has-hail` en previsiones.
+     - **Aguanieve (`sleet`):** Gotas líquidas y copos de nieve cayendo simultáneamente bajo códigos WMO 68, 69, 83, 84 o mezcla física en pluviómetro con temperaturas de cota. Pastilla `.has-sleet` turquesa.
+     - **Nieve Graduada (`snow-light`, `snow`, `heavy-snow`):**
+       - Falispos / Nevada ligera (< 0.8 mm equiv. o WMO 71/85): 1 copito sutil.
+       - Nevada moderada (0.8 a 2.4 mm equiv. o WMO 73): 3 copos regulares.
+       - Nevadona fuerte / Copiosa (>= 2.5 mm equiv. o WMO 75/86): 5 copos densos con abrigo en cómic astur. Pastillas `.has-snow` y `.heavy-snow`.
+  2. *Cobertura en los 5 Temas Gráficos:*
+     - Implementado en Cómic Astur, Pixel Art, Neón Cyber, Dibujo a Mano / Acuarela y Liquid Glass 3D.
+  3. *Métricas y Previsiones Diarias:*
+     - `getDaypartWeather` en `forecastView.js` detecta granizo, aguanieve y nieve en el tramo de mañana o tarde sin forzarlos a códigos de lluvia líquida.
+     - En días con predominio de nieve, el icono del acumulado diario se adapta automáticamente a `❄️`.
+  4. *Anti-Caché Obligatorio:*
+     - `CACHE_NAME` en `sw.js`: `meteoasturlode-v1118-snow-hail`.
+     - Query strings: `?v=1.1.18`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.17 💧⛅ — 2026-09-28
 - **Versionado Obligatorio y Salto Incondicional de Changelog (Reforma de Ley Específica 1):**
   - Se deroga definitivamente la salvedad de Google Play en `AGENTS.md` (Parte II, Ley 1). A partir de ahora, toda mejora o cambio en MeteoAstur Lode incrementa obligatoriamente el ciclo oficial de versión, actualiza el modal HTML `#changelog-modal` e inyecta la nueva versión en `CURRENT_APP_VERSION` para garantizar que el aviso de novedades salte de forma transparente e inequívoca en la pantalla del usuario.
 - **Escala Hidrológica Visual de Lluvia & Desglose Pluviométrico Mañana/Tarde:**

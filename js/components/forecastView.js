@@ -1,4 +1,4 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection } from '../utils/weatherIcons.js?v=1.1.17';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection } from '../utils/weatherIcons.js?v=1.1.18';
 
 /**
  * Calcula la condición meteorológica representativa para un tramo horario (ej. mañana o tarde)
@@ -43,12 +43,32 @@ function getDaypartWeather(hourly, dayDateStr, startHour, endHour, fallbackCode,
   // Determinar código representativo del tramo
   let dominantCode = codes[Math.floor(codes.length / 2)];
   if (popMax >= 20 && precipSum >= 0.1) {
-    // Si hay tormenta eléctrica en el tramo, máxima prioridad
-    const stormCode = codes.find(c => c >= 95 && c <= 99);
-    if (stormCode != null) {
+    // 1. Detección de granizo o pedrisco
+    const hailCode = codes.find(c => c === 89 || c === 90 || c === 96 || c === 99 || c === 77);
+    // 2. Detección de aguanieve (mezcla de lluvia y nieve)
+    const sleetCode = codes.find(c => c === 68 || c === 69 || c === 83 || c === 84);
+    // 3. Detección de nieve
+    const snowCode = codes.find(c => (c >= 71 && c <= 75) || c === 85 || c === 86);
+    // 4. Detección de tormenta
+    const stormCode = codes.find(c => c === 95);
+
+    if (hailCode != null) {
+      dominantCode = hailCode;
+    } else if (sleetCode != null) {
+      dominantCode = sleetCode;
+    } else if (snowCode != null) {
+      // Gradación de nieve por mm/h equivalentes del pluviómetro
+      if (maxPrecipPerHour >= 2.5 || precipSum >= 3.5) {
+        dominantCode = 75; // Nevadona fuerte / Copiosa
+      } else if (maxPrecipPerHour >= 0.8 || precipSum >= 1.2) {
+        dominantCode = 73; // Nevada moderada
+      } else {
+        dominantCode = 71; // Nevada ligera / Falispos
+      }
+    } else if (stormCode != null) {
       dominantCode = stormCode;
     } else {
-      // Gradación hidrometeorológica estricta según intensidad de precipitación:
+      // Gradación hidrometeorológica estricta según intensidad de lluvia:
       // Bastinazu (>= 2.5 mm en una hora o tramo con >= 3.5 mm) -> Lluvia fuerte
       if (maxPrecipPerHour >= 2.5 || precipSum >= 3.5) {
         dominantCode = 65; // Lluvia fuerte / Bastinazu (5 gotas densas)
@@ -251,7 +271,7 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
               <span class="d-daypart-label">🌅 Mañana</span>
               <span class="d-daypart-icon">${renderWeatherIconHtml(morningWeather, 22, iconTheme)}</span>
               <span class="d-daypart-text">${morningWeather.label}</span>
-              <span class="d-daypart-precip ${morningWeather.precipSum >= 2.5 ? 'heavy-rain' : (morningWeather.precipSum >= 0.1 ? 'has-rain' : '')}">
+              <span class="d-daypart-precip ${morningWeather.precipSum >= 0.1 ? (morningWeather.svgKey === 'hail' ? 'has-hail' : (morningWeather.svgKey === 'sleet' ? 'has-sleet' : (morningWeather.isSnow || morningWeather.svgKey.includes('snow') ? (morningWeather.precipSum >= 2.5 ? 'heavy-snow' : 'has-snow') : (morningWeather.precipSum >= 2.5 ? 'heavy-rain' : 'has-rain')))) : ''}">
                 ${morningWeather.precipSum >= 0.1 ? morningWeather.precipSum.toFixed(1) + ' mm' : '0 mm'}
               </span>
             </div>
@@ -260,7 +280,7 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
               <span class="d-daypart-label">🌇 Tarde</span>
               <span class="d-daypart-icon">${renderWeatherIconHtml(afternoonWeather, 22, iconTheme)}</span>
               <span class="d-daypart-text">${afternoonWeather.label}</span>
-              <span class="d-daypart-precip ${afternoonWeather.precipSum >= 2.5 ? 'heavy-rain' : (afternoonWeather.precipSum >= 0.1 ? 'has-rain' : '')}">
+              <span class="d-daypart-precip ${afternoonWeather.precipSum >= 0.1 ? (afternoonWeather.svgKey === 'hail' ? 'has-hail' : (afternoonWeather.svgKey === 'sleet' ? 'has-sleet' : (afternoonWeather.isSnow || afternoonWeather.svgKey.includes('snow') ? (afternoonWeather.precipSum >= 2.5 ? 'heavy-snow' : 'has-snow') : (afternoonWeather.precipSum >= 2.5 ? 'heavy-rain' : 'has-rain')))) : ''}">
                 ${afternoonWeather.precipSum >= 0.1 ? afternoonWeather.precipSum.toFixed(1) + ' mm' : '0 mm'}
               </span>
             </div>
@@ -287,8 +307,8 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
 
           <!-- Fila 2: Métricas Integradas -->
           <div class="d-unified-metrics-grid">
-            <div class="u-metric-item ${popMax >= 40 ? 'metric-rain-active' : ''}" title="Probabilidad de lluvia y acumulado total del día">
-              <span class="u-m-icon">💧</span>
+            <div class="u-metric-item ${popMax >= 40 ? 'metric-rain-active' : ''}" title="Probabilidad de precipitación y acumulado total del día">
+              <span class="u-m-icon">${(dailyWeather.isSnow || (daily.snowfall_sum && daily.snowfall_sum[i] > 0)) ? '❄️' : '💧'}</span>
               <div class="u-m-info">
                 <span class="u-m-val">${popMax}%</span>
                 <span class="u-m-sub">${rain > 0 ? rain + ' mm total' : 'Seco'}</span>

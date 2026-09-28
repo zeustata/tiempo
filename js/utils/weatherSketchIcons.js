@@ -244,9 +244,22 @@ export function getSketchWeatherSvg(iconKey, size = 32) {
         </svg>
       `;
 
+    case 'snow-light':
+      // ❄️ FALISPOS / NIEVE LIGERA DIBUJO A MANO: 1 copo doodle delicado
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon sketch-icon" aria-label="Falispos Dibujo a Mano">
+          <g stroke="#38bdf8" stroke-width="2" stroke-linecap="round" fill="none">
+            <line x1="24" y1="12" x2="24" y2="36" />
+            <line x1="12" y1="24" x2="36" y2="24" />
+            <line x1="15" y1="15" x2="33" y2="33" />
+            <line x1="15" y1="33" x2="33" y2="15" />
+          </g>
+          <circle cx="24" cy="24" r="2.5" fill="#bae6fd" stroke="#0284c7" stroke-width="1.4" />
+        </svg>
+      `;
+
     case 'snow':
-    case 'nevadona':
-      // ❄️ NIEVE DIBUJO A MANO
+      // ❄️ NIEVE DIBUJO A MANO MODERADA
       return `
         <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon sketch-icon" aria-label="Nieve Dibujo a Mano">
           <!-- Copo de nieve dibujado a mano alzada -->
@@ -262,6 +275,57 @@ export function getSketchWeatherSvg(iconKey, size = 32) {
             <path d="M 37,21 L 34,24 L 37,27" />
           </g>
           <circle cx="24" cy="24" r="3" fill="#bae6fd" stroke="#0284c7" stroke-width="1.8" />
+        </svg>
+      `;
+
+    case 'heavy-snow':
+    case 'nevadona':
+      // ❄️🏔️ NEVADONA FUERTE DIBUJO: Nube con borrasca y 5 copos a tinta
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon sketch-icon" aria-label="Nevadona Dibujo a Mano">
+          <path d="M 40,24 H 13 C 8,24 7,17 11,12 C 9.5,4 20,1 25,5 C 29.5,0.5 40,4 38,13 C 43,15.5 43,24 40,24 Z" fill="#e2e8f0" stroke="#334155" stroke-width="2.2" />
+          <!-- 5 Copos artesanales a mano -->
+          <g stroke="#0284c7" stroke-width="1.8" stroke-linecap="round">
+            <line x1="9" y1="30" x2="9" y2="36" /><line x1="6" y1="33" x2="12" y2="33" />
+            <line x1="17" y1="35" x2="17" y2="43" /><line x1="13" y1="39" x2="21" y2="39" />
+            <line x1="25" y1="28" x2="25" y2="36" /><line x1="21" y1="32" x2="29" y2="32" />
+            <line x1="33" y1="35" x2="33" y2="43" /><line x1="29" y1="39" x2="37" y2="39" />
+            <line x1="41" y1="30" x2="41" y2="36" /><line x1="38" y1="33" x2="44" y2="33" />
+          </g>
+        </svg>
+      `;
+
+    case 'sleet':
+      // 🌧️❄️ AGUANIEVE DIBUJO A MANO: Gota y copo
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon sketch-icon" aria-label="Aguanieve Dibujo a Mano">
+          <path d="M 40,24 H 13 C 8,24 7,17 11,12 C 9.5,4 20,1 25,5 C 29.5,0.5 40,4 38,13 C 43,15.5 43,24 40,24 Z" fill="#ffffff" stroke="#334155" stroke-width="2.2" />
+          <!-- Gotas de tinta líquida -->
+          <line x1="12" y1="30" x2="9" y2="38" stroke="#0284c7" stroke-width="2.4" stroke-linecap="round" />
+          <line x1="37" y1="30" x2="34" y2="38" stroke="#0284c7" stroke-width="2.4" stroke-linecap="round" />
+          <!-- Copo de nieve central a pluma -->
+          <g stroke="#38bdf8" stroke-width="2" stroke-linecap="round" fill="none">
+            <line x1="24" y1="28" x2="24" y2="42" />
+            <line x1="17" y1="35" x2="31" y2="35" />
+            <line x1="19" y1="30" x2="29" y2="40" />
+            <line x1="19" y1="40" x2="29" y2="30" />
+          </g>
+        </svg>
+      `;
+
+    case 'hail':
+      // 🧊 GRANIZO / PEDRISCU DIBUJO A MANO: Nube oscura con piedras facetadas a plumilla
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon sketch-icon" aria-label="Granizo Dibujo a Mano">
+          <path d="M 40,24 H 13 C 8,24 7,17 11,12 C 9.5,4 20,1 25,5 C 29.5,0.5 40,4 38,13 C 43,15.5 43,24 40,24 Z" fill="#475569" stroke="#0f172a" stroke-width="2.4" />
+          <!-- Piedras angulares con sombreado de pluma -->
+          <polygon points="12,30 17,32 15,38 9,36" fill="#f8fafc" stroke="#0f172a" stroke-width="1.8" stroke-linejoin="round" />
+          <polygon points="23,32 30,30 32,37 27,42 21,38" fill="#ffffff" stroke="#0f172a" stroke-width="2" stroke-linejoin="round" />
+          <polygon points="36,31 41,34 38,40 33,37" fill="#f8fafc" stroke="#0f172a" stroke-width="1.8" stroke-linejoin="round" />
+          <!-- Trazos de impacto veloz -->
+          <line x1="11" y1="39" x2="9" y2="44" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" />
+          <line x1="26" y1="43" x2="25" y2="47" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" />
+          <line x1="36" y1="41" x2="35" y2="46" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" />
         </svg>
       `;
 
