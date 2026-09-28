@@ -4,7 +4,28 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.19 🚘☀️ — 2026-09-28
+## 🚀 Última Actualización Oficial: v1.1.20 ✨ — 2026-09-28
+- **Consolidación Oficial de la Colección «Futuro Clásico» (Vanguardia 2.5D):**
+  1. *Blindaje de Marca y Política Google Play Store:*
+     - A propuesta y decisión expresa de Lendo para evitar riesgos con marcas comerciales registradas ajenas en Google Play Store, se rebautiza oficialmente la nueva colección estética como **«Futuro Clásico»** (`futuroClasico`).
+     - Módulo centralizado en `js/utils/weatherFuturoIcons.js` exportando `getFuturoWeatherSvg`.
+  2. *Características Artísticas y Técnicas Preservadas al 100%:*
+     - Fusión magistral entre los iconos universales clásicos y la alta vanguardia digital.
+     - Laca satinada multicapa, volúmenes 2.5D, escala de lluvia real graduada en mm/h (1 gota en Orbayu, 3 en Moderada, 5 vectores densos sin rayo en Bastinazu), pedriscu de hielo real (`hail`), aguanieve (`sleet`), graduación de nieve en 3 niveles y Resol asturiano con manto estratiforme translúcido.
+  3. *Integración Completa:*
+     - Selector modal `#icon-themes-modal` con tarjeta `✨ Futuro Clásico` (`#theme-card-futuro`, `data-theme="futuroClasico"`).
+     - Previsualizaciones vectoriales dinámicas en vivo.
+     - Retrocompatibilidad transparente en `renderWeatherIconHtml`.
+  4. *Anti-Caché Obligatorio y Versionado:*
+     - Incremento oficial a `v1.1.20 ✨`.
+     - Footer de `index.html` actualizado con badge `#app-version-badge` a `v1.1.20 ✨`.
+     - Inyectado bloque de novedades en `#changelog-modal`.
+     - `CURRENT_APP_VERSION = '1.1.20'` en `js/app.js`.
+     - `CACHE_NAME = 'meteoasturlode-v1120-futuro-clasico'` en `sw.js`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.19 🚘☀️ — 2026-09-28
 - **Nueva Colección de Iconos «Tesla Clásico» (Automotive Weather UI) & Perfeccionamiento del Selector de Iconos:**
   1. *Filosofía y Lenguaje Visual:*
      - Fusión armónica entre los iconos universales clásicos (reconocibles al instante, familiares) y la alta ingeniería visual automotriz de Tesla (laca satinada multicapa, volúmenes 2.5D, luces especulares pulidas y degradados continuos).

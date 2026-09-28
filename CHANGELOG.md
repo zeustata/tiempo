@@ -10,6 +10,22 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.20] - 2026-09-28
+
+### ✨ Nueva Colección de Iconos «Futuro Clásico» (Vanguardia 2.5D)
+- **Denominación Oficial Segura y Vanguardista:**
+  - Bautismo definitivo de la nueva colección como **«Futuro Clásico»** (`futuroClasico` / `js/utils/weatherFuturoIcons.js`).
+  - Totalmente blindada ante las políticas de marca registrada y propiedad intelectual de Google Play Store.
+- **Diseño Digital de Alta Gama:**
+  - Acabado en laca satinada multicapa, volúmenes 2.5D, sombreado ambiental suave (`feDropShadow`) y reflejos especulares de alta fidelidad.
+  - Representación física real: escala hidrológica por intensidad horaria (1 gota en Orbayu, 3 en Moderada, 5 vectores densos sin rayo en Bastinazu), bolas de hielo densas en Granizo/Pedriscu, copos nítidos de nieve y Resol asturiano con manto estratiforme translúcido.
+- **Integración y Compatibilidad:**
+  - Nueva tarjeta `✨ Futuro Clásico` en `#icon-themes-modal` con previsualización en vivo.
+  - Soporte de retrocompatibilidad transparente para identificadores previos.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v1120-futuro-clasico`, actualización a `?v=1.1.20` en todos los módulos y scripts.
+
+---
+
 ## [1.1.19] - 2026-09-28
 
 ### 🚘☀️ Nueva Colección de Iconos «Tesla Clásico» (Automotive Weather UI)

@@ -1,9 +1,9 @@
-import { getAsturWeatherSvg } from './weatherAsturIcons.js?v=1.1.19';
-import { getPixelWeatherSvg } from './weatherPixelIcons.js?v=1.1.19';
-import { getNeonWeatherSvg } from './weatherNeonIcons.js?v=1.1.19';
-import { getSketchWeatherSvg } from './weatherSketchIcons.js?v=1.1.19';
-import { getGlassWeatherSvg } from './weatherGlassIcons.js?v=1.1.19';
-import { getTeslaWeatherSvg } from './weatherTeslaIcons.js?v=1.1.19';
+import { getAsturWeatherSvg } from './weatherAsturIcons.js?v=1.1.20';
+import { getPixelWeatherSvg } from './weatherPixelIcons.js?v=1.1.20';
+import { getNeonWeatherSvg } from './weatherNeonIcons.js?v=1.1.20';
+import { getSketchWeatherSvg } from './weatherSketchIcons.js?v=1.1.20';
+import { getGlassWeatherSvg } from './weatherGlassIcons.js?v=1.1.20';
+import { getFuturoWeatherSvg } from './weatherFuturoIcons.js?v=1.1.20';
 
 /**
  * Mapeo de códigos meteorológicos WMO a descripciones en asturiano/castellano, iconos y clases
@@ -322,8 +322,8 @@ export function renderWeatherIconHtml(weatherInfo, size = 32, theme = 'astur') {
     return `<span class="emoji-weather-icon" style="font-size: ${Math.round(size * 0.85)}px; line-height: 1; display: inline-flex; align-items: center; justify-content: center;">${weatherInfo.icon}</span>`;
   }
 
-  if (theme === 'tesla') {
-    return getTeslaWeatherSvg(weatherInfo.svgKey, size);
+  if (theme === 'futuroClasico' || theme === 'futuro' || theme === 'tesla') {
+    return getFuturoWeatherSvg(weatherInfo.svgKey, size);
   }
 
   if (theme === 'pixel') {
