@@ -1609,6 +1609,32 @@
   line-height: 1.2;
 }
 
+.d-daypart-precip {
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 2px 7px;
+  border-radius: 999px;
+  margin-left: auto;
+  white-space: nowrap;
+  letter-spacing: 0.2px;
+}
+
+.d-daypart-precip.has-rain {
+  color: #38bdf8;
+  background: rgba(2, 132, 199, 0.22);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.15);
+}
+
+.d-daypart-precip.heavy-rain {
+  color: #93c5fd;
+  background: rgba(30, 64, 175, 0.35);
+  border: 1px solid rgba(147, 197, 253, 0.5);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+}
+
 .d-daypart-divider {
   height: 1px;
   background: linear-gradient(to right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));

@@ -181,30 +181,29 @@ export function getPixelWeatherSvg(iconKey, size = 32) {
 
     case 'drizzle':
     case 'orbayu':
-      // 🌦️ ORBAYU PIXEL ART
+      // 🌦️ ORBAYU PIXEL ART (1 sola gota pixel, 0.1 - 0.4 mm/h)
       return `
         <svg viewBox="0 0 24 24" width="${sz}" height="${sz}" class="astur-svg-icon pixel-icon" shape-rendering="crispEdges" aria-label="Orbayu Pixel Art">
-          <!-- Nube -->
+          <!-- Nube gris clara -->
           <rect x="7" y="5" width="8" height="3" fill="#cbd5e1" />
           <rect x="4" y="8" width="14" height="5" fill="#cbd5e1" />
           <rect x="3" y="11" width="16" height="3" fill="#cbd5e1" />
-          <!-- Gotitas pixel finas -->
-          <rect x="6" y="16" width="2" height="2" fill="#38bdf8" />
-          <rect x="11" y="18" width="2" height="2" fill="#38bdf8" />
-          <rect x="16" y="16" width="2" height="2" fill="#38bdf8" />
+          <!-- 1 SOLA GOTA PIXEL CENTRAL -->
+          <rect x="11" y="16" width="2" height="3" fill="#38bdf8" />
+          <rect x="11" y="15" width="1" height="1" fill="#7dd3fc" />
         </svg>
       `;
 
     case 'rain':
     case 'rain-moderate':
-      // 🌧️ LLUVIA PIXEL ART
+      // 🌧️ LLUVIA PIXEL ART (3 líneas de lluvia, 0.5 - 2.4 mm/h)
       return `
         <svg viewBox="0 0 24 24" width="${sz}" height="${sz}" class="astur-svg-icon pixel-icon" shape-rendering="crispEdges" aria-label="Lluvia Pixel Art">
           <!-- Nube Oscura -->
           <rect x="7" y="4" width="8" height="3" fill="#64748b" />
           <rect x="4" y="7" width="14" height="5" fill="#64748b" />
           <rect x="3" y="10" width="16" height="3" fill="#475569" />
-          <!-- Rayas diagonales de lluvia -->
+          <!-- Rayas diagonales de lluvia (3 columnas) -->
           <rect x="6" y="15" width="2" height="4" fill="#0284c7" />
           <rect x="5" y="16" width="2" height="4" fill="#38bdf8" />
           <rect x="11" y="15" width="2" height="4" fill="#0284c7" />
@@ -215,6 +214,25 @@ export function getPixelWeatherSvg(iconKey, size = 32) {
       `;
 
     case 'heavy-rain':
+      // 🌧️🌊 BASTINAZU PIXEL ART (Cortina densa de 5 chorros pixel, >= 2.5 mm/h, SIN RAYO)
+      return `
+        <svg viewBox="0 0 24 24" width="${sz}" height="${sz}" class="astur-svg-icon pixel-icon" shape-rendering="crispEdges" aria-label="Bastinazu Pixel Art">
+          <!-- Nube Tormentosa Azulada Densa -->
+          <rect x="7" y="3" width="9" height="3" fill="#475569" />
+          <rect x="4" y="6" width="15" height="5" fill="#334155" />
+          <rect x="3" y="9" width="17" height="3" fill="#1e293b" />
+          <!-- Cortina densa de 5 chorros inclinados de bastinazu -->
+          <rect x="4" y="13" width="2" height="5" fill="#0284c7" />
+          <rect x="3" y="14" width="2" height="5" fill="#38bdf8" />
+          <rect x="7" y="15" width="2" height="5" fill="#0284c7" />
+          <rect x="11" y="13" width="2" height="5" fill="#0284c7" />
+          <rect x="10" y="14" width="2" height="5" fill="#38bdf8" />
+          <rect x="15" y="15" width="2" height="5" fill="#0284c7" />
+          <rect x="18" y="13" width="2" height="5" fill="#0284c7" />
+          <rect x="17" y="14" width="2" height="5" fill="#38bdf8" />
+        </svg>
+      `;
+
     case 'storm':
       // ⛈️ TORMENTA PIXEL ART CON RAYO ARCADE
       return `

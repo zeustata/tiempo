@@ -1,16 +1,19 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection } from '../utils/weatherIcons.js?v=1.0.81-solarcalibrate';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection } from '../utils/weatherIcons.js?v=1.1.16-rain-v244';
 
 /**
  * Calcula la condición meteorológica representativa para un tramo horario (ej. mañana o tarde)
+ * Gradúa la lluvia según la intensidad física en mm/hora (Orbayu vs. Moderada vs. Bastinazu)
  */
 function getDaypartWeather(hourly, dayDateStr, startHour, endHour, fallbackCode, fallbackPop, fallbackRain) {
   if (!hourly || !hourly.time) {
-    return getWeatherInfo(fallbackCode, 1, fallbackRain, fallbackPop);
+    const info = getWeatherInfo(fallbackCode, 1, fallbackRain, fallbackPop);
+    return { ...info, precipSum: fallbackRain || 0, maxPrecipPerHour: fallbackRain || 0, popMax: fallbackPop || 0 };
   }
 
   let hoursCount = 0;
   let popMax = 0;
   let precipSum = 0;
+  let maxPrecipPerHour = 0;
   const codes = [];
 
   for (let i = 0; i < hourly.time.length; i++) {
@@ -24,6 +27,7 @@ function getDaypartWeather(hourly, dayDateStr, startHour, endHour, fallbackCode,
         const p = hourly.precipitation ? (hourly.precipitation[i] || 0) : 0;
         if (pop > popMax) popMax = pop;
         precipSum += p;
+        if (p > maxPrecipPerHour) maxPrecipPerHour = p;
         if (hourly.weather_code && hourly.weather_code[i] != null) {
           codes.push(hourly.weather_code[i]);
         }
@@ -32,15 +36,28 @@ function getDaypartWeather(hourly, dayDateStr, startHour, endHour, fallbackCode,
   }
 
   if (hoursCount === 0 || codes.length === 0) {
-    return getWeatherInfo(fallbackCode, 1, fallbackRain, fallbackPop);
+    const info = getWeatherInfo(fallbackCode, 1, fallbackRain, fallbackPop);
+    return { ...info, precipSum: fallbackRain || 0, maxPrecipPerHour: fallbackRain || 0, popMax: fallbackPop || 0 };
   }
 
   // Determinar código representativo del tramo
   let dominantCode = codes[Math.floor(codes.length / 2)];
   if (popMax >= 20 && precipSum >= 0.1) {
-    // Si hay lluvia representativa, priorizar código de lluvia o tormenta
-    const rainCode = codes.find(c => (c >= 51 && c <= 67) || (c >= 80 && c <= 82) || (c >= 95 && c <= 99));
-    if (rainCode != null) dominantCode = rainCode;
+    // Si hay tormenta eléctrica en el tramo, máxima prioridad
+    const stormCode = codes.find(c => c >= 95 && c <= 99);
+    if (stormCode != null) {
+      dominantCode = stormCode;
+    } else {
+      // Gradación hidrometeorológica estricta según intensidad de precipitación:
+      // Bastinazu (>= 2.5 mm en una hora o tramo con >= 3.5 mm) -> Lluvia fuerte
+      if (maxPrecipPerHour >= 2.5 || precipSum >= 3.5) {
+        dominantCode = 65; // Lluvia fuerte / Bastinazu (5 gotas densas)
+      } else if (maxPrecipPerHour >= 0.5 || precipSum >= 0.8) {
+        dominantCode = 63; // Lluvia moderada (3 gotas)
+      } else {
+        dominantCode = 51; // Orbayu / Llovizna ligera (1 gota)
+      }
+    }
   } else {
     // Si no llueve, elegir el código más frecuente de nubosidad/sol
     const counts = {};
@@ -49,7 +66,8 @@ function getDaypartWeather(hourly, dayDateStr, startHour, endHour, fallbackCode,
     dominantCode = Number(dominantCode);
   }
 
-  return getWeatherInfo(dominantCode, 1, precipSum, popMax);
+  const info = getWeatherInfo(dominantCode, 1, maxPrecipPerHour, popMax);
+  return { ...info, precipSum, maxPrecipPerHour, popMax };
 }
 
 /**
@@ -227,18 +245,24 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
             <span class="d-date-sub">${dayFormatted}</span>
           </div>
 
-          <!-- OPCIÓN A: BADGE UNIFICADO MAÑANA Y TARDE -->
+          <!-- BADGE UNIFICADO MAÑANA Y TARDE CON PLUVIOMETRÍA DESGLOSADA -->
           <div class="d-dayparts-badge">
-            <div class="d-daypart-row morning" title="Previsión Mañana (08:00 - 14:00): ${morningWeather.label}">
+            <div class="d-daypart-row morning" title="Previsión Mañana (08:00 - 14:00): ${morningWeather.label}${morningWeather.precipSum >= 0.1 ? ` • ${morningWeather.precipSum.toFixed(1)} mm` : ''}">
               <span class="d-daypart-label">🌅 Mañana</span>
               <span class="d-daypart-icon">${renderWeatherIconHtml(morningWeather, 22, iconTheme)}</span>
               <span class="d-daypart-text">${morningWeather.label}</span>
+              <span class="d-daypart-precip ${morningWeather.precipSum >= 2.5 ? 'heavy-rain' : (morningWeather.precipSum >= 0.1 ? 'has-rain' : '')}">
+                ${morningWeather.precipSum >= 0.1 ? morningWeather.precipSum.toFixed(1) + ' mm' : '0 mm'}
+              </span>
             </div>
             <div class="d-daypart-divider"></div>
-            <div class="d-daypart-row afternoon" title="Previsión Tarde (14:00 - 21:00): ${afternoonWeather.label}">
+            <div class="d-daypart-row afternoon" title="Previsión Tarde (14:00 - 21:00): ${afternoonWeather.label}${afternoonWeather.precipSum >= 0.1 ? ` • ${afternoonWeather.precipSum.toFixed(1)} mm` : ''}">
               <span class="d-daypart-label">🌇 Tarde</span>
               <span class="d-daypart-icon">${renderWeatherIconHtml(afternoonWeather, 22, iconTheme)}</span>
               <span class="d-daypart-text">${afternoonWeather.label}</span>
+              <span class="d-daypart-precip ${afternoonWeather.precipSum >= 2.5 ? 'heavy-rain' : (afternoonWeather.precipSum >= 0.1 ? 'has-rain' : '')}">
+                ${afternoonWeather.precipSum >= 0.1 ? afternoonWeather.precipSum.toFixed(1) + ' mm' : '0 mm'}
+              </span>
             </div>
           </div>
         </div>
@@ -263,11 +287,11 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
 
           <!-- Fila 2: Métricas Integradas -->
           <div class="d-unified-metrics-grid">
-            <div class="u-metric-item ${popMax >= 40 ? 'metric-rain-active' : ''}" title="Probabilidad de lluvia y acumulado">
+            <div class="u-metric-item ${popMax >= 40 ? 'metric-rain-active' : ''}" title="Probabilidad de lluvia y acumulado total del día">
               <span class="u-m-icon">💧</span>
               <div class="u-m-info">
                 <span class="u-m-val">${popMax}%</span>
-                <span class="u-m-sub">${rain > 0 ? rain + ' mm' : 'Seco'}</span>
+                <span class="u-m-sub">${rain > 0 ? rain + ' mm total' : 'Seco'}</span>
               </div>
             </div>
 

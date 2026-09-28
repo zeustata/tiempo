@@ -1,8 +1,8 @@
-import { getAsturWeatherSvg } from './weatherAsturIcons.js?v=1.1.16-resol-v243';
-import { getPixelWeatherSvg } from './weatherPixelIcons.js?v=1.1.16-resol-v243';
-import { getNeonWeatherSvg } from './weatherNeonIcons.js?v=1.1.16-resol-v243';
-import { getSketchWeatherSvg } from './weatherSketchIcons.js?v=1.1.16-resol-v243';
-import { getGlassWeatherSvg } from './weatherGlassIcons.js?v=1.1.16-resol-v243';
+import { getAsturWeatherSvg } from './weatherAsturIcons.js?v=1.1.16-rain-v244';
+import { getPixelWeatherSvg } from './weatherPixelIcons.js?v=1.1.16-rain-v244';
+import { getNeonWeatherSvg } from './weatherNeonIcons.js?v=1.1.16-rain-v244';
+import { getSketchWeatherSvg } from './weatherSketchIcons.js?v=1.1.16-rain-v244';
+import { getGlassWeatherSvg } from './weatherGlassIcons.js?v=1.1.16-rain-v244';
 
 /**
  * Mapeo de códigos meteorológicos WMO a descripciones en asturiano/castellano, iconos y clases
@@ -149,8 +149,8 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
         base = {
           label: 'Lluvia fuerte / Bastinazu',
           icon: '🌧️',
-          svgKey: 'rain',
-          lucide: 'cloud-rain',
+          svgKey: 'heavy-rain',
+          lucide: 'cloud-rain-wind',
           bg: 'heavy-rain',
           isRain: true,
           isSnow: false

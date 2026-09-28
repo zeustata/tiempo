@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v243-resol-icons';
+const CACHE_NAME = 'meteoasturlode-v244-rain-scale';
 const STATIC_ASSETS = [
   './',
   './index.html',

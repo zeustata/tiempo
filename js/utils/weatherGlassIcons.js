@@ -264,11 +264,9 @@ export function getGlassWeatherSvg(iconKey, size = 32) {
           </defs>
           <!-- Nube -->
           <path d="M 39,22 H 13 A 7,7 0 0 1 11.5,8.5 A 10,10 0 0 1 33,9 A 6.5,6.5 0 0 1 39,22 Z" fill="url(#glass-drizzle-cloud)" stroke="rgba(255,255,255,0.7)" stroke-width="1" />
-          <!-- Gotitas perladas -->
+          <!-- 1 SOLA GOTA PERLADA CENTRAL -->
           <g fill="url(#glass-pearl-drop)">
-            <ellipse cx="14" cy="30" rx="2" ry="3.5" transform="rotate(-15 14 30)" />
-            <ellipse cx="24" cy="32" rx="2" ry="3.5" transform="rotate(-15 24 32)" />
-            <ellipse cx="34" cy="30" rx="2" ry="3.5" transform="rotate(-15 34 30)" />
+            <ellipse cx="24" cy="32" rx="2.5" ry="4.5" transform="rotate(-10 24 32)" />
           </g>
         </svg>
       `;
@@ -300,6 +298,31 @@ export function getGlassWeatherSvg(iconKey, size = 32) {
       `;
 
     case 'heavy-rain':
+      // 🌧️🌊 BASTINAZU CRISTAL 3D (Cortina densa de 5 gotas cristal, >= 2.5 mm/h, SIN RAYO)
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon glass-icon" aria-label="Bastinazu Cristal 3D">
+          <defs>
+            <linearGradient id="glass-heavy-cloud" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#475569" stop-opacity="0.95" />
+              <stop offset="100%" stop-color="#1e293b" stop-opacity="0.85" />
+            </linearGradient>
+            <linearGradient id="glass-heavy-drop" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#38bdf8" />
+              <stop offset="100%" stop-color="#0284c7" />
+            </linearGradient>
+          </defs>
+          <path d="M 41,22 H 12 A 8,8 0 0 1 10.5,7.5 A 11.5,11.5 0 0 1 36.5,8 A 7.5,7.5 0 0 1 41,22 Z" fill="url(#glass-heavy-cloud)" stroke="rgba(255,255,255,0.4)" stroke-width="1" />
+          <!-- Cortina de 5 gotas densas inclinadas -->
+          <g fill="url(#glass-heavy-drop)">
+            <path d="M 9,27 C 9,27 6,34 6,37 A 3,3 0 0 0 12,37 C 12,34 9,27 9,27 Z" />
+            <path d="M 17,30 C 17,30 14,37 14,40 A 3,3 0 0 0 20,40 C 20,37 17,30 17,30 Z" />
+            <path d="M 25,27 C 25,27 22,34 22,37 A 3,3 0 0 0 28,37 C 28,34 25,27 25,27 Z" />
+            <path d="M 33,30 C 33,30 30,37 30,40 A 3,3 0 0 0 36,40 C 36,37 33,30 33,30 Z" />
+            <path d="M 40,27 C 40,27 37,34 37,37 A 3,3 0 0 0 43,37 C 43,34 40,27 40,27 Z" />
+          </g>
+        </svg>
+      `;
+
     case 'storm':
       // ⛈️ TORMENTA CRISTAL CON RAYO ORO 3D
       return `

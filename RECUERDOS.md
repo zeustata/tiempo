@@ -5,6 +5,23 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 ---
 
 ## 🚀 Última Actualización Oficial: v1.1.16 — 2026-09-28
+- **Escala Hidrológica Visual de Lluvia & Desglose Pluviométrico Mañana/Tarde:**
+  1. *Física de la Intensidad Pluviométrica:*
+     - Reconocimiento de que en la climatología asturiana 0.2 mm/h es un orbayu que no moja, mientras que >= 2.5 mm/h es un bastinazu torrencial.
+     - Gradación en 3 escalones de lluvia + 1 de tormenta:
+       - **💧 Orbayu / Gotas ligeras (0.1 a 0.4 mm/h):** Nube con 1 sola gota central.
+       - **🌧️ Lluvia moderada (0.5 a 2.4 mm/h):** Nube con 3 gotas regulares.
+       - **🌧️🌊 Lluvia fuerte / Bastinazu (>= 2.5 mm/h o tramo >= 3.5 mm):** Nube cargada con cortina densa de 5 gotas con fuerza, sin rayo.
+       - **⛈️ Tormenta eléctrica:** Nube oscura con lluvia y rayo (códigos 95, 96, 99).
+  2. *Pluviómetro Desglosado en Previsiones (Mañana vs. Tarde):*
+     - Desglose del volumen cuantitativo (mm) en las pastillas de 🌅 Mañana (08:00 - 14:00) y 🌇 Tarde (14:00 - 21:00) junto a su icono específico graduado según el pico horario de lluvia.
+     - La métrica general de la tarjeta diaria muestra el acumulado total de 24h (`X.X mm total`).
+  3. *Cobertura en los 5 Temas Gráficos:*
+     - Adaptado en Cómic Astur, Pixel Art, Neón, Boceto y Liquid Glass.
+  4. *Anti-Caché Obligatorio:*
+     - `CACHE_NAME` en `sw.js`: `meteoasturlode-v244-rain-scale`.
+     - Query strings en `index.html`, `currentCard.js`, `app.js`, `forecastView.js` y `weatherIcons.js`: `?v=1.1.16-rain-v244`.
+
 - **Diferenciación de los 4 Estados Solares & Icono Propio de Resol Asturiano:**
   1. *Física y Filosofía Meteorológica:*
      - Distinción tajante entre Claros (sol directo por hueco azul entre cúmulos) y Resol (cielo tomado por velo blanquecino de altoestratos/cirros que filtra y difumina la luz solar directa quemando y deslumbrando).

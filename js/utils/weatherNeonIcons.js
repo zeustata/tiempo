@@ -229,7 +229,7 @@ export function getNeonWeatherSvg(iconKey, size = 32) {
 
     case 'drizzle':
     case 'orbayu':
-      // 🌦️ ORBAYU NEÓN
+      // 🌦️ ORBAYU NEÓN (1 solo haz neón fino, 0.1 - 0.4 mm/h)
       return `
         <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon neon-icon" aria-label="Orbayu Neón">
           <defs>
@@ -242,20 +242,14 @@ export function getNeonWeatherSvg(iconKey, size = 32) {
             </filter>
           </defs>
           <path d="M 38,24 H 14 A 7,7 0 0 1 12.5,10.5 A 9.5,9.5 0 0 1 33,11 A 6.5,6.5 0 0 1 38,24 Z" stroke="#38bdf8" stroke-width="2" fill="none" filter="url(#neon-glow-drizzle)" />
-          <!-- Rayas de orbayu -->
-          <g stroke="#06b6d4" stroke-width="1.8" stroke-linecap="round">
-            <line x1="14" y1="30" x2="11" y2="35" />
-            <line x1="22" y1="30" x2="19" y2="35" />
-            <line x1="30" y1="30" x2="27" y2="35" />
-            <line x1="18" y1="38" x2="15" y2="43" />
-            <line x1="26" y1="38" x2="23" y2="43" />
-          </g>
+          <!-- 1 SOLO HAZ DE ORBAYU CENTRAL -->
+          <line x1="24" y1="30" x2="21" y2="39" stroke="#06b6d4" stroke-width="2.2" stroke-linecap="round" filter="url(#neon-glow-drizzle)" />
         </svg>
       `;
 
     case 'rain':
     case 'rain-moderate':
-      // 🌧️ LLUVIA NEÓN
+      // 🌧️ LLUVIA NEÓN (3 trazos neón regulares, 0.5 - 2.4 mm/h)
       return `
         <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon neon-icon" aria-label="Lluvia Neón">
           <defs>
@@ -268,7 +262,7 @@ export function getNeonWeatherSvg(iconKey, size = 32) {
             </filter>
           </defs>
           <path d="M 40,24 H 13 A 7.5,7.5 0 0 1 11.5,9.5 A 10.5,10.5 0 0 1 35.5,10 A 7,7 0 0 1 40,24 Z" stroke="#38bdf8" stroke-width="2.2" fill="none" filter="url(#neon-glow-rain)" />
-          <g stroke="#0284c7" stroke-width="2.4" stroke-linecap="round">
+          <g stroke="#0284c7" stroke-width="2.4" stroke-linecap="round" filter="url(#neon-glow-rain)">
             <line x1="14" y1="30" x2="9" y2="42" />
             <line x1="23" y1="30" x2="18" y2="42" />
             <line x1="32" y1="30" x2="27" y2="42" />
@@ -277,6 +271,30 @@ export function getNeonWeatherSvg(iconKey, size = 32) {
       `;
 
     case 'heavy-rain':
+      // 🌧️🌊 BASTINAZU NEÓN (Cortina densa de 5 trazos neón con fuerza, >= 2.5 mm/h, SIN RAYO)
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon neon-icon" aria-label="Bastinazu Neón">
+          <defs>
+            <filter id="neon-glow-heavy" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="2.2" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <path d="M 41,23 H 12 A 8,8 0 0 1 10.5,8 A 11,11 0 0 1 36.5,8.5 A 7.5,7.5 0 0 1 41,23 Z" stroke="#60a5fa" stroke-width="2.2" fill="none" filter="url(#neon-glow-heavy)" />
+          <!-- Cortina de 5 trazos de lluvia densa inclinada -->
+          <g stroke="#38bdf8" stroke-width="2.4" stroke-linecap="round" filter="url(#neon-glow-heavy)">
+            <line x1="10" y1="28" x2="5" y2="42" />
+            <line x1="17" y1="29" x2="12" y2="43" stroke="#0284c7" />
+            <line x1="24" y1="28" x2="19" y2="42" />
+            <line x1="31" y1="29" x2="26" y2="43" stroke="#0284c7" />
+            <line x1="38" y1="28" x2="33" y2="42" />
+          </g>
+        </svg>
+      `;
+
     case 'storm':
       // ⛈️ TORMENTA NEÓN CON RAYO RESPLANDECIENTE
       return `

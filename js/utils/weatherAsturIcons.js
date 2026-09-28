@@ -234,35 +234,30 @@ export function getAsturWeatherSvg(iconKey, size = 32) {
 
     case 'drizzle':
     case 'orbayu':
-      // 🌦️ ORBAYU: NUBE CON GOTITAS BEBÉ SONRIENTES
+      // 🌦️ ORBAYU: NUBE CON 1 SOLA GOTITA BEBÉ TIERNA (0.1 - 0.4 mm/h)
       return `
         <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon icon-comic-orbayu" aria-label="Orbayu Divertido Cómic">
-          <!-- Nube Dulce -->
-          <path d="M 38,22 H 14 A 7,7 0 0 1 12.5,8 A 9.5,9.5 0 0 1 32,8.5 A 6.5,6.5 0 0 1 38,22 Z" fill="#e0f2fe" stroke="#38bdf8" stroke-width="1.8" />
+          <!-- Nube Dulce Celesta -->
+          <path d="M 38,24 H 14 A 7,7 0 0 1 12.5,10 A 9.5,9.5 0 0 1 32,10.5 A 6.5,6.5 0 0 1 38,24 Z" fill="#e0f2fe" stroke="#38bdf8" stroke-width="1.8" />
           <!-- Carita de la Nube -->
-          <ellipse cx="20" cy="14" rx="1.8" ry="2.2" fill="#0369a1" />
-          <ellipse cx="28" cy="14" rx="1.8" ry="2.2" fill="#0369a1" />
-          <ellipse cx="16" cy="17" rx="1.8" ry="1" fill="#f472b6" opacity="0.8" />
-          <ellipse cx="32" cy="17" rx="1.8" ry="1" fill="#f472b6" opacity="0.8" />
-          <path d="M 22,17 Q 24,20 26,17" stroke="#0369a1" stroke-width="1.4" fill="none" stroke-linecap="round" />
-          <!-- Gotita Bebé 1 con Carita -->
-          <g transform="translate(13, 27)">
-            <path d="M 4,0 C 4,0 0,6 0,8 C 0,10.2 1.8,12 4,12 C 6.2,12 8,10.2 8,8 C 8,6 4,0 4,0 Z" fill="#38bdf8" stroke="#0284c7" stroke-width="1" />
-            <circle cx="3" cy="8" r="0.6" fill="#0f172a" />
-            <circle cx="5" cy="8" r="0.6" fill="#0f172a" />
-          </g>
-          <!-- Gotita Bebé 2 -->
-          <g transform="translate(27, 29)">
-            <path d="M 4,0 C 4,0 0,6 0,8 C 0,10.2 1.8,12 4,12 C 6.2,12 8,10.2 8,8 C 8,6 4,0 4,0 Z" fill="#38bdf8" stroke="#0284c7" stroke-width="1" />
-            <circle cx="3" cy="8" r="0.6" fill="#0f172a" />
-            <circle cx="5" cy="8" r="0.6" fill="#0f172a" />
+          <ellipse cx="20" cy="16" rx="1.8" ry="2.2" fill="#0369a1" />
+          <ellipse cx="28" cy="16" rx="1.8" ry="2.2" fill="#0369a1" />
+          <ellipse cx="16" cy="19" rx="1.8" ry="1" fill="#f472b6" opacity="0.8" />
+          <ellipse cx="32" cy="19" rx="1.8" ry="1" fill="#f472b6" opacity="0.8" />
+          <path d="M 22,19 Q 24,22 26,19" stroke="#0369a1" stroke-width="1.4" fill="none" stroke-linecap="round" />
+          <!-- 1 SOLA GOTITA BEBÉ PROTAGONISTA EN EL CENTRO -->
+          <g transform="translate(20, 28)">
+            <path d="M 4,0 C 4,0 0,6 0,8.5 C 0,11 1.8,13 4,13 C 6.2,13 8,11 8,8.5 C 8,6 4,0 4,0 Z" fill="#38bdf8" stroke="#0284c7" stroke-width="1.2" />
+            <circle cx="3" cy="8" r="0.7" fill="#0f172a" />
+            <circle cx="5" cy="8" r="0.7" fill="#0f172a" />
+            <path d="M 3.2,10.2 Q 4,11.2 4.8,10.2" stroke="#0369a1" stroke-width="0.8" fill="none" stroke-linecap="round" />
           </g>
         </svg>
       `;
 
     case 'rain':
     case 'rain-moderate':
-      // 🌧️ LLUVIA: NUBE CONTENTA CON PARAGUAS DE COLORES
+      // 🌧️ LLUVIA: NUBE CONTENTA CON 3 GOTAS (0.5 - 2.4 mm/h)
       return `
         <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon icon-comic-rain" aria-label="Lluvia Cómic">
           <!-- Nube de Lluvia -->
@@ -272,18 +267,40 @@ export function getAsturWeatherSvg(iconKey, size = 32) {
           <ellipse cx="16" cy="19" rx="2.2" ry="1.3" fill="#fb7185" opacity="0.8" />
           <ellipse cx="34" cy="19" rx="2.2" ry="1.3" fill="#fb7185" opacity="0.8" />
           <path d="M 23,19 Q 25,23 27,19" stroke="#0369a1" stroke-width="1.5" fill="none" stroke-linecap="round" />
-          <!-- Gotas de lluvia alegres cayendo -->
+          <!-- Gotas de lluvia alegres cayendo (3 gotas regulares) -->
           <g fill="#0284c7">
-            <path d="M 12,28 C 12,28 9,33 9,35 A 3,3 0 0 0 15,35 C 15,33 12,28 12,28 Z" />
+            <path d="M 13,28 C 13,28 10,33 10,35 A 3,3 0 0 0 16,35 C 16,33 13,28 13,28 Z" />
             <path d="M 24,30 C 24,30 21,35 21,37 A 3,3 0 0 0 27,37 C 27,35 24,30 24,30 Z" />
-            <path d="M 36,28 C 36,28 33,33 33,35 A 3,3 0 0 0 39,35 C 39,33 36,28 36,28 Z" />
+            <path d="M 35,28 C 35,28 32,33 32,35 A 3,3 0 0 0 38,35 C 38,33 35,28 35,28 Z" />
           </g>
         </svg>
       `;
 
     case 'heavy-rain':
+      // 🌧️🌊 BASTINAZU / LLUVIA FUERTE: NUBE CARGADA CON CORTINA DENSA DE 5 GOTAS (>= 2.5 mm/h, SIN RAYO)
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon icon-comic-heavy-rain" aria-label="Bastinazu Lluvia Fuerte Cómic">
+          <!-- Nube Azul Plomo Densa -->
+          <path d="M 41,23 H 12 A 8.5,8.5 0 0 1 10.5,8 A 12,12 0 0 1 36.5,8.5 A 8,8 0 0 1 41,23 Z" fill="#64748b" stroke="#334155" stroke-width="2" />
+          <!-- Ojos decididos ante el bastinazu -->
+          <ellipse cx="19" cy="15" rx="2.2" ry="2.6" fill="#f8fafc" />
+          <circle cx="20" cy="15.5" r="1.2" fill="#0f172a" />
+          <ellipse cx="30" cy="15" rx="2.2" ry="2.6" fill="#f8fafc" />
+          <circle cx="31" cy="15.5" r="1.2" fill="#0f172a" />
+          <path d="M 22,20 Q 25,18 28,20" stroke="#f8fafc" stroke-width="1.8" fill="none" stroke-linecap="round" />
+          <!-- Cortina de 5 gotas densas cayendo con fuerza e inclinación -->
+          <g fill="#0284c7" stroke="#0369a1" stroke-width="0.8">
+            <path d="M 9,28 C 9,28 6,34 6,36.5 A 3,3 0 0 0 12,36.5 C 12,34 9,28 9,28 Z" />
+            <path d="M 17,31 C 17,31 14,37 14,39.5 A 3,3 0 0 0 20,39.5 C 20,37 17,31 17,31 Z" />
+            <path d="M 25,28 C 25,28 22,34 22,36.5 A 3,3 0 0 0 28,36.5 C 28,34 25,28 25,28 Z" />
+            <path d="M 33,31 C 33,31 30,37 30,39.5 A 3,3 0 0 0 36,39.5 C 36,37 33,31 33,31 Z" />
+            <path d="M 40,28 C 40,28 37,34 37,36.5 A 3,3 0 0 0 43,36.5 C 43,34 40,28 40,28 Z" />
+          </g>
+        </svg>
+      `;
+
     case 'storm':
-      // ⛈️ TORMENTA GRUÑONA (NUBE ENFADADA DIVERTIDA CON RAYO)
+      // ⛈️ TORMENTA ELÉCTRICA (NUBE ENFADADA CON RAYO)
       return `
         <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon icon-comic-storm" aria-label="Tormenta Gruñona Cómic">
           <!-- Nube Oscura Gruñona -->

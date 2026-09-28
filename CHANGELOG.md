@@ -12,6 +12,23 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ## [1.1.16] - 2026-09-28
 
+### 🌧️ Escala Hidrológica Visual de Lluvia & Desglose Pluviométrico Mañana/Tarde
+- **Gradación Visual por Intensidad Horaria en mm/h:**
+  - **💧 Orbayu / Llovizna ligera (0.1 a 0.4 mm/h):** Nube con **1 sola gota** cayendo en el centro.
+  - **🌧️ Lluvia moderada (0.5 a 2.4 mm/h):** Nube con **3 gotas** regulares y continuas.
+  - **🌧️🌊 Lluvia fuerte / Bastinazu (>= 2.5 mm/h o tramo >= 3.5 mm):** Nube plomiza con **cortina densa de 5 gotas enérgicas cayendo con fuerza**, ¡totalmente separada de tormenta y SIN RAYO!
+  - **⛈️ Tormenta eléctrica:** Nube oscura con **rayo de tormenta y lluvia** (exclusivo para códigos WMO 95, 96, 99).
+- **Cobertura en los 5 Temas Gráficos:**
+  - `weatherAsturIcons.js`: Orbayu con 1 gotita bebé tierna y sonriente, bastinazu con 5 gotas densas y ojos decididos sin rayo.
+  - `weatherPixelIcons.js`: Orbayu con 1 gota pixel, bastinazu con 5 columnas inclinadas pixel sin rayo.
+  - `weatherNeonIcons.js`: Orbayu con 1 haz neón cian, bastinazu con 5 trazos neón intensos sin rayo.
+  - `weatherSketchIcons.js`: Orbayu con 1 gota a tinta, bastinazu con 5 gotas artesanales densas sin rayo.
+  - `weatherGlassIcons.js`: Orbayu con 1 gota perlada 3D, bastinazu con 5 gotas cristalinas sin rayo.
+- **Pluviómetro Desglosado en Previsiones (`js/components/forecastView.js` & `css/components.css`):**
+  - Pastilla 🌅 **Mañana (08:00 - 14:00):** Icono propio según la intensidad máxima del tramo + **acumulado exacto en mm** (ej. `0.4 mm` o `0 mm`).
+  - Pastilla 🌇 **Tarde (14:00 - 21:00):** Icono propio según la intensidad máxima del tramo + **acumulado exacto en mm** (ej. `3.5 mm` o `0 mm`).
+  - Métrica de Pluviómetro: Mantiene el total acumulado de las 24 horas del día (`X.X mm total`) para máxima coherencia hidrometeorológica.
+
 ### 🎨 Diferenciación de los 4 Estados Solares & Icono Propio de Resol Asturiano
 - **Cuádruple Escenario Meteorológico Solar Inconfundible:**
   - **☀️ Soleado (`clear-day` / WMO 0):** Sol radiante, limpio, sin nubes.

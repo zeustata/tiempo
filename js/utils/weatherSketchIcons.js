@@ -187,31 +187,24 @@ export function getSketchWeatherSvg(iconKey, size = 32) {
 
     case 'drizzle':
     case 'orbayu':
-      // 🌦️ ORBAYU DIBUJADO A MANO
+      // 🌦️ ORBAYU DIBUJADO A MANO (1 sola gota a tinta acuarela, 0.1 - 0.4 mm/h)
       return `
         <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon sketch-icon" aria-label="Orbayu Dibujo a Mano">
-          <!-- Nube -->
+          <!-- Nube suave -->
           <path d="M 39,24 H 13 C 8.5,24 8,17 12,13 C 11,6 20,4 24,7 C 28,3 37,6 36,14 C 40,16 41,24 39,24 Z" fill="#e2e8f0" stroke="#475569" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-          <!-- Rayitas finas dibujadas de orbayu -->
-          <g stroke="#38bdf8" stroke-width="2" stroke-linecap="round">
-            <line x1="14" y1="30" x2="12" y2="35" />
-            <line x1="22" y1="29" x2="20" y2="34" />
-            <line x1="30" y1="30" x2="28" y2="35" />
-            <line x1="17" y1="38" x2="15" y2="43" />
-            <line x1="26" y1="38" x2="24" y2="43" />
-            <line x1="34" y1="37" x2="32" y2="42" />
-          </g>
+          <!-- 1 SOLA GOTA DIBUJADA EN EL CENTRO -->
+          <path d="M 24,28 C 24,28 20,35 20,38 A 4,4 0 0 0 28,38 C 28,35 24,28 24,28 Z" fill="#bae6fd" stroke="#0284c7" stroke-width="2" stroke-linejoin="round" />
         </svg>
       `;
 
     case 'rain':
     case 'rain-moderate':
-      // 🌧️ LLUVIA DIBUJADA A MANO
+      // 🌧️ LLUVIA DIBUJADA A MANO (3 gotas, 0.5 - 2.4 mm/h)
       return `
         <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon sketch-icon" aria-label="Lluvia Dibujo a Mano">
           <!-- Nube sombreada -->
           <path d="M 40,23 H 13 C 8,23 7,16 11,12 C 10,5 19,3 24,6 C 28,2 37,5 36,13 C 41,15 42,23 40,23 Z" fill="#cbd5e1" stroke="#334155" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" />
-          <!-- Gotitas dibujadas con forma de lágrima y trazo -->
+          <!-- Gotitas dibujadas con forma de lágrima y trazo (3 gotas) -->
           <g stroke="#0284c7" stroke-width="2.2" stroke-linecap="round" fill="#38bdf8">
             <path d="M 14,29 C 14,29 10,36 10,38 A 3,3 0 0 0 16,38 C 16,36 14,29 14,29 Z" />
             <path d="M 25,30 C 25,30 21,37 21,39 A 3,3 0 0 0 27,39 C 27,37 25,30 25,30 Z" />
@@ -221,6 +214,22 @@ export function getSketchWeatherSvg(iconKey, size = 32) {
       `;
 
     case 'heavy-rain':
+      // 🌧️🌊 BASTINAZU DIBUJADO A MANO (Cortina densa de 5 gotas con fuerza, >= 2.5 mm/h, SIN RAYO)
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon sketch-icon" aria-label="Bastinazu Dibujo a Mano">
+          <!-- Nube densa plomiza -->
+          <path d="M 41,22 H 12 C 7.5,22 6.5,15 10.5,11 C 9.5,4 18.5,2 23.5,5 C 27.5,1 36.5,4 35.5,12 C 40.5,14 41.5,22 41,22 Z" fill="#64748b" stroke="#1e293b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+          <!-- Cortina de 5 gotas enérgicas inclinadas -->
+          <g stroke="#0369a1" stroke-width="2.2" stroke-linecap="round" fill="#0284c7">
+            <path d="M 9,28 C 9,28 6,35 6,37.5 A 3,3 0 0 0 12,37.5 C 12,35 9,28 9,28 Z" />
+            <path d="M 17,31 C 17,31 14,38 14,40.5 A 3,3 0 0 0 20,40.5 C 20,38 17,31 17,31 Z" />
+            <path d="M 25,28 C 25,28 22,35 22,37.5 A 3,3 0 0 0 28,37.5 C 28,35 25,28 25,28 Z" />
+            <path d="M 33,31 C 33,31 30,38 30,40.5 A 3,3 0 0 0 36,40.5 C 36,38 33,31 33,31 Z" />
+            <path d="M 40,28 C 40,28 37,35 37,37.5 A 3,3 0 0 0 43,37.5 C 43,35 40,28 40,28 Z" />
+          </g>
+        </svg>
+      `;
+
     case 'storm':
       // ⛈️ TORMENTA DIBUJO A MANO CON RAYO ZIG-ZAG
       return `
