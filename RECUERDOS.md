@@ -4,7 +4,9 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.16 — 2026-09-28
+## 🚀 Última Actualización Oficial: v1.1.17 💧⛅ — 2026-09-28
+- **Versionado Obligatorio y Salto Incondicional de Changelog (Reforma de Ley Específica 1):**
+  - Se deroga definitivamente la salvedad de Google Play en `AGENTS.md` (Parte II, Ley 1). A partir de ahora, toda mejora o cambio en MeteoAstur Lode incrementa obligatoriamente el ciclo oficial de versión, actualiza el modal HTML `#changelog-modal` e inyecta la nueva versión en `CURRENT_APP_VERSION` para garantizar que el aviso de novedades salte de forma transparente e inequívoca en la pantalla del usuario.
 - **Escala Hidrológica Visual de Lluvia & Desglose Pluviométrico Mañana/Tarde:**
   1. *Física de la Intensidad Pluviométrica:*
      - Reconocimiento de que en la climatología asturiana 0.2 mm/h es un orbayu que no moja, mientras que >= 2.5 mm/h es un bastinazu torrencial.
@@ -19,8 +21,8 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   3. *Cobertura en los 5 Temas Gráficos:*
      - Adaptado en Cómic Astur, Pixel Art, Neón, Boceto y Liquid Glass.
   4. *Anti-Caché Obligatorio:*
-     - `CACHE_NAME` en `sw.js`: `meteoasturlode-v244-rain-scale`.
-     - Query strings en `index.html`, `currentCard.js`, `app.js`, `forecastView.js` y `weatherIcons.js`: `?v=1.1.16-rain-v244`.
+     - `CACHE_NAME` en `sw.js`: `meteoasturlode-v1117-rain-scale`.
+     - Query strings en `index.html`, `currentCard.js`, `app.js`, `forecastView.js` y `weatherIcons.js`: `?v=1.1.17`.
 
 - **Diferenciación de los 4 Estados Solares & Icono Propio de Resol Asturiano:**
   1. *Física y Filosofía Meteorológica:*

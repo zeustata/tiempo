@@ -91,8 +91,8 @@
 
 ## 📑 PARTE II: LEYES ESPECÍFICAS DEL PROYECTO: METEOASTUR LODE (TIEMPO)
 
-1. **Versionado y Registro de Cambios:**
-   - Incrementar obligatoriamente el número de versión (ej. ciclo oficial `v1.x.x`) en el badge del pie (`#app-version-badge` en `index.html`), en el modal de historial, en `CHANGELOG.md` y en `RECUERDOS.md` *(salvo en fases de revisión de tiendas de apps como Google Play donde deba preservarse la versión bajo examen)*.
+1. **Versionado Obligatorio y Salto Incondicional de Changelog:**
+   - Cada cambio, mejora o actualización requiere imperativamente el incremento oficial del número de versión (ej. `v1.x.x`), la actualización del badge del pie (`#app-version-badge` en `index.html`), la inserción del nuevo bloque de versión en el modal `#changelog-modal`, y la actualización de `CURRENT_APP_VERSION` en `js/app.js`, `CHANGELOG.md` y `RECUERDOS.md`. Queda terminantemente prohibido congelar la versión bajo ningún pretexto, garantizando que el modal de novedades siempre salte automáticamente al usuario tras actualizar (Doctrina de la Ley 13).
 2. **Catálogo de Concejos Inmutable:**
    - Los **78 concejos oficiales de Asturias** deben estar permanentemente disponibles con búsqueda insensible a acentos y sus puntos estratégicos.
 3. **Motor Armónico Autónomo de Mareas del Cantábrico:**

@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.16-rain-v244">
-  <link rel="stylesheet" href="css/components.css?v=1.1.16-rain-v244">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.16-rain-v244">
+  <link rel="stylesheet" href="css/main.css?v=1.1.17">
+  <link rel="stylesheet" href="css/components.css?v=1.1.17">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.17">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -176,7 +176,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.16 ⚡</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.17 💧⛅</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -227,8 +227,20 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.16 ⚡</span>
+            <span class="release-version">v1.1.17 💧⛅</span>
             <span class="release-date">28 Sep 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> <strong>Escala Hidrológica de Lluvia por mm/h</strong>: Representación fiel del volumen de agua por hora en todos los temas de iconos: <em>Orbayu / Llovizna</em> (0.1 a 0.4 mm/h, 1 gota solitaria), <em>Lluvia moderada</em> (0.5 a 2.4 mm/h, 3 gotas) y <em>Lluvia fuerte / Bastinazu</em> (&gt;= 2.5 mm/h o tramo &gt;= 3.5 mm, nube oscura con cortina densa de 5 gotas sin rayo). El rayo queda reservado con rigor exclusivamente a tormentas eléctricas reales.</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Desglose Pluviométrico Mañana y Tarde</strong>: En las tarjetas de previsión diaria, los tramos de Mañana (08:00 a 14:00) y Tarde (14:00 a 21:00) incorporan su propia pastilla de milímetros acumulados (ej. <code>0.4 mm</code> o <code>0 mm</code>) y su icono adaptado a la intensidad horaria máxima del tramo, manteniendo en el pluviómetro principal los litros totales de las 24 horas.</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>4 Estados Solares y Resol Asturiano Propio</strong>: Diferenciación visual estricta entre <em>Soleado</em> (sol radiante), <em>Mayormente soleado</em> (sol con nube pequeña), <em>Parcialmente nublado / Claros</em> (sol con nube grande) y <em>Resol / Sol tamizáu</em> (sol con halo y manto nuboso translúcido), calibrado e ilustrado a medida en los 5 estilos artísticos (Cómic Astur, Pixel Art, Neón Cyber, Dibujo y Liquid Glass).</li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.16 ⚡</span>
+            <span class="release-date">28 Sep 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-new">Nuevo</span> <strong>Motor de Rendimiento Adaptativo (Modo Economía)</strong>: Detector automático de hardware lento basado en núcleos de CPU, RAM y benchmark sintético. En móviles de gama baja activa automáticamente el Modo Economía sin intervención del usuario.</li>
@@ -1798,7 +1810,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.16-rain-v244"></script>
+  <script type="module" src="js/app.js?v=1.1.17"></script>
 
 
 

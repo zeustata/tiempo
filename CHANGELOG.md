@@ -10,7 +10,7 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
-## [1.1.16] - 2026-09-28
+## [1.1.17] - 2026-09-28
 
 ### 🌧️ Escala Hidrológica Visual de Lluvia & Desglose Pluviométrico Mañana/Tarde
 - **Gradación Visual por Intensidad Horaria en mm/h:**
@@ -44,6 +44,11 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Exposición en el Selector de Iconos (`index.html` & `js/app.js`):**
   - El modal de estilos de iconos ahora muestra la comparativa de los 4 estados solares para que el usuario pueda apreciar las diferencias al instante.
   - Se activa el estilo **Emojis Emotivos (Cómic Astur)** como recomendado y por defecto para que la app luzca siempre el arte propio de Asturias.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v1117-rain-scale`, actualización a `?v=1.1.17` en módulos, scripts y hojas de estilo.
+
+---
+
+## [1.1.16] - 2026-09-28
 
 ### ⚡ Motor de Rendimiento Adaptativo & Modo Economía (Performance Optimizer)
 - **Detector Automático de Hardware Lento (`js/utils/gyroGlass.js`):**
