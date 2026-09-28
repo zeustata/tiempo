@@ -60,34 +60,80 @@ export function getNeonWeatherSvg(iconKey, size = 32) {
         </svg>
       `;
 
+    case 'mostly-clear-day':
+    case 'sun-small-cloud':
+      // 🌤️ MAYORMENTE SOLEADO NEÓN — Sol neón grande + nubecita trazo neón pequeña
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon neon-icon" aria-label="Mayormente Soleado Neón">
+          <defs>
+            <filter id="neon-sun-big-glow">
+              <feGaussianBlur stdDeviation="2.5" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="neon-cloud-tiny-glow">
+              <feGaussianBlur stdDeviation="1.5" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <!-- Sol neón grande protagonista -->
+          <circle cx="22" cy="21" r="12" stroke="#fde047" stroke-width="2.5" fill="none" filter="url(#neon-sun-big-glow)" opacity="0.95"/>
+          <!-- Rayos neón -->
+          <g stroke="#fde047" stroke-width="2" stroke-linecap="round" filter="url(#neon-sun-big-glow)" opacity="0.85">
+            <line x1="22" y1="4"  x2="22" y2="8" />
+            <line x1="13" y1="7"  x2="16" y2="11" />
+            <line x1="5"  y1="20" x2="9"  y2="20" />
+            <line x1="31" y1="7"  x2="28" y2="11" />
+            <line x1="39" y1="20" x2="35" y2="20" />
+            <line x1="13" y1="33" x2="16" y2="30" />
+            <line x1="31" y1="33" x2="28" y2="30" />
+          </g>
+          <!-- Brillo interior sol -->
+          <circle cx="22" cy="21" r="6" stroke="#ffffff" stroke-width="1" fill="none" opacity="0.4"/>
+          <!-- Nubecita neón PEQUEÑA en esquina inferior derecha -->
+          <path d="M 47,45 H 33 A 5,5 0 0 1 32,37 A 7,7 0 0 1 46,37.5 A 4.5,4.5 0 0 1 47,45 Z"
+                stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"
+                filter="url(#neon-cloud-tiny-glow)" opacity="0.9"/>
+        </svg>
+      `;
+
     case 'resol':
-      // 🌤️ RESOL NEÓN (Sol brillante irradiando haces a través de nube neón)
+      // 🌥️☀️ RESOL NEÓN — Sol neón + nube grande trazo difuso + nube pequeña sólida neón
       return `
         <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon neon-icon" aria-label="Resol Neón">
           <defs>
-            <filter id="neon-glow-resol" x="-30%" y="-30%" width="160%" height="160%">
-              <feGaussianBlur stdDeviation="2.2" result="coloredBlur"/>
-              <feMerge>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
+            <filter id="neon-resol-halo">
+              <feGaussianBlur stdDeviation="4" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="neon-velo-glow">
+              <feGaussianBlur stdDeviation="2" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="neon-cloud2-glow">
+              <feGaussianBlur stdDeviation="1.5" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
             </filter>
           </defs>
-          <!-- Rayos solares neón penetrantes -->
-          <g stroke="#f59e0b" stroke-width="2" stroke-linecap="round" filter="url(#neon-glow-resol)">
-            <line x1="20" y1="3" x2="20" y2="7" />
-            <line x1="8" y1="8" x2="11" y2="11" />
-            <line x1="4" y1="20" x2="8" y2="20" />
-            <line x1="32" y1="8" x2="29" y2="11" />
-            <line x1="36" y1="20" x2="32" y2="20" />
-            <!-- Haces de luz perforando hacia abajo -->
-            <line x1="14" y1="27" x2="10" y2="39" stroke-dasharray="3,3" opacity="0.8" />
-            <line x1="26" y1="27" x2="30" y2="39" stroke-dasharray="3,3" opacity="0.8" />
+          <!-- Halo dorado difuso (corona del resol) -->
+          <circle cx="18" cy="17" r="15" stroke="#fde047" stroke-width="1" fill="none" opacity="0.25" filter="url(#neon-resol-halo)"/>
+          <!-- Sol neón protagonista -->
+          <circle cx="18" cy="17" r="9" stroke="#fde047" stroke-width="2.2" fill="none" filter="url(#neon-resol-halo)" opacity="0.95"/>
+          <!-- Rayos cortos velados -->
+          <g stroke="#fde047" stroke-width="1.6" stroke-linecap="round" opacity="0.55" filter="url(#neon-resol-halo)">
+            <line x1="18" y1="3"  x2="18" y2="7" />
+            <line x1="9"  y1="7"  x2="12" y2="10" />
+            <line x1="4"  y1="17" x2="8"  y2="17" />
+            <line x1="27" y1="7"  x2="24" y2="10" />
+            <line x1="32" y1="17" x2="28" y2="17" />
           </g>
-          <!-- Sol Neón Dorado Central -->
-          <circle cx="20" cy="18" r="9" stroke="#fbbf24" stroke-width="2.4" fill="none" filter="url(#neon-glow-resol)" />
-          <!-- Nube Neón Cian translúcida -->
-          <path d="M 40,38 H 15 A 7.5,7.5 0 0 1 13.5,24.5 A 10.5,10.5 0 0 1 35.5,25 A 7.5,7.5 0 0 1 40,38 Z" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.95" />
+          <!-- NUBE GRANDE SEMITRANSPARENTE — trazo discontinuo neón (velo nuboso) -->
+          <path d="M 44,37 H 14 A 9,9 0 0 1 12.5,20 A 12,12 0 0 1 40,20.5 A 8.5,8.5 0 0 1 44,37 Z"
+                stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                stroke-dasharray="4,3" fill="none" filter="url(#neon-velo-glow)" opacity="0.55"/>
+          <!-- NUBE PEQUEÑA SÓLIDA (trazo continuo neón — primer plano) -->
+          <path d="M 47,46 H 33 A 5.5,5.5 0 0 1 32,38 A 7.5,7.5 0 0 1 46,38.5 A 5,5 0 0 1 47,46 Z"
+                stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
+                fill="none" filter="url(#neon-cloud2-glow)" opacity="0.95"/>
         </svg>
       `;
 

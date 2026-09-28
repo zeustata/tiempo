@@ -12,6 +12,22 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ## [1.1.16] - 2026-09-28
 
+### 🎨 Diferenciación de los 4 Estados Solares & Icono Propio de Resol Asturiano
+- **Cuádruple Escenario Meteorológico Solar Inconfundible:**
+  - **☀️ Soleado (`clear-day` / WMO 0):** Sol radiante, limpio, sin nubes.
+  - **🌤️ Mayormente soleado (`mostly-clear-day` / WMO 1):** Sol protagonista en el centro con una **nubecita pequeña** abajo a la derecha.
+  - **⛅ Parcialmente nublado / Claros (`partly-cloudy-day` / WMO 2):** **Nube grande** con sol asomando por detrás entre claros de cielo azul.
+  - **🌥️ Resol / Sol tamizáu (`resol`):** Diseño propio exclusivo. El sol en el centro con su **halo dorado difuso**, cubierto por un **manto de nube semitransparente** (donde se ve el disco solar por detrás como un velo) más una nubecita baja sólida.
+- **Implementación Vectorial en los 5 Temas Gráficos:**
+  - `weatherAsturIcons.js` (Cómic Astur): Sol expresivo con ojos entrecerrados velados por la nube translúcida y nube pequeña compañera.
+  - `weatherPixelIcons.js` (Pixel Art Retro): Píxeles de baja opacidad para el halo y velo nuboso translúcido sin duplicidades.
+  - `weatherNeonIcons.js` (Glow & Line Art): Corona neón dorada con resplandor difuso, trazo suave para el velo y nubecita sólida.
+  - `weatherSketchIcons.js` (Dibujo & Acuarela): Halo dorado difuso a la acuarela con líneas de pluma discontinuas y nube translúcida.
+  - `weatherGlassIcons.js` (Liquid Glass 3D): Gradiente de velo translúcido con sol 3D de fondo y sombra suave.
+- **Exposición en el Selector de Iconos (`index.html` & `js/app.js`):**
+  - El modal de estilos de iconos ahora muestra la comparativa de los 4 estados solares para que el usuario pueda apreciar las diferencias al instante.
+  - Se activa el estilo **Emojis Emotivos (Cómic Astur)** como recomendado y por defecto para que la app luzca siempre el arte propio de Asturias.
+
 ### ⚡ Motor de Rendimiento Adaptativo & Modo Economía (Performance Optimizer)
 - **Detector Automático de Hardware Lento (`js/utils/gyroGlass.js`):**
   - Nueva función `detectLowPerf()` que evalúa tres señales combinadas al arranque: núcleos de CPU (`hardwareConcurrency <= 4`), RAM disponible (`deviceMemory <= 2 GB`) y benchmark sintético de CPU (200k iteraciones `Math.sqrt` — ~2ms en flagship, ~35ms en Snapdragon 4xx).

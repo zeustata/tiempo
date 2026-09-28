@@ -1,23 +1,23 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.1.16-perf-opt-v242';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.1.16-perf-opt-v242';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.1.16-perf-opt-v242';
-import { renderCurrentWeather } from './components/currentCard.js?v=1.1.16-perf-opt-v242';
-import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.1.16-perf-opt-v242';
-import { renderSurfCard } from './components/surfCard.js?v=1.1.16-perf-opt-v242';
-import { renderMountainCard } from './components/mountainCard.js?v=1.1.16-perf-opt-v242';
-import { renderForecast } from './components/forecastView.js?v=1.1.16-perf-opt-v242';
-import { renderWeatherChart } from './components/chartsView.js?v=1.1.16-perf-opt-v242';
-import { renderAstronomyView } from './components/astronomyCard.js?v=1.1.16-perf-opt-v242';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.16-perf-opt-v242';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1.16-perf-opt-v242';
-import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1.16-perf-opt-v242';
-import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1.16-perf-opt-v242';
-import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.16-perf-opt-v242';
-import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.16-perf-opt-v242';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.16-perf-opt-v242';
-import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.16-perf-opt-v242';
-import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.16-perf-opt-v242';
-import { initGyroGlass } from './utils/gyroGlass.js?v=1.1.16-perf-opt-v242';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.1.16-resol-v243';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.1.16-resol-v243';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.1.16-resol-v243';
+import { renderCurrentWeather } from './components/currentCard.js?v=1.1.16-resol-v243';
+import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.1.16-resol-v243';
+import { renderSurfCard } from './components/surfCard.js?v=1.1.16-resol-v243';
+import { renderMountainCard } from './components/mountainCard.js?v=1.1.16-resol-v243';
+import { renderForecast } from './components/forecastView.js?v=1.1.16-resol-v243';
+import { renderWeatherChart } from './components/chartsView.js?v=1.1.16-resol-v243';
+import { renderAstronomyView } from './components/astronomyCard.js?v=1.1.16-resol-v243';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.16-resol-v243';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1.16-resol-v243';
+import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1.16-resol-v243';
+import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1.16-resol-v243';
+import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.16-resol-v243';
+import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.16-resol-v243';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.16-resol-v243';
+import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.16-resol-v243';
+import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.16-resol-v243';
+import { initGyroGlass } from './utils/gyroGlass.js?v=1.1.16-resol-v243';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, pronóstico horario 72h y alertas', key: '1' },
@@ -757,48 +757,53 @@ class MeteoAsturiasApp {
     if (!modal) return;
 
     // Renderizar miniaturas SVG dinámicas para cada colección
+    // Renderizar miniaturas SVG dinámicas para cada colección (incluyendo los 4 escenarios de sol/nubes/resol)
     if (previewComic) {
       previewComic.innerHTML = `
-        <span class="preview-svg">${getAsturWeatherSvg('sun', 28)}</span>
-        <span class="preview-svg">${getAsturWeatherSvg('cloud', 28)}</span>
-        <span class="preview-svg">${getAsturWeatherSvg('rain', 28)}</span>
-        <span class="preview-svg">${getAsturWeatherSvg('storm', 28)}</span>
-        <span class="preview-svg">${getAsturWeatherSvg('moon', 28)}</span>
+        <span class="preview-svg" title="Soleado">${getAsturWeatherSvg('sun', 28)}</span>
+        <span class="preview-svg" title="Mayormente soleado">${getAsturWeatherSvg('mostly-clear-day', 28)}</span>
+        <span class="preview-svg" title="Nubes y claros">${getAsturWeatherSvg('partly-cloudy-day', 28)}</span>
+        <span class="preview-svg" title="Resol / Sol tamizáu">${getAsturWeatherSvg('resol', 28)}</span>
+        <span class="preview-svg" title="Nublado">${getAsturWeatherSvg('cloud', 28)}</span>
+        <span class="preview-svg" title="Lluvia">${getAsturWeatherSvg('rain', 28)}</span>
       `;
     }
 
     if (previewPixel) {
       previewPixel.innerHTML = `
-        <span class="preview-svg">${getPixelWeatherSvg('sun', 28)}</span>
-        <span class="preview-svg">${getPixelWeatherSvg('cloud', 28)}</span>
-        <span class="preview-svg">${getPixelWeatherSvg('rain', 28)}</span>
-        <span class="preview-svg">${getPixelWeatherSvg('storm', 28)}</span>
-        <span class="preview-svg">${getPixelWeatherSvg('moon', 28)}</span>
+        <span class="preview-svg" title="Soleado">${getPixelWeatherSvg('sun', 28)}</span>
+        <span class="preview-svg" title="Mayormente soleado">${getPixelWeatherSvg('mostly-clear-day', 28)}</span>
+        <span class="preview-svg" title="Nubes y claros">${getPixelWeatherSvg('partly-cloudy-day', 28)}</span>
+        <span class="preview-svg" title="Resol / Sol tamizáu">${getPixelWeatherSvg('resol', 28)}</span>
+        <span class="preview-svg" title="Nublado">${getPixelWeatherSvg('cloud', 28)}</span>
+        <span class="preview-svg" title="Lluvia">${getPixelWeatherSvg('rain', 28)}</span>
       `;
     }
 
     if (previewNeon) {
       previewNeon.innerHTML = `
-        <span class="preview-svg">${getNeonWeatherSvg('sun', 28)}</span>
-        <span class="preview-svg">${getNeonWeatherSvg('cloud', 28)}</span>
-        <span class="preview-svg">${getNeonWeatherSvg('rain', 28)}</span>
-        <span class="preview-svg">${getNeonWeatherSvg('storm', 28)}</span>
-        <span class="preview-svg">${getNeonWeatherSvg('moon', 28)}</span>
+        <span class="preview-svg" title="Soleado">${getNeonWeatherSvg('sun', 28)}</span>
+        <span class="preview-svg" title="Mayormente soleado">${getNeonWeatherSvg('mostly-clear-day', 28)}</span>
+        <span class="preview-svg" title="Nubes y claros">${getNeonWeatherSvg('partly-cloudy-day', 28)}</span>
+        <span class="preview-svg" title="Resol / Sol tamizáu">${getNeonWeatherSvg('resol', 28)}</span>
+        <span class="preview-svg" title="Nublado">${getNeonWeatherSvg('cloud', 28)}</span>
+        <span class="preview-svg" title="Lluvia">${getNeonWeatherSvg('rain', 28)}</span>
       `;
     }
 
     if (previewSketch) {
       previewSketch.innerHTML = `
-        <span class="preview-svg">${getSketchWeatherSvg('sun', 28)}</span>
-        <span class="preview-svg">${getSketchWeatherSvg('cloud', 28)}</span>
-        <span class="preview-svg">${getSketchWeatherSvg('rain', 28)}</span>
-        <span class="preview-svg">${getSketchWeatherSvg('storm', 28)}</span>
-        <span class="preview-svg">${getSketchWeatherSvg('moon', 28)}</span>
+        <span class="preview-svg" title="Soleado">${getSketchWeatherSvg('sun', 28)}</span>
+        <span class="preview-svg" title="Mayormente soleado">${getSketchWeatherSvg('mostly-clear-day', 28)}</span>
+        <span class="preview-svg" title="Nubes y claros">${getSketchWeatherSvg('partly-cloudy-day', 28)}</span>
+        <span class="preview-svg" title="Resol / Sol tamizáu">${getSketchWeatherSvg('resol', 28)}</span>
+        <span class="preview-svg" title="Nublado">${getSketchWeatherSvg('cloud', 28)}</span>
+        <span class="preview-svg" title="Lluvia">${getSketchWeatherSvg('rain', 28)}</span>
       `;
     }
 
     const updateActiveThemeCards = () => {
-      const currentTheme = this.prefs.iconTheme || 'classic';
+      const currentTheme = this.prefs.iconTheme || 'astur';
       modal.querySelectorAll('.icon-theme-card').forEach(card => {
         const theme = card.dataset.theme;
         card.classList.toggle('active', theme === currentTheme);
@@ -808,6 +813,9 @@ class MeteoAsturiasApp {
 
     const selectTheme = (themeId) => {
       this.triggerHaptic();
+      try {
+        localStorage.setItem('meteoastur_explicit_theme', 'true');
+      } catch (e) {}
       this.prefs.iconTheme = themeId;
       savePreferences(this.prefs);
       updateActiveThemeCards();

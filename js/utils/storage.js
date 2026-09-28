@@ -12,7 +12,7 @@ export function getPreferences() {
         favorites: [], // Vacío por defecto
         units: 'metric', // metric (km/h) | knots (kt)
         model: 'best_match',
-        iconTheme: 'classic', // classic (emojis por defecto) | astur (emojis emotivos cómic)
+        iconTheme: 'astur', // astur (emojis emotivos cómic por defecto)
         autoRefresh: true
       };
     }
@@ -23,8 +23,12 @@ export function getPreferences() {
     if (!parsed.model) {
       parsed.model = 'best_match';
     }
-    if (!parsed.iconTheme) {
-      parsed.iconTheme = 'classic';
+    // Si no tiene iconTheme o tenía el antiguo default 'classic' sin haberlo elegido a mano, activamos 'astur'
+    if (!parsed.iconTheme || (!localStorage.getItem('meteoastur_explicit_theme') && parsed.iconTheme === 'classic')) {
+      parsed.iconTheme = 'astur';
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
+      } catch (e) {}
     }
     return parsed;
   } catch (e) {

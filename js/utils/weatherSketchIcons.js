@@ -59,35 +59,61 @@ export function getSketchWeatherSvg(iconKey, size = 32) {
         </svg>
       `;
 
+    case 'mostly-clear-day':
+    case 'sun-small-cloud':
+      // 🌤️ MAYORMENTE SOLEADO DIBUJO — Sol grande acuarela + nubecita pequeña en esquina
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon sketch-icon" aria-label="Mayormente Soleado Dibujo">
+          <!-- Sol de fondo protagonista -->
+          <circle cx="21" cy="20" r="13" fill="#fef08a" opacity="0.85" />
+          <circle cx="21" cy="20" r="9" fill="#fde047" opacity="0.9" />
+          <!-- Rayos a tinta -->
+          <g stroke="#d97706" stroke-width="2" stroke-linecap="round" fill="none">
+            <line x1="21" y1="3"  x2="21" y2="7" />
+            <line x1="10" y1="9"  x2="13" y2="12" />
+            <line x1="4"  y1="20" x2="8"  y2="20" />
+            <line x1="32" y1="9"  x2="29" y2="12" />
+            <line x1="38" y1="20" x2="34" y2="20" />
+            <line x1="10" y1="31" x2="13" y2="28" />
+          </g>
+          <!-- Contorno de pluma del sol -->
+          <path d="M 21,7 C 28,6.8 34,12.8 33,21" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" />
+          <!-- Nubecita pequeña en esquina inferior derecha -->
+          <path d="M 46,44 H 32 C 28,44 26,38 29.5,35 C 29,29 37,27 40,30 C 43,26 48,29 46,35 C 49,37 49,44 46,44 Z" fill="#ffffff" opacity="0.95" />
+          <path d="M 31.5,43.5 C 28,43.5 26.5,38.5 29.5,35.5 C 29,29.5 36.5,27.5 39.5,30.5 C 42.5,26.5 47.5,29.5 45.5,35.5 C 48.5,37.5 48.5,43.5 45.5,43.5 Z" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      `;
+
     case 'resol':
-      // 🌤️ RESOL DIBUJADO A MANO / ACUARELA (Sol con rayos dorados cruzando velo de nube)
+      // 🌥️☀️ RESOL DIBUJADO A MANO / ACUARELA (Sol con halo + velo translúcido + nube pequeña sólida)
       return `
         <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon sketch-icon" aria-label="Resol Dibujo">
-          <!-- Halo de acuarela dorada -->
-          <circle cx="20" cy="18" r="11" fill="#fef08a" opacity="0.85" />
-          <circle cx="20" cy="18" r="7" fill="#fde047" opacity="0.9" />
-          <!-- Trazos de tinta para los rayos solares del resol -->
-          <g stroke="#d97706" stroke-width="2" stroke-linecap="round" fill="none">
-            <line x1="20" y1="4" x2="20" y2="8" />
-            <line x1="9" y1="9" x2="12" y2="12" />
-            <line x1="5" y1="19" x2="9" y2="19" />
-            <line x1="31" y1="9" x2="28" y2="12" />
-            <line x1="35" y1="19" x2="31" y2="19" />
-            <!-- Rayos que atraviesan la nube hacia abajo -->
-            <line x1="13" y1="25" x2="10" y2="37" stroke-dasharray="3,3" opacity="0.7" />
-            <line x1="27" y1="25" x2="30" y2="37" stroke-dasharray="3,3" opacity="0.7" />
+          <!-- Halo de acuarela dorada difusa (corona del resol) -->
+          <circle cx="18" cy="17" r="15" fill="#fef08a" opacity="0.45" />
+          <circle cx="18" cy="17" r="10" fill="#fde047" opacity="0.75" />
+          <!-- Rayos velados difusos -->
+          <g stroke="#d97706" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.65">
+            <line x1="18" y1="2"  x2="18" y2="6" />
+            <line x1="8"  y1="7"  x2="11" y2="10" />
+            <line x1="3"  y1="17" x2="7"  y2="17" />
+            <line x1="28" y1="7"  x2="25" y2="10" />
+            <line x1="33" y1="17" x2="29" y2="17" />
           </g>
-          <!-- Contorno del sol a tinta -->
-          <path d="M 19,8 C 25,7.8 29.5,12.5 29,19" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" />
-          <!-- Nube acuarela suave translúcida -->
-          <path d="M 40,38 H 15 C 10.5,38 9,31 13,27 C 12,20 21,18 25,21 C 29,17 39,20 38,28 C 42,30 42.5,38 40,38 Z" fill="#f8fafc" opacity="0.88" />
-          <!-- Contorno de pluma / tinta de la nube -->
-          <path d="M 14.5,37.5 C 10.5,37.5 8.5,32 12.5,28.5 C 11.5,22 19.5,19 24,22 C 27.5,18 37,20 37,27.5 C 41.5,29 42,37 37.5,37.5 Z" fill="none" stroke="#475569" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" />
-          <!-- Rayitas de luz y sombra -->
-          <g stroke="#f59e0b" stroke-width="1.3" stroke-linecap="round" opacity="0.75">
-            <line x1="18" y1="31" x2="22" y2="35" />
-            <line x1="26" y1="31" x2="30" y2="35" />
+          <!-- Contorno de pluma / tinta del sol -->
+          <circle cx="18" cy="17" r="8" fill="#facc15" stroke="#d97706" stroke-width="1.8" opacity="0.85" />
+          <!-- NUBE GRANDE VELO TRANSLÚCIDO — se ve el sol detrás -->
+          <path d="M 43,36 H 14 C 9.5,36 8,29 12,25 C 11,18 20,16 24,19 C 28,15 38,18 37,26 C 41,28 41.5,36 43,36 Z"
+                fill="#f8fafc" opacity="0.55" />
+          <path d="M 13.5,35.5 C 9.5,35.5 7.5,30 11.5,26.5 C 10.5,20 18.5,17 23,20 C 26.5,16 36,18 36,25.5 C 40.5,27 41,35 36.5,35.5 Z"
+                fill="none" stroke="#64748b" stroke-width="1.6" stroke-dasharray="3,2" opacity="0.6" stroke-linecap="round" />
+          <!-- Rayos filtrados atravesando el velo -->
+          <g stroke="#f59e0b" stroke-width="1.4" stroke-linecap="round" opacity="0.5" stroke-dasharray="2,2">
+            <line x1="14" y1="24" x2="10" y2="35" />
+            <line x1="22" y1="25" x2="25" y2="35" />
           </g>
+          <!-- NUBE PEQUEÑA SÓLIDA en primer plano abajo-derecha -->
+          <path d="M 46,45 H 31 C 27.5,45 26,40 29,37 C 28.5,32 35.5,30 38,32.5 C 40.5,29.5 45.5,32 44,37 C 46.5,39 46.5,45 46,45 Z"
+                fill="#ffffff" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
       `;
 

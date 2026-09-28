@@ -5,6 +5,22 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 ---
 
 ## 🚀 Última Actualización Oficial: v1.1.16 — 2026-09-28
+- **Diferenciación de los 4 Estados Solares & Icono Propio de Resol Asturiano:**
+  1. *Física y Filosofía Meteorológica:*
+     - Distinción tajante entre Claros (sol directo por hueco azul entre cúmulos) y Resol (cielo tomado por velo blanquecino de altoestratos/cirros que filtra y difumina la luz solar directa quemando y deslumbrando).
+     - Cuatro estados visualmente independientes:
+       - **☀️ Soleado (`clear-day`):** Sol radiante sin nubes.
+       - **🌤️ Mayormente soleado (`mostly-clear-day` / WMO 1):** Sol dominante central con nubecita pequeña en esquina inferior derecha.
+       - **⛅ Parcialmente nublado / Claros (`partly-cloudy-day` / WMO 2):** Nube grande con sol asomando entre claros.
+       - **🌥️ Resol / Sol tamizáu (`resol`):** Sol con halo dorado difuso + manto nuboso semitransparente que deja ver el disco solar por detrás + nube pequeña sólida.
+  2. *Cobertura Universal en Todos los Temas:*
+     - Implementado en `weatherAsturIcons.js` (Cómic Astur con expresiones y coloretes), `weatherPixelIcons.js` (píxeles translúcidos), `weatherNeonIcons.js` (resplandor velado neón), `weatherSketchIcons.js` (acuarela y trazos a pluma) y `weatherGlassIcons.js` (velo 3D translúcido).
+  3. *Unificación de Tema Recomendado & Selector de Iconos:*
+     - Activación de Emojis Emotivos (Cómic Astur) como predeterminado en `storage.js`.
+     - Actualización del modal de selección de iconos en `index.html` y `js/app.js` exhibiendo los 4 estados solares para comparativa inmediata.
+  4. *Anti-Caché Obligatorio:*
+     - `CACHE_NAME` en `sw.js`: `meteoasturlode-v243-resol-icons`.
+     - Query strings en `index.html`, `currentCard.js`, `app.js` y `weatherIcons.js`: `?v=1.1.16-resol-v243`.
 
 - **Motor de Rendimiento Adaptativo & Modo Economía (Performance Optimizer):**
   1. *Detector Automático de Hardware Lento (`js/utils/gyroGlass.js` → `detectLowPerf()`):*

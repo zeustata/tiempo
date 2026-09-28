@@ -1,14 +1,15 @@
-import { getAsturWeatherSvg } from './weatherAsturIcons.js?v=1.0.81';
-import { getPixelWeatherSvg } from './weatherPixelIcons.js?v=1.0.81';
-import { getNeonWeatherSvg } from './weatherNeonIcons.js?v=1.0.81';
-import { getSketchWeatherSvg } from './weatherSketchIcons.js?v=1.0.81';
+import { getAsturWeatherSvg } from './weatherAsturIcons.js?v=1.1.16-resol-v243';
+import { getPixelWeatherSvg } from './weatherPixelIcons.js?v=1.1.16-resol-v243';
+import { getNeonWeatherSvg } from './weatherNeonIcons.js?v=1.1.16-resol-v243';
+import { getSketchWeatherSvg } from './weatherSketchIcons.js?v=1.1.16-resol-v243';
+import { getGlassWeatherSvg } from './weatherGlassIcons.js?v=1.1.16-resol-v243';
 
 /**
  * Mapeo de códigos meteorológicos WMO a descripciones en asturiano/castellano, iconos y clases
  */
 export const WMO_CODES = {
   0: { label: 'Despejado / Soleyeru', icon: '☀️', svgKey: 'clear-day', lucide: 'sun', bg: 'clear-day', isRain: false, isSnow: false },
-  1: { label: 'Principalmente despejado', icon: '🌤️', svgKey: 'mostly-clear-day', lucide: 'sun-medium', bg: 'clear-day', isRain: false, isSnow: false },
+  1: { label: 'Mayormente soleado / Despejáu', icon: '🌤️', svgKey: 'mostly-clear-day', lucide: 'sun-medium', bg: 'clear-day', isRain: false, isSnow: false },
   2: { label: 'Parcialmente nublado / Claros', icon: '⛅', svgKey: 'partly-cloudy-day', lucide: 'cloud-sun', bg: 'partly-cloudy', isRain: false, isSnow: false },
   3: { label: 'Nublado / Cubiertu', icon: '☁️', svgKey: 'cloudy', lucide: 'cloud', bg: 'cloudy', isRain: false, isSnow: false },
   45: { label: 'Niebla / Borrina', icon: '🌫️', svgKey: 'fog', lucide: 'cloud-fog', bg: 'fog', isRain: false, isSnow: false },
@@ -222,7 +223,7 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     if (p < 0.1 && hasRealSolarLight && (base.isRain || base.svgKey === 'cloudy' || code === 3 || base.svgKey === 'fog')) {
       base = {
         label: isResol ? 'Resol / Sol tamizáu' : 'Parcialmente nublado / Claros',
-        icon: isResol ? '🌤️' : '⛅',
+        icon: isResol ? '🌥️' : '⛅',
         svgKey: isResol ? 'resol' : 'partly-cloudy-day',
         lucide: 'cloud-sun',
         bg: 'partly-cloudy',
@@ -239,13 +240,14 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
 
 /**
  * Renderiza el icono meteorológico según el tema activo:
- * - 'classic': Emojis nativos estándar
- * - 'astur': Emojis Emotivos (Cómic con caras)
+ * - 'astur': Emojis Emotivos (Cómic Astur con caras y micro-detalles) - Por defecto
  * - 'pixel': Pixel Art Retro (8-bits arcade)
  * - 'neon': Minimalista Neón (Glow & Line Art)
  * - 'sketch': Dibujo a Mano (Hand-Drawn Sketch & Acuarela)
+ * - 'glass': Liquid Glass 3D translúcido
+ * - 'classic': Emojis nativos estándar del sistema
  */
-export function renderWeatherIconHtml(weatherInfo, size = 32, theme = 'classic') {
+export function renderWeatherIconHtml(weatherInfo, size = 32, theme = 'astur') {
   if (!weatherInfo) return '';
   
   if (theme === 'classic' || !weatherInfo.svgKey) {
@@ -260,8 +262,12 @@ export function renderWeatherIconHtml(weatherInfo, size = 32, theme = 'classic')
     return getNeonWeatherSvg(weatherInfo.svgKey, size);
   }
 
-  if (theme === 'sketch' || theme === 'glass') {
+  if (theme === 'sketch') {
     return getSketchWeatherSvg(weatherInfo.svgKey, size);
+  }
+
+  if (theme === 'glass') {
+    return getGlassWeatherSvg(weatherInfo.svgKey, size);
   }
 
   // Por defecto para 'astur' o cualquier clave personalizada

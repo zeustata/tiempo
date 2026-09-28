@@ -67,37 +67,85 @@ export function getAsturWeatherSvg(iconKey, size = 32) {
         </svg>
       `;
 
+    case 'mostly-clear-day':
+    case 'sun-small-cloud':
+      // 🌤️ MAYORMENTE SOLEADO — Sol grande protagonista, nubecita pequeña en esquina inferior derecha
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon icon-comic-mostly-clear" aria-label="Mayormente Soleado Cómic">
+          <!-- Rayos solares cortos y juguetones -->
+          <g fill="#f59e0b" stroke="#d97706" stroke-width="1">
+            <rect x="20" y="1" width="4" height="6" rx="2" />
+            <rect x="20" y="38" width="4" height="5" rx="2" />
+            <rect x="1" y="20" width="6" height="4" rx="2" />
+            <rect x="37" y="20" width="6" height="4" rx="2" />
+            <rect x="5" y="6" width="4.5" height="4.5" rx="2" transform="rotate(45 7.5 8.5)" />
+            <rect x="32" y="6" width="4.5" height="4.5" rx="2" transform="rotate(-45 34.5 8.5)" />
+            <rect x="5" y="32" width="4.5" height="4.5" rx="2" transform="rotate(-45 7.5 34.5)" />
+          </g>
+          <!-- Cuerpo del Sol grande y feliz -->
+          <circle cx="22" cy="22" r="13" fill="#facc15" stroke="#ca8a04" stroke-width="1.8" />
+          <!-- Coloretes tiernos -->
+          <ellipse cx="14" cy="25" rx="2.8" ry="1.7" fill="#fb7185" opacity="0.85" />
+          <ellipse cx="30" cy="25" rx="2.8" ry="1.7" fill="#fb7185" opacity="0.85" />
+          <!-- Ojos expresivos -->
+          <ellipse cx="17" cy="19" rx="2.2" ry="3" fill="#1e293b" />
+          <circle cx="16.3" cy="17.8" r="1" fill="#ffffff" />
+          <ellipse cx="27" cy="19" rx="2.2" ry="3" fill="#1e293b" />
+          <circle cx="26.3" cy="17.8" r="1" fill="#ffffff" />
+          <!-- Sonrisa grande -->
+          <path d="M 17,23 Q 22,30 27,23 Z" fill="#991b1b" />
+          <path d="M 19.5,26 Q 22,29.5 24.5,26 Z" fill="#f43f5e" />
+          <!-- Nubecita pequeña en esquina inferior derecha (secundaria, no protagonista) -->
+          <path d="M 47,45 H 32 A 5,5 0 0 1 31,36 A 7,7 0 0 1 45.5,36.5 A 5,5 0 0 1 47,45 Z"
+                fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" />
+          <!-- Ojitos de la nubecita -->
+          <circle cx="37" cy="41" r="1.2" fill="#1e293b" />
+          <circle cx="42" cy="41" r="1.2" fill="#1e293b" />
+          <path d="M 38.5,43 Q 39.5,44.5 41,43" stroke="#1e293b" stroke-width="1" fill="none" stroke-linecap="round" />
+        </svg>
+      `;
+
     case 'resol':
       // 🌤️ RESOL / SOL TAMIZÁU (Sol con gafas y rayos penetrando la nube)
       return `
         <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon icon-comic-resol" aria-label="Resol y Sol Tamizado">
-          <!-- Rayos solares resplandecientes -->
-          <g stroke="#f59e0b" stroke-width="2" stroke-linecap="round" opacity="0.9">
-            <line x1="20" y1="4" x2="20" y2="8" />
-            <line x1="10" y1="8" x2="13" y2="11" />
-            <line x1="6" y1="18" x2="10" y2="18" />
-            <line x1="30" y1="8" x2="27" y2="11" />
-            <line x1="34" y1="18" x2="30" y2="18" />
-            <!-- Rayos que bajan atravesando -->
-            <line x1="14" y1="24" x2="11" y2="34" stroke-dasharray="2,2" stroke="#eab308" />
-            <line x1="26" y1="24" x2="29" y2="34" stroke-dasharray="2,2" stroke="#eab308" />
+          <!-- Halo dorado difuso detrás del sol (la corona del resol asturiano) -->
+          <circle cx="18" cy="17" r="16" fill="rgba(250, 204, 21, 0.18)" />
+          <circle cx="18" cy="17" r="13" fill="rgba(250, 204, 21, 0.13)" />
+          <!-- Rayos del sol (difusos, cortos, velados) -->
+          <g stroke="#f59e0b" stroke-width="1.6" stroke-linecap="round" opacity="0.65">
+            <line x1="18" y1="2"  x2="18" y2="6" />
+            <line x1="9"  y1="6"  x2="12" y2="9" />
+            <line x1="4"  y1="16" x2="8"  y2="16" />
+            <line x1="27" y1="6"  x2="24" y2="9" />
+            <line x1="32" y1="16" x2="28" y2="16" />
+            <line x1="9"  y1="26" x2="12" y2="24" />
+            <line x1="27" y1="26" x2="24" y2="24" />
           </g>
-          <!-- Sol sonriente con gafas de sol -->
-          <circle cx="20" cy="18" r="10" fill="#facc15" stroke="#eab308" stroke-width="1.8" />
-          <!-- Gafas de sol oscuras (resol / sol que deslumbra) -->
-          <path d="M 12,16 Q 16,15 20,16 Q 24,15 28,16 L 27,20 Q 24,22 21,20 L 20,17 L 19,20 Q 16,22 13,20 Z" fill="#1e293b" />
-          <path d="M 14,17.5 L 18,17.5" stroke="#ffffff" stroke-width="0.8" stroke-linecap="round" opacity="0.7" />
-          <path d="M 22,17.5 L 26,17.5" stroke="#ffffff" stroke-width="0.8" stroke-linecap="round" opacity="0.7" />
-          <!-- Sonrisa picarona del sol -->
-          <path d="M 17,23 Q 20,25.5 23,23" stroke="#991b1b" stroke-width="1.4" fill="none" stroke-linecap="round" />
-          <!-- Nube translúcida que deja pasar los rayos -->
-          <path d="M 40,40 H 16 A 8,8 0 0 1 14.5,25 A 10.5,10.5 0 0 1 36,25.5 A 7.5,7.5 0 0 1 40,40 Z" fill="rgba(255, 255, 255, 0.88)" stroke="#94a3b8" stroke-width="1.8" />
-          <!-- Carita relajada de la nube recibiendo el calor -->
-          <ellipse cx="23" cy="32" rx="1.6" ry="2.2" fill="#1e293b" />
-          <ellipse cx="31" cy="32" rx="1.6" ry="2.2" fill="#1e293b" />
-          <ellipse cx="19" cy="34" rx="2" ry="1.2" fill="#f59e0b" opacity="0.6" />
-          <ellipse cx="35" cy="34" rx="2" ry="1.2" fill="#f59e0b" opacity="0.6" />
-          <path d="M 25,35 Q 27,37 29,35" stroke="#1e293b" stroke-width="1.3" fill="none" stroke-linecap="round" />
+          <!-- Sol protagonista (ojos entornados por el deslumbre difuso) -->
+          <circle cx="18" cy="17" r="9" fill="#facc15" stroke="#eab308" stroke-width="1.6" />
+          <!-- Ojos entornados — el sol ve a través del velo nuboso -->
+          <path d="M 14,15 Q 15,14 16,15" stroke="#1e293b" stroke-width="1.6" fill="none" stroke-linecap="round" />
+          <path d="M 19,15 Q 20,14 21,15" stroke="#1e293b" stroke-width="1.6" fill="none" stroke-linecap="round" />
+          <!-- Coloretes suaves -->
+          <ellipse cx="13" cy="18" rx="2" ry="1.2" fill="#fb7185" opacity="0.7" />
+          <ellipse cx="23" cy="18" rx="2" ry="1.2" fill="#fb7185" opacity="0.7" />
+          <!-- Sonrisa tranquila -->
+          <path d="M 15,19.5 Q 18,22 21,19.5" stroke="#991b1b" stroke-width="1.3" fill="none" stroke-linecap="round" />
+          <!-- NUBE GRANDE SEMITRANSPARENTE — el velo nuboso (altoestratos/cirros) que filtra el sol -->
+          <!-- opacity baja = se ve el sol a través, que es la esencia física del resol -->
+          <path d="M 44,37 H 15 A 9,9 0 0 1 13.5,20 A 12,12 0 0 1 40,20.5 A 8.5,8.5 0 0 1 44,37 Z"
+                fill="rgba(226, 232, 240, 0.50)" stroke="rgba(148, 163, 184, 0.55)" stroke-width="1.5" />
+          <!-- Carita soñolienta de la nube grande (recibe el calor difuso) -->
+          <path d="M 24,27 Q 25,28.5 26,27" stroke="#64748b" stroke-width="1" fill="none" stroke-linecap="round" />
+          <path d="M 31,27 Q 32,28.5 33,27" stroke="#64748b" stroke-width="1" fill="none" stroke-linecap="round" />
+          <!-- NUBE PEQUEÑA SÓLIDA — la nube compacta de primer plano abajo-derecha -->
+          <path d="M 47,46 H 33 A 5.5,5.5 0 0 1 32,38 A 7.5,7.5 0 0 1 46,38.5 A 5,5 0 0 1 47,46 Z"
+                fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.4" />
+          <!-- Ojitos de la nube pequeña -->
+          <ellipse cx="37.5" cy="42" rx="1.3" ry="1.7" fill="#1e293b" />
+          <ellipse cx="42.5" cy="42" rx="1.3" ry="1.7" fill="#1e293b" />
+          <path d="M 39,44.5 Q 40,46 41.5,44.5" stroke="#1e293b" stroke-width="1" fill="none" stroke-linecap="round" />
         </svg>
       `;
 

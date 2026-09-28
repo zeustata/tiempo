@@ -71,6 +71,94 @@ export function getGlassWeatherSvg(iconKey, size = 32) {
         </svg>
       `;
 
+    case 'mostly-clear-day':
+    case 'sun-small-cloud':
+      // 🌤️ MAYORMENTE SOLEADO — Sol 3D grande + nubecita cristal pequeña en esquina
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon glass-icon" aria-label="Mayormente Soleado Cristal">
+          <defs>
+            <radialGradient id="glass-sun-big" cx="35%" cy="30%" r="65%">
+              <stop offset="0%" stop-color="#fffbeb" />
+              <stop offset="35%" stop-color="#fde047" />
+              <stop offset="100%" stop-color="#ca8a04" />
+            </radialGradient>
+            <linearGradient id="glass-cloud-tiny" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+              <stop offset="100%" stop-color="#94a3b8" stop-opacity="0.7" />
+            </linearGradient>
+            <filter id="glass-sun-big-glow">
+              <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#fbbf24" flood-opacity="0.55"/>
+            </filter>
+          </defs>
+          <!-- Sol grande protagonista 3D -->
+          <circle cx="22" cy="21" r="14" fill="url(#glass-sun-big)" filter="url(#glass-sun-big-glow)" />
+          <!-- Reflejo especular en el sol -->
+          <ellipse cx="17" cy="15" rx="5" ry="2.8" fill="#ffffff" opacity="0.55" transform="rotate(-25 17 15)" />
+          <!-- Rayos finos -->
+          <g stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round" opacity="0.7">
+            <line x1="22" y1="4"  x2="22" y2="7" />
+            <line x1="13" y1="7"  x2="15" y2="10" />
+            <line x1="5"  y1="20" x2="8"  y2="20" />
+            <line x1="31" y1="7"  x2="29" y2="10" />
+            <line x1="39" y1="20" x2="36" y2="20" />
+          </g>
+          <!-- Nubecita pequeña cristal — esquina inferior derecha -->
+          <path d="M 47,45 H 33 A 5,5 0 0 1 32,37 A 7,7 0 0 1 46,37.5 A 4.5,4.5 0 0 1 47,45 Z"
+                fill="url(#glass-cloud-tiny)" stroke="rgba(255,255,255,0.7)" stroke-width="1" />
+          <path d="M 34,38.5 A 5.5,5.5 0 0 1 45,39" stroke="#ffffff" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.75" />
+        </svg>
+      `;
+
+    case 'resol':
+      // 🌥️☀️ RESOL / SOL TAMIZÁU — Sol 3D + velo nuboso semitransparente grande + nube pequeña sólida
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon glass-icon" aria-label="Resol Sol Tamizado Cristal">
+          <defs>
+            <radialGradient id="glass-resol-sun" cx="35%" cy="30%" r="65%">
+              <stop offset="0%" stop-color="#fffbeb" />
+              <stop offset="40%" stop-color="#fde047" />
+              <stop offset="100%" stop-color="#d97706" />
+            </radialGradient>
+            <!-- Gradiente del velo nuboso — semitransparente -->
+            <linearGradient id="glass-velo" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#e2e8f0" stop-opacity="0.55" />
+              <stop offset="100%" stop-color="#cbd5e1" stop-opacity="0.40" />
+            </linearGradient>
+            <!-- Nube pequeña sólida -->
+            <linearGradient id="glass-cloud-small" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+              <stop offset="100%" stop-color="#94a3b8" stop-opacity="0.75" />
+            </linearGradient>
+            <filter id="glass-resol-halo">
+              <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#fbbf24" flood-opacity="0.4"/>
+            </filter>
+          </defs>
+          <!-- Halo dorado difuso (corona del resol) -->
+          <circle cx="18" cy="17" r="15" fill="rgba(251,191,36,0.15)" />
+          <!-- Sol con halo -->
+          <circle cx="18" cy="17" r="9" fill="url(#glass-resol-sun)" filter="url(#glass-resol-halo)" />
+          <!-- Reflejo especular en el sol -->
+          <ellipse cx="14" cy="13" rx="3.5" ry="2" fill="#ffffff" opacity="0.5" transform="rotate(-25 14 13)" />
+          <!-- Rayos cortos y difusos -->
+          <g stroke="#f59e0b" stroke-width="1.4" stroke-linecap="round" opacity="0.55">
+            <line x1="18" y1="3"  x2="18" y2="7" />
+            <line x1="9"  y1="7"  x2="12" y2="10" />
+            <line x1="4"  y1="17" x2="8"  y2="17" />
+            <line x1="27" y1="7"  x2="24" y2="10" />
+            <line x1="32" y1="17" x2="28" y2="17" />
+          </g>
+          <!-- NUBE GRANDE SEMITRANSPARENTE (velo nuboso — altoestratos filtrando el sol) -->
+          <path d="M 44,37 H 14 A 9,9 0 0 1 12.5,20 A 12,12 0 0 1 40,20.5 A 8.5,8.5 0 0 1 44,37 Z"
+                fill="url(#glass-velo)" stroke="rgba(148,163,184,0.45)" stroke-width="1.2" />
+          <!-- Reflejo de borde vítreo en la nube grande -->
+          <path d="M 16,21.5 A 10,10 0 0 1 38,22" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.5" />
+          <!-- NUBE PEQUEÑA SÓLIDA (primer plano abajo-derecha) -->
+          <path d="M 47,46 H 33 A 5.5,5.5 0 0 1 32,38 A 7.5,7.5 0 0 1 46,38.5 A 5,5 0 0 1 47,46 Z"
+                fill="url(#glass-cloud-small)" stroke="rgba(255,255,255,0.6)" stroke-width="1" />
+          <path d="M 34,39.5 A 6,6 0 0 1 45,40" stroke="#ffffff" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.7" />
+        </svg>
+      `;
+
     case 'partly-cloudy-day':
     case 'cloud-sun':
       // ⛅ SOL 3D Y NUBE DE CRISTAL ESMERILADO

@@ -59,29 +59,61 @@ export function getPixelWeatherSvg(iconKey, size = 32) {
         </svg>
       `;
 
+    case 'mostly-clear-day':
+    case 'sun-small-cloud':
+      // 🌤️ MAYORMENTE SOLEADO PIXEL — Sol grande + nubecita pixel en esquina
+      return `
+        <svg viewBox="0 0 24 24" width="${sz}" height="${sz}" class="astur-svg-icon pixel-icon" shape-rendering="crispEdges" aria-label="Mayormente Soleado Pixel">
+          <!-- Sol pixel grande -->
+          <rect x="10" y="1" width="4" height="3" fill="#facc15"/>
+          <rect x="10" y="20" width="4" height="3" fill="#facc15"/>
+          <rect x="1" y="10" width="3" height="4" fill="#facc15"/>
+          <rect x="20" y="10" width="3" height="4" fill="#facc15"/>
+          <rect x="3" y="3" width="3" height="3" fill="#facc15"/>
+          <rect x="18" y="3" width="3" height="3" fill="#facc15"/>
+          <rect x="3" y="18" width="3" height="3" fill="#facc15"/>
+          <!-- Cuerpo sol -->
+          <rect x="7" y="4" width="10" height="10" fill="#fde047"/>
+          <rect x="6" y="5" width="12" height="8" fill="#fde047"/>
+          <rect x="5" y="7" width="14" height="4" fill="#fde047"/>
+          <!-- Brillo -->
+          <rect x="7" y="5" width="3" height="2" fill="#fef9c3"/>
+          <!-- Nubecita pixel PEQUEÑA en esquina inferior derecha -->
+          <rect x="17" y="18" width="6" height="5" fill="#ffffff"/>
+          <rect x="16" y="19" width="8" height="4" fill="#ffffff"/>
+          <rect x="15" y="20" width="9" height="3" fill="#ffffff"/>
+          <rect x="17" y="17" width="4" height="2" fill="#ffffff"/>
+          <rect x="20" y="16" width="3" height="2" fill="#ffffff"/>
+        </svg>
+      `;
+
     case 'resol':
-      // 🌤️ RESOL PIXEL ART (Sol radiante proyectando rayos a través de nube pixelada)
+      // 🌥️☀️ RESOL PIXEL — Sol + nube grande semitransparente (punteada) + nube sólida pequeña
       return `
         <svg viewBox="0 0 24 24" width="${sz}" height="${sz}" class="astur-svg-icon pixel-icon" shape-rendering="crispEdges" aria-label="Resol Pixel">
-          <!-- Corona de rayos del sol -->
-          <rect x="9" y="1" width="2" height="2" fill="#f59e0b" />
-          <rect x="3" y="3" width="2" height="2" fill="#f59e0b" />
-          <rect x="15" y="3" width="2" height="2" fill="#f59e0b" />
-          <rect x="1" y="8" width="2" height="2" fill="#f59e0b" />
-          <rect x="17" y="8" width="2" height="2" fill="#f59e0b" />
-          <!-- Sol dorado de fondo -->
-          <rect x="6" y="3" width="8" height="8" fill="#facc15" />
-          <rect x="7" y="4" width="6" height="6" fill="#fef08a" />
-          <!-- Rayos solares pixelados que perforan -->
-          <rect x="4" y="14" width="2" height="4" fill="#f59e0b" opacity="0.75" />
-          <rect x="16" y="14" width="2" height="4" fill="#f59e0b" opacity="0.75" />
-          <!-- Nube pixelada al frente -->
-          <rect x="8" y="9" width="10" height="3" fill="#ffffff" />
-          <rect x="5" y="12" width="16" height="7" fill="#ffffff" />
-          <rect x="3" y="14" width="20" height="5" fill="#ffffff" />
-          <!-- Sombras de nube pixel -->
-          <rect x="4" y="18" width="18" height="2" fill="#94a3b8" />
-          <rect x="18" y="13" width="3" height="5" fill="#cbd5e1" />
+          <!-- Halo difuso del sol (píxeles de baja opacidad) -->
+          <rect x="5" y="2" width="8" height="8" fill="#fde047" opacity="0.3"/>
+          <!-- Rayos cortos del sol (velados) -->
+          <rect x="8" y="1" width="2" height="2" fill="#f59e0b" opacity="0.7"/>
+          <rect x="4" y="4" width="2" height="2" fill="#f59e0b" opacity="0.7"/>
+          <rect x="12" y="4" width="2" height="2" fill="#f59e0b" opacity="0.7"/>
+          <rect x="2" y="8" width="2" height="2" fill="#f59e0b" opacity="0.7"/>
+          <!-- Sol protagonista pixel -->
+          <rect x="5" y="4" width="8" height="8" fill="#fde047"/>
+          <rect x="4" y="5" width="10" height="6" fill="#fde047"/>
+          <rect x="6" y="3" width="6" height="10" fill="#fde047"/>
+          <!-- Brillo del sol -->
+          <rect x="6" y="4" width="2" height="2" fill="#fef9c3"/>
+          <!-- NUBE GRANDE SEMITRANSPARENTE (velo nuboso — píxeles con opacidad baja) -->
+          <rect x="3" y="11" width="18" height="9" fill="#e2e8f0" opacity="0.55"/>
+          <rect x="2" y="12" width="20" height="7" fill="#e2e8f0" opacity="0.55"/>
+          <rect x="5" y="10" width="14" height="2" fill="#e2e8f0" opacity="0.55"/>
+          <rect x="8"  y="9"  width="8"  height="2" fill="#e2e8f0" opacity="0.55"/>
+          <!-- NUBE PEQUEÑA SÓLIDA (primer plano abajo-derecha) -->
+          <rect x="15" y="18" width="8" height="5" fill="#ffffff"/>
+          <rect x="14" y="19" width="10" height="4" fill="#ffffff"/>
+          <rect x="17" y="17" width="5" height="2" fill="#ffffff"/>
+          <rect x="19" y="16" width="3" height="2" fill="#ffffff"/>
         </svg>
       `;
 
