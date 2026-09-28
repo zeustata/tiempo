@@ -10,6 +10,33 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.19] - 2026-09-28
+
+### 🚘☀️ Nueva Colección de Iconos «Tesla Clásico» (Automotive Weather UI)
+- **Diseño Automotriz de Alta Gama:**
+  - Inspirado en la elegancia, precisión técnica y contraste de las interfaces de abordo de Tesla.
+  - Acabado en laca satinada multicapa, volúmenes 2.5D, sombreado ambiental suave (`feDropShadow`) y reflejos especulares nítidos.
+- **Física Meteorológica Real (Cero Fantasía):**
+  - **☀️ Soleado (`clear-day` / `sun`):** Sol noble con volumen esférico, 8 rayos simétricos de alta gama y reflejo elíptico superior.
+  - **🌙 Noche despejada (`clear-night` / `moon`):** Luna creciente nítida con textura de relieve y resplandor lunar suave.
+  - **🌤️ Mayormente soleado & Nubes y Claros:** Transición suave con nubes satinadas blancas y disco solar emergente.
+  - **🌥️ Resol asturiano (`resol`):** Disco solar central con halo expansivo difuminado, atravesando un manto estratiforme translúcido fidedigno con nubecita baja.
+  - **💧 Escala Pluviométrica Fiel:**
+    - *Orbayu / Llovizna:* 1 gota solitaria pura y cristalina con brillo especular.
+    - *Lluvia moderada:* 3 gotas paralelas aerodinámicas de agua limpia.
+    - *Lluvia fuerte / Bastinazu:* 5 vectores inclinados de agua densa sin rayo.
+    - *Tormenta eléctrica:* Nube tormentosa oscura con rayo de oro eléctrico limpio y dos gotas.
+  - **🧊 Granizo / Pedriscu (`hail`):** Nube de tormenta con nódulos de hielo esféricos sólidos de alta densidad, sombras grises y líneas de impacto de velocidad real.
+  - **🌨️ Aguanieve (`sleet`):** Gotas de agua y cristales de nieve combinados simultáneamente.
+  - **❄️ Escala de Nieve Graduada:** *Falispos* (1 copo fino), *Nevada moderada* (3 copos) y *Nevadona / Copiosa* (nube ártica con 5 copos densos).
+- **Selector en Menú Modal & Previsualizaciones en Vivo:**
+  - Nueva tarjeta `🚘 Tesla Clásico` y tarjeta `💎 Liquid Glass 3D` integradas en el selector visual de estilos (`#icon-themes-modal`).
+  - Previsualizaciones vectoriales SVG dinámicas en tiempo real para todos los temas.
+  - Sincronización de badges y persistencia inmediata en preferencias del usuario.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v1119-tesla-icons`, actualización a `?v=1.1.19` en todos los módulos y scripts.
+
+---
+
 ## [1.1.18] - 2026-09-28
 
 ### ❄️🧊 Granizo, Aguanieve y Graduación de Nieve en la Ecuación Pluviométrica

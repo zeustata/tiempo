@@ -4,7 +4,42 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.18 ❄️🧊 — 2026-09-28
+## 🚀 Última Actualización Oficial: v1.1.19 🚘☀️ — 2026-09-28
+- **Nueva Colección de Iconos «Tesla Clásico» (Automotive Weather UI) & Perfeccionamiento del Selector de Iconos:**
+  1. *Filosofía y Lenguaje Visual:*
+     - Fusión armónica entre los iconos universales clásicos (reconocibles al instante, familiares) y la alta ingeniería visual automotriz de Tesla (laca satinada multicapa, volúmenes 2.5D, luces especulares pulidas y degradados continuos).
+     - Fiel al tiempo real (cero fantasía: se descartaron diamantes o lásers de ciencia ficción; se implementó agua pura, hielo sólido denso, nieve cristalina y velo estratiforme real).
+  2. *Cobertura Meteorológica Integral en `js/utils/weatherTeslaIcons.js`:*
+     - `clear-day` / `sun`: Sol esférico dorado con volumen 2.5D, corona de 8 ejes simétricos pulidos, halo solar tenue y brillo especular elíptico superior.
+     - `clear-night` / `moon`: Luna creciente nítida con textura de relieve y halo nocturno.
+     - `mostly-clear-day` / `mostly-clear-night`: Sol o luna dominante con nubecita satinada baja.
+     - `partly-cloudy-day` / `partly-cloudy-night`: Nube voluminosa frontal con astro emergiendo lateralmente.
+     - `resol`: Resol asturiano con halo solar expansivo difuminado, disco solar deslumbrante atravesando un manto estratiforme translúcido fidedigno y nubecita de horizonte.
+     - `cloudy`: Doble nube aerodinámica con gradiente blanco satinado y sombra ambiental.
+     - `fog`: Nube suave y 3 barras flotantes aerodinámicas con gradiente horizontal.
+     - `drizzle`: Orbayu con 1 sola gota cristalina central con punto de luz especular.
+     - `rain`: Lluvia moderada con 3 gotas paralelas de agua limpia.
+     - `heavy-rain`: Bastinazu torrencial con nube de tormenta cargada y 5 vectores densos inclinados de agua sin rayo.
+     - `storm`: Tormenta eléctrica con nube densa, rayo de oro eléctrico quebradizo y 2 gotas.
+     - `hail`: Pedriscu de hielo real con bolas esféricas densas sombreadas y vectores de impacto rápido.
+     - `sleet`: Aguanieve con gotas de agua líquida y copos de nieve cayendo a la vez.
+     - `snow-light`: Falispos con 1 copo delicado de 6 brazos.
+     - `snow`: Nieve moderada con 3 copos limpios.
+     - `heavy-snow`: Nevadona con nube ártica fría y 5 copos densos escalonados.
+  3. *Integración en el Selector y Sistema de Temas:*
+     - Incorporadas las tarjetas de *Tesla Clásico* (`#theme-card-tesla`) y *Liquid Glass 3D* (`#theme-card-glass`) en el modal `#icon-themes-modal`.
+     - Generación dinámica de previsualizaciones SVG en vivo en `js/app.js`.
+     - Corrección de mapeo en `themeNames` de la barra de navegación.
+  4. *Anti-Caché Obligatorio y Versionado:*
+     - Incremento oficial de versión a `v1.1.19 🚘☀️`.
+     - Actualizado badge en footer de `index.html`.
+     - Inyectado bloque de novedades en modal `#changelog-modal`.
+     - `CURRENT_APP_VERSION = '1.1.19'` en `js/app.js`.
+     - `CACHE_NAME = 'meteoasturlode-v1119-tesla-icons'` en `sw.js`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.18 ❄️🧊 — 2026-09-28
 - **Granizo, Aguanieve y Graduación de Nieve en la Ecuación Pluviométrica:**
   1. *Física de la Precipitación Sólida y Mixta:*
      - **Granizo / Pedriscu (`hail`):** Tratamiento genérico contundente. Icono con piedras anguladas de hielo cayendo a gran velocidad, respondiendo a códigos WMO 89, 90 (chubascos de granizo), 96, 99 (tormentas con granizo) y 77 (granizo menudo). Pastilla `.has-hail` en previsiones.

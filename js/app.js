@@ -1,23 +1,25 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.1.18';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.1.18';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.1.18';
-import { renderCurrentWeather } from './components/currentCard.js?v=1.1.18';
-import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.1.18';
-import { renderSurfCard } from './components/surfCard.js?v=1.1.18';
-import { renderMountainCard } from './components/mountainCard.js?v=1.1.18';
-import { renderForecast } from './components/forecastView.js?v=1.1.18';
-import { renderWeatherChart } from './components/chartsView.js?v=1.1.18';
-import { renderAstronomyView } from './components/astronomyCard.js?v=1.1.18';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.18';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1.18';
-import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1.18';
-import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1.18';
-import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.18';
-import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.18';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.18';
-import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.18';
-import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.18';
-import { initGyroGlass } from './utils/gyroGlass.js?v=1.1.18';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.1.19';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.1.19';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.1.19';
+import { renderCurrentWeather } from './components/currentCard.js?v=1.1.19';
+import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.1.19';
+import { renderSurfCard } from './components/surfCard.js?v=1.1.19';
+import { renderMountainCard } from './components/mountainCard.js?v=1.1.19';
+import { renderForecast } from './components/forecastView.js?v=1.1.19';
+import { renderWeatherChart } from './components/chartsView.js?v=1.1.19';
+import { renderAstronomyView } from './components/astronomyCard.js?v=1.1.19';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.19';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1.19';
+import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1.19';
+import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1.19';
+import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.19';
+import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.19';
+import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=1.1.19';
+import { getTeslaWeatherSvg } from './utils/weatherTeslaIcons.js?v=1.1.19';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.19';
+import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.19';
+import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.19';
+import { initGyroGlass } from './utils/gyroGlass.js?v=1.1.19';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, pronóstico horario 72h y alertas', key: '1' },
@@ -30,7 +32,7 @@ const APP_MODULES = [
   { id: 'astronomy', icon: '🔭', title: 'Astronomía & Cosmos', desc: 'Eclipses, lluvias de estrellas, fases lunares y semáforo de visibilidad en Asturias', key: '8' }
 ];
 
-export const CURRENT_APP_VERSION = '1.1.18';
+export const CURRENT_APP_VERSION = '1.1.19';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -683,10 +685,11 @@ class MeteoAsturiasApp {
         const themeNames = {
           classic: '📱 Emojis Clásicos',
           astur: '🎭 Emojis Emotivos',
+          tesla: '🚘 Tesla Clásico',
+          glass: '💎 Liquid Glass 3D',
           pixel: '👾 Pixel Art Retro',
           neon: '✨ Minimalista Neón',
-          sketch: '✏️ Dibujo a Mano',
-          glass: '✏️ Dibujo a Mano'
+          sketch: '✏️ Dibujo a Mano'
         };
         badgeTheme.textContent = themeNames[theme] || '📱 Emojis Clásicos';
       }
@@ -750,13 +753,14 @@ class MeteoAsturiasApp {
     const closeBtn = document.getElementById('btn-close-icon-themes');
 
     const previewComic = document.getElementById('preview-comic-icons');
+    const previewTesla = document.getElementById('preview-tesla-icons');
+    const previewGlass = document.getElementById('preview-glass-icons');
     const previewPixel = document.getElementById('preview-pixel-icons');
     const previewNeon = document.getElementById('preview-neon-icons');
     const previewSketch = document.getElementById('preview-sketch-icons');
 
     if (!modal) return;
 
-    // Renderizar miniaturas SVG dinámicas para cada colección
     // Renderizar miniaturas SVG dinámicas para cada colección (incluyendo los 4 escenarios de sol/nubes/resol)
     if (previewComic) {
       previewComic.innerHTML = `
@@ -766,6 +770,28 @@ class MeteoAsturiasApp {
         <span class="preview-svg" title="Resol / Sol tamizáu">${getAsturWeatherSvg('resol', 28)}</span>
         <span class="preview-svg" title="Nublado">${getAsturWeatherSvg('cloud', 28)}</span>
         <span class="preview-svg" title="Lluvia">${getAsturWeatherSvg('rain', 28)}</span>
+      `;
+    }
+
+    if (previewTesla) {
+      previewTesla.innerHTML = `
+        <span class="preview-svg" title="Soleado">${getTeslaWeatherSvg('sun', 28)}</span>
+        <span class="preview-svg" title="Mayormente soleado">${getTeslaWeatherSvg('mostly-clear-day', 28)}</span>
+        <span class="preview-svg" title="Nubes y claros">${getTeslaWeatherSvg('partly-cloudy-day', 28)}</span>
+        <span class="preview-svg" title="Resol / Sol tamizáu">${getTeslaWeatherSvg('resol', 28)}</span>
+        <span class="preview-svg" title="Nublado">${getTeslaWeatherSvg('cloud', 28)}</span>
+        <span class="preview-svg" title="Lluvia">${getTeslaWeatherSvg('rain', 28)}</span>
+      `;
+    }
+
+    if (previewGlass) {
+      previewGlass.innerHTML = `
+        <span class="preview-svg" title="Soleado">${getGlassWeatherSvg('sun', 28)}</span>
+        <span class="preview-svg" title="Mayormente soleado">${getGlassWeatherSvg('mostly-clear-day', 28)}</span>
+        <span class="preview-svg" title="Nubes y claros">${getGlassWeatherSvg('partly-cloudy-day', 28)}</span>
+        <span class="preview-svg" title="Resol / Sol tamizáu">${getGlassWeatherSvg('resol', 28)}</span>
+        <span class="preview-svg" title="Nublado">${getGlassWeatherSvg('cloud', 28)}</span>
+        <span class="preview-svg" title="Lluvia">${getGlassWeatherSvg('rain', 28)}</span>
       `;
     }
 

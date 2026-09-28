@@ -176,7 +176,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.18 ❄️🧊</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.19 🚘☀️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -227,8 +227,20 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.18 ❄️🧊</span>
+            <span class="release-version">v1.1.19 🚘☀️</span>
             <span class="release-date">28 Sep 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Nuevo</span> <strong>Nueva Colección de Iconos «Tesla Clásico» (Automotive UI)</strong>: Estilo visual de alta gama que fusiona la universalidad de los iconos meteorológicos clásicos con el refinamiento técnico automotriz. Acabado en laca satinada multicapa, volúmenes 2.5D, sombras ambientales suaves y reflejos especulares de luna y carrocería.</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Física Meteorológica Real (Cero Fantasía)</strong>: Integración exhaustiva de la escala pluviométrica real: gotas cristalinas de agua pura según volumen (1 gota en Orbayu, 3 en Lluvia moderada, 5 vectores densos sin rayo en Bastinazu), bolas de hielo compactas con líneas de impacto en Granizo y Pedriscu, copos nítidos de nieve y velo estratiforme translúcido en Resol asturiano.</li>
+            <li><span class="tag tag-new">Nuevo</span> <strong>Selector Ampliado en Menú con Previsualización Activa</strong>: Incorporadas las tarjetas de <em>Tesla Clásico</em> y <em>Liquid Glass 3D</em> en la ventana de personalización de iconos con previsualizaciones vectoriales SVG en tiempo real.</li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.18 ❄️🧊</span>
+            <span class="release-date">28 Sep 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-new">Nuevo</span> <strong>Granizo y Pedriscu en la Ecuación Pluviométrica</strong>: Integración iconográfica y física de granizo genérico duro y pesado en los 5 temas visuales, con detección directa de chubascos de granizo (WMO 89, 90), tormentas severas (WMO 96, 99) y granizo menudo (WMO 77), acompañado de su pastilla de alerta en previsiones (<code>.has-hail</code>).</li>
@@ -1667,7 +1679,35 @@
             <div class="theme-card-preview" id="preview-comic-icons"></div>
           </div>
 
-          <!-- Tarjeta 3: Pixel Art Retro (8-Bits) -->
+          <!-- Tarjeta 3: Tesla Clásico (Automotive UI) -->
+          <div class="icon-theme-card" id="theme-card-tesla" data-theme="tesla">
+            <div class="theme-card-header">
+              <span class="theme-card-icon">🚘</span>
+              <div class="theme-card-info">
+                <h4>Tesla Clásico</h4>
+                <span class="theme-card-tag">Automotive UI</span>
+              </div>
+              <span class="theme-check-badge">✓ Activo</span>
+            </div>
+            <p class="theme-card-desc">Equilibrio perfecto entre claridad clásica y elegancia automotriz: laca satinada, volumen 2.5D, escala de lluvia real y pedrisco de hielo sólido.</p>
+            <div class="theme-card-preview" id="preview-tesla-icons"></div>
+          </div>
+
+          <!-- Tarjeta 4: Liquid Glass 3D (Aero Glass) -->
+          <div class="icon-theme-card" id="theme-card-glass" data-theme="glass">
+            <div class="theme-card-header">
+              <span class="theme-card-icon">💎</span>
+              <div class="theme-card-info">
+                <h4>Liquid Glass 3D</h4>
+                <span class="theme-card-tag">Aero Glass</span>
+              </div>
+              <span class="theme-check-badge">✓ Activo</span>
+            </div>
+            <p class="theme-card-desc">Volumen translúcido cristalino con reflejos especulares dorados y profundidad 3D.</p>
+            <div class="theme-card-preview" id="preview-glass-icons"></div>
+          </div>
+
+          <!-- Tarjeta 5: Pixel Art Retro (8-Bits) -->
           <div class="icon-theme-card" id="theme-card-pixel" data-theme="pixel">
             <div class="theme-card-header">
               <span class="theme-card-icon">👾</span>
@@ -1681,7 +1721,7 @@
             <div class="theme-card-preview" id="preview-pixel-icons"></div>
           </div>
 
-          <!-- Tarjeta 4: Minimalista Neón -->
+          <!-- Tarjeta 6: Minimalista Neón -->
           <div class="icon-theme-card" id="theme-card-neon" data-theme="neon">
             <div class="theme-card-header">
               <span class="theme-card-icon">✨</span>
@@ -1695,7 +1735,7 @@
             <div class="theme-card-preview" id="preview-neon-icons"></div>
           </div>
 
-          <!-- Tarjeta 5: Dibujo a Mano (Sketch Art) -->
+          <!-- Tarjeta 7: Dibujo a Mano (Sketch Art) -->
           <div class="icon-theme-card" id="theme-card-sketch" data-theme="sketch">
             <div class="theme-card-header">
               <span class="theme-card-icon">✏️</span>
@@ -1822,7 +1862,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.18"></script>
+  <script type="module" src="js/app.js?v=1.1.19"></script>
 
 
 
