@@ -1,4 +1,4 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection } from '../utils/weatherIcons.js?v=1.1.21';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection } from '../utils/weatherIcons.js?v=1.1.22';
 
 /**
  * Calcula la condición meteorológica representativa para un tramo horario (ej. mañana o tarde)
@@ -231,6 +231,8 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
     const morningWeather = getDaypartWeather(hourly, dayDateStr, 8, 13, daily.weather_code[d], popMax, parseFloat(rain));
     const afternoonWeather = getDaypartWeather(hourly, dayDateStr, 14, 21, daily.weather_code[d], popMax, parseFloat(rain));
     const isSnowDay = morningWeather.isSnow || afternoonWeather.isSnow || (daily.snowfall_sum && daily.snowfall_sum[d] > 0);
+    const morningLabel = (morningWeather.label || '').split('/')[0].trim();
+    const afternoonLabel = (afternoonWeather.label || '').split('/')[0].trim();
     
     const windSpeedRaw = daily.wind_speed_10m_max ? daily.wind_speed_10m_max[d] : 0;
     const windGustRaw = daily.wind_gusts_10m_max ? daily.wind_gusts_10m_max[d] : 0;
@@ -242,7 +244,7 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
     let uvClass = 'uv-low';
     if (uvMax >= 8) { uvText = 'Muy Alto'; uvClass = 'uv-very-high'; }
     else if (uvMax >= 6) { uvText = 'Alto'; uvClass = 'uv-high'; }
-    else if (uvMax >= 3) { uvText = 'Moderado'; uvClass = 'uv-mod'; }
+    else if (uvMax >= 3) { uvText = 'Mod.'; uvClass = 'uv-mod'; }
 
     let sunriseStr = '--:--';
     let sunsetStr = '--:--';
@@ -271,7 +273,7 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
             <div class="d-daypart-row morning" title="Previsión Mañana (08:00 - 14:00): ${morningWeather.label}${morningWeather.precipSum >= 0.1 ? ` • ${morningWeather.precipSum.toFixed(1)} mm` : ''}">
               <span class="d-daypart-label">🌅 Mañana</span>
               <span class="d-daypart-icon">${renderWeatherIconHtml(morningWeather, 22, iconTheme)}</span>
-              <span class="d-daypart-text">${morningWeather.label}</span>
+              <span class="d-daypart-text">${morningLabel}</span>
               <span class="d-daypart-precip ${morningWeather.precipSum >= 0.1 ? (morningWeather.svgKey === 'hail' ? 'has-hail' : (morningWeather.svgKey === 'sleet' ? 'has-sleet' : (morningWeather.isSnow || morningWeather.svgKey.includes('snow') ? (morningWeather.precipSum >= 2.5 ? 'heavy-snow' : 'has-snow') : (morningWeather.precipSum >= 2.5 ? 'heavy-rain' : 'has-rain')))) : ''}">
                 ${morningWeather.precipSum >= 0.1 ? morningWeather.precipSum.toFixed(1) + ' mm' : '0 mm'}
               </span>
@@ -280,7 +282,7 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
             <div class="d-daypart-row afternoon" title="Previsión Tarde (14:00 - 21:00): ${afternoonWeather.label}${afternoonWeather.precipSum >= 0.1 ? ` • ${afternoonWeather.precipSum.toFixed(1)} mm` : ''}">
               <span class="d-daypart-label">🌇 Tarde</span>
               <span class="d-daypart-icon">${renderWeatherIconHtml(afternoonWeather, 22, iconTheme)}</span>
-              <span class="d-daypart-text">${afternoonWeather.label}</span>
+              <span class="d-daypart-text">${afternoonLabel}</span>
               <span class="d-daypart-precip ${afternoonWeather.precipSum >= 0.1 ? (afternoonWeather.svgKey === 'hail' ? 'has-hail' : (afternoonWeather.svgKey === 'sleet' ? 'has-sleet' : (afternoonWeather.isSnow || afternoonWeather.svgKey.includes('snow') ? (afternoonWeather.precipSum >= 2.5 ? 'heavy-snow' : 'has-snow') : (afternoonWeather.precipSum >= 2.5 ? 'heavy-rain' : 'has-rain')))) : ''}">
                 ${afternoonWeather.precipSum >= 0.1 ? afternoonWeather.precipSum.toFixed(1) + ' mm' : '0 mm'}
               </span>
@@ -312,7 +314,7 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
               <span class="u-m-icon">${isSnowDay ? '❄️' : '💧'}</span>
               <div class="u-m-info">
                 <span class="u-m-val">${popMax}%</span>
-                <span class="u-m-sub">${rain > 0 ? rain + ' mm total' : 'Seco'}</span>
+                <span class="u-m-sub">${rain > 0 ? rain + ' mm' : '0 mm'}</span>
               </div>
             </div>
 

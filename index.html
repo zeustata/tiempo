@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.18">
-  <link rel="stylesheet" href="css/components.css?v=1.1.18">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.18">
+  <link rel="stylesheet" href="css/main.css?v=1.1.22">
+  <link rel="stylesheet" href="css/components.css?v=1.1.22">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.22">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -176,7 +176,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.21 ⚡</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.22 📱</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -227,8 +227,18 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.21 ⚡</span>
+            <span class="release-version">v1.1.22 📱</span>
             <span class="release-date">28 Sep 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-mejora">Mejora</span> <strong>Ergonomía Móvil Anti-Desborde en Pronóstico a 10 Días</strong>: Optimizada la presentación visual de las tarjetas diarias: el desglose de Mañana y Tarde se consolida en una sola línea horizontal sin particiones forzadas de texto, y las pastillas inferiores de lluvia (<code>0.1 mm</code>) e índice UV (<code>Mod.</code>) se ajustan con holgura para impedir cualquier corte con puntos suspensivos en pantallas de smartphone.</li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.21 ⚡</span>
+            <span class="release-date">28 Sep 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-fix">Corrección</span> <strong>Restauración del Pronóstico Extendido a 10 Días</strong>: Subsanada una referencia interna en la métrica del pluviómetro diario dentro de <code>forecastView.js</code>, restableciendo la generación fluida e inmediata de todas las tarjetas de previsión diaria con desglose de mañana y tarde.</li>
@@ -1884,7 +1894,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.21"></script>
+  <script type="module" src="js/app.js?v=1.1.22"></script>
 
 
 

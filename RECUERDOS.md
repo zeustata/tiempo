@@ -4,7 +4,27 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.21 ⚡ — 2026-09-28
+## 🚀 Última Actualización Oficial: v1.1.22 📱 — 2026-09-28
+- **Ergonomía Móvil Anti-Desborde y Blindaje Visual en Pronósticos:**
+  1. *Optimización de la Cabecera de Día (Mañana y Tarde):*
+     - En `forecastView.js`, se extrae el término primario del cielo (`morningLabel`, `afternoonLabel`) para garantizar una única línea horizontal impecable, sin saltos a 3 líneas quebradas ni colisión con el botón de milímetros (`0 mm`).
+     - Se preserva el rótulo bilingüe completo (`Nublado / Cubiertu`) en el tooltip `title`.
+     - En CSS, se aplica `white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; min-width: 0;` a `.d-daypart-text`.
+  2. *Supresión de Truncados en Métricas Diarias:*
+     - Pluviómetro compacto `${rain} mm` (en vez de `mm total`), erradicando los molestos puntos suspensivos como `0.1 mm ...`.
+     - Escala UV abreviada a `Mod.` (en vez de `Moderado`), impidiendo cortes como `Moder...`.
+     - Mejorados los paddings y flex-wrap de las pastillas `.u-metric-item`.
+  3. *Anti-Caché Obligatorio y Versionado:*
+     - Incremento oficial a `v1.1.22 📱`.
+     - Footer de `index.html` actualizado con badge `#app-version-badge` a `v1.1.22 📱`.
+     - Inyectado bloque de novedades en `#changelog-modal`.
+     - `CURRENT_APP_VERSION = '1.1.22'` en `js/app.js`.
+     - `CACHE_NAME = 'meteoasturlode-v1122-mobile-ergonomics'` en `sw.js`.
+     - CSS y módulos vinculados a `?v=1.1.22`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.21 ⚡ — 2026-09-28
 - **Restauración y Corrección en Pronóstico Extendido a 10 Días:**
   1. *Diagnóstico y Subsanación Técnica:*
      - Al incorporar la detección de nieve en la métrica del pluviómetro dentro de `js/components/forecastView.js`, una variable no declarada (`dailyWeather`) y un índice erróneo (`i` en vez de `d`) causaban una excepción en tiempo de ejecución (`ReferenceError: dailyWeather is not defined`).

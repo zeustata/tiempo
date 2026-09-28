@@ -10,6 +10,21 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.22] - 2026-09-28
+
+### 📱 Ergonomía Móvil Anti-Desborde en Pronóstico a 10 Días
+- **Optimización de Textos en Mañana y Tarde:**
+  - Extraído el término meteorológico principal (ej. `Nublado`, `Claros`, `Orbayu`) evitando particiones forzadas en 3 líneas en pantallas estrechas.
+  - Implementado `white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; min-width: 0;` en `.d-daypart-text`.
+  - Preservado el texto bilingüe íntegro (`Nublado / Cubiertu`) en tooltip accesible (`title`).
+- **Ajuste Anti-Truncado en Pastillas de Métricas Diarias:**
+  - Pluviómetro compacto `${rain} mm` (en lugar de `mm total`), erradicando puntos suspensivos como `0.1 mm ...`.
+  - Índice UV abreviado a `Mod.` (en lugar de `Moderado`), impidiendo cortes como `Moder...`.
+  - Aumentado el padding y holgura interna de `.u-metric-item`.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v1122-mobile-ergonomics`, actualización a `?v=1.1.22` en hojas de estilo, scripts y módulos.
+
+---
+
 ## [1.1.21] - 2026-09-28
 
 ### ⚡ Corrección Crítica en Pronóstico Extendido a 10 Días
