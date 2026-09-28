@@ -10,6 +10,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.21] - 2026-09-28
+
+### ⚡ Corrección Crítica en Pronóstico Extendido a 10 Días
+- **Subsanación de Variable Interna:**
+  - Corregida referencia en la métrica del pluviómetro diario dentro de `forecastView.js` (`isSnowDay`), eliminando la excepción `ReferenceError` y restaurando la generación inmediata de todas las tarjetas diarias.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v1121-forecast-fix`, actualización a `?v=1.1.21` en módulos y scripts.
+
+---
+
 ## [1.1.20] - 2026-09-28
 
 ### ✨ Nueva Colección de Iconos «Futuro Clásico» (Vanguardia 2.5D)

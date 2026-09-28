@@ -1,4 +1,4 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection } from '../utils/weatherIcons.js?v=1.1.18';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection } from '../utils/weatherIcons.js?v=1.1.20';
 
 /**
  * Calcula la condición meteorológica representativa para un tramo horario (ej. mañana o tarde)
@@ -230,6 +230,7 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
     // Desglose de tiempo: 🌅 Mañana (08:00 a 14:00) y 🌇 Tarde (14:00 a 21:00)
     const morningWeather = getDaypartWeather(hourly, dayDateStr, 8, 13, daily.weather_code[d], popMax, parseFloat(rain));
     const afternoonWeather = getDaypartWeather(hourly, dayDateStr, 14, 21, daily.weather_code[d], popMax, parseFloat(rain));
+    const isSnowDay = morningWeather.isSnow || afternoonWeather.isSnow || (daily.snowfall_sum && daily.snowfall_sum[d] > 0);
     
     const windSpeedRaw = daily.wind_speed_10m_max ? daily.wind_speed_10m_max[d] : 0;
     const windGustRaw = daily.wind_gusts_10m_max ? daily.wind_gusts_10m_max[d] : 0;
@@ -308,7 +309,7 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
           <!-- Fila 2: Métricas Integradas -->
           <div class="d-unified-metrics-grid">
             <div class="u-metric-item ${popMax >= 40 ? 'metric-rain-active' : ''}" title="Probabilidad de precipitación y acumulado total del día">
-              <span class="u-m-icon">${(dailyWeather.isSnow || (daily.snowfall_sum && daily.snowfall_sum[i] > 0)) ? '❄️' : '💧'}</span>
+              <span class="u-m-icon">${isSnowDay ? '❄️' : '💧'}</span>
               <div class="u-m-info">
                 <span class="u-m-val">${popMax}%</span>
                 <span class="u-m-sub">${rain > 0 ? rain + ' mm total' : 'Seco'}</span>

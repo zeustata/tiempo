@@ -4,7 +4,23 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.20 ✨ — 2026-09-28
+## 🚀 Última Actualización Oficial: v1.1.21 ⚡ — 2026-09-28
+- **Restauración y Corrección en Pronóstico Extendido a 10 Días:**
+  1. *Diagnóstico y Subsanación Técnica:*
+     - Al incorporar la detección de nieve en la métrica del pluviómetro dentro de `js/components/forecastView.js`, una variable no declarada (`dailyWeather`) y un índice erróneo (`i` en vez de `d`) causaban una excepción en tiempo de ejecución (`ReferenceError: dailyWeather is not defined`).
+     - Se reemplazó por la constante `isSnowDay = morningWeather.isSnow || afternoonWeather.isSnow || (daily.snowfall_sum && daily.snowfall_sum[d] > 0)`, evaluada de forma limpia y robusta sobre el índice `d`.
+  2. *Verificación Sintética:*
+     - Comprobada mediante ejecución directa en Node.js, generando satisfactoriamente las tarjetas extendidas sin errores.
+  3. *Anti-Caché Obligatorio y Versionado:*
+     - Incremento oficial a `v1.1.21 ⚡`.
+     - Footer de `index.html` actualizado con badge `#app-version-badge` a `v1.1.21 ⚡`.
+     - Inyectado bloque de novedades en `#changelog-modal`.
+     - `CURRENT_APP_VERSION = '1.1.21'` en `js/app.js`.
+     - `CACHE_NAME = 'meteoasturlode-v1121-forecast-fix'` en `sw.js`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.20 ✨ — 2026-09-28
 - **Consolidación Oficial de la Colección «Futuro Clásico» (Vanguardia 2.5D):**
   1. *Blindaje de Marca y Política Google Play Store:*
      - A propuesta y decisión expresa de Lendo para evitar riesgos con marcas comerciales registradas ajenas en Google Play Store, se rebautiza oficialmente la nueva colección estética como **«Futuro Clásico»** (`futuroClasico`).

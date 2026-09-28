@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1120-futuro-clasico';
+const CACHE_NAME = 'meteoasturlode-v1121-forecast-fix';
 const STATIC_ASSETS = [
   './',
   './index.html',
