@@ -1547,152 +1547,172 @@
   text-transform: capitalize;
 }
 
-/* --- OPCIÓN A: DOBLE BADGE HORIZONTAL / FILAS MAÑANA Y TARDE --- */
-.d-dayparts-badge {
+/* --- DOS BOTONES INDEPENDIENTES PARA MAÑANA Y TARDE --- */
+.d-dayparts-container {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 8px;
+  width: 100%;
+}
+
+@media (min-width: 600px) {
+  .d-dayparts-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+}
+
+.d-daypart-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   background: rgba(15, 23, 42, 0.68);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
-  padding: 8px 14px;
-  min-width: 220px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  padding: 8px 12px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.22);
   transition: all 0.2s ease;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.d-dayparts-badge:hover {
+.d-daypart-btn:hover {
   background: rgba(15, 23, 42, 0.88);
   border-color: rgba(56, 189, 248, 0.45);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  transform: translateY(-1px);
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.32);
 }
 
-.d-daypart-row {
+.d-daypart-btn.morning {
+  border-left: 3px solid #fbbf24;
+}
+
+.d-daypart-btn.afternoon {
+  border-left: 3px solid #38bdf8;
+}
+
+.d-dp-header {
   display: flex;
   align-items: center;
-  gap: 8px;
-  min-width: 0;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.d-daypart-label {
-  font-size: 0.76rem;
+.d-dp-tag {
+  font-size: 0.72rem;
   font-weight: 800;
-  min-width: 68px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
   display: flex;
   align-items: center;
   gap: 4px;
-  letter-spacing: 0.3px;
-  text-transform: uppercase;
-  flex-shrink: 0;
 }
 
-.d-daypart-row.morning .d-daypart-label {
+.d-daypart-btn.morning .d-dp-tag {
   color: #fbbf24;
 }
 
-.d-daypart-row.afternoon .d-daypart-label {
+.d-daypart-btn.afternoon .d-dp-tag {
   color: #38bdf8;
 }
 
-.d-daypart-icon {
-  font-size: 1.45rem;
-  line-height: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.35));
-}
-
-.d-daypart-text {
-  font-size: 0.84rem;
-  font-weight: 700;
-  color: var(--text-main);
-  line-height: 1.2;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  flex: 1;
-  min-width: 0;
-}
-
-.d-daypart-precip {
-  font-size: 0.74rem;
+.d-dp-precip {
+  font-size: 0.72rem;
   font-weight: 800;
   color: var(--text-muted);
   background: rgba(255, 255, 255, 0.06);
   padding: 2px 7px;
   border-radius: 999px;
-  margin-left: auto;
   white-space: nowrap;
   letter-spacing: 0.2px;
-  flex-shrink: 0;
 }
 
-.d-daypart-precip.has-rain {
+.d-dp-precip.has-rain {
   color: #38bdf8;
   background: rgba(2, 132, 199, 0.22);
   border: 1px solid rgba(56, 189, 248, 0.35);
   box-shadow: 0 0 8px rgba(56, 189, 248, 0.15);
 }
 
-.d-daypart-precip.heavy-rain {
+.d-dp-precip.heavy-rain {
   color: #93c5fd;
   background: rgba(30, 64, 175, 0.35);
   border: 1px solid rgba(147, 197, 253, 0.5);
   box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
 }
 
-.d-daypart-precip.has-snow {
+.d-dp-precip.has-snow {
   color: #e0f2fe;
   background: rgba(186, 230, 253, 0.22);
   border: 1px solid rgba(224, 242, 254, 0.45);
   box-shadow: 0 0 8px rgba(186, 230, 253, 0.2);
 }
 
-.d-daypart-precip.heavy-snow {
+.d-dp-precip.heavy-snow {
   color: #ffffff;
   background: rgba(14, 165, 233, 0.35);
   border: 1px solid rgba(255, 255, 255, 0.7);
   box-shadow: 0 0 12px rgba(224, 242, 254, 0.4);
 }
 
-.d-daypart-precip.has-sleet {
+.d-dp-precip.has-sleet {
   color: #5eead4;
   background: rgba(13, 148, 136, 0.25);
   border: 1px solid rgba(94, 234, 212, 0.45);
   box-shadow: 0 0 8px rgba(45, 212, 191, 0.2);
 }
 
-.d-daypart-precip.has-hail {
+.d-dp-precip.has-hail {
   color: #fbcfe8;
   background: rgba(219, 39, 119, 0.28);
   border: 1px solid rgba(244, 114, 182, 0.55);
   box-shadow: 0 0 10px rgba(236, 72, 153, 0.3);
 }
 
-.d-daypart-divider {
-  height: 1px;
-  background: linear-gradient(to right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+.d-dp-body {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
   width: 100%;
 }
 
+.d-dp-icon {
+  font-size: 1.45rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.35));
+}
+
+.d-dp-desc {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.25;
+  flex: 1;
+  min-width: 0;
+  white-space: normal;
+  word-break: break-word;
+}
+
 @media (max-width: 480px) {
-  .d-dayparts-badge {
-    width: 100%;
-    min-width: 0;
+  .d-daypart-btn {
     padding: 7px 10px;
     gap: 4px;
   }
-  .d-daypart-label {
-    font-size: 0.72rem;
-    min-width: 68px;
+  .d-dp-tag {
+    font-size: 0.70rem;
   }
-  .d-daypart-icon {
-    font-size: 1.3rem;
+  .d-dp-icon {
+    font-size: 1.35rem;
   }
-  .d-daypart-text {
-    font-size: 0.80rem;
+  .d-dp-desc {
+    font-size: 0.82rem;
   }
 }
 
@@ -1848,6 +1868,16 @@
   .d-unified-metrics-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 6px;
+  }
+  .u-metric-item {
+    padding: 6px 7px;
+    gap: 6px;
+  }
+  .u-m-val {
+    font-size: 0.78rem;
+  }
+  .u-m-sub {
+    font-size: 0.68rem;
   }
   .u-temp-val {
     font-size: 1.15rem;

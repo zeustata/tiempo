@@ -10,6 +10,19 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.23] - 2026-09-28
+
+### 📱 Dos Botones Dedicados para Mañana y Tarde & Viento Anti-Desborde
+- **Desacoplamiento Integral en Dos Botones Dedicados:**
+  - Reemplazado el bloque unificado estrecho por dos botones interactivos independientes (`.d-daypart-btn.morning` y `.d-daypart-btn.afternoon`).
+  - **Cabecera dedicada:** Etiqueta `🌅 MAÑANA` / `🌇 TARDE` a la izquierda y badge de pluviometría (`0.5 mm`) a la derecha.
+  - **Cuerpo dedicado a todo el ancho:** Icono representativo (24px) y descripción meteorológica completa en tipografía legible sin truncamiento (`white-space: normal`), eliminando para siempre cortes como `Nu...` u `O...`.
+- **Ajuste Tipográfico en Métricas de Viento y Rachas:**
+  - Reducida la escala de `.u-m-val` y `.u-m-sub` en pantallas móviles a `0.78rem` / `0.68rem`, permitiendo la lectura íntegra de `18 km/h` y `Rachas 28` sin cortar a `18 k...`.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v1123-dual-daypart-buttons`, actualización a `?v=1.1.23` en hojas de estilo, scripts y módulos.
+
+---
+
 ## [1.1.22] - 2026-09-28
 
 ### 📱 Ergonomía Móvil Anti-Desborde en Pronóstico a 10 Días

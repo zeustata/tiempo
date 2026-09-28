@@ -4,7 +4,25 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.22 📱 — 2026-09-28
+## 🚀 Última Actualización Oficial: v1.1.23 📱 — 2026-09-28
+- **Desacoplamiento en Dos Botones Dedicados (Mañana y Tarde) & Viento Anti-Truncado:**
+  1. *Dos Botones Independientes para Mañana y Tarde:*
+     - A propuesta y decisión en equipo con Lendo, se suprime la caja estrecha compartida y se divide en dos botones dedicados completos (`.d-daypart-btn.morning` y `.d-daypart-btn.afternoon`).
+     - Fila superior del botón: Tag de franja (`🌅 MAÑANA` / `🌇 TARDE`) a la izquierda y badge de pluviometría (`0.5 mm` / `0 mm`) a la derecha.
+     - Fila inferior del botón: Icono SVG de alta fidelidad (24px) y texto meteorológico íntegro a todo el ancho (`white-space: normal`), eliminando para siempre truncamientos como `Nu...` u `O...`.
+  2. *Corrección de Escala en Viento y Rachas:*
+     - Reducida la tipografía de `.u-m-val` y `.u-m-sub` en pantallas pequeñas a `0.78rem` y `0.68rem`, logrando que `18 km/h` y `Rachas 28` entren sin recortar a `18 k...` o `Racha...`.
+  3. *Anti-Caché Obligatorio y Versionado:*
+     - Incremento oficial a `v1.1.23 📱`.
+     - Footer de `index.html` actualizado con badge `#app-version-badge` a `v1.1.23 📱`.
+     - Inyectado bloque de novedades en `#changelog-modal`.
+     - `CURRENT_APP_VERSION = '1.1.23'` en `js/app.js`.
+     - `CACHE_NAME = 'meteoasturlode-v1123-dual-daypart-buttons'` en `sw.js`.
+     - CSS y módulos vinculados a `?v=1.1.23`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.22 📱 — 2026-09-28
 - **Ergonomía Móvil Anti-Desborde y Blindaje Visual en Pronósticos:**
   1. *Optimización de la Cabecera de Día (Mañana y Tarde):*
      - En `forecastView.js`, se extrae el término primario del cielo (`morningLabel`, `afternoonLabel`) para garantizar una única línea horizontal impecable, sin saltos a 3 líneas quebradas ni colisión con el botón de milímetros (`0 mm`).
