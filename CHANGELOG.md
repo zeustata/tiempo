@@ -10,6 +10,21 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.31] - 2026-09-29
+
+### 🌫️ Detector Silencioso de Borrina Marina y Nieblas de Valle (Ley 12)
+- **Sensor Pasivo e Inteligente de Nieblas Asturianas:**
+  - Desarrollado como componente 100% silencioso (`.borrina-banner`) que permanece invisible en condiciones atmosféricas ordinarias y únicamente entra en acción cuando los sensores físicos detectan el fenómeno.
+  - **Doble Escala Meteorológica Regional:**
+    1. **Borrina Marina Costera (Litoral Cantábrico):** Identifica la niebla de advección marina que invade playas y rías (Gijón, Salinas, Peñas, Llanes) con humedad extrema (`>= 92%`), punto de rocío coincidente y suave brisa marina, mientras que a pocos kilómetros tierra adentro predomina cielo abierto o resol.
+    2. **Niebla de Valle e Inversión Térmica (Interior y Cuencas):** Detecta bolsas de aire frío estancadas en el fondo de valles fluviales (Nalón, Caudal, Trubia, Cangas de Onís, Oviedo) con viento en calma, humedad alta y visibilidad comprometida, contrastando con sol resplandeciente en cotas medias y cumbres.
+  - **Didáctica y Doctrina de Simulacro (Ley 12):**
+    - Botón didáctico integrado `💡 ¿Por qué ocurre?` enlazado al diccionario interactivo de fenómenos (`borrina` o `inversion`).
+    - Interruptor de simulacro controlado para verificación previa mediante URL (`?test=borrina` o `?test=inversion`).
+- **Cache-bust:** `sw.js` → `meteoasturlode-v1131-borrina-detector`, actualización a `?v=1.1.31` en hojas de estilo, scripts y módulos.
+
+---
+
 ## [1.1.30] - 2026-09-29
 
 ### ☂️ Semáforu del Paragües (Nowcasting Práctico Asturiano)

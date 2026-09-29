@@ -1,12 +1,13 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.1.30';
-import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.1.30';
-import { renderHourlyForecastBlock } from './forecastView.js?v=1.1.30';
-import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.30';
-import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=1.1.30';
-import { detectXeluEffect, renderXeluBanner } from '../utils/xeluDetector.js?v=1.1.30';
-import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.30';
-import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=1.1.30';
-import { calculateUmbrellaStatus, renderUmbrellaCard } from '../utils/umbrellaAdvisor.js?v=1.1.30';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.1.31';
+import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.1.31';
+import { renderHourlyForecastBlock } from './forecastView.js?v=1.1.31';
+import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.31';
+import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=1.1.31';
+import { detectXeluEffect, renderXeluBanner } from '../utils/xeluDetector.js?v=1.1.31';
+import { detectBorrinaEffect, renderBorrinaBanner } from '../utils/borrinaDetector.js?v=1.1.31';
+import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.31';
+import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=1.1.31';
+import { calculateUmbrellaStatus, renderUmbrellaCard } from '../utils/umbrellaAdvisor.js?v=1.1.31';
 
 /**
  * Formatea el título del concejo subordinando las localidades entre paréntesis (ej. Piedras Blancas / Salinas)
@@ -104,6 +105,10 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   const xelu = detectXeluEffect(current, daily, concejo);
   const xeluMarkup = renderXeluBanner(xelu);
 
+  // Detección Silenciosa de Borrina Marina y Nieblas de Valle (Inversión Térmica)
+  const borrina = detectBorrinaEffect(current, hourly, concejo);
+  const borrinaMarkup = renderBorrinaBanner(borrina);
+
   // Asesor de Colada y Secado de Ropa
   const laundry = calculateLaundryDrying(current, hourly, daily);
   const laundryMarkup = renderLaundryCard(laundry);
@@ -163,6 +168,9 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
 
     <!-- BANNER DINÁMICO DE DETECTOR DE ESCARCHA Y PLACAS DE HIELO ("ALERTA XELU") -->
     ${xeluMarkup}
+
+    <!-- BANNER DINÁMICO DE DETECTOR DE BORRINA Y NIEBLAS ASTURIANAS -->
+    ${borrinaMarkup}
 
     <!-- PRONÓSTICO HORARIO 72H / 3 DÍAS (SOLICITADO POR BETA TESTERS) -->
     ${hourlyForecastMarkup}

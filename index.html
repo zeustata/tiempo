@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.30">
-  <link rel="stylesheet" href="css/components.css?v=1.1.30">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.30">
+  <link rel="stylesheet" href="css/main.css?v=1.1.31">
+  <link rel="stylesheet" href="css/components.css?v=1.1.31">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.31">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -176,7 +176,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.30 ☂️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.31 🌫️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -227,8 +227,18 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.30 ☂️</span>
+            <span class="release-version">v1.1.31 🌫️</span>
             <span class="release-date">29 Sep 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-mejora">Nueva Función</span> <strong>Detector Silencioso de Borrina Marina y Nieblas de Valle (Ley 12)</strong>: Sensor pasivo e inteligente que permanece 100% invisible en condiciones normales y solo se activa cuando se dan las condiciones físicas exactas. Diferencia con precisión entre <em>Borrina marina costera de advección</em> en el litoral cantábrico (humedad &gt;= 92%, punto de rocío coincidente y brisa marina) y <em>Niebla de valle por inversión térmica</em> en cuencas fluviales y concejos interiores (aire frío atrapado con calma y sol garantizado en cotas altas). Incluye botón didáctico directo y modo de simulacro controlado.</li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.30 ☂️</span>
+            <span class="release-date">29 Sep 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-mejora">Nueva Función</span> <strong>Semáforu del Paragües (Nowcasting Práctico Asturiano)</strong>: Nueva banda visual inteligente integrada en la tarjeta principal que analiza las próximas 6 a 8 horas con datos armonizados de lluvia y orballu. Informa al instante con semáforo cromático tricolor: 🟢 <em>Cielo Noble (Paraguas no necesario / tregua seca)</em>, 🟡 <em>Peligro d'Orbayu (Llevar chubasquero o paraguas pequeño)</em> con indicación de la hora exacta de inicio, o 🔴 <em>Bastinazu (Lluvia copiosa / paraguas grande indispensable)</em>.</li>
@@ -1948,7 +1958,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.1.30').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.1.31').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1978,7 +1988,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.30"></script>
+  <script type="module" src="js/app.js?v=1.1.31"></script>
 
 
 

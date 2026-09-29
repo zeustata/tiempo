@@ -13,7 +13,27 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   5. *Fronteras del conocimiento:* Distinción rigurosa entre hechos, opiniones y desconocimiento (sin rellenar con especulaciones).
   6. *Separación entre Juicio y Ejecución:* Aplica cuando se pide juicio; ante órdenes de tareas concretas decididas, se ejecuta sin discusión.
 
-## 🚀 Última Actualización Oficial: v1.1.30 ☂️ — 2026-09-29
+## 🚀 Última Actualización Oficial: v1.1.31 🌫️ — 2026-09-29
+- **Detector Silencioso e Inteligente de Borrina Marina y Nieblas de Valle (Ley 12):**
+  1. *Concepto y Naturaleza Pasiva:*
+     - Lendo consultó si el detector de borrina era pasivo, confirmándose su naturaleza 100% silenciosa: permanece invisible en días normales y únicamente salta a la vista cuando los sensores físicos constatan la niebla.
+     - Sigue el patrón arquitectónico de la Galerna Cantábrica, Efecto Foehn y Alerta Xelu.
+  2. *Doble Escala Regional en `js/utils/borrinaDetector.js`:*
+     - **Borrina Marina Costera (Litoral Cantábrico):** Se activa en concejos costeros cuando la humedad es `>= 92%`, la diferencia entre temperatura y punto de rocío es `<= 1.2 °C` y la brisa marina sopla floja del mar, advirtiendo de visibilidad reducida en playas/puertos y desplome de sensación térmica.
+     - **Niebla de Valle / Inversión Térmica (Interior y Cuencas):** Se activa en concejos del interior o cuencas fluviales con humedad `>= 93%`, viento en calma y frío atrapado en fondo de valle, advirtiendo de que en cotas altas luce el sol.
+  3. *Doctrina de Simulacro (Ley 12):*
+     - Se implementó un conmutador controlado de prueba activable con `?test=borrina` (para borrina marina) o `?test=inversion` (para niebla de valle) para verificación previa visual antes de despliegue.
+  4. *Versionado & Anti-Caché:*
+     - Incremento oficial a `v1.1.31 🌫️`.
+     - Footer de `index.html` con `#app-version-badge` actualizado a `v1.1.31 🌫️`.
+     - Inyectado bloque de novedades en `#changelog-modal`.
+     - `CURRENT_APP_VERSION = '1.1.31'` en `js/app.js`.
+     - `CACHE_NAME = 'meteoasturlode-v1131-borrina-detector'` en `sw.js` y añadido `./js/utils/borrinaDetector.js` a `STATIC_ASSETS`.
+     - CSS y módulos JS sincronizados con `?v=1.1.31`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.30 ☂️ — 2026-09-29
 - **Semáforu del Paragües (Nowcasting Práctico Asturiano):**
   1. *Concepto e Integración:*
      - Lendo solicitó incorporar una funcionalidad útil y directa para el día a día asturiano: el "Semáforo del Paraguas", que responde de un vistazo si se debe coger paraguas o si se puede salir o tender con tranquilidad.
