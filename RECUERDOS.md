@@ -15,7 +15,23 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.24 📱 — 2026-09-29
+## 🚀 Última Actualización Oficial: v1.1.25 📱 — 2026-09-29
+- **Blindaje Anti-Desborde y Simetría en Arterias a la Meseta (Leyes 11 y 14):**
+  1. *Diagnóstico y Resolución del Corte Lateral Derecho:*
+     - Lendo detectó que en pantallas móviles, las tarjetas de las dos arterias principales hacia la meseta (*Autopista del Huerna AP-66* y *Puerto de Pajares N-630*) mostraban el borde redondeado izquierdo normal, pero se desbordaban por la derecha, quedando amputadas y sin margen respecto al borde de la pantalla.
+     - Causa identificada: un bloque CSS duplicado residual en `css/components.css` (líneas 3382 a 3476) forzaba la cuadrícula a `minmax(280px, 1fr)` sin contención `box-sizing` ni media query móvil adecuada.
+     - Solución aplicada: se purgó el bloque residual de 98 líneas, se blindó `.passes-arteries-grid` para colapsar en 1 columna limpia en dispositivos móviles (`@media (max-width: 600px)`), y se dotó a `.pass-artery-card` de `width: 100%; max-width: 100%; box-sizing: border-box; overflow: hidden;`.
+  2. *Anti-Caché Obligatorio y Versionado:*
+     - Incremento oficial a `v1.1.25 📱`.
+     - Footer de `index.html` actualizado con badge `#app-version-badge` a `v1.1.25 📱`.
+     - Inyectado bloque de novedades en `#changelog-modal`.
+     - `CURRENT_APP_VERSION = '1.1.25'` en `js/app.js`.
+     - `CACHE_NAME = 'meteoasturlode-v1125-arteries-anti-overflow'` en `sw.js`.
+     - CSS y módulos JS sincronizados con `?v=1.1.25`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.24 📱 — 2026-09-29
 - **Puertos de Montaña sin Truncamientos en Móvil & Armonía Visual (Leyes 11 y 14):**
   1. *Diagnóstico y Resolución del Truncamiento en Sectores de Montaña:*
      - En la vista de puertos de montaña (`#mountain-passes-view`), las tarjetas de sectores (*Centro y Valles Mineros*, *Oriente y Picos de Europa*, *Occidente*) utilizaban un contenedor rígido horizontal de una sola línea (`flex-wrap: nowrap`) con `white-space: nowrap; text-overflow: ellipsis;`.

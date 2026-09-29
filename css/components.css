@@ -2940,24 +2940,35 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
   width: 100%;
+  max-width: 100%;
   box-sizing: border-box;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .passes-arteries-grid {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 }
 
-/* Tarjeta de Arteria Principal */
+/* Tarjeta de Arteria Principal — BLINDAJE ANTI-DESBORDE Y SIMETRÍA MÓVIL */
 .pass-artery-card {
   border-radius: var(--radius-md);
-  padding: 10px 12px;
+  padding: 12px 14px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
   box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
   min-width: 0;
+  overflow: hidden;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.pass-artery-card:hover {
+  transform: translateY(-1px);
 }
 
 .pass-artery-top {
@@ -3379,104 +3390,6 @@
   color: #ffffff;
 }
 
-/* --- PUERTOS Y ARTERIAS DE MONTAÑA --- */
-.passes-group-block {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.passes-group-title {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.passes-group-title span:first-child {
-  font-size: 0.92rem;
-  font-weight: 800;
-  color: var(--text-main);
-}
-
-.passes-group-sub {
-  font-size: 0.74rem;
-  color: #94a3b8;
-}
-
-.passes-arteries-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 10px;
-}
-
-.pass-artery-card {
-  border-radius: var(--radius-sm);
-  padding: 12px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.pass-artery-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 8px;
-}
-
-.pass-artery-name {
-  font-size: 0.96rem;
-  font-weight: 800;
-  color: #ffffff;
-  margin: 0;
-}
-
-.pass-artery-meta {
-  font-size: 0.74rem;
-  color: #cbd5e1;
-  display: block;
-  margin-top: 2px;
-}
-
-.pass-artery-desc {
-  font-size: 0.74rem;
-  color: #94a3b8;
-  margin: 0;
-  line-height: 1.35;
-}
-
-.passes-sector-block {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 14px;
-}
-
-.passes-sector-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 4px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.passes-sector-title {
-  font-size: 0.84rem;
-  font-weight: 800;
-  color: #e2e8f0;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.passes-sector-count {
-  font-size: 0.72rem;
-  color: #94a3b8;
-  background: rgba(255, 255, 255, 0.06);
-  padding: 2px 7px;
-  border-radius: 10px;
-  font-weight: 600;
-}
 
 
 /* --- CUADRÍCULA Y FILAS DE PREVISIÓN DIARIA 7 DÍAS --- */

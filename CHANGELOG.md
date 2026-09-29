@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.25] - 2026-09-29
+
+### 📱 Blindaje Anti-Desborde y Simetría en Arterias a la Meseta (Leyes 11 y 14)
+- **Corrección de Desborde Lateral en Huerna (AP-66) y Pajares (N-630):**
+  - Subsanada la anomalía de renderizado que provocaba que las tarjetas de las dos arterias principales hacia la meseta se saliesen por el margen derecho en smartphones, cortando los bordes redondeados y rompiendo la simetría con el resto de la interfaz.
+  - Purgado un bloque duplicado obsoleto en `css/components.css` que forzaba un ancho de rejilla rígido (`minmax(280px, 1fr)`) incompatible con resoluciones móviles estrechas.
+  - Implementada contención elástica total en `.passes-arteries-grid` y `.pass-artery-card` (`width: 100%; max-width: 100%; box-sizing: border-box; overflow: hidden;`), asegurando una columna única perfecta en pantallas móviles (`@media (max-width: 600px)`).
+- **Cache-bust:** `sw.js` → `meteoasturlode-v1125-arteries-anti-overflow`, actualización a `?v=1.1.25` en hojas de estilo, scripts y módulos.
+
+---
+
 ## [1.1.24] - 2026-09-29
 
 ### 📱 Puertos de Montaña sin Truncamientos en Móvil & Armonía Visual (Leyes 11 y 14)

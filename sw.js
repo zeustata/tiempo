@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1124-mountain-passes-ergonomics';
+const CACHE_NAME = 'meteoasturlode-v1125-arteries-anti-overflow';
 const STATIC_ASSETS = [
   './',
   './index.html',

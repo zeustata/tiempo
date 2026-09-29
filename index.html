@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.24">
-  <link rel="stylesheet" href="css/components.css?v=1.1.24">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.24">
+  <link rel="stylesheet" href="css/main.css?v=1.1.25">
+  <link rel="stylesheet" href="css/components.css?v=1.1.25">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.25">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -176,7 +176,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.24 📱</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.25 📱</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -227,8 +227,18 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.24 📱</span>
+            <span class="release-version">v1.1.25 📱</span>
             <span class="release-date">29 Sep 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-fix">Corrección</span> <strong>Blindaje Anti-Desborde en Arterias a la Meseta (Huerna y Pajares)</strong>: Corregida la alineación y el corte del borde lateral derecho en las dos tarjetas principales hacia la meseta (Autopista del Huerna AP-66 y Puerto de Pajares N-630). Se purgó un bloque residual en la hoja de estilos que forzaba un ancho mínimo rígido y se aplicó contención fluida completa (<code>width: 100%; max-width: 100%; box-sizing: border-box; overflow: hidden;</code>), logrando una simetría visual impecable con bordes redondeados completos en ambos lados de la pantalla.</li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.24 📱</span>
+            <span class="release-date">29 Sep 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-fix">Corrección</span> <strong>Puertos de Montaña sin Truncamientos en Pantallas Móviles</strong>: Reestructuradas las tarjetas de puertos de montaña en todos los sectores geográficos (Centro, Oriente y Occidente) en un diseño fluido y envolvente de dos niveles. Se elimina el recorte por puntos suspensivos (<code>Puerto...</code> o <code>Alto de...</code>), garantizando que el nombre íntegro del puerto, la carretera y la altitud sean 100% legibles en cualquier smartphone.</li>
@@ -1917,7 +1927,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.24"></script>
+  <script type="module" src="js/app.js?v=1.1.25"></script>
 
 
 
