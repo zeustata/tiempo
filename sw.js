@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1126-resol-calibration';
+const CACHE_NAME = 'meteoasturlode-v1127-resol-strict';
 const STATIC_ASSETS = [
   './',
   './index.html',

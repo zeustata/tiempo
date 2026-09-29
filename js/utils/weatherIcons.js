@@ -1,9 +1,9 @@
-import { getAsturWeatherSvg } from './weatherAsturIcons.js?v=1.1.26';
-import { getPixelWeatherSvg } from './weatherPixelIcons.js?v=1.1.26';
-import { getNeonWeatherSvg } from './weatherNeonIcons.js?v=1.1.26';
-import { getSketchWeatherSvg } from './weatherSketchIcons.js?v=1.1.26';
-import { getGlassWeatherSvg } from './weatherGlassIcons.js?v=1.1.26';
-import { getFuturoWeatherSvg } from './weatherFuturoIcons.js?v=1.1.26';
+import { getAsturWeatherSvg } from './weatherAsturIcons.js?v=1.1.27';
+import { getPixelWeatherSvg } from './weatherPixelIcons.js?v=1.1.27';
+import { getNeonWeatherSvg } from './weatherNeonIcons.js?v=1.1.27';
+import { getSketchWeatherSvg } from './weatherSketchIcons.js?v=1.1.27';
+import { getGlassWeatherSvg } from './weatherGlassIcons.js?v=1.1.27';
+import { getFuturoWeatherSvg } from './weatherFuturoIcons.js?v=1.1.27';
 
 /**
  * Mapeo de códigos meteorológicos WMO a descripciones en asturiano/castellano, iconos y clases
@@ -57,7 +57,7 @@ export function getSeasonalSolarThresholds(date = new Date()) {
       uvStrict: 1.8,
       uvModerate: 1.4,
       swGlobalHigh: 300,
-      directMinResol: 150
+      directMinResol: 320
     };
   }
   // Otoño medio / Primavera temprana (Nov, Mar): Sol medio-bajo. UV máx teórico despejado: ~3.0 - 4.0
@@ -66,7 +66,7 @@ export function getSeasonalSolarThresholds(date = new Date()) {
       uvStrict: 2.5,
       uvModerate: 2.0,
       swGlobalHigh: 400,
-      directMinResol: 170
+      directMinResol: 380
     };
   }
   // Primavera / Principios de otoño (Abr, Sep, Oct): UV máx teórico despejado: ~4.5 - 6.0
@@ -75,7 +75,7 @@ export function getSeasonalSolarThresholds(date = new Date()) {
       uvStrict: 3.0,
       uvModerate: 2.4,
       swGlobalHigh: 460,
-      directMinResol: 190
+      directMinResol: 450
     };
   }
   // Verano pleno (May, Jun, Jul, Ago): Sol alto (hasta 70°). UV máx teórico despejado: 7.5 - 9.0
@@ -83,7 +83,7 @@ export function getSeasonalSolarThresholds(date = new Date()) {
     uvStrict: 4.2,
     uvModerate: 3.6,
     swGlobalHigh: 540,
-    directMinResol: 240
+    directMinResol: 500
   };
 }
 

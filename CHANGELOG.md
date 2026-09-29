@@ -10,6 +10,22 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.27] - 2026-09-29
+
+### ☀️ Calibración Estricta de Resol / Sol Tamizáu (Ley 7)
+- **Diferenciación Física entre Cielo Nublado Claro y Verdadero Resol:**
+  - Ajuste de precisión tras validación en vivo con Lendo en Asturias: bajo un cielo completamente cubierto (100% de nubes) pero luminoso (altostratos blanquecinos) con ~398 W/m² de radiación directa normal, el sistema aún activaba *Resol / Sol tamizáu*.
+  - Para que exista auténtico *resol* asturiano, el haz solar debe perforar el estrato nuboso con potencia suficiente para proyectar sombras nítidas y deslumbrar la vista (requiriendo habitualmente > 50-60% del DNI teórico de cielo despejado).
+  - Elevada la exigencia de `direct_normal_irradiance`:
+    - Primavera / Principios de otoño (Sep, Oct, Abr): **450 W/m²** (antes 190 W/m²).
+    - Verano pleno (May, Jun, Jul, Ago): **500 W/m²** (antes 240 W/m²).
+    - Otoño medio / Primavera temprana (Nov, Mar): **380 W/m²** (antes 170 W/m²).
+    - Invierno (Dic, Ene, Feb): **320 W/m²** (antes 150 W/m²).
+  - Con esta calibración, cielos cubiertos blanquecinos permanecen honestamente clasificados como **Nublado / Cubiertu** (`☁️`), reservando el icono `🌥️` y la etiqueta **Resol / Sol tamizáu** únicamente para cuando el sol rompe de verdad.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v1127-resol-strict`, actualización a `?v=1.1.27` en hojas de estilo, scripts y módulos.
+
+---
+
 ## [1.1.26] - 2026-09-29
 
 ### ☀️ Recalibración Inteligente del Resol Asturiano (Ley 7)

@@ -13,9 +13,29 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   5. *Fronteras del conocimiento:* Distinción rigurosa entre hechos, opiniones y desconocimiento (sin rellenar con especulaciones).
   6. *Separación entre Juicio y Ejecución:* Aplica cuando se pide juicio; ante órdenes de tareas concretas decididas, se ejecuta sin discusión.
 
+## 🚀 Última Actualización Oficial: v1.1.27 ☀️ — 2026-09-29
+- **Calibración Estricta de Resol / Sol Tamizáu (Ley 7):**
+  1. *Diagnóstico Físico y Delimitación entre "Nublado Claro" y "Resol":*
+     - Lendo constató en vivo que tras el primer ajuste (190 W/m²), la app continuaba marcando *"Resol / Sol tamizáu"* bajo un cielo totalmente cubierto (100% nubes) pero de tonalidad clara y luminosa (capa de altostratos blanquecinos sin sol directo perceptible).
+     - La consulta a los sensores numéricos en tiempo real en Piedras Blancas a las 17:10 CEST reveló: `weather_code: 3`, `cloud_cover: 100%`, `direct_normal_irradiance: 398.1 W/m²`, `diffuse_radiation: 180.7 W/m²`.
+     - Explicación física: en un día de cielo despejado a las 17:00 en Asturias la radiación directa supera los 820 W/m². Un valor de ~398 W/m² representa una atenuación de más del 51%, típica de un manto nuboso uniforme y luminoso que no llega a proyectar sombras ni a encandilar la mirada.
+     - Ajuste técnico estricto acordado: se elevaron los umbrales de radiación directa normal perpendicular (`direct_normal_irradiance`):
+       - Primavera / Principios de otoño (Sep, Oct, Abr): **450 W/m²** (antes 190 W/m²).
+       - Verano pleno (May, Jun, Jul, Ago): **500 W/m²** (antes 240 W/m²).
+       - Otoño medio / Primavera temprana (Nov, Mar): **380 W/m²** (antes 170 W/m²).
+       - Invierno (Dic, Ene, Feb): **320 W/m²** (antes 150 W/m²).
+     - Resultado: a 398.1 W/m², la condición `dni >= 450` resulta falsa, catalogándose rigurosamente como **Nublado / Cubiertu** (`☁️`). El estado **Resol / Sol tamizáu** (`🌥️`) se reserva con total fidelidad para cuando el disco solar perfora la nubosidad con intensidad real.
+  2. *Anti-Caché Obligatorio y Versionado:*
+     - Incremento oficial a `v1.1.27 ☀️`.
+     - Footer de `index.html` actualizado con badge `#app-version-badge` a `v1.1.27 ☀️`.
+     - Inyectado bloque de novedades en `#changelog-modal`.
+     - `CURRENT_APP_VERSION = '1.1.27'` en `js/app.js`.
+     - `CACHE_NAME = 'meteoasturlode-v1127-resol-strict'` en `sw.js`.
+     - CSS y módulos JS sincronizados con `?v=1.1.27`.
+
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.26 ☀️ — 2026-09-29
+## 🚀 Versión Anterior: v1.1.26 ☀️ — 2026-09-29
 - **Recalibración Inteligente del Resol Asturiano (Ley 7):**
   1. *Diagnóstico y Resolución del Falso Resol en Días Grises:*
      - Lendo observó en el terreno que durante una jornada predominantemente nublada y gris en Asturias, la aplicación etiquetaba de forma continua *"Resol / Sol tamizáu"* en el tiempo en vivo y pronósticos.
