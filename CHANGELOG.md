@@ -10,6 +10,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.26] - 2026-09-29
+
+### ☀️ Recalibración Inteligente del Resol Asturiano (Ley 7)
+- **Eliminación del Falso Resol en Días Predominantemente Nublados:**
+  - Tras observación empírica en tiempo real con Lendo en Asturias, se ajustaron los umbrales físicos del detector de *Resol / Sol tamizáu*.
+  - Elevada la exigencia de radiación solar directa normal perpendicular (`direct_normal_irradiance`) a **190 W/m²** en otoño y primavera (frente a los 90 W/m² previos, que resultaban hiper-permisivos y activaban resol bajo simple claridad blanquecina grisácea).
+  - Eliminado el atajo por radiación ultravioleta difusa (`uv >= uvStrict` con operador `OR`), que forzaba resol en horas centrales del día aunque el sol estuviera completamente oculto. A partir de ahora, el resol exige **imperativamente haz solar directo real** (`hasDirectBeam`).
+  - Escala estacional actualizada: Otoño/Primavera **190 W/m²**, Verano **240 W/m²**, Invierno **150 W/m²**.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v1126-resol-calibration`, actualización a `?v=1.1.26` en hojas de estilo, scripts y módulos.
+
+---
+
 ## [1.1.25] - 2026-09-29
 
 ### 📱 Blindaje Anti-Desborde y Simetría en Arterias a la Meseta (Leyes 11 y 14)

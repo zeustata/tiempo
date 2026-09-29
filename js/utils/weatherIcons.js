@@ -1,9 +1,9 @@
-import { getAsturWeatherSvg } from './weatherAsturIcons.js?v=1.1.25';
-import { getPixelWeatherSvg } from './weatherPixelIcons.js?v=1.1.25';
-import { getNeonWeatherSvg } from './weatherNeonIcons.js?v=1.1.25';
-import { getSketchWeatherSvg } from './weatherSketchIcons.js?v=1.1.25';
-import { getGlassWeatherSvg } from './weatherGlassIcons.js?v=1.1.25';
-import { getFuturoWeatherSvg } from './weatherFuturoIcons.js?v=1.1.25';
+import { getAsturWeatherSvg } from './weatherAsturIcons.js?v=1.1.26';
+import { getPixelWeatherSvg } from './weatherPixelIcons.js?v=1.1.26';
+import { getNeonWeatherSvg } from './weatherNeonIcons.js?v=1.1.26';
+import { getSketchWeatherSvg } from './weatherSketchIcons.js?v=1.1.26';
+import { getGlassWeatherSvg } from './weatherGlassIcons.js?v=1.1.26';
+import { getFuturoWeatherSvg } from './weatherFuturoIcons.js?v=1.1.26';
 
 /**
  * Mapeo de códigos meteorológicos WMO a descripciones en asturiano/castellano, iconos y clases
@@ -57,7 +57,7 @@ export function getSeasonalSolarThresholds(date = new Date()) {
       uvStrict: 1.8,
       uvModerate: 1.4,
       swGlobalHigh: 300,
-      directMinResol: 75
+      directMinResol: 150
     };
   }
   // Otoño medio / Primavera temprana (Nov, Mar): Sol medio-bajo. UV máx teórico despejado: ~3.0 - 4.0
@@ -66,7 +66,7 @@ export function getSeasonalSolarThresholds(date = new Date()) {
       uvStrict: 2.5,
       uvModerate: 2.0,
       swGlobalHigh: 400,
-      directMinResol: 85
+      directMinResol: 170
     };
   }
   // Primavera / Principios de otoño (Abr, Sep, Oct): UV máx teórico despejado: ~4.5 - 6.0
@@ -75,7 +75,7 @@ export function getSeasonalSolarThresholds(date = new Date()) {
       uvStrict: 3.0,
       uvModerate: 2.4,
       swGlobalHigh: 460,
-      directMinResol: 90
+      directMinResol: 190
     };
   }
   // Verano pleno (May, Jun, Jul, Ago): Sol alto (hasta 70°). UV máx teórico despejado: 7.5 - 9.0
@@ -83,7 +83,7 @@ export function getSeasonalSolarThresholds(date = new Date()) {
     uvStrict: 4.2,
     uvModerate: 3.6,
     swGlobalHigh: 540,
-    directMinResol: 100
+    directMinResol: 240
   };
 }
 
@@ -269,22 +269,17 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     let hasRealSolarLight = false;
     let isResol = false;
 
-    if (cc !== null && cc >= 100) {
-      // 100% cubierto por el modelo:
-      // Si hay radiación directa activa o UV estacional estricto, el sol perfora el velo nuboso -> RESOL
-      if (hasDirectBeam || uv >= thresholds.uvStrict) {
-        hasRealSolarLight = true;
-        isResol = true;
-      }
-    } else if (cc !== null && cc >= 85) {
-      // Cobertura casi total (85-99%):
-      if (hasDirectBeam || uv >= thresholds.uvModerate || (irr >= 60 && sw >= thresholds.swGlobalHigh)) {
+    if (cc !== null && cc >= 85) {
+      // Cobertura casi total o total (85% a 100% de nubes):
+      // BLINDAJE ANTI-FALSO RESOL: Se exige obligatoriamente haz solar directo real (irr >= directMinResol)
+      // para perforar el velo nuboso. Se elimina el falso positivo por radiación UV difusa.
+      if (hasDirectBeam) {
         hasRealSolarLight = true;
         isResol = true;
       }
     } else {
-      // Cobertura < 85% o sin dato de nubosidad: desempate por radiación
-      hasRealSolarLight = (irr >= 70 || uv >= thresholds.uvModerate || sw >= thresholds.swGlobalHigh);
+      // Cobertura < 85% o sin dato de nubosidad: desempate por radiación para claros
+      hasRealSolarLight = (irr >= 90 || uv >= thresholds.uvModerate || sw >= thresholds.swGlobalHigh);
       isResol = false;
     }
 

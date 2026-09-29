@@ -15,7 +15,24 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.25 📱 — 2026-09-29
+## 🚀 Última Actualización Oficial: v1.1.26 ☀️ — 2026-09-29
+- **Recalibración Inteligente del Resol Asturiano (Ley 7):**
+  1. *Diagnóstico y Resolución del Falso Resol en Días Grises:*
+     - Lendo observó en el terreno que durante una jornada predominantemente nublada y gris en Asturias, la aplicación etiquetaba de forma continua *"Resol / Sol tamizáu"* en el tiempo en vivo y pronósticos.
+     - Causa identificada al consultar los datos numéricos de radiación de la estación: el umbral de radiación directa perpendicular (`direct_normal_irradiance`) estaba fijado en apenas 90 W/m² (menos del 10% del sol cenital). Además, una condición disyuntiva `|| uv >= thresholds.uvStrict` permitía que el índice UV difuso diurno (habitualmente entre 2.8 y 4.1 a mediodía) forzara la activación de resol con el sol completamente tapado.
+     - Solución acordada en equipo: se elevó el umbral de radiación directa a **190 W/m²** en otoño y primavera (término medio calibrado para no asfixiar el resol periférico de mañana y tarde pero erradicar falsos positivos), y se eliminó el atajo por UV difuso, exigiendo imperativamente haz solar directo real (`hasDirectBeam`) para perforar el velo nuboso.
+     - Escala estacional actualizada: Otoño/Primavera **190 W/m²**, Verano **240 W/m²**, Invierno **150 W/m²**.
+  2. *Anti-Caché Obligatorio y Versionado:*
+     - Incremento oficial a `v1.1.26 ☀️`.
+     - Footer de `index.html` actualizado con badge `#app-version-badge` a `v1.1.26 ☀️`.
+     - Inyectado bloque de novedades en `#changelog-modal`.
+     - `CURRENT_APP_VERSION = '1.1.26'` en `js/app.js`.
+     - `CACHE_NAME = 'meteoasturlode-v1126-resol-calibration'` en `sw.js`.
+     - CSS y módulos JS sincronizados con `?v=1.1.26`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.25 📱 — 2026-09-29
 - **Blindaje Anti-Desborde y Simetría en Arterias a la Meseta (Leyes 11 y 14):**
   1. *Diagnóstico y Resolución del Corte Lateral Derecho:*
      - Lendo detectó que en pantallas móviles, las tarjetas de las dos arterias principales hacia la meseta (*Autopista del Huerna AP-66* y *Puerto de Pajares N-630*) mostraban el borde redondeado izquierdo normal, pero se desbordaban por la derecha, quedando amputadas y sin margen respecto al borde de la pantalla.

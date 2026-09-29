@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1125-arteries-anti-overflow';
+const CACHE_NAME = 'meteoasturlode-v1126-resol-calibration';
 const STATIC_ASSETS = [
   './',
   './index.html',
