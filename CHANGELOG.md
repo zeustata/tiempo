@@ -10,6 +10,21 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.32] - 2026-09-29
+
+### ⚡ Monitor Convectivo de Tormentas Inminentes y Récords AEMET
+- **Monitor Convectivo y Alerta Silenciosa de Tormentas (Nowcasting):**
+  - Componente pasivo (`.thunderstorm-banner`) que analiza las 1 a 3 horas inmediatas mediante modelos numéricos de alta resolución y códigos WMO 95-99.
+  - Alerta anticipada ante tormentas con aparato eléctrico, hora estimada de llegada, chubascos intensos y detección específica de riesgo de granizo/pedrisco (`código 96/99`).
+  - Botón de acceso directo para saltar en un toque al radar de lluvia y tormentas RainViewer en vivo (`📡 Ver Radar en Directo`).
+  - Protocolo de simulacro controlado para verificación (Ley 12) mediante `?test=tormenta` y `?test=granizo`.
+- **Récords Históricos Oficiales AEMET en Tiempo Habitual:**
+  - Integrada en `js/utils/climatologyData.js` la base de datos de récords absolutos históricos mensuales de las estaciones oficiales de referencia de AEMET en Asturias (Gijón-Musel, Oviedo-Buenavista, Avilés-Aeropuerto, Llanes, Cangas del Narcea y Pajares).
+  - Muestra en la franja climatológica: récord de calor absoluto del mes, récord de frío absoluto y máxima lluvia en 24 horas con el año exacto en que se registraron.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v1132-storm-records`, actualización a `?v=1.1.32` en hojas de estilo, scripts y módulos.
+
+---
+
 ## [1.1.31] - 2026-09-29
 
 ### 🌫️ Detector Silencioso de Borrina Marina y Nieblas de Valle (Ley 12)

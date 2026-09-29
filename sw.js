@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1131-borrina-detector';
+const CACHE_NAME = 'meteoasturlode-v1132-storm-records';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -45,6 +45,7 @@ const STATIC_ASSETS = [
   './js/utils/storage.js',
   './js/utils/umbrellaAdvisor.js',
   './js/utils/borrinaDetector.js',
+  './js/utils/thunderstormDetector.js',
   './js/utils/tides.js'
 ];
 

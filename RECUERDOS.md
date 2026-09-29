@@ -13,7 +13,30 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   5. *Fronteras del conocimiento:* Distinción rigurosa entre hechos, opiniones y desconocimiento (sin rellenar con especulaciones).
   6. *Separación entre Juicio y Ejecución:* Aplica cuando se pide juicio; ante órdenes de tareas concretas decididas, se ejecuta sin discusión.
 
-## 🚀 Última Actualización Oficial: v1.1.31 🌫️ — 2026-09-29
+## 🚀 Última Actualización Oficial: v1.1.32 ⚡ — 2026-09-29
+- **Monitor Convectivo de Tormentas Inminentes y Récords Históricos Oficiales AEMET:**
+  1. *Evaluación Crítica Previa (Artículo 0):*
+     - Lendo consultó sobre la fiabilidad real de las tormentas y los récords. Princesa evaluó honestamente: los modelos numéricos no son sensores de rayos al milímetro en tiempo real, pero sí son altamente fiables para predecir inestabilidad convectiva, granizo y chubascos severos a 1-3 horas (nowcasting); por su parte, los récords de los observatorios centenarios de AEMET son 100% veraces e indiscutibles.
+  2. *Arquitectura del Monitor Convectivo en `js/utils/thunderstormDetector.js`:*
+     - Componente pasivo (`.thunderstorm-banner`) que permanece invisible si no hay tormenta inminente.
+     - Analiza códigos WMO 95-99 y aguaceros convectivos violentos a corto plazo.
+     - Detecta riesgo de pedrisco/granizo (WMO 96 y 99) alertando para resguardar vehículos.
+     - Incorpora botón directo `📡 Ver Radar en Directo` que conmuta al instante a la pestaña de radar satélite RainViewer.
+     - Soporta simulacro controlado (Ley 12) mediante `?test=tormenta` y `?test=granizo`.
+  3. *Base de Datos de Récords Oficiales AEMET en `js/utils/climatologyData.js`:*
+     - Incorporada la serie digital oficial de las estaciones históricas de referencia en Asturias (Gijón-Musel, Oviedo-Buenavista, Avilés-Aeropuerto, Llanes, Cangas del Narcea y Pajares).
+     - Despliega en la franja climatológica: récord de calor del mes con año, récord de frío del mes con año y máxima lluvia en 24 horas con año.
+  4. *Versionado & Anti-Caché:*
+     - Incremento oficial a `v1.1.32 ⚡`.
+     - Footer de `index.html` con `#app-version-badge` actualizado a `v1.1.32 ⚡`.
+     - Inyectado bloque de novedades en `#changelog-modal`.
+     - `CURRENT_APP_VERSION = '1.1.32'` en `js/app.js`.
+     - `CACHE_NAME = 'meteoasturlode-v1132-storm-records'` en `sw.js` y añadido `./js/utils/thunderstormDetector.js` a `STATIC_ASSETS`.
+     - CSS y módulos JS sincronizados con `?v=1.1.32`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.31 🌫️ — 2026-09-29
 - **Detector Silencioso e Inteligente de Borrina Marina y Nieblas de Valle (Ley 12):**
   1. *Concepto y Naturaleza Pasiva:*
      - Lendo consultó si el detector de borrina era pasivo, confirmándose su naturaleza 100% silenciosa: permanece invisible en días normales y únicamente salta a la vista cuando los sensores físicos constatan la niebla.

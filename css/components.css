@@ -256,12 +256,55 @@
   background: rgba(15, 23, 42, 0.55);
   border: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
+  flex-direction: column;
+  gap: 8px;
   box-sizing: border-box;
   width: 100%;
   transition: all 0.25s ease;
+}
+
+.climatology-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+}
+
+.climatology-records-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.75rem;
+}
+
+.records-station-tag {
+  color: #94a3b8;
+  font-weight: 700;
+  margin-right: 2px;
+}
+
+.record-mini-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(15, 23, 42, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 2px 7px;
+  border-radius: 6px;
+  color: #cbd5e1;
+}
+
+.record-mini-pill strong {
+  color: #f1f5f9;
+}
+
+.record-mini-pill small {
+  color: #94a3b8;
+  font-size: 0.70rem;
 }
 
 .climatology-strip:hover {
@@ -4966,6 +5009,165 @@
     font-size: 0.92rem;
   }
   .borrina-desc {
+    font-size: 0.84rem;
+  }
+}
+
+/* --- BANNER DINÁMICO DE ALERTA DE TORMENTA INMINENTE Y CONVECCIÓN --- */
+.thunderstorm-banner {
+  border-radius: var(--radius-lg);
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, rgba(88, 28, 135, 0.30) 0%, rgba(15, 23, 42, 0.85) 100%);
+  border: 1.5px solid rgba(168, 85, 247, 0.70);
+  box-shadow: 0 4px 24px rgba(147, 51, 234, 0.28), inset 0 0 16px rgba(168, 85, 247, 0.12);
+  animation: stormPurpleGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes stormPurpleGlow {
+  0% { border-color: rgba(168, 85, 247, 0.50); box-shadow: 0 4px 16px rgba(147, 51, 234, 0.20); }
+  100% { border-color: rgba(192, 132, 252, 0.95); box-shadow: 0 4px 28px rgba(168, 85, 247, 0.45); }
+}
+
+.thunderstorm-banner.severe {
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.32) 0%, rgba(88, 28, 135, 0.40) 100%);
+  border-color: rgba(239, 68, 68, 0.85);
+  box-shadow: 0 4px 30px rgba(239, 68, 68, 0.35), inset 0 0 20px rgba(239, 68, 68, 0.18);
+  animation: stormRedGlow 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes stormRedGlow {
+  0% { border-color: rgba(239, 68, 68, 0.60); box-shadow: 0 4px 18px rgba(239, 68, 68, 0.25); }
+  100% { border-color: rgba(248, 113, 113, 1); box-shadow: 0 4px 32px rgba(239, 68, 68, 0.55); }
+}
+
+.thunderstorm-banner-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.thunderstorm-header-left {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.thunderstorm-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+  animation: lightningFlicker 2s infinite ease-in-out;
+}
+
+@keyframes lightningFlicker {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.1); }
+}
+
+.thunderstorm-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #f3e8ff;
+  letter-spacing: -0.2px;
+}
+
+.thunderstorm-banner.severe .thunderstorm-title {
+  color: #fff1f2;
+}
+
+.thunderstorm-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  background: rgba(168, 85, 247, 0.25);
+  border: 1px solid rgba(192, 132, 252, 0.50);
+  color: #e9d5ff;
+}
+
+.thunderstorm-banner.severe .thunderstorm-badge {
+  background: rgba(239, 68, 68, 0.30);
+  border-color: rgba(239, 68, 68, 0.70);
+  color: #fecdd3;
+}
+
+.btn-radar-shortcut {
+  background: rgba(168, 85, 247, 0.18);
+  color: #e9d5ff;
+  border: 1px solid rgba(168, 85, 247, 0.40);
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-radar-shortcut:hover {
+  background: rgba(168, 85, 247, 0.35);
+  color: #ffffff;
+  border-color: #c084fc;
+  transform: translateY(-1px);
+}
+
+.thunderstorm-desc {
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: #e9d5ff;
+  margin: 0 0 10px 0;
+}
+
+.thunderstorm-desc strong {
+  color: #ffffff;
+}
+
+.thunderstorm-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.thunderstorm-metric-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(15, 23, 42, 0.50);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  color: #cbd5e1;
+}
+
+.thunderstorm-metric-pill strong {
+  color: #f3e8ff;
+}
+
+.thunderstorm-banner.severe .thunderstorm-metric-pill strong {
+  color: #fff1f2;
+}
+
+@media (max-width: 650px) {
+  .thunderstorm-banner {
+    padding: 12px 14px;
+    margin-bottom: 14px;
+  }
+  .thunderstorm-title {
+    font-size: 0.92rem;
+  }
+  .thunderstorm-desc {
     font-size: 0.84rem;
   }
 }

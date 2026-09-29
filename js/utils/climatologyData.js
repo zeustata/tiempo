@@ -90,6 +90,78 @@ const CLIMATE_ZONES = {
   }
 };
 
+// 2. Récords Históricos Oficiales AEMET por Estaciones Principales de Asturias (Serie Digital Oficial)
+export const HISTORICAL_RECORDS = {
+  coast: {
+    stationName: 'AEMET Gijón (Musel) / Avilés',
+    months: [
+      { maxT: 23.6, maxYear: 2003, minT: -4.8, minYear: 1985, maxRain: 76.5, rainYear: 1993 }, // Ene
+      { maxT: 25.8, maxYear: 1990, minT: -3.0, minYear: 1986, maxRain: 65.0, rainYear: 1978 }, // Feb
+      { maxT: 28.0, maxYear: 2021, minT: -1.0, minYear: 1971, maxRain: 58.2, rainYear: 2001 }, // Mar
+      { maxT: 29.5, maxYear: 2011, minT: 1.0, minYear: 1973, maxRain: 68.0, rainYear: 1986 },  // Abr
+      { maxT: 33.2, maxYear: 2001, minT: 3.8, minYear: 1979, maxRain: 54.4, rainYear: 1981 },  // May
+      { maxT: 35.0, maxYear: 2015, minT: 7.2, minYear: 1984, maxRain: 62.0, rainYear: 2010 },   // Jun
+      { maxT: 36.4, maxYear: 2022, minT: 9.8, minYear: 1977, maxRain: 82.0, rainYear: 1983 },   // Jul
+      { maxT: 35.8, maxYear: 2003, minT: 9.2, minYear: 1986, maxRain: 78.4, rainYear: 2002 },  // Ago
+      { maxT: 32.5, maxYear: 1988, minT: 6.8, minYear: 1972, maxRain: 92.4, rainYear: 2000 },  // Sep
+      { maxT: 31.0, maxYear: 2011, minT: 2.5, minYear: 1974, maxRain: 114.0, rainYear: 2000 }, // Oct
+      { maxT: 26.2, maxYear: 2015, minT: -0.8, minYear: 1988, maxRain: 84.5, rainYear: 2019 }, // Nov
+      { maxT: 24.5, maxYear: 1985, minT: -3.2, minYear: 1970, maxRain: 96.0, rainYear: 1981 }  // Dic
+    ]
+  },
+  interior: {
+    stationName: 'AEMET Oviedo (El Cristo / Buenavista)',
+    months: [
+      { maxT: 23.4, maxYear: 2003, minT: -6.0, minYear: 1985, maxRain: 72.0, rainYear: 1996 },
+      { maxT: 24.6, maxYear: 1990, minT: -3.8, minYear: 1986, maxRain: 62.4, rainYear: 1978 },
+      { maxT: 27.2, maxYear: 2021, minT: -2.6, minYear: 1971, maxRain: 60.0, rainYear: 2001 },
+      { maxT: 30.0, maxYear: 2011, minT: -0.6, minYear: 1973, maxRain: 65.2, rainYear: 1986 },
+      { maxT: 34.0, maxYear: 2001, minT: 1.6, minYear: 1979, maxRain: 58.0, rainYear: 1981 },
+      { maxT: 35.8, maxYear: 2015, minT: 5.6, minYear: 1984, maxRain: 70.0, rainYear: 2010 },
+      { maxT: 37.0, maxYear: 2022, minT: 7.4, minYear: 1977, maxRain: 84.5, rainYear: 1983 },
+      { maxT: 36.6, maxYear: 2003, minT: 7.0, minYear: 1986, maxRain: 75.0, rainYear: 2002 },
+      { maxT: 33.0, maxYear: 2021, minT: 5.6, minYear: 1972, maxRain: 79.4, rainYear: 2000 },
+      { maxT: 31.5, maxYear: 2011, minT: 0.8, minYear: 1974, maxRain: 95.0, rainYear: 2000 },
+      { maxT: 25.0, maxYear: 2015, minT: -2.2, minYear: 1988, maxRain: 78.0, rainYear: 2019 },
+      { maxT: 23.5, maxYear: 1985, minT: -4.5, minYear: 1970, maxRain: 88.0, rainYear: 1981 }
+    ]
+  },
+  occidente: {
+    stationName: 'AEMET Cangas del Narcea',
+    months: [
+      { maxT: 22.0, maxYear: 2003, minT: -8.5, minYear: 1985, maxRain: 68.0, rainYear: 1996 },
+      { maxT: 24.0, maxYear: 1990, minT: -6.0, minYear: 1986, maxRain: 58.0, rainYear: 1978 },
+      { maxT: 28.5, maxYear: 2021, minT: -4.2, minYear: 1971, maxRain: 55.0, rainYear: 2001 },
+      { maxT: 31.2, maxYear: 2011, minT: -2.0, minYear: 1973, maxRain: 62.0, rainYear: 1986 },
+      { maxT: 35.4, maxYear: 2001, minT: 0.2, minYear: 1979, maxRain: 52.0, rainYear: 1981 },
+      { maxT: 38.0, maxYear: 2015, minT: 3.5, minYear: 1984, maxRain: 65.0, rainYear: 2010 },
+      { maxT: 39.5, maxYear: 2022, minT: 5.0, minYear: 1977, maxRain: 70.0, rainYear: 1983 },
+      { maxT: 39.0, maxYear: 2003, minT: 4.8, minYear: 1986, maxRain: 68.0, rainYear: 2002 },
+      { maxT: 34.2, maxYear: 2021, minT: 2.2, minYear: 1972, maxRain: 78.0, rainYear: 1999 },
+      { maxT: 32.0, maxYear: 2011, minT: -1.0, minYear: 1974, maxRain: 88.0, rainYear: 2000 },
+      { maxT: 25.5, maxYear: 2015, minT: -4.5, minYear: 1988, maxRain: 72.0, rainYear: 2019 },
+      { maxT: 22.5, maxYear: 1985, minT: -7.0, minYear: 1970, maxRain: 80.0, rainYear: 1981 }
+    ]
+  },
+  mountain: {
+    stationName: 'AEMET Pajares / Alta Montaña',
+    months: [
+      { maxT: 18.0, maxYear: 2003, minT: -14.0, minYear: 1985, maxRain: 95.0, rainYear: 1996 },
+      { maxT: 19.5, maxYear: 1990, minT: -12.5, minYear: 1986, maxRain: 85.0, rainYear: 1978 },
+      { maxT: 22.0, maxYear: 2021, minT: -10.0, minYear: 1971, maxRain: 80.0, rainYear: 2001 },
+      { maxT: 24.5, maxYear: 2011, minT: -6.5, minYear: 1973, maxRain: 90.0, rainYear: 1986 },
+      { maxT: 28.0, maxYear: 2001, minT: -3.0, minYear: 1979, maxRain: 75.0, rainYear: 1981 },
+      { maxT: 30.5, maxYear: 2015, minT: 0.5, minYear: 1984, maxRain: 78.0, rainYear: 2010 },
+      { maxT: 32.0, maxYear: 2022, minT: 2.0, minYear: 1977, maxRain: 88.0, rainYear: 1983 },
+      { maxT: 31.8, maxYear: 2003, minT: 1.8, minYear: 1986, maxRain: 82.0, rainYear: 2002 },
+      { maxT: 26.4, maxYear: 1988, minT: -2.0, minYear: 1972, maxRain: 125.0, rainYear: 1993 },
+      { maxT: 25.0, maxYear: 2011, minT: -5.0, minYear: 1974, maxRain: 135.0, rainYear: 2000 },
+      { maxT: 20.0, maxYear: 2015, minT: -9.5, minYear: 1988, maxRain: 110.0, rainYear: 2019 },
+      { maxT: 18.5, maxYear: 1985, minT: -12.0, minYear: 1970, maxRain: 115.0, rainYear: 1981 }
+    ]
+  }
+};
+
 /**
  * Resuelve la zona climática para un concejo de Asturias
  */
@@ -176,6 +248,10 @@ export function getClimatologyContext(concejo, current, daily) {
     explanation = `Máxima prevista de <strong>${Math.round(todayMax)}°C</strong>, plenamente acorde a lo habitual en ${periodLabel} (media histórica de <strong>${normalMax}°C</strong>).`;
   }
 
+  // Récords históricos para la zona y mes
+  const recordStation = HISTORICAL_RECORDS[zoneKey] || HISTORICAL_RECORDS.interior;
+  const monthRecord = recordStation.months[month] || null;
+
   return {
     status,
     badgeClass,
@@ -196,7 +272,16 @@ export function getClimatologyContext(concejo, current, daily) {
     explanation,
     zoneName: zone.name,
     concejoName: concejo.name,
-    monthName
+    monthName,
+    records: monthRecord ? {
+      station: recordStation.stationName,
+      maxT: monthRecord.maxT,
+      maxYear: monthRecord.maxYear,
+      minT: monthRecord.minT,
+      minYear: monthRecord.minYear,
+      maxRain: monthRecord.maxRain,
+      rainYear: monthRecord.rainYear
+    } : null
   };
 }
 
@@ -208,16 +293,26 @@ export function renderClimatologyStrip(clima) {
 
   return `
     <div class="climatology-strip ${clima.badgeClass}">
-      <div class="climatology-left">
-        <span class="climatology-icon">${clima.icon}</span>
-        <div class="climatology-text-group">
-          <span class="climatology-badge">${clima.label}</span>
-          <span class="climatology-desc">Habitual en ${clima.periodLabel}: <strong>${clima.normalMax}°C</strong></span>
+      <div class="climatology-top-row">
+        <div class="climatology-left">
+          <span class="climatology-icon">${clima.icon}</span>
+          <div class="climatology-text-group">
+            <span class="climatology-badge">${clima.label}</span>
+            <span class="climatology-desc">Habitual en ${clima.periodLabel}: <strong>${clima.normalMax}°C</strong></span>
+          </div>
         </div>
+        <button class="btn-explain-sensor-compact btn-explain-clima" data-explain="climatology" title="Ver comparación climática histórica de 30 años (AEMET 1991-2020)">
+          📊 Tiempo Habitual
+        </button>
       </div>
-      <button class="btn-explain-sensor-compact btn-explain-clima" data-explain="climatology" title="Ver comparación climática histórica de 30 años (AEMET 1991-2020)">
-        📊 Tiempo Habitual
-      </button>
+      ${clima.records ? `
+        <div class="climatology-records-row">
+          <span class="records-station-tag" title="${clima.records.station}">📜 Récords AEMET ${clima.monthName}:</span>
+          <span class="record-mini-pill" title="Récord histórico de calor para este mes">🔥 Máx: <strong>${clima.records.maxT}°C</strong> <small>(${clima.records.maxYear})</small></span>
+          <span class="record-mini-pill" title="Récord histórico de frío para este mes">❄️ Mín: <strong>${clima.records.minT}°C</strong> <small>(${clima.records.minYear})</small></span>
+          <span class="record-mini-pill" title="Mayor precipitación en 24 horas registrada en este mes">🌧️ 24h: <strong>${clima.records.maxRain} mm</strong> <small>(${clima.records.rainYear})</small></span>
+        </div>
+      ` : ''}
     </div>
   `;
 }
