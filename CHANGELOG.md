@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.28] - 2026-09-29
+
+### 🧪 Algoritmo Híbrido de Consenso Cantábrico (AROME + ECMWF)
+- **Filtro de Seguridad contra Falsos Claros Costeros:**
+  - Lendo detectó que bajo cielo cubierto observable en las webcams de Gijón, la aplicación marcaba erróneamente *Despejado / Soleyeru* con apenas un 13-44% de nubes.
+  - Causa meteorológica: el modelo de mesoescala AROME (1.3 km) genera ocasionalmente "agujeros" de subsidencia o viento de sotavento ficticios en bahías costeras cantábricas, mientras que el modelo europeo global (ECMWF IFS, 9 km) mantenía con total acierto un 91% de nubosidad cubierta.
+  - Implementado un filtro de consenso inteligente en paralelo en `js/services/weatherApi.js`: cuando el modelo Auto detecta divergencia crítica (AROME con nubosidad < 50% frente a ECMWF con nubosidad >= 75%), se activa el blindaje adoptando la cobertura y radiación de ECMWF.
+  - **Preservación Total de Calibraciones Asturianas:** El detector de *Resol / Sol tamizáu* (umbral 450 W/m²), la armonización de precipitación QPF-PoP, y todos los módulos propios se mantienen al 100% operativos sobre los datos armonizados.
+- **Catálogo de Modelos:**
+  - Actualizada la etiqueta del modelo `best_match` a **🧪 En Pruebas (Beta)** en el modal de selección de modelos.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v1128-consensus-beta`, actualización a `?v=1.1.28` en hojas de estilo, scripts y módulos.
+
+---
+
 ## [1.1.27] - 2026-09-29
 
 ### ☀️ Calibración Estricta de Resol / Sol Tamizáu (Ley 7)

@@ -125,4 +125,5 @@
 10. **Doctrina de Precisión Frente a Plataformas Generalistas (Duelo Maldonado):**
     - Búsqueda de la máxima fidelidad y veracidad en Asturias frente a los modelos globales simplificados de apps generalistas (*eltiempo.es*).
     - Protocolo de doble escala temporal: a medio plazo (72 a 96 h) se evalúa la tendencia sinóptica con **Auto Multi-Modelo** y **ECMWF** sin forzar horarios prematuros; en corto plazo (< 48 h) se aplica la hiper-resolución de **AROME (1.3 km)** para capturar con precisión la interacción del frente con el Cabo Peñas, valles y la Cordillera Cantábrica, evitando la trampa del desfase de medianoche.
+    - **Algoritmo Híbrido de Consenso Cantábrico (AROME + ECMWF):** en modo Auto, el sistema activa un filtro de seguridad en paralelo que detecta falsos claros costeros numéricos de AROME (`< 50%` nubes frente a `>= 75%` de ECMWF), adoptando la nubosidad y radiación solar real de ECMWF y preservando el 100% de las calibraciones de Resol y lluvia asturiana.
 

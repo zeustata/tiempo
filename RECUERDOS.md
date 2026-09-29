@@ -13,7 +13,28 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   5. *Fronteras del conocimiento:* Distinción rigurosa entre hechos, opiniones y desconocimiento (sin rellenar con especulaciones).
   6. *Separación entre Juicio y Ejecución:* Aplica cuando se pide juicio; ante órdenes de tareas concretas decididas, se ejecuta sin discusión.
 
-## 🚀 Última Actualización Oficial: v1.1.27 ☀️ — 2026-09-29
+## 🚀 Última Actualización Oficial: v1.1.28 🧪 — 2026-09-29
+- **Algoritmo Híbrido de Consenso Cantábrico (AROME + ECMWF):**
+  1. *Diagnóstico de Falso Claro Costero en Gijón:*
+     - Lendo constató que al seleccionar Gijón en la app, se mostraba *Despejado / Soleyeru (`☀️`)* con 13-44% de nubes, mientras que la webcam de San Lorenzo mostraba un cielo mayoritariamente cubierto.
+     - La comparativa multi-modelo reveló que AROME (1.3 km) simuló un claro numérico irreal en la bahía de Gijón, mientras que ECMWF IFS (9 km) marcaba con total fidelidad un 91% de nubosidad cubierta (`weather_code: 3`).
+     - Al estar la app en modo `Auto Multi-Modelo` (`best_match`), Open-Meteo priorizaba a AROME por su malla ultra-fina, arrastrando el error a la interfaz.
+  2. *Implementación Técnica del Consenso en Paralelo:*
+     - En `js/services/weatherApi.js`, cuando el modelo activo es el modo Auto, se lanza en paralelo una consulta ligera (300 bytes) a ECMWF IFS (`weather_code,cloud_cover,direct_normal_irradiance,shortwave_radiation`).
+     - Si se detecta divergencia crítica (`rawCloud < 50 && ecmwfCloud >= 75 && diff >= 30%`), la función `applyCantabricoConsensus` adopta la cobertura nubosa y los valores solares de ECMWF para el tiempo en vivo y las primeras 24 horas.
+     - **Preservación Incondicional de Calibraciones:** Los detectores de *Resol / Sol tamizáu* (Ley 7 con umbral estricto de 450 W/m²), armonización QPF-PoP (Ley 8), rompientes de surf (Ley 9) y puertos de montaña operan de manera intacta sobre los datos armonizados.
+  3. *Catálogo de Modelos & Versionado:*
+     - Etiqueta del modelo `best_match` cambiada a `🧪 En Pruebas (Beta)`.
+     - Incremento oficial a `v1.1.28 🧪`.
+     - Footer de `index.html` actualizado con badge `#app-version-badge` a `v1.1.28 🧪`.
+     - Inyectado bloque de novedades en `#changelog-modal`.
+     - `CURRENT_APP_VERSION = '1.1.28'` en `js/app.js`.
+     - `CACHE_NAME = 'meteoasturlode-v1128-consensus-beta'` en `sw.js`.
+     - CSS y módulos JS sincronizados con `?v=1.1.28`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.27 ☀️ — 2026-09-29
 - **Calibración Estricta de Resol / Sol Tamizáu (Ley 7):**
   1. *Diagnóstico Físico y Delimitación entre "Nublado Claro" y "Resol":*
      - Lendo constató en vivo que tras el primer ajuste (190 W/m²), la app continuaba marcando *"Resol / Sol tamizáu"* bajo un cielo totalmente cubierto (100% nubes) pero de tonalidad clara y luminosa (capa de altostratos blanquecinos sin sol directo perceptible).

@@ -5,13 +5,13 @@ export const WEATHER_MODELS = [
   {
     id: 'best_match',
     apiModel: '',
-    name: 'Auto Multi-Modelo',
-    agency: 'Combinación Inteligente Multi-Fuente',
+    name: 'Auto Híbrido de Consenso',
+    agency: 'Combinación Inteligente AROME + ECMWF',
     flag: '🌟',
     resolution: '1 - 3 km',
-    tag: '⭐ Recomendado',
-    description: 'Algoritmo inteligente que selecciona y combina automáticamente el mejor modelo meteorológico para cada punto de Asturias.',
-    bestFor: 'Máxima precisión general y uso diario en cualquier concejo.'
+    tag: '🧪 En Pruebas (Beta)',
+    description: 'Algoritmo inteligente de consenso cantábrico que combina la hiper-resolución de AROME (1.3 km) con el filtro de seguridad de ECMWF (9 km) para blindar contra falsos claros costeros.',
+    bestFor: 'Máxima precisión general con protección anti-claros ficticios en costa.'
   },
   {
     id: 'ecmwf_ifs025',
@@ -92,9 +92,21 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
     const marineUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${marineLat}&longitude=${marineLon}&current=wave_height,wave_direction,wave_period,wind_wave_height,wind_wave_direction,wind_wave_period,swell_wave_height,swell_wave_direction,swell_wave_period,secondary_swell_wave_height,secondary_swell_wave_direction,secondary_swell_wave_period,sea_surface_temperature&hourly=wave_height,wave_direction,wave_period,wind_wave_height,wind_wave_period,swell_wave_height,swell_wave_direction,swell_wave_period,secondary_swell_wave_height,secondary_swell_wave_direction,secondary_swell_wave_period&timezone=Europe%2FMadrid`;
     const marinePromise = fetch(marineUrl).then(r => r.json()).catch(() => null);
 
-    const [weather, aqi, marine] = await Promise.all([weatherPromise, aqiPromise, marinePromise]);
+    // 4. Filtro de Seguridad y Consenso Cantábrico (AROME + ECMWF)
+    // Cuando se usa el modo Auto, se consulta en paralelo ECMWF para blindar contra falsos claros costeros
+    const isAutoModel = !modelParam || modelParam === 'best_match';
+    const consensusPromise = isAutoModel
+      ? fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=weather_code,cloud_cover,direct_normal_irradiance,shortwave_radiation&hourly=weather_code,cloud_cover,direct_normal_irradiance,shortwave_radiation&models=ecmwf_ifs025&timezone=Europe%2FMadrid&forecast_days=2`)
+          .then(r => r.ok ? r.json() : null)
+          .catch(() => null)
+      : Promise.resolve(null);
+
+    const [weather, aqi, marine, consensus] = await Promise.all([weatherPromise, aqiPromise, marinePromise, consensusPromise]);
 
     if (weather) {
+      if (consensus) {
+        applyCantabricoConsensus(weather, consensus);
+      }
       harmonizeWeatherPrecipitation(weather);
     }
 
@@ -111,6 +123,60 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
       success: false,
       error: error.message
     };
+  }
+}
+
+/**
+ * Filtro de Seguridad y Consenso Cantábrico (AROME + ECMWF):
+ * Resuelve la anomalía de mesoescala donde AROME (malla 1.3 km) simula ocasionalmente
+ * un "agujero" de claro ficticio en la costa o bahías (nubosidad < 50%, cielo soleado)
+ * mientras el modelo de referencia mundial (ECMWF IFS, 9 km) constata que la región
+ * está bajo un manto nuboso cerrado (nubosidad >= 75%).
+ * Si se detecta la divergencia (diferencia >= 30%), adopta la nubosidad y radiación solar real de ECMWF,
+ * permitiendo que el detector de Resol (Ley 7) evalúe con datos físicos fieles.
+ */
+function applyCantabricoConsensus(weather, consensus) {
+  if (!weather || !consensus) return;
+
+  // 1. Verificación del tiempo actual en vivo
+  if (weather.current && consensus.current) {
+    const rawCloud = weather.current.cloud_cover != null ? weather.current.cloud_cover : 100;
+    const ecmwfCloud = consensus.current.cloud_cover != null ? consensus.current.cloud_cover : 0;
+    const isFalseClear = rawCloud < 50 && ecmwfCloud >= 75 && (ecmwfCloud - rawCloud >= 30);
+
+    if (isFalseClear) {
+      weather.current.cloud_cover = ecmwfCloud;
+      if (consensus.current.weather_code != null) {
+        weather.current.weather_code = consensus.current.weather_code;
+      }
+      if (consensus.current.direct_normal_irradiance != null) {
+        weather.current.direct_normal_irradiance = consensus.current.direct_normal_irradiance;
+      }
+      if (consensus.current.shortwave_radiation != null) {
+        weather.current.shortwave_radiation = consensus.current.shortwave_radiation;
+      }
+    }
+  }
+
+  // 2. Verificación de pronóstico horario inmediato (primeras 24 horas)
+  if (weather.hourly && weather.hourly.time && consensus.hourly && consensus.hourly.time) {
+    const limit = Math.min(weather.hourly.time.length, consensus.hourly.time.length, 24);
+    for (let i = 0; i < limit; i++) {
+      const rawC = weather.hourly.cloud_cover ? weather.hourly.cloud_cover[i] : 100;
+      const ecmwfC = consensus.hourly.cloud_cover ? consensus.hourly.cloud_cover[i] : 0;
+      if (rawC < 50 && ecmwfC >= 75 && (ecmwfC - rawC >= 30)) {
+        if (weather.hourly.cloud_cover) weather.hourly.cloud_cover[i] = ecmwfC;
+        if (weather.hourly.weather_code && consensus.hourly.weather_code) {
+          weather.hourly.weather_code[i] = consensus.hourly.weather_code[i];
+        }
+        if (weather.hourly.direct_normal_irradiance && consensus.hourly.direct_normal_irradiance) {
+          weather.hourly.direct_normal_irradiance[i] = consensus.hourly.direct_normal_irradiance[i];
+        }
+        if (weather.hourly.shortwave_radiation && consensus.hourly.shortwave_radiation) {
+          weather.hourly.shortwave_radiation[i] = consensus.hourly.shortwave_radiation[i];
+        }
+      }
+    }
   }
 }
 
