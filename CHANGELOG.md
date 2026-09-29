@@ -10,6 +10,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.29] - 2026-09-29
+
+### 🧪 Armonización de Lluvia por Consenso (Supresión de la Paradoja 63% con 0.0 mm)
+- **Eliminación del Conflicto de Ensambles en Modo Auto:**
+  - Lendo detectó que en el pronóstico para las horas nocturnas (21:00 a 23:00 en Gijón), la aplicación marcaba hasta un 63% de probabilidad de precipitación pero con `0.0 mm`.
+  - Diagnóstico físico y estadístico: el motor `best_match` de Open-Meteo inyecta la probabilidad de lluvia del ensamble alemán (DWD ICON, 55-63%) porque AROME no dispone de salida probabilística, pero conserva los milímetros de la salida determinista seca de AROME (0.0 mm).
+  - Solución en `js/services/weatherApi.js`: se extendió el *Algoritmo Híbrido de Consenso Cantábrico* para consultar en paralelo la precipitación y lluvia de ECMWF IFS. Cuando la probabilidad supera el 30% pero el modelo determinista no marca lluvia (< 0.1 mm) y ECMWF confirma lluvia medible (>= 0.1 mm), el consenso adopta los milímetros acumulables y el código de orballu/llovizna (WMO 51) de ECMWF.
+  - Plena consistencia visual y meteorológica entre la curva de probabilidad horaria, las barras de lluvia y los iconos del tiempo.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v1129-rain-consensus`, actualización a `?v=1.1.29` en hojas de estilo, scripts y módulos.
+
+---
+
 ## [1.1.28] - 2026-09-29
 
 ### 🧪 Algoritmo Híbrido de Consenso Cantábrico (AROME + ECMWF)

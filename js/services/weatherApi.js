@@ -94,9 +94,10 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
 
     // 4. Filtro de Seguridad y Consenso Cantábrico (AROME + ECMWF)
     // Cuando se usa el modo Auto, se consulta en paralelo ECMWF para blindar contra falsos claros costeros
+    // y resolver la asimetría de lluvia (PoP alto con 0.0 mm por corte determinista de AROME)
     const isAutoModel = !modelParam || modelParam === 'best_match';
     const consensusPromise = isAutoModel
-      ? fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=weather_code,cloud_cover,direct_normal_irradiance,shortwave_radiation&hourly=weather_code,cloud_cover,direct_normal_irradiance,shortwave_radiation&models=ecmwf_ifs025&timezone=Europe%2FMadrid&forecast_days=2`)
+      ? fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=weather_code,cloud_cover,direct_normal_irradiance,shortwave_radiation,precipitation&hourly=weather_code,cloud_cover,direct_normal_irradiance,shortwave_radiation,precipitation,rain&models=ecmwf_ifs025&timezone=Europe%2FMadrid&forecast_days=2`)
           .then(r => r.ok ? r.json() : null)
           .catch(() => null)
       : Promise.resolve(null);
@@ -132,8 +133,8 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
  * un "agujero" de claro ficticio en la costa o bahías (nubosidad < 50%, cielo soleado)
  * mientras el modelo de referencia mundial (ECMWF IFS, 9 km) constata que la región
  * está bajo un manto nuboso cerrado (nubosidad >= 75%).
- * Si se detecta la divergencia (diferencia >= 30%), adopta la nubosidad y radiación solar real de ECMWF,
- * permitiendo que el detector de Resol (Ley 7) evalúe con datos físicos fieles.
+ * Igualmente, resuelve la paradoja de probabilidad alta con 0.0 mm cuando AROME omite lluvia
+ * pero los conjuntos y ECMWF confirman orballu o llovizna acumulable.
  */
 function applyCantabricoConsensus(weather, consensus) {
   if (!weather || !consensus) return;
@@ -156,12 +157,23 @@ function applyCantabricoConsensus(weather, consensus) {
         weather.current.shortwave_radiation = consensus.current.shortwave_radiation;
       }
     }
+
+    // Armonización de lluvia en vivo si ECMWF confirma precipitación y AROME la omite
+    const rawPrecip = weather.current.precipitation || 0;
+    const ecmwfPrecip = consensus.current.precipitation || 0;
+    if (rawPrecip < 0.1 && ecmwfPrecip >= 0.1) {
+      weather.current.precipitation = ecmwfPrecip;
+      if (weather.current.weather_code < 50 && consensus.current.weather_code != null) {
+        weather.current.weather_code = consensus.current.weather_code;
+      }
+    }
   }
 
-  // 2. Verificación de pronóstico horario inmediato (primeras 24 horas)
+  // 2. Verificación de pronóstico horario inmediato (primeras 48 horas)
   if (weather.hourly && weather.hourly.time && consensus.hourly && consensus.hourly.time) {
-    const limit = Math.min(weather.hourly.time.length, consensus.hourly.time.length, 24);
+    const limit = Math.min(weather.hourly.time.length, consensus.hourly.time.length, 48);
     for (let i = 0; i < limit; i++) {
+      // A) Armonización de falso claro
       const rawC = weather.hourly.cloud_cover ? weather.hourly.cloud_cover[i] : 100;
       const ecmwfC = consensus.hourly.cloud_cover ? consensus.hourly.cloud_cover[i] : 0;
       if (rawC < 50 && ecmwfC >= 75 && (ecmwfC - rawC >= 30)) {
@@ -174,6 +186,23 @@ function applyCantabricoConsensus(weather, consensus) {
         }
         if (weather.hourly.shortwave_radiation && consensus.hourly.shortwave_radiation) {
           weather.hourly.shortwave_radiation[i] = consensus.hourly.shortwave_radiation[i];
+        }
+      }
+
+      // B) Armonización de precipitación (Asimetría PoP alto con 0.0 mm)
+      // Si la probabilidad es significativa (>= 30%) pero AROME da 0.0 mm y ECMWF prevé lluvia medible (>= 0.1 mm)
+      const pop = weather.hourly.precipitation_probability ? (weather.hourly.precipitation_probability[i] || 0) : 0;
+      const precip = weather.hourly.precipitation ? (weather.hourly.precipitation[i] || 0) : 0;
+      const ePrecip = consensus.hourly.precipitation ? (consensus.hourly.precipitation[i] || 0) : 0;
+      const eCode = consensus.hourly.weather_code ? consensus.hourly.weather_code[i] : null;
+
+      if (precip < 0.1 && pop >= 30 && ePrecip >= 0.1) {
+        if (weather.hourly.precipitation) weather.hourly.precipitation[i] = ePrecip;
+        if (weather.hourly.rain && consensus.hourly.rain) {
+          weather.hourly.rain[i] = consensus.hourly.rain[i];
+        }
+        if (weather.hourly.weather_code && (weather.hourly.weather_code[i] < 50) && eCode) {
+          weather.hourly.weather_code[i] = eCode;
         }
       }
     }

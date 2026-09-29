@@ -13,7 +13,27 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   5. *Fronteras del conocimiento:* Distinción rigurosa entre hechos, opiniones y desconocimiento (sin rellenar con especulaciones).
   6. *Separación entre Juicio y Ejecución:* Aplica cuando se pide juicio; ante órdenes de tareas concretas decididas, se ejecuta sin discusión.
 
-## 🚀 Última Actualización Oficial: v1.1.28 🧪 — 2026-09-29
+## 🚀 Última Actualización Oficial: v1.1.29 🧪 — 2026-09-29
+- **Armonización de Lluvia por Consenso (Supresión de la Paradoja 63% con 0.0 mm):**
+  1. *Diagnóstico del Desacople Estadístico-Determinista:*
+     - Lendo observó en el pronóstico nocturno para Gijón que el modelo en pruebas marcaba a las 22:00 un 55% y a las 23:00 un 63% de lluvia pero con `0.0 mm` acumulados.
+     - La investigación de la API de Open-Meteo desveló que `best_match` extrae el porcentaje de probabilidad del ensamble alemán DWD ICON-EPS (que ve lluvia de 0.6 mm y por tanto 63% de probabilidad), pero los litros los extrae de la salida determinista seca de AROME (0.0 mm).
+     - Al mismo tiempo, el modelo Europeo (ECMWF IFS) pronosticaba orballu continuo (`WMO 51`) con 0.3 mm cada hora (~1 mm acumulado).
+  2. *Resolución Algorítmica en `js/services/weatherApi.js`:*
+     - Se añadió la precipitación y lluvia a la consulta paralela de ECMWF en el *Filtro de Seguridad y Consenso Cantábrico*.
+     - Regla de Armonización: si la probabilidad horaria es significativa (`>= 30%`), el modelo cuantitativo en bruto no marca lluvia (`< 0.1 mm`), y ECMWF prevé lluvia real (`>= 0.1 mm`), el consenso adopta los milímetros y el código WMO de ECMWF (orballu / calabobos / lluvia ligera).
+     - Resultado: a las 22:00 y 23:00, la app muestra de forma coherente 0.3 mm con código 51 (*Orbayu llixeru*) junto a su probabilidad correspondiente, eliminando la confusión visual para el usuario.
+  3. *Versionado & Anti-Caché:*
+     - Incremento oficial a `v1.1.29 🧪`.
+     - Footer de `index.html` actualizado con badge `#app-version-badge` a `v1.1.29 🧪`.
+     - Inyectado bloque de novedades en `#changelog-modal`.
+     - `CURRENT_APP_VERSION = '1.1.29'` en `js/app.js`.
+     - `CACHE_NAME = 'meteoasturlode-v1129-rain-consensus'` en `sw.js`.
+     - CSS y módulos JS sincronizados con `?v=1.1.29`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.28 🧪 — 2026-09-29
 - **Algoritmo Híbrido de Consenso Cantábrico (AROME + ECMWF):**
   1. *Diagnóstico de Falso Claro Costero en Gijón:*
      - Lendo constató que al seleccionar Gijón en la app, se mostraba *Despejado / Soleyeru (`☀️`)* con 13-44% de nubes, mientras que la webcam de San Lorenzo mostraba un cielo mayoritariamente cubierto.
