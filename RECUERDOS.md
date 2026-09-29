@@ -13,7 +13,32 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   5. *Fronteras del conocimiento:* Distinción rigurosa entre hechos, opiniones y desconocimiento (sin rellenar con especulaciones).
   6. *Separación entre Juicio y Ejecución:* Aplica cuando se pide juicio; ante órdenes de tareas concretas decididas, se ejecuta sin discusión.
 
-## 🚀 Última Actualización Oficial: v1.1.29 🧪 — 2026-09-29
+## 🚀 Última Actualización Oficial: v1.1.30 ☂️ — 2026-09-29
+- **Semáforu del Paragües (Nowcasting Práctico Asturiano):**
+  1. *Concepto e Integración:*
+     - Lendo solicitó incorporar una funcionalidad útil y directa para el día a día asturiano: el "Semáforo del Paraguas", que responde de un vistazo si se debe coger paraguas o si se puede salir o tender con tranquilidad.
+     - Se descartó la integración forzada o con iframes de webcams de terceros para evitar bloqueos por CORS, infracciones de derechos, banners publicitarios externos y rechazos en Google Play Store (manteniéndose los enlaces directos verificados en nueva pestaña, 100% legales y seguros).
+  2. *Arquitectura e Implementación en `js/utils/umbrellaAdvisor.js`:*
+     - Ventana temporal de 6 a 8 horas inmediatas (Nowcasting).
+     - Se alimenta de los datos de `current` y `hourly` una vez procesados por el *Algoritmo Híbrido de Consenso Cantábrico (Leyes 7, 8 y 10)*, garantizando que el orballu nocturno de Gijón (0.3 mm rescatado de ECMWF) active correctamente la advertencia.
+     - Tres estados cromáticos intuitivos:
+       - 🟢 **Cielo Noble**: Tregua seca garantizada en las próximas 8 horas. No hace falta paraguas.
+       - 🟡 **Peligro d'Orbayu**: Orbayu / llovizna fina prevista en las próximas horas (o activa en el momento). Muestra la hora exacta prevista de llegada (ej. *"a partir de las 21:00 h"*), la cantidad en mm y recomendación de chubasquero o paraguas pequeño.
+       - 🔴 **Bastinazu**: Lluvia copiosa (>= 1.5 mm/h o tormenta). Alerta visual destacada para llevar paraguas grande o quedarse a cubierto.
+  3. *Diseño Visual y Blindaje Ergonómico (Leyes 11 y 14):*
+     - Componente `.umbrella-advisor-strip` con estética *Liquid Glass* integrado armónicamente dentro de la tarjeta meteorológica principal justo debajo de la pastilla climática.
+     - Indicador tipo píldora pulsante (`dot-safe`, `dot-warning`, `dot-danger`) adaptado al 100% al ancho útil de dispositivos móviles sin desbordes.
+  4. *Versionado & Anti-Caché:*
+     - Incremento oficial a `v1.1.30 ☂️`.
+     - Footer de `index.html` con `#app-version-badge` actualizado a `v1.1.30 ☂️`.
+     - Inyectado bloque de novedades en `#changelog-modal`.
+     - `CURRENT_APP_VERSION = '1.1.30'` en `js/app.js`.
+     - `CACHE_NAME = 'meteoasturlode-v1130-umbrella-advisor'` en `sw.js` y añadido `./js/utils/umbrellaAdvisor.js` a `STATIC_ASSETS`.
+     - CSS y módulos JS sincronizados con `?v=1.1.30`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.29 🧪 — 2026-09-29
 - **Armonización de Lluvia por Consenso (Supresión de la Paradoja 63% con 0.0 mm):**
   1. *Diagnóstico del Desacople Estadístico-Determinista:*
      - Lendo observó en el pronóstico nocturno para Gijón que el modelo en pruebas marcaba a las 22:00 un 55% y a las 23:00 un 63% de lluvia pero con `0.0 mm` acumulados.

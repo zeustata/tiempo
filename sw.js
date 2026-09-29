@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1129-rain-consensus';
+const CACHE_NAME = 'meteoasturlode-v1130-umbrella-advisor';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -43,6 +43,7 @@ const STATIC_ASSETS = [
   './js/utils/laundryAdvisor.js',
   './js/utils/climatologyData.js',
   './js/utils/storage.js',
+  './js/utils/umbrellaAdvisor.js',
   './js/utils/tides.js'
 ];
 

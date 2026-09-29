@@ -10,6 +10,23 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.30] - 2026-09-29
+
+### ☂️ Semáforu del Paragües (Nowcasting Práctico Asturiano)
+- **Asistente Inteligente de Lluvia y Orbayu para el Día a Día:**
+  - Nueva banda interactiva y ergonómica (`.umbrella-advisor-strip`) integrada en la tarjeta meteorológica principal, diseñada para resolver la duda cotidiana asturiana: *¿Tengo que coger paraguas para salir ahora?*.
+  - **Ventana de Nowcasting a Corto Plazo (6 a 8 horas):**
+    - Evalúa en tiempo real las condiciones actuales y el pronóstico de las próximas 6 a 8 horas, alimentándose directamente de los datos ya armonizados por el Algoritmo de Consenso Cantábrico (Leyes 7, 8 y 10).
+  - **Semáforo Cromático Tricolor Inmediato:**
+    - 🟢 **Cielo Noble**: Tregua seca garantizada en las próximas 8 horas. No hace falta paraguas, ideal para tender o pasear sin preocupaciones.
+    - 🟡 **Peligro d'Orbayu**: Orbayu o llovizna fina prevista en las próximas horas (o activa en el momento). Muestra la hora estimada de inicio (ej. *"desde las 21:00 h"*), la cantidad en mm y la recomendación de llevar chubasquero o paraguas pequeño.
+    - 🔴 **Bastinazu / Lluvia Fuerte**: Lluvia copiosa o temporal (>= 1.5 mm/h o tormenta). Alerta visual con paraguas grande indispensable y aviso de ponerse a cubierto.
+  - **Diseño Ergonómico y Liquid Glass (Leyes 5, 11 y 14):**
+    - Totalmente adaptado a pantallas móviles estrechas, sin desbordes, con badge de estado pulsante (`dot-safe`, `dot-warning`, `dot-danger`) y micro-animaciones fluidas.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v1130-umbrella-advisor`, actualización a `?v=1.1.30` en hojas de estilo, scripts y módulos.
+
+---
+
 ## [1.1.29] - 2026-09-29
 
 ### 🧪 Armonización de Lluvia por Consenso (Supresión de la Paradoja 63% con 0.0 mm)

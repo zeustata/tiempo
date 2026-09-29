@@ -6286,5 +6286,151 @@
   color: #fca5a5;
 }
 
+/* ========================================================
+   ☂️ SEMÁFORU DEL PARAGÜES (El Semáforo del Paraguas Asturiano)
+   ======================================================== */
+.umbrella-advisor-strip {
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.umbrella-advisor-strip.safe {
+  border-color: rgba(16, 185, 129, 0.35);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(15, 23, 42, 0.45) 100%);
+}
+
+.umbrella-advisor-strip.warning {
+  border-color: rgba(245, 158, 11, 0.4);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.14) 0%, rgba(15, 23, 42, 0.45) 100%);
+}
+
+.umbrella-advisor-strip.danger {
+  border-color: rgba(239, 68, 68, 0.45);
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.18) 0%, rgba(15, 23, 42, 0.45) 100%);
+}
+
+.umbrella-strip-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-width: 0;
+}
+
+.umbrella-strip-icon {
+  font-size: 1.85rem;
+  line-height: 1;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.umbrella-strip-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  flex: 1;
+}
+
+.umbrella-strip-headline {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.umbrella-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+.umbrella-badge-safe {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.umbrella-badge-warning {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.umbrella-badge-danger {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.umbrella-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot-safe {
+  background: #10b981;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.8);
+}
+
+.dot-warning {
+  background: #f59e0b;
+  box-shadow: 0 0 6px rgba(245, 158, 11, 0.8);
+  animation: pulse-warn 2s infinite ease-in-out;
+}
+
+.dot-danger {
+  background: #ef4444;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.9);
+  animation: pulse-danger 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse-warn {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.2); }
+}
+
+@keyframes pulse-danger {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.3); }
+}
+
+.umbrella-strip-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.umbrella-strip-desc {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.35;
+}
+
+
 
 

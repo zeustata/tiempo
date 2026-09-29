@@ -1,11 +1,12 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.1.29';
-import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.1.29';
-import { renderHourlyForecastBlock } from './forecastView.js?v=1.1.29';
-import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.29';
-import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=1.1.29';
-import { detectXeluEffect, renderXeluBanner } from '../utils/xeluDetector.js?v=1.1.29';
-import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.29';
-import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=1.1.29';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.1.30';
+import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.1.30';
+import { renderHourlyForecastBlock } from './forecastView.js?v=1.1.30';
+import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.30';
+import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=1.1.30';
+import { detectXeluEffect, renderXeluBanner } from '../utils/xeluDetector.js?v=1.1.30';
+import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.30';
+import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=1.1.30';
+import { calculateUmbrellaStatus, renderUmbrellaCard } from '../utils/umbrellaAdvisor.js?v=1.1.30';
 
 /**
  * Formatea el título del concejo subordinando las localidades entre paréntesis (ej. Piedras Blancas / Salinas)
@@ -111,6 +112,10 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   const clima = getClimatologyContext(concejo, current, daily);
   const climaStripMarkup = renderClimatologyStrip(clima);
 
+  // Semáforu del Paragües (Nowcasting Inmediato Asturiano 8h)
+  const umbrella = calculateUmbrellaStatus(current, hourly);
+  const umbrellaMarkup = renderUmbrellaCard(umbrella);
+
   // Pronóstico Horario Detallado (72 Horas / 3 Días) en Vivo
   const hourlyForecastMarkup = renderHourlyForecastBlock(data, units, iconTheme);
 
@@ -145,6 +150,9 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
 
       <!-- FRANJA ERGONÓMICA DE TIEMPO HABITUAL (ANOMALÍA CLIMATOLÓGICA 30 AÑOS AEMET) -->
       ${climaStripMarkup}
+
+      <!-- SEMÁFORU DEL PARAGÜES (Nowcasting Asturiano Inmediato 8h) -->
+      ${umbrellaMarkup}
     </div>
 
     <!-- BANNER DINÁMICO DE EFECTO FOEHN ("VIENTU LES CASTAÑES") -->
