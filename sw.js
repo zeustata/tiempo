@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1123-dual-daypart-buttons';
+const CACHE_NAME = 'meteoasturlode-v1124-mountain-passes-ergonomics';
 const STATIC_ASSETS = [
   './',
   './index.html',

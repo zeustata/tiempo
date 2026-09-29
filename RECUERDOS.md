@@ -15,7 +15,27 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.23 📱 — 2026-09-28
+## 🚀 Última Actualización Oficial: v1.1.24 📱 — 2026-09-29
+- **Puertos de Montaña sin Truncamientos en Móvil & Armonía Visual (Leyes 11 y 14):**
+  1. *Diagnóstico y Resolución del Truncamiento en Sectores de Montaña:*
+     - En la vista de puertos de montaña (`#mountain-passes-view`), las tarjetas de sectores (*Centro y Valles Mineros*, *Oriente y Picos de Europa*, *Occidente*) utilizaban un contenedor rígido horizontal de una sola línea (`flex-wrap: nowrap`) con `white-space: nowrap; text-overflow: ellipsis;`.
+     - La cápsula de estado (`🟢 Tráfico Normal / Abierto`) consumía ~160px, dejando únicamente ~100px para el título en pantallas móviles (320-380px). Esto provocaba que todos los nombres se cortaran como `Puerto...`, `Alto de...` o `Lagos...` y la carretera como `AS-112 / ...`.
+     - Se reestructuró `.pass-card` y su interior `.pass-card-content` con `flex-wrap: wrap`, permitiendo que el nombre del puerto (`.pass-name`) y la información de ruta (`.pass-alt`) cuenten con `white-space: normal`, eliminando cualquier tipo de truncamiento.
+  2. *Cápsula de Tráfico y Armonía Liquid Glass:*
+     - En pantallas reducidas, la cápsula de estado fluye de manera natural sin comprimir el texto y adopta fondo y borde luminiscente reactivos al estado (`background: ${p.color}22; color: ${p.color}; border: 1px solid ${p.color}66;`), armonizando con las tarjetas de Arterias Principales (AP-66 y N-630) según la Ley 14.
+  3. *Depuración de Reglas CSS Duplicadas:*
+     - Eliminados dos bloques duplicados obsoletos de `.pass-card` y `.passes-grid` en `css/components.css` (líneas 3478 y 4007) que provocaban anomalías en la cascada de estilos.
+  4. *Anti-Caché Obligatorio y Versionado:*
+     - Incremento oficial a `v1.1.24 📱`.
+     - Footer de `index.html` actualizado con badge `#app-version-badge` a `v1.1.24 📱`.
+     - Inyectado bloque de novedades en `#changelog-modal`.
+     - `CURRENT_APP_VERSION = '1.1.24'` en `js/app.js`.
+     - `CACHE_NAME = 'meteoasturlode-v1124-mountain-passes-ergonomics'` en `sw.js`.
+     - CSS y módulos JS sincronizados con `?v=1.1.24`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.23 📱 — 2026-09-28
 - **Desacoplamiento en Dos Botones Dedicados (Mañana y Tarde) & Viento Anti-Truncado:**
   1. *Dos Botones Independientes para Mañana y Tarde:*
      - A propuesta y decisión en equipo con Lendo, se suprime la caja estrecha compartida y se divide en dos botones dedicados completos (`.d-daypart-btn.morning` y `.d-daypart-btn.afternoon`).

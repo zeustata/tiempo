@@ -626,13 +626,15 @@ export function renderMountainCard(data, concejo) {
           </div>
           <div class="passes-grid">
             ${centroPasses.map(p => `
-              <div class="pass-card ${p.statusClass}" style="border-left: 3px solid ${p.color};">
-                <div class="pass-main">
-                  <span class="pass-name">${p.name}</span>
-                  <span class="pass-alt"><strong>${p.road}</strong> • ${p.alt} m • ${p.concejo}</span>
-                </div>
-                <div class="pass-badge" style="color: ${p.color};">
-                  <span>${p.icon} ${p.status}</span>
+              <div class="pass-card ${p.statusClass}" style="border: 1px solid ${p.border}; background: rgba(15, 23, 42, 0.55); border-left: 4px solid ${p.color};">
+                <div class="pass-card-content">
+                  <div class="pass-main">
+                    <h5 class="pass-name">${p.name}</h5>
+                    <span class="pass-alt"><strong>${p.road}</strong> • Altitud: <strong>${p.alt} m</strong> • ${p.concejo}</span>
+                  </div>
+                  <div class="pass-badge" style="background: ${p.color}22; color: ${p.color}; border: 1px solid ${p.color}66;">
+                    ${p.icon} ${p.status}
+                  </div>
                 </div>
               </div>
             `).join('')}
@@ -647,13 +649,15 @@ export function renderMountainCard(data, concejo) {
           </div>
           <div class="passes-grid">
             ${orientePasses.map(p => `
-              <div class="pass-card ${p.statusClass}" style="border-left: 3px solid ${p.color};">
-                <div class="pass-main">
-                  <span class="pass-name">${p.name}</span>
-                  <span class="pass-alt"><strong>${p.road}</strong> • ${p.alt} m • ${p.concejo}</span>
-                </div>
-                <div class="pass-badge" style="color: ${p.color};">
-                  <span>${p.icon} ${p.status}</span>
+              <div class="pass-card ${p.statusClass}" style="border: 1px solid ${p.border}; background: rgba(15, 23, 42, 0.55); border-left: 4px solid ${p.color};">
+                <div class="pass-card-content">
+                  <div class="pass-main">
+                    <h5 class="pass-name">${p.name}</h5>
+                    <span class="pass-alt"><strong>${p.road}</strong> • Altitud: <strong>${p.alt} m</strong> • ${p.concejo}</span>
+                  </div>
+                  <div class="pass-badge" style="background: ${p.color}22; color: ${p.color}; border: 1px solid ${p.color}66;">
+                    ${p.icon} ${p.status}
+                  </div>
                 </div>
               </div>
             `).join('')}
@@ -668,13 +672,15 @@ export function renderMountainCard(data, concejo) {
           </div>
           <div class="passes-grid">
             ${occidentePasses.map(p => `
-              <div class="pass-card ${p.statusClass}" style="border-left: 3px solid ${p.color};">
-                <div class="pass-main">
-                  <span class="pass-name">${p.name}</span>
-                  <span class="pass-alt"><strong>${p.road}</strong> • ${p.alt} m • ${p.concejo}</span>
-                </div>
-                <div class="pass-badge" style="color: ${p.color};">
-                  <span>${p.icon} ${p.status}</span>
+              <div class="pass-card ${p.statusClass}" style="border: 1px solid ${p.border}; background: rgba(15, 23, 42, 0.55); border-left: 4px solid ${p.color};">
+                <div class="pass-card-content">
+                  <div class="pass-main">
+                    <h5 class="pass-name">${p.name}</h5>
+                    <span class="pass-alt"><strong>${p.road}</strong> • Altitud: <strong>${p.alt} m</strong> • ${p.concejo}</span>
+                  </div>
+                  <div class="pass-badge" style="background: ${p.color}22; color: ${p.color}; border: 1px solid ${p.color}66;">
+                    ${p.icon} ${p.status}
+                  </div>
                 </div>
               </div>
             `).join('')}

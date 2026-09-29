@@ -3027,71 +3027,74 @@
 .passes-grid {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
   width: 100%;
   box-sizing: border-box;
 }
 
-/* Tarjeta de Puerto Compacta — FILA HORIZONTAL SIN ESTIRAMIENTO */
+/* Tarjeta de Puerto Compacta — ERGONOMÍA MÓVIL ANTI-DESBORDE Y SIN TRUNCAMIENTOS */
 .pass-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 8px 12px;
-  background: rgba(15, 23, 42, 0.45);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
   box-sizing: border-box;
   width: 100%;
   min-width: 0;
-  flex-wrap: nowrap;
-  transition: background 0.2s ease;
+  transition: transform 0.15s ease, background 0.15s ease;
 }
 
 .pass-card:hover {
-  background: rgba(15, 23, 42, 0.65);
+  transform: translateY(-1px);
 }
 
-/* Bloque de texto (nombre + meta) ocupa el espacio sobrante */
+.pass-card-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+/* Bloque de texto (nombre + meta) */
 .pass-main {
   display: flex;
   flex-direction: column;
-  gap: 2px;
   min-width: 0;
-  flex: 1;
-  overflow: hidden;
+  flex: 1 1 180px;
 }
 
 .pass-name {
-  font-size: 0.82rem;
-  font-weight: 700;
+  font-size: 0.88rem;
+  font-weight: 800;
   color: var(--text-main);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1.3;
+  white-space: normal;
+  overflow: visible;
+  line-height: 1.35;
+  margin: 0;
+  word-break: break-word;
 }
 
 .pass-alt {
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   color: #94a3b8;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow: visible;
+  line-height: 1.35;
+  display: block;
+  margin-top: 3px;
 }
 
-/* Badge de estado — compacto, a la derecha, sin crecer */
+/* Badge de estado — armonizado con arterias */
 .pass-card .pass-badge {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 700;
   white-space: nowrap;
   flex-shrink: 0;
-  padding: 3px 8px;
+  padding: 3px 9px;
   border-radius: 9999px;
-  background: rgba(255,255,255,0.05);
 }
 
 /* Badge de Arteria (fuera del .pass-card) */
@@ -3103,7 +3106,7 @@
   font-weight: 700;
   white-space: nowrap;
   flex-shrink: 0;
-  padding: 3px 8px;
+  padding: 3px 9px;
   border-radius: 9999px;
 }
 
@@ -3475,57 +3478,6 @@
   font-weight: 600;
 }
 
-.passes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 10px;
-}
-
-.pass-card {
-  background: var(--bg-surface-elevated);
-  border: 1px solid var(--border-glass);
-  border-radius: var(--radius-sm);
-  padding: 10px 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  transition: transform 0.2s ease;
-}
-
-.pass-card:hover {
-  transform: translateY(-2px);
-}
-
-.pass-main {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-}
-
-.pass-name {
-  font-size: 0.86rem;
-  font-weight: 700;
-  color: var(--text-main);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.pass-alt {
-  font-size: 0.72rem;
-  color: #94a3b8;
-}
-
-.pass-badge {
-  font-size: 0.74rem;
-  font-weight: 700;
-  white-space: nowrap;
-  flex-shrink: 0;
-  padding: 3px 8px;
-  border-radius: 9999px;
-}
 
 /* --- CUADRÍCULA Y FILAS DE PREVISIÓN DIARIA 7 DÍAS --- */
 .surf-daily-cards-grid {
@@ -4004,65 +3956,6 @@
   margin-top: 2px;
 }
 
-.passes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 10px;
-}
-
-.pass-card {
-  background: var(--bg-surface-elevated);
-  border: 1px solid var(--border-glass);
-  padding: 12px 14px;
-  border-radius: var(--radius-sm);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-}
-
-.pass-main {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.pass-name {
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: var(--text-main);
-}
-
-.pass-alt {
-  font-size: 0.76rem;
-  color: #cbd5e1;
-}
-
-.pass-badge {
-  font-size: 0.76rem;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 6px;
-  white-space: nowrap;
-}
-
-.pass-card.status-ok .pass-badge {
-  background: rgba(16, 185, 129, 0.15);
-  color: #34d399;
-  border: 1px solid rgba(16, 185, 129, 0.3);
-}
-
-.pass-card.status-caution .pass-badge {
-  background: rgba(245, 158, 11, 0.15);
-  color: #fbbf24;
-  border: 1px solid rgba(245, 158, 11, 0.3);
-}
-
-.pass-card.status-warning .pass-badge {
-  background: rgba(239, 68, 68, 0.15);
-  color: #f87171;
-  border: 1px solid rgba(239, 68, 68, 0.3);
-}
 
 .ski-resorts-list {
   display: flex;

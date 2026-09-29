@@ -10,6 +10,22 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.24] - 2026-09-29
+
+### 📱 Puertos de Montaña sin Truncamientos en Móvil & Armonía Visual (Leyes 11 y 14)
+- **Ergonomía Móvil y Supresión de Truncamientos en Puertos Generales:**
+  - Reestructuradas las tarjetas `.pass-card` de todos los sectores geográficos (*Centro y Valles Mineros*, *Oriente y Picos de Europa*, *Occidente*) en una estructura envolvente y adaptativa de dos niveles.
+  - Nombre del puerto completo con `white-space: normal`, `line-height: 1.35` y sin puntos suspensivos: erradicados los recortes `Puerto...` o `Alto de...`, permitiendo la lectura íntegra en cualquier dispositivo.
+  - Vía, cota y concejo (`AS-112 • Altitud: 1520 m • Aller / León`) desplegados sin recortes.
+- **Cápsula de Estado Adaptativa y Armonía Liquid Glass:**
+  - La pastilla de estado de tráfico (`🟢 Tráfico Normal / Abierto`, `🟡 Precaución`, `⛓️ Cadenas Obligatorias`, `🔴 Cerrado`) se acopla fluidamente mediante `flex-wrap: wrap`, sin forzar al nombre del puerto a comprimirse ni romperse.
+  - Incorporado micro-borde y fondo traslúcido reactivo a la severidad del estado (`p.color`), armonizando la estética con las Arterias Principales (AP-66 y N-630).
+- **Limpieza de Cascada CSS:**
+  - Eliminados dos bloques obsoletos y duplicados de `.pass-card` y `.passes-grid` en `css/components.css` que generaban conflictos de renderizado.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v1124-mountain-passes-ergonomics`, actualización a `?v=1.1.24` en hojas de estilo, scripts y módulos.
+
+---
+
 ## [1.1.23] - 2026-09-28
 
 ### 📱 Dos Botones Dedicados para Mañana y Tarde & Viento Anti-Desborde
