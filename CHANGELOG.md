@@ -10,6 +10,21 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.34] - 2026-09-30
+
+### 🇫🇷 Soberanía de AROME (1.3 km) en Tiempo Actual & Blindaje Anti-Orballu de ECMWF (Ley 10)
+- **Diagnóstico Forense de Terreno y Desacople en Rasa Costera:**
+  - Lendo detectó que durante toda la jornada en Castrillón / Piedras Blancas la app marcaba de forma fija e inmutable *"Orbayu llixeru (0.1 - 0.2 mm)"* y *"🟡 Orbayando Agora"*, cuando en la realidad no llovía (0.0 mm), solo cayeron 4 gotas testimoniales y a las 14:00 se abrieron claros limpios.
+  - La inspección de las APIs en tiempo real desveló que **AROME (1.3 km)** clavó fidedignamente la atmósfera (0.0 mm toda la mañana, nublado y código 0 despejado a las 13h–14h), mientras que **ECMWF IFS (9 km)** arrojaba llovizna residual continua (0.1 a 0.2 mm y WMO 51) por sesgo húmedo orográfico.
+  - El algoritmo de consenso anterior otorgaba a ECMWF poder de veto sobre la lluvia actual: al recibir `ecmwfPrecip >= 0.1`, sobreescribía la salida de AROME forzando precipitación y código 51, bloqueando a su vez el detector de *Resol / Sol tamizáu* y el *Semáforu del Paragües*.
+- **Soberanía Indiscutible de AROME en Nowcasting:**
+  - Supresión definitiva de la sobreescritura de precipitación en tiempo real (`current`): AROME (1.3 km) tiene resolución 50 veces superior y es la autoridad exclusiva sobre el suelo en Asturias. ECMWF nunca más podrá imponer lluvia activa en vivo si AROME marca seco (`< 0.1 mm`).
+  - Blindaje estricto en el pronóstico horario (`hourly`): ECMWF solo puede armonizar lluvia determinista si el ensamble probabilístico es inequívoco (`PoP >= 65%`), la acumulación prevista es significativa (`>= 0.5 mm`) y el cielo está densamente cubierto (`nubosidad >= 60%`), erradicando las trazas de 0.1–0.2 mm que anulaban los claros costeros.
+  - Calibración de falso claro reforzada a divergencia crítica masiva (`rawCloud < 50 && ecmwfCloud >= 80 && diff >= 35%`).
+- **Cache-bust & Sincronización:** `sw.js` → `meteoasturlode-v1134-arome-sovereignty`, actualización general a `?v=1.1.34` en hojas de estilo, scripts y módulos.
+
+---
+
 ## [1.1.33] - 2026-09-30
 
 ### 🛡️ Blindaje Anti-Colisión y Rediseño Ergonómico de Tiempo Habitual (Ley 11)

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1133-fix-climatology-layout';
+const CACHE_NAME = 'meteoasturlode-v1134-arome-sovereignty';
 const STATIC_ASSETS = [
   './',
   './index.html',

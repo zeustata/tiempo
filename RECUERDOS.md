@@ -13,7 +13,29 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   5. *Fronteras del conocimiento:* Distinción rigurosa entre hechos, opiniones y desconocimiento (sin rellenar con especulaciones).
   6. *Separación entre Juicio y Ejecución:* Aplica cuando se pide juicio; ante órdenes de tareas concretas decididas, se ejecuta sin discusión.
 
-## 🚀 Última Actualización Oficial: v1.1.33 ⚡ — 2026-09-30
+## 🚀 Última Actualización Oficial: v1.1.34 🇫🇷 — 2026-09-30
+- **Soberanía de AROME (1.3 km) en Tiempo Actual & Blindaje Anti-Orballu Fantasma de ECMWF (Ley 10):**
+  1. *Diagnóstico Forense de Terreno y Desacople en Castrillón / Rasa Costera:*
+     - Lendo constató en vivo que durante toda la jornada la app se quedó clavada en *"Orbayu llixeru (0.1 - 0.2 mm)"* y *"🟡 Orbayando Agora"*. En la realidad: de 5:00 a 8:00 no llovió nada, luego cayeron cuatro gotas testimoniales y después nada de nada; sobre las 14:00 se abrieron claros limpios y por la tarde el cielo presentaba claros azules.
+     - La inspección forense de las APIs reveló que **AROME (1.3 km)** clavó con milimétrica precisión la realidad: 0.0 mm en toda la franja, nublado sin lluvia y código 0 (Despejado/Claros) a las 13:00 y 14:00.
+     - Por el contrario, **ECMWF IFS (9 km)** arrojaba llovizna residual continua (0.1 a 0.2 mm y WMO 51) de 5:00 a 16:00 debido a su sesgo húmedo orográfico (la cuadrícula gruesa de 9 km promedia la masa húmeda condensada contra la cordillera y la derrama sobre la costa).
+     - El algoritmo de consenso `applyCantabricoConsensus()` previo tenía un fallo crítico de diseño: si `ecmwfPrecip >= 0.1` y AROME daba 0.0, sobreescribía la precipitación actual e inyectaba el código WMO 51. Esto secuestraba el tiempo en vivo, cegaba el detector de Resol/Claros (que exige `p < 0.1`) y congelaba el Semáforu del Paragües en "Orbayando Agora".
+  2. *Refactorización Rigurosa en `js/services/weatherApi.js`:*
+     - **Soberanía Absoluta de AROME en Nowcasting:** Eliminada completamente la sobreescritura de precipitación y código meteorológico en tiempo actual (`weather.current`). AROME (1.3 km) es la autoridad indiscutible sobre el suelo asturiano. Si AROME dice seco (< 0.1 mm), ECMWF no puede imponer lluvia bajo ninguna circunstancia.
+     - **Protección Anti-Orballu Fantasma en Pronóstico Horario (`weather.hourly`):** ECMWF solo puede armonizar lluvia si el ensamble es inequívoco (`PoP >= 65%`), la acumulación es relevante (`>= 0.5 mm`) y el cielo está efectivamente cubierto (`nubosidad >= 60%`). Se prohíbe machacar a AROME por trazas o lloviznas de 0.1–0.4 mm.
+     - **Blindaje de Falsos Claros:** Se eleva el filtro a divergencia crítica masiva (`rawCloud < 50 && ecmwfCloud >= 80 && diff >= 35%`).
+     - **Metadatos del Catálogo:** Modelo `best_match` actualizado a etiqueta `Calibrado Cantábrico` con descripción de consenso inteligente.
+  3. *Versionado & Anti-Caché:*
+     - Incremento oficial a `v1.1.34 🇫🇷`.
+     - Footer de `index.html` con `#app-version-badge` actualizado a `v1.1.34 🇫🇷`.
+     - Inyectado bloque de novedades en `#changelog-modal`.
+     - `CURRENT_APP_VERSION = '1.1.34'` en `js/app.js`.
+     - `CACHE_NAME = 'meteoasturlode-v1134-arome-sovereignty'` en `sw.js`.
+     - CSS y módulos JS sincronizados con `?v=1.1.34`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.33 ⚡ — 2026-09-30
 - **Blindaje Anti-Colisión y Rediseño Ergonómico de Tiempo Habitual (Ley 11):**
   1. *Diagnóstico del Incidente:*
      - Lendo detectó que en la franja de Climatología (justo bajo las temperaturas mínima y máxima en la Hero Card) se superponían dos textos volviéndose ilegibles en pantallas móviles: el badge de estado térmico `Valores habituales` y el botón de acción didáctica `📊 Tiempo Habitual`.

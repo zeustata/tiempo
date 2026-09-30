@@ -9,9 +9,9 @@ export const WEATHER_MODELS = [
     agency: 'Combinación Inteligente AROME + ECMWF',
     flag: '🌟',
     resolution: '1 - 3 km',
-    tag: '🧪 En Pruebas (Beta)',
-    description: 'Algoritmo inteligente de consenso cantábrico que combina la hiper-resolución de AROME (1.3 km) con el filtro de seguridad de ECMWF (9 km) para blindar contra falsos claros costeros.',
-    bestFor: 'Máxima precisión general con protección anti-claros ficticios en costa.'
+    tag: 'Calibrado Cantábrico',
+    description: 'Algoritmo inteligente de consenso cantábrico con soberanía de AROME (1.3 km) en tiempo real y protección contra falsos claros costeros de ECMWF.',
+    bestFor: 'Máxima fidelidad en costa y valles con protección estricta anti-orballu fantasma.'
   },
   {
     id: 'ecmwf_ifs025',
@@ -132,9 +132,16 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
  * Resuelve la anomalía de mesoescala donde AROME (malla 1.3 km) simula ocasionalmente
  * un "agujero" de claro ficticio en la costa o bahías (nubosidad < 50%, cielo soleado)
  * mientras el modelo de referencia mundial (ECMWF IFS, 9 km) constata que la región
- * está bajo un manto nuboso cerrado (nubosidad >= 75%).
- * Igualmente, resuelve la paradoja de probabilidad alta con 0.0 mm cuando AROME omite lluvia
- * pero los conjuntos y ECMWF confirman orballu o llovizna acumulable.
+ * está bajo un manto nuboso cerrado y continuo (nubosidad >= 80%).
+ * 
+ * SOBERANÍA DE AROME EN TIEMPO ACTUAL & BLINDAJE ANTI-ORBALLU FANTASMA:
+ * 1. En tiempo actual en vivo (nowcasting), AROME (1.3 km) es la autoridad indiscutible.
+ *    Se prohíbe taxativamente que la llovizna residual o sesgo húmedo orográfico de ECMWF
+ *    (0.1 - 0.2 mm por su cuadrícula gruesa de 9 km) imponga lluvia activa o código 51 (Orbayu)
+ *    si AROME marca seco (< 0.1 mm).
+ * 2. En el pronóstico horario, ECMWF solo puede aportar lluvia si el ensamble es inequívoco
+ *    (PoP >= 65%), la precipitación prevista es significativa (>= 0.5 mm) y el cielo está
+ *    efectivamente cubierto (nubosidad >= 60%), evitando que trazas numéricas anulen claros reales.
  */
 function applyCantabricoConsensus(weather, consensus) {
   if (!weather || !consensus) return;
@@ -143,7 +150,8 @@ function applyCantabricoConsensus(weather, consensus) {
   if (weather.current && consensus.current) {
     const rawCloud = weather.current.cloud_cover != null ? weather.current.cloud_cover : 100;
     const ecmwfCloud = consensus.current.cloud_cover != null ? consensus.current.cloud_cover : 0;
-    const isFalseClear = rawCloud < 50 && ecmwfCloud >= 75 && (ecmwfCloud - rawCloud >= 30);
+    // Solo se corrige el falso claro si ECMWF constata un manto cerrado cerrado (>= 80%) y la divergencia es masiva (>= 35%)
+    const isFalseClear = rawCloud < 50 && ecmwfCloud >= 80 && (ecmwfCloud - rawCloud >= 35);
 
     if (isFalseClear) {
       weather.current.cloud_cover = ecmwfCloud;
@@ -158,25 +166,20 @@ function applyCantabricoConsensus(weather, consensus) {
       }
     }
 
-    // Armonización de lluvia en vivo si ECMWF confirma precipitación y AROME la omite
-    const rawPrecip = weather.current.precipitation || 0;
-    const ecmwfPrecip = consensus.current.precipitation || 0;
-    if (rawPrecip < 0.1 && ecmwfPrecip >= 0.1) {
-      weather.current.precipitation = ecmwfPrecip;
-      if (weather.current.weather_code < 50 && consensus.current.weather_code != null) {
-        weather.current.weather_code = consensus.current.weather_code;
-      }
-    }
+    // AROME MANDA EN TIEMPO ACTUAL:
+    // Nunca sobreescribimos precipitation ni weather_code en vivo con ECMWF si AROME marca seco.
+    // Esto garantiza que el detector de resol/claros y el semáforo del paraguas nunca queden
+    // secuestrados por el sesgo orográfico de 9 km de ECMWF.
   }
 
   // 2. Verificación de pronóstico horario inmediato (primeras 48 horas)
   if (weather.hourly && weather.hourly.time && consensus.hourly && consensus.hourly.time) {
     const limit = Math.min(weather.hourly.time.length, consensus.hourly.time.length, 48);
     for (let i = 0; i < limit; i++) {
-      // A) Armonización de falso claro
+      // A) Armonización de falso claro (únicamente bajo cobertura masiva de ECMWF >= 80%)
       const rawC = weather.hourly.cloud_cover ? weather.hourly.cloud_cover[i] : 100;
       const ecmwfC = consensus.hourly.cloud_cover ? consensus.hourly.cloud_cover[i] : 0;
-      if (rawC < 50 && ecmwfC >= 75 && (ecmwfC - rawC >= 30)) {
+      if (rawC < 50 && ecmwfC >= 80 && (ecmwfC - rawC >= 35)) {
         if (weather.hourly.cloud_cover) weather.hourly.cloud_cover[i] = ecmwfC;
         if (weather.hourly.weather_code && consensus.hourly.weather_code) {
           weather.hourly.weather_code[i] = consensus.hourly.weather_code[i];
@@ -189,14 +192,15 @@ function applyCantabricoConsensus(weather, consensus) {
         }
       }
 
-      // B) Armonización de precipitación (Asimetría PoP alto con 0.0 mm)
-      // Si la probabilidad es significativa (>= 30%) pero AROME da 0.0 mm y ECMWF prevé lluvia medible (>= 0.1 mm)
+      // B) Armonización de precipitación frontal real (Protección estricta anti-orballu fantasma):
+      // Solo si el ensamble ve lluvia masiva (PoP >= 65%), ECMWF prevé acumulación real (>= 0.5 mm)
+      // y la nubosidad es propia de frente de lluvia (>= 60%). Jamás por trazas de 0.1 o 0.2 mm.
       const pop = weather.hourly.precipitation_probability ? (weather.hourly.precipitation_probability[i] || 0) : 0;
       const precip = weather.hourly.precipitation ? (weather.hourly.precipitation[i] || 0) : 0;
       const ePrecip = consensus.hourly.precipitation ? (consensus.hourly.precipitation[i] || 0) : 0;
       const eCode = consensus.hourly.weather_code ? consensus.hourly.weather_code[i] : null;
 
-      if (precip < 0.1 && pop >= 30 && ePrecip >= 0.1) {
+      if (precip < 0.1 && pop >= 65 && ePrecip >= 0.5 && rawC >= 60) {
         if (weather.hourly.precipitation) weather.hourly.precipitation[i] = ePrecip;
         if (weather.hourly.rain && consensus.hourly.rain) {
           weather.hourly.rain[i] = consensus.hourly.rain[i];
