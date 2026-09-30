@@ -1,15 +1,15 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.1.36';
-import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.1.36';
-import { renderHourlyForecastBlock } from './forecastView.js?v=1.1.36';
-import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.36';
-import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=1.1.36';
-import { detectXeluEffect, renderXeluBanner } from '../utils/xeluDetector.js?v=1.1.36';
-import { detectBorrinaEffect, renderBorrinaBanner } from '../utils/borrinaDetector.js?v=1.1.36';
-import { detectThunderstormEffect, renderThunderstormBanner } from '../utils/thunderstormDetector.js?v=1.1.36';
-import { getSeismicStatus, renderSeismicBanner } from '../utils/seismicDetector.js?v=1.1.36';
-import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.36';
-import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=1.1.36';
-import { calculateUmbrellaStatus, renderUmbrellaCard } from '../utils/umbrellaAdvisor.js?v=1.1.36';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.1.37';
+import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.1.37';
+import { renderHourlyForecastBlock } from './forecastView.js?v=1.1.37';
+import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.37';
+import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=1.1.37';
+import { detectXeluEffect, renderXeluBanner } from '../utils/xeluDetector.js?v=1.1.37';
+import { detectBorrinaEffect, renderBorrinaBanner } from '../utils/borrinaDetector.js?v=1.1.37';
+import { detectThunderstormEffect, renderThunderstormBanner } from '../utils/thunderstormDetector.js?v=1.1.37';
+import { getSeismicStatus, renderSeismicBanner } from '../utils/seismicDetector.js?v=1.1.37';
+import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.37';
+import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=1.1.37';
+import { calculateUmbrellaStatus, renderUmbrellaCard } from '../utils/umbrellaAdvisor.js?v=1.1.37';
 
 /**
  * Formatea el título del concejo subordinando las localidades entre paréntesis (ej. Piedras Blancas / Salinas)
@@ -185,9 +185,6 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
     <!-- BANNER DINÁMICO DE ALERTA DE TORMENTA INMINENTE Y CONVECCIÓN -->
     ${thunderstormMarkup}
 
-    <!-- CONTENEDOR DINÁMICO DE ACTIVIDAD SÍSMICA (SENTINELA SILENCIOSO EMSC) -->
-    <div id="seismic-banner-container">${seismicMarkup}</div>
-
     <!-- PRONÓSTICO HORARIO 72H / 3 DÍAS (SOLICITADO POR BETA TESTERS) -->
     ${hourlyForecastMarkup}
 
@@ -357,6 +354,9 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
 
       <!-- 7. ASESOR DE COLADA Y SECADO (al final, como manda Lendo) -->
       ${laundryMarkup}
+
+      <!-- 8. MONITOR SÍSMICO SILENCIOSO (tras la tarjeta de colada al final, orden de Lendo) -->
+      <div id="seismic-banner-container" class="seismic-bottom-container">${seismicMarkup}</div>
     </div>
   `;
 }

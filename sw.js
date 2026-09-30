@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1136-seismic-sentinel';
+const CACHE_NAME = 'meteoasturlode-v1137-seismic-calibrated';
 const STATIC_ASSETS = [
   './',
   './index.html',

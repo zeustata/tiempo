@@ -20,7 +20,27 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   5. *Fronteras del conocimiento:* Distinción rigurosa entre hechos, opiniones y desconocimiento (sin rellenar con especulaciones).
   6. *Separación entre Juicio y Ejecución:* Aplica cuando se pide juicio; ante órdenes de tareas concretas decididas, se ejecuta sin discusión.
 
-## 🚀 Última Actualización Oficial: v1.1.36 🌍 — 2026-09-30
+## 🚀 Última Actualización Oficial: v1.1.37 🌍 — 2026-09-30
+- **Calibración Sismológica: Umbral Menor de Sensibilidad (M >= 2.5) & Reubicación Discreta:**
+  1. *Filtro Físico y Menor Sensibilidad (Feedback Lendo):*
+     - Elevación del umbral de activación regional de `M 1.8` a **`M >= 2.5`**, suprimiendo de raíz falsos positivos de micro-sismos instrumentales distantes como el capturado en el norte de Portugal (M 2.2 a ~190 km).
+     - Delimitación geográfica estricta para Asturias y litoral Cantábrico inmediato (Latitud `42.80° N` a `44.40° N`, Longitud `-7.30° W` a `-4.40° W`). Eventos fuera de este cuadrante solo se contemplan si son terremotos mayores (`M >= 4.0` regional o `M >= 4.5` lejano).
+     - Reducción del intervalo de vigilancia de 48h a **24 horas**.
+     - Auto-limpieza inmediata de caché en el cliente (`localStorage`): cualquier sismo residual almacenado que no satisfaga los nuevos filtros se purga al instante al arrancar la app, asegurando el silencio total del centinela.
+  2. *Reubicación al Final del Panel (Instrucción Expresa de Lendo):*
+     - Reubicación del contenedor dinámico `#seismic-banner-container` desde la zona alta hacia la **última tarjeta del dashboard, inmediatamente después del Asesor de Colada y Secado (`${laundryMarkup}`)**.
+     - La cabecera meteorológica queda 100% despejada para el tiempo en vivo, mientras que cualquier evento sísmico relevante se expone discretamente al final.
+  3. *Versionado & Anti-Caché:*
+     - Incremento oficial a `v1.1.37 🌍`.
+     - Footer de `index.html` con `#app-version-badge` actualizado a `v1.1.37 🌍`.
+     - Inyectado bloque de novedades en `#changelog-modal`.
+     - `CURRENT_APP_VERSION = '1.1.37'` en `js/app.js`.
+     - `CACHE_NAME = 'meteoasturlode-v1137-seismic-calibrated'` en `sw.js`.
+     - CSS y módulos JS sincronizados con `?v=1.1.37`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.36 🌍 — 2026-09-30
 - **Monitor Silencioso de Actividad Sísmica en Asturias y Mar Cantábrico (Open Data EMSC / IGN):**
   1. *Centinela Geofísico Silencioso (Doctrina Constitucional 12 & Artículo 15 zeustata):*
      - En conformidad con el recién aprobado **Artículo 15 (Legalidad Estricta y Datos Abiertos)**, se incorporó un monitor sísmico georreferenciado conectado a los servicios oficiales FDSN Web Services del **Centro Sismológico Euromediterráneo (EMSC/CSEM)** e **IGN**.

@@ -5382,6 +5382,20 @@
   }
 }
 
+.seismic-bottom-container {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+.seismic-bottom-container:empty {
+  display: none;
+}
+
+.seismic-bottom-container .seismic-banner {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
 /* --- SECCIÓN DE POLEN EN CALIDAD DEL AIRE (AQI) --- */
 .aqi-pollen-section {
   margin-top: 12px;

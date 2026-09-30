@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.36">
-  <link rel="stylesheet" href="css/components.css?v=1.1.36">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.36">
+  <link rel="stylesheet" href="css/main.css?v=1.1.37">
+  <link rel="stylesheet" href="css/components.css?v=1.1.37">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.37">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -176,7 +176,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.36 🌍</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.37 🌍</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -227,8 +227,18 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.36 🌍</span>
+            <span class="release-version">v1.1.37 🌍</span>
             <span class="release-date">30 Sep 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-mejora">Calibración Sismológica</span> <strong>Filtro de Menor Sensibilidad & Reubicación al Final del Panel (Feedback Lendo)</strong>: Siguiendo las directrices directas de Lendo, se optimiza el centinela sísmico EMSC/IGN: se eleva el umbral de activación regional a <strong>magnitud M &gt;= 2.5</strong> y se acota estrictamente a Asturias y el litoral Cantábrico inmediato (descartando micro-sismos instrumentales lejanos como los de Portugal o la meseta). La ventana de vigilancia se reduce a 24 horas y, si llegara a producirse un evento real, la tarjeta se posiciona <strong>al final de todo el panel, discretamente tras el Asesor de Colada</strong> para no saturar la cabecera del tiempo en vivo. Auto-limpieza inmediata de registros obsoletos en el cliente.</li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.36 🌍</span>
+            <span class="release-date">30 Sep 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-mejora">Sismología en Directo</span> <strong>Monitor Silencioso de Actividad Sísmica en Asturias y Mar Cantábrico (Open Data EMSC)</strong>: Incorporado centinela geofísico 100% legal y abierto conectado a la red oficial del Centro Sismológico Euromediterráneo (EMSC/CSEM) e IGN (conforme al Artículo 15 de la Constitución zeustata). Funciona como centinela 100% silencioso e invisible que solo despierta si se detecta un seísmo en las últimas 48 horas en un radio de ~270 km alrededor de Asturias. Calcula la distancia exacta en kilómetros al concejo seleccionado, magnitud M, profundidad, tiempo transcurrido y enlace directo a la ficha técnica oficial. Incluye modo de simulacro controlado bajo la Doctrina Constitucional 12.</li>
@@ -2009,7 +2019,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.1.36').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.1.37').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -2039,7 +2049,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.36"></script>
+  <script type="module" src="js/app.js?v=1.1.37"></script>
 
 
 

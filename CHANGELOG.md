@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.37] - 2026-09-30
+
+### 🌍 Calibración Sismológica: Umbral Menor de Sensibilidad (M >= 2.5) & Reubicación Discreta
+- **Optimización de Sensibilidad y Delimitación Geográfica (Feedback Lendo):**
+  - Elevación del umbral mínimo de activación regional a **magnitud M >= 2.5** (frente al 1.8 anterior), eliminando de raíz falsos positivos de micro-sismos instrumentales irrelevantes como el registrado en Portugal (M 2.2).
+  - Delimitación geográfica estricta a Asturias y litoral Cantábrico inmediato (Lat `42.80° N` a `44.40° N`, Lon `-7.30° W` a `-4.40° W`). Fuera de esta demarcación, solo se computan sismos de gran intensidad (`M >= 4.0` regional o `M >= 4.5` lejano).
+  - Reducción de la ventana de seguimiento temporal a **24 horas** (en lugar de 48h).
+  - **Auto-purga en cliente:** al arrancar o recibir datos, si el evento en `localStorage` no cumple con la nueva calibración estricta, se elimina de inmediato de la memoria y se retira el banner del DOM.
+- **Reubicación Ergonómica en el Dashboard (Orden de Lendo):**
+  - Desplazamiento del contenedor `#seismic-banner-container` desde la cabecera superior hacia la **última posición del panel en vivo, inmediatamente tras el Asesor de Colada y Secado (`${laundryMarkup}`)**. De este modo, la cabecera queda limpia y el aviso sísmico se ubica discretamente al pie.
+- **Cache-bust & Sincronización:** `sw.js` → `meteoasturlode-v1137-seismic-calibrated`, actualización general a `?v=1.1.37` en `index.html`, `js/app.js` y componentes.
+
+---
+
 ## [1.1.36] - 2026-09-30
 
 ### 🌍 Monitor Silencioso de Sismicidad en Asturias y Mar Cantábrico (Open Data EMSC / IGN)

@@ -7,18 +7,26 @@
  * Cumple estrictamente con la Doctrina Constitucional 12 (Simulacro y Modo Silencioso).
  */
 
-export const ALLOW_SIMULATION = false; // Desconectado formalmente tras visto bueno de Lendo (Ley 12)
+export const ALLOW_SIMULATION = false; // Desconectado formalmente para producción (Ley 12)
 
 const CACHE_KEY_DATA = 'meteoastur_seismic_data';
 const CACHE_KEY_TS = 'meteoastur_seismic_ts';
 const CACHE_TTL_MS = 25 * 60 * 1000; // 25 minutos de caché para evitar consultas excesivas
 
-// Centro geográfico de Asturias y radio de cobertura cantábrica
+// Centro geográfico de Asturias y radio de cobertura
 const ASTURIAS_LAT = 43.35;
 const ASTURIAS_LON = -5.85;
-const MAX_RADIUS_DEG = 2.5; // ~270 km: cubre Asturias, Cordillera Cantábrica, León, Lugo y plataforma marina
-const MIN_MAGNITUDE = 1.8; // Umbral de registro significativo regional
-const MAX_AGE_HOURS = 48; // Ventana temporal de vigilancia
+const MAX_RADIUS_DEG = 2.5;
+
+// Calibración de sensibilidad y límites geográficos (feedback Lendo)
+const ASTURIAS_BOUNDS = {
+  minLat: 42.80,
+  maxLat: 44.40,
+  minLon: -7.30,
+  maxLon: -4.40
+};
+const MIN_MAGNITUDE_LOCAL = 2.5; // Menor sensibilidad: umbral mínimo M >= 2.5 para Asturias
+const MAX_AGE_HOURS = 24; // Ventana temporal estricta de 24 horas
 
 /**
  * Fórmula de Haversine para cálculo de distancia en kilómetros entre dos coordenadas
@@ -34,6 +42,39 @@ export function calculateDistanceKm(lat1, lon1, lat2, lon2) {
     Math.sin(dLon / 2) * Math.sin(dLon / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return Math.round(R * c);
+}
+
+/**
+ * Filtro de relevancia sismológica: descarta micro-sismos lejanos irrelevantes
+ */
+export function isRelevantSeismicEvent(lat, lon, mag, timeStr, concejoLat, concejoLon) {
+  if (mag == null || !timeStr || lat == null || lon == null) return false;
+  const now = Date.now();
+  const eventTime = new Date(timeStr).getTime();
+  if (now - eventTime > MAX_AGE_HOURS * 3600 * 1000) return false;
+
+  const isInsideAsturias =
+    lat >= ASTURIAS_BOUNDS.minLat &&
+    lat <= ASTURIAS_BOUNDS.maxLat &&
+    lon >= ASTURIAS_BOUNDS.minLon &&
+    lon <= ASTURIAS_BOUNDS.maxLon;
+
+  const distToConcejo = (concejoLat != null && concejoLon != null)
+    ? calculateDistanceKm(concejoLat, concejoLon, lat, lon)
+    : calculateDistanceKm(ASTURIAS_LAT, ASTURIAS_LON, lat, lon);
+
+  // 1. En Asturias, cordillera inmediata o costa (< 75 km): umbral M >= 2.5
+  if (isInsideAsturias || distToConcejo <= 75) {
+    return mag >= MIN_MAGNITUDE_LOCAL;
+  }
+
+  // 2. Zona regional media (75 km a 150 km): solo si M >= 3.8
+  if (distToConcejo <= 150) {
+    return mag >= 3.8;
+  }
+
+  // 3. Fuera de 150 km (Portugal, meseta profunda, etc.): solo terremotos notables M >= 4.5
+  return mag >= 4.5;
 }
 
 /**
@@ -117,34 +158,42 @@ export function getSeismicStatus(concejo) {
     }
   }
 
-  // 2. Consulta en la caché local para no saturar peticiones
+  // 2. Consulta en la caché local con auto-limpieza de eventos obsoletos
   if (typeof window !== 'undefined' && window.localStorage) {
     try {
       const cachedTs = parseInt(localStorage.getItem(CACHE_KEY_TS) || '0', 10);
       const isFresh = Date.now() - cachedTs < CACHE_TTL_MS;
       const rawData = localStorage.getItem(CACHE_KEY_DATA);
 
-      if (isFresh && rawData) {
+      if (rawData) {
         const parsed = JSON.parse(rawData);
         if (!parsed || !parsed.hasEvent) {
-          return null; // Silencioso: no hay actividad reciente
+          return null; // Silencioso: sin actividad
         }
 
-        // Recalcular distancia respecto al concejo activo actualmente
-        const dist = calculateDistanceKm(concejo.lat, concejo.lon, parsed.lat, parsed.lon);
-        return {
-          ...parsed,
-          distanceKm: dist,
-          timeLabel: formatTimeAgo(parsed.rawTime),
-          description: buildSeismicDescription(parsed, concejo, dist)
-        };
+        // Si el evento guardado no supera la nueva calibración estricta, purgarlo
+        const isValid = isRelevantSeismicEvent(parsed.lat, parsed.lon, parsed.magnitude, parsed.rawTime, concejo.lat, concejo.lon);
+        if (!isValid) {
+          localStorage.setItem(CACHE_KEY_DATA, JSON.stringify({ hasEvent: false }));
+          return null;
+        }
+
+        if (isFresh) {
+          const dist = calculateDistanceKm(concejo.lat, concejo.lon, parsed.lat, parsed.lon);
+          return {
+            ...parsed,
+            distanceKm: dist,
+            timeLabel: formatTimeAgo(parsed.rawTime),
+            description: buildSeismicDescription(parsed, concejo, dist)
+          };
+        }
       }
     } catch (e) {
       console.warn('[SeismicDetector] Error leyendo caché local:', e);
     }
   }
 
-  // 3. Si la caché expiró o no existe, lanzar refresco en segundo plano sin bloquear la UI
+  // 3. Lanzar refresco en segundo plano sin bloquear la UI
   triggerSeismicRefresh(concejo);
   return null;
 }
@@ -153,16 +202,12 @@ export function getSeismicStatus(concejo) {
  * Construye la descripción adaptada al sismo y a la distancia del concejo
  */
 function buildSeismicDescription(event, concejo, distKm) {
-  const isCoast = concejo.type === 'coast' || (concejo.region && concejo.region.includes('Costa'));
   const locationText = distKm < 25 ? `en el entorno inmediato de <strong>${concejo.name}</strong>` : `a <strong>~${distKm} km</strong> de ${concejo.name}`;
 
   if (event.magnitude >= 3.5) {
     return `Sismo notable de <strong>magnitud M ${event.magnitude.toFixed(1)}</strong> registrado ${locationText} (${event.place}). Evento superficial (${event.depth} km de profundidad) con probabilidad de haber sido percibido.`;
   }
-  if (event.magnitude >= 2.5) {
-    return `Sismo menor de <strong>magnitud M ${event.magnitude.toFixed(1)}</strong> detectado ${locationText} (${event.place}), profundidad de ${event.depth} km. Habitualmente sin repercusión en superficie.`;
-  }
-  return `Micro-sismo instrumental de <strong>magnitud M ${event.magnitude.toFixed(1)}</strong> detectado por la red sísmica ${locationText} (${event.place}). Solo detectable por sismógrafos.`;
+  return `Sismo menor de <strong>magnitud M ${event.magnitude.toFixed(1)}</strong> detectado ${locationText} (${event.place}), profundidad de ${event.depth} km. Habitualmente sin repercusión en superficie.`;
 }
 
 /**
@@ -175,7 +220,7 @@ export async function triggerSeismicRefresh(concejo) {
   isRefreshing = true;
 
   try {
-    const url = `https://www.seismicportal.eu/fdsnws/event/1/query?format=json&lat=${ASTURIAS_LAT}&lon=${ASTURIAS_LON}&maxradius=${MAX_RADIUS_DEG}&minmag=${MIN_MAGNITUDE}&limit=4`;
+    const url = `https://www.seismicportal.eu/fdsnws/event/1/query?format=json&lat=${ASTURIAS_LAT}&lon=${ASTURIAS_LON}&maxradius=${MAX_RADIUS_DEG}&minmag=${MIN_MAGNITUDE_LOCAL}&limit=4`;
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 6000);
 
@@ -190,15 +235,13 @@ export async function triggerSeismicRefresh(concejo) {
     const geojson = await res.json();
     const features = geojson?.features || [];
 
-    const now = Date.now();
-    const cutoffTime = now - (MAX_AGE_HOURS * 3600 * 1000);
-
-    // Filtrar sismos dentro de las últimas 48 horas y magnitud válida
+    // Filtrar con criterio estricto de sensibilidad y ubicación
     const validEvents = features.filter(f => {
       const p = f.properties;
-      if (!p || !p.time || p.mag == null) return false;
-      const t = new Date(p.time).getTime();
-      return t >= cutoffTime && p.mag >= MIN_MAGNITUDE;
+      if (!p || !p.time || p.mag == null || p.lat == null || p.lon == null) return false;
+      const cLat = concejo ? concejo.lat : ASTURIAS_LAT;
+      const cLon = concejo ? concejo.lon : ASTURIAS_LON;
+      return isRelevantSeismicEvent(parseFloat(p.lat), parseFloat(p.lon), parseFloat(p.mag), p.time, cLat, cLon);
     });
 
     if (validEvents.length === 0) {
@@ -227,8 +270,8 @@ export async function triggerSeismicRefresh(concejo) {
       ? `https://www.emsc-csem.org/Earthquake_information/earthquake.php?id=${props.source_id}`
       : 'https://www.emsc-csem.org/';
 
-    const level = mag >= 3.5 ? 'severe' : (mag >= 2.5 ? 'warning' : 'info');
-    const badge = mag >= 3.5 ? `🚨 Sismo Notable M ${mag.toFixed(1)}` : (mag >= 2.5 ? `⚠️ Sismo Menor M ${mag.toFixed(1)}` : `🌍 Micro-sismo M ${mag.toFixed(1)}`);
+    const level = mag >= 3.5 ? 'severe' : 'warning';
+    const badge = mag >= 3.5 ? `🚨 Sismo Notable M ${mag.toFixed(1)}` : `⚠️ Sismo Menor M ${mag.toFixed(1)}`;
     const title = mag >= 3.5 ? '🌍 Registro Sísmico Notable en la Zona' : '🌍 Actividad Sísmica Reciente Registrada';
 
     const eventPayload = {
@@ -268,7 +311,6 @@ export async function triggerSeismicRefresh(concejo) {
       }
     }
   } catch (err) {
-    // Falla silenciosa sin interrumpir la experiencia de usuario
     console.warn('[SeismicDetector] Comprobación de sismología EMSC omitida:', err?.message || err);
   } finally {
     isRefreshing = false;
