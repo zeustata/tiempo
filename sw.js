@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1143-single-clima-pill';
+const CACHE_NAME = 'meteoasturlode-v1144-anti-flicker';
 const STATIC_ASSETS = [
   './',
   './index.html',

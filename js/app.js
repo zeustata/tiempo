@@ -1822,12 +1822,14 @@ class MeteoAsturiasApp {
   renderAllComponents(withFade = false) {
     if (!this.weatherData) return;
 
-    // 1. Dashboard en Vivo
+    // ─── FASE 1: Panel en Vivo (inmediata) ─────────────────────────────────────
+    // Se renderiza primero y solo el panel-live que es lo que el usuario ve.
+    // El hilo principal se libera entre fase 1 y fase 2 gracias al setTimeout(0),
+    // eliminando el congelado de animaciones de ~2 segundos en Android.
     try {
       const liveContainer = document.getElementById('panel-live');
       if (liveContainer) {
         if (withFade) {
-          // Fade-out instantáneo antes del innerHTML (cubre el flash de recomposición GPU)
           liveContainer.classList.remove('refresh-in');
           liveContainer.classList.add('refreshing');
         }
@@ -1835,7 +1837,6 @@ class MeteoAsturiasApp {
         liveContainer.innerHTML = renderCurrentWeather(this.weatherData, this.currentConcejo, this.prefs.units, this.prefs.iconTheme);
 
         if (withFade) {
-          // Fade-in suave: forzar un frame para que el navegador aplique opacity:0 antes de animar
           requestAnimationFrame(() => {
             requestAnimationFrame(() => {
               liveContainer.classList.remove('refreshing');
@@ -1848,66 +1849,7 @@ class MeteoAsturiasApp {
       console.error('[MeteoAstur] Error renderizando Vivo:', e);
     }
 
-    // 2. Módulo Playas & Mareas
-    try {
-      const marineContainer = document.getElementById('panel-marine');
-      if (marineContainer) {
-        marineContainer.innerHTML = renderMarineCard(this.weatherData, this.currentConcejo);
-        scrollTideChartToNow();
-      }
-    } catch (e) {
-      console.error('[MeteoAstur] Error renderizando Playas & Mareas:', e);
-    }
-
-    // 2b. Módulo Surf & Rompientes
-    try {
-      const surfContainer = document.getElementById('panel-surf');
-      if (surfContainer) {
-        surfContainer.innerHTML = renderSurfCard(this.weatherData, this.currentConcejo);
-      }
-    } catch (e) {
-      console.error('[MeteoAstur] Error renderizando Surf & Rompientes:', e);
-    }
-
-    // 3. Módulo Montaña
-    try {
-      const mountainContainer = document.getElementById('panel-mountain');
-      if (mountainContainer) {
-        mountainContainer.innerHTML = renderMountainCard(this.weatherData, this.currentConcejo);
-      }
-    } catch (e) {
-      console.error('[MeteoAstur] Error renderizando Cordillera & Nieve:', e);
-    }
-
-    // 4. Pronóstico
-    try {
-      const forecastContainer = document.getElementById('panel-forecast');
-      if (forecastContainer) {
-        forecastContainer.innerHTML = renderForecast(this.weatherData, this.prefs.units, this.prefs.iconTheme);
-      }
-    } catch (e) {
-      console.error('[MeteoAstur] Error renderizando Pronóstico:', e);
-    }
-
-    // 5. Gráfico si está activo
-    if (this.activeTab === 'charts') {
-      try {
-        renderWeatherChart('meteo-chart-canvas', this.weatherData.weather.hourly, 48);
-      } catch (e) {
-        console.error('[MeteoAstur] Error renderizando Gráfica:', e);
-      }
-    }
-
-    // 6. Comparador si está activo
-    if (this.activeTab === 'compare') {
-      try {
-        this.renderCompareSection();
-      } catch (e) {
-        console.error('[MeteoAstur] Error renderizando Comparador:', e);
-      }
-    }
-
-    // 7. Aplicar Tema Atmosférico Dinámico y Partículas Ambientales
+    // Aplicar tema atmosférico inmediatamente (afecta al fondo/partículas del panel-live)
     if (this.weatherData.weather && this.weatherData.weather.current) {
       try {
         const cur = this.weatherData.weather.current;
@@ -1918,7 +1860,77 @@ class MeteoAsturiasApp {
     }
 
     this.updateFavButton();
+
+    // ─── FASE 2: Resto de módulos (diferida) ───────────────────────────────────
+    // Se ejecuta en el siguiente ciclo del event loop (setTimeout 0), liberando
+    // el hilo principal entre las dos fases y desbloqueando las animaciones.
+    const data = this.weatherData;
+    const concejo = this.currentConcejo;
+    const prefs = this.prefs;
+    const activeTab = this.activeTab;
+
+    setTimeout(() => {
+      // 2. Módulo Playas & Mareas
+      try {
+        const marineContainer = document.getElementById('panel-marine');
+        if (marineContainer) {
+          marineContainer.innerHTML = renderMarineCard(data, concejo);
+          scrollTideChartToNow();
+        }
+      } catch (e) {
+        console.error('[MeteoAstur] Error renderizando Playas & Mareas:', e);
+      }
+
+      // 2b. Módulo Surf & Rompientes
+      try {
+        const surfContainer = document.getElementById('panel-surf');
+        if (surfContainer) {
+          surfContainer.innerHTML = renderSurfCard(data, concejo);
+        }
+      } catch (e) {
+        console.error('[MeteoAstur] Error renderizando Surf & Rompientes:', e);
+      }
+
+      // 3. Módulo Montaña
+      try {
+        const mountainContainer = document.getElementById('panel-mountain');
+        if (mountainContainer) {
+          mountainContainer.innerHTML = renderMountainCard(data, concejo);
+        }
+      } catch (e) {
+        console.error('[MeteoAstur] Error renderizando Cordillera & Nieve:', e);
+      }
+
+      // 4. Pronóstico
+      try {
+        const forecastContainer = document.getElementById('panel-forecast');
+        if (forecastContainer) {
+          forecastContainer.innerHTML = renderForecast(data, prefs.units, prefs.iconTheme);
+        }
+      } catch (e) {
+        console.error('[MeteoAstur] Error renderizando Pronóstico:', e);
+      }
+
+      // 5. Gráfico si está activo
+      if (activeTab === 'charts') {
+        try {
+          renderWeatherChart('meteo-chart-canvas', data.weather.hourly, 48);
+        } catch (e) {
+          console.error('[MeteoAstur] Error renderizando Gráfica:', e);
+        }
+      }
+
+      // 6. Comparador si está activo
+      if (activeTab === 'compare') {
+        try {
+          this.renderCompareSection();
+        } catch (e) {
+          console.error('[MeteoAstur] Error renderizando Comparador:', e);
+        }
+      }
+    }, 0);
   }
+
 
   applyDynamicWeatherTheme(weatherCode, isDay = 1) {
     const cur = this.weatherData?.weather?.current;
