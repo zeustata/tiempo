@@ -339,12 +339,10 @@ export function renderClimatologyStrip(clima) {
   return `
     <div class="climatology-strip ${clima.badgeClass}">
       <div class="climatology-top-row">
-        <div class="climatology-header-left">
+        <button class="climatology-badge-interactive" data-explain="climatology" title="Pulsa para aprender sobre el Tiempo Habitual y las Normales de 30 años de AEMET">
           <span class="climatology-icon">${clima.icon}</span>
           <span class="climatology-badge">${clima.label}</span>
-        </div>
-        <button class="btn-explain-sensor-compact btn-explain-clima" data-explain="climatology" title="Ver comparación climática histórica de 30 años (AEMET 1991-2020)">
-          📊 Tiempo Habitual
+          <span class="climatology-learn-hint">💡 Explícame</span>
         </button>
       </div>
       <div class="climatology-desc-row">

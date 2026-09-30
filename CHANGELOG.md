@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.41] - 2026-09-30
+
+### 🌍 Ergonomía & Diseño Limpio: Pastilla Interactiva en Tiempo Habitual & Purgado de Caché Móvil
+- **Pastilla Interactiva Única en Climatología (Feedback Lendo):**
+  - Supresión del botón redundante `[ 📊 Tiempo Habitual ]` que forzaba un segundo renglón en teléfonos móviles.
+  - La pastilla de diagnóstico (`🟢 Valores habituales 💡 Explícame`) se transforma en el elemento táctil interactivo directo para desplegar la ventana didáctica de las Normales de 30 años de AEMET.
+  - Cabecera reducida a una sola línea limpia, elegante y de bajo consumo vertical.
+- **Purgado Integral de Cachés de Módulos (Doctrina Anti-Caché Artículo 4 zeustata):**
+  - Actualización exhaustiva de las cadenas de consulta (`?v=1.1.41`) en la totalidad de los componentes (`currentCard.js`, `forecastView.js`, `marineCard.js`, etc.) y sus dependencias internas.
+  - Garantizada la visualización inmediata de la demarcación climática y estación de referencia (`🌊 Litoral Cantábrico`, `🏔️ Picos de Europa`, etc.) en smartphones y dispositivos PWA sin retención de caché.
+- **Cache-bust & Sincronización:** `sw.js` → `meteoasturlode-v1141-clima-pill-streamline`, actualización general a `?v=1.1.41` en `index.html`, `js/app.js` y componentes.
+
+---
+
 ## [1.1.40] - 2026-09-30
 
 ### 🌍 Climatología & Zonas AEMET: Diferenciación de Zonas y Estaciones Oficiales en Récords Históricos

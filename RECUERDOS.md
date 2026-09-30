@@ -20,7 +20,26 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   5. *Fronteras del conocimiento:* Distinción rigurosa entre hechos, opiniones y desconocimiento (sin rellenar con especulaciones).
   6. *Separación entre Juicio y Ejecución:* Aplica cuando se pide juicio; ante órdenes de tareas concretas decididas, se ejecuta sin discusión.
 
-## 🚀 Última Actualización Oficial: v1.1.40 🌍 — 2026-09-30
+## 🚀 Última Actualización Oficial: v1.1.41 🌍 — 2026-09-30
+- **Ergonomía & Diseño Limpio: Pastilla Interactiva en Tiempo Habitual & Purgado de Caché Móvil:**
+  1. *Pastilla Interactiva Única en Climatología (Feedback Lendo):*
+     - Supresión del botón redundante `[ 📊 Tiempo Habitual ]` que forzaba un segundo renglón en la cabecera climatológica en teléfonos móviles.
+     - Transformada la pastilla de diagnóstico (`🟢 Valores habituales 💡 Explícame`) en el propio elemento táctil interactivo (`.climatology-badge-interactive`) para abrir la ventana didáctica explicativa de las Normales de 30 años de AEMET.
+     - Cabecera reducida a una sola línea fluida y minimalista, liberando holgura vertical en la tarjeta.
+  2. *Purgado Exhaustivo de Cachés en Módulos (Artículo 4 zeustata):*
+     - Sincronizadas las cadenas de versión (`?v=1.1.41`) en la totalidad de los módulos y componentes en [js/app.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/app.js) y [js/components/currentCard.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/components/currentCard.js).
+     - Erradicada la retención de archivos desactualizados en móviles PWA, garantizando la visualización inmediata de las demarcaciones climáticas oficiales y estaciones AEMET.
+  3. *Versionado & Anti-Caché:*
+     - Incremento oficial a `v1.1.41 🌍`.
+     - Footer de `index.html` con `#app-version-badge` actualizado a `v1.1.41 🌍`.
+     - Inyectado bloque de novedades en `#changelog-modal`.
+     - `CURRENT_APP_VERSION = '1.1.41'` en `js/app.js`.
+     - `CACHE_NAME = 'meteoasturlode-v1141-clima-pill-streamline'` en `sw.js`.
+     - CSS y módulos JS sincronizados con `?v=1.1.41`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.40 🌍 — 2026-09-30
 - **Climatología & Zonas AEMET: Diferenciación de Zonas y Estaciones Oficiales en Récords Históricos:**
   1. *Identificación Geográfica Rigurosa de Récords Mensuales (Feedback Lendo / Ley 11 Parte II):*
      - Erradicada la ambigüedad en los récords históricos de 30 años (AEMET 1991–2020) en la tarjeta principal.

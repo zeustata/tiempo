@@ -1,15 +1,15 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.1.37';
-import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.1.37';
-import { renderHourlyForecastBlock } from './forecastView.js?v=1.1.37';
-import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.37';
-import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=1.1.37';
-import { detectXeluEffect, renderXeluBanner } from '../utils/xeluDetector.js?v=1.1.37';
-import { detectBorrinaEffect, renderBorrinaBanner } from '../utils/borrinaDetector.js?v=1.1.37';
-import { detectThunderstormEffect, renderThunderstormBanner } from '../utils/thunderstormDetector.js?v=1.1.37';
-import { getSeismicStatus, renderSeismicBanner } from '../utils/seismicDetector.js?v=1.1.37';
-import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.37';
-import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=1.1.40';
-import { calculateUmbrellaStatus, renderUmbrellaCard } from '../utils/umbrellaAdvisor.js?v=1.1.37';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.1.41';
+import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.1.41';
+import { renderHourlyForecastBlock } from './forecastView.js?v=1.1.41';
+import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.41';
+import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=1.1.41';
+import { detectXeluEffect, renderXeluBanner } from '../utils/xeluDetector.js?v=1.1.41';
+import { detectBorrinaEffect, renderBorrinaBanner } from '../utils/borrinaDetector.js?v=1.1.41';
+import { detectThunderstormEffect, renderThunderstormBanner } from '../utils/thunderstormDetector.js?v=1.1.41';
+import { getSeismicStatus, renderSeismicBanner } from '../utils/seismicDetector.js?v=1.1.41';
+import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.41';
+import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=1.1.41';
+import { calculateUmbrellaStatus, renderUmbrellaCard } from '../utils/umbrellaAdvisor.js?v=1.1.41';
 
 /**
  * Formatea el título del concejo subordinando las localidades entre paréntesis (ej. Piedras Blancas / Salinas)

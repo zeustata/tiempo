@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1140-climatology-zones';
+const CACHE_NAME = 'meteoasturlode-v1141-clima-pill-streamline';
 const STATIC_ASSETS = [
   './',
   './index.html',
