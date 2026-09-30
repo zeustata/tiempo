@@ -339,9 +339,10 @@ export function renderClimatologyStrip(clima) {
   return `
     <div class="climatology-strip ${clima.badgeClass}">
       <div class="climatology-top-row">
-        <button class="climatology-badge-interactive btn-explain-sensor btn-explain-clima" data-explain="climatology" title="Pulsa para aprender sobre el Tiempo Habitual y las Normales de 30 años de AEMET">
+        <button class="climatology-badge ${clima.badgeClass} btn-explain-clima" data-explain="climatology" title="Pulsa para aprender sobre el Tiempo Habitual y las Normales de 30 años de AEMET">
           <span class="climatology-icon">${clima.icon}</span>
-          <span class="climatology-badge">${clima.label} <span class="clima-bulb">💡</span></span>
+          <span class="climatology-text">${clima.label}</span>
+          <span class="clima-bulb">💡</span>
         </button>
       </div>
       <div class="climatology-desc-row">

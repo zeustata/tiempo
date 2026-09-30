@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1142-clima-explain-bulb';
+const CACHE_NAME = 'meteoasturlode-v1143-single-clima-pill';
 const STATIC_ASSETS = [
   './',
   './index.html',

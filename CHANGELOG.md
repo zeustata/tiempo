@@ -10,6 +10,19 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.43] - 2026-09-30
+
+### 🌍 Diseño & Estabilidad: Supresión de Doble Pastilla y Eliminación del Temblor en Tablets
+- **Pastilla Única Autónoma en Climatología (Feedback Lendo):**
+  - Erradicado el marco amarillo/ámbar exterior heredado de los botones didácticos de sensores (`.btn-explain-sensor`).
+  - La pastilla (ej. `🟢 Valores habituales 💡`) pasa a ser un único elemento interactivo verde, translúcido y elegante (`.climatology-badge.clima-normal`), con su punto, texto y bombilla perfectamente integrados sin capas duplicadas ni marcos redundantes.
+- **Eliminación del Temblor / Jitter al Actualizar en Pantallas Grandes y Tablets:**
+  - Sustituida la transición indiscriminada `transition: all 0.25s ease;` en `.climatology-strip` por transiciones específicas de color y fondo (`transition: background 0.2s ease, border-color 0.2s ease;`).
+  - Erradicado el recálculo elástico que provocaba parpadeo y vibración de altura en el DOM durante el re-renderizado en tablets.
+- **Cache-bust & Sincronización:** `sw.js` → `meteoasturlode-v1143-single-clima-pill`, actualización general a `?v=1.1.43` en `index.html`, `js/app.js` y componentes.
+
+---
+
 ## [1.1.42] - 2026-09-30
 
 ### 🌍 Ergonomía & Apertura Modal: Integración de Bombilla 💡 en Pastilla y Apertura Modal Blindada

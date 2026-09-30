@@ -260,7 +260,7 @@
   gap: 8px;
   box-sizing: border-box;
   width: 100%;
-  transition: all 0.25s ease;
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .climatology-top-row {
@@ -268,45 +268,6 @@
   align-items: center;
   gap: 10px;
   width: 100%;
-}
-
-.climatology-badge-interactive {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: transparent;
-  border: none;
-  padding: 1px 3px;
-  margin: -1px -3px;
-  border-radius: 6px;
-  cursor: pointer;
-  text-align: left;
-  transition: transform 0.18s ease, filter 0.18s ease;
-  font-family: inherit;
-}
-
-.climatology-badge-interactive:hover {
-  transform: translateY(-1px);
-  filter: brightness(1.15);
-}
-
-.climatology-badge-interactive:active {
-  transform: scale(0.97);
-}
-
-.clima-bulb {
-  display: inline-block;
-  font-size: 0.82em;
-  margin-left: 4px;
-  vertical-align: middle;
-  opacity: 0.95;
-  filter: drop-shadow(0 0 4px rgba(250, 204, 21, 0.5));
-  transition: transform 0.2s ease, filter 0.2s ease;
-}
-
-.climatology-badge-interactive:hover .clima-bulb {
-  transform: scale(1.2) rotate(8deg);
-  filter: drop-shadow(0 0 7px rgba(250, 204, 21, 0.95));
 }
 
 .climatology-records-row {
@@ -439,31 +400,67 @@
 }
 
 .climatology-badge {
-  display: inline-block;
-  font-size: 0.76rem;
-  font-weight: 800;
-  padding: 2px 7px;
-  border-radius: 5px;
-  letter-spacing: -0.2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 11px;
+  border-radius: 999px;
+  letter-spacing: -0.1px;
   white-space: nowrap;
+  cursor: pointer;
+  font-family: inherit;
+  border: 1px solid transparent;
+  background: transparent;
+  transition: transform 0.15s ease, filter 0.15s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
+.climatology-badge:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.18);
+}
+
+.climatology-badge:active {
+  transform: scale(0.97);
+}
+
+.climatology-badge.clima-warm,
 .clima-warm .climatology-badge {
-  color: #f87171;
-  background: rgba(239, 68, 68, 0.16);
-  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: #f87171 !important;
+  background: rgba(239, 68, 68, 0.16) !important;
+  border: 1px solid rgba(239, 68, 68, 0.35) !important;
 }
 
+.climatology-badge.clima-cool,
 .clima-cool .climatology-badge {
-  color: #38bdf8;
-  background: rgba(56, 189, 248, 0.16);
-  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: #38bdf8 !important;
+  background: rgba(56, 189, 248, 0.16) !important;
+  border: 1px solid rgba(56, 189, 248, 0.35) !important;
 }
 
+.climatology-badge.clima-normal,
 .clima-normal .climatology-badge {
-  color: #34d399;
-  background: rgba(16, 185, 129, 0.16);
-  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #34d399 !important;
+  background: rgba(16, 185, 129, 0.16) !important;
+  border: 1px solid rgba(16, 185, 129, 0.35) !important;
+}
+
+.clima-bulb {
+  display: inline-block;
+  font-size: 0.90em;
+  margin-left: 2px;
+  vertical-align: middle;
+  opacity: 0.95;
+  filter: drop-shadow(0 0 4px rgba(250, 204, 21, 0.5));
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.climatology-badge:hover .clima-bulb {
+  transform: scale(1.2) rotate(8deg);
+  filter: drop-shadow(0 0 7px rgba(250, 204, 21, 0.95));
 }
 
 .climatology-desc {

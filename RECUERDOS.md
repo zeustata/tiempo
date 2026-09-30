@@ -20,7 +20,26 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   5. *Fronteras del conocimiento:* Distinción rigurosa entre hechos, opiniones y desconocimiento (sin rellenar con especulaciones).
   6. *Separación entre Juicio y Ejecución:* Aplica cuando se pide juicio; ante órdenes de tareas concretas decididas, se ejecuta sin discusión.
 
-## 🚀 Última Actualización Oficial: v1.1.42 🌍 — 2026-09-30
+## 🚀 Última Actualización Oficial: v1.1.43 🌍 — 2026-09-30
+- **Diseño & Estabilidad: Supresión de Doble Pastilla y Eliminación del Temblor en Tablets:**
+  1. *Pastilla Única Autónoma en Climatología (Feedback Lendo):*
+     - Erradicado el marco exterior amarillo/ámbar (`.btn-explain-sensor`) que envolvía la pastilla verde.
+     - La pastilla (`.climatology-badge.clima-normal`) pasa a ser el único botón interactivo, translúcido y redondeado (999px), conteniendo el punto verde (`🟢`), la etiqueta (`Valores habituales`) y la bombilla (`💡`).
+     - Al interactuar o hacer clic se dispara limpiamente la guía didáctica de las Normales AEMET sin cajas duplicadas.
+  2. *Eliminación del Temblor / Jitter de la Tarjeta en Tablets:*
+     - Sustituida la directiva `transition: all 0.25s ease;` en `.climatology-strip` por transiciones específicas discretas de fondo y borde (`transition: background 0.2s ease, border-color 0.2s ease;`).
+     - Al re-renderizar o refrescar el panel en pantallas de tablets, se erradica cualquier cálculo elástico de altura o margen durante el montaje del DOM, garantizando un refresco instantáneo y visualmente inmóvil.
+  3. *Versionado & Anti-Caché:*
+     - Incremento oficial a `v1.1.43 🌍`.
+     - Footer de `index.html` con `#app-version-badge` actualizado a `v1.1.43 🌍`.
+     - Inyectado bloque de novedades en `#changelog-modal`.
+     - `CURRENT_APP_VERSION = '1.1.43'` en [js/app.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/app.js).
+     - `CACHE_NAME = 'meteoasturlode-v1143-single-clima-pill'` en [sw.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/sw.js).
+     - CSS y módulos JS sincronizados con `?v=1.1.43`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.42 🌍 — 2026-09-30
 - **Ergonomía & Apertura Modal: Integración de Bombilla 💡 en Pastilla y Apertura Modal Blindada:**
   1. *Integración de Bombilla en Pastilla de Estado (Feedback Lendo):*
      - Supresión del texto redundante «Explícame» y adición del icono limpio de bombilla `💡` integrado directamente en la pastilla de estado (ej. `🟢 Valores habituales 💡`).
