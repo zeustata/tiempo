@@ -10,6 +10,24 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.40] - 2026-09-30
+
+### 🌍 Climatología & Zonas AEMET: Diferenciación de Zonas y Estaciones Oficiales en Récords Históricos
+- **Identificación Geográfica Rigurosa de Récords Mensuales (Feedback Lendo):**
+  - Supresión de la ambigüedad en los récords históricos de 30 años (AEMET 1991–2020) en la tarjeta principal.
+  - Asignación obligatoria y explícita de cada concejo a su demarcación climática oficial y estación meteorológica de referencia:
+    - 🌊 **Litoral Cantábrico:** *AEMET Gijón Musel / Avilés* (Gijón, Avilés, Castrillón, Gozón, Llanes, Ribadesella, Tapia...).
+    - 🏙️ **Valles Centrales y Cuencas:** *AEMET Oviedo El Cristo* (Oviedo, Siero, Mieres, Langreo, Grado...).
+    - 🍂 **Suroccidente Interior:** *AEMET Cangas del Narcea* (Cangas del Narcea, Allande, Degaña, Ibias, Tineo...).
+    - 🏔️ **Cordillera y Picos de Europa:** *AEMET Pajares / Picos de Europa (Alta Montaña)* (Cabrales, Cangas de Onís, Amieva, Sotres, Somiedo, Pajares, Quirós, Lena...).
+- **Diseño Ergonómico en Dos Niveles (Doctrina Artículo 11 zeustata):**
+  - **Fila 1:** Cabecera con título del mes (`📜 Récords AEMET · [Mes]:`) y pastilla de zona destacada con icono y estación abreviada (ej. `🏔️ Picos de Europa / Cordillera (Pajares / Picos)`).
+  - **Fila 2:** Las 3 pastillas de métricas históricas (`🔥 Máx`, `❄️ Mín`, `🌧️ 24h`) con ancho completo y sin colisiones en pantallas móviles.
+  - Blindaje defensivo en arrays de temperaturas para prevenir excepciones si faltan datos en la API.
+- **Cache-bust & Sincronización:** `sw.js` → `meteoasturlode-v1140-climatology-zones`, actualización general a `?v=1.1.40` en `index.html`, `js/app.js` y componentes.
+
+---
+
 ## [1.1.39] - 2026-09-30
 
 ### 🌍 Ergonomía Móvil & Visualización: Blindaje Anti-Recorte en Métricas de Viento y Rachas

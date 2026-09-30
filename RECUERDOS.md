@@ -20,7 +20,29 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   5. *Fronteras del conocimiento:* Distinción rigurosa entre hechos, opiniones y desconocimiento (sin rellenar con especulaciones).
   6. *Separación entre Juicio y Ejecución:* Aplica cuando se pide juicio; ante órdenes de tareas concretas decididas, se ejecuta sin discusión.
 
-## 🚀 Última Actualización Oficial: v1.1.39 🌍 — 2026-09-30
+## 🚀 Última Actualización Oficial: v1.1.40 🌍 — 2026-09-30
+- **Climatología & Zonas AEMET: Diferenciación de Zonas y Estaciones Oficiales en Récords Históricos:**
+  1. *Identificación Geográfica Rigurosa de Récords Mensuales (Feedback Lendo / Ley 11 Parte II):*
+     - Erradicada la ambigüedad en los récords históricos de 30 años (AEMET 1991–2020) en la tarjeta principal.
+     - Asignación obligatoria y explícita de cada concejo a su demarcación climática oficial y estación meteorológica de referencia:
+       - 🌊 **Litoral Cantábrico:** *AEMET Gijón Musel / Avilés* (Gijón, Avilés, Castrillón, Gozón, Llanes, Ribadesella, Tapia...).
+       - 🏙️ **Valles Centrales y Cuencas:** *AEMET Oviedo El Cristo* (Oviedo, Siero, Mieres, Langreo, Grado...).
+       - 🍂 **Suroccidente Interior:** *AEMET Cangas del Narcea* (Cangas del Narcea, Allande, Degaña, Ibias, Tineo...).
+       - 🏔️ **Cordillera y Picos de Europa:** *AEMET Pajares / Picos de Europa (Alta Montaña)* (Cabrales, Cangas de Onís, Amieva, Sotres, Somiedo, Pajares, Quirós, Lena...).
+  2. *Diseño Ergonómico en Dos Niveles (Doctrina Artículo 11 zeustata):*
+     - Reorganizado el bloque climatológico en 2 filas limpias: cabecera con mes (`📜 Récords AEMET · [Mes]:`) y pastilla de zona destacada (`.records-zone-pill`), y fila inferior con las 3 pastillas de métricas (`🔥 Máx`, `❄️ Mín`, `🌧️ 24h`).
+     - Blindaje defensivo en arrays de temperaturas para prevenir excepciones en cliente si faltan datos en la API.
+  3. *Versionado & Anti-Caché:*
+     - Incremento oficial a `v1.1.40 🌍`.
+     - Footer de `index.html` con `#app-version-badge` actualizado a `v1.1.40 🌍`.
+     - Inyectado bloque de novedades en `#changelog-modal`.
+     - `CURRENT_APP_VERSION = '1.1.40'` en `js/app.js`.
+     - `CACHE_NAME = 'meteoasturlode-v1140-climatology-zones'` en `sw.js`.
+     - CSS y módulos JS sincronizados con `?v=1.1.40`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.39 🌍 — 2026-09-30
 - **Ergonomía Móvil & Visualización: Blindaje Anti-Recorte en Métricas de Viento y Rachas:**
   1. *Subordinación Tipográfica y Jerarquía de Unidades (Artículo 11 zeustata):*
      - Modificado [js/components/forecastView.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/components/forecastView.js) para renderizar la unidad de velocidad (`km/h` o `kt`) encapsulada en `<small class="u-m-unit">`, dotándola de menor peso visual (`0.68rem`, `font-weight: 500`) frente al número principal (`0.92rem`, `font-weight: 700`).

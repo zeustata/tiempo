@@ -94,6 +94,9 @@ const CLIMATE_ZONES = {
 export const HISTORICAL_RECORDS = {
   coast: {
     stationName: 'AEMET Gijón (Musel) / Avilés',
+    zoneLabel: 'Litoral Cantábrico',
+    zoneIcon: '🌊',
+    stationShort: 'Gijón / Avilés',
     months: [
       { maxT: 23.6, maxYear: 2003, minT: -4.8, minYear: 1985, maxRain: 76.5, rainYear: 1993 }, // Ene
       { maxT: 25.8, maxYear: 1990, minT: -3.0, minYear: 1986, maxRain: 65.0, rainYear: 1978 }, // Feb
@@ -111,6 +114,9 @@ export const HISTORICAL_RECORDS = {
   },
   interior: {
     stationName: 'AEMET Oviedo (El Cristo / Buenavista)',
+    zoneLabel: 'Valles Centrales',
+    zoneIcon: '🏙️',
+    stationShort: 'Oviedo',
     months: [
       { maxT: 23.4, maxYear: 2003, minT: -6.0, minYear: 1985, maxRain: 72.0, rainYear: 1996 },
       { maxT: 24.6, maxYear: 1990, minT: -3.8, minYear: 1986, maxRain: 62.4, rainYear: 1978 },
@@ -128,6 +134,9 @@ export const HISTORICAL_RECORDS = {
   },
   occidente: {
     stationName: 'AEMET Cangas del Narcea',
+    zoneLabel: 'Suroccidente',
+    zoneIcon: '🍂',
+    stationShort: 'Cangas del Narcea',
     months: [
       { maxT: 22.0, maxYear: 2003, minT: -8.5, minYear: 1985, maxRain: 68.0, rainYear: 1996 },
       { maxT: 24.0, maxYear: 1990, minT: -6.0, minYear: 1986, maxRain: 58.0, rainYear: 1978 },
@@ -144,7 +153,10 @@ export const HISTORICAL_RECORDS = {
     ]
   },
   mountain: {
-    stationName: 'AEMET Pajares / Alta Montaña',
+    stationName: 'AEMET Pajares / Picos de Europa (Alta Montaña)',
+    zoneLabel: 'Picos de Europa / Cordillera',
+    zoneIcon: '🏔️',
+    stationShort: 'Pajares / Picos',
     months: [
       { maxT: 18.0, maxYear: 2003, minT: -14.0, minYear: 1985, maxRain: 95.0, rainYear: 1996 },
       { maxT: 19.5, maxYear: 1990, minT: -12.5, minYear: 1986, maxRain: 85.0, rainYear: 1978 },
@@ -167,15 +179,45 @@ export const HISTORICAL_RECORDS = {
  */
 function resolveZoneKey(concejo) {
   if (!concejo) return 'interior';
-  if (concejo.type === 'coast' || (concejo.region && concejo.region.toLowerCase().includes('costa'))) {
+  const cId = (concejo.id || '').toLowerCase();
+  const reg = (concejo.region || '').toLowerCase();
+  const cType = (concejo.type || '').toLowerCase();
+  const desc = (concejo.description || '').toLowerCase();
+
+  // 1. Costa y Litoral Cantábrico
+  if (cType === 'coast' || reg.includes('costa') || reg.includes('litoral')) {
     return 'coast';
   }
-  if (concejo.type === 'mountain' || concejo.altitude >= 600) {
-    return 'mountain';
-  }
-  if (concejo.region && (concejo.region.toLowerCase().includes('occidente') || concejo.region.toLowerCase().includes('narcea'))) {
+
+  // 2. Occidente y Suroccidente Interior (Cangas del Narcea, Degaña, Ibias, Allande, Tineo...)
+  if (
+    reg.includes('occidente') ||
+    reg.includes('narcea') ||
+    reg.includes('ibias') ||
+    reg.includes('degaña') ||
+    cId.includes('narcea') ||
+    cId === 'allande' ||
+    cId === 'tineo' ||
+    cId === 'ibias' ||
+    cId === 'degana'
+  ) {
     return 'occidente';
   }
+
+  // 3. Cordillera y Picos de Europa / Alta Montaña
+  if (
+    cType === 'mountain' ||
+    (concejo.altitude || 0) >= 600 ||
+    reg.includes('montaña') ||
+    reg.includes('cordillera') ||
+    reg.includes('picos') ||
+    desc.includes('picos de europa') ||
+    ['cabrales', 'cangasdeonis', 'cangas-de-onis', 'onis', 'amieva', 'ponga', 'caso', 'sobrescobio', 'somiedo', 'quiros', 'teverga', 'lena', 'aller', 'pajares', 'sotres', 'covadonga_lagos', 'fuentesdeinvierno'].includes(cId)
+  ) {
+    return 'mountain';
+  }
+
+  // 4. Valles Centrales y Cuencas
   return 'interior';
 }
 
@@ -208,8 +250,8 @@ export function getClimatologyContext(concejo, current, daily) {
   const normalMean = Math.round((monthData.tMean - lapseRateCorrection) * 10) / 10;
 
   // Temperatura máxima prevista hoy (o temperatura actual si falta)
-  const todayMax = daily.temperature_2m_max[0] != null ? daily.temperature_2m_max[0] : (current?.temperature_2m || normalMax);
-  const todayMin = daily.temperature_2m_min[0] != null ? daily.temperature_2m_min[0] : normalMin;
+  const todayMax = (daily.temperature_2m_max && daily.temperature_2m_max[0] != null) ? daily.temperature_2m_max[0] : (current?.temperature_2m || normalMax);
+  const todayMin = (daily.temperature_2m_min && daily.temperature_2m_min[0] != null) ? daily.temperature_2m_min[0] : normalMin;
 
   const diffMax = Math.round((todayMax - normalMax) * 10) / 10;
   const absDiff = Math.abs(diffMax);
@@ -275,6 +317,9 @@ export function getClimatologyContext(concejo, current, daily) {
     monthName,
     records: monthRecord ? {
       station: recordStation.stationName,
+      zoneLabel: recordStation.zoneLabel,
+      zoneIcon: recordStation.zoneIcon,
+      stationShort: recordStation.stationShort,
       maxT: monthRecord.maxT,
       maxYear: monthRecord.maxYear,
       minT: monthRecord.minT,
@@ -307,10 +352,17 @@ export function renderClimatologyStrip(clima) {
       </div>
       ${clima.records ? `
         <div class="climatology-records-row">
-          <span class="records-station-tag" title="${clima.records.station}">📜 Récords AEMET ${clima.monthName}:</span>
-          <span class="record-mini-pill" title="Récord histórico de calor para este mes">🔥 Máx: <strong>${clima.records.maxT}°C</strong> <small>(${clima.records.maxYear})</small></span>
-          <span class="record-mini-pill" title="Récord histórico de frío para este mes">❄️ Mín: <strong>${clima.records.minT}°C</strong> <small>(${clima.records.minYear})</small></span>
-          <span class="record-mini-pill" title="Mayor precipitación en 24 horas registrada en este mes">🌧️ 24h: <strong>${clima.records.maxRain} mm</strong> <small>(${clima.records.rainYear})</small></span>
+          <div class="climatology-records-header">
+            <span class="records-station-tag">📜 Récords AEMET · ${clima.monthName.charAt(0).toUpperCase() + clima.monthName.slice(1)}:</span>
+            <span class="records-zone-pill" title="Estación oficial de referencia AEMET: ${clima.records.station}">
+              ${clima.records.zoneIcon} ${clima.records.zoneLabel} <small>(${clima.records.stationShort})</small>
+            </span>
+          </div>
+          <div class="climatology-records-pills">
+            <span class="record-mini-pill" title="Récord histórico de calor para este mes en ${clima.records.station}">🔥 Máx: <strong>${clima.records.maxT}°C</strong> <small>(${clima.records.maxYear})</small></span>
+            <span class="record-mini-pill" title="Récord histórico de frío para este mes en ${clima.records.station}">❄️ Mín: <strong>${clima.records.minT}°C</strong> <small>(${clima.records.minYear})</small></span>
+            <span class="record-mini-pill" title="Mayor precipitación en 24 horas registrada en este mes en ${clima.records.station}">🌧️ 24h: <strong>${clima.records.maxRain} mm</strong> <small>(${clima.records.rainYear})</small></span>
+          </div>
         </div>
       ` : ''}
     </div>

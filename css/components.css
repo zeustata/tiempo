@@ -273,18 +273,57 @@
 
 .climatology-records-row {
   display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 6px;
-  padding-top: 6px;
+  flex-direction: column;
+  gap: 7px;
+  padding-top: 7px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   font-size: 0.75rem;
+  width: 100%;
+}
+
+.climatology-records-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
+  width: 100%;
 }
 
 .records-station-tag {
   color: #94a3b8;
   font-weight: 700;
-  margin-right: 2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.records-zone-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  color: #7dd3fc;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.72rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.records-zone-pill small {
+  color: #cbd5e1;
+  font-weight: 400;
+  opacity: 0.88;
+}
+
+.climatology-records-pills {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  width: 100%;
 }
 
 .record-mini-pill {
@@ -446,6 +485,20 @@
   }
   .climatology-desc {
     font-size: 0.78rem;
+  }
+  .climatology-records-header {
+    gap: 4px;
+  }
+  .records-station-tag {
+    font-size: 0.72rem;
+  }
+  .records-zone-pill {
+    font-size: 0.68rem;
+    padding: 2px 6px;
+  }
+  .record-mini-pill {
+    font-size: 0.69rem;
+    padding: 2px 6px;
   }
 }
 

@@ -134,4 +134,13 @@
     - Protocolo de doble escala temporal: a medio plazo (72 a 96 h) se evalúa la tendencia sinóptica con **Auto Multi-Modelo** y **ECMWF** sin forzar horarios prematuros; en corto plazo (< 48 h) se aplica la hiper-resolución de **AROME (1.3 km)** para capturar con precisión la interacción del frente con el Cabo Peñas, valles y la Cordillera Cantábrica, evitando la trampa del desfase de medianoche.
     - **Algoritmo Híbrido de Consenso Cantábrico (AROME + ECMWF):** en modo Auto, el sistema activa un filtro de seguridad en paralelo que detecta falsos claros costeros numéricos de AROME (`< 50%` nubes frente a `>= 80%` de ECMWF).
     - **Soberanía Indiscutible de AROME en Nowcasting & Blindaje Anti-Orballu Fantasma:** En tiempo actual en vivo, AROME (1.3 km) tiene autoridad total sobre la precipitación en superficie. Se prohíbe taxativamente que el sesgo orográfico húmedo de ECMWF (cuadrícula de 9 km) sobreescriba el tiempo en vivo con lloviznas de 0.1–0.2 mm si AROME marca seco (`< 0.1 mm`), blindando el detector de Resol/Claros y el Semáforu del Paragües. En pronóstico horario, ECMWF solo puede aportar lluvia si el ensamble es inequívoco (`PoP >= 65%`), la acumulación prevista es relevante (`>= 0.5 mm`) y el cielo está densamente cubierto (`>= 60%`).
+11. **Diferenciación Climatológica de Zonas y Estaciones Oficiales AEMET en Récords Históricos:**
+    - La tarjeta principal y el motor de series históricas de 30 años (AEMET 1991–2020) deben reflejar con total rigor la diversidad microclimática de Asturias, prohibiendo mostrar récords mensuales genéricos o anónimos sin identificar la zona.
+    - Todo concejo debe resolverse obligatoriamente en una de las 4 demarcaciones meteorológicas oficiales con su estación de referencia asignada:
+      1. **Litoral Cantábrico (`🌊`):** Estación *AEMET Gijón Musel / Avilés*.
+      2. **Valles Centrales y Cuencas (`🏙️`):** Estación *AEMET Oviedo El Cristo*.
+      3. **Suroccidente Interior (`🍂`):** Estación *AEMET Cangas del Narcea*.
+      4. **Cordillera y Picos de Europa (`🏔️`):** Estación *AEMET Pajares / Picos de Europa (Alta Montaña)*.
+    - En la interfaz de usuario, la demarcación debe presentarse en dos niveles ergonómicos (cabecera con pastilla de zona + fila de métricas de máximas, mínimas y lluvia en 24h), garantizando inmunidad al desborde y visualización limpia en pantallas de 320px a 380px conforme al Artículo 11.
+
 

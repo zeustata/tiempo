@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1139-forecast-wind-ergonomy';
+const CACHE_NAME = 'meteoasturlode-v1140-climatology-zones';
 const STATIC_ASSETS = [
   './',
   './index.html',

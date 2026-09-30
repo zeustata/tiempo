@@ -8,7 +8,7 @@ import { detectBorrinaEffect, renderBorrinaBanner } from '../utils/borrinaDetect
 import { detectThunderstormEffect, renderThunderstormBanner } from '../utils/thunderstormDetector.js?v=1.1.37';
 import { getSeismicStatus, renderSeismicBanner } from '../utils/seismicDetector.js?v=1.1.37';
 import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.37';
-import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=1.1.37';
+import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=1.1.40';
 import { calculateUmbrellaStatus, renderUmbrellaCard } from '../utils/umbrellaAdvisor.js?v=1.1.37';
 
 /**

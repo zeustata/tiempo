@@ -12,15 +12,15 @@ import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, rese
 import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1.39';
 import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1.39';
 import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1.39';
-import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.39';
-import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.39';
-import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=1.1.39';
-import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=1.1.39';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.39';
-import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.39';
-import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.39';
-import { initGyroGlass } from './utils/gyroGlass.js?v=1.1.39';
-import { triggerSeismicRefresh } from './utils/seismicDetector.js?v=1.1.39';
+import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.40';
+import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.40';
+import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=1.1.40';
+import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=1.1.40';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.40';
+import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.40';
+import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.40';
+import { initGyroGlass } from './utils/gyroGlass.js?v=1.1.40';
+import { triggerSeismicRefresh } from './utils/seismicDetector.js?v=1.1.40';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, pronóstico horario 72h y alertas', key: '1' },
@@ -33,7 +33,7 @@ const APP_MODULES = [
   { id: 'astronomy', icon: '🔭', title: 'Astronomía & Cosmos', desc: 'Eclipses, lluvias de estrellas, fases lunares y semáforo de visibilidad en Asturias', key: '8' }
 ];
 
-export const CURRENT_APP_VERSION = '1.1.39';
+export const CURRENT_APP_VERSION = '1.1.40';
 
 class MeteoAsturiasApp {
   constructor() {
