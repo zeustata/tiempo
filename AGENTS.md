@@ -95,6 +95,12 @@
 - **Unificación Estética Rigurosa:** Todo tratamiento de diseño, efecto visual, textura de cristal, gradiente de profundidad o micro-animación aprobado para la interfaz debe extenderse y aplicarse de forma armónica e integral a todas las tarjetas, cabeceras, paneles y componentes interactivos del proyecto.
 - **Prohibición de Aislamiento Estético:** Queda terminantemente prohibido dejar componentes o tarjetas secundarias con estilos visuales obsoletos, disonantes o desalineados respecto a la tarjeta o elemento principal, garantizando una identidad visual uniforme, coherente y de máxima calidad en toda la aplicación.
 
+### 15. Doctrina de Legalidad Estricta, Datos Abiertos y Blindaje Google Play Store
+- **Legalidad y Licencias Abiertas Obligatorias:** Toda API, fuente de datos, imagen, icono, librería o servicio integrado en cualquier proyecto zeustata debe operar bajo el más estricto marco legal, utilizando exclusivamente datos abiertos oficiales (Open Data), software de código abierto o recursos de dominio público / Creative Commons conformes a la legislación vigente y a la Ley de Reutilización de la Información del Sector Público.
+- **Prohibición Tajante de Prácticas Ilícitas o Abusivas:** Queda terminantemente prohibido el raspado web (*web scraping*) no autorizado a servidores privados, la elusión de mecanismos de pago, el uso de claves no autorizadas o cualquier vulneración de los Términos de Servicio (TOS) de proveedores tecnológicos.
+- **Atribución Transparente y Descargo Gubernamental:** Toda aplicación debe identificar claramente las fuentes oficiales de las que bebe (ej. Open-Meteo, AEMET, Puertos del Estado, RainViewer, etc.) e incorporar obligatoriamente un descargo de responsabilidad visible indicando que se trata de un desarrollo independiente, evitando cualquier infracción por presunta suplantación de organismos públicos.
+- **Blindaje de Políticas en Google Play Console:** Ningún módulo, contenido, metadato o permiso podrá vulnerar las directivas para desarrolladores de Google Play Store, garantizando que ninguna app del ecosistema zeustata pueda incurrir en suspensión, sanción o baneo de la tienda.
+
 ---
 
 ## 📑 PARTE II: LEYES ESPECÍFICAS DEL PROYECTO: METEOASTUR LODE (TIEMPO)
