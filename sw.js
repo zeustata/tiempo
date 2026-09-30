@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1137-seismic-calibrated';
+const CACHE_NAME = 'meteoasturlode-v1138-https-webcams-blindaje';
 const STATIC_ASSETS = [
   './',
   './index.html',

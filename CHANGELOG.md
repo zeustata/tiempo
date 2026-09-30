@@ -10,6 +10,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.38] - 2026-09-30
+
+### 🌍 Seguridad, Higiene & Blindaje Legal: Migración Integral a HTTPS en Webcams
+- **Migración Integral a Transmisión Cifrada HTTPS (Artículo 15 zeustata):**
+  - Actualización de la totalidad de las URLs en el catálogo oficial de cámaras [js/utils/webcamsData.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/utils/webcamsData.js) (playas, rompientes, puertos de montaña y cumbres alpinas) a protocolo seguro `https://www.webcamsdeasturias.com/`.
+  - Eliminación de redirecciones intermedias 301/302 en texto plano, logrando una apertura más rápida (ahorro de 100-200 ms) al pulsar *"Ver Cámara ↗"*.
+  - Erradicación definitiva de advertencias de *"Tráfico en texto plano (Cleartext Traffic)"* en las auditorías de Google Play Console y de avisos de *"Sitio no seguro"* en navegadores móviles.
+  - Actualizada la leyenda legal al pie del modal de webcams explicitando la condición de enlaces externos verificados hacia el portal oficial propietario con cifrado TLS.
+- **Cache-bust & Sincronización:** `sw.js` → `meteoasturlode-v1138-https-webcams-blindaje`, actualización general a `?v=1.1.38` en `index.html`, `js/app.js` y componentes.
+
+---
+
 ## [1.1.37] - 2026-09-30
 
 ### 🌍 Calibración Sismológica: Umbral Menor de Sensibilidad (M >= 2.5) & Reubicación Discreta

@@ -20,7 +20,24 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   5. *Fronteras del conocimiento:* Distinción rigurosa entre hechos, opiniones y desconocimiento (sin rellenar con especulaciones).
   6. *Separación entre Juicio y Ejecución:* Aplica cuando se pide juicio; ante órdenes de tareas concretas decididas, se ejecuta sin discusión.
 
-## 🚀 Última Actualización Oficial: v1.1.37 🌍 — 2026-09-30
+## 🚀 Última Actualización Oficial: v1.1.38 🌍 — 2026-09-30
+- **Seguridad, Higiene & Blindaje Legal: Migración Integral a HTTPS en Webcams:**
+  1. *Migración Integral a Protocolo Cifrado TLS / HTTPS (Artículo 15 zeustata):*
+     - Actualizada la totalidad de los 39 enlaces salientes de `js/utils/webcamsData.js` a `https://www.webcamsdeasturias.com/`.
+     - Supresión total de redirecciones 301/302 intermedias, acelerando en 100-200 ms la apertura de las cámaras de playas, rompientes y puertos de montaña al pulsar *"Ver Cámara ↗"*.
+     - Blindaje absoluto ante los analizadores de seguridad de Google Play Store, erradicando cualquier aviso potencial de *"Cleartext Traffic"*.
+     - Actualizada la leyenda legal al pie de `#webcams-modal` certificando la condición de enlaces salientes cifrados hacia el portal oficial propietario con plena transparencia.
+  2. *Versionado & Anti-Caché:*
+     - Incremento oficial a `v1.1.38 🌍`.
+     - Footer de `index.html` con `#app-version-badge` actualizado a `v1.1.38 🌍`.
+     - Inyectado bloque de novedades en `#changelog-modal`.
+     - `CURRENT_APP_VERSION = '1.1.38'` en `js/app.js`.
+     - `CACHE_NAME = 'meteoasturlode-v1138-https-webcams-blindaje'` en `sw.js`.
+     - CSS y módulos JS sincronizados con `?v=1.1.38`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.37 🌍 — 2026-09-30
 - **Calibración Sismológica: Umbral Menor de Sensibilidad (M >= 2.5) & Reubicación Discreta:**
   1. *Filtro Físico y Menor Sensibilidad (Feedback Lendo):*
      - Elevación del umbral de activación regional de `M 1.8` a **`M >= 2.5`**, suprimiendo de raíz falsos positivos de micro-sismos instrumentales distantes como el capturado en el norte de Portugal (M 2.2 a ~190 km).

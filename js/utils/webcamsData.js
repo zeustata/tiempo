@@ -19,7 +19,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Surf y Baño',
     icon: '🏄‍♂️',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/comarca-de-aviles/castrillon/salinas/playa-de-salinas-hd/26/'
+    url: 'https://www.webcamsdeasturias.com/asturias/comarca-de-aviles/castrillon/salinas/playa-de-salinas-hd/26/'
   },
   {
     id: 'salinas-espartal',
@@ -32,7 +32,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Surf Spot',
     icon: '🏄‍♂️',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/comarca-aviles/castrillon/salinas/playa-de-salinas-el-espartal/170/'
+    url: 'https://www.webcamsdeasturias.com/asturias/comarca-aviles/castrillon/salinas/playa-de-salinas-el-espartal/170/'
   },
   {
     id: 'san-lorenzo-escalerona',
@@ -45,7 +45,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Urbana y Surf',
     icon: '🏖️',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/centro/gijon/gijon/la-escalerona-playa-de-san-lorenzo-hd/148/'
+    url: 'https://www.webcamsdeasturias.com/asturias/centro/gijon/gijon/la-escalerona-playa-de-san-lorenzo-hd/148/'
   },
   {
     id: 'san-lorenzo-tostaderu',
@@ -58,7 +58,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Surf y Olas',
     icon: '🏄‍♂️',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/centro/gijon/gijon/playa-de-san-lorenzo-el-tostaderu-hd/133/'
+    url: 'https://www.webcamsdeasturias.com/asturias/centro/gijon/gijon/playa-de-san-lorenzo-el-tostaderu-hd/133/'
   },
   {
     id: 'san-lorenzo-panoramica',
@@ -71,7 +71,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Panorámica Costera',
     icon: '🌊',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/gijon/gijon/san-lorenzo/panoramica-playa-hd/198/'
+    url: 'https://www.webcamsdeasturias.com/asturias/gijon/gijon/san-lorenzo/panoramica-playa-hd/198/'
   },
   {
     id: 'gijon-rinconin',
@@ -84,7 +84,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Cala y Senda',
     icon: '🏖️',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/centro/gijon/costa/el-rinconin-san-lorenzo-hd/126/'
+    url: 'https://www.webcamsdeasturias.com/asturias/centro/gijon/costa/el-rinconin-san-lorenzo-hd/126/'
   },
   {
     id: 'gijon-poniente',
@@ -97,7 +97,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Aguas Calmas',
     icon: '⛵',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/centro/gijon/gijon/puerto-deportivo-poniente-hd/41/'
+    url: 'https://www.webcamsdeasturias.com/asturias/centro/gijon/gijon/puerto-deportivo-poniente-hd/41/'
   },
   {
     id: 'xago',
@@ -110,7 +110,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Surf Salvaje',
     icon: '🌊',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/cabo-penas/gozon/xago/playa-de-xago-hd/118/'
+    url: 'https://www.webcamsdeasturias.com/asturias/cabo-penas/gozon/xago/playa-de-xago-hd/118/'
   },
   {
     id: 'luanco-ribera',
@@ -123,7 +123,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Mar de Abrigo',
     icon: '🏖️',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/cabo-penas/gozon/luanco/playa-de-la-ribera-hd/24/'
+    url: 'https://www.webcamsdeasturias.com/asturias/cabo-penas/gozon/luanco/playa-de-la-ribera-hd/24/'
   },
   {
     id: 'luanco-muelle',
@@ -136,7 +136,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Puerto y Bahía',
     icon: '⛵',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/cabo-penas/gozon/luanco/muelle-de-luanco-hd/91/'
+    url: 'https://www.webcamsdeasturias.com/asturias/cabo-penas/gozon/luanco/muelle-de-luanco-hd/91/'
   },
   {
     id: 'candas-paseo',
@@ -149,7 +149,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Costera',
     icon: '🏖️',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/cabo-penas/carreno/candas/paseo-maritimo-de-candas/23/'
+    url: 'https://www.webcamsdeasturias.com/asturias/cabo-penas/carreno/candas/paseo-maritimo-de-candas/23/'
   },
   {
     id: 'rodiles-barra',
@@ -162,7 +162,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Surf Legendario',
     icon: '🏄‍♂️',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/comarca-de-la-sidra/villaviciosa/rodiles/surf-barra-de-playa-de-rodiles-hd/44/'
+    url: 'https://www.webcamsdeasturias.com/asturias/comarca-de-la-sidra/villaviciosa/rodiles/surf-barra-de-playa-de-rodiles-hd/44/'
   },
   {
     id: 'rodiles-playa',
@@ -175,7 +175,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Arenal y Naturaleza',
     icon: '🌲',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/comarca-de-la-sidra/villaviciosa/rodiles/playa-de-rodiles-hd/120/'
+    url: 'https://www.webcamsdeasturias.com/asturias/comarca-de-la-sidra/villaviciosa/rodiles/playa-de-rodiles-hd/120/'
   },
   {
     id: 'playa-espana',
@@ -188,7 +188,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Surf y Acantilados',
     icon: '🏄‍♂️',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/comarca-de-la-sidra/villaviciosa/quintes/playa-espana-hd/164/'
+    url: 'https://www.webcamsdeasturias.com/asturias/comarca-de-la-sidra/villaviciosa/quintes/playa-espana-hd/164/'
   },
   {
     id: 'playa-la-nora',
@@ -201,7 +201,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Cala Cantábrica',
     icon: '🏖️',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/comarca-de-la-sidra/villaviciosa/villaviciosa/playa-de-la-nora-hd/104/'
+    url: 'https://www.webcamsdeasturias.com/asturias/comarca-de-la-sidra/villaviciosa/villaviciosa/playa-de-la-nora-hd/104/'
   },
   {
     id: 'santa-marina',
@@ -214,7 +214,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Playa Urbana y Surf',
     icon: '🏖️',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/oriente/ribadesella/ribadesella/playa-de-santa-marina-hd/166/'
+    url: 'https://www.webcamsdeasturias.com/asturias/oriente/ribadesella/ribadesella/playa-de-santa-marina-hd/166/'
   },
   {
     id: 'vega',
@@ -227,7 +227,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Playa Virgen',
     icon: '🌊',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/oriente/ribadesella/vega/playa-de-vega-hd/132/'
+    url: 'https://www.webcamsdeasturias.com/asturias/oriente/ribadesella/vega/playa-de-vega-hd/132/'
   },
   {
     id: 'llanes-barro',
@@ -240,7 +240,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Aguas Calmas',
     icon: '🏖️',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/oriente-de-asturias/llanes/barro/playa-de-barro-hd/16/'
+    url: 'https://www.webcamsdeasturias.com/asturias/oriente-de-asturias/llanes/barro/playa-de-barro-hd/16/'
   },
   {
     id: 'llanes-palombina',
@@ -253,7 +253,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Cala Turquesa',
     icon: '🏖️',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/oriente/llanes/celorio/playa-palombina-hd/156/'
+    url: 'https://www.webcamsdeasturias.com/asturias/oriente/llanes/celorio/playa-palombina-hd/156/'
   },
   {
     id: 'llanes-andrin',
@@ -266,7 +266,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Surf y Corrientes',
     icon: '🌊',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/oriente/llanes/andrin/playa-de-andrin-hd/187/'
+    url: 'https://www.webcamsdeasturias.com/asturias/oriente/llanes/andrin/playa-de-andrin-hd/187/'
   },
   {
     id: 'llanes-san-antolin',
@@ -279,7 +279,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Surf Abierto',
     icon: '🏄‍♂️',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/oriente/llanes/bedon/playa-de-san-antolin-hd/131/'
+    url: 'https://www.webcamsdeasturias.com/asturias/oriente/llanes/bedon/playa-de-san-antolin-hd/131/'
   },
   {
     id: 'aguilar',
@@ -292,7 +292,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Baño y Paisaje',
     icon: '🏖️',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/bajo-nalon/muros-de-nalon/aguilar/playa-de-aguilar-ii-hd/205/'
+    url: 'https://www.webcamsdeasturias.com/asturias/bajo-nalon/muros-de-nalon/aguilar/playa-de-aguilar-ii-hd/205/'
   },
   {
     id: 'los-quebrantos',
@@ -305,7 +305,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Surf y Ría',
     icon: '🏄‍♂️',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/bajo-nalon/soto-del-barco/san-juan-del-arena/playa-de-los-quebrantos-hd/149/'
+    url: 'https://www.webcamsdeasturias.com/asturias/bajo-nalon/soto-del-barco/san-juan-del-arena/playa-de-los-quebrantos-hd/149/'
   },
   {
     id: 'tapia',
@@ -318,7 +318,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Surf Internacional',
     icon: '🏄‍♂️',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/occidente/tapia-de-casariego/tapia-de-casariego/playa-de-tapia-anguileiro-o-la-grande-hd/114/'
+    url: 'https://www.webcamsdeasturias.com/asturias/occidente/tapia-de-casariego/tapia-de-casariego/playa-de-tapia-anguileiro-o-la-grande-hd/114/'
   },
   {
     id: 'penarronda',
@@ -331,7 +331,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Espacio Protegido',
     icon: '🌊',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/oscos-eo/castropol/penarronda/playa-de-penarronda-hd/27/'
+    url: 'https://www.webcamsdeasturias.com/asturias/oscos-eo/castropol/penarronda/playa-de-penarronda-hd/27/'
   },
 
   // ==========================================
@@ -348,7 +348,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Alta Montaña y Nieve',
     icon: '❄️',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/estacion-valgrande-pajares/lena/pajares/ei-valgrande-pajares-cuitu-negro-cueto-negro-hd/9/'
+    url: 'https://www.webcamsdeasturias.com/asturias/estacion-valgrande-pajares/lena/pajares/ei-valgrande-pajares-cuitu-negro-cueto-negro-hd/9/'
   },
   {
     id: 'pajares-ubinas',
@@ -361,7 +361,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Panorámica Alpina',
     icon: '🏔️',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/estacion-valgrande-pajares/lena/pajares/ei-valgrande-pajares-panoramica-cueto-negro-ubinas-hd/144/'
+    url: 'https://www.webcamsdeasturias.com/asturias/estacion-valgrande-pajares/lena/pajares/ei-valgrande-pajares-panoramica-cueto-negro-ubinas-hd/144/'
   },
   {
     id: 'pajares-branillin',
@@ -374,7 +374,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Estación Invernal',
     icon: '⛷️',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/montana-central/lena/estacion-valgrande-pajares/zona-baja-hd/180/'
+    url: 'https://www.webcamsdeasturias.com/asturias/montana-central/lena/estacion-valgrande-pajares/zona-baja-hd/180/'
   },
   {
     id: 'san-isidro-raya',
@@ -400,7 +400,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Valle de Montaña',
     icon: '🏔️',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/montana-central/aller/felechosa/panoramica-san-isidro-felechosa-hd/105/'
+    url: 'https://www.webcamsdeasturias.com/asturias/montana-central/aller/felechosa/panoramica-san-isidro-felechosa-hd/105/'
   },
   {
     id: 'puerto-tarna',
@@ -413,7 +413,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Paso de Montaña',
     icon: '🚗',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/valle-del-nalon/caso/tarna/puerto-de-tarna-hd/147/'
+    url: 'https://www.webcamsdeasturias.com/asturias/valle-del-nalon/caso/tarna/puerto-de-tarna-hd/147/'
   },
   {
     id: 'puerto-cerredo',
@@ -426,7 +426,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Puerto de Montaña',
     icon: '🏔️',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/occidente/degana/panoramica-de-cerredo/cerredo-hd/76/'
+    url: 'https://www.webcamsdeasturias.com/asturias/occidente/degana/panoramica-de-cerredo/cerredo-hd/76/'
   },
   {
     id: 'somiedo-pola',
@@ -439,7 +439,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Parque Natural',
     icon: '🐻',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/camin-real-de-la-mesa/somiedo/somiedo/pola-de-somiedo-hd/113/'
+    url: 'https://www.webcamsdeasturias.com/asturias/camin-real-de-la-mesa/somiedo/somiedo/pola-de-somiedo-hd/113/'
   },
   {
     id: 'somiedo-caunedo',
@@ -452,7 +452,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Ruta de Montaña',
     icon: '🏔️',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/camin-real-de-la-mesa/somiedo/somiedo/somiedo-caunedo-hd/106/'
+    url: 'https://www.webcamsdeasturias.com/asturias/camin-real-de-la-mesa/somiedo/somiedo/somiedo-caunedo-hd/106/'
   },
   {
     id: 'lagos-covadonga',
@@ -465,7 +465,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Parque Nacional',
     icon: '🏞️',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/oriente/cangas-de-onis/cangas-de-onis/lagos-de-covadonga-lago-enol-hd/159/'
+    url: 'https://www.webcamsdeasturias.com/asturias/oriente/cangas-de-onis/cangas-de-onis/lagos-de-covadonga-lago-enol-hd/159/'
   },
   {
     id: 'picu-urriellu-camarmena',
@@ -478,7 +478,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Alta Montaña Emblemática',
     icon: '🧗‍♂️',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/picos-de-europa/cabrales/camarmena/picu-urriellu-naranjo-de-bulnes-hd/43/'
+    url: 'https://www.webcamsdeasturias.com/asturias/picos-de-europa/cabrales/camarmena/picu-urriellu-naranjo-de-bulnes-hd/43/'
   },
   {
     id: 'refugio-urriellu-bulnes',
@@ -491,7 +491,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Pueblo de Montaña',
     icon: '🏔️',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/picos-de-europa/cabrales/bulnes/refugio-del-urriellu/135/'
+    url: 'https://www.webcamsdeasturias.com/asturias/picos-de-europa/cabrales/bulnes/refugio-del-urriellu/135/'
   },
   {
     id: 'sotres-pandebano',
@@ -504,7 +504,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Pueblo Más Alto de Asturias',
     icon: '🧀',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/picos-de-europa/cabrales/sotres/sotres-pandebano/81/'
+    url: 'https://www.webcamsdeasturias.com/asturias/picos-de-europa/cabrales/sotres/sotres-pandebano/81/'
   },
   {
     id: 'vega-de-ario',
@@ -517,7 +517,7 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Refugio de Alta Montaña',
     icon: '⛺',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/oriente/cangas-de-onis/vega-de-ario/refugio-marques-villaviciosa-vega-ario/177/'
+    url: 'https://www.webcamsdeasturias.com/asturias/oriente/cangas-de-onis/vega-de-ario/refugio-marques-villaviciosa-vega-ario/177/'
   },
   {
     id: 'ponga-tiatordos',
@@ -530,6 +530,6 @@ export const WEBCAMS_ASTURIAS = [
     type: 'Parque Natural',
     icon: '🌲',
     provider: 'Webcams de Asturias',
-    url: 'http://www.webcamsdeasturias.com/asturias/oriente/ponga/san-juan-de-beleno/san-juan-de-beleno-san-xuan-picu-tiatordos/90/'
+    url: 'https://www.webcamsdeasturias.com/asturias/oriente/ponga/san-juan-de-beleno/san-juan-de-beleno-san-xuan-picu-tiatordos/90/'
   }
 ];

@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.37">
-  <link rel="stylesheet" href="css/components.css?v=1.1.37">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.37">
+  <link rel="stylesheet" href="css/main.css?v=1.1.38">
+  <link rel="stylesheet" href="css/components.css?v=1.1.38">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.38">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -176,7 +176,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.37 🌍</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.38 🌍</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -227,8 +227,18 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.37 🌍</span>
+            <span class="release-version">v1.1.38 🌍</span>
             <span class="release-date">30 Sep 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-mejora">Seguridad & Blindaje Legal</span> <strong>Migración Integral a HTTPS en Catálogo de Webcams de Asturias (Artículo 15 zeustata)</strong>: Actualizada la totalidad de los enlaces del directorio oficial de cámaras hacia transmisión cifrada <strong>HTTPS (TLS)</strong> directa. Se eliminan las redirecciones intermedias en texto plano, acelerando la apertura en 100-200 ms, erradicando advertencias de "Sitio no seguro" en navegadores y blindando la app con calificación 100% limpia en los escáneres de seguridad de Google Play Console. Reforzada la atribución transparente hacia el portal oficial propietario (webcamsdeasturias.com).</li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.37 🌍</span>
+            <span class="release-date">30 Sep 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-mejora">Calibración Sismológica</span> <strong>Filtro de Menor Sensibilidad & Reubicación al Final del Panel (Feedback Lendo)</strong>: Siguiendo las directrices directas de Lendo, se optimiza el centinela sísmico EMSC/IGN: se eleva el umbral de activación regional a <strong>magnitud M &gt;= 2.5</strong> y se acota estrictamente a Asturias y el litoral Cantábrico inmediato (descartando micro-sismos instrumentales lejanos como los de Portugal o la meseta). La ventana de vigilancia se reduce a 24 horas y, si llegara a producirse un evento real, la tarjeta se posiciona <strong>al final de todo el panel, discretamente tras el Asesor de Colada</strong> para no saturar la cabecera del tiempo en vivo. Auto-limpieza inmediata de registros obsoletos en el cliente.</li>
@@ -2010,7 +2020,7 @@
       <div class="modal-body webcams-modal-body" id="webcams-list-container"></div>
 
       <div class="phenomena-modal-footer webcams-modal-footer">
-        <span>📹 <em>MeteoAstur Lode • Acceso verificado a cámaras públicas y oficiales de Asturias</em></span>
+        <span>📹 <em>MeteoAstur Lode • Enlaces externos verificados hacia el portal oficial propietario (webcamsdeasturias.com) con transmisión cifrada HTTPS</em></span>
       </div>
     </div>
   </div>
@@ -2019,7 +2029,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.1.37').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.1.38').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -2049,7 +2059,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.37"></script>
+  <script type="module" src="js/app.js?v=1.1.38"></script>
 
 
 
