@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.39] - 2026-09-30
+
+### 🌍 Ergonomía Móvil & Visualización: Blindaje Anti-Recorte en Métricas de Viento y Rachas
+- **Blindaje Tipográfico y Jerarquía de Unidades en Tarjetas Diarias (Doctrina Artículo 11 zeustata):**
+  - Subordinación tipográfica de las unidades de velocidad (`km/h` o `kt`) mediante etiquetas `<small class="u-m-unit">`, reduciendo su peso visual y tamaño (`0.68rem`) frente al valor numérico (`0.92rem`), ganando más de 12px de ancho útil por pastilla.
+  - Formato ultra-compacto en racha máxima (`Racha <strong>${windGust}</strong>`), garantizando que la cifra quede siempre legible y destacada sin colapsar la etiqueta.
+- **Optimización de Padding y Holgura en Pantallas Móviles:**
+  - Reducción del padding horizontal de `.daily-card-rich` en pantallas móviles (`<= 480px`) de `22px` a `14px`, liberando 16px adicionales de ancho útil interior en la tarjeta.
+  - Ajuste ergonómico de la rejilla `.d-unified-metrics-grid`: padding de pastillas reducido a `5px 6px` y espaciado gap ajustado a `5px`.
+  - Iconos de métricas optimizados a `1.05rem` para evitar empujar el texto en teléfonos compactos (320px - 380px), eliminando definitivamente los puntos suspensivos (`25 k...` y `Racha ...`).
+- **Cache-bust & Sincronización:** `sw.js` → `meteoasturlode-v1139-forecast-wind-ergonomy`, actualización general a `?v=1.1.39` en `index.html`, `js/app.js` y componentes.
+
+---
+
 ## [1.1.38] - 2026-09-30
 
 ### 🌍 Seguridad, Higiene & Blindaje Legal: Migración Integral a HTTPS en Webcams

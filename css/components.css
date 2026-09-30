@@ -1929,20 +1929,41 @@
   margin-top: 1px;
 }
 
+.u-m-val .u-m-unit {
+  font-size: 0.72em;
+  font-weight: 600;
+  opacity: 0.85;
+  margin-left: 2px;
+}
+
+.u-metric-item.u-metric-wind .u-m-sub strong {
+  color: var(--text-main);
+  font-weight: 700;
+}
+
 @media (max-width: 480px) {
+  .daily-card-rich {
+    padding: 14px 14px;
+    gap: 12px;
+  }
   .d-unified-metrics-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 6px;
+    gap: 5px;
   }
   .u-metric-item {
-    padding: 6px 7px;
-    gap: 6px;
+    padding: 5px 6px;
+    gap: 5px;
+  }
+  .u-m-icon {
+    font-size: 1.05rem;
   }
   .u-m-val {
-    font-size: 0.78rem;
+    font-size: 0.80rem;
+    letter-spacing: -0.2px;
   }
   .u-m-sub {
     font-size: 0.68rem;
+    letter-spacing: -0.1px;
   }
   .u-temp-val {
     font-size: 1.15rem;

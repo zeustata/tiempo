@@ -328,11 +328,11 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
               </div>
             </div>
 
-            <div class="u-metric-item" title="Viento medio y rachas máximas">
+            <div class="u-metric-item u-metric-wind" title="Viento medio y rachas máximas: ${windSpeed} ${unitLabel}, rachas hasta ${windGust} ${unitLabel}">
               <span class="u-m-icon">💨</span>
               <div class="u-m-info">
-                <span class="u-m-val">${windSpeed} ${unitLabel}</span>
-                <span class="u-m-sub">Racha ${windGust}</span>
+                <span class="u-m-val">${windSpeed} <small class="u-m-unit">${unitLabel}</small></span>
+                <span class="u-m-sub">Racha <strong>${windGust}</strong></span>
               </div>
             </div>
 

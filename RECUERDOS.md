@@ -20,7 +20,28 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   5. *Fronteras del conocimiento:* Distinción rigurosa entre hechos, opiniones y desconocimiento (sin rellenar con especulaciones).
   6. *Separación entre Juicio y Ejecución:* Aplica cuando se pide juicio; ante órdenes de tareas concretas decididas, se ejecuta sin discusión.
 
-## 🚀 Última Actualización Oficial: v1.1.38 🌍 — 2026-09-30
+## 🚀 Última Actualización Oficial: v1.1.39 🌍 — 2026-09-30
+- **Ergonomía Móvil & Visualización: Blindaje Anti-Recorte en Métricas de Viento y Rachas:**
+  1. *Subordinación Tipográfica y Jerarquía de Unidades (Artículo 11 zeustata):*
+     - Modificado [js/components/forecastView.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/components/forecastView.js) para renderizar la unidad de velocidad (`km/h` o `kt`) encapsulada en `<small class="u-m-unit">`, dotándola de menor peso visual (`0.68rem`, `font-weight: 500`) frente al número principal (`0.92rem`, `font-weight: 700`).
+     - Formato ultra-compacto en racha máxima (`Racha <strong>${windGust}</strong>`), destacando la cifra sin consumir espacio innecesario en la pastilla.
+  2. *Optimización de Márgenes y Padding Móvil:*
+     - En [css/components.css](file:///c:/Users/NUC/Downloads/IA/Tiempo/css/components.css), dentro de `@media (max-width: 480px)`:
+       - `.daily-card-rich`: padding reducido de `20px 22px` a `16px 14px`, ganando 16px netos de ancho para las columnas internas.
+       - `.d-unified-metrics-grid`: padding de cada celda ajustado a `5px 6px` y gap a `5px`.
+       - `.u-m-icon`: tamaño ajustado a `1.05rem`.
+     - Resultado verificado: visualización completa y limpia en pantallas estrechas (320px - 380px) sin truncamiento por puntos suspensivos (`25 k...` y `Racha ...`).
+  3. *Versionado & Anti-Caché:*
+     - Incremento oficial a `v1.1.39 🌍`.
+     - Footer de `index.html` con `#app-version-badge` actualizado a `v1.1.39 🌍`.
+     - Inyectado bloque de novedades en `#changelog-modal`.
+     - `CURRENT_APP_VERSION = '1.1.39'` en `js/app.js`.
+     - `CACHE_NAME = 'meteoasturlode-v1139-forecast-wind-ergonomy'` en `sw.js`.
+     - CSS y módulos JS sincronizados con `?v=1.1.39`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.38 🌍 — 2026-09-30
 - **Seguridad, Higiene & Blindaje Legal: Migración Integral a HTTPS en Webcams:**
   1. *Migración Integral a Protocolo Cifrado TLS / HTTPS (Artículo 15 zeustata):*
      - Actualizada la totalidad de los 39 enlaces salientes de `js/utils/webcamsData.js` a `https://www.webcamsdeasturias.com/`.
