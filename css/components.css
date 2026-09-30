@@ -332,6 +332,21 @@
   flex: 1 1 auto;
 }
 
+.climatology-header-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.climatology-desc-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-left: 2px;
+}
+
 .climatology-icon {
   font-size: 1.25rem;
   line-height: 1;
@@ -377,7 +392,7 @@
 .climatology-desc {
   font-size: 0.80rem;
   color: #cbd5e1;
-  line-height: 1.3;
+  line-height: 1.35;
 }
 
 .climatology-desc strong {
@@ -411,19 +426,26 @@
 
 @media (max-width: 480px) {
   .climatology-strip {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
     padding: 10px 12px;
+    gap: 7px;
   }
-  .climatology-left {
+  .climatology-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
     width: 100%;
+    flex-wrap: wrap;
+  }
+  .climatology-header-left {
+    gap: 6px;
   }
   .btn-explain-clima {
-    align-self: flex-start;
-    width: 100%;
-    justify-content: center;
-    padding: 6px 10px;
+    padding: 3px 8px;
+    font-size: 0.72rem;
+  }
+  .climatology-desc {
+    font-size: 0.78rem;
   }
 }
 

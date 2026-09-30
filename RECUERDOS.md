@@ -13,7 +13,29 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   5. *Fronteras del conocimiento:* Distinción rigurosa entre hechos, opiniones y desconocimiento (sin rellenar con especulaciones).
   6. *Separación entre Juicio y Ejecución:* Aplica cuando se pide juicio; ante órdenes de tareas concretas decididas, se ejecuta sin discusión.
 
-## 🚀 Última Actualización Oficial: v1.1.32 ⚡ — 2026-09-29
+## 🚀 Última Actualización Oficial: v1.1.33 ⚡ — 2026-09-30
+- **Blindaje Anti-Colisión y Rediseño Ergonómico de Tiempo Habitual (Ley 11):**
+  1. *Diagnóstico del Incidente:*
+     - Lendo detectó que en la franja de Climatología (justo bajo las temperaturas mínima y máxima en la Hero Card) se superponían dos textos volviéndose ilegibles en pantallas móviles: el badge de estado térmico `Valores habituales` y el botón de acción didáctica `📊 Tiempo Habitual`.
+     - El origen radicaba en que en `v1.1.32`, al agregar la fila de récords históricos, se agrupó la cabecera dentro de un nuevo `<div class="climatology-top-row">` con `display: flex` (row sin wrap), mientras que la media query `@media (max-width: 480px)` asignaba `width: 100%` a la parte izquierda y `width: 100%` al botón. Flexbox comprimió la parte izquierda a ancho 0, pintando el badge desbordado exactamente sobre el botón centrado.
+  2. *Refactorización Ergonómica de Jerarquía en `js/utils/climatologyData.js`:*
+     - Fila 1 (Cabecera limpia): `.climatology-header-left` a la izquierda con icono `🟢` y badge `Valores habituales`, y el botón didáctico `📊 Tiempo Habitual` a la derecha. Ambos caben con holgura en pantallas de 320px–360px.
+     - Fila 2 (Cuerpo descriptivo): `.climatology-desc-row` con el texto explicativo a ancho completo sin interferencias (`Habitual en finales de septiembre: 22.2°C`).
+     - Fila 3 (Pie de récords): `.climatology-records-row` con los récords históricos de AEMET.
+  3. *Blindaje CSS en `css/components.css`:*
+     - Definidos `.climatology-header-left` y `.climatology-desc-row`.
+     - Corregido el media query `@media (max-width: 480px)` eliminando el forzado `width: 100%` que causaba la compresión y permitiendo ajuste ergonómico perfecto.
+  4. *Versionado & Anti-Caché:*
+     - Incremento oficial a `v1.1.33 ⚡`.
+     - Footer de `index.html` con `#app-version-badge` actualizado a `v1.1.33 ⚡`.
+     - Inyectado bloque de novedades en `#changelog-modal`.
+     - `CURRENT_APP_VERSION = '1.1.33'` en `js/app.js`.
+     - `CACHE_NAME = 'meteoasturlode-v1133-fix-climatology-layout'` en `sw.js`.
+     - CSS y módulos JS sincronizados con `?v=1.1.33`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.32 ⚡ — 2026-09-29
 - **Monitor Convectivo de Tormentas Inminentes y Récords Históricos Oficiales AEMET:**
   1. *Evaluación Crítica Previa (Artículo 0):*
      - Lendo consultó sobre la fiabilidad real de las tormentas y los récords. Princesa evaluó honestamente: los modelos numéricos no son sensores de rayos al milímetro en tiempo real, pero sí son altamente fiables para predecir inestabilidad convectiva, granizo y chubascos severos a 1-3 horas (nowcasting); por su parte, los récords de los observatorios centenarios de AEMET son 100% veraces e indiscutibles.

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1132-storm-records';
+const CACHE_NAME = 'meteoasturlode-v1133-fix-climatology-layout';
 const STATIC_ASSETS = [
   './',
   './index.html',

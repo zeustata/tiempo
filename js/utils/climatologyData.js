@@ -294,16 +294,16 @@ export function renderClimatologyStrip(clima) {
   return `
     <div class="climatology-strip ${clima.badgeClass}">
       <div class="climatology-top-row">
-        <div class="climatology-left">
+        <div class="climatology-header-left">
           <span class="climatology-icon">${clima.icon}</span>
-          <div class="climatology-text-group">
-            <span class="climatology-badge">${clima.label}</span>
-            <span class="climatology-desc">Habitual en ${clima.periodLabel}: <strong>${clima.normalMax}°C</strong></span>
-          </div>
+          <span class="climatology-badge">${clima.label}</span>
         </div>
         <button class="btn-explain-sensor-compact btn-explain-clima" data-explain="climatology" title="Ver comparación climática histórica de 30 años (AEMET 1991-2020)">
           📊 Tiempo Habitual
         </button>
+      </div>
+      <div class="climatology-desc-row">
+        <span class="climatology-desc">Habitual en ${clima.periodLabel}: <strong>${clima.normalMax}°C</strong></span>
       </div>
       ${clima.records ? `
         <div class="climatology-records-row">

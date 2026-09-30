@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.32">
-  <link rel="stylesheet" href="css/components.css?v=1.1.32">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.32">
+  <link rel="stylesheet" href="css/main.css?v=1.1.33">
+  <link rel="stylesheet" href="css/components.css?v=1.1.33">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.33">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -176,7 +176,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.32 ⚡</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.33 ⚡</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -227,8 +227,18 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
+            <span class="release-version">v1.1.33 ⚡</span>
+            <span class="release-date">30 Sep 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-mejora">Corrección & Ergonomía</span> <strong>Blindaje Anti-Colisión y Rediseño Ergonómico de Tiempo Habitual (Ley 11)</strong>: Solucionada la superposición de títulos en pantallas móviles donde el indicador térmico <em>«Valores habituales»</em> y el botón didáctico <em>«📊 Tiempo Habitual»</em> chocaban en la misma coordenada. Se establece una cabecera limpia de dos extremos con icono y badge a la izquierda y botón a la derecha, canalizando la frase descriptiva a una fila intermedia independiente para máxima legibilidad.</li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
             <span class="release-version">v1.1.32 ⚡</span>
-            <span class="release-date">29 Sep 2026 (Actual)</span>
+            <span class="release-date">29 Sep 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-mejora">Nueva Función</span> <strong>Monitor Convectivo y Alerta de Tormenta Inminente</strong>: Sensor silencioso que analiza las próximas 1 a 3 horas con modelos numéricos de alta resolución. Si detecta inestabilidad tormentosa severa (WMO 95-99 o chubascos violentos con rachas de viento), despliega una alerta visual con hora de inicio, riesgo de granizo/pedrisco y botón de acceso directo al satélite y radar de lluvia en vivo.</li>
@@ -1969,7 +1979,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.1.32').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.1.33').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -1999,7 +2009,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.32"></script>
+  <script type="module" src="js/app.js?v=1.1.33"></script>
 
 
 

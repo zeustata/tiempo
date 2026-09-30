@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.33] - 2026-09-30
+
+### 🛡️ Blindaje Anti-Colisión y Rediseño Ergonómico de Tiempo Habitual (Ley 11)
+- **Ergonomía y Jerarquía Visual en Climatología AEMET:**
+  - Desacoplada la cabecera del cuerpo descriptivo en `js/utils/climatologyData.js`: se establece una fila superior limpia (`.climatology-top-row`) con el icono térmico y badge a la izquierda (`.climatology-header-left`), y el botón de acción didáctica a la derecha (`.btn-explain-clima`).
+  - Ubicada la frase comparativa (`Habitual en...`) en una fila intermedia independiente (`.climatology-desc-row`) a ancho natural, erradicando por completo el choque visual con el botón `📊 Tiempo Habitual` en pantallas móviles de 320px–480px.
+  - Ajuste en `css/components.css` eliminando el forzado `width: 100%` en ambos elementos bajo la media query móvil que provocaba la superposición espacial.
+- **Cache-bust:** `sw.js` → `meteoasturlode-v1133-fix-climatology-layout`, sincronización a `?v=1.1.33` en hojas de estilo, scripts y módulos.
+
+---
+
 ## [1.1.32] - 2026-09-29
 
 ### ⚡ Monitor Convectivo de Tormentas Inminentes y Récords AEMET
