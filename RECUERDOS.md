@@ -20,7 +20,30 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   5. *Fronteras del conocimiento:* Distinción rigurosa entre hechos, opiniones y desconocimiento (sin rellenar con especulaciones).
   6. *Separación entre Juicio y Ejecución:* Aplica cuando se pide juicio; ante órdenes de tareas concretas decididas, se ejecuta sin discusión.
 
-## 🚀 Última Actualización Oficial: v1.1.35 🌐 — 2026-09-30
+## 🚀 Última Actualización Oficial: v1.1.36 🌍 — 2026-09-30
+- **Monitor Silencioso de Actividad Sísmica en Asturias y Mar Cantábrico (Open Data EMSC / IGN):**
+  1. *Centinela Geofísico Silencioso (Doctrina Constitucional 12 & Artículo 15 zeustata):*
+     - En conformidad con el recién aprobado **Artículo 15 (Legalidad Estricta y Datos Abiertos)**, se incorporó un monitor sísmico georreferenciado conectado a los servicios oficiales FDSN Web Services del **Centro Sismológico Euromediterráneo (EMSC/CSEM)** e **IGN**.
+     - Es 100% legal, público y abierto: sin tokens privados, sin cuotas, sin raspado web ni riesgos de baneo en Google Play Console.
+     - Cobertura geofísica con centro en Asturias (43.35° N, -5.85° W) y un radio de 2.5° (~270 km), abarcando los 78 concejos del Principado, la Cordillera Cantábrica (León, Palencia, Cantabria, Lugo) y la plataforma submarina del Cantábrico.
+     - **Comportamiento Silencioso (Ley 12):** El centinela permanece 100% oculto e imperceptible para el usuario a menos que se haya registrado un evento de magnitud `>= 1.8` en las últimas 48 horas.
+     - **Cálculo de Distancia In situ (Haversine):** Calcula en kilómetros la distancia exacta entre el epicentro y las coordenadas del concejo seleccionado en pantalla (ej. "a ~35 km de Degaña" o "a ~78 km de Gijón").
+     - **Caché Inteligente (25 min):** Almacenado en `localStorage` (`meteoastur_seismic_data`) para no sobrecargar la red al cambiar de concejo. Si el usuario conmuta entre concejos, la app recalcula la distancia al vuelo sin necesidad de repetir peticiones fetch.
+  2. *Simulacro Controlado (Doctrina Constitucional 12):*
+     - Incorporados conmutadores de prueba para verificación visual: `?test=sismo` (sismo en suroccidente asturiano M 3.1) y `?test=sismo_mar` (sismo submarino cantábrico M 3.8).
+  3. *Diseño Armónico Liquid Glass (Ley 14):*
+     - Tarjeta con borde y sombra pulsante (`seismicAmberGlow`, `seismicRedGlow`), pastillas ergonómicas de magnitud M, epicentro, profundidad, registro horario transcurrido y enlace a la ficha técnica oficial del EMSC.
+  4. *Versionado & Anti-Caché:*
+     - Incremento oficial a `v1.1.36 🌍`.
+     - Footer de `index.html` con `#app-version-badge` actualizado a `v1.1.36 🌍`.
+     - Inyectado bloque de novedades en `#changelog-modal`.
+     - `CURRENT_APP_VERSION = '1.1.36'` en `js/app.js`.
+     - `CACHE_NAME = 'meteoasturlode-v1136-seismic-sentinel'` en `sw.js` agregando `seismicDetector.js`.
+     - CSS y módulos JS sincronizados con `?v=1.1.36`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.35 🌐 — 2026-09-30
 - **Ampliación del Observatorio Global: 3 Nuevos Modelos Mundiales (8 Potencias):**
   1. *Auditoría Técnica y Selección de Modelos:*
      - Lendo solicitó evaluar e integrar los demás modelos numéricos disponibles en Open-Meteo.

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1135-global-models';
+const CACHE_NAME = 'meteoasturlode-v1136-seismic-sentinel';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -46,6 +46,7 @@ const STATIC_ASSETS = [
   './js/utils/umbrellaAdvisor.js',
   './js/utils/borrinaDetector.js',
   './js/utils/thunderstormDetector.js',
+  './js/utils/seismicDetector.js',
   './js/utils/tides.js'
 ];
 

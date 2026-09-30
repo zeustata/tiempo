@@ -10,6 +10,23 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.36] - 2026-09-30
+
+### 🌍 Monitor Silencioso de Sismicidad en Asturias y Mar Cantábrico (Open Data EMSC / IGN)
+- **Centinela Geofísico Silencioso (Doctrina Constitucional 12 & Artículo 15 zeustata):**
+  - Creación de `js/utils/seismicDetector.js` conectado a la red oficial del **Centro Sismológico Euromediterráneo (EMSC/CSEM)** e **IGN** mediante servicios FDSN Web Services sin autenticación privada ni scraping (100% Open Data).
+  - Vigilancia geofísica en un radio de 2.5° (~270 km) alrededor del centro de Asturias (lat 43.35°, lon -5.85°), cubriendo la totalidad de los 78 concejos, la Cordillera Cantábrica, León, Lugo, Cantabria y la plataforma marina cantábrica.
+  - Comportamiento 100% silencioso e invisible: si no hay eventos de magnitud `>= 1.8` en las últimas 48 horas, el módulo no muestra nada ni ocupa espacio.
+  - Al registrarse un evento, activa el banner Liquid Glass con magnitud (M), epicentro, profundidad, distancia exacta en km calculada por Haversine hasta el concejo seleccionado, tiempo transcurrido y enlace directo a la ficha técnica oficial del EMSC.
+  - Caché inteligente de 25 minutos en `localStorage` (`meteoastur_seismic_data`) con re-calibración instantánea de distancia entre concejos sin peticiones adicionales a la red.
+- **Simulacro de Pruebas Controlado (Ley 12):**
+  - Parámetros de prueba accesibles mediante `?test=sismo` (sismo terrestre en el suroccidente asturiano M 3.1) o `?test=sismo_mar` (sismo submarino cantábrico M 3.8).
+- **Diseño Armónico Liquid Glass (Ley 14):**
+  - Estilos `.seismic-banner` con gradientes de ámbar a pizarra espacial y cian marino, animaciones pulsantes y pastillas ergonómicas.
+- **Cache-bust & Sincronización:** `sw.js` → `meteoasturlode-v1136-seismic-sentinel`, actualización general a `?v=1.1.36` en `index.html`, `js/app.js` y componentes.
+
+---
+
 ## [1.1.35] - 2026-09-30
 
 ### 🌐 Ampliación del Observatorio Global: 3 Nuevos Modelos Mundiales (8 Potencias)

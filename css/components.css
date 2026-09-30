@@ -5194,6 +5194,194 @@
   }
 }
 
+/* --- BANNER DINÁMICO DE ACTIVIDAD SÍSMICA (EMSC OPEN DATA) --- */
+.seismic-banner {
+  border-radius: var(--radius-lg);
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, rgba(180, 83, 9, 0.28) 0%, rgba(15, 23, 42, 0.88) 100%);
+  border: 1.5px solid rgba(245, 158, 11, 0.65);
+  box-shadow: 0 4px 24px rgba(217, 119, 6, 0.25), inset 0 0 16px rgba(245, 158, 11, 0.12);
+  animation: seismicAmberGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes seismicAmberGlow {
+  0% { border-color: rgba(245, 158, 11, 0.50); box-shadow: 0 4px 16px rgba(217, 119, 6, 0.20); }
+  100% { border-color: rgba(251, 191, 36, 0.90); box-shadow: 0 4px 28px rgba(245, 158, 11, 0.45); }
+}
+
+.seismic-banner.severe {
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.32) 0%, rgba(180, 83, 9, 0.35) 100%);
+  border-color: rgba(239, 68, 68, 0.85);
+  box-shadow: 0 4px 30px rgba(239, 68, 68, 0.35), inset 0 0 20px rgba(239, 68, 68, 0.18);
+  animation: seismicRedGlow 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes seismicRedGlow {
+  0% { border-color: rgba(239, 68, 68, 0.60); box-shadow: 0 4px 18px rgba(239, 68, 68, 0.25); }
+  100% { border-color: rgba(248, 113, 113, 1); box-shadow: 0 4px 32px rgba(239, 68, 68, 0.55); }
+}
+
+.seismic-banner.info {
+  background: linear-gradient(135deg, rgba(14, 116, 144, 0.28) 0%, rgba(15, 23, 42, 0.88) 100%);
+  border-color: rgba(6, 182, 212, 0.65);
+  box-shadow: 0 4px 24px rgba(8, 145, 178, 0.25), inset 0 0 16px rgba(6, 182, 212, 0.12);
+  animation: seismicCyanGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes seismicCyanGlow {
+  0% { border-color: rgba(6, 182, 212, 0.50); box-shadow: 0 4px 16px rgba(8, 145, 178, 0.20); }
+  100% { border-color: rgba(34, 211, 238, 0.90); box-shadow: 0 4px 28px rgba(6, 182, 212, 0.40); }
+}
+
+.seismic-banner-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.seismic-header-left {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.seismic-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.seismic-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fef3c7;
+  letter-spacing: -0.2px;
+}
+
+.seismic-banner.severe .seismic-title {
+  color: #fff1f2;
+}
+
+.seismic-banner.info .seismic-title {
+  color: #cffafe;
+}
+
+.seismic-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  background: rgba(245, 158, 11, 0.25);
+  border: 1px solid rgba(251, 191, 36, 0.50);
+  color: #fde68a;
+}
+
+.seismic-banner.severe .seismic-badge {
+  background: rgba(239, 68, 68, 0.30);
+  border-color: rgba(239, 68, 68, 0.70);
+  color: #fecdd3;
+}
+
+.seismic-banner.info .seismic-badge {
+  background: rgba(6, 182, 212, 0.25);
+  border-color: rgba(34, 211, 238, 0.50);
+  color: #a5f3fc;
+}
+
+.btn-seismic-shortcut {
+  background: rgba(245, 158, 11, 0.18);
+  color: #fde68a;
+  border: 1px solid rgba(245, 158, 11, 0.40);
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-seismic-shortcut:hover {
+  background: rgba(245, 158, 11, 0.35);
+  color: #ffffff;
+  border-color: #fbbf24;
+  transform: translateY(-1px);
+}
+
+.seismic-desc {
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: #fde68a;
+  margin: 0 0 10px 0;
+}
+
+.seismic-banner.severe .seismic-desc {
+  color: #fed7aa;
+}
+
+.seismic-banner.info .seismic-desc {
+  color: #e0f2fe;
+}
+
+.seismic-desc strong {
+  color: #ffffff;
+}
+
+.seismic-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.seismic-metric-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(15, 23, 42, 0.50);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  color: #cbd5e1;
+}
+
+.seismic-metric-pill strong {
+  color: #fef3c7;
+}
+
+.seismic-banner.severe .seismic-metric-pill strong {
+  color: #fff1f2;
+}
+
+.seismic-banner.info .seismic-metric-pill strong {
+  color: #cffafe;
+}
+
+@media (max-width: 650px) {
+  .seismic-banner {
+    padding: 12px 14px;
+    margin-bottom: 14px;
+  }
+  .seismic-title {
+    font-size: 0.92rem;
+  }
+  .seismic-desc {
+    font-size: 0.84rem;
+  }
+}
+
 /* --- SECCIÓN DE POLEN EN CALIDAD DEL AIRE (AQI) --- */
 .aqi-pollen-section {
   margin-top: 12px;
