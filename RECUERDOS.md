@@ -20,7 +20,26 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   5. *Fronteras del conocimiento:* Distinción rigurosa entre hechos, opiniones y desconocimiento (sin rellenar con especulaciones).
   6. *Separación entre Juicio y Ejecución:* Aplica cuando se pide juicio; ante órdenes de tareas concretas decididas, se ejecuta sin discusión.
 
-## 🚀 Última Actualización Oficial: v1.1.41 🌍 — 2026-09-30
+## 🚀 Última Actualización Oficial: v1.1.42 🌍 — 2026-09-30
+- **Ergonomía & Apertura Modal: Integración de Bombilla 💡 en Pastilla y Apertura Modal Blindada:**
+  1. *Integración de Bombilla en Pastilla de Estado (Feedback Lendo):*
+     - Supresión del texto redundante «Explícame» y adición del icono limpio de bombilla `💡` integrado directamente en la pastilla de estado (ej. `🟢 Valores habituales 💡`).
+     - Efecto de iluminación interactiva (*glow*) y micro-rotación en hover/touch con `.clima-bulb`.
+     - La pastilla actúa como botón táctil único de apertura para la guía didáctica de climatología.
+  2. *Blindaje y Corrección de Apertura del Modal Didáctico:*
+     - Corregido el selector en el manejador global de eventos de [js/app.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/app.js) incorporando `[data-explain]` y `.climatology-badge-interactive` para garantizar la captura de clics en cualquier elemento didáctico.
+     - Añadida la sección didáctica completa `climatology` en el diccionario de explicaciones (`WEATHER_EXPLANATIONS` en [js/utils/weatherExplanations.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/utils/weatherExplanations.js)), detallando el estándar de 30 años de la OMM y AEMET (1991-2020), el cálculo de anomalía térmica, la corrección por altitud (-0,6 °C / 100m) y los 4 dominios climáticos de Asturias.
+  3. *Versionado & Anti-Caché:*
+     - Incremento oficial a `v1.1.42 🌍`.
+     - Footer de `index.html` con `#app-version-badge` actualizado a `v1.1.42 🌍`.
+     - Inyectado bloque de novedades en `#changelog-modal`.
+     - `CURRENT_APP_VERSION = '1.1.42'` en [js/app.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/app.js).
+     - `CACHE_NAME = 'meteoasturlode-v1142-clima-explain-bulb'` en [sw.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/sw.js).
+     - CSS y módulos JS sincronizados con `?v=1.1.42`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.41 🌍 — 2026-09-30
 - **Ergonomía & Diseño Limpio: Pastilla Interactiva en Tiempo Habitual & Purgado de Caché Móvil:**
   1. *Pastilla Interactiva Única en Climatología (Feedback Lendo):*
      - Supresión del botón redundante `[ 📊 Tiempo Habitual ]` que forzaba un segundo renglón en la cabecera climatológica en teléfonos móviles.

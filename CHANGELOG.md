@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.42] - 2026-09-30
+
+### 🌍 Ergonomía & Apertura Modal: Integración de Bombilla 💡 en Pastilla y Apertura Modal Blindada
+- **Integración de Bombilla en Pastilla de Estado (Feedback Lendo):**
+  - Supresión del texto redundante «Explícame» y adición del icono limpio de bombilla `💡` integrado directamente en la pastilla de estado (ej. `🟢 Valores habituales 💡`).
+  - Efecto de iluminación interactiva (*glow*) y micro-rotación en hover/touch.
+  - La pastilla actúa como botón táctil único de apertura para la guía didáctica.
+- **Blindaje y Corrección de Apertura del Modal Didáctico:**
+  - Corregido el selector en el manejador global de eventos de `app.js` incorporando `[data-explain]` y `.climatology-badge-interactive` para garantizar la captura de clics en cualquier elemento didáctico.
+  - Añadida la sección didáctica completa `climatology` en el diccionario de explicaciones (`WEATHER_EXPLANATIONS` en `weatherExplanations.js`), detallando el estándar de 30 años de la OMM y AEMET (1991-2020), el cálculo de anomalía térmica, la corrección por altitud (-0,6 °C / 100m) y los 4 dominios climáticos de Asturias.
+- **Cache-bust & Sincronización:** `sw.js` → `meteoasturlode-v1142-clima-explain-bulb`, actualización general a `?v=1.1.42` en `index.html`, `js/app.js` y componentes.
+
+---
+
 ## [1.1.41] - 2026-09-30
 
 ### 🌍 Ergonomía & Diseño Limpio: Pastilla Interactiva en Tiempo Habitual & Purgado de Caché Móvil

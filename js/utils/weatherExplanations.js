@@ -867,6 +867,46 @@ export const WEATHER_EXPLANATIONS = {
         text: 'Los pasos elevados, puentes y curvas umbrías (orientadas al norte o tapadas por arbolado y taludes) son los primeros en helarse y los últimos en descongelarse al no recibir radiación solar directa. Modera la velocidad, aumenta la distancia de seguridad y frena con extrema suavidad.'
       }
     ]
+  },
+
+  climatology: {
+    icon: '📊',
+    title: '¿Qué es el Tiempo Habitual y las Normales de AEMET?',
+    subtitle: 'Aprende cómo calculamos si hoy hace más calor, frío o está en la media habitual para la época en Asturias',
+    badge: 'Serie Oficial AEMET 1991-2020 (30 años)',
+    sections: [
+      {
+        icon: '🏛️',
+        heading: '1. El Estándar de 30 Años de la OMM y AEMET',
+        text: 'En meteorología, para saber qué es "lo normal" en una época no basta con mirar el año pasado: la Organización Meteorológica Mundial (OMM) y la AEMET definen las <strong>Normales Climatológicas</strong> tomando periodos de 30 años consecutivos (actualmente la serie <strong>1991-2020</strong>). De esa serie se extraen las medias matemáticas de temperaturas máximas, mínimas y días de lluvia para cada mes del año.'
+      },
+      {
+        icon: '📐',
+        heading: '2. Cálculo de Anomalía Térmica y Corrección de Altitud',
+        text: 'MeteoAstur Lode compara la temperatura máxima prevista hoy con la media histórica del mes y decena. Además, aplica una <strong>corrección por gradiente adiabático (-0,6 °C por cada 100 metros de altitud)</strong> respecto a la estación de referencia, permitiendo una precisión microclimática real concejo a concejo.'
+      },
+      {
+        icon: '🏷️',
+        heading: '3. Clasificación de la Pastilla',
+        text: `
+          <ul class="explain-list">
+            <li><strong>🟢 Valores habituales:</strong> La temperatura prevista está dentro de +/- 2,0 °C respecto a la media de 30 años (tiempo estándar de la época).</li>
+            <li><strong>☀️ / 🔥 Sobre lo habitual:</strong> Se prevén entre +2,0 °C y más de +4,5 °C por encima de la media histórica (día inusualmente cálido).</li>
+            <li><strong>🧥 / ❄️ Bajo lo habitual:</strong> Se prevén entre -2,0 °C y más de -4,5 °C por debajo de la media histórica (día sensiblemente más frío de lo normal).</li>
+          </ul>
+        `
+      },
+      {
+        icon: '🗺️',
+        heading: '4. Los 4 Grandes Dominios Climáticos Asturianos',
+        text: 'Asturias no tiene un clima único: dividimos el Principado en <strong>Litoral Cantábrico</strong> (marítimo templado con baja oscilación térmica), <strong>Valles Centrales y Cuencas</strong> (más continentalizado con mayores contrastes), <strong>Occidente / Suroccidente</strong> (inviernos más fríos y veranos más calurosos en Cangas del Narcea, Ibias o Tineo) y <strong>Cordillera / Alta Montaña</strong> (clima alpino con frecuentes heladas y nieve).'
+      },
+      {
+        icon: '📜',
+        heading: '5. Récords Históricos Oficiales',
+        text: 'Las fichas inferiores muestran las temperaturas máximas y mínimas absolutas, así como la mayor precipitación caída en 24 horas, registradas en las estaciones centenarias oficiales de AEMET (Gijón-Musel, Oviedo-El Cristo, Cangas del Narcea y Pajares/Picos) para este mismo mes a lo largo de más de 50 años de historia.'
+      }
+    ]
   }
 };
 
