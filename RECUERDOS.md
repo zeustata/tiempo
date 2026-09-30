@@ -13,7 +13,29 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   5. *Fronteras del conocimiento:* Distinción rigurosa entre hechos, opiniones y desconocimiento (sin rellenar con especulaciones).
   6. *Separación entre Juicio y Ejecución:* Aplica cuando se pide juicio; ante órdenes de tareas concretas decididas, se ejecuta sin discusión.
 
-## 🚀 Última Actualización Oficial: v1.1.34 🇫🇷 — 2026-09-30
+## 🚀 Última Actualización Oficial: v1.1.35 🌐 — 2026-09-30
+- **Ampliación del Observatorio Global: 3 Nuevos Modelos Mundiales (8 Potencias):**
+  1. *Auditoría Técnica y Selección de Modelos:*
+     - Lendo solicitó evaluar e integrar los demás modelos numéricos disponibles en Open-Meteo.
+     - Se realizó una auditoría rigurosa de las APIs de predicción en tiempo real. Se constató que el modelo de Inteligencia Artificial `ecmwf_aifs025` no proporciona datos de superficie, códigos WMO ni precipitación en tiempo actual (devuelve `null`), por lo que fue descartado por seguridad técnica para evitar anomalías en la UI.
+     - Se seleccionaron e integraron con éxito los 3 mejores modelos globales con compatibilidad completa a 10 días (240 horas) y ahora en vivo:
+       - **🇬🇧 UK Met Office (Reino Unido) — `ukmo_seamless` (10 km):** Histórica referencia en frentes atlánticos, temporales marinos y borrascas cantábricas.
+       - **🇨🇦 GEM (Environment Canada, Canadá) — `gem_seamless` (15 km):** Máxima precisión en advecciones árticas y olas de frío polar.
+       - **🇯🇵 JMA (Agencia Meteorológica de Japón) — `jma_seamless` (10 km):** Física avanzada de saturación de humedad oceánica y precipitación convectiva.
+  2. *Integración en Catálogo y Guía Didáctica:*
+     - El catálogo `WEATHER_MODELS` en `js/services/weatherApi.js` asciende a 8 modelos de referencia mundial.
+     - Actualizada la sección didáctica `weather_models` en `js/utils/weatherExplanations.js` detallando las fortalezas de cada uno para Asturias.
+  3. *Versionado & Anti-Caché:*
+     - Incremento oficial a `v1.1.35 🌐`.
+     - Footer de `index.html` con `#app-version-badge` actualizado a `v1.1.35 🌐`.
+     - Inyectado bloque de novedades en `#changelog-modal`.
+     - `CURRENT_APP_VERSION = '1.1.35'` en `js/app.js`.
+     - `CACHE_NAME = 'meteoasturlode-v1135-global-models'` en `sw.js`.
+     - CSS y módulos JS sincronizados con `?v=1.1.35`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.34 🇫🇷 — 2026-09-30
 - **Soberanía de AROME (1.3 km) en Tiempo Actual & Blindaje Anti-Orballu Fantasma de ECMWF (Ley 10):**
   1. *Diagnóstico Forense de Terreno y Desacople en Castrillón / Rasa Costera:*
      - Lendo constató en vivo que durante toda la jornada la app se quedó clavada en *"Orbayu llixeru (0.1 - 0.2 mm)"* y *"🟡 Orbayando Agora"*. En la realidad: de 5:00 a 8:00 no llovió nada, luego cayeron cuatro gotas testimoniales y después nada de nada; sobre las 14:00 se abrieron claros limpios y por la tarde el cielo presentaba claros azules.

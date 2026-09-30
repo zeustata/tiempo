@@ -640,6 +640,17 @@ export const WEATHER_EXPLANATIONS = {
             <li><strong>NOAA GFS (13 km):</strong> El clásico modelo estadounidense, muy útil para contrastar si las previsiones americanas coinciden con las europeas.</li>
           </ul>
         `
+      },
+      {
+        icon: '🌐',
+        heading: '7. Especialistas Mundiales: UK Met Office, GEM y JMA',
+        text: `
+          <ul class="explain-list">
+            <li><strong>🇬🇧 UK Met Office (10 km):</strong> La referencia histórica británica para borrascas profundas del Atlántico Norte y temporales en el Cantábrico.</li>
+            <li><strong>🇨🇦 GEM Canadá (15 km):</strong> El mejor identificando advecciones de aire ártico polar, ciclogénesis y olas de frío.</li>
+            <li><strong>🇯🇵 JMA Japón (10 km):</strong> Extraordinaria precisión en modelización de humedad oceánica, frentes marítimos y convección.</li>
+          </ul>
+        `
       }
     ]
   },

@@ -56,6 +56,39 @@ export const WEATHER_MODELS = [
     tag: 'Global Clásico',
     description: 'El modelo numérico global de referencia de la Administración Nacional Oceánica y Atmosférica de EE. UU.',
     bestFor: 'Comparativa sinóptica y contraste internacional entre modelos.'
+  },
+  {
+    id: 'ukmo_seamless',
+    apiModel: 'ukmo_seamless',
+    name: 'UK Met Office (Reino Unido)',
+    agency: 'Servicio Meteorológico Nacional Británico',
+    flag: '🇬🇧',
+    resolution: '10 km',
+    tag: 'Frentes Atlánticos',
+    description: 'El modelo británico de referencia histórica para borrascas profundas del Atlántico Norte y temporales en el Golfo de Vizcaya.',
+    bestFor: 'Evolución de frentes borrascosos que entran por el Cantábrico y mar picado.'
+  },
+  {
+    id: 'gem_seamless',
+    apiModel: 'gem_seamless',
+    name: 'GEM (Canadá)',
+    agency: 'Centro Meteorológico Canadiense (Environment Canada)',
+    flag: '🇨🇦',
+    resolution: '15 km',
+    tag: 'Especialista Polar',
+    description: 'Modelo global de Canadá altamente reconocido por su precisión identificando advecciones de aire ártico marítimo, olas de frío polar y ciclogénesis.',
+    bestFor: 'Entradas frías invernales, nevadas en cotas medias-bajas y contraste polar.'
+  },
+  {
+    id: 'jma_seamless',
+    apiModel: 'jma_seamless',
+    name: 'JMA (Japón)',
+    agency: 'Agencia Meteorológica de Japón (Tokio)',
+    flag: '🇯🇵',
+    resolution: '10 km',
+    tag: 'Humedad Oceánica',
+    description: 'Modelo numérico japonés de gran prestigio por su cálculo de la humedad marítima, frentes cálidos y lluvia convectiva oceánica.',
+    bestFor: 'Evaluación de saturación de humedad, lloviznas marítimas y nubosidad baja.'
   }
 ];
 

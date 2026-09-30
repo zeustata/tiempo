@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.35] - 2026-09-30
+
+### 🌐 Ampliación del Observatorio Global: 3 Nuevos Modelos Mundiales (8 Potencias)
+- **Integración de 3 Nuevos Motores Numéricos de Élite en `js/services/weatherApi.js`:**
+  - **🇬🇧 UK Met Office (Reino Unido) — `ukmo_seamless` (10 km):** Modelo del Servicio Meteorológico Británico de reconocido prestigio histórico en la predicción de borrascas profundas del Atlántico Norte, frentes atlánticos y oleaje en el Mar Cantábrico.
+  - **🇨🇦 GEM (Canadá) — `gem_seamless` (15 km):** Modelo global de Environment Canada, líder mundial en la modelización de masas de aire ártico marítimo, ciclogénesis explosivas y olas de frío polar.
+  - **🇯🇵 JMA (Japón) — `jma_seamless` (10 km):** Modelo de la Agencia Meteorológica de Japón, altamente valorado por su física avanzada de transporte de humedad oceánica, frentes marítimos y precipitación convectiva.
+- **Didáctica & Navegación:**
+  - El modal de selección de modelos pasa de 5 a **8 modelos de potencia mundial**, con banderas identificativas, agencias oficiales, resolución de malla y recomendaciones de uso.
+  - Actualizada la guía didáctica interactiva (`💡 Explícame: ¿Cómo elegir el mejor modelo?`) en `js/utils/weatherExplanations.js` incorporando las fortalezas específicas de los 3 nuevos modelos.
+- **Cache-bust & Sincronización:** `sw.js` → `meteoasturlode-v1135-global-models`, sincronización integral a `?v=1.1.35` en hojas de estilo, scripts y módulos.
+
+---
+
 ## [1.1.34] - 2026-09-30
 
 ### 🇫🇷 Soberanía de AROME (1.3 km) en Tiempo Actual & Blindaje Anti-Orballu de ECMWF (Ley 10)
