@@ -176,7 +176,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.43 🌍</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.44 🌍</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -227,8 +227,18 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.43 🌍</span>
+            <span class="release-version">v1.1.44 🌍</span>
             <span class="release-date">30 Sep 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-mejora">Rendimiento &amp; Móvil</span> <strong>Anti-Parpadeo en Refresco de Datos (Honor Magic Pro / Snapdragon)</strong>: Se elimina el flash visual de ~2 segundos que aparecía en la tarjeta de temperatura y valores habituales al recargar los datos desde la API. Implementado sistema de doble protección: (1) comparación de firma de datos antes de re-renderizar — si los datos frescos son idénticos a los de caché no se destruye el DOM; (2) transición <code>opacity</code> de 180ms que convierte el refresco en un fundido imperceptible en lugar de un parpadeo brusco. Compatibilidad garantizada con todos los dispositivos sin coste GPU adicional.</li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.43 🌍</span>
+            <span class="release-date">30 Sep 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-mejora">Diseño & Estabilidad</span> <strong>Supresión de Doble Pastilla y Eliminación del Temblor al Actualizar en Tablets (Feedback Lendo)</strong>: Se elimina el marco amarillo exterior heredado de los sensores. La pastilla (ej. <code>🟢 Valores habituales 💡</code>) pasa a ser un único elemento interactivo verde autónomo y minimalista. Sustituida la transición general <code>transition: all</code> en la franja climatológica por transiciones discretas no destructivas, erradicando el temblor elástico y parpadeo de layout al refrescar en tablets y pantallas táctiles.</li>

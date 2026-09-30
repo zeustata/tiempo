@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.44] - 2026-09-30
+
+### 📱 Rendimiento & Móvil: Anti-Parpadeo en Refresco de Datos (Honor Magic Pro / Snapdragon)
+- **Diagnóstico del Parpadeo (Análisis Princesa):**
+  - Causa raíz identificada: doble renderizado completo del DOM con `innerHTML` al pasar de datos de caché a datos frescos de red (~1-2 segundos de margen). En ese instante el navegador Android destruye y reconstruye todas las tarjetas glassmorphism simultáneamente con `backdrop-filter: blur(24px) saturate(190%)` en cada una, generando un flash visual brusco de ~2 segundos en el `panel-live`.
+- **Solución Doble (Opción C — Comparación + Fade):**
+  1. **`_dataSignature(data)`**: Nuevo método en `MeteoAsturiasApp` que genera una firma ligera (`timestamp|temperatura|weather_code|viento`) de los datos. En `loadWeather()`, antes de re-renderizar se compara la firma de los datos frescos con la de los datos pintados; si son idénticos, **no se destruye ni reconstruye el DOM**, eliminando el parpadeo en el caso más común (datos sin cambios reales entre refresco de caché y red).
+  2. **Fade suave `withFade=true`**: Cuando los datos sí son distintos, `renderAllComponents(true)` aplica la clase `.refreshing` (`opacity:0; transition:none`) justo antes del `innerHTML`, luego usa doble `requestAnimationFrame` para asegurar que el navegador procesa el opacity:0 antes de activar `.refresh-in` (`opacity:1; transition:opacity 0.18s ease-out`). El parpadeo brusco de 2 segundos se convierte en un fundido de 180ms imperceptible.
+- **CSS en `main.css`**: Añadidas las clases `#panel-live.refreshing` y `#panel-live.refresh-in` sin coste GPU adicional (solo `opacity`, sin `transform` ni `backdrop-filter` nuevos).
+- **Diseño 100% intacto**: Glassmorphism, partículas, gyroGlass, giroscopio y todos los datos se mantienen exactamente igual. El cambio es únicamente en la gestión del ciclo de renderizado.
+- **Versión:** `CURRENT_APP_VERSION = '1.1.44'` en `js/app.js`, badge `v1.1.44` en `index.html`.
+
+---
+
 ## [1.1.43] - 2026-09-30
 
 ### 🌍 Diseño & Estabilidad: Supresión de Doble Pastilla y Eliminación del Temblor en Tablets

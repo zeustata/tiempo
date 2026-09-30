@@ -33,7 +33,7 @@ const APP_MODULES = [
   { id: 'astronomy', icon: '🔭', title: 'Astronomía & Cosmos', desc: 'Eclipses, lluvias de estrellas, fases lunares y semáforo de visibilidad en Asturias', key: '8' }
 ];
 
-export const CURRENT_APP_VERSION = '1.1.43';
+export const CURRENT_APP_VERSION = '1.1.44';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -1760,6 +1760,17 @@ class MeteoAsturiasApp {
     );
   }
 
+  /**
+   * Genera una firma ligera de los datos actuales para detectar si los datos frescos
+   * de red son realmente distintos a los que ya están pintados (caché).
+   * Evita re-renders innecesarios que causan el parpadeo en móviles.
+   */
+  _dataSignature(data) {
+    if (!data || !data.weather || !data.weather.current) return null;
+    const c = data.weather.current;
+    return `${data.timestamp}|${c.temperature_2m}|${c.weather_code}|${c.wind_speed_10m}`;
+  }
+
   async loadWeather(concejoId) {
     const concejo = getConcejoById(concejoId);
     if (!concejo) return;
@@ -1769,9 +1780,21 @@ class MeteoAsturiasApp {
       const result = await fetchWeatherData(concejo.lat, concejo.lon, isCoast, this.currentModel.apiModel || '');
 
       if (result && result.success) {
+        // Comparar firma antes de re-renderizar: si los datos son idénticos a los pintados,
+        // no hay que destruir y reconstruir el DOM (elimina parpadeo en refrescos sin cambios)
+        const sigNew = this._dataSignature(result);
+        const sigOld = this._dataSignature(this.weatherData);
+        const dataChanged = sigNew !== sigOld;
+
         this.weatherData = result;
         saveCachedWeather(concejoId, this.currentModel.id, result);
-        this.renderAllComponents();
+
+        if (dataChanged) {
+          // Datos nuevos: renderizar con fade suave para que no parpadeé
+          this.renderAllComponents(true);
+        }
+        // Si los datos son iguales, no re-renderizamos: el DOM ya es correcto
+
         this.updateLastUpdatedTime(result.timestamp);
         triggerSeismicRefresh(concejo);
       } else {
@@ -1796,14 +1819,30 @@ class MeteoAsturiasApp {
   }
 
 
-  renderAllComponents() {
+  renderAllComponents(withFade = false) {
     if (!this.weatherData) return;
 
     // 1. Dashboard en Vivo
     try {
       const liveContainer = document.getElementById('panel-live');
       if (liveContainer) {
+        if (withFade) {
+          // Fade-out instantáneo antes del innerHTML (cubre el flash de recomposición GPU)
+          liveContainer.classList.remove('refresh-in');
+          liveContainer.classList.add('refreshing');
+        }
+
         liveContainer.innerHTML = renderCurrentWeather(this.weatherData, this.currentConcejo, this.prefs.units, this.prefs.iconTheme);
+
+        if (withFade) {
+          // Fade-in suave: forzar un frame para que el navegador aplique opacity:0 antes de animar
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              liveContainer.classList.remove('refreshing');
+              liveContainer.classList.add('refresh-in');
+            });
+          });
+        }
       }
     } catch (e) {
       console.error('[MeteoAstur] Error renderizando Vivo:', e);
