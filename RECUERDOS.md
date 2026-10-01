@@ -20,7 +20,22 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   5. *Fronteras del conocimiento:* Distinción rigurosa entre hechos, opiniones y desconocimiento (sin rellenar con especulaciones).
   6. *Separación entre Juicio y Ejecución:* Aplica cuando se pide juicio; ante órdenes de tareas concretas decididas, se ejecuta sin discusión.
 
-## 🚀 Última Actualización Oficial: v1.1.46 🌍 — 2026-10-01
+## 🚀 Última Actualización Oficial: v1.1.47 🌍 — 2026-10-01
+- **Usabilidad & Geoposición: Auto-Ubicación Inteligente al Iniciar (Feedback Lendo):**
+  1. *Detección Silenciosa de Concejo por GPS al Iniciar y Reanudar:*
+     - Al abrir la aplicación o reanudarla tras desbloquear el dispositivo (más de 45 segundos inactivo), si la opción está activa, la app geolocaliza al usuario de forma silenciosa en segundo plano. Si detecta un cambio de concejo en Asturias (ej. regreso de Gijón a Castrillón / Piedras Blancas), conmuta instantáneamente sin que el usuario tenga que recordar pulsar el botón GPS.
+     - Preservación de la carga en 0 ms: la interfaz siempre muestra de inmediato el último concejo en caché para no hacer esperar al usuario mientras el chip GPS resuelve la posición.
+  2. *Onboarding No Invasivo y Respeto a Navegación Manual:*
+     - Diálogo modal inicial con estética Liquid Glass que consulta al usuario en su primera apertura si desea activar la auto-ubicación o mantener el concejo fijo.
+     - Si el usuario busca y selecciona manualmente un concejo durante la sesión, la app respeta su consulta activa y no lo sobreescribe.
+  3. *Control Total en Interfaz:*
+     - Distintivo visual verde y etiqueta `Auto GPS` en el botón de cabecera (`#btn-gps`).
+     - Botón conmutador rápido en la barra de herramientas del menú de navegación (`#nav-modal`) para activar/desactivar en un solo toque.
+  4. *Anti-Caché Obligatorio:* `sw.js` (`meteoasturlode-v1147-auto-location-gps`) y query strings `?v=1.1.47` en todos los archivos.
+
+---
+
+## 🚀 Versión Anterior: v1.1.46 🌍 — 2026-10-01
 - **Estabilidad & Tablets: Erradicación Total del Temblor de 2s en Tablets en Stand (Feedback Lendo):**
   1. *Diagnóstico del Conflicto Gyro vs CSS Transition (Tablets Apaisadas en Soporte):*
      - En tablets colocadas en soporte de mesa (stand, ángulo de 75°-80°), el giroscopio calcula un desplazamiento de inclinación que el motor JS (`gyroGlass.js`) interpola con `lerp` durante ~2 segundos al arrancar o refrescar. Al mismo tiempo, las tarjetas tenían `transform: translate(...)` y `transition: transform 0.12s ease-out, box-shadow 0.15s ease-out`. Esta colisión de dos motores de animación independientes sobre la misma propiedad provocaba un temblor o vibración subpixel continua de la tarjeta durante exactamente los 2 segundos de interpolación. En vertical no sucedía porque el ángulo neutro no forzaba este recorrido extremo.

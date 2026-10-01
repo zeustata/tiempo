@@ -10,6 +10,22 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.47] - 2026-10-01
+
+### 📍 Usabilidad & Geoposición: Auto-Ubicación Inteligente al Iniciar (Feedback Lendo)
+- **Detección Automática de Concejo por GPS al Iniciar y Reanudar:**
+  - Si está activada, la app consulta el GPS de forma transparente y silenciosa en segundo plano al abrir la aplicación o desbloquear el móvil/tablet. Si el usuario se ha desplazado a otro concejo (ej. de Gijón a Castrillón / Piedras Blancas), la app conmuta automáticamente al nuevo concejo sin exigir la pulsación manual de `[ 📍 GPS ]`.
+  - Carga ultrarrápida (0 ms) preservada: la pantalla se pinta instantáneamente con la última caché para no hacer esperar al usuario mientras el GPS satelital resuelve las coordenadas.
+- **Onboarding No Invasivo y Respeto a Navegación Manual:**
+  - En el primer uso (o tras la actualización), un modal elegante con estética Liquid Glass pregunta al usuario si desea activar la detección automática o mantener concejo fijo.
+  - No pisa las búsquedas manuales: si el usuario consulta otro concejo desde el buscador o favoritos, se mantiene en pantalla mientras use la aplicación.
+- **Control Directo en Interfaz:**
+  - El botón superior `[ 📍 GPS ]` muestra el estado `Auto GPS` con distintivo visual verde cuando está activado.
+  - Añadido conmutador rápido en la barra de herramientas del menú de navegación (`#nav-modal`) para activar o desactivar la auto-ubicación en cualquier instante.
+- **Cache-bust & Sincronización:** `sw.js` → `meteoasturlode-v1147-auto-location-gps`, actualización general a `?v=1.1.47` en `index.html`, `js/app.js` y componentes.
+
+---
+
 ## [1.1.46] - 2026-10-01
 
 ### 📱 Estabilidad & Tablets: Erradicación Total del Temblor de 2s en Tablets en Stand (Feedback Lendo)

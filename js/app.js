@@ -1,26 +1,26 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.1.46';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.1.46';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.1.46';
-import { renderCurrentWeather } from './components/currentCard.js?v=1.1.46';
-import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.1.46';
-import { renderSurfCard } from './components/surfCard.js?v=1.1.46';
-import { renderMountainCard } from './components/mountainCard.js?v=1.1.46';
-import { renderForecast } from './components/forecastView.js?v=1.1.46';
-import { renderWeatherChart } from './components/chartsView.js?v=1.1.46';
-import { renderAstronomyView } from './components/astronomyCard.js?v=1.1.46';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.46';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1.46';
-import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1.46';
-import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1.46';
-import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.46';
-import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.46';
-import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=1.1.46';
-import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=1.1.46';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.46';
-import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.46';
-import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.46';
-import { initGyroGlass } from './utils/gyroGlass.js?v=1.1.46';
-import { triggerSeismicRefresh } from './utils/seismicDetector.js?v=1.1.46';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.1.47';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.1.47';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.1.47';
+import { renderCurrentWeather } from './components/currentCard.js?v=1.1.47';
+import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.1.47';
+import { renderSurfCard } from './components/surfCard.js?v=1.1.47';
+import { renderMountainCard } from './components/mountainCard.js?v=1.1.47';
+import { renderForecast } from './components/forecastView.js?v=1.1.47';
+import { renderWeatherChart } from './components/chartsView.js?v=1.1.47';
+import { renderAstronomyView } from './components/astronomyCard.js?v=1.1.47';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.47';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1.47';
+import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1.47';
+import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1.47';
+import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.47';
+import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.47';
+import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=1.1.47';
+import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=1.1.47';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.47';
+import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.47';
+import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.47';
+import { initGyroGlass } from './utils/gyroGlass.js?v=1.1.47';
+import { triggerSeismicRefresh } from './utils/seismicDetector.js?v=1.1.47';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, pronóstico horario 72h y alertas', key: '1' },
@@ -33,7 +33,7 @@ const APP_MODULES = [
   { id: 'astronomy', icon: '🔭', title: 'Astronomía & Cosmos', desc: 'Eclipses, lluvias de estrellas, fases lunares y semáforo de visibilidad en Asturias', key: '8' }
 ];
 
-export const CURRENT_APP_VERSION = '1.1.46';
+export const CURRENT_APP_VERSION = '1.1.47';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -60,6 +60,8 @@ class MeteoAsturiasApp {
     this.setupExplainModal();
     this.setupPhenomenaModal();
     this.setupWebcamsModal();
+    this.setupAutoLocationModal();
+    this.updateGpsButtonDisplay();
     this.setupEventListeners();
     this.setupQuickSearch();
     this.setupPwaInstall();
@@ -73,6 +75,7 @@ class MeteoAsturiasApp {
 
     // Auto-apertura inmediata del modal de Novedades si hay nueva versión (Doctrina Constitucional 13)
     this.checkChangelogAutoPrompt();
+    this.checkAutoLocationPrompt();
 
     // 1. Carga instantánea desde caché local (0 ms) para que los botones y tarjetas aparezcan de inmediato
     const cached = getCachedWeather(this.currentConcejo.id, this.currentModel.id);
@@ -86,6 +89,11 @@ class MeteoAsturiasApp {
 
     // Comprobar si se abrió desde un acceso directo PWA (hash URL)
     this.handleInitialHash();
+
+    // Auto-ubicación inteligente silenciosa al iniciar si está activada
+    if (this.prefs.autoLocation === true) {
+      this.locateUser({ silent: true });
+    }
 
     // Cargar datos actualizados en segundo plano/red
     await this.loadWeather(this.currentConcejo.id);
@@ -126,6 +134,10 @@ class MeteoAsturiasApp {
         lastRefreshTime = now;
         console.log('[MeteoAstur] Reanudación detectada: actualizando datos del tiempo y versión...');
         this.loadWeather(this.currentConcejo.id);
+
+        if (this.prefs.autoLocation === true) {
+          this.locateUser({ silent: true });
+        }
 
         if ('serviceWorker' in navigator) {
           navigator.serviceWorker.getRegistration().then(reg => {
@@ -244,6 +256,11 @@ class MeteoAsturiasApp {
       try {
         localStorage.setItem('meteoastur_changelog_seen', CURRENT_APP_VERSION);
       } catch (e) {}
+      if (this.prefs.autoLocation === null || this.prefs.autoLocation === undefined) {
+        setTimeout(() => {
+          this.promptAutoLocation();
+        }, 400);
+      }
     }
     if (history.state?.modalOpen) {
       try {
@@ -363,7 +380,7 @@ class MeteoAsturiasApp {
     if (gpsBtn) {
       gpsBtn.addEventListener('click', () => {
         this.triggerHaptic();
-        this.locateUser();
+        this.locateUser({ silent: false });
       });
     }
 
@@ -483,6 +500,114 @@ class MeteoAsturiasApp {
       }
     } catch (e) {
       console.warn('[MeteoAstur] No se pudo verificar versión del changelog en almacenamiento local:', e);
+    }
+  }
+
+  checkAutoLocationPrompt() {
+    if (this.prefs.autoLocation !== null && this.prefs.autoLocation !== undefined) return;
+    const STORAGE_KEY = 'meteoastur_changelog_seen';
+    try {
+      const lastSeen = localStorage.getItem(STORAGE_KEY);
+      if (lastSeen !== CURRENT_APP_VERSION) {
+        // El changelog modal saltará primero; lo encadenamos al cerrarlo para no solapar modales
+        return;
+      }
+    } catch (e) {}
+
+    // Si ya vio el changelog o no saltó, mostrar prompt de auto-ubicación tras breve retardo
+    setTimeout(() => {
+      this.promptAutoLocation();
+    }, 600);
+  }
+
+  promptAutoLocation() {
+    const modal = document.getElementById('autolocation-modal');
+    if (!modal || modal.style.display === 'flex') return;
+    this.openModal(modal);
+  }
+
+  setupAutoLocationModal() {
+    const modal = document.getElementById('autolocation-modal');
+    const closeBtn = document.getElementById('btn-close-autolocation');
+    const enableBtn = document.getElementById('btn-enable-autolocation');
+    const disableBtn = document.getElementById('btn-disable-autolocation');
+
+    if (!modal) return;
+
+    if (enableBtn) {
+      enableBtn.addEventListener('click', () => {
+        this.triggerHaptic();
+        this.prefs.autoLocation = true;
+        savePreferences(this.prefs);
+        this.updateGpsButtonDisplay();
+        this.updateNavAutoLocationBadge();
+        this.closeModal(modal);
+        // Solicitar GPS de inmediato para situar al usuario
+        this.locateUser({ silent: false });
+      });
+    }
+
+    if (disableBtn) {
+      disableBtn.addEventListener('click', () => {
+        this.triggerHaptic();
+        this.prefs.autoLocation = false;
+        savePreferences(this.prefs);
+        this.updateGpsButtonDisplay();
+        this.updateNavAutoLocationBadge();
+        this.closeModal(modal);
+      });
+    }
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        if (this.prefs.autoLocation === null || this.prefs.autoLocation === undefined) {
+          this.prefs.autoLocation = false;
+          savePreferences(this.prefs);
+          this.updateGpsButtonDisplay();
+          this.updateNavAutoLocationBadge();
+        }
+        this.closeModal(modal);
+      });
+    }
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        if (this.prefs.autoLocation === null || this.prefs.autoLocation === undefined) {
+          this.prefs.autoLocation = false;
+          savePreferences(this.prefs);
+          this.updateGpsButtonDisplay();
+          this.updateNavAutoLocationBadge();
+        }
+        this.closeModal(modal);
+      }
+    });
+  }
+
+  updateGpsButtonDisplay() {
+    const gpsBtn = document.getElementById('btn-gps');
+    const gpsLabel = document.getElementById('gps-btn-label');
+    if (!gpsBtn) return;
+
+    const isAuto = this.prefs.autoLocation === true;
+    gpsBtn.classList.toggle('auto-active', isAuto);
+
+    if (gpsLabel) {
+      gpsLabel.textContent = isAuto ? 'Auto GPS' : 'GPS';
+    }
+    gpsBtn.title = isAuto 
+      ? 'Auto-Ubicación Activa: Detecta tu concejo en Asturias al abrir o reanudar. Toca para forzar GPS ahora.'
+      : 'Localizar por GPS (Tecla G)';
+  }
+
+  updateNavAutoLocationBadge() {
+    const textEl = document.getElementById('nav-autoloc-text');
+    const iconEl = document.getElementById('nav-autoloc-icon');
+    const isAuto = this.prefs.autoLocation === true;
+    if (textEl) {
+      textEl.innerHTML = `Auto-GPS: <strong>${isAuto ? 'Sí' : 'No'}</strong>`;
+    }
+    if (iconEl) {
+      iconEl.textContent = isAuto ? '📍' : '📌';
     }
   }
 
@@ -700,6 +825,7 @@ class MeteoAsturiasApp {
 
     const renderNavItems = () => {
       updateNavHeaderThemeBadge();
+      this.updateNavAutoLocationBadge();
       grid.innerHTML = APP_MODULES.map(m => {
         const isActive = m.id === this.activeTab;
         return `
@@ -725,6 +851,20 @@ class MeteoAsturiasApp {
         });
       });
     };
+
+    const toggleAutoLocBtn = document.getElementById('btn-toggle-autolocation-nav');
+    if (toggleAutoLocBtn) {
+      toggleAutoLocBtn.addEventListener('click', () => {
+        this.triggerHaptic();
+        this.prefs.autoLocation = !this.prefs.autoLocation;
+        savePreferences(this.prefs);
+        this.updateGpsButtonDisplay();
+        this.updateNavAutoLocationBadge();
+        if (this.prefs.autoLocation) {
+          this.locateUser({ silent: false });
+        }
+      });
+    }
 
     if (triggerBtn) {
       triggerBtn.addEventListener('click', () => {
@@ -1387,7 +1527,7 @@ class MeteoAsturiasApp {
         this.updateFavButton();
         this.renderFavoritePills();
       } else if (key === 'g') {
-        this.locateUser();
+        this.locateUser({ silent: false });
       } else if (key === 's' || key === '/') {
         e.preventDefault();
         if (this.openSearchModal) this.openSearchModal();
@@ -1724,20 +1864,32 @@ class MeteoAsturiasApp {
     favBtn.classList.toggle('active', fav);
   }
 
-  locateUser() {
+  locateUser(options = {}) {
+    const { silent = false } = options;
     if (!navigator.geolocation) {
-      alert('Tu dispositivo o navegador no soporta geolocalización.');
+      if (!silent) alert('Tu dispositivo o navegador no soporta geolocalización.');
       return;
     }
 
     const gpsBtn = document.getElementById('btn-gps');
-    if (gpsBtn) gpsBtn.innerHTML = '<span class="split-btn-icon">📍</span><span class="split-btn-action-text">GPS...</span>';
+    const gpsLabel = document.getElementById('gps-btn-label');
+    if (gpsBtn && !silent && gpsLabel) {
+      gpsLabel.textContent = 'GPS...';
+    }
 
     const onGeoSuccess = (pos) => {
       const closest = findClosestConcejo(pos.coords.latitude, pos.coords.longitude);
-      if (gpsBtn) gpsBtn.innerHTML = '<span class="split-btn-icon">📍</span><span class="split-btn-action-text">GPS</span>';
+      this.updateGpsButtonDisplay();
       if (closest) {
-        this.switchConcejo(closest.id);
+        if (closest.id !== this.currentConcejo.id) {
+          console.log(`[MeteoAstur] GPS detectó concejo: ${closest.name}`);
+          this.switchConcejo(closest.id);
+        } else if (!silent && gpsLabel) {
+          gpsLabel.textContent = '✓ Aquí';
+          setTimeout(() => {
+            this.updateGpsButtonDisplay();
+          }, 1400);
+        }
       }
     };
 
@@ -1745,18 +1897,22 @@ class MeteoAsturiasApp {
       // Intento secundario con menor precisión si el chip satelital tarda en fijar posición
       navigator.geolocation.getCurrentPosition(
         onGeoSuccess,
-        () => {
-          if (gpsBtn) gpsBtn.innerHTML = '<span class="split-btn-icon">📍</span><span class="split-btn-action-text">GPS</span>';
-          alert('No pudimos acceder a tu ubicación GPS. Asegúrate de dar permisos de ubicación precisa en tu dispositivo.');
+        (err) => {
+          this.updateGpsButtonDisplay();
+          if (!silent) {
+            alert('No pudimos acceder a tu ubicación GPS. Asegúrate de dar permisos de ubicación precisa en tu dispositivo.');
+          } else {
+            console.warn('[MeteoAstur] Auto-ubicación silenciosa no pudo obtener coordenadas:', err);
+          }
         },
-        { enableHighAccuracy: false, timeout: 7000 }
+        { enableHighAccuracy: false, timeout: 6000 }
       );
     };
 
     navigator.geolocation.getCurrentPosition(
       onGeoSuccess,
       onGeoError,
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+      { enableHighAccuracy: true, timeout: 8000, maximumAge: 30000 }
     );
   }
 

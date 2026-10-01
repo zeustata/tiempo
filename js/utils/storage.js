@@ -13,10 +13,14 @@ export function getPreferences() {
         units: 'metric', // metric (km/h) | knots (kt)
         model: 'best_match',
         iconTheme: 'astur', // astur (emojis emotivos cómic por defecto)
-        autoRefresh: true
+        autoRefresh: true,
+        autoLocation: null // null: aún no preguntado; true: auto-GPS activo; false: concejo fijo
       };
     }
     const parsed = JSON.parse(raw);
+    if (parsed.autoLocation === undefined) {
+      parsed.autoLocation = null;
+    }
     if (!Array.isArray(parsed.favorites)) {
       parsed.favorites = [];
     }
@@ -38,7 +42,8 @@ export function getPreferences() {
       units: 'metric',
       model: 'best_match',
       iconTheme: 'astur',
-      autoRefresh: true
+      autoRefresh: true,
+      autoLocation: null
     };
   }
 }

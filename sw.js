@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1146-rock-solid-glass';
+const CACHE_NAME = 'meteoasturlode-v1147-auto-location-gps';
 const STATIC_ASSETS = [
   './',
   './index.html',
