@@ -10,6 +10,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.52] - 2026-10-01
+
+### 🥾 Ergonomía Móvil y Blindaje Anti-Corte en Rutas (Ley 11)
+- **Compactación y Resolución de Desborde en Filtros de Sendas (Feedback Lendo):**
+  - Reducción ergonómica del texto de pastillas a `🟢 Fáciles` y `🟡 Medias`, evitando que nombres largos como *«Fáciles & Familiares»* se corten en el borde lateral de las pantallas de smartphones (resolución estándar de 320px a 380px).
+  - Implementación de `flex-wrap: wrap; gap: 6px;` y `box-sizing: border-box` en `.routes-filter-strip`, garantizando que todas las opciones quepan holgadamente en una sola fila en móviles y se adapten limpiamente sin desbordamiento horizontal.
+- **Cache-Busting Sincronizado:** Service Worker actualizado a `meteoasturlode-v1152-ergonomia-rutas` y query strings unificadas a `?v=1.1.52`.
+
+---
+
 ## [1.1.51] - 2026-10-01
 
 ### 🥾 Nuevo Módulo: Rutas, Sendas & Monte Asturiano (Tecla 7)

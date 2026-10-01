@@ -4,7 +4,7 @@
  * Estética Liquid Glass Pura, Ergonomía Móvil (Ley 11) y Blindaje Legal (Ley 16).
  */
 
-import { calculateHikingIndex, getRoutesForConcejo } from '../utils/routesData.js?v=1.1.51';
+import { calculateHikingIndex, getRoutesForConcejo } from '../utils/routesData.js?v=1.1.52';
 
 // Función global de filtrado táctil interactivo
 if (typeof window !== 'undefined' && !window.filterRoutes) {
@@ -112,19 +112,19 @@ export function renderRoutesCard(data, concejo) {
         </div>
       </div>
 
-      <!-- 3. BARRA DE FILTROS TÁCTILES RÁPIDOS -->
+      <!-- 3. BARRA DE FILTROS TÁCTILES RÁPIDOS (LEY 11 ANTI-DESBORDE) -->
       <div class="routes-filter-strip">
         <button class="route-filter-btn active" onclick="window.filterRoutes('all', this)">
           Todas (${counts.all})
         </button>
         ${counts.facil > 0 ? `
           <button class="route-filter-btn" onclick="window.filterRoutes('facil', this)">
-            🟢 Fáciles &amp; Familiares (${counts.facil})
+            🟢 Fáciles (${counts.facil})
           </button>
         ` : ''}
         ${counts.media > 0 ? `
           <button class="route-filter-btn" onclick="window.filterRoutes('media', this)">
-            🟡 Moderadas (${counts.media})
+            🟡 Medias (${counts.media})
           </button>
         ` : ''}
         ${counts.alta > 0 ? `

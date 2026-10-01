@@ -7229,33 +7229,27 @@
   color: #cbd5e1;
 }
 
-/* Filtros Ergonómicos de Rutas */
+/* Filtros Ergonómicos de Rutas (Ley 11 Blindaje Anti-Desborde) */
 .routes-filter-strip {
   display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 6px;
+  flex-wrap: wrap;
+  gap: 6px;
   margin-bottom: 18px;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-}
-
-.routes-filter-strip::-webkit-scrollbar {
-  display: none;
 }
 
 .route-filter-btn {
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.12);
   color: #cbd5e1;
-  padding: 7px 14px;
+  padding: 6px 12px;
   border-radius: 20px;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.2s ease;
   user-select: none;
+  box-sizing: border-box;
 }
 
 .route-filter-btn:hover {

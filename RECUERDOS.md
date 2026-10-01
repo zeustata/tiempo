@@ -10,7 +10,16 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.51 🥾 — 2026-10-01
+## 🚀 Última Actualización Oficial: v1.1.52 🥾 — 2026-10-01
+- **Ergonomía Móvil y Blindaje Anti-Corte en Filtros de Rutas (Ley 11):**
+  1. *Resolución de Desborde Lateral:*
+     - Modificada la etiqueta del botón de `🟢 Fáciles & Familiares` a `🟢 Fáciles`, y de `🟡 Moderadas` a `🟡 Medias`.
+     - Implementado `flex-wrap: wrap; gap: 6px;` y `box-sizing: border-box` en `.routes-filter-strip`, asegurando que todas las pastillas quepan juntas en una sola fila en dispositivos móviles sin cortarse jamás en el margen derecho.
+  2. *Anti-Caché Obligatorio:* `sw.js` (`meteoasturlode-v1152-ergonomia-rutas`) y sincronización de query strings a `?v=1.1.52`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.51 🥾 — 2026-10-01
 - **Nuevo Módulo Dedicado: Rutas, Sendas & Monte Asturiano (Tecla 7):**
   1. *Creación del Módulo 'routes':*
      - Posicionado entre *Surf & Rompientes* y *Cordillera & Nieve*. Tecla rápida <kbd>7</kbd> y acceso integrado en la navegación.

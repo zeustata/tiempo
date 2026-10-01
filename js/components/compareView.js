@@ -1,5 +1,5 @@
 import { CONCEJOS_ASTURIAS, getConcejoById } from '../config/concejos.js';
-import { getWeatherInfo } from '../utils/weatherIcons.js?v=1.1.51';
+import { getWeatherInfo } from '../utils/weatherIcons.js?v=1.1.52';
 
 /**
  * Renderiza el comparador climático cara a cara entre dos concejos de Asturias

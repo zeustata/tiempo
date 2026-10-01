@@ -1,4 +1,4 @@
-import { getWindDirection } from '../utils/weatherIcons.js?v=1.1.51';
+import { getWindDirection } from '../utils/weatherIcons.js?v=1.1.52';
 import { 
   getMoonAndTideInfo, 
   getDailyTideEvents, 
