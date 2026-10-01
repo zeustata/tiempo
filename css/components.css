@@ -413,7 +413,7 @@
   font-family: inherit;
   border: 1px solid transparent;
   background: transparent;
-  transition: transform 0.15s ease, filter 0.15s ease;
+  transition: transform 0.15s ease;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
@@ -454,13 +454,13 @@
   margin-left: 2px;
   vertical-align: middle;
   opacity: 0.95;
-  filter: drop-shadow(0 0 4px rgba(250, 204, 21, 0.5));
-  transition: transform 0.2s ease, filter 0.2s ease;
+  text-shadow: 0 0 4px rgba(250, 204, 21, 0.75);
+  transition: transform 0.2s ease;
 }
 
 .climatology-badge:hover .clima-bulb {
   transform: scale(1.2) rotate(8deg);
-  filter: drop-shadow(0 0 7px rgba(250, 204, 21, 0.95));
+  text-shadow: 0 0 8px rgba(250, 204, 21, 0.95);
 }
 
 .climatology-desc {

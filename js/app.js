@@ -1,26 +1,26 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.1.43';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.1.43';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.1.43';
-import { renderCurrentWeather } from './components/currentCard.js?v=1.1.43';
-import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.1.43';
-import { renderSurfCard } from './components/surfCard.js?v=1.1.43';
-import { renderMountainCard } from './components/mountainCard.js?v=1.1.43';
-import { renderForecast } from './components/forecastView.js?v=1.1.43';
-import { renderWeatherChart } from './components/chartsView.js?v=1.1.43';
-import { renderAstronomyView } from './components/astronomyCard.js?v=1.1.43';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.43';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1.43';
-import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1.43';
-import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1.43';
-import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.43';
-import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.43';
-import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=1.1.43';
-import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=1.1.43';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.43';
-import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.43';
-import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.43';
-import { initGyroGlass } from './utils/gyroGlass.js?v=1.1.43';
-import { triggerSeismicRefresh } from './utils/seismicDetector.js?v=1.1.43';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.1.45';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.1.45';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.1.45';
+import { renderCurrentWeather } from './components/currentCard.js?v=1.1.45';
+import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.1.45';
+import { renderSurfCard } from './components/surfCard.js?v=1.1.45';
+import { renderMountainCard } from './components/mountainCard.js?v=1.1.45';
+import { renderForecast } from './components/forecastView.js?v=1.1.45';
+import { renderWeatherChart } from './components/chartsView.js?v=1.1.45';
+import { renderAstronomyView } from './components/astronomyCard.js?v=1.1.45';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.45';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1.45';
+import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1.45';
+import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1.45';
+import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.45';
+import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.45';
+import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=1.1.45';
+import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=1.1.45';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.45';
+import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.45';
+import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.45';
+import { initGyroGlass } from './utils/gyroGlass.js?v=1.1.45';
+import { triggerSeismicRefresh } from './utils/seismicDetector.js?v=1.1.45';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, pronóstico horario 72h y alertas', key: '1' },
@@ -33,7 +33,7 @@ const APP_MODULES = [
   { id: 'astronomy', icon: '🔭', title: 'Astronomía & Cosmos', desc: 'Eclipses, lluvias de estrellas, fases lunares y semáforo de visibilidad en Asturias', key: '8' }
 ];
 
-export const CURRENT_APP_VERSION = '1.1.44';
+export const CURRENT_APP_VERSION = '1.1.45';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -1768,7 +1768,7 @@ class MeteoAsturiasApp {
   _dataSignature(data) {
     if (!data || !data.weather || !data.weather.current) return null;
     const c = data.weather.current;
-    return `${data.timestamp}|${c.temperature_2m}|${c.weather_code}|${c.wind_speed_10m}`;
+    return `${Math.round(c.temperature_2m)}|${c.weather_code}|${Math.round(c.wind_speed_10m || 0)}|${Math.round(c.apparent_temperature || 0)}`;
   }
 
   async loadWeather(concejoId) {
@@ -1790,10 +1790,9 @@ class MeteoAsturiasApp {
         saveCachedWeather(concejoId, this.currentModel.id, result);
 
         if (dataChanged) {
-          // Datos nuevos: renderizar con fade suave para que no parpadeé
-          this.renderAllComponents(true);
+          // Solo re-renderizamos si los datos meteorológicos han variado realmente
+          this.renderAllComponents();
         }
-        // Si los datos son iguales, no re-renderizamos: el DOM ya es correcto
 
         this.updateLastUpdatedTime(result.timestamp);
         triggerSeismicRefresh(concejo);
@@ -1819,7 +1818,7 @@ class MeteoAsturiasApp {
   }
 
 
-  renderAllComponents(withFade = false) {
+  renderAllComponents() {
     if (!this.weatherData) return;
 
     // ─── FASE 1: Panel en Vivo (inmediata) ─────────────────────────────────────
@@ -1829,21 +1828,7 @@ class MeteoAsturiasApp {
     try {
       const liveContainer = document.getElementById('panel-live');
       if (liveContainer) {
-        if (withFade) {
-          liveContainer.classList.remove('refresh-in');
-          liveContainer.classList.add('refreshing');
-        }
-
         liveContainer.innerHTML = renderCurrentWeather(this.weatherData, this.currentConcejo, this.prefs.units, this.prefs.iconTheme);
-
-        if (withFade) {
-          requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              liveContainer.classList.remove('refreshing');
-              liveContainer.classList.add('refresh-in');
-            });
-          });
-        }
       }
     } catch (e) {
       console.error('[MeteoAstur] Error renderizando Vivo:', e);

@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.43">
-  <link rel="stylesheet" href="css/components.css?v=1.1.43">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.43">
+  <link rel="stylesheet" href="css/main.css?v=1.1.45">
+  <link rel="stylesheet" href="css/components.css?v=1.1.45">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.45">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -176,7 +176,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.44 🌍</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.45 🌍</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -227,11 +227,21 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.44 🌍</span>
-            <span class="release-date">30 Sep 2026 (Actual)</span>
+            <span class="release-version">v1.1.45 🌍</span>
+            <span class="release-date">01 Oct 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-mejora">Rendimiento &amp; Móvil</span> <strong>Anti-Parpadeo en Refresco de Datos (Honor Magic Pro / Snapdragon)</strong>: Se elimina el flash visual de ~2 segundos que aparecía en la tarjeta de temperatura y valores habituales al recargar los datos desde la API. Implementado sistema de doble protección: (1) comparación de firma de datos antes de re-renderizar — si los datos frescos son idénticos a los de caché no se destruye el DOM; (2) transición <code>opacity</code> de 180ms que convierte el refresco en un fundido imperceptible en lugar de un parpadeo brusco. Compatibilidad garantizada con todos los dispositivos sin coste GPU adicional.</li>
+            <li><span class="tag tag-mejora">Rendimiento &amp; GPU</span> <strong>Fix Definitivo Anti-Microdestellos en Tablets (Feedback Lendo)</strong>: Sustituido el filtro <code>drop-shadow</code> por sombreado tipográfico nativo <code>text-shadow</code> en la bombilla de la pastilla climatológica, erradicando el conflicto de descarte de texturas GPU en pantallas táctiles de alta resolución con <code>backdrop-filter</code> activo. Eliminada la opacidad cero artificial en refrescos y purgada la firma de datos para evitar re-renderizados innecesarios del DOM.</li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.44 🌍</span>
+            <span class="release-date">30 Sep 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-mejora">Rendimiento &amp; Móvil</span> <strong>Anti-Parpadeo en Refresco de Datos</strong>: Optimización en la gestión de renderizado de componentes y separación de fases de montaje.</li>
           </ul>
         </div>
 
@@ -2119,7 +2129,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.43"></script>
+  <script type="module" src="js/app.js?v=1.1.45"></script>
 
 
 

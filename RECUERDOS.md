@@ -20,7 +20,26 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   5. *Fronteras del conocimiento:* Distinción rigurosa entre hechos, opiniones y desconocimiento (sin rellenar con especulaciones).
   6. *Separación entre Juicio y Ejecución:* Aplica cuando se pide juicio; ante órdenes de tareas concretas decididas, se ejecuta sin discusión.
 
-## 🚀 Última Actualización Oficial: v1.1.43 🌍 — 2026-09-30
+## 🚀 Última Actualización Oficial: v1.1.45 🌍 — 2026-10-01
+- **Rendimiento & GPU: Fix Definitivo Anti-Microdestellos en Tablets (Feedback Lendo):**
+  1. *Diagnóstico del Conflicto de Capas GPU en Pantallas de Alta Resolución (Tablets):*
+     - En pantallas táctiles de gran resolución (tablets), la combinación de un elemento hijo con `filter: drop-shadow(...)` y `transition: filter` dentro de una tarjeta con `backdrop-filter: blur(24px)` y animación dinámica de refracción (`gyroGlass`) provocaba que el compositor gráfico de Chrome/Android descartara y reconstruyera la textura GPU repetidamente durante los primeros ~2 segundos de montaje, traduciéndose en micro-destellos o chispazos rápidos en la tarjeta principal.
+  2. *Solución Quirúrgica y Limpia (Cero Riesgo):*
+     - **Sustitución Vectorial por `text-shadow`:** Se sustituye `filter: drop-shadow` por sombreado tipográfico nativo `text-shadow: 0 0 4px rgba(250, 204, 21, 0.75)` en la bombilla `💡` de `.clima-bulb`. El efecto estético de halo dorado es idéntico, pero no fuerza la creación de texturas GPU separadas ni genera descarte de capas sobre `backdrop-filter`.
+     - **Supresión de Transiciones en `filter`:** Eliminado el canal `filter` de las transiciones de `.climatology-badge` y `.clima-bulb`, evitando que la GPU intente interpolar filtros durante el ciclo de entrada.
+     - **Erradicación de Opacidad Cero Artificial:** Retirado el `opacity: 0` de `#panel-live.refreshing`, evitando cualquier micro-apagón forzado del contenedor.
+     - **Firma Pura en `_dataSignature`:** Eliminado el timestamp dinámico para que solo se active re-renderizado si la temperatura, código de tiempo o viento han variado realmente respecto a los datos en pantalla.
+  3. *Versionado & Anti-Caché:*
+     - Incremento oficial a `v1.1.45 🌍`.
+     - Footer de `index.html` con `#app-version-badge` actualizado a `v1.1.45 🌍`.
+     - Inyectado bloque de novedades en `#changelog-modal`.
+     - `CURRENT_APP_VERSION = '1.1.45'` en [js/app.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/app.js).
+     - `CACHE_NAME = 'meteoasturlode-v1145-tablet-gpu-pure'` en [sw.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/sw.js).
+     - CSS y módulos JS sincronizados con `?v=1.1.45`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.43 🌍 — 2026-09-30
 - **Diseño & Estabilidad: Supresión de Doble Pastilla y Eliminación del Temblor en Tablets:**
   1. *Pastilla Única Autónoma en Climatología (Feedback Lendo):*
      - Erradicado el marco exterior amarillo/ámbar (`.btn-explain-sensor`) que envolvía la pastilla verde.

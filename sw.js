@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1144-anti-flicker';
+const CACHE_NAME = 'meteoasturlode-v1145-tablet-gpu-pure';
 const STATIC_ASSETS = [
   './',
   './index.html',

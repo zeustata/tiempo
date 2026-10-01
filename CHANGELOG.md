@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.45] - 2026-10-01
+
+### 📱 Rendimiento & GPU: Fix Definitivo Anti-Microdestellos en Tablets (Feedback Lendo)
+- **Diagnóstico del Conflicto de Capas GPU en Pantallas de Alta Resolución (Tablets):**
+  - Causa raíz identificada: En pantallas táctiles de gran resolución (tablets), la combinación de un elemento hijo con `filter: drop-shadow(...)` y `transition: filter` dentro de una tarjeta con `backdrop-filter: blur(24px)` y animación dinámica de refracción (`gyroGlass`) provocaba que el compositor gráfico descartara y reconstruyera la textura GPU repetidamente durante los primeros ~2 segundos de montaje, traduciéndose en micro-destellos o chispazos rápidos en la tarjeta principal.
+- **Solución Quirúrgica y Limpia (Cero Riesgo):**
+  1. **Sustitución Vectorial por `text-shadow`:** Se sustituye `filter: drop-shadow` por sombreado tipográfico nativo `text-shadow: 0 0 4px rgba(250, 204, 21, 0.75)` en la bombilla `💡` de `.clima-bulb`. El efecto estético de halo dorado es idéntico, pero no fuerza la creación de texturas GPU separadas ni genera descarte de capas sobre `backdrop-filter`.
+  2. **Supresión de Transiciones en `filter`:** Eliminado el canal `filter` de las transiciones de `.climatology-badge` y `.clima-bulb`, evitando que la GPU intente interpolar filtros durante el ciclo de entrada.
+  3. **Erradicación de Opacidad Cero Artificial:** Retirado el `opacity: 0` de `#panel-live.refreshing`, evitando cualquier micro-apagón forzado del contenedor.
+  4. **Firma Pura en `_dataSignature`:** Eliminado el timestamp dinámico para que solo se active re-renderizado si la temperatura, código de tiempo o viento han variado realmente respecto a los datos en pantalla.
+- **Cache-bust & Sincronización:** `sw.js` → `meteoasturlode-v1145-tablet-gpu-pure`, actualización general a `?v=1.1.45` en `index.html`, `js/app.js` y componentes.
+
+---
+
 ## [1.1.44] - 2026-09-30
 
 ### 📱 Rendimiento & Móvil: Anti-Parpadeo en Refresco de Datos (Honor Magic Pro / Snapdragon)

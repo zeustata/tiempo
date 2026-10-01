@@ -1524,18 +1524,13 @@ body {
   margin-left: 4px;
 }
 
-/* --- ANTI-PARPADEO: Fade suave en re-renders de datos frescos (Opción C Princesa) ---
-   Se aplica temporalmente al panel-live mientras se destruye y reconstruye el DOM.
-   Convierte el flash brusco de ~2s en un fundido imperceptible de 180ms.
-   Compatible con todos los dispositivos: no usa propiedades GPU adicionales. */
+/* --- REFRESH LIMPIO SIN APAGONES --- */
 #panel-live.refreshing {
-  opacity: 0;
-  transition: none;
+  /* Sin opacity 0 para evitar micro-apagones en tablets */
 }
 
 #panel-live.refresh-in {
   opacity: 1;
-  transition: opacity 0.18s ease-out;
 }
 
 /* --- TAB CONTENT PANELS (Deslizamiento Lateral Sedoso / Silk Slide) --- */
