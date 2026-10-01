@@ -101,6 +101,11 @@
 - **Atribución Transparente y Descargo Gubernamental:** Toda aplicación debe identificar claramente las fuentes oficiales de las que bebe (ej. Open-Meteo, AEMET, Puertos del Estado, RainViewer, etc.) e incorporar obligatoriamente un descargo de responsabilidad visible indicando que se trata de un desarrollo independiente, evitando cualquier infracción por presunta suplantación de organismos públicos.
 - **Blindaje de Políticas en Google Play Console:** Ningún módulo, contenido, metadato o permiso podrá vulnerar las directivas para desarrolladores de Google Play Store, garantizando que ninguna app del ecosistema zeustata pueda incurrir en suspensión, sanción o baneo de la tienda.
 
+### 16. Doctrina de Exención de Responsabilidad Civil, Prudencia y Blindaje de Actividades en Entornos Naturales
+- **Naturaleza Estrictamente Orientativa y Teórica:** Toda previsión meteorológica, estado del mar, bandera de baño, calidad de surf, vialidad invernal, cota de nieve, índice de radiación o estimación en ruta mostrada en cualquier aplicación del ecosistema zeustata emana de modelos matemáticos y algoritmos numéricos teóricos. Queda terminantemente prohibido formular textos que expresen o sugieran "garantía de seguridad", "autorización de paso" o "certeza absoluta de condiciones".
+- **Soberanía de los Servicios Oficiales de Emergencia y Rescate:** Ninguna función de la app sustituye las banderas físicas y órdenes del Servicio de Salvamento y Socorrismo a pie de playa, la señalización de la Dirección General de Tráfico (DGT), la Guardia Civil, Protección Civil o los avisos de emergencias del 112.
+- **Responsabilidad Individual e Inmunidad del Desarrollador:** La práctica de actividades deportivas, náuticas, de baño, montañismo o conducción se realiza siempre bajo la exclusiva responsabilidad, juicio y prudencia del usuario. Las aplicaciones deben incorporar advertencias visibles de exención de responsabilidad civil en cada módulo sensible y en la Política de Privacidad, blindando al desarrollador (Lendo / zeustata) frente a cualquier reclamación derivada de rescates, accidentes o variaciones meteorológicas imprevistas.
+
 ---
 
 ## 📑 PARTE II: LEYES ESPECÍFICAS DEL PROYECTO: METEOASTUR LODE (TIEMPO)

@@ -1138,6 +1138,12 @@ export function renderSurfCard(data, concejo) {
           }).join('')}
         </div>
       </div>
+
+      <!-- AVISO LEGAL Y EXENCIÓN DE RESPONSABILIDAD (LEY 16) -->
+      <div class="surf-disclaimer-box" style="margin-top: 20px; padding: 12px 16px; background: rgba(15, 23, 42, 0.45); border-radius: 12px; border-left: 3px solid #06b6d4; font-size: 0.76rem; color: #94a3b8; line-height: 1.5;">
+        <strong style="color: #e2e8f0; display: block; margin-bottom: 4px;">⚠️ Responsabilidad Deportiva &amp; Surf (Ley 16):</strong>
+        Las calificaciones (0-10★), energía en kJ y alturas de ola son cálculos físicos teóricos del oleaje mar adentro. <strong>Las condiciones locales en rompientes, barras y corrientes pueden ser muy cambiantes y peligrosas</strong>. Cada surfista entra al mar bajo su exclusiva responsabilidad, criterio y preparación física.
+      </div>
     </div>
   `;
 }

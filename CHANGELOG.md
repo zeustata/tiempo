@@ -10,6 +10,22 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.50] - 2026-10-01
+
+### 🛡️ Blindaje Legal: Doctrina de Exención de Responsabilidad Civil (Ley 16)
+- **Consagración Constitucional de la Ley 16 (Parte I):**
+  - Autenticada formalmente mediante PIN maestro de seguridad de Lendo (`2796`), se consagra en la Constitución Suprema la *Doctrina de Exención de Responsabilidad Civil, Prudencia y Blindaje de Actividades en Entornos Naturales*.
+  - Establece la naturaleza estrictamente orientativa y matemática de los modelos meteorológicos, la soberanía inapelable de las autoridades y servicios oficiales a pie de campo (socorristas, DGT, 112) y la asunción exclusiva de riesgo por el usuario, blindando al desarrollador (Lendo / zeustata) frente a cualquier contingencia civil.
+- **Avisos Legales Visibles en Módulos Sensibles:**
+  - *Playas & Mareas (`marineCard.js`):* Banderas renombradas a *«(Teórica)»* (ej. `🟢 Bandera Verde (Teórica)`) y cintillo al pie recordando que las condiciones locales y las directrices del servicio de socorrismo y salvamento prevalecen en todo momento.
+  - *Surf & Rompientes (`surfCard.js`):* Bloque de advertencia recordando que las calificaciones (0-10★) y cálculos en kJ son teóricos y que cada surfista accede al agua bajo su propia responsabilidad física y técnica.
+  - *Cordillera & Nieve (`mountainCard.js`):* Cintillo de vialidad invernal remitiendo obligatoriamente a la DGT (011) y al 112 Asturias.
+- **Blindaje en Términos Oficiales (`privacy.html`):**
+  - Incorporada la sección expresa *«6. Exención de Responsabilidad en Actividades al Aire Libre, Náuticas y de Montaña (Prudencia Individual)»*.
+- **Cache-bust & Sincronización:** `sw.js` → `meteoasturlode-v1150-legal-disclaimer`, actualización general a `?v=1.1.50` en `index.html`, `js/app.js` y componentes.
+
+---
+
 ## [1.1.49] - 2026-10-01
 
 ### 🏖️ Diseño & Claridad: Títulos Limpios y Elegantes en Playas y Surf (Feedback Lendo)

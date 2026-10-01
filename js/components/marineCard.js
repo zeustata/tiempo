@@ -1069,33 +1069,33 @@ export function renderMarineCard(data, concejo) {
   if (h < 0.6) {
     douglasDegree = 1;
     douglasName = 'Mar Calma / Rizada';
-    flagBadge = '🟢 Bandera Verde';
+    flagBadge = '🟢 Bandera Verde (Teórica)';
     flagColor = '#10b981';
-    bathStatus = 'Condiciones excelentes para el baño, paseo por la orilla y niños.';
+    bathStatus = 'Condiciones meteorológicas teóricas favorables. Precaución habitual en el agua.';
   } else if (h < 1.3) {
     douglasDegree = 2;
     douglasName = 'Marejadilla';
-    flagBadge = '🟢 Bandera Verde / Amarilla';
+    flagBadge = '🟢 Bandera Verde / Amarilla (Teórica)';
     flagColor = '#10b981';
-    bathStatus = 'Mar en buenas condiciones. Baño agradable prestando atención a zonas de rompiente.';
+    bathStatus = 'Mar favorable en previsión. Prestar atención a corrientes de orilla y rompientes.';
   } else if (h <= 2.6) {
     douglasDegree = 3;
     douglasName = 'Marejada Consistente';
-    flagBadge = '🟡 Bandera Amarilla';
+    flagBadge = '🟡 Bandera Amarilla (Teórica)';
     flagColor = '#f59e0b';
-    bathStatus = 'Precaución en el baño. Oleaje marcado y corrientes de resaca en orilla.';
+    bathStatus = 'Precaución en el baño. Oleaje marcado y probables corrientes de resaca.';
   } else if (h <= 3.8) {
     douglasDegree = 4;
     douglasName = 'Fuerte Marejada';
-    flagBadge = '🔴 Bandera Roja';
+    flagBadge = '🔴 Bandera Roja (Teórica)';
     flagColor = '#ef4444';
-    bathStatus = 'Peligro. Baño desaconsejado por fuerte oleaje y corrientes.';
+    bathStatus = 'Peligro estimado. Baño desaconsejado por fuerte oleaje y corrientes.';
   } else {
     douglasDegree = 5;
     douglasName = 'Mar Gruesa / Temporal';
-    flagBadge = '🔴 Bandera Roja / Temporal';
+    flagBadge = '🔴 Bandera Roja / Temporal (Teórica)';
     flagColor = '#ef4444';
-    bathStatus = '🚨 Temporal costero activo. Prohibido el baño en todas las playas.';
+    bathStatus = '🚨 Temporal costero activo. Baño prohibido en arenales expuestos.';
   }
 
   // Temperatura del agua unificada
@@ -1402,6 +1402,12 @@ export function renderMarineCard(data, concejo) {
             </div>
           `).join('')}
         </div>
+      </div>
+
+      <!-- AVISO LEGAL Y EXENCIÓN DE RESPONSABILIDAD (LEY 16) -->
+      <div class="marine-disclaimer-box" style="margin-top: 20px; padding: 12px 16px; background: rgba(15, 23, 42, 0.45); border-radius: 12px; border-left: 3px solid #38bdf8; font-size: 0.76rem; color: #94a3b8; line-height: 1.5;">
+        <strong style="color: #e2e8f0; display: block; margin-bottom: 4px;">⚠️ Aviso de Seguridad en Playas &amp; Baño (Ley 16):</strong>
+        El estado del mar y la bandera mostrados son estimaciones matemáticas teóricas basadas en modelos oceanográficos numéricos. <strong>En ningún caso sustituyen la señalización física ni las indicaciones del Servicio de Salvamento y Socorrismo a pie de playa</strong>. Respeta siempre las banderas oficiales en cada arenal y báñate bajo tu propia responsabilidad.
       </div>
     </div>
   `;

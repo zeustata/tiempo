@@ -2,25 +2,26 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏛️ Reforma Constitucional Suprema: Doctrina de Exención de Responsabilidad Civil, Prudencia y Blindaje de Actividades en Entornos Naturales (Artículo 16) — 2026-10-01
+- **Autenticación y Reforma:** Tras verificación obligatoria con PIN maestro de seguridad (`2796`), Lendo aprueba y consagra formalmente el **Artículo 16** en la Parte I (Constitución Suprema):
+  1. *Naturaleza Estrictamente Orientativa y Teórica:* Toda previsión de mar, surf, vialidad invernal, aludes o rutas emana de modelos matemáticos numéricos. Prohibido formular textos que expresen o sugieran "garantía de seguridad" o "autorización de paso".
+  2. *Soberanía Inapelable de Servicios Oficiales:* Ninguna función de la app sustituye las banderas físicas y órdenes del Servicio de Salvamento y Socorrismo a pie de playa, la DGT, Guardia Civil, Bomberos de Asturias o avisos de emergencias del 112.
+  3. *Responsabilidad Individual e Inmunidad del Desarrollador:* Toda actividad en entornos naturales o carretera se realiza bajo la exclusiva responsabilidad del usuario. Obligatoriedad de incorporar advertencias visibles de exención de responsabilidad civil en módulos sensibles y en la Política de Privacidad, blindando al desarrollador (Lendo / zeustata) frente a cualquier reclamación de terceros.
+
 ---
 
-## 🏛️ Reforma Constitucional Suprema: Doctrina de Legalidad Estricta, Datos Abiertos y Blindaje Google Play Store (Artículo 15) — 2026-09-30
-- **Autenticación y Reforma:** Tras verificación obligatoria con PIN maestro de seguridad (`2796`), Lendo aprueba y consagra formalmente el **Artículo 15** en la Parte I (Constitución Suprema):
-  1. *Legalidad y Licencias Abiertas:* Obligatoriedad de operar exclusivamente con datos abiertos oficiales (Open Data), código abierto o dominio público conforme a la Ley de Reutilización de la Información del Sector Público.
-  2. *Prohibición de Malas Prácticas:* Prohibido taxativamente el raspado web (*web scraping*) no autorizado a servidores privados, la elusión de pagos o la vulneración de Términos de Servicio (TOS).
-  3. *Atribución y Transparencia:* Obligación de identificar todas las fuentes oficiales e incluir descargo visible de independencia para evitar presunta suplantación de entes estatales.
-  4. *Blindaje Google Play Store:* Blindaje estricto de directivas para desarrolladores en Google Play Console para erradicar cualquier riesgo de sanción, suspensión o baneo.
+## 🚀 Última Actualización Oficial: v1.1.50 🛡️ — 2026-10-01
+- **Blindaje Legal Integral & Banderas Teóricas (Ley 16):**
+  1. *Consagración de la Ley 16 en AGENTS.md y blindaje de responsabilidades.*
+  2. *Playas & Mareas (`marineCard.js`):* Banderas rotuladas como teóricas estimadas (ej. `🟢 Bandera Verde (Teórica)`) y caja de aviso recordando la primacía del servicio de socorrismo y salvamento.
+  3. *Surf & Rompientes (`surfCard.js`):* Cintillo de responsabilidad deportiva individual.
+  4. *Cordillera & Puertos (`mountainCard.js`):* Cintillo de vialidad invernal remitiendo a DGT (011) y 112 Asturias.
+  5. *Política de Privacidad (`privacy.html`):* Sección 6 completa de exención de responsabilidad civil.
+  6. *Anti-Caché Obligatorio:* `sw.js` (`meteoasturlode-v1150-legal-disclaimer`) y query strings `?v=1.1.50` en todos los archivos.
 
-## 🏛️ Reforma Constitucional Suprema: Protocolo de Juicio Crítico, Evaluación y Firmeza Intelectual (Artículo 0) — 2026-09-28
-- **Autenticación y Reforma:** Tras verificación obligatoria con PIN maestro de seguridad (`2796`), Lendo aprueba y consagra formalmente la adición al **Artículo 0** de la Constitución Suprema:
-  1. *Socios en Igualdad:* Lendo y Princesa son socios; nadie manda sobre nadie y Princesa dice siempre la verdad sin complacencia.
-  2. *Evaluación antes de elogiar:* Al solicitar opinión o evaluación de algo (un texto, una idea, una decisión), Princesa evalúa antes de elogiar: empieza por lo que fallaría o lo que objetaría un experto exigente, y después lo que funciona. Sin aperturas halagüeñas ni inventar fallos artificiales.
-  3. *Juicio independiente sin anclaje:* Si Lendo opina antes de pedir la opinión de Princesa, no se toma como referencia; se forma juicio autónomo y se señala cualquier discrepancia.
-  4. *Firmeza ante la presión:* Si hay posición técnica fundada, se sostiene frente a insistencias; solo cambia ante argumentos o datos nuevos explicados con rigor.
-  5. *Fronteras del conocimiento:* Distinción rigurosa entre hechos, opiniones y desconocimiento (sin rellenar con especulaciones).
-  6. *Separación entre Juicio y Ejecución:* Aplica cuando se pide juicio; ante órdenes de tareas concretas decididas, se ejecuta sin discusión.
+---
 
-## 🚀 Última Actualización Oficial: v1.1.49 🏖️ — 2026-10-01
+## 🚀 Versión Anterior: v1.1.49 🏖️ — 2026-10-01
 - **Diseño & Claridad: Títulos Limpios y Elegantes en Playas y Surf (Feedback Lendo):**
   1. *Supresión de Localidades entre Paréntesis en Encabezados H3:*
      - En las tarjetas de *Playas & Turismo* (`marineCard.js`) y *Surf & Rompientes* (`surfCard.js`), los títulos principales repetían innecesariamente las localidades subordinadas del concejo (ej. `🏖️ Playas, Mareas & Turismo de Castrillón (Piedras Blancas / Salinas)`).
