@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.45">
-  <link rel="stylesheet" href="css/components.css?v=1.1.45">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.45">
+  <link rel="stylesheet" href="css/main.css?v=1.1.46">
+  <link rel="stylesheet" href="css/components.css?v=1.1.46">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.46">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -176,7 +176,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.45 🌍</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.46 🌍</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -227,11 +227,21 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.45 🌍</span>
+            <span class="release-version">v1.1.46 🌍</span>
             <span class="release-date">01 Oct 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-mejora">Rendimiento &amp; GPU</span> <strong>Fix Definitivo Anti-Microdestellos en Tablets (Feedback Lendo)</strong>: Sustituido el filtro <code>drop-shadow</code> por sombreado tipográfico nativo <code>text-shadow</code> en la bombilla de la pastilla climatológica, erradicando el conflicto de descarte de texturas GPU en pantallas táctiles de alta resolución con <code>backdrop-filter</code> activo. Eliminada la opacidad cero artificial en refrescos y purgada la firma de datos para evitar re-renderizados innecesarios del DOM.</li>
+            <li><span class="tag tag-mejora">Estabilidad &amp; Tablets</span> <strong>Erradicación Total del Temblor de 2s en Tablets en Stand (Feedback Lendo)</strong>: Eliminado el conflicto entre la interpolación JavaScript de giroscopio a 60fps y las transiciones CSS de <code>transform</code> y <code>box-shadow</code> en las tarjetas. La tarjeta principal se asienta como una roca fija sin vibración subpixel, manteniendo al 100% el brillo translúcido, la refracción óptica y el reflejo de luz dinámica.</li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.45 🌍</span>
+            <span class="release-date">01 Oct 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-mejora">Rendimiento &amp; GPU</span> <strong>Fix Anti-Microdestellos</strong>: Sustitución de filtros GPU por text-shadow y limpieza de firmas en el ciclo de carga.</li>
           </ul>
         </div>
 
@@ -2129,7 +2139,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.45"></script>
+  <script type="module" src="js/app.js?v=1.1.46"></script>
 
 
 

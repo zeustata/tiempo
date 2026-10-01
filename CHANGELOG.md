@@ -10,6 +10,19 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.46] - 2026-10-01
+
+### 📱 Estabilidad & Tablets: Erradicación Total del Temblor de 2s en Tablets en Stand (Feedback Lendo)
+- **Diagnóstico del Conflicto Gyro vs CSS Transition (Tablets Apaisadas en Soporte):**
+  - Causa raíz identificada: En tablets colocadas en soporte de mesa (stand, ángulo de 75°-80°), el giroscopio calcula un desplazamiento de inclinación que el motor JS (`gyroGlass.js`) interpola con `lerp` durante ~2 segundos al arrancar o refrescar. Al mismo tiempo, las tarjetas tenían `transform: translate(...)` y `transition: transform 0.12s ease-out, box-shadow 0.15s ease-out`. Esta colisión de dos motores de animación independientes sobre la misma propiedad provocaba un temblor o vibración subpixel continua de la tarjeta durante exactamente los 2 segundos de interpolación. En vertical no sucedía porque el ángulo neutro no forzaba este recorrido extremo.
+- **Solución Definitiva y Limpia (Cero Riesgo):**
+  1. **Asentamiento Fijo de Tarjetas:** Eliminado el `transform: translate` físico y las transiciones CSS de `transform` y `box-shadow` en `.hero-weather-card` y `.app-header`. La tarjeta permanece inmóvil y nítida como una roca.
+  2. **Preservación Integral de Liquid Glass:** El efecto óptico de refracción líquida y halo de luz en `::after` (`--glass-x`, `--glass-y`) se mantiene 100% vivo y reactivo a toques y giroscopio.
+  3. **Limpieza de Transición Residual:** Ajustado `.btn-explain-clima` para transiciones discretas en lugar de `transition: all`.
+- **Cache-bust & Sincronización:** `sw.js` → `meteoasturlode-v1146-rock-solid-glass`, actualización general a `?v=1.1.46` en `index.html`, `js/app.js` y componentes.
+
+---
+
 ## [1.1.45] - 2026-10-01
 
 ### 📱 Rendimiento & GPU: Fix Definitivo Anti-Microdestellos en Tablets (Feedback Lendo)

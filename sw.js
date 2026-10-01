@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1145-tablet-gpu-pure';
+const CACHE_NAME = 'meteoasturlode-v1146-rock-solid-glass';
 const STATIC_ASSETS = [
   './',
   './index.html',

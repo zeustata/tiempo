@@ -20,7 +20,25 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   5. *Fronteras del conocimiento:* Distinción rigurosa entre hechos, opiniones y desconocimiento (sin rellenar con especulaciones).
   6. *Separación entre Juicio y Ejecución:* Aplica cuando se pide juicio; ante órdenes de tareas concretas decididas, se ejecuta sin discusión.
 
-## 🚀 Última Actualización Oficial: v1.1.45 🌍 — 2026-10-01
+## 🚀 Última Actualización Oficial: v1.1.46 🌍 — 2026-10-01
+- **Estabilidad & Tablets: Erradicación Total del Temblor de 2s en Tablets en Stand (Feedback Lendo):**
+  1. *Diagnóstico del Conflicto Gyro vs CSS Transition (Tablets Apaisadas en Soporte):*
+     - En tablets colocadas en soporte de mesa (stand, ángulo de 75°-80°), el giroscopio calcula un desplazamiento de inclinación que el motor JS (`gyroGlass.js`) interpola con `lerp` durante ~2 segundos al arrancar o refrescar. Al mismo tiempo, las tarjetas tenían `transform: translate(...)` y `transition: transform 0.12s ease-out, box-shadow 0.15s ease-out`. Esta colisión de dos motores de animación independientes sobre la misma propiedad provocaba un temblor o vibración subpixel continua de la tarjeta durante exactamente los 2 segundos de interpolación. En vertical no sucedía porque el ángulo neutro no forzaba este recorrido extremo.
+  2. *Solución Definitiva y Limpia (Cero Riesgo):*
+     - **Asentamiento Fijo de Tarjetas:** Eliminado el `transform: translate` físico y las transiciones CSS de `transform` y `box-shadow` en `.hero-weather-card` y `.app-header`. La tarjeta permanece inmóvil y nítida como una roca.
+     - **Preservación Integral de Liquid Glass:** El efecto óptico de refracción líquida y halo de luz en `::after` (`--glass-x`, `--glass-y`) se mantiene 100% vivo y reactivo a toques y giroscopio.
+     - **Limpieza de Transición Residual:** Ajustado `.btn-explain-clima` para transiciones discretas en lugar de `transition: all`.
+  3. *Versionado & Anti-Caché:*
+     - Incremento oficial a `v1.1.46 🌍`.
+     - Footer de `index.html` con `#app-version-badge` actualizado a `v1.1.46 🌍`.
+     - Inyectado bloque de novedades en `#changelog-modal`.
+     - `CURRENT_APP_VERSION = '1.1.46'` en [js/app.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/app.js).
+     - `CACHE_NAME = 'meteoasturlode-v1146-rock-solid-glass'` en [sw.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/sw.js).
+     - CSS y módulos JS sincronizados con `?v=1.1.46`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.45 🌍 — 2026-10-01
 - **Rendimiento & GPU: Fix Definitivo Anti-Microdestellos en Tablets (Feedback Lendo):**
   1. *Diagnóstico del Conflicto de Capas GPU en Pantallas de Alta Resolución (Tablets):*
      - En pantallas táctiles de gran resolución (tablets), la combinación de un elemento hijo con `filter: drop-shadow(...)` y `transition: filter` dentro de una tarjeta con `backdrop-filter: blur(24px)` y animación dinámica de refracción (`gyroGlass`) provocaba que el compositor gráfico de Chrome/Android descartara y reconstruyera la textura GPU repetidamente durante los primeros ~2 segundos de montaje, traduciéndose en micro-destellos o chispazos rápidos en la tarjeta principal.
