@@ -42,6 +42,7 @@ export function getAsturWeatherSvg(iconKey, size = 32) {
       `;
 
     case 'clear-night':
+    case 'mostly-clear-night':
     case 'moon':
       // 🌙 LA LUNA FELIZ DESPEJADA CON ESTRELLITAS BRILLANTES
       return `

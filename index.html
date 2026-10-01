@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.50">
-  <link rel="stylesheet" href="css/components.css?v=1.1.50">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.50">
+  <link rel="stylesheet" href="css/main.css?v=1.1.51">
+  <link rel="stylesheet" href="css/components.css?v=1.1.51">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.51">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -142,6 +142,9 @@
       <!-- 3b. SURF & ROMPIENTES -->
       <div id="panel-surf" class="tab-panel"></div>
 
+      <!-- 3c. RUTAS & SENDERISMO (v1.1.51) -->
+      <div id="panel-routes" class="tab-panel"></div>
+
       <!-- 4. MONTAÑA & NIEVE -->
       <div id="panel-mountain" class="tab-panel"></div>
 
@@ -176,7 +179,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.50 🛡️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.51 🥾</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -203,7 +206,7 @@
         <button id="btn-close-modal" class="btn-close" aria-label="Cerrar modal">&times;</button>
       </div>
       <div class="modal-body">
-        <div class="shortcut-row"><kbd>1</kbd> - <kbd>8</kbd><span>Cambiar entre módulos (1: Vivo ... 8: Cosmos)</span></div>
+        <div class="shortcut-row"><kbd>1</kbd> - <kbd>9</kbd><span>Cambiar entre módulos (1: Vivo ... 9: Cosmos)</span></div>
         <div class="shortcut-row"><kbd>S</kbd> / <kbd>/</kbd><span>Abrir buscador rápido de los 78 concejos</span></div>
         <div class="shortcut-row"><kbd>R</kbd><span>Refrescar datos meteorológicos en directo</span></div>
         <div class="shortcut-row"><kbd>F</kbd><span>Añadir o quitar concejo actual de Favoritos</span></div>
@@ -227,8 +230,23 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.50 🛡️</span>
+            <span class="release-version">v1.1.51 🥾</span>
             <span class="release-date">01 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-nuevo">Nuevo Módulo</span> <strong>Módulo Dedicado «Rutas &amp; Senderismo» (Tecla 7)</strong>: Nueva suite especializada para senderistas, caminantes y montañeros asturianos. Incluye:
+              <br>• <strong>Índice de Firme &amp; Barro (Llamuergues):</strong> Cálculo del estado del suelo y riesgo de resbalones en roca caliza sombría y senderos según la lluvia acumulada en las últimas 48h.
+              <br>• <strong>Veredicto de Confort &amp; Ventana de Marcha:</strong> Diagnóstico global para salir a caminar, sensación térmica corregida por altitud en cota alta y recomendaciones de equipamiento (calzado, capas y protección solar UV).
+              <br>• <strong>Guía de Sendas Homologadas y Tradicionales:</strong> Catálogo de rutas emblemáticas por concejo y comarca con ficha técnica de distancia, desnivel, tiempo y advertencias del terreno.
+              <br>• <strong>Blindaje Legal (Ley 16):</strong> Advertencia expresa de seguridad y prudencia individual en montaña.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.50 🛡️</span>
+            <span class="release-date">01 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-nuevo">Blindaje Legal</span> <strong>Doctrina Constitucional de Exención de Responsabilidad Civil (Ley 16)</strong>: Blindaje integral ante actividades al aire libre, náuticas y de montaña. Incorporación de cintillos de advertencia legal expresa en <em>Playas &amp; Turismo</em> (señalización física de socorristas prevalece sobre modelos teóricos), <em>Surf &amp; Rompientes</em> (responsabilidad deportiva individual) y <em>Cordillera &amp; Nieve</em> (consulta obligatoria a DGT 011 y 112 Asturias). Actualizada la Política de Privacidad oficial con la cláusula general de exoneración.</li>
@@ -2190,7 +2208,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.1.50').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.1.51').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -2220,7 +2238,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.50"></script>
+  <script type="module" src="js/app.js?v=1.1.51"></script>
 
 
 

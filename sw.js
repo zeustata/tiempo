@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1150-legal-disclaimer';
+const CACHE_NAME = 'meteoasturlode-v1151-rutas-senderismo';
 const STATIC_ASSETS = [
   './',
   './index.html',

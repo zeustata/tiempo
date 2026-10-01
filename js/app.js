@@ -1,26 +1,27 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.1.50';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.1.50';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.1.50';
-import { renderCurrentWeather } from './components/currentCard.js?v=1.1.50';
-import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.1.50';
-import { renderSurfCard } from './components/surfCard.js?v=1.1.50';
-import { renderMountainCard } from './components/mountainCard.js?v=1.1.50';
-import { renderForecast } from './components/forecastView.js?v=1.1.50';
-import { renderWeatherChart } from './components/chartsView.js?v=1.1.50';
-import { renderAstronomyView } from './components/astronomyCard.js?v=1.1.50';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.50';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1.50';
-import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1.50';
-import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1.50';
-import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.50';
-import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.50';
-import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=1.1.50';
-import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=1.1.50';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.50';
-import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.50';
-import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.50';
-import { initGyroGlass } from './utils/gyroGlass.js?v=1.1.50';
-import { triggerSeismicRefresh } from './utils/seismicDetector.js?v=1.1.50';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.1.51';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.1.51';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.1.51';
+import { renderCurrentWeather } from './components/currentCard.js?v=1.1.51';
+import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.1.51';
+import { renderSurfCard } from './components/surfCard.js?v=1.1.51';
+import { renderRoutesCard } from './components/routesCard.js?v=1.1.51';
+import { renderMountainCard } from './components/mountainCard.js?v=1.1.51';
+import { renderForecast } from './components/forecastView.js?v=1.1.51';
+import { renderWeatherChart } from './components/chartsView.js?v=1.1.51';
+import { renderAstronomyView } from './components/astronomyCard.js?v=1.1.51';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.51';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1.51';
+import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1.51';
+import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1.51';
+import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.51';
+import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.51';
+import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=1.1.51';
+import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=1.1.51';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.51';
+import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.51';
+import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.51';
+import { initGyroGlass } from './utils/gyroGlass.js?v=1.1.51';
+import { triggerSeismicRefresh } from './utils/seismicDetector.js?v=1.1.51';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, pronóstico horario 72h y alertas', key: '1' },
@@ -29,11 +30,12 @@ const APP_MODULES = [
   { id: 'radar', icon: '📡', title: 'Radar Cantábrico', desc: 'Precipitación y tormentas en directo vía satélite RainViewer', key: '4' },
   { id: 'marine', icon: '🏖️', title: 'Playas & Mareas', desc: 'Mareógrafo 72h, fases lunares, estado de baño, bandera y calas', key: '5' },
   { id: 'surf', icon: '🏄‍♂️', title: 'Surf & Rompientes', desc: 'Swell, período, viento offshore/onshore, picos bautizados y fondos', key: '6' },
-  { id: 'mountain', icon: '🏔️', title: 'Cordillera & Nieve', desc: 'Estado de puertos de montaña, cota de nieve y esquí', key: '7' },
-  { id: 'astronomy', icon: '🔭', title: 'Astronomía & Cosmos', desc: 'Eclipses, lluvias de estrellas, fases lunares y semáforo de visibilidad en Asturias', key: '8' }
+  { id: 'routes', icon: '🥾', title: 'Rutas & Senderismo', desc: 'Confort de marcha, índice de barro en sendas y catálogo de rutas asturianas', key: '7' },
+  { id: 'mountain', icon: '🏔️', title: 'Cordillera & Nieve', desc: 'Estado de puertos de montaña, cota de nieve y esquí', key: '8' },
+  { id: 'astronomy', icon: '🔭', title: 'Astronomía & Cosmos', desc: 'Eclipses, lluvias de estrellas, fases lunares y semáforo de visibilidad en Asturias', key: '9' }
 ];
 
-export const CURRENT_APP_VERSION = '1.1.50';
+export const CURRENT_APP_VERSION = '1.1.51';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -1515,7 +1517,7 @@ class MeteoAsturiasApp {
 
       const key = e.key.toLowerCase();
 
-      if (e.key >= '1' && e.key <= '8') {
+      if (e.key >= '1' && e.key <= '9') {
         const index = parseInt(e.key, 10) - 1;
         if (tabList[index]) {
           this.switchTab(tabList[index]);
@@ -2030,6 +2032,16 @@ class MeteoAsturiasApp {
         }
       } catch (e) {
         console.error('[MeteoAstur] Error renderizando Surf & Rompientes:', e);
+      }
+
+      // 2c. Módulo Rutas & Senderismo (v1.1.51)
+      try {
+        const routesContainer = document.getElementById('panel-routes');
+        if (routesContainer) {
+          routesContainer.innerHTML = renderRoutesCard(data, concejo);
+        }
+      } catch (e) {
+        console.error('[MeteoAstur] Error renderizando Rutas & Senderismo:', e);
       }
 
       // 3. Módulo Montaña

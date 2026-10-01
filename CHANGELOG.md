@@ -10,6 +10,25 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.51] - 2026-10-01
+
+### 🥾 Nuevo Módulo: Rutas, Sendas & Monte Asturiano (Tecla 7)
+- **Suite Especializada para Caminantes y Montañeros:**
+  - Creación del nuevo módulo independiente posicionado armónicamente entre *Surf & Rompientes* y *Cordillera & Nieve*, asignado con el atajo de teclado numérico <kbd>7</kbd> (desplazando Cordillera al 8 y Cosmos al 9).
+  - Componente dedicado `routesCard.js` y motor termodinámico de sendas en `routesData.js` con diseño Liquid Glass puro.
+- **Rediseño Ergonómico y Fichas de Ruta Modernas (Feedback Lendo):**
+  - **Semáforu de Llamuergues Visual:** Barra de tracción de 4 niveles (*Seco*, *Húmedo*, *Zonas Blandas*, *Llamuergues*) con porcentaje visual dinámico, lluvia acumulada 24-48h y textura de agarre.
+  - **Panel de Confort en Marcha:** 3 bloques compactos (Sensación térmica en cota +300m, Viento en cresta con alerta de rachas y Mochila/Equipo sugerido con UV).
+  - **Filtros Táctiles Instantáneos:** Botonera interactiva para filtrar en caliente por `Todas`, `🟢 Fáciles & Familiares`, `🟡 Moderadas` y `🔴 Exigentes`.
+  - **Fichas Estilo AllTrails / Wikiloc:** Sustitución de listas de texto por chips horizontales ergonómicos (`📏 km`, `⏱️ tiempo`, `⛰️ desnivel`, `🪵 firme`) y avisos destacados de precaución.
+- **Blindaje Legal Pleno (Ley 16):**
+  - Cintillo expreso de seguridad en senderismo y montaña sin tecnicismos internos.
+- **Corrección de Caché en Cascada del Icono Lunar:**
+  - Sincronización de importaciones a `?v=1.1.51` en `forecastView.js`, `chartsView.js`, `marineCard.js`, `surfCard.js` y `compareView.js`, erradicando definitivamente el residuo de la luna con gorro de versiones antiguas en todos los navegadores.
+- **Cache-bust & Sincronización:** `sw.js` → `meteoasturlode-v1151-rutas-senderismo`, actualización general a `?v=1.1.51` en `index.html`, `js/app.js` y todos los componentes.
+
+---
+
 ## [1.1.50] - 2026-10-01
 
 ### 🛡️ Blindaje Legal: Doctrina de Exención de Responsabilidad Civil (Ley 16)

@@ -10,7 +10,29 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.50 🛡️ — 2026-10-01
+## 🚀 Última Actualización Oficial: v1.1.51 🥾 — 2026-10-01
+- **Nuevo Módulo Dedicado: Rutas, Sendas & Monte Asturiano (Tecla 7):**
+  1. *Creación del Módulo 'routes':*
+     - Posicionado entre *Surf & Rompientes* y *Cordillera & Nieve*. Tecla rápida <kbd>7</kbd> y acceso integrado en la navegación.
+     - Componente [routesCard.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/components/routesCard.js) y motor [routesData.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/utils/routesData.js).
+  2. *Algoritmo de Firme y Barra Visual de Barro (Llamuergues):*
+     - Detección de fango y riesgo de resbalones en caliza mediante análisis de lluvia acumulada en 48 horas.
+     - Visualización con barra de progreso de 4 niveles (*Seco*, *Húmedo*, *Zonas Blandas*, *Llamuergues*) con porcentaje dinámico y mm caídos.
+  3. *Panel de Confort en Cota Alta & Mochila:*
+     - Rejilla ergonómica de 3 columnas: Sensación en cota +300 m, Viento en cresta con alerta de rachas y Mochila/Equipo sugerido con UV.
+  4. *Filtros Táctiles Instantáneos:*
+     - Botonera interactiva para filtrar en caliente por `Todas`, `🟢 Fáciles & Familiares`, `🟡 Moderadas` y `🔴 Exigentes`.
+  5. *Fichas Estilo AllTrails / Wikiloc:*
+     - Sustitución de listas de texto por chips horizontales ergonómicos (`📏 km`, `⏱️ tiempo`, `⛰️ desnivel`, `🪵 firme`) y avisos destacados de precaución.
+  6. *Blindaje Legal Integral (Ley 16):*
+     - Advertencia visible de seguridad al pie del panel.
+  7. *Erradicación Definitiva de Caché Antigua en Icono Lunar:*
+     - Sincronización a `?v=1.1.51` en `forecastView.js`, `chartsView.js`, `marineCard.js`, `surfCard.js` y `compareView.js` para asegurar que ningún navegador recupere la versión antigua con gorro.
+  8. *Anti-Caché Obligatorio:* `sw.js` (`meteoasturlode-v1151-rutas-senderismo`) y query strings `?v=1.1.51` en todos los archivos.
+
+---
+
+## 🚀 Versión Anterior: v1.1.50 🛡️ — 2026-10-01
 - **Blindaje Legal Integral & Banderas Teóricas (Ley 16):**
   1. *Consagración de la Ley 16 en AGENTS.md y blindaje de responsabilidades.*
   2. *Playas & Mareas (`marineCard.js`):* Banderas rotuladas como teóricas estimadas (ej. `🟢 Bandera Verde (Teórica)`) y caja de aviso recordando la primacía del servicio de socorrismo y salvamento.
