@@ -688,9 +688,9 @@ export function renderMountainCard(data, concejo) {
         </div>
       </div>
 
-      <!-- AVISO LEGAL Y EXENCIÓN DE RESPONSABILIDAD (LEY 16) -->
+      <!-- AVISO LEGAL Y EXENCIÓN DE RESPONSABILIDAD -->
       <div class="mountain-disclaimer-box" style="margin-top: 20px; padding: 12px 16px; background: rgba(15, 23, 42, 0.45); border-radius: 12px; border-left: 3px solid #a855f7; font-size: 0.76rem; color: #94a3b8; line-height: 1.5;">
-        <strong style="color: #e2e8f0; display: block; margin-bottom: 4px;">⚠️ Vialidad Invernal &amp; Alta Montaña (Ley 16):</strong>
+        <strong style="color: #e2e8f0; display: block; margin-bottom: 4px;">⚠️ Vialidad Invernal &amp; Alta Montaña:</strong>
         El estado de transitabilidad de puertos y cotas de nieve procede de estimaciones matemáticas y cotas altitudinales. <strong>Consulta siempre el estado oficial en tiempo real de la DGT (011) y 112 Asturias</strong> antes de circular por alta montaña en episodios de nieve o hielo.
       </div>
     </div>

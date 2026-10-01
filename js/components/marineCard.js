@@ -1404,9 +1404,9 @@ export function renderMarineCard(data, concejo) {
         </div>
       </div>
 
-      <!-- AVISO LEGAL Y EXENCIÓN DE RESPONSABILIDAD (LEY 16) -->
+      <!-- AVISO LEGAL Y EXENCIÓN DE RESPONSABILIDAD -->
       <div class="marine-disclaimer-box" style="margin-top: 20px; padding: 12px 16px; background: rgba(15, 23, 42, 0.45); border-radius: 12px; border-left: 3px solid #38bdf8; font-size: 0.76rem; color: #94a3b8; line-height: 1.5;">
-        <strong style="color: #e2e8f0; display: block; margin-bottom: 4px;">⚠️ Aviso de Seguridad en Playas &amp; Baño (Ley 16):</strong>
+        <strong style="color: #e2e8f0; display: block; margin-bottom: 4px;">⚠️ Aviso de Seguridad en Playas &amp; Baño:</strong>
         El estado del mar y la bandera mostrados son estimaciones matemáticas teóricas basadas en modelos oceanográficos numéricos. <strong>En ningún caso sustituyen la señalización física ni las indicaciones del Servicio de Salvamento y Socorrismo a pie de playa</strong>. Respeta siempre las banderas oficiales en cada arenal y báñate bajo tu propia responsabilidad.
       </div>
     </div>
