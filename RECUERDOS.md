@@ -20,7 +20,16 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   5. *Fronteras del conocimiento:* Distinción rigurosa entre hechos, opiniones y desconocimiento (sin rellenar con especulaciones).
   6. *Separación entre Juicio y Ejecución:* Aplica cuando se pide juicio; ante órdenes de tareas concretas decididas, se ejecuta sin discusión.
 
-## 🚀 Última Actualización Oficial: v1.1.47 🌍 — 2026-10-01
+## 🚀 Última Actualización Oficial: v1.1.48 🌍 — 2026-10-01
+- **Diseño & Iconos: Rediseño Nítido de Luna Despejada con Estrellas (Feedback Lendo):**
+  1. *Eliminación del Gorro Confuso en Pantallas Móviles/Tablets:*
+     - Sustituido el antiguo gorro cónico de noche rojo con borla blanca y letras Zzz del icono `clear-night` en "Emojis Emotivos / Cómic", el cual a 32px se percibía como una mancha marrón indistinguible.
+     - Creado un diseño limpio y radiante con luna creciente azul celestial (`#38bdf8`), mirada alegre y dos estrellas doradas de 4 puntas (`✨` / `✦`) en la esquina superior derecha, logrando legibilidad perfecta a cualquier escala.
+  2. *Anti-Caché Obligatorio:* `sw.js` (`meteoasturlode-v1148-luna-estrellas`) y query strings `?v=1.1.48` en todos los archivos.
+
+---
+
+## 🚀 Versión Anterior: v1.1.47 🌍 — 2026-10-01
 - **Usabilidad & Geoposición: Auto-Ubicación Inteligente al Iniciar (Feedback Lendo):**
   1. *Detección Silenciosa de Concejo por GPS al Iniciar y Reanudar:*
      - Al abrir la aplicación o reanudarla tras desbloquear el dispositivo (más de 45 segundos inactivo), si la opción está activa, la app geolocaliza al usuario de forma silenciosa en segundo plano. Si detecta un cambio de concejo en Asturias (ej. regreso de Gijón a Castrillón / Piedras Blancas), conmuta instantáneamente sin que el usuario tenga que recordar pulsar el botón GPS.

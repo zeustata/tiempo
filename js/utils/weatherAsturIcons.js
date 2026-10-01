@@ -43,27 +43,25 @@ export function getAsturWeatherSvg(iconKey, size = 32) {
 
     case 'clear-night':
     case 'moon':
-      // 🌙 LA LUNA DURMIENDO CON GORRO DE NOCHE Y "Zzz"
+      // 🌙 LA LUNA FELIZ DESPEJADA CON ESTRELLITAS BRILLANTES
       return `
-        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon icon-comic-moon" aria-label="Luna Durmiente Cómic">
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon icon-comic-moon" aria-label="Luna y Estrellas Cómic">
           <!-- Cuerpo de la Luna Creciente -->
-          <path d="M 33,28 A 14,14 0 0 1 18,9 A 14,14 0 1 0 33,28 Z" fill="#38bdf8" stroke="#0284c7" stroke-width="1.5" />
-          <!-- Colorete de Dormir -->
-          <ellipse cx="16" cy="25" rx="2.5" ry="1.5" fill="#f472b6" opacity="0.8" />
-          <!-- Ojo Feliz Cerrado Durmiendo -->
-          <path d="M 13,20 Q 16,24 19,20" stroke="#0f172a" stroke-width="1.8" fill="none" stroke-linecap="round" />
+          <path d="M 31,31 A 15,15 0 0 1 15,10 A 15,15 0 1 0 31,31 Z" fill="#38bdf8" stroke="#0284c7" stroke-width="1.6" />
+          <!-- Colorete tierno -->
+          <ellipse cx="15" cy="27" rx="2.6" ry="1.6" fill="#f472b6" opacity="0.85" />
+          <!-- Ojo Feliz Cómic (mirada tierna y despierta) -->
+          <ellipse cx="16.5" cy="20.5" rx="2" ry="2.6" fill="#0f172a" />
+          <circle cx="15.8" cy="19.3" r="0.9" fill="#ffffff" />
           <!-- Boquita Sonriente Dulce -->
-          <path d="M 18,27 Q 21,30 24,27" stroke="#0f172a" stroke-width="1.5" fill="none" stroke-linecap="round" />
-          <!-- Gorrito de Dormir a Rayas -->
-          <g transform="translate(14, 2)">
-            <path d="M 4,14 Q 12,2 26,6 Q 18,12 8,15 Z" fill="#ef4444" stroke="#991b1b" stroke-width="1" />
-            <path d="M 8,11 Q 14,5 20,7" stroke="#ffffff" stroke-width="2.5" fill="none" />
-            <!-- Borla del Gorro -->
-            <circle cx="27" cy="7" r="3" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
-          </g>
-          <!-- Letras Zzz Tiernas -->
-          <text x="33" y="16" font-family="'Comic Sans MS', cursive, sans-serif" font-size="9" font-weight="bold" fill="#fef08a">Z</text>
-          <text x="39" y="10" font-family="'Comic Sans MS', cursive, sans-serif" font-size="7" font-weight="bold" fill="#fef08a">z</text>
+          <path d="M 16,27 Q 19,30 22,27" stroke="#0f172a" stroke-width="1.5" fill="none" stroke-linecap="round" />
+          <!-- Estrellita Principal Brillante (Dorada de 4 puntas) -->
+          <path d="M 36,4 Q 36,10 42,10 Q 36,10 36,16 Q 36,10 30,10 Q 36,10 36,4 Z" fill="#facc15" stroke="#eab308" stroke-width="0.8" />
+          <circle cx="36" cy="10" r="1.3" fill="#ffffff" />
+          <!-- Estrellita Secundaria -->
+          <path d="M 26,3 Q 26,6 29,6 Q 26,6 26,9 Q 26,6 23,6 Q 26,6 26,3 Z" fill="#fde047" stroke="#eab308" stroke-width="0.6" />
+          <!-- Mini destello adicional en cielo nocturno -->
+          <circle cx="41" cy="22" r="1.5" fill="#fde047" opacity="0.9" />
         </svg>
       `;
 

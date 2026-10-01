@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1147-auto-location-gps';
+const CACHE_NAME = 'meteoasturlode-v1148-luna-estrellas';
 const STATIC_ASSETS = [
   './',
   './index.html',

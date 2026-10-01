@@ -10,6 +10,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.48] - 2026-10-01
+
+### 🌙 Diseño & Iconos: Rediseño Nítido de Luna Despejada con Estrellas (Feedback Lendo)
+- **Erradicación del Borrón Nocturno a 32px:**
+  - En el pack por defecto de "Emojis Emotivos / Cómic", el icono de noche despejada (`clear-night`) representaba una luna con un gorro de dormir cónico a rayas rojas y borla blanca con letras `Zzz`. En pantallas de smartphones y tablets a tamaños reducidos (28-32px), el gorro y las letras se fundían visualmente, dando la impresión de una mancha marrón confusa en la parte superior.
+  - Se sustituye el gorro por una luna creciente luminosa, nítida y sonriente en azul celestial (`#38bdf8`), acompañada en la parte superior de dos estrellas doradas de cuatro puntas (`✨` / `✦` en `#facc15` y `#fde047`) con destello blanco central, simbolizando con absoluta claridad el cielo despejado y estrellado.
+- **Cache-bust & Sincronización:** `sw.js` → `meteoasturlode-v1148-luna-estrellas`, actualización general a `?v=1.1.48` en `index.html`, `js/app.js` y componentes.
+
+---
+
 ## [1.1.47] - 2026-10-01
 
 ### 📍 Usabilidad & Geoposición: Auto-Ubicación Inteligente al Iniciar (Feedback Lendo)
