@@ -1113,11 +1113,14 @@ export function renderMarineCard(data, concejo) {
   const weeklyTides = getWeeklyTides(now, targetLon);
   const tideSvg = renderTideSvgGraph(now, true, tideStatus.currentHours, targetLon);
 
+  // Título limpio sin paréntesis para evitar redundancia y recarga visual
+  const concejoTitle = concejo.name.replace(/\s*\(.*?\)/, '');
+
   return `
     <div class="marine-card">
       <div class="section-title-wrap">
         <div>
-          <h3 class="section-heading">🏖️ Playas, Mareas & Turismo de ${concejo.name}</h3>
+          <h3 class="section-heading">🏖️ Playas, Mareas & Turismo de ${concejoTitle}</h3>
           <span class="section-subtitle">
             ${isCoasting 
               ? `Litoral de ${concejo.name} (${coastalData.region}) • Guía costera, mareas y arenales`

@@ -20,7 +20,17 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   5. *Fronteras del conocimiento:* Distinción rigurosa entre hechos, opiniones y desconocimiento (sin rellenar con especulaciones).
   6. *Separación entre Juicio y Ejecución:* Aplica cuando se pide juicio; ante órdenes de tareas concretas decididas, se ejecuta sin discusión.
 
-## 🚀 Última Actualización Oficial: v1.1.48 🌍 — 2026-10-01
+## 🚀 Última Actualización Oficial: v1.1.49 🏖️ — 2026-10-01
+- **Diseño & Claridad: Títulos Limpios y Elegantes en Playas y Surf (Feedback Lendo):**
+  1. *Supresión de Localidades entre Paréntesis en Encabezados H3:*
+     - En las tarjetas de *Playas & Turismo* (`marineCard.js`) y *Surf & Rompientes* (`surfCard.js`), los títulos principales repetían innecesariamente las localidades subordinadas del concejo (ej. `🏖️ Playas, Mareas & Turismo de Castrillón (Piedras Blancas / Salinas)`).
+     - La reiteración recargaba visualmente la cabecera de las tarjetas y consumía altura valiosa en pantallas de smartphones.
+     - Se aplica un limpiador regex (`replace(/\s*\(.*?\)/, '')`) para los encabezados `h3`, mostrando el título directo y limpio (`🏖️ Playas, Mareas & Turismo de Castrillón` y `🏄‍♂️ Surf, Rompientes & Olas de Castrillón`), manteniendo el contexto detallado en el subtítulo inferior.
+  2. *Anti-Caché Obligatorio:* `sw.js` (`meteoasturlode-v1149-clean-titles`) y query strings `?v=1.1.49` en todos los archivos.
+
+---
+
+## 🚀 Versión Anterior: v1.1.48 🌍 — 2026-10-01
 - **Diseño & Iconos: Rediseño Nítido de Luna Despejada con Estrellas (Feedback Lendo):**
   1. *Eliminación del Gorro Confuso en Pantallas Móviles/Tablets:*
      - Sustituido el antiguo gorro cónico de noche rojo con borla blanca y letras Zzz del icono `clear-night` en "Emojis Emotivos / Cómic", el cual a 32px se percibía como una mancha marrón indistinguible.

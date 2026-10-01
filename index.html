@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.48">
-  <link rel="stylesheet" href="css/components.css?v=1.1.48">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.48">
+  <link rel="stylesheet" href="css/main.css?v=1.1.49">
+  <link rel="stylesheet" href="css/components.css?v=1.1.49">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.49">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -176,7 +176,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.48 🌍</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.49 🏖️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -227,8 +227,18 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.48 🌍</span>
+            <span class="release-version">v1.1.49 🏖️</span>
             <span class="release-date">01 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-mejora">Diseño &amp; Claridad</span> <strong>Títulos Limpios y Elegantes en Playas y Surf (Feedback Lendo)</strong>: Supresión de las localidades secundarias entre paréntesis en los títulos principales de las tarjetas de <em>Playas &amp; Turismo</em> y <em>Surf &amp; Rompientes</em> (ej. mostrando directamente <em>🏖️ Playas de Castrillón</em> en lugar de reiterar <em>Piedras Blancas / Salinas</em>). Elimina la sobrecarga visual y optimiza la legibilidad en pantallas móviles manteniendo las referencias en el subtítulo geográfico.</li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.48 🌍</span>
+            <span class="release-date">01 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-mejora">Diseño &amp; Iconos</span> <strong>Rediseño Nítido de Luna Despejada con Estrellas (Feedback Lendo)</strong>: Eliminado el gorro de dormir cónico y las letras que producían un aspecto confuso o manchado a 32px en pantallas móviles y tablets. Sustituido por una luna creciente luminosa, limpia y sonriente, acompañada de dos estrellas doradas de cuatro puntas (<code>✨</code>) que representan con total claridad el cielo nocturno despejado.</li>
@@ -2169,7 +2179,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.1.48').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.1.49').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -2199,7 +2209,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.48"></script>
+  <script type="module" src="js/app.js?v=1.1.49"></script>
 
 
 

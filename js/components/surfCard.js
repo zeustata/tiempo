@@ -710,11 +710,14 @@ export function renderSurfCard(data, concejo) {
   const timelineSlots = getSurfTimelineSlots(data, concejo);
   const dailyForecast = getSurfDailyForecast(data, concejo);
 
+  // Título limpio sin paréntesis para evitar redundancia y recarga visual
+  const concejoTitle = concejo.name.replace(/\s*\(.*?\)/, '');
+
   return `
     <div class="marine-card">
       <div class="section-title-wrap">
         <div>
-          <h3 class="section-heading">🏄‍♂️ Surf, Rompientes & Olas de ${concejo.name}</h3>
+          <h3 class="section-heading">🏄‍♂️ Surf, Rompientes & Olas de ${concejoTitle}</h3>
           <span class="section-subtitle">
             ${isCoasting 
               ? `Dinámica marina y picos de ${concejo.name} (${coastalData.region}) • Swell Cantábrico`

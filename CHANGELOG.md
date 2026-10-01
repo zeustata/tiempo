@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.49] - 2026-10-01
+
+### 🏖️ Diseño & Claridad: Títulos Limpios y Elegantes en Playas y Surf (Feedback Lendo)
+- **Supresión de Localidades entre Paréntesis en Encabezados H3:**
+  - En las tarjetas de *Playas & Turismo* (`marineCard.js`) y *Surf & Rompientes* (`surfCard.js`), los títulos principales mostraban el nombre completo del concejo con sus localidades entre paréntesis (ej. `🏖️ Playas, Mareas & Turismo de Castrillón (Piedras Blancas / Salinas)` y `🏄‍♂️ Surf, Rompientes & Olas de Castrillón (Piedras Blancas / Salinas)`).
+  - Al figurar ya las localidades subordinadas en la tarjeta principal y en el propio subtítulo geográfico de la sección, la reiteración generaba una carga visual excesiva y aumentaba innecesariamente la altura del bloque en dispositivos móviles.
+  - Se aplica limpieza automática con expresión regular sobre el título principal, mostrando directamente el concejo limpio (`🏖️ Playas, Mareas & Turismo de Castrillón` y `🏄‍♂️ Surf, Rompientes & Olas de Castrillón`), logrando una presencia mucho más despejada y elegante.
+- **Cache-bust & Sincronización:** `sw.js` → `meteoasturlode-v1149-clean-titles`, actualización general a `?v=1.1.49` en `index.html`, `js/app.js` y componentes.
+
+---
+
 ## [1.1.48] - 2026-10-01
 
 ### 🌙 Diseño & Iconos: Rediseño Nítido de Luna Despejada con Estrellas (Feedback Lendo)
