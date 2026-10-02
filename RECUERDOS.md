@@ -8,9 +8,20 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Soberanía Inapelable de Servicios Oficiales:* Ninguna función de la app sustituye las banderas físicas y órdenes del Servicio de Salvamento y Socorrismo a pie de playa, la DGT, Guardia Civil, Bomberos de Asturias o avisos de emergencias del 112.
   3. *Responsabilidad Individual e Inmunidad del Desarrollador:* Toda actividad en entornos naturales o carretera se realiza bajo la exclusiva responsabilidad del usuario. Obligatoriedad de incorporar advertencias visibles de exención de responsabilidad civil en módulos sensibles y en la Política de Privacidad, blindando al desarrollador (Lendo / zeustata) frente a cualquier reclamación de terceros.
 
+## 🚀 Última Actualización Oficial: v1.1.55 📸 — 2026-10-02
+- **Rediseño Minimalista del Botón de Cámara y Blindaje de Escalado de la Estampa (Feedback Lendo):**
+  1. *Botón Minimalista de Cámara en Hero Card ([currentCard.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/components/currentCard.js)):*
+     - Sustituida la pastilla con texto por un botón circular de 32px (`.btn-hero-camera`) con estética Liquid Glass pura que solo muestra el icono `📸`, armonizado a la perfección junto a las temperaturas mínima y máxima.
+     - Suprimido el botón redundante en la barra superior (`.header-extra-tools`) para cumplir a rajatabla la Doctrina Constitucional 11 (Ergonomía Móvil y Blindaje Anti-Desborde), evitando saturación de cabecera.
+  2. *Blindaje Estricto de Escalado en Modal de Estampa ([shareCardGenerator.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/utils/shareCardGenerator.js) & [components.css](file:///c:/Users/NUC/Downloads/IA/Tiempo/css/components.css)):*
+     - Erradicado el problema del visor gigante: añadidos estilos inline directos al elemento `<img>` (`width: 100%; max-width: 270px; margin: 0 auto; height: auto; border-radius: 16px;`), haciendo que el lienzo de 1080×1350 px sea 100% inmune a demoras de caché CSS en navegadores móviles.
+     - Ajustado el modal `.modal-share-card` a `max-height: 88vh; max-width: 400px;` para caber íntegro en cualquier resolución de teléfono sin barras de desplazamiento invasivas.
+  3. *Versionado y Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v1155-fix-estampa-boton-y-preview` y query strings `?v=1.1.55` sincronizadas en todos los archivos.
+
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.54 📸 — 2026-10-02
+## 🚀 Versión Anterior: v1.1.54 📸 — 2026-10-02
 - **Nueva Función Social: «MeteoAstur Instant» (Estampa Visual Compartible para Redes):**
   1. *Generador Canvas Nativo ([shareCardGenerator.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/utils/shareCardGenerator.js)):*
      - Genera instantáneamente postales de 1080&times;1350 px (4:5) en cliente mediante HTML5 Canvas, sin APIs de pago ni dependencias externas.

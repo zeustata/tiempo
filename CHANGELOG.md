@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.55] - 2026-10-02
+
+### 📸 Rediseño Minimalista del Botón de Cámara y Blindaje de Escalado de la Estampa
+- **Botón de Cámara Minimalista en Hero Card (Feedback Directo de Lendo):**
+  - Sustitución de la pastilla con texto por un elegante botón circular minimalista de 32px (`📸`) con estética Liquid Glass pura, sin texto innecesario y perfectamente alineado con las pastillas de temperaturas mínima y máxima.
+  - Supresión del botón duplicado en la barra superior de herramientas para evitar cualquier sobrecarga o colisión en pantallas móviles estrechas (Doctrina Constitucional 11 de Ergonomía Móvil).
+- **Blindaje Estricto de Escalado en el Modal de Vista Previa:**
+  - Inmunización absoluta contra cachés lentas mediante estilos inline aplicados directamente sobre el elemento `<img>` (`width: 100%; max-width: 270px; margin: 0 auto; height: auto; border-radius: 16px;`), impidiendo que el lienzo de alta resolución (1080×1350 px) se desborde o se muestre gigante en pantallas de teléfono.
+  - Contenedor de vista previa con sombra de cristal sutil y encaje vertical ergonómico dentro de los límites del viewport móvil (`max-height: 88vh`).
+- **Cache-Busting y Sincronización:**
+  - Cadena de Service Worker actualizada a `meteoasturlode-v1155-fix-estampa-boton-y-preview` y query strings `?v=1.1.55` sincronizadas en CSS y módulos JS.
+
+---
+
 ## [1.1.54] - 2026-10-02
 
 ### 📸 Nueva Función Social: «MeteoAstur Instant» (Estampa Visual Compartible)

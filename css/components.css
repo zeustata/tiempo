@@ -7628,9 +7628,9 @@
 
 /* --- MODAL DE ESTAMPA COMPARTIBLE ("METEOASTUR INSTANT") --- */
 .modal-share-card {
-  max-width: 460px;
-  width: 95%;
-  max-height: 90vh;
+  max-width: 400px;
+  width: 92%;
+  max-height: 88vh;
   display: flex;
   flex-direction: column;
 }
@@ -7639,19 +7639,20 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
   overflow-y: auto;
-  padding: 8px 4px 6px 4px;
+  padding: 6px 2px;
 }
 
 .share-preview-wrapper {
   width: 100%;
-  max-width: 320px;
-  border-radius: var(--radius-md);
+  max-width: 270px;
+  margin: 0 auto;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.15);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.18);
   background: rgba(15, 23, 42, 0.6);
-  min-height: 200px;
+  min-height: 180px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -7659,8 +7660,11 @@
 
 .share-preview-img {
   width: 100%;
+  max-width: 270px;
   height: auto;
   display: block;
+  border-radius: 16px;
+  margin: 0 auto;
 }
 
 .share-loading-spinner {
@@ -7746,24 +7750,36 @@
   text-overflow: ellipsis;
 }
 
-/* Pastilla botón compartir dentro de la Hero Card */
-.t-pill.share-pill {
-  cursor: pointer;
+/* Botón Minimalista de Cámara en Hero Card (Liquid Glass circular de 32px) */
+.btn-hero-camera {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 999px;
   background: rgba(56, 189, 248, 0.16);
-  border-color: rgba(56, 189, 248, 0.45);
-  color: #7dd3fc;
-  font-weight: 700;
-  transition: all 0.2s ease;
-  user-select: none;
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  color: #ffffff;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 0;
+  margin-left: 2px;
+  box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
+  outline: none;
+  line-height: 1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
-.t-pill.share-pill:hover,
-.t-pill.share-pill:active {
-  background: rgba(56, 189, 248, 0.28);
-  border-color: rgba(56, 189, 248, 0.75);
-  transform: translateY(-1px);
-  color: #ffffff;
+.btn-hero-camera:hover,
+.btn-hero-camera:active {
+  background: rgba(56, 189, 248, 0.35);
+  border-color: rgba(56, 189, 248, 0.85);
+  transform: scale(1.08);
+  box-shadow: 0 4px 14px rgba(56, 189, 248, 0.35);
 }
 
 @media (max-width: 480px) {

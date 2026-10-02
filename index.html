@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.52">
-  <link rel="stylesheet" href="css/components.css?v=1.1.52">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.52">
+  <link rel="stylesheet" href="css/main.css?v=1.1.55">
+  <link rel="stylesheet" href="css/components.css?v=1.1.55">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.55">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -60,7 +60,6 @@
         </div>
 
         <div class="header-extra-tools">
-          <button id="btn-share-card" class="btn-mini-tool" title="Generar estampa visual de este concejo para WhatsApp o Instagram" aria-label="Compartir Tiempo">📸</button>
           <button id="btn-fullscreen" class="btn-mini-tool" title="Alternar Pantalla Completa / Modo Ventana (Tecla K / F11)" aria-label="Pantalla Completa">🖥️</button>
           <button id="btn-install-app" class="btn-mini-tool btn-install" style="display: none;" title="Instalar en Windows / Móvil" aria-label="Instalar App">📥</button>
         </div>
@@ -180,7 +179,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.54 📸</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.55 📸</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -231,8 +230,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.54 📸</span>
+            <span class="release-version">v1.1.55 📸</span>
             <span class="release-date">02 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-mejora">Diseño &amp; Ergonomía Móvil (Ley 11)</span> <strong>Ajuste Visual de Estampa y Botón Minimalista (Feedback Lendo)</strong>:
+              <br>• <strong>Botón Minimalista de Cámara:</strong> Sustituido el botón con texto por un icono circular Liquid Glass de cámara (<code>📸</code>, 32px), alineado discretamente con las temperaturas mínima y máxima en la Hero Card sin romper la armonía visual.
+              <br>• <strong>Despeje de Cabecera:</strong> Eliminado el icono redundante de la barra superior para evitar que se comprima o sobresalga contra el borde en pantallas móviles.
+              <br>• <strong>Escalado Blindado en Previsualización:</strong> Aplicados estilos inline estrictos (<code>max-width: 270px; margin: 0 auto;</code>) para garantizar que la postal se vea completa, reducida y proporcionada sin salirse de la pantalla.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.54 📸</span>
+            <span class="release-date">02 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-nuevo">Nueva Función Social</span> <strong>«MeteoAstur Instant» (Estampa Visual Compartible para Redes)</strong>:
@@ -2253,7 +2266,7 @@
         <button id="btn-close-share-modal" class="btn-close" aria-label="Cerrar modal">&times;</button>
       </div>
       <div class="modal-body share-card-modal-body">
-        <div id="share-card-preview-container" class="share-preview-wrapper"></div>
+        <div id="share-card-preview-container" class="share-preview-wrapper" style="width: 100%; max-width: 270px; margin: 0 auto; overflow: hidden; border-radius: 16px; min-height: 180px; display: flex; align-items: center; justify-content: center;"></div>
         <div class="share-actions-row">
           <button id="btn-action-share-native" class="btn-share-primary">
             <span class="btn-share-icon">📲</span>
@@ -2278,7 +2291,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.1.54').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.1.55').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -2308,7 +2321,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.54"></script>
+  <script type="module" src="js/app.js?v=1.1.55"></script>
 
 
 
