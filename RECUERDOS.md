@@ -27,6 +27,19 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   4. *📈 Meteorología Gráfica — Comparador de Curvas de Modelos (ECMWF vs. ICON):* Opción para superponer en el gráfico la curva del modelo europeo y del alemán simultáneamente, revelando la dispersión o consenso del pronóstico ante situaciones de lluvia o ciclogénesis.
   5. *🏔️ Cordillera y Puertos — Factor de Sensación Térmica por Viento (Wind Chill Index):* En puertos de montaña y estaciones de esquí con rachas >30 km/h, calcular el enfriamiento eólico real en cumbre para advertir de riesgos de congelación rápida e hipotermia.
   6. *📡 PWA y Conectividad — Detección Activa de Pérdida de Cobertura en Zonas Rurales:* Pastilla flotante discreta al perder señal (*«📡 Modo Sin Conexión • Mostrando datos en caché de las XX:XX»*), aportando transparencia total sobre la frescura de los datos en zonas sin cobertura.
+- **Módulo 10: Asesor Meteorológico de Turismo, Ocio y «Qué Facer Güei» en Asturias (Acuerdo Lendo 02-10-2026):**
+  - *Visión y Filosofía:* Creación de un recomendador dinámico que vincule el estado del cielo y la previsión horaria del concejo con planes de ocio, cultura y naturaleza reales, respondiendo al histórico dilema asturiano (*«Está lloviendo/orballando, ¿a dónde vamos hoy?»* o *«Hace solazo, ¿a qué mirador o cala escapamos?»*).
+  - *Arquitectura Comarcal y Anti-Vacío:*
+    - Catálogo estructurado por **Comarcas y Concejos Nodrizas** (Oriente, Centro/Costa, Caudal, Nalón, Occidente, Picos de Europa) para que ningún concejo pequeño (ej. Yernes y Tameza, Pesoz, Caravia) quede jamás huérfano de recomendaciones, ofreciendo planes locales y comarcales a menos de 20-30 minutos.
+  - *Motor Dinámico de Clasificación Meteorológica:*
+    1. *🌧️ Lluvia / Bastinazu / Temporal:* Planes a cubierto (Museos emblemáticos: MUJA, MUMI, Sidra, Bellas Artes, Niemeyer; Cuevas visitables: Tito Bustillo, Cueva Huerta; Acuario; llagares y espichas).
+    2. *☀️ Despejado / Soleado:* Miradores panorámicos (Fitu, Cabo Peñas, Naranco), calas y arenales de postal, monumentos exteriores (Prerrománico, Castro de Coaña).
+    3. *🌫️ Borrina / Nublado sin lluvia:* Bosques mágicos y hayedos de cuento (Muniellos, Peloño, Montegrande, Redes) y villas marineras y etnográficas (Cudillero, Lastres, Taramundi, Luarca, Tazones).
+    4. *❄️ Cota Baja de Nieve:* Gastronomía de cuchara y chimenea en pueblos de montaña (Somiedo, Cangas de Onís, Caso, Tarna).
+  - *Blindaje Constitucional Estricto (Leyes 11, 15 y 16):*
+    - **Legalidad y Datos Abiertos (Ley 15):** Información basada en Open Data oficial de Turismo Asturias y patrimonio público, sin raspado no autorizado ni dependencias opacas.
+    - **Exención de Responsabilidad Civil (Ley 16):** Advertencia explícita de naturaleza orientativa; prohibición de formular textos que garanticen paso o seguridad en accesos de montaña o calas escarpadas.
+    - **Ergonomía Móvil (Ley 11):** Integración limpia como Módulo 10 en la botonera de navegación con tarjeta Liquid Glass y pastilla inteligente de llamada en el Tiempo Actual.
 
 ## 🚀 Última Actualización Oficial: v1.1.66 🌅 — 2026-10-02
 - **Atmósfera Cromática y Acabado Liquid Glass en Pronóstico a 10 Días (Feedback Lendo):**
