@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1166-tarjetas-pronostico-ricas';
+const CACHE_NAME = 'meteoasturlode-v1167-modulo-planes-proximamente';
 const STATIC_ASSETS = [
   './',
   './index.html',

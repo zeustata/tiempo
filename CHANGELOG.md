@@ -10,6 +10,23 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.67] - 2026-10-02
+
+### 🗺️ Avance Oficial del Módulo 10: «Planes & Ocio: ¿Qué facer güei?» (Feedback Lendo)
+- **Arquitectura Híbrida y Presentación Oficial:**
+  - Creación e incorporación del **Módulo 10 (`🗺️ Planes & Ocio`)** en el selector principal de navegación con distintivo `🚀 Próximamente` y asignación de atajo de teclado directo (tecla `0`).
+  - Implementación de la vista teaser en acabado *Liquid Glass* (`#panel-tourism`) anticipando la catalogación comarcal de los 78 concejos estructurada en los 4 grandes pilares climáticos:
+    - *🌧️ Lluvia:* Museos emblemáticos (MUJA, MUMI, Sidra, Niemeyer), cuevas visitables, acuario y llagares tradicionales.
+    - *☀️ Sol:* Balcones y miradores panorámicos (El Fitu, Cabo Peñas, Naranco), arenales de postal y monumentos al aire libre.
+    - *🌫️ Borrina:* Bosques y hayedos mágicos (Muniellos, Peloño, Redes) y villas marineras.
+    - *❄️ Nieve:* Pueblos con chimenea, gastronomía de cuchara y planes de montaña.
+- **Pastilla de Llamada Rápida en Tiempo Actual:**
+  - Inserción de una pastilla interactiva en la pantalla principal (`.tourism-teaser-strip`) que vincula el concejo activo con el futuro asesor meteorológico comarcal.
+- **Cache-Busting y Sincronización:**
+  - Cadena de Service Worker actualizada a `meteoasturlode-v1167-modulo-planes-proximamente` y query strings `?v=1.1.67` sincronizadas en toda la plataforma.
+
+---
+
 ## [1.1.66] - 2026-10-02
 
 ### 🎨 Atmósfera Cromática y Acabado Liquid Glass en Pronóstico a 10 Días (Feedback Lendo)

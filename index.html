@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.66">
-  <link rel="stylesheet" href="css/components.css?v=1.1.66">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.66">
+  <link rel="stylesheet" href="css/main.css?v=1.1.67">
+  <link rel="stylesheet" href="css/components.css?v=1.1.67">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.67">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -217,13 +217,16 @@
 
       <!-- 7. OBSERVATORIO ASTRONÓMICO & COSMOS -->
       <div id="panel-astronomy" class="tab-panel"></div>
+
+      <!-- 8. PLANES & TURISMO INTELIGENTE (MÓDULO 10) -->
+      <div id="panel-tourism" class="tab-panel"></div>
     </main>
 
     <!-- FOOTER -->
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.66 🌅</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.67 🗺️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -250,7 +253,7 @@
         <button id="btn-close-modal" class="btn-close" aria-label="Cerrar modal">&times;</button>
       </div>
       <div class="modal-body">
-        <div class="shortcut-row"><kbd>1</kbd> - <kbd>9</kbd><span>Cambiar entre módulos (1: Vivo ... 9: Cosmos)</span></div>
+        <div class="shortcut-row"><kbd>1</kbd> - <kbd>0</kbd><span>Cambiar entre módulos (1: Vivo ... 0: Planes)</span></div>
         <div class="shortcut-row"><kbd>S</kbd> / <kbd>/</kbd><span>Abrir buscador rápido de los 78 concejos</span></div>
         <div class="shortcut-row"><kbd>R</kbd><span>Refrescar datos meteorológicos en directo</span></div>
         <div class="shortcut-row"><kbd>F</kbd><span>Añadir o quitar concejo actual de Favoritos</span></div>
@@ -274,8 +277,21 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.66 🌅</span>
+            <span class="release-version">v1.1.67 🗺️</span>
             <span class="release-date">02 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-nuevo">Innovación (Ley 15 y 16)</span> <strong>Avance Oficial del Módulo 10: «Planes & Ocio: ¿Qué facer güei?» (Feedback Lendo)</strong>:
+              <br>• <strong>Arquitectura Híbrida:</strong> Incorporación oficial del 10º módulo en el selector general con distintivo <code>🚀 Próximamente</code> y atajo rápido en la pantalla principal de <em>Tiempo Actual</em>.
+              <br>• <strong>Presentación Liquid Glass de los 4 Pilares Climáticos:</strong> Tarjeta dedicada que anticipa el futuro asesor comarcal: planes a cubierto con lluvia, miradores y calas al sol, hayedos con borrina y gastronomía de chimenea con nieve.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.66 🌅</span>
+            <span class="release-date">02 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-mejora">Armonía Visual (Ley 14)</span> <strong>Atmósfera Cromática y Acabado Liquid Glass en Pronóstico a 10 Días (Feedback Lendo)</strong>:
@@ -2505,7 +2521,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.66"></script>
+  <script type="module" src="js/app.js?v=1.1.67"></script>
 
 
 
