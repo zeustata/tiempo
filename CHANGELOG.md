@@ -10,6 +10,30 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.53] - 2026-10-02
+
+### 🚗💨 Alerta Silenciosa de Viento Lateral en Viaductos y Conducción (Seguridad Vial)
+- **Banner Dinámico Condicional en Cabecera (Doctrina Constitucional 12):**
+  - Implementación del nuevo detector modular `roadWindDetector.js`, diseñado para alertar en carretera frente al riesgo de desestabilización, efecto tijera o vuelco provocado por viento lateral transversal.
+  - **Modo Silencioso Estricto:** En días de régimen normal (`rachas < 65 km/h`), el banner no ocupa espacio en el DOM (0 px), preservando intacta la interfaz.
+  - **Disparo Condicional:** Cuando las rachas alcanzan nivel de aviso (`65 a 84 km/h`, nivel amarillo) o temporal severo (`>= 85 km/h`, nivel rojo), salta el banner Liquid Glass destacando la precaución obligatoria para vehículos vulnerables (*furgonetas, autocaravanas, remolques y motos*) al salir de túneles, desmontes o avanzar por puentes expuestos.
+- **Catálogo de Viaductos y Trazados Críticos por Concejo:**
+  - Asignación comarcal de los viaductos más batidos de la red viaria asturiana:
+    - *A-8 Costa Occidental:* Viaductos de Concha de Artedo (110 m), San Pedro de la Ribera, Cabo Vidio, Río Esva, Ría de Navia y Viaducto de los Santos (Eo).
+    - *A-8 / A-66 Costa Central & Y Griega:* Nudo y enlaces de Serín, Viaducto de San Sebastián (Castrillón / Salinas), Viaducto de La Florida y Tabaza.
+    - *A-8 Costa Oriental:* Viaductos del Río España (Quintes / Villaviciosa), Ría de Villaviciosa (Tazones), Ribadesella (Sella), Niembro y Río Deva.
+    - *A-66 / N-630 Corredor de Montaña y Cuencas:* Viaductos del Huerna (Campomanes, Vega del Ciego), bocas del Túnel del Negrón y Puerto de Pajares.
+    - *A-63 Corredor del Suroccidente:* Viaductos de Doriga, Cornellana, Casazorrina y Alto de La Espina.
+- **Píldora Contextual en Anemómetro (Sensor #1):**
+  - Línea ergonómica fija en la tarjeta de Anemómetro con código semafórico en tiempo real: *Viento favorable en viaductos* (verde), *Viento moderado* (amarillo), *Precaución viento lateral* (naranja) o *Alerta severa* (rojo).
+- **Cumplimiento Constitucional Riguroso:**
+  - **Ergonomía Móvil (Ley 11):** Diseño `box-sizing: border-box`, `max-width: 100%`, flex-wrap y chips compactos para garantizar ausencia total de desborde en pantallas de 320px a 380px.
+  - **Simulacro y Verificación (Ley 12):** Conmutador controlado mediante `?test=viento_viaductos` (aviso amarillo) y `?test=viaductos_severo` (alerta roja).
+  - **Exención de Responsabilidad Civil (Ley 16):** Cintillo visible recordando que los avisos emanan de modelos numéricos y que prevalecen las órdenes de la Agrupación de Tráfico de la Guardia Civil y los paneles PMV de la DGT (011 / dgt.es).
+- **Cache-Busting Sincronizado:** Service Worker actualizado a `meteoasturlode-v1153-alerta-viento-viaductos` y query strings unificadas a `?v=1.1.53`.
+
+---
+
 ## [1.1.52] - 2026-10-01
 
 ### 🥾 Ergonomía Móvil y Blindaje Anti-Corte en Rutas (Ley 11)

@@ -1,4 +1,4 @@
-import { getWindDirection } from '../utils/weatherIcons.js?v=1.1.52';
+import { getWindDirection } from '../utils/weatherIcons.js?v=1.1.53';
 import { getRealtimeTideStatus } from '../utils/tides.js?v=1.0.81-tides-calib';
 import { 
   PLAYAS_POR_CONCEJO, 

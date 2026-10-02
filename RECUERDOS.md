@@ -10,7 +10,30 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.52 🥾 — 2026-10-01
+## 🚀 Última Actualización Oficial: v1.1.53 🚗💨 — 2026-10-02
+- **Alerta Silenciosa de Viento Lateral en Viaductos y Conducción (Seguridad Vial):**
+  1. *Detector Modular Independiente ([roadWindDetector.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/utils/roadWindDetector.js)):*
+     - Diseñado con arquitectura modular estanca: no interfiere con el layout general, giroscopio ni carruseles.
+     - **Modo Silencioso Estricto (Doctrina 12):** En días normales (`rachas < 65 km/h`), devuelve cadena vacía `''` (0 px en pantalla).
+     - **Disparo Condicional:** Rachas `65 a 84 km/h` (aviso amarillo) y `>= 85 km/h` (alerta roja), alertando del riesgo de empuje lateral y efecto pantalla para furgonetas, caravanas, remolques y motos en pasos elevados y salidas de túneles.
+  2. *Catálogo de Viaductos y Pasos Expuestos por Concejo:*
+     - Costa Occidental (A-8): Concha de Artedo (110 m), San Pedro de la Ribera, Cabo Vidio, Río Esva, Ría de Navia y Los Santos (Ría del Eo).
+     - Costa Central y Y Griega (A-8 / A-66): Nudo de Serín, Viaducto de San Sebastián (Salinas / Castrillón) y La Florida/Tabaza.
+     - Costa Oriental (A-8): Viaductos del Río España (Quintes), Tazones, Ribadesella (Sella), Niembro y Deva.
+     - Montaña y Pasos Sur (A-66 / N-630): Viaductos del Huerna, bocas del Túnel del Negrón y Puerto de Pajares.
+     - Suroccidente (A-63): Viaductos de Doriga, Cornellana, Casazorrina y Alto de La Espina.
+  3. *Píldora Ergonómica en Sensor Anemómetro (Sensor #1 en [currentCard.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/components/currentCard.js)):*
+     - Tag contextual integrado en la tarjeta con semáforo vial continuo (`.road-wind-tag.safe`, `.caution`, `.warning`, `.severe`).
+  4. *Blindaje Legal (Ley 16) y Móvil (Ley 11):*
+     - Advertencia visible remitiendo a los paneles PMV de la DGT (011 / dgt.es) y el 112 Asturias.
+     - Adaptación responsive total (`box-sizing: border-box`, `max-width: 100%`).
+  5. *Simulacro y Modo de Prueba (Ley 12):*
+     - Conmutador activo mediante `?test=viento_viaductos` y `?test=viaductos_severo`.
+  6. *Anti-Caché Obligatorio:* `sw.js` (`meteoasturlode-v1153-alerta-viento-viaductos`) y sincronización de query strings a `?v=1.1.53`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.52 🥾 — 2026-10-01
 - **Ergonomía Móvil y Blindaje Anti-Corte en Filtros de Rutas (Ley 11):**
   1. *Resolución de Desborde Lateral:*
      - Modificada la etiqueta del botón de `🟢 Fáciles & Familiares` a `🟢 Fáciles`, y de `🟡 Moderadas` a `🟡 Medias`.

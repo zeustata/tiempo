@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1152-ergonomia-rutas';
+const CACHE_NAME = 'meteoasturlode-v1153-alerta-viento-viaductos';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -20,6 +20,7 @@ const STATIC_ASSETS = [
   './js/components/currentCard.js',
   './js/components/marineCard.js',
   './js/components/surfCard.js',
+  './js/components/routesCard.js',
   './js/components/mountainCard.js',
   './js/components/forecastView.js',
   './js/components/chartsView.js',
@@ -46,6 +47,8 @@ const STATIC_ASSETS = [
   './js/utils/umbrellaAdvisor.js',
   './js/utils/borrinaDetector.js',
   './js/utils/thunderstormDetector.js',
+  './js/utils/roadWindDetector.js',
+  './js/utils/routesData.js',
   './js/utils/seismicDetector.js',
   './js/utils/tides.js'
 ];

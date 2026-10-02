@@ -1,15 +1,16 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.1.52';
-import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.1.52';
-import { renderHourlyForecastBlock } from './forecastView.js?v=1.1.52';
-import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.52';
-import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=1.1.52';
-import { detectXeluEffect, renderXeluBanner } from '../utils/xeluDetector.js?v=1.1.52';
-import { detectBorrinaEffect, renderBorrinaBanner } from '../utils/borrinaDetector.js?v=1.1.52';
-import { detectThunderstormEffect, renderThunderstormBanner } from '../utils/thunderstormDetector.js?v=1.1.52';
-import { getSeismicStatus, renderSeismicBanner } from '../utils/seismicDetector.js?v=1.1.52';
-import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.52';
-import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=1.1.52';
-import { calculateUmbrellaStatus, renderUmbrellaCard } from '../utils/umbrellaAdvisor.js?v=1.1.52';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.1.53';
+import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.1.53';
+import { renderHourlyForecastBlock } from './forecastView.js?v=1.1.53';
+import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.53';
+import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=1.1.53';
+import { detectXeluEffect, renderXeluBanner } from '../utils/xeluDetector.js?v=1.1.53';
+import { detectBorrinaEffect, renderBorrinaBanner } from '../utils/borrinaDetector.js?v=1.1.53';
+import { detectThunderstormEffect, renderThunderstormBanner } from '../utils/thunderstormDetector.js?v=1.1.53';
+import { detectRoadWindStatus, renderRoadWindBanner, renderRoadWindSensorPill } from '../utils/roadWindDetector.js?v=1.1.53';
+import { getSeismicStatus, renderSeismicBanner } from '../utils/seismicDetector.js?v=1.1.53';
+import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.53';
+import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=1.1.53';
+import { calculateUmbrellaStatus, renderUmbrellaCard } from '../utils/umbrellaAdvisor.js?v=1.1.53';
 
 /**
  * Formatea el título del concejo subordinando las localidades entre paréntesis (ej. Piedras Blancas / Salinas)
@@ -115,6 +116,11 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   const storm = detectThunderstormEffect(current, hourly, concejo);
   const thunderstormMarkup = renderThunderstormBanner(storm);
 
+  // Detector Silencioso e Inteligente de Viento Lateral en Viaductos y Autovías (Seguridad Vial)
+  const roadWind = detectRoadWindStatus(current, daily, hourly, concejo);
+  const roadWindMarkup = renderRoadWindBanner(roadWind);
+  const roadWindSensorPill = renderRoadWindSensorPill(roadWind);
+
   // Monitor Silencioso de Actividad Sísmica en Asturias y Mar Cantábrico (EMSC Open Data)
   const seismic = getSeismicStatus(concejo);
   const seismicMarkup = renderSeismicBanner(seismic);
@@ -185,6 +191,9 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
     <!-- BANNER DINÁMICO DE ALERTA DE TORMENTA INMINENTE Y CONVECCIÓN -->
     ${thunderstormMarkup}
 
+    <!-- BANNER DINÁMICO DE ALERTA DE VIENTO LATERAL EN VIADUCTOS Y CARRETERA -->
+    ${roadWindMarkup}
+
     <!-- PRONÓSTICO HORARIO 72H / 3 DÍAS (SOLICITADO POR BETA TESTERS) -->
     ${hourlyForecastMarkup}
 
@@ -232,6 +241,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
             ${foehn ? `<div class="sensor-sub foehn-sensor-indicator">🔥 Viento Sur: Efecto Foehn Activo</div>` : ''}
             <div class="sensor-sub">Racha actual: <strong>${windGusts} ${windUnit}</strong></div>
             <div class="sensor-sub">Racha máx. prevista: <strong>${windMaxGustToday} ${windUnit}</strong></div>
+            ${roadWindSensorPill}
           </div>
         </div>
       </div>

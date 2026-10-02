@@ -4,7 +4,7 @@
  * Estética Liquid Glass Pura, Ergonomía Móvil (Ley 11) y Blindaje Legal (Ley 16).
  */
 
-import { calculateHikingIndex, getRoutesForConcejo } from '../utils/routesData.js?v=1.1.52';
+import { calculateHikingIndex, getRoutesForConcejo } from '../utils/routesData.js?v=1.1.53';
 
 // Función global de filtrado táctil interactivo
 if (typeof window !== 'undefined' && !window.filterRoutes) {
