@@ -10,6 +10,24 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.57] - 2026-10-02
+
+### 📸 Evolución Horaria Completa en la Estampa Compartible (Feedback Lendo)
+- **Suite Horaria Detallada en 6 Mini-Tarjetas Liquid Glass:**
+  - Sustitución de los números planos de temperatura por 6 pastillas independientes de cristal translúcido para las próximas 6 horas consecutivas (`Ahora`, `+1h`, `+2h`, `+3h`, `+4h`, `+5h`).
+  - **Métricas completas por hora:**
+    1. *Hora formateada:* `Ahora`, `18:00`, `19:00`, etc.
+    2. *Icono meteorológico en alta resolución:* Sol, Resol asturiano (`🌥️`), Orbayu (`🌧️`), etc. con soporte de nowcasting solar.
+    3. *Temperatura destacada:* En tipografía suiza rotunda blanca.
+    4. *Pluviómetro de precipitación:* Volumen cuantitativo en milímetros (`💧 1.2mm` en cian brillante o probabilidad `💧 %` / `💧 0 mm`).
+    5. *Velocidad del viento:* Anemómetro horario (`💨 km/h`).
+- **Preservación Estricta de la Proporción 4:5 (1080×1350 px):**
+  - Rebalanceo armónico del lienzo para alojar las tarjetas horarias preservando intactas las 3 cajas métricas (viento, humedad, mar), el refrán popular asturiano y el pie institucional, sin requerir scroll ni desbordar la pantalla del móvil.
+- **Cache-Busting y Sincronización:**
+  - Cadena de Service Worker actualizada a `meteoasturlode-v1157-evolucion-horaria-completa-en-estampa` y query strings `?v=1.1.57` sincronizadas en CSS y módulos JS.
+
+---
+
 ## [1.1.56] - 2026-10-02
 
 ### 📸 Botones Compactos y Supresión Total de Scroll en Modal de Estampa (Feedback Lendo)

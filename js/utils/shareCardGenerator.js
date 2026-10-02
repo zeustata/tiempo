@@ -7,7 +7,7 @@
  * Compatible con la Web Share API (WhatsApp, Instagram, Telegram) y descarga directa.
  */
 
-import { getWeatherInfo } from './weatherIcons.js?v=1.1.56';
+import { getWeatherInfo } from './weatherIcons.js?v=1.1.57';
 
 const DICHOS_ASTURIANOS = [
   "«El tiempu n'Asturies camuda más que l'orballu na yerba.»",
@@ -161,52 +161,52 @@ export function generateShareCardCanvas(concejo, weatherData) {
   const mainConcejoName = nameMatch ? nameMatch[1] : rawName;
   const localities = nameMatch ? nameMatch[2].replace(/[()]/g, '') : concejo.region || '';
 
-  ctx.font = '800 62px "Inter", -apple-system, sans-serif';
+  ctx.font = '800 56px "Inter", -apple-system, sans-serif';
   ctx.fillStyle = '#ffffff';
-  ctx.fillText(mainConcejoName, cardX + 44, cardY + 175);
+  ctx.fillText(mainConcejoName, cardX + 44, cardY + 145);
 
-  ctx.font = '600 26px "Inter", -apple-system, sans-serif';
+  ctx.font = '600 24px "Inter", -apple-system, sans-serif';
   ctx.fillStyle = '#94a3b8';
-  ctx.fillText(`${localities}  •  ${concejo.altitude || 0} m`, cardX + 44, cardY + 220);
+  ctx.fillText(`${localities}  •  ${concejo.altitude || 0} m`, cardX + 44, cardY + 185);
 
   // Fecha y hora formateada en Asturiano / Español
   const now = new Date();
   const options = { weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' };
   const dateStr = now.toLocaleDateString('es-ES', options).replace(',', ' •');
-  ctx.font = '500 22px "Inter", -apple-system, sans-serif';
+  ctx.font = '500 20px "Inter", -apple-system, sans-serif';
   ctx.fillStyle = '#38bdf8';
-  ctx.fillText(dateStr.toUpperCase(), cardX + 44, cardY + 265);
+  ctx.fillText(dateStr.toUpperCase(), cardX + 44, cardY + 220);
 
   // 5. Bloque Central: Gran Temperatura + Icono + Condición
   // Gran temperatura
-  ctx.font = '800 150px "Inter", -apple-system, sans-serif';
+  ctx.font = '800 135px "Inter", -apple-system, sans-serif';
   ctx.fillStyle = '#ffffff';
-  ctx.fillText(`${tempVal}°`, cardX + 44, cardY + 440);
+  ctx.fillText(`${tempVal}°`, cardX + 44, cardY + 365);
 
   // Icono del tiempo grande (emoji/símbolo de alta legibilidad)
   const iconEmoji = weatherInfo.icon || '⛅';
-  ctx.font = '110px "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif';
-  ctx.fillText(iconEmoji, cardX + 440, cardY + 420);
+  ctx.font = '95px "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif';
+  ctx.fillText(iconEmoji, cardX + 410, cardY + 350);
 
   // Nombre de la condición en vivo
-  ctx.font = '700 42px "Inter", -apple-system, sans-serif';
+  ctx.font = '700 38px "Inter", -apple-system, sans-serif';
   ctx.fillStyle = weatherInfo.isResol ? '#fef08a' : '#e2e8f0';
-  ctx.fillText(weatherInfo.label, cardX + 44, cardY + 520);
+  ctx.fillText(weatherInfo.label, cardX + 44, cardY + 430);
 
   // Píldoras de Sensación y Min/Max
-  ctx.font = '600 26px "Inter", -apple-system, sans-serif';
+  ctx.font = '600 24px "Inter", -apple-system, sans-serif';
   ctx.fillStyle = '#94a3b8';
-  ctx.fillText(`Sensación térmica: ${feelsLike}°C`, cardX + 44, cardY + 575);
+  ctx.fillText(`Sensación: ${feelsLike}°C`, cardX + 44, cardY + 472);
 
-  ctx.font = '700 26px "Inter", -apple-system, sans-serif';
+  ctx.font = '700 24px "Inter", -apple-system, sans-serif';
   ctx.fillStyle = '#38bdf8';
-  ctx.fillText(`↓ ${tempMin}°C`, cardX + 380, cardY + 575);
+  ctx.fillText(`↓ ${tempMin}°C`, cardX + 310, cardY + 472);
   ctx.fillStyle = '#f87171';
-  ctx.fillText(`↑ ${tempMax}°C`, cardX + 490, cardY + 575);
+  ctx.fillText(`↑ ${tempMax}°C`, cardX + 420, cardY + 472);
 
   // 6. Tres Cajas Métricas Horizontales
-  const boxY = cardY + 630;
-  const boxH = 160;
+  const boxY = cardY + 505;
+  const boxH = 135;
   const boxW = (cardW - 88 - 32) / 3;
 
   const metrics = [
@@ -241,74 +241,129 @@ export function generateShareCardCanvas(concejo, weatherData) {
     ctx.stroke();
 
     // Texto interior
-    ctx.font = '28px sans-serif';
-    ctx.fillText(m.icon, curX + 20, boxY + 48);
+    ctx.font = '26px sans-serif';
+    ctx.fillText(m.icon, curX + 18, boxY + 42);
 
-    ctx.font = '700 16px "Inter", -apple-system, sans-serif';
+    ctx.font = '700 15px "Inter", -apple-system, sans-serif';
     ctx.fillStyle = '#94a3b8';
-    ctx.fillText(m.label, curX + 62, boxY + 44);
+    ctx.fillText(m.label, curX + 56, boxY + 38);
 
-    ctx.font = '800 32px "Inter", -apple-system, sans-serif';
+    ctx.font = '800 28px "Inter", -apple-system, sans-serif';
     ctx.fillStyle = '#ffffff';
-    ctx.fillText(m.val, curX + 20, boxY + 98);
+    ctx.fillText(m.val, curX + 18, boxY + 82);
 
-    ctx.font = '600 18px "Inter", -apple-system, sans-serif';
+    ctx.font = '600 16px "Inter", -apple-system, sans-serif';
     ctx.fillStyle = '#38bdf8';
-    ctx.fillText(m.sub, curX + 20, boxY + 132);
+    ctx.fillText(m.sub, curX + 18, boxY + 114);
 
     ctx.restore();
   });
 
   // 7. Franja de Refrán Asturiano
-  const refranY = cardY + 840;
+  const refranY = cardY + 660;
   const dicho = getRandomDicho();
 
   ctx.save();
-  drawRoundRectFallback(ctx, cardX + 44, refranY, cardW - 88, 100, 20);
+  drawRoundRectFallback(ctx, cardX + 44, refranY, cardW - 88, 75, 18);
   ctx.fillStyle = 'rgba(15, 23, 42, 0.50)';
   ctx.fill();
   ctx.lineWidth = 1.2;
   ctx.strokeStyle = 'rgba(250, 204, 21, 0.35)';
   ctx.stroke();
 
-  ctx.font = 'italic 500 24px "Inter", -apple-system, sans-serif';
+  ctx.font = 'italic 500 21px "Inter", -apple-system, sans-serif';
   ctx.fillStyle = '#fef08a';
   ctx.textAlign = 'center';
-  ctx.fillText(dicho, cardX + cardW / 2, refranY + 58);
+  ctx.fillText(dicho, cardX + cardW / 2, refranY + 46);
   ctx.textAlign = 'left';
   ctx.restore();
 
-  // 8. Gráfico de Tendencia Horaria Compacto (Mini curva de las próximas 12h)
-  const hourlyY = cardY + 970;
+  // 8. Evolución Horaria Detallada (Próximas 6 Horas con Icono, Pluviómetro y Viento)
+  const hourlyTitleY = cardY + 770;
   ctx.font = '700 20px "Inter", -apple-system, sans-serif';
   ctx.fillStyle = '#cbd5e1';
-  ctx.fillText('EVOLUCIÓN PRÓXIMAS 12 HORAS', cardX + 44, hourlyY);
+  ctx.fillText('EVOLUCIÓN PRÓXIMAS 6 HORAS', cardX + 44, hourlyTitleY);
 
   if (hourly && hourly.time && hourly.temperature_2m) {
-    const next12Temps = [];
-    const next12Hours = [];
-    for (let h = currentHour; h < currentHour + 12 && h < hourly.time.length; h++) {
-      next12Temps.push(Math.round(hourly.temperature_2m[h]));
-      next12Hours.push(`${h % 24}h`);
-    }
+    let startIdx = 0;
+    const nowHour = now.getHours();
+    const foundIdx = hourly.time.findIndex(t => {
+      const d = new Date(t);
+      return d.getDate() === now.getDate() && d.getHours() === nowHour;
+    });
+    startIdx = foundIdx !== -1 ? foundIdx : Math.min(nowHour, hourly.time.length - 1);
 
-    if (next12Temps.length > 0) {
-      const stepX = (cardW - 88) / (next12Temps.length - 1 || 1);
-      ctx.font = '700 20px "Inter", -apple-system, sans-serif';
+    const cardBoxW = 140;
+    const cardBoxH = 225;
+    const gap = (cardW - 88 - (6 * cardBoxW)) / 5;
+    const cardsStartY = cardY + 795;
 
-      next12Temps.forEach((t, idx) => {
-        const px = cardX + 44 + idx * stepX;
-        ctx.fillStyle = '#ffffff';
-        ctx.textAlign = 'center';
-        ctx.fillText(`${t}°`, px, hourlyY + 45);
+    for (let step = 0; step < 6; step++) {
+      const idx = startIdx + step;
+      if (idx >= hourly.time.length) break;
 
+      const curX = cardX + 44 + step * (cardBoxW + gap);
+      const curY = cardsStartY;
+      const tDate = new Date(hourly.time[idx]);
+      const hourFormatted = step === 0 ? 'Ahora' : `${tDate.getHours().toString().padStart(2, '0')}:00`;
+      const isDay = (hourly.is_day && hourly.is_day[idx] != null) ? hourly.is_day[idx] : (tDate.getHours() >= 8 && tDate.getHours() < 21 ? 1 : 0);
+      const code = hourly.weather_code ? hourly.weather_code[idx] : 0;
+      const pop = hourly.precipitation_probability ? (hourly.precipitation_probability[idx] || 0) : 0;
+      const precip = hourly.precipitation ? (hourly.precipitation[idx] || 0) : 0;
+      const cloudCover = (hourly.cloud_cover && hourly.cloud_cover[idx] != null) ? hourly.cloud_cover[idx] : null;
+      const isImmediate = (step <= 1);
+      const hWeather = getWeatherInfo(code, isDay, precip, pop, isImmediate ? directIrr : null, isImmediate ? currentUv : null, isImmediate ? currentSw : null, cloudCover);
+      const hIcon = hWeather ? hWeather.icon : '☀️';
+      const hTemp = Math.round(hourly.temperature_2m[idx]);
+      const hWind = hourly.wind_speed_10m ? Math.round(hourly.wind_speed_10m[idx]) : (hourly.windspeed_10m ? Math.round(hourly.windspeed_10m[idx]) : 0);
+
+      ctx.save();
+      // Fondo Liquid Glass de la tarjeta horaria
+      drawRoundRectFallback(ctx, curX, curY, cardBoxW, cardBoxH, 16);
+      ctx.fillStyle = step === 0 ? 'rgba(14, 165, 233, 0.20)' : 'rgba(15, 23, 42, 0.55)';
+      ctx.fill();
+      ctx.lineWidth = 1.2;
+      ctx.strokeStyle = step === 0 ? 'rgba(56, 189, 248, 0.55)' : 'rgba(255, 255, 255, 0.12)';
+      ctx.stroke();
+
+      const centerX = curX + cardBoxW / 2;
+
+      // 1. Hora
+      ctx.font = '700 17px "Inter", -apple-system, sans-serif';
+      ctx.fillStyle = step === 0 ? '#38bdf8' : '#94a3b8';
+      ctx.textAlign = 'center';
+      ctx.fillText(hourFormatted, centerX, curY + 30);
+
+      // 2. Icono Meteorológico
+      ctx.font = '36px "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif';
+      ctx.fillText(hIcon, centerX, curY + 76);
+
+      // 3. Temperatura
+      ctx.font = '800 28px "Inter", -apple-system, sans-serif';
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText(`${hTemp}°`, centerX, curY + 118);
+
+      // 4. Pluviómetro / Lluvia
+      ctx.font = '600 15px "Inter", -apple-system, sans-serif';
+      if (precip >= 0.1) {
+        ctx.fillStyle = '#38bdf8';
+        ctx.fillText(`💧 ${precip.toFixed(1)}mm`, centerX, curY + 154);
+      } else if (pop >= 15) {
+        ctx.fillStyle = '#94a3b8';
+        ctx.fillText(`💧 ${pop}%`, centerX, curY + 154);
+      } else {
         ctx.fillStyle = '#64748b';
-        ctx.font = '600 16px "Inter", -apple-system, sans-serif';
-        ctx.fillText(next12Hours[idx], px, hourlyY + 75);
-        ctx.font = '700 20px "Inter", -apple-system, sans-serif';
-      });
-      ctx.textAlign = 'left';
+        ctx.fillText('💧 0 mm', centerX, curY + 154);
+      }
+
+      // 5. Viento
+      ctx.font = '600 14px "Inter", -apple-system, sans-serif';
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText(`💨 ${hWind} km/h`, centerX, curY + 192);
+
+      ctx.restore();
     }
+    ctx.textAlign = 'left';
   }
 
   // 9. Pie Institucional de Firma y Autoría

@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.56">
-  <link rel="stylesheet" href="css/components.css?v=1.1.56">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.56">
+  <link rel="stylesheet" href="css/main.css?v=1.1.57">
+  <link rel="stylesheet" href="css/components.css?v=1.1.57">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.57">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -179,7 +179,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.56 📸</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.57 📸</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -230,8 +230,21 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.56 📸</span>
+            <span class="release-version">v1.1.57 📸</span>
             <span class="release-date">02 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-nuevo">Evolución Horaria</span> <strong>Evolución Horaria Completa en la Estampa (Feedback Lendo)</strong>:
+              <br>• <strong>Mini-Tarjetas Liquid Glass de 6 Horas:</strong> En lugar de simples números planos, la estampa incorpora 6 pastillas horarias de cristal independientes con hora (<code>18:00</code>), icono meteorológico de alta resolución, temperatura, pluviómetro (<code>💧 mm</code>) y viento (<code>💨 km/h</code>).
+              <br>• <strong>Equilibrio y Proporción 4:5 Intacta:</strong> Perfectamente ajustada dentro de la resolución estándar 1080×1350 px sin desbordar ni alterar el refrán asturiano ni las métricas de viento y oleaje.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.56 📸</span>
+            <span class="release-date">02 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-mejora">Ergonomía Móvil (Ley 11)</span> <strong>Botones Compactos y Supresión de Scroll en Modal de Estampa (Feedback Lendo)</strong>:
@@ -2298,7 +2311,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.1.56').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.1.57').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -2328,7 +2341,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.56"></script>
+  <script type="module" src="js/app.js?v=1.1.57"></script>
 
 
 

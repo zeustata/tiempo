@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1156-botones-compactos-sin-scroll';
+const CACHE_NAME = 'meteoasturlode-v1157-evolucion-horaria-completa-en-estampa';
 const STATIC_ASSETS = [
   './',
   './index.html',

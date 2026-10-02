@@ -16,9 +16,24 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. **Pie Institucional de la Estampa (Canvas):** Añadir la mención o sello elegante *«Disponible en Google Play • zeustata.github.io/tiempo»* en el pie de la imagen compartida.
     3. **Badge en la Web ([index.html](file:///c:/Users/NUC/Downloads/IA/Tiempo/index.html)):** Incorporar el botón oficial *«Consíguelo en Google Play»* en el pie de la aplicación web.
 
+## 🚀 Última Actualización Oficial: v1.1.57 📸 — 2026-10-02
+- **Evolución Horaria Completa en la Estampa Compartible (Feedback Lendo):**
+  1. *Mini-Tarjetas Liquid Glass para 6 Horas ([shareCardGenerator.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/utils/shareCardGenerator.js)):*
+     - Reemplazada la antigua fila de números planos por 6 tarjetas verticales de cristal translúcido para las próximas 6 horas consecutivas (`Ahora`, `+1h`, `+2h`, `+3h`, `+4h`, `+5h`).
+     - Cada tarjeta muestra de forma integrada y cristalina:
+       - Hora en formato `Ahora` o `18:00`.
+       - Icono de condición meteorológica en alta definición con soporte de nowcasting solar.
+       - Temperatura en gran formato blanco.
+       - Pluviómetro de precipitación (`💧 1.2mm` en cian brillante o probabilidad `💧 %` / `💧 0 mm`).
+       - Velocidad del viento (`💨 km/h`).
+  2. *Preservación de Proporciones y Geometría 4:5 (1080×1350 px):*
+     - Reorganizados los pesos verticales del lienzo para que las 6 pastillas horarias convivan con la cabecera, la gran temperatura, las tres cajas de viento/humedad/mar y el refranero popular asturiano sin generar desbordamiento ni scroll.
+  3. *Versionado y Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v1157-evolucion-horaria-completa-en-estampa` y query strings `?v=1.1.57` sincronizadas en todos los archivos.
+
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.56 📸 — 2026-10-02
+## 🚀 Versión Anterior: v1.1.56 📸 — 2026-10-02
 - **Botones Compactos y Supresión Total de Scroll en Modal de Estampa (Feedback Lendo):**
   1. *Titulares Directos sin Subtítulos ([index.html](file:///c:/Users/NUC/Downloads/IA/Tiempo/index.html)):*
      - Suprimidos los subtítulos descriptivos secundarios de los botones del modal, dejando los textos limpios `📲 Compartir en redes` y `💾 Guardar postal`.
