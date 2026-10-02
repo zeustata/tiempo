@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1159-audio-resumen-voz';
+const CACHE_NAME = 'meteoasturlode-v1160-hero-dividers';
 const STATIC_ASSETS = [
   './',
   './index.html',

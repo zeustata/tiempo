@@ -1,16 +1,16 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.1.59';
-import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.1.59';
-import { renderHourlyForecastBlock } from './forecastView.js?v=1.1.59';
-import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.59';
-import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=1.1.59';
-import { detectXeluEffect, renderXeluBanner } from '../utils/xeluDetector.js?v=1.1.59';
-import { detectBorrinaEffect, renderBorrinaBanner } from '../utils/borrinaDetector.js?v=1.1.59';
-import { detectThunderstormEffect, renderThunderstormBanner } from '../utils/thunderstormDetector.js?v=1.1.59';
-import { detectRoadWindStatus, renderRoadWindBanner, renderRoadWindSensorPill } from '../utils/roadWindDetector.js?v=1.1.59';
-import { getSeismicStatus, renderSeismicBanner } from '../utils/seismicDetector.js?v=1.1.59';
-import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.59';
-import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=1.1.59';
-import { calculateUmbrellaStatus, renderUmbrellaCard } from '../utils/umbrellaAdvisor.js?v=1.1.59';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.1.60';
+import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.1.60';
+import { renderHourlyForecastBlock } from './forecastView.js?v=1.1.60';
+import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.60';
+import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=1.1.60';
+import { detectXeluEffect, renderXeluBanner } from '../utils/xeluDetector.js?v=1.1.60';
+import { detectBorrinaEffect, renderBorrinaBanner } from '../utils/borrinaDetector.js?v=1.1.60';
+import { detectThunderstormEffect, renderThunderstormBanner } from '../utils/thunderstormDetector.js?v=1.1.60';
+import { detectRoadWindStatus, renderRoadWindBanner, renderRoadWindSensorPill } from '../utils/roadWindDetector.js?v=1.1.60';
+import { getSeismicStatus, renderSeismicBanner } from '../utils/seismicDetector.js?v=1.1.60';
+import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.60';
+import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=1.1.60';
+import { calculateUmbrellaStatus, renderUmbrellaCard } from '../utils/umbrellaAdvisor.js?v=1.1.60';
 
 /**
  * Formatea el título del concejo subordinando las localidades entre paréntesis (ej. Piedras Blancas / Salinas)
@@ -176,10 +176,10 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
       </div>
 
       <!-- FRANJA ERGONÓMICA DE TIEMPO HABITUAL (ANOMALÍA CLIMATOLÓGICA 30 AÑOS AEMET) -->
-      ${climaStripMarkup}
+      ${climaStripMarkup ? `<div class="hero-divider"></div>${climaStripMarkup}` : ''}
 
       <!-- SEMÁFORU DEL PARAGÜES (Nowcasting Asturiano Inmediato 8h) -->
-      ${umbrellaMarkup}
+      ${umbrellaMarkup ? `<div class="hero-divider"></div>${umbrellaMarkup}` : ''}
     </div>
 
     <!-- BANNER DINÁMICO DE EFECTO FOEHN ("VIENTU LES CASTAÑES") -->

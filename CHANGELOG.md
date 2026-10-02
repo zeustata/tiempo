@@ -10,6 +10,21 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.60] - 2026-10-02
+
+### 📏 Líneas Divisorias de Cristal Líquido en Hero Card (Feedback Lendo)
+- **Estructuración Visual de la Hero Card (Doctrina de Armonía Visual, Ley 14):**
+  - Incorporación de dos líneas divisorias sutiles y difuminadas (`1px solid rgba(255, 255, 255, 0.08)`):
+    1. Una línea entre la fila principal térmica/acciones y el bloque de *Valores Habituales* (climatología 30 años AEMET).
+    2. Otra línea entre *Valores Habituales* y el *Semáforu del Paragües*.
+  - Renderizado condicional para que solo se dibujen si los bloques correspondientes están presentes.
+- **Espaciado y Ergonomía Móvil (Ley 11):**
+  - Ajuste de márgenes simétricos (`margin: 12px 0` con reglas de hermanos adyacentes `margin-top: 0`), permitiendo que las tres zonas respiren y luzcan ordenadas sin añadir scroll vertical.
+- **Cache-Busting y Sincronización:**
+  - Cadena de Service Worker actualizada a `meteoasturlode-v1160-hero-dividers` y query strings `?v=1.1.60` sincronizadas en toda la plataforma.
+
+---
+
 ## [1.1.59] - 2026-10-02
 
 ### 🔊 Boletín Meteorológico Locutado por Voz (Web Speech API)

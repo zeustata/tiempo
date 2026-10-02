@@ -16,7 +16,21 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. **Pie Institucional de la Estampa (Canvas):** Añadir la mención o sello elegante *«Disponible en Google Play • zeustata.github.io/tiempo»* en el pie de la imagen compartida.
     3. **Badge en la Web ([index.html](file:///c:/Users/NUC/Downloads/IA/Tiempo/index.html)):** Incorporar el botón oficial *«Consíguelo en Google Play»* en el pie de la aplicación web.
 
-## 🚀 Última Actualización Oficial: v1.1.59 🔊 — 2026-10-02
+## 🚀 Última Actualización Oficial: v1.1.60 📏 — 2026-10-02
+- **Líneas Divisorias de Cristal Líquido en Hero Card (Feedback Lendo):**
+  1. *Estructuración Visual y Armonía (Doctrina de Armonía Visual, Ley 14):*
+     - Incorporadas dos líneas sutiles y difuminadas (`1px solid rgba(255, 255, 255, 0.08)`) idénticas a la de la cabecera:
+       - Una línea separadora entre la fila principal térmica/acciones y el bloque de *Valores Habituales* (climatología 30 años AEMET).
+       - Otra línea separadora entre *Valores Habituales* y el *Semáforu del Paragües*.
+     - Renderizado condicional en [currentCard.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/components/currentCard.js): cada línea solo se inyecta en el DOM si el componente asociado existe.
+  2. *Espaciado y Ergonomía Móvil ([components.css](file:///c:/Users/NUC/Downloads/IA/Tiempo/css/components.css)):*
+     - Definida la clase `.hero-divider` con márgenes equilibrados (`margin: 12px 0`) y combinadores adyacentes (`.hero-divider + .climatology-strip` y `.hero-divider + .umbrella-advisor-strip` a `margin-top: 0`), garantizando transiciones limpias y simétricas sin incrementar el scroll vertical.
+  3. *Versionado y Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v1160-hero-dividers` y query strings `?v=1.1.60` sincronizadas en toda la plataforma.
+
+---
+
+## 🚀 Versión Anterior: v1.1.59 🔊 — 2026-10-02
 - **Boletín Meteorológico Locutado por Voz (Web Speech API) (Feedback Lendo):**
   1. *Botón de Audio Locución en Hero Card ([currentCard.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/components/currentCard.js) & [components.css](file:///c:/Users/NUC/Downloads/IA/Tiempo/css/components.css)):*
      - Integrado el botón `🔊` con la clase `.btn-hero-audio` dentro de `.hero-actions-toolbar` junto a la cámara de la estampa (`📸`).
