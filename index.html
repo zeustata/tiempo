@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.60">
-  <link rel="stylesheet" href="css/components.css?v=1.1.60">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.60">
+  <link rel="stylesheet" href="css/main.css?v=1.1.61">
+  <link rel="stylesheet" href="css/components.css?v=1.1.61">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.61">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -151,18 +151,38 @@
       <!-- 5. PRONÓSTICO -->
       <div id="panel-forecast" class="tab-panel"></div>
 
-      <!-- 6. GRÁFICOS -->
+      <!-- 6. METEOROLOGÍA GRÁFICA -->
       <div id="panel-charts" class="tab-panel">
         <div class="chart-card">
           <div class="section-title-wrap">
             <div>
-              <h3 class="section-heading">📈 Evolución Meteorológica Próximas 48 Horas</h3>
-              <span class="section-subtitle">Curvas horarias detalladas de temperatura, lluvia y viento</span>
+              <h3 class="section-heading" id="chart-section-title">📈 Meteorología Gráfica</h3>
+              <span class="section-subtitle" id="chart-section-subtitle">Evolución horaria de temperatura real vs. sensación térmica y confort</span>
             </div>
             <div class="chart-scroll-hint-pill">
-              <span>👈 Desliza la gráfica para explorar las 48h 👉</span>
+              <span id="chart-scroll-hint">👈 Desliza la gráfica para explorar las 48h 👉</span>
             </div>
           </div>
+
+          <!-- SELECTOR DE VARIABLES Y RANGO HORARIO (LIQUID GLASS) -->
+          <div class="chart-controls-bar">
+            <div class="chart-type-selector" role="tablist" aria-label="Variables Meteorológicas">
+              <button class="chart-pill-btn active" data-chart="thermal" title="Temperatura y Sensación Térmica">🌡️ Térmico</button>
+              <button class="chart-pill-btn" data-chart="precip" title="Hidrograma de Lluvia y Acumulado">🌧️ Lluvia</button>
+              <button class="chart-pill-btn" data-chart="wind" title="Velocidad y Rachas de Viento">💨 Viento</button>
+              <button class="chart-pill-btn" data-chart="pressure" title="Barógrafo y Presión Atmosférica">⏱️ Barómetro</button>
+              <button class="chart-pill-btn" data-chart="multi" title="Curvas combinadas clásicas">📊 Combinado</button>
+            </div>
+            <div class="chart-range-selector" role="group" aria-label="Rango de horas">
+              <button class="chart-range-btn" data-hours="24">24h</button>
+              <button class="chart-range-btn active" data-hours="48">48h</button>
+              <button class="chart-range-btn" data-hours="72">72h</button>
+            </div>
+          </div>
+
+          <!-- FRANJA DE RESUMEN Y EXTREMOS DE LA VARIABLE ACTIVA -->
+          <div class="chart-summary-strip" id="chart-summary-strip"></div>
+
           <div class="chart-scroll-viewport">
             <div class="chart-canvas-wrapper" id="chart-canvas-wrapper">
               <canvas id="meteo-chart-canvas"></canvas>
@@ -179,7 +199,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.60 📏</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.61 📈</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -230,8 +250,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.60 📏</span>
+            <span class="release-version">v1.1.61 📈</span>
             <span class="release-date">02 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-nuevo">Observatorio Horario</span> <strong>Transformación a «Meteorología Gráfica» (Feedback Lendo)</strong>:
+              <br>• <strong>Nuevo Módulo Multigráfico Especializado:</strong> Evolución del antiguo panel único de 48h a una suite completa interactiva con selector táctil Liquid Glass de 5 variables: <em>🌡️ Térmico</em> (Temperatura real vs. Sensación), <em>🌧️ Lluvia</em> (Hidrograma en mm/h, probabilidad y lluvia acumulada), <em>💨 Viento</em> (Velocidad media y rachas), <em>⏱️ Barómetro</em> (Presión en hPa y detección de frentes) y <em>📊 Combinado</em>.
+              <br>• <strong>Selector Dinámico de Ventana Temporal:</strong> Posibilidad de alternar con un toque entre <strong>24h</strong>, <strong>48h</strong> y <strong>72h</strong>.
+              <br>• <strong>Franja de Resumen y Extremos:</strong> Pastillas de lectura rápida con picos máximos, mínimos, acumulados totales de lluvia, hora de mayor intensidad y tendencias de presión.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.60 📏</span>
+            <span class="release-date">02 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-mejora">Diseño &amp; Jerarquía (Ley 14)</span> <strong>Líneas Divisorias de Cristal Líquido en Hero Card (Feedback Lendo)</strong>:
@@ -2380,7 +2414,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.60"></script>
+  <script type="module" src="js/app.js?v=1.1.61"></script>
 
 
 

@@ -16,7 +16,27 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. **Pie Institucional de la Estampa (Canvas):** Añadir la mención o sello elegante *«Disponible en Google Play • zeustata.github.io/tiempo»* en el pie de la imagen compartida.
     3. **Badge en la Web ([index.html](file:///c:/Users/NUC/Downloads/IA/Tiempo/index.html)):** Incorporar el botón oficial *«Consíguelo en Google Play»* en el pie de la aplicación web.
 
-## 🚀 Última Actualización Oficial: v1.1.60 📏 — 2026-10-02
+## 🚀 Última Actualización Oficial: v1.1.61 📈 — 2026-10-02
+- **Transformación a «Meteorología Gráfica» (Feedback Lendo):**
+  1. *Suite Multigráfico Especializada ([chartsView.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/components/chartsView.js) & [index.html](file:///c:/Users/NUC/Downloads/IA/Tiempo/index.html)):*
+     - Reemplazado el antiguo panel estático de 48h por un observatorio horario interactivo con selector de 5 gráficos especializados:
+       - *🌡️ Térmico:* Temperatura real vs. Sensación térmica.
+       - *🌧️ Lluvia:* Hidrograma con mm/h, probabilidad y lluvia acumulada total.
+       - *💨 Viento:* Velocidad media del viento y rachas máximas con niveles de alerta.
+       - *⏱️ Barómetro:* Presión atmosférica en hPa con escala dinámica sensible para detección anticipada de frentes.
+       - *📊 Combinado:* Las tres métricas simultáneas clásicas.
+  2. *Selector Dinámico de Alcance Horario (24h / 48h / 72h):*
+     - Selector táctil para alternar la ventana de tiempo al instante sin recargas, con scroll horizontal fluido.
+  3. *Franja Superior de Resumen y Métricas Clave ([components.css](file:///c:/Users/NUC/Downloads/IA/Tiempo/css/components.css)):*
+     - Pastillas informativas con picos máximos, mínimos, hora exacta del pico y tendencias barométricas.
+  4. *Renombramiento Oficial en Menú:*
+     - Módulo 2 pasa a llamarse oficialmente **«Meteorología Gráfica»** en el menú de navegación y cabeceras.
+  5. *Versionado y Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v1161-meteorologia-grafica-suite` y query strings `?v=1.1.61` sincronizadas en toda la plataforma.
+
+---
+
+## 🚀 Versión Anterior: v1.1.60 📏 — 2026-10-02
 - **Líneas Divisorias de Cristal Líquido en Hero Card (Feedback Lendo):**
   1. *Estructuración Visual y Armonía (Doctrina de Armonía Visual, Ley 14):*
      - Incorporadas dos líneas sutiles y difuminadas (`1px solid rgba(255, 255, 255, 0.08)`) idénticas a la de la cabecera:

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1160-hero-dividers';
+const CACHE_NAME = 'meteoasturlode-v1161-meteorologia-grafica-suite';
 const STATIC_ASSETS = [
   './',
   './index.html',

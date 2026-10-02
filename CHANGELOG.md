@@ -10,6 +10,27 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.61] - 2026-10-02
+
+### 📈 Transformación a «Meteorología Gráfica» (Feedback Lendo)
+- **Suite Multigráfico Especializado de Observatorio Horario:**
+  - Sustitución del antiguo panel rígido único de 48h por un observatorio dinámico interactivo con selector de 5 variables meteorológicas táctil Liquid Glass:
+    1. *🌡️ Térmico:* Curva de temperatura real (`#38bdf8`) vs. curva de sensación térmica (`#fb923c`) discontinua.
+    2. *🌧️ Lluvia:* Hidrograma completo con barras de precipitación horaria (mm/h), probabilidad de lluvia (%) y curva de lluvia acumulada total (mm).
+    3. *💨 Viento:* Anemograma continuo con rachas máximas (km/h) y velocidad media del viento.
+    4. *⏱️ Barómetro:* Barógrafo de presión atmosférica a nivel del mar (hPa) con eje dinámico de alta resolución para detectar frentes, borrascas y galernas.
+    5. *📊 Combinado:* La gráfica multivariable clásica con las tres métricas combinadas.
+- **Selector de Ventana Temporal (24h / 48h / 72h):**
+  - Posibilidad de alternar el alcance temporal con un solo clic/toque, recalculando automáticamente el lienzo táctil con scroll horizontal holgado.
+- **Franja Superior de Resumen y Métricas Clave:**
+  - Tarjetas compactas con los picos máximos, mínimos, horas exactas de los eventos, lluvia acumulada y tendencias de presión.
+- **Renombramiento Oficial en Navegación y Menús:**
+  - El módulo 2 pasa a denominarse oficialmente **«Meteorología Gráfica»** en toda la aplicación.
+- **Cache-Busting y Sincronización:**
+  - Cadena de Service Worker actualizada a `meteoasturlode-v1161-meteorologia-grafica-suite` y query strings `?v=1.1.61` sincronizadas.
+
+---
+
 ## [1.1.60] - 2026-10-02
 
 ### 📏 Líneas Divisorias de Cristal Líquido en Hero Card (Feedback Lendo)
