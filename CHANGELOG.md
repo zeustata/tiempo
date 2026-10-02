@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.58] - 2026-10-02
+
+### 🌡️ Rebalanceo Térmico y Toolbar de Acciones en Hero Card (Feedback Lendo)
+- **Bloque Térmico Unificado a la Izquierda:**
+  - Reubicación de las pastillas de temperatura mínima y máxima (`↓ X°C` y `↑ Y°C`) debajo de la temperatura actual a la izquierda (`.temp-primary-block`).
+  - Se aprovecha de forma natural el hueco inferior de la gran cifra de grados, unificando toda la información térmica en una columna vertical sólida.
+- **Botonera de Herramientas Ergonómica a la Derecha:**
+  - Creación de `.hero-actions-toolbar` en la columna derecha para alojar los botones de interacción del concejo: botón circular de estampa postal (`📸`) y espacio reservado para la futura función de audio resumen con voz (`🔊`).
+  - La columna derecha queda despejada, equilibrada y sin acumulación de elementos.
+- **Cache-Busting y Sincronización:**
+  - Cadena de Service Worker actualizada a `meteoasturlode-v1158-herocard-rebalance-minmax-toolbar` y query strings `?v=1.1.58` sincronizadas en CSS y módulos JS.
+
+---
+
 ## [1.1.57] - 2026-10-02
 
 ### 📸 Evolución Horaria Completa en la Estampa Compartible (Feedback Lendo)

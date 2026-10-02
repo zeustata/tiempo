@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1157-evolucion-horaria-completa-en-estampa';
+const CACHE_NAME = 'meteoasturlode-v1158-herocard-rebalance-minmax-toolbar';
 const STATIC_ASSETS = [
   './',
   './index.html',

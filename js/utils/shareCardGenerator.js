@@ -7,7 +7,7 @@
  * Compatible con la Web Share API (WhatsApp, Instagram, Telegram) y descarga directa.
  */
 
-import { getWeatherInfo } from './weatherIcons.js?v=1.1.57';
+import { getWeatherInfo } from './weatherIcons.js?v=1.1.58';
 
 const DICHOS_ASTURIANOS = [
   "«El tiempu n'Asturies camuda más que l'orballu na yerba.»",

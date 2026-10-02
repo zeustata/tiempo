@@ -16,7 +16,18 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. **Pie Institucional de la Estampa (Canvas):** Añadir la mención o sello elegante *«Disponible en Google Play • zeustata.github.io/tiempo»* en el pie de la imagen compartida.
     3. **Badge en la Web ([index.html](file:///c:/Users/NUC/Downloads/IA/Tiempo/index.html)):** Incorporar el botón oficial *«Consíguelo en Google Play»* en el pie de la aplicación web.
 
-## 🚀 Última Actualización Oficial: v1.1.57 📸 — 2026-10-02
+## 🚀 Última Actualización Oficial: v1.1.58 📸 — 2026-10-02
+- **Rebalanceo Térmico y Toolbar de Acciones en Hero Card (Feedback Lendo):**
+  1. *Unificación Térmica a la Izquierda ([currentCard.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/components/currentCard.js) & [components.css](file:///c:/Users/NUC/Downloads/IA/Tiempo/css/components.css)):*
+     - Reubicadas las pastillas de mín/máx (`↓ X°C` y `↑ Y°C`) en una columna alineada a la izquierda (`.temp-primary-block`) justo debajo de la temperatura actual. Se aprovecha el espacio inferior de la cifra grande creando una columna térmica unificada.
+  2. *Toolbar Ergonómica a la Derecha:*
+     - Creado el contenedor `.hero-actions-toolbar` en la columna derecha para alojar los botones de acción del concejo (cámara de estampa `📸` y espacio para el próximo botón de audio resumen `🔊`). El lateral derecho queda limpio y despejado.
+  3. *Versionado y Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v1158-herocard-rebalance-minmax-toolbar` y query strings `?v=1.1.58` sincronizadas en todos los archivos.
+
+---
+
+## 🚀 Versión Anterior: v1.1.57 📸 — 2026-10-02
 - **Evolución Horaria Completa en la Estampa Compartible (Feedback Lendo):**
   1. *Mini-Tarjetas Liquid Glass para 6 Horas ([shareCardGenerator.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/utils/shareCardGenerator.js)):*
      - Reemplazada la antigua fila de números planos por 6 tarjetas verticales de cristal translúcido para las próximas 6 horas consecutivas (`Ahora`, `+1h`, `+2h`, `+3h`, `+4h`, `+5h`).

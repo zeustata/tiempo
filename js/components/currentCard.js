@@ -1,16 +1,16 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.1.57';
-import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.1.57';
-import { renderHourlyForecastBlock } from './forecastView.js?v=1.1.57';
-import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.57';
-import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=1.1.57';
-import { detectXeluEffect, renderXeluBanner } from '../utils/xeluDetector.js?v=1.1.57';
-import { detectBorrinaEffect, renderBorrinaBanner } from '../utils/borrinaDetector.js?v=1.1.57';
-import { detectThunderstormEffect, renderThunderstormBanner } from '../utils/thunderstormDetector.js?v=1.1.57';
-import { detectRoadWindStatus, renderRoadWindBanner, renderRoadWindSensorPill } from '../utils/roadWindDetector.js?v=1.1.57';
-import { getSeismicStatus, renderSeismicBanner } from '../utils/seismicDetector.js?v=1.1.57';
-import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.57';
-import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=1.1.57';
-import { calculateUmbrellaStatus, renderUmbrellaCard } from '../utils/umbrellaAdvisor.js?v=1.1.57';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.1.58';
+import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.1.58';
+import { renderHourlyForecastBlock } from './forecastView.js?v=1.1.58';
+import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.58';
+import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=1.1.58';
+import { detectXeluEffect, renderXeluBanner } from '../utils/xeluDetector.js?v=1.1.58';
+import { detectBorrinaEffect, renderBorrinaBanner } from '../utils/borrinaDetector.js?v=1.1.58';
+import { detectThunderstormEffect, renderThunderstormBanner } from '../utils/thunderstormDetector.js?v=1.1.58';
+import { detectRoadWindStatus, renderRoadWindBanner, renderRoadWindSensorPill } from '../utils/roadWindDetector.js?v=1.1.58';
+import { getSeismicStatus, renderSeismicBanner } from '../utils/seismicDetector.js?v=1.1.58';
+import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.58';
+import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=1.1.58';
+import { calculateUmbrellaStatus, renderUmbrellaCard } from '../utils/umbrellaAdvisor.js?v=1.1.58';
 
 /**
  * Formatea el título del concejo subordinando las localidades entre paréntesis (ej. Piedras Blancas / Salinas)
@@ -155,16 +155,20 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
       </div>
 
       <div class="hero-main-row">
-        <div class="temp-primary">
-          <span class="temp-val">${Math.round(current.temperature_2m)}</span>
-          <span class="temp-unit">°C</span>
+        <div class="temp-primary-block">
+          <div class="temp-primary">
+            <span class="temp-val">${Math.round(current.temperature_2m)}</span>
+            <span class="temp-unit">°C</span>
+          </div>
+          <div class="temp-minmax-pills">
+            <span class="t-pill min">↓ ${Math.round(daily.temperature_2m_min[0])}°C</span>
+            <span class="t-pill max">↑ ${Math.round(daily.temperature_2m_max[0])}°C</span>
+          </div>
         </div>
         <div class="temp-info-block">
           <div class="condition-name" title="${weatherInfo.isSolarCalibrated ? (weatherInfo.isResol ? '☀️ Calibración Solar Inteligente: Resol / Sol tamizado activo atravesando las nubes con radiación solar directa en superficie' : '☀️ Calibración Solar Inteligente: Sensores físicos en tierra confirman sol y claros') : ''}">${weatherInfo.label}</div>
           <div class="temp-feels">Sensación térmica: <strong>${Math.round(current.apparent_temperature)}°C</strong></div>
-          <div class="temp-minmax-pills">
-            <span class="t-pill min">↓ ${Math.round(daily.temperature_2m_min[0])}°C</span>
-            <span class="t-pill max">↑ ${Math.round(daily.temperature_2m_max[0])}°C</span>
+          <div class="hero-actions-toolbar">
             <button class="btn-hero-camera btn-open-share-card" id="btn-hero-share" title="Generar estampa visual de este concejo para WhatsApp o Instagram" aria-label="Compartir estampa">📸</button>
           </div>
         </div>

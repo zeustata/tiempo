@@ -163,11 +163,19 @@
 
 .hero-main-row {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 14px;
   padding-top: 14px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.temp-primary-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  flex-shrink: 0;
 }
 
 .temp-primary {
@@ -220,9 +228,15 @@
 
 .temp-minmax-pills {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   align-items: center;
-  margin-top: 2px;
+}
+
+.hero-actions-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
 }
 
 .t-pill {
@@ -7738,7 +7752,8 @@
   flex-shrink: 0;
 }
 
-/* Botón Minimalista de Cámara en Hero Card (Liquid Glass circular de 32px) */
+/* Botón Minimalista de Cámara / Herramientas en Hero Card (Liquid Glass circular de 32px) */
+.btn-hero-tool,
 .btn-hero-camera {
   width: 32px;
   height: 32px;
@@ -7754,7 +7769,6 @@
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   padding: 0;
-  margin-left: 2px;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
   outline: none;
@@ -7762,6 +7776,8 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
+.btn-hero-tool:hover,
+.btn-hero-tool:active,
 .btn-hero-camera:hover,
 .btn-hero-camera:active {
   background: rgba(56, 189, 248, 0.35);
