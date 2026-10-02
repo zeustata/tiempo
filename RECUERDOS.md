@@ -16,7 +16,23 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. **Pie Institucional de la Estampa (Canvas):** Añadir la mención o sello elegante *«Disponible en Google Play • zeustata.github.io/tiempo»* en el pie de la imagen compartida.
     3. **Badge en la Web ([index.html](file:///c:/Users/NUC/Downloads/IA/Tiempo/index.html)):** Incorporar el botón oficial *«Consíguelo en Google Play»* en el pie de la aplicación web.
 
-## 🚀 Última Actualización Oficial: v1.1.61 📈 — 2026-10-02
+## 🚀 Última Actualización Oficial: v1.1.62 📈 — 2026-10-02
+- **Rediseño Limpio y Gráfico Protagonista en «Meteorología Gráfica» (Feedback Lendo):**
+  1. *Ergonomía Móvil y Supresión de Barrera Vertical (Ley 11):*
+     - Reorganizado el panel para que el gráfico sea el protagonista absoluto visible de inmediato al entrar en la pestaña.
+     - Suprimidos subtítulos descriptivos redundantes y el aviso azul que empujaban la gráfica fuera del marco.
+  2. *Cabecera Unificada en 1 Línea ([index.html](file:///c:/Users/NUC/Downloads/IA/Tiempo/index.html) & [components.css](file:///c:/Users/NUC/Downloads/IA/Tiempo/css/components.css)):*
+     - Título `📈 Meteorología Gráfica` a la izquierda y selector de horas (`24h | 48h | 72h`) integrado en la misma fila a la derecha.
+  3. *Rejilla 2×2 Simétrica de Métricas:*
+     - Las pastillas de datos clave pasan a ubicarse debajo del gráfico, distribuidas en 2 columnas al 50% con lectura rápida.
+  4. *Lienzo Táctil Compacto:*
+     - Altura ajustada a 340px (310px en smartphones estrechos) para visualización íntegra sin scroll vertical en pantallas móviles.
+  5. *Versionado y Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v1162-graficos-ergonomia-movil` y query strings `?v=1.1.62` sincronizadas en toda la plataforma.
+
+---
+
+## 🚀 Versión Anterior: v1.1.61 📈 — 2026-10-02
 - **Transformación a «Meteorología Gráfica» (Feedback Lendo):**
   1. *Suite Multigráfico Especializada ([chartsView.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/components/chartsView.js) & [index.html](file:///c:/Users/NUC/Downloads/IA/Tiempo/index.html)):*
      - Reemplazado el antiguo panel estático de 48h por un observatorio horario interactivo con selector de 5 gráficos especializados:

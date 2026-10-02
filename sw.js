@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1161-meteorologia-grafica-suite';
+const CACHE_NAME = 'meteoasturlode-v1162-graficos-ergonomia-movil';
 const STATIC_ASSETS = [
   './',
   './index.html',

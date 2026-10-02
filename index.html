@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.61">
-  <link rel="stylesheet" href="css/components.css?v=1.1.61">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.61">
+  <link rel="stylesheet" href="css/main.css?v=1.1.62">
+  <link rel="stylesheet" href="css/components.css?v=1.1.62">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.62">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -154,25 +154,9 @@
       <!-- 6. METEOROLOGÍA GRÁFICA -->
       <div id="panel-charts" class="tab-panel">
         <div class="chart-card">
-          <div class="section-title-wrap">
-            <div>
-              <h3 class="section-heading" id="chart-section-title">📈 Meteorología Gráfica</h3>
-              <span class="section-subtitle" id="chart-section-subtitle">Evolución horaria de temperatura real vs. sensación térmica y confort</span>
-            </div>
-            <div class="chart-scroll-hint-pill">
-              <span id="chart-scroll-hint">👈 Desliza la gráfica para explorar las 48h 👉</span>
-            </div>
-          </div>
-
-          <!-- SELECTOR DE VARIABLES Y RANGO HORARIO (LIQUID GLASS) -->
-          <div class="chart-controls-bar">
-            <div class="chart-type-selector" role="tablist" aria-label="Variables Meteorológicas">
-              <button class="chart-pill-btn active" data-chart="thermal" title="Temperatura y Sensación Térmica">🌡️ Térmico</button>
-              <button class="chart-pill-btn" data-chart="precip" title="Hidrograma de Lluvia y Acumulado">🌧️ Lluvia</button>
-              <button class="chart-pill-btn" data-chart="wind" title="Velocidad y Rachas de Viento">💨 Viento</button>
-              <button class="chart-pill-btn" data-chart="pressure" title="Barógrafo y Presión Atmosférica">⏱️ Barómetro</button>
-              <button class="chart-pill-btn" data-chart="multi" title="Curvas combinadas clásicas">📊 Combinado</button>
-            </div>
+          <!-- CABECERA ULTRA COMPACTA (Título + Selector de Horas en 1 sola línea) -->
+          <div class="chart-header-row">
+            <h3 class="section-heading">📈 Meteorología Gráfica</h3>
             <div class="chart-range-selector" role="group" aria-label="Rango de horas">
               <button class="chart-range-btn" data-hours="24">24h</button>
               <button class="chart-range-btn active" data-hours="48">48h</button>
@@ -180,14 +164,24 @@
             </div>
           </div>
 
-          <!-- FRANJA DE RESUMEN Y EXTREMOS DE LA VARIABLE ACTIVA -->
-          <div class="chart-summary-strip" id="chart-summary-strip"></div>
+          <!-- SELECTOR DE VARIABLES TIPO PESTAÑA DESLIZABLE -->
+          <div class="chart-type-selector" role="tablist" aria-label="Variables Meteorológicas">
+            <button class="chart-pill-btn active" data-chart="thermal" title="Temperatura y Sensación Térmica">🌡️ Térmico</button>
+            <button class="chart-pill-btn" data-chart="precip" title="Hidrograma de Lluvia y Acumulado">🌧️ Lluvia</button>
+            <button class="chart-pill-btn" data-chart="wind" title="Velocidad y Rachas de Viento">💨 Viento</button>
+            <button class="chart-pill-btn" data-chart="pressure" title="Barógrafo y Presión Atmosférica">⏱️ Barómetro</button>
+            <button class="chart-pill-btn" data-chart="multi" title="Curvas combinadas clásicas">📊 Combinado</button>
+          </div>
 
+          <!-- EL GRÁFICO INMEDIATAMENTE VISIBLE (PROTAGONISTA ABSOLUTO) -->
           <div class="chart-scroll-viewport">
             <div class="chart-canvas-wrapper" id="chart-canvas-wrapper">
               <canvas id="meteo-chart-canvas"></canvas>
             </div>
           </div>
+
+          <!-- MÉTRICAS DE RESUMEN EN REJILLA COMPACTA 2x2 DEBAJO DEL GRÁFICO -->
+          <div class="chart-summary-strip" id="chart-summary-strip"></div>
         </div>
       </div>
 
@@ -199,7 +193,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.61 📈</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.62 📈</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -250,8 +244,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.61 📈</span>
+            <span class="release-version">v1.1.62 📈</span>
             <span class="release-date">02 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-mejora">Ergonomía Móvil (Ley 11)</span> <strong>Rediseño Limpio y Gráfico Protagonista en «Meteorología Gráfica» (Feedback Lendo)</strong>:
+              <br>• <strong>Supresión de Sobrecarga Vertical:</strong> El gráfico sube a la parte superior inmediatamente visible sin necesidad de scroll, eliminando subtítulos redundantes y banners de aviso.
+              <br>• <strong>Cabecera Unificada en 1 Línea:</strong> Título a la izquierda y selector de horas (<code>24h | 48h | 72h</code>) alineado a la derecha en la misma fila.
+              <br>• <strong>Rejilla 2×2 Compacta de Métricas:</strong> Las pastillas de resumen pasan debajo del gráfico organizadas simétricamente en 2 columnas al 50%, manteniendo la pantalla ordenada y despejada.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.61 📈</span>
+            <span class="release-date">02 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-nuevo">Observatorio Horario</span> <strong>Transformación a «Meteorología Gráfica» (Feedback Lendo)</strong>:
@@ -2414,7 +2422,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.61"></script>
+  <script type="module" src="js/app.js?v=1.1.62"></script>
 
 
 

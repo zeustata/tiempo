@@ -10,6 +10,22 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.62] - 2026-10-02
+
+### 📱 Rediseño Limpio y Gráfico Protagonista en «Meteorología Gráfica» (Feedback Lendo)
+- **Supresión de Sobrecarga Vertical y Ergonomía Móvil (Ley 11):**
+  - El gráfico sube a la parte superior inmediatamente visible sin necesidad de scroll, eliminando subtítulos redundantes y banners gigantes de aviso que desplazaban la gráfica fuera de la pantalla.
+- **Cabecera Unificada en 1 Sola Línea:**
+  - Título `📈 Meteorología Gráfica` a la izquierda y selector de horas (`24h | 48h | 72h`) integrado a la derecha en la misma fila horizontal.
+- **Rejilla 2×2 Compacta de Métricas de Resumen:**
+  - Las pastillas de datos clave pasan debajo de la gráfica distribuidas simétricamente en 2 columnas al 50%, manteniendo la pantalla ordenada y limpia.
+- **Altura de Lienzo Optimizada:**
+  - Ajuste de altura a 340px (310px en smartphones estrechos) para que la gráfica completa y las métricas queden visibles en una sola pantalla.
+- **Cache-Busting y Sincronización:**
+  - Cadena de Service Worker actualizada a `meteoasturlode-v1162-graficos-ergonomia-movil` y query strings `?v=1.1.62` sincronizadas.
+
+---
+
 ## [1.1.61] - 2026-10-02
 
 ### 📈 Transformación a «Meteorología Gráfica» (Feedback Lendo)
