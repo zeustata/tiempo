@@ -16,7 +16,30 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. **Pie Institucional de la Estampa (Canvas):** Añadir la mención o sello elegante *«Disponible en Google Play • zeustata.github.io/tiempo»* en el pie de la imagen compartida.
     3. **Badge en la Web ([index.html](file:///c:/Users/NUC/Downloads/IA/Tiempo/index.html)):** Incorporar el botón oficial *«Consíguelo en Google Play»* en el pie de la aplicación web.
 
-## 🚀 Última Actualización Oficial: v1.1.58 📸 — 2026-10-02
+## 🚀 Última Actualización Oficial: v1.1.59 🔊 — 2026-10-02
+- **Boletín Meteorológico Locutado por Voz (Web Speech API) (Feedback Lendo):**
+  1. *Botón de Audio Locución en Hero Card ([currentCard.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/components/currentCard.js) & [components.css](file:///c:/Users/NUC/Downloads/IA/Tiempo/css/components.css)):*
+     - Integrado el botón `🔊` con la clase `.btn-hero-audio` dentro de `.hero-actions-toolbar` junto a la cámara de la estampa (`📸`).
+     - Efecto visual dinámico con pulsación luminosa cian (`.btn-hero-audio.speaking` y `@keyframes pulseAudioSpeaking`) mientras el sintetizador está activo, conmutando el icono temporalmente a `⏹️` para permitir parada manual en 1 clic.
+  2. *Motor de Síntesis de Voz Inteligente ([weatherSpeaker.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/utils/weatherSpeaker.js)):*
+     - Generación dinámica de un guion de locución cercano, fluido y adaptativo en español:
+       - Saludo y contexto: concejo y hora del reporte.
+       - Temperatura actual, sensación térmica y descripción del cielo con soporte Nowcasting.
+       - Extremos diarios: máximas y mínimas previstas.
+       - Viento con dirección cardinal y velocidad en km/h.
+       - Humedad relativa ambiental.
+       - Lluvia y probabilidad de precipitación en horas inmediatas.
+       - Oleaje y altura de ola en litoral para concejos costeros.
+     - Selección inteligente de la mejor voz natural en español disponible en el sistema (Google, Microsoft, Apple o predeterminada del navegador).
+     - Cancelación segura sin errores ante interrupciones de usuario o cambio de concejo (`stopWeatherSpeech`).
+  3. *Arquitectura 100% Nativa y Privada:*
+     - Cero dependencias externas, cero consumo de ancho de banda adicional y total respeto a la privacidad del usuario.
+  4. *Versionado y Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v1159-audio-resumen-voz` y query strings `?v=1.1.59` sincronizadas en toda la plataforma.
+
+---
+
+## 🚀 Versión Anterior: v1.1.58 📸 — 2026-10-02
 - **Rebalanceo Térmico y Toolbar de Acciones en Hero Card (Feedback Lendo):**
   1. *Unificación Térmica a la Izquierda ([currentCard.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/components/currentCard.js) & [components.css](file:///c:/Users/NUC/Downloads/IA/Tiempo/css/components.css)):*
      - Reubicadas las pastillas de mín/máx (`↓ X°C` y `↑ Y°C`) en una columna alineada a la izquierda (`.temp-primary-block`) justo debajo de la temperatura actual. Se aprovecha el espacio inferior de la cifra grande creando una columna térmica unificada.

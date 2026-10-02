@@ -10,6 +10,29 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.59] - 2026-10-02
+
+### 🔊 Boletín Meteorológico Locutado por Voz (Web Speech API)
+- **Locución Nativa por Voz en la Hero Card (Feedback Lendo):**
+  - Incorporación del botón de audio `🔊` en la barra de herramientas derecha (`.hero-actions-toolbar`) junto a la cámara de la estampa (`📸`).
+  - Al pulsarlo, el sintetizador de voz nativo del dispositivo (`window.speechSynthesis`) narra un boletín meteorológico completo en español (`es-ES`) estructurado de forma natural y cercana:
+    - *Identificación del concejo y hora del boletín.*
+    - *Estado actual del cielo y sensación térmica.*
+    - *Valores extremos esperados para hoy (temperatura máxima y mínima).*
+    - *Régimen de viento (velocidad en km/h y dirección cardinal).*
+    - *Humedad relativa ambiental.*
+    - *Precipitación y probabilidad de lluvia según Nowcasting.*
+    - *Condición marítima (altura de ola en el litoral para concejos costeros).*
+- **Control Interactivo y Feedback Visual Dinámico:**
+  - Mientras el boletín está en reproducción, el botón conmuta a `⏹️` con una suave pulsación luminosa cian (`pulseAudioSpeaking`).
+  - Al volver a pulsar `⏹️`, la locución se detiene de inmediato.
+  - Se detiene automáticamente al cambiar de concejo en el mapa o buscador.
+  - Cero dependencias externas (0 KB de librería añadida) y privacidad total (no envía grabaciones ni peticiones a servidores de terceros).
+- **Cache-Busting y Sincronización:**
+  - Cadena de Service Worker actualizada a `meteoasturlode-v1159-audio-resumen-voz` y query strings `?v=1.1.59` sincronizadas en toda la aplicación.
+
+---
+
 ## [1.1.58] - 2026-10-02
 
 ### 🌡️ Rebalanceo Térmico y Toolbar de Acciones en Hero Card (Feedback Lendo)
