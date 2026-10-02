@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1153-alerta-viento-viaductos';
+const CACHE_NAME = 'meteoasturlode-v1154-estampa-compartir';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -48,6 +48,7 @@ const STATIC_ASSETS = [
   './js/utils/borrinaDetector.js',
   './js/utils/thunderstormDetector.js',
   './js/utils/roadWindDetector.js',
+  './js/utils/shareCardGenerator.js',
   './js/utils/routesData.js',
   './js/utils/seismicDetector.js',
   './js/utils/tides.js'

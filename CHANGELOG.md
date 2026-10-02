@@ -10,6 +10,29 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.54] - 2026-10-02
+
+### 📸 Nueva Función Social: «MeteoAstur Instant» (Estampa Visual Compartible)
+- **Generación Local Instantánea mediante Canvas (100% en Cliente):**
+  - Nuevo módulo independiente `js/utils/shareCardGenerator.js` que renderiza al vuelo en menos de 30 ms una postal visual en resolución premium vertical de 1080&times;1350 px (proporción estándar 4:5 de WhatsApp e Instagram Stories).
+  - Cero dependencias externas y cero coste de servidor: utiliza la API nativa de `<canvas>` sin subir archivos a servidores intermedios.
+- **Estética Liquid Glass y Toque Asturiano Genuino:**
+  - **Fondo dinámico adaptativo:** El lienzo adopta el color atmosférico del cielo en tiempo real (azul cobalto cálido para resol y sol, azul cosmos estrellado para noche, pizarra atlántica para orbayu y violeta para tormentas).
+  - **Identidad local:** Muestra el nombre del concejo con tipografía suiza rotunda, localidades subordinadas (ej. *Castrillón - Piedras Blancas / Salinas*), altitud, fecha y hora actual en asturiano/castellano.
+  - **Gran bloque térmico:** Temperatura destacada a gran escala, condición meteorológica fidedigna (incluyendo etiquetas asturianas como *«Resol / Sol tamizáu»* u *«Orbayu manso»*), sensación y extremas.
+  - **Trilogía métrica:** Tres cajas compactas con viento y rachas, humedad/lluvia acumulada y estado del Cantábrico (oleaje/rompiente si es costero) o confort de marcha.
+  - **Refrán Popular Asturiano:** Franja elegante con dichos tradicionales del refranero meteorológico asturiano (*«El tiempu n'Asturies camuda más que l'orballu na yerba»*, *«Si ves la mar berrar, pon la proa pal varaderu»*, etc.).
+  - **Firma y sello:** Marca de agua elegante *MeteoAstur Lode • zeustata.github.io/tiempo*.
+- **Integración con Web Share API y Guardar en Galería:**
+  - Soporte nativo para compartir directo mediante `navigator.share`: abre la bandeja del teléfono para enviar la estampa con un solo clic a grupos o estados de WhatsApp, Instagram Stories o Telegram.
+  - Botón de guardado local (*«Guardar Postal»*) para descargar el archivo PNG directamente en la galería del dispositivo o PC.
+- **Accesos Ergonómicos en Interfaz:**
+  - Botón directo `📸` en la barra de herramientas superior de la aplicación.
+  - Pastilla interactiva `📸 Compartir` incrustada de forma ergonómica en la fila de temperaturas de la propia Hero Card.
+- **Cache-Busting Sincronizado:** Service Worker actualizado a `meteoasturlode-v1154-estampa-compartir` y query strings unificadas a `?v=1.1.54`.
+
+---
+
 ## [1.1.53] - 2026-10-02
 
 ### 🚗💨 Alerta Silenciosa de Viento Lateral en Viaductos y Conducción (Seguridad Vial)

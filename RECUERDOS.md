@@ -10,7 +10,24 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ---
 
-## 🚀 Última Actualización Oficial: v1.1.53 🚗💨 — 2026-10-02
+## 🚀 Última Actualización Oficial: v1.1.54 📸 — 2026-10-02
+- **Nueva Función Social: «MeteoAstur Instant» (Estampa Visual Compartible para Redes):**
+  1. *Generador Canvas Nativo ([shareCardGenerator.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/utils/shareCardGenerator.js)):*
+     - Genera instantáneamente postales de 1080&times;1350 px (4:5) en cliente mediante HTML5 Canvas, sin APIs de pago ni dependencias externas.
+     - Fondo atmosférico dinámico según las condiciones del concejo (sol, noche, orbayu, tormenta, nieve).
+     - Incorpora nombre de concejo, localidades subordinadas, fecha y hora en asturiano/castellano, temperatura y condición (con calibración solar y resol), trilogía métrica (viento, humedad, mar/entorno) y refranero popular meteorológico asturiano.
+  2. *Web Share API & Descarga Directa:*
+     - Botón nativo para compartir directo en WhatsApp, Telegram e Instagram Stories con imagen adjunta.
+     - Fallback de descarga directa de archivo PNG en la galería de fotos.
+  3. *Integración en Interfaz y Ergonomía Móvil (Ley 11):*
+     - Acceso directo con icono `📸` en la barra de herramientas superior (`.header-extra-tools`).
+     - Pastilla interactiva ergonómica `📸 Compartir` incrustada junto a las mínimas y máximas en la Hero Card.
+     - Modal `#share-card-modal` con diseño Liquid Glass, vista previa centrada y botones ergonómicos.
+  4. *Anti-Caché Obligatorio:* `sw.js` (`meteoasturlode-v1154-estampa-compartir`) y sincronización de query strings a `?v=1.1.54`.
+
+---
+
+## 🚀 Versión Anterior: v1.1.53 🚗💨 — 2026-10-02
 - **Alerta Silenciosa de Viento Lateral en Viaductos y Conducción (Seguridad Vial):**
   1. *Detector Modular Independiente ([roadWindDetector.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/utils/roadWindDetector.js)):*
      - Diseñado con arquitectura modular estanca: no interfiere con el layout general, giroscopio ni carruseles.

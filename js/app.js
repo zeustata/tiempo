@@ -1,27 +1,28 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.1.53';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.1.53';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.1.53';
-import { renderCurrentWeather } from './components/currentCard.js?v=1.1.53';
-import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.1.53';
-import { renderSurfCard } from './components/surfCard.js?v=1.1.53';
-import { renderRoutesCard } from './components/routesCard.js?v=1.1.53';
-import { renderMountainCard } from './components/mountainCard.js?v=1.1.53';
-import { renderForecast } from './components/forecastView.js?v=1.1.53';
-import { renderWeatherChart } from './components/chartsView.js?v=1.1.53';
-import { renderAstronomyView } from './components/astronomyCard.js?v=1.1.53';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.53';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1.53';
-import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1.53';
-import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1.53';
-import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.53';
-import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.53';
-import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=1.1.53';
-import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=1.1.53';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.53';
-import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.53';
-import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.53';
-import { initGyroGlass } from './utils/gyroGlass.js?v=1.1.53';
-import { triggerSeismicRefresh } from './utils/seismicDetector.js?v=1.1.53';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.1.54';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.1.54';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.1.54';
+import { renderCurrentWeather } from './components/currentCard.js?v=1.1.54';
+import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.1.54';
+import { renderSurfCard } from './components/surfCard.js?v=1.1.54';
+import { renderRoutesCard } from './components/routesCard.js?v=1.1.54';
+import { renderMountainCard } from './components/mountainCard.js?v=1.1.54';
+import { renderForecast } from './components/forecastView.js?v=1.1.54';
+import { renderWeatherChart } from './components/chartsView.js?v=1.1.54';
+import { renderAstronomyView } from './components/astronomyCard.js?v=1.1.54';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.54';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1.54';
+import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1.54';
+import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1.54';
+import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.54';
+import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.54';
+import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=1.1.54';
+import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=1.1.54';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.54';
+import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.54';
+import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.54';
+import { initGyroGlass } from './utils/gyroGlass.js?v=1.1.54';
+import { triggerSeismicRefresh } from './utils/seismicDetector.js?v=1.1.54';
+import { openShareModal } from './utils/shareCardGenerator.js?v=1.1.54';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, pronóstico horario 72h y alertas', key: '1' },
@@ -35,7 +36,7 @@ const APP_MODULES = [
   { id: 'astronomy', icon: '🔭', title: 'Astronomía & Cosmos', desc: 'Eclipses, lluvias de estrellas, fases lunares y semáforo de visibilidad en Asturias', key: '9' }
 ];
 
-export const CURRENT_APP_VERSION = '1.1.53';
+export const CURRENT_APP_VERSION = '1.1.54';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -393,6 +394,45 @@ class MeteoAsturiasApp {
         this.toggleFullscreen();
       });
     }
+
+    // Botón y Modal de Estampa Compartible ("MeteoAstur Instant")
+    const shareCardBtn = document.getElementById('btn-share-card');
+    const shareModal = document.getElementById('share-card-modal');
+    const closeShareModalBtn = document.getElementById('btn-close-share-modal');
+
+    const handleOpenShare = () => {
+      this.triggerHaptic();
+      if (this.currentConcejo && this.weatherData) {
+        openShareModal(this.currentConcejo, this.weatherData);
+      }
+    };
+
+    if (shareCardBtn) {
+      shareCardBtn.addEventListener('click', handleOpenShare);
+    }
+
+    if (closeShareModalBtn && shareModal) {
+      closeShareModalBtn.addEventListener('click', () => {
+        this.closeModal(shareModal);
+      });
+    }
+
+    if (shareModal) {
+      shareModal.addEventListener('click', (e) => {
+        if (e.target === shareModal) {
+          this.closeModal(shareModal);
+        }
+      });
+    }
+
+    // Delegación de clic para botones de compartir (ej. en Hero Card)
+    document.addEventListener('click', (e) => {
+      const shareTrigger = e.target.closest('.btn-open-share-card');
+      if (shareTrigger) {
+        e.preventDefault();
+        handleOpenShare();
+      }
+    });
 
     // Modal de Atajos de Teclado
     const shortcutsBtn = document.getElementById('btn-shortcuts-help');
