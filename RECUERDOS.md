@@ -15,6 +15,11 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     1. **Texto Clicable al Compartir ([shareCardGenerator.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/utils/shareCardGenerator.js)):** Actualizar el mensaje de WhatsApp/Telegram para incluir el enlace dual inteligente (*«📲 Descárgala en Google Play: [Enlace Play Store] | 🌐 Web: https://zeustata.github.io/tiempo/»*), permitiendo instalación en 1 clic a usuarios de Android y acceso universal a usuarios de iOS/PC.
     2. **Pie Institucional de la Estampa (Canvas):** Añadir la mención o sello elegante *«Disponible en Google Play • zeustata.github.io/tiempo»* en el pie de la imagen compartida.
     3. **Badge en la Web ([index.html](file:///c:/Users/NUC/Downloads/IA/Tiempo/index.html)):** Incorporar el botón oficial *«Consíguelo en Google Play»* en el pie de la aplicación web.
+- **Ideas de Evolución y Hoja de Ruta para Pronósticos a 10 Días (Acuerdo Lendo 02-10-2026):**
+  1. *Barra Visual de Rango Térmico (Estilo Apple Weather / Meteo Suiza):* Insertar una barra horizontal fina con degradado continuo (azul frío a ámbar cálido) entre la temperatura Mínima y Máxima en la tarjeta general para visualizar intuitivamente la amplitud térmica diaria.
+  2. *Probabilidad de Precipitación (% PoP) Segmentada por Tramos (Mañana vs. Tarde):* Incorporar el porcentaje de probabilidad junto al volumen en milímetros en cada pastilla horaria (ej. `💧 10% • 0.1 mm` matinal vs. `💧 85% • 31.3 mm` vespertino) para que el usuario conozca con precisión cuándo se concentrará la precipitación.
+  3. *Distintivo Ergonómico de Fin de Semana (Sábados y Domingos):* Realzar visualmente los días de fin de semana con pastilla distintiva (`FINDE` / `Sáb - Dom`) o acento dorado para agilizar la planificación de ocio y escapadas en Asturias.
+  4. *Nieve Fresca Acumulada en Centímetros (cm):* En días o concejos con cota de nieve efectiva, traducir el equivalente de precipitación a espesor aproximado de manto nivoso en centímetros (`cm`), reforzando la vialidad invernal y el seguimiento cordillerano.
 
 ## 🚀 Última Actualización Oficial: v1.1.66 🌅 — 2026-10-02
 - **Atmósfera Cromática y Acabado Liquid Glass en Pronóstico a 10 Días (Feedback Lendo):**
