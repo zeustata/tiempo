@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1164-graficos-menu-dropdown';
+const CACHE_NAME = 'meteoasturlode-v1165-readout-blindado';
 const STATIC_ASSETS = [
   './',
   './index.html',

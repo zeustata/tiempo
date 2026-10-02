@@ -16,7 +16,21 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. **Pie Institucional de la Estampa (Canvas):** Añadir la mención o sello elegante *«Disponible en Google Play • zeustata.github.io/tiempo»* en el pie de la imagen compartida.
     3. **Badge en la Web ([index.html](file:///c:/Users/NUC/Downloads/IA/Tiempo/index.html)):** Incorporar el botón oficial *«Consíguelo en Google Play»* en el pie de la aplicación web.
 
-## 🚀 Última Actualización Oficial: v1.1.64 📈 — 2026-10-02
+## 🚀 Última Actualización Oficial: v1.1.65 📈 — 2026-10-02
+- **Blindaje Anti-Corte en Barra Live Inspector y Métricas (Feedback Lendo):**
+  1. *Distribución Dual Protegida en Live Inspector Readout (`#chart-live-readout`):*
+     - Reestructuración de la barra de lectura en dos áreas flexibles:
+       - *Izquierda:* Contexto horario (`🕒 Día Hora • Cielo`) con texto fluido.
+       - *Derecha:* Valor numérico blindado con `flex-shrink: 0`, `margin-left: auto` y colores vivos (`1024 hPa`, `21°C`, `2.4mm`, `35 km/h`), impidiendo que el texto numérico se corte por el margen derecho en pantallas móviles.
+  2. *Sintetización Inteligente de Textos y Tiempos:*
+     - Supresión automática de coletillas redundantes en el estado del cielo (ej: «de noche / de día»).
+     - Abreviatura de horas en pastillas de extremos (`18h` en lugar de `18:00`), garantizando que ninguna cifra quede oculta.
+  3. *Versionado y Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v1165-readout-blindado` y query strings `?v=1.1.65` sincronizadas en toda la plataforma.
+
+---
+
+## 🚀 Versión Anterior: v1.1.64 📈 — 2026-10-02
 - **Selector Desplegable Liquid Glass y Tooltip Flotante Silenciado (Feedback Lendo):**
   1. *Pastilla Desplegable de Variables (Opción B):*
      - Reemplazo de la hilera horizontal de pastillas por un selector desplegable flotante (`[ 🌡️ Térmico ▾ ]`) que se posiciona en la misma fila que el selector de ventana horaria (`24h | 48h | 72h`).

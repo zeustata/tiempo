@@ -10,6 +10,21 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.65] - 2026-10-02
+
+### 📱 Blindaje Anti-Corte en Barra Live Inspector y Métricas (Feedback Lendo)
+- **Distribución Dual Protegida en Live Inspector Readout (`#chart-live-readout`):**
+  - Reestructuración de la barra de lectura en dos áreas flexibles diferenciadas:
+    - *Izquierda:* Contexto horario (`🕒 Día Hora • Cielo`) con texto fluido.
+    - *Derecha:* Valor métrico blindado con `flex-shrink: 0`, `margin-left: auto` y colores vivos (`1024 hPa`, `21°C`, `2.4mm`, `35 km/h`), impidiendo que el texto numérico se corte por el margen derecho en pantallas móviles.
+- **Sintetización Inteligente de Textos y Tiempos:**
+  - Supresión automática de coletillas redundantes en el estado del cielo (ej: «de noche / de día»).
+  - Abreviatura de horas en pastillas de extremos (`18h` en lugar de `18:00`), garantizando que ninguna cifra quede oculta.
+- **Cache-Busting y Sincronización:**
+  - Cadena de Service Worker actualizada a `meteoasturlode-v1165-readout-blindado` y query strings `?v=1.1.65` sincronizadas.
+
+---
+
 ## [1.1.64] - 2026-10-02
 
 ### 📱 Selector Desplegable Liquid Glass y Tooltip Flotante Silenciado (Feedback Lendo)

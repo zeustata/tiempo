@@ -1,4 +1,4 @@
-import { getWeatherInfo } from '../utils/weatherIcons.js?v=1.1.64';
+import { getWeatherInfo } from '../utils/weatherIcons.js?v=1.1.65';
 
 /**
  * 📈 METEOROLOGÍA GRÁFICA (Suite Multivariable de Observatorio Horario)
@@ -235,8 +235,8 @@ function renderSummaryStrip(type, dataSlice) {
     const amp = Math.round((maxT - minT) * 10) / 10;
 
     html = `
-      <div class="chart-metric-badge highlight-warm">🔥 Máx: <strong>${Math.round(maxT)}°C</strong> <small>(${maxItem?.hourStr})</small></div>
-      <div class="chart-metric-badge highlight-cool">❄️ Mín: <strong>${Math.round(minT)}°C</strong> <small>(${minItem?.hourStr})</small></div>
+      <div class="chart-metric-badge highlight-warm">🔥 Máx: <strong>${Math.round(maxT)}°C</strong> <small>(${maxItem?.hourStr?.replace(':00', 'h')})</small></div>
+      <div class="chart-metric-badge highlight-cool">❄️ Mín: <strong>${Math.round(minT)}°C</strong> <small>(${minItem?.hourStr?.replace(':00', 'h')})</small></div>
       <div class="chart-metric-badge">🥵 Sensación: <strong>${Math.round(maxApp)}°C</strong></div>
       <div class="chart-metric-badge">↔️ Amplitud: <strong>${amp}°C</strong></div>
     `;
@@ -249,7 +249,7 @@ function renderSummaryStrip(type, dataSlice) {
 
     html = `
       <div class="chart-metric-badge highlight-rain">🌧️ Total: <strong>${totalPrecip.toFixed(1)} mm</strong></div>
-      <div class="chart-metric-badge highlight-rain">⚡ Pico: <strong>${maxPrecip.toFixed(1)} mm</strong> <small>(${maxPrecipItem?.hourStr || '--'})</small></div>
+      <div class="chart-metric-badge highlight-rain">⚡ Pico: <strong>${maxPrecip.toFixed(1)} mm</strong> <small>(${maxPrecipItem?.hourStr?.replace(':00', 'h') || '--'})</small></div>
       <div class="chart-metric-badge">🎯 Prob. máx: <strong>${maxPop}%</strong></div>
       <div class="chart-metric-badge">🕒 Con agua: <strong>${wetHours} h</strong></div>
     `;
@@ -258,10 +258,10 @@ function renderSummaryStrip(type, dataSlice) {
     const maxGust = Math.max(...gusts);
     const maxGustItem = dataSlice.find(d => d.windGusts === maxGust);
     const avgWind = Math.round(dataSlice.reduce((acc, d) => acc + d.windSpeed, 0) / dataSlice.length);
-    const windLevel = maxGust >= 65 ? '🔴 Temporal' : (maxGust >= 45 ? '🟡 Rachas fuertes' : '🟢 Viento moderado');
+    const windLevel = maxGust >= 65 ? '🔴 Temporal' : (maxGust >= 45 ? '🟡 Fuerte' : '🟢 Moderado');
 
     html = `
-      <div class="chart-metric-badge highlight-wind">💨 Racha: <strong>${Math.round(maxGust)} km/h</strong> <small>(${maxGustItem?.hourStr})</small></div>
+      <div class="chart-metric-badge highlight-wind">💨 Racha: <strong>${Math.round(maxGust)} km/h</strong> <small>(${maxGustItem?.hourStr?.replace(':00', 'h')})</small></div>
       <div class="chart-metric-badge">🌬️ Media: <strong>${avgWind} km/h</strong></div>
       <div class="chart-metric-badge">${windLevel}</div>
       <div class="chart-metric-badge">🌪️ Máx: <strong>${Math.round(maxGust)} km/h</strong></div>
@@ -273,11 +273,11 @@ function renderSummaryStrip(type, dataSlice) {
     const maxP = Math.max(...pressures);
     const minPItem = dataSlice.find(d => d.pressure === minP);
     const diff = Math.round((pressures[pressures.length - 1] - currentP) * 10) / 10;
-    const trend = diff > 1.5 ? `↗️ +${diff} hPa` : (diff < -1.5 ? `↘️ ${diff} hPa` : `➡️ Estable`);
+    const trend = diff > 1.5 ? `↗️ +${diff}` : (diff < -1.5 ? `↘️ ${diff}` : `➡️ Estable`);
 
     html = `
       <div class="chart-metric-badge highlight-pressure">⏱️ Ahora: <strong>${Math.round(currentP)} hPa</strong></div>
-      <div class="chart-metric-badge">📉 Mín: <strong>${Math.round(minP)} hPa</strong> <small>(${minPItem?.hourStr})</small></div>
+      <div class="chart-metric-badge">📉 Mín: <strong>${Math.round(minP)} hPa</strong> <small>(${minPItem?.hourStr?.replace(':00', 'h')})</small></div>
       <div class="chart-metric-badge">📈 Máx: <strong>${Math.round(maxP)} hPa</strong></div>
       <div class="chart-metric-badge">Tendencia: <strong>${trend}</strong></div>
     `;
@@ -336,18 +336,33 @@ function buildChartConfig(ctx, type, labels, fullDates, weatherDescriptions, hou
             const item = hoursData[idx];
             if (item) {
               const day = item.time.toLocaleDateString('es-ES', { weekday: 'short' });
-              const wDesc = weatherDescriptions[idx] || '';
-              let readoutHtml = `<span class="readout-time">🕒 ${day} ${item.hourStr}</span> • <span>${wDesc}</span>`;
+              // Sintetizar descripciones largas (ej. "Nublado de noche" -> "Nublado", "Despejado de noche" -> "Despejado")
+              const rawDesc = weatherDescriptions[idx] || '';
+              const wDesc = rawDesc.replace(/\s+de\s+(noche|día)/gi, '').trim();
+
+              let metricValHtml = '';
               if (type === 'thermal') {
-                readoutHtml += ` • <span class="readout-val" style="color:#38bdf8;">🌡️ ${Math.round(item.temp)}°C</span> <span class="readout-sub">(Sens. ${Math.round(item.apparent)}°C)</span>`;
+                metricValHtml = `<span class="readout-val" style="color:#38bdf8;">🌡️ ${Math.round(item.temp)}°C</span> <span class="readout-sub">(${Math.round(item.apparent)}°)</span>`;
               } else if (type === 'precip') {
-                readoutHtml += ` • <span class="readout-val" style="color:#38bdf8;">💧 ${item.precip.toFixed(1)} mm</span> <span class="readout-sub">(${item.pop}%)</span>`;
+                metricValHtml = `<span class="readout-val" style="color:#38bdf8;">💧 ${item.precip.toFixed(1)}mm</span> <span class="readout-sub">(${item.pop}%)</span>`;
               } else if (type === 'wind') {
-                readoutHtml += ` • <span class="readout-val" style="color:#f59e0b;">💨 ${Math.round(item.windGusts)} km/h</span> <span class="readout-sub">(Med. ${Math.round(item.windSpeed)})</span>`;
+                metricValHtml = `<span class="readout-val" style="color:#f59e0b;">💨 ${Math.round(item.windGusts)} km/h</span>`;
               } else if (type === 'pressure') {
-                readoutHtml += ` • <span class="readout-val" style="color:#c084fc;">⏱️ ${Math.round(item.pressure)} hPa</span>`;
+                metricValHtml = `<span class="readout-val" style="color:#c084fc;">⏱️ ${Math.round(item.pressure)} hPa</span>`;
+              } else {
+                metricValHtml = `<span class="readout-val" style="color:#38bdf8;">${Math.round(item.temp)}°</span> • <span class="readout-val" style="color:#60a5fa;">${item.precip.toFixed(1)}mm</span>`;
               }
-              readout.innerHTML = readoutHtml;
+
+              readout.innerHTML = `
+                <div class="readout-left">
+                  <span class="readout-time">🕒 ${day} ${item.hourStr}</span>
+                  <span class="readout-dot">•</span>
+                  <span class="readout-desc">${wDesc}</span>
+                </div>
+                <div class="readout-right">
+                  ${metricValHtml}
+                </div>
+              `;
             }
           }
         }
