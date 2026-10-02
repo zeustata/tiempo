@@ -2339,14 +2339,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   margin-bottom: 10px;
   width: 100%;
+  flex-wrap: wrap;
 }
 
 .chart-header-row .section-heading {
   margin: 0;
-  font-size: 1.18rem;
+  font-size: 1.05rem;
   font-weight: 800;
   color: var(--text-main);
   white-space: nowrap;
@@ -2357,8 +2358,8 @@
   background: rgba(15, 23, 42, 0.65);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 10px;
-  padding: 3px;
-  gap: 3px;
+  padding: 2px;
+  gap: 2px;
   flex-shrink: 0;
 }
 
@@ -2366,9 +2367,9 @@
   background: transparent;
   border: none;
   color: #94a3b8;
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   font-weight: 700;
-  padding: 4px 10px;
+  padding: 3px 8px;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -2393,7 +2394,7 @@
   max-width: 100%;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .chart-type-selector::-webkit-scrollbar {
@@ -2405,8 +2406,8 @@
   border: 1px solid rgba(255, 255, 255, 0.12);
   color: #cbd5e1;
   border-radius: 20px;
-  padding: 6px 14px;
-  font-size: 0.82rem;
+  padding: 5px 12px;
+  font-size: 0.78rem;
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
@@ -2428,19 +2429,64 @@
   font-weight: 700;
 }
 
+/* --- LIVE INSPECTOR READOUT BAR --- */
+.chart-live-readout {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 8px;
+  padding: 6px 10px;
+  margin-bottom: 8px;
+  min-height: 32px;
+  font-size: 0.78rem;
+  color: var(--text-main);
+  box-sizing: border-box;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.chart-live-readout .readout-idle {
+  color: var(--text-dim);
+  font-size: 0.74rem;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chart-live-readout .readout-time {
+  font-weight: 800;
+  color: #38bdf8;
+  margin-right: 2px;
+}
+
+.chart-live-readout .readout-val {
+  font-weight: 700;
+  margin: 0 2px;
+}
+
+.chart-live-readout .readout-sub {
+  color: #94a3b8;
+  font-size: 0.72rem;
+  margin-left: 2px;
+}
+
 .chart-scroll-viewport {
   width: 100%;
   overflow-x: auto;
-  padding: 4px 0 10px;
+  padding: 2px 0 6px;
   scrollbar-width: thin;
   -webkit-overflow-scrolling: touch;
   border-radius: var(--radius-md);
   margin-top: 0;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .chart-canvas-wrapper {
-  height: 340px;
+  height: 320px;
   min-width: 1050px;
   position: relative;
 }
@@ -2449,8 +2495,8 @@
 .chart-summary-strip {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-  margin-top: 8px;
+  gap: 6px;
+  margin-top: 6px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -2459,12 +2505,12 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 6px;
+  gap: 5px;
   background: rgba(15, 23, 42, 0.55);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 7px 10px;
+  padding: 6px 8px;
   border-radius: 8px;
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   color: #cbd5e1;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
@@ -2476,6 +2522,12 @@
 .chart-metric-badge strong {
   color: #f1f5f9;
   font-weight: 700;
+}
+
+.chart-metric-badge small {
+  font-size: 0.68rem;
+  color: #94a3b8;
+  opacity: 0.9;
 }
 
 .chart-metric-badge.highlight-warm strong {
@@ -2500,14 +2552,15 @@
 
 @media (max-width: 380px) {
   .chart-canvas-wrapper {
-    height: 310px;
+    height: 300px;
   }
   .chart-header-row .section-heading {
-    font-size: 1.05rem;
+    font-size: 0.98rem;
   }
   .chart-metric-badge {
-    font-size: 0.72rem;
-    padding: 6px 8px;
+    font-size: 0.70rem;
+    padding: 5px 6px;
+    gap: 4px;
   }
 }
 

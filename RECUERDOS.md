@@ -16,7 +16,24 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. **Pie Institucional de la Estampa (Canvas):** Añadir la mención o sello elegante *«Disponible en Google Play • zeustata.github.io/tiempo»* en el pie de la imagen compartida.
     3. **Badge en la Web ([index.html](file:///c:/Users/NUC/Downloads/IA/Tiempo/index.html)):** Incorporar el botón oficial *«Consíguelo en Google Play»* en el pie de la aplicación web.
 
-## 🚀 Última Actualización Oficial: v1.1.62 📈 — 2026-10-02
+## 🚀 Última Actualización Oficial: v1.1.63 📈 — 2026-10-02
+- **Optimización de Espacio y Live Inspector en «Meteorología Gráfica» (Feedback Lendo):**
+  1. *Barra Fija Superior Live Inspector Readout (`#chart-live-readout`):*
+     - Franja fija de lectura en vivo ubicada inmediatamente encima del lienzo de la gráfica.
+     - Al tocar o deslizar el dedo por la curva, actualiza al milisegundo la fecha abreviada, hora, icono/descripción del cielo y los valores numéricos correspondientes a la variable activa (temperatura, sensación, lluvia, rachas, presión).
+     - Resuelve de raíz el desbordamiento de los tooltips de Chart.js que se salían de pantalla por la derecha en móviles de 360px.
+  2. *Protección Anti-Desborde en Cabecera (Doctrina Ley 11):*
+     - Tipografía del título `📈 Meteorología Gráfica` afinada a `1.05rem` (y `0.98rem` en `<= 380px`), permitiendo que conviva en una fila con el selector (`24h | 48h | 72h`) sin expulsar el botón `72h` fuera de pantalla.
+  3. *Métricas 2×2 Sintetizadas:*
+     - Eliminación de etiquetas largas que provocaban puntos suspensivos (`...`), quedando pastillas limpias y contundentes con `box-sizing: border-box`.
+  4. *Tooltips Compactos y Ágiles:*
+     - Tooltips nativos de Chart.js simplificados con padding de 6px, sin cajas de colores y con fecha sintetizada (`Vie 23:00`).
+  5. *Versionado y Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v1163-graficos-ultra-mobile` y query strings `?v=1.1.63` sincronizadas en toda la plataforma.
+
+---
+
+## 🚀 Versión Anterior: v1.1.62 📈 — 2026-10-02
 - **Rediseño Limpio y Gráfico Protagonista en «Meteorología Gráfica» (Feedback Lendo):**
   1. *Ergonomía Móvil y Supresión de Barrera Vertical (Ley 11):*
      - Reorganizado el panel para que el gráfico sea el protagonista absoluto visible de inmediato al entrar en la pestaña.

@@ -10,6 +10,22 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.63] - 2026-10-02
+
+### 📱 Optimización de Espacio y Live Inspector en «Meteorología Gráfica» (Feedback Lendo)
+- **Barra Fija Superior Live Inspector Readout (`#chart-live-readout`):**
+  - Incorporación de una franja de lectura en tiempo real situada justo encima de la gráfica. Al tocar o deslizar el dedo por cualquier punto de la curva horaria, muestra al instante día, hora, descripción meteorológica y valores numéricos exactos, eliminando por completo el problema de los tooltips de Chart.js que se cortaban fuera del marco de la pantalla en los bordes laterales del móvil.
+- **Tipografía y Controles Micro-Ajustados (Anti-Desborde Móvil, Ley 11):**
+  - Ajuste del título `📈 Meteorología Gráfica` a `1.05rem` (y `0.98rem` en pantallas ultra estrechas `<= 380px`), permitiendo que el selector horario (`24h | 48h | 72h`) conviva holgadamente en la misma fila sin expulsar el botón `72h`.
+- **Métricas 2×2 Sintetizadas sin Puntos Suspensivos:**
+  - Reducción quirúrgica de etiquetas y decimales en las tarjetas de resumen inferiores (`🔥 Máx`, `❄️ Mín`, `🥵 Sensación`, `↔️ Amplitud`), impidiendo que el texto se trunque con `...` en pantallas de 360px.
+- **Tooltips Compactos en Canvas:**
+  - Reducción del padding del tooltip interno a 6px, fecha abreviada (`Vie 23:00`), y supresión de cajas de color redundantes para una experiencia visual limpia y precisa.
+- **Cache-Busting y Sincronización:**
+  - Cadena de Service Worker actualizada a `meteoasturlode-v1163-graficos-ultra-mobile` y query strings `?v=1.1.63` sincronizadas en toda la aplicación.
+
+---
+
 ## [1.1.62] - 2026-10-02
 
 ### 📱 Rediseño Limpio y Gráfico Protagonista en «Meteorología Gráfica» (Feedback Lendo)

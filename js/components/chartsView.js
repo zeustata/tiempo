@@ -1,9 +1,9 @@
-import { getWeatherInfo } from '../utils/weatherIcons.js?v=1.1.60';
+import { getWeatherInfo } from '../utils/weatherIcons.js?v=1.1.63';
 
 /**
  * 📈 METEOROLOGÍA GRÁFICA (Suite Multivariable de Observatorio Horario)
- * Permite explorar curvas especializadas de Temperatura y Sensación, Hidrograma de Lluvia,
- * Anemograma de Viento, Barógrafo de Presión y Gráfica Combinada en rangos de 24h, 48h y 72h.
+ * Diseño Ultra-Ergonómico para Móviles con Live Inspector Readout,
+ * tooltips compactos anti-desborde y métricas sintetizadas sin truncamiento.
  */
 
 let meteoChart = null;
@@ -14,7 +14,7 @@ let canvasTargetId = 'meteo-chart-canvas';
 let eventsInitialized = false;
 
 /**
- * Inicializa la escucha de eventos táctiles y clics para los selectores de variable y horas
+ * Inicializa la escucha de eventos para selectores de variable y ventana horaria
  */
 function initChartControls() {
   if (eventsInitialized) return;
@@ -54,7 +54,7 @@ function initChartControls() {
 }
 
 /**
- * Actualiza las clases visuales de los botones de la barra de controles
+ * Actualiza las clases visuales activas
  */
 function updateActivePillsUI() {
   document.querySelectorAll('.chart-pill-btn').forEach(btn => {
@@ -64,26 +64,14 @@ function updateActivePillsUI() {
     btn.classList.toggle('active', parseInt(btn.dataset.hours, 10) === activeHours);
   });
 
-  const subtitleEl = document.getElementById('chart-section-subtitle');
-  if (subtitleEl) {
-    const subtitles = {
-      thermal: 'Evolución horaria de temperatura real vs. sensación térmica y confort',
-      precip: 'Hidrograma de precipitaciones, probabilidad y volumen acumulado (mm)',
-      wind: 'Anemograma de velocidad media del viento y rachas máximas (km/h)',
-      pressure: 'Barógrafo de presión atmosférica a nivel del mar (hPa) y detección de frentes',
-      multi: 'Curvas continuas clásicas combinadas de temperatura, lluvia y viento'
-    };
-    subtitleEl.textContent = subtitles[activeChartType] || subtitles.thermal;
-  }
-
-  const hintEl = document.getElementById('chart-scroll-hint');
-  if (hintEl) {
-    hintEl.textContent = `👈 Desliza la gráfica para explorar las ${activeHours}h 👉`;
+  const readout = document.getElementById('chart-live-readout');
+  if (readout) {
+    readout.innerHTML = '<span class="readout-idle">👆 Toca la curva para ver el detalle de cada hora</span>';
   }
 }
 
 /**
- * Función principal expuesta para renderizar la suite de gráficos
+ * Función principal expuesta
  */
 export function renderWeatherChart(canvasId = 'meteo-chart-canvas', hourlyData = null, hoursCount = null) {
   if (canvasId) canvasTargetId = canvasId;
@@ -109,8 +97,7 @@ function renderCurrentChart() {
 
   const wrapper = document.getElementById('chart-canvas-wrapper');
   if (wrapper) {
-    // Ancho proporcional holgado (52px por hora) para deslizamiento táctil ultra cómodo
-    const targetWidth = Math.max(1050, hoursCount * 52);
+    const targetWidth = Math.max(980, hoursCount * 50);
     wrapper.style.minWidth = `${targetWidth}px`;
   }
 
@@ -143,7 +130,7 @@ function renderCurrentChart() {
       labels.push(hourStr);
     }
 
-    fullDates.push(d.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }));
+    fullDates.push(d.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }));
 
     const isDay = (hourlyData.is_day && hourlyData.is_day[i] != null) ? hourlyData.is_day[i] : (d.getHours() >= 8 && d.getHours() < 21 ? 1 : 0);
     const pop = hourlyData.precipitation_probability ? (hourlyData.precipitation_probability[i] || 0) : 0;
@@ -174,7 +161,7 @@ function renderCurrentChart() {
     });
   }
 
-  // Renderizar franja de métricas clave resumidas
+  // Renderizar franja de métricas clave compactas
   renderSummaryStrip(activeChartType, hoursData);
 
   const ctx = canvas.getContext('2d');
@@ -184,7 +171,7 @@ function renderCurrentChart() {
 }
 
 /**
- * Renderiza la franja de pastillas de datos clave sobre el gráfico
+ * Renderiza la franja de pastillas de datos clave sintetizados sin textos largos
  */
 function renderSummaryStrip(type, dataSlice) {
   const container = document.getElementById('chart-summary-strip');
@@ -204,8 +191,8 @@ function renderSummaryStrip(type, dataSlice) {
     html = `
       <div class="chart-metric-badge highlight-warm">🔥 Máx: <strong>${Math.round(maxT)}°C</strong> <small>(${maxItem?.hourStr})</small></div>
       <div class="chart-metric-badge highlight-cool">❄️ Mín: <strong>${Math.round(minT)}°C</strong> <small>(${minItem?.hourStr})</small></div>
-      <div class="chart-metric-badge">🥵 Sensación máx: <strong>${Math.round(maxApp)}°C</strong></div>
-      <div class="chart-metric-badge">↔️ Amplitud térmica: <strong>${amp}°C</strong></div>
+      <div class="chart-metric-badge">🥵 Sensación: <strong>${Math.round(maxApp)}°C</strong></div>
+      <div class="chart-metric-badge">↔️ Amplitud: <strong>${amp}°C</strong></div>
     `;
   } else if (type === 'precip') {
     const totalPrecip = dataSlice.reduce((acc, d) => acc + (d.precip || 0), 0);
@@ -215,22 +202,23 @@ function renderSummaryStrip(type, dataSlice) {
     const wetHours = dataSlice.filter(d => d.precip >= 0.1 || d.pop >= 45).length;
 
     html = `
-      <div class="chart-metric-badge highlight-rain">🌧️ Lluvia acumulada: <strong>${totalPrecip.toFixed(1)} mm</strong></div>
-      <div class="chart-metric-badge highlight-rain">⚡ Pico: <strong>${maxPrecip.toFixed(1)} mm/h</strong> <small>(${maxPrecipItem?.hourStr || '--'})</small></div>
-      <div class="chart-metric-badge">🎯 Probabilidad máx: <strong>${maxPop}%</strong></div>
-      <div class="chart-metric-badge">🕒 Horas con agua: <strong>${wetHours} h</strong></div>
+      <div class="chart-metric-badge highlight-rain">🌧️ Total: <strong>${totalPrecip.toFixed(1)} mm</strong></div>
+      <div class="chart-metric-badge highlight-rain">⚡ Pico: <strong>${maxPrecip.toFixed(1)} mm</strong> <small>(${maxPrecipItem?.hourStr || '--'})</small></div>
+      <div class="chart-metric-badge">🎯 Prob. máx: <strong>${maxPop}%</strong></div>
+      <div class="chart-metric-badge">🕒 Con agua: <strong>${wetHours} h</strong></div>
     `;
   } else if (type === 'wind') {
     const gusts = dataSlice.map(d => d.windGusts);
     const maxGust = Math.max(...gusts);
     const maxGustItem = dataSlice.find(d => d.windGusts === maxGust);
     const avgWind = Math.round(dataSlice.reduce((acc, d) => acc + d.windSpeed, 0) / dataSlice.length);
-    const windLevel = maxGust >= 65 ? '🔴 Temporal Cantábrico' : (maxGust >= 45 ? '🟡 Rachas fuertes' : '🟢 Viento moderado');
+    const windLevel = maxGust >= 65 ? '🔴 Temporal' : (maxGust >= 45 ? '🟡 Rachas fuertes' : '🟢 Viento moderado');
 
     html = `
-      <div class="chart-metric-badge highlight-wind">💨 Racha máxima: <strong>${Math.round(maxGust)} km/h</strong> <small>(${maxGustItem?.hourStr})</small></div>
-      <div class="chart-metric-badge">🌬️ Viento medio: <strong>${avgWind} km/h</strong></div>
+      <div class="chart-metric-badge highlight-wind">💨 Racha: <strong>${Math.round(maxGust)} km/h</strong> <small>(${maxGustItem?.hourStr})</small></div>
+      <div class="chart-metric-badge">🌬️ Media: <strong>${avgWind} km/h</strong></div>
       <div class="chart-metric-badge">${windLevel}</div>
+      <div class="chart-metric-badge">🌪️ Máx: <strong>${Math.round(maxGust)} km/h</strong></div>
     `;
   } else if (type === 'pressure') {
     const pressures = dataSlice.map(d => d.pressure);
@@ -239,24 +227,26 @@ function renderSummaryStrip(type, dataSlice) {
     const maxP = Math.max(...pressures);
     const minPItem = dataSlice.find(d => d.pressure === minP);
     const diff = Math.round((pressures[pressures.length - 1] - currentP) * 10) / 10;
-    const trend = diff > 1.5 ? `↗️ Subiendo (+${diff} hPa)` : (diff < -1.5 ? `↘️ Bajando (${diff} hPa)` : `➡️ Estable (${diff} hPa)`);
+    const trend = diff > 1.5 ? `↗️ +${diff} hPa` : (diff < -1.5 ? `↘️ ${diff} hPa` : `➡️ Estable`);
 
     html = `
-      <div class="chart-metric-badge highlight-pressure">⏱️ Presión ahora: <strong>${Math.round(currentP)} hPa</strong></div>
-      <div class="chart-metric-badge">📉 Mínimo: <strong>${Math.round(minP)} hPa</strong> <small>(${minPItem?.hourStr})</small></div>
-      <div class="chart-metric-badge">📈 Máximo: <strong>${Math.round(maxP)} hPa</strong></div>
+      <div class="chart-metric-badge highlight-pressure">⏱️ Ahora: <strong>${Math.round(currentP)} hPa</strong></div>
+      <div class="chart-metric-badge">📉 Mín: <strong>${Math.round(minP)} hPa</strong> <small>(${minPItem?.hourStr})</small></div>
+      <div class="chart-metric-badge">📈 Máx: <strong>${Math.round(maxP)} hPa</strong></div>
       <div class="chart-metric-badge">Tendencia: <strong>${trend}</strong></div>
     `;
   } else {
     // Multi
     const maxT = Math.max(...dataSlice.map(d => d.temp));
+    const minT = Math.min(...dataSlice.map(d => d.temp));
     const totalPrecip = dataSlice.reduce((acc, d) => acc + (d.precip || 0), 0);
     const maxGust = Math.max(...dataSlice.map(d => d.windGusts));
 
     html = `
       <div class="chart-metric-badge highlight-warm">🌡️ Máx: <strong>${Math.round(maxT)}°C</strong></div>
-      <div class="chart-metric-badge highlight-rain">🌧️ Acumulado: <strong>${totalPrecip.toFixed(1)} mm</strong></div>
-      <div class="chart-metric-badge highlight-wind">💨 Racha máx: <strong>${Math.round(maxGust)} km/h</strong></div>
+      <div class="chart-metric-badge highlight-cool">❄️ Mín: <strong>${Math.round(minT)}°C</strong></div>
+      <div class="chart-metric-badge highlight-rain">🌧️ Lluvia: <strong>${totalPrecip.toFixed(1)} mm</strong></div>
+      <div class="chart-metric-badge highlight-wind">💨 Racha: <strong>${Math.round(maxGust)} km/h</strong></div>
     `;
   }
 
@@ -264,10 +254,9 @@ function renderSummaryStrip(type, dataSlice) {
 }
 
 /**
- * Ensambla la configuración de Chart.js según la variable seleccionada
+ * Ensambla la configuración de Chart.js con soporte de Live Inspector y tooltips compactos anti-corte
  */
 function buildChartConfig(ctx, type, labels, fullDates, weatherDescriptions, hoursData) {
-  // 1. Configuración común de tooltips e interacciones
   const commonOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -280,21 +269,23 @@ function buildChartConfig(ctx, type, labels, fullDates, weatherDescriptions, hou
         position: 'top',
         labels: {
           color: '#cbd5e1',
-          font: { family: 'Outfit, sans-serif', size: 13, weight: '600' },
-          padding: 14,
+          font: { family: 'Outfit, sans-serif', size: 12, weight: '600' },
+          padding: 10,
           usePointStyle: true,
-          boxWidth: 9
+          boxWidth: 8
         }
       },
       tooltip: {
         backgroundColor: 'rgba(15, 23, 42, 0.95)',
         titleColor: '#38bdf8',
-        titleFont: { size: 13, weight: 'bold', family: 'Outfit, sans-serif' },
-        bodyFont: { size: 12, family: 'Outfit, sans-serif' },
-        padding: 12,
-        borderColor: 'rgba(56, 189, 248, 0.3)',
+        titleFont: { size: 11, weight: 'bold', family: 'Outfit, sans-serif' },
+        bodyFont: { size: 11, family: 'Outfit, sans-serif' },
+        padding: 6,
+        borderColor: 'rgba(56, 189, 248, 0.35)',
         borderWidth: 1,
-        boxPadding: 6,
+        boxPadding: 3,
+        caretSize: 3,
+        displayColors: false,
         callbacks: {
           title: function(items) {
             const index = items[0].dataIndex;
@@ -304,6 +295,34 @@ function buildChartConfig(ctx, type, labels, fullDates, weatherDescriptions, hou
             const index = items[0].dataIndex;
             return weatherDescriptions[index] || '';
           }
+        },
+        external: function(context) {
+          const readout = document.getElementById('chart-live-readout');
+          if (!readout) return;
+          const tooltipModel = context.tooltip;
+          if (tooltipModel.opacity === 0) {
+            readout.innerHTML = '<span class="readout-idle">👆 Toca o desliza la curva para explorar horas</span>';
+            return;
+          }
+          if (tooltipModel.dataPoints && tooltipModel.dataPoints.length) {
+            const idx = tooltipModel.dataPoints[0].dataIndex;
+            const item = hoursData[idx];
+            if (item) {
+              const day = item.time.toLocaleDateString('es-ES', { weekday: 'short' });
+              const wDesc = weatherDescriptions[idx] || '';
+              let readoutHtml = `<span class="readout-time">🕒 ${day} ${item.hourStr}</span> • <span>${wDesc}</span>`;
+              if (type === 'thermal') {
+                readoutHtml += ` • <span class="readout-val" style="color:#38bdf8;">🌡️ ${Math.round(item.temp)}°C</span> <span class="readout-sub">(Sens. ${Math.round(item.apparent)}°C)</span>`;
+              } else if (type === 'precip') {
+                readoutHtml += ` • <span class="readout-val" style="color:#38bdf8;">💧 ${item.precip.toFixed(1)} mm</span> <span class="readout-sub">(${item.pop}%)</span>`;
+              } else if (type === 'wind') {
+                readoutHtml += ` • <span class="readout-val" style="color:#f59e0b;">💨 ${Math.round(item.windGusts)} km/h</span> <span class="readout-sub">(Med. ${Math.round(item.windSpeed)})</span>`;
+              } else if (type === 'pressure') {
+                readoutHtml += ` • <span class="readout-val" style="color:#c084fc;">⏱️ ${Math.round(item.pressure)} hPa</span>`;
+              }
+              readout.innerHTML = readoutHtml;
+            }
+          }
         }
       }
     },
@@ -312,7 +331,7 @@ function buildChartConfig(ctx, type, labels, fullDates, weatherDescriptions, hou
         grid: {
           color: (context) => {
             const label = labels[context.index];
-            return Array.isArray(label) ? 'rgba(56, 189, 248, 0.28)' : 'rgba(255, 255, 255, 0.06)';
+            return Array.isArray(label) ? 'rgba(56, 189, 248, 0.28)' : 'rgba(255, 255, 255, 0.05)';
           },
           lineWidth: (context) => {
             const label = labels[context.index];
@@ -328,8 +347,8 @@ function buildChartConfig(ctx, type, labels, fullDates, weatherDescriptions, hou
           font: (context) => {
             const label = labels[context.index];
             return Array.isArray(label)
-              ? { family: 'Outfit, sans-serif', size: 11, weight: '700' }
-              : { family: 'Outfit, sans-serif', size: 11, weight: '600' };
+              ? { family: 'Outfit, sans-serif', size: 10.5, weight: '700' }
+              : { family: 'Outfit, sans-serif', size: 10.5, weight: '600' };
           },
           maxRotation: 0,
           autoSkip: false,
@@ -341,8 +360,8 @@ function buildChartConfig(ctx, type, labels, fullDates, weatherDescriptions, hou
 
   // --- A. GRÁFICO TÉRMICO & CONFORT ---
   if (type === 'thermal') {
-    const tempGrad = ctx.createLinearGradient(0, 0, 0, 340);
-    tempGrad.addColorStop(0, 'rgba(56, 189, 248, 0.45)');
+    const tempGrad = ctx.createLinearGradient(0, 0, 0, 300);
+    tempGrad.addColorStop(0, 'rgba(56, 189, 248, 0.40)');
     tempGrad.addColorStop(1, 'rgba(56, 189, 248, 0.02)');
 
     return {
@@ -354,30 +373,30 @@ function buildChartConfig(ctx, type, labels, fullDates, weatherDescriptions, hou
             label: 'Temperatura (°C)',
             data: hoursData.map(d => d.temp),
             borderColor: '#38bdf8',
-            borderWidth: 3,
+            borderWidth: 2.8,
             backgroundColor: tempGrad,
             fill: true,
             tension: 0.35,
-            pointRadius: 3.5,
+            pointRadius: 3,
             pointBackgroundColor: '#0f172a',
             pointBorderColor: '#38bdf8',
-            pointBorderWidth: 2,
-            pointHoverRadius: 6.5,
+            pointBorderWidth: 1.8,
+            pointHoverRadius: 6,
             pointHoverBackgroundColor: '#38bdf8',
             yAxisID: 'yTemp'
           },
           {
-            label: 'Sensación Térmica (°C)',
+            label: 'Sensación (°C)',
             data: hoursData.map(d => d.apparent),
             borderColor: '#fb923c',
-            borderWidth: 2.2,
-            borderDash: [5, 4],
+            borderWidth: 2,
+            borderDash: [4, 3],
             fill: false,
             tension: 0.35,
-            pointRadius: 2.5,
+            pointRadius: 2,
             pointBackgroundColor: '#0f172a',
             pointBorderColor: '#fb923c',
-            pointHoverRadius: 6,
+            pointHoverRadius: 5,
             pointHoverBackgroundColor: '#fb923c',
             yAxisID: 'yTemp'
           }
@@ -390,10 +409,10 @@ function buildChartConfig(ctx, type, labels, fullDates, weatherDescriptions, hou
           yTemp: {
             type: 'linear',
             position: 'left',
-            grid: { color: 'rgba(255, 255, 255, 0.06)' },
+            grid: { color: 'rgba(255, 255, 255, 0.05)' },
             ticks: {
               color: '#38bdf8',
-              font: { family: 'Outfit, sans-serif', size: 11, weight: '700' },
+              font: { family: 'Outfit, sans-serif', size: 10.5, weight: '700' },
               callback: (v) => v + '°'
             }
           }
@@ -410,7 +429,7 @@ function buildChartConfig(ctx, type, labels, fullDates, weatherDescriptions, hou
       return Math.round(runningAccum * 10) / 10;
     });
 
-    const accumGrad = ctx.createLinearGradient(0, 0, 0, 340);
+    const accumGrad = ctx.createLinearGradient(0, 0, 0, 300);
     accumGrad.addColorStop(0, 'rgba(168, 85, 247, 0.35)');
     accumGrad.addColorStop(1, 'rgba(168, 85, 247, 0.02)');
 
@@ -421,34 +440,34 @@ function buildChartConfig(ctx, type, labels, fullDates, weatherDescriptions, hou
         datasets: [
           {
             type: 'bar',
-            label: 'Precipitación (mm/h)',
+            label: 'Precipitación (mm)',
             data: hoursData.map(d => d.precip),
             backgroundColor: 'rgba(56, 189, 248, 0.70)',
             borderColor: '#38bdf8',
             borderWidth: 1,
-            borderRadius: 4,
+            borderRadius: 3,
             yAxisID: 'yPrecip',
             barPercentage: 0.65
           },
           {
             type: 'line',
-            label: 'Lluvia Acumulada (mm)',
+            label: 'Acumulado (mm)',
             data: accumData,
             borderColor: '#a855f7',
-            borderWidth: 2.5,
+            borderWidth: 2.2,
             backgroundColor: accumGrad,
             fill: true,
             tension: 0.25,
-            pointRadius: 2,
+            pointRadius: 1.5,
             pointHoverRadius: 5,
             yAxisID: 'yPrecip'
           },
           {
             type: 'line',
-            label: 'Probabilidad de Lluvia (%)',
+            label: 'Probabilidad (%)',
             data: hoursData.map(d => d.pop),
             borderColor: '#60a5fa',
-            borderWidth: 1.8,
+            borderWidth: 1.6,
             borderDash: [4, 3],
             pointRadius: 0,
             pointHoverRadius: 4,
@@ -464,10 +483,10 @@ function buildChartConfig(ctx, type, labels, fullDates, weatherDescriptions, hou
             type: 'linear',
             position: 'left',
             min: 0,
-            grid: { color: 'rgba(255, 255, 255, 0.06)' },
+            grid: { color: 'rgba(255, 255, 255, 0.05)' },
             ticks: {
               color: '#38bdf8',
-              font: { family: 'Outfit, sans-serif', size: 11, weight: '700' },
+              font: { family: 'Outfit, sans-serif', size: 10.5, weight: '700' },
               callback: (v) => v + ' mm'
             }
           },
@@ -479,7 +498,7 @@ function buildChartConfig(ctx, type, labels, fullDates, weatherDescriptions, hou
             grid: { drawOnChartArea: false },
             ticks: {
               color: '#60a5fa',
-              font: { family: 'Outfit, sans-serif', size: 11, weight: '600' },
+              font: { family: 'Outfit, sans-serif', size: 10, weight: '600' },
               callback: (v) => v + '%'
             }
           }
@@ -490,7 +509,7 @@ function buildChartConfig(ctx, type, labels, fullDates, weatherDescriptions, hou
 
   // --- C. ANEMOGRAMA DE VIENTO & RACHAS ---
   if (type === 'wind') {
-    const windGrad = ctx.createLinearGradient(0, 0, 0, 340);
+    const windGrad = ctx.createLinearGradient(0, 0, 0, 300);
     windGrad.addColorStop(0, 'rgba(245, 158, 11, 0.35)');
     windGrad.addColorStop(1, 'rgba(245, 158, 11, 0.02)');
 
@@ -500,26 +519,26 @@ function buildChartConfig(ctx, type, labels, fullDates, weatherDescriptions, hou
         labels,
         datasets: [
           {
-            label: 'Rachas Máximas (km/h)',
+            label: 'Rachas (km/h)',
             data: hoursData.map(d => d.windGusts),
             borderColor: '#f59e0b',
-            borderWidth: 2.8,
+            borderWidth: 2.5,
             backgroundColor: windGrad,
             fill: true,
             tension: 0.3,
-            pointRadius: 3,
+            pointRadius: 2.5,
             pointBackgroundColor: '#0f172a',
             pointBorderColor: '#f59e0b',
-            pointHoverRadius: 6,
+            pointHoverRadius: 5.5,
             pointHoverBackgroundColor: '#f59e0b',
             yAxisID: 'yWind'
           },
           {
-            label: 'Velocidad Media (km/h)',
+            label: 'Viento medio (km/h)',
             data: hoursData.map(d => d.windSpeed),
             borderColor: '#38bdf8',
-            borderWidth: 2.2,
-            pointRadius: 2,
+            borderWidth: 2,
+            pointRadius: 1.5,
             fill: false,
             tension: 0.3,
             pointBackgroundColor: '#0f172a',
@@ -536,10 +555,10 @@ function buildChartConfig(ctx, type, labels, fullDates, weatherDescriptions, hou
             type: 'linear',
             position: 'left',
             min: 0,
-            grid: { color: 'rgba(255, 255, 255, 0.06)' },
+            grid: { color: 'rgba(255, 255, 255, 0.05)' },
             ticks: {
               color: '#f59e0b',
-              font: { family: 'Outfit, sans-serif', size: 11, weight: '700' },
+              font: { family: 'Outfit, sans-serif', size: 10.5, weight: '700' },
               callback: (v) => v + ' km/h'
             }
           }
@@ -554,8 +573,8 @@ function buildChartConfig(ctx, type, labels, fullDates, weatherDescriptions, hou
     const minP = Math.floor(Math.min(...pressures) - 2);
     const maxP = Math.ceil(Math.max(...pressures) + 2);
 
-    const presGrad = ctx.createLinearGradient(0, 0, 0, 340);
-    presGrad.addColorStop(0, 'rgba(192, 132, 252, 0.40)');
+    const presGrad = ctx.createLinearGradient(0, 0, 0, 300);
+    presGrad.addColorStop(0, 'rgba(192, 132, 252, 0.35)');
     presGrad.addColorStop(1, 'rgba(192, 132, 252, 0.02)');
 
     return {
@@ -567,15 +586,15 @@ function buildChartConfig(ctx, type, labels, fullDates, weatherDescriptions, hou
             label: 'Presión al Nivel del Mar (hPa)',
             data: pressures,
             borderColor: '#c084fc',
-            borderWidth: 3,
+            borderWidth: 2.8,
             backgroundColor: presGrad,
             fill: true,
             tension: 0.35,
-            pointRadius: 3.5,
+            pointRadius: 3,
             pointBackgroundColor: '#0f172a',
             pointBorderColor: '#c084fc',
-            pointBorderWidth: 2,
-            pointHoverRadius: 6.5,
+            pointBorderWidth: 1.8,
+            pointHoverRadius: 6,
             pointHoverBackgroundColor: '#c084fc',
             yAxisID: 'yPressure'
           }
@@ -590,10 +609,10 @@ function buildChartConfig(ctx, type, labels, fullDates, weatherDescriptions, hou
             position: 'left',
             min: minP,
             max: maxP,
-            grid: { color: 'rgba(255, 255, 255, 0.06)' },
+            grid: { color: 'rgba(255, 255, 255, 0.05)' },
             ticks: {
               color: '#c084fc',
-              font: { family: 'Outfit, sans-serif', size: 11, weight: '700' },
+              font: { family: 'Outfit, sans-serif', size: 10.5, weight: '700' },
               callback: (v) => v + ' hPa'
             }
           }
@@ -603,8 +622,8 @@ function buildChartConfig(ctx, type, labels, fullDates, weatherDescriptions, hou
   }
 
   // --- E. MULTIVARIABLE (COMBINADO CLÁSICO) ---
-  const tempGradient = ctx.createLinearGradient(0, 0, 0, 320);
-  tempGradient.addColorStop(0, 'rgba(56, 189, 248, 0.45)');
+  const tempGradient = ctx.createLinearGradient(0, 0, 0, 300);
+  tempGradient.addColorStop(0, 'rgba(56, 189, 248, 0.40)');
   tempGradient.addColorStop(1, 'rgba(56, 189, 248, 0.02)');
 
   return {
@@ -616,34 +635,34 @@ function buildChartConfig(ctx, type, labels, fullDates, weatherDescriptions, hou
           label: 'Temperatura (°C)',
           data: hoursData.map(d => d.temp),
           borderColor: '#38bdf8',
-          borderWidth: 3,
+          borderWidth: 2.8,
           backgroundColor: tempGradient,
           fill: true,
           tension: 0.35,
           yAxisID: 'yTemp',
-          pointRadius: 4,
+          pointRadius: 3,
           pointBackgroundColor: '#0f172a',
           pointBorderColor: '#38bdf8',
-          pointBorderWidth: 2,
-          pointHoverRadius: 7,
+          pointBorderWidth: 1.8,
+          pointHoverRadius: 6,
           pointHoverBackgroundColor: '#38bdf8'
         },
         {
-          label: 'Probabilidad de Lluvia (%)',
+          label: 'Probabilidad (%)',
           data: hoursData.map(d => d.pop),
           borderColor: '#60a5fa',
           backgroundColor: 'rgba(96, 165, 250, 0.45)',
           type: 'bar',
           yAxisID: 'yRain',
-          borderRadius: 5,
+          borderRadius: 4,
           barPercentage: 0.55
         },
         {
-          label: 'Rachas de Viento (km/h)',
+          label: 'Rachas (km/h)',
           data: hoursData.map(d => d.windGusts),
           borderColor: '#f59e0b',
-          borderWidth: 2.5,
-          borderDash: [5, 4],
+          borderWidth: 2.2,
+          borderDash: [4, 3],
           pointRadius: 0,
           pointHoverRadius: 5,
           pointHoverBackgroundColor: '#f59e0b',
@@ -659,10 +678,10 @@ function buildChartConfig(ctx, type, labels, fullDates, weatherDescriptions, hou
         yTemp: {
           type: 'linear',
           position: 'left',
-          grid: { color: 'rgba(255, 255, 255, 0.06)' },
+          grid: { color: 'rgba(255, 255, 255, 0.05)' },
           ticks: {
             color: '#38bdf8',
-            font: { family: 'Outfit, sans-serif', size: 11, weight: '700' },
+            font: { family: 'Outfit, sans-serif', size: 10.5, weight: '700' },
             callback: (v) => v + '°'
           }
         },
@@ -674,7 +693,7 @@ function buildChartConfig(ctx, type, labels, fullDates, weatherDescriptions, hou
           grid: { drawOnChartArea: false },
           ticks: {
             color: '#60a5fa',
-            font: { family: 'Outfit, sans-serif', size: 11, weight: '600' },
+            font: { family: 'Outfit, sans-serif', size: 10, weight: '600' },
             callback: (v) => v + '%'
           }
         },

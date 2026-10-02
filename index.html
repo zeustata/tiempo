@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.62">
-  <link rel="stylesheet" href="css/components.css?v=1.1.62">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.62">
+  <link rel="stylesheet" href="css/main.css?v=1.1.63">
+  <link rel="stylesheet" href="css/components.css?v=1.1.63">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.63">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -173,6 +173,11 @@
             <button class="chart-pill-btn" data-chart="multi" title="Curvas combinadas clásicas">📊 Combinado</button>
           </div>
 
+          <!-- BARRA DE LECTURA DIRECTA DE DATOS (LIVE INSPECTOR READOUT) -->
+          <div class="chart-live-readout" id="chart-live-readout">
+            <span class="readout-idle">👆 Toca o desliza la curva para ver el detalle de cada hora</span>
+          </div>
+
           <!-- EL GRÁFICO INMEDIATAMENTE VISIBLE (PROTAGONISTA ABSOLUTO) -->
           <div class="chart-scroll-viewport">
             <div class="chart-canvas-wrapper" id="chart-canvas-wrapper">
@@ -193,7 +198,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.62 📈</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.63 📈</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -244,8 +249,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.62 📈</span>
+            <span class="release-version">v1.1.63 📈</span>
             <span class="release-date">02 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-mejora">Ergonomía Móvil (Ley 11)</span> <strong>Optimización de Espacio y Live Inspector en «Meteorología Gráfica» (Feedback Lendo)</strong>:
+              <br>• <strong>Live Inspector Readout:</strong> Barra fija de lectura superior que muestra inmediatamente fecha, hora, estado del cielo y valores al deslizar el dedo por la curva, impidiendo que los tooltips flotantes se corten en los bordes de la pantalla.
+              <br>• <strong>Cabecera y Selectores Ajustados:</strong> Tipografía compacta y selectores ergonómicos (<code>24h | 48h | 72h</code>) con ajuste fluido sin desborde horizontal en móviles estrechos.
+              <br>• <strong>Métricas Sintetizadas:</strong> Textos sintetizados y concisos en la rejilla 2×2 inferior para evitar puntos suspensivos o cortes visuales.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.62 📈</span>
+            <span class="release-date">02 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-mejora">Ergonomía Móvil (Ley 11)</span> <strong>Rediseño Limpio y Gráfico Protagonista en «Meteorología Gráfica» (Feedback Lendo)</strong>:
@@ -2422,7 +2441,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.62"></script>
+  <script type="module" src="js/app.js?v=1.1.63"></script>
 
 
 
