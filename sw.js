@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1165-readout-blindado';
+const CACHE_NAME = 'meteoasturlode-v1166-tarjetas-pronostico-ricas';
 const STATIC_ASSETS = [
   './',
   './index.html',

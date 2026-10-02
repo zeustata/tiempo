@@ -320,7 +320,7 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
 
           <!-- Fila 2: Métricas Integradas -->
           <div class="d-unified-metrics-grid">
-            <div class="u-metric-item ${popMax >= 40 ? 'metric-rain-active' : ''}" title="Probabilidad de precipitación y acumulado total del día">
+            <div class="u-metric-item u-metric-rain ${popMax >= 40 ? 'metric-rain-active' : ''}" title="Probabilidad de precipitación y acumulado total del día">
               <span class="u-m-icon">${isSnowDay ? '❄️' : '💧'}</span>
               <div class="u-m-info">
                 <span class="u-m-val">${popMax}%</span>
@@ -337,7 +337,7 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
             </div>
 
             ${uvMax !== null ? `
-            <div class="u-metric-item" title="Índice Ultravioleta Máximo">
+            <div class="u-metric-item u-metric-uv" title="Índice Ultravioleta Máximo">
               <span class="u-m-icon">☀️</span>
               <div class="u-m-info">
                 <span class="u-m-val">UV ${uvMax}</span>

@@ -16,7 +16,25 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. **Pie Institucional de la Estampa (Canvas):** Añadir la mención o sello elegante *«Disponible en Google Play • zeustata.github.io/tiempo»* en el pie de la imagen compartida.
     3. **Badge en la Web ([index.html](file:///c:/Users/NUC/Downloads/IA/Tiempo/index.html)):** Incorporar el botón oficial *«Consíguelo en Google Play»* en el pie de la aplicación web.
 
-## 🚀 Última Actualización Oficial: v1.1.65 📈 — 2026-10-02
+## 🚀 Última Actualización Oficial: v1.1.66 🌅 — 2026-10-02
+- **Atmósfera Cromática y Acabado Liquid Glass en Pronóstico a 10 Días (Feedback Lendo):**
+  1. *Diferenciación Matinal vs. Crepuscular:*
+     - La tarjeta de **🌅 Mañana** incorpora un degradado cálido de sol naciente (`linear-gradient(135deg, rgba(245, 158, 11, 0.13) 0%, rgba(15, 23, 42, 0.72) 100%)`) con borde reflectante ámbar suave (`rgba(245, 158, 11, 0.28)`).
+     - La tarjeta de **🌇 Tarde** incorpora un degradado azul zafiro/índigo crepuscular (`linear-gradient(135deg, rgba(56, 189, 248, 0.13) 0%, rgba(15, 23, 42, 0.72) 100%)`) con borde celeste suave (`rgba(56, 189, 248, 0.28)`).
+     - Elimina la monotonía entre ambas partes del día y facilita la lectura instantánea.
+  2. *Panel General Unificado y Micro-Tintes Temáticos:*
+     - Acabado pulido *Liquid Glass* superior (`linear-gradient(180deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.78) 100%)`) con bisel interior fino y cápsula oscura para las temperaturas Mín/Máx.
+     - Micro-tintes cromáticos individuales para las 4 métricas clave:
+       - *💧 Precipitación:* Fondo aguamarina suave (`rgba(14, 165, 233, 0.08)` / `0.22` con lluvia activa).
+       - *💨 Viento y rachas:* Fondo plateado / cian tenue (`rgba(148, 163, 184, 0.08)`).
+       - *☀️ Índice UV:* Fondo solar ámbar (`rgba(245, 158, 11, 0.08)`).
+       - *🌅/🌇 Orto y Ocaso:* Fondo crepuscular violeta tenue (`rgba(168, 85, 247, 0.08)`).
+  3. *Versionado y Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v1166-tarjetas-pronostico-ricas` y query strings `?v=1.1.66` sincronizadas en toda la plataforma.
+
+---
+
+## 🚀 Versión Anterior: v1.1.65 📈 — 2026-10-02
 - **Blindaje Anti-Corte en Barra Live Inspector y Métricas (Feedback Lendo):**
   1. *Distribución Dual Protegida en Live Inspector Readout (`#chart-live-readout`):*
      - Reestructuración de la barra de lectura en dos áreas flexibles:

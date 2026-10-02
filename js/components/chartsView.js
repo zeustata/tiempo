@@ -1,4 +1,4 @@
-import { getWeatherInfo } from '../utils/weatherIcons.js?v=1.1.65';
+import { getWeatherInfo } from '../utils/weatherIcons.js?v=1.1.66';
 
 /**
  * 📈 METEOROLOGÍA GRÁFICA (Suite Multivariable de Observatorio Horario)

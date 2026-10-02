@@ -10,6 +10,25 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.66] - 2026-10-02
+
+### 🎨 Atmósfera Cromática y Acabado Liquid Glass en Pronóstico a 10 Días (Feedback Lendo)
+- **Diferenciación Matinal vs. Crepuscular:**
+  - La tarjeta de **🌅 Mañana** incorpora un degradado envolvente cálido de sol naciente (`linear-gradient(135deg, rgba(245, 158, 11, 0.13) 0%, rgba(15, 23, 42, 0.72) 100%)`) con borde ámbar suave (`rgba(245, 158, 11, 0.28)`).
+  - La tarjeta de **🌇 Tarde** incorpora un degradado azul zafiro/índigo crepuscular (`linear-gradient(135deg, rgba(56, 189, 248, 0.13) 0%, rgba(15, 23, 42, 0.72) 100%)`) con borde celeste suave (`rgba(56, 189, 248, 0.28)`).
+  - Se erradica la monotonía visual entre ambas partes del día, permitiendo distinguir de inmediato la evolución del cielo sin esfuerzo lector.
+- **Panel General Unificado y Micro-Tintes Temáticos:**
+  - Acabado pulido *Liquid Glass* superior (`linear-gradient(180deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.78) 100%)`) con bisel interior fino y fila de temperaturas destacada en cápsula oscura.
+  - Micro-tintes cromáticos individuales para las 4 métricas clave:
+    - *💧 Precipitación:* Fondo aguamarina suave (`rgba(14, 165, 233, 0.08)` / `0.22` con lluvia activa).
+    - *💨 Viento y rachas:* Fondo plateado / cian tenue (`rgba(148, 163, 184, 0.08)`).
+    - *☀️ Índice UV:* Fondo solar ámbar (`rgba(245, 158, 11, 0.08)`).
+    - *🌅/🌇 Orto y Ocaso:* Fondo crepuscular violeta tenue (`rgba(168, 85, 247, 0.08)`).
+- **Cache-Busting y Sincronización:**
+  - Cadena de Service Worker actualizada a `meteoasturlode-v1166-tarjetas-pronostico-ricas` y query strings `?v=1.1.66` sincronizadas en toda la plataforma.
+
+---
+
 ## [1.1.65] - 2026-10-02
 
 ### 📱 Blindaje Anti-Corte en Barra Live Inspector y Métricas (Feedback Lendo)
