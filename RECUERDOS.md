@@ -8,6 +8,16 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Soberanía Inapelable de Servicios Oficiales:* Ninguna función de la app sustituye las banderas físicas y órdenes del Servicio de Salvamento y Socorrismo a pie de playa, la DGT, Guardia Civil, Bomberos de Asturias o avisos de emergencias del 112.
   3. *Responsabilidad Individual e Inmunidad del Desarrollador:* Toda actividad en entornos naturales o carretera se realiza bajo la exclusiva responsabilidad del usuario. Obligatoriedad de incorporar advertencias visibles de exención de responsabilidad civil en módulos sensibles y en la Política de Privacidad, blindando al desarrollador (Lendo / zeustata) frente a cualquier reclamación de terceros.
 
+## 📌 Tareas Pendientes / Hoja de Ruta Futura
+- **Integración de Enlaces de Google Play Store tras Publicación Oficial:**
+  - *Contexto:* Acordado con Lendo el 02-10-2026 para cuando la app esté aprobada y publicada en la Google Play Store con su `package_id` definitivo.
+  - *Acciones a ejecutar:*
+    1. **Texto Clicable al Compartir ([shareCardGenerator.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/utils/shareCardGenerator.js)):** Actualizar el mensaje de WhatsApp/Telegram para incluir el enlace dual inteligente (*«📲 Descárgala en Google Play: [Enlace Play Store] | 🌐 Web: https://zeustata.github.io/tiempo/»*), permitiendo instalación en 1 clic a usuarios de Android y acceso universal a usuarios de iOS/PC.
+    2. **Pie Institucional de la Estampa (Canvas):** Añadir la mención o sello elegante *«Disponible en Google Play • zeustata.github.io/tiempo»* en el pie de la imagen compartida.
+    3. **Badge en la Web ([index.html](file:///c:/Users/NUC/Downloads/IA/Tiempo/index.html)):** Incorporar el botón oficial *«Consíguelo en Google Play»* en el pie de la aplicación web.
+
+---
+
 ## 🚀 Última Actualización Oficial: v1.1.56 📸 — 2026-10-02
 - **Botones Compactos y Supresión Total de Scroll en Modal de Estampa (Feedback Lendo):**
   1. *Titulares Directos sin Subtítulos ([index.html](file:///c:/Users/NUC/Downloads/IA/Tiempo/index.html)):*
