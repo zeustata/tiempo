@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.55">
-  <link rel="stylesheet" href="css/components.css?v=1.1.55">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.55">
+  <link rel="stylesheet" href="css/main.css?v=1.1.56">
+  <link rel="stylesheet" href="css/components.css?v=1.1.56">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.56">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -179,7 +179,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.55 📸</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.56 📸</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -230,8 +230,21 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.55 📸</span>
+            <span class="release-version">v1.1.56 📸</span>
             <span class="release-date">02 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-mejora">Ergonomía Móvil (Ley 11)</span> <strong>Botones Compactos y Supresión de Scroll en Modal de Estampa (Feedback Lendo)</strong>:
+              <br>• <strong>Titulares Limpios sin Subtítulos:</strong> Eliminados los subtítulos secundarios de los botones inferiores dejando directamente <code>📲 Compartir en redes</code> y <code>💾 Guardar postal</code>.
+              <br>• <strong>Eliminación de la Barra de Desplazamiento:</strong> Reajuste ergonómico del contenedor y botones en una sola fila compacta, permitiendo que la estampa completa y las dos opciones quepan limpiamente de un solo vistazo en cualquier pantalla móvil sin barra de scroll vertical.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.55 📸</span>
+            <span class="release-date">02 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-mejora">Diseño &amp; Ergonomía Móvil (Ley 11)</span> <strong>Ajuste Visual de Estampa y Botón Minimalista (Feedback Lendo)</strong>:
@@ -2266,21 +2279,15 @@
         <button id="btn-close-share-modal" class="btn-close" aria-label="Cerrar modal">&times;</button>
       </div>
       <div class="modal-body share-card-modal-body">
-        <div id="share-card-preview-container" class="share-preview-wrapper" style="width: 100%; max-width: 270px; margin: 0 auto; overflow: hidden; border-radius: 16px; min-height: 180px; display: flex; align-items: center; justify-content: center;"></div>
+        <div id="share-card-preview-container" class="share-preview-wrapper" style="width: 100%; max-width: 250px; margin: 0 auto; overflow: hidden; border-radius: 16px; min-height: 180px; display: flex; align-items: center; justify-content: center;"></div>
         <div class="share-actions-row">
           <button id="btn-action-share-native" class="btn-share-primary">
             <span class="btn-share-icon">📲</span>
-            <div class="btn-share-text">
-              <strong>Compartir en Redes</strong>
-              <span>WhatsApp, Telegram o Instagram</span>
-            </div>
+            <span>Compartir en redes</span>
           </button>
           <button id="btn-action-share-download" class="btn-share-secondary">
             <span class="btn-share-icon">💾</span>
-            <div class="btn-share-text">
-              <strong>Guardar Postal</strong>
-              <span>Descargar imagen en tu galería</span>
-            </div>
+            <span>Guardar postal</span>
           </button>
         </div>
       </div>
@@ -2291,7 +2298,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=1.1.55').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=1.1.56').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -2321,7 +2328,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.55"></script>
+  <script type="module" src="js/app.js?v=1.1.56"></script>
 
 
 

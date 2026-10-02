@@ -8,7 +8,18 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Soberanía Inapelable de Servicios Oficiales:* Ninguna función de la app sustituye las banderas físicas y órdenes del Servicio de Salvamento y Socorrismo a pie de playa, la DGT, Guardia Civil, Bomberos de Asturias o avisos de emergencias del 112.
   3. *Responsabilidad Individual e Inmunidad del Desarrollador:* Toda actividad en entornos naturales o carretera se realiza bajo la exclusiva responsabilidad del usuario. Obligatoriedad de incorporar advertencias visibles de exención de responsabilidad civil en módulos sensibles y en la Política de Privacidad, blindando al desarrollador (Lendo / zeustata) frente a cualquier reclamación de terceros.
 
-## 🚀 Última Actualización Oficial: v1.1.55 📸 — 2026-10-02
+## 🚀 Última Actualización Oficial: v1.1.56 📸 — 2026-10-02
+- **Botones Compactos y Supresión Total de Scroll en Modal de Estampa (Feedback Lendo):**
+  1. *Titulares Directos sin Subtítulos ([index.html](file:///c:/Users/NUC/Downloads/IA/Tiempo/index.html)):*
+     - Suprimidos los subtítulos descriptivos secundarios de los botones del modal, dejando los textos limpios `📲 Compartir en redes` y `💾 Guardar postal`.
+  2. *Ergonomía Móvil y Supresión de la Barra de Desplazamiento ([components.css](file:///c:/Users/NUC/Downloads/IA/Tiempo/css/components.css) & [shareCardGenerator.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/utils/shareCardGenerator.js)):*
+     - Reducido el ancho máximo de la postal a 250px y los paddings verticales para que la estampa completa y ambos botones entren de forma holgada en cualquier pantalla sin necesidad de deslizar.
+  3. *Versionado y Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v1156-botones-compactos-sin-scroll` y query strings `?v=1.1.56` sincronizadas en todos los archivos.
+
+---
+
+## 🚀 Versión Anterior: v1.1.55 📸 — 2026-10-02
 - **Rediseño Minimalista del Botón de Cámara y Blindaje de Escalado de la Estampa (Feedback Lendo):**
   1. *Botón Minimalista de Cámara en Hero Card ([currentCard.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/components/currentCard.js)):*
      - Sustituida la pastilla con texto por un botón circular de 32px (`.btn-hero-camera`) con estética Liquid Glass pura que solo muestra el icono `📸`, armonizado a la perfección junto a las temperaturas mínima y máxima.

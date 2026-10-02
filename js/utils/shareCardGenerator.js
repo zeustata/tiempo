@@ -7,7 +7,7 @@
  * Compatible con la Web Share API (WhatsApp, Instagram, Telegram) y descarga directa.
  */
 
-import { getWeatherInfo } from './weatherIcons.js?v=1.1.55';
+import { getWeatherInfo } from './weatherIcons.js?v=1.1.56';
 
 const DICHOS_ASTURIANOS = [
   "«El tiempu n'Asturies camuda más que l'orballu na yerba.»",
@@ -358,7 +358,7 @@ export function openShareModal(concejo, weatherData) {
       img.alt = `Estampa del tiempo de ${concejo.name}`;
       img.className = 'share-preview-img';
       img.style.width = '100%';
-      img.style.maxWidth = '270px';
+      img.style.maxWidth = '250px';
       img.style.height = 'auto';
       img.style.display = 'block';
       img.style.borderRadius = '16px';

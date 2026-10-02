@@ -10,6 +10,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.56] - 2026-10-02
+
+### 📸 Botones Compactos y Supresión Total de Scroll en Modal de Estampa (Feedback Lendo)
+- **Eliminación de Subtítulos Secundarios (Ergonomía Móvil y Doctrina 11):**
+  - Supresión de los textos secundarios explicativos dentro de los botones de acción inferior, dejando exclusivamente los títulos limpios y claros: **`📲 Compartir en redes`** y **`💾 Guardar postal`**.
+- **Supresión de la Barra de Desplazamiento Vertical:**
+  - Ajuste dimensional del modal y de la previsualización (`max-width: 250px`), reduciendo los paddings y márgenes verticales para que la postal completa y los dos botones entren de forma armónica y holgada en la pantalla de cualquier smartphone sin generar barra de scroll vertical.
+- **Cache-Busting y Sincronización:**
+  - Cadena de Service Worker actualizada a `meteoasturlode-v1156-botones-compactos-sin-scroll` y query strings `?v=1.1.56` sincronizadas en CSS y módulos JS.
+
+---
+
 ## [1.1.55] - 2026-10-02
 
 ### 📸 Rediseño Minimalista del Botón de Cámara y Blindaje de Escalado de la Estampa

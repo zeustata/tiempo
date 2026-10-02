@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1155-fix-estampa-boton-y-preview';
+const CACHE_NAME = 'meteoasturlode-v1156-botones-compactos-sin-scroll';
 const STATIC_ASSETS = [
   './',
   './index.html',

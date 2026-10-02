@@ -7628,9 +7628,9 @@
 
 /* --- MODAL DE ESTAMPA COMPARTIBLE ("METEOASTUR INSTANT") --- */
 .modal-share-card {
-  max-width: 400px;
+  max-width: 380px;
   width: 92%;
-  max-height: 88vh;
+  max-height: 90vh;
   display: flex;
   flex-direction: column;
 }
@@ -7639,18 +7639,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
   overflow-y: auto;
-  padding: 6px 2px;
+  overflow-x: hidden;
+  padding: 4px 2px;
 }
 
 .share-preview-wrapper {
   width: 100%;
-  max-width: 270px;
+  max-width: 250px;
   margin: 0 auto;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.18);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.18);
   background: rgba(15, 23, 42, 0.6);
   min-height: 180px;
   display: flex;
@@ -7660,7 +7661,7 @@
 
 .share-preview-img {
   width: 100%;
-  max-width: 270px;
+  max-width: 250px;
   height: auto;
   display: block;
   border-radius: 16px;
@@ -7683,22 +7684,29 @@
 .share-actions-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
 }
 
 .btn-share-primary,
 .btn-share-secondary {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 14px;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 8px;
   border-radius: var(--radius-md);
   border: 1px solid rgba(255, 255, 255, 0.15);
   cursor: pointer;
   transition: all 0.2s ease;
-  text-align: left;
+  text-align: center;
   font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #f8fafc;
 }
 
 .btn-share-primary {
@@ -7725,29 +7733,9 @@
 }
 
 .btn-share-icon {
-  font-size: 1.4rem;
+  font-size: 1.15rem;
   line-height: 1;
   flex-shrink: 0;
-}
-
-.btn-share-text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-}
-
-.btn-share-text strong {
-  font-size: 0.86rem;
-  color: #f8fafc;
-}
-
-.btn-share-text span {
-  font-size: 0.72rem;
-  color: #94a3b8;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 /* Botón Minimalista de Cámara en Hero Card (Liquid Glass circular de 32px) */
