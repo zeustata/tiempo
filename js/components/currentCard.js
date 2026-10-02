@@ -206,13 +206,6 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
     <!-- TARJETA OFICIAL DE ALERTAS Y AVISOS AEMET -->
     ${aemetCardMarkup}
 
-    <!-- PASTILLA INTELIGENTE HÍBRIDA: PLANES & OCIO (PRÓXIMAMENTE) -->
-    <div class="tourism-teaser-strip btn-goto-tourism" id="btn-quick-tourism-teaser" title="Toca para conocer el futuro Asesor de Ocio y Planes según el tiempo">
-      <span class="tts-icon">🗺️</span>
-      <span class="tts-text"><strong>¿Qué facer güei?</strong> Asesor de planes según el tiempo en ${concejo.name}</span>
-      <span class="tts-btn">Próximamente ➔</span>
-    </div>
-
     <!-- SENSORS GRID -->
     <div class="sensors-grid">
       <!-- 1. ANEMÓMETRO Y DIRECCIÓN -->

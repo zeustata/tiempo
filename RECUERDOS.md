@@ -41,19 +41,13 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     - **Exención de Responsabilidad Civil (Ley 16):** Advertencia explícita de naturaleza orientativa; prohibición de formular textos que garanticen paso o seguridad en accesos de montaña o calas escarpadas.
     - **Ergonomía Móvil (Ley 11):** Integración limpia como Módulo 10 en la botonera de navegación con tarjeta Liquid Glass y pastilla inteligente de llamada en el Tiempo Actual.
 
-## 🚀 Última Actualización Oficial: v1.1.67 🗺️ — 2026-10-02
-- **Avance Oficial del Módulo 10: «Planes & Ocio: ¿Qué facer güei?» (Feedback Lendo):**
-  1. *Arquitectura Híbrida y Presentación Oficial:*
-     - Incorporación oficial del **Módulo 10 (`🗺️ Planes & Ocio`)** en el selector principal de navegación con distintivo `🚀 Próximamente` y atajo de teclado directo (tecla `0`).
-     - Vista teaser Liquid Glass (`#panel-tourism`) anticipando la catalogación comarcal de los 78 concejos estructurada en los 4 grandes pilares climáticos (Lluvia, Sol, Borrina y Nieve).
-  2. *Pastilla de Llamada Rápida en Tiempo Actual:*
-     - Inserción de una pastilla interactiva en la pantalla principal (`.tourism-teaser-strip`) que vincula el concejo activo con el futuro asesor meteorológico comarcal.
-  3. *Versionado y Despliegue:*
-     - Service Worker actualizado a `meteoasturlode-v1167-modulo-planes-proximamente` y query strings `?v=1.1.67` sincronizadas en toda la plataforma.
+## 🚀 Última Actualización Oficial: v1.1.68 🛡️ — 2026-10-02
+- **Restauración Inmediata de Estabilidad Funcional (Feedback Lendo):**
+  - **Retorno a Versión Estable (Ley 2):** Tras detectar un fallo de sintaxis en el avance preliminar del módulo de planes, se ejecuta de inmediato el protocolo de retorno a la versión funcional previa 100% operativa (v1.1.66).
+  - **Purga Integral de Caché (Ley 4):** Incremento a `v1.1.68`, actualización de la cadena de Service Worker a `meteoasturlode-v1168-restauracion-estabilidad` y query strings `?v=1.1.68` para forzar la recarga limpia en todos los dispositivos y PWA.
+  - **Hoja de Ruta Preservada:** El diseño y especificación técnica del Módulo 10 quedan rigurosamente salvaguardados en este documento para su integración segura y sin prisas.
 
----
-
-## 🚀 Versión Anterior: v1.1.66 🌅 — 2026-10-02
+## 🚀 Versión Previa: v1.1.66 🌅 — 2026-10-02
 - **Atmósfera Cromática y Acabado Liquid Glass en Pronóstico a 10 Días (Feedback Lendo):**
   1. *Diferenciación Matinal vs. Crepuscular:*
      - La tarjeta de **🌅 Mañana** incorpora un degradado cálido de sol naciente (`linear-gradient(135deg, rgba(245, 158, 11, 0.13) 0%, rgba(15, 23, 42, 0.72) 100%)`) con borde reflectante ámbar suave (`rgba(245, 158, 11, 0.28)`).

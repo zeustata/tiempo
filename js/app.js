@@ -1,29 +1,29 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.1.67';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.1.67';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.1.67';
-import { renderCurrentWeather } from './components/currentCard.js?v=1.1.67';
-import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.1.67';
-import { renderSurfCard } from './components/surfCard.js?v=1.1.67';
-import { renderRoutesCard } from './components/routesCard.js?v=1.1.67';
-import { renderMountainCard } from './components/mountainCard.js?v=1.1.67';
-import { renderForecast } from './components/forecastView.js?v=1.1.67';
-import { renderWeatherChart } from './components/chartsView.js?v=1.1.67';
-import { renderAstronomyView } from './components/astronomyCard.js?v=1.1.67';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.67';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1.67';
-import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1.67';
-import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1.67';
-import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.67';
-import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.67';
-import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=1.1.67';
-import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=1.1.67';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.67';
-import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.67';
-import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.67';
-import { initGyroGlass } from './utils/gyroGlass.js?v=1.1.67';
-import { triggerSeismicRefresh } from './utils/seismicDetector.js?v=1.1.67';
-import { openShareModal } from './utils/shareCardGenerator.js?v=1.1.67';
-import { toggleWeatherSpeech, stopWeatherSpeech } from './utils/weatherSpeaker.js?v=1.1.67';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.1.68';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.1.68';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.1.68';
+import { renderCurrentWeather } from './components/currentCard.js?v=1.1.68';
+import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.1.68';
+import { renderSurfCard } from './components/surfCard.js?v=1.1.68';
+import { renderRoutesCard } from './components/routesCard.js?v=1.1.68';
+import { renderMountainCard } from './components/mountainCard.js?v=1.1.68';
+import { renderForecast } from './components/forecastView.js?v=1.1.68';
+import { renderWeatherChart } from './components/chartsView.js?v=1.1.68';
+import { renderAstronomyView } from './components/astronomyCard.js?v=1.1.68';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.68';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1.68';
+import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1.68';
+import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1.68';
+import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.68';
+import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.68';
+import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=1.1.68';
+import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=1.1.68';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.68';
+import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.68';
+import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.68';
+import { initGyroGlass } from './utils/gyroGlass.js?v=1.1.68';
+import { triggerSeismicRefresh } from './utils/seismicDetector.js?v=1.1.68';
+import { openShareModal } from './utils/shareCardGenerator.js?v=1.1.68';
+import { toggleWeatherSpeech, stopWeatherSpeech } from './utils/weatherSpeaker.js?v=1.1.68';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, pronóstico horario 72h y alertas', key: '1' },
@@ -34,11 +34,10 @@ const APP_MODULES = [
   { id: 'surf', icon: '🏄‍♂️', title: 'Surf & Rompientes', desc: 'Swell, período, viento offshore/onshore, picos bautizados y fondos', key: '6' },
   { id: 'routes', icon: '🥾', title: 'Rutas & Senderismo', desc: 'Confort de marcha, índice de barro en sendas y catálogo de rutas asturianas', key: '7' },
   { id: 'mountain', icon: '🏔️', title: 'Cordillera & Nieve', desc: 'Estado de puertos de montaña, cota de nieve y esquí', key: '8' },
-  { id: 'astronomy', icon: '🔭', title: 'Astronomía & Cosmos', desc: 'Eclipses, lluvias de estrellas, fases lunares y semáforo de visibilidad en Asturias', key: '9' },
-  { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0', isComingSoon: true }
+  { id: 'astronomy', icon: '🔭', title: 'Astronomía & Cosmos', desc: 'Eclipses, lluvias de estrellas, fases lunares y semáforo de visibilidad en Asturias', key: '9' }
 ];
 
-export const CURRENT_APP_VERSION = '1.1.67';
+export const CURRENT_APP_VERSION = '1.1.68';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -891,7 +890,6 @@ class MeteoAsturiasApp {
               <div class="nav-module-details">
                 <div class="nav-module-title-row">
                   <span class="nav-module-name">${m.title}</span>
-                  ${m.isComingSoon ? '<span class="nav-module-tag-soon">🚀 Próximamente</span>' : ''}
                 </div>
                 <span class="nav-module-desc">${m.desc}</span>
               </div>
@@ -1135,15 +1133,6 @@ class MeteoAsturiasApp {
       e.preventDefault();
       this.triggerHaptic();
       this.switchTab('radar');
-    });
-
-    // Acceso directo al Módulo 10 (Planes & Turismo) desde la pastilla teaser en Tiempo Actual
-    document.addEventListener('click', (e) => {
-      const btn = e.target.closest('.btn-goto-tourism');
-      if (!btn) return;
-      e.preventDefault();
-      this.triggerHaptic();
-      this.switchTab('tourism');
     });
 
     // Delegación global para interruptor deslizante segmentado de previsión de surf (Horario 3h vs Extendido 7 Días)
@@ -1528,75 +1517,10 @@ class MeteoAsturiasApp {
       renderAstronomyView('panel-astronomy', 'all');
     }
 
-    if (targetTab === 'tourism') {
-      this.renderTourismTeaser();
-    }
-
     const navModal = document.getElementById('nav-modal');
     if (navModal && navModal.style.display === 'flex') {
       navModal.style.display = 'none';
     }
-  }
-
-  renderTourismTeaser() {
-    const container = document.getElementById('panel-tourism');
-    if (!container) return;
-    const concejoName = this.currentConcejo ? this.currentConcejo.name : 'Asturias';
-    container.innerHTML = `
-      <div class="tourism-teaser-card">
-        <div class="tourism-hero-header">
-          <div class="tourism-badge-row">
-            <span class="tourism-badge-pill">🚀 Próximamente en v1.2.0</span>
-            <span class="tourism-badge-sub">Módulo 10 • Ecosistema Zeustata</span>
-          </div>
-          <h2 class="tourism-hero-title">🗺️ Planes & Ocio: ¿Qué facer güei?</h2>
-          <p class="tourism-hero-desc">
-            El primer <strong>asesor meteorológico inteligente de ocio y turismo para Asturias</strong>. Vinculará el cielo y la previsión en tiempo real de <strong>${concejoName}</strong> y su comarca con las actividades más idóneas según el tiempo.
-          </p>
-        </div>
-
-        <div class="tourism-pillars-grid">
-          <div class="tourism-pillar-item pillar-rain">
-            <div class="pillar-icon">🌧️</div>
-            <div class="pillar-content">
-              <h4>Planes a Cubierto si Llueve</h4>
-              <p>Museos emblemáticos (MUJA, MUMI, Sidra, Niemeyer), cuevas visitables (Tito Bustillo, Cueva Huerta), acuario, llagares y espichas tradicionales.</p>
-            </div>
-          </div>
-
-          <div class="tourism-pillar-item pillar-sun">
-            <div class="pillar-icon">☀️</div>
-            <div class="pillar-content">
-              <h4>Miradores y Calas si hay Sol</h4>
-              <p>Balcones panorámicos (El Fitu, Cabo Peñas, Naranco), arenales de postal y monumentos al aire libre (Prerrománico, castros celtas).</p>
-            </div>
-          </div>
-
-          <div class="tourism-pillar-item pillar-fog">
-            <div class="pillar-icon">🌫️</div>
-            <div class="pillar-content">
-              <h4>Hayedos Mágicos con Borrina</h4>
-              <p>Bosques de cuento donde la niebla suma encanto (Muniellos, Peloño, Redes) y villas marineras para pasear con encanto.</p>
-            </div>
-          </div>
-
-          <div class="tourism-pillar-item pillar-snow">
-            <div class="pillar-icon">❄️</div>
-            <div class="pillar-content">
-              <h4>Gastronomía y Montaña con Nieve</h4>
-              <p>Pueblos con chimenea y gastronomía de cuchara (Somiedo, Caso, Tarna, Quirós) y planes invernales en la Cordillera Cantábrica.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="tourism-footer-notice">
-          <span class="notice-icon">💡</span>
-          <span class="notice-text">
-            <strong>En fase de catalogación comarcal:</strong> Estamos estructurando los 78 concejos en áreas nodrizas para que ningún rincón de Asturias se quede sin planes a menos de 20-30 minutos de tu ubicación.
-          </span>
-        </div>
-      </div>
-    `;
   }
 
   setupPwaInstall() {
@@ -1651,11 +1575,6 @@ class MeteoAsturiasApp {
         if (tabList[index]) {
           this.switchTab(tabList[index]);
         }
-      } else if (e.key === '0') {
-        if (tabList[9]) {
-          this.switchTab(tabList[9]);
-        }
-      }
       } else if (key === 'r') {
         this.loadWeather(this.currentConcejo.id);
       } else if (key === 'f') {

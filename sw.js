@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1167-modulo-planes-proximamente';
+const CACHE_NAME = 'meteoasturlode-v1168-restauracion-estabilidad';
 const STATIC_ASSETS = [
   './',
   './index.html',
