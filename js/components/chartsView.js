@@ -1,10 +1,18 @@
-import { getWeatherInfo } from '../utils/weatherIcons.js?v=1.1.63';
+import { getWeatherInfo } from '../utils/weatherIcons.js?v=1.1.64';
 
 /**
  * 📈 METEOROLOGÍA GRÁFICA (Suite Multivariable de Observatorio Horario)
- * Diseño Ultra-Ergonómico para Móviles con Live Inspector Readout,
- * tooltips compactos anti-desborde y métricas sintetizadas sin truncamiento.
+ * Diseño Ultra-Ergonómico para Móviles con Selector Desplegable Liquid Glass (Opción B),
+ * Live Inspector Readout continuo y métricas sintetizadas sin truncamiento.
  */
+
+const CHART_VAR_INFO = {
+  thermal: { label: '🌡️ Térmico', full: '🌡️ Térmico (Temp. & Sensación)' },
+  precip: { label: '🌧️ Lluvia', full: '🌧️ Lluvia (Hidrograma & Acumulado)' },
+  wind: { label: '💨 Viento', full: '💨 Viento (Velocidad & Rachas)' },
+  pressure: { label: '⏱️ Barómetro', full: '⏱️ Barómetro (Presión Atmosférica)' },
+  multi: { label: '📊 Combinado', full: '📊 Combinado (Multivariable Clásico)' }
+};
 
 let meteoChart = null;
 let activeChartType = 'thermal'; // 'thermal' | 'precip' | 'wind' | 'pressure' | 'multi'
@@ -14,18 +22,39 @@ let canvasTargetId = 'meteo-chart-canvas';
 let eventsInitialized = false;
 
 /**
- * Inicializa la escucha de eventos para selectores de variable y ventana horaria
+ * Inicializa la escucha de eventos para selector desplegable de variable y rango horario
  */
 function initChartControls() {
   if (eventsInitialized) return;
   eventsInitialized = true;
 
   document.addEventListener('click', (e) => {
-    // Selector de Variable
-    const pillBtn = e.target.closest('.chart-pill-btn');
-    if (pillBtn) {
+    const dropdownBtn = e.target.closest('#chart-var-dropdown-btn');
+    const menu = document.getElementById('chart-var-dropdown-menu');
+
+    // Alternar menú desplegable al hacer clic en el botón
+    if (dropdownBtn) {
       e.preventDefault();
-      const type = pillBtn.dataset.chart;
+      e.stopPropagation();
+      if (menu) {
+        const isClosed = menu.style.display === 'none' || !menu.style.display;
+        menu.style.display = isClosed ? 'flex' : 'none';
+        dropdownBtn.setAttribute('aria-expanded', isClosed ? 'true' : 'false');
+      }
+      return;
+    }
+
+    // Seleccionar variable desde el menú
+    const varItem = e.target.closest('.chart-var-item');
+    if (varItem) {
+      e.preventDefault();
+      const type = varItem.dataset.chart;
+      if (menu) {
+        menu.style.display = 'none';
+      }
+      const btn = document.getElementById('chart-var-dropdown-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+
       if (type && type !== activeChartType) {
         activeChartType = type;
         updateActivePillsUI();
@@ -34,6 +63,13 @@ function initChartControls() {
         }
       }
       return;
+    }
+
+    // Cerrar menú al hacer clic fuera
+    if (menu && menu.style.display !== 'none' && !e.target.closest('#chart-var-dropdown-wrapper')) {
+      menu.style.display = 'none';
+      const btn = document.getElementById('chart-var-dropdown-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
     }
 
     // Selector de Rango Horario (24h / 48h / 72h)
@@ -54,19 +90,29 @@ function initChartControls() {
 }
 
 /**
- * Actualiza las clases visuales activas
+ * Actualiza las clases visuales y textos activos
  */
 function updateActivePillsUI() {
-  document.querySelectorAll('.chart-pill-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.chart === activeChartType);
+  const activeInfo = CHART_VAR_INFO[activeChartType] || { label: '📈 Gráfico' };
+  const labelEl = document.getElementById('chart-active-var-text');
+  if (labelEl) {
+    labelEl.textContent = activeInfo.label;
+  }
+
+  document.querySelectorAll('.chart-var-item').forEach(item => {
+    const isAct = item.dataset.chart === activeChartType;
+    item.classList.toggle('active', isAct);
+    const check = item.querySelector('.item-check');
+    if (check) check.textContent = isAct ? '✓' : '';
   });
+
   document.querySelectorAll('.chart-range-btn').forEach(btn => {
     btn.classList.toggle('active', parseInt(btn.dataset.hours, 10) === activeHours);
   });
 
   const readout = document.getElementById('chart-live-readout');
   if (readout) {
-    readout.innerHTML = '<span class="readout-idle">👆 Toca la curva para ver el detalle de cada hora</span>';
+    readout.innerHTML = '<span class="readout-idle">👆 Toca o desliza la curva para ver el detalle de cada hora</span>';
   }
 }
 
@@ -276,26 +322,7 @@ function buildChartConfig(ctx, type, labels, fullDates, weatherDescriptions, hou
         }
       },
       tooltip: {
-        backgroundColor: 'rgba(15, 23, 42, 0.95)',
-        titleColor: '#38bdf8',
-        titleFont: { size: 11, weight: 'bold', family: 'Outfit, sans-serif' },
-        bodyFont: { size: 11, family: 'Outfit, sans-serif' },
-        padding: 6,
-        borderColor: 'rgba(56, 189, 248, 0.35)',
-        borderWidth: 1,
-        boxPadding: 3,
-        caretSize: 3,
-        displayColors: false,
-        callbacks: {
-          title: function(items) {
-            const index = items[0].dataIndex;
-            return '🕒 ' + fullDates[index];
-          },
-          afterTitle: function(items) {
-            const index = items[0].dataIndex;
-            return weatherDescriptions[index] || '';
-          }
-        },
+        enabled: false,
         external: function(context) {
           const readout = document.getElementById('chart-live-readout');
           if (!readout) return;

@@ -16,7 +16,20 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. **Pie Institucional de la Estampa (Canvas):** Añadir la mención o sello elegante *«Disponible en Google Play • zeustata.github.io/tiempo»* en el pie de la imagen compartida.
     3. **Badge en la Web ([index.html](file:///c:/Users/NUC/Downloads/IA/Tiempo/index.html)):** Incorporar el botón oficial *«Consíguelo en Google Play»* en el pie de la aplicación web.
 
-## 🚀 Última Actualización Oficial: v1.1.63 📈 — 2026-10-02
+## 🚀 Última Actualización Oficial: v1.1.64 📈 — 2026-10-02
+- **Selector Desplegable Liquid Glass y Tooltip Flotante Silenciado (Feedback Lendo):**
+  1. *Pastilla Desplegable de Variables (Opción B):*
+     - Reemplazo de la hilera horizontal de pastillas por un selector desplegable flotante (`[ 🌡️ Térmico ▾ ]`) que se posiciona en la misma fila que el selector de ventana horaria (`24h | 48h | 72h`).
+     - Despeja una fila entera de altura en pantalla vertical y dota a la suite de capacidad para albergar ilimitadas variables futuras (Radiación UV, Humedad, Cota, etc.) sin desbordar el diseño móvil jamás.
+  2. *Supresión Definitiva de Cajas Flotantes Cortadas en Móvil:*
+     - Desactivado el popup flotante nativo de Chart.js (`tooltip.enabled = false`) que se cortaba en el margen derecho de pantallas móviles de 360px.
+     - Toda la retroalimentación táctil se canaliza a través de la barra fija superior Live Inspector Readout (`#chart-live-readout`), proporcionando una lectura clara y sin obstáculos.
+  3. *Versionado y Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v1164-graficos-menu-dropdown` y query strings `?v=1.1.64` sincronizadas en toda la plataforma.
+
+---
+
+## 🚀 Versión Anterior: v1.1.63 📈 — 2026-10-02
 - **Optimización de Espacio y Live Inspector en «Meteorología Gráfica» (Feedback Lendo):**
   1. *Barra Fija Superior Live Inspector Readout (`#chart-live-readout`):*
      - Franja fija de lectura en vivo ubicada inmediatamente encima del lienzo de la gráfica.

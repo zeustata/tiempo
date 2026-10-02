@@ -10,6 +10,19 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.64] - 2026-10-02
+
+### 📱 Selector Desplegable Liquid Glass y Tooltip Flotante Silenciado (Feedback Lendo)
+- **Pastilla Desplegable de Variables (Opción B):**
+  - Sustitución de la fila horizontal de pastillas por un selector desplegable elegante (`[ 🌡️ Térmico ▾ ]`) que comparte la misma fila con el selector de ventana horaria (`24h | 48h | 72h`).
+  - Ahorro de una línea completa de altura en pantalla vertical y arquitectura preparada para añadir ilimitadas variables futuras (Radiación UV, Humedad, Punto de rocío, etc.) sin desbordar el diseño móvil jamás.
+- **Supresión Definitiva de Cajas Flotantes Cortadas en Móvil:**
+  - Configurado `tooltip: { enabled: false }` en Chart.js para apagar el popup nativo flotante que se cortaba en el borde derecho en pantallas móviles de 360px, canalizando el 100% de la interactividad táctil hacia la barra fija superior Live Inspector Readout (`#chart-live-readout`).
+- **Cache-Busting y Sincronización:**
+  - Cadena de Service Worker actualizada a `meteoasturlode-v1164-graficos-menu-dropdown` y query strings `?v=1.1.64` sincronizadas.
+
+---
+
 ## [1.1.63] - 2026-10-02
 
 ### 📱 Optimización de Espacio y Live Inspector en «Meteorología Gráfica» (Feedback Lendo)

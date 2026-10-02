@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=1.1.63">
-  <link rel="stylesheet" href="css/components.css?v=1.1.63">
-  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.63">
+  <link rel="stylesheet" href="css/main.css?v=1.1.64">
+  <link rel="stylesheet" href="css/components.css?v=1.1.64">
+  <link rel="stylesheet" href="css/weather-themes.css?v=1.1.64">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -154,23 +154,48 @@
       <!-- 6. METEOROLOGÍA GRÁFICA -->
       <div id="panel-charts" class="tab-panel">
         <div class="chart-card">
-          <!-- CABECERA ULTRA COMPACTA (Título + Selector de Horas en 1 sola línea) -->
-          <div class="chart-header-row">
+          <!-- CABECERA DE METEOROLOGÍA GRÁFICA CON SELECTOR DESPLEGABLE (OPCIÓN B) -->
+          <div class="chart-header-block">
             <h3 class="section-heading">📈 Meteorología Gráfica</h3>
-            <div class="chart-range-selector" role="group" aria-label="Rango de horas">
-              <button class="chart-range-btn" data-hours="24">24h</button>
-              <button class="chart-range-btn active" data-hours="48">48h</button>
-              <button class="chart-range-btn" data-hours="72">72h</button>
-            </div>
-          </div>
+            
+            <div class="chart-controls-bar">
+              <!-- SELECTOR DESPLEGABLE DE VARIABLES -->
+              <div class="chart-var-dropdown-wrapper" id="chart-var-dropdown-wrapper">
+                <button type="button" class="chart-var-dropdown-btn" id="chart-var-dropdown-btn" aria-haspopup="true" aria-expanded="false">
+                  <span id="chart-active-var-text">🌡️ Térmico</span>
+                  <span class="dropdown-arrow">▾</span>
+                </button>
+                <div class="chart-var-dropdown-menu" id="chart-var-dropdown-menu" style="display: none;">
+                  <button type="button" class="chart-var-item active" data-chart="thermal">
+                    <span>🌡️ Térmico (Temp. & Sensación)</span>
+                    <span class="item-check">✓</span>
+                  </button>
+                  <button type="button" class="chart-var-item" data-chart="precip">
+                    <span>🌧️ Lluvia (Hidrograma & Acumulado)</span>
+                    <span class="item-check"></span>
+                  </button>
+                  <button type="button" class="chart-var-item" data-chart="wind">
+                    <span>💨 Viento (Velocidad & Rachas)</span>
+                    <span class="item-check"></span>
+                  </button>
+                  <button type="button" class="chart-var-item" data-chart="pressure">
+                    <span>⏱️ Barómetro (Presión Atmosférica)</span>
+                    <span class="item-check"></span>
+                  </button>
+                  <button type="button" class="chart-var-item" data-chart="multi">
+                    <span>📊 Combinado (Multivariable Clásico)</span>
+                    <span class="item-check"></span>
+                  </button>
+                </div>
+              </div>
 
-          <!-- SELECTOR DE VARIABLES TIPO PESTAÑA DESLIZABLE -->
-          <div class="chart-type-selector" role="tablist" aria-label="Variables Meteorológicas">
-            <button class="chart-pill-btn active" data-chart="thermal" title="Temperatura y Sensación Térmica">🌡️ Térmico</button>
-            <button class="chart-pill-btn" data-chart="precip" title="Hidrograma de Lluvia y Acumulado">🌧️ Lluvia</button>
-            <button class="chart-pill-btn" data-chart="wind" title="Velocidad y Rachas de Viento">💨 Viento</button>
-            <button class="chart-pill-btn" data-chart="pressure" title="Barógrafo y Presión Atmosférica">⏱️ Barómetro</button>
-            <button class="chart-pill-btn" data-chart="multi" title="Curvas combinadas clásicas">📊 Combinado</button>
+              <!-- SELECTOR DE RANGO DE HORAS -->
+              <div class="chart-range-selector" role="group" aria-label="Rango de horas">
+                <button class="chart-range-btn" data-hours="24">24h</button>
+                <button class="chart-range-btn active" data-hours="48">48h</button>
+                <button class="chart-range-btn" data-hours="72">72h</button>
+              </div>
+            </div>
           </div>
 
           <!-- BARRA DE LECTURA DIRECTA DE DATOS (LIVE INSPECTOR READOUT) -->
@@ -198,7 +223,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.63 📈</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.64 📈</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -249,8 +274,21 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.63 📈</span>
+            <span class="release-version">v1.1.64 📈</span>
             <span class="release-date">02 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-mejora">Ergonomía Móvil (Ley 11)</span> <strong>Menú Desplegable Liquid Glass y Tooltip Flotante Silenciado (Feedback Lendo)</strong>:
+              <br>• <strong>Selector Desplegable Escalable (Opción B):</strong> Sustituida la fila de pastillas horizontales por una elegante pastilla desplegable compacta (<code>[ 🌡️ Térmico ▾ ]</code>) que convive en la misma fila con el selector de horas (<code>24h | 48h | 72h</code>), ahorrando una línea entera de espacio vertical y permitiendo añadir ilimitadas gráficas futuras.
+              <br>• <strong>Supresión de Cajas Flotantes Cortadas:</strong> Desactivado el tooltip flotante dentro del lienzo de Chart.js para que no se corte en los bordes de la pantalla del móvil, centralizando toda la lectura en la barra fija superior de Live Inspector.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.63 📈</span>
+            <span class="release-date">02 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-mejora">Ergonomía Móvil (Ley 11)</span> <strong>Optimización de Espacio y Live Inspector en «Meteorología Gráfica» (Feedback Lendo)</strong>:
@@ -2441,7 +2479,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.63"></script>
+  <script type="module" src="js/app.js?v=1.1.64"></script>
 
 
 

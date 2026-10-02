@@ -1,29 +1,29 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.1.63';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.1.63';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.1.63';
-import { renderCurrentWeather } from './components/currentCard.js?v=1.1.63';
-import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.1.63';
-import { renderSurfCard } from './components/surfCard.js?v=1.1.63';
-import { renderRoutesCard } from './components/routesCard.js?v=1.1.63';
-import { renderMountainCard } from './components/mountainCard.js?v=1.1.63';
-import { renderForecast } from './components/forecastView.js?v=1.1.63';
-import { renderWeatherChart } from './components/chartsView.js?v=1.1.63';
-import { renderAstronomyView } from './components/astronomyCard.js?v=1.1.63';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.63';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1.63';
-import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1.63';
-import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1.63';
-import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.63';
-import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.63';
-import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=1.1.63';
-import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=1.1.63';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.63';
-import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.63';
-import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.63';
-import { initGyroGlass } from './utils/gyroGlass.js?v=1.1.63';
-import { triggerSeismicRefresh } from './utils/seismicDetector.js?v=1.1.63';
-import { openShareModal } from './utils/shareCardGenerator.js?v=1.1.63';
-import { toggleWeatherSpeech, stopWeatherSpeech } from './utils/weatherSpeaker.js?v=1.1.63';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.1.64';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.1.64';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.1.64';
+import { renderCurrentWeather } from './components/currentCard.js?v=1.1.64';
+import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.1.64';
+import { renderSurfCard } from './components/surfCard.js?v=1.1.64';
+import { renderRoutesCard } from './components/routesCard.js?v=1.1.64';
+import { renderMountainCard } from './components/mountainCard.js?v=1.1.64';
+import { renderForecast } from './components/forecastView.js?v=1.1.64';
+import { renderWeatherChart } from './components/chartsView.js?v=1.1.64';
+import { renderAstronomyView } from './components/astronomyCard.js?v=1.1.64';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.64';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1.64';
+import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1.64';
+import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1.64';
+import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.64';
+import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.64';
+import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=1.1.64';
+import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=1.1.64';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.64';
+import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.64';
+import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.64';
+import { initGyroGlass } from './utils/gyroGlass.js?v=1.1.64';
+import { triggerSeismicRefresh } from './utils/seismicDetector.js?v=1.1.64';
+import { openShareModal } from './utils/shareCardGenerator.js?v=1.1.64';
+import { toggleWeatherSpeech, stopWeatherSpeech } from './utils/weatherSpeaker.js?v=1.1.64';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, pronóstico horario 72h y alertas', key: '1' },
@@ -37,7 +37,7 @@ const APP_MODULES = [
   { id: 'astronomy', icon: '🔭', title: 'Astronomía & Cosmos', desc: 'Eclipses, lluvias de estrellas, fases lunares y semáforo de visibilidad en Asturias', key: '9' }
 ];
 
-export const CURRENT_APP_VERSION = '1.1.63';
+export const CURRENT_APP_VERSION = '1.1.64';
 
 class MeteoAsturiasApp {
   constructor() {
