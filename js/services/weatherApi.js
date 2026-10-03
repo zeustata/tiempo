@@ -135,7 +135,12 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
           .catch(() => null)
       : Promise.resolve(null);
 
-    const [weather, aqi, marine, consensus] = await Promise.all([weatherPromise, aqiPromise, marinePromise, consensusPromise]);
+    // 5. Avisos Oficiales AEMET (desde JSON estático actualizado por GitHub Actions)
+    const aemetAlertsPromise = fetch('data/avisos-asturias.json')
+      .then(r => r.ok ? r.json() : null)
+      .catch(() => null);
+
+    const [weather, aqi, marine, consensus, aemetAlerts] = await Promise.all([weatherPromise, aqiPromise, marinePromise, consensusPromise, aemetAlertsPromise]);
 
     if (weather) {
       if (consensus) {
@@ -149,6 +154,7 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
       weather,
       aqi,
       marine,
+      aemetAlerts,
       timestamp: new Date()
     };
   } catch (error) {

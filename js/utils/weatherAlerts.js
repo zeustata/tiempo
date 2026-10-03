@@ -13,6 +13,7 @@ export function getAemetZone(concejo) {
   if (['castropol', 'tapiadecasariego', 'tapia-de-casariego', 'elfranco', 'el-franco', 'coana', 'navia', 'valdes', 'cudillero'].includes(cId) || (reg.includes('Costa') && (reg.includes('Occidental') || reg.includes('Noroccidental')))) {
     return {
       id: 'litoral_occidental',
+      aemetCode: '633301',
       name: 'Litoral Occidental Asturiano',
       code: 'ES-AST-LIT-OCC',
       scope: 'Costa y franja marítima occidental hasta 20 millas'
@@ -23,6 +24,7 @@ export function getAemetZone(concejo) {
   if (['murosdenalon', 'muros-de-nalon', 'sotodelbarco', 'soto-del-barco', 'castrillon', 'aviles', 'gozon', 'carreno', 'gijon', 'villaviciosa', 'colunga', 'caravia', 'ribadesella', 'llanes', 'ribadedeva'].includes(cId) || (reg.includes('Costa') && !reg.includes('Occidental'))) {
     return {
       id: 'litoral_oriental',
+      aemetCode: '633302',
       name: 'Litoral Central y Oriental de Asturias',
       code: 'ES-AST-LIT-ORI',
       scope: 'Costa central y oriental (Gijón, Peñas, Llanes) hasta 20 millas'
@@ -33,6 +35,7 @@ export function getAemetZone(concejo) {
   if (['somiedo', 'quiros', 'teverga', 'lena', 'aller', 'sobrescobio', 'caso', 'ponga', 'amieva', 'cabrales', 'penasanta', 'onis', 'oniss', 'cangasdeonis', 'cangas-de-onis', 'sotres', 'covadonga_lagos', 'pajares', 'fuentesdeinvierno'].includes(cId) || concejo.altitude >= 700 || reg.includes('Montaña') || reg.includes('Cordillera') || reg.includes('Picos de Europa')) {
     return {
       id: 'cordillera_picos',
+      aemetCode: '633305',
       name: 'Cordillera Cantábrica y Picos de Europa',
       code: 'ES-AST-COR-PIC',
       scope: 'Zonas de cumbre, macizos y red de puertos de montaña (+800 m)'
@@ -43,6 +46,7 @@ export function getAemetZone(concejo) {
   if (['cangasdelnarcea', 'cangas-del-narcea', 'tineo', 'allande', 'ibias', 'degana', 'belmontedemiranda', 'belmonte-de-miranda', 'salas', 'villayon'].includes(cId) || reg.includes('Suroccidente')) {
     return {
       id: 'suroccidente',
+      aemetCode: '633303',
       name: 'Suroccidente Asturiano',
       code: 'ES-AST-SUR-OCC',
       scope: 'Valles y sierras del suroccidente (Fuentes del Narcea, Ibias)'
@@ -52,6 +56,7 @@ export function getAemetZone(concejo) {
   // 5. Zona Central, Valles Mineros y Cuencas (por defecto)
   return {
     id: 'central_valles',
+    aemetCode: '633304',
     name: 'Zona Central, Valles y Cuencas Mineras',
     code: 'ES-AST-CEN-VAL',
     scope: 'Oviedo, Siero, Gijón interior, Cuencas del Nalón y Caudal'
@@ -65,16 +70,10 @@ export const ALLOW_SIMULATION = false; // Desconectado formalmente tras visto bu
  * Visión dual: evalúa simultáneamente el tiempo en vivo y la previsión máxima de la jornada (Ley Específica 12.10)
  */
 export function getAemetAlertStatus(weatherData, concejo) {
-  const current = weatherData.weather?.current || {};
-  const hourly = weatherData.weather?.hourly || {};
-  const daily = weatherData.weather?.daily || {};
-  const marine = weatherData.marine?.current || null;
-  const marineHourly = weatherData.marine?.hourly || null;
-
   const aemetZone = getAemetZone(concejo);
-  const alerts = [];
+  let alerts = [];
 
-  // Simulacro de prueba controlado (Doctrina Constitucional 12)
+  // 1. Simulacro de prueba controlado (Doctrina Constitucional 12)
   if (ALLOW_SIMULATION && typeof window !== 'undefined') {
     const urlParams = new URLSearchParams(window.location.search);
     const testMode = urlParams.get('test');
@@ -109,175 +108,152 @@ export function getAemetAlertStatus(weatherData, concejo) {
     }
   }
 
-  const windSpeed = current.wind_speed_10m || 0;
-  const windGustsCurrent = Math.round(current.wind_gusts_10m != null ? current.wind_gusts_10m : windSpeed);
-  const windGustsDailyMax = Math.round((daily.wind_gusts_10m_max && daily.wind_gusts_10m_max[0] != null) ? daily.wind_gusts_10m_max[0] : windGustsCurrent);
+  // 2. Avisos Oficiales (MeteoAlarm) si existen y se han descargado
+  let usingOfficialAemet = false;
+  if (weatherData.aemetAlerts && weatherData.aemetAlerts.zones && weatherData.aemetAlerts.zones[aemetZone.aemetCode]) {
+    const officialAlerts = weatherData.aemetAlerts.zones[aemetZone.aemetCode].alerts;
+    
+    if (officialAlerts && officialAlerts.length > 0) {
+      usingOfficialAemet = true;
+      
+      const typeIcons = {
+        'wind': '💨',
+        'rain': '🌧️',
+        'snow': '❄️',
+        'coastal': '🌊',
+        'temperature': '🌡️',
+        'thunderstorm': '⛈️',
+        'fog': '🌫️',
+        'forest-fire': '🔥'
+      };
+      
+      const levelNames = {
+        'yellow': 'Aviso Amarillo (Riesgo)',
+        'orange': 'Aviso Naranja (Riesgo Importante)',
+        'red': 'Aviso Rojo (Riesgo Extremo)'
+      };
+      
+      const levelColors = {
+        'yellow': '#eab308',
+        'orange': '#f97316',
+        'red': '#ef4444'
+      };
 
-  // Analizar pico de viento y franja horaria en las próximas 24 horas
-  let peakGustHourly = 0;
-  let peakHourIndex = -1;
-  let peakHourStr = '';
-  if (hourly && Array.isArray(hourly.wind_gusts_10m) && Array.isArray(hourly.time)) {
-    for (let i = 0; i < Math.min(hourly.wind_gusts_10m.length, 24); i++) {
-      const g = typeof hourly.wind_gusts_10m[i] === 'number' ? Math.round(hourly.wind_gusts_10m[i]) : 0;
-      if (g > peakGustHourly) {
-        peakGustHourly = g;
-        peakHourIndex = i;
-      }
-    }
-    if (peakHourIndex !== -1 && hourly.time[peakHourIndex]) {
-      const d = new Date(hourly.time[peakHourIndex]);
-      peakHourStr = `${String(d.getHours()).padStart(2, '0')}:00 h`;
-    }
-  }
-
-  const evaluatedWindGusts = Math.max(windGustsCurrent, windGustsDailyMax, peakGustHourly);
-  const windDir = current.wind_direction_10m || 0;
-  const temp = current.temperature_2m || 15;
-  const rainSum = daily.precipitation_sum ? daily.precipitation_sum[0] || 0 : 0;
-  const maxRainProb = daily.precipitation_probability_max ? daily.precipitation_probability_max[0] || 0 : 0;
-  
-  // Altura de ola: actual y máxima en 24h
-  const currentWaveHeight = marine && typeof marine.wave_height === 'number' ? marine.wave_height : 0;
-  let maxWaveToday = currentWaveHeight;
-  if (marineHourly && Array.isArray(marineHourly.wave_height)) {
-    for (let i = 0; i < Math.min(marineHourly.wave_height.length, 24); i++) {
-      const wh = typeof marineHourly.wave_height[i] === 'number' ? marineHourly.wave_height[i] : 0;
-      if (wh > maxWaveToday) maxWaveToday = wh;
-    }
-  }
-  const isCoast = concejo.type === 'coast' || concejo.region.includes('Costa');
-
-  // 1. AVISO POR FENÓMENOS COSTEROS (AEMET Costeros Cantábrico)
-  if (isCoast && (maxWaveToday >= 3.5 || evaluatedWindGusts >= 65)) {
-    const isOrange = maxWaveToday >= 5.0 || evaluatedWindGusts >= 85;
-    const isRed = maxWaveToday >= 7.0 || evaluatedWindGusts >= 110;
-    const level = isRed ? 'red' : (isOrange ? 'orange' : 'yellow');
-
-    const waveDesc = (maxWaveToday > currentWaveHeight + 0.4)
-      ? `Mar combinada del NW con olas de ${currentWaveHeight.toFixed(1)} m aumentando hasta ${maxWaveToday.toFixed(1)} m hoy`
-      : `Mar combinada del NW con olas de hasta ${maxWaveToday.toFixed(1)} m`;
-
-    alerts.push({
-      id: 'aemet_coastal',
-      type: 'costeros',
-      level,
-      levelName: isRed ? 'Aviso Rojo (Riesgo Extremo)' : (isOrange ? 'Aviso Naranja (Riesgo Importante)' : 'Aviso Amarillo (Riesgo)'),
-      levelColor: isRed ? '#ef4444' : (isOrange ? '#f97316' : '#eab308'),
-      icon: '🌊',
-      title: 'Aviso por Fenómenos Costeros en el Litoral Asturiano',
-      desc: `${waveDesc} y viento con rachas de hasta ${evaluatedWindGusts} km/h en la costa.`,
-      validity: 'Hoy • Todo el día (00:00 - 23:59 h)',
-      probability: '70% - 100%',
-      recommendation: 'Aléjese de espigones, rompientes, paseos marítimos y acantilados. No navegue ni practique deportes náuticos.'
-    });
-  }
-
-  // 2. AVISO POR VIENTO Y RACHAS HURACANADAS
-  if (evaluatedWindGusts >= 70) {
-    const isOrange = evaluatedWindGusts >= 90;
-    const isRed = evaluatedWindGusts >= 120;
-    const level = isRed ? 'red' : (isOrange ? 'orange' : 'yellow');
-
-    const isCurrentActive = windGustsCurrent >= 70;
-    let validityStr = 'Hoy • Jornada completa';
-    if (isCurrentActive) {
-      validityStr = peakHourStr ? `Activo ahora • Pico de ${evaluatedWindGusts} km/h previsto a las ${peakHourStr}` : 'Activo ahora • Vigente durante las próximas horas';
+      officialAlerts.forEach(a => {
+        let title = a.headline || `Aviso por ${a.type}`;
+        
+        alerts.push({
+          id: a.id,
+          type: a.type,
+          level: a.level,
+          levelName: levelNames[a.level] || 'Aviso AEMET',
+          levelColor: levelColors[a.level] || '#eab308',
+          icon: typeIcons[a.type] || '⚠️',
+          title: title,
+          desc: a.description || 'Consulta los detalles en aemet.es',
+          validity: `Hasta ${new Date(a.expires).toLocaleString('es-ES', {weekday: 'short', hour: '2-digit', minute:'2-digit'})}`,
+          probability: 'Oficial',
+          recommendation: a.instruction || 'Siga los consejos de las autoridades.'
+        });
+      });
     } else {
-      validityStr = peakHourStr ? `Previsto hoy • Pico máx. en torno a las ${peakHourStr}` : 'Previsto hoy • Jornada completa';
+      // MeteoAlarm devolvió explícitamente 0 alertas para esta zona.
+      usingOfficialAemet = true; 
     }
-
-    const windDesc = isCurrentActive
-      ? `Rachas intensas registradas de ${windGustsCurrent} km/h alcanzando hasta ${evaluatedWindGusts} km/h en ${concejo.name} y zonas expuestas de ${aemetZone.name}.`
-      : `Rachas máximas previstas de hasta ${evaluatedWindGusts} km/h en ${concejo.name} y zonas altas o expuestas de ${aemetZone.name} (racha actual en calma: ${windGustsCurrent} km/h).`;
-
-    alerts.push({
-      id: 'aemet_wind',
-      type: 'viento',
-      level,
-      levelName: isRed ? 'Aviso Rojo (Riesgo Extremo)' : (isOrange ? 'Aviso Naranja (Riesgo Importante)' : 'Aviso Amarillo (Riesgo)'),
-      levelColor: isRed ? '#ef4444' : (isOrange ? '#f97316' : '#eab308'),
-      icon: '💨',
-      title: 'Aviso por Rachas Fuertes de Viento',
-      desc: windDesc,
-      validity: validityStr,
-      probability: '40% - 70%',
-      recommendation: 'Asegure elementos en terrazas y ventanas. Evite transitar bajo árboles grandes o estructuras en obras. Máxima precaución al volante.'
-    });
   }
 
-  // 3. AVISO POR LLUVIAS INTENSAS Y ACUMULACIÓN
-  if (rainSum >= 35 || current.precipitation >= 10) {
-    const isOrange = rainSum >= 70 || current.precipitation >= 20;
-    const isRed = rainSum >= 120;
-    const level = isRed ? 'red' : (isOrange ? 'orange' : 'yellow');
+  // 3. Fallback: Cálculos Locales si MeteoAlarm falla
+  if (!usingOfficialAemet && alerts.length === 0) {
+    const current = weatherData.weather?.current || {};
+    const hourly = weatherData.weather?.hourly || {};
+    const daily = weatherData.weather?.daily || {};
+    const marine = weatherData.marine?.current || null;
+    const marineHourly = weatherData.marine?.hourly || null;
 
-    alerts.push({
-      id: 'aemet_rain',
-      type: 'lluvia',
-      level,
-      levelName: isRed ? 'Aviso Rojo (Riesgo Extremo)' : (isOrange ? 'Aviso Naranja (Riesgo Importante)' : 'Aviso Amarillo (Riesgo)'),
-      levelColor: isRed ? '#ef4444' : (isOrange ? '#f97316' : '#eab308'),
-      icon: '🌧️',
-      title: 'Aviso por Precipitación Acumulada',
-      desc: `Acumulación prevista de hasta ${rainSum.toFixed(1)} mm en 12-24 horas. Posible saturación de suelos y aumento de caudales.`,
-      validity: 'Hoy • Jornada completa',
-      probability: `${maxRainProb}%`,
-      recommendation: 'Precaución en carreteras secundarias por balsas de agua y desprendimientos de ladera.'
-    });
-  }
+    const windSpeed = current.wind_speed_10m || 0;
+    const windGustsCurrent = Math.round(current.wind_gusts_10m != null ? current.wind_gusts_10m : windSpeed);
+    const windGustsDailyMax = Math.round((daily.wind_gusts_10m_max && daily.wind_gusts_10m_max[0] != null) ? daily.wind_gusts_10m_max[0] : windGustsCurrent);
 
-  // 4. AVISO POR NEVADAS EN CORDILLERA Y PUERTOS
-  let minFreezingLevel = 2500;
-  let minFreezingHourStr = '';
-  if (hourly && Array.isArray(hourly.freezing_level_height)) {
-    for (let i = 0; i < Math.min(hourly.freezing_level_height.length, 24); i++) {
-      const fl = typeof hourly.freezing_level_height[i] === 'number' ? hourly.freezing_level_height[i] : 2500;
-      if (fl < minFreezingLevel) {
-        minFreezingLevel = fl;
-        if (hourly.time && hourly.time[i]) {
-          const d = new Date(hourly.time[i]);
-          minFreezingHourStr = `${String(d.getHours()).padStart(2, '0')}:00 h`;
+    let peakGustHourly = 0;
+    let peakHourStr = '';
+    if (hourly && Array.isArray(hourly.wind_gusts_10m) && Array.isArray(hourly.time)) {
+      for (let i = 0; i < Math.min(hourly.wind_gusts_10m.length, 24); i++) {
+        const g = typeof hourly.wind_gusts_10m[i] === 'number' ? Math.round(hourly.wind_gusts_10m[i]) : 0;
+        if (g > peakGustHourly) {
+          peakGustHourly = g;
+          if (hourly.time[i]) {
+            const d = new Date(hourly.time[i]);
+            peakHourStr = `${String(d.getHours()).padStart(2, '0')}:00 h`;
+          }
         }
       }
     }
-  }
 
-  if (minFreezingLevel <= 1000 && (rainSum > 0 || current.precipitation > 0 || current.snowfall > 0)) {
-    const isOrange = minFreezingLevel <= 600 || current.snowfall > 5;
-    const level = isOrange ? 'orange' : 'yellow';
+    const evaluatedWindGusts = Math.max(windGustsCurrent, windGustsDailyMax, peakGustHourly);
+    const windDir = current.wind_direction_10m || 0;
+    const rainSum = daily.precipitation_sum ? daily.precipitation_sum[0] || 0 : 0;
+    const maxRainProb = daily.precipitation_probability_max ? daily.precipitation_probability_max[0] || 0 : 0;
+    
+    const currentWaveHeight = marine && typeof marine.wave_height === 'number' ? marine.wave_height : 0;
+    let maxWaveToday = currentWaveHeight;
+    if (marineHourly && Array.isArray(marineHourly.wave_height)) {
+      for (let i = 0; i < Math.min(marineHourly.wave_height.length, 24); i++) {
+        const wh = typeof marineHourly.wave_height[i] === 'number' ? marineHourly.wave_height[i] : 0;
+        if (wh > maxWaveToday) maxWaveToday = wh;
+      }
+    }
+    const isCoast = concejo.type === 'coast' || concejo.region.includes('Costa');
 
-    alerts.push({
-      id: 'aemet_snow',
-      type: 'nieve',
-      level,
-      levelName: isOrange ? 'Aviso Naranja (Riesgo Importante)' : 'Aviso Amarillo (Riesgo)',
-      levelColor: isOrange ? '#f97316' : '#eab308',
-      icon: '❄️',
-      title: 'Aviso por Nevadas en Cotas Bajas / Puertos',
-      desc: `Cota de nieve descendiendo a ${Math.round(minFreezingLevel)} metros en la ${aemetZone.name}${minFreezingHourStr ? ` (mínimo hacia las ${minFreezingHourStr})` : ''}.`,
-      validity: 'Hoy • Horas centrales y noche',
-      probability: '70% - 100%',
-      recommendation: 'Obligatorio consultar el estado de puertos antes de viajar. Lleve cadenas o neumáticos de invierno.'
-    });
-  }
+    if (isCoast && (maxWaveToday >= 3.5 || evaluatedWindGusts >= 65)) {
+      const isOrange = maxWaveToday >= 5.0 || evaluatedWindGusts >= 85;
+      const isRed = maxWaveToday >= 7.0 || evaluatedWindGusts >= 110;
+      const level = isRed ? 'red' : (isOrange ? 'orange' : 'yellow');
+      const waveDesc = (maxWaveToday > currentWaveHeight + 0.4)
+        ? `Mar combinada del NW con olas de ${currentWaveHeight.toFixed(1)} m aumentando hasta ${maxWaveToday.toFixed(1)} m hoy`
+        : `Mar combinada del NW con olas de hasta ${maxWaveToday.toFixed(1)} m`;
+      alerts.push({
+        id: 'aemet_coastal', type: 'costeros', level,
+        levelName: isRed ? 'Aviso Rojo (Riesgo Extremo)' : (isOrange ? 'Aviso Naranja (Riesgo Importante)' : 'Aviso Amarillo (Riesgo)'),
+        levelColor: isRed ? '#ef4444' : (isOrange ? '#f97316' : '#eab308'), icon: '🌊',
+        title: 'Aviso Local Estimado: Fenómenos Costeros',
+        desc: `${waveDesc} y viento con rachas de hasta ${evaluatedWindGusts} km/h en la costa.`,
+        validity: 'Hoy', probability: 'Local Estimado',
+        recommendation: 'Aléjese de espigones y acantilados.'
+      });
+    }
 
-  // 5. EFECTO FÖHN / VIENTU DEL SUR
-  const isSouth = (windDir >= 140 && windDir <= 230);
-  if (isSouth && evaluatedWindGusts >= 45 && !alerts.some(a => a.type === 'viento')) {
-    alerts.push({
-      id: 'aemet_fohn',
-      type: 'fohn',
-      level: evaluatedWindGusts >= 75 ? 'orange' : 'yellow',
-      levelName: evaluatedWindGusts >= 75 ? 'Aviso Naranja (Vientu del Sur)' : 'Aviso Amarillo (Vientu del Sur)',
-      levelColor: evaluatedWindGusts >= 75 ? '#f97316' : '#eab308',
-      icon: '🔥',
-      title: 'Aviso: Efecto Föhn / Vientu del Sur',
-      desc: `Viento del sur recalentado y seco con rachas previstas de hasta ${evaluatedWindGusts} km/h. Aumento brusco de temperaturas y riesgo forestal.`,
-      validity: 'Hoy • Próximas horas',
-      probability: '80%',
-      recommendation: 'Prohibidas las quemas y precauciones en zonas arboladas de monte.'
-    });
+    if (evaluatedWindGusts >= 70) {
+      const isOrange = evaluatedWindGusts >= 90;
+      const isRed = evaluatedWindGusts >= 120;
+      const level = isRed ? 'red' : (isOrange ? 'orange' : 'yellow');
+      const isCurrentActive = windGustsCurrent >= 70;
+      const windDesc = isCurrentActive
+        ? `Rachas intensas registradas de ${windGustsCurrent} km/h alcanzando hasta ${evaluatedWindGusts} km/h.`
+        : `Rachas máximas previstas de hasta ${evaluatedWindGusts} km/h (racha actual en calma).`;
+      alerts.push({
+        id: 'aemet_wind', type: 'viento', level,
+        levelName: isRed ? 'Aviso Rojo (Riesgo Extremo)' : (isOrange ? 'Aviso Naranja (Riesgo Importante)' : 'Aviso Amarillo (Riesgo)'),
+        levelColor: isRed ? '#ef4444' : (isOrange ? '#f97316' : '#eab308'), icon: '💨',
+        title: 'Aviso Local Estimado: Rachas Fuertes',
+        desc: windDesc, validity: 'Hoy', probability: 'Local Estimado',
+        recommendation: 'Precaución en exteriores y al volante.'
+      });
+    }
+
+    if (rainSum >= 35 || current.precipitation >= 10) {
+      const isOrange = rainSum >= 70 || current.precipitation >= 20;
+      const isRed = rainSum >= 120;
+      const level = isRed ? 'red' : (isOrange ? 'orange' : 'yellow');
+      alerts.push({
+        id: 'aemet_rain', type: 'lluvia', level,
+        levelName: isRed ? 'Aviso Rojo (Riesgo Extremo)' : (isOrange ? 'Aviso Naranja (Riesgo Importante)' : 'Aviso Amarillo (Riesgo)'),
+        levelColor: isRed ? '#ef4444' : (isOrange ? '#f97316' : '#eab308'), icon: '🌧️',
+        title: 'Aviso Local Estimado: Lluvias Intensas',
+        desc: `Acumulación prevista de hasta ${rainSum.toFixed(1)} mm.`,
+        validity: 'Hoy', probability: 'Local Estimado',
+        recommendation: 'Precaución en carreteras y cauces.'
+      });
+    }
   }
 
   // Determinar nivel máximo

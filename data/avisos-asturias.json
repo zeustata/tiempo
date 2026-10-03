@@ -1,0 +1,205 @@
+{
+  "updatedAt": "2026-10-03T18:45:24.619Z",
+  "zones": {
+    "633301": {
+      "name": "Litoral occidental asturiano",
+      "alerts": [
+        {
+          "id": "2.49.0.0.724.0.ES.261003093010.633301TOTO041619810",
+          "type": "3; thunderstorm",
+          "level": "yellow",
+          "onset": "2026-10-03T15:00:00+02:00",
+          "expires": "2026-10-04T17:59:59+02:00",
+          "headline": "Aviso de tormentas de nivel amarillo. Litoral occidental asturiano",
+          "instruction": "Esté atento. Manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños moderados a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
+        },
+        {
+          "id": "2.49.0.0.724.0.ES.261003093010.633301PRP1032219810",
+          "type": "10; rain",
+          "level": "yellow",
+          "onset": "2026-10-03T15:00:00+02:00",
+          "expires": "2026-10-03T23:59:59+02:00",
+          "headline": "Aviso de lluvias de nivel amarillo. Litoral occidental asturiano",
+          "description": "Precipitación acumulada en una hora: 25 mm.",
+          "instruction": "Esté atento. Manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños moderados a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
+        },
+        {
+          "id": "2.49.0.0.724.0.ES.261003093010.633301PRP1041619810",
+          "type": "10; rain",
+          "level": "orange",
+          "onset": "2026-10-04T00:00:00+02:00",
+          "expires": "2026-10-04T17:59:59+02:00",
+          "headline": "Aviso de lluvias de nivel naranja. Litoral occidental asturiano",
+          "description": "Precipitación acumulada en una hora: 30 mm.",
+          "instruction": "Esté preparado. Tome precauciones y manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños graves a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
+        },
+        {
+          "id": "2.49.0.0.724.0.ES.261003170408.633301PRP2041247048",
+          "type": "10; rain",
+          "level": "orange",
+          "onset": "2026-10-04T00:00:00+02:00",
+          "expires": "2026-10-04T13:59:59+02:00",
+          "headline": "Aviso de lluvias de nivel naranja. Litoral occidental asturiano",
+          "description": "Precipitación acumulada en 12 horas: 80 mm.",
+          "instruction": "Esté preparado. Tome precauciones y manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños graves a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
+        },
+        {
+          "id": "2.49.0.0.724.0.ES.261003170408.633301PRP2041647048",
+          "type": "10; rain",
+          "level": "yellow",
+          "onset": "2026-10-04T14:00:00+02:00",
+          "expires": "2026-10-04T17:59:59+02:00",
+          "headline": "Aviso de lluvias de nivel amarillo. Litoral occidental asturiano",
+          "description": "Precipitación acumulada en 12 horas: 40 mm.",
+          "instruction": "Esté atento. Manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños moderados a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
+        }
+      ]
+    },
+    "633302": {
+      "name": "Litoral oriental asturiano",
+      "alerts": [
+        {
+          "id": "2.49.0.0.724.0.ES.261002163809.633302PRP2032259089",
+          "type": "10; rain",
+          "level": "yellow",
+          "onset": "2026-10-03T15:00:00+02:00",
+          "expires": "2026-10-03T23:59:59+02:00",
+          "headline": "Aviso de lluvias de nivel amarillo. Litoral oriental asturiano",
+          "description": "Precipitación acumulada en 12 horas: 60 mm.",
+          "instruction": "Esté atento. Manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños moderados a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
+        },
+        {
+          "id": "2.49.0.0.724.0.ES.261003093010.633302PRP1041219810",
+          "type": "10; rain",
+          "level": "orange",
+          "onset": "2026-10-04T00:00:00+02:00",
+          "expires": "2026-10-04T13:59:59+02:00",
+          "headline": "Aviso de lluvias de nivel naranja. Litoral oriental asturiano",
+          "description": "Precipitación acumulada en una hora: 30 mm.",
+          "instruction": "Esté preparado. Tome precauciones y manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños graves a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
+        },
+        {
+          "id": "2.49.0.0.724.0.ES.261003093010.633302PRP1032219810",
+          "type": "10; rain",
+          "level": "yellow",
+          "onset": "2026-10-03T15:00:00+02:00",
+          "expires": "2026-10-03T23:59:59+02:00",
+          "headline": "Aviso de lluvias de nivel amarillo. Litoral oriental asturiano",
+          "description": "Precipitación acumulada en una hora: 25 mm.",
+          "instruction": "Esté atento. Manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños moderados a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
+        },
+        {
+          "id": "2.49.0.0.724.0.ES.261003093010.633302PRP1041619810",
+          "type": "10; rain",
+          "level": "yellow",
+          "onset": "2026-10-04T14:00:00+02:00",
+          "expires": "2026-10-04T17:59:59+02:00",
+          "headline": "Aviso de lluvias de nivel amarillo. Litoral oriental asturiano",
+          "description": "Precipitación acumulada en una hora: 25 mm.",
+          "instruction": "Esté atento. Manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños moderados a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
+        },
+        {
+          "id": "2.49.0.0.724.0.ES.261003093010.633302TOTO041619810",
+          "type": "3; thunderstorm",
+          "level": "yellow",
+          "onset": "2026-10-03T15:00:00+02:00",
+          "expires": "2026-10-04T17:59:59+02:00",
+          "headline": "Aviso de tormentas de nivel amarillo. Litoral oriental asturiano",
+          "instruction": "Esté atento. Manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños moderados a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
+        },
+        {
+          "id": "2.49.0.0.724.0.ES.261003093010.633302PRP2041619810",
+          "type": "10; rain",
+          "level": "yellow",
+          "onset": "2026-10-04T14:00:00+02:00",
+          "expires": "2026-10-04T17:59:59+02:00",
+          "headline": "Aviso de lluvias de nivel amarillo. Litoral oriental asturiano",
+          "description": "Precipitación acumulada en 12 horas: 40 mm.",
+          "instruction": "Esté atento. Manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños moderados a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
+        },
+        {
+          "id": "2.49.0.0.724.0.ES.261003093010.633302PRP2041219810",
+          "type": "10; rain",
+          "level": "orange",
+          "onset": "2026-10-04T00:00:00+02:00",
+          "expires": "2026-10-04T13:59:59+02:00",
+          "headline": "Aviso de lluvias de nivel naranja. Litoral oriental asturiano",
+          "description": "Precipitación acumulada en 12 horas: 80 mm.",
+          "instruction": "Esté preparado. Tome precauciones y manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños graves a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
+        }
+      ]
+    },
+    "633303": {
+      "name": "Suroccidental asturiana",
+      "alerts": [
+        {
+          "id": "2.49.0.0.724.0.ES.261003170408.633303PRP1041247048",
+          "type": "10; rain",
+          "level": "yellow",
+          "onset": "2026-10-03T19:00:00+02:00",
+          "expires": "2026-10-04T13:59:59+02:00",
+          "headline": "Aviso de lluvias de nivel amarillo. Suroccidental asturiana",
+          "description": "Precipitación acumulada en una hora: 25 mm.",
+          "instruction": "Esté atento. Manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños moderados a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
+        },
+        {
+          "id": "2.49.0.0.724.0.ES.261003170408.633303PRP2041247048",
+          "type": "10; rain",
+          "level": "yellow",
+          "onset": "2026-10-04T00:00:00+02:00",
+          "expires": "2026-10-04T13:59:59+02:00",
+          "headline": "Aviso de lluvias de nivel amarillo. Suroccidental asturiana",
+          "description": "Precipitación acumulada en 12 horas: 60 mm.",
+          "instruction": "Esté atento. Manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños moderados a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
+        },
+        {
+          "id": "2.49.0.0.724.0.ES.261003170408.633303TOTO041247048",
+          "type": "3; thunderstorm",
+          "level": "yellow",
+          "onset": "2026-10-03T19:00:00+02:00",
+          "expires": "2026-10-04T13:59:59+02:00",
+          "headline": "Aviso de tormentas de nivel amarillo. Suroccidental asturiana",
+          "instruction": "Esté atento. Manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños moderados a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
+        }
+      ]
+    },
+    "633304": {
+      "name": "Central y Valles mineros",
+      "alerts": []
+    },
+    "633305": {
+      "name": "Cordillera y Picos de Europa",
+      "alerts": [
+        {
+          "id": "2.49.0.0.724.0.ES.261003093010.633305PRP1041219810",
+          "type": "10; rain",
+          "level": "yellow",
+          "onset": "2026-10-03T15:00:00+02:00",
+          "expires": "2026-10-04T13:59:59+02:00",
+          "headline": "Aviso de lluvias de nivel amarillo. Cordillera y Picos de Europa",
+          "description": "Precipitación acumulada en una hora: 25 mm.",
+          "instruction": "Esté atento. Manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños moderados a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
+        },
+        {
+          "id": "2.49.0.0.724.0.ES.261003093010.633305PRP2041219810",
+          "type": "10; rain",
+          "level": "yellow",
+          "onset": "2026-10-03T15:00:00+02:00",
+          "expires": "2026-10-04T13:59:59+02:00",
+          "headline": "Aviso de lluvias de nivel amarillo. Cordillera y Picos de Europa",
+          "description": "Precipitación acumulada en 12 horas: 60 mm.",
+          "instruction": "Esté atento. Manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños moderados a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
+        },
+        {
+          "id": "2.49.0.0.724.0.ES.261003093010.633305TOTO041219810",
+          "type": "3; thunderstorm",
+          "level": "yellow",
+          "onset": "2026-10-03T15:00:00+02:00",
+          "expires": "2026-10-04T13:59:59+02:00",
+          "headline": "Aviso de tormentas de nivel amarillo. Cordillera y Picos de Europa",
+          "instruction": "Esté atento. Manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños moderados a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
+        }
+      ]
+    }
+  }
+}

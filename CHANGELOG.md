@@ -10,6 +10,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.80] - 2026-10-03
+
+### 🚨 Integración Oficial de Avisos AEMET en Tiempo Real (Ley Específica 1)
+- **Conexión con MeteoAlarm Oficial:** Implementado flujo automatizado en la rama `data` para descargar de forma recurrente los avisos meteorológicos oficiales de AEMET para España, filtrando y aislando las 5 zonas de Asturias.
+- **Reestructuración de la Tarjeta AEMET (`weatherAlerts.js`):** La tarjeta principal muestra ahora la realidad oficial estricta de AEMET para el concejo, respetando la demanda del usuario (*"Si dan alertas no puede ser que diga sin alertas"*). Se mantiene de forma secundaria la estimación local como mecanismo de resiliencia (`Fallback`) si el servidor oficial falla.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v1180-avisos-oficiales-aemet` y scripts a `?v=1.1.80`.
+
+---
+
 ## [1.1.79] - 2026-10-03
 
 ### ⏱️ Robustez de Indexación Temporal por Timestamp Local en Pronóstico y Gráficas (Ley Específica 12.13)
@@ -39,7 +48,7 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ## [1.1.77] - 2026-10-03
 
-### ⏱️ Inmunidad al Desfase UTC y Sellado Horario Local en Detectores y Modelos (Ley Específica 12.11)
+### 🚨 Inmunidad al Desfase UTC y Sellado Horario Local en Detectores y Modelos (Ley Específica 12.11)
 - **Erradicación del Atraso de 2 Horas en la Galerna Cantábrica (`galernaDetector.js`):**
   - Sustituida la llamada a `new Date().toISOString().slice(0, 13)` por formateo de hora local asturiana real (`YYYY-MM-DDTHH`).
   - Corrige el desfase de 2 horas (UTC+2 en verano / UTC+1 en invierno) que obligaba al detector a comparar la temperatura contra registros de hacía 3 a 5 horas, restaurando el principio de nowcasting para comparar fielmente la caída térmica en los últimos 60 a 120 minutos reales.
@@ -275,7 +284,7 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
     1. *🌡️ Térmico:* Curva de temperatura real (`#38bdf8`) vs. curva de sensación térmica (`#fb923c`) discontinua.
     2. *🌧️ Lluvia:* Hidrograma completo con barras de precipitación horaria (mm/h), probabilidad de lluvia (%) y curva de lluvia acumulada total (mm).
     3. *💨 Viento:* Anemograma continuo con rachas máximas (km/h) y velocidad media del viento.
-    4. *⏱️ Barómetro:* Barógrafo de presión atmosférica a nivel del mar (hPa) con eje dinámico de alta resolución para detectar frentes, borrascas y galernas.
+    4. *🚨 Barómetro:* Barógrafo de presión atmosférica a nivel del mar (hPa) con eje dinámico de alta resolución para detectar frentes, borrascas y galernas.
     5. *📊 Combinado:* La gráfica multivariable clásica con las tres métricas combinadas.
 - **Selector de Ventana Temporal (24h / 48h / 72h):**
   - Posibilidad de alternar el alcance temporal con un solo clic/toque, recalculando automáticamente el lienzo táctil con scroll horizontal holgado.
@@ -451,7 +460,7 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
   - **Semáforu de Llamuergues Visual:** Barra de tracción de 4 niveles (*Seco*, *Húmedo*, *Zonas Blandas*, *Llamuergues*) con porcentaje visual dinámico, lluvia acumulada 24-48h y textura de agarre.
   - **Panel de Confort en Marcha:** 3 bloques compactos (Sensación térmica en cota +300m, Viento en cresta con alerta de rachas y Mochila/Equipo sugerido con UV).
   - **Filtros Táctiles Instantáneos:** Botonera interactiva para filtrar en caliente por `Todas`, `🟢 Fáciles & Familiares`, `🟡 Moderadas` y `🔴 Exigentes`.
-  - **Fichas Estilo AllTrails / Wikiloc:** Sustitución de listas de texto por chips horizontales ergonómicos (`📏 km`, `⏱️ tiempo`, `⛰️ desnivel`, `🪵 firme`) y avisos destacados de precaución.
+  - **Fichas Estilo AllTrails / Wikiloc:** Sustitución de listas de texto por chips horizontales ergonómicos (`📏 km`, `🚨 tiempo`, `⛰️ desnivel`, `🪵 firme`) y avisos destacados de precaución.
 - **Blindaje Legal Pleno (Ley 16):**
   - Cintillo expreso de seguridad en senderismo y montaña sin tecnicismos internos.
 - **Corrección de Caché en Cascada del Icono Lunar:**
@@ -1694,7 +1703,7 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ### 📱 Filas Horizontales Espaciosas y Switch Compacto Móvil para Previsión de Surf
 - **Filas Horizontales Espaciosas para Mañana y Tarde (`.surf-dayparts-list`)**: Rediseño de las tarjetas diarias de 7 días reemplazando las 2 columnas estrechas por filas horizontales completas y legibles al 100%, mostrando claramente metros de ola, mar de fondo (Swell), período en segundos ($T$), energía combinada en kiloJulios (⚡ kJ) y viento en la rompiente (*Offshore / Onshore / Glassy*).
-- **Ajuste Ergonómico del Switch (`⏱️ 3 Horas` / `📅 7 Días`)**: Reducción de textos en el interruptor deslizante segmentado y contención estricta de márgenes laterales en el widget para eliminar cualquier desborde en teléfonos móviles.
+- **Ajuste Ergonómico del Switch (`🚨 3 Horas` / `📅 7 Días`)**: Reducción de textos en el interruptor deslizante segmentado y contención estricta de márgenes laterales en el widget para eliminar cualquier desborde en teléfonos móviles.
 - **Service Worker `v180-official` & Cache-Busting Total**: Sincronización completa a `?v=1.0.80` en todos los archivos.
 
 ---
@@ -1702,7 +1711,7 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 ## [1.0.79] - 2026-09-02
 
 ### 📱 Interruptor Deslizante Segmentado 100% Móvil para Previsión de Surf
-- **Interruptor Deslizante Segmentado de Ancho Completo (`.surf-sliding-segmented-switch`)**: Sustitución de los botones con textos largos por una cápsula deslizable tipo iOS / Liquid Glass con dos posiciones simétricas al 50% (`⏱️ Horas 3h` / `📅 7 Días M/T`), eliminando por completo cualquier corte de texto o desbordamiento horizontal en pantallas móviles.
+- **Interruptor Deslizante Segmentado de Ancho Completo (`.surf-sliding-segmented-switch`)**: Sustitución de los botones con textos largos por una cápsula deslizable tipo iOS / Liquid Glass con dos posiciones simétricas al 50% (`🚨 Horas 3h` / `📅 7 Días M/T`), eliminando por completo cualquier corte de texto o desbordamiento horizontal en pantallas móviles.
 - **Glider Animado de Alta Fluidez**: Deslizamiento suave de la pastilla celeste brillante con aceleración cúbica (`cubic-bezier(0.4, 0, 0.2, 1)`) y retroalimentación háptica en dispositivos móviles.
 - **Service Worker `v179-official` & Cache-Busting Total**: Sincronización completa a `?v=1.0.79` en todos los archivos.
 
@@ -1713,7 +1722,7 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 ### 🏄‍♂️ Previsión Extendida de Surf a 7 Días (Mañana vs Tarde) con Selector Conmutable
 - **Panel de Planificación Semanal de Rompientes (7 Días)**: Nueva función `getSurfDailyForecast` que calcula la evolución de oleaje, swell, período, energía combinada en kJ, velocidad y rumbo de viento y aptitud de rompiente para cada uno de los próximos 7 días completos.
 - **Estructura Símétrica Mañana (08h-14h) vs Tarde (14h-20h)**: Cada día cuenta con dos cápsulas visuales claras que permiten comparar el amanecer y el atardecer, facilitando la elección del mejor baño del día.
-- **Selector Conmutable de Previsión**: Pestañas interactivas `[ ⏱️ Próximas Horas (3h) ]` y `[ 📅 Previsión 7 Días (Mañana / Tarde) ]` en la cabecera del visor de surf con transición suave e instantánea.
+- **Selector Conmutable de Previsión**: Pestañas interactivas `[ 🚨 Próximas Horas (3h) ]` y `[ 📅 Previsión 7 Días (Mañana / Tarde) ]` en la cabecera del visor de surf con transición suave e instantánea.
 - **Service Worker `v178-official` & Cache-Busting Total**: Sincronización completa a `?v=1.0.78` en todos los componentes.
 
 ---
@@ -2348,7 +2357,7 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Despliegue Global en los 6 Sensores de Estación en Vivo**: Integración de botones interactivos didácticos `[ 💡 Explícame ]` en la totalidad de las tarjetas meteorológicas principales:
   1. 🧭 **Anemómetro y Dirección**: Guía sobre la diferencia entre viento medio y rachas máximas instantáneas, escala de intensidad Beaufort (brisa, moderado, fuerte, temporal), la Rosa de los Vientos y la influencia de los vientos asturianos (el *Sur/Ábrego* cálido y seco por efecto Foehn frente al *Gallego/NO* frío y húmedo).
   2. 🌧️ **Pluviómetro Digital**: Explicación de la equivalencia 1 mm = 1 l/m², escala oficial de intensidad de lluvia AEMET (<2 débil, 2-15 moderada, 15-30 fuerte, >30 torrencial), probabilidad vs volumen y singularidades asturianas (*orbayu / calabobos* vs *bastinazu*).
-  3. ⏱️ **Barómetro y Presión**: Funcionamiento de altas/bajas presiones y tendencia.
+  3. 🚨 **Barómetro y Presión**: Funcionamiento de altas/bajas presiones y tendencia.
   4. 💧 **Higrómetro y Punto de Rocío**: Escala de bochorno y condensación.
   5. ☀️ **Radiación Solar e Índice UV**: Rangos de protección solar y aumento de UV por altitud en la Cordillera.
   6. 🍃 **Calidad del Aire (AQI)**: Monitoreo de partículas PM2.5 / PM10 y escala europea de salubridad.
@@ -2700,7 +2709,7 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ## [0.9.998-beta] - 2026-08-23
 
-### ⏱️ Pronóstico Horario Extendido a 72 Horas con Separadores de Días (New & Improved)
+### 🚨 Pronóstico Horario Extendido a 72 Horas con Separadores de Días (New & Improved)
 - **Ampliación de 24h a 72 Horas (3 Días)**: El carrusel interactivo por horas ahora muestra las próximas 72 horas completas con sus iconos de tiempo, temperatura, probabilidad de precipitación y viento.
 - **Insignias de Separación Diaria**: Incorporados divisores visuales verticales con etiquetas estilizadas (*Hoy*, *Mañana*, *Día de la semana*) que separan de manera intuitiva cada jornada al deslizar.
 

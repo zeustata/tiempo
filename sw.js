@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1179-cursor-temporal-robusto';
+const CACHE_NAME = 'meteoasturlode-v1180-avisos-oficiales-aemet';
 const STATIC_ASSETS = [
   './',
   './index.html',

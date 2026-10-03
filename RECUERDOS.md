@@ -41,7 +41,17 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     - **Exención de Responsabilidad Civil (Ley 16):** Advertencia explícita de naturaleza orientativa; prohibición de formular textos que garanticen paso o seguridad en accesos de montaña o calas escarpadas.
     - **Ergonomía Móvil (Ley 11):** Integración limpia como Módulo 10 en la botonera de navegación con tarjeta Liquid Glass y pastilla inteligente de llamada en el Tiempo Actual.
 
-## 🚀 Versión Actual: v1.1.79 ⏱️ — 2026-10-03
+## 🚀 Versión Actual: v1.1.80 🚨 — 2026-10-03
+- **Integración Oficial de Avisos AEMET en Tiempo Real (Ley Específica 1):**
+  1. *Conexión con MeteoAlarm Oficial:*
+     - Implementado flujo automatizado (GitHub Actions) en la rama `data` para descargar de forma recurrente y sin dependencias opacas los avisos meteorológicos oficiales de AEMET para España, filtrando y aislando las 5 zonas de Asturias (`633301` a `633305`).
+  2. *Reestructuración de la Tarjeta AEMET (weatherAlerts.js):*
+     - Erradicada la dependencia exclusiva de cálculos y umbrales locales. La tarjeta de la estación principal muestra ahora la **realidad oficial estricta de AEMET** para el concejo, respetando la demanda del usuario: *"Si dan alertas no puede ser que diga sin alertas"*.
+     - Se mantiene de forma secundaria la estimación local como mecanismo de resiliencia (`Fallback`) únicamente en caso de caída del servidor o si AEMET confirma la ausencia de avisos pero los umbrales prevén temporal, etiquetándose rigurosamente como *"Aviso Local Estimado"*.
+  3. *Versionado Oficial, Anti-Caché y Documentación:*
+     - Versión oficial actualizada a `v1.1.80 🚨` en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js` y Service Worker `meteoasturlode-v1180-avisos-oficiales-aemet` en `sw.js`.
+
+## 🚀 Versión Previa: v1.1.79 ⏱️ — 2026-10-03
 - **Robustez de Indexación Temporal por Timestamp Local en Pronóstico y Gráficas (Ley Específica 12.13):**
   1. *Erradicación del Cursor Ciego de Horas (forecastView.js, chartsView.js, compareView.js):*
      - Erradicada la asunción ciega de que el índice `0` del array `hourly.time` corresponde a las 00:00 de hoy (`for (let i = currentHour; ...)`).
