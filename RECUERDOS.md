@@ -9,6 +9,9 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   3. *Responsabilidad Individual e Inmunidad del Desarrollador:* Toda actividad en entornos naturales o carretera se realiza bajo la exclusiva responsabilidad del usuario. Obligatoriedad de incorporar advertencias visibles de exención de responsabilidad civil en módulos sensibles y en la Política de Privacidad, blindando al desarrollador (Lendo / zeustata) frente a cualquier reclamación de terceros.
 
 ## 📌 Tareas Pendientes / Hoja de Ruta Futura
+- **Optimización Ergonómica de Avisos AEMET (Acuerdo Lendo 03-10-2026):**
+  - *Contexto:* Los avisos oficiales de AEMET pueden ocupar mucho espacio en pantalla si hay múltiples alertas concurrentes (viento, costeros, lluvia).
+  - *Acción a ejecutar:* Diseñar la tarjeta AEMET para que, en caso de haber alertas activas, éstas se presenten en estado **minimizado/colapsado** por defecto (ej. mostrando solo el titular principal y el nivel máximo) e incorporen un sistema de desglose o acordeón interactivo para expandir y leer la recomendación completa y los detalles, mejorando la usabilidad móvil sin saturar el scroll.
 - **Integración de Enlaces de Google Play Store tras Publicación Oficial:**
   - *Contexto:* Acordado con Lendo el 02-10-2026 para cuando la app esté aprobada y publicada en la Google Play Store con su `package_id` definitivo.
   - *Acciones a ejecutar:*
