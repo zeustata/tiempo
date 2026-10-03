@@ -10,12 +10,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
-## [1.1.80] - 2026-10-03
+## [1.1.81] - 2026-10-03
 
 ### 🚨 Integración Oficial de Avisos AEMET en Tiempo Real (Ley Específica 1)
 - **Conexión con MeteoAlarm Oficial:** Implementado flujo automatizado en la rama `data` para descargar de forma recurrente los avisos meteorológicos oficiales de AEMET para España, filtrando y aislando las 5 zonas de Asturias.
 - **Reestructuración de la Tarjeta AEMET (`weatherAlerts.js`):** La tarjeta principal muestra ahora la realidad oficial estricta de AEMET para el concejo, respetando la demanda del usuario (*"Si dan alertas no puede ser que diga sin alertas"*). Se mantiene de forma secundaria la estimación local como mecanismo de resiliencia (`Fallback`) si el servidor oficial falla.
-- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v1180-avisos-oficiales-aemet` y scripts a `?v=1.1.80`.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v1180-avisos-oficiales-aemet` y scripts a `?v=1.1.81`.
 
 ---
 

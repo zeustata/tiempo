@@ -301,52 +301,57 @@ export function renderAemetAlertCard(alertStatus, concejo) {
 
   // Si hay alertas activas
   return `
-    <div class="aemet-alert-card aemet-${maxLevel} has-active-alerts">
+    <div class="aemet-alert-card aemet-${maxLevel} has-active-alerts collapsed" onclick="this.classList.toggle('collapsed')">
       <div class="aemet-card-header">
         <div class="aemet-header-left">
           <span class="aemet-badge-pill pill-${maxLevel}">🚨 AVISOS METEOROLÓGICOS ACTIVOS (${alerts.length})</span>
           <span class="aemet-zone-label">📍 Zona AEMET: <strong>${zone.name}</strong></span>
         </div>
-        <a href="https://www.aemet.es" target="_blank" rel="noopener noreferrer" class="aemet-logo-tag" style="text-decoration: none;" title="Visitar portal oficial de AEMET">aemet.es ↗</a>
+        <div class="aemet-header-right" style="display: flex; align-items: center; gap: 8px;">
+          <a href="https://www.aemet.es" target="_blank" rel="noopener noreferrer" class="aemet-logo-tag" style="text-decoration: none;" title="Visitar portal oficial de AEMET" onclick="event.stopPropagation()">aemet.es ↗</a>
+          <span class="aemet-chevron" style="color: inherit; opacity: 0.7; font-size: 0.85rem; transition: transform 0.3s ease;">▼</span>
+        </div>
       </div>
 
-      <div class="aemet-alerts-list">
-        ${alerts.map(a => `
-          <div class="aemet-alert-item item-${a.level}">
-            <div class="alert-item-top">
-              <div class="alert-item-title-wrap">
-                <span class="alert-item-icon">${a.icon}</span>
-                <div>
-                  <h4 class="alert-item-title">${a.title}</h4>
-                  <span class="alert-item-level-tag" style="color: ${a.levelColor}; border-color: ${a.levelColor}60; background: ${a.levelColor}18;">
-                    ${a.levelName}
-                  </span>
+      <div class="aemet-collapsible-content">
+        <div class="aemet-alerts-list">
+          ${alerts.map(a => `
+            <div class="aemet-alert-item item-${a.level}" onclick="event.stopPropagation()">
+              <div class="alert-item-top">
+                <div class="alert-item-title-wrap">
+                  <span class="alert-item-icon">${a.icon}</span>
+                  <div>
+                    <h4 class="alert-item-title">${a.title}</h4>
+                    <span class="alert-item-level-tag" style="color: ${a.levelColor}; border-color: ${a.levelColor}60; background: ${a.levelColor}18;">
+                      ${a.levelName}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <p class="alert-item-desc">${a.desc}</p>
+              <p class="alert-item-desc">${a.desc}</p>
 
-            <div class="alert-item-meta-grid">
-              <div class="alert-meta-box">
-                <span class="meta-label">⏰ Vigencia</span>
-                <span class="meta-value">${a.validity}</span>
+              <div class="alert-item-meta-grid">
+                <div class="alert-meta-box">
+                  <span class="meta-label">⏰ Vigencia</span>
+                  <span class="meta-value">${a.validity}</span>
+                </div>
+                <div class="alert-meta-box">
+                  <span class="meta-label">🎯 Probabilidad</span>
+                  <span class="meta-value">${a.probability}</span>
+                </div>
               </div>
-              <div class="alert-meta-box">
-                <span class="meta-label">🎯 Probabilidad</span>
-                <span class="meta-value">${a.probability}</span>
+
+              <div class="alert-item-advice">
+                <span class="advice-icon">⚠️</span>
+                <span class="advice-text"><strong>Recomendación oficial:</strong> ${a.recommendation}</span>
               </div>
             </div>
-
-            <div class="alert-item-advice">
-              <span class="advice-icon">⚠️</span>
-              <span class="advice-text"><strong>Recomendación oficial:</strong> ${a.recommendation}</span>
-            </div>
-          </div>
-        `).join('')}
-      </div>
-      <div style="padding: 6px 14px 10px; font-size: 0.72rem; color: var(--text-dim); text-align: right; opacity: 0.9;">
-        Avisos basados en datos abiertos oficiales de <a href="https://www.aemet.es" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;">aemet.es</a> • App meteorológica independiente
+          `).join('')}
+        </div>
+        <div style="padding: 6px 14px 10px; font-size: 0.72rem; color: var(--text-dim); text-align: right; opacity: 0.9;" onclick="event.stopPropagation()">
+          Avisos basados en datos abiertos oficiales de <a href="https://www.aemet.es" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;">aemet.es</a> • App meteorológica independiente
+        </div>
       </div>
     </div>
   `;

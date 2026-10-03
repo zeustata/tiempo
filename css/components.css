@@ -8187,4 +8187,9 @@
 
 
 
-
+
+/* AEMET Collapsible Logic */
+.aemet-alert-card.has-active-alerts { cursor: pointer; }
+.aemet-alert-card.collapsed .aemet-collapsible-content { display: none; }
+.aemet-alert-card:not(.collapsed) .aemet-chevron { transform: rotate(180deg); }
+.aemet-chevron { display: inline-block; }
