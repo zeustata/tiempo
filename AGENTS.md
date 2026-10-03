@@ -147,5 +147,15 @@
       3. **Suroccidente Interior (`🍂`):** Estación *AEMET Cangas del Narcea*.
       4. **Cordillera y Picos de Europa (`🏔️`):** Estación *AEMET Pajares / Picos de Europa (Alta Montaña)*.
     - En la interfaz de usuario, la demarcación debe presentarse en dos niveles ergonómicos (cabecera con pastilla de zona + fila de métricas de máximas, mínimas y lluvia en 24h), garantizando inmunidad al desborde y visualización limpia en pantallas de 320px a 380px conforme al Artículo 11.
+12. **Protocolo de Calibración Empírica y Ajustes Finos del Clima Asturiano:**
+    - Centralización inmutable de los umbrales empíricos de ajuste fino que gobiernan la lógica de interpretación meteorológica y oceanográfica en MeteoAstur Lode:
+      1. **Filtro Anti-Orbayu Fantasma por Humedad Relativa (Feedback Lendo / Nowcasting):** Si el modelo matemático asigna código WMO de llovizna (`51`, `53`, `55`, `56`, `57`) pero el pluviómetro determinista registra estrictamente `0.0 mm` en suelo, el sistema evalúa la humedad relativa (`relative_humidity_2m`):
+         - Si `Humedad < 94%`: se anula la condición de lluvia activa y se reconduce a **"Nublado / Cubiertu"** con icono `☁️` y tema nublado sin gotas (evita falsas alarmas provocadas por estratocúmulos costeros o panza de burro seca).
+         - Si `Humedad >= 94%`: se valida como **"Orbayu meón / Llovizna fina"** (aire en saturación extrema capaz de mojar sin hacer bascular la cazoleta del pluviómetro).
+         - Si `Precipitación >= 0.1 mm`: se clasifica siempre como llovizna o lluvia física activa.
+      2. **Detector de Resol y Sol Tamizáu (Ley 7):** Radiación solar directa perpendicular mínima (`direct_normal_irradiance`) bajo cielo cubierto (`>= 85%` nubes): Invierno `320 W/m²`, Primavera/Otoño `450 W/m²`, Otoño tardío `380 W/m²`, Verano `500 W/m²`.
+      3. **Suelos de Probabilidad Coherente QPF-PoP (Ley 8):** `0.1 a 0.4 mm -> PoP >= 30%`; `0.5 a 1.9 mm -> PoP >= 55%`; `>= 2.0 mm -> PoP >= 80%`.
+      4. **Energía y Saturación de Rompiente en Salinas y San Lorenzo (Ley 9):** Saturación / Mar Pasado en beach breaks con ola `>= 1.7 m`, o `>= 1.5 m` con período `>= 13 s` o energía `>= 350 kJ`.
+
 
 

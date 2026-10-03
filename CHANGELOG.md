@@ -10,6 +10,24 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.69] - 2026-10-03
+
+### 💧 Calibración Empírica & Filtro Anti-Orbayu Fantasma por Humedad (Feedback Lendo)
+- **Filtro Anti-Orbayu Fantasma por Humedad Relativa (Ley 12):**
+  - Si el modelo numérico (Open-Meteo / AROME / ECMWF) proyecta código WMO de llovizna (`51`, `53`, `55`, `56`, `57`), pero el pluviómetro determinista registra estrictamente `0.0 mm` en suelo, el sistema evalúa la humedad relativa (`relative_humidity_2m`).
+  - **Humedad < 94%:** Se anula la calificación de lluvia activa y se reconduce a **"Nublado / Cubiertu"** con icono `☁️` y tema nublado sin gotas (resuelve el caso clásico de estratocúmulos o panza de burro secos donde no cae ni una gota en la calle).
+  - **Humedad >= 94%:** Se valida como **"Orbayu meón / Llovizna fina"**, alertando de aire en saturación extrema capaz de mojar y condensar sobre el usuario sin llegar a hacer bascular la cazoleta del pluviómetro (0.1 mm).
+  - **Precipitación >= 0.1 mm:** Se preserva la condición indiscutible de lluvia/llovizna física activa.
+- **Sincronización Total de Módulos:**
+  - Armonizado en el **Semáforo del Paraguas** (`umbrellaAdvisor.js`) y en el **Asesor de Tendido** (`laundryAdvisor.js`) para evitar que indiquen erróneamente *"Orbayando agora"* o *"Lluvia activa"* con la calle seca.
+  - Sincronizado en la tarjeta principal (`currentCard.js`), pronóstico horario (`forecastView.js`), gráficas horarias (`chartsView.js`), postales compartibles (`shareCardGenerator.js`) y locución por voz (`weatherSpeaker.js`).
+- **Constitución Específica del Proyecto (`AGENTS.md`):**
+  - Incorporado el **Artículo 12 (Protocolo de Calibración Empírica y Ajustes Finos del Clima Asturiano)** en la Parte II, centralizando en una sola tabla todos los umbrales de ajuste manual (Orbayu fantasma, Resol vs. Panza de Burro, QPF-PoP, y Energía de rompiente en arenales).
+- **Cache-Busting Garantizado (Ley 4):**
+  - Service Worker actualizado a `meteoasturlode-v1169-filtro-anti-orbayu-humedad` y query strings `?v=1.1.69`.
+
+---
+
 ## [1.1.68] - 2026-10-02
 
 ### 🛡️ Restauración Inmediata de Estabilidad Funcional (Feedback Lendo)

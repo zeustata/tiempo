@@ -23,7 +23,10 @@ export function calculateUmbrellaStatus(current, hourly) {
 
   const currentPrecip = current.precipitation != null ? parseFloat(current.precipitation) : 0;
   const currentCode = current.weather_code != null ? parseInt(current.weather_code, 10) : 0;
-  const isCurrentlyRaining = currentPrecip >= 0.1 || (currentCode >= 50 && currentCode <= 99);
+  const currentHum = current.relative_humidity_2m != null ? parseFloat(current.relative_humidity_2m) : null;
+  const isDrizzleCode = (currentCode >= 51 && currentCode <= 57);
+  const isFalseDrizzle = isDrizzleCode && currentPrecip < 0.1 && (currentHum !== null && currentHum < 94);
+  const isCurrentlyRaining = (currentPrecip >= 0.1 || (currentCode >= 50 && currentCode <= 99)) && !isFalseDrizzle;
 
   // 1. Si está lloviendo AHORA MISMO
   if (isCurrentlyRaining) {

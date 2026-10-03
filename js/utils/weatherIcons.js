@@ -87,7 +87,7 @@ export function getSeasonalSolarThresholds(date = new Date()) {
   };
 }
 
-export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null, directIrradiance = null, uvIndex = null, shortwaveRadiation = null, cloudCover = null) {
+export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null, directIrradiance = null, uvIndex = null, shortwaveRadiation = null, cloudCover = null, humidity = null) {
   let base = WMO_CODES[code] || { label: 'Variable', icon: '⛅', svgKey: 'cloudy', lucide: 'cloud', bg: 'cloudy', isRain: false, isSnow: false };
 
   const isNight = isDay === 0 || isDay === false;
@@ -106,14 +106,34 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
   }
 
   // 2. Graduación y coherencia de lluvia física (LA PROBABILIDAD NUNCA INVENTA LLUVIA)
-  if (precipitation !== null || pop !== null) {
+  if (precipitation !== null || pop !== null || humidity !== null) {
     const p = precipitation != null ? Math.max(0, parseFloat(precipitation)) : 0;
     const hasPop = pop !== null && pop !== undefined;
     const prob = hasPop ? Math.max(0, parseFloat(pop)) : null;
+    const h = humidity != null ? parseFloat(humidity) : null;
 
     // Lluvia física real medible en pluviómetro (>= 0.1 mm) o código WMO explícito de lluvia
     const isPhysicallyRaining = p >= 0.1;
-    const isExplicitRainCode = base.isRain || base.svgKey === 'drizzle' || base.svgKey === 'rain' || base.svgKey === 'storm';
+    let isExplicitRainCode = base.isRain || base.svgKey === 'drizzle' || base.svgKey === 'rain' || base.svgKey === 'storm';
+
+    // FILTRO ANTI-ORBAYU FANTASMA (Feedback Lendo / Ley 12):
+    // Si el modelo marca código de llovizna (51, 53, 55, 56, 57) pero el pluviómetro marca estrictamente 0.0 mm (< 0.1 mm):
+    // Solo se valida como llovizna activa si la humedad relativa en superficie roza la saturación extrema (>= 94%).
+    // Con humedad < 94%, se anula la condición de lluvia activa y se reconduce a 'Nublado / Cubiertu' sin gotas,
+    // erradicando los falsos orbayus provocados por estratocúmulos o panza de burro secos.
+    const isDrizzleCode = (code >= 51 && code <= 57) || base.svgKey === 'drizzle';
+    if (!isPhysicallyRaining && isDrizzleCode && h !== null && h < 94) {
+      isExplicitRainCode = false;
+      base = {
+        label: isNight ? 'Nublado de noche' : 'Nublado / Cubiertu',
+        icon: '☁️',
+        svgKey: 'cloudy',
+        lucide: 'cloud',
+        bg: isNight ? 'partly-cloudy-night' : 'cloudy',
+        isRain: false,
+        isSnow: false
+      };
+    }
 
     // REGLA 1: Si el código base es de tiempo seco (sol, claros, nublado) y no cae lluvia física (p < 0.1 mm),
     // la probabilidad estadística jamás transforma el cielo en lluvia. Se respeta el estado del cielo.
@@ -236,10 +256,15 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
           isSnow: false
         };
       }
-      // 💧 Caso G: Orbayu / Llovizna ligera (p >= 0.1 mm o códigos 51/53/55/56/57/80/61)
+      // 💧 Caso G: Orbayu / Llovizna ligera (p >= 0.1 mm o códigos 51/53/55/56/57 con saturación h >= 94%)
       else {
+        const isSaturatedFineDrizzle = !isPhysicallyRaining && h !== null && h >= 94;
+        let drizzleLabel = isNight ? 'Orbayu nocturno ligero' : 'Orbayu / Llovizna ligera';
+        if (isSaturatedFineDrizzle) {
+          drizzleLabel = isNight ? 'Orbayu meón nocturno (Llovizna fina)' : 'Orbayu meón (Llovizna fina)';
+        }
         base = {
-          label: isNight ? 'Orbayu nocturno ligero' : 'Orbayu / Llovizna ligera',
+          label: drizzleLabel,
           icon: isNight ? '🌧️' : '🌦️',
           svgKey: 'drizzle',
           lucide: 'cloud-drizzle',

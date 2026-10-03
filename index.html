@@ -223,7 +223,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.68 🛡️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.69 💧</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -274,8 +274,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
+            <span class="release-version">v1.1.69 💧</span>
+            <span class="release-date">03 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-mejora">Calibración Empírica (Ley 12)</span> <strong>Filtro Anti-Orbayu Fantasma por Humedad Relativa (Feedback Lendo)</strong>:
+              <br>• <strong>Detección de Llovizna Real vs. Panza de Burro:</strong> Si el modelo numérico asigna código de llovizna (WMO 51-57) pero el pluviómetro marca estrictamente 0.0 mm en suelo, el sistema evalúa la humedad relativa. Si está por debajo del 94%, se anula la llovizna activa y se reconduce a <em>Nublado / Cubiertu</em> (cero gotas ni falsos avisos por estratos costeros secos).
+              <br>• <strong>Orbayu Meón por Saturación Extrema:</strong> Con humedad igual o superior al 94% y 0.0 mm se clasifica fidedignamente como <em>Orbayu meón (Llovizna fina)</em>, avisando al usuario de gotículas en suspensión capaces de empapar sin mover el pluviómetro.
+              <br>• <strong>Sincronización Total de Tarjetas:</strong> Integrado de forma armónica en el Semáforo del Paraguas, Asesor de Tendido y postales compartidas.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
             <span class="release-version">v1.1.68 🛡️</span>
-            <span class="release-date">02 Oct 2026 (Actual)</span>
+            <span class="release-date">02 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-fix">Estabilidad & Rollback</span> <strong>Restauración Inmediata de Estabilidad Funcional (Feedback Lendo)</strong>:
@@ -2518,7 +2532,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.68"></script>
+  <script type="module" src="js/app.js?v=1.1.69"></script>
 
 
 

@@ -37,7 +37,8 @@ export function generateWeatherSpeechScript(concejo, weatherData) {
     current.direct_normal_irradiance,
     current.uv_index,
     current.shortwave_radiation,
-    current.cloud_cover
+    current.cloud_cover,
+    current.relative_humidity_2m
   );
 
   const cleanConcejoName = concejo.name ? concejo.name.replace(/\(.*?\)/, '').trim() : 'Asturias';

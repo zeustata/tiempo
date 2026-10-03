@@ -37,7 +37,7 @@ const APP_MODULES = [
   { id: 'astronomy', icon: '🔭', title: 'Astronomía & Cosmos', desc: 'Eclipses, lluvias de estrellas, fases lunares y semáforo de visibilidad en Asturias', key: '9' }
 ];
 
-export const CURRENT_APP_VERSION = '1.1.68';
+export const CURRENT_APP_VERSION = '1.1.69';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -2148,7 +2148,7 @@ class MeteoAsturiasApp {
     const currentUv = cur?.uv_index != null ? cur.uv_index : (hourly?.uv_index && hourly.uv_index[currentHour] != null ? hourly.uv_index[currentHour] : null);
     const currentSw = cur?.shortwave_radiation != null ? cur.shortwave_radiation : null;
     const currentCloud = cur?.cloud_cover != null ? cur.cloud_cover : (hourly?.cloud_cover && hourly.cloud_cover[currentHour] != null ? hourly.cloud_cover[currentHour] : null);
-    const info = getWeatherInfo(weatherCode, isDay, cur?.precipitation, currentPop, directIrr, currentUv, currentSw, currentCloud);
+    const info = getWeatherInfo(weatherCode, isDay, cur?.precipitation, currentPop, directIrr, currentUv, currentSw, currentCloud, cur?.relative_humidity_2m);
     const bgType = info ? info.bg : 'cloudy';
     let themeKey = bgType;
 

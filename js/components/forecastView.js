@@ -154,7 +154,8 @@ export function renderHourlyForecastBlock(data, units = 'metric', iconTheme = 'a
     const useSw = isImmediateNextHour ? liveSw : null;
 
     const cloudCoverHour = (hourly.cloud_cover && hourly.cloud_cover[i] != null) ? hourly.cloud_cover[i] : null;
-    const weather = getWeatherInfo(code, isDay, precipMm, pop, useDirectIrr, useUv, useSw, cloudCoverHour);
+    const humHour = (hourly.relative_humidity_2m && hourly.relative_humidity_2m[i] != null) ? hourly.relative_humidity_2m[i] : null;
+    const weather = getWeatherInfo(code, isDay, precipMm, pop, useDirectIrr, useUv, useSw, cloudCoverHour, humHour);
     const temp = Math.round(hourly.temperature_2m[i]);
     const windSpeed = units === 'knots' ? (hourly.wind_speed_10m[i] * 0.539957).toFixed(0) : Math.round(hourly.wind_speed_10m[i]);
     const windDeg = (hourly.wind_direction_10m && hourly.wind_direction_10m[i] != null) ? hourly.wind_direction_10m[i] : 0;

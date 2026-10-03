@@ -76,7 +76,8 @@ export function generateShareCardCanvas(concejo, weatherData) {
     directIrr,
     currentUv,
     currentSw,
-    currentCloud
+    currentCloud,
+    current.relative_humidity_2m
   );
 
   const tempVal = Math.round(current.temperature_2m != null ? current.temperature_2m : 15);
@@ -311,8 +312,8 @@ export function generateShareCardCanvas(concejo, weatherData) {
       const pop = hourly.precipitation_probability ? (hourly.precipitation_probability[idx] || 0) : 0;
       const precip = hourly.precipitation ? (hourly.precipitation[idx] || 0) : 0;
       const cloudCover = (hourly.cloud_cover && hourly.cloud_cover[idx] != null) ? hourly.cloud_cover[idx] : null;
-      const isImmediate = (step <= 1);
-      const hWeather = getWeatherInfo(code, isDay, precip, pop, isImmediate ? directIrr : null, isImmediate ? currentUv : null, isImmediate ? currentSw : null, cloudCover);
+      const hHum = (hourly.relative_humidity_2m && hourly.relative_humidity_2m[idx] != null) ? hourly.relative_humidity_2m[idx] : null;
+      const hWeather = getWeatherInfo(code, isDay, precip, pop, isImmediate ? directIrr : null, isImmediate ? currentUv : null, isImmediate ? currentSw : null, cloudCover, hHum);
       const hIcon = hWeather ? hWeather.icon : '☀️';
       const hTemp = Math.round(hourly.temperature_2m[idx]);
       const hWind = hourly.wind_speed_10m ? Math.round(hourly.wind_speed_10m[idx]) : (hourly.windspeed_10m ? Math.round(hourly.windspeed_10m[idx]) : 0);

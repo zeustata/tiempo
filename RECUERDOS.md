@@ -42,10 +42,31 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     - **Ergonomía Móvil (Ley 11):** Integración limpia como Módulo 10 en la botonera de navegación con tarjeta Liquid Glass y pastilla inteligente de llamada en el Tiempo Actual.
 
 ## 🚀 Última Actualización Oficial: v1.1.68 🛡️ — 2026-10-02
+## 🚀 Versión Actual: v1.1.69 💧 — 2026-10-03
+- **Calibración Empírica & Filtro Anti-Orbayu Fantasma por Humedad Relativa (Feedback Lendo):**
+  1. *Filtro Anti-Orbayu Fantasma por Humedad en Nowcasting (Ley 12):*
+     - Detección rigurosa de la discrepancia física entre el modelo numérico (código WMO 51 a 57) y la precipitación en suelo (`0.0 mm`).
+     - Si la humedad relativa en superficie es `< 94%`: se anula la condición de lluvia/llovizna activa y se reconduce a **"Nublado / Cubiertu"** con icono `☁️` y tema nublado sin partículas de lluvia (resuelve con fidelidad los casos de estratocúmulos o panza de burro secos donde en la calle no cae ni una gota, como el observado en Castrillón).
+     - Si la humedad relativa es `>= 94%`: se valida como **"Orbayu meón / Llovizna fina"**, advirtiendo de condensación en suspensión extrema que moja sin llegar a hacer bascular el pluviómetro de 0.1 mm.
+     - Si la precipitación en pluviómetro es `>= 0.1 mm`: se clasifica siempre como llovizna o lluvia física activa.
+  2. *Sincronización Total de Componentes y Módulos de Decisión:*
+     - *Semáforo del Paraguas ([umbrellaAdvisor.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/utils/umbrellaAdvisor.js)):* Supresión del aviso falso *"Orbayando agora"* cuando el pluviómetro marca 0.0 mm y la humedad es < 94%, pasando a evaluar la ventana de las próximas 8 horas.
+     - *Asesor de Tendido ([laundryAdvisor.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/utils/laundryAdvisor.js)):* Supresión de la alarma roja por lluvia activa en situaciones de falso orbayu seco.
+     - *Componentes Visuales y Gráficos:* Sincronización en [currentCard.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/components/currentCard.js), [forecastView.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/components/forecastView.js), [chartsView.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/components/chartsView.js), [shareCardGenerator.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/utils/shareCardGenerator.js) y locución [weatherSpeaker.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/utils/weatherSpeaker.js).
+  3. *Consagración en Leyes Específicas del Proyecto ([AGENTS.md](file:///c:/Users/NUC/Downloads/IA/Tiempo/AGENTS.md)):*
+     - Incorporado el **Artículo 12 (Protocolo de Calibración Empírica y Ajustes Finos del Clima Asturiano)** en la Parte II, centralizando en una sola tabla transparente todos los umbrales empíricos del proyecto (Anti-Orbayu fantasma, Resol vs. Panza de Burro, QPF-PoP, y Energía de rompiente en arenales).
+  4. *Versionado y Despliegue:*
+     - Versión oficial actualizada a `v1.1.69 💧` en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en [app.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/app.js) y cadena de Service Worker a `meteoasturlode-v1169-filtro-anti-orbayu-humedad` en [sw.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/sw.js).
+
+---
+
+## 🚀 Versión Previa: v1.1.68 🛡️ — 2026-10-02
 - **Restauración Inmediata de Estabilidad Funcional (Feedback Lendo):**
   - **Retorno a Versión Estable (Ley 2):** Tras detectar un fallo de sintaxis en el avance preliminar del módulo de planes, se ejecuta de inmediato el protocolo de retorno a la versión funcional previa 100% operativa (v1.1.66).
   - **Purga Integral de Caché (Ley 4):** Incremento a `v1.1.68`, actualización de la cadena de Service Worker a `meteoasturlode-v1168-restauracion-estabilidad` y query strings `?v=1.1.68` para forzar la recarga limpia en todos los dispositivos y PWA.
   - **Hoja de Ruta Preservada:** El diseño y especificación técnica del Módulo 10 quedan rigurosamente salvaguardados en este documento para su integración segura y sin prisas.
+
+---
 
 ## 🚀 Versión Previa: v1.1.66 🌅 — 2026-10-02
 - **Atmósfera Cromática y Acabado Liquid Glass en Pronóstico a 10 Días (Feedback Lendo):**
