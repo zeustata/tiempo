@@ -1,17 +1,52 @@
 import { CONCEJOS_ASTURIAS, getConcejoById } from '../config/concejos.js';
-import { getWeatherInfo } from '../utils/weatherIcons.js?v=1.1.53';
+import { getWeatherInfo, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=1.1.60';
+
+/**
+ * Extrae y sintetiza el estado meteorológico real con calibración solar inteligente (Leyes 7 y 12)
+ */
+function extractConcejoWeatherInfo(weatherData) {
+  if (!weatherData || !weatherData.weather) return null;
+  const current = weatherData.weather.current;
+  const hourly = weatherData.weather.hourly;
+  if (!current) return null;
+
+  const currentHour = new Date().getHours();
+  const currentPop = (hourly && hourly.precipitation_probability && hourly.precipitation_probability[currentHour] != null) 
+    ? hourly.precipitation_probability[currentHour] 
+    : null;
+  const directIrr = current.direct_normal_irradiance != null ? current.direct_normal_irradiance : null;
+  const currentUv = current.uv_index != null 
+    ? current.uv_index 
+    : (hourly?.uv_index && hourly.uv_index[currentHour] != null ? hourly.uv_index[currentHour] : null);
+  const currentSw = current.shortwave_radiation != null ? current.shortwave_radiation : null;
+  const currentCloud = current.cloud_cover != null 
+    ? current.cloud_cover 
+    : (hourly?.cloud_cover && hourly.cloud_cover[currentHour] != null ? hourly.cloud_cover[currentHour] : null);
+
+  return getWeatherInfo(
+    current.weather_code,
+    current.is_day !== undefined ? current.is_day : 1,
+    current.precipitation || 0,
+    currentPop,
+    directIrr,
+    currentUv,
+    currentSw,
+    currentCloud,
+    current.relative_humidity_2m
+  );
+}
 
 /**
  * Renderiza el comparador climático cara a cara entre dos concejos de Asturias
  */
-export function renderCompareView(concejoA, weatherDataA, concejoB, weatherDataB) {
+export function renderCompareView(concejoA, weatherDataA, concejoB, weatherDataB, iconTheme = 'astur') {
   const currentA = weatherDataA.weather.current;
   const currentB = weatherDataB?.weather?.current;
   const dailyA = weatherDataA.weather.daily;
   const dailyB = weatherDataB?.weather?.daily;
 
-  const weatherInfoA = getWeatherInfo(currentA.weather_code);
-  const weatherInfoB = currentB ? getWeatherInfo(currentB.weather_code) : null;
+  const weatherInfoA = extractConcejoWeatherInfo(weatherDataA);
+  const weatherInfoB = extractConcejoWeatherInfo(weatherDataB);
 
   const tempA = currentA.temperature_2m;
   const tempB = currentB ? currentB.temperature_2m : null;
@@ -62,7 +97,7 @@ export function renderCompareView(concejoA, weatherDataA, concejoB, weatherDataB
         </div>
       </div>
 
-      ${currentB ? `
+      ${currentB && weatherInfoB ? `
         <!-- TARJETAS CARA A CARA -->
         <div class="compare-grid">
           <!-- CONCEJO A -->
@@ -73,9 +108,9 @@ export function renderCompareView(concejoA, weatherDataA, concejoB, weatherDataB
               <span class="col-meta">${concejoA.altitude} m • ${concejoA.region}</span>
             </div>
             <div class="col-weather">
-              <span class="col-icon">${weatherInfoA.icon}</span>
+              <div class="col-icon">${renderWeatherIconHtml(weatherInfoA, 44, iconTheme)}</div>
               <div class="col-temp">${Math.round(tempA)}°C</div>
-              <span class="col-desc">${weatherInfoA.label}</span>
+              <span class="col-desc" title="${weatherInfoA.isSolarCalibrated ? (weatherInfoA.isResol ? '☀️ Resol / Sol tamizado activo' : '☀️ Sensores físicos confirman sol') : ''}">${weatherInfoA.label}</span>
             </div>
             <ul class="col-metrics">
               <li><span>💧 Prob. Lluvia:</span> <strong>${rainA}%</strong></li>
@@ -112,9 +147,9 @@ export function renderCompareView(concejoA, weatherDataA, concejoB, weatherDataB
               <span class="col-meta">${concejoB.altitude} m • ${concejoB.region}</span>
             </div>
             <div class="col-weather">
-              <span class="col-icon">${weatherInfoB.icon}</span>
+              <div class="col-icon">${renderWeatherIconHtml(weatherInfoB, 44, iconTheme)}</div>
               <div class="col-temp">${Math.round(tempB)}°C</div>
-              <span class="col-desc">${weatherInfoB.label}</span>
+              <span class="col-desc" title="${weatherInfoB.isSolarCalibrated ? (weatherInfoB.isResol ? '☀️ Resol / Sol tamizado activo' : '☀️ Sensores físicos confirman sol') : ''}">${weatherInfoB.label}</span>
             </div>
             <ul class="col-metrics">
               <li><span>💧 Prob. Lluvia:</span> <strong>${rainB}%</strong></li>

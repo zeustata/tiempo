@@ -10,6 +10,22 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.75] - 2026-10-03
+
+### ⚖️ Sincronización Total del Comparador Climático con Leyes 7, 12 y 14 (Feedback Lendo)
+- **Calibración Solar Inteligente (Ley 7) y Filtro Anti-Orbayu (Ley 12.1):**
+  - El comparador de concejos cara a cara (`compareView.js`) ahora procesa todos los sensores físicos del observatorio (`direct_normal_irradiance`, `shortwave_radiation`, `uv_index`, `cloud_cover`, `is_day`, `relative_humidity_2m` y `precipitation_probability`).
+  - Si un concejo se encuentra bajo condiciones de *Resol / Sol tamizáu*, el comparador lo identificará con total fidelidad en lugar de degradarlo a nublado o sol plano.
+  - El filtro anti-orbayu evita falsas alarmas de llovizna si la humedad es inferior al 94% con 0.0 mm.
+- **Detección Nocturna Real:**
+  - Erradicado el fallo visual que mostraba un sol a medianoche en noches despejadas; ahora muestra con exactitud la luna nocturna.
+- **Doctrina de Armonía Visual y Acabado Integral (Ley 14):**
+  - Sustituidos los emojis planos por el motor de renderizado de iconos dinámicos SVG asturianos (`renderWeatherIconHtml`) del sistema en ambas columnas comparativas.
+- **Cache-Busting Garantizado (Ley 4):**
+  - Service Worker actualizado a `meteoasturlode-v1175-comparador-calibracion-solar`, hoja de estilos `components.css?v=1.1.75` y script `app.js?v=1.1.75`.
+
+---
+
 ## [1.1.74] - 2026-10-03
 
 ### 🌊 Unificación Oficial de la Escala Douglas (IHM / Puertos del Estado / OMM)

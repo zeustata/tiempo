@@ -41,7 +41,19 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     - **Exención de Responsabilidad Civil (Ley 16):** Advertencia explícita de naturaleza orientativa; prohibición de formular textos que garanticen paso o seguridad en accesos de montaña o calas escarpadas.
     - **Ergonomía Móvil (Ley 11):** Integración limpia como Módulo 10 en la botonera de navegación con tarjeta Liquid Glass y pastilla inteligente de llamada en el Tiempo Actual.
 
-## 🚀 Versión Actual: v1.1.74 🌊 — 2026-10-03
+## 🚀 Versión Actual: v1.1.75 ⚖️ — 2026-10-03
+- **Sincronización Total del Comparador Climático con Leyes 7, 12 y 14 (Feedback Lendo):**
+  1. *Calibración Solar y Filtro Anti-Orbayu en el Comparador (Ley 12, Punto 9):*
+     - Adaptación de [compareView.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/components/compareView.js) para extraer todos los parámetros meteorológicos requeridos (`direct_normal_irradiance`, `shortwave_radiation`, `uv_index`, `cloud_cover`, `is_day`, `relative_humidity_2m` y `precipitation_probability`).
+     - Plena vigencia de la Ley 7 (Detector de Resol y Sol Tamizáu) y la Ley 12.1 (Filtro Anti-Orbayu): si en un concejo hay resol, el comparador lo etiqueta fielmente, y si hay humedad <94% con 0.0 mm no inventa lloviznas.
+  2. *Detección de Día y Noche:*
+     - Erradicado el sol fijo que se pintaba en las comparaciones nocturnas; ahora muestra la luna y estrellas con precisión horaria.
+  3. *Armonía Visual SVG (Ley 14):*
+     - Conexión con `renderWeatherIconHtml` para utilizar los iconos vectoriales SVG asturianos del sistema en las tarjetas cara a cara en lugar de emojis planos.
+  4. *Versionado Oficial, Anti-Caché y Documentación:*
+     - Versión oficial actualizada a `v1.1.75 ⚖️` en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en [app.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/app.js), hojas de estilo `components.css?v=1.1.75` y Service Worker `meteoasturlode-v1175-comparador-calibracion-solar` en [sw.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/sw.js).
+
+## 🚀 Versión v1.1.74 🌊 — 2026-10-03
 - **Unificación Oficial de la Escala Douglas (IHM / Puertos del Estado / OMM) (Feedback Lendo):**
   1. *Centralización y Rigor Náutico Oficial (Ley 12, Punto 8):*
      - Definición de la función matemática canónica `getDouglasScale(heightM)` en [marineCard.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/components/marineCard.js) conforme al estándar náutico oficial de la Organización Meteorológica Mundial (OMM Código 3700), el Instituto Hidrográfico de la Marina (IHM) y Salvamento Marítimo.

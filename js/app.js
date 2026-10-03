@@ -37,7 +37,7 @@ const APP_MODULES = [
   { id: 'astronomy', icon: '🔭', title: 'Astronomía & Cosmos', desc: 'Eclipses, lluvias de estrellas, fases lunares y semáforo de visibilidad en Asturias', key: '9' }
 ];
 
-export const CURRENT_APP_VERSION = '1.1.74';
+export const CURRENT_APP_VERSION = '1.1.75';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -1897,7 +1897,7 @@ class MeteoAsturiasApp {
     const compareContainer = document.getElementById('panel-compare');
     if (!compareContainer || !this.weatherData) return;
 
-    compareContainer.innerHTML = renderCompareView(this.currentConcejo, this.weatherData, this.compareConcejoB, this.compareWeatherDataB);
+    compareContainer.innerHTML = renderCompareView(this.currentConcejo, this.weatherData, this.compareConcejoB, this.compareWeatherDataB, this.prefs.iconTheme);
 
     const selectB = document.getElementById('compare-select-b');
     if (selectB) {
