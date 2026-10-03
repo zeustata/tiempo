@@ -223,7 +223,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.72 🌅</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.73 🥾</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -274,8 +274,21 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.72 🌅</span>
+            <span class="release-version">v1.1.73 🥾</span>
             <span class="release-date">03 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-fix">Corrección & Sincronización</span> <strong>Sincronización de Rutas &amp; Senderismo con Nowcasting del Paraguas (Feedback Lendo)</strong>:
+              <br>• <strong>Nowcasting Real en Marcha (Próximas 6 Horas):</strong> El motor de confort senderista ahora parte de la hora local en curso (<code>startIndex</code>) para inspeccionar las próximas 6 horas reales, en vez de quedarse ciego mirando la madrugada pasada de 00:00 a 05:00. Si entra lluvia o tormenta a la tarde o noche, la tarjeta de Rutas pasa inmediatamente a aviso con hora estimada (ej. <em>Lluvia o llovizna prevista hacia las 21:00 h</em>) en perfecta armonía con el Semáforu del Paragües.
+              <br>• <strong>Calibración Fiel del Firme y Llamuergues:</strong> El Semáforu de Llamuergues evalúa el agua real caída durante la jornada y la inminente en 2 horas, erradicando la suma ciega de lluvia futura no ocurrida.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.72 🌅</span>
+            <span class="release-date">03 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-fix">Corrección & Ley 12</span> <strong>Cobertura Temporal Íntegra de 24 Horas en Tarjetas Diarias (Feedback Lendo)</strong>:
@@ -2570,7 +2583,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.72"></script>
+  <script type="module" src="js/app.js?v=1.1.73"></script>
 
 
 

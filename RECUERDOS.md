@@ -41,7 +41,18 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     - **Exención de Responsabilidad Civil (Ley 16):** Advertencia explícita de naturaleza orientativa; prohibición de formular textos que garanticen paso o seguridad en accesos de montaña o calas escarpadas.
     - **Ergonomía Móvil (Ley 11):** Integración limpia como Módulo 10 en la botonera de navegación con tarjeta Liquid Glass y pastilla inteligente de llamada en el Tiempo Actual.
 
-## 🚀 Versión Actual: v1.1.72 🌅 — 2026-10-03
+## 🚀 Versión Actual: v1.1.73 🥾 — 2026-10-03
+- **Sincronización de Rutas & Senderismo con Nowcasting del Paraguas (Feedback Lendo):**
+  1. *Corrección del Desfase Temporal en Nowcasting Senderista (Ley 12, Punto 7):*
+     - Detección del error en [routesData.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/utils/routesData.js), donde la ventana de lluvia de 6 horas arrancaba estáticamente desde `i = 0` (evaluando la madrugada pasada de 00:00 a 05:00 en lugar del tiempo real actual).
+     - Implementada la búsqueda dinámica por marca de hora local (`startIndex`) sincronizada con el Semáforu del Paragües. Ahora inspecciona las 6 horas reales inmediatamente posteriores al momento de consulta.
+     - Si se aproxima un frente de lluvia o tormenta en la tarde/noche, la tarjeta de Rutas abandona de inmediato el veredicto optimista y advierte con hora estimada de llegada (ej. *Lluvia o llovizna prevista hacia las 21:00 h*), logrando 100% de coherencia con el Semáforo del Paraguas.
+  2. *Calibración Fiel del Firme y Semáforu de Llamuergues:*
+     - Corrección en la estimación del barro: evalúa la precipitación real caída en lo que va de jornada más la inminente en las próximas 2 horas, eliminando la suma ciega de lluvia futura que aún no ha caído.
+  3. *Versionado Oficial, Anti-Caché y Documentación:*
+     - Versión oficial actualizada a `v1.1.73 🥾` en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en [app.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/app.js) y cadena de Service Worker a `meteoasturlode-v1173-rutas-nowcasting` en [sw.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/sw.js).
+
+## 🚀 Versión v1.1.72 🌅 — 2026-10-03
 - **Cobertura Temporal Íntegra de 24 Horas en Tarjetas Diarias (Feedback Lendo):**
   1. *Eliminación del Agujero Negro de la Madrugada (Ley 12, Punto 6):*
      - Detección y corrección de la omisión horaria en [forecastView.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/components/forecastView.js), donde los tramos de mañana y tarde solo abarcaban de 08:00 a 13:00 y de 14:00 a 21:00, ignorando 10 horas completas del día (la madrugada de 00:00 a 07:59 y la noche de 22:00 a 23:59).

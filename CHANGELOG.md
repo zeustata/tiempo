@@ -10,6 +10,19 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.73] - 2026-10-03
+
+### 🥾 Sincronización de Rutas & Senderismo con Nowcasting del Paraguas (Feedback Lendo)
+- **Nowcasting Real en Marcha (Próximas 6 Horas):**
+  - Corrección del desfase en `routesData.js`: se sustituye el bucle estático `i = 0 a 5` (que evaluaba la madrugada de 00:00 a 05:00 del pasado) por el índice de la hora actual (`startIndex`), evaluando las próximas 6 horas reales desde este instante.
+  - Sincronización cronológica con el Semáforu del Paragües: si entra lluvia o tormenta por la tarde o noche, la tarjeta de Rutas pasa inmediatamente a estado de aviso con hora estimada (ej. *Lluvia o llovizna prevista hacia las 21:00 h*), erradicando el falso veredicto de «Jornada Ideal de Marcha» ante frentes vespertinos o nocturnos.
+- **Calibración Fiel del Firme y Llamuergues:**
+  - El Semáforu de Llamuergues evalúa el agua real caída durante las horas previas de la jornada y la precipitación inminente en 2 horas, eliminando la suma ciega de horas futuras no ocurridas.
+- **Cache-Busting Garantizado (Ley 4):**
+  - Service Worker actualizado a `meteoasturlode-v1173-rutas-nowcasting` y script `app.js?v=1.1.73`.
+
+---
+
 ## [1.1.72] - 2026-10-03
 
 ### 🌅 Cobertura Temporal Íntegra de 24 Horas en Tarjetas Diarias (Feedback Lendo)

@@ -82,7 +82,7 @@ export function renderRoutesCard(data, concejo) {
         </div>
 
         <div class="traction-subtext">
-          Lluvia acumulada 24-48h: <strong>${hike.mudIndex.rain24h || '0.0'} mm</strong> • ${hike.mudIndex.desc}
+          Lluvia reciente: <strong>${hike.mudIndex.rain24h || '0.0'} mm</strong> • ${hike.mudIndex.desc}
         </div>
 
         <!-- B) Rejilla de Confort en Marcha (3 columnas compactas) -->

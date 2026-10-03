@@ -303,14 +303,64 @@ export function calculateHikingIndex(data, concejo) {
   const precipNow = current.precipitation || 0;
   const humidity = current.relative_humidity_2m || 70;
 
-  // 1. Análisis de lluvia reciente y acumulada (Últimas 24h a 48h) -> ÍNDICE DE BARRO
-  let rainRecent24h = 0;
-  if (hourly && hourly.precipitation && hourly.precipitation.length > 0) {
-    const checkLen = Math.min(24, hourly.precipitation.length);
-    for (let i = 0; i < checkLen; i++) {
-      rainRecent24h += parseFloat(hourly.precipitation[i]) || 0;
+  // Buscar el índice de la hora local en curso (sincronizado con Semáforu del Paragües)
+  const now = new Date();
+  const currentHourStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}T${String(now.getHours()).padStart(2, '0')}:00`;
+
+  let startIndex = 0;
+  if (hourly && hourly.time) {
+    for (let i = 0; i < hourly.time.length; i++) {
+      if (hourly.time[i] >= currentHourStr) {
+        startIndex = i;
+        break;
+      }
     }
   }
+
+  // 1. Análisis de lluvia reciente y firme del terreno (Llamuergues / Barro)
+  let rainFallenToday = 0;
+  if (hourly && hourly.precipitation && startIndex > 0) {
+    for (let i = 0; i < startIndex; i++) {
+      rainFallenToday += parseFloat(hourly.precipitation[i]) || 0;
+    }
+  } else if (daily && daily.precipitation_sum) {
+    rainFallenToday = parseFloat(daily.precipitation_sum[0]) || 0;
+  }
+
+  // 2. Ventana de Nowcasting en las próximas 6 horas reales desde la hora actual
+  let rainInNext6h = 0;
+  let maxNextPop = 0;
+  let hasStormInWindow = false;
+  let firstRainHourStr = null;
+
+  if (hourly && hourly.precipitation) {
+    const windowLimit = Math.min(hourly.precipitation.length, startIndex + 6);
+    for (let i = startIndex; i < windowLimit; i++) {
+      const p = parseFloat(hourly.precipitation[i]) || 0;
+      const pop = hourly.precipitation_probability ? (parseFloat(hourly.precipitation_probability[i]) || 0) : 0;
+      const c = hourly.weather_code ? parseInt(hourly.weather_code[i], 10) : 0;
+
+      rainInNext6h += p;
+      if (pop > maxNextPop) maxNextPop = pop;
+      if (c >= 95 && c <= 99) hasStormInWindow = true;
+
+      if (!firstRainHourStr && (p >= 0.2 || (pop >= 40 && c >= 51))) {
+        if (hourly.time && hourly.time[i]) {
+          firstRainHourStr = hourly.time[i].split('T')[1].substring(0, 5);
+        }
+      }
+    }
+  }
+
+  // Ponderación del estado del firme: agua caída + lluvia inminente en las próximas 2 horas
+  let rainImmediate2h = 0;
+  if (hourly && hourly.precipitation) {
+    const shortLimit = Math.min(hourly.precipitation.length, startIndex + 2);
+    for (let i = startIndex; i < shortLimit; i++) {
+      rainImmediate2h += parseFloat(hourly.precipitation[i]) || 0;
+    }
+  }
+  const effectiveMudRain = Math.max(rainFallenToday, rainImmediate2h, precipNow * 2);
 
   let mudLevel = 'Bajo / Firme Seco';
   let mudDesc = 'Sendas firmes y transitables. Caliza seca con excelente tracción.';
@@ -318,36 +368,24 @@ export function calculateHikingIndex(data, concejo) {
   let mudScore = 1;
   let mudPct = 25;
 
-  if (rainRecent24h >= 14 || precipNow >= 1.5) {
+  if (effectiveMudRain >= 14 || precipNow >= 2.0) {
     mudLevel = 'Muy Alto / Llamuergues';
     mudDesc = 'Barrizales abundantes (llamuergues). Caliza muy resbaladiza; botas con taco y bastones indispensables.';
     mudColor = '#ef4444';
     mudScore = 4;
     mudPct = 100;
-  } else if (rainRecent24h >= 6 || precipNow >= 0.4) {
+  } else if (effectiveMudRain >= 6 || precipNow >= 0.4 || rainInNext6h >= 4.0) {
     mudLevel = 'Moderado / Zonas Blandas';
     mudDesc = 'Terreno húmedo y tramos blandos. Precaución en bajadas de tierra y roca sombría.';
     mudColor = '#f59e0b';
     mudScore = 3;
     mudPct = 75;
-  } else if (rainRecent24h >= 1.5 || precipNow > 0) {
+  } else if (effectiveMudRain >= 1.2 || precipNow > 0 || rainInNext6h >= 1.0) {
     mudLevel = 'Leve / Terreno Húmedo';
     mudDesc = 'Tierra húmeda pero compacta. Buen agarre en sendas y pistas forestales.';
     mudColor = '#84cc16';
     mudScore = 2;
     mudPct = 50;
-  }
-
-  // 2. Ventana de lluvia en las próximas 6 horas
-  let rainInNext6h = 0;
-  let hasStormInWindow = false;
-  if (hourly && hourly.precipitation) {
-    for (let i = 0; i < Math.min(6, hourly.precipitation.length); i++) {
-      const p = parseFloat(hourly.precipitation[i]) || 0;
-      const c = hourly.weather_code ? parseInt(hourly.weather_code[i], 10) : 0;
-      rainInNext6h += p;
-      if (c >= 95 && c <= 99) hasStormInWindow = true;
-    }
   }
 
   // 3. Sensación térmica en cumbres (+300m sobre el concejo por defecto)
@@ -363,20 +401,24 @@ export function calculateHikingIndex(data, concejo) {
   let icon = '🟢';
   let summary = 'Cielos tranquilos, sin riesgo de lluvia inmediata y firme en buen estado.';
 
-  if (precipNow >= 2.0 || hasStormInWindow || windGust >= 65) {
+  if (precipNow >= 2.0 || hasStormInWindow || windGust >= 65 || rainInNext6h >= 5.0) {
     status = 'danger';
     label = 'Meteorología Desfavorable';
     badgeClass = 'hike-danger';
     icon = '🔴';
     summary = hasStormInWindow 
       ? '🚨 Riesgo de tormenta eléctrica en montaña. Evitar crestas y zonas expuestas.'
-      : '🌧️ Lluvia continuada o viento severo. Rutas de montaña desaconsejadas.';
-  } else if (precipNow >= 0.2 || rainInNext6h >= 2.5 || mudLevel === 'Muy Alto / Fango' || windGust >= 45) {
+      : (precipNow >= 2.0 
+          ? '🌧️ Bastinazu o lluvia copiosa activa. Rutas de montaña desaconsejadas.' 
+          : `🌧️ Frente de lluvia intensa previsto (${rainInNext6h.toFixed(1)} mm) o viento severo en las próximas horas. No recomendable salir a cumbres.`);
+  } else if (precipNow >= 0.2 || rainInNext6h >= 1.2 || maxNextPop >= 50 || mudScore >= 3 || windGust >= 45) {
     status = 'warning';
     label = 'Precaución en Terreno';
     badgeClass = 'hike-warning';
     icon = '🟡';
-    summary = 'Sendas húmedas y probabilidad de orballu o viento molesto. Recomendable ruta baja por bosque o pista acondicionada.';
+    summary = firstRainHourStr 
+      ? `Lluvia o llovizna prevista hacia las ${firstRainHourStr} h (${rainInNext6h.toFixed(1)} mm en 6h). Recomendable ruta baja por bosque o pista acondicionada.`
+      : 'Sendas húmedas y probabilidad de orballu o viento molesto. Recomendable ruta baja por bosque o pista acondicionada.';
   } else if (humidity >= 92 && temp <= 16 && (code === 45 || code === 48)) {
     status = 'mist';
     label = 'Niebla / Cumbres Tapadas';
@@ -391,7 +433,7 @@ export function calculateHikingIndex(data, concejo) {
     badgeClass,
     icon,
     summary,
-    mudIndex: { level: mudLevel, desc: mudDesc, color: mudColor, score: mudScore, pct: mudPct, rain24h: rainRecent24h.toFixed(1) },
+    mudIndex: { level: mudLevel, desc: mudDesc, color: mudColor, score: mudScore, pct: mudPct, rain24h: effectiveMudRain.toFixed(1) },
     tempNow: Math.round(temp),
     feelsLike: Math.round(current.apparent_temperature || temp),
     windChillHigh,
