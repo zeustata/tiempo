@@ -10,6 +10,25 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.74] - 2026-10-03
+
+### 🌊 Unificación Oficial de la Escala Douglas (IHM / Puertos del Estado / OMM)
+- **Centralización y Rigor Náutico Oficial (Ley 12, Punto 8):**
+  - Implementación de la función centralizada `getDouglasScale(heightM)` en `marineCard.js` conforme al estándar de la Organización Meteorológica Mundial (OMM Código 3700), el Instituto Hidrográfico de la Marina y Puertos del Estado.
+  - Sincronización idéntica entre **Playas & Mareas** y **Surf & Rompientes**: ambas tarjetas importan y ejecutan exactamente la misma función, eliminando desfases donde un mar de 2.55 m se rotulaba como Marejada en una tarjeta y Fuerte Marejada en otra.
+  - Clasificación oficial rigurosa:
+    - `0 a 0.10 m`: Mar Llana / Rizada (Grado 0–1)
+    - `0.10 a 0.50 m`: Marejadilla (Grado 2)
+    - `0.50 a 1.25 m`: Marejada (Grado 3)
+    - `1.25 a 2.50 m`: Fuerte Marejada (Grado 4)
+    - `2.50 a 4.00 m`: Gruesa / Mar Pesada (Grado 5)
+    - `4.00 a 6.00 m`: Muy Gruesa (Grado 6)
+    - `>= 6.00 m`: Temporal / Arbolada (Grado 7+)
+- **Cache-Busting Garantizado (Ley 4):**
+  - Service Worker actualizado a `meteoasturlode-v1174-douglas-oficial-ihm` y script `app.js?v=1.1.74`.
+
+---
+
 ## [1.1.73] - 2026-10-03
 
 ### 🥾 Sincronización de Rutas & Senderismo con Nowcasting del Paraguas (Feedback Lendo)

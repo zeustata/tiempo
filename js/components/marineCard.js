@@ -1040,6 +1040,34 @@ export function getSeaWaterTemperature(marine) {
 }
 
 /**
+ * Escala Douglas Oficial del Instituto Hidrográfico de la Marina (IHM) y la OMM (Código 3700)
+ * Calibración unificada oficial para la costa asturiana y el Mar Cantábrico:
+ * - Grado 0: Mar Llana (0 m)
+ * - Grado 1: Mar Rizada (0.01 a 0.10 m)
+ * - Grado 2: Marejadilla (0.10 a 0.50 m)
+ * - Grado 3: Marejada (0.50 a 1.25 m)
+ * - Grado 4: Fuerte Marejada (1.25 a 2.50 m)
+ * - Grado 5: Gruesa (2.50 a 4.00 m)
+ * - Grado 6: Muy Gruesa (4.00 a 6.00 m)
+ * - Grado 7: Arbolada (6.00 a 9.00 m)
+ * - Grado 8: Montañosa (9.00 a 14.00 m)
+ * - Grado 9: Enorme (>= 14.00 m)
+ */
+export function getDouglasScale(heightM) {
+  const h = Math.max(0, parseFloat(heightM) || 0);
+  if (h <= 0.02) return { degree: 0, name: 'Mar Llana', fullName: 'Mar Llana / Calma chicha', badge: '🟢 Calma' };
+  if (h < 0.10) return { degree: 1, name: 'Mar Rizada', fullName: 'Mar Rizada (Sin rompiente)', badge: '🟢 Rizada' };
+  if (h < 0.50) return { degree: 2, name: 'Marejadilla', fullName: 'Marejadilla (Olas suaves)', badge: '🟢 Marejadilla' };
+  if (h < 1.25) return { degree: 3, name: 'Marejada', fullName: 'Marejada (Olas bien formadas)', badge: '🟡 Marejada' };
+  if (h < 2.50) return { degree: 4, name: 'Fuerte Marejada', fullName: 'Fuerte Marejada (Borreguillos blancos)', badge: '🟡 Fuerte Marejada' };
+  if (h < 4.00) return { degree: 5, name: 'Gruesa', fullName: 'Mar Gruesa (Oleaje pesado)', badge: '🔴 Mar Gruesa' };
+  if (h < 6.00) return { degree: 6, name: 'Muy Gruesa', fullName: 'Mar Muy Gruesa (Temporal cantábrico)', badge: '🔴 Muy Gruesa' };
+  if (h < 9.00) return { degree: 7, name: 'Arbolada', fullName: 'Mar Arbolada (Temporal severo)', badge: '⛔ Arbolada' };
+  if (h < 14.00) return { degree: 8, name: 'Montañosa', fullName: 'Mar Montañosa (Mar arbolada extrema)', badge: '⛔ Montañosa' };
+  return { degree: 9, name: 'Enorme', fullName: 'Mar Enorme (Temporal extremo)', badge: '⛔ Enorme' };
+}
+
+/**
  * Renderiza el módulo marítimo con Mareógrafo interactivo en tiempo real, 
  * Cuadro semanal de mareas y Catálogo de Playas y Calas de Asturias (Turismo y Baño)
  */
@@ -1060,42 +1088,34 @@ export function renderMarineCard(data, concejo) {
   const windDirObj = getWindDirection(windDeg);
 
   const h = parseFloat(waveHeight);
-  let douglasDegree = 3;
-  let douglasName = 'Marejada';
-  let flagColor = '#f59e0b';
-  let flagBadge = '🟡 Bandera Amarilla';
-  let bathStatus = 'Precaución en el baño. Oleaje moderado con corriente en orilla.';
+  const douglas = getDouglasScale(h);
+  const douglasDegree = douglas.degree;
+  const douglasName = douglas.name;
 
-  if (h < 0.6) {
-    douglasDegree = 1;
-    douglasName = 'Mar Calma / Rizada';
+  let flagColor = '#10b981';
+  let flagBadge = '🟢 Bandera Verde (Teórica)';
+  let bathStatus = 'Condiciones meteorológicas teóricas favorables. Precaución habitual en el agua.';
+
+  if (douglasDegree <= 1) {
     flagBadge = '🟢 Bandera Verde (Teórica)';
     flagColor = '#10b981';
-    bathStatus = 'Condiciones meteorológicas teóricas favorables. Precaución habitual en el agua.';
-  } else if (h < 1.3) {
-    douglasDegree = 2;
-    douglasName = 'Marejadilla';
+    bathStatus = 'Condiciones meteorológicas teóricas óptimas. Mar en calma o rizado.';
+  } else if (douglasDegree === 2) {
     flagBadge = '🟢 Bandera Verde / Amarilla (Teórica)';
     flagColor = '#10b981';
-    bathStatus = 'Mar favorable en previsión. Prestar atención a corrientes de orilla y rompientes.';
-  } else if (h <= 2.6) {
-    douglasDegree = 3;
-    douglasName = 'Marejada Consistente';
+    bathStatus = 'Mar favorable en previsión con oleaje suave. Prestar atención a corrientes locales.';
+  } else if (douglasDegree === 3) {
     flagBadge = '🟡 Bandera Amarilla (Teórica)';
     flagColor = '#f59e0b';
     bathStatus = 'Precaución en el baño. Oleaje marcado y probables corrientes de resaca.';
-  } else if (h <= 3.8) {
-    douglasDegree = 4;
-    douglasName = 'Fuerte Marejada';
-    flagBadge = '🔴 Bandera Roja (Teórica)';
-    flagColor = '#ef4444';
-    bathStatus = 'Peligro estimado. Baño desaconsejado por fuerte oleaje y corrientes.';
+  } else if (douglasDegree === 4) {
+    flagBadge = '🔴 Bandera Amarilla / Roja (Teórica)';
+    flagColor = '#f59e0b';
+    bathStatus = 'Fuerte oleaje con corrientes activas. Baño exigente, solo nadadores experimentados.';
   } else {
-    douglasDegree = 5;
-    douglasName = 'Mar Gruesa / Temporal';
     flagBadge = '🔴 Bandera Roja / Temporal (Teórica)';
     flagColor = '#ef4444';
-    bathStatus = '🚨 Temporal costero activo. Baño prohibido en arenales expuestos.';
+    bathStatus = '🚨 Temporal costero / Mar gruesa activa. Baño desaconsejado o prohibido en arenales expuestos.';
   }
 
   // Temperatura del agua unificada

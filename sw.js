@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1173-rutas-nowcasting';
+const CACHE_NAME = 'meteoasturlode-v1174-douglas-oficial-ihm';
 const STATIC_ASSETS = [
   './',
   './index.html',

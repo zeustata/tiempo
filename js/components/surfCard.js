@@ -5,23 +5,9 @@ import {
   getNearestCoastalReference, 
   getSurfWindCondition,
   getBeachSpecificWindCondition,
-  getSeaWaterTemperature
+  getSeaWaterTemperature,
+  getDouglasScale
 } from './marineCard.js?v=1.0.81-tides';
-
-/**
- * Calcula la escala de Douglas a partir de la altura significativa de ola
- */
-function getDouglasScale(height) {
-  if (height < 0.1) return { degree: 0, name: 'Mar llana' };
-  if (height < 0.5) return { degree: 1, name: 'Mar rizada' };
-  if (height < 1.25) return { degree: 2, name: 'Marejadilla' };
-  if (height < 2.5) return { degree: 3, name: 'Marejada' };
-  if (height < 4.0) return { degree: 4, name: 'Fuerte marejada' };
-  if (height < 6.0) return { degree: 5, name: 'Gruesa' };
-  if (height < 9.0) return { degree: 6, name: 'Muy gruesa' };
-  if (height < 14.0) return { degree: 7, name: 'Arbolada' };
-  return { degree: 8, name: 'Montañosa' };
-}
 
 /**
  * Recomienda el grosor de neopreno según la temperatura del agua
@@ -739,6 +725,7 @@ export function renderSurfCard(data, concejo) {
             <button class="btn-explain-sensor" data-explain="waves" title="¿Cómo entender la altura del oleaje, mar de fondo y escala Douglas? Pulsa para aprender">💡 Explícame</button>
           </div>
           <div class="widget-value">${waveHeight} <span class="unit">metros</span></div>
+          <div class="widget-detail">Escala Douglas: <strong>Grado ${douglasDegree} (${douglasName})</strong></div>
           <div class="widget-detail">Mar de fondo (Swell): <strong>${swellHeight} m</strong></div>
           <div class="widget-detail">Mar de viento (Chop): <strong>${windWaveH} m</strong></div>
         </div>

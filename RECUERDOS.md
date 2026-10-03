@@ -41,7 +41,17 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     - **Exención de Responsabilidad Civil (Ley 16):** Advertencia explícita de naturaleza orientativa; prohibición de formular textos que garanticen paso o seguridad en accesos de montaña o calas escarpadas.
     - **Ergonomía Móvil (Ley 11):** Integración limpia como Módulo 10 en la botonera de navegación con tarjeta Liquid Glass y pastilla inteligente de llamada en el Tiempo Actual.
 
-## 🚀 Versión Actual: v1.1.73 🥾 — 2026-10-03
+## 🚀 Versión Actual: v1.1.74 🌊 — 2026-10-03
+- **Unificación Oficial de la Escala Douglas (IHM / Puertos del Estado / OMM) (Feedback Lendo):**
+  1. *Centralización y Rigor Náutico Oficial (Ley 12, Punto 8):*
+     - Definición de la función matemática canónica `getDouglasScale(heightM)` en [marineCard.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/components/marineCard.js) conforme al estándar náutico oficial de la Organización Meteorológica Mundial (OMM Código 3700), el Instituto Hidrográfico de la Marina (IHM) y Salvamento Marítimo.
+     - Ambas tarjetas litorales (**Playas & Mareas** y **Surf & Rompientes**) importan y ejecutan exactamente la misma función, erradicando discrepancias numéricas en el Cantábrico (ej. un oleaje de 2.55 m pasa a denominarse con exactitud unificada como *Grado 5 Gruesa* en ambas tarjetas).
+  2. *Integración en el Widget de Olas de Surf:*
+     - Incorporada la etiqueta legible *«Escala Douglas: Grado X (Nombre Oficial)»* en la tarjeta de Surf junto a la altura significativa, mar de fondo y mar de viento.
+  3. *Versionado Oficial, Anti-Caché y Documentación:*
+     - Versión oficial actualizada a `v1.1.74 🌊` en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en [app.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/app.js) y cadena de Service Worker a `meteoasturlode-v1174-douglas-oficial-ihm` en [sw.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/sw.js).
+
+## 🚀 Versión v1.1.73 🥾 — 2026-10-03
 - **Sincronización de Rutas & Senderismo con Nowcasting del Paraguas (Feedback Lendo):**
   1. *Corrección del Desfase Temporal en Nowcasting Senderista (Ley 12, Punto 7):*
      - Detección del error en [routesData.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/utils/routesData.js), donde la ventana de lluvia de 6 horas arrancaba estáticamente desde `i = 0` (evaluando la madrugada pasada de 00:00 a 05:00 en lugar del tiempo real actual).
