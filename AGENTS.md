@@ -156,6 +156,8 @@
       2. **Detector de Resol y Sol Tamizáu (Ley 7):** Radiación solar directa perpendicular mínima (`direct_normal_irradiance`) bajo cielo cubierto (`>= 85%` nubes): Invierno `320 W/m²`, Primavera/Otoño `450 W/m²`, Otoño tardío `380 W/m²`, Verano `500 W/m²`.
       3. **Suelos de Probabilidad Coherente QPF-PoP (Ley 8):** `0.1 a 0.4 mm -> PoP >= 30%`; `0.5 a 1.9 mm -> PoP >= 55%`; `>= 2.0 mm -> PoP >= 80%`.
       4. **Energía y Saturación de Rompiente en Salinas y San Lorenzo (Ley 9):** Saturación / Mar Pasado en beach breaks con ola `>= 1.7 m`, o `>= 1.5 m` con período `>= 13 s` o energía `>= 350 kJ`.
+      5. **Sincronización Cronológica Estricta en el Semáforu del Paragües (Feedback Lendo):** Queda terminantemente prohibido atribuir la hora de inicio de una llovizna débil previa (`firstRainIndex`) a la severidad de un bastinazu o lluvia copiosa que no entra hasta horas posteriores (`firstHeavyIndex`). El aviso de lluvia copiosa/bastinazu debe consignar siempre la hora exacta en que el modelo prevé que la precipitación alcance el umbral de lluvia moderada/fuerte (`>= 1.5 mm/h`), informando con fidelidad de la tregua o llovizna previa para evitar contradicciones flagrantes con la tabla horaria.
+
 
 
 

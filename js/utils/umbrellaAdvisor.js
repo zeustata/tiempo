@@ -47,6 +47,7 @@ export function calculateUmbrellaStatus(current, hourly) {
   // 2. Si no llueve ahora, inspeccionar las próximas 8 horas (nowcasting)
   const windowLimit = Math.min(hourly.time.length, startIndex + 8);
   let firstRainIndex = -1;
+  let firstHeavyIndex = -1;
   let maxPrecipInWindow = 0;
 
   for (let i = startIndex; i < windowLimit; i++) {
@@ -58,14 +59,20 @@ export function calculateUmbrellaStatus(current, hourly) {
       maxPrecipInWindow = p;
     }
 
-    // Criterio de lluvia física armonizada: mm >= 0.1 o código WMO confirmado con PoP >= 35%
-    if (firstRainIndex === -1 && (p >= 0.1 || (pop >= 35 && c >= 50))) {
+    const isHeavyHour = p >= 1.5 || c === 65 || c === 82 || c === 95 || c === 96 || c === 99;
+    const isRainHour = p >= 0.1 || (pop >= 35 && c >= 50);
+
+    if (firstRainIndex === -1 && isRainHour) {
       firstRainIndex = i;
+    }
+
+    if (firstHeavyIndex === -1 && isHeavyHour) {
+      firstHeavyIndex = i;
     }
   }
 
   // Si no se espera lluvia en las próximas 8 horas
-  if (firstRainIndex === -1) {
+  if (firstRainIndex === -1 && firstHeavyIndex === -1) {
     return {
       status: 'safe',
       badgeClass: 'umbrella-badge-safe',
@@ -77,24 +84,45 @@ export function calculateUmbrellaStatus(current, hourly) {
     };
   }
 
-  // Si se espera lluvia en las próximas horas
-  const rainTimeStr = hourly.time[firstRainIndex];
-  const rainHour = rainTimeStr ? rainTimeStr.split('T')[1].substring(0, 5) : 'próximas horas';
-  const rainPrecip = hourly.precipitation ? (parseFloat(hourly.precipitation[firstRainIndex]) || 0) : 0;
-  const rainPop = hourly.precipitation_probability ? (parseFloat(hourly.precipitation_probability[firstRainIndex]) || 0) : 0;
-  const isHeavyUpcoming = maxPrecipInWindow >= 1.5;
+  // Si se espera lluvia copiosa o bastinazu (>= 1.5 mm/h o tormenta) en la ventana
+  if (firstHeavyIndex !== -1) {
+    const heavyTimeStr = hourly.time[firstHeavyIndex];
+    const heavyHour = heavyTimeStr ? heavyTimeStr.split('T')[1].substring(0, 5) : 'próximas horas';
+    const heavyPop = hourly.precipitation_probability ? (parseFloat(hourly.precipitation_probability[firstHeavyIndex]) || 0) : 0;
+    const heavyPrecip = hourly.precipitation ? (parseFloat(hourly.precipitation[firstHeavyIndex]) || maxPrecipInWindow) : maxPrecipInWindow;
 
-  if (isHeavyUpcoming) {
+    // Si hay llovizna débil previa antes del bastinazu (ej. 17:00 h llovizna y 21:00 h bastinazu)
+    if (firstRainIndex !== -1 && firstRainIndex < firstHeavyIndex) {
+      const lightTimeStr = hourly.time[firstRainIndex];
+      const lightHour = lightTimeStr ? lightTimeStr.split('T')[1].substring(0, 5) : 'tarde';
+      const lightPrecip = hourly.precipitation ? (parseFloat(hourly.precipitation[firstRainIndex]) || 0) : 0;
+      return {
+        status: 'danger',
+        badgeClass: 'umbrella-badge-danger',
+        dotClass: 'dot-danger',
+        icon: '☂️',
+        badgeText: '🔴 Peligro de Bastinazu',
+        title: `Lluvia copiosa a partir de las ${heavyHour} h`,
+        desc: `Orbayu débil previo a las ${lightHour} h (~${lightPrecip.toFixed(1)} mm) con tregua; el frente activo (~${heavyPrecip.toFixed(1)} mm/h, prob. ${heavyPop}%) entrará a las ${heavyHour} h. Prepara paraguas grande.`
+      };
+    }
+
     return {
       status: 'danger',
       badgeClass: 'umbrella-badge-danger',
       dotClass: 'dot-danger',
       icon: '☂️',
       badgeText: '🔴 Peligro de Bastinazu',
-      title: `Lluvia copiosa a partir de las ${rainHour} h`,
-      desc: `Se espera lluvia moderada a fuerte (~${maxPrecipInWindow.toFixed(1)} mm/h, prob. ${rainPop}%). No salgas sin paraguas grande.`
+      title: `Lluvia copiosa a partir de las ${heavyHour} h`,
+      desc: `Se espera lluvia moderada a fuerte (~${heavyPrecip.toFixed(1)} mm/h, prob. ${heavyPop}%). No salgas sin paraguas grande.`
     };
   }
+
+  // Si solo se espera orbayu o lluvia débil (< 1.5 mm/h)
+  const rainTimeStr = hourly.time[firstRainIndex];
+  const rainHour = rainTimeStr ? rainTimeStr.split('T')[1].substring(0, 5) : 'próximas horas';
+  const rainPrecip = hourly.precipitation ? (parseFloat(hourly.precipitation[firstRainIndex]) || 0) : 0;
+  const rainPop = hourly.precipitation_probability ? (parseFloat(hourly.precipitation_probability[firstRainIndex]) || 0) : 0;
 
   return {
     status: 'warning',

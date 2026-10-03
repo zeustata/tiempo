@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1169-filtro-anti-orbayu-humedad';
+const CACHE_NAME = 'meteoasturlode-v1170-semaforu-paragues-cronologia';
 const STATIC_ASSETS = [
   './',
   './index.html',

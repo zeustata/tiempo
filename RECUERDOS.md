@@ -41,8 +41,20 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     - **Exención de Responsabilidad Civil (Ley 16):** Advertencia explícita de naturaleza orientativa; prohibición de formular textos que garanticen paso o seguridad en accesos de montaña o calas escarpadas.
     - **Ergonomía Móvil (Ley 11):** Integración limpia como Módulo 10 en la botonera de navegación con tarjeta Liquid Glass y pastilla inteligente de llamada en el Tiempo Actual.
 
-## 🚀 Última Actualización Oficial: v1.1.68 🛡️ — 2026-10-02
-## 🚀 Versión Actual: v1.1.69 💧 — 2026-10-03
+## 🚀 Versión Actual: v1.1.70 🌂 — 2026-10-03
+- **Sincronización Cronológica Estricta en el Semáforu del Paragües (Feedback Lendo):**
+  1. *Diferenciación Rigurosa entre Primera Llovizna y Bastinazu (Ley 12, Punto 5):*
+     - Detección y corrección del error lógico en [umbrellaAdvisor.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/utils/umbrellaAdvisor.js) que mezclaba la hora de la primera llovizna débil previa (`firstRainIndex`) con el pico de intensidad o bastinazu previsto horas después (`firstHeavyIndex`).
+     - Si en la ventana de 8 horas se prevé lluvia copiosa o bastinazu (`>= 1.5 mm/h`), el aviso fija como hora oficial de inicio la hora real del frente activo (ej. *Lluvia copiosa a partir de las 21:00 h*), sin adelantar erróneamente el bastinazu a las horas de orballu disperso o tregua seca.
+     - Si existen lloviznas previas con tregua (ej. 0.1 mm a las 17:00 h y seco de 18:00 a 20:00 h), la descripción detalla fidedignamente: *«Orbayu débil previo a las 17:00 h (~0.1 mm) con tregua; el frente activo (~2.0 mm/h, prob. 88%) entrará a las 21:00 h. Prepara paraguas grande»*.
+  2. *Consagración en Leyes Específicas del Proyecto ([AGENTS.md](file:///c:/Users/NUC/Downloads/IA/Tiempo/AGENTS.md)):*
+     - Incorporado el **Punto 5 del Artículo 12 (Sincronización Cronológica Estricta en el Semáforu del Paragües)** en la Parte II, prohibiendo taxativamente adelantar la hora de un bastinazu nocturno al momento de una llovizna débil previa.
+  3. *Versionado y Despliegue:*
+     - Versión oficial actualizada a `v1.1.70 🌂` en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en [app.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/app.js) y cadena de Service Worker a `meteoasturlode-v1170-semaforu-paragues-cronologia` en [sw.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/sw.js).
+
+---
+
+## 🚀 Versión Previa: v1.1.69 💧 — 2026-10-03
 - **Calibración Empírica & Filtro Anti-Orbayu Fantasma por Humedad Relativa (Feedback Lendo):**
   1. *Filtro Anti-Orbayu Fantasma por Humedad en Nowcasting (Ley 12):*
      - Detección rigurosa de la discrepancia física entre el modelo numérico (código WMO 51 a 57) y la precipitación en suelo (`0.0 mm`).

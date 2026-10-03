@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.70] - 2026-10-03
+
+### 🌂 Sincronización Cronológica Estricta en el Semáforu del Paragües (Feedback Lendo)
+- **Diferenciación Rigurosa entre Primera Llovizna y Bastinazu (Ley 12, Punto 5):**
+  - Corrección de la anomalía lógica que combinaba la hora de la primera llovizna débil previa (`firstRainIndex`) con la severidad del pico de precipitación posterior (`firstHeavyIndex`).
+  - Si en la ventana de 8 horas se prevé lluvia copiosa o bastinazu (`>= 1.5 mm/h`), el titular sitúa con total honestidad la hora exacta de entrada del frente activo (ej. *Lluvia copiosa a partir de las 21:00 h*), sin adelantar erróneamente el bastinazu a las horas de orballu disperso o tregua seca.
+  - Si existen lloviznas previas con tregua (ej. 0.1 mm a las 17:00 h y seco de 18:00 a 20:00 h), la descripción detalla fidedignamente: *«Orbayu débil previo a las 17:00 h (~0.1 mm) con tregua; el frente activo (~2.0 mm/h, prob. 88%) entrará a las 21:00 h. Prepara paraguas grande»*.
+- **Coherencia Matemática Absoluta:**
+  - Plena concordancia cronológica entre la tarjeta superior del Semáforo del Paraguas y la tabla de Pronóstico Horario a 72 Horas.
+- **Cache-Busting Garantizado (Ley 4):**
+  - Service Worker actualizado a `meteoasturlode-v1170-semaforu-paragues-cronologia` y query strings `?v=1.1.70`.
+
+---
+
 ## [1.1.69] - 2026-10-03
 
 ### 💧 Calibración Empírica & Filtro Anti-Orbayu Fantasma por Humedad (Feedback Lendo)
