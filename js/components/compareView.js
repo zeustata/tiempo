@@ -10,18 +10,23 @@ function extractConcejoWeatherInfo(weatherData) {
   const hourly = weatherData.weather.hourly;
   if (!current) return null;
 
-  const currentHour = new Date().getHours();
-  const currentPop = (hourly && hourly.precipitation_probability && hourly.precipitation_probability[currentHour] != null) 
-    ? hourly.precipitation_probability[currentHour] 
+  const now = new Date();
+  const currentHour = now.getHours();
+  const currentHourStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}T${String(currentHour).padStart(2, '0')}:00`;
+  let currentHourIdx = (hourly && Array.isArray(hourly.time)) ? hourly.time.findIndex(t => t >= currentHourStr) : -1;
+  if (currentHourIdx === -1) currentHourIdx = currentHour;
+
+  const currentPop = (hourly && hourly.precipitation_probability && hourly.precipitation_probability[currentHourIdx] != null) 
+    ? hourly.precipitation_probability[currentHourIdx] 
     : null;
   const directIrr = current.direct_normal_irradiance != null ? current.direct_normal_irradiance : null;
   const currentUv = current.uv_index != null 
     ? current.uv_index 
-    : (hourly?.uv_index && hourly.uv_index[currentHour] != null ? hourly.uv_index[currentHour] : null);
+    : (hourly?.uv_index && hourly.uv_index[currentHourIdx] != null ? hourly.uv_index[currentHourIdx] : null);
   const currentSw = current.shortwave_radiation != null ? current.shortwave_radiation : null;
   const currentCloud = current.cloud_cover != null 
     ? current.cloud_cover 
-    : (hourly?.cloud_cover && hourly.cloud_cover[currentHour] != null ? hourly.cloud_cover[currentHour] : null);
+    : (hourly?.cloud_cover && hourly.cloud_cover[currentHourIdx] != null ? hourly.cloud_cover[currentHourIdx] : null);
 
   return getWeatherInfo(
     current.weather_code,

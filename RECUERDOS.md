@@ -41,7 +41,18 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     - **Exención de Responsabilidad Civil (Ley 16):** Advertencia explícita de naturaleza orientativa; prohibición de formular textos que garanticen paso o seguridad en accesos de montaña o calas escarpadas.
     - **Ergonomía Móvil (Ley 11):** Integración limpia como Módulo 10 en la botonera de navegación con tarjeta Liquid Glass y pastilla inteligente de llamada en el Tiempo Actual.
 
-## 🚀 Versión Actual: v1.1.78 🌧️ — 2026-10-03
+## 🚀 Versión Actual: v1.1.79 ⏱️ — 2026-10-03
+- **Robustez de Indexación Temporal por Timestamp Local en Pronóstico y Gráficas (Ley Específica 12.13):**
+  1. *Erradicación del Cursor Ciego de Horas (forecastView.js, chartsView.js, compareView.js):*
+     - Erradicada la asunción ciega de que el índice `0` del array `hourly.time` corresponde a las 00:00 de hoy (`for (let i = currentHour; ...)`).
+     - Se implementa el cálculo universal de arranque `startIndex` mediante búsqueda matemática por timestamp local: `hourly.time.findIndex(t => t >= currentHourStr)`.
+  2. *Nowcasting y Curvas Armonizadas:*
+     - Sincronizadas las condiciones de Nowcasting (`i === startIndex || i === startIndex + 1`) y la primera etiqueta horaria con `startIndex`.
+     - Garantiza que el carrusel de 72 horas y las curvas multivariables arranquen con total fidelidad en la hora exacta que vive el usuario, con independencia de desfases de husos o arrays con histórico de horas pasadas.
+  3. *Versionado Oficial, Anti-Caché y Documentación:*
+     - Versión oficial actualizada a `v1.1.79 ⏱️` en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en [app.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/app.js) y Service Worker `meteoasturlode-v1179-cursor-temporal-robusto` en [sw.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/sw.js).
+
+## 🚀 Versión v1.1.78 🌧️ — 2026-10-03
 - **Rigor en el Pluviómetro Digital y Diferenciación Acumulada vs Prevista (Ley Específica 12.12):**
   1. *Diferenciación Física Estricta en el Sensor del Pluviómetro (currentCard.js):*
      - Erradicada la confusión entre lluvia caída y pronóstico. El valor principal en grande del pluviómetro muestra con exactitud el **Agua caída hoy hasta la hora actual** (sumando las horas transcurridas en `hourly.precipitation`), evitando falsas alarmas matinales.

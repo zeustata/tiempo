@@ -99,16 +99,20 @@ export function renderHourlyForecastBlock(data, units = 'metric', iconTheme = 'a
 
   const now = new Date();
   const currentHour = now.getHours();
+  const currentHourStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}T${String(currentHour).padStart(2, '0')}:00`;
+  let startIndex = (hourly.time && Array.isArray(hourly.time)) ? hourly.time.findIndex(t => t >= currentHourStr) : -1;
+  if (startIndex === -1) startIndex = currentHour;
+
   const cur = data.weather ? data.weather.current : null;
   const liveDirectIrr = cur?.direct_normal_irradiance != null ? cur.direct_normal_irradiance : null;
-  const liveUv = cur?.uv_index != null ? cur.uv_index : (hourly?.uv_index && hourly.uv_index[currentHour] != null ? hourly.uv_index[currentHour] : null);
+  const liveUv = cur?.uv_index != null ? cur.uv_index : (hourly?.uv_index && hourly.uv_index[startIndex] != null ? hourly.uv_index[startIndex] : null);
   const liveSw = cur?.shortwave_radiation != null ? cur.shortwave_radiation : null;
   const unitLabel = units === 'knots' ? 'kt' : 'km/h';
 
   let hourlyCards = '';
   let lastDayDateStr = null;
 
-  for (let i = currentHour; i < currentHour + 72 && i < hourly.time.length; i++) {
+  for (let i = startIndex; i < startIndex + 72 && i < hourly.time.length; i++) {
     const timeDate = new Date(hourly.time[i]);
     const dayDateStr = timeDate.toDateString();
     
@@ -148,7 +152,7 @@ export function renderHourlyForecastBlock(data, units = 'metric', iconTheme = 'a
     const code = hourly.weather_code[i];
     // Calibración Solar en Nowcasting: se aplica exclusivamente a la hora en curso y a la siguiente hora inmediata,
     // preservando al 100% la previsión general del modelo numérico para el resto de horas y días.
-    const isImmediateNextHour = (i === currentHour || i === currentHour + 1);
+    const isImmediateNextHour = (i === startIndex || i === startIndex + 1);
     const useDirectIrr = isImmediateNextHour ? liveDirectIrr : null;
     const useUv = isImmediateNextHour ? liveUv : null;
     const useSw = isImmediateNextHour ? liveSw : null;

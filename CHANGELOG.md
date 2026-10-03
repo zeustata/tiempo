@@ -10,6 +10,19 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.79] - 2026-10-03
+
+### ⏱️ Robustez de Indexación Temporal por Timestamp Local en Pronóstico y Gráficas (Ley Específica 12.13)
+- **Erradicación del Cursor Ciego de Horas (`forecastView.js`, `chartsView.js`, `compareView.js`):**
+  - Se erradica por completo la asunción de que la posición 0 del array `hourly.time` de la API corresponde a las 00:00 de hoy (`for (let i = currentHour; ...)`).
+  - El Pronóstico Horario 72h, la Suite Multivariable de Gráficas y el Comparador Climático ahora localizan de forma matemática e infalible su índice de arranque (`startIndex`) mediante comparación con el timestamp local exacto: `const startIndex = hourly.time.findIndex(t => t >= currentHourStr)`.
+- **Nowcasting y Curvas Armonizadas:**
+  - Las evaluaciones de Nowcasting en tiempo real (irradiancia directa perpendicular, UV, radiación solar y nubosidad) se sincronizan con `startIndex` (`i === startIndex || i === startIndex + 1`), garantizando que tanto el carrusel de 72 horas como el trazado de la gráfica arranquen siempre en el punto temporal fidedigno, con independencia de husos o arrays con histórico de horas pasadas.
+- **Cache-Busting Garantizado (Ley 4):**
+  - Service Worker actualizado a `meteoasturlode-v1179-cursor-temporal-robusto` y script `app.js?v=1.1.79`.
+
+---
+
 ## [1.1.78] - 2026-10-03
 
 ### 🌧️ Rigor en el Pluviómetro Digital y Diferenciación Acumulada vs Prevista (Ley Específica 12.12)

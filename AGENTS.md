@@ -175,6 +175,11 @@
             1. **Agua caída hasta ahora hoy:** Sumatorio determinista real de las horas transcurridas de la jornada en curso (`hourly.precipitation` de 00:00 h hasta la hora actual).
             2. **Total previsto hoy (24 horas):** Proyección integral estimada para la jornada (`daily.precipitation_sum[0]`).
           - Asimismo, en la probabilidad horaria, se prohíbe rotular el índice de la hora en curso como "próxima hora". El sensor debe desglosar de forma clara: *Probabilidad hora actual (Xh) ➔ Próxima hora (Yh)*, junto con la intensidad en tiempo real (`current.precipitation` en mm/h).
+      13. **Doctrina de Robustez de Indexación Temporal por Timestamp Local en Pronóstico Horario y Gráficas (Feedback Lendo):**
+          - Queda terminantemente prohibido utilizar el valor instantáneo de `currentHour = new Date().getHours()` como índice directo del array (`hourly[currentHour]`) o como punto de arranque ciego de bucles (`for (let i = currentHour; ...)`), bajo la asunción infundada de que la posición 0 del array corresponde a las 00:00 del día en curso.
+          - Todo módulo de pronóstico extendido por horas (Pronóstico 72h, Suite Multivariable de Gráficas Meteorológicas y Comparador Climático) debe localizar su punto de arranque temporal (`startIndex`) de forma matemática e infalible mediante comparación lexicográfica o cronológica con el sellado de fecha y hora local (`YYYY-MM-DDTHH:00`):
+            `const startIndex = hourly.time.findIndex(t => t >= currentHourStr)`.
+          - Asimismo, la condición de Nowcasting inmediato en dichos bucles debe evaluarse estrictamente contra `startIndex` (`i === startIndex || i === startIndex + 1`), garantizando sincronización perfecta e inmunidad total frente a desfases de husos, arrays con histórico de horas pasadas o cambios de jornada.
 
 
 

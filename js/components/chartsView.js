@@ -152,7 +152,14 @@ function renderCurrentChart() {
     meteoChart = null;
   }
 
-  const currentHour = new Date().getHours();
+  const now = new Date();
+  const currentHour = now.getHours();
+  const currentHourStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}T${String(currentHour).padStart(2, '0')}:00`;
+  let startIndex = (hourlyData.time && Array.isArray(hourlyData.time)) 
+    ? hourlyData.time.findIndex(t => t >= currentHourStr) 
+    : -1;
+  if (startIndex === -1) startIndex = currentHour;
+
   const labels = [];
   const fullDates = [];
   const weatherDescriptions = [];
@@ -160,10 +167,10 @@ function renderCurrentChart() {
 
   const weatherCodes = hourlyData.weather_code || hourlyData.weathercode || [];
 
-  for (let i = currentHour; i < currentHour + hoursCount && i < hourlyData.time.length; i++) {
+  for (let i = startIndex; i < startIndex + hoursCount && i < hourlyData.time.length; i++) {
     const d = new Date(hourlyData.time[i]);
     const isStartOfDay = d.getHours() === 0;
-    const isFirstHour = i === currentHour;
+    const isFirstHour = i === startIndex;
     const dayPrefix = d.toLocaleDateString('es-ES', { weekday: 'short' });
     const formattedDay = dayPrefix.charAt(0).toUpperCase() + dayPrefix.slice(1);
     const hourStr = d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
@@ -184,7 +191,7 @@ function renderCurrentChart() {
     const wCode = weatherCodes[i] != null ? weatherCodes[i] : 0;
 
     // Nowcasting
-    const isImmediate = (i === currentHour || i === currentHour + 1);
+    const isImmediate = (i === startIndex || i === startIndex + 1);
     const useUv = (isImmediate && hourlyData.uv_index && hourlyData.uv_index[i] != null) ? hourlyData.uv_index[i] : null;
     const useDirectIrr = (isImmediate && hourlyData.direct_normal_irradiance && hourlyData.direct_normal_irradiance[i] != null) ? hourlyData.direct_normal_irradiance[i] : null;
     const useSw = (isImmediate && hourlyData.shortwave_radiation && hourlyData.shortwave_radiation[i] != null) ? hourlyData.shortwave_radiation[i] : null;

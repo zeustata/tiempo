@@ -223,7 +223,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.78 🌧️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.79 ⏱️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -274,8 +274,21 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.78 🌧️</span>
+            <span class="release-version">v1.1.79 ⏱️</span>
             <span class="release-date">03 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-fix">Sincronización Cronológica</span> <strong>Robustez de Indexación Temporal por Timestamp Local en Pronóstico y Gráficas (Ley Específica 12.13)</strong>:
+              <br>• <strong>Erradicación del Cursor Ciego:</strong> Se elimina la asunción de que la posición 0 de la API es siempre las 00:00 de hoy. El Pronóstico Horario 72h y la Suite de Gráficas Meteorológicas ahora localizan su punto de arranque exacto (<code>startIndex</code>) mediante búsqueda por timestamp local (<code>t >= YYYY-MM-DDTHH:00</code>).
+              <br>• <strong>Nowcasting y Curvas Armonizadas:</strong> Las evaluaciones en tiempo real y la condición inmediata de Nowcasting se vinculan estrictamente al <code>startIndex</code>, garantizando que el carrusel de 72h y el trazado de la gráfica arranquen siempre en el punto temporal fidedigno, con independencia de husos o arrays con histórico de horas pasadas.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.78 🌧️</span>
+            <span class="release-date">03 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-fix">Rigor Hidrológico</span> <strong>Rigor en el Pluviómetro Digital y Diferenciación Acumulada vs Prevista (Ley Específica 12.12)</strong>:
@@ -2650,7 +2663,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.78"></script>
+  <script type="module" src="js/app.js?v=1.1.79"></script>
 
 
 
