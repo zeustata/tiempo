@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1177-inmunidad-utc-horarios';
+const CACHE_NAME = 'meteoasturlode-v1178-pluviometro-rigor-caida-prevista';
 const STATIC_ASSETS = [
   './',
   './index.html',

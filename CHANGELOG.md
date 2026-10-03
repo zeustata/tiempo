@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.78] - 2026-10-03
+
+### 🌧️ Rigor en el Pluviómetro Digital y Diferenciación Acumulada vs Prevista (Ley Específica 12.12)
+- **Diferenciación Física Estricta en el Sensor del Pluviómetro (`currentCard.js`):**
+  - Se erradica la confusión entre lluvia caída y pronóstico. El valor principal en grande del pluviómetro ahora muestra con exactitud el **Agua caída hoy hasta la hora actual** (sumando las horas transcurridas en `hourly.precipitation`), evitando que en mañanas secas con tormenta prevista por la tarde el sensor muestre falsos acumulados pasados.
+  - Se incorpora como métrica destacada el **Total previsto hoy (24h)** (`daily.precipitation_sum[0]`) para que el usuario conozca con total transparencia la proyección completa del día.
+- **Corrección Cronológica de Probabilidad Horaria e Intensidad en Vivo:**
+  - Corregido el índice que leía la hora en curso llamándola "próxima hora". El sensor ahora detalla con precisión: *Probabilidad hora actual (Xh) ➔ Próxima hora (Yh)*.
+  - Muestra la intensidad en tiempo real: *Lloviendo ahora: X mm/h* o *Sin lluvia en este momento*.
+- **Cache-Busting Garantizado (Ley 4):**
+  - Service Worker actualizado a `meteoasturlode-v1178-pluviometro-rigor-caida-prevista` y script `app.js?v=1.1.78`.
+
+---
+
 ## [1.1.77] - 2026-10-03
 
 ### ⏱️ Inmunidad al Desfase UTC y Sellado Horario Local en Detectores y Modelos (Ley Específica 12.11)

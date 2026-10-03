@@ -223,7 +223,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.77 ⏱️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.78 🌧️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -274,8 +274,21 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.77 ⏱️</span>
+            <span class="release-version">v1.1.78 🌧️</span>
             <span class="release-date">03 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-fix">Rigor Hidrológico</span> <strong>Rigor en el Pluviómetro Digital y Diferenciación Acumulada vs Prevista (Ley Específica 12.12)</strong>:
+              <br>• <strong>Diferenciación Física Estricta:</strong> Se erradica la confusión entre lluvia caída y pronóstico. El valor principal en grande del pluviómetro muestra con exactitud el <em>Agua caída hoy hasta la hora actual</em> (ej. 0.0 mm en mañanas secas), distinguiéndola con total transparencia del <em>Total previsto hoy (24h)</em>.
+              <br>• <strong>Corrección Cronológica de Probabilidad:</strong> Se subsana el índice que leía la hora en curso llamándola "próxima hora". El sensor ahora detalla con precisión: <em>Probabilidad hora actual (Xh) ➔ Próxima hora (Yh)</em>, junto a la intensidad en vivo (mm/h).
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.77 ⏱️</span>
+            <span class="release-date">03 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-fix">Sincronización Cronológica</span> <strong>Inmunidad al Desfase UTC y Sellado Horario Local en Detectores y Modelos (Ley Específica 12.11)</strong>:
@@ -2637,7 +2650,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.77"></script>
+  <script type="module" src="js/app.js?v=1.1.78"></script>
 
 
 

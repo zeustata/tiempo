@@ -112,6 +112,27 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   const borrina = detectBorrinaEffect(current, hourly, concejo);
   const borrinaMarkup = renderBorrinaBanner(borrina);
 
+  // 4. Pluviómetro: cálculo riguroso de agua caída hasta ahora vs total previsto de la jornada (Ley 12.12)
+  const now = new Date();
+  const todayPrefix = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  let rainFallenSoFar = 0;
+  if (hourly && Array.isArray(hourly.precipitation) && Array.isArray(hourly.time)) {
+    for (let i = 0; i < hourly.time.length; i++) {
+      if (hourly.time[i].startsWith(todayPrefix)) {
+        const hourPart = parseInt(hourly.time[i].substring(11, 13), 10);
+        if (hourPart <= currentHour) {
+          rainFallenSoFar += (parseFloat(hourly.precipitation[i]) || 0);
+        }
+      }
+    }
+  }
+  rainFallenSoFar = Math.round(rainFallenSoFar * 10) / 10;
+  const rainTodayTotal = (daily && daily.precipitation_sum && daily.precipitation_sum[0] != null) ? daily.precipitation_sum[0] : 0;
+  const currentPopVal = (hourly && hourly.precipitation_probability && hourly.precipitation_probability[currentHour] != null) ? hourly.precipitation_probability[currentHour] : 0;
+  const nextHour = (currentHour + 1) % 24;
+  const nextPopVal = (hourly && hourly.precipitation_probability && hourly.precipitation_probability[currentHour + 1] != null) ? hourly.precipitation_probability[currentHour + 1] : currentPopVal;
+  const currentRainIntensity = current.precipitation != null ? current.precipitation : 0;
+
   // Monitor Convectivo y Alerta Silenciosa de Tormenta Inminente
   const storm = detectThunderstormEffect(current, hourly, concejo);
   const thunderstormMarkup = renderThunderstormBanner(storm);
@@ -306,13 +327,16 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
           <button class="btn-explain-sensor" data-explain="rain" title="¿Cómo funciona el pluviómetro y la lluvia? Pulsa para aprender">💡 Explícame</button>
         </div>
         <div class="sensor-body">
-          <div class="sensor-val">${(daily.precipitation_sum[0] || 0).toFixed(1)} <small>mm (l/m²)</small></div>
-          <div class="sensor-sub">Lluvia acumulada hoy</div>
-          <div class="rain-status">
-            Probabilidad próxima hora: <strong>${hourly.precipitation_probability[new Date().getHours()] || 0}%</strong>
+          <div class="sensor-val">${rainFallenSoFar.toFixed(1)} <small>mm (l/m²)</small></div>
+          <div class="sensor-sub">Agua caída hoy hasta las ${String(currentHour).padStart(2, '0')}:00 h</div>
+          <div class="sensor-sub" style="margin-top: 4px;">
+            Total previsto hoy (24h): <strong>${rainTodayTotal.toFixed(1)} mm</strong>
           </div>
-          <div class="sensor-sub">
-            Intensidad actual: <strong>${current.precipitation > 0 ? `${current.precipitation.toFixed(1)} mm/h` : 'Sin precipitación'}</strong>
+          <div class="sensor-sub" style="margin-top: 6px; padding: 4px 8px; background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 6px; font-size: 0.80rem;">
+            Probabilidad: <strong>${currentPopVal}%</strong> (${String(currentHour).padStart(2, '0')}h) ➔ <strong>${nextPopVal}%</strong> (${String(nextHour).padStart(2, '0')}h)
+          </div>
+          <div class="sensor-sub" style="margin-top: 4px;">
+            Intensidad en vivo: <strong>${currentRainIntensity > 0 ? `${currentRainIntensity.toFixed(1)} mm/h` : 'Sin lluvia en este momento'}</strong>
           </div>
         </div>
       </div>

@@ -169,6 +169,12 @@
           - Queda terminantemente prohibido utilizar llamadas a `.toISOString()` para indexar arrays de predicción horaria (`hourly.time`) que se encuentren formateados en hora civil española/asturiana (`Europe/Madrid`).
           - La conversión de fecha u hora para búsqueda de nowcasting, caídas térmicas o barométricas (como en el Detector de Galerna Cantábrica) debe generarse imperativamente a partir de los métodos locales de JavaScript (`getFullYear()`, `getMonth() + 1`, `getDate()`, `getHours()`), evitando desfases de 1 a 2 horas (CET/CEST) que corrompan la comparación con registros pasados o causen fallos de índice en horas nocturnas (00:00 a 01:59 h).
           - Asimismo, en los módulos de pronóstico extendido (Surf & Rompientes y Mareógrafo de 72 horas), la iteración de días debe realizarse sumando días naturales de calendario (`new Date(y, m, d + offset)`), garantizando inmunidad absoluta frente a saltos de cambio de hora estacional (DST).
+      12. **Doctrina de Rigor en el Pluviómetro Digital y Diferenciación Acumulada vs Prevista (Feedback Lendo):**
+          - Queda terminantemente prohibido etiquetar la proyección cuantitativa total de la jornada (`daily.precipitation_sum[0]`) como "lluvia acumulada", generando la falsa percepción de que el agua ya ha caído cuando el día aún está transcurriendo o no ha comenzado a llover.
+          - El sensor del pluviómetro debe distinguir con total honestidad y rigor físico entre:
+            1. **Agua caída hasta ahora hoy:** Sumatorio determinista real de las horas transcurridas de la jornada en curso (`hourly.precipitation` de 00:00 h hasta la hora actual).
+            2. **Total previsto hoy (24 horas):** Proyección integral estimada para la jornada (`daily.precipitation_sum[0]`).
+          - Asimismo, en la probabilidad horaria, se prohíbe rotular el índice de la hora en curso como "próxima hora". El sensor debe desglosar de forma clara: *Probabilidad hora actual (Xh) ➔ Próxima hora (Yh)*, junto con la intensidad en tiempo real (`current.precipitation` en mm/h).
 
 
 
