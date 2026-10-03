@@ -10,6 +10,24 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.76] - 2026-10-03
+
+### 🛡️ Visión Dual en Viaductos y Avisos Oficiales AEMET (Ley Específica 12.10)
+- **Superación de la Foto Fija en Avisos AEMET (`weatherAlerts.js`):**
+  - El motor de alertas oficiales evalúa simultáneamente el tiempo en vivo y la previsión máxima de la jornada:
+    - **Viento:** Consulta `daily.wind_gusts_10m_max[0]` y localiza el pico horario en las próximas 24 horas (`hourly.wind_gusts_10m`). Se erradica la ceguera de mañanas tranquilas con temporal vespertino previsto, activando el aviso con validez y hora estimada (ej. *Previsto hoy • Pico máximo de 92 km/h hacia las 17:00 h*).
+    - **Fenómenos Costeros:** Consulta la altura de ola máxima esperada en 24 horas (`marineHourly.wave_height`) y rachas costeras, avisando con antelación ante la llegada de mar arbolada o muy gruesa.
+    - **Nevadas:** Evalúa la cota mínima de nieve en 24 horas (`hourly.freezing_level_height`) y la hora de mayor descenso para puertos y cotas bajas.
+- **Preaviso Preventivo en Viaductos y Autovías (`roadWindDetector.js`):**
+  - Implementación de la distinción operativa vial:
+    - **En Curso (Tiempo Real):** Si las rachas actuales son `>= 65 km/h` o `>= 85 km/h`, el sistema emite alerta severa o precaución en vivo con sus correspondientes badges y consejos de sujeción de volante.
+    - **Preaviso para Hoy (Previsión):** Si el viento actual es moderado pero los modelos numéricos prevén rachas de `>= 65 km/h` o `>= 85 km/h` durante la jornada, la tarjeta emite un preaviso preventivo detallando el pico esperado y la hora crítica para planificar desplazamientos de caravanas, furgonetas y motocicletas.
+  - La píldora ergonómica del Anemómetro (Sensor #1) refleja fielmente el estado: *🕒 Preaviso viento hoy (XX km/h)* o *🚨 Viento lateral en vivo (XX km/h)*.
+- **Cache-Busting Garantizado (Ley 4):**
+  - Service Worker actualizado a `meteoasturlode-v1176-vision-dual-viaductos-aemet` y query strings `app.js?v=1.1.76`.
+
+---
+
 ## [1.1.75] - 2026-10-03
 
 ### ⚖️ Sincronización Total del Comparador Climático con Leyes 7, 12 y 14 (Feedback Lendo)

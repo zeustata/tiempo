@@ -37,7 +37,7 @@ const APP_MODULES = [
   { id: 'astronomy', icon: '🔭', title: 'Astronomía & Cosmos', desc: 'Eclipses, lluvias de estrellas, fases lunares y semáforo de visibilidad en Asturias', key: '9' }
 ];
 
-export const CURRENT_APP_VERSION = '1.1.75';
+export const CURRENT_APP_VERSION = '1.1.76';
 
 class MeteoAsturiasApp {
   constructor() {

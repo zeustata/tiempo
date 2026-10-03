@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1175-comparador-calibracion-solar';
+const CACHE_NAME = 'meteoasturlode-v1176-vision-dual-viaductos-aemet';
 const STATIC_ASSETS = [
   './',
   './index.html',

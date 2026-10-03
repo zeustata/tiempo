@@ -41,7 +41,18 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     - **Exención de Responsabilidad Civil (Ley 16):** Advertencia explícita de naturaleza orientativa; prohibición de formular textos que garanticen paso o seguridad en accesos de montaña o calas escarpadas.
     - **Ergonomía Móvil (Ley 11):** Integración limpia como Módulo 10 en la botonera de navegación con tarjeta Liquid Glass y pastilla inteligente de llamada en el Tiempo Actual.
 
-## 🚀 Versión Actual: v1.1.75 ⚖️ — 2026-10-03
+## 🚀 Versión Actual: v1.1.76 🛡️ — 2026-10-03
+- **Visión Dual en Viaductos y Avisos Oficiales AEMET (Ley Específica 12.10):**
+  1. *Superación de la Foto Fija en Avisos AEMET (weatherAlerts.js):*
+     - El motor de alertas oficiales evalúa simultáneamente el tiempo en vivo y la previsión máxima de la jornada (viento en 24h, altura de oleaje cantábrico y cota mínima de nieve en puertos).
+     - Erradicada la ceguera de mañanas tranquilas con temporal vespertino previsto: el sistema avisa con antelación indicando la racha máxima esperada y la hora estimada del pico.
+  2. *Preaviso Preventivo en Viaductos y Autovías (roadWindDetector.js):*
+     - Distinción operativa entre *Alerta en curso* (racha actual >= 65 o >= 85 km/h) y *Preaviso vial para hoy* (viento moderado actual pero con rachas previstas de riesgo hoy).
+     - La píldora del Anemómetro (Sensor #1) refleja con claridad el estado en tiempo real o el preaviso para la jornada.
+  3. *Versionado Oficial, Anti-Caché y Documentación:*
+     - Versión oficial actualizada a `v1.1.76 🛡️` en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en [app.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/app.js) y Service Worker `meteoasturlode-v1176-vision-dual-viaductos-aemet` en [sw.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/sw.js).
+
+## 🚀 Versión v1.1.75 ⚖️ — 2026-10-03
 - **Sincronización Total del Comparador Climático con Leyes 7, 12 y 14 (Feedback Lendo):**
   1. *Calibración Solar y Filtro Anti-Orbayu en el Comparador (Ley 12, Punto 9):*
      - Adaptación de [compareView.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/components/compareView.js) para extraer todos los parámetros meteorológicos requeridos (`direct_normal_irradiance`, `shortwave_radiation`, `uv_index`, `cloud_cover`, `is_day`, `relative_humidity_2m` y `precipitation_probability`).

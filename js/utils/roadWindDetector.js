@@ -167,6 +167,26 @@ export function detectRoadWindStatus(current, daily, hourly, concejo) {
   const gusts = current.wind_gusts_10m != null ? Math.round(current.wind_gusts_10m) : speed;
   const windDir = current.wind_direction_10m != null ? Math.round(current.wind_direction_10m) : 0;
 
+  // Analizar previsión diaria y pico horario en las próximas 24 horas (Visión Dual Ley Específica 12.10)
+  const dailyMaxGust = Math.round((daily?.wind_gusts_10m_max && daily.wind_gusts_10m_max[0] != null) ? daily.wind_gusts_10m_max[0] : gusts);
+  let peakGustHourly = 0;
+  let peakHourIndex = -1;
+  let peakHourStr = '';
+  if (hourly && Array.isArray(hourly.wind_gusts_10m) && Array.isArray(hourly.time)) {
+    for (let i = 0; i < Math.min(hourly.wind_gusts_10m.length, 24); i++) {
+      const g = typeof hourly.wind_gusts_10m[i] === 'number' ? Math.round(hourly.wind_gusts_10m[i]) : 0;
+      if (g > peakGustHourly) {
+        peakGustHourly = g;
+        peakHourIndex = i;
+      }
+    }
+    if (peakHourIndex !== -1 && hourly.time[peakHourIndex]) {
+      const d = new Date(hourly.time[peakHourIndex]);
+      peakHourStr = `${String(d.getHours()).padStart(2, '0')}:00 h`;
+    }
+  }
+  const maxAnticipatedGust = Math.max(gusts, dailyMaxGust, peakGustHourly);
+
   // Determinar dirección cardinal legible aproximada
   let windDirName = 'Variable';
   if (windDir >= 337.5 || windDir < 22.5) windDirName = 'Norte (N)';
@@ -178,11 +198,16 @@ export function detectRoadWindStatus(current, daily, hourly, concejo) {
   else if (windDir >= 247.5 && windDir < 292.5) windDirName = 'Oeste (W)';
   else if (windDir >= 292.5 && windDir < 337.5) windDirName = 'Noroeste (NW)';
 
-  // 2. Umbrales de evaluación vial
-  const isSevere = gusts >= 85;
-  const isWarning = gusts >= 65 && gusts < 85;
-  const isCaution = gusts >= 45 && gusts < 65;
-  const isSafe = gusts < 45;
+  // 2. Umbrales de evaluación vial con Visión Dual (En vivo vs Preaviso)
+  const isSevereNow = gusts >= 85;
+  const isWarningNow = gusts >= 65 && gusts < 85;
+  const isSevereForecast = !isSevereNow && !isWarningNow && maxAnticipatedGust >= 85;
+  const isWarningForecast = !isSevereNow && !isWarningNow && !isSevereForecast && maxAnticipatedGust >= 65;
+
+  const isSevere = isSevereNow || isSevereForecast;
+  const isWarning = isWarningNow || isWarningForecast;
+  const isCaution = !isSevere && !isWarning && (gusts >= 45 || maxAnticipatedGust >= 45);
+  const isForecast = isSevereForecast || isWarningForecast || (isCaution && gusts < 45);
 
   const isBannerActive = isSevere || isWarning;
 
@@ -196,25 +221,43 @@ export function detectRoadWindStatus(current, daily, hourly, concejo) {
   let description = '';
   let adviceList = [];
 
-  if (isSevere) {
-    title = '🚨💨 Alerta Severa de Viento Lateral en Viaductos y Trazados Altos';
-    badge = '⛔ Alto Riesgo de Vuelco / Tijera';
-    description = `Temporal severo con rachas de <strong>${gusts} km/h</strong> incidiendo sobre viaductos expuestos. Riesgo crítico de sacudida y pérdida de control para furgonetas, caravanas y motocicletas.`;
+  if (isSevereNow) {
+    title = '🚨💨 Alerta Severa en Vivo: Viento Lateral en Viaductos y Trazados Altos';
+    badge = '⛔ En Curso: Alto Riesgo de Vuelco / Tijera';
+    description = `Temporal severo en curso con rachas registradas de <strong>${gusts} km/h</strong> incidiendo sobre viaductos expuestos. Riesgo crítico de sacudida lateral y pérdida de control para furgonetas, caravanas y motocicletas.`;
     adviceList = [
       'Evitar circular con autocaravanas, furgonetas vacías o remolques por viaductos elevados.',
       'Extremar la prudencia al salir de túneles y tramos encajonados al puente.',
       'Reducción preventiva de velocidad a límites de seguridad vial.',
       'Consulta imperativa con DGT (011) o el 112 Asturias.'
     ];
-  } else if (isWarning) {
-    title = '🚗💨 Precaución por Viento Lateral en Viaductos y Autovías';
-    badge = '⚠️ Riesgo de Desestabilización';
-    description = `Rachas de <strong>${gusts} km/h</strong> de componente <strong>${windDirName}</strong>. Efecto empuje lateral pronunciado sobre vehículos altos y ligeros en pasos elevados y viaductos.`;
+  } else if (isWarningNow) {
+    title = '🚗💨 Precaución en Vivo: Viento Lateral en Viaductos y Autovías';
+    badge = '⚠️ En Curso: Riesgo de Desestabilización';
+    description = `Rachas registradas de <strong>${gusts} km/h</strong> de componente <strong>${windDirName}</strong>. Efecto empuje lateral pronunciado sobre vehículos altos y ligeros en pasos elevados y viaductos.`;
     adviceList = [
       'Sujetar con firmeza el volante ante sacudidas laterales imprevistas al superar camiones.',
       'Moderar la velocidad para reducir el empuje dinámico del viento.',
       'Aumentar la distancia de seguridad lateral con el resto de usuarios.',
       'Atender a las mangas de viento instaladas por el Ministerio en los viaductos.'
+    ];
+  } else if (isSevereForecast) {
+    title = '🚨💨 Preaviso de Temporal Severo en Viaductos y Autovías';
+    badge = '🕒 Preaviso: Temporal Previsto Hoy';
+    description = `Viento moderado en este momento (<strong>${gusts} km/h</strong>), pero los modelos alertan de un <strong>temporal severo con rachas de hasta ${maxAnticipatedGust} km/h</strong>${peakHourStr ? ` previsto en torno a las ${peakHourStr}` : ' a lo largo de la jornada'} en viaductos expuestos de este corredor. Riesgo crítico de desestabilización para vehículos ligeros o de gran superficie.`;
+    adviceList = [
+      'Planifique sus desplazamientos evitando circular en las horas de mayor intensidad de viento.',
+      'Evite circular con autocaravanas, remolques o furgonetas ligeras durante el paso del temporal.',
+      'Atender a los paneles de mensaje variable (PMV) de la DGT y avisos del 112 Asturias.'
+    ];
+  } else if (isWarningForecast) {
+    title = '🚗💨 Preaviso de Viento Lateral en Viaductos y Autovías';
+    badge = '🕒 Preaviso: Viento Fuerte Previsto Hoy';
+    description = `Viento favorable en este momento (<strong>${gusts} km/h</strong>), pero se prevé un <strong>aumento de viento con rachas de hasta ${maxAnticipatedGust} km/h</strong>${peakHourStr ? ` (máxima prevista hacia las ${peakHourStr})` : ' durante la jornada'}. Tenga en cuenta el efecto pantalla en viaductos si va a circular hoy.`;
+    adviceList = [
+      'Sujetar el volante con ambas manos con firmeza ante sacudidas laterales imprevistas.',
+      'Moderar la velocidad para reducir el empuje aerodinámico del viento.',
+      'Aumentar la distancia de seguridad lateral con vehículos pesados.'
     ];
   }
 
@@ -222,9 +265,12 @@ export function detectRoadWindStatus(current, daily, hourly, concejo) {
     isActive: true,
     isSimulation: false,
     isBannerActive,
+    isForecast,
     level,
     speed,
     gusts,
+    maxAnticipatedGust,
+    peakHourStr,
     windDir,
     windDirName,
     viaducts,
@@ -241,13 +287,25 @@ export function detectRoadWindStatus(current, daily, hourly, concejo) {
 export function renderRoadWindSensorPill(roadWind) {
   if (!roadWind) return '';
 
-  const { level, gusts } = roadWind;
+  const { level, gusts, isForecast, maxAnticipatedGust, peakHourStr } = roadWind;
+
+  if (isForecast) {
+    if (level === 'severe') {
+      return `<div class="sensor-sub road-wind-tag severe" title="Preaviso vial: rachas severas de hasta ${maxAnticipatedGust} km/h previstas hoy${peakHourStr ? ` (${peakHourStr})` : ''} en viaductos y puertos. Peligro de vuelco para motos y vehículos altos.">🕒 Viaductos / Tráfico: <strong>Preaviso temporal (${maxAnticipatedGust} km/h)</strong></div>`;
+    }
+    if (level === 'warning') {
+      return `<div class="sensor-sub road-wind-tag warning" title="Preaviso vial: rachas de hasta ${maxAnticipatedGust} km/h previstas hoy${peakHourStr ? ` (${peakHourStr})` : ''} en viaductos expuestos.">🕒 Viaductos A-8/A-66: <strong>Preaviso viento (${maxAnticipatedGust} km/h)</strong></div>`;
+    }
+    if (level === 'caution') {
+      return `<div class="sensor-sub road-wind-tag caution" title="Preaviso vial: rachas moderadas de hasta ${maxAnticipatedGust} km/h previstas hoy.">🕒 Viaductos / Altos: <strong>Preaviso moderado (${maxAnticipatedGust} km/h)</strong></div>`;
+    }
+  }
 
   if (level === 'severe') {
-    return `<div class="sensor-sub road-wind-tag severe" title="Alerta vial: rachas severas de ${gusts} km/h en viaductos y puertos. Peligro de vuelco para motos y vehículos altos.">⛔ Viaductos / Tráfico: <strong>Alerta severa (${gusts} km/h)</strong></div>`;
+    return `<div class="sensor-sub road-wind-tag severe" title="Alerta vial en vivo: rachas severas de ${gusts} km/h en viaductos y puertos. Peligro de vuelco para motos y vehículos altos.">⛔ Viaductos / Tráfico: <strong>Alerta severa en vivo (${gusts} km/h)</strong></div>`;
   }
   if (level === 'warning') {
-    return `<div class="sensor-sub road-wind-tag warning" title="Precaución vial: rachas de ${gusts} km/h en viaductos y trazados elevados.">🚨 Viaductos A-8/A-66: <strong>Viento lateral (${gusts} km/h)</strong></div>`;
+    return `<div class="sensor-sub road-wind-tag warning" title="Precaución vial en vivo: rachas de ${gusts} km/h en viaductos y trazados elevados.">🚨 Viaductos A-8/A-66: <strong>Viento lateral en vivo (${gusts} km/h)</strong></div>`;
   }
   if (level === 'caution') {
     return `<div class="sensor-sub road-wind-tag caution" title="Viento moderado: atención en viaductos expuestos de la red principal.">⚠️ Viaductos / Altos: <strong>Viento moderado (${gusts} km/h)</strong></div>`;
@@ -291,7 +349,8 @@ export function renderRoadWindBanner(roadWind) {
 
         <!-- Métricas Viales -->
         <div class="road-wind-metrics">
-          <span class="road-wind-metric-pill">💨 Racha Máxima: <strong>${roadWind.gusts} km/h</strong></span>
+          <span class="road-wind-metric-pill">💨 ${roadWind.isForecast ? 'Pico Máx. Previsto' : 'Racha Actual'}: <strong>${roadWind.isForecast ? roadWind.maxAnticipatedGust : roadWind.gusts} km/h</strong></span>
+          ${roadWind.isForecast ? `<span class="road-wind-metric-pill">⏱️ Racha Actual: <strong>${roadWind.gusts} km/h</strong></span>` : ''}
           <span class="road-wind-metric-pill">🧭 Dirección: <strong>${roadWind.windDirName}</strong></span>
           <span class="road-wind-metric-pill">🚚 Vehículos: <strong>Motos, Furgos y Caravanas</strong></span>
         </div>

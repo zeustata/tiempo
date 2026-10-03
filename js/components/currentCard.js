@@ -1,12 +1,12 @@
 import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=1.1.60';
-import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.1.60';
+import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.1.76';
 import { renderHourlyForecastBlock } from './forecastView.js?v=1.1.60';
 import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.60';
 import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=1.1.60';
 import { detectXeluEffect, renderXeluBanner } from '../utils/xeluDetector.js?v=1.1.60';
 import { detectBorrinaEffect, renderBorrinaBanner } from '../utils/borrinaDetector.js?v=1.1.60';
 import { detectThunderstormEffect, renderThunderstormBanner } from '../utils/thunderstormDetector.js?v=1.1.60';
-import { detectRoadWindStatus, renderRoadWindBanner, renderRoadWindSensorPill } from '../utils/roadWindDetector.js?v=1.1.60';
+import { detectRoadWindStatus, renderRoadWindBanner, renderRoadWindSensorPill } from '../utils/roadWindDetector.js?v=1.1.76';
 import { getSeismicStatus, renderSeismicBanner } from '../utils/seismicDetector.js?v=1.1.60';
 import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.60';
 import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=1.1.60';
