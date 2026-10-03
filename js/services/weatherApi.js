@@ -136,7 +136,12 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
       : Promise.resolve(null);
 
     // 5. Avisos Oficiales AEMET (desde JSON estático actualizado por GitHub Actions)
-    const aemetAlertsPromise = fetch('data/avisos-asturias.json')
+    const isLocalhost = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+    const alertsUrl = isLocalhost 
+      ? 'data/avisos-asturias.json' 
+      : 'https://raw.githubusercontent.com/zeustata/tiempo/data/data/avisos-asturias.json';
+      
+    const aemetAlertsPromise = fetch(alertsUrl)
       .then(r => r.ok ? r.json() : null)
       .catch(() => null);
 
