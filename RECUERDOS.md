@@ -41,7 +41,22 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     - **Exención de Responsabilidad Civil (Ley 16):** Advertencia explícita de naturaleza orientativa; prohibición de formular textos que garanticen paso o seguridad en accesos de montaña o calas escarpadas.
     - **Ergonomía Móvil (Ley 11):** Integración limpia como Módulo 10 en la botonera de navegación con tarjeta Liquid Glass y pastilla inteligente de llamada en el Tiempo Actual.
 
-## 🚀 Versión Actual: v1.1.71 📱 — 2026-10-03
+## 🚀 Versión Actual: v1.1.72 🌅 — 2026-10-03
+- **Cobertura Temporal Íntegra de 24 Horas en Tarjetas Diarias (Feedback Lendo):**
+  1. *Eliminación del Agujero Negro de la Madrugada (Ley 12, Punto 6):*
+     - Detección y corrección de la omisión horaria en [forecastView.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/components/forecastView.js), donde los tramos de mañana y tarde solo abarcaban de 08:00 a 13:00 y de 14:00 a 21:00, ignorando 10 horas completas del día (la madrugada de 00:00 a 07:59 y la noche de 22:00 a 23:59).
+     - Ampliación de los intervalos para cubrir de forma continua el 100% de las 24 horas del día natural:
+       - *Tramo 1 (Madrugada / Mañana):* De `00:00 a 13:59`.
+       - *Tramo 2 (Tarde / Noche):* De `14:00 a 23:59`.
+     - Resuelve la asimetría detectada en Castrillón para el domingo 4 de octubre, donde 14–15 mm descargados entre la 01:00 y las 06:00 de la madrugada quedaban excluidos de la pastilla matinal (que solo mostraba 3.7 mm residuales). Ahora la suma de los tramos concuerda al milímetro con el total acumulado del día y con la tabla horaria a 72 horas.
+  2. *Consagración en Leyes Específicas del Proyecto ([AGENTS.md](file:///c:/Users/NUC/Downloads/IA/Tiempo/AGENTS.md)):*
+     - Incorporado el **Punto 6 del Artículo 12 (Cobertura Temporal Íntegra de 24 Horas en Tarjetas de Pronóstico Diario)** en la Parte II, prohibiendo taxativamente dejar horas huérfanas en el cálculo meteorológico diario.
+  3. *Versionado y Despliegue:*
+     - Versión oficial actualizada a `v1.1.72 🌅` en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en [app.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/app.js) y cadena de Service Worker a `meteoasturlode-v1172-cobertura-24h-pronosticos` en [sw.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/sw.js).
+
+---
+
+## 🚀 Versión Previa: v1.1.71 📱 — 2026-10-03
 - **Blindaje Anti-Corte y Fluidez Multilínea en el Semáforu del Paragües (Feedback Lendo):**
   1. *Ergonomía Móvil y Visibilidad Total de la Hora (Ley 11):*
      - Supresión de la regla rígida `white-space: nowrap; text-overflow: ellipsis;` en el titular `.umbrella-strip-title` de [components.css](file:///c:/Users/NUC/Downloads/IA/Tiempo/css/components.css) que truncaba el texto con puntos suspensivos (*«Lluvia copiosa a partir de...»*) en teléfonos móviles (320px–380px).

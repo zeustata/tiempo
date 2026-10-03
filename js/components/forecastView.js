@@ -228,9 +228,9 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
     const rain = (daily.precipitation_sum[d] || 0).toFixed(1);
     const popMax = daily.precipitation_probability_max ? daily.precipitation_probability_max[d] : 0;
     
-    // Desglose de tiempo: 🌅 Mañana (08:00 a 14:00) y 🌇 Tarde (14:00 a 21:00)
-    const morningWeather = getDaypartWeather(hourly, dayDateStr, 8, 13, daily.weather_code[d], popMax, parseFloat(rain));
-    const afternoonWeather = getDaypartWeather(hourly, dayDateStr, 14, 21, daily.weather_code[d], popMax, parseFloat(rain));
+    // Desglose de tiempo: 🌅 Madrugada y Mañana (00:00 a 14:00) y 🌇 Tarde y Noche (14:00 a 24:00)
+    const morningWeather = getDaypartWeather(hourly, dayDateStr, 0, 13, daily.weather_code[d], popMax, parseFloat(rain));
+    const afternoonWeather = getDaypartWeather(hourly, dayDateStr, 14, 23, daily.weather_code[d], popMax, parseFloat(rain));
     const isSnowDay = morningWeather.isSnow || afternoonWeather.isSnow || (daily.snowfall_sum && daily.snowfall_sum[d] > 0);
     const morningLabel = (morningWeather.label || '').split('/')[0].trim();
     const afternoonLabel = (afternoonWeather.label || '').split('/')[0].trim();
@@ -273,7 +273,7 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
         <!-- DOS BOTONES INDEPENDIENTES PARA MAÑANA Y TARDE -->
         <div class="d-dayparts-container">
           <!-- Botón Mañana -->
-          <div class="d-daypart-btn morning" title="Previsión Mañana (08:00 - 14:00): ${morningWeather.label}${morningWeather.precipSum >= 0.1 ? ` • ${morningWeather.precipSum.toFixed(1)} mm` : ''}">
+          <div class="d-daypart-btn morning" title="Previsión Mañana (00:00 - 14:00): ${morningWeather.label}${morningWeather.precipSum >= 0.1 ? ` • ${morningWeather.precipSum.toFixed(1)} mm` : ''}">
             <div class="d-dp-header">
               <span class="d-dp-tag">🌅 MAÑANA</span>
               <span class="d-dp-precip ${morningWeather.precipSum >= 0.1 ? (morningWeather.svgKey === 'hail' ? 'has-hail' : (morningWeather.svgKey === 'sleet' ? 'has-sleet' : (morningWeather.isSnow || morningWeather.svgKey.includes('snow') ? (morningWeather.precipSum >= 2.5 ? 'heavy-snow' : 'has-snow') : (morningWeather.precipSum >= 2.5 ? 'heavy-rain' : 'has-rain')))) : ''}">
@@ -287,7 +287,7 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
           </div>
 
           <!-- Botón Tarde -->
-          <div class="d-daypart-btn afternoon" title="Previsión Tarde (14:00 - 21:00): ${afternoonWeather.label}${afternoonWeather.precipSum >= 0.1 ? ` • ${afternoonWeather.precipSum.toFixed(1)} mm` : ''}">
+          <div class="d-daypart-btn afternoon" title="Previsión Tarde y Noche (14:00 - 24:00): ${afternoonWeather.label}${afternoonWeather.precipSum >= 0.1 ? ` • ${afternoonWeather.precipSum.toFixed(1)} mm` : ''}">
             <div class="d-dp-header">
               <span class="d-dp-tag">🌇 TARDE</span>
               <span class="d-dp-precip ${afternoonWeather.precipSum >= 0.1 ? (afternoonWeather.svgKey === 'hail' ? 'has-hail' : (afternoonWeather.svgKey === 'sleet' ? 'has-sleet' : (afternoonWeather.isSnow || afternoonWeather.svgKey.includes('snow') ? (afternoonWeather.precipSum >= 2.5 ? 'heavy-snow' : 'has-snow') : (afternoonWeather.precipSum >= 2.5 ? 'heavy-rain' : 'has-rain')))) : ''}">

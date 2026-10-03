@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1171-antidesborde-paragues';
+const CACHE_NAME = 'meteoasturlode-v1172-cobertura-24h-pronosticos';
 const STATIC_ASSETS = [
   './',
   './index.html',

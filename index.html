@@ -223,7 +223,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.71 📱</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.72 🌅</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -274,8 +274,21 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.71 📱</span>
+            <span class="release-version">v1.1.72 🌅</span>
             <span class="release-date">03 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-fix">Corrección & Ley 12</span> <strong>Cobertura Temporal Íntegra de 24 Horas en Tarjetas Diarias (Feedback Lendo)</strong>:
+              <br>• <strong>Fin del Agujero Negro de la Madrugada:</strong> Los tramos de Pronóstico Diario pasan a cubrir el 100% de las 24 horas del día natural (<em>Tramo Mañana: 00:00 a 14:00</em> y <em>Tramo Tarde: 14:00 a 24:00</em>), eliminando la omisión de las 10 horas nocturnas (00h–08h y 22h–24h).
+              <br>• <strong>Coherencia Matemática Absoluta en Lluvia:</strong> Ahora las descargas nocturnas y borrascas de madrugada (como los 14 mm previstos para la madrugada de mañana) se suman íntegramente en la pastilla matinal, logrando que la suma de tramos coincida al milímetro con el total del día y con la tabla horaria a 72 horas.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.71 📱</span>
+            <span class="release-date">03 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-mejora">Ergonomía Móvil (Ley 11)</span> <strong>Blindaje Anti-Corte en el Semáforu del Paragües (Feedback Lendo)</strong>:
@@ -2557,7 +2570,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.71"></script>
+  <script type="module" src="js/app.js?v=1.1.72"></script>
 
 
 

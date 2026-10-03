@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.72] - 2026-10-03
+
+### 🌅 Cobertura Temporal Íntegra de 24 Horas en Tarjetas Diarias (Feedback Lendo)
+- **Eliminación del Agujero Negro Nocturno (Ley 12, Punto 6):**
+  - Corrección de los rangos horarios en el desglose diario de `forecastView.js`. Anteriormente solo computaban de 08:00 a 13:00 (Mañana) y de 14:00 a 21:00 (Tarde), dejando 10 horas completas en un limbo (la madrugada de 00:00 a 07:59 y la noche de 22:00 a 23:59).
+  - Ampliación de los tramos para abarcar el 100% de las 24 horas del día:
+    - **Tramo Mañana:** De `00:00 a 13:59` (cubre la noche, madrugada y mañana).
+    - **Tramo Tarde:** De `14:00 a 23:59` (cubre la tarde y noche completa).
+  - Resuelve la desconexión matemática donde borrascas nocturnas de 14–15 mm en la madrugada aparecían como 3.7 mm en la pastilla matinal. Ahora la suma de los tramos concuerda al milímetro con el total acumulado diario y con el Pronóstico Horario a 72 Horas.
+- **Cache-Busting Garantizado (Ley 4):**
+  - Service Worker actualizado a `meteoasturlode-v1172-cobertura-24h-pronosticos` y script `app.js?v=1.1.72`.
+
+---
+
 ## [1.1.71] - 2026-10-03
 
 ### 📱 Blindaje Anti-Corte y Fluidez Multilínea en el Semáforu del Paragües (Feedback Lendo)
