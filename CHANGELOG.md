@@ -10,6 +10,23 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.77] - 2026-10-03
+
+### ⏱️ Inmunidad al Desfase UTC y Sellado Horario Local en Detectores y Modelos (Ley Específica 12.11)
+- **Erradicación del Atraso de 2 Horas en la Galerna Cantábrica (`galernaDetector.js`):**
+  - Sustituida la llamada a `new Date().toISOString().slice(0, 13)` por formateo de hora local asturiana real (`YYYY-MM-DDTHH`).
+  - Corrige el desfase de 2 horas (UTC+2 en verano / UTC+1 en invierno) que obligaba al detector a comparar la temperatura contra registros de hacía 3 a 5 horas, restaurando el principio de nowcasting para comparar fielmente la caída térmica en los últimos 60 a 120 minutos reales.
+  - Se erradica el fallo de indexación nocturna entre las 00:00 y las 01:59 h donde `toISOString` caía a la fecha del día anterior y forzaba un fallback a las 12:00 del mediodía.
+- **Corrección de Medianoche en Previsión Semanal de Surf (`surfCard.js`):**
+  - Sustituida la traslación con `toISOString().split('T')[0]` por composición de fechas de calendario local (`YYYY-MM-DD`).
+  - Erradica el bug de medianoche que desfasaba el parte matinal de olas (11:00 h) hacia la jornada anterior.
+- **Blindaje de Días Naturales en el Mareógrafo de 72h (`tides.js`):**
+  - Sustituida la suma de milisegundos planos (`24 * 3600 * 1000`) por adición natural de días de calendario (`new Date(y, m, d + offset)`), garantizando inmunidad a desajustes de 1 hora en los cambios oficiales de hora estacional (DST).
+- **Cache-Busting Garantizado (Ley 4):**
+  - Service Worker actualizado a `meteoasturlode-v1177-inmunidad-utc-horarios` y script `app.js?v=1.1.77`.
+
+---
+
 ## [1.1.76] - 2026-10-03
 
 ### 🛡️ Visión Dual en Viaductos y Avisos Oficiales AEMET (Ley Específica 12.10)

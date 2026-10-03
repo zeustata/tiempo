@@ -223,7 +223,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.76 🛡️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v1.1.77 ⏱️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -274,8 +274,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v1.1.76 🛡️</span>
+            <span class="release-version">v1.1.77 ⏱️</span>
             <span class="release-date">03 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-fix">Sincronización Cronológica</span> <strong>Inmunidad al Desfase UTC y Sellado Horario Local en Detectores y Modelos (Ley Específica 12.11)</strong>:
+              <br>• <strong>Erradicación del Atraso de 2 Horas en la Galerna Cantábrica:</strong> Sustituido el cálculo en hora UTC por sellado de hora local asturiana real (<code>YYYY-MM-DDTHH</code>). El detector de galerna ahora compara la temperatura y presión contra los últimos 60-120 minutos reales, evitando el desfase de 2 horas (UTC+2) y fallos de indexación en horario nocturno.
+              <br>• <strong>Corrección de Medianoche en Pronóstico Semanal de Surf:</strong> Sustituido <code>toISOString()</code> por días de calendario local en la proyección a 7 días, eliminando el error que desfasaba el parte de oleaje de la mañana hacia el día anterior tras la medianoche.
+              <br>• <strong>Blindaje de Días Naturales en Mareógrafo (72h):</strong> La curva y el pronóstico semanal de mareas operan con traslación de días naturales de calendario, garantizando inmunidad a cambios de hora de verano e invierno (DST).
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v1.1.76 🛡️</span>
+            <span class="release-date">03 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-fix">Seguridad Vial & Avisos Oficiales</span> <strong>Visión Dual en Viaductos y Avisos Oficiales AEMET (Ley Específica 12.10)</strong>:
@@ -2623,7 +2637,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=1.1.76"></script>
+  <script type="module" src="js/app.js?v=1.1.77"></script>
 
 
 

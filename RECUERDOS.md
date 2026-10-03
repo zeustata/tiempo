@@ -41,7 +41,20 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     - **Exención de Responsabilidad Civil (Ley 16):** Advertencia explícita de naturaleza orientativa; prohibición de formular textos que garanticen paso o seguridad en accesos de montaña o calas escarpadas.
     - **Ergonomía Móvil (Ley 11):** Integración limpia como Módulo 10 en la botonera de navegación con tarjeta Liquid Glass y pastilla inteligente de llamada en el Tiempo Actual.
 
-## 🚀 Versión Actual: v1.1.76 🛡️ — 2026-10-03
+## 🚀 Versión Actual: v1.1.77 ⏱️ — 2026-10-03
+- **Inmunidad al Desfase UTC y Sellado Horario Local en Detectores y Modelos (Ley Específica 12.11):**
+  1. *Erradicación del Atraso de 2 Horas en la Galerna Cantábrica (galernaDetector.js):*
+     - Sustitución de `new Date().toISOString().slice(0, 13)` por formateo local asturiano estricto (`YYYY-MM-DDTHH`).
+     - Corrige el desfase de 2 horas (UTC+2 / UTC+1) que obligaba al detector a comparar la caída térmica con datos obsoletos de hacía 3-5 horas en lugar de la ventana inmediata de 60-120 minutos, y elimina el error de indexación nocturna tras medianoche.
+  2. *Corrección de Medianoche en Previsión Semanal de Surf (surfCard.js):*
+     - Sustitución de `toISOString().split('T')[0]` por composición de fechas de calendario local (`YYYY-MM-DD`).
+     - Erradica el bug de medianoche que desfasaba el parte matinal de olas (11:00 h) hacia la jornada anterior.
+  3. *Blindaje de Días Naturales en el Mareógrafo de 72h (tides.js):*
+     - Sustitución de la suma fija de milisegundos (`24 * 3600 * 1000`) por traslación de días naturales de calendario (`new Date(y, m, d + offset)`), garantizando inmunidad a cambios de hora estacional (DST).
+  4. *Versionado Oficial, Anti-Caché y Documentación:*
+     - Versión oficial actualizada a `v1.1.77 ⏱️` en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en [app.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/app.js) y Service Worker `meteoasturlode-v1177-inmunidad-utc-horarios` en [sw.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/sw.js).
+
+## 🚀 Versión v1.1.76 🛡️ — 2026-10-03
 - **Visión Dual en Viaductos y Avisos Oficiales AEMET (Ley Específica 12.10):**
   1. *Superación de la Foto Fija en Avisos AEMET (weatherAlerts.js):*
      - El motor de alertas oficiales evalúa simultáneamente el tiempo en vivo y la previsión máxima de la jornada (viento en 24h, altura de oleaje cantábrico y cota mínima de nieve en puertos).

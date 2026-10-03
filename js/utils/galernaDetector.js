@@ -75,9 +75,10 @@ export function detectGalernaEffect(current, hourly, concejo) {
   let hasThermalCollapse = false;
 
   if (hourly && Array.isArray(hourly.time) && Array.isArray(hourly.temperature_2m)) {
-    const nowIsoHour = new Date().toISOString().slice(0, 13);
-    let nowIndex = hourly.time.findIndex(t => t.startsWith(nowIsoHour));
-    if (nowIndex === -1) nowIndex = Math.min(12, hourly.time.length - 1);
+    const now = new Date();
+    const nowLocalHourStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}T${String(now.getHours()).padStart(2, '0')}`;
+    let nowIndex = hourly.time.findIndex(t => t.startsWith(nowLocalHourStr));
+    if (nowIndex === -1) nowIndex = Math.min(now.getHours(), hourly.time.length - 1);
 
     // Comparar con la temperatura de 1 a 3 horas antes
     const lookback = Math.max(0, nowIndex - 2);

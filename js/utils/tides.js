@@ -415,7 +415,7 @@ export function getRealtimeTideStatus(now = new Date(), lon = -5.6615) {
 export function getWeeklyTides(startDate = new Date(), lon = -5.6615) {
   const week = [];
   for (let i = 0; i < 7; i++) {
-    const d = new Date(startDate.getTime() + i * 24 * 60 * 60 * 1000);
+    const d = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + i, 12, 0, 0);
     const tideData = getDailyTideEvents(d, lon);
     week.push({
       dayIndex: i,
@@ -435,9 +435,9 @@ export function getWeeklyTides(startDate = new Date(), lon = -5.6615) {
 export function renderTideSvgGraph(baseDate = new Date(), isLiveToday = true, currentHours = null, lon = -5.6615) {
   const startOfDay = new Date(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate(), 0, 0, 0, 0);
   
-  // Obtenemos los datos de los 3 días completos
+  // Obtenemos los datos de los 3 días completos usando fechas naturales de calendario
   const daysData = [0, 1, 2].map(offset => {
-    const d = new Date(startOfDay.getTime() + offset * 24 * 60 * 60 * 1000);
+    const d = new Date(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate() + offset, 0, 0, 0, 0);
     const tideData = getDailyTideEvents(d, lon);
     const dayLabel = offset === 0 ? 'HOY' : (offset === 1 ? 'MAÑANA' : 'PASADO MAÑANA');
     const dateFormatted = d.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' });
@@ -469,9 +469,9 @@ export function renderTideSvgGraph(baseDate = new Date(), isLiveToday = true, cu
   const maxH = globalMaxH + 0.25;
 
   // Eventos continuos a lo largo de los 3 días (con soporte de eventos anterior y posterior para interpolación suave)
-  const prevDay = new Date(startOfDay.getTime() - 24 * 3600 * 1000);
+  const prevDay = new Date(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate() - 1, 0, 0, 0, 0);
   const prevDayData = getDailyTideEvents(prevDay, lon);
-  const nextDay = new Date(startOfDay.getTime() + 3 * 24 * 3600 * 1000);
+  const nextDay = new Date(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate() + 3, 0, 0, 0, 0);
   const nextDayData = getDailyTideEvents(nextDay, lon);
 
   const allEventsSpan = [

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1176-vision-dual-viaductos-aemet';
+const CACHE_NAME = 'meteoasturlode-v1177-inmunidad-utc-horarios';
 const STATIC_ASSETS = [
   './',
   './index.html',

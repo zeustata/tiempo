@@ -532,9 +532,8 @@ function getSurfDailyForecast(data, concejo) {
   const dailyForecast = [];
 
   for (let d = 0; d < 7; d++) {
-    const targetDate = new Date(now);
-    targetDate.setDate(now.getDate() + d);
-    const dayDateStr = targetDate.toISOString().split('T')[0];
+    const targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + d);
+    const dayDateStr = `${targetDate.getFullYear()}-${String(targetDate.getMonth() + 1).padStart(2, '0')}-${String(targetDate.getDate()).padStart(2, '0')}`;
     const isToday = d === 0;
     const isTomorrow = d === 1;
     const dayTitle = isToday ? 'Hoy' : isTomorrow ? 'Mañana' : targetDate.toLocaleDateString('es-ES', { weekday: 'long' });
