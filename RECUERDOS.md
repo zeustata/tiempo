@@ -41,7 +41,18 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     - **Exención de Responsabilidad Civil (Ley 16):** Advertencia explícita de naturaleza orientativa; prohibición de formular textos que garanticen paso o seguridad en accesos de montaña o calas escarpadas.
     - **Ergonomía Móvil (Ley 11):** Integración limpia como Módulo 10 en la botonera de navegación con tarjeta Liquid Glass y pastilla inteligente de llamada en el Tiempo Actual.
 
-## 🚀 Versión Actual: v1.1.70 🌂 — 2026-10-03
+## 🚀 Versión Actual: v1.1.71 📱 — 2026-10-03
+- **Blindaje Anti-Corte y Fluidez Multilínea en el Semáforu del Paragües (Feedback Lendo):**
+  1. *Ergonomía Móvil y Visibilidad Total de la Hora (Ley 11):*
+     - Supresión de la regla rígida `white-space: nowrap; text-overflow: ellipsis;` en el titular `.umbrella-strip-title` de [components.css](file:///c:/Users/NUC/Downloads/IA/Tiempo/css/components.css) que truncaba el texto con puntos suspensivos (*«Lluvia copiosa a partir de...»*) en teléfonos móviles (320px–380px).
+     - Implementado ajuste multilínea fluido con `white-space: normal; line-height: 1.3; word-break: break-word;` y separación elástica `gap: 6px 8px` en `.umbrella-strip-headline`.
+     - Ahora el titular desglosa la hora con nitidez y holgura completa debajo de la pastilla de alarma (ej. *Lluvia copiosa a partir de las 21:00 h*), garantizando que ningún dato clave quede recortado en pantalla pequeña.
+  2. *Versionado y Despliegue:*
+     - Versión oficial actualizada a `v1.1.71 📱` en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en [app.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/app.js), query strings de hojas de estilo `components.css?v=1.1.71` y cadena de Service Worker a `meteoasturlode-v1171-antidesborde-paragues` en [sw.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/sw.js).
+
+---
+
+## 🚀 Versión Previa: v1.1.70 🌂 — 2026-10-03
 - **Sincronización Cronológica Estricta en el Semáforu del Paragües (Feedback Lendo):**
   1. *Diferenciación Rigurosa entre Primera Llovizna y Bastinazu (Ley 12, Punto 5):*
      - Detección y corrección del error lógico en [umbrellaAdvisor.js](file:///c:/Users/NUC/Downloads/IA/Tiempo/js/utils/umbrellaAdvisor.js) que mezclaba la hora de la primera llovizna débil previa (`firstRainIndex`) con el pico de intensidad o bastinazu previsto horas después (`firstHeavyIndex`).

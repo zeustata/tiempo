@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1170-semaforu-paragues-cronologia';
+const CACHE_NAME = 'meteoasturlode-v1171-antidesborde-paragues';
 const STATIC_ASSETS = [
   './',
   './index.html',

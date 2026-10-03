@@ -10,6 +10,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.71] - 2026-10-03
+
+### 📱 Blindaje Anti-Corte y Fluidez Multilínea en el Semáforu del Paragües (Feedback Lendo)
+- **Ergonomía Móvil y Visibilidad Total de la Hora (Ley 11):**
+  - Supresión de la regla rígida `white-space: nowrap; text-overflow: ellipsis;` en el titular `.umbrella-strip-title` que truncaba el texto con puntos suspensivos (*«Lluvia copiosa a partir de...»*) en teléfonos móviles (320px–380px).
+  - Implementado ajuste multilínea fluido con `white-space: normal; line-height: 1.3; word-break: break-word;` y separación elástica `gap: 6px 8px` en `.umbrella-strip-headline`.
+  - Ahora el titular desglosa la hora con nitidez y holgura completa debajo de la pastilla de alarma (ej. *Lluvia copiosa a partir de las 21:00 h*), garantizando que ningún dato clave quede recortado en pantalla pequeña.
+- **Cache-Busting Garantizado (Ley 4):**
+  - Service Worker actualizado a `meteoasturlode-v1171-antidesborde-paragues`, query strings de hojas de estilo `components.css?v=1.1.71` y script `app.js?v=1.1.71`.
+
+---
+
 ## [1.1.70] - 2026-10-03
 
 ### 🌂 Sincronización Cronológica Estricta en el Semáforu del Paragües (Feedback Lendo)
