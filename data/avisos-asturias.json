@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-03T18:45:24.619Z",
+  "updatedAt": "2026-10-04T00:38:57.868Z",
   "zones": {
     "633301": {
       "name": "Litoral occidental asturiano",
@@ -11,16 +11,6 @@
           "onset": "2026-10-03T15:00:00+02:00",
           "expires": "2026-10-04T17:59:59+02:00",
           "headline": "Aviso de tormentas de nivel amarillo. Litoral occidental asturiano",
-          "instruction": "Esté atento. Manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños moderados a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
-        },
-        {
-          "id": "2.49.0.0.724.0.ES.261003093010.633301PRP1032219810",
-          "type": "10; rain",
-          "level": "yellow",
-          "onset": "2026-10-03T15:00:00+02:00",
-          "expires": "2026-10-03T23:59:59+02:00",
-          "headline": "Aviso de lluvias de nivel amarillo. Litoral occidental asturiano",
-          "description": "Precipitación acumulada en una hora: 25 mm.",
           "instruction": "Esté atento. Manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños moderados a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
         },
         {
@@ -59,16 +49,6 @@
       "name": "Litoral oriental asturiano",
       "alerts": [
         {
-          "id": "2.49.0.0.724.0.ES.261002163809.633302PRP2032259089",
-          "type": "10; rain",
-          "level": "yellow",
-          "onset": "2026-10-03T15:00:00+02:00",
-          "expires": "2026-10-03T23:59:59+02:00",
-          "headline": "Aviso de lluvias de nivel amarillo. Litoral oriental asturiano",
-          "description": "Precipitación acumulada en 12 horas: 60 mm.",
-          "instruction": "Esté atento. Manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños moderados a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
-        },
-        {
           "id": "2.49.0.0.724.0.ES.261003093010.633302PRP1041219810",
           "type": "10; rain",
           "level": "orange",
@@ -77,16 +57,6 @@
           "headline": "Aviso de lluvias de nivel naranja. Litoral oriental asturiano",
           "description": "Precipitación acumulada en una hora: 30 mm.",
           "instruction": "Esté preparado. Tome precauciones y manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños graves a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
-        },
-        {
-          "id": "2.49.0.0.724.0.ES.261003093010.633302PRP1032219810",
-          "type": "10; rain",
-          "level": "yellow",
-          "onset": "2026-10-03T15:00:00+02:00",
-          "expires": "2026-10-03T23:59:59+02:00",
-          "headline": "Aviso de lluvias de nivel amarillo. Litoral oriental asturiano",
-          "description": "Precipitación acumulada en una hora: 25 mm.",
-          "instruction": "Esté atento. Manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños moderados a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
         },
         {
           "id": "2.49.0.0.724.0.ES.261003093010.633302PRP1041619810",
