@@ -10,6 +10,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.83] - 2026-10-04
+
+### 🗺️ Módulo 10 Oficial: Planes & Ocio Climático — ¿Qué facer güei?
+- **Asesor Meteorológico Dinámico (`tourismData.js`, `tourismCard.js`):** Nuevo motor inteligente comarcal que cruza el tiempo actual en el concejo (lluvia, sol, niebla o frío) con actividades culturales, patrimoniales, miradores y visitas en Asturias.
+- **Arquitectura Comarcal Nodriza:** Organización de los 78 concejos en 6 comarcas nodrizas (Costa Central/Avilés, Gijón/Costa Verde, Oviedo/Centro, Cuencas Mineras, Oriente/Picos de Europa y Occidente/Eo-Navia) garantizando propuestas de proximidad a menos de 20-30 minutos.
+- **Filtros Ergonómicos y Blindaje Legal (Leyes 11, 15 y 16):** Selector táctil por categoría meteorológica y advertencias institucionales de prudencia y datos abiertos oficiales.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v1183-modulo-10-planes-y-ocio` y módulos JS a `?v=1.1.83`.
+
+---
+
 ## [1.1.82] - 2026-10-04
 
 ### 📸 Subsanación de Generación de Estampa Compartible "MeteoAstur Instant"

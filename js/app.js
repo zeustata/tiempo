@@ -5,25 +5,26 @@ import { renderCurrentWeather } from './components/currentCard.js?v=1.1.82';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.1.82';
 import { renderSurfCard } from './components/surfCard.js?v=1.1.82';
 import { renderRoutesCard } from './components/routesCard.js?v=1.1.82';
-import { renderMountainCard } from './components/mountainCard.js?v=1.1.82';
-import { renderForecast } from './components/forecastView.js?v=1.1.82';
-import { renderWeatherChart } from './components/chartsView.js?v=1.1.82';
-import { renderAstronomyView } from './components/astronomyCard.js?v=1.1.82';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.82';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1.82';
-import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1.82';
-import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1.82';
-import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.82';
-import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.82';
-import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=1.1.82';
-import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=1.1.82';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.82';
-import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.82';
-import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.82';
-import { initGyroGlass } from './utils/gyroGlass.js?v=1.1.82';
-import { triggerSeismicRefresh } from './utils/seismicDetector.js?v=1.1.82';
-import { openShareModal } from './utils/shareCardGenerator.js?v=1.1.82';
-import { toggleWeatherSpeech, stopWeatherSpeech } from './utils/weatherSpeaker.js?v=1.1.82';
+import { renderMountainCard } from './components/mountainCard.js?v=1.1.83';
+import { renderTourismCard } from './components/tourismCard.js?v=1.1.83';
+import { renderForecast } from './components/forecastView.js?v=1.1.83';
+import { renderWeatherChart } from './components/chartsView.js?v=1.1.83';
+import { renderAstronomyView } from './components/astronomyCard.js?v=1.1.83';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.83';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1.83';
+import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1.83';
+import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1.83';
+import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.83';
+import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.83';
+import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=1.1.83';
+import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=1.1.83';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.83';
+import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.83';
+import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.83';
+import { initGyroGlass } from './utils/gyroGlass.js?v=1.1.83';
+import { triggerSeismicRefresh } from './utils/seismicDetector.js?v=1.1.83';
+import { openShareModal } from './utils/shareCardGenerator.js?v=1.1.83';
+import { toggleWeatherSpeech, stopWeatherSpeech } from './utils/weatherSpeaker.js?v=1.1.83';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, pronóstico horario 72h y alertas', key: '1' },
@@ -34,10 +35,11 @@ const APP_MODULES = [
   { id: 'surf', icon: '🏄‍♂️', title: 'Surf & Rompientes', desc: 'Swell, período, viento offshore/onshore, picos bautizados y fondos', key: '6' },
   { id: 'routes', icon: '🥾', title: 'Rutas & Senderismo', desc: 'Confort de marcha, índice de barro en sendas y catálogo de rutas asturianas', key: '7' },
   { id: 'mountain', icon: '🏔️', title: 'Cordillera & Nieve', desc: 'Estado de puertos de montaña, cota de nieve y esquí', key: '8' },
-  { id: 'astronomy', icon: '🔭', title: 'Astronomía & Cosmos', desc: 'Eclipses, lluvias de estrellas, fases lunares y semáforo de visibilidad en Asturias', key: '9' }
+  { id: 'astronomy', icon: '🔭', title: 'Astronomía & Cosmos', desc: 'Eclipses, lluvias de estrellas, fases lunares y semáforo de visibilidad en Asturias', key: '9' },
+  { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '1.1.82';
+export const CURRENT_APP_VERSION = '1.1.83';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -1517,6 +1519,13 @@ class MeteoAsturiasApp {
       renderAstronomyView('panel-astronomy', 'all');
     }
 
+    if (targetTab === 'tourism' && this.weatherData && this.currentConcejo) {
+      const tourismContainer = document.getElementById('panel-tourism');
+      if (tourismContainer && !tourismContainer.innerHTML.trim()) {
+        tourismContainer.innerHTML = renderTourismCard(this.weatherData, this.currentConcejo);
+      }
+    }
+
     const navModal = document.getElementById('nav-modal');
     if (navModal && navModal.style.display === 'flex') {
       navModal.style.display = 'none';
@@ -1574,6 +1583,10 @@ class MeteoAsturiasApp {
         const index = parseInt(e.key, 10) - 1;
         if (tabList[index]) {
           this.switchTab(tabList[index]);
+        }
+      } else if (e.key === '0') {
+        if (tabList[9]) {
+          this.switchTab(tabList[9]);
         }
       } else if (key === 'r') {
         this.loadWeather(this.currentConcejo.id);
@@ -2106,6 +2119,16 @@ class MeteoAsturiasApp {
         }
       } catch (e) {
         console.error('[MeteoAstur] Error renderizando Cordillera & Nieve:', e);
+      }
+
+      // 3b. Módulo 10: Turismo & Planes de Ocio Climático
+      try {
+        const tourismContainer = document.getElementById('panel-tourism');
+        if (tourismContainer) {
+          tourismContainer.innerHTML = renderTourismCard(data, concejo);
+        }
+      } catch (e) {
+        console.error('[MeteoAstur] Error renderizando Planes & Ocio:', e);
       }
 
       // 4. Pronóstico

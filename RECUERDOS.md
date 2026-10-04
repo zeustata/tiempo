@@ -8,6 +8,16 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Soberanía Inapelable de Servicios Oficiales:* Ninguna función de la app sustituye las banderas físicas y órdenes del Servicio de Salvamento y Socorrismo a pie de playa, la DGT, Guardia Civil, Bomberos de Asturias o avisos de emergencias del 112.
   3. *Responsabilidad Individual e Inmunidad del Desarrollador:* Toda actividad en entornos naturales o carretera se realiza bajo la exclusiva responsabilidad del usuario. Obligatoriedad de incorporar advertencias visibles de exención de responsabilidad civil en módulos sensibles y en la Política de Privacidad, blindando al desarrollador (Lendo / zeustata) frente a cualquier reclamación de terceros.
 
+## 🗺️ Actualización v1.1.83: Módulo 10 Oficial: Planes & Ocio Climático — ¿Qué facer güei? — 2026-10-04
+- **Arquitectura Comarcal y Asesor Inteligente (`tourismData.js`, `tourismCard.js`):**
+  - Creado e integrado el nuevo recomendador inteligente comarcal que asocia las condiciones meteorológicas del concejo en tiempo real (lluvia, sol, niebla o frío) con actividades, museos, miradores y visitas en Asturias.
+  - Organización de los 78 concejos en 6 comarcas nodrizas (Costa Central/Avilés, Gijón/Costa Verde, Oviedo/Centro, Cuencas Mineras, Oriente/Picos de Europa y Occidente/Eo-Navia) garantizando propuestas de proximidad a menos de 20-30 minutos.
+  - Implementadas pastillas ergonómicas de filtrado táctil por categoría meteorológica (Lluvia, Sol, Niebla, Montaña/Nieve).
+  - Blindaje estricto de leyes constitucionales: Estética Liquid Glass (Ley 5 y 14), Ergonomía móvil (Ley 11), Datos abiertos oficiales (Ley 15) y Advertencias de responsabilidad civil (Ley 16).
+- **Atajos y Navegación:**
+  - Integrado en el selector de módulos (`APP_MODULES`, `key: '0'`), atajo de teclado `'0'` en escritorio y visualización limpia en `#panel-tourism`.
+- **Cache-Busting y Changelog:** Sincronizado a `v1.1.83 🗺️` en `sw.js`, `app.js`, `index.html`, `CHANGELOG.md` y `RECUERDOS.md`.
+
 ## 📸 Actualización v1.1.82: Subsanación de Generación de Estampa Postal "MeteoAstur Instant" — 2026-10-04
 - **Diagnóstico y Corrección en Cliente (`shareCardGenerator.js`):** Subsanado `ReferenceError: isImmediate is not defined` en el bucle de previsión a 6 horas del lienzo HTML5 Canvas (`1080x1350 px`), declarando `const isImmediate = (step === 0);`.
 - **Experiencia de Usuario Restaurada:** La postal meteorológica se genera al vuelo en cliente sin consumo de servidor externo ni dependencias externas, reactivando la previsualización y el flujo nativo de la Web Share API para WhatsApp, Instagram Stories, Telegram y descarga directa.

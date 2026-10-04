@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1182-fix-estampa-share-card';
+const CACHE_NAME = 'meteoasturlode-v1183-modulo-10-planes-y-ocio';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -22,6 +22,7 @@ const STATIC_ASSETS = [
   './js/components/surfCard.js',
   './js/components/routesCard.js',
   './js/components/mountainCard.js',
+  './js/components/tourismCard.js',
   './js/components/forecastView.js',
   './js/components/chartsView.js',
   './js/components/astronomyCard.js',
@@ -51,6 +52,7 @@ const STATIC_ASSETS = [
   './js/utils/shareCardGenerator.js',
   './js/utils/weatherSpeaker.js',
   './js/utils/routesData.js',
+  './js/utils/tourismData.js',
   './js/utils/seismicDetector.js',
   './js/utils/tides.js'
 ];
