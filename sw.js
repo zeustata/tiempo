@@ -1,9 +1,10 @@
-const CACHE_NAME = 'meteoasturlode-v1184-fichas-didacticas-ocio';
+const CACHE_NAME = 'meteoasturlode-v1185-folixas-fiestas-locales';
 const STATIC_ASSETS = [
   './',
   './index.html',
   './privacy.html',
   './manifest.json',
+  './js/utils/festivosData.js',
   './icons/bandera-asturias.svg',
   './icons/icon.svg',
   './icons/icon-192.png',

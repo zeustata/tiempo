@@ -11,6 +11,7 @@ import { getSeismicStatus, renderSeismicBanner } from '../utils/seismicDetector.
 import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.60';
 import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=1.1.60';
 import { calculateUmbrellaStatus, renderUmbrellaCard } from '../utils/umbrellaAdvisor.js?v=1.1.60';
+import { checkConcejoFolixa } from '../utils/festivosData.js?v=1.1.85';
 
 /**
  * Formatea el título del concejo subordinando las localidades entre paréntesis (ej. Piedras Blancas / Salinas)
@@ -158,6 +159,36 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   const umbrella = calculateUmbrellaStatus(current, hourly);
   const umbrellaMarkup = renderUmbrellaCard(umbrella);
 
+  // Monitor Automático de Folixas y Fiestas Locales del Concejo (Ley 12 de Simulacro)
+  const folixa = checkConcejoFolixa(concejo);
+  let folixaBannerMarkup = '';
+  if (folixa && folixa.active) {
+    const f = folixa.festivo;
+    const isSim = folixa.isSimulated;
+    folixaBannerMarkup = `
+      <div class="folixa-banner-card ${isSim ? 'folixa-simulated' : ''}">
+        <div class="folixa-banner-top">
+          <div class="folixa-flag-badge">
+            <span class="folixa-icon">${f.icon || '🎉'}</span>
+            <span class="folixa-pill-tag">${isSim ? '🎭 Simulacro Folixa (Ley 12)' : '🎉 ¡Hoxe tamos de Folixa!'}</span>
+            <span class="folixa-pill-sub">${f.tag || 'Fiesta Patronal'}</span>
+          </div>
+          <button type="button" class="folixa-explain-btn btn-explain-folixa" data-explain-folixa="${f.id || 'patronal'}" title="Toca para conocer la historia, tradición y gastronomía de esta fiesta">
+            💡 ¿Qué se celebra? ➔
+          </button>
+        </div>
+        <div class="folixa-content">
+          <h3 class="folixa-title">${f.name}</h3>
+          <p class="folixa-tradition">${f.tradition}</p>
+          <div class="folixa-clima-tip">
+            <span class="folixa-tip-icon">🎪</span>
+            <span class="folixa-tip-text"><strong>Plan de Fiesta & Clima:</strong> ${f.tipClima || 'Ambiente ideal para disfrutar de la romería.'}</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
   // Pronóstico Horario Detallado (72 Horas / 3 Días) en Vivo
   const hourlyForecastMarkup = renderHourlyForecastBlock(data, units, iconTheme);
 
@@ -195,6 +226,9 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
           </div>
         </div>
       </div>
+
+      <!-- BANNER DESTACADO DE FOLIXAS Y FIESTAS LOCALES (HOXE TAMOS DE FOLIXA) -->
+      ${folixaBannerMarkup ? `<div class="hero-divider"></div>${folixaBannerMarkup}` : ''}
 
       <!-- FRANJA ERGONÓMICA DE TIEMPO HABITUAL (ANOMALÍA CLIMATOLÓGICA 30 AÑOS AEMET) -->
       ${climaStripMarkup ? `<div class="hero-divider"></div>${climaStripMarkup}` : ''}

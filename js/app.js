@@ -1,31 +1,32 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.1.82';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.1.82';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.1.82';
-import { renderCurrentWeather } from './components/currentCard.js?v=1.1.82';
-import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.1.82';
-import { renderSurfCard } from './components/surfCard.js?v=1.1.82';
-import { renderRoutesCard } from './components/routesCard.js?v=1.1.82';
-import { renderMountainCard } from './components/mountainCard.js?v=1.1.83';
-import { renderTourismCard } from './components/tourismCard.js?v=1.1.83';
-import { renderForecast } from './components/forecastView.js?v=1.1.83';
-import { renderWeatherChart } from './components/chartsView.js?v=1.1.83';
-import { renderAstronomyView } from './components/astronomyCard.js?v=1.1.83';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.83';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1.83';
-import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1.83';
-import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1.83';
-import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.83';
-import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.83';
-import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=1.1.83';
-import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=1.1.83';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.84';
-import { getTourismPlanExplanation } from './utils/tourismData.js?v=1.1.84';
-import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.84';
-import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.84';
-import { initGyroGlass } from './utils/gyroGlass.js?v=1.1.84';
-import { triggerSeismicRefresh } from './utils/seismicDetector.js?v=1.1.84';
-import { openShareModal } from './utils/shareCardGenerator.js?v=1.1.84';
-import { toggleWeatherSpeech, stopWeatherSpeech } from './utils/weatherSpeaker.js?v=1.1.84';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=1.1.85';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=1.1.85';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=1.1.85';
+import { renderCurrentWeather } from './components/currentCard.js?v=1.1.85';
+import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=1.1.85';
+import { renderSurfCard } from './components/surfCard.js?v=1.1.85';
+import { renderRoutesCard } from './components/routesCard.js?v=1.1.85';
+import { renderMountainCard } from './components/mountainCard.js?v=1.1.85';
+import { renderTourismCard } from './components/tourismCard.js?v=1.1.85';
+import { renderForecast } from './components/forecastView.js?v=1.1.85';
+import { renderWeatherChart } from './components/chartsView.js?v=1.1.85';
+import { renderAstronomyView } from './components/astronomyCard.js?v=1.1.85';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=1.1.85';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=1.1.85';
+import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=1.1.85';
+import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=1.1.85';
+import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.85';
+import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.85';
+import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=1.1.85';
+import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=1.1.85';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.85';
+import { getTourismPlanExplanation } from './utils/tourismData.js?v=1.1.85';
+import { checkConcejoFolixa } from './utils/festivosData.js?v=1.1.85';
+import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.85';
+import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.85';
+import { initGyroGlass } from './utils/gyroGlass.js?v=1.1.85';
+import { triggerSeismicRefresh } from './utils/seismicDetector.js?v=1.1.85';
+import { openShareModal } from './utils/shareCardGenerator.js?v=1.1.85';
+import { toggleWeatherSpeech, stopWeatherSpeech } from './utils/weatherSpeaker.js?v=1.1.85';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, pronóstico horario 72h y alertas', key: '1' },
@@ -40,7 +41,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '1.1.84';
+export const CURRENT_APP_VERSION = '1.1.85';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -1117,6 +1118,47 @@ class MeteoAsturiasApp {
                 </div>
                 <div class="explain-footer-note">
                   🗺️ <em>MeteoAstur Lode • Guía didáctica de turismo y clima en Asturias</em>
+                </div>
+              </div>
+            `;
+          }
+          this.openModal(modal);
+          return;
+        }
+      }
+
+      // 1b. Fichas Didácticas de Folixas y Fiestas Locales Asturianas
+      const folixaBtn = e.target.closest('.btn-explain-folixa, [data-explain-folixa]');
+      if (folixaBtn) {
+        this.triggerHaptic();
+        const folixaStatus = checkConcejoFolixa(this.currentConcejo);
+        const f = folixaStatus ? folixaStatus.festivo : null;
+        if (f) {
+          if (titleEl) titleEl.innerHTML = `${f.icon || '🎉'} ${f.name}`;
+          if (subtitleEl) subtitleEl.textContent = `${this.currentConcejo.name} • ${f.tag || 'Fiesta Patronal'}`;
+          if (contentEl) {
+            const sections = f.sections && f.sections.length > 0 ? f.sections : [
+              { icon: '📜', heading: 'Tradición e Historia', text: f.tradition || 'Celebración popular asturiana de honda raigambre.' },
+              { icon: '🥘', heading: 'Gastronomía de Prao', text: f.gastronomy || 'Platos típicos asturianos y sidra natural.' },
+              { icon: '🎪', heading: 'Plan Fiestero & Clima', text: f.tipClima || 'Disfruta de la verbena y actividades al aire libre.' }
+            ];
+
+            contentEl.innerHTML = `
+              <div class="explain-content-wrapper">
+                <div class="explain-top-badge-row">
+                  <span class="explain-icon-large">${f.icon || '🎉'}</span>
+                  <div class="explain-badge-tag">${f.tag || 'Fiesta Patronal'}</div>
+                </div>
+                <div class="explain-sections-list">
+                  ${sections.map(sec => `
+                    <div class="explain-card-block">
+                      <h4 class="explain-block-title">${sec.icon} ${sec.heading}</h4>
+                      <div class="explain-block-text">${sec.text}</div>
+                    </div>
+                  `).join('')}
+                </div>
+                <div class="explain-footer-note">
+                  🎉 <em>MeteoAstur Lode • Calendario de Folixas y Fiestas de los 78 Concejos de Asturias</em>
                 </div>
               </div>
             `;

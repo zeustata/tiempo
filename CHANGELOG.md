@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.85] - 2026-10-04
+
+### 🎪 Detección Automática de Días Festivos y Folixas ("¡Hoxe tamos de Folixa!")
+- **Banner Dinámico de Folixa (`festivosData.js`, `currentCard.js`, `components.css`):** Tarjeta luminosa con estética Liquid Glass que se activa automáticamente bajo el bloque principal de tiempo cuando el concejo en pantalla celebra su festivo local o patronal.
+- **Cómputo Astronómico de Pascua (Meeus/Butcher):** Algoritmo autónomo para el cálculo exacto del Domingo de Resurrección, permitiendo sincronizar las fiestas móviles asturianas (Antroxu en Gijón, El Bollo en Avilés, Balesquida y Martes de Campo en Oviedo) sin APIs externas.
+- **Ficha Didáctica Explicativa (`#explain-modal`):** Botón táctil *💡 ¿Qué se celebra?* que despliega en el modal de la app la historia, tradición marinera/vaqueira, gastronomía de prao (pote, frixuelos, bollo, sidra) y recomendaciones meteorológicas.
+- **Doctrina de Simulacro (Ley 12):** Interruptor de prueba controlado mediante parámetro en URL (`?test=folixa` o `?test=fiesta`) para verificar el banner en cualquier momento y concejo.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v1185-folixas-fiestas-locales` y módulos JS a `?v=1.1.85`.
+
+---
+
 ## [1.1.84] - 2026-10-04
 
 ### 💡 Fichas Didácticas Interactivas en Planes de Ocio ("Explícame: ¿Por qué hoy?")

@@ -8,6 +8,18 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Soberanía Inapelable de Servicios Oficiales:* Ninguna función de la app sustituye las banderas físicas y órdenes del Servicio de Salvamento y Socorrismo a pie de playa, la DGT, Guardia Civil, Bomberos de Asturias o avisos de emergencias del 112.
   3. *Responsabilidad Individual e Inmunidad del Desarrollador:* Toda actividad en entornos naturales o carretera se realiza bajo la exclusiva responsabilidad del usuario. Obligatoriedad de incorporar advertencias visibles de exención de responsabilidad civil en módulos sensibles y en la Política de Privacidad, blindando al desarrollador (Lendo / zeustata) frente a cualquier reclamación de terceros.
 
+## 🎪 Actualización v1.1.85: Detección Automática de Días Festivos y Folixas ("¡Hoxe tamos de Folixa!") — 2026-10-04
+- **Detección Automática de Festivos y Romerías (`festivosData.js`, `currentCard.js`):**
+  - Implementado el catálogo de festivos patronales oficiales y romerías populares para los concejos de Asturias.
+  - Al consultar un concejo que celebra hoy su día grande (ej. San Pedro en Gijón, San Agustín en Avilés, San Mateo en Oviedo, San Roque en Llanes, El Carmen en Cangas del Narcea, etc.), salta de forma automática una tarjeta luminosa de folixa (`.folixa-banner-card`) con estética Liquid Glass integrada prioritariamente en la tarjeta madre (`.hero-weather-card`) justo debajo de las temperaturas y de la sensación térmica.
+- **Motor de Cómputo Astronómico de Fiestas Móviles (Meeus/Butcher):**
+  - Algoritmo matemático para el cálculo universal de la Pascua cristiana que sincroniza festivos dependientes del calendario lunar (Antroxu de Gijón, El Bollo de Avilés, La Balesquida y Martes de Campo en Oviedo) sin requerir llamadas a APIs externas.
+- **Ficha Didáctica Explicativa en `#explain-modal`:**
+  - Botón interactivo *💡 ¿Qué se celebra?* integrado con el modal explicativo de la app, detallando historia, tradición del concejo, gastronomía típica de prao (pote, frixuelos, bollo preñáu, fabes, sidra) y recomendaciones meteorológicas.
+- **Doctrina de Simulacro (Ley 12):**
+  - Incorporado el conmutador de prueba `?test=folixa` / `?test=fiesta` para verificar el comportamiento visual en cualquier día del año sin alterar el modo silencioso de producción.
+- **Cache-Busting y Changelog:** Sincronizado a `v1.1.85 🎪` en `sw.js`, `app.js`, `index.html`, `CHANGELOG.md` y `RECUERDOS.md`.
+
 ## 💡 Actualización v1.1.84: Fichas Didácticas Interactivas en Planes de Ocio ("Explícame: ¿Por qué hoy?") — 2026-10-04
 - **Bombilla Táctil e Interactiva (`tourismCard.js`, `tourismData.js`, `app.js`):**
   - Transformada la píldora informativa del consejo meteorológico de cada plan turístico en un botón interactivo ergonómico (`.btn-explain-tourism`).
