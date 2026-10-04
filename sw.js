@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1180-avisos-oficiales-aemet';
+const CACHE_NAME = 'meteoasturlode-v1182-fix-estampa-share-card';
 const STATIC_ASSETS = [
   './',
   './index.html',

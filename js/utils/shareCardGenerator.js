@@ -7,7 +7,7 @@
  * Compatible con la Web Share API (WhatsApp, Instagram, Telegram) y descarga directa.
  */
 
-import { getWeatherInfo } from './weatherIcons.js?v=1.1.58';
+import { getWeatherInfo } from './weatherIcons.js?v=1.1.82';
 
 const DICHOS_ASTURIANOS = [
   "«El tiempu n'Asturies camuda más que l'orballu na yerba.»",
@@ -313,6 +313,7 @@ export function generateShareCardCanvas(concejo, weatherData) {
       const precip = hourly.precipitation ? (hourly.precipitation[idx] || 0) : 0;
       const cloudCover = (hourly.cloud_cover && hourly.cloud_cover[idx] != null) ? hourly.cloud_cover[idx] : null;
       const hHum = (hourly.relative_humidity_2m && hourly.relative_humidity_2m[idx] != null) ? hourly.relative_humidity_2m[idx] : null;
+      const isImmediate = (step === 0);
       const hWeather = getWeatherInfo(code, isDay, precip, pop, isImmediate ? directIrr : null, isImmediate ? currentUv : null, isImmediate ? currentSw : null, cloudCover, hHum);
       const hIcon = hWeather ? hWeather.icon : '☀️';
       const hTemp = Math.round(hourly.temperature_2m[idx]);

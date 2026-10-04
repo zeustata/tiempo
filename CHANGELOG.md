@@ -10,6 +10,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.82] - 2026-10-04
+
+### 📸 Subsanación de Generación de Estampa Compartible "MeteoAstur Instant"
+- **Corrección de ReferenceError en Canvas (`shareCardGenerator.js`):** Declarada e inicializada la constante `isImmediate = (step === 0)` dentro del bucle de evolución horaria de las próximas 6 horas de la postal. Resuelve el error `isImmediate is not defined` que provocaba la caída al bloque `catch` e impedía la generación visual de la postal en móviles y escritorio.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v1182-fix-estampa-share-card` y módulos JS a `?v=1.1.82`.
+
+---
+
 ## [1.1.81] - 2026-10-03
 
 ### 🚨 Integración Oficial de Avisos AEMET en Tiempo Real (Ley Específica 1)

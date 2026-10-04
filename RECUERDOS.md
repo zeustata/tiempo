@@ -8,6 +8,11 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Soberanía Inapelable de Servicios Oficiales:* Ninguna función de la app sustituye las banderas físicas y órdenes del Servicio de Salvamento y Socorrismo a pie de playa, la DGT, Guardia Civil, Bomberos de Asturias o avisos de emergencias del 112.
   3. *Responsabilidad Individual e Inmunidad del Desarrollador:* Toda actividad en entornos naturales o carretera se realiza bajo la exclusiva responsabilidad del usuario. Obligatoriedad de incorporar advertencias visibles de exención de responsabilidad civil en módulos sensibles y en la Política de Privacidad, blindando al desarrollador (Lendo / zeustata) frente a cualquier reclamación de terceros.
 
+## 📸 Actualización v1.1.82: Subsanación de Generación de Estampa Postal "MeteoAstur Instant" — 2026-10-04
+- **Diagnóstico y Corrección en Cliente (`shareCardGenerator.js`):** Subsanado `ReferenceError: isImmediate is not defined` en el bucle de previsión a 6 horas del lienzo HTML5 Canvas (`1080x1350 px`), declarando `const isImmediate = (step === 0);`.
+- **Experiencia de Usuario Restaurada:** La postal meteorológica se genera al vuelo en cliente sin consumo de servidor externo ni dependencias externas, reactivando la previsualización y el flujo nativo de la Web Share API para WhatsApp, Instagram Stories, Telegram y descarga directa.
+- **Cache-Busting y Changelog:** Sincronizado a `v1.1.82` en `sw.js`, `app.js`, `index.html`, `CHANGELOG.md` y `RECUERDOS.md`.
+
 ## 📌 Tareas Pendientes / Hoja de Ruta Futura
 - **Optimización Ergonómica de Avisos AEMET (Acuerdo Lendo 03-10-2026):**
   - *Contexto:* Los avisos oficiales de AEMET pueden ocupar mucho espacio en pantalla si hay múltiples alertas concurrentes (viento, costeros, lluvia).
