@@ -46,6 +46,20 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - **Cache-Busting y Changelog:** Sincronizado a `v1.1.82` en `sw.js`, `app.js`, `index.html`, `CHANGELOG.md` y `RECUERDOS.md`.
 
 ## 📌 Tareas Pendientes / Hoja de Ruta Futura
+- **Estrategia y Protocolo de Aprobación en Google Play Store (Intento 2 / Salto a v2.0) — Acuerdo Lendo 04-10-2026:**
+  - *Diagnóstico del Primer Rechazo:*
+    - Tras los primeros 14 días con 20 testers cerrados, el filtro algorítmico automatizado de Google denegó la solicitud de producción debido a métricas bajas de interacción y ausencia de feedback formal registrado en Play Console.
+  - *Factores Clave para el Segundo Intento (Revisión Humana):*
+    - En el segundo intento, la solicitud pasa a ser evaluada por un **revisor técnico humano** de Google.
+    - Se cuenta ahora con una aplicación radicalmente superior: 10 módulos operativos, catálogo de los 78 concejos, motor astronómico de mareas, radar RainViewer, avisos oficiales de AEMET, detección de galernas, efecto Foehn, recomendador de ocio y folixas locales.
+    - Blindaje legal estricto (Leyes 15 y 16) con política de privacidad transparente, descargo no gubernamental oficial y exención de responsabilidad civil.
+    - Ausencia absoluta de ánimo de lucro o monetización abusiva (app 100% de servicio público y utilidad comunitaria).
+  - *Plan de Acción Técnico Obligatorio:*
+    1. *Feedback Activo de Testers en Play Store:* Conseguir que 4 o 5 testers de confianza dejen comentarios constructivos privados desde Google Play Store en la ficha de la app (*«Enviar comentarios al desarrollador»*).
+    2. *Actividad de Uso:* Garantizar que los testers abran la app periódicamente durante la semana.
+    3. *Nuevo Icono Oficial 512x512:* Diseño que integre armónicamente la identidad meteorológica con la Cruz de la Victoria y la bandera del Principado de Asturias.
+    4. *Empaquetado y Subida de la v2.0:* Generar el nuevo `.aab` (TWA) con `versionCode` superior y publicarlo en la pista de pruebas cerradas.
+    5. *Cuestionario de Producción con Defensa Técnica Impecable:* Redactar las justificaciones formales demostrando cómo el feedback de los testers guió las mejoras de la app (resolución de precisión en precipitaciones, ergonomía de avisos y adición de planes turísticos y folixas).
 - **Optimización Ergonómica de Avisos AEMET (Acuerdo Lendo 03-10-2026):**
   - *Contexto:* Los avisos oficiales de AEMET pueden ocupar mucho espacio en pantalla si hay múltiples alertas concurrentes (viento, costeros, lluvia).
   - *Acción a ejecutar:* Diseñar la tarjeta AEMET para que, en caso de haber alertas activas, éstas se presenten en estado **minimizado/colapsado** por defecto (ej. mostrando solo el titular principal y el nivel máximo) e incorporen un sistema de desglose o acordeón interactivo para expandir y leer la recomendación completa y los detalles, mejorando la usabilidad móvil sin saturar el scroll.
