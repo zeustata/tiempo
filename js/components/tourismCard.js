@@ -66,10 +66,11 @@ export function renderTourismCard(weatherData, concejo) {
 
         <p class="plan-desc">${p.desc}</p>
 
-        <div class="plan-tip-box">
+        <button type="button" class="plan-tip-box plan-tip-btn btn-explain-tourism" data-explain-tourism="${p.id}" title="Toca para abrir la ficha didáctica y detalles de ${p.title}">
           <span class="plan-tip-icon">💡</span>
           <span class="plan-tip-text"><strong>Por qué hoy:</strong> ${p.tip}</span>
-        </div>
+          <span class="plan-tip-arrow">➔</span>
+        </button>
       </article>
     `;
   }).join('');

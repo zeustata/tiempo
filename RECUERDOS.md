@@ -8,6 +8,16 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Soberanía Inapelable de Servicios Oficiales:* Ninguna función de la app sustituye las banderas físicas y órdenes del Servicio de Salvamento y Socorrismo a pie de playa, la DGT, Guardia Civil, Bomberos de Asturias o avisos de emergencias del 112.
   3. *Responsabilidad Individual e Inmunidad del Desarrollador:* Toda actividad en entornos naturales o carretera se realiza bajo la exclusiva responsabilidad del usuario. Obligatoriedad de incorporar advertencias visibles de exención de responsabilidad civil en módulos sensibles y en la Política de Privacidad, blindando al desarrollador (Lendo / zeustata) frente a cualquier reclamación de terceros.
 
+## 💡 Actualización v1.1.84: Fichas Didácticas Interactivas en Planes de Ocio ("Explícame: ¿Por qué hoy?") — 2026-10-04
+- **Bombilla Táctil e Interactiva (`tourismCard.js`, `tourismData.js`, `app.js`):**
+  - Transformada la píldora informativa del consejo meteorológico de cada plan turístico en un botón interactivo ergonómico (`.btn-explain-tourism`).
+  - Al pulsar la bombilla o el texto, se abre el modal didáctico unificado de la app (`#explain-modal`) mostrando la ficha exhaustiva del enclave.
+  - Cada uno de los planes del catálogo incorpora 3 bloques didácticos:
+    1. *Historia, Arquitectura o Identidad Natural:* Valor cultural, arquitectónico o ecológico del lugar.
+    2. *Comportamiento Meteorológico y Refugio:* Por qué es la elección perfecta para el tiempo reinante (lluvia, sol, niebla, frío de montaña).
+    3. *Consejos Prácticos de Visita & Gastronomía:* Accesos, recomendaciones de visita y platos típicos de proximidad en la comarca.
+- **Cache-Busting y Changelog:** Sincronizado a `v1.1.84 💡` en `sw.js`, `app.js`, `index.html`, `CHANGELOG.md` y `RECUERDOS.md`.
+
 ## 🗺️ Actualización v1.1.83: Módulo 10 Oficial: Planes & Ocio Climático — ¿Qué facer güei? — 2026-10-04
 - **Arquitectura Comarcal y Asesor Inteligente (`tourismData.js`, `tourismCard.js`):**
   - Creado e integrado el nuevo recomendador inteligente comarcal que asocia las condiciones meteorológicas del concejo en tiempo real (lluvia, sol, niebla o frío) con actividades, museos, miradores y visitas en Asturias.

@@ -8466,20 +8466,59 @@
 
 .plan-tip-box {
   display: flex;
-  align-items: flex-start;
-  gap: 6px;
+  align-items: center;
+  gap: 8px;
   background: rgba(15, 23, 42, 0.5);
   border-left: 3px solid #38bdf8;
   border-radius: 0 8px 8px 0;
-  padding: 6px 8px;
+  padding: 8px 10px;
   font-size: 0.74rem;
   color: #e2e8f0;
   line-height: 1.35;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.plan-tip-btn {
+  cursor: pointer;
+}
+
+.plan-tip-btn:hover,
+.plan-tip-btn:focus-visible {
+  background: rgba(56, 189, 248, 0.12);
+  border-left-color: #7dd3fc;
+  color: #ffffff;
+  transform: translateX(2px);
 }
 
 .plan-tip-icon {
   flex-shrink: 0;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
+}
+
+.plan-tip-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.plan-tip-arrow {
+  flex-shrink: 0;
+  font-size: 0.8rem;
+  color: #38bdf8;
+  opacity: 0.7;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  margin-left: 4px;
+}
+
+.plan-tip-btn:hover .plan-tip-arrow {
+  opacity: 1;
+  transform: translateX(3px);
 }
 
 /* Aviso Legal y Blindaje */

@@ -10,6 +10,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [1.1.84] - 2026-10-04
+
+### 💡 Fichas Didácticas Interactivas en Planes de Ocio ("Explícame: ¿Por qué hoy?")
+- **Bombilla Táctil Interactiva (`tourismCard.js`, `tourismData.js`, `app.js`):** La píldora del consejo meteorológico de cada plan se convierte en un botón interactivo que abre el modal didáctico de la app.
+- **Ficha Didáctica Completa por Enclave:** Desglose en 3 bloques por cada uno de los planes del catálogo: Historia/Arquitectura, Comportamiento Meteorológico y Refugio, y Consejos Prácticos de Visita / Gastronomía de proximidad.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v1184-fichas-didacticas-ocio` y módulos JS a `?v=1.1.84`.
+
+---
+
 ## [1.1.83] - 2026-10-04
 
 ### 🗺️ Módulo 10 Oficial: Planes & Ocio Climático — ¿Qué facer güei?

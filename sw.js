@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1183-modulo-10-planes-y-ocio';
+const CACHE_NAME = 'meteoasturlode-v1184-fichas-didacticas-ocio';
 const STATIC_ASSETS = [
   './',
   './index.html',

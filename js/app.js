@@ -18,13 +18,14 @@ import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=1.1.83';
 import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=1.1.83';
 import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=1.1.83';
 import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=1.1.83';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.83';
-import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.83';
-import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.83';
-import { initGyroGlass } from './utils/gyroGlass.js?v=1.1.83';
-import { triggerSeismicRefresh } from './utils/seismicDetector.js?v=1.1.83';
-import { openShareModal } from './utils/shareCardGenerator.js?v=1.1.83';
-import { toggleWeatherSpeech, stopWeatherSpeech } from './utils/weatherSpeaker.js?v=1.1.83';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=1.1.84';
+import { getTourismPlanExplanation } from './utils/tourismData.js?v=1.1.84';
+import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=1.1.84';
+import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=1.1.84';
+import { initGyroGlass } from './utils/gyroGlass.js?v=1.1.84';
+import { triggerSeismicRefresh } from './utils/seismicDetector.js?v=1.1.84';
+import { openShareModal } from './utils/shareCardGenerator.js?v=1.1.84';
+import { toggleWeatherSpeech, stopWeatherSpeech } from './utils/weatherSpeaker.js?v=1.1.84';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, pronóstico horario 72h y alertas', key: '1' },
@@ -39,7 +40,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '1.1.83';
+export const CURRENT_APP_VERSION = '1.1.84';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -1090,6 +1091,42 @@ class MeteoAsturiasApp {
 
     // Delegación global de evento para cualquier botón didáctico en la app
     document.addEventListener('click', (e) => {
+      // 1. Fichas de Planes Turísticos y Ocio Climático (Módulo 10)
+      const tourismBtn = e.target.closest('.btn-explain-tourism, [data-explain-tourism]');
+      if (tourismBtn) {
+        this.triggerHaptic();
+        const planId = tourismBtn.dataset.explainTourism;
+        const planTopic = getTourismPlanExplanation(planId);
+        if (planTopic) {
+          if (titleEl) titleEl.innerHTML = `${planTopic.icon} ${planTopic.title}`;
+          if (subtitleEl) subtitleEl.textContent = planTopic.subtitle;
+          if (contentEl) {
+            contentEl.innerHTML = `
+              <div class="explain-content-wrapper">
+                <div class="explain-top-badge-row">
+                  <span class="explain-icon-large">${planTopic.icon}</span>
+                  <div class="explain-badge-tag">${planTopic.badge}</div>
+                </div>
+                <div class="explain-sections-list">
+                  ${planTopic.sections.map(sec => `
+                    <div class="explain-card-block">
+                      <h4 class="explain-block-title">${sec.icon} ${sec.heading}</h4>
+                      <div class="explain-block-text">${sec.text}</div>
+                    </div>
+                  `).join('')}
+                </div>
+                <div class="explain-footer-note">
+                  🗺️ <em>MeteoAstur Lode • Guía didáctica de turismo y clima en Asturias</em>
+                </div>
+              </div>
+            `;
+          }
+          this.openModal(modal);
+          return;
+        }
+      }
+
+      // 2. Sensores y Explicaciones Meteorológicas Estándar
       const btn = e.target.closest('.btn-explain-sensor, .btn-explain-sensor-compact, .btn-explain-clima, .climatology-badge, [data-explain]');
       if (!btn) return;
 
