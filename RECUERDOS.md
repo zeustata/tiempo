@@ -45,16 +45,13 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - **Experiencia de Usuario Restaurada:** La postal meteorológica se genera al vuelo en cliente sin consumo de servidor externo ni dependencias externas, reactivando la previsualización y el flujo nativo de la Web Share API para WhatsApp, Instagram Stories, Telegram y descarga directa.
 - **Cache-Busting y Changelog:** Sincronizado a `v1.1.82` en `sw.js`, `app.js`, `index.html`, `CHANGELOG.md` y `RECUERDOS.md`.
 
-## 🚀 Despliegue Oficial en Google Play Store: Envío a Revisión de Versión 2.0 e Icono Conmemorativo — 2026-10-05
-- **Nuevo Icono Oficial de Alta Resolución (512x512 px):**
-  - Implementado y aprobado para la ficha de Google Play Store el nuevo escudo Liquid Glass con bordes dorados, corona radiante, soles, nubes y la Cruz de la Victoria sobre el azul emblemático del Principado de Asturias y del Mar Cantábrico.
-  - Actualizados los recursos gráficos en `icons/icon-512.png`, `icons/icon-192.png` y sus versiones maskable.
-- **Generación y Empaquetado Limpio con PWABuilder (TWA):**
-  - Configurado el empaquetado TWA con Package ID oficial `com.zeustata.meteoasturlode`, nombre de app `MeteoAstur Lode`, versión `2.0.0` y `versionCode: 2`.
-  - Firma digital legítima verificada contra el almacén de claves `signing.keystore` con alias `my-key-alias` para garantizar la continuidad criptográfica y el reconocimiento por parte de Google Play.
-- **Publicación en Canal de Pruebas Cerradas & Envío a Revisión Humana:**
-  - Archivo `MeteoAstur-v2-PlayStore.aab` subido exitosamente a la pista de pruebas cerradas.
-  - Cambios de la ficha y nueva versión enviados conjuntamente a revisión oficial de Google Play Console (`En revisión`), activando el segundo ciclo de evaluación técnica con notas de versión detalladas sobre los 10 módulos, Nowcasting, mareas y folixas asturianas.
+## 🚀 Despliegue Oficial en Google Play Store: Envío a Revisión de Icono Oficial y Canal de Sugerencias — 2026-10-05
+- **Nuevo Icono Oficial de Alta Resolución (512x512 px) y Canal de Sugerencias Enviados a Revisión:**
+  - Implementado y subido para la ficha de Google Play Store el nuevo escudo Liquid Glass con la Cruz de la Victoria sobre azul Cantábrico (`icono-playstore-512.png`), junto con la actualización del correo oficial de sugerencias del canal de testers (`...baergio@gmail.com`).
+  - Ambos cambios quedaron formalmente enviados a los revisores de Google y en estado oficial **«En revisión»**, manteniendo el contador de los 10 días de los 20 testers activo e ininterrumpido.
+- **Generación y Empaquetado Limpio con PWABuilder (TWA v2.0):**
+  - Resuelto con éxito el error de empaquetado de PWABuilder configurando el Package ID oficial `com.zeustata.meteoasturlode`, nombre `MeteoAstur Lode`, versión `2.0.0`, `versionCode: 2` y firmando con el almacén legítimo `signing.keystore` (alias `my-key-alias`).
+  - Paquete compilado y preservado en local en `C:\Users\NUC\Downloads\MeteoAstur-v2-PlayStore.aab` (4,48 MB), listo para subirse al canal Alpha en cuanto Google concluya la revisión del icono y del canal de sugerencias y habilite el botón de nueva versión.
 
 ## 📌 Tareas Pendientes / Hoja de Ruta Futura
 - **Estrategia y Protocolo de Aprobación en Google Play Store (Intento 2 / Salto a v2.0) — Acuerdo Lendo 04-10-2026:**
