@@ -18,7 +18,7 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   3. *Mareas del Cantábrico:* Motor armónico autónomo de 6 constituyentes astronómicos de alta precisión (IHM).
   4. *Calibración Solar Inteligente:* Detección de resol y sol tamizado en superficie.
   5. *Nuevo Icono Oficial:* Escudo con Cruz de la Victoria sobre azul Cantábrico y mejoras de fluidez y estabilidad.
-- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v200-gran-actualizacion-playstore` y módulos JS a `?v=2.0.0`.
+- **Cache-Busting y Documentación Legal Garantizada (Leyes 4 y 15):** Service Worker actualizado a `meteoasturlode-v200-gran-actualizacion-playstore`, módulos JS a `?v=2.0.0`, y `privacy.html` 100% alineado con la versión v2.0.0 oficial y fecha del 5 de octubre de 2026.
 
 ## 🎪 Actualización v1.1.85: Detección Automática de Días Festivos y Folixas ("¡Hoxe tamos de Folixa!") — 2026-10-04
 - **Detección Automática de Festivos y Romerías (`festivosData.js`, `currentCard.js`):**
