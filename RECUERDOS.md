@@ -8,6 +8,18 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Soberanía Inapelable de Servicios Oficiales:* Ninguna función de la app sustituye las banderas físicas y órdenes del Servicio de Salvamento y Socorrismo a pie de playa, la DGT, Guardia Civil, Bomberos de Asturias o avisos de emergencias del 112.
   3. *Responsabilidad Individual e Inmunidad del Desarrollador:* Toda actividad en entornos naturales o carretera se realiza bajo la exclusiva responsabilidad del usuario. Obligatoriedad de incorporar advertencias visibles de exención de responsabilidad civil en módulos sensibles y en la Política de Privacidad, blindando al desarrollador (Lendo / zeustata) frente a cualquier reclamación de terceros.
 
+## 🚀 Gran Actualización Oficial v2.0.0 (Google Play Store & PWA) — 2026-10-05
+- **Sincronización Total con Google Play Console (Package versionCode 2):**
+  - Empaquetada y enviada a revisión oficial la versión 2.0.0 (`MeteoAstur Lode.aab`, versionCode: 2) para el canal de pruebas cerradas de Google Play Store, firmada con la clave legítima (`signing.keystore`).
+  - Actualización sincronizada en el cliente web PWA: `CURRENT_APP_VERSION = '2.0.0'`, badge `#app-version-badge` a `v2.0.0 🚀`, e inserción del nuevo bloque en `#changelog-modal`.
+- **Novedades de la Gran Versión 2.0 (Resumen Oficial Play Store):**
+  1. *Detección de folixas y festivos:* Reconocimiento automático en los 78 concejos de Asturias con historia, gastronomía y tradiciones.
+  2. *Planes y Ocio Climático:* Asesor comarcal inteligente según el tiempo actual (sol, lluvia, niebla o frío) en las 6 comarcas asturianas.
+  3. *Mareas del Cantábrico:* Motor armónico autónomo de 6 constituyentes astronómicos de alta precisión (IHM).
+  4. *Calibración Solar Inteligente:* Detección de resol y sol tamizado en superficie.
+  5. *Nuevo Icono Oficial:* Escudo con Cruz de la Victoria sobre azul Cantábrico y mejoras de fluidez y estabilidad.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v200-gran-actualizacion-playstore` y módulos JS a `?v=2.0.0`.
+
 ## 🎪 Actualización v1.1.85: Detección Automática de Días Festivos y Folixas ("¡Hoxe tamos de Folixa!") — 2026-10-04
 - **Detección Automática de Festivos y Romerías (`festivosData.js`, `currentCard.js`):**
   - Implementado el catálogo de festivos patronales oficiales y romerías populares para los concejos de Asturias.

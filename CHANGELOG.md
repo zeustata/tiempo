@@ -10,6 +10,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.0.0] - 2026-10-05
+
+### 🚀 Novedades Oficiales de la Versión 2.0 (Google Play Store & PWA)
+- **Detección de folixas y festivos:** Reconocimiento automático en los 78 concejos de Asturias con historia y tradiciones (`festivosData.js`, `currentCard.js`).
+- **Planes y Ocio Climático:** Asesor inteligente comarcal para saber qué hacer o visitar según el tiempo en vivo (sol, lluvia o frío) en las 6 comarcas asturianas (`tourismData.js`, `tourismCard.js`).
+- **Mareas del Cantábrico:** Motor armónico autónomo de 6 constituyentes astronómicos y predicción del estado del mar de alta precisión calibrada con el Instituto Hidrográfico de la Marina (IHM) a 3 minutos (`tides.js`, `marineCard.js`).
+- **Calibración Solar Inteligente:** Detección pionera de resol y sol tamizado en superficie mediante sensores de radiación directa perpendicular (`weatherIcons.js`, `weatherApi.js`).
+- **Nuevo Icono y Rendimiento:** Nuevo diseño del escudo oficial de Asturias con la Cruz de la Victoria sobre azul Cantábrico, mejoras de fluidez y estabilidad.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v200-gran-actualizacion-playstore` y módulos JS a `?v=2.0.0`.
+
+---
+
 ## [1.1.85] - 2026-10-04
 
 ### 🎪 Detección Automática de Días Festivos y Folixas ("¡Hoxe tamos de Folixa!")

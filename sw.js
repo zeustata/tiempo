@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v1185-folixas-fiestas-locales';
+const CACHE_NAME = 'meteoasturlode-v200-gran-actualizacion-playstore';
 const STATIC_ASSETS = [
   './',
   './index.html',
