@@ -45,6 +45,17 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - **Experiencia de Usuario Restaurada:** La postal meteorológica se genera al vuelo en cliente sin consumo de servidor externo ni dependencias externas, reactivando la previsualización y el flujo nativo de la Web Share API para WhatsApp, Instagram Stories, Telegram y descarga directa.
 - **Cache-Busting y Changelog:** Sincronizado a `v1.1.82` en `sw.js`, `app.js`, `index.html`, `CHANGELOG.md` y `RECUERDOS.md`.
 
+## 🚀 Despliegue Oficial en Google Play Store: Envío a Revisión de Versión 2.0 e Icono Conmemorativo — 2026-10-05
+- **Nuevo Icono Oficial de Alta Resolución (512x512 px):**
+  - Implementado y aprobado para la ficha de Google Play Store el nuevo escudo Liquid Glass con bordes dorados, corona radiante, soles, nubes y la Cruz de la Victoria sobre el azul emblemático del Principado de Asturias y del Mar Cantábrico.
+  - Actualizados los recursos gráficos en `icons/icon-512.png`, `icons/icon-192.png` y sus versiones maskable.
+- **Generación y Empaquetado Limpio con PWABuilder (TWA):**
+  - Configurado el empaquetado TWA con Package ID oficial `com.zeustata.meteoasturlode`, nombre de app `MeteoAstur Lode`, versión `2.0.0` y `versionCode: 2`.
+  - Firma digital legítima verificada contra el almacén de claves `signing.keystore` con alias `my-key-alias` para garantizar la continuidad criptográfica y el reconocimiento por parte de Google Play.
+- **Publicación en Canal de Pruebas Cerradas & Envío a Revisión Humana:**
+  - Archivo `MeteoAstur-v2-PlayStore.aab` subido exitosamente a la pista de pruebas cerradas.
+  - Cambios de la ficha y nueva versión enviados conjuntamente a revisión oficial de Google Play Console (`En revisión`), activando el segundo ciclo de evaluación técnica con notas de versión detalladas sobre los 10 módulos, Nowcasting, mareas y folixas asturianas.
+
 ## 📌 Tareas Pendientes / Hoja de Ruta Futura
 - **Estrategia y Protocolo de Aprobación en Google Play Store (Intento 2 / Salto a v2.0) — Acuerdo Lendo 04-10-2026:**
   - *Diagnóstico del Primer Rechazo:*
@@ -57,8 +68,8 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - *Plan de Acción Técnico Obligatorio:*
     1. *Feedback Activo de Testers en Play Store:* Conseguir que 4 o 5 testers de confianza dejen comentarios constructivos privados desde Google Play Store en la ficha de la app (*«Enviar comentarios al desarrollador»*).
     2. *Actividad de Uso:* Garantizar que los testers abran la app periódicamente durante la semana.
-    3. *Nuevo Icono Oficial 512x512:* Diseño que integre armónicamente la identidad meteorológica con la Cruz de la Victoria y la bandera del Principado de Asturias.
-    4. *Empaquetado y Subida de la v2.0:* Generar el nuevo `.aab` (TWA) con `versionCode` superior y publicarlo en la pista de pruebas cerradas.
+    3. *Nuevo Icono Oficial 512x512:* [COMPLETADO 05-10-2026] Subido y enviado a revisión en Google Play Console.
+    4. *Empaquetado y Subida de la v2.0:* [COMPLETADO 05-10-2026] Paquete `MeteoAstur-v2-PlayStore.aab` (versionCode 2) generado con firma legítima y enviado a revisión en pruebas cerradas.
     5. *Cuestionario de Producción con Defensa Técnica Impecable:* Redactar las justificaciones formales demostrando cómo el feedback de los testers guió las mejoras de la app (resolución de precisión en precipitaciones, ergonomía de avisos y adición de planes turísticos y folixas).
 - **Optimización Ergonómica de Avisos AEMET (Acuerdo Lendo 03-10-2026):**
   - *Contexto:* Los avisos oficiales de AEMET pueden ocupar mucho espacio en pantalla si hay múltiples alertas concurrentes (viento, costeros, lluvia).
