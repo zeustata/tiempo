@@ -27,7 +27,7 @@ export function detectBorrinaEffect(current, hourly, concejo) {
         windSpeed: 8,
         visibility: 450,
         phenomenonId: 'borrina',
-        title: '🌫️ Borrina Marina Activa • Litoral Cantábrico [SIMULACRO]',
+        title: 'Borrina Marina Activa • Litoral Cantábrico [SIMULACRO]',
         badge: '⚠️ Niebla de Advección',
         description: 'Manto denso y bajo de niebla marina entrando desde el Cantábrico por brisa marina. <strong>Visibilidad reducida a ~450 m</strong> y desplome de la sensación térmica en la costa. Cielo despejado o resol a pocos kilómetros hacia el interior.'
       };
@@ -44,7 +44,7 @@ export function detectBorrinaEffect(current, hourly, concejo) {
         windSpeed: 3,
         visibility: 300,
         phenomenonId: 'inversion',
-        title: '🌫️ Niebla de Valle Zarrada • Inversión Térmica [SIMULACRO]',
+        title: 'Niebla de Valle Zarrada • Inversión Térmica [SIMULACRO]',
         badge: '⚠️ Niebla en Fondo de Cuenca',
         description: 'Bolsa de aire frío atrapada en el fondo del valle con <strong>visibilidad reducida a ~300 m</strong> en carreteras fluviales y cuencas. Cielo despejado, sol resplandeciente y ambiente más templado por encima de los 400-600 m de altitud.'
       };
@@ -95,7 +95,9 @@ export function detectBorrinaEffect(current, hourly, concejo) {
     const isMarineBreeze = speed <= 22; // la borrina entra con viento flojo o brisa marina
 
     if ((isFogCode || isLowVis || (isMarineDewMatch && isMarineBreeze)) && rh >= 90 && dewSpread <= 1.5) {
-      const isSevere = (visibility != null && visibility <= 500) || rh >= 97;
+      // Calibración estricta del Cantábrico: solo es 'severe' (rojo) si la visibilidad es realmente un muro de niebla (<= 200 m)
+      // o si hay niebla cerrada con saturación máxima y código WMO 45/48. Si la visibilidad es mayor (ej. 300-800 m), se califica como warning (amarillo).
+      const isSevere = visibility != null ? (visibility <= 200) : (rh >= 98 && isFogCode);
       return {
         isActive: true,
         type: 'marina',
@@ -106,8 +108,8 @@ export function detectBorrinaEffect(current, hourly, concejo) {
         windSpeed: speed,
         visibility,
         phenomenonId: 'borrina',
-        title: isSevere ? '🌫️ Borrina Marina Densa • Litoral Cantábrico' : '🌫️ Borrina Marina Activa • Costa Asturiana',
-        badge: isSevere ? '🚨 Visibilidad Muy Reducida' : '⚠️ Banco de Niebla en Costa',
+        title: isSevere ? 'Borrina Marina Densa • Litoral Cantábrico' : 'Borrina Marina Activa • Costa Asturiana',
+        badge: isSevere ? '🚨 Visibilidad Muy Reducida' : '⚠️ Visibilidad Reducida',
         description: `Manto denso de niebla marina arrastrado desde el mar Cantábrico hacia el litoral (humedad del <strong>${rh}%</strong>). Desplome de la sensación térmica en playas y paseos costeros.${visibility ? ` Visibilidad horizontal estimada en <strong>~${visibility} m</strong>.` : ''} Hacia el interior suele predominar cielo más abierto.`
       };
     }
@@ -122,7 +124,7 @@ export function detectBorrinaEffect(current, hourly, concejo) {
     const isValleyInversion = rh >= 93 && dewSpread <= 1.0 && speed <= 10 && (isNightOrMorning || isFogCode || isLowVis);
 
     if (isValleyInversion) {
-      const isSevere = (visibility != null && visibility <= 500) || rh >= 97;
+      const isSevere = visibility != null ? (visibility <= 200) : (rh >= 98 && isFogCode);
       return {
         isActive: true,
         type: 'valle',
@@ -133,7 +135,7 @@ export function detectBorrinaEffect(current, hourly, concejo) {
         windSpeed: speed,
         visibility,
         phenomenonId: 'inversion',
-        title: isSevere ? '🌫️ Niebla de Valle Zarrada • Inversión Térmica' : '🌫️ Niebla de Valle • Inversión Térmica',
+        title: isSevere ? 'Niebla de Valle Zarrada • Inversión Térmica' : 'Niebla de Valle • Inversión Térmica',
         badge: isSevere ? '🚨 Niebla Densa en Fondo de Cuenca' : '⚠️ Visibilidad Reducida en Valle',
         description: `Bolsa de aire frío y húmedo atrapada en el fondo del valle por inversión térmica matinal (humedad del <strong>${rh}%</strong>).${visibility ? ` Visibilidad de <strong>~${visibility} m</strong> en carreteras de cuenca.` : ''} Ambiente despejado, templado y soleado en cotas altas y cumbres montañosas.`
       };

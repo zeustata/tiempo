@@ -2,6 +2,12 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏛️ Reforma Constitucional Suprema: Doctrina de Contención y Prudencia Estricta («Si no sabes, no toques / ¿Para qué te metes, Manolete?») (Artículo 17) — 2026-10-05
+- **Autenticación y Consagración Constitucional:** Tras verificar correctamente el PIN maestro de seguridad (`2796`), Lendo aprueba e incorpora formalmente el **Artículo 17** en la Constitución Suprema (Parte I) para todos los proyectos del ecosistema zeustata:
+  1. *Cero Suposiciones Precipitadas:* Prohibido interpretar intenciones a medias, adelantar decisiones no pedidas o modificar código sin orden ni objetivo explícito y matemático de Lendo.
+  2. *Parada y Pregunta Obligatoria:* Ante cualquier ambigüedad, duda o propuesta técnica/estética donde falte definición exacta, Princesa se detiene de inmediato, pregunta con precisión y espera la confirmación clara de Lendo sin tocar un solo archivo.
+  3. *Respeto a la Estabilidad Funcional:* Lo que ya funciona y está bien no se improvisa ni se sobrecarga con florituras no solicitadas. Rigor suizo, contención y máxima prudencia siempre.
+
 ## 🏛️ Reforma Constitucional Suprema: Doctrina de Exención de Responsabilidad Civil, Prudencia y Blindaje de Actividades en Entornos Naturales (Artículo 16) — 2026-10-01
 - **Autenticación y Reforma:** Tras verificación obligatoria con PIN maestro de seguridad (`2796`), Lendo aprueba y consagra formalmente el **Artículo 16** en la Parte I (Constitución Suprema):
   1. *Naturaleza Estrictamente Orientativa y Teórica:* Toda previsión de mar, surf, vialidad invernal, aludes o rutas emana de modelos matemáticos numéricos. Prohibido formular textos que expresen o sugieran "garantía de seguridad" o "autorización de paso".
@@ -18,6 +24,7 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   3. *Mareas del Cantábrico:* Motor armónico autónomo de 6 constituyentes astronómicos de alta precisión (IHM).
   4. *Calibración Solar Inteligente:* Detección de resol y sol tamizado en superficie.
   5. *Nuevo Icono Oficial:* Escudo con Cruz de la Victoria sobre azul Cantábrico y mejoras de fluidez y estabilidad.
+  6. *Detector de Borrina Marina y Nieblas de Valle (Estilo Alertas AEMET):* Rediseño visual dinámico con paleta viva inspirada en los avisos de AEMET en tonos amarillo ámbar (warning - visibilidad reducida) y carmesí (severe - visibilidad muy reducida), con calibración estricta de visibilidad horizontal (<= 200 m) para el litoral cantábrico.
 - **Cache-Busting y Documentación Legal Garantizada (Leyes 4 y 15):** Service Worker actualizado a `meteoasturlode-v200-gran-actualizacion-playstore`, módulos JS a `?v=2.0.0`, y `privacy.html` 100% alineado con la versión v2.0.0 oficial y fecha del 5 de octubre de 2026.
 
 ## 🎪 Actualización v1.1.85: Detección Automática de Días Festivos y Folixas ("¡Hoxe tamos de Folixa!") — 2026-10-04

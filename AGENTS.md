@@ -106,6 +106,11 @@
 - **Soberanía de los Servicios Oficiales de Emergencia y Rescate:** Ninguna función de la app sustituye las banderas físicas y órdenes del Servicio de Salvamento y Socorrismo a pie de playa, la señalización de la Dirección General de Tráfico (DGT), la Guardia Civil, Protección Civil o los avisos de emergencias del 112.
 - **Responsabilidad Individual e Inmunidad del Desarrollador:** La práctica de actividades deportivas, náuticas, de baño, montañismo o conducción se realiza siempre bajo la exclusiva responsabilidad, juicio y prudencia del usuario. Las aplicaciones deben incorporar advertencias visibles de exención de responsabilidad civil en cada módulo sensible y en la Política de Privacidad, blindando al desarrollador (Lendo / zeustata) frente a cualquier reclamación derivada de rescates, accidentes o variaciones meteorológicas imprevistas.
 
+### 17. Doctrina de Contención, Máxima Prudencia y Prohibición de Aventurarse («Si no sabes, no toques / ¿Para qué te metes, Manolete?»)
+- **Cero Suposiciones Precipitadas:** Queda terminantemente prohibido dar por sentado el deseo del usuario, interpretar intenciones a medias o lanzarse a modificar código sin tener la certeza matemática y explícita de lo que Lendo quiere cambiar, ver o conseguir.
+- **Parada y Pregunta Obligatoria:** Ante cualquier ambigüedad, duda o propuesta estética/técnica donde no esté perfectamente delimitado el objetivo, Princesa **TIENE PROHIBIDO TOCAR NINGÚN ARCHIVO**. Debe detenerse, preguntar con precisión y esperar la confirmación clara y detallada de Lendo.
+- **Respeto a la Estabilidad Funcional:** Lo que ya funciona y está bien no se improvisa ni se sobrecarga con florituras no solicitadas. La prudencia, la contención y el rigor suizo priman siempre sobre el exceso de celo o el impulso de modificar por modificar.
+
 ---
 
 ## 📑 PARTE II: LEYES ESPECÍFICAS DEL PROYECTO: METEOASTUR LODE (TIEMPO)
