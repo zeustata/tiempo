@@ -151,6 +151,19 @@ export const WEATHER_PHENOMENA = [
     howItForms: 'Se produce cuando la nubosidad está compuesta por <strong>nubes altas o medias de escaso grosor óptico</strong> (como cirrostratos o altoestratos finos). A diferencia de las nubes densas y bajas de lluvia (estratos y nimbostratos) que bloquean los rayos, estos velos translúcidos dispersan parte de la luz pero permiten que un flujo notable de <strong>radiación solar directa perpendicular (DNI >= 80-120 W/m²)</strong> alcance el suelo.',
     asturiasEffect: 'Es muy frecuente en el litoral y valles asturianos en situaciones de pre-frente o brumas altas. La sensación de bochorno aumenta notablemente y existe un <strong>alto riesgo de quemaduras solares imprevistas</strong>, ya que la radiación ultravioleta (UV) sigue incidiendo con fuerza a pesar de que el cielo aparente estar cubierto.',
     curiosity: 'MeteoAstur Lode incorpora un algoritmo pionero de Calibración Solar Inteligente Estacional que detecta el resol en tiempo real, desempatando cuando los modelos numéricos predicen cielo 100% cubierto pero los piranómetros y sensores en tierra confirman radiación directa activa.'
+  },
+  {
+    id: 'mar_fondo',
+    title: 'Mar de Fondo & Golpes de Mar',
+    icon: '🌊',
+    category: 'cantabrico',
+    categoryName: 'Asturias & Cantábrico',
+    tag: 'La Fuerza Invisible del Atlántico',
+    summary: 'Olas potentes y espaciadas que viajan miles de kilómetros desde borrascas lejanas y rompen con violencia en la costa sin previo aviso.',
+    whatIs: 'El <strong>mar de fondo</strong> (o <em>swell</em>) es el oleaje generado por borrascas lejanas en medio del océano Atlántico. A diferencia del mar de viento local, que es picado y caótico, las olas de fondo se ordenan en series de crestas limpias con <strong>períodos muy largos (entre 12 y 16 segundos)</strong>.',
+    howItForms: 'Una borrasca profunda en Terranova o Islandia empuja el agua durante días. Las olas viajan libremente miles de millas sin perder energía. Al acercarse a la costa asturiana y rozar la batimetría del fondo marino, la velocidad de la ola disminuye bruscamente pero su altura y volumen se comprimen hacia arriba, liberando una energía descomunal al romper.',
+    asturiasEffect: 'Es el fenómeno que más sustos y rescates provoca en el litoral asturiano (Gijón, Peñas, Cudillero, Tazones, Ribadesella). En tierra puede hacer un día despejado y apacible sin viento, pero de repente <strong>una ola gigante sobrepasa diques, escolleras y barandillas de paseos marítimos</strong>, o genera fortísimas corrientes de resaca invisibles en la orilla de las playas.',
+    curiosity: 'Los pescadores asturianos siempre decían que "el mar de fondo no avisa". Se caracteriza por períodos de calma aparente donde el mar parece quieto durante 5 o 10 minutos, seguidos por una serie de tres o cuatro olas gigantes ("las tres marías") que barrieron a quienes se confiaron al borde de las rocas.'
   }
 ];
 

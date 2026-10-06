@@ -19,6 +19,7 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Calibración Solar Inteligente:** Detección pionera de resol y sol tamizado en superficie mediante sensores de radiación directa perpendicular (`weatherIcons.js`, `weatherApi.js`).
 - **Nuevo Icono y Rendimiento:** Nuevo diseño del escudo oficial de Asturias con la Cruz de la Victoria sobre azul Cantábrico, mejoras de fluidez y estabilidad.
 - **Detector de Borrina Marina y Nieblas de Valle (Estilo Alertas AEMET):** Rediseño visual prominente con gradientes luminosos y resplandor dinámico en amarillo ámbar (warning - visibilidad reducida) y carmesí (severe - visibilidad muy reducida), adaptado con la calibración del Cantábrico para exigir visibilidad real estricta <= 200 m antes de disparar el nivel rojo.
+- **Detector Silencioso de Mar de Fondo y Golpe de Mar (marFondoDetector.js):** Nuevo monitor costero con aviso amarillo (resaca peligrosa y período largo >= 11s) y rojo carmesí (golpes de mar severos en espigones, paseos y acantilados con períodos >= 12-16s y oleaje masivo), con ficha didáctica (*💡 ¿Por qué ocurre?*) y simulacro Ley 12 (?test=mar_fondo y ?test=mar_fondo_rojo).
 - **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v200-gran-actualizacion-playstore` y módulos JS a `?v=2.0.0`.
 
 ---

@@ -5,6 +5,7 @@ import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?
 import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=1.1.60';
 import { detectXeluEffect, renderXeluBanner } from '../utils/xeluDetector.js?v=1.1.60';
 import { detectBorrinaEffect, renderBorrinaBanner } from '../utils/borrinaDetector.js?v=1.1.60';
+import { detectMarFondoEffect, renderMarFondoBanner } from '../utils/marFondoDetector.js?v=2.0.0';
 import { detectThunderstormEffect, renderThunderstormBanner } from '../utils/thunderstormDetector.js?v=1.1.60';
 import { detectRoadWindStatus, renderRoadWindBanner, renderRoadWindSensorPill } from '../utils/roadWindDetector.js?v=1.1.76';
 import { getSeismicStatus, renderSeismicBanner } from '../utils/seismicDetector.js?v=1.1.60';
@@ -112,6 +113,10 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   // Detección Silenciosa de Borrina Marina y Nieblas de Valle (Inversión Térmica)
   const borrina = detectBorrinaEffect(current, hourly, concejo);
   const borrinaMarkup = renderBorrinaBanner(borrina);
+
+  // Detección Silenciosa de Mar de Fondo y Golpe de Mar (Litoral Asturiano)
+  const marFondo = detectMarFondoEffect(data.marine, concejo);
+  const marFondoMarkup = renderMarFondoBanner(marFondo);
 
   // 4. Pluviómetro: cálculo riguroso de agua caída hasta ahora vs total previsto de la jornada (Ley 12.12)
   const now = new Date();
@@ -248,6 +253,9 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
 
     <!-- BANNER DINÁMICO DE DETECTOR DE BORRINA Y NIEBLAS ASTURIANAS -->
     ${borrinaMarkup}
+
+    <!-- BANNER DINÁMICO DE DETECTOR DE MAR DE FONDO Y GOLPE DE MAR -->
+    ${marFondoMarkup}
 
     <!-- BANNER DINÁMICO DE ALERTA DE TORMENTA INMINENTE Y CONVECCIÓN -->
     ${thunderstormMarkup}

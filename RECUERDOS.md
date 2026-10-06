@@ -25,6 +25,7 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   4. *Calibración Solar Inteligente:* Detección de resol y sol tamizado en superficie.
   5. *Nuevo Icono Oficial:* Escudo con Cruz de la Victoria sobre azul Cantábrico y mejoras de fluidez y estabilidad.
   6. *Detector de Borrina Marina y Nieblas de Valle (Estilo Alertas AEMET):* Rediseño visual dinámico con paleta viva inspirada en los avisos de AEMET en tonos amarillo ámbar (warning - visibilidad reducida) y carmesí (severe - visibilidad muy reducida), con calibración estricta de visibilidad horizontal (<= 200 m) para el litoral cantábrico.
+  7. *Detector Silencioso de Mar de Fondo y Golpe de Mar (Litoral Cantábrico):* Nuevo monitor oceanográfico inteligente con doble nivel de severidad (amarillo por corrientes de resaca y períodos largos >= 11s, y rojo carmesí por golpes de mar severos con peligro en escolleras y paseos marítimos). Incluye ficha didáctica náutica en #explain-modal y simulacro Ley 12.
 - **Cache-Busting y Documentación Legal Garantizada (Leyes 4 y 15):** Service Worker actualizado a `meteoasturlode-v200-gran-actualizacion-playstore`, módulos JS a `?v=2.0.0`, y `privacy.html` 100% alineado con la versión v2.0.0 oficial y fecha del 5 de octubre de 2026.
 
 ## 🎪 Actualización v1.1.85: Detección Automática de Días Festivos y Folixas ("¡Hoxe tamos de Folixa!") — 2026-10-04
