@@ -2,6 +2,12 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🧹 Mantenimiento y Calidad de Código: Limpieza de Advertencias Linter en CSS — 2026-10-07
+- **Resolución de Advertencias en `css/main.css`:**
+  1. *Compatibilidad Estándar Vendor-Prefix:* Añadida la propiedad estándar `background-clip: text;` en conjunción con `-webkit-background-clip: text;` en `.brand-info h1` para máxima compatibilidad con navegadores modernos.
+  2. *Supresión de Reglas Vacías:* Eliminado el selector huérfano `#panel-live.refreshing { }`, conservando el comentario técnico explicativo sobre prevención de micro-apagones en tablets.
+- **Resultado:** 0 advertencias y 0 problemas en la consola de diagnóstico de la IDE. Servidor local `localhost:8080` probado y detenido.
+
 ## 🏛️ Reforma Constitucional Suprema: Doctrina de Contención y Prudencia Estricta («Si no sabes, no toques / ¿Para qué te metes, Manolete?») (Artículo 17) — 2026-10-05
 - **Autenticación y Consagración Constitucional:** Tras verificar correctamente el PIN maestro de seguridad (`2796`), Lendo aprueba e incorpora formalmente el **Artículo 17** en la Constitución Suprema (Parte I) para todos los proyectos del ecosistema zeustata:
   1. *Cero Suposiciones Precipitadas:* Prohibido interpretar intenciones a medias, adelantar decisiones no pedidas o modificar código sin orden ni objetivo explícito y matemático de Lendo.

@@ -401,6 +401,7 @@ body {
   letter-spacing: -0.5px;
   background: linear-gradient(135deg, #f8fafc 40%, #38bdf8 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   line-height: 1.15;
   margin: 0;
@@ -1522,11 +1523,7 @@ body {
   margin-left: 4px;
 }
 
-/* --- REFRESH LIMPIO SIN APAGONES --- */
-#panel-live.refreshing {
-  /* Sin opacity 0 para evitar micro-apagones en tablets */
-}
-
+/* --- REFRESH LIMPIO SIN APAGONES (Sin opacity 0 para evitar micro-apagones en tablets) --- */
 #panel-live.refresh-in {
   opacity: 1;
 }
