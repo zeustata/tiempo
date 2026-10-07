@@ -2,6 +2,17 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌧️ Registro y Hoja de Ruta: Calibración Fina de Lluvia Débil vs. Chubascos Dispersos (Piedras Blancas) — 2026-10-07
+- **Contexto Observado en Vivo:** En Piedras Blancas (Castrillón), el modelo meteorológico en bruto reportó `weather_code: 61` (*Lluvia débil*) y `precipitation: 0.40 mm` (franja horaria con acumulados previstos de 1.9 a 3.3 mm), pero en la realidad física en tierra no caía lluvia.
+- **Diagnóstico Técnico:**
+  - El filtro actual anti-orbayu en `weatherIcons.js` opera sobre códigos de llovizna `51-57` cuando `p < 0.1 mm` y humedad `< 94%`.
+  - Ante códigos `61` (lluvia) con `p >= 0.1 mm` (como 0.4 mm), la app y el Semáforo del Paraguas (`umbrellaAdvisor.js`) lo califican como lluvia física activa continua (*"Lluvia débil"*, *"🟡 Orbayando Agora"*).
+- **Decisión de Lendo y Princesa:** Se pospone la modificación de código para más adelante para mantener la estabilidad del sistema en v2.0.0.
+- **Soluciones Propuestas para Futura Implementación:**
+  1. *Matización Textual e Iconográfica:* Tratar franjas de precipitación leve (0.1 a 0.5 mm) sin lluvia intensa como *"Chubascos dispersos / Posible orbayu"* con icono `🌦️` en lugar de lluvia generalizada continua `🌧️`.
+  2. *Calibración del Semáforo del Paraguas:* Ajustar el umbral o el mensaje para indicar *"Riesgo de chubascos dispersos"* en lugar de afirmar categóricamente *"Orbayando agora"* ante trazas sutiles del modelo.
+  3. *Verificación de Coherencia:* Analizar si ante diferencias locales de nowcasting se requiere cruzar con probabilidad o volumen mínimo antes de bloquear la interfaz en estado de lluvia activa.
+
 ## 📋 Análisis Estético y Hoja de Ruta UI/UX Post-Evaluación — 2026-10-07
 - **Diagnóstico Estético y Criterio de Blindaje:** A 48 horas de la evaluación oficial del proyecto, Lendo y Princesa analizan la estética de la app bajo el principio de que MeteoAstur Lode es una **estación meteorológica de alta precisión** y requiere gran densidad de datos técnicos contextualizados.
 - **Aplicación de la Ley 17 (Doctrina de Contención y Máxima Prudencia):** Se acuerda congelar completamente la estructura visual actual para evitar riesgos de regresión, manteniendo la estabilidad total y el rendimiento probado del sistema.
