@@ -120,18 +120,93 @@ export function resizeMap() {
   }
 }
 
+let radarHost = 'https://tilecache.rainviewer.com';
+
 async function loadRadarLayers() {
   const radarData = await fetchRainViewerRadar();
   if (!radarData || !radarData.radar || !radarData.radar.past) return;
 
+  radarHost = radarData.host || 'https://tilecache.rainviewer.com';
   radarFrames = [...radarData.radar.past, ...(radarData.radar.nowcast || [])];
   if (radarFrames.length === 0) return;
 
   currentFrameIndex = radarData.radar.past.length - 1;
-  showRadarFrame(currentFrameIndex, radarData.host);
+  initRadarSliderControls();
+  showRadarFrame(currentFrameIndex, radarHost);
 }
 
-function showRadarFrame(index, host = 'https://tilecache.rainviewer.com') {
+function initRadarSliderControls() {
+  const slider = document.getElementById('radar-time-slider');
+  const minLabel = document.getElementById('radar-slider-min-time');
+  const maxLabel = document.getElementById('radar-slider-max-time');
+
+  if (slider && radarFrames.length > 0) {
+    slider.min = '0';
+    slider.max = String(radarFrames.length - 1);
+    slider.value = String(currentFrameIndex);
+
+    const firstDate = new Date(radarFrames[0].time * 1000);
+    const lastDate = new Date(radarFrames[radarFrames.length - 1].time * 1000);
+
+    if (minLabel) {
+      minLabel.textContent = `⏮️ ${firstDate.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`;
+    }
+    if (maxLabel) {
+      maxLabel.textContent = `${lastDate.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })} ⏭️`;
+    }
+
+    slider.oninput = (e) => {
+      const idx = parseInt(e.target.value, 10);
+      if (!isNaN(idx) && idx >= 0 && idx < radarFrames.length) {
+        pauseRadarAnimation();
+        currentFrameIndex = idx;
+        showRadarFrame(currentFrameIndex, radarHost);
+      }
+    };
+  }
+
+  // Vincular botones de navegación temporal
+  const btnFirst = document.getElementById('btn-radar-first');
+  const btnPrev = document.getElementById('btn-radar-prev');
+  const btnNext = document.getElementById('btn-radar-next');
+  const btnLast = document.getElementById('btn-radar-last');
+
+  if (btnFirst) {
+    btnFirst.onclick = () => stepRadarFrame(0);
+  }
+  if (btnPrev) {
+    btnPrev.onclick = () => stepRadarFrame(currentFrameIndex - 1);
+  }
+  if (btnNext) {
+    btnNext.onclick = () => stepRadarFrame(currentFrameIndex + 1);
+  }
+  if (btnLast) {
+    btnLast.onclick = () => stepRadarFrame(radarFrames.length - 1);
+  }
+}
+
+export function stepRadarFrame(targetIndex) {
+  if (radarFrames.length === 0) return;
+  pauseRadarAnimation();
+  const clampedIndex = Math.max(0, Math.min(radarFrames.length - 1, targetIndex));
+  currentFrameIndex = clampedIndex;
+  showRadarFrame(currentFrameIndex, radarHost);
+}
+
+export function pauseRadarAnimation() {
+  if (isPlaying) {
+    if (animationTimer) clearInterval(animationTimer);
+    animationTimer = null;
+    isPlaying = false;
+    const playBtn = document.getElementById('btn-radar-play');
+    if (playBtn) {
+      playBtn.innerHTML = '▶️ Reproducir Radar';
+      playBtn.classList.remove('active');
+    }
+  }
+}
+
+function showRadarFrame(index, host = radarHost) {
   if (!radarFrames[index] || !asturiasMap) return;
 
   const frame = radarFrames[index];
@@ -147,30 +222,42 @@ function showRadarFrame(index, host = 'https://tilecache.rainviewer.com') {
     tileSize: 256,
     minZoom: 4,
     maxZoom: 11,
-    maxNativeZoom: 7 // RainViewer solo genera teselas nativas hasta zoom 7; Leaflet las escala nítidamente sin pedir teselas inexistentes
+    maxNativeZoom: 7 // RainViewer solo genera teselas nativas hasta zoom 7
   }).addTo(asturiasMap);
 
-  // Actualizar etiqueta temporal del radar
+  // Actualizar slider y etiqueta horaria del radar
+  const slider = document.getElementById('radar-time-slider');
+  if (slider && parseInt(slider.value, 10) !== index) {
+    slider.value = String(index);
+  }
+
+  const d = new Date(frame.time * 1000);
+  const timeStr = d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+  const isForecast = index >= (radarFrames.length - (radarFrames.length > 3 ? 3 : 1));
+
   const timeEl = document.getElementById('radar-time-display');
   if (timeEl) {
-    const d = new Date(frame.time * 1000);
-    const isForecast = index >= (radarFrames.length - (radarFrames.length > 3 ? 3 : 1));
-    timeEl.innerHTML = `${isForecast ? '🔮 Proyección Inmediata: ' : '📡 Radar en Directo: '} <strong>${d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}</strong>`;
+    timeEl.innerHTML = `${isForecast ? '🔮 Proyección Inmediata: ' : '📡 Radar en Directo: '} <strong>${timeStr}</strong>`;
+  }
+
+  const badgeEl = document.getElementById('radar-slider-now-badge');
+  if (badgeEl) {
+    badgeEl.textContent = `${isForecast ? '🔮 ' : '📡 '}${timeStr}`;
+    badgeEl.style.borderColor = isForecast ? '#d946ef' : '#00ecff';
+    badgeEl.style.color = isForecast ? '#f472b6' : '#00ecff';
   }
 }
 
 export function playRadarAnimation() {
   if (isPlaying) {
-    if (animationTimer) clearInterval(animationTimer);
-    animationTimer = null;
-    isPlaying = false;
+    pauseRadarAnimation();
     return false; // detenido
   }
 
   isPlaying = true;
   animationTimer = setInterval(() => {
     currentFrameIndex = (currentFrameIndex + 1) % radarFrames.length;
-    showRadarFrame(currentFrameIndex);
+    showRadarFrame(currentFrameIndex, radarHost);
   }, 900);
 
   return true; // reproduciendo

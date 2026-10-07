@@ -2,6 +2,29 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📋 Análisis Estético y Hoja de Ruta UI/UX Post-Evaluación — 2026-10-07
+- **Diagnóstico Estético y Criterio de Blindaje:** A 48 horas de la evaluación oficial del proyecto, Lendo y Princesa analizan la estética de la app bajo el principio de que MeteoAstur Lode es una **estación meteorológica de alta precisión** y requiere gran densidad de datos técnicos contextualizados.
+- **Aplicación de la Ley 17 (Doctrina de Contención y Máxima Prudencia):** Se acuerda congelar completamente la estructura visual actual para evitar riesgos de regresión, manteniendo la estabilidad total y el rendimiento probado del sistema.
+- **Opciones Registradas para Futuras Versiones (Hoja de Ruta Post-Evaluación):**
+  1. *Refinamiento de Micro-Contraste en Textos Secundarios:* Aplicación de un sutil sombreado (`text-shadow: 0 1px 3px rgba(0,0,0,0.5)`) en etiquetas secundarias (humedad, presión, viento) para maximizar la legibilidad en días de sol brillante sin alterar la transparencia *Liquid Glass*.
+  2. *Auditoría de Accesibilidad (A11y):* Refuerzo de atributos `aria-label` y `title` en selectores y botones de acción secundaria para excelencia en inspección técnica formal.
+  3. *Unificación Iconográfica Progresiva:* Evaluación futura de sustitución de emojis estándar sueltos por iconos SVG vectoriales monocromos o integrados, preservando siempre la familiaridad visual.
+  4. *Revisión Tipográfica y Textos Fijos:* Chequeo ortotipográfico preventivo de descripciones y modales de ayuda.
+  5. *Mini-Gráfico Térmico Continuo 24h en Portada (Curva Diaria con Posición en Vivo):*
+     - *Concepto Visual:* Trazado vectorial SVG ultraligero y estilizado (~35-40px de alto) integrado directamente en la tarjeta principal (`currentCard.js`), dibujando la curva continua de temperaturas del día completo (00:00 a 23:59).
+     - *Gradiente y Posición en Tiempo Real:* Curva con gradiente térmico de color (azul/frío para la mínima nocturna hasta ámbar/cálido para la máxima diurna) y un punto luminoso pulsante ubicado en la hora exacta actual para identificar en 1 segundo si nos encontramos antes o después del pico térmico del día.
+     - *Eficiencia Técnica:* Renderizado 100% en local y cliente a partir de los datos ya descargados en memoria (`hourly.temperature_2m`), sin consumo de red adicional ni sobrecarga de cifras numéricas.
+  6. *MeteoAstur Sensorial: Micro-Háptica y Acústica Ambiental Generativa (Opcional bajo demanda):*
+     - *Tacto (Vibration API):* Micro-vibraciones hápticas calibradas según la intensidad de la precipitación (cosquilleo sutil para orpín/calabobos, toques rítmicos para lluvia moderada/fuerte, o pulso espaciado al ritmo del período del mar de fondo cantábrico).
+     - *Sonido Ambiental (Web Audio API):* Síntesis matemática sin archivos de audio pesados que genera una atmósfera sonora binaural levísima de bienvenida (viento según ráfagas y rumor de lluvia según mm/h).
+     - *Criterio de Control:* Desactivado por defecto para no molestar; activable voluntariamente mediante interruptor o al pulsar sobre la tarjeta meteorológica.
+  7. *Brújula Solar y Trayectoria de Sombras ("Buscador de Terrazas, Praos y Fachadas"):*
+     - *Cálculo Astronómico Local:* Aprovechamiento del azimut y elevación solar exacta según latitud/longitud asturiana para indicar orientación óptima de incidencia solar o sombra según la hora del día.
+  8. *Cámara Meteorológica Asturiana con Telemetría Holográfica (Realidad Aumentada Ligera):*
+     - *Captura Directa con Superposición:* Interfaz de cámara que proyecta sobreimpreso en vivo sobre la lente un marco translúcido con telemetría en tiempo real (temperatura, concejo, viento, bandera marina o cota de nieve) para generar estampas fotográficas inmediatas listas para compartir en redes.
+  9. *Monitor de Puntos Críticos Viales de Asturias (Seguridad en Carretera):*
+     - *Enfoque de Servicio Público:* Lectura rápida focalizada en los grandes nudos de comunicación asturiana (Huerna / Pajares A-66, viaductos de la A-8 expuestos a viento cruzado y zonas de xelu en fondos de valle), integrando avisos de vialidad invernal y nieblas orográficas.
+
 ## 🧹 Mantenimiento y Calidad de Código: Limpieza de Advertencias Linter en CSS — 2026-10-07
 - **Resolución de Advertencias en `css/main.css`:**
   1. *Compatibilidad Estándar Vendor-Prefix:* Añadida la propiedad estándar `background-clip: text;` en conjunción con `-webkit-background-clip: text;` en `.brand-info h1` para máxima compatibilidad con navegadores modernos.
@@ -29,6 +52,13 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
      - 🏔️ *Temporal en Montaña (> 600 m):* Preaviso de acumulaciones en centímetros y vialidad invernal.
   3. *Doctrina de Simulacro (Ley 12) & Didáctica (Leyes 11 y 16):* Conmutador ?test=nieve / ?test=cota / ?test=snow y ficha explicativa didáctica en #explain-modal con exención de responsabilidad civil.
 - **Preservación Estratégica de Versión:** Mantenida la versión 2.0.0 (sin incrementar número) por estar en revisión el paquete en Google Play Console, documentando la novedad dentro del bloque oficial de v2.0.0.
+
+## 📡 Visor de Radar Interactivo: Barra de Control Temporal y Deslizador (Slider) en v2.0.0 — 2026-10-07
+- **Evolución del Radar a Estación Interactiva (mapRadar.js, index.html, weather-themes.css):**
+  1. *Línea de Tiempo Táctil con Slider:* Añadido control deslizante horizontal continuo que sincroniza la animación de RainViewer con el minuto y hora exacta de cada fotograma (pasado y proyección futura de Nowcasting).
+  2. *Controles Paso a Paso:* Botones táctiles ergonómicos (⏮️ Inicio, ◀ -10m, +10m ▶, ⏭️ Ahora) para pausar e inspeccionar minuciosamente la trayectoria y nubosidad de lluvia sobre los 78 concejos y el Cantábrico.
+  3. *Etiquetado Dinámico:* Distinción visual en vivo entre Radar en Directo (azul cian) y Proyección Inmediata (fucsia/magenta) con hora local exacta.
+  4. *Preservación Sigilosa de Versión:* Mantenida intacta la versión 2.0.0 sin alterar número de release por revisión en curso en Google Play Console.
 
 ## 🚀 Gran Actualización Oficial v2.0.0 (Google Play Store & PWA) — 2026-10-05
 - **Sincronización Total con Google Play Console (Package versionCode 2):**
