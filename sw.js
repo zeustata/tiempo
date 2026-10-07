@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v200-gran-actualizacion-playstore';
+const CACHE_NAME = 'meteoasturlode-v200-alerta-nieve-playstore';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -42,6 +42,7 @@ const STATIC_ASSETS = [
   './js/utils/foehnDetector.js',
   './js/utils/galernaDetector.js',
   './js/utils/xeluDetector.js',
+  './js/utils/snowDetector.js',
   './js/utils/gyroGlass.js',
   './js/utils/laundryAdvisor.js',
   './js/utils/climatologyData.js',

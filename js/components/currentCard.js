@@ -4,6 +4,7 @@ import { renderHourlyForecastBlock } from './forecastView.js?v=1.1.60';
 import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.60';
 import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=1.1.60';
 import { detectXeluEffect, renderXeluBanner } from '../utils/xeluDetector.js?v=1.1.60';
+import { detectSnowStatus, renderSnowBanner } from '../utils/snowDetector.js?v=2.0.0';
 import { detectBorrinaEffect, renderBorrinaBanner } from '../utils/borrinaDetector.js?v=1.1.60';
 import { detectMarFondoEffect, renderMarFondoBanner } from '../utils/marFondoDetector.js?v=2.0.0';
 import { detectThunderstormEffect, renderThunderstormBanner } from '../utils/thunderstormDetector.js?v=1.1.60';
@@ -109,6 +110,10 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   // Detección Silenciosa de Escarcha y Placas de Hielo ("Alerta Xelu")
   const xelu = detectXeluEffect(current, daily, concejo);
   const xeluMarkup = renderXeluBanner(xelu);
+
+  // Detector Silencioso e Inteligente de Nevadas y Cota de Nieve ("Alerta Nieve")
+  const snow = detectSnowStatus(current, hourly, daily, concejo);
+  const snowMarkup = renderSnowBanner(snow);
 
   // Detección Silenciosa de Borrina Marina y Nieblas de Valle (Inversión Térmica)
   const borrina = detectBorrinaEffect(current, hourly, concejo);
@@ -250,6 +255,9 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
 
     <!-- BANNER DINÁMICO DE DETECTOR DE ESCARCHA Y PLACAS DE HIELO ("ALERTA XELU") -->
     ${xeluMarkup}
+
+    <!-- BANNER DINÁMICO DE DETECTOR DE NEVADAS Y COTA ("ALERTA NIEVE") -->
+    ${snowMarkup}
 
     <!-- BANNER DINÁMICO DE DETECTOR DE BORRINA Y NIEBLAS ASTURIANAS -->
     ${borrinaMarkup}

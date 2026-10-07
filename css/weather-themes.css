@@ -123,3 +123,173 @@ body[data-weather-theme="fog"] {
 body {
   transition: background 1.8s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s ease;
 }
+
+/* --- BANNER DINÁMICO DETECTOR DE NEVADAS Y COTA ("ALERTA NIEVE") --- */
+.snow-banner {
+  border-radius: var(--radius-lg, 16px);
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+/* 🔵 NIVEL 1 PREVENTIVO: VALLES Y COTAS MEDIAS/BAJAS (AZUL HIELO / CIAN TRASLÚCIDO) */
+.snow-banner.valleys,
+.snow-banner:not(.historic):not(.mountain) {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.20) 0%, rgba(15, 23, 42, 0.85) 100%);
+  border: 1.5px solid rgba(56, 189, 248, 0.85);
+  box-shadow: 0 4px 24px rgba(6, 182, 212, 0.28), inset 0 0 16px rgba(56, 189, 248, 0.12);
+  animation: snowCyanGlow 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes snowCyanGlow {
+  0% { border-color: rgba(56, 189, 248, 0.60); box-shadow: 0 4px 16px rgba(6, 182, 212, 0.20); }
+  100% { border-color: rgba(125, 211, 252, 1); box-shadow: 0 4px 28px rgba(6, 182, 212, 0.42); }
+}
+
+.snow-banner.valleys .snow-title,
+.snow-banner:not(.historic):not(.mountain) .snow-title {
+  color: #e0f2fe;
+}
+
+.snow-banner.valleys .snow-badge,
+.snow-banner:not(.historic):not(.mountain) .snow-badge {
+  background: rgba(6, 182, 212, 0.25);
+  border: 1px solid rgba(56, 189, 248, 0.70);
+  color: #bae6fd;
+}
+
+.snow-banner.valleys .snow-desc strong,
+.snow-banner:not(.historic):not(.mountain) .snow-desc strong {
+  color: #7dd3fc;
+}
+
+/* 🔴 NIVEL 2 HISTÓRICO / COTA CERO: NIEVE EN PLAYAS Y LITORAL (CARMESÍ Y BLANCO GÉLIDO) */
+.snow-banner.historic {
+  background: linear-gradient(135deg, rgba(225, 29, 72, 0.35) 0%, rgba(15, 23, 42, 0.92) 100%);
+  border: 1.5px solid rgba(244, 63, 94, 0.95);
+  box-shadow: 0 4px 30px rgba(225, 29, 72, 0.50), inset 0 0 20px rgba(244, 63, 94, 0.25);
+  animation: snowHistoricGlow 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes snowHistoricGlow {
+  0% { border-color: rgba(244, 63, 94, 0.65); box-shadow: 0 4px 18px rgba(225, 29, 72, 0.30); }
+  100% { border-color: rgba(251, 113, 133, 1); box-shadow: 0 4px 32px rgba(225, 29, 72, 0.60); }
+}
+
+.snow-banner.historic .snow-title {
+  color: #fff1f2;
+}
+
+.snow-banner.historic .snow-badge {
+  background: rgba(225, 29, 72, 0.35);
+  border-color: rgba(251, 113, 133, 0.85);
+  color: #ffffff;
+}
+
+.snow-banner.historic .snow-desc strong {
+  color: #fda4af;
+}
+
+/* 🏔️ NIVEL 3 MONTAÑA Y PUERTOS: TEMPORAL CORDILLERANO (ÍNDIGO / VIOLETA ALPINO) */
+.snow-banner.mountain {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.25) 0%, rgba(15, 23, 42, 0.88) 100%);
+  border: 1.5px solid rgba(129, 140, 248, 0.85);
+  box-shadow: 0 4px 26px rgba(99, 102, 241, 0.32), inset 0 0 18px rgba(129, 140, 248, 0.15);
+  animation: snowMountainGlow 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes snowMountainGlow {
+  0% { border-color: rgba(129, 140, 248, 0.60); box-shadow: 0 4px 18px rgba(99, 102, 241, 0.22); }
+  100% { border-color: rgba(165, 180, 252, 1); box-shadow: 0 4px 28px rgba(99, 102, 241, 0.45); }
+}
+
+.snow-banner.mountain .snow-title {
+  color: #e0e7ff;
+}
+
+.snow-banner.mountain .snow-badge {
+  background: rgba(99, 102, 241, 0.30);
+  border-color: rgba(165, 180, 252, 0.75);
+  color: #c7d2fe;
+}
+
+.snow-banner.mountain .snow-desc strong {
+  color: #a5b4fc;
+}
+
+.snow-banner-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.snow-header-left {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.snow-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.snow-title {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+}
+
+.snow-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm, 6px);
+}
+
+.snow-desc {
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: #f1f5f9;
+  margin: 0 0 10px 0;
+}
+
+.snow-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.snow-metric-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(15, 23, 42, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  color: #cbd5e1;
+}
+
+@media (max-width: 650px) {
+  .snow-banner {
+    padding: 12px 14px;
+    margin-bottom: 14px;
+  }
+  .snow-title {
+    font-size: 0.92rem;
+  }
+  .snow-desc {
+    font-size: 0.84rem;
+  }
+}

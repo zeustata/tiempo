@@ -655,6 +655,41 @@ export const WEATHER_EXPLANATIONS = {
     ]
   },
 
+  snow_alert: {
+    icon: '❄️',
+    title: '¿Cómo funciona la Alerta Nieve y el Cálculo de Cotas?',
+    subtitle: 'Aprende cómo anticipa la app la nieve en concejos de costa, valles y cordillera en Asturias',
+    badge: 'Isoterma 0 °C & Cota Física • Modelo Numérico',
+    sections: [
+      {
+        icon: '📐',
+        heading: '1. Diferencia entre Isoterma 0 °C y Cota de Nieve',
+        text: 'La <strong>isoterma cero</strong> es la altitud a la que el aire alcanza exactamente 0 °C. Sin embargo, los copos de nieve no se derriten de forma instantánea al cruzar esa línea: necesitan atravesar una capa de aire templado para licuarse. Por eso, la <strong>cota de nieve real suele situarse entre 200 y 300 metros por debajo de la isoterma 0 °C</strong> (o incluso más baja si la precipitación es intensa y el aire se enfría por evaporación).'
+      },
+      {
+        icon: '🌊',
+        heading: '2. Nieve a Nivel del Mar en la Costa Asturiana',
+        text: 'Para que nieve a nivel del mar en arenales como Salinas, San Lorenzo o Luarca, se requiere una entrada severa de <strong>aire polar continental o ártico marítimo</strong> con la isoterma de 0 °C situada a menos de 200-300 metros. Aunque el Cantábrico actúa como amortiguador térmico reteniendo calor marino (temperatura superficial del agua ~12-13 °C en invierno), un desplome rápido con chubascos convectivos intensos puede vencer la capa templada y hacer cuajar la nieve a ras de playa.'
+      },
+      {
+        icon: '⚠️',
+        heading: '3. Los 3 Niveles de Severidad de la Alerta',
+        text: `
+          <ul class="explain-list">
+            <li><strong>🚨 Nivel Histórico / Cota Cero (&lt; 200 m):</strong> Fenómeno excepcional en Asturias. Riesgo directo de corte o placas en las autovías principales (A-8 del Cantábrico y A-66 "Y" entre Oviedo, Gijón y Avilés).</li>
+            <li><strong>⚠️ Nivel Valles / Cotas Bajas (200 - 600 m):</strong> Afecta a núcleos muy poblados y accesos interurbanos (Oviedo, Cuencas del Caudal y Nalón, Siero, Cangas del Narcea capital).</li>
+            <li><strong>🏔️ Temporal en Montaña (&gt; 600 m):</strong> Preaviso de nevada copiosa en carreteras cordilleranas. Obligatoriedad de portar cadenas y consultar vialidad invernal.</li>
+          </ul>
+        `
+      },
+      {
+        icon: '🚗',
+        heading: '4. Seguridad Vial y Exención de Responsabilidad (Leyes 11 y 16)',
+        text: 'Las estimaciones de cota y precipitación emanan de simulaciones numéricas de alta resolución. <strong>En ningún caso sustituyen las alertas e indicaciones de la DGT, Guardia Civil de Tráfico o el 112 Asturias</strong>. Ante aviso de nieve, consulta siempre el estado oficial de la red viaria antes de iniciar cualquier viaje.'
+      }
+    ]
+  },
+
   ski_mountain: {
     icon: '🎿',
     title: 'Guía de Esquí, Cotas de Nieve & Puertos',

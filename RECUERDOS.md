@@ -20,6 +20,16 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Soberanía Inapelable de Servicios Oficiales:* Ninguna función de la app sustituye las banderas físicas y órdenes del Servicio de Salvamento y Socorrismo a pie de playa, la DGT, Guardia Civil, Bomberos de Asturias o avisos de emergencias del 112.
   3. *Responsabilidad Individual e Inmunidad del Desarrollador:* Toda actividad en entornos naturales o carretera se realiza bajo la exclusiva responsabilidad del usuario. Obligatoriedad de incorporar advertencias visibles de exención de responsabilidad civil en módulos sensibles y en la Política de Privacidad, blindando al desarrollador (Lendo / zeustata) frente a cualquier reclamación de terceros.
 
+## ❄️ Innovación Invernal en v2.0.0: Detector Silencioso e Inteligente de Nevadas y Cota («Alerta Nieve») — 2026-10-07
+- **Nuevo Sensor Silencioso (snowDetector.js, currentCard.js, weather-themes.css, weatherExplanations.js):**
+  1. *Vigilancia Preventiva en Ventana Temporal (12-24h):* Localización de timestamp local exacto (startIndex) escaneando las próximas 18 horas para anticipar nevadas y desplomes de cota física antes de que empiece a nevar.
+  2. *Triada de Severidad y Altitud por Concejo:*
+     - 🔴 *Alerta Histórica Cota Cero / Nivel del Mar (< 200 m):* Desplome excepcional con riesgo de cuajar en playas, paseos marítimos y autovías (A-8, A-66).
+     - ⚠️ *Aviso en Cotas Bajas y Valles (200 - 600 m):* Alerta para cascos urbanos, fondos de cuencas mineras y red secundaria.
+     - 🏔️ *Temporal en Montaña (> 600 m):* Preaviso de acumulaciones en centímetros y vialidad invernal.
+  3. *Doctrina de Simulacro (Ley 12) & Didáctica (Leyes 11 y 16):* Conmutador ?test=nieve / ?test=cota / ?test=snow y ficha explicativa didáctica en #explain-modal con exención de responsabilidad civil.
+- **Preservación Estratégica de Versión:** Mantenida la versión 2.0.0 (sin incrementar número) por estar en revisión el paquete en Google Play Console, documentando la novedad dentro del bloque oficial de v2.0.0.
+
 ## 🚀 Gran Actualización Oficial v2.0.0 (Google Play Store & PWA) — 2026-10-05
 - **Sincronización Total con Google Play Console (Package versionCode 2):**
   - Empaquetada y enviada a revisión oficial la versión 2.0.0 (`MeteoAstur Lode.aab`, versionCode: 2) para el canal de pruebas cerradas de Google Play Store, firmada con la clave legítima (`signing.keystore`).
