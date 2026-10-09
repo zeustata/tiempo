@@ -2,6 +2,20 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📱 Historial de Producción en Google Play y Estado de Pruebas Cerradas — 2026-10-09
+- **Antecedente del Primer Rechazo en Google Play:**
+  - *Motivo Oficial:* Falta de actividad e interacción suficiente por parte del grupo de testers durante el período obligatorio de pruebas cerradas y no haber incrementado el número de versión formalmente.
+- **Acciones Correctivas Ejecutadas:**
+  - Se incrementó y empaquetó oficialmente la versión a **v2.0.0** (código de versión actualizado).
+  - Convocatoria y aviso directo a los 20 testers para interactuar regularmente con la app en sus dispositivos Android a fin de alimentar la telemetría continua requerida por Google Play Console.
+- **Estado Actual del Proyecto:**
+  - App enviada formalmente a revisión en Google Play Console (plazo estimado de 5 a 7 días).
+  - **Blindaje Total de Código (Ley 17):** Código de producción 100% congelado y estable. Prohibido tocar ningún archivo funcional para no interrumpir las pruebas de los testers ni generar discrepancias en la revisión.
+
+## 🏛️ Registro de Nuevas Normas Constitucionales — 2026-10-09
+- **Honestidad Intelectual y Código de Respuesta:** Cero complacencia automática, detección de premisas erróneas, rigor en la evidencia y sinceridad leal sin filtros de cortesía artificial.
+- **Protocolo de Juicio Crítico y Evaluación (Socios en Igualdad):** Evaluación crítica previa a cualquier elogio, juicio independiente sin sesgo de anclaje, firmeza argumentada y separación estricta entre juicio (evaluación sincera) y ejecución (eficiencia absoluta tras la decisión tomada por Lendo).
+
 ## 🌧️ Registro y Hoja de Ruta: Calibración Fina de Lluvia Débil vs. Chubascos Dispersos (Piedras Blancas) — 2026-10-07
 - **Contexto Observado en Vivo:** En Piedras Blancas (Castrillón), el modelo meteorológico en bruto reportó `weather_code: 61` (*Lluvia débil*) y `precipitation: 0.40 mm` (franja horaria con acumulados previstos de 1.9 a 3.3 mm), pero en la realidad física en tierra no caía lluvia.
 - **Diagnóstico Técnico:**
