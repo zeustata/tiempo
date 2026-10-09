@@ -49,6 +49,10 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
      - *Captura Directa con Superposición:* Interfaz de cámara que proyecta sobreimpreso en vivo sobre la lente un marco translúcido con telemetría en tiempo real (temperatura, concejo, viento, bandera marina o cota de nieve) para generar estampas fotográficas inmediatas listas para compartir en redes.
   9. *Monitor de Puntos Críticos Viales de Asturias (Seguridad en Carretera):*
      - *Enfoque de Servicio Público:* Lectura rápida focalizada en los grandes nudos de comunicación asturiana (Huerna / Pajares A-66, viaductos de la A-8 expuestos a viento cruzado y zonas de xelu en fondos de valle), integrando avisos de vialidad invernal y nieblas orográficas.
+   10. *Sensor Silencioso de Lluvia Torrencial Aguda e Inundación Relámpago (Flash Flood Alert):*
+      - *Fundamento Físico y Seguridad Ciudadana:* Detección de trombas de agua intensas y repentinas concentradas en ventanas de tiempo muy cortas (1-2 horas), diferenciando el orpín o lluvia frontal continua de descargas torrenciales que colapsan colectores y alcantarillado.
+      - *Criterio de Disparo Agudo:* Tasa horaria de precipitación extrema (>= 20-25 mm/h) o chubascos convectivos severos (códigos WMO 81, 82, 95, 96, 99) para evitar falsas alarmas.
+      - *Avisos Viales y Urbanos:* Alerta específica orientada a conductores y peatones sobre formación súbita de balsas de agua en calzada, aquaplaning en autovías (A-8, Y asturiana) y anegamiento rápido de pasos subterráneos, garajes y zonas bajas.
 
 ## 🧹 Mantenimiento y Calidad de Código: Limpieza de Advertencias Linter en CSS — 2026-10-07
 - **Resolución de Advertencias en `css/main.css`:**
