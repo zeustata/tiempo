@@ -194,8 +194,18 @@ function applyCantabricoConsensus(weather, consensus) {
   if (weather.current && consensus.current) {
     const rawCloud = weather.current.cloud_cover != null ? weather.current.cloud_cover : 100;
     const ecmwfCloud = consensus.current.cloud_cover != null ? consensus.current.cloud_cover : 0;
-    // Solo se corrige el falso claro si ECMWF constata un manto cerrado cerrado (>= 80%) y la divergencia es masiva (>= 35%)
-    const isFalseClear = rawCloud < 50 && ecmwfCloud >= 80 && (ecmwfCloud - rawCloud >= 35);
+    const rawDirectIrr = weather.current.direct_normal_irradiance != null ? parseFloat(weather.current.direct_normal_irradiance) : 0;
+    const rawUv = weather.current.uv_index != null ? parseFloat(weather.current.uv_index) : 0;
+    const rawSw = weather.current.shortwave_radiation != null ? parseFloat(weather.current.shortwave_radiation) : 0;
+
+    // SOBERANÍA SOLAR FÍSICA INQUEBRANTABLE EN TIEMPO ACTUAL:
+    // Si los sensores y el modelo de alta resolución detectan haz solar directo real (radiación directa >= 100 W/m²,
+    // radiación global >= 200 W/m² o UV >= 1.0), es físicamente imposible que haya un cielo 100% encapotado.
+    // Prohibido clasificar como "falso claro" si hay radiación solar activa verificable.
+    const hasActiveSunlight = rawDirectIrr >= 100 || rawSw >= 200 || rawUv >= 1.0;
+
+    // Solo se corrige el falso claro si no hay sol directo activo, ECMWF constata un manto cerrado (>= 80%) y la divergencia es masiva (>= 35%)
+    const isFalseClear = !hasActiveSunlight && rawCloud < 50 && ecmwfCloud >= 80 && (ecmwfCloud - rawCloud >= 35);
 
     if (isFalseClear) {
       weather.current.cloud_cover = ecmwfCloud;
@@ -209,11 +219,6 @@ function applyCantabricoConsensus(weather, consensus) {
         weather.current.shortwave_radiation = consensus.current.shortwave_radiation;
       }
     }
-
-    // AROME MANDA EN TIEMPO ACTUAL:
-    // Nunca sobreescribimos precipitation ni weather_code en vivo con ECMWF si AROME marca seco.
-    // Esto garantiza que el detector de resol/claros y el semáforo del paraguas nunca queden
-    // secuestrados por el sesgo orográfico de 9 km de ECMWF.
   }
 
   // 2. Verificación de pronóstico horario inmediato (primeras 48 horas)

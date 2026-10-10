@@ -2,6 +2,14 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## ☀️ Registro Técnico: Soberanía Solar Física y Blindaje Nowcasting (Castrillón / Piedras Blancas) — 2026-10-10
+- **Contexto Observado en Vivo:** En Piedras Blancas, día con sol directo brillante (~600 W/m² de radiación perpendicular y cielo despejado en el modelo de alta resolución), pero la app mostraba "Nublado / Cubiertu".
+- **Causa Raíz Diagnosticada:** En `applyCantabricoConsensus` (`weatherApi.js`), el filtro de falso claro asumía unilateralmente que si el modelo global ECMWF (9 km) marcaba cobertura >= 80%, la lectura de sol era ficticia y sobreescribía el código a 3 (Nublado) y degradaba artificialmente la radiación directa (`direct_normal_irradiance`) a ~180 W/m².
+- **Solución Implementada:**
+  1. *Soberanía Solar Real:* En tiempo actual, si los sensores y el modelo registran radiación directa activa (`>= 100 W/m²`, radiación global `>= 200 W/m²` o UV `>= 1.0`), se prohíbe taxativamente catalogarlo como "falso claro" y se respeta la realidad física del sol.
+  2. *Calibración Bidireccional en `weatherIcons.js`:* Si la nubosidad es muy baja (`<= 25%`) con radiación solar directa activa, se califica con fidelidad absoluta como "Despejado / Soleyeru" (`☀️`).
+- **Control de Versión:** Versión de producción congelada intacta en v2.0.0 a petición de Lendo para preservar la estabilidad de la revisión en Google Play Console.
+
 ## 📱 Historial de Producción en Google Play y Estado de Pruebas Cerradas — 2026-10-09
 - **Antecedente del Primer Rechazo en Google Play:**
   - *Motivo Oficial:* Falta de actividad e interacción suficiente por parte del grupo de testers durante el período obligatorio de pruebas cerradas y no haber incrementado el número de versión formalmente.

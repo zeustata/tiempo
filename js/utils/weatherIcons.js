@@ -309,12 +309,13 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     }
 
     if (p < 0.1 && hasRealSolarLight && (base.isRain || base.svgKey === 'cloudy' || code === 3 || base.svgKey === 'fog')) {
+      const isClearSky = !isResol && cc !== null && cc <= 25 && irr >= 150;
       base = {
-        label: isResol ? 'Resol / Sol tamizáu' : 'Parcialmente nublado / Claros',
-        icon: isResol ? '🌥️' : '⛅',
-        svgKey: isResol ? 'resol' : 'partly-cloudy-day',
-        lucide: 'cloud-sun',
-        bg: 'partly-cloudy',
+        label: isResol ? 'Resol / Sol tamizáu' : (isClearSky ? 'Despejado / Soleyeru' : 'Parcialmente nublado / Claros'),
+        icon: isResol ? '🌥️' : (isClearSky ? '☀️' : '⛅'),
+        svgKey: isResol ? 'resol' : (isClearSky ? 'clear-day' : 'partly-cloudy-day'),
+        lucide: isResol ? 'cloud-sun' : (isClearSky ? 'sun' : 'cloud-sun'),
+        bg: isClearSky ? 'clear-day' : 'partly-cloudy',
         isRain: false,
         isSnow: false,
         isSolarCalibrated: true,
