@@ -8,6 +8,7 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - **Solución Implementada:**
   1. *Soberanía Solar Real:* En tiempo actual, si los sensores y el modelo registran radiación directa activa (`>= 100 W/m²`, radiación global `>= 200 W/m²` o UV `>= 1.0`), se prohíbe taxativamente catalogarlo como "falso claro" y se respeta la realidad física del sol.
   2. *Calibración Bidireccional en `weatherIcons.js`:* Si la nubosidad es muy baja (`<= 25%`) con radiación solar directa activa, se califica con fidelidad absoluta como "Despejado / Soleyeru" (`☀️`).
+  3. *Simetría Física Inversa (Anti-falso sol / Panza de burro):* Si el modelo traía código de sol (0, 1, 2) pero las lecturas en tierra constatan manto nuboso cerrado (`cc >= 85%`) y radiación directa nula (`irr < 80 W/m²` y `sw < 180 W/m²`), se rectifica automáticamente a "Nublado / Cubiertu" (`☁️`), garantizando coherencia matemática en ambos sentidos.
 - **Control de Versión:** Versión de producción congelada intacta en v2.0.0 a petición de Lendo para preservar la estabilidad de la revisión en Google Play Console.
 
 ## 📱 Historial de Producción en Google Play y Estado de Pruebas Cerradas — 2026-10-09

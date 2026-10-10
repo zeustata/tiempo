@@ -322,6 +322,27 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
         isResol: isResol
       };
     }
+
+    // SIMETRÍA FÍSICA INVERSA (BLINDAJE ANTI-FALSO SOL / PANZA DE BURRO):
+    // Si el modelo numérico traía un código de sol (0, 1 o 2) pero las lecturas en tierra
+    // demuestran un manto nuboso cerrado (cc >= 85%) y la radiación solar directa es prácticamente nula
+    // (irr < 80 W/m² y sw < 180 W/m²), es físicamente imposible que esté soleado.
+    // Se rectifica automáticamente a 'Nublado / Cubiertu' erradicando los falsos soles asturianos.
+    const isSolarCode = code === 0 || code === 1 || code === 2 || base.svgKey === 'clear-day' || base.svgKey === 'mostly-clear-day';
+    const isOvercastBlocked = cc !== null && cc >= 85 && irr < 80 && sw < 180;
+    if (p < 0.1 && isSolarCode && isOvercastBlocked) {
+      base = {
+        label: 'Nublado / Cubiertu',
+        icon: '☁️',
+        svgKey: 'cloudy',
+        lucide: 'cloud',
+        bg: 'cloudy',
+        isRain: false,
+        isSnow: false,
+        isSolarCalibrated: true,
+        isResol: false
+      };
+    }
   }
 
   return base;
