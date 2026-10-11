@@ -2,6 +2,21 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📱 Diagnóstico Forense de Google Play Console y Hoja de Ruta Estratégica v2.1.0 — 2026-10-11
+- **Situación Reportada:** Notificación oficial en Google Play Console y correo electrónico indicando *"More testing required to access Google Play production"* y reactivación del contador obligatorio de *"14 días más a partir de la fecha de revisión (sábado 10-10, 20:21)"*.
+- **Causa Raíz Diagnosticada (Evidencia Oficial de Google):**
+  1. *Testers engagement:* Falta de actividad continuada y sostenida en el tiempo registrada en telemetría de Play Console durante la prueba cerrada.
+  2. *Testing best practices (Gathering and acting on feedback through updates):* Google exige demostrar un ciclo iterativo donde el desarrollador recopila sugerencias/críticas de los testers y publica una actualización correctiva intermedia en la propia pista de pruebas cerradas.
+- **Estrategia Acordada y Hoja de Ruta v2.1.0 (Plan en 3 Fases):**
+  - **Fase 1 (Reposo y telemetría de base, días 1-5):** Mantener la prueba cerrada activa acumulando días naturales sin presión ni saturación a los testers.
+  - **Fase 2 (Desarrollo y Despliegue de v2.1.0, días 6-8 ~ 16-17 Octubre):**
+    1. *Mini-Gráfico Térmico Continuo 24h:* Curva continua de temperaturas del día con gradiente térmico y punto vivo según la hora actual en la tarjeta principal (`currentCard.js`).
+    2. *Refuerzo de Legibilidad Diurna:* Micro-contraste mejorado en textos secundarios mediante sombras sutiles bajo luz solar intensa.
+    3. *Empaquetado de v2.1.0 a Prueba Cerrada:* Subida formal del `.aab` a la pista cerrada con notas de versión explícitas vinculando los cambios a sugerencias de los testers.
+  - **Fase 3 (Feedback orgánico y Solicitud Final, días 13-14 ~ 24-25 Octubre):**
+    1. Recopilación de comentarios naturales de 2-3 testers en Google Play confirmando la mejora con la v2.1.0.
+    2. Redacción técnica blindada del cuestionario de solicitud de producción detallando las iteraciones entre v2.0.0 y v2.1.0 para aprobación definitiva por el revisor humano.
+
 ## ☀️ Registro Técnico: Soberanía Solar Física y Blindaje Nowcasting (Castrillón / Piedras Blancas) — 2026-10-10
 - **Contexto Observado en Vivo:** En Piedras Blancas, día con sol directo brillante (~600 W/m² de radiación perpendicular y cielo despejado en el modelo de alta resolución), pero la app mostraba "Nublado / Cubiertu".
 - **Causa Raíz Diagnosticada:** En `applyCantabricoConsensus` (`weatherApi.js`), el filtro de falso claro asumía unilateralmente que si el modelo global ECMWF (9 km) marcaba cobertura >= 80%, la lectura de sol era ficticia y sobreescribía el código a 3 (Nublado) y degradaba artificialmente la radiación directa (`direct_normal_irradiance`) a ~180 W/m².
