@@ -438,13 +438,13 @@ export function evaluatePassStatus(passAlt, freezingLevel, snowAccumToday, preci
     if (fl <= alt - 150 && snow >= 6) {
       skiAccessStatus = {
         icon: '⛓️',
-        label: `Acceso a ${skiAccess}: Cadenas obligatorias`,
+        label: `Acceso a ${skiAccess}: Cadenas obligatorias estimadas`,
         color: '#ef4444'
       };
     } else if (fl <= alt && (snow > 0 || isPrecip)) {
       skiAccessStatus = {
         icon: '⚠️',
-        label: `Acceso a ${skiAccess}: Precaución por nieve/hielo`,
+        label: `Acceso a ${skiAccess}: Precaución estimada (Nieve/Hielo)`,
         color: '#f59e0b'
       };
     } else if (fl <= alt + 150) {
@@ -456,7 +456,7 @@ export function evaluatePassStatus(passAlt, freezingLevel, snowAccumToday, preci
     } else {
       skiAccessStatus = {
         icon: '🎿',
-        label: `Acceso a ${skiAccess}: Carretera despejada`,
+        label: `Acceso a ${skiAccess}: Calzada estimada despejada`,
         color: '#10b981'
       };
     }
@@ -464,7 +464,7 @@ export function evaluatePassStatus(passAlt, freezingLevel, snowAccumToday, preci
 
   if (fl <= alt - 150 && snow >= 6) {
     return {
-      status: 'Cadenas Obligatorias',
+      status: 'Cadenas Estimadas',
       statusClass: 'status-chains',
       icon: '⛓️',
       color: '#ef4444',
@@ -475,7 +475,7 @@ export function evaluatePassStatus(passAlt, freezingLevel, snowAccumToday, preci
   }
   if (fl <= alt && (snow > 0 || isPrecip)) {
     return {
-      status: 'Precaución (Nieve/Hielo)',
+      status: 'Precaución Estimada',
       statusClass: 'status-caution',
       icon: '🟡',
       color: '#f59e0b',
@@ -486,7 +486,7 @@ export function evaluatePassStatus(passAlt, freezingLevel, snowAccumToday, preci
   }
   if (fl <= alt + 150) {
     return {
-      status: 'Riesgo de Heladas',
+      status: 'Riesgo Heladas',
       statusClass: 'status-frost',
       icon: '❄️',
       color: '#38bdf8',
@@ -496,7 +496,7 @@ export function evaluatePassStatus(passAlt, freezingLevel, snowAccumToday, preci
     };
   }
   return {
-    status: 'Tráfico Normal / Abierto',
+    status: 'Tráfico Estimado Normal',
     statusClass: 'status-ok',
     icon: '🟢',
     color: '#10b981',
@@ -800,6 +800,10 @@ export function renderMountainCard(data, concejo) {
       <!-- VISTA B: 🚗 RED INTEGRAL DE PUERTOS Y ACCESOS A LA MESETA -->
       <div id="mountain-passes-view" class="mountain-tab-content" style="display: none;">
         <!-- ARTERIAS PRINCIPALES DE CONEXIÓN CON LA MESETA -->
+        <div class="passes-disclaimer-banner">
+          <span>⚠️ <strong>Aviso Preventivo:</strong> Estado del firme estimado por modelo físico. No sustituye la señalización de la DGT ni la orden de la Guardia Civil de Tráfico. Consulta las webcams antes de viajar.</span>
+        </div>
+
         <div class="passes-group-block">
           <div class="passes-group-title">
             <span>🛣️ Arterias Principales hacia la Meseta (Asturias - León)</span>

@@ -3577,6 +3577,24 @@
   padding: 2px 6px;
   margin: 3px 0 1px 0;
 }
+/* Banner de Aviso Preventivo en Puertos de Montaña (Ley 16) */
+.passes-disclaimer-banner {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.28);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  font-size: 0.72rem;
+  color: #fef3c7;
+  line-height: 1.45;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.passes-disclaimer-banner strong {
+  color: #fbbf24;
+}
+
 
 
 /* Bloques de Sectores (Centro / Oriente / Occidente) */

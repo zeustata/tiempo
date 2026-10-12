@@ -5,11 +5,14 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 ## 🚗 Actualización v2.0.2: Accesos Viales a Estaciones de Esquí en Puertos de Montaña — 2026-10-12
 - **Módulo Operativo en Puertos de Montaña (`mountainCard.js`):**
   1. *Diagnóstico Vial de Acceso a Pistas:* Incorporación de metadata `skiAccess` en los puertos clave de conexión (Puerto de Pajares N-630 hacia Valgrande-Pajares, Puerto de San Isidro AS-112/LE-331 hacia Fuentes de Invierno y San Isidro, y Puerto de Leitariegos AS-213 hacia Leitariegos).
-  2. *Semáforo Dinámico de Vialidad Invernal:* En la función `evaluatePassStatus`, se genera un diagnóstico vivo que indica si la carretera hasta el parking está despejada (`🎿 Carretera despejada`), con riesgo de heladas o si exige cadenas (`⛓️ Cadenas obligatorias`) según la cota de nieve en tiempo real.
-  3. *Armonía Visual y Anti-Desborde (Leyes 11 y 14):* Estilo Liquid Glass en `.pass-ski-access-badge` con variante compacta en los sectores de montaña, adaptada a pantallas ultra-estrechas.
+  2. *Semáforo Dinámico de Vialidad Invernal:* En la función `evaluatePassStatus`, se genera un diagnóstico vivo que indica si la carretera hasta el parking está despejada, con riesgo de heladas o si exige cadenas según la cota de nieve en tiempo real.
+  3. *Blindaje Preventivo y Textos Estimados (Ley 16):* Todas las etiquetas de estado han sido matizadas taxativamente a "Estimado" (`Tráfico Estimado Normal`, `Precaución Estimada`, `Cadenas Estimadas`, `Calzada estimada despejada`, `Cadenas obligatorias estimadas`) erradicando afirmaciones categóricas de paso o garantía de tránsito.
+  4. *Banner de Aviso Preventivo Visible (`.passes-disclaimer-banner`):* Tarjeta prominente en la cabecera de la red de puertos recordando que el estado es un modelo numérico teórico, que no sustituye la señalización de la DGT ni la orden de la Guardia Civil de Tráfico, e invitando a verificar las webcams antes del desplazamiento.
+  5. *Armonía Visual y Anti-Desborde (Leyes 11 y 14):* Estilo Liquid Glass en `.pass-ski-access-badge` con variante compacta en los sectores de montaña, adaptada a pantallas ultra-estrechas.
 - **Cache-Busting y Sincronización de Versión (Leyes 1, 4 y 13):**
   - Versión oficial actualizada a **`v2.0.2 🚗`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
   - Service Worker actualizado a `meteoasturlode-v202-accesos-puertos-esqui` en `sw.js`.
+
 
 
 
