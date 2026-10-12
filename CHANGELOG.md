@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.0.3] - 2026-10-12
+
+### 📈 Mini-Gráfico Térmico Continuo 24h (Hero Card)
+- **Curva Térmica Spline:** Incorporación de una curva continua suave con gradiente térmico de 24 horas dentro de la tarjeta principal, proyectando la evolución de la temperatura de 00:00 a 23:59h.
+- **Punto Vivo Horario:** Indicador pulsante situado en tiempo real sobre el minuto exacto de la jornada, facilitando la lectura inmediata de la tendencia térmica.
+- **Mínimas y Máximas Dinámicas:** Rotulación discreta de los picos térmicos del día sin saturar la vista.
+- **Inmunidad Anti-Desborde (Ley 11):** SVG vectorial nativo sin dependencias pesadas adaptado con fluidez a cualquier ancho móvil.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v203-curva-termica-24h`.
+
+---
+
 ## [2.0.2] - 2026-10-12
 
 ### 🚗 Accesos Viales a Estaciones de Esquí en Puertos de Montaña

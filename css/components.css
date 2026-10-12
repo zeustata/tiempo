@@ -255,6 +255,76 @@
   gap: 8px;
   margin-top: 4px;
 }
+/* --- MINI-GRÁFICO TÉRMICO CONTINUO 24H (INMUNIDAD ANTI-DESBORDE Y PULSO VIVO) --- */
+.mini-thermal-widget {
+  margin-top: 10px;
+  background: rgba(15, 23, 42, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px 6px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+}
+
+.mini-thermal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.70rem;
+}
+
+.mth-title {
+  color: #94a3b8;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.mth-live-tag {
+  color: #cbd5e1;
+  font-size: 0.70rem;
+}
+
+.mth-live-tag strong {
+  color: #38bdf8;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.mini-thermal-svg-wrap {
+  width: 100%;
+  height: 42px;
+  overflow: visible;
+}
+
+.mini-thermal-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.mini-thermal-timeline {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.62rem;
+  color: #64748b;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 0 4px;
+}
+
+@keyframes thermalPulseAnim {
+  0% { r: 3.5; opacity: 0.5; }
+  50% { r: 6.5; opacity: 0.15; }
+  100% { r: 3.5; opacity: 0.5; }
+}
+
+.thermal-live-pulse {
+  animation: thermalPulseAnim 2.2s infinite ease-in-out;
+}
+
 
 .t-pill {
   font-size: 0.92rem;

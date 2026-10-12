@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v202-accesos-puertos-esqui';
+const CACHE_NAME = 'meteoasturlode-v203-curva-termica-24h';
 const STATIC_ASSETS = [
   './',
   './index.html',

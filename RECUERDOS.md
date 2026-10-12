@@ -2,6 +2,18 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📈 Actualización v2.0.3: Mini-Gráfico Térmico Continuo 24h en Tarjeta Principal — 2026-10-12
+- **Módulo Operativo en Tarjeta Principal (`currentCard.js` y `components.css`):**
+  1. *Curva Térmica Continua 24h:* Renderizado vectorial nativo en SVG con curva bezier spline de 00:00 a 23:59h y sombreado con gradiente térmico tricolor suave (azul cantábrico, ámbar y violeta).
+  2. *Punto Vivo Horario en Tiempo Real:* Cálculo dinámico de interpolación minuto a minuto de la hora local en curso (`hourFraction`), situando un punto blanco brillante con pulso visual continuo sobre la curva para lectura instantánea de la tendencia térmica.
+  3. *Mínimas y Máximas Dinámicas:* Marcadores numéricos sutiles situados en los picos y valles de la curva (`↑máx` y `↓mín`).
+  4. *Inmunidad Anti-Desborde y Ergonomía Móvil (Ley 11):* Lienzo con relación de aspecto preservada, altura contenida (~42px) y adaptación fluida a cualquier resolución móvil.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4 y 13):**
+  - Versión oficial actualizada a **`v2.0.3 📈`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v203-curva-termica-24h` en `sw.js`.
+
+
+
 ## 🚗 Actualización v2.0.2: Accesos Viales a Estaciones de Esquí en Puertos de Montaña — 2026-10-12
 - **Módulo Operativo en Puertos de Montaña (`mountainCard.js`):**
   1. *Diagnóstico Vial de Acceso a Pistas:* Incorporación de metadata `skiAccess` en los puertos clave de conexión (Puerto de Pajares N-630 hacia Valgrande-Pajares, Puerto de San Isidro AS-112/LE-331 hacia Fuentes de Invierno y San Isidro, y Puerto de Leitariegos AS-213 hacia Leitariegos).

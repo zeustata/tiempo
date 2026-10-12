@@ -48,6 +48,128 @@ function getPollenLabel(val, lowLimit = 10, highLimit = 50) {
 }
 
 /**
+ * Genera el Mini-Gráfico Térmico Continuo 24h en SVG nativo
+ * Inmunidad al desborde móvil (Ley 11), gradiente térmico y punto vivo horario
+ */
+function renderMiniThermalCurve24h(hourly) {
+  if (!hourly || !Array.isArray(hourly.temperature_2m) || !Array.isArray(hourly.time)) {
+    return '';
+  }
+
+  // Filtrar las 24 horas del día natural de hoy
+  const now = new Date();
+  const todayPrefix = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  
+  const temps = [];
+  const hours = [];
+  for (let i = 0; i < hourly.time.length; i++) {
+    if (hourly.time[i].startsWith(todayPrefix)) {
+      temps.push(hourly.temperature_2m[i]);
+      hours.push(parseInt(hourly.time[i].substring(11, 13), 10));
+      if (temps.length >= 24) break;
+    }
+  }
+
+  if (temps.length < 12) return '';
+
+  const minTemp = Math.min(...temps);
+  const maxTemp = Math.max(...temps);
+  const range = Math.max(1, maxTemp - minTemp);
+
+  // Dimensiones del lienzo SVG
+  const width = 300;
+  const height = 40;
+  const paddingX = 14;
+  const paddingTop = 12;
+  const paddingBottom = 8;
+  const graphH = height - paddingTop - paddingBottom;
+  const stepX = (width - paddingX * 2) / (temps.length - 1);
+
+  // Coordenadas de los puntos
+  const points = temps.map((t, idx) => {
+    const x = paddingX + idx * stepX;
+    const y = paddingTop + graphH - ((t - minTemp) / range) * graphH;
+    return { x, y, temp: t, hour: hours[idx] };
+  });
+
+  // Generar curva suave bezier (spline continua)
+  let dCurve = `M ${points[0].x.toFixed(1)} ${points[0].y.toFixed(1)}`;
+  for (let i = 0; i < points.length - 1; i++) {
+    const p0 = points[i];
+    const p1 = points[i + 1];
+    const cpx1 = (p0.x + (p1.x - p0.x) / 2).toFixed(1);
+    const cpx2 = cpx1;
+    dCurve += ` C ${cpx1} ${p0.y.toFixed(1)}, ${cpx2} ${p1.y.toFixed(1)}, ${p1.x.toFixed(1)} ${p1.y.toFixed(1)}`;
+  }
+
+  // Área bajo la curva para el gradiente suave
+  const dArea = `${dCurve} L ${points[points.length - 1].x.toFixed(1)} ${height} L ${points[0].x.toFixed(1)} ${height} Z`;
+
+  // Calcular la posición del punto vivo según la hora y minutos actuales
+  const curHour = now.getHours();
+  const curMin = now.getMinutes();
+  const hourFraction = Math.min(23, curHour + curMin / 60);
+  const curX = paddingX + hourFraction * stepX;
+  
+  // Interpolación de Y y temperatura para el punto vivo
+  const baseIdx = Math.min(points.length - 2, Math.floor(hourFraction));
+  const tFrac = hourFraction - baseIdx;
+  const curY = points[baseIdx].y + (points[baseIdx + 1].y - points[baseIdx].y) * tFrac;
+  const curTemp = (temps[baseIdx] + (temps[baseIdx + 1] - temps[baseIdx]) * tFrac).toFixed(1);
+
+  // Identificar el índice de máxima y mínima para etiquetas discretas
+  const maxIdx = temps.indexOf(maxTemp);
+  const minIdx = temps.indexOf(minTemp);
+  const maxPt = points[maxIdx];
+  const minPt = points[minIdx];
+
+  return `
+    <div class="mini-thermal-widget" title="Curva térmica continua de 24h con punto en tiempo real">
+      <div class="mini-thermal-header">
+        <span class="mth-title">📈 Curva Térmica Hoy</span>
+        <span class="mth-live-tag">Ahora: <strong>${curTemp}°C</strong> (${String(curHour).padStart(2, '0')}:${String(curMin).padStart(2, '0')}h)</span>
+      </div>
+      <div class="mini-thermal-svg-wrap">
+        <svg viewBox="0 0 ${width} ${height}" class="mini-thermal-svg" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="thermalCurveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#38bdf8" />
+              <stop offset="50%" stop-color="#fbbf24" />
+              <stop offset="100%" stop-color="#818cf8" />
+            </linearGradient>
+            <linearGradient id="thermalAreaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.22" />
+              <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.0" />
+            </linearGradient>
+          </defs>
+
+          <!-- Área sombreada -->
+          <path d="${dArea}" fill="url(#thermalAreaGrad)" />
+
+          <!-- Línea suave continua -->
+          <path d="${dCurve}" fill="none" stroke="url(#thermalCurveGrad)" stroke-width="2.2" stroke-linecap="round" />
+
+          <!-- Etiquetas discretas de mínima y máxima -->
+          <text x="${maxPt.x}" y="${Math.max(8, maxPt.y - 4)}" fill="#fbbf24" font-size="7.5" font-family="'JetBrains Mono', monospace" font-weight="800" text-anchor="middle">↑${Math.round(maxTemp)}°</text>
+          <text x="${minPt.x}" y="${Math.min(height - 1, minPt.y + 7.5)}" fill="#38bdf8" font-size="7.5" font-family="'JetBrains Mono', monospace" font-weight="800" text-anchor="middle">↓${Math.round(minTemp)}°</text>
+
+          <!-- Punto vivo actual con pulso visual -->
+          <circle cx="${curX.toFixed(1)}" cy="${curY.toFixed(1)}" r="4.5" fill="#38bdf8" opacity="0.35" class="thermal-live-pulse" />
+          <circle cx="${curX.toFixed(1)}" cy="${curY.toFixed(1)}" r="2.8" fill="#ffffff" stroke="#0284c7" stroke-width="1.4" />
+        </svg>
+      </div>
+      <div class="mini-thermal-timeline">
+        <span>00h</span>
+        <span>06h</span>
+        <span>12h</span>
+        <span>18h</span>
+        <span>23h</span>
+      </div>
+    </div>
+  `;
+}
+
+/**
  * Renderiza el dashboard principal con alineación uniforme y todos los sensores de la estación
  */
 export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme = 'astur') {
@@ -236,6 +358,9 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
           </div>
         </div>
       </div>
+
+      <!-- MINI-GRÁFICO TÉRMICO CONTINUO 24H (CURVA SUAVE CON PUNTO VIVO HORARIO) -->
+      ${renderMiniThermalCurve24h(hourly)}
 
       <!-- BANNER DESTACADO DE FOLIXAS Y FIESTAS LOCALES (HOXE TAMOS DE FOLIXA) -->
       ${folixaBannerMarkup ? `<div class="hero-divider"></div>${folixaBannerMarkup}` : ''}
