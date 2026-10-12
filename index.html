@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.0.2">
-  <link rel="stylesheet" href="css/components.css?v=2.0.2">
-  <link rel="stylesheet" href="css/weather-themes.css?v=2.0.2">
+  <link rel="stylesheet" href="css/main.css?v=2.0.4">
+  <link rel="stylesheet" href="css/components.css?v=2.0.4">
+  <link rel="stylesheet" href="css/weather-themes.css?v=2.0.4">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -243,7 +243,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.0.3 📈</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.0.4 ⛅</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -295,8 +295,21 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.0.3 📈</span>
+            <span class="release-version">v2.0.4 ⛅</span>
             <span class="release-date">12 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-improvement">Calibración Física</span> <strong>Blindaje Anti-Falso Sol Costero y Nubes Bajas Asturianas</strong>:
+              <br>• <strong>Detección de Estratos y Panza de Burro Marina:</strong> Cuando el modelo numérico predice código despejado pero los sensores en tierra registran humedad costera casi saturada (<code>≥ 90%</code>), presencia de nubosidad y ausencia de radiación solar directa (<code>&lt; 80 W/m²</code>), la app desempata con total fidelidad clasificando como <code>⛅ Parcialmente nublado / Intervalos nubosos</code> o <code>☁️ Nublado / Cubiertu</code>.
+              <br>• <strong>Respeto Absoluto a Parámetros Clave:</strong> Se preserva intacta la soberanía del sol directo a mediodía, el detector asturiano de <em>Resol / Sol tamizáu</em> (<code>🌥️</code>) y el riguroso filtro de <em>Orbayu físico</em>.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.0.3 📈</span>
+            <span class="release-date">12 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-new">Nuevo Componente</span> <strong>Mini-Gráfico Térmico Continuo 24h</strong>:
@@ -2802,7 +2815,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.0.2"></script>
+  <script type="module" src="js/app.js?v=2.0.4"></script>
 
 
 

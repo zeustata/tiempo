@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v203-curva-termica-24h';
+const CACHE_NAME = 'meteoasturlode-v204-calibracion-falso-sol-costero';
 const STATIC_ASSETS = [
   './',
   './index.html',

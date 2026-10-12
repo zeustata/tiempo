@@ -10,6 +10,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.0.4] - 2026-10-12
+
+### ⛅ Blindaje Anti-Falso Sol Costero y Nubes Bajas Asturianas
+- **Detección Fiel de Estratos y Panza de Burro Costera:** Corrección de la simetría inversa física cuando el modelo numérico pronostica código despejado (`code 1`) pero en el litoral asturiano los sensores demuestran humedad casi saturada (`≥ 90%`), presencia de estratos bajos (`cloud_cover ≥ 35%`) y ausencia de radiación solar directa (`< 80 W/m²`).
+- **Desempate Realista Nowcasting:** Reasigna a `⛅ Parcialmente nublado / Intervalos nubosos` o `☁️ Nublado / Cubiertu` (si la cobertura es `>= 70%`), erradicando la contradicción visual en concejos de costa (Castrillón, Gijón, Gozón, etc.).
+- **Inmunidad de Parámetros Preexistentes:** La soberanía de la radiación solar directa a mediodía, el detector de *Resol / Sol tamizáu* (`🌥️`) y los filtros estrictos de lluvia y orbayu físico (`p >= 0.1 mm` o `h >= 94%`) se mantienen completamente inalterados.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v204-calibracion-falso-sol-costero`.
+
+---
+
 ## [2.0.3] - 2026-10-12
 
 ### 📈 Mini-Gráfico Térmico Continuo 24h (Hero Card)

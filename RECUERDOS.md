@@ -2,6 +2,19 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## ⛅ Actualización v2.0.4: Blindaje Anti-Falso Sol Costero y Nubes Bajas Asturianas — 2026-10-12
+- **Módulo Operativo en Motor Meteorológico (`weatherIcons.js`, `currentCard.js` y `app.js`):**
+  1. *Simetría Inversa Física Costera:* Refinamiento del filtro anti-falso sol para cubrir el fenómeno frecuente en el litoral asturiano donde el modelo numérico vertical predice cielo despejado (`code 1`), pero los sensores en tierra registran humedad casi saturada (`h >= 88%`), presencia de estratos bajos (`cloud_cover >= 20%`) y ausencia de radiación solar directa (`irr < 80 W/m²` y `sw < 180 W/m²`).
+  2. *Desempate Realista:* Rectificación fidedigna a `⛅ Parcialmente nublado / Intervalos nubosos` o `☁️ Nublado / Cubiertu` (si `cc >= 70%`), reflejando con exactitud la sensación visual en Castrillón, Gijón, Gozón o Avilés.
+  3. *Inmunidad de Parámetros Preexistentes:* Cero interferencia con la soberanía solar diurna a mediodía (`irr >= 100` o `uv >= 1.0`), el detector asturiano de *Resol / Sol tamizáu* (`🌥️`) y el rigor del filtro de lluvia y *Orbayu meón* (`p >= 0.1 mm` o `h >= 94%`).
+  4. *Incorporación a Ley 12 de AGENTS.md (Cláusula 14 - Doctrina de Blindaje Holístico en Calibraciones Físicas):* Mandato permanente de contemplar estación del año, horas efectivas de sol, cambio de hora (DST) y humedad costera antes de cualquier ajuste para blindar la estabilidad del resto de parámetros.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4 y 13):**
+  - Versión oficial actualizada a **`v2.0.4 ⛅`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v204-calibracion-falso-sol-costero` en `sw.js`.
+  - Actualización de las cadenas de importación de módulos (`weatherIcons.js?v=2.0.4` y `currentCard.js?v=2.0.4`) para garantizar cache-busting total e inmediato en clientes.
+
+---
+
 ## 📈 Actualización v2.0.3: Mini-Gráfico Térmico Continuo 24h en Tarjeta Principal — 2026-10-12
 - **Módulo Operativo en Tarjeta Principal (`currentCard.js` y `components.css`):**
   1. *Curva Térmica Continua 24h:* Renderizado vectorial nativo en SVG con curva bezier spline de 00:00 a 23:59h y sombreado con gradiente térmico tricolor suave (azul cantábrico, ámbar y violeta).

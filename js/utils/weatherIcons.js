@@ -287,6 +287,7 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     const sw = shortwaveRadiation != null ? parseFloat(shortwaveRadiation) : 0;
     const p = precipitation != null ? Math.max(0, parseFloat(precipitation)) : 0;
     const cc = cloudCover != null ? parseFloat(cloudCover) : null;
+    const h = humidity != null ? parseFloat(humidity) : null;
     const thresholds = getSeasonalSolarThresholds();
 
     // Detección física de haz solar directo (direct normal irradiance)
@@ -323,25 +324,44 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
       };
     }
 
-    // SIMETRÍA FÍSICA INVERSA (BLINDAJE ANTI-FALSO SOL / PANZA DE BURRO):
+    // SIMETRÍA FÍSICA INVERSA (BLINDAJE ANTI-FALSO SOL / PANZA DE BURRO / NIEBLA COSTERA):
     // Si el modelo numérico traía un código de sol (0, 1 o 2) pero las lecturas en tierra
-    // demuestran un manto nuboso cerrado (cc >= 85%) y la radiación solar directa es prácticamente nula
-    // (irr < 80 W/m² y sw < 180 W/m²), es físicamente imposible que esté soleado.
-    // Se rectifica automáticamente a 'Nublado / Cubiertu' erradicando los falsos soles asturianos.
+    // demuestran que NO hay radiación solar directa activa (irr < 80 W/m² y sw < 180 W/m²):
+    // 1) Caso cubierto cerrado (cc >= 80%) -> 'Nublado / Cubiertu'
+    // 2) Caso estratos / panza de burro costera con humedad casi saturada (h >= 90% y cc >= 35%) -> 'Parcialmente nublado / Intervalos nubosos' (o 'Nublado' si cc >= 70%)
+    // Erradica los falsos soles cuando en la costa asturiana el cielo está encapotado por nubes bajas.
     const isSolarCode = code === 0 || code === 1 || code === 2 || base.svgKey === 'clear-day' || base.svgKey === 'mostly-clear-day';
-    const isOvercastBlocked = cc !== null && cc >= 85 && irr < 80 && sw < 180;
-    if (p < 0.1 && isSolarCode && isOvercastBlocked) {
-      base = {
-        label: 'Nublado / Cubiertu',
-        icon: '☁️',
-        svgKey: 'cloudy',
-        lucide: 'cloud',
-        bg: 'cloudy',
-        isRain: false,
-        isSnow: false,
-        isSolarCalibrated: true,
-        isResol: false
-      };
+    const hasNoDirectSun = irr < 80 && sw < 180;
+    
+    if (p < 0.1 && isSolarCode && hasNoDirectSun) {
+      const isOvercastBlocked = cc !== null && cc >= 80;
+      const isCoastalStratusCover = (h !== null && h >= 88 && cc !== null && cc >= 20);
+
+      if (isOvercastBlocked || (isCoastalStratusCover && cc >= 70)) {
+        base = {
+          label: 'Nublado / Cubiertu',
+          icon: '☁️',
+          svgKey: 'cloudy',
+          lucide: 'cloud',
+          bg: 'cloudy',
+          isRain: false,
+          isSnow: false,
+          isSolarCalibrated: true,
+          isResol: false
+        };
+      } else if (isCoastalStratusCover) {
+        base = {
+          label: 'Parcialmente nublado / Intervalos nubosos',
+          icon: '⛅',
+          svgKey: 'partly-cloudy-day',
+          lucide: 'cloud-sun',
+          bg: 'partly-cloudy',
+          isRain: false,
+          isSnow: false,
+          isSolarCalibrated: true,
+          isResol: false
+        };
+      }
     }
   }
 
