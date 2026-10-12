@@ -3556,6 +3556,28 @@
   margin: 0;
   line-height: 1.4;
 }
+/* Pastilla de Acceso a Estaciones de Esquí (Ley 11 y 14) */
+.pass-ski-access-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  border-radius: 6px;
+  padding: 4px 8px;
+  margin: 4px 0 2px 0;
+  width: fit-content;
+  max-width: 100%;
+  box-sizing: border-box;
+  line-height: 1.25;
+}
+
+.pass-ski-access-badge.compact {
+  font-size: 0.68rem;
+  padding: 2px 6px;
+  margin: 3px 0 1px 0;
+}
+
 
 /* Bloques de Sectores (Centro / Oriente / Occidente) */
 .passes-sector-block {

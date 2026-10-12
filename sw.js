@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v201-partes-nieve-esqui';
+const CACHE_NAME = 'meteoasturlode-v202-accesos-puertos-esqui';
 const STATIC_ASSETS = [
   './',
   './index.html',

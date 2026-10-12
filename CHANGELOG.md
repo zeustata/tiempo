@@ -10,6 +10,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.0.2] - 2026-10-12
+
+### 🚗 Accesos Viales a Estaciones de Esquí en Puertos de Montaña
+- **Diagnóstico Vial de Acceso a Estaciones:** Los puertos de montaña que conectan con los dominios esquiables (Pajares N-630 hacia Valgrande-Pajares, San Isidro AS-112/LE-331 hacia Fuentes de Invierno y San Isidro, y Leitariegos AS-213) cuentan ahora con un distintivo dinámico de accesibilidad invernal.
+- **Semáforo de Accesibilidad a Pistas:** Evalúa si el firme está limpio hasta el parking de la estación (`🎿 Carretera despejada`), si se requiere precaución por heladas o si es obligatorio el uso de cadenas/neumáticos de invierno (`⛓️ Cadenas obligatorias`).
+- **Doctrina de Blindaje Anti-Desborde y Armonía Visual (Leyes 11 y 14):** Integración homogénea de pastillas ergonómicas tanto en arterias principales como en los sectores de montaña.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v202-accesos-puertos-esqui`.
+
+---
+
 ## [2.0.1] - 2026-10-12
 
 ### 🎿 Parte de Nieve y Estado de Pistas de Esquí (Cordillera Cantábrica)

@@ -5,10 +5,10 @@
 export const PUERTOS_MONTANA_ASTURIAS = [
   // --- ARTERIAS PRINCIPALES DE CONEXIÓN CON LA MESETA ---
   { id: 'huerna', name: 'Autopista del Huerna (AP-66)', alt: 1229, concejo: 'Lena / León', road: 'AP-66', sector: 'arterias', isArtery: true, desc: 'Vía de alta capacidad principal entre Asturias y la Meseta (Túnel del Negrón).' },
-  { id: 'pajares', name: 'Puerto de Pajares (N-630)', alt: 1378, concejo: 'Lena / León', road: 'N-630', sector: 'arterias', isArtery: true, desc: 'Paso histórico nacional alternativo al Huerna con fuertes pendientes.' },
+  { id: 'pajares', name: 'Puerto de Pajares (N-630)', alt: 1378, concejo: 'Lena / León', road: 'N-630', sector: 'arterias', isArtery: true, skiAccess: 'Valgrande-Pajares', desc: 'Paso histórico nacional alternativo al Huerna con fuertes pendientes.' },
 
   // --- SECTOR CENTRO Y VALLES MINEROS (Caudal, Aller, Quirós, Riosa) ---
-  { id: 'san_isidro', name: 'Puerto de San Isidro', alt: 1520, concejo: 'Aller / León', road: 'AS-112 / LE-331', sector: 'centro', desc: 'Acceso a Fuentes de Invierno y San Isidro.' },
+  { id: 'san_isidro', name: 'Puerto de San Isidro', alt: 1520, concejo: 'Aller / León', road: 'AS-112 / LE-331', sector: 'centro', skiAccess: 'Fuentes de Invierno y San Isidro', desc: 'Acceso a Fuentes de Invierno y San Isidro.' },
   { id: 'cobertoria', name: 'Alto de la Cobertoria', alt: 1173, concejo: 'Quirós / Lena', road: 'AS-230', sector: 'centro', desc: 'Paso interior central que enlaza Quirós y Pola de Lena.' },
   { id: 'angliru', name: 'Alto del Angliru', alt: 1570, concejo: 'Riosa', road: 'RI-5', sector: 'centro', desc: 'Cima mítica ciclista de rampas extremas en la Sierra del Aramo.' },
   { id: 'ventana', name: 'Puerto de Ventana', alt: 1587, concejo: 'Teverga / León', road: 'AS-228 / LE-481', sector: 'centro', desc: 'Paso de alta montaña entre Teverga y Babia.' },
@@ -21,7 +21,7 @@ export const PUERTOS_MONTANA_ASTURIAS = [
   // --- SECTOR OCCIDENTE (Somiedo, Narcea, Allande, Ibias) ---
   { id: 'somiedo', name: 'Puerto de Somiedo', alt: 1486, concejo: 'Somiedo / León', road: 'AS-227 / LE-495', sector: 'occidente', desc: 'Corazón del Parque Natural de Somiedo hacia Laciana.' },
   { id: 'san_lorenzo', name: 'Puerto de San Lorenzo', alt: 1349, concejo: 'Somiedo / Teverga', road: 'AS-265', sector: 'occidente', desc: 'Conexión entre valles occidentales con rampas exigentes.' },
-  { id: 'leitariegos', name: 'Puerto de Leitariegos', alt: 1525, concejo: 'Cangas del Narcea / León', road: 'AS-213 / LE-497', sector: 'occidente', desc: 'Acceso a la estación invernal de Leitariegos.' },
+  { id: 'leitariegos', name: 'Puerto de Leitariegos', alt: 1525, concejo: 'Cangas del Narcea / León', road: 'AS-213 / LE-497', sector: 'occidente', skiAccess: 'Leitariegos', desc: 'Acceso a la estación invernal de Leitariegos.' },
   { id: 'el_connio', name: 'Puerto del Connio', alt: 1315, concejo: 'Cangas del Narcea / Ibias', road: 'AS-348', sector: 'occidente', desc: 'Atraviesa la Reserva Integral de Muniellos.' },
   { id: 'el_palo', name: 'Puerto del Palo', alt: 1146, concejo: 'Allande / Grandas', road: 'AS-14', sector: 'occidente', desc: 'Paso clave del Camino Primitivo y el occidente asturiano.' },
   { id: 'la_marta', name: 'Puerto de la Marta', alt: 1105, concejo: 'Allande', road: 'ALL-4', sector: 'occidente', desc: 'Paso montañoso solitario y expuesto del occidente.' },
@@ -411,11 +411,56 @@ export function evaluateAvalancheRisk(snowfallSumToday, windSpeedKmH, freezingLe
 /**
  * Evalúa el estado de un puerto de montaña según la cota de nieve y precipitación
  */
-export function evaluatePassStatus(passAlt, freezingLevel, snowAccumToday, precipNow) {
+export function evaluatePassStatus(passAlt, freezingLevel, snowAccumToday, precipNow, skiAccess = null) {
   const alt = parseInt(passAlt, 10);
-  const fl = parseInt(freezingLevel, 10);
-  const snow = parseFloat(snowAccumToday) || 0;
-  const isPrecip = parseFloat(precipNow) > 0;
+  let fl = parseInt(freezingLevel, 10);
+  let snow = parseFloat(snowAccumToday) || 0;
+  let isPrecip = parseFloat(precipNow) > 0;
+
+  // Doctrina de Simulacro Ley 12: Simulación controlada de temporal de nieve en puertos
+  const urlParams = new URLSearchParams(window.location.search);
+  const isTestChains = urlParams.get('test') === 'cadenas' || urlParams.get('test') === 'puertos_nieve' || urlParams.get('test') === 'temporal_nieve';
+  const isTestCaution = urlParams.get('test') === 'precaucion_puertos' || urlParams.get('test') === 'hielo';
+
+  if (isTestChains) {
+    fl = 1100; // Cota baja simulada
+    snow = 12.0; // Nevada copiosa
+    isPrecip = true;
+  } else if (isTestCaution) {
+    fl = 1400;
+    snow = 2.0;
+    isPrecip = true;
+  }
+
+  // Diagnóstico vial de acceso a estación de esquí
+  let skiAccessStatus = null;
+  if (skiAccess) {
+    if (fl <= alt - 150 && snow >= 6) {
+      skiAccessStatus = {
+        icon: '⛓️',
+        label: `Acceso a ${skiAccess}: Cadenas obligatorias`,
+        color: '#ef4444'
+      };
+    } else if (fl <= alt && (snow > 0 || isPrecip)) {
+      skiAccessStatus = {
+        icon: '⚠️',
+        label: `Acceso a ${skiAccess}: Precaución por nieve/hielo`,
+        color: '#f59e0b'
+      };
+    } else if (fl <= alt + 150) {
+      skiAccessStatus = {
+        icon: '❄️',
+        label: `Acceso a ${skiAccess}: Precaución por heladas nocturnas`,
+        color: '#38bdf8'
+      };
+    } else {
+      skiAccessStatus = {
+        icon: '🎿',
+        label: `Acceso a ${skiAccess}: Carretera despejada`,
+        color: '#10b981'
+      };
+    }
+  }
 
   if (fl <= alt - 150 && snow >= 6) {
     return {
@@ -424,7 +469,8 @@ export function evaluatePassStatus(passAlt, freezingLevel, snowAccumToday, preci
       icon: '⛓️',
       color: '#ef4444',
       badgeBg: 'rgba(239, 68, 68, 0.15)',
-      border: 'rgba(239, 68, 68, 0.4)'
+      border: 'rgba(239, 68, 68, 0.4)',
+      skiAccessStatus
     };
   }
   if (fl <= alt && (snow > 0 || isPrecip)) {
@@ -434,7 +480,8 @@ export function evaluatePassStatus(passAlt, freezingLevel, snowAccumToday, preci
       icon: '🟡',
       color: '#f59e0b',
       badgeBg: 'rgba(245, 158, 11, 0.15)',
-      border: 'rgba(245, 158, 11, 0.4)'
+      border: 'rgba(245, 158, 11, 0.4)',
+      skiAccessStatus
     };
   }
   if (fl <= alt + 150) {
@@ -444,7 +491,8 @@ export function evaluatePassStatus(passAlt, freezingLevel, snowAccumToday, preci
       icon: '❄️',
       color: '#38bdf8',
       badgeBg: 'rgba(56, 189, 248, 0.15)',
-      border: 'rgba(56, 189, 248, 0.4)'
+      border: 'rgba(56, 189, 248, 0.4)',
+      skiAccessStatus
     };
   }
   return {
@@ -453,7 +501,8 @@ export function evaluatePassStatus(passAlt, freezingLevel, snowAccumToday, preci
     icon: '🟢',
     color: '#10b981',
     badgeBg: 'rgba(16, 185, 129, 0.15)',
-    border: 'rgba(16, 185, 129, 0.4)'
+    border: 'rgba(16, 185, 129, 0.4)',
+    skiAccessStatus
   };
 }
 
@@ -544,7 +593,7 @@ export function renderMountainCard(data, concejo) {
 
   // Procesar puertos de montaña clasificados (Arterias principales y red general)
   const passesWithStatus = PUERTOS_MONTANA_ASTURIAS.map(p => {
-    const statusObj = evaluatePassStatus(p.alt, freezingLevel, snowAccumToday, current.precipitation);
+    const statusObj = evaluatePassStatus(p.alt, freezingLevel, snowAccumToday, current.precipitation, p.skiAccess);
     return {
       ...p,
       ...statusObj
@@ -769,6 +818,12 @@ export function renderMountainCard(data, concejo) {
                     ${p.icon} ${p.status}
                   </div>
                 </div>
+                ${p.skiAccessStatus ? `
+                  <div class="pass-ski-access-badge" style="border: 1px solid ${p.skiAccessStatus.color}44; background: ${p.skiAccessStatus.color}18; color: ${p.skiAccessStatus.color};">
+                    <span>${p.skiAccessStatus.icon}</span>
+                    <span>${p.skiAccessStatus.label}</span>
+                  </div>
+                ` : ''}
                 <p class="pass-artery-desc">${p.desc}</p>
               </div>
             `).join('')}
@@ -788,6 +843,12 @@ export function renderMountainCard(data, concejo) {
                   <div class="pass-main">
                     <h5 class="pass-name">${p.name}</h5>
                     <span class="pass-alt"><strong>${p.road}</strong> • Altitud: <strong>${p.alt} m</strong> • ${p.concejo}</span>
+                    ${p.skiAccessStatus ? `
+                      <div class="pass-ski-access-badge compact" style="border: 1px solid ${p.skiAccessStatus.color}44; background: ${p.skiAccessStatus.color}18; color: ${p.skiAccessStatus.color};">
+                        <span>${p.skiAccessStatus.icon}</span>
+                        <span>${p.skiAccessStatus.label}</span>
+                      </div>
+                    ` : ''}
                   </div>
                   <div class="pass-badge" style="background: ${p.color}22; color: ${p.color}; border: 1px solid ${p.color}66;">
                     ${p.icon} ${p.status}
@@ -834,6 +895,12 @@ export function renderMountainCard(data, concejo) {
                   <div class="pass-main">
                     <h5 class="pass-name">${p.name}</h5>
                     <span class="pass-alt"><strong>${p.road}</strong> • Altitud: <strong>${p.alt} m</strong> • ${p.concejo}</span>
+                    ${p.skiAccessStatus ? `
+                      <div class="pass-ski-access-badge compact" style="border: 1px solid ${p.skiAccessStatus.color}44; background: ${p.skiAccessStatus.color}18; color: ${p.skiAccessStatus.color};">
+                        <span>${p.skiAccessStatus.icon}</span>
+                        <span>${p.skiAccessStatus.label}</span>
+                      </div>
+                    ` : ''}
                   </div>
                   <div class="pass-badge" style="background: ${p.color}22; color: ${p.color}; border: 1px solid ${p.color}66;">
                     ${p.icon} ${p.status}
