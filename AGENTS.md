@@ -185,6 +185,11 @@
           - Todo módulo de pronóstico extendido por horas (Pronóstico 72h, Suite Multivariable de Gráficas Meteorológicas y Comparador Climático) debe localizar su punto de arranque temporal (`startIndex`) de forma matemática e infalible mediante comparación lexicográfica o cronológica con el sellado de fecha y hora local (`YYYY-MM-DDTHH:00`):
             `const startIndex = hourly.time.findIndex(t => t >= currentHourStr)`.
           - Asimismo, la condición de Nowcasting inmediato en dichos bucles debe evaluarse estrictamente contra `startIndex` (`i === startIndex || i === startIndex + 1`), garantizando sincronización perfecta e inmunidad total frente a desfases de husos, arrays con histórico de horas pasadas o cambios de jornada.
+13. **Protocolo y Mandato de Automatización de Partes de Nieve en Temporada Invernal (Pajares & Fuentes):**
+    - **Vigencia Estacional:** En pretemporada / fuera de temporada (primavera, verano y otoño temprano), las estaciones permanecen en estado inactivo o senderismo sin publicación de tablas de esquí.
+    - **Activación del Bot en Apertura Oficial (Diciembre-Abril):** En cuanto el Principado de Asturias y las estaciones abran oficialmente la temporada y publiquen el boletín nival diario en web, Princesa DEBE implementar y activar el flujo autónomo de sincronización (`.github/workflows/ski_sync.yml` y `data/skiStatus.json`).
+    - **Legalidad Estricta y Cero Sobrecarga (Ley 15):** La consulta debe ejecutarse de forma programada una única vez al día en la nube (8:45 AM) desde GitHub Actions sin coste ni intervención manual de Lendo, respetando la Ley de Reutilización del Sector Público (Ley 37/2007) y sirviendo el archivo JSON desde la infraestructura propia de `zeustata` sin realizar consultas de scraping desde los dispositivos móviles de los usuarios.
+
 
 
 

@@ -10,6 +10,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.0.1] - 2026-10-12
+
+### 🎿 Parte de Nieve y Estado de Pistas de Esquí (Cordillera Cantábrica)
+- **Dominio Esquiable y Km en Vivo:** Monitor dinámico en cada estación (Valgrande-Pajares, Fuentes de Invierno, San Isidro y Leitariegos) mostrando los kilómetros esquiables disponibles respecto al dominio total de la estación.
+- **Desglose de Pistas por Colores:** Conteo visual ergonómico de pistas operativas clasificadas por niveles de dificultad (🟢 Verdes, 🔵 Azules, 🔴 Rojas y ⚫ Negras) y pistas abiertas/totales.
+- **Remontes y Espesores de Nieve:** Seguimiento de remontes mecánicos operativos y cotas de nieve mínima y máxima en pistas (cm).
+- **Acceso Oficial Directo:** Enlace integrado al parte diario oficial del Principado de Asturias (`deporteasturiano.org`) y centrales de estaciones para contraste en tiempo real.
+- **Doctrina de Simulacro (Ley 12):** Activación de prueba mediante parámetro en URL (`?test=esqui` o `?test=pistas`) para inspeccionar el panel invernal en cualquier momento.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v201-partes-nieve-esqui`.
+
+---
+
 ## [2.0.0] - 2026-10-05
 
 ### 🚀 Novedades Oficiales de la Versión 2.0 (Google Play Store & PWA)

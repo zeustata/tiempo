@@ -43,11 +43,22 @@ export const ESTACIONES_ESQUI = [
     topAlt: 1890,
     summitName: 'Celleros / Cueto Negro',
     pistasKm: '21.5 km',
+    kmTotalNum: 21.5,
     pistasCount: 38,
     remontesCount: 8,
     snowpark: true,
     web: 'https://www.valgrande-pajares.com',
-    desc: 'La decana del esquí en la cordillera cantábrica. Cuenta con la nueva telecabina Cuitu Negru y vertientes orientadas al norte y este.'
+    parteOficialUrl: 'https://www.deporteasturiano.org/estaciones-invernales/valgrande-pajares/',
+    desc: 'La decana del esquí en la cordillera cantábrica. Cuenta con la nueva telecabina Cuitu Negru y vertientes orientadas al norte y este.',
+    pistasDesglose: { verdes: 9, azules: 10, rojas: 15, negras: 4 },
+    defaultStatus: {
+      temporada: 'pretemporada', // 'abierta' | 'cerrada' | 'pretemporada'
+      kmEsquiables: 0,
+      pistasAbiertas: 0,
+      remontesAbiertos: 0,
+      espesorMin: 0,
+      espesorMax: 0
+    }
   },
   {
     id: 'fuentes',
@@ -59,11 +70,22 @@ export const ESTACIONES_ESQUI = [
     topAlt: 1950,
     summitName: 'Picu Entresiegu',
     pistasKm: '8.7 km',
+    kmTotalNum: 8.7,
     pistasCount: 15,
     remontesCount: 5,
     snowpark: false,
     web: 'https://www.fuentesdeinvierno.com',
-    desc: 'Estación moderna y acogedora en el concejo de Aller, con nieve polvo de altísima calidad por su orientación sombría.'
+    parteOficialUrl: 'https://www.deporteasturiano.org/estaciones-invernales/fuentes-de-invierno/',
+    desc: 'Estación moderna y acogedora en el concejo de Aller, con nieve polvo de altísima calidad por su orientación sombría.',
+    pistasDesglose: { verdes: 3, azules: 3, rojas: 6, negras: 3 },
+    defaultStatus: {
+      temporada: 'pretemporada',
+      kmEsquiables: 0,
+      pistasAbiertas: 0,
+      remontesAbiertos: 0,
+      espesorMin: 0,
+      espesorMax: 0
+    }
   },
   {
     id: 'san_isidro',
@@ -75,11 +97,22 @@ export const ESTACIONES_ESQUI = [
     topAlt: 2100,
     summitName: 'Pico Requejines',
     pistasKm: '34.0 km',
+    kmTotalNum: 34.0,
     pistasCount: 35,
     remontesCount: 15,
     snowpark: true,
     web: 'https://www.san-isidro.net',
-    desc: 'La mayor estación de la cordillera cantábrica, pegada a Fuentes de Invierno. Dividida en 4 sectores: Cebolledo, Riopinos, Requejines y Salencias.'
+    parteOficialUrl: 'https://www.san-isidro.net/parte-de-nieve',
+    desc: 'La mayor estación de la cordillera cantábrica, pegada a Fuentes de Invierno. Dividida en 4 sectores: Cebolledo, Riopinos, Requejines y Salencias.',
+    pistasDesglose: { verdes: 5, azules: 9, rojas: 14, negras: 4, itinerarios: 3 },
+    defaultStatus: {
+      temporada: 'pretemporada',
+      kmEsquiables: 0,
+      pistasAbiertas: 0,
+      remontesAbiertos: 0,
+      espesorMin: 0,
+      espesorMax: 0
+    }
   },
   {
     id: 'leitariegos',
@@ -91,11 +124,22 @@ export const ESTACIONES_ESQUI = [
     topAlt: 1800,
     summitName: 'Cueto de Arbás',
     pistasKm: '8.0 km',
+    kmTotalNum: 8.0,
     pistasCount: 13,
     remontesCount: 6,
     snowpark: true,
     web: 'https://www.nieveleitariegos.com',
-    desc: 'Estación familiar del occidente al pie del Cueto de Arbás, rodeada de bosques de abedules y pistas muy resguardadas.'
+    parteOficialUrl: 'https://www.nieveleitariegos.com/parte-de-nieve',
+    desc: 'Estación familiar del occidente al pie del Cueto de Arbás, rodeada de bosques de abedules y pistas muy resguardadas.',
+    pistasDesglose: { verdes: 6, azules: 4, rojas: 2, negras: 0, itinerarios: 1 },
+    defaultStatus: {
+      temporada: 'pretemporada',
+      kmEsquiables: 0,
+      pistasAbiertas: 0,
+      remontesAbiertos: 0,
+      espesorMin: 0,
+      espesorMax: 0
+    }
   }
 ];
 
@@ -209,6 +253,116 @@ export function evaluateSnowQuality(tempC, windSpeedKmH, isSnowing, freezingLeve
     color: '#38bdf8',
     desc: 'Buenas condiciones generales de manto nival en pista.'
   };
+}
+
+/**
+ * Genera el Bloque Visual Ergonómico de Parte de Nieve y Estado de Pistas
+ * Cumple la Ley 11 (Anti-desborde) y la Ley 12 (Simulacro ?test=esqui o ?test=pistas)
+ */
+export function renderSkiResortSnowReport(resort) {
+  // Comprobación de simulacro controlado (Ley 12)
+  const urlParams = new URLSearchParams(window.location.search);
+  const isTestEsqui = urlParams.get('test') === 'esqui' || urlParams.get('test') === 'pistas' || urlParams.get('test') === 'nieve_abierta';
+
+  // Si estamos en simulacro de prueba, mostramos la estación abierta con datos realistas de temporada
+  const isAbierta = isTestEsqui;
+  
+  // Cálculo de valores según estado
+  const kmEsquiables = isAbierta ? (resort.kmTotalNum * 0.72).toFixed(1) : '0.0';
+  const kmTotales = resort.kmTotalNum.toFixed(1);
+  const porcentaje = isAbierta ? Math.round((parseFloat(kmEsquiables) / resort.kmTotalNum) * 100) : 0;
+  
+  const pistasAbiertas = isAbierta ? Math.round(resort.pistasCount * 0.70) : 0;
+  const remontesAbiertos = isAbierta ? Math.max(1, Math.round(resort.remontesCount * 0.75)) : 0;
+  const espesorMin = isAbierta ? 25 : 0;
+  const espesorMax = isAbierta ? 75 : 0;
+
+  const d = resort.pistasDesglose || { verdes: 0, azules: 0, rojas: 0, negras: 0 };
+  const verdesAbiertas = isAbierta ? Math.max(1, Math.round(d.verdes * 0.8)) : 0;
+  const azulesAbiertas = isAbierta ? Math.max(1, Math.round(d.azules * 0.75)) : 0;
+  const rojasAbiertas = isAbierta ? Math.round(d.rojas * 0.6) : 0;
+  const negrasAbiertas = isAbierta ? Math.round(d.negras * 0.5) : 0;
+
+  return `
+    <div class="resort-snow-report-block">
+      <div class="resort-report-top">
+        <div class="resort-report-heading">
+          <span class="report-badge-title">🎿 Parte de Nieve & Pistas</span>
+          <span class="report-update-tag">${isAbierta ? '🟢 Temporada Invernal' : '🍂 Fuera de Temporada / Pretemporada'}</span>
+        </div>
+        <div class="resort-open-badge ${isAbierta ? 'badge-open' : 'badge-closed'}">
+          ${isAbierta ? '⛷️ Estación Abierta' : '🔴 Cerrada'}
+        </div>
+      </div>
+
+      <!-- Métricas Principales de Kilómetros y Remontes -->
+      <div class="resort-km-metric-card">
+        <div class="resort-km-main-row">
+          <div class="resort-km-info">
+            <span class="km-label">Dominio Esquiable</span>
+            <div class="km-numbers">
+              <span class="km-open-val">${kmEsquiables}</span>
+              <span class="km-total-val">/ ${kmTotales} km</span>
+            </div>
+          </div>
+          <div class="resort-pct-circle" style="--pct: ${porcentaje}%;">
+            <span class="pct-val">${porcentaje}%</span>
+            <span class="pct-sub">abierto</span>
+          </div>
+        </div>
+
+        <!-- Barra de Progreso Visual de Km Esquiables -->
+        <div class="resort-km-progress-bar">
+          <div class="resort-km-progress-fill" style="width: ${porcentaje}%;"></div>
+        </div>
+
+        <div class="resort-quick-pills-row">
+          <div class="quick-stat-pill">
+            <span class="qs-icon">🎿</span>
+            <span class="qs-label">Pistas:</span>
+            <span class="qs-val"><strong>${pistasAbiertas}</strong>/${resort.pistasCount}</span>
+          </div>
+          <div class="quick-stat-pill">
+            <span class="qs-icon">🚠</span>
+            <span class="qs-label">Remontes:</span>
+            <span class="qs-val"><strong>${remontesAbiertos}</strong>/${resort.remontesCount}</span>
+          </div>
+          <div class="quick-stat-pill">
+            <span class="qs-icon">📏</span>
+            <span class="qs-label">Espesor:</span>
+            <span class="qs-val"><strong>${espesorMin}-${espesorMax}</strong> cm</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Desglose de Pistas por Colores de Dificultad -->
+      <div class="resort-slopes-breakdown">
+        <span class="slopes-breakdown-title">Desglose de Pistas por Dificultad:</span>
+        <div class="slopes-pills-grid">
+          <div class="slope-pill slope-green" title="Pistas Verdes (Muy fáciles / Iniciación)">
+            <span class="slope-dot">🟢</span>
+            <span class="slope-name">Verdes</span>
+            <span class="slope-count"><strong>${verdesAbiertas}</strong>/${d.verdes}</span>
+          </div>
+          <div class="slope-pill slope-blue" title="Pistas Azules (Fáciles)">
+            <span class="slope-dot">🔵</span>
+            <span class="slope-name">Azules</span>
+            <span class="slope-count"><strong>${azulesAbiertas}</strong>/${d.azules}</span>
+          </div>
+          <div class="slope-pill slope-red" title="Pistas Rojas (Difíciles)">
+            <span class="slope-dot">🔴</span>
+            <span class="slope-name">Rojas</span>
+            <span class="slope-count"><strong>${rojasAbiertas}</strong>/${d.rojas}</span>
+          </div>
+          <div class="slope-pill slope-black" title="Pistas Negras (Muy difíciles / Expertos)">
+            <span class="slope-dot">⚫</span>
+            <span class="slope-name">Negras</span>
+            <span class="slope-count"><strong>${negrasAbiertas}</strong>/${d.negras}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
 }
 
 /**
@@ -558,6 +712,9 @@ export function renderMountainCard(data, concejo) {
                 </div>
               </div>
 
+              <!-- 4. BLOQUE DINÁMICO DE PARTE DE NIEVE Y ESTADO DE PISTAS (KM ESQUIABLES) -->
+              ${renderSkiResortSnowReport(r)}
+
               <!-- PREVISIÓN DE NIEVE FRESCA A 3 DÍAS (CUADRÍCULA 2X2 ANTI-DESBORDE) -->
               <div class="ski-resort-snowfall-row">
                 <div class="snowfall-pills-grid">
@@ -582,8 +739,8 @@ export function renderMountainCard(data, concejo) {
 
               <!-- Enlace Oficial a Webcams y Partes de Nieve -->
               <div class="resort-web-link-row">
-                <a href="${r.web}" target="_blank" rel="noopener noreferrer" class="btn-resort-link">
-                  📷 Webcams y Parte Oficial de ${r.shortName} ↗
+                <a href="${r.parteOficialUrl || r.web}" target="_blank" rel="noopener noreferrer" class="btn-resort-link">
+                  🎿 Parte Oficial Diario y Webcams de ${r.shortName} ↗
                 </a>
               </div>
             </div>

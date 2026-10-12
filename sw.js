@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v200-radar-slider-playstore';
+const CACHE_NAME = 'meteoasturlode-v201-partes-nieve-esqui';
 const STATIC_ASSETS = [
   './',
   './index.html',

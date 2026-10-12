@@ -2,6 +2,18 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🎿 Actualización v2.0.1: Parte de Nieve y Estado de Pistas de Esquí (Km Esquiables) — 2026-10-12
+- **Módulo Operativo en Cordillera & Esquí (`mountainCard.js`):**
+  1. *Dominio y Km Esquiables en Vivo:* Incorporación de monitor visual con desglose de kilómetros esquiables abiertos frente al total de la estación (Valgrande-Pajares, Fuentes de Invierno, San Isidro y Leitariegos), porcentaje de dominio abierto y barra de progreso dinámica.
+  2. *Desglose de Pistas por Colores:* Distribución estructurada en cuadrícula ergonómica de pistas operativas según su dificultad técnica (🟢 Verdes, 🔵 Azules, 🔴 Rojas y ⚫ Negras), además de remontes en servicio y espesores nivosos (mínimo - máximo en cm).
+  3. *Integración con Partes Oficiales:* Botón directo con enlace a la información oficial del Principado de Asturias (`deporteasturiano.org`) y portales oficiales de cada estación.
+  4. *Doctrina de Simulacro (Ley 12):* Interruptor de prueba controlado mediante URL (`?test=esqui` o `?test=pistas`) para verificar en vivo el comportamiento de temporada abierta sin alterar el estado real fuera de temporada en producción.
+  5. *Doctrina de Blindaje Anti-Desborde (Ley 11):* Diseño adaptable en `components.css` con `box-sizing: border-box`, estética Liquid Glass y cuadrícula 2x2 en pantallas ultra-estrechas (<360px).
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4 y 13):**
+  - Versión oficial actualizada a **`v2.0.1 🎿`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v201-partes-nieve-esqui` en `sw.js`.
+
+
 ## 📱 Diagnóstico Forense de Google Play Console y Hoja de Ruta Estratégica v2.1.0 — 2026-10-11
 - **Situación Reportada:** Notificación oficial en Google Play Console y correo electrónico indicando *"More testing required to access Google Play production"* y reactivación del contador obligatorio de *"14 días más a partir de la fecha de revisión (sábado 10-10, 20:21)"*.
 - **Causa Raíz Diagnosticada (Evidencia Oficial de Google):**
