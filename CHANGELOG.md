@@ -10,6 +10,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.0.5] - 2026-10-12
+
+### 🌙 Armonización Visual Nocturna ante Borrina y Niebla Costera (Feedback Lendo)
+- **Sincronización Realista del Cielo Nocturno:** Cuando el detector oficial de borrina marina o niebla en fondo de valle está activo en Asturias (humedad relativa saturada y condensación en superficie), la tarjeta principal sustituye la luna despejada con estrellas por la **Luna con Nube (`☁️🌙 partly-cloudy-night`)**.
+- **Coherencia Visual Inmediata:** Elimina la contradicción estética de mostrar una noche despejada de postal cuando la atmósfera en tierra está cubierta por un manto de niebla marina o bruma densa con visibilidad reducida.
+- **Inmunidad Integral de Sensores:** Mantiene intacta la jerarquía de precipitaciones (lluvia, nieve, granizo), alertas de viento, avisos de AEMET y calibraciones diurnas de resol y panza de burro.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v205-armonizacion-nocturna-borrina`.
+
+---
+
 ## [2.0.4] - 2026-10-12
 
 ### ⛅ Blindaje Anti-Falso Sol Costero y Nubes Bajas Asturianas

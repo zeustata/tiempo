@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.0.4">
-  <link rel="stylesheet" href="css/components.css?v=2.0.4">
-  <link rel="stylesheet" href="css/weather-themes.css?v=2.0.4">
+  <link rel="stylesheet" href="css/main.css?v=2.0.5">
+  <link rel="stylesheet" href="css/components.css?v=2.0.5">
+  <link rel="stylesheet" href="css/weather-themes.css?v=2.0.5">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -243,7 +243,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.0.4 ⛅</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.0.5 🌙</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -295,8 +295,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.0.4 ⛅</span>
+            <span class="release-version">v2.0.5 🌙</span>
             <span class="release-date">12 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-improvement">Armonización Visual</span> <strong>Armonización Nocturna ante Borrina y Niebla Costera (Feedback Lendo)</strong>:
+              <br>• <strong>Sincronización de Cielo Nocturno:</strong> Cuando el detector oficial de borrina marina o niebla costera está activo en el litoral (humedad saturada y condensación costera), la cabecera principal sustituye la luna despejada con estrellas por la <strong>Luna con Nube (<code>☁️🌙 partly-cloudy-night</code>)</strong>.
+              <br>• <strong>Eliminación de Contradicciones Visuales:</strong> Erradica la paradoja visual de mostrar un cielo nocturno estrellado de postal cuando la atmósfera en superficie está tomada por la bruma marina o borrina.
+              <br>• <strong>Preservación de Sensores:</strong> Inmunidad absoluta en lluvia, tormenta, viento y resto de detectores de la aplicación.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.0.4 ⛅</span>
+            <span class="release-date">12 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-improvement">Calibración Física</span> <strong>Blindaje Anti-Falso Sol Costero y Nubes Bajas Asturianas</strong>:
@@ -2815,7 +2829,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.0.4"></script>
+  <script type="module" src="js/app.js?v=2.0.5"></script>
 
 
 

@@ -2,6 +2,18 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌙 Actualización v2.0.5: Armonización Visual Nocturna ante Borrina y Niebla Costera — 2026-10-12
+- **Módulo Operativo en Tarjeta Principal (`currentCard.js`):**
+  1. *Sincronización Fidedigna Noche-Borrina:* Integración en `currentCard.js` de una regla de armonización visual para horas nocturnas (`is_day === 0`). Si el detector oficial de borrina marina (`borrina.isActive`) o niebla en valle detecta condensación en superficie activa, la tarjeta principal reemplaza la luna despejada con estrellas (`clear-night`) por la **Luna con Nube (`☁️🌙 partly-cloudy-night`)**.
+  2. *Etiquetado Coherente:* Rotula como *"Bruma nocturna / Borrina costera"* (o *"Niebla nocturna en valle"*), reflejando con total sinceridad la visibilidad real en Castrillón, Salinas o la rasa litoral asturiana.
+  3. *Inmunidad Absoluta de Sensores (Leyes 14 y 15 de AGENTS.md):* No altera mediciones térmicas, pluviómetro, avisos de viento en viaductos ni detectores diurnos de resol o nubosidad. Si la borrina se disipa, el sistema retorna limpiamente al cielo nocturno despejado.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4 y 13):**
+  - Versión oficial actualizada a **`v2.0.5 🌙`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v205-armonizacion-nocturna-borrina` en `sw.js`.
+  - Actualización de las cadenas de importación y query strings en `index.html` (`?v=2.0.5`).
+
+---
+
 ## ⛅ Actualización v2.0.4: Blindaje Anti-Falso Sol Costero y Nubes Bajas Asturianas — 2026-10-12
 - **Módulo Operativo en Motor Meteorológico (`weatherIcons.js`, `currentCard.js` y `app.js`):**
   1. *Simetría Inversa Física Costera:* Refinamiento del filtro anti-falso sol para cubrir el fenómeno frecuente en el litoral asturiano donde el modelo numérico vertical predice cielo despejado (`code 1`), pero los sensores en tierra registran humedad casi saturada (`h >= 88%`), presencia de estratos bajos (`cloud_cover >= 20%`) y ausencia de radiación solar directa (`irr < 80 W/m²` y `sw < 180 W/m²`).

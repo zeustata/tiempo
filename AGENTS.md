@@ -185,17 +185,18 @@
           - Todo módulo de pronóstico extendido por horas (Pronóstico 72h, Suite Multivariable de Gráficas Meteorológicas y Comparador Climático) debe localizar su punto de arranque temporal (`startIndex`) de forma matemática e infalible mediante comparación lexicográfica o cronológica con el sellado de fecha y hora local (`YYYY-MM-DDTHH:00`):
             `const startIndex = hourly.time.findIndex(t => t >= currentHourStr)`.
           - Asimismo, la condición de Nowcasting inmediato en dichos bucles debe evaluarse estrictamente contra `startIndex` (`i === startIndex || i === startIndex + 1`), garantizando sincronización perfecta e inmunidad total frente a desfases de husos, arrays con histórico de horas pasadas o cambios de jornada.
-      14. **Doctrina de Blindaje Holístico en Calibraciones Físicas (Estacionalidad, Horas, DST y Humedad Costera - Feedback Lendo):**
-          - Todo ajuste futuro sobre los algoritmos de clasificación de cielo, sol, nubes y precipitación (`weatherIcons.js`, `weatherApi.js` y `currentCard.js`) debe someterse a una evaluación multifactorial rigurosa antes de su despliegue:
-            1. **Época del Año y Elevación Solar:** Considerar la declinación astronómica en Asturias (~43.5° N) y no exigir radiaciones de verano en meses fríos, ni tolerar que la baja elevación solar al ocaso o amanecer se confunda con cielos cubiertos.
-            2. **Hora del Día y Ciclo Diurno:** Ponderar la radiación directa e inclinación según la hora solar efectiva, diferenciando entre pleno mediodía y ventanas de transición matutina o vespertina.
-            3. **Cambio de Hora Estacional (DST / UTC+1 a UTC+2):** Las comparaciones horarias deben respetar la hora civil local (`Europe/Madrid`) sin desfases que desplacen las curvas de radiación.
-            4. **Saturación Costera y Microclimas:** Reconocer las inversiones térmicas y estratos marinos del Cantábrico (humedad `>= 88%` con ausencia de radiación directa), asegurando que el desempate no anule la soberanía del sol diurno real, el detector de *Resol asturiano* ni el filtro de *Orbayu meón*.
-          - Queda terminantemente prohibido aplicar reglas unilaterales o atajos basados en una sola variable aislada que puedan descalibrar el resto de parámetros del ecosistema.
-13. **Protocolo y Mandato de Automatización de Partes de Nieve en Temporada Invernal (Pajares & Fuentes):**
-    - **Vigencia Estacional:** En pretemporada / fuera de temporada (primavera, verano y otoño temprano), las estaciones permanecen en estado inactivo o senderismo sin publicación de tablas de esquí.
-    - **Activación del Bot en Apertura Oficial (Diciembre-Abril):** En cuanto el Principado de Asturias y las estaciones abran oficialmente la temporada y publiquen el boletín nival diario en web, Princesa DEBE implementar y activar el flujo autónomo de sincronización (`.github/workflows/ski_sync.yml` y `data/skiStatus.json`).
-    - **Legalidad Estricta y Cero Sobrecarga (Ley 15):** La consulta debe ejecutarse de forma programada una única vez al día en la nube (8:45 AM) desde GitHub Actions sin coste ni intervención manual de Lendo, respetando la Ley de Reutilización del Sector Público (Ley 37/2007) y sirviendo el archivo JSON desde la infraestructura propia de `zeustata` sin realizar consultas de scraping desde los dispositivos móviles de los usuarios.
+14. **Doctrina de Blindaje Holístico en Calibraciones Físicas (Estacionalidad, Horas, DST y Humedad Costera - Feedback Lendo):**
+    - Todo ajuste futuro sobre los algoritmos de clasificación de cielo, sol, nubes y precipitación (`weatherIcons.js`, `weatherApi.js` y `currentCard.js`) debe someterse a una evaluación multifactorial rigurosa antes de su despliegue:
+      1. **Época del Año y Elevación Solar:** Considerar la declinación astronómica en Asturias (~43.5° N) y no exigir radiaciones de verano en meses fríos, ni tolerar que la baja elevación solar al ocaso o amanecer se confunda con cielos cubiertos.
+      2. **Hora del Día y Ciclo Diurno:** Ponderar la radiación directa e inclinación según la hora solar efectiva, diferenciando entre pleno mediodía y ventanas de transición matutina o vespertina.
+      3. **Cambio de Hora Estacional (DST / UTC+1 a UTC+2):** Las comparaciones horarias deben respetar la hora civil local (`Europe/Madrid`) sin desfases que desplacen las curvas de radiación.
+      4. **Saturación Costera y Microclimas:** Reconocer las inversiones térmicas y estratos marinos del Cantábrico (humedad `>= 88%` con ausencia de radiación directa), asegurando que el desempate no anule la soberanía del sol diurno real, el detector de *Resol asturiano* ni el filtro de *Orbayu meón*.
+    - Queda terminantemente prohibido aplicar reglas unilaterales o atajos basados en una sola variable aislada que puedan descalibrar el resto de parámetros del ecosistema.
+15. **Armonización Visual Nocturna ante Borrina y Niebla Costera (Feedback Lendo):**
+    - Si durante la noche (`is_day === 0`) el detector de borrina marina o niebla costera/valle está activo (`borrina.isActive`), queda terminantemente prohibido renderizar un cielo despejado de postal (luna sola con estrellas).
+    - La tarjeta principal debe sustituir automáticamente la luna solitaria por la **Luna con Nube (`☁️🌙 partly-cloudy-night`)** y rotular como *"Bruma nocturna / Borrina costera"* (o *"Niebla nocturna en valle"*), reflejando la atmósfera real y erradicando cualquier contradicción con el banner de visibilidad reducida.
+    - Se preserva la inmunidad absoluta de lluvia física, tormenta y resto de sensores de la aplicación.
+
 
 
 

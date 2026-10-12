@@ -241,6 +241,20 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   const borrina = detectBorrinaEffect(current, hourly, concejo);
   const borrinaMarkup = renderBorrinaBanner(borrina);
 
+  // Armonización Visual Nocturna (Ley 15 del Proyecto):
+  // Si es de noche y el detector de borrina marina o niebla costera está activo,
+  // la cabecera no puede mostrar cielo despejado de postal (luna sola con estrellas).
+  // Se conmuta a la Luna con la Nube ('partly-cloudy-night'), reflejando el velo de bruma sobre el cielo nocturno.
+  if (borrina && borrina.isActive && (current.is_day === 0 || current.is_day === false)) {
+    if (!weatherInfo.isRain && !weatherInfo.isSnow && (current.weather_code === 0 || current.weather_code === 1 || weatherInfo.svgKey === 'clear-night' || weatherInfo.svgKey === 'mostly-clear-night')) {
+      weatherInfo.label = borrina.type === 'marina' ? 'Bruma nocturna / Borrina costera' : 'Niebla nocturna en valle';
+      weatherInfo.icon = '☁️🌙';
+      weatherInfo.svgKey = 'partly-cloudy-night';
+      weatherInfo.bg = 'partly-cloudy-night';
+      weatherInfo.lucide = 'cloud-moon';
+    }
+  }
+
   // Detección Silenciosa de Mar de Fondo y Golpe de Mar (Litoral Asturiano)
   const marFondo = detectMarFondoEffect(data.marine, concejo);
   const marFondoMarkup = renderMarFondoBanner(marFondo);
