@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v205-armonizacion-nocturna-borrina';
+const CACHE_NAME = 'meteoasturlode-v206-borrina-costera-cantabrico';
 const STATIC_ASSETS = [
   './',
   './index.html',

@@ -2,6 +2,19 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌫️ Actualización v2.0.6: Calibración Integral de Borrina Marina en los 20 Concejos Costeros — 2026-10-12
+- **Módulo Operativo en Detector de Borrina (`borrinaDetector.js` y `currentCard.js`):**
+  1. *Sensibilidad Nocturna Calibrada:* Reajuste de los umbrales de saturación costera para horas nocturnas (`is_day === 0`), reduciendo el umbral de disparo de humedad a `>= 88%` y ampliando el margen de condensación (`dewSpread <= 1.8 °C`), capturando con rigor físico la niebla marina de advección (verificado en vivo en las webcams de Salinas y toda la costa cantábrica).
+  2. *Catálogo Universal de Costas (20 Concejos):* Extensión garantizada a todos los concejos con fachada litoral (Castropol, Tapia, El Franco, Coaña, Navia, Valdés, Cudillero, Muros de Nalón, Soto del Barco, Castrillón, Avilés, Gozón, Carreño, Gijón, Villaviciosa, Colunga, Caravia, Ribadesella, Llanes y Ribadedeva).
+  3. *Armonización con Luna y Nube:* Sincronización con `partly-cloudy-night` para que ningún concejo costero con borrina activa muestre una noche despejada irreal.
+  4. *Inmunidad de Parámetros Preexistentes:* El comportamiento diurno conserva umbrales más estrictos (`>= 92%` y `<= 1.2 °C`) para evitar falsos positivos con resol o brisa marina húmeda.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4 y 13):**
+  - Versión oficial actualizada a **`v2.0.6 🌫️`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v206-borrina-costera-cantabrico` en `sw.js`.
+  - Actualización de query strings en `index.html` y módulos JS (`?v=2.0.6`).
+
+---
+
 ## 🌙 Actualización v2.0.5: Armonización Visual Nocturna ante Borrina y Niebla Costera — 2026-10-12
 - **Módulo Operativo en Tarjeta Principal (`currentCard.js`):**
   1. *Sincronización Fidedigna Noche-Borrina:* Integración en `currentCard.js` de una regla de armonización visual para horas nocturnas (`is_day === 0`). Si el detector oficial de borrina marina (`borrina.isActive`) o niebla en valle detecta condensación en superficie activa, la tarjeta principal reemplaza la luna despejada con estrellas (`clear-night`) por la **Luna con Nube (`☁️🌙 partly-cloudy-night`)**.

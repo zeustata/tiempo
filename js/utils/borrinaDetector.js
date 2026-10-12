@@ -68,15 +68,17 @@ export function detectBorrinaEffect(current, hourly, concejo) {
   const dewPoint = (b * alpha) / (a - alpha);
   const dewSpread = Math.abs(temp - dewPoint);
 
-  // Ámbitos geográficos
+  // Ámbitos geográficos: catálogo completo de concejos con fachada litoral en Asturias
   const isCoast = concejo.type === 'coast' || 
                   (concejo.region && concejo.region.toLowerCase().includes('costa')) ||
+                  (concejo.region && concejo.region.toLowerCase().includes('costero')) ||
                   concejo.id === 'castrillon' || concejo.id === 'gijon' || concejo.id === 'gozon' ||
                   concejo.id === 'llanes' || concejo.id === 'ribadesella' || concejo.id === 'carreno' ||
-                  concejo.id === 'aviles' || concejo.id === 'valdes' || concejo.id === 'tapia' ||
+                  concejo.id === 'aviles' || concejo.id === 'valdes' || concejo.id === 'tapiadecasariego' ||
                   concejo.id === 'cudillero' || concejo.id === 'villaviciosa' || concejo.id === 'colunga' ||
-                  concejo.id === 'soto_barco' || concejo.id === 'navia' || concejo.id === 'franco' ||
-                  concejo.id === 'coana' || concejo.id === 'ribadedeva';
+                  concejo.id === 'sotodelbarco' || concejo.id === 'navia' || concejo.id === 'elfranco' ||
+                  concejo.id === 'coana' || concejo.id === 'ribadedeva' || concejo.id === 'caravia' ||
+                  concejo.id === 'castropol' || concejo.id === 'murosdenalon';
 
   // Visibilidad estimada (si viene en hourly o en current)
   let visibility = null;
@@ -87,14 +89,24 @@ export function detectBorrinaEffect(current, hourly, concejo) {
     }
   }
 
-  // 1. EVALUACIÓN BORRINA MARINA (COSTA)
+  // 1. EVALUACIÓN BORRINA MARINA (COSTA ASTURIANA)
   if (isCoast) {
+    const isNight = current.is_day === 0 || current.is_day === false;
     const isFogCode = weatherCode === 45 || weatherCode === 48;
     const isLowVis = visibility != null && visibility <= 2000;
-    const isMarineDewMatch = rh >= 92 && dewSpread <= 1.2;
-    const isMarineBreeze = speed <= 22; // la borrina entra con viento flojo o brisa marina
+    
+    // Calibración Fiel del Litoral Cantábrico (Feedback Lendo / Ley 15):
+    // De noche, el enfriamiento radiativo costero atrapa la borrina marina baja con humedad >= 88% y margen de rocío <= 1.8°C.
+    // De día, se exige mayor saturación (>= 92% y margen <= 1.2°C) para no confundir con resol o brisas húmedas.
+    const minRhTrigger = isNight ? 88 : 92;
+    const maxSpreadTrigger = isNight ? 1.8 : 1.2;
+    const isMarineDewMatch = rh >= minRhTrigger && dewSpread <= maxSpreadTrigger;
+    const isMarineBreeze = speed <= 25; // la borrina entra con viento flojo o brisa marina suave
 
-    if ((isFogCode || isLowVis || (isMarineDewMatch && isMarineBreeze)) && rh >= 90 && dewSpread <= 1.5) {
+    const minRhSustain = isNight ? 86 : 90;
+    const maxSpreadSustain = isNight ? 2.0 : 1.5;
+
+    if ((isFogCode || isLowVis || (isMarineDewMatch && isMarineBreeze)) && rh >= minRhSustain && dewSpread <= maxSpreadSustain) {
       // Calibración estricta del Cantábrico: solo es 'severe' (rojo) si la visibilidad es realmente un muro de niebla (<= 200 m)
       // o si hay niebla cerrada con saturación máxima y código WMO 45/48. Si la visibilidad es mayor (ej. 300-800 m), se califica como warning (amarillo).
       const isSevere = visibility != null ? (visibility <= 200) : (rh >= 98 && isFogCode);

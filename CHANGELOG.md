@@ -10,6 +10,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.0.6] - 2026-10-12
+
+### 🌫️ Calibración Cantábrica: Detector Integral de Borrina Marina en los 20 Concejos Costeros (Feedback Lendo)
+- **Sensibilidad Nocturna Calibrada:** Adaptación de los umbrales de saturación costera en horas nocturnas (`is_day === 0`), fijando activación con humedad relativa `≥ 88%` y margen de rocío `dewSpread ≤ 1.8 °C`. Captura con fidelidad la entrada y estancamiento de niebla marina arrastrada hacia el litoral (verificado en Salinas y toda la rasa costera asturiana).
+- **Cobertura Costera Integral de los 20 Concejos:** Incorporación completa de la totalidad de municipios con litoral de Asturias (Castropol, Tapia de Casariego, El Franco, Coaña, Navia, Valdés, Cudillero, Muros de Nalón, Soto del Barco, Castrillón, Avilés, Gozón, Carreño, Gijón, Villaviciosa, Colunga, Caravia, Ribadesella, Llanes y Ribadedeva).
+- **Armonización Visual con Luna y Nube:** La cabecera se viste con `☁️🌙 partly-cloudy-night` mientras la borrina permanezca activa sobre la costa de noche.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v206-borrina-costera-cantabrico`.
+
+---
+
 ## [2.0.5] - 2026-10-12
 
 ### 🌙 Armonización Visual Nocturna ante Borrina y Niebla Costera (Feedback Lendo)

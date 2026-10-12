@@ -5,7 +5,7 @@ import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?
 import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=1.1.60';
 import { detectXeluEffect, renderXeluBanner } from '../utils/xeluDetector.js?v=1.1.60';
 import { detectSnowStatus, renderSnowBanner } from '../utils/snowDetector.js?v=2.0.0';
-import { detectBorrinaEffect, renderBorrinaBanner } from '../utils/borrinaDetector.js?v=1.1.60';
+import { detectBorrinaEffect, renderBorrinaBanner } from '../utils/borrinaDetector.js?v=2.0.6';
 import { detectMarFondoEffect, renderMarFondoBanner } from '../utils/marFondoDetector.js?v=2.0.0';
 import { detectThunderstormEffect, renderThunderstormBanner } from '../utils/thunderstormDetector.js?v=1.1.60';
 import { detectRoadWindStatus, renderRoadWindBanner, renderRoadWindSensorPill } from '../utils/roadWindDetector.js?v=1.1.76';
