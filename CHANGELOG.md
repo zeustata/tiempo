@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.1.5] - 2026-10-14
+
+### 🌫️ Icono Exclusivo para Borrina Húmeda / Niebla Saturada (Feedback Lendo)
+- **Diferenciación Visual Real (`wet-fog` / `🌫️🫧`):**
+  - Creado un icono vectorial independiente para la niebla cerrada saturada de humedad (humedad relativa en superficie ≥95%, cielo cubierto y lluvia estrictamente 0.0 mm con probabilidad < 20%), separándolo del icono de niebla seca estándar (`fog` / `🌫️`).
+- **Diseño Meteorológico Fiel sin Gotas Falsas de Lluvia:**
+  - Nube con sutil tinte brumoso húmedo, 4 franjas tupidas de borrina en gradiente azul Cantábrico y dos micro-partículas de condensación en suspensión estática.
+  - Refleja fielmente la atmósfera caladora de la borrina costera sin recurrir a gotas de precipitación que confundan al usuario frente al 0% y 0.0 mm de los modelos.
+- **Soporte Multi-Tema Completo:** Integrado en todos los packs de iconos (`Astur Cómic`, `Glass`, `Pixel Art`, `Neón`, `Sketch` y `Futuro Clásico`).
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v215-icono-borrina-humeda`, query strings actualizadas a `?v=2.1.5`.
+
 ## [2.1.4] - 2026-10-14
 
 ### 📈 Ergonomía Visual y Proporción de la Curva Térmica 24h (Feedback Lendo)

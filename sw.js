@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v214-curva-termica-ergonomia';
+const CACHE_NAME = 'meteoasturlode-v215-icono-borrina-humeda';
 const STATIC_ASSETS = [
   './',
   './index.html',

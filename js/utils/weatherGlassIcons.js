@@ -246,6 +246,26 @@ export function getGlassWeatherSvg(iconKey, size = 32) {
         </svg>
       `;
 
+    case 'wet-fog':
+      // 🌫️🫧 NIEBLA HÚMEDA / BORRINA AZULADA DE CRISTAL TRANSLÚCIDO
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon glass-icon" aria-label="Borrina Húmeda Cristal 3D">
+          <defs>
+            <linearGradient id="glass-wetfog-bar" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.35" />
+              <stop offset="50%" stop-color="#bae6fd" stop-opacity="0.95" />
+              <stop offset="100%" stop-color="#0284c7" stop-opacity="0.35" />
+            </linearGradient>
+          </defs>
+          <rect x="7" y="11" width="34" height="4" rx="2" fill="url(#glass-wetfog-bar)" />
+          <rect x="3" y="19" width="42" height="4.5" rx="2.2" fill="url(#glass-wetfog-bar)" />
+          <rect x="6" y="27" width="36" height="4.5" rx="2.2" fill="url(#glass-wetfog-bar)" />
+          <rect x="5" y="35" width="38" height="4" rx="2" fill="url(#glass-wetfog-bar)" />
+          <circle cx="35" cy="15" r="1.4" fill="#38bdf8" opacity="0.8" />
+          <circle cx="11" cy="31" r="1.4" fill="#7dd3fc" opacity="0.8" />
+        </svg>
+      `;
+
     case 'drizzle':
     case 'orbayu':
       // 🌦️ ORBAYU CON GOTAS DE CRISTAL PERLADAS

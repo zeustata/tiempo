@@ -285,6 +285,28 @@ export function getFuturoWeatherSvg(key, size = 32) {
         </svg>
       `;
 
+    case 'wet-fog':
+      // 🌫️🫧 NIEBLA HÚMEDA FUTURO CLÁSICO: Nube con 4 barras aerodinámicas con gradiente azulado y micro-partículas
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon futuro-icon" aria-label="Borrina Húmeda Futuro Clásico">
+          <defs>
+            <linearGradient id="futuro-wetfog-bar" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.3" />
+              <stop offset="30%" stop-color="#bae6fd" stop-opacity="0.95" />
+              <stop offset="70%" stop-color="#38bdf8" stop-opacity="0.95" />
+              <stop offset="100%" stop-color="#0284c7" stop-opacity="0.3" />
+            </linearGradient>
+          </defs>
+          <path d="M 39,20 H 13 A 6.5,6.5 0 0 1 11.8,8 A 9.5,9.5 0 0 1 33.5,9 A 6.5,6.5 0 0 1 39,20 Z" fill="#e0f2fe" opacity="0.85" />
+          <rect x="5" y="24" width="38" height="3" rx="1.5" fill="url(#futuro-wetfog-bar)" />
+          <rect x="8" y="29" width="32" height="3" rx="1.5" fill="url(#futuro-wetfog-bar)" />
+          <rect x="6" y="34" width="36" height="3" rx="1.5" fill="url(#futuro-wetfog-bar)" />
+          <rect x="11" y="39" width="26" height="3" rx="1.5" fill="url(#futuro-wetfog-bar)" />
+          <circle cx="36" cy="14" r="1.3" fill="#38bdf8" opacity="0.85" />
+          <circle cx="10" cy="27" r="1.3" fill="#7dd3fc" opacity="0.85" />
+        </svg>
+      `;
+
     case 'drizzle':
       // 💧 ORBAYU / LLOVIZNA (0.1 - 0.4 mm/h): Nube suave con 1 SOLA GOTA pura y cristalina
       return `

@@ -231,6 +231,31 @@ export function getAsturWeatherSvg(iconKey, size = 32) {
         </svg>
       `;
 
+    case 'wet-fog':
+      // 🌫️🫧 BORRINA HÚMEDA / NIEBLA CERRADA CÓMIC: Nube con tinte de condensación, 4 capas densas y micro-partículas de vapor flotando
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon icon-comic-wet-fog" aria-label="Borrina Húmeda Cómic">
+          <!-- Nube Flotante con suave tinte brumoso húmedo -->
+          <path d="M 38,25 H 14 A 7,7 0 0 1 12.5,12 A 9.5,9.5 0 0 1 32,12.5 A 6.5,6.5 0 0 1 38,25 Z" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8" />
+          <!-- Ojos asomando curiosos en la niebla -->
+          <ellipse cx="20" cy="17" rx="2.2" ry="2.8" fill="#0369a1" />
+          <circle cx="19.2" cy="16" r="0.9" fill="#ffffff" />
+          <ellipse cx="28" cy="17" rx="2.2" ry="2.8" fill="#0369a1" />
+          <circle cx="27.2" cy="16" r="0.9" fill="#ffffff" />
+          <ellipse cx="16" cy="20" rx="2" ry="1.2" fill="#38bdf8" opacity="0.6" />
+          <ellipse cx="32" cy="20" rx="2" ry="1.2" fill="#38bdf8" opacity="0.6" />
+          <path d="M 22,20 Q 24,22 26,20" stroke="#0369a1" stroke-width="1.4" fill="none" stroke-linecap="round" />
+          <!-- 4 Capas densas de Borrina Húmeda en gradiente cantábrico -->
+          <line x1="5" y1="28" x2="43" y2="28" stroke="#38bdf8" stroke-width="3.8" stroke-linecap="round" />
+          <line x1="8" y1="33" x2="40" y2="33" stroke="#0284c7" stroke-width="3.6" stroke-linecap="round" />
+          <line x1="6" y1="38" x2="38" y2="38" stroke="#0ea5e9" stroke-width="3.8" stroke-linecap="round" />
+          <line x1="10" y1="43" x2="35" y2="43" stroke="#7dd3fc" stroke-width="3.2" stroke-linecap="round" />
+          <!-- Micro-partículas de vapor de condensación en suspensión (estáticas, sin caer) -->
+          <circle cx="12" cy="25" r="1.5" fill="#38bdf8" opacity="0.8" />
+          <circle cx="37" cy="35" r="1.3" fill="#bae6fd" opacity="0.85" />
+        </svg>
+      `;
+
     case 'drizzle':
     case 'orbayu':
       // 🌦️ ORBAYU: NUBE CON 1 SOLA GOTITA BEBÉ TIERNA (0.1 - 0.4 mm/h)

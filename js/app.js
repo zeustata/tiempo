@@ -41,7 +41,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '2.1.4';
+export const CURRENT_APP_VERSION = '2.1.5';
 
 class MeteoAsturiasApp {
   constructor() {

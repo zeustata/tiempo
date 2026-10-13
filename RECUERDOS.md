@@ -2,6 +2,19 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌫️ Actualización v2.1.5: Icono Exclusivo de Borrina Húmeda / Niebla Saturada — 2026-10-14
+- **Creación del Icono Vectorial Diferenciado `wet-fog` / `🌫️🫧` (Feedback Lendo):**
+  1. *Diagnóstico Operativo:* Lendo consultó si existía diferencia visual entre una niebla seca ordinaria (WMO 45/48) y la niebla cerrada / borrina húmeda saturada al 95-100% que cala el ambiente. Hasta ahora ambas compartían el mismo icono (`fog` / `🌫️`), ya que la versión previa v2.1.3 había eliminado la gotita de lluvia para evitar contradicciones con el 0% de probabilidad y los 0.0 mm de lluvia.
+  2. *Diseño y Modelado Meteorológico Fiel (Opción 1 elegida por Lendo):*
+     - Se creó la clave vectorial independiente `wet-fog` y el emoji representativo `🌫️🫧`.
+     - **Diseño del icono (Tema Cómic Asturiano y temas derivados):** Nube con suave tinte de condensación brumosa (`#f0f9ff` con borde celeste `#38bdf8`), 4 franjas tupidas y gruesas de borrina en gradiente azul Cantábrico (`#38bdf8`, `#0284c7`, `#0ea5e9`, `#7dd3fc`) y 2 micro-partículas de vapor en suspensión estática.
+     - **Transmisión de atmósfera sin gotas engañosas:** Expresa de forma impecable el ambiente calador de la niebla marítima costera y de ría asturiana sin recurrir a gotas de precipitación cayendo en vertical, preservando al 100% la honestidad matemática ante previsiones de 0% y 0.0 mm.
+     - **Soporte Multi-Tema Completo:** Integrado en los 6 motores de iconos (`Astur Cómic`, `Glass 3D`, `Pixel Art`, `Neón`, `Sketch` y `Futuro Clásico`).
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.1.5 🌫️`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v215-icono-borrina-humeda` en `sw.js`.
+  - Query strings actualizadas a `?v=2.1.5` en `index.html` y módulos correspondientes.
+
 ## 📈 Actualización v2.1.4: Ergonomía Visual y Proporción de la Curva Térmica 24h — 2026-10-14
 - **Optimización Proporcional de la Curva Térmica 24h en Pantallas Grandes (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Lendo comprobó el comportamiento de la curva térmica continua de 24 horas (`.mini-thermal-widget`) en tres dispositivos distintos: teléfono móvil (Imagen 1), tableta Android (Imagen 2) y monitor panorámico en Windows (Imagen 3). Mientras que en pantalla móvil vertical (~360px) la curva lucía perfecta con una relación de aspecto elegante (~8:1) y un relieve sinusoidal nítido, en tableta (~900px) y sobre todo en Windows (~1400px o superior) el widget ocupaba el 100% del ancho con `preserveAspectRatio="none"` y `height: 42px`, estirándose hasta un ratio desproporcionado de más de 30:1 que aplastaba la onda térmica hasta parecer una línea casi plana.

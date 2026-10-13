@@ -185,6 +185,21 @@ export function getSketchWeatherSvg(iconKey, size = 32) {
         </svg>
       `;
 
+    case 'wet-fog':
+      // 🌫️🫧 NIEBLA HÚMEDA DIBUJADA A MANO
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon sketch-icon" aria-label="Borrina Húmeda Dibujo a Mano">
+          <g stroke="#0284c7" stroke-width="2.5" stroke-linecap="round" fill="none">
+            <path d="M 8,13 C 14,11.5 20,14.5 26,13 C 32,11.5 36,14 40,13" stroke="#38bdf8" />
+            <path d="M 5,21 C 12,19 18,22.5 25,20.5 C 32,18.5 38,22 43,20" stroke="#0284c7" />
+            <path d="M 9,29 C 15,27.5 21,30 27,28.5 C 33,27 36,29.5 39,28.5" stroke="#0ea5e9" />
+            <path d="M 7,37 C 13,35 20,38 27,36.5 C 34,35 38,37.5 42,36" stroke="#0284c7" />
+          </g>
+          <circle cx="34" cy="17" r="1.4" fill="#38bdf8" opacity="0.8" />
+          <circle cx="11" cy="33" r="1.4" fill="#7dd3fc" opacity="0.8" />
+        </svg>
+      `;
+
     case 'drizzle':
     case 'orbayu':
       // 🌦️ ORBAYU DIBUJADO A MANO (1 sola gota a tinta acuarela, 0.1 - 0.4 mm/h)

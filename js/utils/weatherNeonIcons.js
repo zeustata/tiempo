@@ -227,6 +227,27 @@ export function getNeonWeatherSvg(iconKey, size = 32) {
         </svg>
       `;
 
+    case 'wet-fog':
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon neon-icon" aria-label="Borrina Húmeda Neón">
+          <defs>
+            <filter id="neon-glow-wetfog" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="1.8" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <g stroke="#06b6d4" stroke-width="2.6" stroke-linecap="round" filter="url(#neon-glow-wetfog)">
+            <line x1="6" y1="13" x2="42" y2="13" stroke="#38bdf8" />
+            <line x1="4" y1="21" x2="44" y2="21" stroke="#0ea5e9" />
+            <line x1="7" y1="29" x2="41" y2="29" stroke="#38bdf8" />
+            <line x1="5" y1="37" x2="43" y2="37" stroke="#0284c7" />
+          </g>
+        </svg>
+      `;
+
     case 'drizzle':
     case 'orbayu':
       // 🌦️ ORBAYU NEÓN (1 solo haz neón fino, 0.1 - 0.4 mm/h)

@@ -179,6 +179,19 @@ export function getPixelWeatherSvg(iconKey, size = 32) {
         </svg>
       `;
 
+    case 'wet-fog':
+      // 🌫️🫧 NIEBLA HÚMEDA PIXEL ART
+      return `
+        <svg viewBox="0 0 24 24" width="${sz}" height="${sz}" class="astur-svg-icon pixel-icon" shape-rendering="crispEdges" aria-label="Borrina Húmeda Pixel Art">
+          <rect x="4" y="5" width="16" height="2" fill="#7dd3fc" />
+          <rect x="2" y="9" width="20" height="2" fill="#38bdf8" />
+          <rect x="5" y="13" width="14" height="2" fill="#0284c7" />
+          <rect x="3" y="17" width="18" height="2" fill="#0369a1" />
+          <rect x="18" y="7" width="1" height="1" fill="#bae6fd" />
+          <rect x="4" y="15" width="1" height="1" fill="#bae6fd" />
+        </svg>
+      `;
+
     case 'drizzle':
     case 'orbayu':
       // 🌦️ ORBAYU PIXEL ART (1 sola gota pixel, 0.1 - 0.4 mm/h)

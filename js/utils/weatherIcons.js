@@ -1,9 +1,9 @@
-import { getAsturWeatherSvg } from './weatherAsturIcons.js?v=1.1.53';
-import { getPixelWeatherSvg } from './weatherPixelIcons.js?v=1.1.53';
-import { getNeonWeatherSvg } from './weatherNeonIcons.js?v=1.1.53';
-import { getSketchWeatherSvg } from './weatherSketchIcons.js?v=1.1.53';
-import { getGlassWeatherSvg } from './weatherGlassIcons.js?v=1.1.53';
-import { getFuturoWeatherSvg } from './weatherFuturoIcons.js?v=1.1.53';
+import { getAsturWeatherSvg } from './weatherAsturIcons.js?v=2.1.5';
+import { getPixelWeatherSvg } from './weatherPixelIcons.js?v=2.1.5';
+import { getNeonWeatherSvg } from './weatherNeonIcons.js?v=2.1.5';
+import { getSketchWeatherSvg } from './weatherSketchIcons.js?v=2.1.5';
+import { getGlassWeatherSvg } from './weatherGlassIcons.js?v=2.1.5';
+import { getFuturoWeatherSvg } from './weatherFuturoIcons.js?v=2.1.5';
 
 /**
  * Mapeo de códigos meteorológicos WMO a descripciones en asturiano/castellano, iconos y clases
@@ -169,8 +169,8 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
         isExplicitRainCode = false;
         base = {
           label: isNight ? 'Niebla cerrada / Borrina húmeda' : 'Niebla / Borrina húmeda',
-          icon: '🌫️',
-          svgKey: 'fog',
+          icon: '🌫️🫧',
+          svgKey: 'wet-fog',
           lucide: 'cloud-fog',
           bg: 'fog',
           isRain: false,
