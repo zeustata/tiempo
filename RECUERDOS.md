@@ -2,6 +2,30 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌦️ Actualización v2.1.3: Rescate Inteligente de Orbayu Real & Calibración Cantábrica — 2026-10-14
+- **Resolución del Punto Ciego de Llovizna Fina por Retraso de AROME (Feedback Lendo):**
+  1. *Diagnóstico Operativo:* Durante una jornada de trabajo en moto por Gijón (13 de octubre, 16:30 a 17:30), comenzó a orbayar intensificándose hasta llover. *eltiempo.es* acertó al basarse en el modelo europeo ECMWF (código 51, 0.1 mm, PoP 47%-65%). Sin embargo, la app MeteoAstur Lode marcaba únicamente `☁️ Nublado` con 0% de probabilidad.
+  2. *Causa Raíz Identificada:*
+     - AROME (malla 1.3 km) sufrió un desfase temporal de 1 hora, retrasando el inicio de la precipitación hasta las 18:00 h (1.3 mm).
+     - El filtro anti-fantasmas del Consenso Cantábrico en `weatherApi.js` exigía que ECMWF acumulase al menos `≥ 0.5 mm` y que AROME tuviese `PoP ≥ 65%`. Como el orbayu fino de ECMWF era de `0.1 mm` y AROME daba `0%`, el filtro catalogó los 0.1 mm de ECMWF como "lluvia fantasma" y los descartó por completo.
+     - En tiempo actual (`current`), AROME tenía soberanía ciega y no se permitía ninguna corrección de lluvia desde ECMWF.
+  3. *Solución y Calibración Física Quirúrgica:*
+     - Se incorporaron `precipitation_probability` y `relative_humidity_2m` a la llamada en paralelo de ECMWF IFS.
+     - **Rescate de Orbayu Real (Nowcasting y Horario 48h):** Si AROME marca seco (`< 0.1 mm` o código `< 50`), pero ECMWF marca llovizna activa (código 51-57 o `≥ 0.1 mm`), el consenso valida y rescata el Orbayu real si concurren los chivatos físicos inequívocos:
+       * Humedad relativa en superficie en saturación alta: `humidity >= 86%`.
+       * Manto nuboso cerrado: `cloudCover >= 80%`.
+       * Ensamble europeo certero: `ePop >= 40%`.
+       * Ausencia de haz solar directo: radiación directa en ECMWF `< 100 W/m²`.
+     - **Blindaje Anti-Fantasmas Preservado:** En días de panza de burro seca de primavera/verano (humedad < 85% o probabilidad baja < 40%), se mantiene estrictamente el tiempo nublado seco sin inventar falsas lluvias.
+  4. *Coherencia Visual Estricta Niebla vs. Orbayu (Feedback Lendo):*
+     - *Diagnóstico:* En previsiones horarias de madrugada (como a las 03:00 y 04:00 h en Gijón), la app mostraba un icono de llovizna (nube con 1 gotita tierna `drizzle`) pero con 0% de probabilidad y 0.0 mm de lluvia.
+     - *Causa:* El detector de llovizna meona reaccionaba a la humedad extrema (95%) y visibilidad reducida (400-540 m) asignando `drizzle`, contradiciendo el 0% del modelo.
+     - *Resolución:* En condiciones de niebla/estratos con `0.0 mm` y probabilidad baja/nula (`< 20%`), se clasifica limpiamente con icono de **`🌫️ Borrina / Niebla húmeda`** (`fog`), eliminando cualquier gota de lluvia y garantizando honestidad matemática total sin inventar porcentajes falsos.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.1.3 🌦️`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v213-rescate-orbayu` en `sw.js`.
+  - Query strings actualizadas a `?v=2.1.3` en `index.html` y módulos correspondientes.
+
 ## ⛷️ Actualización v2.1.2: Armonización Diurna en Pistas de Esquí — 2026-10-13
 - **Resolución de la Paradoja Cielo Diurno vs. Nocturno en Estaciones (Feedback Lendo & Cefe):**
   1. *Diagnóstico:* En las fichas de estaciones, la tarjeta de un día podía encabezarse con «☁️ Nublado» a pesar de que el desglose de mañana (09-13h) y tarde (13-17h) mostraba sol radiante (`☀️`). La causa residía en que `daily.weather_code` abarca las 24 horas del día (incluyendo nieblas o estratos de las 04:00 AM).

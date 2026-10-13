@@ -256,7 +256,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.1.2 ⛷️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.1.3 🌦️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -308,8 +308,23 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
+            <span class="release-version">v2.1.3 🌦️</span>
+            <span class="release-date">14 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-fix">Consenso Cantábrico</span> <strong>Rescate Inteligente de Orbayu Real & Anti-Punto Ciego (Feedback Lendo)</strong>:
+              <br>• <strong>Rescate Físico ante Desfases de AROME:</strong> Si el modelo de alta resolución (AROME) retrasa la llegada de un frente marítimo débil marcando cielo seco (<code>0.0 mm</code>), pero el modelo europeo (ECMWF) detecta llovizna activa (código 51 con <code>≥ 0.1 mm</code>), el sistema valida el ensamble si la humedad relativa en superficie es alta (<code>≥ 86%</code>), el cielo está encapotado (<code>≥ 80%</code>) y la probabilidad por conjuntos supera el 40%.
+              <br>• <strong>Sincronización en Tiempo Real y Pronóstico:</strong> Elimina el punto ciego que mostraba solo una nube cuando ya estaba orbayando activamente en la calle, activando al instante el Semáforu del Paragües (<code>🟡 Orbayando Agora</code>), partículas vivas de lluvia y previsiones horarias.
+              <br>• <strong>Blindaje Anti-Fantasmas Preservado:</strong> En días de panza de burro seca o nubes altas sin humedad de saturación (&lt; 86% o PoP &lt; 40%), se mantiene estrictamente el tiempo nublado seco sin inventar lluvia.
+              <br>• <strong>Coherencia Visual Estricta Niebla vs. Orbayu:</strong> Erradicada la discordancia que mostraba icono de gota de lluvia con 0% y 0.0 mm en nieblas de madrugada. Si la probabilidad es nula (< 20%) y no llueve, se clasifica limpiamente con icono de <code>🌫️ Borrina / Niebla húmeda</code>, garantizando honestidad matemática total sin gotas engañosas.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
             <span class="release-version">v2.1.2 ⛷️</span>
-            <span class="release-date">13 Oct 2026 (Actual)</span>
+            <span class="release-date">13 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-fix">Armonización de Esquí</span> <strong>Coherencia Diurna en Horario de Pistas (Feedback Lendo & Cefe)</strong>:
@@ -2940,7 +2955,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.1.2"></script>
+  <script type="module" src="js/app.js?v=2.1.3"></script>
 
 
 

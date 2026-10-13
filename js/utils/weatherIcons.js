@@ -149,16 +149,34 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     const isFogMeonaActive = !isPhysicallyRaining && !isExplicitRainCode && h !== null && h >= 94 && isOvercastSky && hasNoSunBeam && isFogMistCondition;
 
     if (isFogMeonaActive) {
-      isExplicitRainCode = true;
-      base = {
-        label: isNight ? 'Orbayu meón nocturno (Llovizna fina)' : 'Orbayu meón (Llovizna fina)',
-        icon: isNight ? '🌧️' : '🌦️',
-        svgKey: 'drizzle',
-        lucide: 'cloud-drizzle',
-        bg: 'drizzle',
-        isRain: true,
-        isSnow: false
-      };
+      // Coherencia visual estricta y honestidad matemática (Feedback Lendo):
+      // Si la probabilidad es baja o nula (prob < 20%) y no cae lluvia medible (p < 0.1 mm),
+      // se clasifica fielmente como Niebla / Borrina húmeda con icono de niebla (fog) y sin gotas,
+      // erradicando la contradicción de mostrar una gota de lluvia cuando la probabilidad es 0% y la lluvia 0.0 mm.
+      // Solo si el ensamble respalda probabilidad de lluvia (prob >= 20%), se clasifica como Orbayu meón (drizzle).
+      if (hasPop && prob >= 20) {
+        isExplicitRainCode = true;
+        base = {
+          label: isNight ? 'Orbayu meón nocturno (Llovizna fina)' : 'Orbayu meón (Llovizna fina)',
+          icon: isNight ? '🌧️' : '🌦️',
+          svgKey: 'drizzle',
+          lucide: 'cloud-drizzle',
+          bg: 'drizzle',
+          isRain: true,
+          isSnow: false
+        };
+      } else {
+        isExplicitRainCode = false;
+        base = {
+          label: isNight ? 'Niebla cerrada / Borrina húmeda' : 'Niebla / Borrina húmeda',
+          icon: '🌫️',
+          svgKey: 'fog',
+          lucide: 'cloud-fog',
+          bg: 'fog',
+          isRain: false,
+          isSnow: false
+        };
+      }
     }
 
     // REGLA 1: Si el código base es de tiempo seco (sol, claros, nublado) y no cae lluvia física (p < 0.1 mm),

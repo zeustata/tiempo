@@ -130,7 +130,7 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
     // y resolver la asimetría de lluvia (PoP alto con 0.0 mm por corte determinista de AROME)
     const isAutoModel = !modelParam || modelParam === 'best_match';
     const consensusPromise = isAutoModel
-      ? fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=weather_code,cloud_cover,direct_normal_irradiance,shortwave_radiation,precipitation&hourly=weather_code,cloud_cover,direct_normal_irradiance,shortwave_radiation,precipitation,rain&models=ecmwf_ifs025&timezone=Europe%2FMadrid&forecast_days=2`)
+      ? fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=weather_code,cloud_cover,direct_normal_irradiance,shortwave_radiation,precipitation,relative_humidity_2m&hourly=weather_code,cloud_cover,direct_normal_irradiance,shortwave_radiation,precipitation,rain,precipitation_probability,relative_humidity_2m&models=ecmwf_ifs025&timezone=Europe%2FMadrid&forecast_days=2`)
           .then(r => r.ok ? r.json() : null)
           .catch(() => null)
       : Promise.resolve(null);
@@ -178,14 +178,17 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
  * mientras el modelo de referencia mundial (ECMWF IFS, 9 km) constata que la región
  * está bajo un manto nuboso cerrado y continuo (nubosidad >= 80%).
  * 
- * SOBERANÍA DE AROME EN TIEMPO ACTUAL & BLINDAJE ANTI-ORBALLU FANTASMA:
- * 1. En tiempo actual en vivo (nowcasting), AROME (1.3 km) es la autoridad indiscutible.
- *    Se prohíbe taxativamente que la llovizna residual o sesgo húmedo orográfico de ECMWF
- *    (0.1 - 0.2 mm por su cuadrícula gruesa de 9 km) imponga lluvia activa o código 51 (Orbayu)
- *    si AROME marca seco (< 0.1 mm).
- * 2. En el pronóstico horario, ECMWF solo puede aportar lluvia si el ensamble es inequívoco
- *    (PoP >= 65%), la precipitación prevista es significativa (>= 0.5 mm) y el cielo está
- *    efectivamente cubierto (nubosidad >= 60%), evitando que trazas numéricas anulen claros reales.
+ * RESCATE INTELIGENTE DE ORBAYU REAL & BLINDAJE ANTI-ORBALLU FANTASMA:
+ * 1. En tiempo actual en vivo (nowcasting):
+ *    - AROME mantiene soberanía si no hay condiciones de saturación.
+ *    - Si AROME marca seco (< 0.1 mm) por corte determinista o desfase horario, pero ECMWF
+ *      marca llovizna activa (código 51-57 o >= 0.1 mm), humedad relativa alta (>= 86%),
+ *      cielo cerrado (>= 80%) y ausencia de radiación solar directa, se rescata el Orbayu real.
+ * 2. En el pronóstico horario:
+ *    - Si ECMWF detecta llovizna (0.1 - 0.4 mm) respaldada por ensamble (PoP >= 40%),
+ *      humedad >= 86%, cielo cubierto (>= 80%) y sin haz solar en ECMWF (< 100 W/m²), se valida el Orbayu.
+ *    - Si se trata de lluvia frontal mayor (>= 0.5 mm), basta certeza del ensamble (PoP >= 60%) y nubes >= 60%.
+ *    - En días secos de panza de burro (humedad < 85% o PoP < 40%), se mantiene el blindaje anti-fantasmas.
  */
 function applyCantabricoConsensus(weather, consensus) {
   if (!weather || !consensus) return;
@@ -204,7 +207,7 @@ function applyCantabricoConsensus(weather, consensus) {
     // Prohibido clasificar como "falso claro" si hay radiación solar activa verificable.
     const hasActiveSunlight = rawDirectIrr >= 100 || rawSw >= 200 || rawUv >= 1.0;
 
-    // Solo se corrige el falso claro si no hay sol directo activo, ECMWF constata un manto cerrado (>= 80%) y la divergencia es masiva (>= 35%)
+    // A) Solo se corrige el falso claro si no hay sol directo activo, ECMWF constata un manto cerrado (>= 80%) y la divergencia es masiva (>= 35%)
     const isFalseClear = !hasActiveSunlight && rawCloud < 50 && ecmwfCloud >= 80 && (ecmwfCloud - rawCloud >= 35);
 
     if (isFalseClear) {
@@ -218,6 +221,30 @@ function applyCantabricoConsensus(weather, consensus) {
       if (consensus.current.shortwave_radiation != null) {
         weather.current.shortwave_radiation = consensus.current.shortwave_radiation;
       }
+    }
+
+    // B) Rescate de Orbayu Cantábrico Real en tiempo actual:
+    const rawPrecip = weather.current.precipitation != null ? parseFloat(weather.current.precipitation) : 0;
+    const ePrecip = consensus.current.precipitation != null ? parseFloat(consensus.current.precipitation) : 0;
+    const eCode = consensus.current.weather_code != null ? parseInt(consensus.current.weather_code, 10) : 0;
+    const hum = weather.current.relative_humidity_2m != null 
+      ? parseFloat(weather.current.relative_humidity_2m) 
+      : (consensus.current.relative_humidity_2m != null ? parseFloat(consensus.current.relative_humidity_2m) : 0);
+    const eDirectIrr = consensus.current.direct_normal_irradiance != null ? parseFloat(consensus.current.direct_normal_irradiance) : 0;
+
+    const isCurrentDrizzleRescue = rawPrecip < 0.1 &&
+      ((eCode >= 51 && eCode <= 57) || (ePrecip >= 0.1 && ePrecip < 0.5)) &&
+      ePrecip >= 0.1 &&
+      hum >= 86 &&
+      (rawCloud >= 80 || ecmwfCloud >= 80) &&
+      !hasActiveSunlight &&
+      eDirectIrr < 100;
+
+    if (isCurrentDrizzleRescue) {
+      weather.current.precipitation = ePrecip;
+      if (weather.current.rain != null) weather.current.rain = ePrecip;
+      weather.current.weather_code = (eCode >= 50 && eCode <= 67) ? eCode : 51;
+      if (ecmwfCloud > rawCloud) weather.current.cloud_cover = ecmwfCloud;
     }
   }
 
@@ -241,21 +268,43 @@ function applyCantabricoConsensus(weather, consensus) {
         }
       }
 
-      // B) Armonización de precipitación frontal real (Protección estricta anti-orballu fantasma):
-      // Solo si el ensamble ve lluvia masiva (PoP >= 65%), ECMWF prevé acumulación real (>= 0.5 mm)
-      // y la nubosidad es propia de frente de lluvia (>= 60%). Jamás por trazas de 0.1 o 0.2 mm.
+      // B) Armonización y Rescate de Orbayu Real / Lluvia Frontal:
       const pop = weather.hourly.precipitation_probability ? (weather.hourly.precipitation_probability[i] || 0) : 0;
+      const ePop = consensus.hourly.precipitation_probability ? (consensus.hourly.precipitation_probability[i] || 0) : 0;
       const precip = weather.hourly.precipitation ? (weather.hourly.precipitation[i] || 0) : 0;
       const ePrecip = consensus.hourly.precipitation ? (consensus.hourly.precipitation[i] || 0) : 0;
       const eCode = consensus.hourly.weather_code ? consensus.hourly.weather_code[i] : null;
+      const hum = weather.hourly.relative_humidity_2m 
+        ? weather.hourly.relative_humidity_2m[i] 
+        : (consensus.hourly.relative_humidity_2m ? consensus.hourly.relative_humidity_2m[i] : 80);
+      const eDirectIrr = consensus.hourly.direct_normal_irradiance ? consensus.hourly.direct_normal_irradiance[i] : 0;
 
-      if (precip < 0.1 && pop >= 65 && ePrecip >= 0.5 && rawC >= 60) {
+      // 1. Rescate de Orbayu Fino Real (0.1 - 0.4 mm):
+      // Si AROME marca seco pero ECMWF ve llovizna con ensamble (PoP >= 40%), humedad >= 86%,
+      // cielo cubierto (>= 80%) y sin haz solar directo en ECMWF (< 100 W/m²).
+      const isDrizzleRescue = precip < 0.1 &&
+        ((eCode >= 51 && eCode <= 57) || (ePrecip >= 0.1 && ePrecip < 0.5)) &&
+        ePrecip >= 0.1 &&
+        ePop >= 40 &&
+        hum >= 86 &&
+        (rawC >= 80 || ecmwfC >= 80) &&
+        eDirectIrr < 100;
+
+      // 2. Lluvia Frontal Significativa (>= 0.5 mm):
+      // Si el ensamble ve lluvia clara (PoP >= 60% en AROME o ECMWF), acumulación >= 0.5 mm y nubosidad >= 60%.
+      const isFrontalRainRescue = precip < 0.1 &&
+        (pop >= 60 || ePop >= 60) &&
+        ePrecip >= 0.5 &&
+        (rawC >= 60 || ecmwfC >= 60);
+
+      if (isDrizzleRescue || isFrontalRainRescue) {
         if (weather.hourly.precipitation) weather.hourly.precipitation[i] = ePrecip;
-        if (weather.hourly.rain && consensus.hourly.rain) {
-          weather.hourly.rain[i] = consensus.hourly.rain[i];
-        }
+        if (weather.hourly.rain) weather.hourly.rain[i] = ePrecip;
         if (weather.hourly.weather_code && (weather.hourly.weather_code[i] < 50) && eCode) {
           weather.hourly.weather_code[i] = eCode;
+        }
+        if (weather.hourly.precipitation_probability) {
+          weather.hourly.precipitation_probability[i] = Math.max(pop, ePop);
         }
       }
     }

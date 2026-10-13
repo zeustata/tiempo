@@ -10,6 +10,19 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.1.3] - 2026-10-14
+
+### 🌦️ Rescate Inteligente de Orbayu Real & Calibración Cantábrica (Feedback Lendo)
+- **Eliminación del Punto Ciego de Llovizna Fina por Desfase de AROME:**
+  - Cuando el modelo determinista de alta resolución (AROME, 1.3 km) retrasa la entrada de una masa húmeda atlántica o marca corte seco (`0.0 mm`), pero el modelo europeo (ECMWF IFS, 9 km) constata llovizna activa (código 51 con `≥ 0.1 mm`), el algoritmo de consenso evalúa los chivatos físicos en superficie.
+  - Si la humedad relativa en superficie es alta (`≥ 86%`), el cielo está cubierto (`≥ 80%`), la probabilidad del ensamble europeo supera el 40% y no hay radiación solar directa activa, se valida y rescata el **Orbayu real** tanto en tiempo en vivo como en el pronóstico horario inmediato.
+  - Activa de inmediato el Semáforu del Paragües (`🟡 Orbayando Agora`), fondo de llovizna con partículas vivas de lluvia y sincronización horaria a 72h.
+- **Blindaje Anti-Orbayu Fantasma Preservado:**
+  - En días de panza de burro seca o coberturas nubosas altas sin saturación de humedad (< 86% o probabilidad < 40%), se mantiene estrictamente el tiempo nublado seco sin inventar falsas lluvias.
+- **Coherencia Visual Estricta Niebla vs. Orbayu (Feedback Lendo):**
+  - Erradicada la discordancia que mostraba icono de llovizna (nube con 1 gota) en horas con 0% de probabilidad y 0.0 mm. Si la probabilidad es nula (< 20%) y no llueve, las nieblas de inversión o madrugada se clasifican limpiamente con icono de `🌫️ Borrina / Niebla húmeda` sin gotas de agua, preservando la honestidad matemática sin inventar lluvia.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v213-rescate-orbayu` y query strings `?v=2.1.3`.
+
 ## [2.1.2] - 2026-10-13
 
 ### ⛷️ Armonización Diurna en Horario de Pistas de Esquí (Feedback Lendo & Cefe)

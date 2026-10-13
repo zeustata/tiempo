@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v212-armonizacion-esqui';
+const CACHE_NAME = 'meteoasturlode-v213-rescate-orbayu';
 const STATIC_ASSETS = [
   './',
   './index.html',
