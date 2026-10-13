@@ -87,7 +87,7 @@ export function getSeasonalSolarThresholds(date = new Date()) {
   };
 }
 
-export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null, directIrradiance = null, uvIndex = null, shortwaveRadiation = null, cloudCover = null, humidity = null) {
+export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null, directIrradiance = null, uvIndex = null, shortwaveRadiation = null, cloudCover = null, humidity = null, visibility = null) {
   let base = WMO_CODES[code] || { label: 'Variable', icon: '⛅', svgKey: 'cloudy', lucide: 'cloud', bg: 'cloudy', isRain: false, isSnow: false };
 
   const isNight = isDay === 0 || isDay === false;
@@ -111,6 +111,9 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     const hasPop = pop !== null && pop !== undefined;
     const prob = hasPop ? Math.max(0, parseFloat(pop)) : null;
     const h = humidity != null ? parseFloat(humidity) : null;
+    const cc = cloudCover != null ? parseFloat(cloudCover) : null;
+    const irr = directIrradiance != null ? parseFloat(directIrradiance) : 0;
+    const vis = visibility != null ? parseFloat(visibility) : null;
 
     // Lluvia física real medible en pluviómetro (>= 0.1 mm) o código WMO explícito de lluvia
     const isPhysicallyRaining = p >= 0.1;
@@ -135,6 +138,29 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
       };
     }
 
+    // DETECTOR ASTURIANO DE ORBAYU DE NIEBLA / MEONA (Feedback Lendo):
+    // Resuelve el punto ciego de los modelos numéricos donde el pluviómetro marca 0.0 mm (< 0.1 mm)
+    // y el código en bruto es 3 (Cubierto) o 45/48 (Niebla), pero la atmósfera está en condensación líquida activa:
+    // Humedad extrema (h >= 94%), cielo cerrado (cc >= 85% o código 3/45/48), ausencia de radiación solar directa
+    // y techo bajo con visibilidad reducida (<= 2500 m, o h >= 95% si no hay sensor de visibilidad).
+    const isOvercastSky = (cc !== null && cc >= 85) || code === 3 || code === 45 || code === 48;
+    const hasNoSunBeam = irr < 80;
+    const isFogMistCondition = vis !== null ? (vis <= 2500) : (h !== null && h >= 95);
+    const isFogMeonaActive = !isPhysicallyRaining && !isExplicitRainCode && h !== null && h >= 94 && isOvercastSky && hasNoSunBeam && isFogMistCondition;
+
+    if (isFogMeonaActive) {
+      isExplicitRainCode = true;
+      base = {
+        label: isNight ? 'Orbayu meón nocturno (Llovizna fina)' : 'Orbayu meón (Llovizna fina)',
+        icon: isNight ? '🌧️' : '🌦️',
+        svgKey: 'drizzle',
+        lucide: 'cloud-drizzle',
+        bg: 'drizzle',
+        isRain: true,
+        isSnow: false
+      };
+    }
+
     // REGLA 1: Si el código base es de tiempo seco (sol, claros, nublado) y no cae lluvia física (p < 0.1 mm),
     // la probabilidad estadística jamás transforma el cielo en lluvia. Se respeta el estado del cielo.
     if (!isPhysicallyRaining && !isExplicitRainCode) {
@@ -142,7 +168,7 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     }
     // REGLA 2: Si el modelo traía un código de lluvia pero la probabilidad es ínfima (< 20%) y no cae lluvia física (p < 0.1):
     // anular a 'Nublado' para evitar falsas alarmas
-    else if (hasPop && prob < 20 && !isPhysicallyRaining && code !== 61 && code !== 63 && code !== 65 && code !== 81 && code !== 82 && code !== 95 && code !== 96 && code !== 99) {
+    else if (hasPop && prob < 20 && !isPhysicallyRaining && !isFogMeonaActive && code !== 61 && code !== 63 && code !== 65 && code !== 81 && code !== 82 && code !== 95 && code !== 96 && code !== 99) {
       if (isExplicitRainCode) {
         base = {
           label: isNight ? 'Nublado de noche' : 'Nublado / Cubiertu',

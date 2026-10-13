@@ -29,6 +29,8 @@ export function generateWeatherSpeechScript(concejo, weatherData) {
     ? hourly.precipitation_probability[currentHour]
     : 0;
 
+  const currentVis = current.visibility != null ? current.visibility : (hourly?.visibility && hourly.visibility[currentHour] != null ? hourly.visibility[currentHour] : null);
+
   const weatherInfo = getWeatherInfo(
     current.weather_code != null ? current.weather_code : 0,
     current.is_day != null ? current.is_day : 1,
@@ -38,7 +40,8 @@ export function generateWeatherSpeechScript(concejo, weatherData) {
     current.uv_index,
     current.shortwave_radiation,
     current.cloud_cover,
-    current.relative_humidity_2m
+    current.relative_humidity_2m,
+    currentVis
   );
 
   const cleanConcejoName = concejo.name ? concejo.name.replace(/\(.*?\)/, '').trim() : 'Asturias';

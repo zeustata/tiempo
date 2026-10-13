@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v206-borrina-costera-cantabrico';
+const CACHE_NAME = 'meteoasturlode-v207-orbayu-niebla-meona';
 const STATIC_ASSETS = [
   './',
   './index.html',

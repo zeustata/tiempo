@@ -1,4 +1,4 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=2.0.4';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=2.0.7';
 import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=1.1.76';
 import { renderHourlyForecastBlock } from './forecastView.js?v=1.1.60';
 import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=1.1.60';
@@ -184,7 +184,8 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   const currentUv = current.uv_index != null ? current.uv_index : (hourly?.uv_index && hourly.uv_index[currentHour] != null ? hourly.uv_index[currentHour] : null);
   const currentSw = current.shortwave_radiation != null ? current.shortwave_radiation : null;
   const currentCloud = current.cloud_cover != null ? current.cloud_cover : (hourly?.cloud_cover && hourly.cloud_cover[currentHour] != null ? hourly.cloud_cover[currentHour] : null);
-  const weatherInfo = getWeatherInfo(current.weather_code, current.is_day, current.precipitation, currentPop, directIrr, currentUv, currentSw, currentCloud, current.relative_humidity_2m);
+  const currentVis = current.visibility != null ? current.visibility : (hourly?.visibility && hourly.visibility[currentHour] != null ? hourly.visibility[currentHour] : null);
+  const weatherInfo = getWeatherInfo(current.weather_code, current.is_day, current.precipitation, currentPop, directIrr, currentUv, currentSw, currentCloud, current.relative_humidity_2m, currentVis);
   const windDir = getWindDirection(current.wind_direction_10m || 0);
   const uvVal = (daily.uv_index_max && daily.uv_index_max[0] != null) ? daily.uv_index_max[0] : (hourly.uv_index && hourly.uv_index[new Date().getHours()] != null ? hourly.uv_index[new Date().getHours()] : null);
   const uvInfo = getUVDescription(uvVal);

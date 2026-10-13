@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.0.6">
-  <link rel="stylesheet" href="css/components.css?v=2.0.6">
-  <link rel="stylesheet" href="css/weather-themes.css?v=2.0.6">
+  <link rel="stylesheet" href="css/main.css?v=2.0.7">
+  <link rel="stylesheet" href="css/components.css?v=2.0.7">
+  <link rel="stylesheet" href="css/weather-themes.css?v=2.0.7">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -243,7 +243,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.0.6 🌫️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.0.7 🌧️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -295,8 +295,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
+            <span class="release-version">v2.0.7 🌧️</span>
+            <span class="release-date">13 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-improvement">Calibración Cantábrica</span> <strong>Detector Asturiano de Orbayu de Niebla / Meona (Feedback Lendo)</strong>:
+              <br>• <strong>Detección de Llovizna Fina en Techo Bajo:</strong> Resuelve el punto ciego de los modelos numéricos cuando el pluviómetro marca 0.0 mm pero la atmósfera está en condensación líquida activa (humedad <code>≥ 94%</code>, cielo cerrado <code>≥ 85%</code>, visibilidad <code>≤ 2.500 m</code> y ausencia de radiación solar directa).
+              <br>• <strong>Identificación Precisa:</strong> Clasifica fidedignamente como <strong>«Orbayu meón (Llovizna fina)»</strong> (o <em>«Orbayu meón nocturno»</em>) con icono <code>🌦️</code> y fondo activo de lluvia, reflejando fielmente el orballar real asturiano.
+              <br>• <strong>Blindaje Anti-Orbayu Fantasma Intacto:</strong> Mantiene estrictamente protegido el filtro anti-fantasma; en días de panza de burro seca o coberturas sin saturación extrema se preserva impecable el tiempo nublado seco.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
             <span class="release-version">v2.0.6 🌫️</span>
-            <span class="release-date">12 Oct 2026 (Actual)</span>
+            <span class="release-date">12 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-improvement">Calibración Cantábrica</span> <strong>Detector Integral de Borrina Marina en los 20 Concejos Costeros (Feedback Lendo)</strong>:
@@ -2843,7 +2857,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.0.6"></script>
+  <script type="module" src="js/app.js?v=2.0.7"></script>
 
 
 

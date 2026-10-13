@@ -197,8 +197,9 @@ function renderCurrentChart() {
     const useSw = (isImmediate && hourlyData.shortwave_radiation && hourlyData.shortwave_radiation[i] != null) ? hourlyData.shortwave_radiation[i] : null;
     const cloudCoverHour = (hourlyData.cloud_cover && hourlyData.cloud_cover[i] != null) ? hourlyData.cloud_cover[i] : null;
     const humHour = (hourlyData.relative_humidity_2m && hourlyData.relative_humidity_2m[i] != null) ? hourlyData.relative_humidity_2m[i] : null;
+    const visHour = (hourlyData.visibility && hourlyData.visibility[i] != null) ? hourlyData.visibility[i] : null;
 
-    const wInfo = getWeatherInfo(wCode, isDay, precipMm, pop, useDirectIrr, useUv, useSw, cloudCoverHour, humHour);
+    const wInfo = getWeatherInfo(wCode, isDay, precipMm, pop, useDirectIrr, useUv, useSw, cloudCoverHour, humHour, visHour);
     weatherDescriptions.push(`${wInfo.icon} ${wInfo.label}${precipMm >= 0.1 ? ` (${precipMm.toFixed(1)} mm)` : ''}`);
 
     hoursData.push({

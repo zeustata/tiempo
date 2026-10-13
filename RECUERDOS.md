@@ -2,6 +2,24 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌧️ Actualización v2.0.7: Detector Asturiano de Orbayu de Niebla / Meona — 2026-10-13
+- **Módulo Operativo en Motor de Iconos y Clasificación (`weatherIcons.js`, `currentCard.js`, `app.js`):**
+  1. *Punto Ciego de Modelos Numéricos Resuelto:* Los modelos globales y de mesoescala (AROME, ECMWF) envían con frecuencia código WMO `3` (Cubierto) o `45/48` (Niebla) con `0.0 mm` en pluviómetro debido a que las gotas microscópicas de la llovizna en niebla no poseen peso suficiente para accionar la cazoleta basculante de 0,1 mm, a pesar de estar empapando el asfalto.
+  2. *Detección Física por Humedad Extrema y Visibilidad:* Detección automática cuando concurren simultáneamente:
+     - Pluviómetro en `0.0 mm` (`p < 0.1`).
+     - Humedad relativa en saturación extrema (`humidity >= 94%`).
+     - Manto nuboso cerrado (`cloudCover >= 85%` o códigos 3/45/48).
+     - Ausencia de haz solar directo (`directIrradiance < 80 W/m²`).
+     - Techo bajo con visibilidad reducida (`visibility <= 2.500 m`, o `humidity >= 95%` en ausencia de sensor de visibilidad).
+  3. *Etiquetado Fidedigno y Atmósfera Líquida:* Rotula como **«Orbayu meón (Llovizna fina)»** (o *«Orbayu meón nocturno»* si es de noche), asignando icono `🌦️` (o `🌧️`), fondo `drizzle` y activación de partículas de lluvia viva.
+  4. *Blindaje Anti-Orbayu Fantasma 100% Preservado:* El filtro anti-fantasma que tumba códigos 51 con humedad `< 94%` a nublado seco continúa completamente inalterado, evitando que en días secos de estratocúmulos o panza de burro clara se invente lluvia ficticia.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4 y 13):**
+  - Versión oficial actualizada a **`v2.0.7 🌧️`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v207-orbayu-niebla-meona` en `sw.js`.
+  - Actualización de query strings en `index.html` y módulos JS (`?v=2.0.7`).
+
+---
+
 ## 🌫️ Actualización v2.0.6: Calibración Integral de Borrina Marina en los 20 Concejos Costeros — 2026-10-12
 - **Módulo Operativo en Detector de Borrina (`borrinaDetector.js` y `currentCard.js`):**
   1. *Sensibilidad Nocturna Calibrada:* Reajuste de los umbrales de saturación costera para horas nocturnas (`is_day === 0`), reduciendo el umbral de disparo de humedad a `>= 88%` y ampliando el margen de condensación (`dewSpread <= 1.8 °C`), capturando con rigor físico la niebla marina de advección (verificado en vivo en las webcams de Salinas y toda la costa cantábrica).

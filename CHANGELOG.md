@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.0.7] - 2026-10-13
+
+### 🌧️ Calibración Cantábrica: Detector Asturiano de Orbayu de Niebla / Meona (Feedback Lendo)
+- **Resolución del Punto Ciego de Modelos Numéricos:** Resuelve la anomalía en la que el modelo numérico envía código WMO 3 (Cubierto) o 45/48 (Niebla) y precipitación 0.0 mm por falta de peso hidrostático en la cazoleta del pluviómetro, pero la atmósfera está en condensación líquida activa mojando el asfalto.
+- **Criterios Físicos Rigurosos de Activación:** Se detecta automáticamente ante saturación extrema de humedad (`humidity >= 94%`), cielo cerrado (`cloudCover >= 85%` o código 3/45/48), ausencia de radiación solar directa y techo bajo con visibilidad reducida (`visibility <= 2.500 m`, o `humidity >= 95%` en ausencia de sensor de visibilidad).
+- **Etiquetado Fidedigno Asturiano:** Clasifica con exactitud como **«Orbayu meón (Llovizna fina)»** (o *«Orbayu meón nocturno»*) con icono `🌦️`, fondo dinámico de lluvia (`drizzle`) y gotas vivas.
+- **Blindaje Anti-Orbayu Fantasma 100% Intacto:** Se mantiene estrictamente el filtro anti-fantasma (anulación de código 51 a nublado seco si la humedad es `< 94%`), impidiendo que en días secos de panza de burro se invente lluvia ficticia.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v207-orbayu-niebla-meona` y query strings `?v=2.0.7`.
+
+---
+
 ## [2.0.6] - 2026-10-12
 
 ### 🌫️ Calibración Cantábrica: Detector Integral de Borrina Marina en los 20 Concejos Costeros (Feedback Lendo)

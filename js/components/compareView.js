@@ -28,6 +28,10 @@ function extractConcejoWeatherInfo(weatherData) {
     ? current.cloud_cover 
     : (hourly?.cloud_cover && hourly.cloud_cover[currentHourIdx] != null ? hourly.cloud_cover[currentHourIdx] : null);
 
+  const currentVis = current.visibility != null 
+    ? current.visibility 
+    : (hourly?.visibility && hourly.visibility[currentHourIdx] != null ? hourly.visibility[currentHourIdx] : null);
+
   return getWeatherInfo(
     current.weather_code,
     current.is_day !== undefined ? current.is_day : 1,
@@ -37,7 +41,8 @@ function extractConcejoWeatherInfo(weatherData) {
     currentUv,
     currentSw,
     currentCloud,
-    current.relative_humidity_2m
+    current.relative_humidity_2m,
+    currentVis
   );
 }
 

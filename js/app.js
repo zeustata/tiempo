@@ -11,7 +11,7 @@ import { renderForecast } from './components/forecastView.js?v=2.0.0';
 import { renderWeatherChart } from './components/chartsView.js?v=2.0.0';
 import { renderAstronomyView } from './components/astronomyCard.js?v=2.0.0';
 import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=2.0.0-slider';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=2.0.4';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=2.0.7';
 import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=2.0.0';
 import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=2.0.0';
 import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=2.0.0';
@@ -41,7 +41,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '2.0.6';
+export const CURRENT_APP_VERSION = '2.0.7';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -2250,7 +2250,8 @@ class MeteoAsturiasApp {
     const currentUv = cur?.uv_index != null ? cur.uv_index : (hourly?.uv_index && hourly.uv_index[currentHour] != null ? hourly.uv_index[currentHour] : null);
     const currentSw = cur?.shortwave_radiation != null ? cur.shortwave_radiation : null;
     const currentCloud = cur?.cloud_cover != null ? cur.cloud_cover : (hourly?.cloud_cover && hourly.cloud_cover[currentHour] != null ? hourly.cloud_cover[currentHour] : null);
-    const info = getWeatherInfo(weatherCode, isDay, cur?.precipitation, currentPop, directIrr, currentUv, currentSw, currentCloud, cur?.relative_humidity_2m);
+    const curVis = cur?.visibility != null ? cur.visibility : (hourly?.visibility && hourly.visibility[currentHour] != null ? hourly.visibility[currentHour] : null);
+    const info = getWeatherInfo(weatherCode, isDay, cur?.precipitation, currentPop, directIrr, currentUv, currentSw, currentCloud, cur?.relative_humidity_2m, curVis);
     const bgType = info ? info.bg : 'cloudy';
     let themeKey = bgType;
 
