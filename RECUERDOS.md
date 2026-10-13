@@ -19,9 +19,10 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
      - *🏔️ Nieve & Cota:* Curva de altitud de cota (0°C en metros) combinada con barras de nieve horaria.
      - *☁️ Nubosidad:* Curva suave de porcentaje de cobertura nubosa (%) y balance de horas de sol directo vs cielo cubierto.
   5. *Doctrina de Blindaje Anti-Desborde y Ergonomía Móvil (Ley 11 & Ley 14):* Inmunidad total al desborde en anchos de 320 px a 380 px, preservando la armonía Liquid Glass.
+  6. *Armonización Jerárquica de Cabecera (Ley 14 - Feedback Lendo):* El título principal «📈 Meteorología Gráfica» se escala a `1.35rem` igualándose en presencia e impacto visual al resto de menús de la aplicación.
 - **Cache-Busting y Sincronización de Versión (Leyes 1, 4 y 13):**
   - Versión oficial actualizada a **`v2.0.9 📈`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
-  - Service Worker actualizado a `meteoasturlode-v209-meteorologia-grafica-viva` en `sw.js`.
+  - Service Worker actualizado a `meteoasturlode-v209-grafica-heading-polish` en `sw.js`.
   - Actualización de query strings en `index.html` y módulos JS (`?v=2.0.9`).
 
 ---
