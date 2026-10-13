@@ -2,6 +2,26 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📱 Hoja de Ruta Técnica: Widget Nativo de Android para Google Play Store (.aab v3) — 2026-10-14
+- **Diagnóstico y Consulta Estratégica (Feedback Lendo):**
+  1. *Pregunta de Lendo:* Viabilidad de crear un widget para la pantalla de inicio de Android y encapsularlo dentro del paquete `.aab` de la aplicación junto a un icono mejorado para la futura actualización (versión con `versionCode: 3`), teniendo en cuenta que MeteoAstur Lode es una aplicación con núcleo web.
+  2. *Resolución y Viabilidad Técnica:*
+     - **Viabilidad 100%:** Aunque el núcleo interactivo sea una web/PWA a pantalla completa (TWA), el paquete `.aab` (Android App Bundle) es un contenedor nativo compilado de Android.
+     - **Convivencia Híbrida:** En el mismo binario coexisten la actividad principal de la TWA (que abre la web) y un componente nativo de escritorio Android (`AppWidgetProvider` con `RemoteViews`).
+     - **Mecanismo del Widget:**
+       * Ejecuta en segundo plano una tarea ligera (`WorkManager`) cada 1 o 2 horas para consultar los datos climáticos del concejo favorito sin necesidad de mantener la web abierta.
+       * Renderiza en la pantalla de inicio del teléfono: temperatura actual, píldoras de mín/máx, estado del cielo, icono meteorológico y nombre del concejo con estética refinada *Liquid Glass*.
+       * Al pulsar sobre el widget (`PendingIntent`), abre directamente MeteoAstur Lode en pantalla completa.
+  3. *Plan de Empaquetado y Firma para el Hito v3:*
+     - Descarga e integración en el proyecto fuente de Android de las clases nativas del widget, layouts XML y registro en `AndroidManifest.xml`.
+     - Inyección del nuevo escudo / icono de alta resolución en los directorios `res/mipmap`.
+     - Configuración de `versionCode: 3` en `build.gradle`.
+     - Compilación y firma con la clave legítima existente (`signing.keystore` ubicada en `C:\Users\NUC\Downloads\MeteoAstur - Google Play package\signing.keystore`).
+     - Generación del archivo final `MeteoAstur-v3-Widget.aab`.
+  4. *Estrategia respecto a Google Play Console (Contador de 14 Días):*
+     - Respetar el ciclo de revisión cerrado en curso sin alterar la versión actual mientras los 20 testers completan su actividad regular requerida por Google.
+     - Subir la nueva versión `v3` con el widget y el icono mejorado en el momento óptimo acordado por Lendo (bien como hito de transición o como versión definitiva de acceso a producción).
+
 ## 🌫️ Actualización v2.1.5: Icono Exclusivo de Borrina Húmeda / Niebla Saturada — 2026-10-14
 - **Creación del Icono Vectorial Diferenciado `wet-fog` / `🌫️🫧` (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Lendo consultó si existía diferencia visual entre una niebla seca ordinaria (WMO 45/48) y la niebla cerrada / borrina húmeda saturada al 95-100% que cala el ambiente. Hasta ahora ambas compartían el mismo icono (`fog` / `🌫️`), ya que la versión previa v2.1.3 había eliminado la gotita de lluvia para evitar contradicciones con el 0% de probabilidad y los 0.0 mm de lluvia.
