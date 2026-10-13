@@ -10,6 +10,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.1.2] - 2026-10-13
+
+### ⛷️ Armonización Diurna en Horario de Pistas de Esquí (Feedback Lendo & Cefe)
+- **Eliminación de Falsas Contradicciones Cielo Diurno vs. Nocturno:**
+  - El icono meteorológico principal y la descripción superior de cada jornada en las estaciones de esquí ahora se calculan a partir de la franja horaria real de funcionamiento de remontes (09:00 a 17:00).
+  - Si durante las horas de esquí el cielo está despejado tanto por la mañana como por la tarde, la tarjeta se armoniza mostrando `☀️ Despejado / Sol`, evitando que nubes, nieblas o estratos de la madrugada (a las 04:00 o 06:00 de la mañana) marquen erróneamente el día entero como "Nublado".
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v212-armonizacion-esqui` y query strings `?v=2.1.2`.
+
 ## [2.1.1] - 2026-10-13
 
 ### 🎿 Cefe Edition: Previsión de Esquí a 7 Días & Detector de Ventisca Vespertina (Feedback Tester Cefe)

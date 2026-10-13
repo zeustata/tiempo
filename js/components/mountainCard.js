@@ -648,13 +648,39 @@ export function renderMountainCard(data, concejo) {
       const rawGust = daily.wind_gusts_10m_max && daily.wind_gusts_10m_max[dayIdx] != null ? daily.wind_gusts_10m_max[dayIdx] : rawWind * 1.4;
       const windStation = Math.round(rawWind * 1.3);
       const gustStation = Math.round(rawGust * 1.35);
-
       // Nieve fresca prevista para este día
       const snowDay = daily.snowfall_sum && daily.snowfall_sum[dayIdx] != null ? daily.snowfall_sum[dayIdx].toFixed(1) : '0.0';
 
-      const dayInfo = getWeatherInfo(code, 1, parseFloat(snowDay) > 0 ? 1 : 0);
-      let dayIcon = dayInfo.icon;
-      if (parseFloat(snowDay) > 0) dayIcon = '🌨️';
+      // Desglose de tramos horarios (Mañana vs Tarde en pistas)
+      const dayDateStr = (daily.time && daily.time[dayIdx]) ? daily.time[dayIdx] : '';
+      const dayparts = dayDateStr ? getSkiDaypartMetrics(dayDateStr) : null;
+
+      const rawDayInfo = getWeatherInfo(code, 1, parseFloat(snowDay) > 0 ? 1 : 0);
+      let dayIcon = rawDayInfo.icon;
+      let dayDesc = rawDayInfo.label.split('/')[0].trim();
+
+      // ARMONIZACIÓN DE PISTAS (Feedback Lendo & Cefe):
+      // Si tenemos desglose de pistas (09-17h), el tiempo representativo del día no debe heredar nubes nocturnas
+      if (dayparts) {
+        if (parseFloat(snowDay) > 0 || dayparts.morning.isBlizzard || dayparts.afternoon.isBlizzard) {
+          dayIcon = (dayparts.morning.isBlizzard || dayparts.afternoon.isBlizzard) ? '❄️💨' : '🌨️';
+          dayDesc = (dayparts.morning.isBlizzard || dayparts.afternoon.isBlizzard) ? 'Ventisca' : 'Nieve en Pistas';
+        } else if (dayparts.morning.icon === '☀️' && dayparts.afternoon.icon === '☀️') {
+          dayIcon = '☀️';
+          dayDesc = 'Despejado / Sol';
+        } else if ((dayparts.morning.icon === '☀️' || dayparts.morning.icon === '🌤️') && (dayparts.afternoon.icon === '☀️' || dayparts.afternoon.icon === '🌤️')) {
+          dayIcon = '🌤️';
+          dayDesc = 'Sol / Casi Despejado';
+        } else if (dayparts.morning.icon === '☀️' && dayparts.afternoon.icon.includes('☁')) {
+          dayIcon = '⛅';
+          dayDesc = 'Sol mañana, nubes tarde';
+        } else if (dayparts.morning.icon.includes('☁') && dayparts.afternoon.icon === '☀️') {
+          dayIcon = '⛅';
+          dayDesc = 'Nubes mañana, abre tarde';
+        }
+      } else if (parseFloat(snowDay) > 0) {
+        dayIcon = '🌨️';
+      }
 
       // Etiqueta del día
       let dayLabel = '';
@@ -671,14 +697,10 @@ export function renderMountainCard(data, concejo) {
         dayLabel = dStr.charAt(0).toUpperCase() + dStr.slice(1);
       }
 
-      // Desglose de tramos horarios (Mañana vs Tarde en pistas)
-      const dayDateStr = (daily.time && daily.time[dayIdx]) ? daily.time[dayIdx] : '';
-      const dayparts = dayDateStr ? getSkiDaypartMetrics(dayDateStr) : null;
-
       return {
         label: dayLabel,
         icon: dayIcon,
-        desc: dayInfo.label.split('/')[0].trim(),
+        desc: dayDesc,
         tMax,
         tMin,
         wind: windStation,

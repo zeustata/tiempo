@@ -2,6 +2,15 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## ⛷️ Actualización v2.1.2: Armonización Diurna en Pistas de Esquí — 2026-10-13
+- **Resolución de la Paradoja Cielo Diurno vs. Nocturno en Estaciones (Feedback Lendo & Cefe):**
+  1. *Diagnóstico:* En las fichas de estaciones, la tarjeta de un día podía encabezarse con «☁️ Nublado» a pesar de que el desglose de mañana (09-13h) y tarde (13-17h) mostraba sol radiante (`☀️`). La causa residía en que `daily.weather_code` abarca las 24 horas del día (incluyendo nieblas o estratos de las 04:00 AM).
+  2. *Armonización Jerárquica:* Como las pistas operan de día y ningún esquiador esquía de madrugada, el icono y titular superior de la jornada se calculan en base a la ventana real de esquí (09:00 a 17:00). Si las dos mitades del día disfrutan de sol o claros, el titular se alinea fielmente en `☀️ Despejado / Sol` o `🌤️ Sol / Casi Despejado`.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.1.2 ⛷️`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v212-armonizacion-esqui` en `sw.js`.
+  - Query strings actualizadas a `?v=2.1.2` en `index.html` y módulos correspondientes.
+
 ## 🎿 Actualización v2.1.1: Cefe Edition — Previsión de Esquí a 7 Días & Detector de Ventisca — 2026-10-13
 - **Mejora Integral del Módulo de Esquí & Cordillera (Feedback Tester Cefe & Lendo):**
   1. *Diagnóstico de Alta Montaña:* El tester Cefe (esquiador exigente con perfil intelectual/fashion) señaló dos realidades críticas de la Cordillera Cantábrica:
