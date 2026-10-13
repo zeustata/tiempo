@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v207-orbayu-niebla-meona';
+const CACHE_NAME = 'meteoasturlode-v208-esqui-prevision-pistas';
 const STATIC_ASSETS = [
   './',
   './index.html',

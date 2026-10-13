@@ -1,3 +1,5 @@
+import { getWeatherInfo } from '../utils/weatherIcons.js?v=2.0.7';
+
 /**
  * Red de puertos de montaña estratégicos de la Cordillera Cantábrica en Asturias
  * Arterias prioritarias de conexión con la meseta y pasos comarcales
@@ -559,8 +561,61 @@ export function renderMountainCard(data, concejo) {
     // Nieve prevista para esta estación hoy
     const resortSnowToday = freezingLevel <= resort.topAlt ? snowAccumToday : '0.0';
 
+    // TIEMPO ACTUAL EN PISTAS (Cota Media de la Estación)
+    let currentSky = { icon: '⛅', label: 'Variable' };
+    if (topIsSnowing || midIsSnowing) {
+      currentSky = { icon: '❄️', label: 'Nevando' };
+    } else if (current.precipitation > 0) {
+      currentSky = { icon: '🌧️', label: 'Lluvia' };
+    } else {
+      const liveInfo = getWeatherInfo(current.weather_code, current.is_day, current.precipitation, null, current.direct_normal_irradiance, current.uv_index, current.shortwave_radiation, current.cloud_cover, current.relative_humidity_2m);
+      currentSky = {
+        icon: liveInfo.icon,
+        label: liveInfo.label.split('/')[0].trim()
+      };
+    }
+
+    // PREVISIÓN A 3 DÍAS EN LA ESTACIÓN (Hoy, Mañana, Pasado)
+    const dayNames = ['Hoy', 'Mañana', 'Pasado'];
+    const forecast3Days = [0, 1, 2].map(dayIdx => {
+      const code = daily.weather_code && daily.weather_code[dayIdx] != null ? daily.weather_code[dayIdx] : 3;
+      const rawMax = daily.temperature_2m_max && daily.temperature_2m_max[dayIdx] != null ? daily.temperature_2m_max[dayIdx] : current.temperature_2m;
+      const rawMin = daily.temperature_2m_min && daily.temperature_2m_min[dayIdx] != null ? daily.temperature_2m_min[dayIdx] : current.temperature_2m - 4;
+      
+      // Adaptación de temperaturas a cota media de la estación
+      const tMax = Math.round(rawMax - (resort.midAlt - concejo.altitude) * lapseRate);
+      const tMin = Math.round(rawMin - (resort.midAlt - concejo.altitude) * lapseRate);
+
+      // Viento y rachas previstas en la estación
+      const rawWind = daily.wind_speed_10m_max && daily.wind_speed_10m_max[dayIdx] != null ? daily.wind_speed_10m_max[dayIdx] : baseWindSpeed;
+      const rawGust = daily.wind_gusts_10m_max && daily.wind_gusts_10m_max[dayIdx] != null ? daily.wind_gusts_10m_max[dayIdx] : rawWind * 1.4;
+      const windStation = Math.round(rawWind * 1.3);
+      const gustStation = Math.round(rawGust * 1.35);
+
+      // Nieve fresca prevista para este día
+      const snowDay = daily.snowfall_sum && daily.snowfall_sum[dayIdx] != null ? daily.snowfall_sum[dayIdx].toFixed(1) : '0.0';
+
+      const dayInfo = getWeatherInfo(code, 1, parseFloat(snowDay) > 0 ? 1 : 0);
+      let dayIcon = dayInfo.icon;
+      if (parseFloat(snowDay) > 0) dayIcon = '🌨️';
+
+      return {
+        label: dayNames[dayIdx],
+        icon: dayIcon,
+        desc: dayInfo.label.split('/')[0].trim(),
+        tMax,
+        tMin,
+        wind: windStation,
+        gust: gustStation,
+        snow: snowDay,
+        isGaleRisk: gustStation >= 65
+      };
+    });
+
     return {
       ...resort,
+      currentSky,
+      forecast3Days,
       top: {
         alt: resort.topAlt,
         name: resort.summitName,
@@ -710,9 +765,16 @@ export function renderMountainCard(data, concejo) {
                   <h4 class="resort-name-main">⛷️ ${r.name}</h4>
                   <span class="resort-sub">${r.concejo} • ${r.pistasKm} (${r.pistasCount} pistas, ${r.remontesCount} remontes)</span>
                 </div>
-                <!-- Semáforo de Remontes por Viento en Cumbre -->
-                <div class="lift-status-pill" style="background: ${r.liftSafety.bg}; color: ${r.liftSafety.color}; border: 1px solid ${r.liftSafety.color}66;">
-                  ${r.liftSafety.icon} ${r.liftSafety.status}
+                <div class="resort-header-badges">
+                  <!-- Tiempo General Actual en la Estación -->
+                  <div class="ski-sky-badge" title="Tiempo general actual en la estación">
+                    <span class="ski-sky-icon">${r.currentSky.icon}</span>
+                    <span class="ski-sky-label">${r.currentSky.label}</span>
+                  </div>
+                  <!-- Semáforo de Remontes por Viento en Cumbre -->
+                  <div class="lift-status-pill" style="background: ${r.liftSafety.bg}; color: ${r.liftSafety.color}; border: 1px solid ${r.liftSafety.color}66;">
+                    ${r.liftSafety.icon} ${r.liftSafety.status}
+                  </div>
                 </div>
               </div>
 
@@ -764,25 +826,38 @@ export function renderMountainCard(data, concejo) {
               <!-- 4. BLOQUE DINÁMICO DE PARTE DE NIEVE Y ESTADO DE PISTAS (KM ESQUIABLES) -->
               ${renderSkiResortSnowReport(r)}
 
-              <!-- PREVISIÓN DE NIEVE FRESCA A 3 DÍAS (CUADRÍCULA 2X2 ANTI-DESBORDE) -->
-              <div class="ski-resort-snowfall-row">
-                <div class="snowfall-pills-grid">
-                  <div class="snow-day-pill">
-                    <span class="snow-day-label">📅 Hoy</span>
-                    <span class="snow-day-val">${snowAccumToday} cm</span>
-                  </div>
-                  <div class="snow-day-pill">
-                    <span class="snow-day-label">📅 Mañana</span>
-                    <span class="snow-day-val">${snowAccumTomorrow} cm</span>
-                  </div>
-                  <div class="snow-day-pill">
-                    <span class="snow-day-label">📅 Pasado</span>
-                    <span class="snow-day-val">${snowAccumDay3} cm</span>
-                  </div>
-                  <div class="snow-day-pill total-pill">
-                    <span class="snow-day-label">❄️ Total 3 Días</span>
-                    <span class="snow-day-val highlight">${totalSnow3Days} cm</span>
-                  </div>
+              <!-- PREVISIÓN METEOROLÓGICA Y VIENTO A 3 DÍAS EN LA ESTACIÓN (FEEDBACK TESTER) -->
+              <div class="ski-resort-forecast-section">
+                <div class="ski-forecast-title-row">
+                  <span class="ski-forecast-badge">📅 Previsión a 3 Días • Tiempo y Viento en Pistas</span>
+                  <span class="ski-forecast-sub">Nieve prevista y riesgo de vendaval para remontes</span>
+                </div>
+                <div class="ski-3days-grid">
+                  ${r.forecast3Days.map(f => `
+                    <div class="ski-day-card ${f.isGaleRisk ? 'gale-warning' : ''}">
+                      <div class="ski-day-header">
+                        <span class="ski-day-name">${f.label}</span>
+                        <span class="ski-day-icon" title="${f.desc}">${f.icon}</span>
+                      </div>
+                      <div class="ski-day-temps">
+                        <span class="ski-day-tmax">${f.tMax > 0 ? `+${f.tMax}` : f.tMax}°</span>
+                        <span class="ski-day-tmin">${f.tMin > 0 ? `+${f.tMin}` : f.tMin}°</span>
+                      </div>
+                      <div class="ski-day-wind ${f.isGaleRisk ? 'wind-alert' : ''}" title="Viento medio y rachas máximas previstas">
+                        <span>💨 ${f.wind} km/h</span>
+                        <span class="ski-day-gust">(${f.gust} racha)</span>
+                      </div>
+                      <div class="ski-day-snow">
+                        <span class="ski-snow-icon">❄️</span>
+                        <span class="ski-snow-val ${parseFloat(f.snow) > 0 ? 'snow-active' : ''}">${f.snow} cm</span>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+                <!-- Total 3 Días Resumen -->
+                <div class="ski-total-strip">
+                  <span class="ski-total-label">❄️ Acumulado Nieve Fresca (3 Días):</span>
+                  <span class="ski-total-val">${totalSnow3Days} cm</span>
                 </div>
               </div>
 

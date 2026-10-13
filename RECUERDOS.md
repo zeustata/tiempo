@@ -2,6 +2,23 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## ⛷️ Actualización v2.0.8: Previsión a 3 Días y Tiempo en Pistas para las 4 Estaciones de Esquí — 2026-10-13
+- **Módulo Operativo en Tarjeta de Montaña y Esquí (`mountainCard.js`, `components.css`):**
+  1. *Feedback de Tester de Nieve y Esquí Implementado:* Atendiendo a la petición de usuarios esquiadores en la Cordillera Cantábrica, se cubre la necesidad crítica de anticipar no solo los cm de nieve sino la viabilidad del día (viento, cielo y rachas en remontes).
+  2. *Tiempo General en Vivo en Cabecera de Estación:* Integra en la cabecera de las 4 estaciones (Valgrande-Pajares, Fuentes de Invierno, San Isidro y Leitariegos) una pastilla visual con el estado meteorológico general en directo (`☀️ Soleado`, `❄️ Nevando en pistas`, `🌧️ Lluvia en cotas bajas`, `☁️ Cubierto`).
+  3. *Panel de Previsión a 3 Días (Hoy, Mañana, Pasado):*
+     - Icono meteorológico representativo de la jornada.
+     - Temperaturas mínimas y máximas recalculadas térmicamente según el gradiente altitudinal (~0.65 °C / 100 m) para la cota media esquiable de cada estación.
+     - Viento medio y rachas máximas previstas en cumbre y pistas (`💨 km/h`), con aviso visual (`gale-warning` / `wind-alert`) ante rachas que amenacen el cierre de remontes o telecabinas.
+     - Nieve fresca acumulada prevista por jornada y total acumulado a 3 días.
+  4. *Doctrina de Blindaje Anti-Desborde y Ergonomía Móvil (Ley 11):* Formato en cuadrícula compacta de 3 columnas (`ski-3days-grid`), con cajas proporcionales y total legibilidad en anchos de pantalla desde 320 px a 380 px sin colisiones de texto ni desbordes horizontales.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4 y 13):**
+  - Versión oficial actualizada a **`v2.0.8 ⛷️`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v208-esqui-prevision-pistas` en `sw.js`.
+  - Actualización de query strings en `index.html` y módulos JS (`?v=2.0.8`).
+
+---
+
 ## 🌧️ Actualización v2.0.7: Detector Asturiano de Orbayu de Niebla / Meona — 2026-10-13
 - **Módulo Operativo en Motor de Iconos y Clasificación (`weatherIcons.js`, `currentCard.js`, `app.js`):**
   1. *Punto Ciego de Modelos Numéricos Resuelto:* Los modelos globales y de mesoescala (AROME, ECMWF) envían con frecuencia código WMO `3` (Cubierto) o `45/48` (Niebla) con `0.0 mm` en pluviómetro debido a que las gotas microscópicas de la llovizna en niebla no poseen peso suficiente para accionar la cazoleta basculante de 0,1 mm, a pesar de estar empapando el asfalto.

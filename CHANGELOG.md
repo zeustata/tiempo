@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.0.8] - 2026-10-13
+
+### ⛷️ Esquí & Cordillera Cantábrica: Previsión Meteorológica Completa a 3 Días y Tiempo en Pistas (Feedback Tester de Esquí)
+- **Tiempo General Actual en Pistas:** Integración en la cabecera de las 4 estaciones invernales (Valgrande-Pajares, Fuentes de Invierno, San Isidro y Leitariegos) de una pastilla informativa con el estado del cielo y tiempo en vivo (`☀️ Soleado`, `❄️ Nevando en pistas`, `☁️ Cubierto`...).
+- **Previsión de 3 Días (Hoy, Mañana, Pasado):** Incorporación de un panel desglosado con:
+  - Icono del tiempo general previsto para cada jornada.
+  - Temperaturas mínimas y máximas calculadas a cota media de estación.
+  - Viento medio y rachas máximas estimadas (`💨 km/h`), con alerta visual (`gale-warning`) cuando las rachas comprometen la operatividad de los remontes.
+  - Nieve fresca acumulada prevista por jornada y balance total a 3 días.
+- **Doctrina Anti-Desborde (Ley 11):** Cuadrícula ergonómica de 3 columnas (`ski-3days-grid`) con visualización impecable en resoluciones móviles estándar.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v208-esqui-prevision-pistas` y query strings `?v=2.0.8`.
+
+---
+
 ## [2.0.7] - 2026-10-13
 
 ### 🌧️ Calibración Cantábrica: Detector Asturiano de Orbayu de Niebla / Meona (Feedback Lendo)
