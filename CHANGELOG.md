@@ -10,6 +10,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.1.4] - 2026-10-14
+
+### 📈 Ergonomía Visual y Proporción de la Curva Térmica 24h (Feedback Lendo)
+- **Tope de Ancho Ergonómico en Pantallas Grandes (Ley 11 y Ley 14):**
+  - Acotado el ancho máximo de la tarjeta de la curva térmica continua (`.mini-thermal-widget`) a `440px` y centrado horizontalmente (`margin: 10px auto 0 auto;`).
+  - Erradica la distorsión que aplastaba la curva en tabletas y monitores panorámicos de Windows, manteniendo exactamente el mismo relieve sinusoidal, curvatura elegante y proporción estética que en teléfonos móviles.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v214-curva-termica-ergonomia`, query strings de hojas de estilo actualizadas a `components.css?v=2.1.4` y `app.js?v=2.1.4`.
+
 ## [2.1.3] - 2026-10-14
 
 ### 🌦️ Rescate Inteligente de Orbayu Real & Calibración Cantábrica (Feedback Lendo)

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v213-rescate-orbayu';
+const CACHE_NAME = 'meteoasturlode-v214-curva-termica-ergonomia';
 const STATIC_ASSETS = [
   './',
   './index.html',

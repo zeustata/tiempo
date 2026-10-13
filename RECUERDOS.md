@@ -2,6 +2,19 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📈 Actualización v2.1.4: Ergonomía Visual y Proporción de la Curva Térmica 24h — 2026-10-14
+- **Optimización Proporcional de la Curva Térmica 24h en Pantallas Grandes (Feedback Lendo):**
+  1. *Diagnóstico Operativo:* Lendo comprobó el comportamiento de la curva térmica continua de 24 horas (`.mini-thermal-widget`) en tres dispositivos distintos: teléfono móvil (Imagen 1), tableta Android (Imagen 2) y monitor panorámico en Windows (Imagen 3). Mientras que en pantalla móvil vertical (~360px) la curva lucía perfecta con una relación de aspecto elegante (~8:1) y un relieve sinusoidal nítido, en tableta (~900px) y sobre todo en Windows (~1400px o superior) el widget ocupaba el 100% del ancho con `preserveAspectRatio="none"` y `height: 42px`, estirándose hasta un ratio desproporcionado de más de 30:1 que aplastaba la onda térmica hasta parecer una línea casi plana.
+  2. *Causa Raíz:* `.mini-thermal-widget` tenía asignado `width: 100%; max-width: 100%;`, forzando al SVG vectorial a expandirse por todo el ancho de la tarjeta independientemente de la resolución de pantalla.
+  3. *Solución Ergonómica y de Diseño (Leyes 11 y 14):*
+     - Se fijó un tope de ancho máximo ergonómico de `max-width: 440px;` y centrado automático horizontal (`margin: 10px auto 0 auto;`) con padding de confort (`padding: 8px 12px 6px 12px;`).
+     - En teléfonos móviles estándar (320px a 440px) continúa adaptándose de forma 100% fluida a pantalla completa.
+     - En tabletas y monitores panorámicos de escritorio/Windows, el widget se presenta como una pastilla o módulo tecnológico refinado y perfectamente centrado bajo la fila de temperatura actual, preservando su relación de aspecto óptima (~10:1), su marcado relieve sinusoidal diurno/nocturno y la legibilidad inmediata de picos de máxima y mínima.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.1.4 📈`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v214-curva-termica-ergonomia` en `sw.js`.
+  - Query strings actualizadas a `?v=2.1.4` en `index.html` (`main.css`, `components.css`, `weather-themes.css`, `app.js`).
+
 ## 🌦️ Actualización v2.1.3: Rescate Inteligente de Orbayu Real & Calibración Cantábrica — 2026-10-14
 - **Resolución del Punto Ciego de Llovizna Fina por Retraso de AROME (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Durante una jornada de trabajo en moto por Gijón (13 de octubre, 16:30 a 17:30), comenzó a orbayar intensificándose hasta llover. *eltiempo.es* acertó al basarse en el modelo europeo ECMWF (código 51, 0.1 mm, PoP 47%-65%). Sin embargo, la app MeteoAstur Lode marcaba únicamente `☁️ Nublado` con 0% de probabilidad.

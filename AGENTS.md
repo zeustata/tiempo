@@ -197,6 +197,11 @@
     - La tarjeta principal debe sustituir automáticamente la luna solitaria por la **Luna con Nube (`☁️🌙 partly-cloudy-night`)** y rotular como *"Bruma nocturna / Borrina costera"* (o *"Niebla nocturna en valle"*), reflejando la atmósfera real y erradicando cualquier contradicción con el banner de visibilidad reducida.
     - Se preserva la inmunidad absoluta de lluvia física, tormenta y resto de sensores de la aplicación.
 
+16. **Ergonomía Visual Proporcional de Widgets Técnicos y Curvas Continuas (Feedback Lendo):**
+    - Todo gráfico continuo o widget técnico integrado en tarjetas principales (como la curva térmica de 24 horas `.mini-thermal-widget`) debe contar obligatoriamente con un tope de ancho máximo ergonómico (`max-width: 440px`) y centrado horizontal automático (`margin: 10px auto 0 auto`).
+    - Queda prohibido permitir que gráficos de silueta vectorial se expandan al 100% sin límite en pantallas anchas (tabletas y monitores de Windows), impidiendo que se aplaste o deforme la lectura sinusoidal de las curvas y preservando un módulo estilizado, legible y armónico en cualquier dispositivo.
+
+
 
 
 
