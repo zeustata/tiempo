@@ -196,7 +196,15 @@
                     <span class="item-check"></span>
                   </button>
                   <button type="button" class="chart-var-item" data-chart="pressure">
-                    <span>🚨 Barómetro (Presión Atmosférica)</span>
+                    <span>⏱️ Barómetro (Presión Atmosférica)</span>
+                    <span class="item-check"></span>
+                  </button>
+                  <button type="button" class="chart-var-item" data-chart="snow">
+                    <span>🏔️ Nieve & Cota (Altitud & Espesor)</span>
+                    <span class="item-check"></span>
+                  </button>
+                  <button type="button" class="chart-var-item" data-chart="clouds">
+                    <span>☁️ Nubosidad (Baja, Media & Alta)</span>
                     <span class="item-check"></span>
                   </button>
                   <button type="button" class="chart-var-item" data-chart="multi">
@@ -215,14 +223,19 @@
             </div>
           </div>
 
+          <!-- TITULARES INTELIGENTES / HITOS CLAVE HORARIOS (SMART DIGEST) -->
+          <div class="chart-smart-digest" id="chart-smart-digest"></div>
+
           <!-- BARRA DE LECTURA DIRECTA DE DATOS (LIVE INSPECTOR READOUT) -->
           <div class="chart-live-readout" id="chart-live-readout">
             <span class="readout-idle">👆 Toca o desliza la curva para ver el detalle de cada hora</span>
           </div>
 
-          <!-- EL GRÁFICO INMEDIATAMENTE VISIBLE (PROTAGONISTA ABSOLUTO) -->
-          <div class="chart-scroll-viewport">
+          <!-- EL GRÁFICO INMEDIATAMENTE VISIBLE (CON PISTA HORARIA SINCRONIZADA DE CIELO Y VIENTO) -->
+          <div class="chart-scroll-viewport" id="chart-scroll-viewport">
             <div class="chart-canvas-wrapper" id="chart-canvas-wrapper">
+              <!-- CINTA SUPERIOR SINCRONIZADA DE CIELO Y VIENTO (ESTILO WINDY/METEOBLUE) -->
+              <div class="chart-sky-timeline" id="chart-sky-timeline"></div>
               <canvas id="meteo-chart-canvas"></canvas>
             </div>
           </div>
@@ -243,7 +256,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.0.8 ⛷️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.0.9 📈</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -295,8 +308,23 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.0.8 ⛷️</span>
+            <span class="release-version">v2.0.9 📈</span>
             <span class="release-date">13 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-new">Observatorio Gráfico Vivo</span> <strong>Rediseño Integral de «Meteorología Gráfica» (Feedback Lendo)</strong>:
+              <br>• <strong>Cinta Horaria Sincronizada de Cielo y Viento (Estilo Windy/Meteoblue):</strong> Tira interactiva superior perfectamente alineada columna a columna con la gráfica que muestra el icono meteorológico (<code>☀️</code>, <code>⛅</code>, <code>🌧️</code>), probabilidad de precipitación y flecha de dirección e intensidad del viento a cada hora.
+              <br>• <strong>Titulares Inteligentes / Hitos Clave (Smart Digest):</strong> Carrusel superior de pastillas inteligentes que detecta automáticamente ventanas sin nubes (horas seguidas de sol), picos de lluvia en mm/h, rachas máximas destacadas de viento y contrastes térmicos de las próximas 48-72h.
+              <br>• <strong>Nuevos Modos Especializados Asturianos:</strong> Incorporación de <em>🏔️ Nieve & Cota</em> (evolución de la cota de nieve en metros y nieve acumulada en cm) y <em>☁️ Nubosidad</em> (porcentaje de cobertura nubosa y horas de sol) en el selector táctil desplegable Liquid Glass.
+              <br>• <strong>Ergonomía Móvil y Anti-Desborde (Ley 11 & Ley 14):</strong> Ajuste de lecturas directas y badges inferiores enriquecidos para una experiencia visual completa y sin frialdad técnica.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.0.8 ⛷️</span>
+            <span class="release-date">13 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-improvement">Esquí & Cordillera</span> <strong>Previsión Meteorológica Completa a 3 Días y Tiempo en Pistas (Feedback Tester de Esquí)</strong>:
@@ -2871,7 +2899,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.0.8"></script>
+  <script type="module" src="js/app.js?v=2.0.9"></script>
 
 
 

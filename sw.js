@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v208-esqui-prevision-pistas';
+const CACHE_NAME = 'meteoasturlode-v209-meteorologia-grafica-viva';
 const STATIC_ASSETS = [
   './',
   './index.html',

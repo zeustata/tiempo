@@ -10,6 +10,27 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.0.9] - 2026-10-13
+
+### 📈 Observatorio Gráfico Vivo: Cinta Horaria Sincronizada (Estilo Windy/Meteoblue), Titulares Inteligentes (Smart Digest) y Modos Nieve & Nubosidad (Feedback Lendo)
+- **Cinta Horaria Sincronizada de Cielo y Viento:** Superpuesta directamente sobre la gráfica en scroll horizontal, mostrando alineado columna a columna con el eje de horas:
+  - Icono meteorológico del tiempo en esa hora (`☀️`, `⛅`, `🌧️`, `🌨️`, `⛈️`).
+  - Probabilidad de precipitación (`%`).
+  - Velocidad del viento (`km/h`) con distinción cromática ámbar en rachas vivas y rumbo cardinal (`N`, `NE`, `S`, `NO`...).
+- **Titulares Inteligentes / Hitos Clave (Smart Digest):** Carrusel horizontal con tarjetas analíticas calculadas en tiempo real:
+  - *Ventana sin nubes:* Intervalos de horas consecutivas de sol despejado (ej. "Mañana de 11h a 18h").
+  - *Pico de lluvia y acumulado:* Momento exacto de mayor precipitación en mm/h y balance total.
+  - *Racha máxima de viento:* Velocidad punta y dirección cardinal.
+  - *Contraste y Amplitud Térmica:* Diferencia entre mínima y máxima del tramo.
+  - *Proyección de nieve fresca:* Alerta en cm si hay cota en la Cordillera.
+- **Nuevos Modos Gráficos Especializados Asturianos:**
+  - *🏔️ Nieve & Cota:* Curva continua de altitud de cota (0°C en metros) combinada con hidrograma de nieve horaria acumulada en cm.
+  - *☁️ Nubosidad:* Porcentaje de cobertura de cielo (%) con desglose de horas despejadas, mixtas y cubiertas.
+- **Ergonomía Móvil y Blindaje Anti-Desborde (Ley 11 & Ley 14):** Inmunidad visual en pantallas móviles de 320px a 380px.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v209-meteorologia-grafica-viva` y query strings `?v=2.0.9`.
+
+---
+
 ## [2.0.8] - 2026-10-13
 
 ### ⛷️ Esquí & Cordillera Cantábrica: Previsión Meteorológica Completa a 3 Días y Tiempo en Pistas (Feedback Tester de Esquí)

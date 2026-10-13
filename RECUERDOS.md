@@ -2,6 +2,30 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📈 Actualización v2.0.9: Observatorio Gráfico Vivo, Cinta Horaria Sincronizada y Smart Digest — 2026-10-13
+- **Módulo Operativo en Suite de Meteorología Gráfica (`chartsView.js`, `components.css`, `index.html`):**
+  1. *Diagnóstico y Feedback de Lendo:* Superada la frialdad técnica de una gráfica solitaria. El observatorio ahora proporciona lectura meteorológica integral inmediata de un solo vistazo.
+  2. *Cinta Horaria Sincronizada (Estilo Windy / Meteoblue):* Ubicada sobre el canvas del gráfico y sincronizada milimétricamente con el scroll horizontal y las columnas de horas:
+     - Icono meteorológico en esa hora exacta (`☀️`, `⛅`, `🌧️`, `🌨️`, `⛈️`).
+     - Probabilidad de precipitación (`%`).
+     - Dirección cardinal del viento (`N`, `NE`, `S`, `NO`...) y velocidad media, destacando en dorado las rachas notables.
+  3. *Titulares Inteligentes / Hitos Clave (Smart Digest):* Carrusel horizontal superior que calcula y sintetiza:
+     - Ventanas consecutivas de sol o cielo despejado (ej. "3h seguidas de 12h a 15h").
+     - Pico máximo de lluvia (mm/h) y balance acumulado.
+     - Racha máxima de viento prevista.
+     - Amplitud y contraste térmico del período analizado.
+     - Nieve prevista en cota si la hubiere.
+  4. *Nuevos Modos Gráficos Especializados:*
+     - *🏔️ Nieve & Cota:* Curva de altitud de cota (0°C en metros) combinada con barras de nieve horaria.
+     - *☁️ Nubosidad:* Curva suave de porcentaje de cobertura nubosa (%) y balance de horas de sol directo vs cielo cubierto.
+  5. *Doctrina de Blindaje Anti-Desborde y Ergonomía Móvil (Ley 11 & Ley 14):* Inmunidad total al desborde en anchos de 320 px a 380 px, preservando la armonía Liquid Glass.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4 y 13):**
+  - Versión oficial actualizada a **`v2.0.9 📈`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v209-meteorologia-grafica-viva` en `sw.js`.
+  - Actualización de query strings en `index.html` y módulos JS (`?v=2.0.9`).
+
+---
+
 ## ⛷️ Actualización v2.0.8: Previsión a 3 Días y Tiempo en Pistas para las 4 Estaciones de Esquí — 2026-10-13
 - **Módulo Operativo en Tarjeta de Montaña y Esquí (`mountainCard.js`, `components.css`):**
   1. *Feedback de Tester de Nieve y Esquí Implementado:* Atendiendo a la petición de usuarios esquiadores en la Cordillera Cantábrica, se cubre la necesidad crítica de anticipar no solo los cm de nieve sino la viabilidad del día (viento, cielo y rachas en remontes).

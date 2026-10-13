@@ -2695,9 +2695,152 @@
 }
 
 .chart-canvas-wrapper {
-  height: 320px;
+  height: 350px;
   min-width: 1050px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* CINTA SUPERIOR SINCRONIZADA DE CIELO Y VIENTO (ESTILO WINDY/METEOBLUE) */
+.chart-sky-timeline {
+  display: flex;
+  width: 100%;
+  height: 52px;
+  background: rgba(15, 23, 42, 0.55);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px 8px 0 0;
+  box-sizing: border-box;
+}
+
+.chart-sky-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.03);
+  box-sizing: border-box;
+  user-select: none;
+}
+
+.chart-sky-col.day-start {
+  border-left: 1.5px solid rgba(56, 189, 248, 0.35);
+  background: rgba(56, 189, 248, 0.06);
+}
+
+.chart-sky-col .col-icon {
+  font-size: 1.05rem;
+  line-height: 1.1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1px;
+}
+
+.chart-sky-col .col-pop {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #60a5fa;
+  line-height: 1;
+}
+
+.chart-sky-col .col-pop.pop-zero {
+  opacity: 0.35;
+  color: #94a3b8;
+}
+
+.chart-sky-col .col-wind {
+  font-size: 0.60rem;
+  color: #cbd5e1;
+  line-height: 1;
+  margin-top: 1px;
+  display: flex;
+  align-items: center;
+  gap: 1px;
+}
+
+.chart-sky-col .col-wind.wind-gusty {
+  color: #fbbf24;
+  font-weight: 700;
+}
+
+/* TITULARES INTELIGENTES / HITOS CLAVE HORARIOS (SMART DIGEST) */
+.chart-smart-digest {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 2px 0 8px;
+  margin-bottom: 6px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.chart-smart-digest::-webkit-scrollbar {
+  display: none;
+}
+
+.digest-chip {
+  flex: 0 0 auto;
+  max-width: 85%;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 0.74rem;
+  color: #cbd5e1;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+}
+
+.digest-chip.chip-sun {
+  border-left: 3px solid #f59e0b;
+}
+
+.digest-chip.chip-rain {
+  border-left: 3px solid #38bdf8;
+}
+
+.digest-chip.chip-wind {
+  border-left: 3px solid #fbbf24;
+}
+
+.digest-chip.chip-temp {
+  border-left: 3px solid #ec4899;
+}
+
+.digest-chip.chip-snow {
+  border-left: 3px solid #a855f7;
+}
+
+.digest-chip .chip-icon {
+  font-size: 1.05rem;
+  flex-shrink: 0;
+}
+
+.digest-chip .chip-content {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.digest-chip .chip-title {
+  font-weight: 700;
+  color: #f1f5f9;
+  font-size: 0.73rem;
+}
+
+.digest-chip .chip-desc {
+  color: #94a3b8;
+  font-size: 0.68rem;
+  white-space: nowrap;
 }
 
 /* REJILLA COMPACTA 2x2 DEBAJO DEL GRÁFICO */
