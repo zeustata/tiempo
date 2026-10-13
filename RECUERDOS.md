@@ -2,6 +2,24 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🎿 Actualización v2.1.1: Cefe Edition — Previsión de Esquí a 7 Días & Detector de Ventisca — 2026-10-13
+- **Mejora Integral del Módulo de Esquí & Cordillera (Feedback Tester Cefe & Lendo):**
+  1. *Diagnóstico de Alta Montaña:* El tester Cefe (esquiador exigente con perfil intelectual/fashion) señaló dos realidades críticas de la Cordillera Cantábrica:
+     - 3 días de previsión eran escasos para planificar escapadas de esquí o fines de semana de montaña.
+     - Las cumbres son extremadamente cambiantes (mañanas despejadas que derivan en ventisca y vendaval de tarde que cierran remontes).
+  2. *Horizonte Extendido a 7 Días:*
+     - Se reemplazó la rejilla estática de 3 días por un carrusel horizontal táctil (`.ski-7days-carousel`) adaptado a móviles con `scroll-snap` y desplazamiento lateral ultrasuave.
+     - Cálculo de balance acumulado de nieve fresca para la semana completa (7 días) junto al balance de los 3 días inmediatos.
+  3. *Desglose en Pistas Mañana vs. Tarde (09-13h vs. 13-17h):*
+     - Extracción horaria de viento, nieve e icono dominante en los dos turnos de esquí de cada jornada.
+     - Detector proactivo de cambio brusco: si la tarde empeora severamente respecto a la mañana con rachas de vendaval o ventisca de nieve, se resalta con alerta visual `⚠️ Ventisca Tarde`.
+     - Insignia fashion `🎿 Cefe Edition` con gradiente Liquid Glass.
+  4. *Blindaje Táctil Móvil (Leyes 11 y 14):* Se incluyó `.ski-7days-carousel` en `isInteractiveZone` de `js/app.js` y `touch-action: pan-x pan-y;` en `css/main.css`, garantizando que al deslizar los días no se produzca cambio de menú accidental.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.1.1 🎿`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v211-esqui-cefe-edition` en `sw.js`.
+  - Query strings actualizadas a `?v=2.1.1` en `index.html` y módulos correspondientes.
+
 ## 🛡️ Actualización v2.1.0: Blindaje Táctil del Carrusel de Titulares Inteligentes — 2026-10-13
 - **Diagnóstico y Corrección Táctil Móvil (Feedback Lendo):**
   1. *Síntoma:* Al intentar hacer scroll horizontal con el dedo sobre el carrusel superior de titulares inteligentes (`.chart-smart-digest`) en pantallas táctiles móviles para leer hitos como «Sin lluvia significativa», «Contraste térmico» o «Rachas de viento», el gesto disparaba inadvertidamente el detector global de swipe de la aplicación, cambiando de pestaña o menú en lugar de deslizar las tarjetas.

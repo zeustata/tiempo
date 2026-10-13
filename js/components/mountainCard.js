@@ -523,6 +523,7 @@ export function renderMountainCard(data, concejo) {
   const snowAccumTomorrow = daily.snowfall_sum && daily.snowfall_sum.length > 1 ? daily.snowfall_sum[1].toFixed(1) : '0.0';
   const snowAccumDay3 = daily.snowfall_sum && daily.snowfall_sum.length > 2 ? daily.snowfall_sum[2].toFixed(1) : '0.0';
   const totalSnow3Days = (parseFloat(snowAccumToday) + parseFloat(snowAccumTomorrow) + parseFloat(snowAccumDay3)).toFixed(1);
+  const totalSnow7Days = (daily.snowfall_sum ? daily.snowfall_sum.slice(0, 7).reduce((acc, val) => acc + (val || 0), 0) : 0).toFixed(1);
 
   // Viento actual en la estación base
   const baseWindSpeed = Math.round(current.wind_speed_10m || 0);
@@ -575,9 +576,65 @@ export function renderMountainCard(data, concejo) {
       };
     }
 
-    // PREVISIÓN A 3 DÍAS EN LA ESTACIÓN (Hoy, Mañana, Pasado)
-    const dayNames = ['Hoy', 'Mañana', 'Pasado'];
-    const forecast3Days = [0, 1, 2].map(dayIdx => {
+    // PREVISIÓN A 7 DÍAS EN LA ESTACIÓN (Hoy a 7 días) CON DESGLOSE MAÑANA / TARDE (Feedback Tester Cefe)
+    const today = new Date();
+    const forecastDaysCount = Math.min(7, (daily.time && daily.time.length) || 7);
+    
+    // Función auxiliar para extraer métricas de tramos de esquí (Mañana 09-13h vs Tarde 13-17h)
+    const getSkiDaypartMetrics = (dayDateStr) => {
+      if (!hourly || !hourly.time) return null;
+      let morningCodes = [], morningWinds = [], morningSnows = 0;
+      let afternoonCodes = [], afternoonWinds = [], afternoonSnows = 0;
+      
+      for (let i = 0; i < hourly.time.length; i++) {
+        const tStr = hourly.time[i];
+        if (tStr.startsWith(dayDateStr)) {
+          const parts = tStr.split('T');
+          const h = parts[1] ? parseInt(parts[1].split(':')[0], 10) : new Date(tStr).getHours();
+          const w = (hourly.wind_speed_10m && hourly.wind_speed_10m[i] != null) ? hourly.wind_speed_10m[i] * 1.3 : 15;
+          const s = (hourly.snowfall && hourly.snowfall[i] != null) ? hourly.snowfall[i] : 0;
+          const c = (hourly.weather_code && hourly.weather_code[i] != null) ? hourly.weather_code[i] : 3;
+
+          // Mañana en pistas: 09h a 13h
+          if (h >= 9 && h < 13) {
+            morningCodes.push(c);
+            morningWinds.push(w);
+            morningSnows += s;
+          }
+          // Tarde en pistas: 13h a 17h
+          else if (h >= 13 && h <= 17) {
+            afternoonCodes.push(c);
+            afternoonWinds.push(w);
+            afternoonSnows += s;
+          }
+        }
+      }
+
+      if (morningCodes.length === 0 && afternoonCodes.length === 0) return null;
+
+      const calcPart = (codes, winds, snowSum) => {
+        if (codes.length === 0) return { icon: '⛅', wind: 15, snow: 0, isGale: false, isBlizzard: false };
+        const maxWind = Math.round(Math.max(...winds));
+        const domCode = codes[Math.floor(codes.length / 2)];
+        const info = getWeatherInfo(domCode, 1, snowSum > 0 ? 1 : 0);
+        let icon = info.icon;
+        if (snowSum > 0) icon = '🌨️';
+        const isGale = maxWind >= 50;
+        const isBlizzard = snowSum > 0 && maxWind >= 45;
+        if (isBlizzard) icon = '❄️💨';
+        return { icon, wind: maxWind, snow: snowSum.toFixed(1), isGale, isBlizzard, label: isBlizzard ? 'Ventisca' : (snowSum > 0 ? 'Nieve' : info.label.split('/')[0].trim()) };
+      };
+
+      const morning = calcPart(morningCodes, morningWinds, morningSnows);
+      const afternoon = calcPart(afternoonCodes, afternoonWinds, afternoonSnows);
+      
+      // Detectar cambio brusco de tarde (ej. Mañana tranquila/sol y tarde con ventisca/vendaval)
+      const isShiftRisk = (!morning.isGale && !morning.isBlizzard) && (afternoon.isGale || afternoon.isBlizzard || afternoon.wind >= morning.wind + 25);
+
+      return { morning, afternoon, isShiftRisk };
+    };
+
+    const forecast7Days = Array.from({ length: forecastDaysCount }, (_, dayIdx) => {
       const code = daily.weather_code && daily.weather_code[dayIdx] != null ? daily.weather_code[dayIdx] : 3;
       const rawMax = daily.temperature_2m_max && daily.temperature_2m_max[dayIdx] != null ? daily.temperature_2m_max[dayIdx] : current.temperature_2m;
       const rawMin = daily.temperature_2m_min && daily.temperature_2m_min[dayIdx] != null ? daily.temperature_2m_min[dayIdx] : current.temperature_2m - 4;
@@ -599,8 +656,27 @@ export function renderMountainCard(data, concejo) {
       let dayIcon = dayInfo.icon;
       if (parseFloat(snowDay) > 0) dayIcon = '🌨️';
 
+      // Etiqueta del día
+      let dayLabel = '';
+      if (dayIdx === 0) dayLabel = 'Hoy';
+      else if (dayIdx === 1) dayLabel = 'Mañana';
+      else if (daily.time && daily.time[dayIdx]) {
+        const dObj = new Date(daily.time[dayIdx] + 'T12:00:00');
+        const dStr = dObj.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric' });
+        dayLabel = dStr.charAt(0).toUpperCase() + dStr.slice(1);
+      } else {
+        const dObj = new Date(today);
+        dObj.setDate(today.getDate() + dayIdx);
+        const dStr = dObj.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric' });
+        dayLabel = dStr.charAt(0).toUpperCase() + dStr.slice(1);
+      }
+
+      // Desglose de tramos horarios (Mañana vs Tarde en pistas)
+      const dayDateStr = (daily.time && daily.time[dayIdx]) ? daily.time[dayIdx] : '';
+      const dayparts = dayDateStr ? getSkiDaypartMetrics(dayDateStr) : null;
+
       return {
-        label: dayNames[dayIdx],
+        label: dayLabel,
         icon: dayIcon,
         desc: dayInfo.label.split('/')[0].trim(),
         tMax,
@@ -608,14 +684,15 @@ export function renderMountainCard(data, concejo) {
         wind: windStation,
         gust: gustStation,
         snow: snowDay,
-        isGaleRisk: gustStation >= 65
+        isGaleRisk: gustStation >= 65,
+        dayparts
       };
     });
 
     return {
       ...resort,
       currentSky,
-      forecast3Days,
+      forecast7Days,
       top: {
         alt: resort.topAlt,
         name: resort.summitName,
@@ -826,27 +903,55 @@ export function renderMountainCard(data, concejo) {
               <!-- 4. BLOQUE DINÁMICO DE PARTE DE NIEVE Y ESTADO DE PISTAS (KM ESQUIABLES) -->
               ${renderSkiResortSnowReport(r)}
 
-              <!-- PREVISIÓN METEOROLÓGICA Y VIENTO A 3 DÍAS EN LA ESTACIÓN (FEEDBACK TESTER) -->
+              <!-- PREVISIÓN METEOROLÓGICA Y VIENTO A 7 DÍAS EN LA ESTACIÓN (FEEDBACK TESTER CEFE) -->
               <div class="ski-resort-forecast-section">
                 <div class="ski-forecast-title-row">
-                  <span class="ski-forecast-badge">📅 Previsión a 3 Días • Tiempo y Viento en Pistas</span>
-                  <span class="ski-forecast-sub">Nieve prevista y riesgo de vendaval para remontes</span>
+                  <div class="ski-forecast-badge-line">
+                    <span class="ski-forecast-badge">📅 Previsión a 7 Días • Esquí & Montaña</span>
+                    <span class="ski-fashion-pill">🎿 Cefe Edition</span>
+                  </div>
+                  <span class="ski-forecast-sub">Evolución de nieve fresca, viento y riesgo de ventisca de tarde (desliza para ver la semana)</span>
                 </div>
-                <div class="ski-3days-grid">
-                  ${r.forecast3Days.map(f => `
-                    <div class="ski-day-card ${f.isGaleRisk ? 'gale-warning' : ''}">
+
+                <!-- Carrusel horizontal fashion con scroll nativo táctil -->
+                <div class="ski-7days-carousel">
+                  ${r.forecast7Days.map(f => `
+                    <div class="ski-day-card ${f.isGaleRisk ? 'gale-warning' : ''} ${f.dayparts && f.dayparts.isShiftRisk ? 'shift-warning' : ''}">
                       <div class="ski-day-header">
                         <span class="ski-day-name">${f.label}</span>
                         <span class="ski-day-icon" title="${f.desc}">${f.icon}</span>
                       </div>
+                      
                       <div class="ski-day-temps">
                         <span class="ski-day-tmax">${f.tMax > 0 ? `+${f.tMax}` : f.tMax}°</span>
                         <span class="ski-day-tmin">${f.tMin > 0 ? `+${f.tMin}` : f.tMin}°</span>
                       </div>
-                      <div class="ski-day-wind ${f.isGaleRisk ? 'wind-alert' : ''}" title="Viento medio y rachas máximas previstas">
-                        <span>💨 ${f.wind} km/h</span>
-                        <span class="ski-day-gust">(${f.gust} racha)</span>
-                      </div>
+
+                      <!-- Desglose Mañana vs Tarde (Detector de Ventisca / Cambio Brusco de Cefe) -->
+                      ${f.dayparts ? `
+                        <div class="ski-dayparts-dual">
+                          <div class="ski-daypart-slot morning" title="Mañana (09h-13h): ${f.dayparts.morning.label}">
+                            <span class="daypart-tag">09-13h</span>
+                            <span class="daypart-icon">${f.dayparts.morning.icon}</span>
+                            <span class="daypart-wind ${f.dayparts.morning.isGale ? 'wind-alert' : ''}">💨${f.dayparts.morning.wind}</span>
+                          </div>
+                          <div class="ski-daypart-divider"></div>
+                          <div class="ski-daypart-slot afternoon ${f.dayparts.isShiftRisk ? 'shift-alert' : ''}" title="Tarde (13h-17h): ${f.dayparts.afternoon.label}">
+                            <span class="daypart-tag">13-17h</span>
+                            <span class="daypart-icon">${f.dayparts.afternoon.icon}</span>
+                            <span class="daypart-wind ${f.dayparts.afternoon.isGale ? 'wind-alert' : ''}">💨${f.dayparts.afternoon.wind}</span>
+                          </div>
+                        </div>
+                        ${f.dayparts.isShiftRisk ? `
+                          <div class="ski-shift-badge" title="La tarde empeora de forma brusca con ventisca o fuerte viento">⚠️ Ventisca Tarde</div>
+                        ` : ''}
+                      ` : `
+                        <div class="ski-day-wind ${f.isGaleRisk ? 'wind-alert' : ''}" title="Viento medio y rachas máximas previstas">
+                          <span>💨 ${f.wind} km/h</span>
+                          <span class="ski-day-gust">(${f.gust} racha)</span>
+                        </div>
+                      `}
+
                       <div class="ski-day-snow">
                         <span class="ski-snow-icon">❄️</span>
                         <span class="ski-snow-val ${parseFloat(f.snow) > 0 ? 'snow-active' : ''}">${f.snow} cm</span>
@@ -854,10 +959,16 @@ export function renderMountainCard(data, concejo) {
                     </div>
                   `).join('')}
                 </div>
-                <!-- Total 3 Días Resumen -->
+
+                <!-- Resumen de Nieve de la Semana -->
                 <div class="ski-total-strip">
-                  <span class="ski-total-label">❄️ Acumulado Nieve Fresca (3 Días):</span>
-                  <span class="ski-total-val">${totalSnow3Days} cm</span>
+                  <div class="ski-total-group">
+                    <span class="ski-total-label">❄️ Nieve Fresca Semana (7 Días):</span>
+                    <span class="ski-total-val">${totalSnow7Days} cm</span>
+                  </div>
+                  <div class="ski-total-hint">
+                    <span>(3 Días: <strong>${totalSnow3Days} cm</strong>)</span>
+                  </div>
                 </div>
               </div>
 

@@ -10,6 +10,19 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.1.1] - 2026-10-13
+
+### 🎿 Cefe Edition: Previsión de Esquí a 7 Días & Detector de Ventisca Vespertina (Feedback Tester Cefe)
+- **Horizonte Extendido a 7 Días (Semana Completa de Esquí):**
+  - Las fichas de estaciones invernales (Valgrande-Pajares, Fuentes de Invierno, Leitariegos, San Isidro) amplían su pronóstico de 3 a 7 días en un carrusel táctil suave (`.ski-7days-carousel`) adaptado a móviles.
+  - Balance de nieve fresca acumulada: desglose de la semana completa (7 días) junto al balance de los 3 días inmediatos.
+- **Desglose en Pistas Mañana vs. Tarde (09-13h vs. 13-17h):**
+  - Análisis horario específico para esquiadores y montañeros.
+  - Detección proactiva de la clásica trampa cantábrica: alerta destacada `⚠️ Ventisca Tarde` cuando la mañana amanece despejada pero la tarde empeora bruscamente con rachas severas de viento o ventisca de nieve.
+  - Indicador fashion `🎿 Cefe Edition` con estilo Liquid Glass y estética moderna.
+- **Blindaje Táctil Móvil:** Inclusión de `.ski-7days-carousel` en `isInteractiveZone` de `js/app.js` y `touch-action` en `css/main.css` para scroll horizontal nativo sin saltos de menú.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v211-esqui-cefe-edition` y query strings `?v=2.1.1`.
+
 ## [2.1.0] - 2026-10-13
 
 ### 🛡️ Blindaje Táctil del Carrusel de Titulares Inteligentes (Feedback Lendo)
