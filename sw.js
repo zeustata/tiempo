@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v209-grafica-heading-polish';
+const CACHE_NAME = 'meteoasturlode-v210-blindaje-tactil-digest';
 const STATIC_ASSETS = [
   './',
   './index.html',

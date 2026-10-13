@@ -10,6 +10,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.1.0] - 2026-10-13
+
+### 🛡️ Blindaje Táctil del Carrusel de Titulares Inteligentes (Feedback Lendo)
+- **Inmunidad al Swipe de Pantalla Completa:**
+  - Inclusión de `.chart-smart-digest` y `.digest-chip` en la función de protección `isInteractiveZone` de `js/app.js`.
+  - Al arrastrar el dedo horizontalmente en teléfonos móviles sobre las tarjetas de hitos clave («Sin lluvia», «Contraste térmico», «Rachas de viento», etc.), el scroll horizontal pertenece estrictamente al carrusel sin activar accidentalmente el cambio de menú/pestaña general.
+- **Respuesta Táctil Fluida:** Incorporación de `.chart-smart-digest` a la directiva CSS `touch-action: pan-x pan-y;` en `css/main.css`.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v210-blindaje-tactil-digest` y query strings `?v=2.1.0`.
+
 ## [2.0.9] - 2026-10-13
 
 ### 📈 Observatorio Gráfico Vivo: Cinta Horaria Sincronizada (Estilo Windy/Meteoblue), Titulares Inteligentes (Smart Digest) y Modos Nieve & Nubosidad (Feedback Lendo)

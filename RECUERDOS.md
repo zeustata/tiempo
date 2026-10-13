@@ -2,6 +2,16 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🛡️ Actualización v2.1.0: Blindaje Táctil del Carrusel de Titulares Inteligentes — 2026-10-13
+- **Diagnóstico y Corrección Táctil Móvil (Feedback Lendo):**
+  1. *Síntoma:* Al intentar hacer scroll horizontal con el dedo sobre el carrusel superior de titulares inteligentes (`.chart-smart-digest`) en pantallas táctiles móviles para leer hitos como «Sin lluvia significativa», «Contraste térmico» o «Rachas de viento», el gesto disparaba inadvertidamente el detector global de swipe de la aplicación, cambiando de pestaña o menú en lugar de deslizar las tarjetas.
+  2. *Causa raíz:* `.chart-smart-digest` y `.digest-chip` no estaban listados en el selector excluyente de `isInteractiveZone` en `js/app.js`, y el contenedor carecía de la directiva `touch-action: pan-x pan-y;` en `css/main.css`.
+  3. *Solución implementada:* Se añadió `.chart-smart-digest, .digest-chip` a `isInteractiveZone(target)` en `js/app.js` y se incorporó `.chart-smart-digest` al bloque CSS de `touch-action: pan-x pan-y;` en `css/main.css`. Ahora el desplazamiento lateral en las pastillas es 100% independiente, suave e inmune a falsos cambios de menú.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.1.0 🛡️`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v210-blindaje-tactil-digest` en `sw.js`.
+  - Query strings actualizadas a `?v=2.1.0` en `index.html` y módulos correspondientes.
+
 ## 📈 Actualización v2.0.9: Observatorio Gráfico Vivo, Cinta Horaria Sincronizada y Smart Digest — 2026-10-13
 - **Módulo Operativo en Suite de Meteorología Gráfica (`chartsView.js`, `components.css`, `index.html`):**
   1. *Diagnóstico y Feedback de Lendo:* Superada la frialdad técnica de una gráfica solitaria. El observatorio ahora proporciona lectura meteorológica integral inmediata de un solo vistazo.
