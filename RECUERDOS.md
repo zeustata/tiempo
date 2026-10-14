@@ -2,6 +2,16 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📈 Actualización v2.1.7: Alineación Integrada de la Curva Térmica bajo la Temperatura — 2026-10-14
+- **Anclaje Natural en Columna Izquierda (Feedback Lendo):**
+  1. *Diagnóstico Operativo:* Lendo comprobó en monitores panorámicos de Windows y tabletas que centrar la curva térmica (`.mini-thermal-widget`) provocaba un efecto de "isla flotante" en medio de la tarjeta, dejando el widget desvinculado visualmente de la columna de temperatura que se encuentra a la izquierda.
+  2. *Solución:* Se sustituyó `margin: 10px auto 0 auto;` por `margin: 10px 0 0 0;`, alineando la caja directamente debajo de la temperatura actual y las píldoras de mín/máx.
+  3. *Resultado:* En pantallas grandes unifica todo el bloque térmico en una misma vertical natural e intuitiva, mientras que en pantallas móviles continúa ocupando el 100% del ancho útil disponible.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.1.7 📈`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v217-curva-termica-izquierda` en `sw.js`.
+  - Query strings actualizadas a `?v=2.1.7` en `index.html` y módulos correspondientes.
+
 ## 🌊🌫️ Actualización v2.1.6: Iconos Vectoriales para Alertas de Borrina Marina & Niebla de Valle — 2026-10-14
 - **Erradicación del Glifo Cuadrado Descolorido de Android/Windows (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Lendo detectó que en el banner dinámico de alerta de *Borrina Marina Activa*, el icono visual se mostraba como un sello cuadrado blanquecino y descolorido, sin contraste y aislado en la parte superior del título. La causa era que se utilizaba el emoji plano del sistema `🌫️` (U+1F32B), el cual en fuentes como Noto Color Emoji de Google/Android y Segoe UI Emoji de Windows se renderiza como una baldosa cuadrada gris-blanquecina plana que arruinaba la estética Liquid Glass del banner.

@@ -10,6 +10,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.1.7] - 2026-10-14
+
+### 📈 Alineación Integrada de la Curva Térmica bajo la Temperatura (Feedback Lendo)
+- **Anclaje Natural en Columna Izquierda (Ley 11 y Ley 14):**
+  - Desplazado el widget de la curva térmica continua 24 horas (`.mini-thermal-widget`) hacia la izquierda (`margin: 10px 0 0 0;`), situándolo directamente bajo la temperatura actual y las píldoras de mín/máx.
+  - Erradica el efecto de «isla flotante» que dejaba el widget aislado en el centro de tarjetas anchas en monitores de Windows y tabletas, unificando todo el bloque de datos térmicos en una misma vertical intuitiva.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v217-curva-termica-izquierda`, query strings actualizadas a `?v=2.1.7`.
+
 ## [2.1.6] - 2026-10-14
 
 ### 🌊🌫️ Icono Vectorial Dinámico para Alertas de Borrina Marina & Niebla de Valle (Feedback Lendo)

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v216-icono-vectorial-borrina';
+const CACHE_NAME = 'meteoasturlode-v217-curva-termica-izquierda';
 const STATIC_ASSETS = [
   './',
   './index.html',
