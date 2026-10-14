@@ -2,7 +2,7 @@ import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/
 import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=2.0.0';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=2.0.0';
 import { renderCurrentWeather } from './components/currentCard.js?v=2.2.1';
-import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=2.2.6';
+import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=2.2.7';
 import { renderSurfCard } from './components/surfCard.js?v=2.2.6';
 import { renderRoutesCard } from './components/routesCard.js?v=2.2.1';
 import { renderMountainCard } from './components/mountainCard.js?v=2.2.1';
@@ -41,7 +41,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '2.2.6';
+export const CURRENT_APP_VERSION = '2.2.7';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -515,6 +515,19 @@ class MeteoAsturiasApp {
         }
       }
     });
+
+    // Delegación global para acordeones exclusivos (soporte universal garantizado)
+    document.addEventListener('toggle', (e) => {
+      if (e.target && e.target.tagName === 'DETAILS' && e.target.hasAttribute('name') && e.target.open) {
+        const groupName = e.target.getAttribute('name');
+        const container = e.target.parentElement;
+        if (container) {
+          container.querySelectorAll(`details[name="${groupName}"][open]`).forEach(item => {
+            if (item !== e.target) item.removeAttribute('open');
+          });
+        }
+      }
+    }, true);
 
     // Tabs de navegación
     document.querySelectorAll('.tab-btn').forEach(btn => {

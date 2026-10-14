@@ -2,6 +2,20 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏖️ Actualización v2.2.7: Guía de Playas y Calas en Acordeón Compacto Exclusivo — 2026-10-15
+- **Optimización de Ergonomía Móvil & Síntesis Visual (Feedback Lendo):**
+  1. *Diagnóstico Operativo:* Lendo detectó que en el módulo de «Playas y Mareas», debajo del botón de webcams en directo, el catálogo de arenales y calas mostraba todas las tarjetas completamente expandidas por defecto. En concejos costeros con múltiples playas (Gijón, Llanes, Gozón, Castrillón, Valdés, etc.), esto generaba un scroll vertical masivo y fatigoso para el usuario.
+  2. *Intervención Técnica y Rediseño en Acordeón Exclusivo (Opción A):*
+     - Reemplazo del contenedor estático de fichas por tarjetas acordeón basadas en `<details class="beach-accordion-card" name="beach-accordion">` y cabeceras táctiles `<summary class="beach-accordion-header">`.
+     - **Todas cerradas de inicio:** La vista arranca limpia, compacta y ordenada, permitiendo escanear al instante toda la oferta de arenales de la zona sin scroll fatigoso.
+     - **Acordeón Exclusivo:** Gracias al estándar `name="beach-accordion"` respaldado por una delegación global de eventos JS, al abrir una playa se repliega automáticamente cualquier otra que estuviera abierta.
+     - **Cabecera Táctil Ergonómica (Ley 11):** Mínimo 48px de altura táctil, nombre destacado en color cian (`#38bdf8`), badge de entorno (`Urbana`, `Cala`, `Natural`) y flecha interactiva `▾` con rotación suave de 180°.
+     - **Despliegue Suave:** El contenido interior (descripción, fondo/entorno, marea óptima y recomendación de baño) se revela mediante animación fluida `beachAccordionFade`.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.2.7 🏖️`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v227-guia-playas-acordeon` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.7` en `index.html` (CSS y scripts) y `app.js`.
+
 ## 🌊 Actualización v2.2.6: Blindaje y Restauración Definitiva de Mareas de Hoy — 2026-10-14
 - **Cierre y Restauración Estable al Diseño Original Funcional (Leyes 2 y 17):**
   1. *Diagnóstico Operativo:* Tras experimentar con diversas arquitecturas de compactación (rejilla de 2 columnas, fila única y tabla de 3 columnas), se constata de forma fehaciente mediante captura en dispositivo móvil real que intentar forzar los elementos de marea en un ancho de ~320px útiles provoca superposición de fuentes (la hora sobre el nombre de la marea) debido a discrepancias en el cálculo métrico de tipografías móviles. Siguiendo las directrices de Lendo (*"si ves que no va a funcionar, revierte"*) y la Ley 17 («Si no sabes, no toques / ¿Para qué te metes, Manolete?»), se procede a la reversión definitiva.

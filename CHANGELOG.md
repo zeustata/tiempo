@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.7] - 2026-10-15
+
+### 🏖️ Guía de Playas y Calas en Acordeón Compacto Exclusivo (Feedback Lendo)
+- **Ergonomía & Despliegue Bajo Demanda (Opción A - Leyes 11 y 14):**
+  - Transformación del catálogo de arenales y calas del concejo en un acordeón táctil exclusivo basado en `<details class="beach-accordion-card" name="beach-accordion">` y `<summary class="beach-accordion-header">`.
+  - **Todas las playas cerradas de inicio:** Se elimina el scroll infinito en móvil, permitiendo ver de un vistazo toda la lista de playas y seleccionar directamente la que se desea consultar.
+  - **Acordeón Exclusivo:** Al abrir una playa, cualquier otra que estuviera desplegada se cierra de forma automática, preservando la pantalla siempre despejada.
+  - **Cabecera Táctil Ergonómica:** Icono `🏖️`, nombre destacado en azul celeste (`#38bdf8`), distintivo de entorno (`Urbana`, `Cala`, `Natural`) y chevron `▾` interactivo con rotación suave (`180deg`) al desplegar.
+  - **Compatibilidad Universal:** Atributo nativo HTML5 con delegación de respaldo para máxima fluidez en cualquier navegador y dispositivo móvil.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v227-guia-playas-acordeon`, query strings actualizadas a `?v=2.2.7`.
+
 ## [2.2.6] - 2026-10-14
 
 ### 🌊 Blindaje y Restauración Definitiva de Mareas de Hoy (Feedback Lendo & Princesa)

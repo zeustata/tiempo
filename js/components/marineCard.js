@@ -1395,31 +1395,39 @@ export function renderMarineCard(data, concejo) {
 
         <div class="beaches-grid">
           ${activePlayas.map(p => `
-            <div class="beach-card">
-              <div class="beach-card-top">
-                <span class="beach-card-name">${p.name}</span>
-                <span class="beach-card-tag">${p.tag || 'Playa'}</span>
-              </div>
+            <details class="beach-accordion-card" name="beach-accordion">
+              <summary class="beach-accordion-header">
+                <div class="beach-accordion-title-wrap">
+                  <span class="beach-accordion-icon">🏖️</span>
+                  <span class="beach-card-name">${p.name}</span>
+                </div>
+                <div class="beach-accordion-meta">
+                  <span class="beach-card-tag">${p.tag || 'Playa'}</span>
+                  <span class="beach-accordion-chevron">▾</span>
+                </div>
+              </summary>
               
-              <div class="beach-card-desc">${p.type}</div>
+              <div class="beach-accordion-body">
+                <div class="beach-card-desc">${p.type}</div>
 
-              <div class="beach-specs-table">
-                <div class="beach-spec-row">
-                  <span class="spec-label">🏖️ Entorno / Fondo:</span>
-                  <span class="spec-value">${p.bottom || 'Arena fina dorada'}</span>
-                </div>
+                <div class="beach-specs-table">
+                  <div class="beach-spec-row">
+                    <span class="spec-label">🏖️ Entorno / Fondo:</span>
+                    <span class="spec-value">${p.bottom || 'Arena fina dorada'}</span>
+                  </div>
 
-                <div class="beach-spec-row">
-                  <span class="spec-label">⏳ Marea Óptima:</span>
-                  <span class="spec-value">${p.bestTide || 'Media Marea / Bajamar'}</span>
-                </div>
+                  <div class="beach-spec-row">
+                    <span class="spec-label">⏳ Marea Óptima:</span>
+                    <span class="spec-value">${p.bestTide || 'Media Marea / Bajamar'}</span>
+                  </div>
 
-                <div class="beach-spec-row full-card">
-                  <span class="spec-label">🎯 Recomendación:</span>
-                  <span class="spec-value">${p.surfLevel.includes('Baño') || p.surfLevel.includes('Familiar') || p.surfLevel.includes('Todos') ? '👨‍👩‍👧‍👦 Ideal para baño, descanso y paseos' : '🌊 Precaución con el oleaje en días de mar viva'}</span>
+                  <div class="beach-spec-row full-card">
+                    <span class="spec-label">🎯 Recomendación:</span>
+                    <span class="spec-value">${p.surfLevel.includes('Baño') || p.surfLevel.includes('Familiar') || p.surfLevel.includes('Todos') ? '👨‍👩‍👧‍👦 Ideal para baño, descanso y paseos' : '🌊 Precaución con el oleaje en días de mar viva'}</span>
+                  </div>
                 </div>
               </div>
-            </div>
+            </details>
           `).join('')}
         </div>
       </div>
