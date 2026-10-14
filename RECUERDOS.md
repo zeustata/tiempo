@@ -2,6 +2,23 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🎯 Actualización v2.2.1: Simplificación y Limpieza de Cabeceras y Menús — 2026-10-14
+- **Ergonomía Visual & Supresión de Redundancias (Feedback Lendo):**
+  1. *Diagnóstico Operativo:* Lendo señaló con agudeza que los títulos de varias secciones y menús eran excesivamente largos y repetitivos (por ejemplo, `📅 Pronóstico Extendido a 10 Días` o incluir `de ${concejoTitle}`), cuando inmediatamente debajo cada tarjeta cuenta con subtítulos ricos e insignias donde ya se detalla el concejo, la comarca y la información contextual.
+  2. *Intervención y Limpieza de Cabeceras:*
+     - **Pronósticos:** Título compactado a **`📅 Pronóstico a 10 Días`** (en `forecastView.js` y en el selector `APP_MODULES`).
+     - **Radar Cantábrico:** Título de cabecera en `index.html` y en `APP_MODULES` compactado a **`📡 Radar en Directo`** (el badge adyacente ya indica la ubicación).
+     - **Playas & Mareas:** Cabecera en `marineCard.js` simplificada a **`🏖️ Playas & Mareas`** (el subtítulo ya detalla el litoral del concejo, arenales y comarca).
+     - **Surf & Rompientes:** Cabecera en `surfCard.js` simplificada a **`🏄‍♂️ Surf & Rompientes`** (el subtítulo ya desglosa la dinámica marina del concejo y swell cantábrico).
+     - **Rutas & Senderismo:** Cabecera en `routesCard.js` simplificada a **`🥾 Rutas & Senderismo`** (el subtítulo ya expone las sendas del concejo y su región).
+     - **Montaña & Esquí:** Cabecera en `mountainCard.js` simplificada a **`🏔️ Cordillera & Nieve`** (subtítulo y píldora de altitud complementan los datos de puertos y cota).
+     - **Comparador:** Cabecera en `compareView.js` simplificada a **`⚖️ Comparador Climático`**.
+     - **Astronomía:** Cabecera en `astronomyCard.js` compactada a **`Astronomía & Cosmos`**.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.2.1 🎯`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v221-titulos-limpios` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.1` en `index.html` y módulos correspondientes.
+
 ## ✨ Actualización v2.2.0: Splash Cinemático MeteoAsturLode — 2026-10-14
 - **Apertura de Marca Cinemática & Fluidez de Carga (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Lendo planteó aprovechar la apertura de la app (donde el sistema operativo muestra el icono grande) para introducir una animación de revelado estético con el nombre `MeteoAsturLode`. Tras comprobar la primera prueba ultracorta, Lendo observó con acierto que, al ser una app limpia y libre de publicidad molesta, una duración de 1,8 segundos ofrece el tiempo perfecto para contemplar el escudo oficial de Asturias sin sensación de prisa, manteniendo el blindaje de salto instantáneo para emergencias.

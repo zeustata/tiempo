@@ -376,7 +376,7 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
       <div class="forecast-block">
         <div class="section-title-wrap">
           <div>
-            <h3 class="section-heading">📅 Pronóstico Extendido a 10 Días</h3>
+            <h3 class="section-heading">📅 Pronóstico a 10 Días</h3>
             <span class="section-subtitle">Evolución diaria completa • Modelo ECMWF / ICON</span>
           </div>
         </div>

@@ -702,7 +702,7 @@ export function renderSurfCard(data, concejo) {
     <div class="marine-card">
       <div class="section-title-wrap">
         <div>
-          <h3 class="section-heading">🏄‍♂️ Surf, Rompientes & Olas de ${concejoTitle}</h3>
+          <h3 class="section-heading">🏄‍♂️ Surf & Rompientes</h3>
           <span class="section-subtitle">
             ${isCoasting 
               ? `Dinámica marina y picos de ${concejo.name} (${coastalData.region}) • Swell Cantábrico`

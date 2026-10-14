@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v220-splash-cinematico';
+const CACHE_NAME = 'meteoasturlode-v221-titulos-limpios';
 const STATIC_ASSETS = [
   './',
   './index.html',

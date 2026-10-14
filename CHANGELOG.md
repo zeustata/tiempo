@@ -10,6 +10,23 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.1] - 2026-10-14
+
+### 🎯 Simplificación y Limpieza de Cabeceras y Menús (Feedback Lendo)
+- **Cabeceras Directas y Supresión de Redundancias:**
+  - Renombrada la cabecera principal de previsión de `📅 Pronóstico Extendido a 10 Días` a `📅 Pronóstico a 10 Días`, logrando un encabezado mucho más ágil y conciso.
+  - Limpieza de títulos de módulo eliminando reiteraciones de nombres de concejo o textos largos que ya figuran en los subtítulos o insignias de estado:
+    - Playas: de `🏖️ Playas, Mareas & Turismo de [Concejo]` a `🏖️ Playas & Mareas`.
+    - Surf: de `🏄‍♂️ Surf, Rompientes & Olas de [Concejo]` a `🏄‍♂️ Surf & Rompientes`.
+    - Rutas: de `🥾 Rutas & Senderismo de [Concejo]` a `🥾 Rutas & Senderismo`.
+    - Montaña: de `🏔️ Cordillera Cantábrica, Esquí & Puertos` a `🏔️ Cordillera & Nieve`.
+    - Radar: de `📡 Radar Meteorológico en Directo sobre Asturias` a `📡 Radar en Directo`.
+    - Comparador: de `⚖️ Comparador Climático de Concejos` a `⚖️ Comparador Climático`.
+    - Astronomía: de `Observatorio Astronómico & Cosmos` a `Astronomía & Cosmos`.
+- **Selector General Armonizado (`APP_MODULES`):**
+  - Módulos en el modal "Menú" alineados con los nuevos nombres (`Pronóstico a 10 Días`, `Radar en Directo`), optimizando la legibilidad en pantallas móviles.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v221-titulos-limpios`, query strings actualizadas a `?v=2.2.1`.
+
 ## [2.2.0] - 2026-10-14
 
 ### ✨ Splash Cinemático MeteoAsturLode (Feedback Lendo)

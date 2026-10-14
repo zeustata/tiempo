@@ -302,7 +302,7 @@ export function renderAstronomyView(containerId, currentFilter = 'all') {
           <div class="astronomy-hero-title">
             <span class="astronomy-hero-icon">🔭</span>
             <div>
-              <h3>Observatorio Astronómico & Cosmos</h3>
+              <h3>Astronomía & Cosmos</h3>
               <span class="astronomy-subtitle">Acontecimientos celestes y semáforo de visibilidad en Asturias (2026 - 2027)</span>
             </div>
           </div>

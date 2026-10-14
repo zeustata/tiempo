@@ -55,7 +55,7 @@ export function renderRoutesCard(data, concejo) {
       <!-- 1. CABECERA LIMPIA Y ERGONÓMICA -->
       <div class="section-title-wrap" style="margin-bottom: 16px;">
         <div>
-          <h3 class="section-heading">🥾 Rutas &amp; Senderismo de ${concejoTitle}</h3>
+          <h3 class="section-heading">🥾 Rutas &amp; Senderismo</h3>
           <span class="section-subtitle">
             Condiciones de marcha, estado del suelo y senderos de ${concejoTitle} (${concejo.region})
           </span>

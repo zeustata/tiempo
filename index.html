@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.2.0">
-  <link rel="stylesheet" href="css/components.css?v=2.2.0">
-  <link rel="stylesheet" href="css/weather-themes.css?v=2.2.0">
+  <link rel="stylesheet" href="css/main.css?v=2.2.1">
+  <link rel="stylesheet" href="css/components.css?v=2.2.1">
+  <link rel="stylesheet" href="css/weather-themes.css?v=2.2.1">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -135,7 +135,7 @@
           <div class="radar-controls-bar">
             <div>
               <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-                <h3 class="section-heading" style="margin-bottom: 0;">📡 Radar Meteorológico en Directo sobre Asturias</h3>
+                <h3 class="section-heading" style="margin-bottom: 0;">📡 Radar en Directo</h3>
                 <span id="radar-active-location" class="radar-concejo-badge">📍 Asturias</span>
               </div>
               <span id="radar-time-display" style="font-size: 0.9rem; color: var(--primary); display: block; margin-top: 4px;">Cargando satélite...</span>
@@ -270,7 +270,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.0 ✨</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.1 🎯</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -322,8 +322,21 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.2.0 ✨</span>
+            <span class="release-version">v2.2.1 🎯</span>
             <span class="release-date">14 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-ui">Ergonomía & Claridad Visual (Feedback Lendo)</span> <strong>Simplificación y Limpieza de Cabeceras y Menús</strong>:
+              <br>• <strong>Cabeceras Directas y Sin Redundancia:</strong> Eliminación de textos reiterativos y concejos en los títulos principales (ej. <code>📅 Pronóstico a 10 Días</code> en lugar de <em>Pronóstico Extendido a 10 Días</em>, <code>🏖️ Playas & Mareas</code>, <code>🏄‍♂️ Surf & Rompientes</code>, <code>🥾 Rutas & Senderismo</code>, <code>🏔️ Cordillera & Nieve</code>, <code>📡 Radar en Directo</code>, <code>⚖️ Comparador Climático</code>), evitando duplicar la información que ya figura de forma nítida en los subtítulos y badges.
+              <br>• <strong>Selector General Armonizado:</strong> Nombres más concisos y proporcionados en el selector de navegación (Menú) para una lectura ágil y cómoda en móviles.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.0 ✨</span>
+            <span class="release-date">14 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-ui">Experiencia de Inicio & Branding (Feedback Lendo)</span> <strong>Splash Cinemático MeteoAsturLode</strong>:
@@ -3066,7 +3079,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.0"></script>
+  <script type="module" src="js/app.js?v=2.2.1"></script>
 
 
 

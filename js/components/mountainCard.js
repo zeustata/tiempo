@@ -764,7 +764,7 @@ export function renderMountainCard(data, concejo) {
     <div class="mountain-card">
       <div class="section-title-wrap">
         <div>
-          <h3 class="section-heading">🏔️ Cordillera Cantábrica, Esquí & Puertos</h3>
+          <h3 class="section-heading">🏔️ Cordillera & Nieve</h3>
           <span class="section-subtitle">Estándar Snow-Forecast para Esquí • Estado de Puertos y Cota de Nieve en Asturias</span>
         </div>
         <div class="altitude-pill">

@@ -82,7 +82,7 @@ export function renderCompareView(concejoA, weatherDataA, concejoB, weatherDataB
     <div class="compare-card">
       <div class="section-title-wrap">
         <div>
-          <h3 class="section-heading">⚖️ Comparador Climático de Concejos</h3>
+          <h3 class="section-heading">⚖️ Comparador Climático</h3>
           <span class="section-subtitle">Compara el tiempo en tiempo real entre dos localidades de Asturias</span>
         </div>
       </div>

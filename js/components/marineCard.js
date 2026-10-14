@@ -1140,7 +1140,7 @@ export function renderMarineCard(data, concejo) {
     <div class="marine-card">
       <div class="section-title-wrap">
         <div>
-          <h3 class="section-heading">🏖️ Playas, Mareas & Turismo de ${concejoTitle}</h3>
+          <h3 class="section-heading">🏖️ Playas & Mareas</h3>
           <span class="section-subtitle">
             ${isCoasting 
               ? `Litoral de ${concejo.name} (${coastalData.region}) • Guía costera, mareas y arenales`
