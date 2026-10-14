@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v229-surf-limpieza-inteligencia';
+const CACHE_NAME = 'meteoasturlode-v2210-surf-cabecera-ergonomica';
 const STATIC_ASSETS = [
   './',
   './index.html',

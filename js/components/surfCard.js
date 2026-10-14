@@ -644,6 +644,10 @@ export function renderSurfCard(data, concejo) {
     ? (coastalData ? coastalData.playas : [])
     : (PLAYAS_POR_CONCEJO[interiorRef.refId] ? PLAYAS_POR_CONCEJO[interiorRef.refId].playas : []);
 
+  const cleanConcejoName = (concejo.name || '').split(' (')[0].trim();
+  const cleanInteriorName = interiorRef ? (interiorRef.name || '').split(' (')[0].trim() : '';
+  const surfLocationTitle = isCoasting ? cleanConcejoName : `${cleanConcejoName} (en ${cleanInteriorName})`;
+
   // Métricas del oleaje y swell primario y secundario
   const waveHeight = (marine && typeof marine.wave_height === 'number') ? marine.wave_height.toFixed(1) : (isCoasting ? '1.4' : '1.3');
   const swellHeight = (marine && typeof marine.swell_wave_height === 'number') ? marine.swell_wave_height.toFixed(1) : ((marine && typeof marine.wave_height === 'number') ? marine.wave_height.toFixed(1) : '1.2');
@@ -983,17 +987,16 @@ export function renderSurfCard(data, concejo) {
 
       <!-- 3. CATÁLOGO TÉCNICO DE PICOS DE SURF, FONDOS & ROMPIENTES -->
       <div class="marine-ports-section" style="margin-top: 20px;">
-        <div class="beach-section-header">
-          <div style="min-width: 0; flex: 1;">
-            <h4 class="ports-title" style="margin-bottom: 2px;">
-              🏖️ Rompientes, Picos de Surf & Fondos de ${isCoasting ? concejo.name : `${concejo.name} (en ${interiorRef.name})`}
-            </h4>
-            <span class="beach-section-subtitle">
-              Picos bautizados, orientación de costa, viento en tiempo real, tipo de fondo y marea óptima
-            </span>
-          </div>
-          <button class="btn-explain-sensor surf-guide-btn" data-explain="surf" title="Aprender sobre Offshore, Fondos, Izquierdas y Picos" style="margin-top: 2px; flex-shrink: 0;">
-            💡 Guía de Surf y Olas
+        <div class="beach-section-header" style="margin-bottom: 8px;">
+          <h4 class="ports-title" style="margin: 0; font-size: 1.05rem; line-height: 1.35;">
+            🏖️ Rompientes, Picos de Surf y Fondos de ${surfLocationTitle}
+          </h4>
+        </div>
+
+        <div style="margin: 8px 0 14px 0;">
+          <button class="btn-explain-sensor surf-guide-btn" data-explain="surf" title="Aprender sobre Offshore, Fondos, Izquierdas y Picos" style="width: 100%; justify-content: center; min-height: 44px; box-sizing: border-box;">
+            <span>💡</span>
+            <span>Guía de Surf y Olas</span>
           </button>
         </div>
 

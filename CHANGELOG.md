@@ -10,6 +10,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.10] - 2026-10-15
+
+### 🏄‍♂️ Blindaje Anti-Desborde & Tipografía en Rompientes de Surf (Feedback Lendo - Ley 11)
+- **Desacoplamiento de Cabecera & Título Limpio (Ley 11):**
+  - Tras verificar en dispositivo móvil real que el nombre largo del concejo comprimía el título en un bloque vertical estrecho de múltiples líneas forzadas, se depura el título dejándolo conciso y a ancho completo: `🏖️ Rompientes, Picos de Surf y Fondos de ${ConcejoLimpio}` (ej. *Castrillón*).
+  - Eliminado el subtítulo redundante para otorgar total limpieza y confort visual.
+  - **Fila Secundaria Dedicada:** El botón `[ 💡 Guía de Surf y Olas ]` pasa a ocupar su propia fila independiente debajo del título con ancho completo y altura táctil de 44px, erradicando cualquier riesgo de colisión o estrangulamiento tipográfico.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v2210-surf-cabecera-ergonomica`, query strings actualizadas a `?v=2.2.10`.
+
 ## [2.2.9] - 2026-10-15
 
 ### 🏄‍♂️ Síntesis Ergonómica & Limpieza del Módulo de Surf (Feedback Lendo)

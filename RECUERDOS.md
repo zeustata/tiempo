@@ -2,6 +2,18 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏄‍♂️ Actualización v2.2.10: Blindaje Anti-Desborde & Tipografía en Rompientes de Surf — 2026-10-15
+- **Blindaje Móvil Estricto & Tipografía Limpia (Feedback Lendo - Ley 11):**
+  1. *Diagnóstico Operativo:* Lendo aportó captura real desde su móvil en Castrillón demostrando que al ubicar el botón `[ 💡 Guía de Surf y Olas ]` en la misma fila horizontal del título, el texto del concejo largo `Castrillón (Piedras Blancas / Salinas)` más el subtítulo quedaban estrangulados en un ancho residual de ~50%, forzando un salto de línea vertical de más de 10 líneas.
+  2. *Intervención Técnica y Desacoplamiento (Ley 11):*
+     - Depurado el nombre del concejo eliminando los paréntesis de parroquias y el subtítulo redundante: `🏖️ Rompientes, Picos de Surf y Fondos de ${ConcejoLimpio}` (ej. *Castrillón*).
+     - El título dispone ahora del 100% del ancho útil de la pantalla para una visualización holgada y sin quiebros tipográficos.
+     - Reubicado el botón `[ 💡 Guía de Surf y Olas ]` en su propia fila independiente debajo del título, con `width: 100%`, centrado ergonómico y altura táctil de 44px (idéntico al botón de webcams de Playas y Mareas).
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.2.10 🏄‍♂️`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v2210-surf-cabecera-ergonomica` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.10` en `index.html` (CSS y scripts) y `app.js`.
+
 ## 🏄‍♂️ Actualización v2.2.9: Síntesis Ergonómica & Limpieza del Módulo de Surf — 2026-10-15
 - **Optimización de Ergonomía Móvil & Poda de Redundancias (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Lendo señaló con gran acierto que las dos tarjetas del bloque `.surf-intelligence-card` (la tarjeta de consejos estáticos Offshore/Onshore/Izquierdas y la tarjeta de diagnóstico genérico de viento Glassy) eran prescindibles y sobrecargaban la pantalla, puesto que el contenido didáctico ya reside en el modal interactivo `[ 💡 Guía de Surf y Olas ]` y el cálculo de viento en tiempo real ya se ejecuta con mayor precisión microclimática dentro de cada rompiente individual según su orientación particular.
