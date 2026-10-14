@@ -2,6 +2,21 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌊 Actualización v2.2.5: Tabla Náutica Compacta Unificada de Mareas de Hoy — 2026-10-14
+- **Optimización de Espacio y Arquitectura Visual de Mareas (Feedback Lendo & Princesa):**
+  1. *Diagnóstico Operativo:* Lendo planteó con agudeza la necesidad de minimizar las dos mareas del día sin deteriorar la interfaz móvil ni desbordar la pantalla. El error de los intentos anteriores fue el empaquetado de "cajas dentro de cajas" (dos tarjetas exteriores independientes con paddings redundantes y rejillas comprimidas).
+  2. *Intervención Técnica y Rediseño en Tabla Náutica:*
+     - Fusión de las dos tarjetas en una única tarjeta estelar (`.today-tides-card`).
+     - Creación de una tabla cronológica unificada de 3 columnas milimétricas (`.today-tide-row`):
+       - Columna izquierda: Icono náutico (`🌅` / `🏖️`), nombre en mayúsculas (`PLEAMAR` / `BAJAMAR`) y etiqueta de ciclo (`1ª marea` / `2ª marea`).
+       - Columna central: Hora en tipografía `JetBrains Mono` con indicador dinámico «Próxima» en la marea inminente.
+       - Columna derecha: Altura en metros con pastilla de contraste Liquid Glass (`high` / `low`) y `white-space: nowrap` estricto.
+     - Ahorro de más de 120px de altura vertical en móviles, manteniendo una legibilidad perfecta e inmunidad total a desbordes (Ley 11).
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.2.5 🌊`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v225-tabla-mareas-compacta` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.5` en `index.html`, `app.js` y `surfCard.js`.
+
 ## 🌊 Actualización v2.2.4: Restauración de Mareas de Hoy al Formato Funcional Doble Nivel — 2026-10-14
 - **Rollback Limpio al Diseño de Alta Legibilidad Móvil (Leyes 2 y 11):**
   1. *Diagnóstico Operativo:* Tras probar en móvil real la compactación en fila de la v2.2.3, se comprobó empíricamente que comprimir en una sola línea horizontal el icono, el nombre extenso (**BAJAMAR** / **PLEAMAR**), la hora y la altura provocaba falta de ancho físico, forzando al motor del navegador a quebrar la unidad de medida (`m`) bajo el dígito decimal. Lendo observó con acierto y franqueza que la experiencia móvil empeoraba respecto a la versión funcional original.

@@ -10,6 +10,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.5] - 2026-10-14
+
+### 🌊 Tabla Náutica Compacta Unificada de Mareas de Hoy (Feedback Lendo & Princesa)
+- **Unificación Profesional en 1 Sola Tarjeta Delgada (Leyes 11 y 14):**
+  - En lugar de dos tarjetas exteriores superpuestas que consumían márgenes y altura excesiva, se unifica todo el ciclo de mareas del día en una sola tarjeta náutica estilizada (`.today-tides-card`).
+  - Tabla de 3 columnas milimétricamente alineada:
+    - **Izquierda:** Icono náutico (`🌅` / `🏖️`), nombre en mayúsculas (**PLEAMAR** / **BAJAMAR**) y etiqueta de ciclo (*1ª marea* / *2ª marea*).
+    - **Centro:** Hora astronómica en tipografía monoespaciada `JetBrains Mono` con distintivo luminoso «Próxima» para la marea inminente.
+    - **Derecha:** Altura del agua en metros en pastilla compacta de contraste marino (`3.76 m` / `0.98 m`) con ancho garantizado y blindaje anti-desborde.
+  - Ahorro de más de 120px de espacio vertical en móvil con visibilidad directa de las 4 mareas del día sin necesidad de scroll forzado.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v225-tabla-mareas-compacta`, query strings actualizadas a `?v=2.2.5`.
+
 ## [2.2.4] - 2026-10-14
 
 ### 🌊 Restauración de Mareas de Hoy al Formato Funcional Doble Nivel (Feedback Lendo & Princesa)

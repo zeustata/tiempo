@@ -1209,64 +1209,63 @@ export function renderMarineCard(data, concejo) {
           </div>
         </div>
 
-        <!-- Mareas de Hoy Organizadas por Ciclos Diarios -->
+        <!-- Mareas de Hoy (Tabla Náutica Compacta Unificada) -->
         ${(() => {
           const events = tideStatus.dayData.events || [];
-          const ev0 = events[0];
-          const ev1 = events[1];
-          const ev2 = events[2];
-          const ev3 = events[3];
-
-          const renderSubItem = (ev) => {
-            if (!ev) return '';
-            const isHigh = ev.type === 'high';
-            return `
-              <div class="tide-sub-item ${isHigh ? 'high' : 'low'}">
-                <div class="tide-sub-top">
-                  <span class="tide-sub-icon">${isHigh ? '🌅' : '🏖️'}</span>
-                  <span class="tide-sub-name">${ev.name}</span>
-                </div>
-                <div class="tide-sub-bottom">
-                  <span class="tide-sub-time">${ev.timeStr}</span>
-                  <span class="tide-sub-height">${ev.height} m</span>
-                </div>
-              </div>
-            `;
-          };
-
           return `
-            <div class="daily-tide-cycles-grid">
-              <!-- Tarjeta 1 (1ª Marea del Día) -->
-              <div class="tide-cycle-card">
-                <div class="tide-cycle-header">
-                  <span class="cycle-badge">🌅 1ª Marea del Día</span>
+            <div class="today-tides-card">
+              <div class="today-tides-header">
+                <div class="today-tides-title-wrap">
+                  <span class="today-tides-icon">🌊</span>
+                  <div>
+                    <div class="today-tides-title">Mareas de Hoy</div>
+                    <div class="today-tides-sub">Horarios astronómicos en la costa de Asturias</div>
+                  </div>
                 </div>
-                <div class="tide-cycle-items">
-                  ${renderSubItem(ev0)}
-                  ${renderSubItem(ev1)}
-                </div>
+                <span class="today-tides-coef-pill" title="Coeficiente de Marea">${tideStatus.moonInfo.coefficient} • ${tideStatus.moonInfo.tideType}</span>
               </div>
 
-              <!-- Tarjeta 2 (2ª Marea del Día) -->
-              <div class="tide-cycle-card">
-                <div class="tide-cycle-header">
-                  <span class="cycle-badge">🌙 2ª Marea del Día</span>
-                </div>
-                <div class="tide-cycle-items">
-                  ${renderSubItem(ev2)}
-                  ${ev3 ? renderSubItem(ev3) : `
-                    <div class="tide-sub-item low" style="opacity: 0.75; border-style: dashed;">
-                      <div class="tide-sub-top">
-                        <span class="tide-sub-icon">⏳</span>
-                        <span class="tide-sub-name">Próx. Ciclo</span>
+              <div class="today-tides-table">
+                ${events.map((ev, idx) => {
+                  const isHigh = ev.type === 'high';
+                  const isNext = tideStatus.nextEvent && tideStatus.nextEvent.timeStr === ev.timeStr;
+                  const cycleLabel = idx < 2 ? '1ª marea' : '2ª marea';
+                  return `
+                    <div class="today-tide-row ${isHigh ? 'is-high' : 'is-low'} ${isNext ? 'is-next' : ''}">
+                      <div class="tide-col-type">
+                        <span class="tide-type-icon">${isHigh ? '🌅' : '🏖️'}</span>
+                        <div class="tide-type-text">
+                          <span class="tide-type-name">${ev.name}</span>
+                          <span class="tide-cycle-tag">${cycleLabel}</span>
+                        </div>
                       </div>
-                      <div class="tide-sub-bottom">
-                        <span class="tide-sub-time">Madrugada</span>
-                        <span class="tide-sub-height">Día sig.</span>
+                      <div class="tide-col-time">
+                        <span class="tide-time-val">${ev.timeStr}</span>
+                        ${isNext ? '<span class="tide-next-badge">Próxima</span>' : ''}
+                      </div>
+                      <div class="tide-col-height">
+                        <span class="tide-height-pill ${isHigh ? 'high' : 'low'}">${ev.height} m</span>
                       </div>
                     </div>
-                  `}
-                </div>
+                  `;
+                }).join('')}
+                ${events.length < 4 ? `
+                  <div class="today-tide-row is-pending" style="opacity: 0.65; border-style: dashed;">
+                    <div class="tide-col-type">
+                      <span class="tide-type-icon">⏳</span>
+                      <div class="tide-type-text">
+                        <span class="tide-type-name">Siguiente Pleamar</span>
+                        <span class="tide-cycle-tag">Madrugada día sig.</span>
+                      </div>
+                    </div>
+                    <div class="tide-col-time">
+                      <span class="tide-time-val" style="font-size: 0.82rem; color: #94a3b8;">Próx. ciclo</span>
+                    </div>
+                    <div class="tide-col-height">
+                      <span class="tide-height-pill" style="color: #94a3b8; border: 1px dashed rgba(255,255,255,0.15);">—</span>
+                    </div>
+                  </div>
+                ` : ''}
               </div>
             </div>
           `;
