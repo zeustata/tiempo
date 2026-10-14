@@ -10,6 +10,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.0] - 2026-10-14
+
+### ✨ Splash Cinemático MeteoAsturLode (Feedback Lendo)
+- **Impacto de Marca y Calidad Estética (1,8 s):**
+  - Implementada una pantalla de bienvenida cinemática (1,8 segundos) que enlaza armónicamente la pantalla de carga nativa del sistema operativo con el arranque de la app.
+  - Presenta el escudo oficial de la estación (`icon-512.png`) con la Cruz de la Victoria, Alfa y Omega, sol radiante y lluvia cantábrica con halo pulsante, junto al surgimiento luminoso del título `MeteoAsturLode` en azul Cantábrico y oro asturiano, aprovechando la ausencia de publicidad en la app para ofrecer una bienvenida de máxima categoría.
+- **Blindaje «Tap to Skip» Inmediato:**
+  - Tocar o pulsar cualquier parte de la pantalla retira la cortina al instante (150 ms) para usuarios que requieren consulta inmediata sin esperas.
+- **Cero Bloqueo de Datos:**
+  - La animación corre en una capa flotante mientras el motor meteorológico consulta la API en segundo plano, sin demorar la respuesta de la interfaz.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v220-splash-cinematico`, query strings actualizadas a `?v=2.2.0`.
+
 ## [2.1.9] - 2026-10-14
 
 ### 💛💙 Optimización de Escala y Porte Tipográfico de MeteoAsturLode (Feedback Lendo)

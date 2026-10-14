@@ -31,13 +31,27 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.1.9">
-  <link rel="stylesheet" href="css/components.css?v=2.1.9">
-  <link rel="stylesheet" href="css/weather-themes.css?v=2.1.9">
+  <link rel="stylesheet" href="css/main.css?v=2.2.0">
+  <link rel="stylesheet" href="css/components.css?v=2.2.0">
+  <link rel="stylesheet" href="css/weather-themes.css?v=2.2.0">
 </head>
 <body>
   <!-- Fondo de partículas -->
   <canvas id="weather-particles-canvas"></canvas>
+
+  <!-- INTRO SPLASH CINEMÁTICO ULTRACORTO (v2.2.0) -->
+  <div id="app-splash-screen" class="app-splash-screen" title="Toca en cualquier parte para saltar">
+    <div class="splash-content">
+      <div class="splash-icon-wrapper">
+        <img src="icons/icon-512.png" alt="MeteoAsturLode" class="splash-icon-img">
+        <div class="splash-icon-glow"></div>
+      </div>
+      <div class="splash-brand-title">
+        <span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span>
+      </div>
+      <div class="splash-subline">Asturias en tiempo real</div>
+    </div>
+  </div>
 
   <div class="app-container">
     <!-- BARRA DE CABECERA -->
@@ -256,7 +270,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.1.9 💛💙</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.0 ✨</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -308,8 +322,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.1.9 💛💙</span>
+            <span class="release-version">v2.2.0 ✨</span>
             <span class="release-date">14 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-ui">Experiencia de Inicio & Branding (Feedback Lendo)</span> <strong>Splash Cinemático MeteoAsturLode</strong>:
+              <br>• <strong>Impacto Visual de Calidad (1,8 s):</strong> Apertura cinemática elegante (1,8 segundos) que presenta el escudo oficial con la Cruz de la Victoria y el surgimiento luminoso de <code>MeteoAsturLode</code> en azul y oro asturiano, aprovechando que la app no incluye publicidad para ofrecer una experiencia estética de alta gama.
+              <br>• <strong>Blindaje «Tap to Skip»:</strong> Tocar o pulsar cualquier parte de la pantalla retira la cortina al instante (150 ms) para usuarios que necesitan consultar el tiempo de inmediato sin pausas.
+              <br>• <strong>Cero Bloqueo:</strong> Se ejecuta en una capa flotante de alto rendimiento mientras los datos se cargan en segundo plano, sin demorar la respuesta de la aplicación.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.1.9 💛💙</span>
+            <span class="release-date">14 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-ui">Identidad de Marca & Presencia Visual (Feedback Lendo)</span> <strong>Optimización de Escala y Porte Tipográfico de MeteoAsturLode</strong>:
@@ -3038,7 +3066,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.1.9"></script>
+  <script type="module" src="js/app.js?v=2.2.0"></script>
 
 
 

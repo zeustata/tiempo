@@ -41,7 +41,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '2.1.9';
+export const CURRENT_APP_VERSION = '2.2.0';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -59,6 +59,7 @@ class MeteoAsturiasApp {
   }
 
   async init() {
+    this.setupSplashScreen();
     this.updateSearchTriggerDisplay();
     this.updateModelTriggerDisplay();
     this.renderFavoritesMenu();
@@ -543,6 +544,31 @@ class MeteoAsturiasApp {
 
   }
 
+  setupSplashScreen() {
+    const splash = document.getElementById('app-splash-screen');
+    if (!splash) return;
+
+    let dismissed = false;
+    const dismiss = () => {
+      if (dismissed) return;
+      dismissed = true;
+      splash.classList.add('splash-exit');
+      setTimeout(() => {
+        if (splash && splash.parentNode) {
+          splash.remove();
+        }
+      }, 350);
+    };
+
+    // 1. Blindaje 'Tap to Skip' inmediato (< 150 ms)
+    splash.addEventListener('click', dismiss);
+    splash.addEventListener('touchstart', dismiss, { passive: true });
+    window.addEventListener('keydown', dismiss, { once: true });
+
+    // 2. Salida automática cinemática tras 1.800 ms (1,8 s para apreciar el escudo oficial sin prisas)
+    setTimeout(dismiss, 1800);
+  }
+
   checkChangelogAutoPrompt() {
     const CURRENT_CHANGELOG_VERSION = CURRENT_APP_VERSION;
     const STORAGE_KEY = 'meteoastur_changelog_seen';
@@ -554,7 +580,7 @@ class MeteoAsturiasApp {
           setTimeout(() => {
             // Mostrar modal directamente sin alterar historial en el arranque para evitar que popstate lo cierre
             changelogModal.style.display = 'flex';
-          }, 400);
+          }, 2200);
         }
       }
     } catch (e) {

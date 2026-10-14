@@ -2,6 +2,18 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## ✨ Actualización v2.2.0: Splash Cinemático MeteoAsturLode — 2026-10-14
+- **Apertura de Marca Cinemática & Fluidez de Carga (Feedback Lendo):**
+  1. *Diagnóstico Operativo:* Lendo planteó aprovechar la apertura de la app (donde el sistema operativo muestra el icono grande) para introducir una animación de revelado estético con el nombre `MeteoAsturLode`. Tras comprobar la primera prueba ultracorta, Lendo observó con acierto que, al ser una app limpia y libre de publicidad molesta, una duración de 1,8 segundos ofrece el tiempo perfecto para contemplar el escudo oficial de Asturias sin sensación de prisa, manteniendo el blindaje de salto instantáneo para emergencias.
+  2. *Diseño del Motor de Entrada:*
+     - **Coreografía Cinemática (1,8 s):** El escudo oficial de la estación (`icon-512.png` con la Cruz de la Victoria, Alfa y Omega, sol y lluvia) late con resplandor en el fondo nocturno `#070d17` (idéntico al splash del sistema, eliminando cualquier parpadeo de pantalla). Al instante, brota el nombre `MeteoAsturLode` en azul Cantábrico y oro de la Victoria, seguido del lema oficial "Asturias en tiempo real". Tras 1,8 segundos, la cortina se disuelve con suave fade-out hacia la app.
+     - **Blindaje «Tap to Skip» Inmediato:** Tocar o pulsar cualquier parte de la pantalla o presionar cualquier tecla retira la cortina en menos de 150 ms para quien requiera ver el tiempo de inmediato.
+     - **Cero Bloqueo de Red:** Se ejecuta en una capa flotante (`z-index: 999999`) mientras la API y la caché descargan los datos en segundo plano, disolviéndose suavemente cuando la app está 100% lista.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.2.0 ✨`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v220-splash-cinematico` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.0` en `index.html` y módulos correspondientes.
+
 ## 💛💙 Actualización v2.1.9: Optimización de Escala y Porte Tipográfico de MeteoAsturLode — 2026-10-14
 - **Presencia Visual Reforzada en 1 Sola Línea (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Tras unificar el nombre de la app en `MeteoAsturLode`, Lendo solicitó aumentar el tamaño de letra para que el nombre destaque con nitidez y presencia rotunda, manteniendo la condición innegociable de no desbordar a una segunda línea.

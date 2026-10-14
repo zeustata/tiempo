@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v219-brand-size-opt';
+const CACHE_NAME = 'meteoasturlode-v220-splash-cinematico';
 const STATIC_ASSETS = [
   './',
   './index.html',
