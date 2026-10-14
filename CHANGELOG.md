@@ -10,6 +10,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.3] - 2026-10-14
+
+### 🌊 Filas Limpias Integradas para Mareas de Hoy (Feedback Lendo)
+- **Erradicación Definitiva de Desborde y Cortes de Texto:**
+  - Sustitución de las cajas cuadradas rígidas que colisionaban en pantallas móviles por un formato integrado de filas náuticas horizontales de ancho completo (`.tide-cycle-rows` y `.tide-row-item`).
+  - La bajamar y la pleamar aprovechan el 100% del ancho disponible en cada ciclo diario, mostrando nombre, hora en grande monoespaciada blanca y altura de agua en color con acento marino lateral (ámbar y cian).
+  - Solución garantizada a prueba de cualquier resolución de pantalla, sin truncamientos de texto ni desbordes laterales.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v223-mareas-filas-limpias`, query strings actualizadas a `?v=2.2.3`.
+
 ## [2.2.2] - 2026-10-14
 
 ### 🌊 Unificación Horizontal de Mareas Diarias (Feedback Lendo)

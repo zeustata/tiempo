@@ -7,7 +7,7 @@ import {
   getBeachSpecificWindCondition,
   getSeaWaterTemperature,
   getDouglasScale
-} from './marineCard.js?v=2.2.2';
+} from './marineCard.js?v=2.2.3';
 
 /**
  * Recomienda el grosor de neopreno según la temperatura del agua

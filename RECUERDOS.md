@@ -2,6 +2,19 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌊 Actualización v2.2.3: Filas Limpias Integradas de Mareas sin Desborde Móvil — 2026-10-14
+- **Resolución Definitiva de Desborde Móvil en Ciclos de Marea (Feedback Lendo & Princesa):**
+  1. *Diagnóstico Operativo:* En `v2.2.2`, la disposición en cuadrícula de 2 columnas (`repeat(2, 1fr)`) en pantallas estrechas de teléfono provocaba que la caja derecha de la marea sobresaliera lateralmente del contenedor y recortara el texto (ej. mostrándose "PLEAM" en vez de "PLEAMAR").
+  2. *Intervención Técnica y Rediseño Integral:*
+     - Sustituido el grid lateral por filas horizontales completas al 100% de ancho útil (`.tide-row-item` dentro de `.tide-cycle-rows`).
+     - Distribución simétrica y ergonómica (`justify-content: space-between`): a la izquierda, icono de estado (`🌊`/`🔻`) y etiqueta en mayúsculas ("PLEAMAR" / "BAJAMAR"); a la derecha, hora precisa en fuente monoespaciada `JetBrains Mono` acompañada de la altura en metros en pastilla translúcida.
+     - Indicador visual perimetral Liquid Glass: resalte de borde izquierdo de 3px con cian Cantábrico (`#38bdf8`) para la pleamar y ámbar solar (`#f59e0b`) para la bajamar.
+     - Cumplimiento estricto de la Ley 11 (Doctrina de Blindaje Anti-Desborde Móvil): holgura garantizada sin recortes ni desbordes incluso en anchos mínimos de 320px.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.2.3 🌊`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v223-mareas-filas-limpias` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.3` en `index.html`, `app.js` y `surfCard.js`.
+
 ## 🌊 Actualización v2.2.2: Unificación Horizontal de Mareas Diarias (Bajamar & Pleamar) — 2026-10-14
 - **Ergonomía de Mareas y Reducción de Espacio Vertical (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Lendo propuso simplificar la visualización de las mareas del día en el módulo de *Playas & Mareas*, sugiriendo presentar la bajamar y pleamar de cada marea en un mismo botón/fila en lugar de dos cajas verticales apiladas que alargaban excesivamente el scroll de la pantalla.

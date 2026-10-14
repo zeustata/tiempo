@@ -1217,18 +1217,18 @@ export function renderMarineCard(data, concejo) {
           const ev2 = events[2];
           const ev3 = events[3];
 
-          const renderSubItem = (ev) => {
+          const renderTideRow = (ev) => {
             if (!ev) return '';
             const isHigh = ev.type === 'high';
             return `
-              <div class="tide-sub-item ${isHigh ? 'high' : 'low'}">
-                <div class="tide-sub-top">
-                  <span class="tide-sub-icon">${isHigh ? '🌅' : '🏖️'}</span>
-                  <span class="tide-sub-name">${ev.name}</span>
+              <div class="tide-row-item ${isHigh ? 'high' : 'low'}">
+                <div class="tide-row-left">
+                  <span class="tide-row-icon">${isHigh ? '🌅' : '🏖️'}</span>
+                  <span class="tide-row-name">${ev.name}</span>
                 </div>
-                <div class="tide-sub-bottom">
-                  <span class="tide-sub-time">${ev.timeStr}</span>
-                  <span class="tide-sub-height">${ev.height} m</span>
+                <div class="tide-row-right">
+                  <span class="tide-row-time">${ev.timeStr}</span>
+                  <span class="tide-row-height">${ev.height} m</span>
                 </div>
               </div>
             `;
@@ -1241,9 +1241,9 @@ export function renderMarineCard(data, concejo) {
                 <div class="tide-cycle-header">
                   <span class="cycle-badge">🌅 1ª Marea del Día</span>
                 </div>
-                <div class="tide-cycle-items">
-                  ${renderSubItem(ev0)}
-                  ${renderSubItem(ev1)}
+                <div class="tide-cycle-rows">
+                  ${renderTideRow(ev0)}
+                  ${renderTideRow(ev1)}
                 </div>
               </div>
 
@@ -1252,17 +1252,17 @@ export function renderMarineCard(data, concejo) {
                 <div class="tide-cycle-header">
                   <span class="cycle-badge">🌙 2ª Marea del Día</span>
                 </div>
-                <div class="tide-cycle-items">
-                  ${renderSubItem(ev2)}
-                  ${ev3 ? renderSubItem(ev3) : `
-                    <div class="tide-sub-item low" style="opacity: 0.75; border-style: dashed;">
-                      <div class="tide-sub-top">
-                        <span class="tide-sub-icon">⏳</span>
-                        <span class="tide-sub-name">Próx. Ciclo</span>
+                <div class="tide-cycle-rows">
+                  ${renderTideRow(ev2)}
+                  ${ev3 ? renderTideRow(ev3) : `
+                    <div class="tide-row-item next-cycle">
+                      <div class="tide-row-left">
+                        <span class="tide-row-icon">⏳</span>
+                        <span class="tide-row-name">Próx. Ciclo</span>
                       </div>
-                      <div class="tide-sub-bottom">
-                        <span class="tide-sub-time">Madrugada</span>
-                        <span class="tide-sub-height">Día sig.</span>
+                      <div class="tide-row-right">
+                        <span class="tide-row-time">Madrugada</span>
+                        <span class="tide-row-height">Día sig.</span>
                       </div>
                     </div>
                   `}
