@@ -2,6 +2,19 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏖️ Actualización v2.2.13: Minimalismo Náutico & Píldoras Simétricas de Mareas de Hoy — 2026-10-15
+- **Erradicación del Cardception & Rejilla Minimalista de Mareas (Feedback Lendo):**
+  1. *Diagnóstico Operativo:* Lendo solicitó que las tarjetas de 1ª marea y 2ª marea fueran más minimalistas para eliminar la sobrecarga visual. El diagnóstico detectó que el problema radicaba en el "cardception" (cajas anidadas dentro de tarjetas mayores con doble marco, dobles encabezados y padding excesivo).
+  2. *Intervención Técnica en `marineCard.js` y `components.css`:*
+     - Supresión íntegra del contenedor `.daily-tide-cycles-grid` y sus tarjetas `.tide-cycle-card`.
+     - Creación de `.tide-today-minimal-grid`: Rejilla simétrica limpia de 4 píldoras translúcidas (2×2 en móviles y 4×1 en escritorio).
+     - Cada píldora `.tide-mini-pill` cuenta con acento de borde cian (Pleamar) o ámbar (Bajamar), icono `🌅`/`🏖️`, hora destacada en `1.25rem` JetBrains Mono, altura en metros y distintivo verde `Próxima` en la marea inminente.
+     - Ahorro de más de 180px de scroll vertical y aspecto náutico profesional impecable.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.2.13 🏖️`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v2213-mareas-minimal-grid` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.13` en `index.html` (CSS y scripts) y `app.js`.
+
 ## 💡 Actualización v2.2.12: Síntesis Visual & Micro-animación Didáctica de Sensores — 2026-10-15
 - **Erradicación del Texto «Explícame» & Botón Circular con Respiración Luminosa (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Lendo propuso simplificar los botones didácticos de los sensores eliminando las letras «Explícame» para aligerar la interfaz y dejar únicamente la bombilla `💡` con una micro-animación de respiración de intensidad. Tras el análisis crítico y acuerdo de diseño para evitar el efecto alarma, se implementó una micro-animación suave y elegante (`bulbBreathing` de 3.5s).

@@ -1209,65 +1209,28 @@ export function renderMarineCard(data, concejo) {
           </div>
         </div>
 
-        <!-- Mareas de Hoy Organizadas por Ciclos Diarios -->
+        <!-- Mareas de Hoy (Rejilla Minimalista de Píldoras Simétricas) -->
         ${(() => {
           const events = tideStatus.dayData.events || [];
-          const ev0 = events[0];
-          const ev1 = events[1];
-          const ev2 = events[2];
-          const ev3 = events[3];
-
-          const renderSubItem = (ev) => {
-            if (!ev) return '';
-            const isHigh = ev.type === 'high';
-            return `
-              <div class="tide-sub-item ${isHigh ? 'high' : 'low'}">
-                <div class="tide-sub-top">
-                  <span class="tide-sub-icon">${isHigh ? '🌅' : '🏖️'}</span>
-                  <span class="tide-sub-name">${ev.name}</span>
-                </div>
-                <div class="tide-sub-bottom">
-                  <span class="tide-sub-time">${ev.timeStr}</span>
-                  <span class="tide-sub-height">${ev.height} m</span>
-                </div>
-              </div>
-            `;
-          };
-
           return `
-            <div class="daily-tide-cycles-grid">
-              <!-- Tarjeta 1 (1ª Marea del Día) -->
-              <div class="tide-cycle-card">
-                <div class="tide-cycle-header">
-                  <span class="cycle-badge">🌅 1ª Marea del Día</span>
-                </div>
-                <div class="tide-cycle-items">
-                  ${renderSubItem(ev0)}
-                  ${renderSubItem(ev1)}
-                </div>
-              </div>
-
-              <!-- Tarjeta 2 (2ª Marea del Día) -->
-              <div class="tide-cycle-card">
-                <div class="tide-cycle-header">
-                  <span class="cycle-badge">🌙 2ª Marea del Día</span>
-                </div>
-                <div class="tide-cycle-items">
-                  ${renderSubItem(ev2)}
-                  ${ev3 ? renderSubItem(ev3) : `
-                    <div class="tide-sub-item low" style="opacity: 0.75; border-style: dashed;">
-                      <div class="tide-sub-top">
-                        <span class="tide-sub-icon">⏳</span>
-                        <span class="tide-sub-name">Próx. Ciclo</span>
-                      </div>
-                      <div class="tide-sub-bottom">
-                        <span class="tide-sub-time">Madrugada</span>
-                        <span class="tide-sub-height">Día sig.</span>
-                      </div>
+            <div class="tide-today-minimal-grid">
+              ${events.map((ev) => {
+                const isHigh = ev.type === 'high';
+                const isNext = tideStatus.nextEvent && tideStatus.nextEvent.timeStr === ev.timeStr;
+                const accentColor = isHigh ? '#38bdf8' : '#f59e0b';
+                const icon = isHigh ? '🌅' : '🏖️';
+                return `
+                  <div class="tide-mini-pill ${isHigh ? 'high' : 'low'} ${isNext ? 'is-next' : ''}">
+                    <div class="tide-mini-pill-top">
+                      <span class="tide-mini-icon">${icon}</span>
+                      <span class="tide-mini-name">${ev.name}</span>
+                      ${isNext ? '<span class="tide-mini-next-badge">Próxima</span>' : ''}
                     </div>
-                  `}
-                </div>
-              </div>
+                    <div class="tide-mini-time">${ev.timeStr}</div>
+                    <div class="tide-mini-height" style="color: ${accentColor};">${ev.height} <span class="tide-mini-unit">m</span></div>
+                  </div>
+                `;
+              }).join('')}
             </div>
           `;
         })()}

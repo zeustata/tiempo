@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.13] - 2026-10-15
+
+### 🏖️ Minimalismo Náutico & Píldoras Simétricas de Mareas de Hoy (Feedback Lendo)
+- **Erradicación del Cardception (Cajas dentro de Cajas):**
+  - Supresión de las dos grandes tarjetas apiladas (*«1ª Marea del Día»* y *«2ª Marea del Día»*) que contenían sub-cajas anidadas, bordes dobles y cabeceras duplicadas.
+  - Ahorro de más de 180px de scroll vertical en el módulo de Playas y Mareas.
+- **Rejilla Simétrica de 4 Píldoras (2×2 en Móviles / 4×1 en Escritorio):**
+  - Cada evento de marea de la jornada se muestra en una elegante píldora de superficie única con acento de borde cian (Pleamar) o ámbar (Bajamar).
+  - Jerarquía visual impecable: icono y nombre de marea, hora destacada en `1.25rem` JetBrains Mono, altura en metros y distintivo verde luminoso `Próxima` en la marea inminente.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v2213-mareas-minimal-grid`, query strings actualizadas a `?v=2.2.13`.
+
 ## [2.2.12] - 2026-10-15
 
 ### 💡 Síntesis Visual & Micro-animación Didáctica de Sensores (Feedback Lendo)

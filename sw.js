@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2212-bombilla-didactica-respiracion';
+const CACHE_NAME = 'meteoasturlode-v2213-mareas-minimal-grid';
 const STATIC_ASSETS = [
   './',
   './index.html',

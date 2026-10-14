@@ -1226,138 +1226,100 @@
   50% { transform: scale(1.6); opacity: 0.2; }
 }
 
-.daily-tide-cycles-grid {
+.tide-today-minimal-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
   margin-top: 14px;
   width: 100%;
   box-sizing: border-box;
 }
 
-@media (max-width: 720px) {
-  .daily-tide-cycles-grid {
-    grid-template-columns: 1fr;
-    gap: 10px;
+@media (max-width: 680px) {
+  .tide-today-minimal-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
     margin-top: 10px;
   }
 }
 
-.tide-cycle-card {
-  background: var(--bg-surface-elevated);
-  border: 1px solid var(--border-glass);
-  border-radius: var(--radius-md);
-  padding: 14px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-  box-sizing: border-box;
-  overflow: hidden;
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.tide-cycle-card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(56, 189, 248, 0.4);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
-}
-
-.tide-cycle-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.cycle-badge {
-  font-size: 0.82rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  color: #e2e8f0;
-}
-
-.tide-cycle-items {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.tide-sub-item {
+.tide-mini-pill {
+  background: rgba(15, 23, 42, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
   display: flex;
   flex-direction: column;
   gap: 4px;
-  padding: 10px 14px;
-  border-radius: var(--radius-sm);
-  border: 1px solid transparent;
-  width: 100%;
   box-sizing: border-box;
-  transition: all 0.15s ease;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.tide-sub-item.high {
-  border-color: rgba(56, 189, 248, 0.35);
-  background: linear-gradient(135deg, rgba(2, 132, 199, 0.16), rgba(15, 23, 42, 0.45));
+.tide-mini-pill:hover {
+  transform: translateY(-2px);
 }
 
-.tide-sub-item.low {
-  border-color: rgba(245, 158, 11, 0.35);
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.14), rgba(15, 23, 42, 0.45));
+.tide-mini-pill.high {
+  border-left: 3px solid #38bdf8;
+  background: linear-gradient(135deg, rgba(2, 132, 199, 0.14), rgba(15, 23, 42, 0.45));
 }
 
-.tide-sub-top {
+.tide-mini-pill.low {
+  border-left: 3px solid #f59e0b;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(15, 23, 42, 0.45));
+}
+
+.tide-mini-pill.is-next {
+  border-color: rgba(56, 189, 248, 0.5);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+}
+
+.tide-mini-pill-top {
   display: flex;
   align-items: center;
   gap: 6px;
-}
-
-.tide-sub-icon {
-  font-size: 1.1rem;
-}
-
-.tide-sub-name {
   font-size: 0.78rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  font-weight: 700;
+  color: var(--text-dim);
+}
+
+.tide-mini-name {
   color: #e2e8f0;
 }
 
-.tide-sub-item.high .tide-sub-name {
-  color: #bae6fd;
+.tide-mini-next-badge {
+  margin-left: auto;
+  font-size: 0.65rem;
+  font-weight: 800;
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  padding: 1px 6px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
 }
 
-.tide-sub-item.low .tide-sub-name {
-  color: #fde68a;
-}
-
-.tide-sub-bottom {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.tide-sub-time {
+.tide-mini-time {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 1.35rem;
+  font-size: 1.25rem;
   font-weight: 800;
   color: #ffffff;
-  letter-spacing: 0.5px;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
 }
 
-.tide-sub-height {
-  font-size: 0.95rem;
+.tide-mini-height {
+  font-size: 0.88rem;
   font-weight: 700;
-  color: var(--primary-light, #38bdf8);
 }
 
-.tide-sub-item.low .tide-sub-height {
-  color: #fbbf24;
+.tide-mini-unit {
+  font-size: 0.72rem;
+  font-weight: 500;
+  opacity: 0.85;
 }
 
 /* --- CUADRO SEMANAL DE MAREAS (7 DÍAS) --- */
