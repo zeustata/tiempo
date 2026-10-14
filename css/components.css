@@ -1186,8 +1186,24 @@
   50% { transform: scale(1.6); opacity: 0.2; }
 }
 
-/* --- TARJETA UNIFICADA DE MAREAS DE HOY (TABLA NÁUTICA COMPACTA) --- */
-.today-tides-card {
+.daily-tide-cycles-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 720px) {
+  .daily-tide-cycles-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 10px;
+  }
+}
+
+.tide-cycle-card {
   background: var(--bg-surface-elevated);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
@@ -1197,17 +1213,17 @@
   gap: 10px;
   width: 100%;
   box-sizing: border-box;
-  margin-top: 14px;
+  overflow: hidden;
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.today-tides-card:hover {
+.tide-cycle-card:hover {
   transform: translateY(-2px);
   border-color: rgba(56, 189, 248, 0.4);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
 
-.today-tides-header {
+.tide-cycle-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1215,178 +1231,93 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.today-tides-title-wrap {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.today-tides-icon {
-  font-size: 1.25rem;
-  line-height: 1;
-}
-
-.today-tides-title {
-  font-size: 0.92rem;
+.cycle-badge {
+  font-size: 0.82rem;
   font-weight: 800;
-  color: #ffffff;
-  letter-spacing: -0.2px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #e2e8f0;
 }
 
-.today-tides-sub {
-  font-size: 0.72rem;
-  color: #94a3b8;
-}
-
-.today-tides-coef-pill {
-  font-size: 0.72rem;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 12px;
-  background: rgba(56, 189, 248, 0.12);
-  color: #38bdf8;
-  border: 1px solid rgba(56, 189, 248, 0.25);
-  white-space: nowrap;
-}
-
-.today-tides-table {
+.tide-cycle-items {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
   width: 100%;
   box-sizing: border-box;
 }
 
-.today-tide-row {
+.tide-sub-item {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 12px;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 14px;
   border-radius: var(--radius-sm);
-  background: rgba(15, 23, 42, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-left: 3px solid transparent;
+  border: 1px solid transparent;
   width: 100%;
   box-sizing: border-box;
   transition: all 0.15s ease;
 }
 
-.today-tide-row.is-high {
-  border-left-color: #38bdf8;
-  background: linear-gradient(90deg, rgba(2, 132, 199, 0.14), rgba(15, 23, 42, 0.4));
+.tide-sub-item.high {
+  border-color: rgba(56, 189, 248, 0.35);
+  background: linear-gradient(135deg, rgba(2, 132, 199, 0.16), rgba(15, 23, 42, 0.45));
 }
 
-.today-tide-row.is-low {
-  border-left-color: #f59e0b;
-  background: linear-gradient(90deg, rgba(245, 158, 11, 0.12), rgba(15, 23, 42, 0.4));
+.tide-sub-item.low {
+  border-color: rgba(245, 158, 11, 0.35);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.14), rgba(15, 23, 42, 0.45));
 }
 
-.today-tide-row.is-next {
-  border-color: rgba(56, 189, 248, 0.45);
-  box-shadow: inset 0 0 12px rgba(56, 189, 248, 0.12);
-}
-
-.tide-col-type {
+.tide-sub-top {
   display: flex;
   align-items: center;
-  gap: 8px;
-  min-width: 0;
-  flex: 1;
+  gap: 6px;
 }
 
-.tide-type-icon {
-  font-size: 1.05rem;
-  line-height: 1;
-  flex-shrink: 0;
+.tide-sub-icon {
+  font-size: 1.1rem;
 }
 
-.tide-type-text {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  min-width: 0;
-}
-
-.tide-type-name {
-  font-size: 0.82rem;
+.tide-sub-name {
+  font-size: 0.78rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: #e2e8f0;
-  white-space: nowrap;
 }
 
-.today-tide-row.is-high .tide-type-name {
+.tide-sub-item.high .tide-sub-name {
   color: #bae6fd;
 }
 
-.today-tide-row.is-low .tide-type-name {
+.tide-sub-item.low .tide-sub-name {
   color: #fde68a;
 }
 
-.tide-cycle-tag {
-  font-size: 0.68rem;
-  color: #94a3b8;
-  white-space: nowrap;
-}
-
-.tide-col-time {
+.tide-sub-bottom {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1px;
-  padding: 0 8px;
-  flex-shrink: 0;
+  align-items: baseline;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.tide-time-val {
+.tide-sub-time {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 1.15rem;
+  font-size: 1.35rem;
   font-weight: 800;
   color: #ffffff;
   letter-spacing: 0.5px;
-  white-space: nowrap;
 }
 
-.tide-next-badge {
-  font-size: 0.60rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
-  padding: 1px 5px;
-  border-radius: 8px;
-  background: rgba(56, 189, 248, 0.25);
-  color: #38bdf8;
-  border: 1px solid rgba(56, 189, 248, 0.4);
-  line-height: 1.1;
-  white-space: nowrap;
+.tide-sub-height {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--primary-light, #38bdf8);
 }
 
-.tide-col-height {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  flex-shrink: 0;
-}
-
-.tide-height-pill {
-  font-size: 0.85rem;
-  font-weight: 800;
-  font-family: 'JetBrains Mono', monospace;
-  padding: 3px 8px;
-  border-radius: 6px;
-  background: rgba(15, 23, 42, 0.6);
-  white-space: nowrap;
-}
-
-.tide-height-pill.high {
-  color: #38bdf8;
-  border: 1px solid rgba(56, 189, 248, 0.3);
-}
-
-.tide-height-pill.low {
+.tide-sub-item.low .tide-sub-height {
   color: #fbbf24;
-  border: 1px solid rgba(245, 158, 11, 0.3);
 }
 
 /* --- CUADRO SEMANAL DE MAREAS (7 DÍAS) --- */

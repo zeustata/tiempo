@@ -2,6 +2,19 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌊 Actualización v2.2.6: Blindaje y Restauración Definitiva de Mareas de Hoy — 2026-10-14
+- **Cierre y Restauración Estable al Diseño Original Funcional (Leyes 2 y 17):**
+  1. *Diagnóstico Operativo:* Tras experimentar con diversas arquitecturas de compactación (rejilla de 2 columnas, fila única y tabla de 3 columnas), se constata de forma fehaciente mediante captura en dispositivo móvil real que intentar forzar los elementos de marea en un ancho de ~320px útiles provoca superposición de fuentes (la hora sobre el nombre de la marea) debido a discrepancias en el cálculo métrico de tipografías móviles. Siguiendo las directrices de Lendo (*"si ves que no va a funcionar, revierte"*) y la Ley 17 («Si no sabes, no toques / ¿Para qué te metes, Manolete?»), se procede a la reversión definitiva.
+  2. *Intervención Técnica y Retorno Inmutable:*
+     - Restaurada la arquitectura contrastada de dos niveles (`.daily-tide-cycles-grid` con `.tide-sub-top` y `.tide-sub-bottom`).
+     - Nivel superior: Icono (`🌅` / `🏖️`) y nombre completo en mayúsculas (**BAJAMAR** / **PLEAMAR**) con color diferencial.
+     - Nivel inferior: Hora grande (`1.35rem` `JetBrains Mono`) a la izquierda y altura en metros (`0.95rem`) a la derecha.
+     - Separación física absoluta de capas, cero colisiones tipográficas y máxima holgura en cualquier móvil.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.2.6 🌊`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v226-mareas-estables` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.6` en `index.html`, `app.js` y `surfCard.js`.
+
 ## 🌊 Actualización v2.2.5: Tabla Náutica Compacta Unificada de Mareas de Hoy — 2026-10-14
 - **Optimización de Espacio y Arquitectura Visual de Mareas (Feedback Lendo & Princesa):**
   1. *Diagnóstico Operativo:* Lendo planteó con agudeza la necesidad de minimizar las dos mareas del día sin deteriorar la interfaz móvil ni desbordar la pantalla. El error de los intentos anteriores fue el empaquetado de "cajas dentro de cajas" (dos tarjetas exteriores independientes con paddings redundantes y rejillas comprimidas).

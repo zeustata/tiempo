@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.6] - 2026-10-14
+
+### 🌊 Blindaje y Restauración Definitiva de Mareas de Hoy (Feedback Lendo & Princesa)
+- **Cierre y Restauración Estable al Diseño Original Funcional (Leyes 2 y 17):**
+  - Tras verificar de forma fehaciente en pantallas móviles que los intentos de compactación horizontal provocan conflictos de renderizado en navegadores móviles (superposiciones o cortes de caracteres), se aplica la Ley 17 («Si no sabes, no toques / ¿Para qué te metes, Manolete?») y la Ley 2 (Rollback seguro).
+  - Se restaura de forma inmutable la arquitectura original de dos niveles por evento:
+    - Nivel superior (`.tide-sub-top`): Icono temático (`🌅` / `🏖️`) y nombre completo en mayúsculas (**BAJAMAR** / **PLEAMAR**).
+    - Nivel inferior (`.tide-sub-bottom`): Hora grande (`1.35rem` `JetBrains Mono`) a la izquierda y altura en metros (`0.95rem`) a la derecha.
+  - Cero riesgos, cero textos montados y legibilidad premium al 100% en cualquier dispositivo.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v226-mareas-estables`, query strings actualizadas a `?v=2.2.6`.
+
 ## [2.2.5] - 2026-10-14
 
 ### 🌊 Tabla Náutica Compacta Unificada de Mareas de Hoy (Feedback Lendo & Princesa)
