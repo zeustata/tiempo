@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.9] - 2026-10-15
+
+### 🏄‍♂️ Síntesis Ergonómica & Limpieza del Módulo de Surf (Feedback Lendo)
+- **Supresión de Tarjetas Redundantes & Ahorro de Scroll (Leyes 11 y 14):**
+  - Eliminado el bloque intermedio `.surf-intelligence-card` que albergaba las tarjetas fijas de consejos estáticos (Offshore/Onshore) y diagnóstico general de viento (Glassy).
+  - Ahorro de más de 220px de scroll vertical en pantallas móviles, eliminando textos redundantes y simplificando drásticamente la interfaz.
+  - El diagnóstico de viento en vivo se preserva donde verdaderamente tiene valor microclimático: calculado playa a playa dentro de cada ficha desplegable de rompiente según la orientación real de costa (`facingDeg`).
+- **Integración Armónica de la Guía Didáctica (Ley 14):**
+  - El botón interactivo `[ 💡 Guía de Surf y Olas ]` se traslada a la cabecera de la sección de rompientes (`.beach-section-header`), alineado con el título y con adaptación `flex-wrap` responsive para móvil.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v229-surf-limpieza-inteligencia`, query strings actualizadas a `?v=2.2.9`.
+
 ## [2.2.8] - 2026-10-15
 
 ### 🏄‍♂️ Rompientes y Picos de Surf en Acordeón Exclusivo (Feedback Lendo)

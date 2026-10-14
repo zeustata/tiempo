@@ -2,6 +2,19 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏄‍♂️ Actualización v2.2.9: Síntesis Ergonómica & Limpieza del Módulo de Surf — 2026-10-15
+- **Optimización de Ergonomía Móvil & Poda de Redundancias (Feedback Lendo):**
+  1. *Diagnóstico Operativo:* Lendo señaló con gran acierto que las dos tarjetas del bloque `.surf-intelligence-card` (la tarjeta de consejos estáticos Offshore/Onshore/Izquierdas y la tarjeta de diagnóstico genérico de viento Glassy) eran prescindibles y sobrecargaban la pantalla, puesto que el contenido didáctico ya reside en el modal interactivo `[ 💡 Guía de Surf y Olas ]` y el cálculo de viento en tiempo real ya se ejecuta con mayor precisión microclimática dentro de cada rompiente individual según su orientación particular.
+  2. *Intervención Técnica y Limpieza Estética:*
+     - Supresión íntegra del contenedor `.surf-intelligence-card` en `surfCard.js`.
+     - Reubicación del botón `[ 💡 Guía de Surf y Olas ]` en la cabecera de la sección de rompientes (`.beach-section-header`).
+     - Adaptación responsive de `.beach-section-header` mediante `display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;` en `components.css`, garantizando que en móviles de cualquier ancho el botón y el título respiren con holgura y sin colisiones (Ley 11).
+     - Ahorro inmediato de más de 220px de scroll vertical en la vista de surf.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.2.9 🏄‍♂️`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v229-surf-limpieza-inteligencia` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.9` en `index.html` (CSS y scripts) y `app.js`.
+
 ## 🏄‍♂️ Actualización v2.2.8: Rompientes y Picos de Surf en Acordeón Exclusivo — 2026-10-15
 - **Optimización de Ergonomía Móvil & Armonía Visual Integral (Leyes 11 y 14):**
   1. *Diagnóstico Operativo:* Tras el éxito y aprobación de Lendo del acordeón en la guía de playas, se detectó que la sección hermana de Surf («Rompientes, Picos de Surf & Fondos» en `surfCard.js`) presentaba una problemática idéntica de saturación de scroll en pantallas móviles, debido a las extensas fichas técnicas de cada rompiente.

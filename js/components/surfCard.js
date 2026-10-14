@@ -981,66 +981,10 @@ export function renderSurfCard(data, concejo) {
         </div>
       </div>
 
-      <!-- 3. PANEL DE INTELIGENCIA DE SURF: VIENTO OFFSHORE/ONSHORE & GUÍA DIDÁCTICA -->
-      <div class="marine-widget surf-intelligence-card" style="margin-top: 20px; margin-bottom: 20px;">
-        <div class="surf-intel-header">
-          <div class="surf-intel-title-wrap">
-            <span class="surf-intel-icon">💨</span>
-            <div>
-              <div class="surf-intel-title">Calidad de Viento para Surf (Offshore / Onshore)</div>
-              <div class="surf-intel-subtitle">Análisis aerodinámico en vivo cruzando viento y orientación cantábrica</div>
-            </div>
-          </div>
-          <button class="btn-explain-sensor surf-guide-btn" data-explain="surf" title="Aprender sobre Offshore, Fondos, Izquierdas y Picos">
-            💡 Guía de Surf y Olas
-          </button>
-        </div>
-
-        <div class="surf-wind-analysis-grid">
-          <!-- Tarjeta de Estado del Viento en Vivo -->
-          <div class="surf-wind-pill-card ${surfWind.statusClass}">
-            <div class="surf-wind-badge-row">
-              <span class="surf-wind-status-badge" style="background: ${surfWind.color}22; color: ${surfWind.color}; border: 1px solid ${surfWind.color}80;">
-                ${surfWind.badge}
-              </span>
-              <span class="surf-wind-reading">${windSpeed} km/h • ${windDirObj.name} (${Math.round(windDeg)}°)</span>
-            </div>
-            <div class="surf-wind-desc-text">
-              <strong>${surfWind.name}:</strong> ${surfWind.desc}
-            </div>
-            <div class="surf-wind-effect-tag">
-              ⚡ <strong>Efecto en la rompiente:</strong> ${surfWind.effect}
-            </div>
-          </div>
-
-          <!-- Consejos de Orientación y Lectura Rápida -->
-          <div class="surf-quick-tips-card">
-            <div class="quick-tip-row">
-              <span class="tip-icon">🟢</span>
-              <div class="tip-body">
-                <strong>Offshore (Viento Sur):</strong> Ideal. Peina la ola, crea tubos y deja el mar como un espejo.
-              </div>
-            </div>
-            <div class="quick-tip-row">
-              <span class="tip-icon">🔴</span>
-              <div class="tip-body">
-                <strong>Onshore (Viento Norte):</strong> Mar picado (chop), aplasta las olas y genera espuma.
-              </div>
-            </div>
-            <div class="quick-tip-row">
-              <span class="tip-icon">🏄‍♂️</span>
-              <div class="tip-body">
-                <strong>Izquierdas / Derechas:</strong> Se definen siempre mirando hacia la playa desde la ola.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 4. CATÁLOGO TÉCNICO DE PICOS DE SURF, FONDOS & ROMPIENTES -->
-      <div class="marine-ports-section">
+      <!-- 3. CATÁLOGO TÉCNICO DE PICOS DE SURF, FONDOS & ROMPIENTES -->
+      <div class="marine-ports-section" style="margin-top: 20px;">
         <div class="beach-section-header">
-          <div>
+          <div style="min-width: 0; flex: 1;">
             <h4 class="ports-title" style="margin-bottom: 2px;">
               🏖️ Rompientes, Picos de Surf & Fondos de ${isCoasting ? concejo.name : `${concejo.name} (en ${interiorRef.name})`}
             </h4>
@@ -1048,6 +992,9 @@ export function renderSurfCard(data, concejo) {
               Picos bautizados, orientación de costa, viento en tiempo real, tipo de fondo y marea óptima
             </span>
           </div>
+          <button class="btn-explain-sensor surf-guide-btn" data-explain="surf" title="Aprender sobre Offshore, Fondos, Izquierdas y Picos" style="margin-top: 2px; flex-shrink: 0;">
+            💡 Guía de Surf y Olas
+          </button>
         </div>
 
         <div class="beaches-grid">
