@@ -2,6 +2,18 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏖️ Actualización v2.2.14: Refinamiento Tipográfico & Limpieza en Mareas de Hoy — 2026-10-15
+- **Supresión de Etiqueta «Próxima» & Ajuste de Escala Tipográfica (Feedback Lendo):**
+  1. *Diagnóstico Operativo:* Lendo aportó captura móvil donde se comprobaba que en las píldoras del 50% de ancho la etiqueta verde «Próxima» quedaba estrangulada y cortada en el lateral derecho, y que los números de hora y metros resultaban algo desproporcionados para el tamaño de la pastilla.
+  2. *Intervención Técnica en `marineCard.js` y `components.css`:*
+     - Erradicación definitiva de la etiqueta `Próxima` en el DOM y CSS, eliminando cualquier riesgo de colisión o desborde (Ley 11).
+     - Escala tipográfica refinada: hora reducida de `1.25rem` a `1.08rem` JetBrains Mono, altura en metros reducida de `0.88rem` a `0.80rem`, nombre de marea a `0.74rem` y padding a `8px 10px`.
+     - Aspecto más sobrio, descansado, compacto y perfectamente integrado.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.2.14 🏖️`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v2214-mareas-tipografia-fina` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.14` en `index.html` (CSS y scripts) y `app.js`.
+
 ## 🏖️ Actualización v2.2.13: Minimalismo Náutico & Píldoras Simétricas de Mareas de Hoy — 2026-10-15
 - **Erradicación del Cardception & Rejilla Minimalista de Mareas (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Lendo solicitó que las tarjetas de 1ª marea y 2ª marea fueran más minimalistas para eliminar la sobrecarga visual. El diagnóstico detectó que el problema radicaba en el "cardception" (cajas anidadas dentro de tarjetas mayores con doble marco, dobles encabezados y padding excesivo).

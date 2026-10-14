@@ -10,6 +10,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.14] - 2026-10-15
+
+### 🏖️ Refinamiento Tipográfico & Limpieza en Mareas de Hoy (Feedback Lendo)
+- **Supresión Definitiva de la Etiqueta «Próxima» (Ley 11):**
+  - Eliminado el distintivo verde que se comprimía y quedaba cortado en teléfonos móviles de columna estrecha, garantizando total limpieza y cero cortes de texto.
+- **Escala Tipográfica Proporcionada y Elegante:**
+  - Hora ajustada a `1.08rem` JetBrains Mono (reduciendo la escala anterior de `1.25rem`).
+  - Nombre de marea ajustado a `0.74rem` y altura en metros a `0.80rem` con padding compacto de `8px 10px`, logrando un equilibrio visual y minimalista perfecto.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v2214-mareas-tipografia-fina`, query strings actualizadas a `?v=2.2.14`.
+
 ## [2.2.13] - 2026-10-15
 
 ### 🏖️ Minimalismo Náutico & Píldoras Simétricas de Mareas de Hoy (Feedback Lendo)

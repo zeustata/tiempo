@@ -1220,11 +1220,10 @@ export function renderMarineCard(data, concejo) {
                 const accentColor = isHigh ? '#38bdf8' : '#f59e0b';
                 const icon = isHigh ? '🌅' : '🏖️';
                 return `
-                  <div class="tide-mini-pill ${isHigh ? 'high' : 'low'} ${isNext ? 'is-next' : ''}">
+                  <div class="tide-mini-pill ${isHigh ? 'high' : 'low'}">
                     <div class="tide-mini-pill-top">
                       <span class="tide-mini-icon">${icon}</span>
                       <span class="tide-mini-name">${ev.name}</span>
-                      ${isNext ? '<span class="tide-mini-next-badge">Próxima</span>' : ''}
                     </div>
                     <div class="tide-mini-time">${ev.timeStr}</div>
                     <div class="tide-mini-height" style="color: ${accentColor};">${ev.height} <span class="tide-mini-unit">m</span></div>
