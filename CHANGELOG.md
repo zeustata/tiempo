@@ -10,6 +10,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.11] - 2026-10-15
+
+### 🌊 Síntesis Visual & Ergonomía del Mareógrafo (Feedback Lendo)
+- **Simplificación Integral de la Cabecera del Mareógrafo:**
+  - **Título Conciso:** Eliminada la coletilla extensa *«Dinámico en Vivo (72 Horas)»*, dejando el título directo, sobrio y elegante como **«Mareógrafo»**.
+  - **Subtítulo Focalizado Únicamente en el Concejo:** Suprimidas las cadenas secundarias auxiliares (coordenadas longitudinales y previsión de 3 días) para mostrar exclusivamente el nombre del concejo limpio (`${concejoTitle}`, ej. *Castrillón*).
+  - **Reducción de Carga Visual:** Se aligera el módulo de Playas y Mareas eliminando texto superfluo y optimizando la legibilidad en pantallas móviles.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v2211-mareografo-simplificado`, query strings actualizadas a `?v=2.2.11`.
+
 ## [2.2.10] - 2026-10-15
 
 ### 🏄‍♂️ Blindaje Anti-Desborde & Tipografía en Rompientes de Surf (Feedback Lendo - Ley 11)

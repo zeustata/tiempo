@@ -1159,8 +1159,8 @@ export function renderMarineCard(data, concejo) {
           <div class="mareografo-title-wrap">
             <span class="mareografo-icon">🌊</span>
             <div>
-              <div class="mareografo-title">Mareógrafo Dinámico en Vivo (72 Horas)</div>
-              <div class="mareografo-subtitle">${activeCoastName} • Previsión Continua 3 Días (${Math.abs(targetLon).toFixed(2)}° O)</div>
+              <div class="mareografo-title">Mareógrafo</div>
+              <div class="mareografo-subtitle">${concejoTitle}</div>
             </div>
           </div>
           <div class="mareografo-live-badge" style="background: ${tideStatus.directionColor}20; color: ${tideStatus.directionColor}; border: 1px solid ${tideStatus.directionColor}60;">

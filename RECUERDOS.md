@@ -2,6 +2,18 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌊 Actualización v2.2.11: Síntesis Visual & Ergonomía del Mareógrafo — 2026-10-15
+- **Simplificación Integral de la Cabecera del Mareógrafo (Feedback Lendo):**
+  1. *Diagnóstico Operativo:* Lendo solicitó continuar aligerando y minimizando la aplicación para reducir la sobrecarga visual, centrándose en el widget del Mareógrafo dentro del módulo de Playas y Mareas.
+  2. *Intervención Técnica y Limpieza en `marineCard.js`:*
+     - Título: Eliminada la coletilla extensa *«Dinámico en Vivo (72 Horas)»*, dejando el título sobrio y directo como `Mareógrafo`.
+     - Subtítulo: Depurado para mostrar únicamente el nombre limpio del concejo (`${concejoTitle}`), suprimiendo textos auxiliares como `Previsión Continua 3 Días` y las coordenadas longitudinales entre paréntesis.
+     - Mayor claridad visual, menor scroll y visualización inmediata y sin ruido de las métricas clave y la onda mareal.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.2.11 🌊`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v2211-mareografo-simplificado` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.11` en `index.html` (CSS y scripts) y `app.js`.
+
 ## 🏄‍♂️ Actualización v2.2.10: Blindaje Anti-Desborde & Tipografía en Rompientes de Surf — 2026-10-15
 - **Blindaje Móvil Estricto & Tipografía Limpia (Feedback Lendo - Ley 11):**
   1. *Diagnóstico Operativo:* Lendo aportó captura real desde su móvil en Castrillón demostrando que al ubicar el botón `[ 💡 Guía de Surf y Olas ]` en la misma fila horizontal del título, el texto del concejo largo `Castrillón (Piedras Blancas / Salinas)` más el subtítulo quedaban estrangulados en un ancho residual de ~50%, forzando un salto de línea vertical de más de 10 líneas.
