@@ -17,7 +17,7 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
   - Versión oficial actualizada a **`v2.2.1 🎯`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
   - Service Worker actualizado a `meteoasturlode-v221-titulos-limpios` en `sw.js`.
-  - Query strings actualizadas a `?v=2.2.1` en `index.html` y módulos correspondientes.
+  - Query strings actualizadas a `?v=2.2.1` en `index.html` (incluyendo registro de `sw.js?v=2.2.1`) y en todos los imports internos de componentes en `app.js`, `currentCard.js` y `surfCard.js` para destruir la persistencia de caché de disco en Chrome móvil y WebAPK.
 
 ## ✨ Actualización v2.2.0: Splash Cinemático MeteoAsturLode — 2026-10-14
 - **Apertura de Marca Cinemática & Fluidez de Carga (Feedback Lendo):**

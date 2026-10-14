@@ -25,7 +25,7 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
     - Astronomía: de `Observatorio Astronómico & Cosmos` a `Astronomía & Cosmos`.
 - **Selector General Armonizado (`APP_MODULES`):**
   - Módulos en el modal "Menú" alineados con los nuevos nombres (`Pronóstico a 10 Días`, `Radar en Directo`), optimizando la legibilidad en pantallas móviles.
-- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v221-titulos-limpios`, query strings actualizadas a `?v=2.2.1`.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v221-titulos-limpios`, registro de `sw.js?v=2.2.1` y sincronización completa de imports internos (`forecastView.js?v=2.2.1`, `marineCard.js?v=2.2.1`, `surfCard.js?v=2.2.1`, `routesCard.js?v=2.2.1`, `mountainCard.js?v=2.2.1`, `astronomyCard.js?v=2.2.1`, `currentCard.js?v=2.2.1`, `mapRadar.js?v=2.2.1`) para forzar la invalidación inmediata de caché de disco en Chrome móvil y WebAPK.
 
 ## [2.2.0] - 2026-10-14
 
