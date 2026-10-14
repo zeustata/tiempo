@@ -1192,7 +1192,7 @@ export function renderMarineCard(data, concejo) {
           <div class="tide-metric-pill">
             <div class="t-label-row">
               <span class="t-label">Coeficiente Hoy</span>
-              <button class="btn-explain-sensor" data-explain="tides" title="¿Qué es el Coeficiente de Marea? Pulsa para aprender">💡 Explícame</button>
+              <button class="btn-explain-sensor" data-explain="tides" title="¿Qué es el Coeficiente de Marea? Pulsa para aprender" aria-label="Explicación del coeficiente de marea">💡</button>
             </div>
             <span class="t-value">${tideStatus.moonInfo.coefficient}</span>
             <span class="t-badge-small ${tideStatus.moonInfo.tideClass}">${tideStatus.moonInfo.tideBadge}</span>
@@ -1283,7 +1283,7 @@ export function renderMarineCard(data, concejo) {
               <div class="weekly-subtitle">Previsión astronómica oficial a 7 días • Fases Lunares & Mareonas</div>
             </div>
           </div>
-          <button class="btn-explain-sensor" data-explain="tides" title="¿Qué es el Coeficiente de Marea y cómo interpretarlo? Pulsa para aprender">💡 Explícame</button>
+          <button class="btn-explain-sensor" data-explain="tides" title="¿Qué es el Coeficiente de Marea y cómo interpretarlo? Pulsa para aprender" aria-label="Explicación del coeficiente de marea">💡</button>
         </div>
 
         <div class="weekly-tides-grid">
@@ -1345,7 +1345,7 @@ export function renderMarineCard(data, concejo) {
         <div class="marine-widget">
           <div class="t-label-row">
             <span class="widget-label">Estado de la Mar (Escala Douglas)</span>
-            <button class="btn-explain-sensor" data-explain="waves" title="¿Cómo entender la altura del oleaje y la escala Douglas? Pulsa para aprender">💡 Explícame</button>
+            <button class="btn-explain-sensor" data-explain="waves" title="¿Cómo entender la altura del oleaje y la escala Douglas? Pulsa para aprender" aria-label="Explicación del estado de la mar">💡</button>
           </div>
           <div class="widget-value">${waveHeight} <span class="unit">m</span></div>
           <div class="widget-detail">Grado: <strong>Grado ${douglasDegree} (${douglasName})</strong></div>

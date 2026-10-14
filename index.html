@@ -32,7 +32,7 @@
 
   <!-- Estilos de la Aplicación con Cache Busting -->
   <link rel="stylesheet" href="css/main.css?v=2.2.7">
-  <link rel="stylesheet" href="css/components.css?v=2.2.11">
+  <link rel="stylesheet" href="css/components.css?v=2.2.12">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.7">
 </head>
 <body>
@@ -270,7 +270,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.11 🌊</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.12 💡</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -322,8 +322,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.2.11 🌊</span>
+            <span class="release-version">v2.2.12 💡</span>
             <span class="release-date">15 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-ui">Síntesis Visual & Micro-animación (Feedback Lendo)</span> <strong>Icono Didáctico Minimalista con Respiración de Filamento</strong>:
+              <br>• <strong>Erradicación del Texto «Explícame»:</strong> Sustituido el botón rectangular con texto por un botón circular compacto de 32×32 px que contiene únicamente el icono de la bombilla <code>💡</code>, despejando notablemente las cabeceras de todos los sensores (Viento, Barómetro, Humedad, Pluvio, UV, Polen, Mareas, Oleaje y Colada).
+              <br>• <strong>Respiración Luminosa Ámbar (Breathing Glow):</strong> El icono cuenta con una micro-animación cíclica suave (3.5 s) donde el resplandor dorado sube y baja de intensidad de forma elegante, señalando visualmente su interactividad sin parpadear bruscamente ni saturar la vista.
+              <br>• <strong>Ergonomía Táctil y Accesibilidad (Ley 11):</strong> Dimensiones protegidas con área de toque confortable para el pulgar, micro-interacción al pulsar y descripciones <code>title</code> y <code>aria-label</code> enriquecidas.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.11 🌊</span>
+            <span class="release-date">15 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-ui">Síntesis Visual & Ergonomía (Feedback Lendo)</span> <strong>Simplificación de la Cabecera del Mareógrafo</strong>:
@@ -3209,7 +3223,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.11"></script>
+  <script type="module" src="js/app.js?v=2.2.12"></script>
 
 
 

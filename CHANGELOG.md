@@ -10,6 +10,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.12] - 2026-10-15
+
+### 💡 Síntesis Visual & Micro-animación Didáctica de Sensores (Feedback Lendo)
+- **Erradicación del Texto «Explícame» en Todos los Sensores:**
+  - Sustituida la pastilla rectangular con texto por un botón circular compacto de 32×32 px con solo el icono `💡`.
+  - Aplicado de manera unificada a todos los sensores meteorológicos: Viento, Barómetro, Humedad/Rocío, Pluviómetro, Radiación UV, Calidad del Aire/Polen, Mareas, Oleaje y Asesor de Colada.
+  - Gran despeje visual de las cabeceras de todas las tarjetas, reduciendo drásticamente la sobrecarga cognitiva.
+- **Respiración Luminosa Ámbar (Breathing Glow):**
+  - Implementada micro-animación cíclica suave (3.5 s) de intensidad luminosa y halo ámbar en el filamento de la bombilla, llamando la atención de forma atractiva y natural sin causar fatiga ni parecer una alarma.
+  - Al pulsar o interactuar, se escala confortablemente con micro-animación de retorno.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v2212-bombilla-didactica-respiracion`, query strings actualizadas a `?v=2.2.12`.
+
 ## [2.2.11] - 2026-10-15
 
 ### 🌊 Síntesis Visual & Ergonomía del Mareógrafo (Feedback Lendo)

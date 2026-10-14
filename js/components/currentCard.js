@@ -10,7 +10,7 @@ import { detectMarFondoEffect, renderMarFondoBanner } from '../utils/marFondoDet
 import { detectThunderstormEffect, renderThunderstormBanner } from '../utils/thunderstormDetector.js?v=1.1.60';
 import { detectRoadWindStatus, renderRoadWindBanner, renderRoadWindSensorPill } from '../utils/roadWindDetector.js?v=1.1.76';
 import { getSeismicStatus, renderSeismicBanner } from '../utils/seismicDetector.js?v=1.1.60';
-import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=1.1.60';
+import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=2.2.12';
 import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=1.1.60';
 import { calculateUmbrellaStatus, renderUmbrellaCard } from '../utils/umbrellaAdvisor.js?v=1.1.60';
 import { checkConcejoFolixa } from '../utils/festivosData.js?v=1.1.85';
@@ -426,7 +426,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
             <span class="sensor-icon">🧭</span>
             <span class="sensor-title">Anemómetro y Dirección</span>
           </div>
-          <button class="btn-explain-sensor" data-explain="wind" title="¿Cómo interpretar el viento y las rachas? Pulsa para aprender">💡 Explícame</button>
+          <button class="btn-explain-sensor" data-explain="wind" title="¿Cómo interpretar el viento y las rachas? Pulsa para aprender" aria-label="Explicación del viento">💡</button>
         </div>
         <div class="sensor-body wind-body">
           <div class="compass-wrapper">
@@ -470,7 +470,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
             <span class="sensor-icon">⏱️</span>
             <span class="sensor-title">Barómetro (Presión MSL)</span>
           </div>
-          <button class="btn-explain-sensor" data-explain="barometer" title="¿Cómo funciona el barómetro? Pulsa para aprender">💡 Explícame</button>
+          <button class="btn-explain-sensor" data-explain="barometer" title="¿Cómo funciona el barómetro? Pulsa para aprender" aria-label="Explicación del barómetro">💡</button>
         </div>
         <div class="sensor-body">
           <div class="sensor-val">${current.pressure_msl != null ? current.pressure_msl.toFixed(1) : '1013.0'} <small>hPa</small></div>
@@ -493,7 +493,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
             <span class="sensor-icon">💧</span>
             <span class="sensor-title">Humedad y Punto de Rocío</span>
           </div>
-          <button class="btn-explain-sensor" data-explain="humidity_dewpoint" title="¿Qué es el punto de rocío y el bochorno? Pulsa para aprender">💡 Explícame</button>
+          <button class="btn-explain-sensor" data-explain="humidity_dewpoint" title="¿Qué es el punto de rocío y el bochorno? Pulsa para aprender" aria-label="Explicación de humedad y punto de rocío">💡</button>
         </div>
         <div class="sensor-body">
           <div class="sensor-val">${current.relative_humidity_2m}<small>%</small></div>
@@ -514,7 +514,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
             <span class="sensor-icon">🌧️</span>
             <span class="sensor-title">Pluviómetro Digital</span>
           </div>
-          <button class="btn-explain-sensor" data-explain="rain" title="¿Cómo funciona el pluviómetro y la lluvia? Pulsa para aprender">💡 Explícame</button>
+          <button class="btn-explain-sensor" data-explain="rain" title="¿Cómo funciona el pluviómetro y la lluvia? Pulsa para aprender" aria-label="Explicación del pluviómetro">💡</button>
         </div>
         <div class="sensor-body">
           <div class="sensor-val">${rainFallenSoFar.toFixed(1)} <small>mm (l/m²)</small></div>
@@ -538,7 +538,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
             <span class="sensor-icon">☀️</span>
             <span class="sensor-title">Radiación Solar / Índice UV</span>
           </div>
-          <button class="btn-explain-sensor" data-explain="uv" title="¿Qué es el índice UV y cómo protegerse? Pulsa para aprender">💡 Explícame</button>
+          <button class="btn-explain-sensor" data-explain="uv" title="¿Qué es el índice UV y cómo protegerse? Pulsa para aprender" aria-label="Explicación de radiación solar e índice UV">💡</button>
         </div>
         <div class="sensor-body">
           <div class="sensor-val" style="color: ${uvVal != null ? uvInfo.color : 'var(--text-dim)'};">${uvVal != null ? `${uvVal.toFixed(1)} <small class="uv-level">(${uvInfo.level})</small>` : '<span style="font-size: 1.35rem; font-weight: 700; color: var(--text-dim);">No disponible</span>'}</div>
@@ -556,7 +556,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
             <span class="sensor-icon">🍃</span>
             <span class="sensor-title">Calidad del Aire & Polen</span>
           </div>
-          <button class="btn-explain-sensor" data-explain="aqi" title="¿Qué mide el índice de calidad del aire y los niveles de polen? Pulsa para aprender">💡 Explícame</button>
+          <button class="btn-explain-sensor" data-explain="aqi" title="¿Qué mide el índice de calidad del aire y los niveles de polen? Pulsa para aprender" aria-label="Explicación de calidad del aire y polen">💡</button>
         </div>
         <div class="sensor-body">
           <div class="sensor-val" style="color: ${aqiInfo.color};">${aqi?.european_aqi ?? 'Óptimo'} <small>(${aqiInfo.level})</small></div>

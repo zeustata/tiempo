@@ -2,6 +2,19 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 💡 Actualización v2.2.12: Síntesis Visual & Micro-animación Didáctica de Sensores — 2026-10-15
+- **Erradicación del Texto «Explícame» & Botón Circular con Respiración Luminosa (Feedback Lendo):**
+  1. *Diagnóstico Operativo:* Lendo propuso simplificar los botones didácticos de los sensores eliminando las letras «Explícame» para aligerar la interfaz y dejar únicamente la bombilla `💡` con una micro-animación de respiración de intensidad. Tras el análisis crítico y acuerdo de diseño para evitar el efecto alarma, se implementó una micro-animación suave y elegante (`bulbBreathing` de 3.5s).
+  2. *Intervención Técnica en CSS y Componentes:*
+     - `.btn-explain-sensor`: Rediseñado a botón circular compacto de 32×32 px con borde translúcido ámbar, alineado al centro y con `border-radius: 50%`.
+     - Micro-animación `bulbBreathing`: Variación orgánica de opacidad (0.72 a 1) y resplandor suave (`box-shadow: 0 0 10px rgba(245, 158, 11, 0.55)`), pausándose en hover.
+     - Preservación de botones didácticos anchos (`.surf-guide-btn` y `.btn-explain-model-pill`) sin alterar su diseño de barra completa.
+     - Aplicado en `currentCard.js` (6 sensores), `marineCard.js` (mareas y oleaje), `surfCard.js` (olas, swell, energía y estrellas), `mountainCard.js` (aludes) y `laundryAdvisor.js` (colada).
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.2.12 💡`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v2212-bombilla-didactica-respiracion` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.12` en `index.html` (CSS y scripts) y `app.js`.
+
 ## 🌊 Actualización v2.2.11: Síntesis Visual & Ergonomía del Mareógrafo — 2026-10-15
 - **Simplificación Integral de la Cabecera del Mareógrafo (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Lendo solicitó continuar aligerando y minimizando la aplicación para reducir la sobrecarga visual, centrándose en el widget del Mareógrafo dentro del módulo de Playas y Mareas.

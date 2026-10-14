@@ -684,28 +684,68 @@
   background: rgba(245, 158, 11, 0.15);
   border: 1px solid rgba(245, 158, 11, 0.4);
   color: #fbbf24;
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 0.76rem;
-  font-weight: 700;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  transition: all 0.2s ease;
+  justify-content: center;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: inherit;
+  box-sizing: border-box;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 0.95rem;
+  line-height: 1;
+  animation: bulbBreathing 3.5s ease-in-out infinite;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@keyframes bulbBreathing {
+  0%, 100% {
+    opacity: 0.72;
+    box-shadow: 0 0 0px rgba(245, 158, 11, 0);
+    border-color: rgba(245, 158, 11, 0.35);
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.55);
+    border-color: rgba(245, 158, 11, 0.85);
+    transform: scale(1.06);
+  }
 }
 
 .btn-explain-sensor:hover {
   background: rgba(245, 158, 11, 0.3);
   border-color: #f59e0b;
   color: #ffffff;
-  transform: translateY(-1px);
-  box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+  transform: translateY(-1px) scale(1.08);
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.6);
+  animation-play-state: paused;
 }
 
 .btn-explain-sensor:active {
-  transform: scale(0.96);
+  transform: scale(0.92);
+}
+
+/* Excepciones de botones didácticos que ocupan ancho completo (guías) */
+.btn-explain-sensor.surf-guide-btn,
+.btn-explain-sensor.btn-explain-model-pill {
+  width: 100% !important;
+  height: auto !important;
+  min-width: unset !important;
+  min-height: 44px !important;
+  padding: 8px 16px !important;
+  border-radius: 12px !important;
+  animation: none !important;
+  font-size: 0.84rem !important;
+  font-weight: 700 !important;
+  transform: none !important;
+  line-height: 1.4 !important;
 }
 
 .sensor-icon {

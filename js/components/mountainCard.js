@@ -801,9 +801,7 @@ export function renderMountainCard(data, concejo) {
               ${avalanche.icon} <strong>Nivel ${avalanche.level} (${avalanche.name})</strong>
             </span>
           </div>
-          <button class="btn-explain-sensor-compact" data-explain="ski_mountain" title="Escala europea de riesgo de aludes y guía didáctica">
-            💡 Explícame
-          </button>
+          <button class="btn-explain-sensor" data-explain="ski_mountain" title="Escala europea de riesgo de aludes y guía didáctica" aria-label="Escala europea de riesgo de aludes y guía didáctica">💡</button>
         </div>
       </div>
 

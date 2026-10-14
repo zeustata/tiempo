@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2211-mareografo-simplificado';
+const CACHE_NAME = 'meteoasturlode-v2212-bombilla-didactica-respiracion';
 const STATIC_ASSETS = [
   './',
   './index.html',

@@ -179,7 +179,7 @@ export function renderLaundryCard(laundry) {
           <span class="sensor-icon">${laundry.icon}</span>
           <span class="sensor-title">Asesor de la Colada & Secado</span>
         </div>
-        <button class="btn-explain-sensor" data-explain="laundry" title="¿Cómo funciona el índice de secado de ropa? Pulsa para aprender">💡 Explícame</button>
+        <button class="btn-explain-sensor" data-explain="laundry" title="¿Cómo funciona el índice de secado de ropa? Pulsa para aprender" aria-label="Explicación del asesor de colada">💡</button>
       </div>
       <div class="sensor-body laundry-sensor-body">
         <div class="laundry-title-row">

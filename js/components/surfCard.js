@@ -725,7 +725,7 @@ export function renderSurfCard(data, concejo) {
         <div class="marine-widget">
           <div class="t-label-row">
             <span class="widget-label">Altura del Oleaje (Significativa)</span>
-            <button class="btn-explain-sensor" data-explain="waves" title="¿Cómo entender la altura del oleaje, mar de fondo y escala Douglas? Pulsa para aprender">💡 Explícame</button>
+            <button class="btn-explain-sensor" data-explain="waves" title="¿Cómo entender la altura del oleaje, mar de fondo y escala Douglas? Pulsa para aprender" aria-label="Explicación del oleaje y escala Douglas">💡</button>
           </div>
           <div class="widget-value">${waveHeight} <span class="unit">metros</span></div>
           <div class="widget-detail">Escala Douglas: <strong>Grado ${douglasDegree} (${douglasName})</strong></div>
@@ -737,7 +737,7 @@ export function renderSurfCard(data, concejo) {
         <div class="marine-widget">
           <div class="t-label-row">
             <span class="widget-label">Período y Dirección del Swell</span>
-            <button class="btn-explain-sensor" data-explain="swell" title="¿Qué es el período en segundos y la dirección del swell? Pulsa para aprender">💡 Explícame</button>
+            <button class="btn-explain-sensor" data-explain="swell" title="¿Qué es el período en segundos y la dirección del swell? Pulsa para aprender" aria-label="Explicación del período y dirección del swell">💡</button>
           </div>
           <div class="widget-value">${wavePeriod} <span class="unit">segundos</span></div>
           <div class="widget-detail">🌊 Swell 1 (Principal): ${getSurfSwellArrowSvg(waveDirDeg, '#38bdf8', 13)} <strong>${swellHeight}m · ${wavePeriod}s (${waveDir.name})</strong></div>
@@ -751,7 +751,7 @@ export function renderSurfCard(data, concejo) {
         <div class="marine-widget surf-energy-widget">
           <div class="t-label-row">
             <span class="widget-label">⚡ Energía de la Ola (Combinada)</span>
-            <button class="btn-explain-sensor" data-explain="surf_energy" title="¿Qué es la energía de la ola en kJ y multiswell? Pulsa para aprender">💡 Explícame</button>
+            <button class="btn-explain-sensor" data-explain="surf_energy" title="¿Qué es la energía de la ola en kJ y multiswell? Pulsa para aprender" aria-label="Explicación de la energía de la ola">💡</button>
           </div>
           <div class="widget-value" style="color: ${waveEnergy.color};">${waveEnergy.kj} <span class="unit">kJ (kiloJulios)</span></div>
           <div class="surf-energy-badge-row">
@@ -787,7 +787,7 @@ export function renderSurfCard(data, concejo) {
               <div>
                 <div class="surf-title-main" style="display: flex; align-items: center; gap: 8px;">
                   <span>Calificación & Estrellas</span>
-                  <button class="btn-explain-sensor" data-explain="surf_stars" title="¿Cómo funciona el rating de estrellas doradas y blancas? Pulsa para aprender">💡 Explícame</button>
+                  <button class="btn-explain-sensor" data-explain="surf_stars" title="¿Cómo funciona el rating de estrellas doradas y blancas? Pulsa para aprender" aria-label="Explicación del rating de estrellas de surf">💡</button>
                 </div>
                 <div class="surf-title-sub">${isCoasting ? `Playas de ${concejo.name}` : `Costa de ${interiorRef.name}`} • Estándar Surf-Forecast</div>
               </div>
