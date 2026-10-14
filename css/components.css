@@ -1239,92 +1239,84 @@
   color: #e2e8f0;
 }
 
-.tide-cycle-rows {
+.tide-cycle-items {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 8px;
   width: 100%;
   box-sizing: border-box;
 }
 
-.tide-row-item {
+.tide-sub-item {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 12px;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 14px;
   border-radius: var(--radius-sm);
-  background: rgba(15, 23, 42, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-left: 3px solid transparent;
+  border: 1px solid transparent;
   width: 100%;
   box-sizing: border-box;
   transition: all 0.15s ease;
 }
 
-.tide-row-item.high {
-  border-left-color: #38bdf8;
-  background: linear-gradient(90deg, rgba(2, 132, 199, 0.14), rgba(15, 23, 42, 0.35));
+.tide-sub-item.high {
+  border-color: rgba(56, 189, 248, 0.35);
+  background: linear-gradient(135deg, rgba(2, 132, 199, 0.16), rgba(15, 23, 42, 0.45));
 }
 
-.tide-row-item.low {
-  border-left-color: #f59e0b;
-  background: linear-gradient(90deg, rgba(245, 158, 11, 0.12), rgba(15, 23, 42, 0.35));
+.tide-sub-item.low {
+  border-color: rgba(245, 158, 11, 0.35);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.14), rgba(15, 23, 42, 0.45));
 }
 
-.tide-row-item.next-cycle {
-  border-left-color: #64748b;
-  opacity: 0.75;
-  border-style: dashed;
-}
-
-.tide-row-left {
+.tide-sub-top {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
-.tide-row-icon {
-  font-size: 1.05rem;
-  line-height: 1;
+.tide-sub-icon {
+  font-size: 1.1rem;
 }
 
-.tide-row-name {
-  font-size: 0.80rem;
+.tide-sub-name {
+  font-size: 0.78rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: #e2e8f0;
 }
 
-.tide-row-item.high .tide-row-name {
+.tide-sub-item.high .tide-sub-name {
   color: #bae6fd;
 }
 
-.tide-row-item.low .tide-row-name {
+.tide-sub-item.low .tide-sub-name {
   color: #fde68a;
 }
 
-.tide-row-right {
+.tide-sub-bottom {
   display: flex;
   align-items: baseline;
-  gap: 10px;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.tide-row-time {
+.tide-sub-time {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 1.18rem;
+  font-size: 1.35rem;
   font-weight: 800;
   color: #ffffff;
   letter-spacing: 0.5px;
 }
 
-.tide-row-height {
-  font-size: 0.88rem;
+.tide-sub-height {
+  font-size: 0.95rem;
   font-weight: 700;
   color: var(--primary-light, #38bdf8);
 }
 
-.tide-row-item.low .tide-row-height {
+.tide-sub-item.low .tide-sub-height {
   color: #fbbf24;
 }
 

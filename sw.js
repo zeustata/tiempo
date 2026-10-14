@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v223-mareas-filas-limpias';
+const CACHE_NAME = 'meteoasturlode-v224-mareas-restauradas';
 const STATIC_ASSETS = [
   './',
   './index.html',

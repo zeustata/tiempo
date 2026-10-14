@@ -2,6 +2,20 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌊 Actualización v2.2.4: Restauración de Mareas de Hoy al Formato Funcional Doble Nivel — 2026-10-14
+- **Rollback Limpio al Diseño de Alta Legibilidad Móvil (Leyes 2 y 11):**
+  1. *Diagnóstico Operativo:* Tras probar en móvil real la compactación en fila de la v2.2.3, se comprobó empíricamente que comprimir en una sola línea horizontal el icono, el nombre extenso (**BAJAMAR** / **PLEAMAR**), la hora y la altura provocaba falta de ancho físico, forzando al motor del navegador a quebrar la unidad de medida (`m`) bajo el dígito decimal. Lendo observó con acierto y franqueza que la experiencia móvil empeoraba respecto a la versión funcional original.
+  2. *Intervención Técnica y Retorno Funcional:*
+     - Siguiendo la Ley 2 (Seguridad, Copia y Retorno a Versión Anterior) y la Ley 17 (Doctrina de Contención y Prudencia), se ejecuta el rollback limpio de los estilos y marcado de mareas al diseño contrastado de la v2.2.1.
+     - Estructura en dos niveles por evento:
+       - Nivel superior (`.tide-sub-top`): Icono temático (`🌅` / `🏖️`) y nombre completo en mayúsculas con espaciado óptimo.
+       - Nivel inferior (`.tide-sub-bottom`): Hora en fuente monoespaciada de gran visibilidad (`1.35rem` JetBrains Mono) alineada a la izquierda y altura en metros (`0.95rem`) a la derecha.
+     - Eliminación total de saltos de línea indeseados, compresión tipográfica o truncamiento de métricas.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.2.4 🌊`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v224-mareas-restauradas` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.4` en `index.html`, `app.js` y `surfCard.js`.
+
 ## 🌊 Actualización v2.2.3: Filas Limpias Integradas de Mareas sin Desborde Móvil — 2026-10-14
 - **Resolución Definitiva de Desborde Móvil en Ciclos de Marea (Feedback Lendo & Princesa):**
   1. *Diagnóstico Operativo:* En `v2.2.2`, la disposición en cuadrícula de 2 columnas (`repeat(2, 1fr)`) en pantallas estrechas de teléfono provocaba que la caja derecha de la marea sobresaliera lateralmente del contenedor y recortara el texto (ej. mostrándose "PLEAM" en vez de "PLEAMAR").

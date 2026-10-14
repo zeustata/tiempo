@@ -10,6 +10,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.4] - 2026-10-14
+
+### 🌊 Restauración de Mareas de Hoy al Formato Funcional Doble Nivel (Feedback Lendo & Princesa)
+- **Rollback Limpio al Diseño de Alta Legibilidad Móvil (Leyes 2 y 11):**
+  - Tras verificar en dispositivo móvil real que las filas horizontales comprimidas forzaban la partición de la unidad de medida (`m` partida debajo de la cifra decimal), se restaura el formato original de dos niveles (`.tide-sub-top` y `.tide-sub-bottom`).
+  - Arriba: Icono distintivo (`🌅` / `🏖️`) y nombre de marea (**PLEAMAR** / **BAJAMAR**).
+  - Abajo: Hora en tipografía monoespaciada grande (`1.35rem` JetBrains Mono) alineada a la izquierda y altura (`0.98 m` / `3.76 m`) a la derecha, con espacio generoso para respirar.
+  - Cero cortes, cero desbordes y legibilidad instantánea en cualquier smartphone.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v224-mareas-restauradas`, query strings actualizadas a `?v=2.2.4`.
+
 ## [2.2.3] - 2026-10-14
 
 ### 🌊 Filas Limpias Integradas para Mareas de Hoy (Feedback Lendo)
