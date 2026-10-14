@@ -1240,8 +1240,8 @@
 }
 
 .tide-cycle-items {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 8px;
   width: 100%;
   box-sizing: border-box;
@@ -1250,8 +1250,9 @@
 .tide-sub-item {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 10px 14px;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 8px 10px;
   border-radius: var(--radius-sm);
   border: 1px solid transparent;
   width: 100%;
@@ -1272,15 +1273,15 @@
 .tide-sub-top {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
 }
 
 .tide-sub-icon {
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .tide-sub-name {
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -1299,19 +1300,21 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px;
   width: 100%;
 }
 
 .tide-sub-time {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 1.35rem;
+  font-size: 1.15rem;
   font-weight: 800;
   color: #ffffff;
   letter-spacing: 0.5px;
 }
 
 .tide-sub-height {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: var(--primary-light, #38bdf8);
 }

@@ -10,6 +10,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.2] - 2026-10-14
+
+### 🌊 Unificación Horizontal de Mareas Diarias (Feedback Lendo)
+- **Bajamar y Pleamar en una Sola Fila (50% / 50%):**
+  - Rediseñado el bloque de mareas de hoy en el módulo de Playas & Mareas (`marineCard.js` y `components.css`).
+  - Los eventos de cada marea diaria (1ª Marea y 2ª Marea) se presentan ahora unificados de forma horizontal en un bloque simétrico de dos columnas, en lugar de cajas verticales apiladas.
+  - Ahorro de más del 40% del espacio vertical en pantalla móvil, permitiendo una lectura simultánea e intuitiva de la evolución de la bajamar y pleamar sin scroll forzado.
+  - Tipografía optimizada y blindaje anti-desborde para cualquier ancho de pantalla (Ley 11).
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v222-mareas-unificadas`, query strings actualizadas a `?v=2.2.2`.
+
 ## [2.2.1] - 2026-10-14
 
 ### 🎯 Simplificación y Limpieza de Cabeceras y Menús (Feedback Lendo)

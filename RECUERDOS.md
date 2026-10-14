@@ -2,6 +2,18 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌊 Actualización v2.2.2: Unificación Horizontal de Mareas Diarias (Bajamar & Pleamar) — 2026-10-14
+- **Ergonomía de Mareas y Reducción de Espacio Vertical (Feedback Lendo):**
+  1. *Diagnóstico Operativo:* Lendo propuso simplificar la visualización de las mareas del día en el módulo de *Playas & Mareas*, sugiriendo presentar la bajamar y pleamar de cada marea en un mismo botón/fila en lugar de dos cajas verticales apiladas que alargaban excesivamente el scroll de la pantalla.
+  2. *Intervención Técnica:*
+     - Modificado `.tide-cycle-items` en `css/components.css` para estructurarse como una cuadrícula simétrica de 2 columnas (`grid-template-columns: repeat(2, 1fr); gap: 8px`).
+     - Redimensionados los elementos de marea (`.tide-sub-item`) con tipografía compacta (`1.15rem` para la hora en JetBrains Mono y `0.85rem` para la altura en metros), asegurando que ambas fases queden lado a lado sin colisión ni desborde en pantallas estrechas.
+     - Reducción de más del 40% en la altura total del bloque de mareas de hoy en móviles.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.2.2 🌊`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v222-mareas-unificadas` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.2` en `index.html`, `app.js` y `surfCard.js`.
+
 ## 🎯 Actualización v2.2.1: Simplificación y Limpieza de Cabeceras y Menús — 2026-10-14
 - **Ergonomía Visual & Supresión de Redundancias (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Lendo señaló con agudeza que los títulos de varias secciones y menús eran excesivamente largos y repetitivos (por ejemplo, `📅 Pronóstico Extendido a 10 Días` o incluir `de ${concejoTitle}`), cuando inmediatamente debajo cada tarjeta cuenta con subtítulos ricos e insignias donde ya se detalla el concejo, la comarca y la información contextual.

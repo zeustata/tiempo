@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v221-titulos-limpios';
+const CACHE_NAME = 'meteoasturlode-v222-mareas-unificadas';
 const STATIC_ASSETS = [
   './',
   './index.html',
