@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v217-curva-termica-izquierda';
+const CACHE_NAME = 'meteoasturlode-v218-branding-bandera-asturias';
 const STATIC_ASSETS = [
   './',
   './index.html',

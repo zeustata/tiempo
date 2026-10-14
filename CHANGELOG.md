@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.1.8] - 2026-10-14
+
+### 💛💙 Unificación Tipográfica MeteoAsturLode con Colores de la Bandera de Asturias (Feedback Lendo)
+- **Fusión de Marca en 1 Sola Línea Compacta:**
+  - El título de la aplicación se unifica en una sola palabra continua: `MeteoAsturLode`.
+  - Escala tipográfica compacta y proporcionada (reducida de 1.75rem a 1.45rem en escritorio/tablet y 1.25rem en móviles con `white-space: nowrap`), liberando valioso espacio vertical para que las tarjetas del tiempo y alertas luzcan más altas y accesibles.
+- **Bicolor Bandera de Asturias:**
+  - `MeteoAstur`: Gradiente azul Cantábrico brillante (`#ffffff` a `#38bdf8`) con resplandor atmosférico.
+  - `Lode`: Oro resplandeciente de la Cruz de la Victoria (`#fef08a`, `#facc15` y `#f59e0b`), actuando como separador visual óptico y firma de autor de máxima categoría.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v218-branding-bandera-asturias`, query strings actualizadas a `?v=2.1.8`.
+
 ## [2.1.7] - 2026-10-14
 
 ### 📈 Alineación Integrada de la Curva Térmica bajo la Temperatura (Feedback Lendo)

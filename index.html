@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.1.7">
-  <link rel="stylesheet" href="css/components.css?v=2.1.7">
-  <link rel="stylesheet" href="css/weather-themes.css?v=2.1.7">
+  <link rel="stylesheet" href="css/main.css?v=2.1.8">
+  <link rel="stylesheet" href="css/components.css?v=2.1.8">
+  <link rel="stylesheet" href="css/weather-themes.css?v=2.1.8">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -50,7 +50,7 @@
             <img src="icons/bandera-asturias.svg" alt="Bandera del Principado de Asturias" class="asturias-flag-img">
           </div>
           <div class="brand-info">
-            <h1>MeteoAstur Lode</h1>
+            <h1 class="brand-title"><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></h1>
             <div class="brand-badges-row">
               <div id="live-clock" class="live-clock-badge" title="Hora y fecha en tiempo real">--:--:--</div>
               <div id="network-status" class="network-badge online" title="Estado de conexión">🟢 Online</div>
@@ -255,8 +255,8 @@
     <!-- FOOTER -->
     <footer class="app-footer">
       <div class="footer-credits">
-        <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.1.7 📈</button>
+        <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.1.8 💛💙</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -308,8 +308,21 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.1.7 📈</span>
+            <span class="release-version">v2.1.8 💛💙</span>
             <span class="release-date">14 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-ui">Identidad de Marca & Diseño Asturiano (Feedback Lendo)</span> <strong>Unificación Tipográfica MeteoAsturLode con Colores de la Bandera de Asturias</strong>:
+              <br>• <strong>Fusión de Marca en 1 Sola Línea:</strong> Unificado el nombre a <code>MeteoAsturLode</code> sin espacios y con escala tipográfica compacta y estilizada (1.45rem en escritorio, 1.25rem en móvil), garantizando su presencia en una única línea horizontal y reduciendo la ocupación de la cabecera.
+              <br>• <strong>Bicolor Bandera de Asturias:</strong> <code>MeteoAstur</code> en radiante azul cielo cantábrico (<code>#38bdf8</code>) y <code>Lode</code> en oro resplandeciente de la Cruz de la Victoria (<code>#facc15</code>), logrando un contraste elegante, máxima legibilidad e identidad visual de autor.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.1.7 📈</span>
+            <span class="release-date">14 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-ui">Ergonomía Visual & Disposición (Feedback Lendo)</span> <strong>Alineación Integrada de la Curva Térmica bajo la Temperatura</strong>:
@@ -3012,7 +3025,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.1.7"></script>
+  <script type="module" src="js/app.js?v=2.1.8"></script>
 
 
 

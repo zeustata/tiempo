@@ -2,6 +2,20 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 💛💙 Actualización v2.1.8: Unificación Tipográfica MeteoAsturLode con Colores de la Bandera de Asturias — 2026-10-14
+- **Evolución de Marca & Optimización de Espacio en Cabecera (Feedback Lendo):**
+  1. *Diagnóstico Operativo:* Lendo propuso unificar el nombre de la app en una sola palabra continua (`MeteoAsturLode`), garantizando que entre holgadamente en una sola línea horizontal en cualquier pantalla, reduciendo el espacio muerto que consumía la cabecera e incorporando los colores emblemáticos de la bandera de Asturias para dotarlo de máximo impacto visual.
+  2. *Solución Tipográfica & Cromática:*
+     - **Formato:** `MeteoAsturLode` sin espacio intermedio, estructurado semánticamente mediante `<h1 class="brand-title"><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></h1>`.
+     - **Bicolor Bandera de Asturias:**
+       * `MeteoAstur`: Gradiente de blanco a azul Cantábrico brillante (`#ffffff` a `#38bdf8`) con resplandor luminoso.
+       * `Lode`: Oro resplandeciente de la Cruz de la Victoria (`#fef08a`, `#facc15` y `#f59e0b`), actuando como separador visual óptico natural y sello de autor de alta gama.
+     - **Ergonomía de Altura:** Escala tipográfica compacta de 1.45rem en escritorio y 1.25rem en móviles (`white-space: nowrap`), liberando espacio vertical en la parte superior para que la tarjeta del tiempo ascienda y gane visibilidad en pantalla.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.1.8 💛💙`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v218-branding-bandera-asturias` en `sw.js`.
+  - Query strings actualizadas a `?v=2.1.8` en `index.html` y módulos correspondientes.
+
 ## 📈 Actualización v2.1.7: Alineación Integrada de la Curva Térmica bajo la Temperatura — 2026-10-14
 - **Anclaje Natural en Columna Izquierda (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Lendo comprobó en monitores panorámicos de Windows y tabletas que centrar la curva térmica (`.mini-thermal-widget`) provocaba un efecto de "isla flotante" en medio de la tarjeta, dejando el widget desvinculado visualmente de la columna de temperatura que se encuentra a la izquierda.
