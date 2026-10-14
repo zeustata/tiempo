@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v227-guia-playas-acordeon';
+const CACHE_NAME = 'meteoasturlode-v228-surf-rompientes-acordeon';
 const STATIC_ASSETS = [
   './',
   './index.html',

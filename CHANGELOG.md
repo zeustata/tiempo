@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.8] - 2026-10-15
+
+### 🏄‍♂️ Rompientes y Picos de Surf en Acordeón Exclusivo (Feedback Lendo)
+- **Ergonomía, Síntesis y Armonía Visual (Leyes 11 y 14):**
+  - Extensión del sistema de acordeón exclusivo a la sección de Surf (`surfCard.js` y `components.css`).
+  - **Todos los spots cerrados de inicio:** Se erradica el scroll kilométrico en móvil, permitiendo una visión de conjunto limpia y rápida de todos los rompientes del concejo.
+  - **Acordeón Exclusivo:** Basado en `<details class="beach-accordion-card" name="surf-spots-accordion">`. Al abrir un spot se cierran automáticamente los demás.
+  - **Cabecera Táctil Ergonómica:** Icono `🏄‍♂️`, nombre del spot en azul celeste (`#38bdf8`), distintivo de entorno (`Spot`, `Cala`, `Playa`) y chevron dinámico `▾` con rotación suave.
+  - **Ficha Técnica Integral al Desplegar:** Diagnóstico en tiempo real del viento en la rompiente según orientación de costa, picos de surf bautizados, swell óptimo, terral favorable, tipo de fondo marino, dirección de ola, marea idónea y nivel técnico.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v228-surf-rompientes-acordeon`, query strings actualizadas a `?v=2.2.8`.
+
 ## [2.2.7] - 2026-10-15
 
 ### 🏖️ Guía de Playas y Calas en Acordeón Compacto Exclusivo (Feedback Lendo)

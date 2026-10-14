@@ -2,6 +2,20 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏄‍♂️ Actualización v2.2.8: Rompientes y Picos de Surf en Acordeón Exclusivo — 2026-10-15
+- **Optimización de Ergonomía Móvil & Armonía Visual Integral (Leyes 11 y 14):**
+  1. *Diagnóstico Operativo:* Tras el éxito y aprobación de Lendo del acordeón en la guía de playas, se detectó que la sección hermana de Surf («Rompientes, Picos de Surf & Fondos» en `surfCard.js`) presentaba una problemática idéntica de saturación de scroll en pantallas móviles, debido a las extensas fichas técnicas de cada rompiente.
+  2. *Intervención Técnica y Armonización Visual:*
+     - Extensión del componente de acordeón exclusivo a la rejilla de rompientes de surf: `<details class="beach-accordion-card" name="surf-spots-accordion">` con `<summary class="beach-accordion-header">`.
+     - **Todos los spots cerrados de inicio:** La vista de surf queda despejada y compacta, permitiendo al surfista identificar al instante su spot favorito sin scroll infinito.
+     - **Acordeón Exclusivo:** Al abrir un spot, cualquier otro que estuviera desplegado se repliega de forma automática.
+     - **Cabecera Táctil Ergonómica (Ley 11):** Mínimo 48px de altura táctil, icono distintivo `🏄‍♂️`, nombre del spot en azul celeste (`#38bdf8`), distintivo de entorno (`Spot`, `Cala`, `Playa`) y chevron dinámico interactivo `▾` con rotación suave.
+     - **Ficha Técnica Integral al Desplegar:** Diagnóstico en tiempo real del viento en la rompiente según orientación de costa, picos de surf bautizados, swell óptimo, terral favorable, tipo de fondo marino, dirección de ola, marea idónea y nivel técnico.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.2.8 🏄‍♂️`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v228-surf-rompientes-acordeon` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.8` en `index.html` (CSS y scripts) y `app.js`.
+
 ## 🏖️ Actualización v2.2.7: Guía de Playas y Calas en Acordeón Compacto Exclusivo — 2026-10-15
 - **Optimización de Ergonomía Móvil & Síntesis Visual (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Lendo detectó que en el módulo de «Playas y Mareas», debajo del botón de webcams en directo, el catálogo de arenales y calas mostraba todas las tarjetas completamente expandidas por defecto. En concejos costeros con múltiples playas (Gijón, Llanes, Gozón, Castrillón, Valdés, etc.), esto generaba un scroll vertical masivo y fatigoso para el usuario.

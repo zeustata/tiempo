@@ -1054,72 +1054,80 @@ export function renderSurfCard(data, concejo) {
           ${activePlayas.map(p => {
             const beachWind = getBeachSpecificWindCondition(p.facingDeg || 355, windDeg, windSpeed);
             return `
-              <div class="beach-card">
-                <div class="beach-card-top">
-                  <span class="beach-card-name">${p.name}</span>
-                  <span class="beach-card-tag">${p.tag || 'Playa'}</span>
-                </div>
+              <details class="beach-accordion-card" name="surf-spots-accordion">
+                <summary class="beach-accordion-header">
+                  <div class="beach-accordion-title-wrap">
+                    <span class="beach-accordion-icon">🏄‍♂️</span>
+                    <span class="beach-card-name">${p.name}</span>
+                  </div>
+                  <div class="beach-accordion-meta">
+                    <span class="beach-card-tag">${p.tag || 'Spot'}</span>
+                    <span class="beach-accordion-chevron">▾</span>
+                  </div>
+                </summary>
                 
-                <div class="beach-card-desc">${p.type}</div>
+                <div class="beach-accordion-body">
+                  <div class="beach-card-desc">${p.type}</div>
 
-                <div class="beach-specs-table">
-                  ${p.picos ? `
-                    <div class="beach-picos-box">
-                      <span class="picos-box-label">📍 PICOS DE SURF:</span>
-                      <span class="picos-box-value">${p.picos}</span>
+                  <div class="beach-specs-table">
+                    ${p.picos ? `
+                      <div class="beach-picos-box">
+                        <span class="picos-box-label">📍 PICOS DE SURF:</span>
+                        <span class="picos-box-value">${p.picos}</span>
+                      </div>
+                    ` : ''}
+
+                    <!-- Diagnóstico de Viento en Vivo específico para esta playa según su orientación -->
+                    <div class="beach-spec-row ${beachWind.statusClass}" style="border-left: 3px solid ${beachWind.color}; background: rgba(15, 23, 42, 0.55);">
+                      <span class="spec-label">💨 VIENTO EN ESTA PLAYA (${p.facing ? `Mira al ${p.facing}` : 'Costera'}):</span>
+                      <span class="spec-value" style="color: ${beachWind.color}; font-weight: 700;">
+                        ${beachWind.badge} • ${beachWind.shortDesc}
+                      </span>
                     </div>
-                  ` : ''}
 
-                  <!-- Diagnóstico de Viento en Vivo específico para esta playa según su orientación -->
-                  <div class="beach-spec-row ${beachWind.statusClass}" style="border-left: 3px solid ${beachWind.color}; background: rgba(15, 23, 42, 0.55);">
-                    <span class="spec-label">💨 VIENTO EN ESTA PLAYA (${p.facing ? `Mira al ${p.facing}` : 'Costera'}):</span>
-                    <span class="spec-value" style="color: ${beachWind.color}; font-weight: 700;">
-                      ${beachWind.badge} • ${beachWind.shortDesc}
-                    </span>
-                  </div>
+                    ${p.bestSwell ? `
+                      <div class="beach-spec-row" style="background: rgba(56, 189, 248, 0.08); border-left: 3px solid #38bdf8;">
+                        <span class="spec-label">🌊 Swell Óptimo:</span>
+                        <span class="spec-value" style="color: #38bdf8; font-weight: 700;">${p.bestSwell}</span>
+                      </div>
+                    ` : ''}
 
-                  ${p.bestSwell ? `
-                    <div class="beach-spec-row" style="background: rgba(56, 189, 248, 0.08); border-left: 3px solid #38bdf8;">
-                      <span class="spec-label">🌊 Swell Óptimo:</span>
-                      <span class="spec-value" style="color: #38bdf8; font-weight: 700;">${p.bestSwell}</span>
+                    ${p.bestWind ? `
+                      <div class="beach-spec-row" style="background: rgba(16, 185, 129, 0.08); border-left: 3px solid #10b981;">
+                        <span class="spec-label">🧭 Viento Favorable (Terral):</span>
+                        <span class="spec-value" style="color: #34d399; font-weight: 700;">${p.bestWind}</span>
+                      </div>
+                    ` : ''}
+
+                    <div class="beach-spec-row">
+                      <span class="spec-label">🪨 Fondo Marino:</span>
+                      <span class="spec-value">${p.bottom || '🏖️ Arena (Beach Break)'}</span>
                     </div>
-                  ` : ''}
 
-                  ${p.bestWind ? `
-                    <div class="beach-spec-row" style="background: rgba(16, 185, 129, 0.08); border-left: 3px solid #10b981;">
-                      <span class="spec-label">🧭 Viento Favorable (Terral):</span>
-                      <span class="spec-value" style="color: #34d399; font-weight: 700;">${p.bestWind}</span>
+                    <div class="beach-spec-row">
+                      <span class="spec-label">🔄 Dirección Ola:</span>
+                      <span class="spec-value">${p.waveType || '↔️ Picos A-Frame'}</span>
                     </div>
-                  ` : ''}
 
-                  <div class="beach-spec-row">
-                    <span class="spec-label">🪨 Fondo Marino:</span>
-                    <span class="spec-value">${p.bottom || '🏖️ Arena (Beach Break)'}</span>
-                  </div>
-
-                  <div class="beach-spec-row">
-                    <span class="spec-label">🔄 Dirección Ola:</span>
-                    <span class="spec-value">${p.waveType || '↔️ Picos A-Frame'}</span>
-                  </div>
-
-                  <div class="beach-spec-row">
-                    <span class="spec-label">⏳ Marea Óptima:</span>
-                    <span class="spec-value">${p.bestTide || 'Media Marea'}</span>
-                  </div>
-
-                  <div class="beach-spec-row">
-                    <span class="spec-label">🎯 Nivel Técnico:</span>
-                    <span class="spec-value level-badge">${p.surfLevel || 'Todos'}</span>
-                  </div>
-
-                  ${p.hazards ? `
-                    <div class="beach-spec-row" style="background: rgba(239, 68, 68, 0.06); border-left: 3px solid #ef4444;">
-                      <span class="spec-label">⚠️ Precaución / Peligros:</span>
-                      <span class="spec-value" style="color: #fca5a5; font-size: 0.72rem;">${p.hazards}</span>
+                    <div class="beach-spec-row">
+                      <span class="spec-label">⏳ Marea Óptima:</span>
+                      <span class="spec-value">${p.bestTide || 'Media Marea'}</span>
                     </div>
-                  ` : ''}
+
+                    <div class="beach-spec-row">
+                      <span class="spec-label">🎯 Nivel Técnico:</span>
+                      <span class="spec-value level-badge">${p.surfLevel || 'Todos'}</span>
+                    </div>
+
+                    ${p.hazards ? `
+                      <div class="beach-spec-row" style="background: rgba(239, 68, 68, 0.06); border-left: 3px solid #ef4444;">
+                        <span class="spec-label">⚠️ Precaución / Peligros:</span>
+                        <span class="spec-value" style="color: #fca5a5; font-size: 0.72rem;">${p.hazards}</span>
+                      </div>
+                    ` : ''}
+                  </div>
                 </div>
-              </div>
+              </details>
             `;
           }).join('')}
         </div>
