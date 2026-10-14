@@ -399,9 +399,9 @@ body {
 
 .brand-info h1,
 .brand-title {
-  font-size: 1.45rem;
+  font-size: 1.68rem;
   font-weight: 800;
-  letter-spacing: -0.4px;
+  letter-spacing: -0.5px;
   line-height: 1.15;
   margin: 0;
   white-space: nowrap;
@@ -1955,7 +1955,7 @@ kbd {
   .brand-title-row h1,
   .brand-info h1,
   .brand-title {
-    font-size: 1.25rem;
+    font-size: 1.40rem;
   }
 
   .header-controls {

@@ -10,6 +10,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.1.9] - 2026-10-14
+
+### 💛💙 Optimización de Escala y Porte Tipográfico de MeteoAsturLode (Feedback Lendo)
+- **Mayor Legibilidad y Presencia en 1 Sola Línea:**
+  - Ajustado el tamaño de la marca unificada a `1.68rem` en monitores de escritorio/tabletas y `1.40rem` en dispositivos móviles (con `letter-spacing: -0.5px` y `white-space: nowrap;`).
+  - El nombre de la app destaca con mayor presencia, nitidez y fuerza visual, garantizando matemáticamente que permanezca en una sola línea horizontal (más de 70px de margen libre incluso en pantallas de 320px).
+- **Equilibrio Vertical y Ergonomía:**
+  - La altura de la cabecera no se incrementa, integrando el texto de forma armónica junto a los 44px del círculo con la bandera del Principado de Asturias.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v219-brand-size-opt`, query strings actualizadas a `?v=2.1.9`.
+
 ## [2.1.8] - 2026-10-14
 
 ### 💛💙 Unificación Tipográfica MeteoAsturLode con Colores de la Bandera de Asturias (Feedback Lendo)

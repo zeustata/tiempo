@@ -2,6 +2,18 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 💛💙 Actualización v2.1.9: Optimización de Escala y Porte Tipográfico de MeteoAsturLode — 2026-10-14
+- **Presencia Visual Reforzada en 1 Sola Línea (Feedback Lendo):**
+  1. *Diagnóstico Operativo:* Tras unificar el nombre de la app en `MeteoAsturLode`, Lendo solicitó aumentar el tamaño de letra para que el nombre destaque con nitidez y presencia rotunda, manteniendo la condición innegociable de no desbordar a una segunda línea.
+  2. *Solución y Calibración:*
+     - **Escritorio / Tablet:** Incrementado de 1.45rem a **`1.68rem`** con `letter-spacing: -0.5px`, otorgando todo el porte institucional y fuerza visual al gradiente bicolor azul/oro.
+     - **Móvil (< 768px):** Incrementado de 1.25rem a **`1.40rem`**, garantizando matemáticamente más de 70px de margen libre incluso en pantallas estrechas de 320px (`white-space: nowrap;`).
+     - **Equilibrio Vertical:** El aumento se integra en la misma cota que el círculo de la bandera asturiana (44px), sin empujar hacia abajo la cabecera ni incrementar la altura global de la tarjeta.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.1.9 💛💙`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v219-brand-size-opt` en `sw.js`.
+  - Query strings actualizadas a `?v=2.1.9` en `index.html` y módulos correspondientes.
+
 ## 💛💙 Actualización v2.1.8: Unificación Tipográfica MeteoAsturLode con Colores de la Bandera de Asturias — 2026-10-14
 - **Evolución de Marca & Optimización de Espacio en Cabecera (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Lendo propuso unificar el nombre de la app en una sola palabra continua (`MeteoAsturLode`), garantizando que entre holgadamente en una sola línea horizontal en cualquier pantalla, reduciendo el espacio muerto que consumía la cabecera e incorporando los colores emblemáticos de la bandera de Asturias para dotarlo de máximo impacto visual.

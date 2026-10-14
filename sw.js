@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v218-branding-bandera-asturias';
+const CACHE_NAME = 'meteoasturlode-v219-brand-size-opt';
 const STATIC_ASSETS = [
   './',
   './index.html',
