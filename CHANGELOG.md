@@ -10,6 +10,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.1.6] - 2026-10-14
+
+### 🌊🌫️ Icono Vectorial Dinámico para Alertas de Borrina Marina & Niebla de Valle (Feedback Lendo)
+- **Erradicación del Glifo Cuadrado Descolorido de Android/Windows:**
+  - Sustituido el emoji estándar `🌫️` (que en dispositivos Android y pantallas Windows se representaba como un sello cuadrado blanco-grisáceo plano sin relieve ni contraste) por iconos vectoriales SVG dinámicos a todo color.
+- **Iconografía Exclusiva por Tipología de Niebla:**
+  - **Borrina Marina Litoral:** Olas del Cantábrico en azul turquesa y marino (`#0284c7`, `#38bdf8`) con franjas de bruma iluminada y micro-partículas flotando sobre el agua, transmitiendo al instante la entrada de niebla desde el mar hacia la costa.
+  - **Niebla de Valle / Inversión Térmica:** Siluetas de montaña en cuenca emergiendo sobre el denso mar de niebla atrapado en el fondo del valle.
+- **Blindaje Estructural de Cabecera Móvil (Ley 11):**
+  - Creado `.borrina-title-group` para que el icono y el título viajen siempre juntos en el mismo renglón, impidiendo que el icono quede huérfano o salte de línea en pantallas estrechas.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v216-icono-vectorial-borrina`, query strings de hojas de estilo y scripts actualizadas a `?v=2.1.6`.
+
 ## [2.1.5] - 2026-10-14
 
 ### 🌫️ Icono Exclusivo para Borrina Húmeda / Niebla Saturada (Feedback Lendo)

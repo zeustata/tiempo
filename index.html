@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.1.5">
-  <link rel="stylesheet" href="css/components.css?v=2.1.5">
-  <link rel="stylesheet" href="css/weather-themes.css?v=2.1.5">
+  <link rel="stylesheet" href="css/main.css?v=2.1.6">
+  <link rel="stylesheet" href="css/components.css?v=2.1.6">
+  <link rel="stylesheet" href="css/weather-themes.css?v=2.1.6">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -256,7 +256,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong>MeteoAstur Lode</strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.1.5 🌫️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.1.6 🌊🌫️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -308,8 +308,23 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.1.5 🌫️</span>
+            <span class="release-version">v2.1.6 🌊🌫️</span>
             <span class="release-date">14 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-ui">Identidad Visual & Alertas (Feedback Lendo)</span> <strong>Icono Vectorial Dinámico para Alertas de Borrina Marina</strong>:
+              <br>• <strong>Erradicación del Glifo Cuadrado Descolorido:</strong> Sustituido el emoji genérico <code>🌫️</code> (que en Android y Windows se renderizaba como un sello cuadrado blanco-grisáceo plano sin contraste) por un icono vectorial SVG exclusivo y estilizado.
+              <br>• <strong>Borrina Marina Litoral:</strong> Olas del Cantábrico en azul turquesa y marino profundo (<code>#0284c7</code> y <code>#38bdf8</code>) coronadas por franjas de bruma iluminada flotando sobre el agua, transmitiendo de un vistazo la confluencia entre mar y niebla costera.
+              <br>• <strong>Niebla de Valle / Inversión Térmica:</strong> Siluetas de montaña en cuenca emergiendo sobre el manto de niebla densa atrapada en el fondo del valle.
+              <br>• <strong>Blindaje de Cabecera Móvil:</strong> Encapsulado el icono y título en un grupo unificado (<code>.borrina-title-group</code>), impidiendo que el icono quede aislado o salte de línea en pantallas pequeñas.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.1.5 🌫️</span>
+            <span class="release-date">14 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-ui">Identidad Visual & Meteorología</span> <strong>Icono Exclusivo para Borrina Húmeda / Niebla Saturada (Feedback Lendo)</strong>:
@@ -2983,7 +2998,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.1.5"></script>
+  <script type="module" src="js/app.js?v=2.1.6"></script>
 
 
 

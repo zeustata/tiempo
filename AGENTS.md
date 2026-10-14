@@ -201,6 +201,11 @@
     - Todo gráfico continuo o widget técnico integrado en tarjetas principales (como la curva térmica de 24 horas `.mini-thermal-widget`) debe contar obligatoriamente con un tope de ancho máximo ergonómico (`max-width: 440px`) y centrado horizontal automático (`margin: 10px auto 0 auto`).
     - Queda prohibido permitir que gráficos de silueta vectorial se expandan al 100% sin límite en pantallas anchas (tabletas y monitores de Windows), impidiendo que se aplaste o deforme la lectura sinusoidal de las curvas y preservando un módulo estilizado, legible y armónico en cualquier dispositivo.
 
+17. **Iconografía Vectorial Rica en Banners Dinámicos de Alerta (Feedback Lendo):**
+    - Todo banner dinámico de alerta climática sensible (como Borrina Marina, Niebla de Valle, etc.) debe utilizar iconos vectoriales SVG propios a color o composiciones gráficas de alto contraste, erradicando emojis planos aislados del sistema operativo (como `🌫️`) que en fuentes móviles de Android y Windows se renderizan como sellos cuadrados descoloridos o parches borrosos sin contraste.
+    - La cabecera del banner debe encapsular el icono y el titular en un grupo unificado (`.borrina-title-group` con `display: inline-flex; align-items: center;`), impidiendo que el icono quede aislado o salte de línea en pantallas pequeñas.
+
+
 
 
 

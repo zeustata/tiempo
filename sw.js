@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v215-icono-borrina-humeda';
+const CACHE_NAME = 'meteoasturlode-v216-icono-vectorial-borrina';
 const STATIC_ASSETS = [
   './',
   './index.html',
