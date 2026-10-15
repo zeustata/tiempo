@@ -5,7 +5,7 @@ import { renderCurrentWeather } from './components/currentCard.js?v=2.2.12';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=2.2.16';
 import { renderSurfCard } from './components/surfCard.js?v=2.2.12';
 import { renderRoutesCard } from './components/routesCard.js?v=2.2.20';
-import { renderMountainCard } from './components/mountainCard.js?v=2.2.12';
+import { renderMountainCard } from './components/mountainCard.js?v=2.2.24';
 import { renderTourismCard } from './components/tourismCard.js?v=2.2.1';
 import { renderForecast } from './components/forecastView.js?v=2.2.1';
 import { renderWeatherChart } from './components/chartsView.js?v=2.2.23';
@@ -41,7 +41,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '2.2.23';
+export const CURRENT_APP_VERSION = '2.2.24';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -2236,7 +2236,7 @@ class MeteoAsturiasApp {
       try {
         const mountainContainer = document.getElementById('panel-mountain');
         if (mountainContainer) {
-          mountainContainer.innerHTML = renderMountainCard(data, concejo);
+          mountainContainer.innerHTML = renderMountainCard(data, concejo, prefs.iconTheme);
         }
       } catch (e) {
         console.error('[MeteoAstur] Error renderizando Cordillera & Nieve:', e);

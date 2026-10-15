@@ -32,7 +32,7 @@
 
   <!-- Estilos de la Aplicación con Cache Busting -->
   <link rel="stylesheet" href="css/main.css?v=2.2.7">
-  <link rel="stylesheet" href="css/components.css?v=2.2.23">
+  <link rel="stylesheet" href="css/components.css?v=2.2.24">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.7">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.23 🎨</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.24 🏔️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -326,8 +326,21 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.2.23 🎨</span>
+            <span class="release-version">v2.2.24 🏔️</span>
             <span class="release-date">15 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-ui">Armonía Visual (Feedback Lendo)</span> <strong>Iconos Temáticos Sincronizados en Cordillera &amp; Nieve</strong>:
+              <br>• <strong>Fidelidad al Tema Activo en Esquí:</strong> Integrado el motor de renderizado vectorial dinámico (<code>renderWeatherIconHtml</code>) en el badge de tiempo actual de cada estación de esquí (<code>.ski-sky-icon</code>), en el carrusel semanal a 7 días (<code>.ski-day-icon</code>) y en los tramos de pistas de Mañana y Tarde (<code>.daypart-icon</code>), sustituyendo los antiguos emojis planos por los iconos temáticos SVG oficiales (Asturiano por defecto, Liquid Glass 3D, Píxel, Neón, Boceto o Futurista).
+              <br>• <strong>Coherencia Integral (Ley 14):</strong> Sincronizado el pase de <code>prefs.iconTheme</code> desde <code>app.js</code>, garantizando una identidad visual 100% uniforme con el resto de la aplicación.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.23 🎨</span>
+            <span class="release-date">15 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-ui">Armonía Visual (Reflexión Lendo)</span> <strong>Iconos Temáticos Sincronizados en Meteorología Gráfica</strong>:
@@ -3368,7 +3381,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.23"></script>
+  <script type="module" src="js/app.js?v=2.2.24"></script>
 
 
 

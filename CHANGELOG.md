@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.24] - 2026-10-15
+
+### 🏔️ Armonía Visual & Iconos Temáticos en Cordillera & Nieve (Feedback Lendo)
+- **Sincronización de Iconos Temáticos en Estaciones de Esquí y Pistas:**
+  - Integrado el motor de renderizado dinámico `renderWeatherIconHtml` en el badge general de tiempo de cada estación (`.ski-sky-icon`), en las tarjetas del carrusel de previsión a 7 días (`.ski-day-icon`) y en el desglose horario de pistas de Mañana (09-13h) y Tarde (13-17h) (`.daypart-icon`).
+  - Sustituidos los antiguos emojis planos por los iconos oficiales vectoriales SVG del sistema según el tema activo del usuario (Asturiano por defecto, Liquid Glass 3D, Píxel Retro, Neón Cyberpunk, Boceto o Futurista), preservando el icono especial de alerta ante riesgo de ventisca severa (`❄️💨`).
+  - Sincronizado el pase de `prefs.iconTheme` desde `js/app.js` e incorporadas reglas CSS con tamaños ergonómicos (22px, 24px y 18px) y micro-centrado con protección anti-desborde (Ley 14).
+- **Cache-Busting Garantizado (Leyes 1, 4, 10 y 13):**
+  - Service Worker actualizado a `meteoasturlode-v2224-iconos-montana`.
+  - Versión oficial elevada a `v2.2.24 🏔️` en pie, modal y variables del sistema.
+
 ## [2.2.23] - 2026-10-15
 
 ### 🎨 Armonía Visual & Iconos Temáticos en Meteorología Gráfica (Reflexión Lendo)

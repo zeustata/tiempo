@@ -8,6 +8,26 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🏔️ Actualización v2.2.24: Armonización de Iconos Temáticos en Cordillera & Nieve — 2026-10-15
+- **Sincronización Total de Iconos Temáticos en Estaciones de Esquí y Pistas (Feedback Lendo):**
+  1. *Diagnóstico Operativo:* Lendo detectó que en el módulo de «Cordillera & Nieve» (`#panel-mountain`) persistía la misma inconsistencia de diseño que se había subsanado en la gráfica: los iconos de tiempo actual de cada estación de esquí, la previsión a 7 días y los tramos horarios de pistas (09-13h y 13-17h) se mostraban en emojis planos del sistema en lugar de adoptar el tema de iconos activo del usuario.
+  2. *Causa Raíz:* `mountainCard.js` no importaba `renderWeatherIconHtml` ni recibía `iconTheme` desde `app.js`. Extraía únicamente la propiedad de texto `.icon` de `getWeatherInfo`.
+  3. *Intervención Técnica en `mountainCard.js`, `app.js` y `components.css`:*
+     - Importación de `renderWeatherIconHtml` desde `weatherIcons.js?v=2.2.24` en `mountainCard.js`.
+     - Inclusión del parámetro `iconTheme = 'astur'` en la firma de `renderMountainCard(data, concejo, iconTheme)`.
+     - Sincronización en `app.js` pasando `prefs.iconTheme` al contenedor de montaña.
+     - Preservación del objeto meteorológico completo `weatherInfo` en `currentSky`, en `calcPart` (mañana y tarde) y en cada día de `forecast7Days`.
+     - Invocación de `renderWeatherIconHtml` en los 3 elementos clave:
+       * Tiempo actual de la estación (`.ski-sky-icon`): tamaño **22px**.
+       * Carrusel diario de la semana (`.ski-day-icon`): tamaño **24px**.
+       * Tramos de pistas Mañana/Tarde (`.daypart-icon`): tamaño **18px**.
+       *(Conservando la alerta gráfica `❄️💨` para ventiscas de pistas).*
+     - Blindaje de estilos CSS con reglas dedicadas para centrado y contención de SVGs (`width: 22px / 24px / 18px; height: auto; flex-shrink: 0`).
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 13 y 14):**
+  - Versión oficial actualizada a **`v2.2.24 🏔️`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v2224-iconos-montana` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.24` en `index.html` y módulos correspondientes.
+
 ## 🎨 Actualización v2.2.23: Armonización de Iconos Temáticos en Meteorología Gráfica — 2026-10-15
 - **Sincronización Total de Iconos Temáticos en el Módulo Gráfico (Reflexión Lendo):**
   1. *Diagnóstico Operativo:* Lendo observó una clara disonancia visual en la aplicación: mientras que en la Estación en Vivo, Pronóstico a 10 Días y Comparador Climático se respeta escrupulosamente el tema de iconos seleccionado (el tema oficial asturiano por defecto, o temas como Glass 3D, Píxel o Neón), en Meteorología Gráfica (`#panel-charts`) la cinta horaria superior de cielo y viento (`.chart-sky-timeline`) mostraba únicamente emojis planos del sistema (`☀️`, `⛅`, `🌧️`) sin seguir el tema activo.

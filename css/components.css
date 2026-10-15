@@ -9520,6 +9520,17 @@
 .ski-sky-icon {
   font-size: 1.05rem;
   line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ski-sky-icon svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+  max-width: 100%;
+  flex-shrink: 0;
 }
 
 /* --- PREVISION METEOROLOGICA Y VIENTO A 3 DIAS EN ESTACIONES --- */
@@ -9649,6 +9660,18 @@
 .ski-day-icon {
   font-size: 1.35rem;
   line-height: 1.1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 26px;
+}
+
+.ski-day-icon svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+  max-width: 100%;
+  flex-shrink: 0;
 }
 
 .ski-day-temps {
@@ -9700,6 +9723,18 @@
 .daypart-icon {
   font-size: 0.85rem;
   line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 20px;
+}
+
+.daypart-icon svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+  max-width: 100%;
+  flex-shrink: 0;
 }
 
 .daypart-wind {

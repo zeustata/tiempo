@@ -1,4 +1,4 @@
-import { getWeatherInfo } from '../utils/weatherIcons.js?v=2.0.7';
+import { getWeatherInfo, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=2.2.24';
 
 /**
  * Red de puertos de montaña estratégicos de la Cordillera Cantábrica en Asturias
@@ -512,7 +512,7 @@ export function evaluatePassStatus(passAlt, freezingLevel, snowAccumToday, preci
  * Renderiza el módulo completo de Cordillera, Esquí & Puertos
  * Arquitectura Dual: Estaciones de Esquí (Snow-Forecast) & Red de Puertos de Montaña
  */
-export function renderMountainCard(data, concejo) {
+export function renderMountainCard(data, concejo, iconTheme = 'astur') {
   const current = data.weather.current;
   const hourly = data.weather.hourly;
   const daily = data.weather.daily;
@@ -563,16 +563,17 @@ export function renderMountainCard(data, concejo) {
     const resortSnowToday = freezingLevel <= resort.topAlt ? snowAccumToday : '0.0';
 
     // TIEMPO ACTUAL EN PISTAS (Cota Media de la Estación)
-    let currentSky = { icon: '⛅', label: 'Variable' };
+    let currentSky = { icon: '⛅', label: 'Variable', weatherInfo: null };
     if (topIsSnowing || midIsSnowing) {
-      currentSky = { icon: '❄️', label: 'Nevando' };
+      currentSky = { icon: '❄️', label: 'Nevando', weatherInfo: getWeatherInfo(73, 1, 1) };
     } else if (current.precipitation > 0) {
-      currentSky = { icon: '🌧️', label: 'Lluvia' };
+      currentSky = { icon: '🌧️', label: 'Lluvia', weatherInfo: getWeatherInfo(current.weather_code || 61, 1, 1) };
     } else {
       const liveInfo = getWeatherInfo(current.weather_code, current.is_day, current.precipitation, null, current.direct_normal_irradiance, current.uv_index, current.shortwave_radiation, current.cloud_cover, current.relative_humidity_2m);
       currentSky = {
         icon: liveInfo.icon,
-        label: liveInfo.label.split('/')[0].trim()
+        label: liveInfo.label.split('/')[0].trim(),
+        weatherInfo: liveInfo
       };
     }
 
@@ -613,16 +614,31 @@ export function renderMountainCard(data, concejo) {
       if (morningCodes.length === 0 && afternoonCodes.length === 0) return null;
 
       const calcPart = (codes, winds, snowSum) => {
-        if (codes.length === 0) return { icon: '⛅', wind: 15, snow: 0, isGale: false, isBlizzard: false };
+        if (codes.length === 0) {
+          const defInfo = getWeatherInfo(2, 1, 0);
+          return { icon: '⛅', weatherInfo: defInfo, wind: 15, snow: 0, isGale: false, isBlizzard: false, label: 'Variable' };
+        }
         const maxWind = Math.round(Math.max(...winds));
         const domCode = codes[Math.floor(codes.length / 2)];
         const info = getWeatherInfo(domCode, 1, snowSum > 0 ? 1 : 0);
         let icon = info.icon;
-        if (snowSum > 0) icon = '🌨️';
+        let weatherInfo = info;
+        if (snowSum > 0) {
+          icon = '🌨️';
+          weatherInfo = getWeatherInfo(73, 1, 1);
+        }
         const isGale = maxWind >= 50;
         const isBlizzard = snowSum > 0 && maxWind >= 45;
         if (isBlizzard) icon = '❄️💨';
-        return { icon, wind: maxWind, snow: snowSum.toFixed(1), isGale, isBlizzard, label: isBlizzard ? 'Ventisca' : (snowSum > 0 ? 'Nieve' : info.label.split('/')[0].trim()) };
+        return {
+          icon,
+          weatherInfo,
+          wind: maxWind,
+          snow: snowSum.toFixed(1),
+          isGale,
+          isBlizzard,
+          label: isBlizzard ? 'Ventisca' : (snowSum > 0 ? 'Nieve' : info.label.split('/')[0].trim())
+        };
       };
 
       const morning = calcPart(morningCodes, morningWinds, morningSnows);
@@ -656,6 +672,7 @@ export function renderMountainCard(data, concejo) {
       const dayparts = dayDateStr ? getSkiDaypartMetrics(dayDateStr) : null;
 
       const rawDayInfo = getWeatherInfo(code, 1, parseFloat(snowDay) > 0 ? 1 : 0);
+      let dayInfo = rawDayInfo;
       let dayIcon = rawDayInfo.icon;
       let dayDesc = rawDayInfo.label.split('/')[0].trim();
 
@@ -665,21 +682,27 @@ export function renderMountainCard(data, concejo) {
         if (parseFloat(snowDay) > 0 || dayparts.morning.isBlizzard || dayparts.afternoon.isBlizzard) {
           dayIcon = (dayparts.morning.isBlizzard || dayparts.afternoon.isBlizzard) ? '❄️💨' : '🌨️';
           dayDesc = (dayparts.morning.isBlizzard || dayparts.afternoon.isBlizzard) ? 'Ventisca' : 'Nieve en Pistas';
+          dayInfo = getWeatherInfo(73, 1, 1);
         } else if (dayparts.morning.icon === '☀️' && dayparts.afternoon.icon === '☀️') {
           dayIcon = '☀️';
           dayDesc = 'Despejado / Sol';
+          dayInfo = getWeatherInfo(0, 1, 0);
         } else if ((dayparts.morning.icon === '☀️' || dayparts.morning.icon === '🌤️') && (dayparts.afternoon.icon === '☀️' || dayparts.afternoon.icon === '🌤️')) {
           dayIcon = '🌤️';
           dayDesc = 'Sol / Casi Despejado';
+          dayInfo = getWeatherInfo(1, 1, 0);
         } else if (dayparts.morning.icon === '☀️' && dayparts.afternoon.icon.includes('☁')) {
           dayIcon = '⛅';
           dayDesc = 'Sol mañana, nubes tarde';
+          dayInfo = getWeatherInfo(2, 1, 0);
         } else if (dayparts.morning.icon.includes('☁') && dayparts.afternoon.icon === '☀️') {
           dayIcon = '⛅';
           dayDesc = 'Nubes mañana, abre tarde';
+          dayInfo = getWeatherInfo(2, 1, 0);
         }
       } else if (parseFloat(snowDay) > 0) {
         dayIcon = '🌨️';
+        dayInfo = getWeatherInfo(73, 1, 1);
       }
 
       // Etiqueta del día
@@ -697,9 +720,13 @@ export function renderMountainCard(data, concejo) {
         dayLabel = dStr.charAt(0).toUpperCase() + dStr.slice(1);
       }
 
+      const isBlizzardDay = (dayparts && (dayparts.morning.isBlizzard || dayparts.afternoon.isBlizzard));
+
       return {
         label: dayLabel,
         icon: dayIcon,
+        weatherInfo: dayInfo,
+        isBlizzardDay,
         desc: dayDesc,
         tMax,
         tMin,
@@ -865,7 +892,7 @@ export function renderMountainCard(data, concejo) {
                 <div class="resort-header-badges">
                   <!-- Tiempo General Actual en la Estación -->
                   <div class="ski-sky-badge" title="Tiempo general actual en la estación">
-                    <span class="ski-sky-icon">${r.currentSky.icon}</span>
+                    <span class="ski-sky-icon">${r.currentSky.weatherInfo ? renderWeatherIconHtml(r.currentSky.weatherInfo, 22, iconTheme) : r.currentSky.icon}</span>
                     <span class="ski-sky-label">${r.currentSky.label}</span>
                   </div>
                   <!-- Semáforo de Remontes por Viento en Cumbre -->
@@ -939,7 +966,7 @@ export function renderMountainCard(data, concejo) {
                     <div class="ski-day-card ${f.isGaleRisk ? 'gale-warning' : ''} ${f.dayparts && f.dayparts.isShiftRisk ? 'shift-warning' : ''}">
                       <div class="ski-day-header">
                         <span class="ski-day-name">${f.label}</span>
-                        <span class="ski-day-icon" title="${f.desc}">${f.icon}</span>
+                        <span class="ski-day-icon" title="${f.desc}">${f.isBlizzardDay ? '❄️💨' : (f.weatherInfo ? renderWeatherIconHtml(f.weatherInfo, 24, iconTheme) : f.icon)}</span>
                       </div>
                       
                       <div class="ski-day-temps">
@@ -952,13 +979,13 @@ export function renderMountainCard(data, concejo) {
                         <div class="ski-dayparts-dual">
                           <div class="ski-daypart-slot morning" title="Mañana (09h-13h): ${f.dayparts.morning.label}">
                             <span class="daypart-tag">09-13h</span>
-                            <span class="daypart-icon">${f.dayparts.morning.icon}</span>
+                            <span class="daypart-icon">${f.dayparts.morning.isBlizzard ? '❄️💨' : (f.dayparts.morning.weatherInfo ? renderWeatherIconHtml(f.dayparts.morning.weatherInfo, 18, iconTheme) : f.dayparts.morning.icon)}</span>
                             <span class="daypart-wind ${f.dayparts.morning.isGale ? 'wind-alert' : ''}">💨${f.dayparts.morning.wind}</span>
                           </div>
                           <div class="ski-daypart-divider"></div>
                           <div class="ski-daypart-slot afternoon ${f.dayparts.isShiftRisk ? 'shift-alert' : ''}" title="Tarde (13h-17h): ${f.dayparts.afternoon.label}">
                             <span class="daypart-tag">13-17h</span>
-                            <span class="daypart-icon">${f.dayparts.afternoon.icon}</span>
+                            <span class="daypart-icon">${f.dayparts.afternoon.isBlizzard ? '❄️💨' : (f.dayparts.afternoon.weatherInfo ? renderWeatherIconHtml(f.dayparts.afternoon.weatherInfo, 18, iconTheme) : f.dayparts.afternoon.icon)}</span>
                             <span class="daypart-wind ${f.dayparts.afternoon.isGale ? 'wind-alert' : ''}">💨${f.dayparts.afternoon.wind}</span>
                           </div>
                         </div>
