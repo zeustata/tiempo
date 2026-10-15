@@ -162,19 +162,30 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  animation: heroWeatherFloat 4s ease-in-out infinite;
+  animation: heroWeatherFloat 3.2s ease-in-out infinite;
   transform-origin: center center;
-  will-change: transform, filter;
+  will-change: transform;
 }
 
 @keyframes heroWeatherFloat {
   0%, 100% {
-    transform: translateY(0px) scale(1);
+    transform: translate3d(0, 0px, 0) scale(1) rotate(0deg);
     filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.25));
   }
-  50% {
-    transform: translateY(-4px) scale(1.06);
-    filter: drop-shadow(0 8px 18px rgba(56, 189, 248, 0.45));
+  38% {
+    transform: translate3d(0, -8px, 0) scale(1.10) rotate(2deg);
+    filter: drop-shadow(0 10px 20px rgba(56, 189, 248, 0.50));
+  }
+  70% {
+    transform: translate3d(0, -3px, 0) scale(1.04) rotate(-2deg);
+    filter: drop-shadow(0 6px 14px rgba(56, 189, 248, 0.35));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-icon-block {
+    animation: none !important;
+    transform: none !important;
   }
 }
 

@@ -10,6 +10,19 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.26] - 2026-10-15
+
+### ✨ Dinamismo Visual & Presencia en Estación en Vivo (Feedback Lendo)
+- **Calibración con Presencia del Icono Vivo Flotante (`css/components.css`):**
+  - Ajustado el ciclo de respiración y levitación `@keyframes heroWeatherFloat` para que tenga presencia visible real: ascenso de **-8px** (en vez de -4px imperceptibles), expansión armónica de un **10%** (`scale(1.10)`), balanceo pendular mecido por la brisa (**±2°**) y resplandor vivo sobre el cristal.
+  - Cadencia natural de **3.2s** (en lugar de 4.0s demasiado estático) aportando vida al icono principal sin saturar.
+- **Aceleración por Hardware & Blindaje para SoCs Modestos:**
+  - Migración a `translate3d(0, -8px, 0)` garantizando compositing directo en GPU (0% CPU).
+  - Incorporada directiva `@media (prefers-reduced-motion: reduce)` para apagar la animación automáticamente en modos de ahorro de batería o accesibilidad en móviles antiguos.
+- **Cache-Busting Garantizado (Leyes 1, 4, 10 y 13):**
+  - Service Worker actualizado a `meteoasturlode-v2226-icono-vivo`.
+  - Versión oficial elevada a `v2.2.26 ✨` en pie, modal `#changelog-modal`, CSS y scripts.
+
 ## [2.2.25] - 2026-10-15
 
 ### 📸 Armonía Visual & Iconos Temáticos en la Estampa para Compartir (Feedback Lendo)

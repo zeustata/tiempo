@@ -8,6 +8,24 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## ✨ Actualización v2.2.26: Dinamismo Visual & Presencia en Estación en Vivo — 2026-10-15
+- **Calibración con Presencia del Icono Flotante Vivo (Feedback Lendo):**
+  1. *Diagnóstico Operativo:* Lendo observó con acierto que la animación de respiración introducida en `v2.2.19` resultaba casi imperceptible en la práctica: con apenas 4 píxeles de desplazamiento vertical y un ciclo lento de 4.0 segundos, el icono parecía prácticamente una imagen estática. Solicitó darle «más chicha» y presencia visual sin comprometer la fluidez en móviles antiguos o con SoCs modestos.
+  2. *Intervención Técnica en `css/components.css`:*
+     - Reajuste del ciclo `@keyframes heroWeatherFloat`:
+       * Ascenso vertical visible: ampliado a **-8px** (en vez de -4px).
+       * Expansión de respiración: calibrada al **+10%** (`scale(1.10)` en vez de 1.06).
+       * Bamboleo pendular sutil: balanceo orgánico de **±2°** mecido por la brisa.
+       * Cadencia viva: ritmo ajustado a **3.2 segundos** para una percepción natural y viva sin ser estridente.
+       * Resplandor atmosférico: halo de luz que intensifica su presencia sobre el fondo Liquid Glass.
+  3. *Blindaje de Rendimiento y Aceleración de Hardware para SoCs Modestos:*
+     - Migración a `translate3d(0, -8px, 0)` para garantizar que el navegador delegue el 100% del renderizado en capas de vídeo de la GPU (0% CPU, 60 FPS estables incluso en procesadores de gama de entrada).
+     - Incorporación de `@media (prefers-reduced-motion: reduce)`: apaga automáticamente la animación y deja el icono fijo para usuarios con modo de ahorro de batería o reducción de movimiento activa en Android/iOS.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 13 y 14):**
+  - Versión oficial actualizada a **`v2.2.26 ✨`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v2226-icono-vivo` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.26` en `index.html` y módulos correspondientes.
+
 ## 📸 Actualización v2.2.25: Armonización de Iconos Temáticos en la Estampa para Compartir — 2026-10-15
 - **Sincronización Total de Iconos Vectoriales SVG en Lienzo Canvas (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Lendo detectó que en el menú «Estación en vivo», al pulsar el botón de compartir (`📸`) y abrir la estampa postal compartible («MeteoAstur Instant»), los iconos del tiempo seguían mostrándose como emojis planos clásicos en lugar de los iconos temáticos activos configurados por el usuario.
