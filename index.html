@@ -32,7 +32,7 @@
 
   <!-- Estilos de la Aplicación con Cache Busting -->
   <link rel="stylesheet" href="css/main.css?v=2.2.7">
-  <link rel="stylesheet" href="css/components.css?v=2.2.16">
+  <link rel="stylesheet" href="css/components.css?v=2.2.17">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.7">
 </head>
 <body>
@@ -270,7 +270,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.16 📅</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.17 🌊</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -322,8 +322,21 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.2.16 📅</span>
+            <span class="release-version">v2.2.17 🌊</span>
             <span class="release-date">15 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-ui">Ergonomía &amp; Diseño Móvil (Feedback Lendo)</span> <strong>Carrusel Horizontal para Marea Semanal</strong>:
+              <br>• <strong>Deslizamiento Horizontal Fluido:</strong> Transformada la cuadrícula de 7 días de <em>«Marea Semanal»</em> en un carrusel táctil horizontal continuo con <code>scroll-snap</code> y aceleración nativa.
+              <br>• <strong>Ergonomía Vertical Blindada:</strong> Se reduce drásticamente el desplazamiento hacia abajo en pantallas de móvil (pasando de apilar 7 tarjetas verticales de más de 1.500px a ocupar la altura limpia de una sola tarjeta), permitiendo explorar todos los días deslizando de lado a lado con total comodidad.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.16 📅</span>
+            <span class="release-date">15 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-ui">Depuración de Redundancias (Feedback Lendo)</span> <strong>Supresión de Bombilla Didáctica Duplicada</strong>:
@@ -3274,7 +3287,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.16"></script>
+  <script type="module" src="js/app.js?v=2.2.17"></script>
 
 
 

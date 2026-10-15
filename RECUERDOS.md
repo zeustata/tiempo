@@ -2,6 +2,18 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌊 Actualización v2.2.17: Ergonomía & Carrusel Horizontal en Marea Semanal — 2026-10-15
+- **Transformación de Cuadrícula Semanal en Carrusel Táctil Horizontal (Feedback Lendo):**
+  1. *Diagnóstico Operativo:* Lendo propuso con acierto transformar el desglose de 7 días de «Marea Semanal» a un scroll horizontal, evitando el alargamiento vertical desmedido de la página. En pantallas de teléfono móvil (360px–400px), la cuadrícula forzaba a apilar 7 tarjetas completas vertically, sumando más de 1.500px de longitud de scroll.
+  2. *Intervención Técnica en `components.css`:*
+     - `.weekly-tides-grid`: Rediseñado como contenedor `display: flex; overflow-x: auto; gap: 12px;` con `scroll-snap-type: x mandatory;`, scrollbar fina estilizada en cyan translúcido y aceleración por GPU `-webkit-overflow-scrolling: touch;`.
+     - `.tide-day-card`: Ajustada con `flex: 0 0 215px; min-width: 215px; box-sizing: border-box; scroll-snap-align: start;`.
+     - Resultado: La sección de Marea Semanal reduce su altura al equivalente de un solo día (~220px), permitiendo examinar toda la semana mediante un deslizamiento lateral fluido e intuitivo.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.2.17 🌊`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v2217-marea-semanal-scroll-horizontal` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.17` en `index.html` (CSS y scripts) y `app.js`.
+
 ## 📅 Actualización v2.2.16: Depuración de Redundancias en Marea Semanal — 2026-10-15
 - **Supresión de Bombilla Didáctica Duplicada (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Lendo advirtió con agudeza que la bombilla didáctica de la cabecera de «Marea Semanal» era un duplicado exacto del botón ya existente en «Coeficiente Hoy». Ambas disparaban la misma explicación técnica de mareas y coeficientes (`data-explain="tides"`).

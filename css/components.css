@@ -1307,12 +1307,39 @@
 
 /* --- CUADRO SEMANAL DE MAREAS (7 DÍAS) --- */
 .weekly-tides-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 14px;
+  display: flex;
+  overflow-x: auto;
+  gap: 12px;
+  padding: 4px 4px 14px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(56, 189, 248, 0.4) rgba(15, 23, 42, 0.3);
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+}
+
+.weekly-tides-grid::-webkit-scrollbar {
+  height: 6px;
+}
+
+.weekly-tides-grid::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.3);
+  border-radius: 4px;
+}
+
+.weekly-tides-grid::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.35);
+  border-radius: 4px;
+}
+
+.weekly-tides-grid::-webkit-scrollbar-thumb:hover {
+  background: rgba(56, 189, 248, 0.6);
 }
 
 .tide-day-card {
+  flex: 0 0 215px;
+  min-width: 215px;
+  box-sizing: border-box;
+  scroll-snap-align: start;
   background: var(--bg-surface-elevated);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);

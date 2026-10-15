@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.17] - 2026-10-15
+
+### 🌊 Ergonomía & Carrusel Horizontal en Marea Semanal (Feedback Lendo)
+- **Transformación a Carrusel Táctil Horizontal Continuo:**
+  - Convertida la cuadrícula de 7 días (`.weekly-tides-grid`) en un contenedor `display: flex; overflow-x: auto;` con `scroll-snap-type: x mandatory;`.
+  - Tarjetas de día fijadas en `flex: 0 0 215px` con `scroll-snap-align: start`, barra de scroll sutil y aceleración nativa `-webkit-overflow-scrolling: touch`.
+- **Blindaje contra el Desplazamiento Vertical Excesivo:**
+  - En pantallas móviles se erradica el apilamiento kilométrico de 7 tarjetas verticales (~1.500px), reduciendo la altura total a la de una sola tarjeta (~220px).
+  - Los 7 días se consultan deslizando suavemente de izquierda a derecha con respuesta táctil inmediata.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v2217-marea-semanal-scroll-horizontal`, query strings actualizadas a `?v=2.2.17`.
+
 ## [2.2.16] - 2026-10-15
 
 ### 📅 Depuración de Redundancias en Marea Semanal (Feedback Lendo)
