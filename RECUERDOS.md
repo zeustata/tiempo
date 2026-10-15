@@ -2,6 +2,18 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🥾 Actualización v2.2.20: Síntesis Visual & Rediseño Ejecutivo en Rutas & Senderismo — 2026-10-15
+- **Rediseño Integral y Erradicación del Caos Visual (Feedback Lendo):**
+  1. *Diagnóstico Operativo:* Lendo detectó que el módulo de «Rutas & Senderismo» presentaba una sobrecarga caótica, especialmente en dispositivos móviles, donde el diagnóstico acumulaba barras de tracción, tres cajas apiladas de confort con párrafos extensos y fichas de rutas saturadas de chips y advertencias desordenadas.
+  2. *Intervención Técnica en `routesCard.js` y `components.css`:*
+     - Creación del **Dashboard Ejecutivo**: Sustituida la amalgama de barras y cajas por un banner de veredicto inmediato con semáforo (`hike-optimal`, `hike-warning`, `hike-danger`) y una rejilla simétrica de 3 píldoras métricas limpias: Firme & Tracción (estado del suelo + lluvia acumulada), Cumbres (+300m, temperatura corregida + viento en cresta) y Recomendación de Equipo (calzado ligero o bota + ropa recomendada).
+     - Fichas de Rutas AllTrails-Style: Métricas alineadas en una sola fila compacta (`📏 Distancia`, `⏱️ Tiempo`, `⛰️ Desnivel`), descripciones directas y pastilla sutil de tipo de firme.
+     - Aviso legal conciso y respetuoso con la Ley 16 al pie del módulo.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.2.20 🥾`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v2220-rutas-senderismo-redisenado` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.20` en `index.html` (CSS y scripts) y `app.js`.
+
 ## ✨ Actualización v2.2.19: Dinamismo Visual & Atmósfera Viva en Estación en Vivo — 2026-10-15
 - **Animaciones Atmosféricas en Iconos de la Estación en Vivo (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Lendo propuso dotar de animación al icono del tiempo actual y a los iconos de los sensores en la estación en vivo para captar la atención de los usuarios y dar mayor sensación de dinamismo vivo a la interfaz.

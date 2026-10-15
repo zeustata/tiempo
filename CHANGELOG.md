@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.20] - 2026-10-15
+
+### 🥾 Síntesis Visual & Rediseño Ejecutivo en Rutas & Senderismo (Feedback Lendo)
+- **Erradicación del Caos Visual y Estructuración Ejecutiva:**
+  - Sustituido el antiguo panel sobrecargado y las barras repetitivas por un **Dashboard Ejecutivo** unificado:
+    - **Banner de Veredicto Inmediato:** Indicador claro con semáforo y resumen directo (🟢 Favorable / 🟡 Precaución / 🔴 Desaconsejada).
+    - **3 Píldoras Métricas Simétricas:** Firme & Tracción (estado del suelo y lluvia reciente), Cumbres (+300m, temperatura y viento en cresta) y Recomendación de Equipo (calzado y ropa).
+- **Fichas de Rutas Limpias y Claras:**
+  - Métricas clave en una sola línea horizontal (`📏 Distancia`, `⏱️ Tiempo`, `⛰️ Desnivel`), descripción directa y terreno en pastilla discreta, eliminando la densidad y saturación visual.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v2220-rutas-senderismo-redisenado`, query strings actualizadas a `?v=2.2.20`.
+
 ## [2.2.19] - 2026-10-15
 
 ### ✨ Dinamismo Visual & Atmósfera Viva en Estación en Vivo (Feedback Lendo)

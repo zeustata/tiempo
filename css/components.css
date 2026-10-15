@@ -8542,118 +8542,97 @@
   }
 }
 
-/* Diagnóstico Superior: Caja de Terreno y Confort */
+/* Diagnóstico Superior: Panel Ejecutivo de Senderismo */
 .routes-diagnostics-panel {
-  background: rgba(15, 23, 42, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  padding: 18px 20px;
-  margin-bottom: 22px;
-  box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.35);
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-card);
 }
 
-.traction-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 10px;
-}
-
-.traction-title {
-  font-size: 0.96rem;
-  font-weight: 700;
-  color: #f8fafc;
+.routes-summary-banner {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  padding: 11px 14px;
+  border-radius: var(--radius-md);
+  margin-bottom: 12px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.4;
 }
 
-.traction-level-badge {
-  font-size: 0.82rem;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 20px;
-  letter-spacing: 0.3px;
+.routes-summary-banner.optimal {
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #34d399;
 }
 
-/* Barra visual de tracción en 4 segmentos */
-.traction-bar-track {
-  width: 100%;
-  height: 8px;
-  background: rgba(255, 255, 255, 0.12);
-  border-radius: 6px;
-  overflow: hidden;
-  position: relative;
-  margin-bottom: 8px;
+.routes-summary-banner.warning, .routes-summary-banner.mist {
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  color: #fbbf24;
 }
 
-.traction-bar-fill {
-  height: 100%;
-  border-radius: 6px;
-  transition: width 0.4s ease;
+.routes-summary-banner.danger {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: #f87171;
 }
 
-.traction-subtext {
-  font-size: 0.82rem;
-  color: #cbd5e1;
-  line-height: 1.45;
-  margin-bottom: 16px;
-}
-
-/* Rejilla de Confort en Marcha (3 columnas compactas) */
-.routes-comfort-row {
+.routes-metrics-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding-top: 14px;
+  gap: 10px;
 }
 
-@media (max-width: 768px) {
-  .routes-comfort-row {
+@media (max-width: 680px) {
+  .routes-metrics-grid {
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 8px;
   }
 }
 
-.routes-comfort-item {
+.routes-metric-pill {
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 12px;
-  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: 11px 13px;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
+  transition: all 0.2s ease;
 }
 
-.comfort-item-label {
-  font-size: 0.76rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: #94a3b8;
-  font-weight: 600;
+.routes-metric-pill:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+.rm-pill-top {
   display: flex;
   align-items: center;
   gap: 6px;
-}
-
-.comfort-item-value {
-  font-size: 1.25rem;
+  font-size: 0.74rem;
   font-weight: 700;
-  color: #f8fafc;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
 }
 
-.comfort-item-value .unit {
-  font-size: 0.85rem;
-  color: #94a3b8;
-  font-weight: 500;
+.rm-pill-val {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.2;
 }
 
-.comfort-item-sub {
-  font-size: 0.78rem;
+.rm-pill-sub {
+  font-size: 0.76rem;
   color: #cbd5e1;
+  line-height: 1.35;
 }
 
 /* Filtros Ergonómicos de Rutas (Ley 11 Blindaje Anti-Desborde) */

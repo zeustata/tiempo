@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2219-animacion-viva-iconos-estacion';
+const CACHE_NAME = 'meteoasturlode-v2220-rutas-senderismo-redisenado';
 const STATIC_ASSETS = [
   './',
   './index.html',
