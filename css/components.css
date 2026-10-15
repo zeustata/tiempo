@@ -1311,6 +1311,7 @@
   overflow-x: auto;
   gap: 12px;
   padding: 4px 4px 14px;
+  touch-action: pan-x;
   scrollbar-width: thin;
   scrollbar-color: rgba(56, 189, 248, 0.4) rgba(15, 23, 42, 0.3);
   -webkit-overflow-scrolling: touch;

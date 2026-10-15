@@ -10,6 +10,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.18] - 2026-10-15
+
+### 🌊 Blindaje Táctil & Aislamiento de Swipe en Marea Semanal (Feedback Lendo)
+- **Aislamiento de Gestos Horizontales en `isInteractiveZone`:**
+  - Añadido `.weekly-tides-grid`, `.weekly-tides-card` y `.tide-day-card` a la lista de zonas interactivas protegidas en `js/app.js`.
+  - Directiva `touch-action: pan-x` añadida al contenedor en `components.css`.
+- **Erradicación del Salto Involuntario de Pestaña/Menú:**
+  - El detector global de swipe ya no intercepta los deslizamientos sobre el carrusel de 7 días, permitiendo deslizar suavemente de lado a lado para ver las mareas sin cambiar accidentalmente de módulo.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v2218-blindaje-swipe-marea-semanal`, query strings actualizadas a `?v=2.2.18`.
+
 ## [2.2.17] - 2026-10-15
 
 ### 🌊 Ergonomía & Carrusel Horizontal en Marea Semanal (Feedback Lendo)

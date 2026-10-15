@@ -41,7 +41,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '2.2.17';
+export const CURRENT_APP_VERSION = '2.2.18';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -1764,6 +1764,7 @@ class MeteoAsturiasApp {
         '.chart-smart-digest, .digest-chip, ' +
         '.ski-7days-carousel, .ski-day-card, ' +
         '.tide-scroll-viewport, .tide-svg-chart, ' +
+        '.weekly-tides-grid, .weekly-tides-card, .tide-day-card, ' +
         '.surf-timeline-grid, .surf-dayparts-list, ' +
         '.favorites-pills, .view-tabs, ' +
         '#map-container, .leaflet-container, ' +

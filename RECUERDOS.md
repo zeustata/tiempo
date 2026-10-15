@@ -2,6 +2,17 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌊 Actualización v2.2.18: Blindaje Táctil & Aislamiento de Swipe en Marea Semanal — 2026-10-15
+- **Aislamiento de Gestos de Swipe Horizontal (Feedback Lendo):**
+  1. *Diagnóstico Operativo:* Lendo comprobó en su dispositivo móvil que al intentar deslizar con el dedo sobre el nuevo carrusel de «Marea Semanal», el gesto era capturado por el detector global de swipes de la app (`touchstart`/`touchend` en `app.js`), provocando el cambio involuntario de pestaña o menú entre módulos meteorológicos.
+  2. *Intervención Técnica en `js/app.js` y `components.css`:*
+     - Inclusión de `.weekly-tides-grid`, `.weekly-tides-card` y `.tide-day-card` en la función guardiana `isInteractiveZone(target)` en `js/app.js`, anulando el salto de pestañas cuando el usuario interactúa dentro de la sección de marea semanal.
+     - Añadida la regla CSS `touch-action: pan-x;` a `.weekly-tides-grid` para garantizar que el navegador reconozca y gestione el desplazamiento lateral del carrusel con máxima prioridad y aceleración fluida.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.2.18 🌊`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v2218-blindaje-swipe-marea-semanal` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.18` en `index.html` (CSS y scripts) y `app.js`.
+
 ## 🌊 Actualización v2.2.17: Ergonomía & Carrusel Horizontal en Marea Semanal — 2026-10-15
 - **Transformación de Cuadrícula Semanal en Carrusel Táctil Horizontal (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Lendo propuso con acierto transformar el desglose de 7 días de «Marea Semanal» a un scroll horizontal, evitando el alargamiento vertical desmedido de la página. En pantallas de teléfono móvil (360px–400px), la cuadrícula forzaba a apilar 7 tarjetas completas vertically, sumando más de 1.500px de longitud de scroll.

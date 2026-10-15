@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2217-marea-semanal-scroll-horizontal';
+const CACHE_NAME = 'meteoasturlode-v2218-blindaje-swipe-marea-semanal';
 const STATIC_ASSETS = [
   './',
   './index.html',
