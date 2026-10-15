@@ -10,6 +10,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.21] - 2026-10-15
+
+### 📈 Claridad & Ergonomía en Meteorología Gráfica (Feedback Lendo)
+- **Subtítulo Minimalista en Cabecera de Gráficas:**
+  - Incorporada la leyenda explicativa *«Suite de curvas y tendencias multivariable por horas»* bajo la clase estandarizada `.section-subtitle` en el panel de gráficos (`#panel-charts`), armonizando su jerarquía visual con el resto de módulos de la aplicación.
+- **Cache-Busting Garantizado (Leyes 1, 4, 10 y 13):**
+  - Service Worker actualizado a `meteoasturlode-v2221-subtitulo-grafica`.
+  - Versión oficial elevada a `v2.2.21 📈` en pie, modal y variables del sistema.
+
 ## [2.2.20] - 2026-10-15
 
 ### 🥾 Síntesis Visual & Rediseño Ejecutivo en Rutas & Senderismo (Feedback Lendo)

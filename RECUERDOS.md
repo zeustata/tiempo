@@ -8,6 +8,17 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 📈 Actualización v2.2.21: Subtítulo Minimalista en Meteorología Gráfica — 2026-10-15
+- **Claridad y Jerarquía Visual en el Módulo Gráfico (Feedback Lendo):**
+  1. *Diagnóstico Operativo:* Lendo solicitó incorporar un subtítulo explicativo en el módulo de «Meteorología Gráfica» para orientar al usuario sobre el contenido de la suite manteniendo un diseño limpio y minimalista. Entre las opciones propuestas, Lendo seleccionó la opción sintética y sobria: *«Suite de curvas y tendencias multivariable por horas»*.
+  2. *Intervención Técnica en `index.html`:*
+     - Inserción de `<span class="section-subtitle">Suite de curvas y tendencias multivariable por horas</span>` dentro de `chart-header-block`.
+     - Integración natural con la clase `.section-subtitle` (`0.84rem`, color `#cbd5e1`, interlineado `1.3`), garantizando total coherencia visual con el resto de cabeceras de la aplicación y blindaje anti-desborde en móvil.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.2.21 📈`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v2221-subtitulo-grafica` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.21` en `index.html` (CSS y scripts) y `app.js`.
+
 ## 🥾 Actualización v2.2.20: Síntesis Visual & Rediseño Ejecutivo en Rutas & Senderismo — 2026-10-15
 - **Rediseño Integral y Erradicación del Caos Visual (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Lendo detectó que el módulo de «Rutas & Senderismo» presentaba una sobrecarga caótica, especialmente en dispositivos móviles, donde el diagnóstico acumulaba barras de tracción, tres cajas apiladas de confort con párrafos extensos y fichas de rutas saturadas de chips y advertencias desordenadas.

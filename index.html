@@ -32,7 +32,7 @@
 
   <!-- Estilos de la Aplicación con Cache Busting -->
   <link rel="stylesheet" href="css/main.css?v=2.2.7">
-  <link rel="stylesheet" href="css/components.css?v=2.2.20">
+  <link rel="stylesheet" href="css/components.css?v=2.2.21">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.7">
 </head>
 <body>
@@ -187,7 +187,10 @@
         <div class="chart-card">
           <!-- CABECERA DE METEOROLOGÍA GRÁFICA CON SELECTOR DESPLEGABLE (OPCIÓN B) -->
           <div class="chart-header-block">
-            <h3 class="section-heading">📈 Meteorología Gráfica</h3>
+            <div>
+              <h3 class="section-heading">📈 Meteorología Gráfica</h3>
+              <span class="section-subtitle">Suite de curvas y tendencias multivariable por horas</span>
+            </div>
             
             <div class="chart-controls-bar">
               <!-- SELECTOR DESPLEGABLE DE VARIABLES -->
@@ -270,7 +273,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.20 🥾</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.21 📈</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -322,8 +325,20 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.2.20 🥾</span>
+            <span class="release-version">v2.2.21 📈</span>
             <span class="release-date">15 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-ui">Claridad &amp; Ergonomía (Feedback Lendo)</span> <strong>Subtítulo Explicativo en Meteorología Gráfica</strong>:
+              <br>• <strong>Identidad Visual Homogénea:</strong> Incorporado el subtítulo minimalista <em>«Suite de curvas y tendencias multivariable por horas»</em> en la cabecera del módulo bajo <code>.section-subtitle</code>, alineando su estética con el resto de módulos de la aplicación.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.20 🥾</span>
+            <span class="release-date">15 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-ui">Síntesis y Ergonomía (Feedback Lendo)</span> <strong>Rediseño Integral de Rutas &amp; Senderismo</strong>:
@@ -3326,7 +3341,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.20"></script>
+  <script type="module" src="js/app.js?v=2.2.21"></script>
 
 
 

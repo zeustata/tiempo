@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2220-rutas-senderismo-redisenado';
+const CACHE_NAME = 'meteoasturlode-v2221-subtitulo-grafica';
 const STATIC_ASSETS = [
   './',
   './index.html',
