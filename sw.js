@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2218-blindaje-swipe-marea-semanal';
+const CACHE_NAME = 'meteoasturlode-v2219-animacion-viva-iconos-estacion';
 const STATIC_ASSETS = [
   './',
   './index.html',

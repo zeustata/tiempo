@@ -2,6 +2,17 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## ✨ Actualización v2.2.19: Dinamismo Visual & Atmósfera Viva en Estación en Vivo — 2026-10-15
+- **Animaciones Atmosféricas en Iconos de la Estación en Vivo (Feedback Lendo):**
+  1. *Diagnóstico Operativo:* Lendo propuso dotar de animación al icono del tiempo actual y a los iconos de los sensores en la estación en vivo para captar la atención de los usuarios y dar mayor sensación de dinamismo vivo a la interfaz.
+  2. *Intervención Técnica en `components.css`:*
+     - `.hero-icon-block`: Creada animación fluida `heroWeatherFloat 4s ease-in-out infinite` que produce una suave levitación vertical (-4px), respiración de escala (`1.0` a `1.06`) y resplandor ambiental (*glow*) de sombras. Esta animación opera a nivel de contenedor padre, garantizando compatibilidad universal con los 7 temas gráficos (emojis del sistema, Astur SVG, Liquid Glass 3D, Neón, Píxel, Boceto y Futurista).
+     - `.sensor-icon`: Creada animación `sensorIconSubtlePulse 4.5s ease-in-out infinite` con un micro-latido pausado y elegante (escala `1.0` a `1.08`, opacidad `0.88` a `1.0`), manteniendo la jerarquía y perfecta armonía con las bombillas ámbar `💡` sin saturar la pantalla ni entorpecer la lectura de los datos.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.2.19 ✨`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v2219-animacion-viva-iconos-estacion` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.19` en `index.html` (CSS y scripts) y `app.js`.
+
 ## 🌊 Actualización v2.2.18: Blindaje Táctil & Aislamiento de Swipe en Marea Semanal — 2026-10-15
 - **Aislamiento de Gestos de Swipe Horizontal (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Lendo comprobó en su dispositivo móvil que al intentar deslizar con el dedo sobre el nuevo carrusel de «Marea Semanal», el gesto era capturado por el detector global de swipes de la app (`touchstart`/`touchend` en `app.js`), provocando el cambio involuntario de pestaña o menú entre módulos meteorológicos.

@@ -10,6 +10,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.19] - 2026-10-15
+
+### ✨ Dinamismo Visual & Atmósfera Viva en Estación en Vivo (Feedback Lendo)
+- **Animación Flotante y Respiración Viva en Icono del Tiempo Actual:**
+  - Creada animación `@keyframes heroWeatherFloat 4s ease-in-out infinite` sobre `.hero-icon-block`.
+  - El icono del cielo levita suavemente 4px con un sutil pulso de escala (1.0 a 1.06) y resplandor ambiental (*glow* atmosférico).
+  - Compatible al 100% y de forma automática con los 7 temas de iconos disponibles (Emojis nativos, Asturiano SVG, Liquid Glass 3D, Neón, Píxel, Boceto y Futurista).
+- **Micro-latido Orgánico en Sensores:**
+  - Creada animación `@keyframes sensorIconSubtlePulse 4.5s ease-in-out infinite` sobre `.sensor-icon`.
+  - Los iconos de las tarjetas de sensores (anemómetro, lluvia, barómetro, UV, etc.) respiran con cadencia relajada y elegante, conviviendo en armonía con las bombillas ámbar sin saturar la vista.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v2219-animacion-viva-iconos-estacion`, query strings actualizadas a `?v=2.2.19`.
+
 ## [2.2.18] - 2026-10-15
 
 ### 🌊 Blindaje Táctil & Aislamiento de Swipe en Marea Semanal (Feedback Lendo)

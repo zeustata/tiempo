@@ -159,6 +159,23 @@
   line-height: 1;
   filter: drop-shadow(0 4px 10px rgba(0,0,0,0.25));
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  animation: heroWeatherFloat 4s ease-in-out infinite;
+  transform-origin: center center;
+  will-change: transform, filter;
+}
+
+@keyframes heroWeatherFloat {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.25));
+  }
+  50% {
+    transform: translateY(-4px) scale(1.06);
+    filter: drop-shadow(0 8px 18px rgba(56, 189, 248, 0.45));
+  }
 }
 
 .hero-main-row {
@@ -749,7 +766,25 @@
 }
 
 .sensor-icon {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  animation: sensorIconSubtlePulse 4.5s ease-in-out infinite;
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+@keyframes sensorIconSubtlePulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.88;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+    filter: drop-shadow(0 0 5px rgba(56, 189, 248, 0.35));
+  }
 }
 
 .sensor-title {
