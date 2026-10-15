@@ -2,6 +2,17 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📅 Actualización v2.2.15: Síntesis Visual en Marea Semanal — 2026-10-15
+- **Simplificación de Cabecera en Marea Semanal (Feedback Lendo):**
+  1. *Diagnóstico Operativo:* Lendo solicitó continuar la poda de textos largos en el módulo de Playas y Mareas, renombrando la tarjeta de mareas a 7 días.
+  2. *Intervención Técnica en `marineCard.js`:*
+     - Título: Sustituido *«Cuadro Semanal de Mareas & Coeficientes»* por **«Marea Semanal»**.
+     - Subtítulo: Reducido a *«Previsión a 7 días • Fases lunares»*, erradicando texto superfluo y armonizando la estética con el Mareógrafo.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.2.15 📅`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v2215-marea-semanal-minimal` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.15` en `index.html` (CSS y scripts) y `app.js`.
+
 ## 🏖️ Actualización v2.2.14: Refinamiento Tipográfico & Limpieza en Mareas de Hoy — 2026-10-15
 - **Supresión de Etiqueta «Próxima» & Ajuste de Escala Tipográfica (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Lendo aportó captura móvil donde se comprobaba que en las píldoras del 50% de ancho la etiqueta verde «Próxima» quedaba estrangulada y cortada en el lateral derecho, y que los números de hora y metros resultaban algo desproporcionados para el tamaño de la pastilla.

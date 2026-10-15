@@ -10,6 +10,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.15] - 2026-10-15
+
+### 📅 Síntesis Visual en Marea Semanal (Feedback Lendo)
+- **Simplificación Integral de la Cabecera:**
+  - Título conciso: Sustituido *«Cuadro Semanal de Mareas & Coeficientes»* por **«Marea Semanal»**.
+  - Subtítulo aligerado: Reducido a *«Previsión a 7 días • Fases lunares»*, despejando el espacio visual de la tarjeta y armonizando con el estilo directo de la app.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v2215-marea-semanal-minimal`, query strings actualizadas a `?v=2.2.15`.
+
 ## [2.2.14] - 2026-10-15
 
 ### 🏖️ Refinamiento Tipográfico & Limpieza en Mareas de Hoy (Feedback Lendo)

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2214-mareas-tipografia-fina';
+const CACHE_NAME = 'meteoasturlode-v2215-marea-semanal-minimal';
 const STATIC_ASSETS = [
   './',
   './index.html',
