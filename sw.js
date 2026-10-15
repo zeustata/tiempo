@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2227-carrusel-10dias';
+const CACHE_NAME = 'meteoasturlode-v2228-blindaje-carrusel-10dias';
 const STATIC_ASSETS = [
   './',
   './index.html',

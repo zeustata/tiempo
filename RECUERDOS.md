@@ -8,6 +8,20 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🛡️ Actualización v2.2.28: Blindaje Táctil & Pantalla Completa en Pronóstico a 10 Días — 2026-10-16
+- **Aislamiento de Gestos de Swipe y Ajuste de Pantalla Completa (Feedback Crítico de Lendo):**
+  1. *Diagnóstico Operativo en Móvil:* Lendo identificó dos problemas inmediatos tras la publicación del carrusel:
+     - *Problema 1 (Encuadre de Tarjeta):* La tarjeta no cabía entera en la pantalla del móvil (`calc(100% - 24px)` con `scroll-snap-align: center`), asomando el día anterior por la izquierda y cortando el extremo derecho (temperaturas y rachas de viento).
+     - *Problema 2 (Conflicto de Swipe):* Al deslizar con el pulgar para cambiar de día, el gesto era capturado por el detector global `setupSwipeNavigation()` de `app.js`, saltando involuntariamente de pestaña o menú en lugar de avanzar en los 10 días.
+  2. *Intervención Técnica en `components.css` y `app.js`:*
+     - `.daily-card-rich`: Reconfigurada para ocupar el **100% exacto del ancho útil** (`flex: 0 0 100%; width: 100%; max-width: 100%`) con alineación inicial (`scroll-snap-align: start`) y salto estricto (`scroll-snap-stop: always`). La tarjeta se ve íntegra, sin recortes ni elementos residuales.
+     - `.daily-cards-container`: Espaciado lateral eliminado (`padding: 8px 0 14px 0`), `width: 100%; box-sizing: border-box;` y desplazamiento suave `scroll-behavior: smooth;`.
+     - `setupSwipeNavigation()` en `js/app.js`: Añadidas las clases `.daily-cards-container`, `.daily-card-rich` y `.forecast-scroll-hint` a la función guardiana `isInteractiveZone(target)`, blindando completamente el carrusel contra cambios accidentales de menú.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 13 y 14):**
+  - Versión oficial actualizada a **`v2.2.28 📅`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), CSS y scripts.
+  - Service Worker actualizado a `meteoasturlode-v2228-blindaje-carrusel-10dias` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.28` en `index.html` y módulos correspondientes.
+
 ## 📅 Actualización v2.2.27: Carrusel Horizontal Día a Día en Pronóstico a 10 Días — 2026-10-16
 - **Ergonomía Móvil y Supresión de Scroll Vertical (Petición Expresa de Lendo):**
   1. *Diagnóstico Operativo:* Lendo identificó un punto de fatiga ergonómica en el módulo de «Pronóstico a 10 Días» (`#panel-forecast`): las 10 tarjetas diarias se apilaban verticalmente, generando una columna de más de 3.500 píxeles de longitud. Consultar el final del pronóstico obligaba a deslizar el pulgar hacia abajo decenas de veces, y luego realizar el camino inverso para volver a la cabecera.

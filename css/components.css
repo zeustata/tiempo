@@ -1755,13 +1755,16 @@
   display: flex;
   overflow-x: auto;
   gap: 16px;
-  padding: 8px 4px 14px;
+  padding: 8px 0 14px 0;
   margin-top: 14px;
   touch-action: pan-x;
   scrollbar-width: thin;
   scrollbar-color: rgba(56, 189, 248, 0.4) rgba(15, 23, 42, 0.3);
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .daily-cards-container::-webkit-scrollbar {
@@ -1779,15 +1782,17 @@
 }
 
 .daily-card-rich {
-  flex: 0 0 min(370px, calc(100% - 24px));
-  min-width: 290px;
-  max-width: 400px;
-  scroll-snap-align: center;
+  flex: 0 0 100%;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
   box-sizing: border-box;
   background: var(--bg-surface-elevated);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
-  padding: 20px 22px;
+  padding: 18px 18px;
   box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
@@ -1795,12 +1800,15 @@
   transition: all 0.25s ease;
   position: relative;
   overflow: hidden;
+  touch-action: pan-x;
 }
 
 @media (min-width: 769px) {
   .daily-card-rich {
     flex: 0 0 350px;
+    max-width: 350px;
     scroll-snap-align: start;
+    scroll-snap-stop: normal;
   }
 }
 

@@ -32,7 +32,7 @@
 
   <!-- Estilos de la Aplicación con Cache Busting -->
   <link rel="stylesheet" href="css/main.css?v=2.2.7">
-  <link rel="stylesheet" href="css/components.css?v=2.2.27">
+  <link rel="stylesheet" href="css/components.css?v=2.2.28">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.7">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.27 📅</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.28 📅</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -326,8 +326,21 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.2.27 📅</span>
+            <span class="release-version">v2.2.28 📅</span>
             <span class="release-date">16 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-fix">Blindaje Táctil &amp; Ergonomía (Feedback Lendo)</span> <strong>Inmunidad al Swipe y Pantalla Completa en Pronóstico a 10 Días</strong>:
+              <br>• <strong>Visión Íntegra al 100%:</strong> Cada tarjeta diaria ocupa ahora el 100% exacto del ancho de pantalla en móviles con fijación magnética (<code>scroll-snap-stop: always</code>), permitiendo ver el día completo sin recortes a la derecha ni restos del día anterior.
+              <br>• <strong>Blindaje de Navegación por Gestos:</strong> Integrado el carrusel en la zona táctil protegida (<code>isInteractiveZone</code>) para que al deslizar el pulgar entre días no se active el cambio involuntario de menú o pestaña.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.27 📅</span>
+            <span class="release-date">16 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-ui">Ergonomía Móvil &amp; Síntesis (Petición Lendo)</span> <strong>Carrusel Horizontal Día a Día en Pronóstico a 10 Días</strong>:
@@ -3418,7 +3431,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.27"></script>
+  <script type="module" src="js/app.js?v=2.2.28"></script>
 
 
 

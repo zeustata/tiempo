@@ -7,7 +7,7 @@ import { renderSurfCard } from './components/surfCard.js?v=2.2.12';
 import { renderRoutesCard } from './components/routesCard.js?v=2.2.20';
 import { renderMountainCard } from './components/mountainCard.js?v=2.2.24';
 import { renderTourismCard } from './components/tourismCard.js?v=2.2.1';
-import { renderForecast } from './components/forecastView.js?v=2.2.27';
+import { renderForecast } from './components/forecastView.js?v=2.2.28';
 import { renderWeatherChart } from './components/chartsView.js?v=2.2.23';
 import { renderAstronomyView } from './components/astronomyCard.js?v=2.2.1';
 import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=2.2.1';
@@ -1765,6 +1765,7 @@ class MeteoAsturiasApp {
         '.ski-7days-carousel, .ski-day-card, ' +
         '.tide-scroll-viewport, .tide-svg-chart, ' +
         '.weekly-tides-grid, .weekly-tides-card, .tide-day-card, ' +
+        '.daily-cards-container, .daily-card-rich, .forecast-scroll-hint, ' +
         '.surf-timeline-grid, .surf-dayparts-list, ' +
         '.favorites-pills, .view-tabs, ' +
         '#map-container, .leaflet-container, ' +
