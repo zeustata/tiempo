@@ -10,6 +10,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.29] - 2026-10-16
+
+### 🏖️ Carrusel Monotarjeta al 100% en Marea Semanal (Aplicación Ley 18 / Feedback Lendo)
+- **Encuadre Monotarjeta al 100% en Pantallas Móviles (`components.css`):**
+  - Cada tarjeta de marea `.tide-day-card` se reconfigura para ocupar el 100% exacto del ancho útil disponible en smartphones (`flex: 0 0 100%; width: 100%; max-width: 100%`) con alineación inicial fija `scroll-snap-align: start`.
+  - Añadida la propiedad CSS `scroll-snap-stop: always`, asegurando que cada arrastre con el pulgar desplace limpiamente un día de marea a la vez sin espacios residuales.
+- **Pastilla Didáctica en Cristal Líquido (`marineCard.js`):**
+  - Añadida la pastilla interactiva *«👉 Desliza horizontalmente para ver los 7 días de mareas ➔»* bajo el carrusel de marea semanal.
+- **Cache-Busting Garantizado (Leyes 1, 4, 10 y 13):**
+  - Service Worker actualizado a `meteoasturlode-v2229-marea-semanal-monotarjeta`.
+  - Versión oficial elevada a `v2.2.29 🏖️` en pie, modal `#changelog-modal`, CSS y scripts.
+
 ## [2.2.28] - 2026-10-16
 
 ### 🛡️ Blindaje Táctil & Pantalla Completa en Pronóstico a 10 Días (Feedback Lendo)

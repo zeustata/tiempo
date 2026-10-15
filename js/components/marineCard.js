@@ -1282,6 +1282,12 @@ export function renderMarineCard(data, concejo) {
             </div>
           `).join('')}
         </div>
+
+        <div class="forecast-scroll-hint weekly-tides-scroll-hint">
+          <span class="hint-hand">👉</span>
+          <span>Desliza horizontalmente para ver los 7 días de mareas</span>
+          <span class="hint-arrow">➔</span>
+        </div>
       </div>
 
       <!-- 3. GRID DE SENSORES TURÍSTICOS Y CONDICIONES DE PLAYA -->

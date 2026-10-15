@@ -8,6 +8,18 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🏖️ Actualización v2.2.29: Carrusel Monotarjeta al 100% en Marea Semanal (Ley 18) — 2026-10-16
+- **Aplicación Directa de la Ley 18 en Marea Semanal (Feedback Lendo):**
+  1. *Diagnóstico Operativo:* Lendo identificó que en la sección de Marea Semanal (`.weekly-tides-grid` dentro de Playas & Mareas), cada tarjeta diaria (`.tide-day-card`) mantenía un ancho rígido de 215px. En teléfonos móviles ocupaba solo el ~60% de pantalla, dejando espacio vacío a la derecha y no ofreciendo una experiencia monotarjeta completa.
+  2. *Intervención Técnica en `components.css` y `marineCard.js`:*
+     - `.tide-day-card`: Reconfigurada para ocupar el **100% exacto del ancho útil** (`flex: 0 0 100%; width: 100%; max-width: 100%`) con fijación `scroll-snap-align: start` y `scroll-snap-stop: always`.
+     - `.weekly-tides-grid`: Espaciado lateral eliminado (`padding: 4px 0 14px 0`), `width: 100%; box-sizing: border-box;` y desplazamiento suave `scroll-behavior: smooth;`.
+     - `marineCard.js`: Añadida la pastilla didáctica interactiva en cristal líquido (`.forecast-scroll-hint.weekly-tides-scroll-hint`) para guiar el desplazamiento de los 7 días de mareas.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 13 y 14):**
+  - Versión oficial actualizada a **`v2.2.29 🏖️`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), CSS y scripts.
+  - Service Worker actualizado a `meteoasturlode-v2229-marea-semanal-monotarjeta` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.29` en `index.html` y módulos correspondientes.
+
 ## 🛡️ Actualización v2.2.28: Blindaje Táctil & Pantalla Completa en Pronóstico a 10 Días — 2026-10-16
 - **Aislamiento de Gestos de Swipe y Ajuste de Pantalla Completa (Feedback Crítico de Lendo):**
   1. *Diagnóstico Operativo en Móvil:* Lendo identificó dos problemas inmediatos tras la publicación del carrusel:

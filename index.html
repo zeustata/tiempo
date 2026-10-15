@@ -32,7 +32,7 @@
 
   <!-- Estilos de la Aplicación con Cache Busting -->
   <link rel="stylesheet" href="css/main.css?v=2.2.7">
-  <link rel="stylesheet" href="css/components.css?v=2.2.28">
+  <link rel="stylesheet" href="css/components.css?v=2.2.29">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.7">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.28 📅</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.29 🏖️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -326,8 +326,21 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.2.28 📅</span>
+            <span class="release-version">v2.2.29 🏖️</span>
             <span class="release-date">16 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-ui">Ergonomía &amp; Ley 18 (Feedback Lendo)</span> <strong>Carrusel Monotarjeta al 100% en Marea Semanal</strong>:
+              <br>• <strong>Encuadre Completo en Pantalla:</strong> Cada día de marea (<code>.tide-day-card</code>) pasa a ocupar el 100% exacto del ancho de smartphone con salto magnético de uno en uno (<code>scroll-snap-stop: always</code>), permitiendo leer las pleamares, bajamares y coeficientes con máxima holgura y sin espacios residuales.
+              <br>• <strong>Pastilla Didáctica de Desplazamiento:</strong> Añadido el indicador táctil en cristal líquido bajo el carrusel (<em>«👉 Desliza horizontalmente para ver los 7 días de mareas ➔»</em>).
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.28 📅</span>
+            <span class="release-date">16 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-fix">Blindaje Táctil &amp; Ergonomía (Feedback Lendo)</span> <strong>Inmunidad al Swipe y Pantalla Completa en Pronóstico a 10 Días</strong>:
@@ -3431,7 +3444,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.28"></script>
+  <script type="module" src="js/app.js?v=2.2.29"></script>
 
 
 
