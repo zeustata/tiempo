@@ -32,7 +32,7 @@ const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, pronóstico horario 72h y alertas', key: '1' },
   { id: 'charts', icon: '📈', title: 'Meteorología Gráfica', desc: 'Observatorio interactivo: curvas de temperatura, lluvia, viento, barómetro y más', key: '2' },
   { id: 'forecast', icon: '📅', title: 'Pronóstico a 10 Días', desc: 'Predicción diaria completa con desglose de mañana y tarde', key: '3' },
-  { id: 'radar', icon: '📡', title: 'Radar en Directo', desc: 'Precipitación y tormentas vía satélite RainViewer', key: '4' },
+  { id: 'radar', icon: '📡', title: 'Radar en Directo', desc: 'Seguimiento de lluvia y tormentas en tiempo real vía satélite', key: '4' },
   { id: 'marine', icon: '🏖️', title: 'Playas & Mareas', desc: 'Mareógrafo 72h, fases lunares, estado de baño, bandera y calas', key: '5' },
   { id: 'surf', icon: '🏄‍♂️', title: 'Surf & Rompientes', desc: 'Swell, período, viento offshore/onshore, picos bautizados y fondos', key: '6' },
   { id: 'routes', icon: '🥾', title: 'Rutas & Senderismo', desc: 'Confort de marcha, índice de barro en sendas y catálogo de rutas asturianas', key: '7' },
@@ -41,7 +41,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '2.2.21';
+export const CURRENT_APP_VERSION = '2.2.22';
 
 class MeteoAsturiasApp {
   constructor() {

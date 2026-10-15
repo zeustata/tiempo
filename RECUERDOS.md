@@ -8,6 +8,18 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 📡 Actualización v2.2.22: Subtítulo Explicativo en Radar en Directo — 2026-10-15
+- **Claridad y Jerarquía Visual en el Módulo de Radar (Feedback Lendo):**
+  1. *Diagnóstico Operativo:* Lendo solicitó incorporar un subtítulo en el módulo de «Radar en Directo» para armonizar su cabecera y guiar al usuario sobre el contenido del radar satélite en tiempo real. Entre las opciones propuestas, Lendo seleccionó la opción 3: *«Seguimiento de lluvia y tormentas en tiempo real vía satélite»*.
+  2. *Intervención Técnica en `index.html` y `app.js`:*
+     - Inserción de `<span class="section-subtitle">Seguimiento de lluvia y tormentas en tiempo real vía satélite</span>` en la cabecera de `radar-controls-bar` en `index.html`.
+     - Integración natural bajo la clase unificada `.section-subtitle` (`0.84rem`, `#cbd5e1`, interlineado `1.3`), garantizando ergonomía móvil y blindaje anti-desborde.
+     - Sincronización de la descripción del módulo radar en `APP_MODULES` (`app.js`) para una correspondencia total en el menú modal de navegación.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.2.22 📡`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v2222-subtitulo-radar` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.22` en `index.html` y scripts de la aplicación.
+
 ## 📈 Actualización v2.2.21: Subtítulo Minimalista en Meteorología Gráfica — 2026-10-15
 - **Claridad y Jerarquía Visual en el Módulo Gráfico (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Lendo solicitó incorporar un subtítulo explicativo en el módulo de «Meteorología Gráfica» para orientar al usuario sobre el contenido de la suite manteniendo un diseño limpio y minimalista. Entre las opciones propuestas, Lendo seleccionó la opción sintética y sobria: *«Suite de curvas y tendencias multivariable por horas»*.

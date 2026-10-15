@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.22] - 2026-10-15
+
+### 📡 Claridad & Ergonomía en Radar en Directo (Feedback Lendo)
+- **Subtítulo Minimalista en Cabecera de Radar:**
+  - Incorporada la leyenda explicativa *«Seguimiento de lluvia y tormentas en tiempo real vía satélite»* bajo la clase estandarizada `.section-subtitle` en el panel de radar (`#panel-radar`), armonizando su jerarquía visual con el resto de módulos de la aplicación.
+- **Sincronización en Menú de Módulos (`APP_MODULES`):**
+  - Actualizada la descripción en la tarjeta de navegación de radar para mantener perfecta consistencia visual y de contenido.
+- **Cache-Busting Garantizado (Leyes 1, 4, 10 y 13):**
+  - Service Worker actualizado a `meteoasturlode-v2222-subtitulo-radar`.
+  - Versión oficial elevada a `v2.2.22 📡` en pie, modal y variables del sistema.
+
 ## [2.2.21] - 2026-10-15
 
 ### 📈 Claridad & Ergonomía en Meteorología Gráfica (Feedback Lendo)
