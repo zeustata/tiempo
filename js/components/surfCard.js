@@ -982,6 +982,11 @@ export function renderSurfCard(data, concejo) {
               </div>
             `).join('')}
           </div>
+          <div class="forecast-scroll-hint surf-daily-scroll-hint">
+            <span class="hint-hand">👉</span>
+            <span>Desliza horizontalmente para ver los 7 días de surf</span>
+            <span class="hint-arrow">➔</span>
+          </div>
         </div>
       </div>
 

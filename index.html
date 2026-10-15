@@ -31,8 +31,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.2.30">
-  <link rel="stylesheet" href="css/components.css?v=2.2.30">
+  <link rel="stylesheet" href="css/main.css?v=2.2.31">
+  <link rel="stylesheet" href="css/components.css?v=2.2.31">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.7">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.30 👆</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.31 🏄‍♂️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -326,8 +326,21 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.2.30 👆</span>
+            <span class="release-version">v2.2.31 🏄‍♂️</span>
             <span class="release-date">16 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-ui">Ergonomía &amp; Ley 18 (Feedback Lendo)</span> <strong>Carrusel Horizontal Monotarjeta al 100% en Surf 7 Días</strong>:
+              <br>• <strong>Desplazamiento Lateral Fluido:</strong> Transformada la vista de 7 días de surf (<code>.surf-daily-cards-grid</code>) de columna vertical infinita a carrusel táctil horizontal monotarjeta al 100% con fijación magnética (<code>scroll-snap-stop: always</code>) y <code>touch-action: pan-x pan-y</code>.
+              <br>• <strong>Pastilla Didáctica &amp; Blindaje:</strong> Incorporado el indicador táctil (<em>«👉 Desliza horizontalmente para ver los 7 días de surf ➔»</em>) y protección en <code>isInteractiveZone</code> para evitar cambios involuntarios de menú.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.30 👆</span>
+            <span class="release-date">16 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-fix">Fluidez Táctil &amp; Ergonomía (Feedback Lendo)</span> <strong>Preservación del Scroll Vertical Libre en Carruseles</strong>:
@@ -3456,7 +3469,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.30"></script>
+  <script type="module" src="js/app.js?v=2.2.31"></script>
 
 
 

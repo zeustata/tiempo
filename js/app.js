@@ -3,7 +3,7 @@ import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from 
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=2.0.0';
 import { renderCurrentWeather } from './components/currentCard.js?v=2.2.12';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=2.2.29';
-import { renderSurfCard } from './components/surfCard.js?v=2.2.12';
+import { renderSurfCard } from './components/surfCard.js?v=2.2.31';
 import { renderRoutesCard } from './components/routesCard.js?v=2.2.20';
 import { renderMountainCard } from './components/mountainCard.js?v=2.2.24';
 import { renderTourismCard } from './components/tourismCard.js?v=2.2.1';
@@ -1766,7 +1766,7 @@ class MeteoAsturiasApp {
         '.tide-scroll-viewport, .tide-svg-chart, ' +
         '.weekly-tides-grid, .weekly-tides-card, .tide-day-card, ' +
         '.daily-cards-container, .daily-card-rich, .forecast-scroll-hint, ' +
-        '.surf-timeline-grid, .surf-dayparts-list, ' +
+        '.surf-timeline-grid, .surf-daily-cards-grid, .surf-daily-card, .surf-dayparts-list, .surf-daily-scroll-hint, ' +
         '.favorites-pills, .view-tabs, ' +
         '#map-container, .leaflet-container, ' +
         '.modal-overlay, .modal-card, ' +

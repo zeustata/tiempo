@@ -118,6 +118,8 @@ body {
 .daily-cards-container,
 .daily-card-rich,
 .surf-timeline-grid,
+.surf-daily-cards-grid,
+.surf-daily-card,
 #map-container,
 .leaflet-container {
   touch-action: pan-x pan-y;

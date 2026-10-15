@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2230-touch-action-pan-y';
+const CACHE_NAME = 'meteoasturlode-v2231-surf-7dias-carrusel';
 const STATIC_ASSETS = [
   './',
   './index.html',

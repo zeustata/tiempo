@@ -10,6 +10,22 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.31] - 2026-10-16
+
+### 🏄‍♂️ Carrusel Monotarjeta al 100% en Surf 7 Días (Aplicación Ley 18 / Feedback Lendo)
+- **Transformación a Carrusel Horizontal (`components.css` y `surfCard.js`):**
+  - Reemplazada la columna vertical infinita de 7 días (`.surf-daily-cards-grid`) por un carrusel táctil horizontal fluido con fijación magnética `scroll-snap-type: x mandatory` y `scroll-snap-stop: always`.
+  - En móviles cada tarjeta diaria `.surf-daily-card` ocupa el 100% exacto del ancho útil (`flex: 0 0 100%; width: 100%; max-width: 100%`) con alineación inicial fija `scroll-snap-align: start`.
+  - En tablets y escritorio se adapta a 350px de ancho fijo ergonómico.
+- **Scroll Vertical Libre & Blindaje Táctil (`main.css` y `app.js`):**
+  - Asignada la directiva `touch-action: pan-x pan-y;` conforme a la Ley 18 para no bloquear jamás el scroll vertical de la página.
+  - Blindadas las clases `.surf-daily-cards-grid`, `.surf-daily-card` y `.surf-daily-scroll-hint` en `isInteractiveZone` para impedir saltos accidentales de menú al deslizar.
+- **Pastilla Didáctica en Cristal Líquido (`surfCard.js`):**
+  - Añadida la pastilla *«👉 Desliza horizontalmente para ver los 7 días de surf ➔»* con micro-animación intuitiva.
+- **Cache-Busting Garantizado (Leyes 1, 4, 10 y 13):**
+  - Service Worker actualizado a `meteoasturlode-v2231-surf-7dias-carrusel`.
+  - Versión oficial elevada a `v2.2.31 🏄‍♂️` en pie, modal `#changelog-modal`, CSS y scripts.
+
 ## [2.2.30] - 2026-10-16
 
 ### 👆 Desbloqueo de Scroll Vertical Libre en Carruseles (Feedback Lendo)
