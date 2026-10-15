@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2226-icono-vivo';
+const CACHE_NAME = 'meteoasturlode-v2227-carrusel-10dias';
 const STATIC_ASSETS = [
   './',
   './index.html',

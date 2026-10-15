@@ -383,6 +383,11 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
         <div class="daily-cards-container">
           ${dailyCards}
         </div>
+        <div class="forecast-scroll-hint">
+          <span class="hint-hand">👉</span>
+          <span>Desliza horizontalmente para ver los 10 días</span>
+          <span class="hint-arrow">➔</span>
+        </div>
       </div>
     </div>
   `;

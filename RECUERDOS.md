@@ -8,6 +8,25 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 📅 Actualización v2.2.27: Carrusel Horizontal Día a Día en Pronóstico a 10 Días — 2026-10-16
+- **Ergonomía Móvil y Supresión de Scroll Vertical (Petición Expresa de Lendo):**
+  1. *Diagnóstico Operativo:* Lendo identificó un punto de fatiga ergonómica en el módulo de «Pronóstico a 10 Días» (`#panel-forecast`): las 10 tarjetas diarias se apilaban verticalmente, generando una columna de más de 3.500 píxeles de longitud. Consultar el final del pronóstico obligaba a deslizar el pulgar hacia abajo decenas de veces, y luego realizar el camino inverso para volver a la cabecera.
+  2. *Intervención Técnica en `forecastView.js` y `components.css`:*
+     - Reestructuración de `.daily-cards-container` sustituyendo la rejilla vertical por un carrusel táctil horizontal continuo (`display: flex; overflow-x: auto; scroll-snap-type: x mandatory; touch-action: pan-x`).
+     - Adaptación responsiva de cada tarjeta `.daily-card-rich`:
+       * En móviles: ocupa el 88-90% del ancho (`flex: 0 0 min(370px, calc(100% - 24px)); scroll-snap-align: center`), asomando el borde del día siguiente para comunicar de forma intuitiva el deslizamiento lateral.
+       * En tablets y escritorio: ancho fijo armónico de **350px** con alineación inicial (`scroll-snap-align: start`).
+     - Incorporación bajo el carrusel de una pastilla didáctica minimalista en cristal líquido (`.forecast-scroll-hint`):
+       * Texto: *«👉 Desliza horizontalmente para ver los 10 días ➔»*.
+       * Micro-animaciones en bucle pausado (`hintHandWiggle` y `hintArrowSlide`) para una guía visual limpia y elegante sin saturar.
+   3. *Blindaje Anti-Truncamiento en Rejilla de Métricas 2x2 (`components.css` - Foto Lendo):*
+      - *Diagnóstico en vivo:* Lendo detectó que en monitores de escritorio los 4 botones de métricas inferiores (Lluvia, Viento, UV y Sol) aparecían cortados con puntos suspensivos (`4..`, `0..`, `2..`, `R..`). Esto ocurría porque al tener cada tarjeta un ancho fijo de 350px, la regla original de 4 columnas comprimía cada botón a apenas 65px de ancho útil.
+      - *Solución Definitiva:* Reconfiguración de `.d-unified-metrics-grid` a un formato simétrico universal de 2 columnas x 2 filas (`repeat(2, 1fr); gap: 8px`), otorgando ~150px a cada botón. Los textos, cifras y unidades respiran con holgura total y cero recortes, en perfecta armonía con los bloques superiores de Mañana y Tarde.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 13 y 14):**
+  - Versión oficial actualizada a **`v2.2.27 📅`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v2227-carrusel-10dias` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.27` en `index.html` y módulos correspondientes.
+
 ## ✨ Actualización v2.2.26: Dinamismo Visual & Presencia en Estación en Vivo — 2026-10-15
 - **Calibración con Presencia del Icono Flotante Vivo (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Lendo observó con acierto que la animación de respiración introducida en `v2.2.19` resultaba casi imperceptible en la práctica: con apenas 4 píxeles de desplazamiento vertical y un ciclo lento de 4.0 segundos, el icono parecía prácticamente una imagen estática. Solicitó darle «más chicha» y presencia visual sin comprometer la fluidez en móviles antiguos o con SoCs modestos.

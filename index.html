@@ -32,7 +32,7 @@
 
   <!-- Estilos de la Aplicación con Cache Busting -->
   <link rel="stylesheet" href="css/main.css?v=2.2.7">
-  <link rel="stylesheet" href="css/components.css?v=2.2.26">
+  <link rel="stylesheet" href="css/components.css?v=2.2.27">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.7">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.26 ✨</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.27 📅</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -326,13 +326,25 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
+            <span class="release-version">v2.2.27 📅</span>
+            <span class="release-date">16 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-ui">Ergonomía Móvil &amp; Síntesis (Petición Lendo)</span> <strong>Carrusel Horizontal Día a Día en Pronóstico a 10 Días</strong>:
+              <br>• <strong>Fin del Scroll Vertical Interminable:</strong> Las 10 tarjetas diarias dejan de apilarse en una columna infinita de más de 3.500px y se transforman en un carrusel táctil horizontal fluido con <code>scroll-snap</code> día a día a la altura ergonómica del pulgar.
+              <br>• <strong>Pastilla Didáctica Minimalista:</strong> Incorporado debajo un badge elegante en cristal líquido (<em>«👉 Desliza horizontalmente para ver los 10 días ➔»</em>) con micro-animación intuitiva para guiar al usuario.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
             <span class="release-version">v2.2.26 ✨</span>
-            <span class="release-date">15 Oct 2026 (Actual)</span>
+            <span class="release-date">15 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-ui">Dinamismo Visual &amp; Rendimiento (Feedback Lendo)</span> <strong>Icono Vivo Flotante con Presencia en Estación en Vivo</strong>:
-              <br>• <strong>Respiración y Levitación Real:</strong> Calibrado el motor de animación (<code>heroWeatherFloat</code>) a un ciclo natural de 3.2s con ascenso de -8px, expansión armónica del 10% (<code>scale(1.10)</code>), sutil balanceo pendular mecido por la brisa (±2°) y aura de luz viva, erradicando la sensación de imagen fija.
-              <br>• <strong>Aceleración por Hardware &amp; Blindaje SoC:</strong> Movimiento renderizado en GPU pura mediante <code>translate3d</code> (0% CPU en móviles básicos) e incorporación del interruptor de accesibilidad <code>prefers-reduced-motion</code> para ahorro automático de batería.
+              <br>• <strong>Respiración y Levitación Real:</strong> Calibrado el motor de animación (<code>heroWeatherFloat</code>) a un ciclo natural de 3.2s con ascenso de -8px, expansión armónica del 10% (<code>scale(1.10)</code>), sutil balanceo pendular mecido por la brisa (±2°) y aura de luz viva.
             </li>
           </ul>
         </div>
@@ -3376,7 +3388,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=2.2.26').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=2.2.27').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -3406,7 +3418,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.26"></script>
+  <script type="module" src="js/app.js?v=2.2.27"></script>
 
 
 

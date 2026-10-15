@@ -10,6 +10,21 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.27] - 2026-10-16
+
+### 📅 Ergonomía Móvil & Carrusel Horizontal en Pronóstico a 10 Días (Petición Lendo)
+- **Transformación a Carrusel Horizontal Día a Día (`forecastView.js` y `components.css`):**
+  - Erradicado el scroll vertical infinito (más de 3.500 px de desplazamiento continuo en móviles). Las 10 tarjetas diarias ahora se navegan en un carrusel horizontal táctil con fijación magnética `scroll-snap-type: x mandatory` y `touch-action: pan-x`.
+  - En móviles cada tarjeta ocupa el ancho óptimo (88-90% de pantalla) dejando asomar el lateral del día siguiente para invitar al deslizamiento natural con el pulgar.
+  - En tablets y escritorio las tarjetas se alinean con ancho fijo ergonómico de 350px.
+- **Pastilla Didáctica Minimalista:**
+  - Incorporado bajo el carrusel un badge elegante en cristal líquido (*«👉 Desliza horizontalmente para ver los 10 días ➔»*) con sutil micro-animación en la mano y la flecha guía.
+- **Rejilla de Métricas 2x2 sin Recortes (`components.css`):**
+  - Corregida la cuadrícula `.d-unified-metrics-grid` a un formato fijo de 2 columnas x 2 filas (`repeat(2, 1fr)`), otorgando ~150px de ancho útil a cada botón métrico (Lluvia, Viento, UV y Sol). Erradicado al 100% el truncamiento con puntos suspensivos (`4..`, `0..`, etc.) visto en monitores y pantallas anchas.
+- **Cache-Busting Garantizado (Leyes 1, 4, 10 y 13):**
+  - Service Worker actualizado a `meteoasturlode-v2227-carrusel-10dias`.
+  - Versión oficial elevada a `v2.2.27 📅` en pie, modal `#changelog-modal`, CSS y scripts.
+
 ## [2.2.26] - 2026-10-15
 
 ### ✨ Dinamismo Visual & Presencia en Estación en Vivo (Feedback Lendo)
