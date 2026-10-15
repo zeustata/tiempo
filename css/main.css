@@ -106,13 +106,17 @@ body {
   overflow-x: clip;
 }
 
-/* Blindaje de zonas con scroll horizontal interno para permitir navegación táctil interna fluida */
+/* Blindaje de zonas con scroll horizontal interno para permitir navegación táctil interna fluida y scroll vertical libre */
 .hourly-scroll-container,
 .live-hourly-block,
 .chart-scroll-viewport,
 .chart-smart-digest,
 .ski-7days-carousel,
 .tide-scroll-viewport,
+.weekly-tides-grid,
+.tide-day-card,
+.daily-cards-container,
+.daily-card-rich,
 .surf-timeline-grid,
 #map-container,
 .leaflet-container {

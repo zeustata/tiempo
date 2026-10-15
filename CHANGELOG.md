@@ -10,6 +10,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.30] - 2026-10-16
+
+### 👆 Desbloqueo de Scroll Vertical Libre en Carruseles (Feedback Lendo)
+- **Corrección de Directiva Táctil Bidireccional (`main.css` y `components.css`):**
+  - Sustituida la directiva excluyente `touch-action: pan-x` por la directiva bidireccional nativa `touch-action: pan-x pan-y;` en `.weekly-tides-grid`, `.tide-day-card`, `.daily-cards-container` y `.daily-card-rich`.
+  - Desbloqueadas las zonas muertas verticales: ahora el usuario puede apoyar el pulgar en cualquier parte de las tarjetas para desplazarse libremente arriba y abajo por la página sin que la pantalla se congele.
+- **Cache-Busting Garantizado (Leyes 1, 4, 10 y 13):**
+  - Service Worker actualizado a `meteoasturlode-v2230-touch-action-pan-y`.
+  - Versión oficial elevada a `v2.2.30 👆` en pie, modal `#changelog-modal`, CSS y scripts.
+
 ## [2.2.29] - 2026-10-16
 
 ### 🏖️ Carrusel Monotarjeta al 100% en Marea Semanal (Aplicación Ley 18 / Feedback Lendo)

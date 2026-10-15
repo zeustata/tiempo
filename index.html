@@ -31,8 +31,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.2.7">
-  <link rel="stylesheet" href="css/components.css?v=2.2.29">
+  <link rel="stylesheet" href="css/main.css?v=2.2.30">
+  <link rel="stylesheet" href="css/components.css?v=2.2.30">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.7">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.29 🏖️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.30 👆</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -326,8 +326,20 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.2.29 🏖️</span>
+            <span class="release-version">v2.2.30 👆</span>
             <span class="release-date">16 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-fix">Fluidez Táctil &amp; Ergonomía (Feedback Lendo)</span> <strong>Preservación del Scroll Vertical Libre en Carruseles</strong>:
+              <br>• <strong>Desbloqueo de Zonas Muertas:</strong> Corregida la directiva táctil a <code>touch-action: pan-x pan-y</code> en el carrusel de Pronóstico a 10 Días y en Marea Semanal. Apoyar el pulgar sobre las tarjetas para subir o bajar por la página ahora responde con total fluidez, erradicando el bloqueo que impedía hacer scroll vertical.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.29 🏖️</span>
+            <span class="release-date">16 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-ui">Ergonomía &amp; Ley 18 (Feedback Lendo)</span> <strong>Carrusel Monotarjeta al 100% en Marea Semanal</strong>:
@@ -3444,7 +3456,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.29"></script>
+  <script type="module" src="js/app.js?v=2.2.30"></script>
 
 
 

@@ -8,6 +8,18 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 👆 Actualización v2.2.30: Preservación del Scroll Vertical Libre en Carruseles (Ley 18) — 2026-10-16
+- **Desbloqueo de Zonas Muertas Verticales en Carruseles Móviles (Feedback Crítico de Lendo):**
+  1. *Diagnóstico Operativo:* Lendo detectó que al colocar el pulgar sobre las tarjetas de Pronóstico a 10 Días o de Marea Semanal para hacer scroll hacia arriba o hacia abajo en la pantalla, la página se quedaba completamente bloqueada/inmóvil. Esto sucedía porque las tarjetas tenían asignada la directiva CSS `touch-action: pan-x;` a secas, la cual según la especificación W3C desactiva expresamente todo desplazamiento vertical (`pan-y`) sobre el elemento.
+  2. *Intervención Técnica en `main.css` y `components.css`:*
+     - Sustituido `touch-action: pan-x;` por `touch-action: pan-x pan-y;` en `.weekly-tides-grid`, `.tide-day-card`, `.daily-cards-container` y `.daily-card-rich`.
+     - Ahora el navegador reconoce simultáneamente el gesto lateral (desplazamiento suave día por día entre tarjetas) y el gesto vertical (subir y bajar por la página con absoluta fluidez sin importar dónde repose el pulgar).
+  3. *Actualización Constitucional de la Ley 18:* Incorporado mandato explícito en la Constitución Suprema (Parte I) y Leyes Específicas (Parte II) prohibiendo `touch-action: pan-x` a secas y exigiendo `pan-x pan-y;`.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 13 y 14):**
+  - Versión oficial actualizada a **`v2.2.30 👆`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), CSS y scripts.
+  - Service Worker actualizado a `meteoasturlode-v2230-touch-action-pan-y` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.30` en `index.html` y módulos correspondientes.
+
 ## 🏖️ Actualización v2.2.29: Carrusel Monotarjeta al 100% en Marea Semanal (Ley 18) — 2026-10-16
 - **Aplicación Directa de la Ley 18 en Marea Semanal (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Lendo identificó que en la sección de Marea Semanal (`.weekly-tides-grid` dentro de Playas & Mareas), cada tarjeta diaria (`.tide-day-card`) mantenía un ancho rígido de 215px. En teléfonos móviles ocupaba solo el ~60% de pantalla, dejando espacio vacío a la derecha y no ofreciendo una experiencia monotarjeta completa.

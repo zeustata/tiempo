@@ -114,6 +114,7 @@
 ### 18. Doctrina de Aislamiento Táctil y Carruseles Monotarjeta al 100% en Móvil
 - **Inmunidad al Swipe Global y Aislamiento de Gestos:** En cualquier aplicación que cuente con navegación por gestos horizontales (cambio de pestañas o menús al deslizar la pantalla con el dedo), todo carrusel, visor de días, gráfico temporal o contenedor con scroll lateral interno debe incorporarse imperativamente a la lista de zonas interactivas protegidas (`isInteractiveZone` o equivalente), asegurando que el arrastre con el pulgar desplace con absoluta exclusividad el contenido del carrusel sin activar jamás el cambio accidental de pestaña o menú.
 - **Encuadre Monotarjeta al 100% en Smartphones:** En dispositivos móviles, cada tarjeta individual de un carrusel o slider paso a paso debe ocupar exactamente el 100% del ancho útil disponible (`flex: 0 0 100%; width: 100%; max-width: 100%; box-sizing: border-box;`), alineada de forma fija al inicio (`scroll-snap-align: start`) y con salto estricto de una en una (`scroll-snap-stop: always`). Queda terminantemente prohibido utilizar anchos parciales o alineaciones que dejen asomar la tarjeta previa a la izquierda o corten el lateral derecho, garantizando que el usuario visualice siempre una única tarjeta completa y que cada deslizamiento avance con precisión magnética a la siguiente.
+- **Preservación Incondicional del Scroll Vertical (`touch-action: pan-x pan-y;`):** Queda terminantemente prohibido utilizar directivas excluyentes como `touch-action: pan-x` a secas en contenedores o tarjetas deslizantes horizontales. Debe aplicarse imperativamente `touch-action: pan-x pan-y;` para garantizar que cuando el usuario apoye el pulgar sobre la tarjeta para desplazarse verticalmente por la página, el navegador responda de forma fluida y natural sin congelar jamás el scroll vertical de la aplicación.
 
 ---
 
@@ -212,6 +213,7 @@
 18. **Doctrina de Navegación Monotarjeta y Blindaje Táctil en Pronóstico Extendido a 10 Días (Feedback Lendo):**
     - La navegación día a día en el pronóstico a 10 días (`#panel-forecast`) debe preservar permanentemente la arquitectura de tarjeta completa al 100% de pantalla en móviles con `scroll-snap-type: x mandatory`, `scroll-snap-align: start` y `scroll-snap-stop: always`.
     - Queda terminantemente prohibido desvincular `.daily-cards-container`, `.daily-card-rich` y `.forecast-scroll-hint` de la zona interactiva protegida (`isInteractiveZone`), garantizando que el usuario pueda consultar los 10 días con el pulgar sin sufrir saltos involuntarios de módulo ni recortes en las métricas de lluvia, viento, UV y sol.
+    - Se exige la directiva `touch-action: pan-x pan-y;` en contenedores y tarjetas tanto de Marea Semanal como de Pronóstico a 10 Días para asegurar que el scroll vertical de la página no quede bloqueado al deslizar con el pulgar.
 
 
 

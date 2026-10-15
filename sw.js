@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2229-marea-semanal-monotarjeta';
+const CACHE_NAME = 'meteoasturlode-v2230-touch-action-pan-y';
 const STATIC_ASSETS = [
   './',
   './index.html',
