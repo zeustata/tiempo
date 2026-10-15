@@ -111,6 +111,10 @@
 - **Parada y Pregunta Obligatoria:** Ante cualquier ambigüedad, duda o propuesta estética/técnica donde no esté perfectamente delimitado el objetivo, Princesa **TIENE PROHIBIDO TOCAR NINGÚN ARCHIVO**. Debe detenerse, preguntar con precisión y esperar la confirmación clara y detallada de Lendo.
 - **Respeto a la Estabilidad Funcional:** Lo que ya funciona y está bien no se improvisa ni se sobrecarga con florituras no solicitadas. La prudencia, la contención y el rigor suizo priman siempre sobre el exceso de celo o el impulso de modificar por modificar.
 
+### 18. Doctrina de Aislamiento Táctil y Carruseles Monotarjeta al 100% en Móvil
+- **Inmunidad al Swipe Global y Aislamiento de Gestos:** En cualquier aplicación que cuente con navegación por gestos horizontales (cambio de pestañas o menús al deslizar la pantalla con el dedo), todo carrusel, visor de días, gráfico temporal o contenedor con scroll lateral interno debe incorporarse imperativamente a la lista de zonas interactivas protegidas (`isInteractiveZone` o equivalente), asegurando que el arrastre con el pulgar desplace con absoluta exclusividad el contenido del carrusel sin activar jamás el cambio accidental de pestaña o menú.
+- **Encuadre Monotarjeta al 100% en Smartphones:** En dispositivos móviles, cada tarjeta individual de un carrusel o slider paso a paso debe ocupar exactamente el 100% del ancho útil disponible (`flex: 0 0 100%; width: 100%; max-width: 100%; box-sizing: border-box;`), alineada de forma fija al inicio (`scroll-snap-align: start`) y con salto estricto de una en una (`scroll-snap-stop: always`). Queda terminantemente prohibido utilizar anchos parciales o alineaciones que dejen asomar la tarjeta previa a la izquierda o corten el lateral derecho, garantizando que el usuario visualice siempre una única tarjeta completa y que cada deslizamiento avance con precisión magnética a la siguiente.
+
 ---
 
 ## 📑 PARTE II: LEYES ESPECÍFICAS DEL PROYECTO: METEOASTUR LODE (TIEMPO)
@@ -204,6 +208,10 @@
 17. **Iconografía Vectorial Rica en Banners Dinámicos de Alerta (Feedback Lendo):**
     - Todo banner dinámico de alerta climática sensible (como Borrina Marina, Niebla de Valle, etc.) debe utilizar iconos vectoriales SVG propios a color o composiciones gráficas de alto contraste, erradicando emojis planos aislados del sistema operativo (como `🌫️`) que en fuentes móviles de Android y Windows se renderizan como sellos cuadrados descoloridos o parches borrosos sin contraste.
     - La cabecera del banner debe encapsular el icono y el titular en un grupo unificado (`.borrina-title-group` con `display: inline-flex; align-items: center;`), impidiendo que el icono quede aislado o salte de línea en pantallas pequeñas.
+
+18. **Doctrina de Navegación Monotarjeta y Blindaje Táctil en Pronóstico Extendido a 10 Días (Feedback Lendo):**
+    - La navegación día a día en el pronóstico a 10 días (`#panel-forecast`) debe preservar permanentemente la arquitectura de tarjeta completa al 100% de pantalla en móviles con `scroll-snap-type: x mandatory`, `scroll-snap-align: start` y `scroll-snap-stop: always`.
+    - Queda terminantemente prohibido desvincular `.daily-cards-container`, `.daily-card-rich` y `.forecast-scroll-hint` de la zona interactiva protegida (`isInteractiveZone`), garantizando que el usuario pueda consultar los 10 días con el pulgar sin sufrir saltos involuntarios de módulo ni recortes en las métricas de lluvia, viento, UV y sol.
 
 
 

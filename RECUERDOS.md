@@ -17,6 +17,9 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
      - `.daily-card-rich`: Reconfigurada para ocupar el **100% exacto del ancho útil** (`flex: 0 0 100%; width: 100%; max-width: 100%`) con alineación inicial (`scroll-snap-align: start`) y salto estricto (`scroll-snap-stop: always`). La tarjeta se ve íntegra, sin recortes ni elementos residuales.
      - `.daily-cards-container`: Espaciado lateral eliminado (`padding: 8px 0 14px 0`), `width: 100%; box-sizing: border-box;` y desplazamiento suave `scroll-behavior: smooth;`.
      - `setupSwipeNavigation()` en `js/app.js`: Añadidas las clases `.daily-cards-container`, `.daily-card-rich` y `.forecast-scroll-hint` a la función guardiana `isInteractiveZone(target)`, blindando completamente el carrusel contra cambios accidentales de menú.
+- **Reforma Constitucional Solemne (PIN Maestro Verificado - Leyes 6 y 8):**
+  - **Constitución Suprema (Parte I - Ley 18):** Promulgada la *Doctrina de Aislamiento Táctil y Carruseles Monotarjeta al 100% en Móvil* para todos los proyectos del ecosistema zeustata. Obligatoriedad de blindar zonas de scroll interno en `isInteractiveZone` y encuadrar tarjetas paso a paso al 100% de pantalla con `scroll-snap-stop: always`.
+  - **Leyes Específicas de MeteoAstur Lode (Parte II - Ley 18):** Blindaje permanente del carrusel a 10 días (`#panel-forecast`) para impedir que futuras modificaciones desvinculen las clases protegidas o alteren el encuadre íntegro de las jornadas.
 - **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 13 y 14):**
   - Versión oficial actualizada a **`v2.2.28 📅`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), CSS y scripts.
   - Service Worker actualizado a `meteoasturlode-v2228-blindaje-carrusel-10dias` en `sw.js`.
