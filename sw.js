@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2215-marea-semanal-minimal';
+const CACHE_NAME = 'meteoasturlode-v2216-marea-semanal-sin-bombilla-duplicada';
 const STATIC_ASSETS = [
   './',
   './index.html',

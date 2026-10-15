@@ -2,6 +2,18 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📅 Actualización v2.2.16: Depuración de Redundancias en Marea Semanal — 2026-10-15
+- **Supresión de Bombilla Didáctica Duplicada (Feedback Lendo):**
+  1. *Diagnóstico Operativo:* Lendo advirtió con agudeza que la bombilla didáctica de la cabecera de «Marea Semanal» era un duplicado exacto del botón ya existente en «Coeficiente Hoy». Ambas disparaban la misma explicación técnica de mareas y coeficientes (`data-explain="tides"`).
+  2. *Intervención Técnica en `marineCard.js`:*
+     - Supresión del botón `.btn-explain-sensor` en la cabecera de `Marea Semanal`.
+     - La explicación didáctica se mantiene donde tiene mayor valor semántico (en la métrica de Coeficiente de Hoy dentro del Mareógrafo).
+     - La cabecera de Marea Semanal queda 100% despejada y libre de duplicidades.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Versión oficial actualizada a **`v2.2.16 📅`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v2216-marea-semanal-sin-bombilla-duplicada` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.16` en `index.html` (CSS y scripts) y `app.js`.
+
 ## 📅 Actualización v2.2.15: Síntesis Visual en Marea Semanal — 2026-10-15
 - **Simplificación de Cabecera en Marea Semanal (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Lendo solicitó continuar la poda de textos largos en el módulo de Playas y Mareas, renombrando la tarjeta de mareas a 7 días.

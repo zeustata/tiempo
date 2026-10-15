@@ -10,6 +10,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.16] - 2026-10-15
+
+### 📅 Depuración de Redundancias en Marea Semanal (Feedback Lendo)
+- **Supresión de Bombilla Didáctica Duplicada:**
+  - Eliminado el botón interactivo `💡` de la cabecera de *«Marea Semanal»*, al ser un duplicado idéntico del botón ya presente en la tarjeta contigua superior (*«Coeficiente Hoy»*). Ambas abrían la misma explicación sobre mareas y coeficientes (`data-explain="tides"`).
+  - La cabecera semanal queda despejada, elegante y minimalista.
+- **Cache-Busting Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v2216-marea-semanal-sin-bombilla-duplicada`, query strings actualizadas a `?v=2.2.16`.
+
 ## [2.2.15] - 2026-10-15
 
 ### 📅 Síntesis Visual en Marea Semanal (Feedback Lendo)

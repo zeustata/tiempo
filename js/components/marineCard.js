@@ -1245,7 +1245,6 @@ export function renderMarineCard(data, concejo) {
               <div class="weekly-subtitle">Previsión a 7 días • Fases lunares</div>
             </div>
           </div>
-          <button class="btn-explain-sensor" data-explain="tides" title="¿Qué es el Coeficiente de Marea y cómo interpretarlo? Pulsa para aprender" aria-label="Explicación del coeficiente de marea">💡</button>
         </div>
 
         <div class="weekly-tides-grid">
