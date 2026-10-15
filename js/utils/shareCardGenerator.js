@@ -7,7 +7,33 @@
  * Compatible con la Web Share API (WhatsApp, Instagram, Telegram) y descarga directa.
  */
 
-import { getWeatherInfo } from './weatherIcons.js?v=1.1.82';
+import { getWeatherInfo, renderWeatherIconHtml } from './weatherIcons.js?v=2.2.25';
+
+/**
+ * Carga un string SVG en un objeto Image en memoria para pintado directo en Canvas HTML5
+ */
+function loadSvgToImage(svgHtml) {
+  return new Promise((resolve) => {
+    if (!svgHtml || typeof svgHtml !== 'string' || !svgHtml.includes('<svg')) return resolve(null);
+    try {
+      const cleanSvg = svgHtml.trim();
+      const withXmlns = cleanSvg.includes('xmlns=')
+        ? cleanSvg
+        : cleanSvg.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
+      const blob = new Blob([withXmlns], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const img = new Image();
+      img.onload = () => resolve({ img, url });
+      img.onerror = () => {
+        URL.revokeObjectURL(url);
+        resolve(null);
+      };
+      img.src = url;
+    } catch (_) {
+      resolve(null);
+    }
+  });
+}
 
 const DICHOS_ASTURIANOS = [
   "«El tiempu n'Asturies camuda más que l'orballu na yerba.»",
@@ -48,7 +74,7 @@ function drawRoundRectFallback(ctx, x, y, width, height, radius) {
 /**
  * Genera el lienzo de 1080x1350 px con el estado del tiempo actual
  */
-export function generateShareCardCanvas(concejo, weatherData) {
+export async function generateShareCardCanvas(concejo, weatherData, iconTheme = 'astur') {
   const canvas = document.createElement('canvas');
   canvas.width = 1080;
   canvas.height = 1350;
@@ -184,10 +210,27 @@ export function generateShareCardCanvas(concejo, weatherData) {
   ctx.fillStyle = '#ffffff';
   ctx.fillText(`${tempVal}°`, cardX + 44, cardY + 365);
 
-  // Icono del tiempo grande (emoji/símbolo de alta legibilidad)
-  const iconEmoji = weatherInfo.icon || '⛅';
-  ctx.font = '95px "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif';
-  ctx.fillText(iconEmoji, cardX + 410, cardY + 350);
+  // Icono del tiempo grande (SVG temático con fallback a emoji)
+  let mainIconDrawn = false;
+  if (iconTheme !== 'classic' && weatherInfo && weatherInfo.svgKey) {
+    try {
+      const mainSvgHtml = renderWeatherIconHtml(weatherInfo, 130, iconTheme);
+      const loaded = await loadSvgToImage(mainSvgHtml);
+      if (loaded && loaded.img) {
+        ctx.drawImage(loaded.img, cardX + 380, cardY + 245, 130, 130);
+        URL.revokeObjectURL(loaded.url);
+        mainIconDrawn = true;
+      }
+    } catch (err) {
+      console.warn('[MeteoAstur] Fallback a emoji en icono principal de estampa:', err);
+    }
+  }
+
+  if (!mainIconDrawn) {
+    const iconEmoji = weatherInfo.icon || '⛅';
+    ctx.font = '95px "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif';
+    ctx.fillText(iconEmoji, cardX + 410, cardY + 350);
+  }
 
   // Nombre de la condición en vivo
   ctx.font = '700 38px "Inter", -apple-system, sans-serif';
@@ -299,12 +342,12 @@ export function generateShareCardCanvas(concejo, weatherData) {
     const gap = (cardW - 88 - (6 * cardBoxW)) / 5;
     const cardsStartY = cardY + 795;
 
+    // Preparamos los datos de las 6 horas
+    const hourlyItems = [];
     for (let step = 0; step < 6; step++) {
       const idx = startIdx + step;
       if (idx >= hourly.time.length) break;
 
-      const curX = cardX + 44 + step * (cardBoxW + gap);
-      const curY = cardsStartY;
       const tDate = new Date(hourly.time[idx]);
       const hourFormatted = step === 0 ? 'Ahora' : `${tDate.getHours().toString().padStart(2, '0')}:00`;
       const isDay = (hourly.is_day && hourly.is_day[idx] != null) ? hourly.is_day[idx] : (tDate.getHours() >= 8 && tDate.getHours() < 21 ? 1 : 0);
@@ -318,6 +361,37 @@ export function generateShareCardCanvas(concejo, weatherData) {
       const hIcon = hWeather ? hWeather.icon : '☀️';
       const hTemp = Math.round(hourly.temperature_2m[idx]);
       const hWind = hourly.wind_speed_10m ? Math.round(hourly.wind_speed_10m[idx]) : (hourly.windspeed_10m ? Math.round(hourly.windspeed_10m[idx]) : 0);
+
+      hourlyItems.push({
+        step,
+        idx,
+        hourFormatted,
+        hWeather,
+        hIcon,
+        hTemp,
+        hWind,
+        precip,
+        pop
+      });
+    }
+
+    // Cargamos los SVGs temáticos de las horas en paralelo
+    const hourlySvgs = await Promise.all(hourlyItems.map(async (item) => {
+      if (iconTheme !== 'classic' && item.hWeather && item.hWeather.svgKey) {
+        try {
+          const svgHtml = renderWeatherIconHtml(item.hWeather, 42, iconTheme);
+          return await loadSvgToImage(svgHtml);
+        } catch (_) {
+          return null;
+        }
+      }
+      return null;
+    }));
+
+    for (let step = 0; step < hourlyItems.length; step++) {
+      const item = hourlyItems[step];
+      const curX = cardX + 44 + step * (cardBoxW + gap);
+      const curY = cardsStartY;
 
       ctx.save();
       // Fondo Liquid Glass de la tarjeta horaria
@@ -334,25 +408,31 @@ export function generateShareCardCanvas(concejo, weatherData) {
       ctx.font = '700 17px "Inter", -apple-system, sans-serif';
       ctx.fillStyle = step === 0 ? '#38bdf8' : '#94a3b8';
       ctx.textAlign = 'center';
-      ctx.fillText(hourFormatted, centerX, curY + 30);
+      ctx.fillText(item.hourFormatted, centerX, curY + 30);
 
-      // 2. Icono Meteorológico
-      ctx.font = '36px "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif';
-      ctx.fillText(hIcon, centerX, curY + 76);
+      // 2. Icono Meteorológico (SVG temático con fallback a emoji)
+      const loaded = hourlySvgs[step];
+      if (loaded && loaded.img) {
+        ctx.drawImage(loaded.img, centerX - 21, curY + 44, 42, 42);
+        URL.revokeObjectURL(loaded.url);
+      } else {
+        ctx.font = '36px "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif';
+        ctx.fillText(item.hIcon, centerX, curY + 76);
+      }
 
       // 3. Temperatura
       ctx.font = '800 28px "Inter", -apple-system, sans-serif';
       ctx.fillStyle = '#ffffff';
-      ctx.fillText(`${hTemp}°`, centerX, curY + 118);
+      ctx.fillText(`${item.hTemp}°`, centerX, curY + 118);
 
       // 4. Pluviómetro / Lluvia
       ctx.font = '600 15px "Inter", -apple-system, sans-serif';
-      if (precip >= 0.1) {
+      if (item.precip >= 0.1) {
         ctx.fillStyle = '#38bdf8';
-        ctx.fillText(`💧 ${precip.toFixed(1)}mm`, centerX, curY + 154);
-      } else if (pop >= 15) {
+        ctx.fillText(`💧 ${item.precip.toFixed(1)}mm`, centerX, curY + 154);
+      } else if (item.pop >= 15) {
         ctx.fillStyle = '#94a3b8';
-        ctx.fillText(`💧 ${pop}%`, centerX, curY + 154);
+        ctx.fillText(`💧 ${item.pop}%`, centerX, curY + 154);
       } else {
         ctx.fillStyle = '#64748b';
         ctx.fillText('💧 0 mm', centerX, curY + 154);
@@ -361,7 +441,7 @@ export function generateShareCardCanvas(concejo, weatherData) {
       // 5. Viento
       ctx.font = '600 14px "Inter", -apple-system, sans-serif';
       ctx.fillStyle = '#94a3b8';
-      ctx.fillText(`💨 ${hWind} km/h`, centerX, curY + 192);
+      ctx.fillText(`💨 ${item.hWind} km/h`, centerX, curY + 192);
 
       ctx.restore();
     }
@@ -397,7 +477,7 @@ export function generateShareCardCanvas(concejo, weatherData) {
 /**
  * Abre el modal con la estampa interactiva y activa las opciones de compartir
  */
-export function openShareModal(concejo, weatherData) {
+export function openShareModal(concejo, weatherData, iconTheme = 'astur') {
   const modal = document.getElementById('share-card-modal');
   const previewContainer = document.getElementById('share-card-preview-container');
   if (!modal || !previewContainer) return;
@@ -405,9 +485,9 @@ export function openShareModal(concejo, weatherData) {
   previewContainer.innerHTML = '<div class="share-loading-spinner">🎨 Generando estampa asturiana...</div>';
   modal.style.display = 'flex';
 
-  setTimeout(() => {
+  setTimeout(async () => {
     try {
-      const canvas = generateShareCardCanvas(concejo, weatherData);
+      const canvas = await generateShareCardCanvas(concejo, weatherData, iconTheme);
       previewContainer.innerHTML = '';
       
       const img = document.createElement('img');

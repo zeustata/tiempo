@@ -25,7 +25,7 @@ import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomen
 import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=2.0.0';
 import { initGyroGlass } from './utils/gyroGlass.js?v=2.0.0';
 import { triggerSeismicRefresh } from './utils/seismicDetector.js?v=2.0.0';
-import { openShareModal } from './utils/shareCardGenerator.js?v=2.0.0';
+import { openShareModal } from './utils/shareCardGenerator.js?v=2.2.25';
 import { toggleWeatherSpeech, stopWeatherSpeech } from './utils/weatherSpeaker.js?v=2.0.0';
 
 const APP_MODULES = [
@@ -41,7 +41,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '2.2.24';
+export const CURRENT_APP_VERSION = '2.2.25';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -409,7 +409,7 @@ class MeteoAsturiasApp {
     const handleOpenShare = () => {
       this.triggerHaptic();
       if (this.currentConcejo && this.weatherData) {
-        openShareModal(this.currentConcejo, this.weatherData);
+        openShareModal(this.currentConcejo, this.weatherData, this.prefs.iconTheme);
       }
     };
 

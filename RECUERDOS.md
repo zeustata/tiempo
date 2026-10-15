@@ -8,6 +8,21 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 📸 Actualización v2.2.25: Armonización de Iconos Temáticos en la Estampa para Compartir — 2026-10-15
+- **Sincronización Total de Iconos Vectoriales SVG en Lienzo Canvas (Feedback Lendo):**
+  1. *Diagnóstico Operativo:* Lendo detectó que en el menú «Estación en vivo», al pulsar el botón de compartir (`📸`) y abrir la estampa postal compartible («MeteoAstur Instant»), los iconos del tiempo seguían mostrándose como emojis planos clásicos en lugar de los iconos temáticos activos configurados por el usuario.
+  2. *Causa Raíz:* `shareCardGenerator.js` dibuja toda la tarjeta directamente sobre un lienzo `<canvas>` 2D de 1080×1350 px mediante HTML5 Canvas API. En las líneas de pintado, ejecutaba `ctx.fillText(iconEmoji, ...)` con tipografías de emojis del sistema (`Apple Color Emoji`, `Segoe UI Emoji`). Además, `openShareModal` y `generateShareCardCanvas` no recibían las preferencias de tema del usuario (`prefs.iconTheme`).
+  3. *Intervención Técnica en `shareCardGenerator.js` y `app.js`:*
+     - Creación del helper asíncrono `loadSvgToImage(svgHtml)`: convierte strings SVG limpios en un Blob con `type: 'image/svg+xml'`, garantizando el namespace `xmlns="http://www.w3.org/2000/svg"`, y resuelve un objeto `Image` nativo en memoria con su URL de revocación.
+     - Transformación de `generateShareCardCanvas(concejo, weatherData, iconTheme = 'astur')` en función asíncrona.
+     - **Icono Principal del Tiempo:** Pintado vectorial mediante `ctx.drawImage` a escala de **130×130 px** en `(cardX + 380, cardY + 245)`, alineado con la gran temperatura numérica, con fallback automático a emoji en caso de fallo o modo clásico.
+     - **Evolución Horaria (Próximas 6 Horas):** Carga paralela de los 6 iconos SVG temáticos (`Promise.all`) a tamaño **42×42 px** y centrado matemático en cada una de las tarjetas Liquid Glass inferiores.
+     - **Paso de Preferencias:** `app.js` ahora transmite `this.prefs.iconTheme` al invocar `openShareModal(this.currentConcejo, this.weatherData, this.prefs.iconTheme)`.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 13 y 14):**
+  - Versión oficial actualizada a **`v2.2.25 📸`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v2225-iconos-estampa` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.25` en `index.html` y módulos correspondientes.
+
 ## 🏔️ Actualización v2.2.24: Armonización de Iconos Temáticos en Cordillera & Nieve — 2026-10-15
 - **Sincronización Total de Iconos Temáticos en Estaciones de Esquí y Pistas (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Lendo detectó que en el módulo de «Cordillera & Nieve» (`#panel-mountain`) persistía la misma inconsistencia de diseño que se había subsanado en la gráfica: los iconos de tiempo actual de cada estación de esquí, la previsión a 7 días y los tramos horarios de pistas (09-13h y 13-17h) se mostraban en emojis planos del sistema en lugar de adoptar el tema de iconos activo del usuario.

@@ -10,6 +10,19 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.25] - 2026-10-15
+
+### 📸 Armonía Visual & Iconos Temáticos en la Estampa para Compartir (Feedback Lendo)
+- **Renderizado Vectorial SVG en Lienzo HTML5 Canvas (`shareCardGenerator.js`):**
+  - Implementado motor de carga y pintado asíncrono de iconos vectoriales SVG en memoria (`loadSvgToImage`) directamente sobre el lienzo Canvas de 1080×1350 px.
+  - El icono meteorológico principal de la estampa ahora se dibuja a gran escala (130×130 px) con los gráficos vectoriales del tema activo elegido por el usuario (Asturiano Cómic por defecto, Liquid Glass 3D, Píxel Retro, Neón Cyberpunk, Boceto o Futurista), con fallback automático a emoji en caso de fallo.
+  - Las 6 tarjetas de la evolución horaria de la postal postal ahora renderizan sus iconos SVG temáticos (42×42 px) cargados en paralelo con `Promise.all`.
+- **Sincronización de Preferencias Globales (Ley 14):**
+  - Conectado el paso de `this.prefs.iconTheme` desde `app.js` hacia `openShareModal` y `generateShareCardCanvas`, asegurando que las estampas compartidas en WhatsApp, Instagram Stories y Telegram luzcan con la misma calidad e identidad que la aplicación.
+- **Cache-Busting Garantizado (Leyes 1, 4, 10 y 13):**
+  - Service Worker actualizado a `meteoasturlode-v2225-iconos-estampa`.
+  - Versión oficial elevada a `v2.2.25 📸` en pie, modal `#changelog-modal` y scripts.
+
 ## [2.2.24] - 2026-10-15
 
 ### 🏔️ Armonía Visual & Iconos Temáticos en Cordillera & Nieve (Feedback Lendo)
