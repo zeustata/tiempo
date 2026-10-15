@@ -10,6 +10,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.23] - 2026-10-15
+
+### 🎨 Armonía Visual & Iconos Temáticos en Meteorología Gráfica (Reflexión Lendo)
+- **Sincronización de Iconos Temáticos en la Gráfica Horaria:**
+  - Integrado el motor dinámico `renderWeatherIconHtml` en la cinta superior horaria (`.chart-sky-timeline`) y en el Live Inspector Readout, sustituyendo los emojis planos residuales por los iconos vectoriales SVG oficiales del sistema según el tema activo del usuario (Asturiano por defecto, Liquid Glass 3D, Píxel Retro, Neón Cyberpunk, Boceto o Futurista).
+  - Configurado tamaño ergonómico de 20px SVG con protección anti-desborde y micro-alineación vertical, garantizando una estética 100% homogénea con la Estación en Vivo, Pronóstico a 10 Días y Comparador Climático (Ley 14).
+- **Cache-Busting Garantizado (Leyes 1, 4, 10 y 13):**
+  - Service Worker actualizado a `meteoasturlode-v2223-iconos-grafica`.
+  - Versión oficial elevada a `v2.2.23 🎨` en pie, modal y variables del sistema.
+
 ## [2.2.22] - 2026-10-15
 
 ### 📡 Claridad & Ergonomía en Radar en Directo (Feedback Lendo)

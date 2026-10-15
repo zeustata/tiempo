@@ -8,7 +8,7 @@ import { renderRoutesCard } from './components/routesCard.js?v=2.2.20';
 import { renderMountainCard } from './components/mountainCard.js?v=2.2.12';
 import { renderTourismCard } from './components/tourismCard.js?v=2.2.1';
 import { renderForecast } from './components/forecastView.js?v=2.2.1';
-import { renderWeatherChart } from './components/chartsView.js?v=2.2.1';
+import { renderWeatherChart } from './components/chartsView.js?v=2.2.23';
 import { renderAstronomyView } from './components/astronomyCard.js?v=2.2.1';
 import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=2.2.1';
 import { getWeatherInfo } from './utils/weatherIcons.js?v=2.0.7';
@@ -41,7 +41,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '2.2.22';
+export const CURRENT_APP_VERSION = '2.2.23';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -1626,7 +1626,7 @@ class MeteoAsturiasApp {
     }
 
     if (targetTab === 'charts' && this.weatherData) {
-      setTimeout(() => renderWeatherChart('meteo-chart-canvas', this.weatherData.weather.hourly, 48), 50);
+      setTimeout(() => renderWeatherChart('meteo-chart-canvas', this.weatherData.weather.hourly, 48, this.prefs.iconTheme), 50);
     }
 
     if (targetTab === 'marine') {
@@ -2265,7 +2265,7 @@ class MeteoAsturiasApp {
       // 5. Gráfico si está activo
       if (activeTab === 'charts') {
         try {
-          renderWeatherChart('meteo-chart-canvas', data.weather.hourly, 48);
+          renderWeatherChart('meteo-chart-canvas', data.weather.hourly, 48, prefs.iconTheme);
         } catch (e) {
           console.error('[MeteoAstur] Error renderizando Gráfica:', e);
         }

@@ -1,4 +1,4 @@
-import { getWeatherInfo, getWindDirection } from '../utils/weatherIcons.js?v=1.1.66';
+import { getWeatherInfo, getWindDirection, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=2.2.23';
 
 /**
  * 📈 METEOROLOGÍA GRÁFICA (Suite Multivariable de Observatorio Horario)
@@ -22,6 +22,19 @@ let activeHours = 48; // 24 | 48 | 72
 let cachedHourlyData = null;
 let canvasTargetId = 'meteo-chart-canvas';
 let eventsInitialized = false;
+let activeIconTheme = 'astur';
+
+function getActiveIconTheme() {
+  if (activeIconTheme) return activeIconTheme;
+  try {
+    const raw = localStorage.getItem('meteoastur_prefs');
+    if (raw) {
+      const p = JSON.parse(raw);
+      if (p && p.iconTheme) return p.iconTheme;
+    }
+  } catch (e) {}
+  return 'astur';
+}
 
 /**
  * Inicializa la escucha de eventos para selector desplegable de variable y rango horario
@@ -121,10 +134,11 @@ function updateActivePillsUI() {
 /**
  * Función principal expuesta
  */
-export function renderWeatherChart(canvasId = 'meteo-chart-canvas', hourlyData = null, hoursCount = null) {
+export function renderWeatherChart(canvasId = 'meteo-chart-canvas', hourlyData = null, hoursCount = null, iconTheme = null) {
   if (canvasId) canvasTargetId = canvasId;
   if (hourlyData) cachedHourlyData = hourlyData;
   if (hoursCount && !eventsInitialized) activeHours = hoursCount;
+  if (iconTheme) activeIconTheme = iconTheme;
 
   initChartControls();
   updateActivePillsUI();
@@ -229,6 +243,7 @@ function renderCurrentChart() {
       windDirShort: windDirInfo ? windDirInfo.short : '',
       pressure: hourlyData.pressure_msl ? hourlyData.pressure_msl[i] : (hourlyData.surface_pressure ? hourlyData.surface_pressure[i] : 1015),
       humidity: hourlyData.relative_humidity_2m ? hourlyData.relative_humidity_2m[i] : 75,
+      weatherInfo: wInfo,
       weatherIcon: wInfo.icon,
       weatherLabel: wInfo.label
     });
@@ -366,14 +381,17 @@ function renderSkyTimeline(hoursData) {
   const container = document.getElementById('chart-sky-timeline');
   if (!container || !hoursData.length) return;
 
+  const currentTheme = getActiveIconTheme();
+
   const html = hoursData.map(h => {
     const isGusty = (h.windGusts || 0) >= 40;
     const popClass = (h.pop && h.pop > 0) ? 'col-pop' : 'col-pop pop-zero';
     const dayStartClass = h.isStartOfDay ? ' day-start' : '';
+    const iconMarkup = h.weatherInfo ? renderWeatherIconHtml(h.weatherInfo, 20, currentTheme) : (h.weatherIcon || '☀️');
 
     return `
       <div class="chart-sky-col${dayStartClass}" title="${h.hourStr}: ${h.weatherLabel || ''} (${h.pop || 0}%, viento ${Math.round(h.windSpeed || 0)} km/h ${h.windDirShort || ''})">
-        <span class="col-icon">${h.weatherIcon || '☀️'}</span>
+        <span class="col-icon">${iconMarkup}</span>
         <span class="${popClass}">${h.pop != null ? h.pop + '%' : ''}</span>
         <span class="col-wind ${isGusty ? 'wind-gusty' : ''}">
           <span>${Math.round(h.windSpeed || 0)}</span><small style="font-size:0.55rem;opacity:0.8;">${h.windDirShort || ''}</small>
@@ -562,11 +580,13 @@ function buildChartConfig(ctx, type, labels, fullDates, weatherDescriptions, hou
                 metricValHtml = `<span class="readout-val" style="color:#38bdf8;">${Math.round(item.temp)}°</span> • <span class="readout-val" style="color:#60a5fa;">${item.precip.toFixed(1)}mm</span>`;
               }
 
+              const iconMarkup = item.weatherInfo ? renderWeatherIconHtml(item.weatherInfo, 18, getActiveIconTheme()) : '';
               readout.innerHTML = `
                 <div class="readout-left">
                   <span class="readout-time">🕒 ${day} ${item.hourStr}</span>
                   <span class="readout-dot">•</span>
-                  <span class="readout-desc">${wDesc}</span>
+                  ${iconMarkup ? `<span class="readout-icon-slot" style="display:inline-flex;align-items:center;vertical-align:middle;margin-right:3px;">${iconMarkup}</span>` : ''}
+                  <span class="readout-desc">${item.weatherLabel || wDesc}</span>
                 </div>
                 <div class="readout-right">
                   ${metricValHtml}

@@ -8,6 +8,22 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🎨 Actualización v2.2.23: Armonización de Iconos Temáticos en Meteorología Gráfica — 2026-10-15
+- **Sincronización Total de Iconos Temáticos en el Módulo Gráfico (Reflexión Lendo):**
+  1. *Diagnóstico Operativo:* Lendo observó una clara disonancia visual en la aplicación: mientras que en la Estación en Vivo, Pronóstico a 10 Días y Comparador Climático se respeta escrupulosamente el tema de iconos seleccionado (el tema oficial asturiano por defecto, o temas como Glass 3D, Píxel o Neón), en Meteorología Gráfica (`#panel-charts`) la cinta horaria superior de cielo y viento (`.chart-sky-timeline`) mostraba únicamente emojis planos del sistema (`☀️`, `⛅`, `🌧️`) sin seguir el tema activo.
+  2. *Causa Raíz:* `chartsView.js` no importaba `renderWeatherIconHtml` ni recibía el parámetro `iconTheme` desde `app.js`. Al compilar las horas (`prepareHourlyData`), solo guardaba `weatherIcon: wInfo.icon` (carácter Unicode plano).
+  3. *Intervención Técnica en `chartsView.js`, `app.js` y `components.css`:*
+     - Importación de `renderWeatherIconHtml` desde `weatherIcons.js?v=2.2.23` en `chartsView.js`.
+     - Definición del estado reactivo `activeIconTheme` con resolución por parámetro y fallback automático a `localStorage` (`meteoastur_prefs.iconTheme` || `'astur'`).
+     - Almacenamiento del objeto meteorológico completo `weatherInfo: wInfo` en cada elemento del array `hoursData`.
+     - Invocación de `renderWeatherIconHtml(h.weatherInfo, 20, currentTheme)` en `renderSkyTimeline` y `renderWeatherIconHtml(item.weatherInfo, 18, currentTheme)` en el Live Inspector Readout (`#chart-live-readout`).
+     - Blindaje CSS en `.chart-sky-col .col-icon` y `.col-icon svg` (`width: 20px; height: 20px; display: block; flex-shrink: 0`) para garantizar centrado perfecto sin deformación ni saltos de maqueta.
+     - Sincronización en `js/app.js`: paso de `this.prefs.iconTheme` al conmutar pestañas y en `renderAllComponents`.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 13 y 14):**
+  - Versión oficial actualizada a **`v2.2.23 🎨`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), `CURRENT_APP_VERSION` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+  - Service Worker actualizado a `meteoasturlode-v2223-iconos-grafica` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.23` en `index.html` y módulos correspondientes.
+
 ## 📡 Actualización v2.2.22: Subtítulo Explicativo en Radar en Directo — 2026-10-15
 - **Claridad y Jerarquía Visual en el Módulo de Radar (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Lendo solicitó incorporar un subtítulo en el módulo de «Radar en Directo» para armonizar su cabecera y guiar al usuario sobre el contenido del radar satélite en tiempo real. Entre las opciones propuestas, Lendo seleccionó la opción 3: *«Seguimiento de lluvia y tormentas en tiempo real vía satélite»*.
