@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2232-surf-3h-monotarjeta';
+const CACHE_NAME = 'meteoasturlode-v2233-alertas-pulsantes';
 const STATIC_ASSETS = [
   './',
   './index.html',

@@ -8,6 +8,25 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🚨 Actualización v2.2.33: Palpitación Envolvente en Tarjeta AEMET y Alertas Silenciosas — 2026-10-16
+- **Potenciación Visual del Parpadeo y Respiración de Alertas (Petición Expresa de Lendo):**
+  1. *Diagnóstico Operativo:* Lendo observó que la tarjeta oficial AEMET (`.aemet-alert-card`) era 100% estática cuando había avisos meteorológicos activos (amarillo, naranja o rojo), careciendo de animación llamativa. Además, en las alertas silenciosas del panel en vivo (Xelu, Borrina, Mar de Fondo, etc.) el halo existente era excesivamente tímido (3,5 segundos con baja variación de opacidad), por lo que solicitó que se viese mucho más ese parpadeo tanto en las alertas silenciosas como en la tarjeta oficial de AEMET.
+  2. *Intervención Técnica en `components.css` y `weather-themes.css`:*
+     - **Tarjeta Oficial AEMET (`.aemet-alert-card`):**
+       - 🟡 `aemet-yellow`: Animación `aemetPulseYellow 2.2s ease-in-out infinite alternate;` con borde ámbar encendido a 1.0, halo exterior expansivo de hasta 32px y brillo interior `inset` de 24px.
+       - 🟠 `aemet-orange`: Animación `aemetPulseOrange 1.8s ease-in-out infinite alternate;` con halo naranja de 34px y resplandor vivo.
+       - 🔴 `aemet-red`: Animación `aemetPulseRed 1.5s ease-in-out infinite alternate;` con resplandor rubí de 38px transmitiendo urgencia y máxima precaución.
+     - **Alertas Silenciosas Envolventes:**
+       - Reducido el tiempo de ciclo a 2,2s para nivel moderado/amarillo y a 1,5s para nivel grave/rojo.
+       - Incorporado halo inset en el marco interior de la tarjeta de cristal líquido para que todo el recuadro respire «de más a menos color» con profundidad.
+       - Aplicado a Foehn (`foehnWarmGlow`, `foehnRedGlow`), Galerna (`galernaOceanGlow`, `galernaRedGlow`), Xelu (`xeluAmberGlow`, `xeluRedGlow`), Borrina (`borrinaYellowGlow`, `borrinaRedGlow`), Mar de Fondo (`marFondoYellowGlow`, `marFondoRedGlow`), Tormenta Convectiva (`stormPurpleGlow`, `stormRedGlow`), Viento en Viaductos (`roadWindAmberGlow`, `roadWindRedGlow`), Sismos (`seismicAmberGlow`, `seismicRedGlow`, `seismicCyanGlow`) y Nieve (`snowCyanGlow`, `snowHistoricGlow`, `snowMountainGlow`).
+  3. *Ampliación de Simulacro (Ley 12 en `weatherAlerts.js`):*
+     - Soporte para parámetros de prueba rápida `?test=aemet` o `?test=aemet_amarillo` (aviso amarillo), `?test=aemet_naranja` (aviso naranja) y `?test=aemet_rojo` (aviso rojo) para comprobación inmediata en localhost.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 13 y 14):**
+  - Versión oficial actualizada a **`v2.2.33 🚨`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), CSS y scripts.
+  - Service Worker actualizado a `meteoasturlode-v2233-alertas-pulsantes` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.33` en `index.html` y módulos correspondientes.
+
 ## 🏄‍♂️ Actualización v2.2.32: Armonización Visual de Tarjetas a 3 Horas de Surf con Diseño y Monotarjeta de 7 Días — 2026-10-16
 - **Unificación Visual y Estética de Tarjetas de Surf (Petición Expresa de Lendo):**
   1. *Diagnóstico Operativo:* Lendo observó que las tarjetas de 3 horas del cronograma de surf (`.surf-slot-card`) mantenían una estructura estrecha antigua (170px con métricas apiladas verticalmente), viéndose desfasadas y de inferior calidad respecto a las nuevas tarjetas de 7 días (`.surf-daily-card`) con su diseño horizontal a 2 columnas. Solicitó dejarlas visualmente iguales para mayor coherencia estética.

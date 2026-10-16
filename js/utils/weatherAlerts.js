@@ -77,7 +77,7 @@ export function getAemetAlertStatus(weatherData, concejo) {
   if (ALLOW_SIMULATION && typeof window !== 'undefined') {
     const urlParams = new URLSearchParams(window.location.search);
     const testMode = urlParams.get('test');
-    if (testMode === 'aemet_viento' || testMode === 'viaductos' || testMode === 'viento_viaductos') {
+    if (testMode === 'aemet' || testMode === 'aemet_amarillo' || testMode === 'aemet_yellow' || testMode === 'aemet_viento' || testMode === 'viaductos' || testMode === 'viento_viaductos') {
       alerts.push({
         id: 'aemet_wind_sim',
         type: 'viento',
@@ -91,7 +91,7 @@ export function getAemetAlertStatus(weatherData, concejo) {
         probability: '40% - 70%',
         recommendation: 'Asegure elementos en terrazas y ventanas. Evite transitar bajo árboles grandes o estructuras en obras. Máxima precaución al volante.'
       });
-    } else if (testMode === 'viaductos_severo' || testMode === 'temporal_viaductos' || testMode === 'viento_severo') {
+    } else if (testMode === 'aemet_naranja' || testMode === 'aemet_orange' || testMode === 'viaductos_severo' || testMode === 'temporal_viaductos' || testMode === 'viento_severo') {
       alerts.push({
         id: 'aemet_wind_sim_severe',
         type: 'viento',
@@ -104,6 +104,20 @@ export function getAemetAlertStatus(weatherData, concejo) {
         validity: 'Hoy • Horas centrales y tarde (15:00 - 21:00 h)',
         probability: '70% - 90%',
         recommendation: 'Extreme la precaución en carretera y viaductos expuestos. Evite actividades al aire libre.'
+      });
+    } else if (testMode === 'aemet_rojo' || testMode === 'aemet_red') {
+      alerts.push({
+        id: 'aemet_rain_sim_red',
+        type: 'lluvia',
+        level: 'red',
+        levelName: 'Aviso Rojo (Riesgo Extremo)',
+        levelColor: '#ef4444',
+        icon: '🌧️',
+        title: 'Aviso Rojo por Precipitaciones Torrenciales',
+        desc: `Simulacro: Acumulaciones extraordinarias superiores a 120 mm en 12h en ${concejo.name} y cuencas fluviales de ${aemetZone.name}.`,
+        validity: 'Hoy • Vigencia inmediata',
+        probability: '80% - 100%',
+        recommendation: 'Peligro extremo. No se desplace salvo necesidad imperiosa. Aléjese de cauces, ramblas y zonas bajas inundables.'
       });
     }
   }

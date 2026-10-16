@@ -10,6 +10,31 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.33] - 2026-10-16
+
+### 🚨 Palpitación Envolvente en Tarjeta AEMET y Alertas Silenciosas (Petición Lendo)
+- **Animación Pulsante en Tarjeta Oficial AEMET (`components.css`):**
+  - Dotada a la tarjeta oficial AEMET (`.aemet-alert-card`) de un sistema de animación rítmica de halo y respiración Liquid Glass cuando existen avisos activos:
+    - 🟡 **Aviso Amarillo:** Pulso de 2,2 segundos (`aemetPulseYellow`) con borde ámbar encendido, halo expansivo de 0 a 32px y resplandor interior.
+    - 🟠 **Aviso Naranja:** Pulso de 1,8 segundos (`aemetPulseOrange`) en tono naranja vivo.
+    - 🔴 **Aviso Rojo:** Pulso de 1,5 segundos (`aemetPulseRed`) con halo rubí de 38px y urgencia visual.
+- **Potenciación y Homogeneización de Alertas Silenciosas (`components.css` y `weather-themes.css`):**
+  - Acelerados los ciclos de pulsación (antes lentos a 3,5s, ahora 2,2s para moderado y 1,5s para severo) y enriquecida la profundidad con resplandor `box-shadow` inset y exterior de alto contraste:
+    - Alerta Xelu (`xeluAmberGlow` y `xeluRedGlow`).
+    - Alerta Borrina (`borrinaYellowGlow` y `borrinaRedGlow`).
+    - Alerta Mar de Fondo (`marFondoYellowGlow` y `marFondoRedGlow`).
+    - Alerta Tormenta Convectiva (`stormPurpleGlow` y `stormRedGlow`).
+    - Alerta Viento en Viaductos / Carretera (`roadWindAmberGlow` y `roadWindRedGlow`).
+    - Alerta Galerna Cantábrica (`galernaOceanGlow` y `galernaRedGlow`).
+    - Alerta Efecto Foehn (`foehnWarmGlow` y `foehnRedGlow`).
+    - Alerta Sismología EMSC (`seismicAmberGlow`, `seismicRedGlow` y `seismicCyanGlow`).
+    - Alerta Nieve y Ventiscas (`snowCyanGlow`, `snowHistoricGlow` y `snowMountainGlow`).
+- **Simulacro Dinámico para Verificación (Ley 12 / `weatherAlerts.js`):**
+  - Incorporados alias de simulacro controlado `?test=aemet` (amarillo), `?test=aemet_naranja` y `?test=aemet_rojo` para prueba visual inmediata en local.
+- **Cache-Busting Garantizado (Leyes 1, 4, 10 y 13):**
+  - Service Worker actualizado a `meteoasturlode-v2233-alertas-pulsantes`.
+  - Versión oficial elevada a `v2.2.33 🚨` en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+
 ## [2.2.32] - 2026-10-16
 
 ### 🏄‍♂️ Armonización Visual de Tarjetas a 3 Horas de Surf con Diseño y Monotarjeta de 7 Días (Petición Lendo)

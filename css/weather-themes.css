@@ -141,12 +141,18 @@ body {
   background: linear-gradient(135deg, rgba(6, 182, 212, 0.20) 0%, rgba(15, 23, 42, 0.85) 100%);
   border: 1.5px solid rgba(56, 189, 248, 0.85);
   box-shadow: 0 4px 24px rgba(6, 182, 212, 0.28), inset 0 0 16px rgba(56, 189, 248, 0.12);
-  animation: snowCyanGlow 3.5s ease-in-out infinite alternate;
+  animation: snowCyanGlow 2.2s ease-in-out infinite alternate;
 }
 
 @keyframes snowCyanGlow {
-  0% { border-color: rgba(56, 189, 248, 0.60); box-shadow: 0 4px 16px rgba(6, 182, 212, 0.20); }
-  100% { border-color: rgba(125, 211, 252, 1); box-shadow: 0 4px 28px rgba(6, 182, 212, 0.42); }
+  0% {
+    border-color: rgba(56, 189, 248, 0.40);
+    box-shadow: 0 2px 14px rgba(6, 182, 212, 0.15), inset 0 0 8px rgba(56, 189, 248, 0.06);
+  }
+  100% {
+    border-color: rgba(125, 211, 252, 1);
+    box-shadow: 0 0 32px rgba(6, 182, 212, 0.45), 0 0 12px rgba(125, 211, 252, 0.60), inset 0 0 24px rgba(56, 189, 248, 0.22);
+  }
 }
 
 .snow-banner.valleys .snow-title,
@@ -171,12 +177,18 @@ body {
   background: linear-gradient(135deg, rgba(225, 29, 72, 0.35) 0%, rgba(15, 23, 42, 0.92) 100%);
   border: 1.5px solid rgba(244, 63, 94, 0.95);
   box-shadow: 0 4px 30px rgba(225, 29, 72, 0.50), inset 0 0 20px rgba(244, 63, 94, 0.25);
-  animation: snowHistoricGlow 3.5s ease-in-out infinite alternate;
+  animation: snowHistoricGlow 1.5s ease-in-out infinite alternate;
 }
 
 @keyframes snowHistoricGlow {
-  0% { border-color: rgba(244, 63, 94, 0.65); box-shadow: 0 4px 18px rgba(225, 29, 72, 0.30); }
-  100% { border-color: rgba(251, 113, 133, 1); box-shadow: 0 4px 32px rgba(225, 29, 72, 0.60); }
+  0% {
+    border-color: rgba(244, 63, 94, 0.45);
+    box-shadow: 0 2px 16px rgba(225, 29, 72, 0.18), inset 0 0 10px rgba(244, 63, 94, 0.08);
+  }
+  100% {
+    border-color: rgba(251, 113, 133, 1);
+    box-shadow: 0 0 38px rgba(225, 29, 72, 0.60), 0 0 16px rgba(251, 113, 133, 0.75), inset 0 0 30px rgba(244, 63, 94, 0.30);
+  }
 }
 
 .snow-banner.historic .snow-title {
@@ -198,12 +210,18 @@ body {
   background: linear-gradient(135deg, rgba(99, 102, 241, 0.25) 0%, rgba(15, 23, 42, 0.88) 100%);
   border: 1.5px solid rgba(129, 140, 248, 0.85);
   box-shadow: 0 4px 26px rgba(99, 102, 241, 0.32), inset 0 0 18px rgba(129, 140, 248, 0.15);
-  animation: snowMountainGlow 3.5s ease-in-out infinite alternate;
+  animation: snowMountainGlow 2.2s ease-in-out infinite alternate;
 }
 
 @keyframes snowMountainGlow {
-  0% { border-color: rgba(129, 140, 248, 0.60); box-shadow: 0 4px 18px rgba(99, 102, 241, 0.22); }
-  100% { border-color: rgba(165, 180, 252, 1); box-shadow: 0 4px 28px rgba(99, 102, 241, 0.45); }
+  0% {
+    border-color: rgba(129, 140, 248, 0.40);
+    box-shadow: 0 2px 14px rgba(99, 102, 241, 0.15), inset 0 0 8px rgba(129, 140, 248, 0.06);
+  }
+  100% {
+    border-color: rgba(165, 180, 252, 1);
+    box-shadow: 0 0 32px rgba(99, 102, 241, 0.45), 0 0 12px rgba(165, 180, 252, 0.60), inset 0 0 24px rgba(129, 140, 248, 0.22);
+  }
 }
 
 .snow-banner.mountain .snow-title {
