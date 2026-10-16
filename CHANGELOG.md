@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.45] - 2026-10-16
+
+### 🏖️ Selector Desplegable de Playas y Omisión de Seguridad de Baño (Petición Lendo)
+- **Selector Desplegable Ergonómico en Guía de Playas (`marineCard.js`, `components.css` y `app.js`):**
+  - Sustituido el carrusel de pastillas horizontales por un selector desplegable (`<select id="beach-category-select">`) estilizado con Glassmorphism y chevron cyan, alineado en una sola fila compacta junto al botón de `📹 Webcams ●`.
+  - Desglose fluido e instantáneo de opciones: `🏖️ Todas las playas`, `👨‍👩‍👧‍👦 Familiares`, `🪨 Calas & Pozas`, `🏄‍♂️ Surf` y `🌿 Salvajes & Dunas`, con actualización dinámica del icono frontal según la categoría activa.
+  - Elimina el deslizamiento lateral con el pulgar para buscar categorías, activando el selector nativo táctil de iOS y Android en una vista compacta sin sobrecarga visual.
+- **Omisión de la Tarjeta de Seguridad de Baño y Tríada Simétrica (`marineCard.js`):**
+  - Retirado el widget de seguridad de baño de la cuadrícula de sensores marinos por petición expresa de Lendo: la aplicación meteorológica no sustituye la evaluación presencial de los socorristas y salvavidas a pie de playa (Ley 16 - Exención de Responsabilidad Civil).
+  - La cuadrícula `.marine-grid` pasa a una tríada simétrica limpia y equilibrada de 3 sensores esenciales: `Temperatura del Agua`, `Estado de la Mar (Douglas)` y `Visibilidad Costera & Viento`.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):**
+  - Service Worker actualizado a `meteoasturlode-v2245-beach-dropdown-streamline`.
+  - Versión oficial elevada a `v2.2.45 🏖️` en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+
 ## [2.2.44] - 2026-10-16
 
 ### 🏖️ Integración de Webcams en Barra de Filtros (Petición Lendo)

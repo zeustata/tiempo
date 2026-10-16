@@ -32,7 +32,7 @@
 
   <!-- Estilos de la Aplicación con Cache Busting -->
   <link rel="stylesheet" href="css/main.css?v=2.2.35">
-  <link rel="stylesheet" href="css/components.css?v=2.2.44">
+  <link rel="stylesheet" href="css/components.css?v=2.2.45b">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.44 🏖️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.45 🏖️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -349,8 +349,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.2.44 🏖️</span>
+            <span class="release-version">v2.2.45 🏖️</span>
             <span class="release-date">16 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-ui">Ergonomía &amp; Playas (Petición Lendo)</span> <strong>Desplegable de Playas y Omisión de Tarjeta de Baño</strong>:
+              <br>• <strong>Selector Desplegable Integrado:</strong> Sustituido el carrusel de pastillas horizontales por un selector desplegable ergonómico (<code>🏖️ Todas las playas ▾</code>, familiares, calas, surf, salvajes) alineado en una sola fila compacta junto al botón de Webcams.
+              <br>• <strong>Omisión de Seguridad de Baño:</strong> Retirada la 4ª tarjeta redundante de seguridad de baño, blindando la exención de responsabilidad civil (Ley 16) y dejando la decisión de baño a criterio exclusivo de los salvavidas oficiales a pie de playa.
+              <br>• <strong>Tríada Simétrica de Sensores:</strong> Distribución limpia y equilibrada en 3 tarjetas esenciales: Temperatura del Agua, Estado de la Mar (Douglas) y Visibilidad/Viento.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.44 🏖️</span>
+            <span class="release-date">16 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-ui">Ergonomía &amp; Playas (Petición Lendo)</span> <strong>Integración de Webcams en Barra de Filtros</strong>:
@@ -3665,7 +3679,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.44"></script>
+  <script type="module" src="js/app.js?v=2.2.45"></script>
 
 
 

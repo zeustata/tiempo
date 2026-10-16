@@ -1393,16 +1393,6 @@ export function renderMarineCard(data, concejo) {
           <div class="widget-detail">Viento en arenal: <strong>${windSpeed} km/h (${windDirObj.name})</strong></div>
           <div class="widget-detail">Ambiente: <strong>${parseFloat(visibilityKm) >= 15 ? 'Cielos limpios y diáfanos' : 'Ligera bruma marina'}</strong></div>
         </div>
-
-        <!-- Seguridad y Recomendación de Baño -->
-        <div class="marine-widget">
-          <div class="widget-label">Seguridad de Baño</div>
-          <div class="widget-value" style="color: ${flagColor};">
-            ${douglasDegree <= 1 ? 'Óptima' : (douglasDegree === 2 ? 'Favorable' : (douglasDegree === 3 ? 'Precaución' : 'Exigente'))}
-          </div>
-          <div class="widget-detail">Condición: <strong style="color: ${flagColor};">${douglasDegree <= 2 ? 'Mar en calma o rizado' : (douglasDegree === 3 ? 'Corrientes y mar picada' : 'Fuerte oleaje / Mar viva')}</strong></div>
-          <div class="widget-detail">Consejo: <strong>${douglasDegree <= 2 ? 'Precaución habitual en agua' : (douglasDegree === 3 ? 'Atención a resacas y bandera' : 'Baño solo expertos o prohibido')}</strong></div>
-        </div>
       </div>
 
       <!-- 4. CATÁLOGO TURÍSTICO DE PLAYAS Y CALAS DEL CONCEJO -->
@@ -1418,25 +1408,23 @@ export function renderMarineCard(data, concejo) {
           </div>
         </div>
 
-        <div class="beach-filters-scroll-wrap" role="tablist" aria-label="Filtrar playas por categoría">
-          <div class="beach-filters-bar">
-            <button type="button" class="beach-filter-pill btn-open-webcams-beach beach-webcams-pill" data-webcam-cat="playas" title="Ver cámaras en directo de arenales asturianos" aria-label="Ver webcams de playas en directo">
-              <span class="pill-icon">📹</span>
-              <span class="pill-text">Webcams</span>
-              <span class="pill-live-dot" title="En directo">●</span>
-            </button>
-            <button type="button" class="beach-filter-pill active" data-beach-filter="all" aria-label="Mostrar todas las playas (${activePlayas.length})">
-              <span class="pill-icon">🏖️</span>
-              <span class="pill-text">Todas</span>
-              <span class="pill-count">${activePlayas.length}</span>
-            </button>
-            ${beachCategories.map(cat => `
-              <button type="button" class="beach-filter-pill" data-beach-filter="${cat.id}" aria-label="Filtrar por playas ${cat.label} (${cat.count})">
-                <span class="pill-icon">${cat.icon}</span>
-                <span class="pill-text">${cat.label}</span>
-                <span class="pill-count">${cat.count}</span>
-              </button>
-            `).join('')}
+        <!-- BARRA ERGONÓMICA DE WEBCAMS Y SELECTOR DESPLEGABLE DE CATEGORÍAS -->
+        <div class="beach-controls-toolbar">
+          <button type="button" class="btn-open-webcams-beach beach-webcams-btn" data-webcam-cat="playas" title="Ver cámaras en directo de arenales asturianos" aria-label="Ver webcams de playas en directo">
+            <span class="webcam-btn-icon">📹</span>
+            <span class="webcam-btn-text">Webcams</span>
+            <span class="webcam-live-dot" title="En directo">●</span>
+          </button>
+
+          <div class="beach-filter-dropdown-wrapper">
+            <span class="dropdown-filter-icon" id="beach-active-icon">🏖️</span>
+            <select id="beach-category-select" class="beach-category-select" aria-label="Filtrar catálogo de playas">
+              <option value="all" selected>Todas las playas (${activePlayas.length})</option>
+              ${beachCategories.map(cat => `
+                <option value="${cat.id}">${cat.icon} ${cat.label} (${cat.count})</option>
+              `).join('')}
+            </select>
+            <span class="dropdown-chevron">▾</span>
           </div>
         </div>
 

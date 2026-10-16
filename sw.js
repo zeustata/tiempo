@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2244-webcams-pill-streamline';
+const CACHE_NAME = 'meteoasturlode-v2245-beach-dropdown-streamline';
 const STATIC_ASSETS = [
   './',
   './index.html',
