@@ -2,7 +2,7 @@ import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/
 import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=2.2.36';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=2.0.0';
 import { renderCurrentWeather } from './components/currentCard.js?v=2.2.38b';
-import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=2.2.43';
+import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=2.2.44';
 import { renderSurfCard } from './components/surfCard.js?v=2.2.32';
 import { renderRoutesCard } from './components/routesCard.js?v=2.2.20';
 import { renderMountainCard } from './components/mountainCard.js?v=2.2.24';
@@ -42,7 +42,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '2.2.43';
+export const CURRENT_APP_VERSION = '2.2.44';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -1480,7 +1480,7 @@ class MeteoAsturiasApp {
 
     // Delegación global para filtros rápidos de playas por categoría (Playas y Mareas)
     document.addEventListener('click', (e) => {
-      const filterBtn = e.target.closest('.beach-filter-pill');
+      const filterBtn = e.target.closest('.beach-filter-pill:not(.btn-open-webcams-beach)');
       if (!filterBtn) return;
 
       this.triggerHaptic();
@@ -1489,7 +1489,7 @@ class MeteoAsturiasApp {
       // Activar visualmente la pastilla seleccionada
       const filterBar = filterBtn.closest('.beach-filters-bar');
       if (filterBar) {
-        filterBar.querySelectorAll('.beach-filter-pill').forEach(b => b.classList.remove('active'));
+        filterBar.querySelectorAll('.beach-filter-pill:not(.btn-open-webcams-beach)').forEach(b => b.classList.remove('active'));
         filterBtn.classList.add('active');
       }
 

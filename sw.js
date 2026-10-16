@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2243-marine-sensors-symmetry';
+const CACHE_NAME = 'meteoasturlode-v2244-webcams-pill-streamline';
 const STATIC_ASSETS = [
   './',
   './index.html',

@@ -8,6 +8,18 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🏖️ Actualización v2.2.44: Integración de Webcams en Barra de Filtros — 2026-10-16
+- **Compactación y Eliminación de Filas Aisladas en Playas (Petición Expresa de Lendo - «vamos a la siguiente opcion»):**
+  1. *Diagnóstico Operativo:* El botón de webcams en vivo de playas ocupaba una fila rectangular completa y solitaria entre la cabecera de playas y el carrusel de filtros, consumiendo 45px de altura vertical y cortando el ritmo de la pantalla móvil.
+  2. *Intervención Técnica en `marineCard.js`, `components.css` y `app.js`:*
+     - **Pastilla Dinámica Live (`.beach-webcams-pill`):** Fusionado el acceso a webcams como la primera pastilla destacada del carrusel de filtros de playas, con un punto rojo pulsante (*live pulse dot*) y gradiente cyan distintivo.
+     - **Erradicación de Fila Intermedia:** La eliminación del bloque de botón aislado ahorra un salto de pantalla entero, permitiendo que el usuario vea de inmediato las primeras playas de la lista al cargar la vista.
+     - **Blindaje de Delegación:** Exclusión de `.btn-open-webcams-beach` de la lógica de conmutación de clases de filtros (`:not(.btn-open-webcams-beach)`), asegurando que el toque abra limpia y exclusivamente el modal de cámaras de Asturias.
+  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
+     - Versión oficial elevada a **`v2.2.44 🏖️`** en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+     - Service Worker actualizado a `meteoasturlode-v2244-webcams-pill-streamline` en `sw.js`.
+     - Actualizado `CURRENT_APP_VERSION = '2.2.44'` en `app.js` y query strings de versión en `index.html`.
+
 ## 🏖️ Actualización v2.2.43: Estandarización y Simetría Limpia en Sensores Costeros — 2026-10-16
 - **Simetría y Eliminación de Redundancias en Sensores Marinos (Petición Expresa de Lendo - «empezamos con el punto 1»):**
   1. *Diagnóstico Operativo:* La cuadrícula `.marine-grid` sufría una asimetría visual notable: mientras que los tres primeros sensores (`Temperatura del Agua`, `Estado de la Mar` y `Visibilidad & Viento`) presentaban un diseño compacto y armonizado, el 4º widget (`Seguridad de Baño`) poseía una cabecera disonante, mayor altura vertical, un banner alargado de color y un distintivo duplicado de bandera que ya presidía en gran formato la cabecera principal del módulo.

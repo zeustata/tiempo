@@ -1418,31 +1418,27 @@ export function renderMarineCard(data, concejo) {
           </div>
         </div>
 
-        <div style="margin: 8px 0 10px 0;">
-          <button class="btn-open-webcams-beach" data-webcam-cat="playas" title="Ver cámaras en directo de arenales asturianos">
-            <span>📹</span>
-            <span>Ver Webcams de Playas en Directo</span>
-          </button>
-        </div>
-
-        ${beachCategories.length > 0 ? `
-          <div class="beach-filters-scroll-wrap" role="tablist" aria-label="Filtrar playas por categoría">
-            <div class="beach-filters-bar">
-              <button type="button" class="beach-filter-pill active" data-beach-filter="all" aria-label="Mostrar todas las playas (${activePlayas.length})">
-                <span class="pill-icon">🏖️</span>
-                <span class="pill-text">Todas</span>
-                <span class="pill-count">${activePlayas.length}</span>
+        <div class="beach-filters-scroll-wrap" role="tablist" aria-label="Filtrar playas por categoría">
+          <div class="beach-filters-bar">
+            <button type="button" class="beach-filter-pill btn-open-webcams-beach beach-webcams-pill" data-webcam-cat="playas" title="Ver cámaras en directo de arenales asturianos" aria-label="Ver webcams de playas en directo">
+              <span class="pill-icon">📹</span>
+              <span class="pill-text">Webcams</span>
+              <span class="pill-live-dot" title="En directo">●</span>
+            </button>
+            <button type="button" class="beach-filter-pill active" data-beach-filter="all" aria-label="Mostrar todas las playas (${activePlayas.length})">
+              <span class="pill-icon">🏖️</span>
+              <span class="pill-text">Todas</span>
+              <span class="pill-count">${activePlayas.length}</span>
+            </button>
+            ${beachCategories.map(cat => `
+              <button type="button" class="beach-filter-pill" data-beach-filter="${cat.id}" aria-label="Filtrar por playas ${cat.label} (${cat.count})">
+                <span class="pill-icon">${cat.icon}</span>
+                <span class="pill-text">${cat.label}</span>
+                <span class="pill-count">${cat.count}</span>
               </button>
-              ${beachCategories.map(cat => `
-                <button type="button" class="beach-filter-pill" data-beach-filter="${cat.id}" aria-label="Filtrar por playas ${cat.label} (${cat.count})">
-                  <span class="pill-icon">${cat.icon}</span>
-                  <span class="pill-text">${cat.label}</span>
-                  <span class="pill-count">${cat.count}</span>
-                </button>
-              `).join('')}
-            </div>
+            `).join('')}
           </div>
-        ` : ''}
+        </div>
 
         <div id="beach-empty-filter-msg" class="beach-empty-filter-msg" style="display: none;">
           ℹ️ No se han encontrado playas en esta categoría para este concejo.

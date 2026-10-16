@@ -5337,6 +5337,33 @@
   color: #e0f2fe;
 }
 
+.beach-filter-pill.beach-webcams-pill {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.16), rgba(14, 165, 233, 0.26)) !important;
+  border-color: rgba(56, 189, 248, 0.45) !important;
+  color: #38bdf8 !important;
+  font-weight: 700 !important;
+  width: auto !important;
+}
+
+.beach-filter-pill.beach-webcams-pill:hover {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.32), rgba(14, 165, 233, 0.45)) !important;
+  border-color: #38bdf8 !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 12px rgba(56, 189, 248, 0.28) !important;
+}
+
+.beach-filter-pill.beach-webcams-pill .pill-live-dot {
+  color: #ef4444;
+  font-size: 0.68rem;
+  line-height: 1;
+  animation: liveDotPulse 1.5s infinite;
+}
+
+@keyframes liveDotPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.85); }
+}
+
 .beach-empty-filter-msg {
   padding: 14px 16px;
   background: rgba(15, 23, 42, 0.45);

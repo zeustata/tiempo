@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.44] - 2026-10-16
+
+### 🏖️ Integración de Webcams en Barra de Filtros (Petición Lendo)
+- **Compactación y Ergonomía en Guía de Playas (`marineCard.js`, `components.css` y `app.js`):**
+  - Fusionado el botón de cámaras en directo como la primera pastilla destacada (`📹 Webcams ●`) del carrusel de filtros, equipada con un punto rojo pulsante (*live pulse*).
+  - **Ahorro de Salto Vertical:** Eliminada la fila rectangular aislada que consumía 45px de altura en la vista móvil, agrupando todas las acciones y filtros en un único carrusel horizontal con el pulgar.
+  - **Aislamiento de Delegación de Eventos:** Asegurado que el pulsador de webcams abra exclusivamente el modal de cámaras sin interferir con la lógica de filtrado de playas ni heredar la clase `.active`.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):**
+  - Service Worker actualizado a `meteoasturlode-v2244-webcams-pill-streamline`.
+  - Versión oficial elevada a `v2.2.44 🏖️` en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+
 ## [2.2.43] - 2026-10-16
 
 ### 🏖️ Estandarización y Simetría Limpia en Sensores Costeros (Petición Lendo)
