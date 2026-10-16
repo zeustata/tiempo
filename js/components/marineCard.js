@@ -1199,12 +1199,18 @@ export function renderMarineCard(data, concejo) {
           </div>
         </div>
 
-        <!-- SELECTOR ERGONÓMICO DESLIZANTE DE VISTA: CURVA 72H VS SEMANA 7 DÍAS -->
+        <!-- SELECTOR ERGONÓMICO DESLIZANTE DE VISTA (BLINDAJE MÓVIL LEY 11) -->
         <div class="tide-segmented-switch-container">
           <div class="tide-sliding-segmented-switch" id="tide-segmented-switch" data-active="curve">
             <div class="tide-switch-glider"></div>
-            <button type="button" class="tide-switch-option active" data-tide-tab="curve">📈 Curva Continua 72h</button>
-            <button type="button" class="tide-switch-option" data-tide-tab="weekly">📅 Marea Semanal 7 Días</button>
+            <button type="button" class="tide-switch-option active" data-tide-tab="curve" aria-label="Ver curva continua de marea de 72 horas">
+              <span class="tide-switch-icon">📈</span>
+              <span class="tide-switch-label">Curva 72h</span>
+            </button>
+            <button type="button" class="tide-switch-option" data-tide-tab="weekly" aria-label="Ver previsión de mareas de 7 días">
+              <span class="tide-switch-icon">📅</span>
+              <span class="tide-switch-label">7 Días</span>
+            </button>
           </div>
         </div>
 

@@ -8,6 +8,17 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🏖️ Actualización v2.2.40: Blindaje Móvil y Sintetización en Selector de Mareas — 2026-10-16
+- **Sintetización Ergonómica Anti-Desborde (Petición Expresa y Captura de Lendo):**
+  1. *Diagnóstico Operativo:* Lendo comprobó en su smartphone que las etiquetas largas del selector de marea («Curva Continua 72h» y «Marea Semanal 7 Días») colisionaban con el ancho útil del 50%, provocando que el texto de la derecha («Semanal 7 Días») fuera expulsado fuera de pantalla y cortado.
+  2. *Intervención Técnica en `marineCard.js` y `components.css`:*
+     - **Sintetización Visual (Ley 11):** Reducidos los textos a `📈 Curva 72h` y `📅 7 Días`, encapsulando icono y texto en `<span class="tide-switch-icon">` y `<span class="tide-switch-label">`.
+     - **Blindaje Tipográfico y Padding Responsive:** En resoluciones de smartphone (< 380px), se ajusta el padding a `7px 6px` y el tamaño de fuente a `0.78rem`, garantizando centrado perfecto, holgura visual generosa y armonía total con los selectores de Surf y Cordillera.
+  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
+     - Versión oficial elevada a **`v2.2.40 🏖️`** en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+     - Service Worker actualizado a `meteoasturlode-v2240-marine-switch-streamline` en `sw.js`.
+     - Actualizado `CURRENT_APP_VERSION = '2.2.40'` en `app.js` y query strings de versión en `index.html`.
+
 ## 🏖️ Actualización v2.2.39: Selector Deslizante en Mareógrafo y Reorganización de Playas y Mareas — 2026-10-16
 - **Simplificación y Ergonomía del Módulo de Playas y Mareas (Petición Expresa de Lendo):**
   1. *Diagnóstico Operativo:* Lendo planteó revisar y simplificar el módulo de *Playas y Mareas* (`marineCard.js`) para que no fuera tan abrumador, sin renunciar a ningún contenido. El análisis crítico detectó dos problemas principales:

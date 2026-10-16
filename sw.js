@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2239-marine-card-streamline';
+const CACHE_NAME = 'meteoasturlode-v2240-marine-switch-streamline';
 const STATIC_ASSETS = [
   './',
   './index.html',

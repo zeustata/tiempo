@@ -10,6 +10,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.40] - 2026-10-16
+
+### 🏖️ Blindaje Móvil y Sintetización en Selector de Mareas (Petición Lendo)
+- **Sintetización Visual Ergonómica (Ley 11):**
+  - Rediseñadas las etiquetas del selector deslizante del mareógrafo a `📈 Curva 72h` y `📅 7 Días` (en lugar de «Curva Continua 72h» y «Marea Semanal 7 Días»).
+  - Erradicado el desborde y corte lateral en smartphones estrechos (< 380px), garantizando centrado perfecto, holgura visual y armonía con los selectores de Surf y Cordillera.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):**
+  - Service Worker actualizado a `meteoasturlode-v2240-marine-switch-streamline`.
+  - Versión oficial elevada a `v2.2.40 🏖️` en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+
 ## [2.2.39] - 2026-10-16
 
 ### 🏖️ Selector Deslizante en Mareógrafo y Reorganización de Mareas (Petición Lendo)
