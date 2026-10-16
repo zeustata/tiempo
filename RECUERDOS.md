@@ -8,6 +8,20 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🏖️ Actualización v2.2.50: Ajuste de Paddings y Compactación del Mareógrafo — 2026-10-16
+- **Apretar el Aire Sobrante y Máxima Eficiencia Vertical (Petición Expresa de Lendo - «dale a todo princesa. confio»):**
+  1. *Diagnóstico Operativo de Lendo y Princesa:*
+     - A pesar de los recortes de cabeceras, la tarjeta del mareógrafo y la rejilla de sensores conservaban márgenes internos sobredimensionados pensados originalmente para monitores de escritorio (paddings de hasta 24px), junto a una pastilla informativa redundante sobre el gráfico SVG (`👆 Desliza horizontalmente...`).
+  2. *Intervención Técnica en `marineCard.js` y `components.css`:*
+     - **Erradicación de `.tide-scroll-hint-bar`:** Eliminada la pastilla superior de ayuda en el gráfico de 72h, permitiendo que la curva dinámica comience directamente bajo el selector de vistas.
+     - **Compactación del Mareógrafo:** Reducido el padding de `.mareografo-card` a 16px 18px (12px 14px en móvil) y su margen inferior a 14px.
+     - **Pastillas de Métricas Sleeker:** Ajustado el acolchado de `.tide-metric-pill` a 10px 14px con un gap reducido a 8px en `.mareografo-metrics-row`, logrando pastillas de datos precisas y proporcionadas.
+     - **Sensores Marinos Afinados:** Ajustado el padding de `.marine-widget` a 14px 16px, ganando otros 40px y culminando la compactación integral de la pestaña sin perder ni un solo parámetro.
+  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
+     - Versión oficial elevada a **`v2.2.50 🏖️`** en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+     - Service Worker actualizado a `meteoasturlode-v2250-compact-tide-paddings` en `sw.js`.
+     - Actualizado `CURRENT_APP_VERSION = '2.2.50'` en `app.js` y query strings de versión en `index.html`.
+
 ## 🏖️ Actualización v2.2.49: Supresión de Textos de Relleno en Guía de Playas — 2026-10-16
 - **Erradicación de Poesía Decorativa y Ascenso de Contenido (Petición Expresa de Lendo - «recuerdame la opcion 2» y «pisale»):**
   1. *Diagnóstico Operativo de Lendo y Princesa:*

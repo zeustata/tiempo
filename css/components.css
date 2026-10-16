@@ -1022,7 +1022,7 @@
   background: var(--bg-surface-elevated);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
-  padding: 16px 20px;
+  padding: 14px 16px;
 }
 
 .widget-label, .m-label {
@@ -1062,7 +1062,7 @@
   background: var(--bg-surface);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
-  padding: 22px 24px;
+  padding: 16px 18px;
   box-shadow: var(--shadow-card);
 }
 
@@ -1113,18 +1113,18 @@
 .mareografo-metrics-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 12px;
-  margin-bottom: 18px;
+  gap: 8px;
+  margin-bottom: 12px;
 }
 
 .tide-metric-pill {
   background: var(--bg-surface-elevated);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
-  padding: 14px 16px;
+  padding: 10px 14px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .t-label-row {
@@ -1224,37 +1224,21 @@
   background: rgba(10, 18, 32, 0.4);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
-  padding: 14px 12px 16px;
-  margin-bottom: 18px;
+  padding: 10px 10px 12px;
+  margin-bottom: 12px;
   position: relative;
   overflow: hidden;
 }
 
 .tide-scroll-hint-bar {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 8px;
-}
-
-.tide-scroll-hint-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.74rem;
-  font-weight: 700;
-  color: var(--primary);
-  background: rgba(56, 189, 248, 0.12);
-  border: 1px solid rgba(56, 189, 248, 0.3);
-  padding: 4px 12px;
-  border-radius: 20px;
-  user-select: none;
+  display: none;
 }
 
 .tide-scroll-viewport {
   width: 100%;
   overflow-x: scroll !important;
   overflow-y: hidden !important;
-  padding: 8px 0 14px;
+  padding: 4px 0 8px;
   scrollbar-width: thin;
   -webkit-overflow-scrolling: touch !important;
   border-radius: var(--radius-sm);

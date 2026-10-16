@@ -32,7 +32,7 @@
 
   <!-- Estilos de la Aplicación con Cache Busting -->
   <link rel="stylesheet" href="css/main.css?v=2.2.35">
-  <link rel="stylesheet" href="css/components.css?v=2.2.49">
+  <link rel="stylesheet" href="css/components.css?v=2.2.50">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.49 🏖️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.50 🏖️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -349,8 +349,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.2.49 🏖️</span>
+            <span class="release-version">v2.2.50 🏖️</span>
             <span class="release-date">16 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-ui">Ergonomía &amp; Compactación (Petición Lendo)</span> <strong>Ajuste de Paddings y Compactación del Mareógrafo</strong>:
+              <br>• <strong>Supresión de Barra de Aviso:</strong> Eliminado el cartel redundante sobre la curva de marea de 72h, permitiendo que el gráfico SVG se conecte de forma limpia y directa con el selector.
+              <br>• <strong>Ajuste de Acolchado Interior:</strong> Reducido el padding de la tarjeta del mareógrafo y de los sensores marinos, compactando las 4 métricas en vivo en pastillas sleeker sin perder ningún dato.
+              <br>• <strong>Máxima Eficiencia Vertical:</strong> Ganancia neta de otros 40 píxeles, logrando una vista panorámica donde mareógrafo, sensores y playas se aprecian en un solo golpe de pantalla.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.49 🏖️</span>
+            <span class="release-date">16 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-ui">Ergonomía &amp; Compactación (Petición Lendo)</span> <strong>Supresión de Textos de Relleno en Playas</strong>:
@@ -3732,7 +3746,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.49"></script>
+  <script type="module" src="js/app.js?v=2.2.50"></script>
 
 
 

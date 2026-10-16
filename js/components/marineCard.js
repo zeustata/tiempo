@@ -1228,7 +1228,7 @@ export function renderMarineCard(data, concejo) {
       </div>
 
       <!-- 1. MAREÓGRAFO INTERACTIVO EN TIEMPO REAL (ONDA SINUSOIDAL 72H / SEMANAL) -->
-      <div class="marine-widget mareografo-card" style="margin-bottom: 20px;">
+      <div class="marine-widget mareografo-card" style="margin-bottom: 14px;">
         <!-- Métricas clave en vivo -->
         <div class="mareografo-metrics-row">
           <div class="tide-metric-pill">
@@ -1278,9 +1278,6 @@ export function renderMarineCard(data, concejo) {
         <!-- SUB-VISTA A: CURVA SINUSOIDAL CONTINUA 72H + MAREAS DE HOY -->
         <div id="tide-curve-view">
           <div class="tide-chart-container">
-            <div class="tide-scroll-hint-bar">
-              <span class="tide-scroll-hint-pill">👆 Desliza horizontalmente para recorrer las 72h (3 días de marea)</span>
-            </div>
             <div class="tide-scroll-viewport">
               ${tideSvg}
             </div>

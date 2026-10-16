@@ -10,6 +10,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.50] - 2026-10-16
+
+### 🏖️ Ajuste de Paddings y Compactación del Mareógrafo (Petición Lendo)
+- **Apretar el Aire Sobrante y Eficiencia Vertical (`marineCard.js` y `components.css`):**
+  - Suprimida la barra de aviso redundante sobre la curva de marea de 72h (`.tide-scroll-hint-bar`), permitiendo que el gráfico dinámico SVG se conecte de forma inmediata y limpia.
+  - Reducido el padding interior de la tarjeta del mareógrafo (`.mareografo-card`) a 16px 18px (y 12px 14px en smartphones), aprovechando el marco útil de la pantalla.
+  - Compactadas las 4 métricas en vivo en pastillas sleeker (`.tide-metric-pill`) con padding de 10px 14px y gap de 8px, y ajustado el padding de los 3 sensores de costa (`.marine-widget`) a 14px 16px.
+  - Ahorro neto de otros 40 píxeles verticales, completando la tríada de recortes ergonómicos del módulo.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):**
+  - Service Worker actualizado a `meteoasturlode-v2250-compact-tide-paddings`.
+  - Versión oficial elevada a `v2.2.50 🏖️` en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+
 ## [2.2.49] - 2026-10-16
 
 ### 🏖️ Supresión de Textos de Relleno en Guía de Playas (Petición Lendo)
