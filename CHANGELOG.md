@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.51] - 2026-10-16
+
+### 🏖️ Desplegable de Playas Conciso y Anti-Recorte (Petición Lendo)
+- **Ergonomía de Etiquetas y Blindaje Móvil (`marineCard.js`):**
+  - Simplificada la opción por defecto del selector a `🏖️ Playas` (en sustitución de `🏖️ Todas las playas (xx)`), eliminando el desborde y los puntos suspensivos que se producían al compartir fila con el botón de Webcams en móviles.
+  - Concisión de una sola palabra en los nombres de las categorías temáticas (`Familiares`, `Calas`, `Surf`, `Salvajes`) y supresión de los contadores numéricos en el desplegable.
+  - Garantizada la lectura limpia, proporcionada y sin cortes en pantallas estrechas (320px - 380px) al seleccionar cualquier filtro.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):**
+  - Service Worker actualizado a `meteoasturlode-v2251-compact-beach-select`.
+  - Versión oficial elevada a `v2.2.51 🏖️` en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+
 ## [2.2.50] - 2026-10-16
 
 ### 🏖️ Ajuste de Paddings y Compactación del Mareógrafo (Petición Lendo)

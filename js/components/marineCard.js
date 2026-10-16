@@ -1085,7 +1085,7 @@ export function getBeachCategories(playas) {
     },
     {
       id: 'calas',
-      label: 'Calas & Pozas',
+      label: 'Calas',
       icon: '🪨',
       test: (p) => {
         const text = `${p.name} ${p.type} ${p.tag || ''} ${p.bottom || ''}`.toLowerCase();
@@ -1106,7 +1106,7 @@ export function getBeachCategories(playas) {
     },
     {
       id: 'salvaje',
-      label: 'Salvajes & Dunas',
+      label: 'Salvajes',
       icon: '🌿',
       test: (p) => {
         const text = `${p.name} ${p.type} ${p.tag || ''}`.toLowerCase();
@@ -1402,9 +1402,9 @@ export function renderMarineCard(data, concejo) {
 
           <div class="beach-filter-dropdown-wrapper">
             <select id="beach-category-select" class="beach-category-select" aria-label="Filtrar catálogo de playas">
-              <option value="all" selected>🏖️ Todas las playas (${activePlayas.length})</option>
+              <option value="all" selected>🏖️ Playas</option>
               ${beachCategories.map(cat => `
-                <option value="${cat.id}">${cat.icon} ${cat.label} (${cat.count})</option>
+                <option value="${cat.id}">${cat.icon} ${cat.label}</option>
               `).join('')}
             </select>
             <span class="dropdown-chevron">▾</span>

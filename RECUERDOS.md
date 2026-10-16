@@ -8,6 +8,19 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🏖️ Actualización v2.2.51: Desplegable Ergonómico de Playas Anti-Desborde — 2026-10-16
+- **Etiquetas Concisas y Blindaje Anti-Recorte en Móvil (Petición Expresa de Lendo - «mira. me gustaria que cambies el boton desplegable...» y «PISALE»):**
+  1. *Diagnóstico Operativo de Lendo y Princesa:*
+     - Lendo detectó que en teléfonos móviles (ancho 360px-390px), al compartir fila el botón `[ 📹 Webcams ]` y el desplegable de playas, el texto por defecto `🏖️ Todas las playas (12)` no entraba en el contenedor y el navegador lo truncaba feamente con puntos suspensivos como `🏖️ Todas las pl... ▾`.
+  2. *Intervención Técnica en `marineCard.js`:*
+     - **Opción Principal Concisa:** Reemplazada la etiqueta inicial por `🏖️ Playas`.
+     - **Categorías Temáticas de 1 Palabra:** Simplificados los nombres en el matcher a `Familiares`, `Calas` (antes *Calas & Pozas*), `Surf` y `Salvajes` (antes *Salvajes & Dunas*).
+     - **Eliminación de Contadores Numéricos:** Suprimidos los paréntesis `(xx)` de las opciones para que, cualquiera que sea la categoría seleccionada, la pastilla encaje perfectamente y con holgura sin volver a recortarse jamás (cumpliendo la Ley 11).
+  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
+     - Versión oficial elevada a **`v2.2.51 🏖️`** en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+     - Service Worker actualizado a `meteoasturlode-v2251-compact-beach-select` en `sw.js`.
+     - Actualizado `CURRENT_APP_VERSION = '2.2.51'` en `app.js` y query strings de versión en `index.html`.
+
 ## 🏖️ Actualización v2.2.50: Ajuste de Paddings y Compactación del Mareógrafo — 2026-10-16
 - **Apretar el Aire Sobrante y Máxima Eficiencia Vertical (Petición Expresa de Lendo - «dale a todo princesa. confio»):**
   1. *Diagnóstico Operativo de Lendo y Princesa:*
