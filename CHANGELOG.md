@@ -10,6 +10,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.49] - 2026-10-16
+
+### 🏖️ Supresión de Textos de Relleno en Guía de Playas (Petición Lendo)
+- **Eliminación de Subtítulo Decorativo y Ganancia de Espacio (`marineCard.js` y `components.css`):**
+  - Suprimida la frase poética de relleno (*«Arenales, calas con encanto, entorno marinero y mejor momento de marea»*) sobre el catálogo de arenales.
+  - La barra ergonómica de Webcams y el desplegable de categorías se acoplan directamente bajo el título de las playas con margen optimizado, ahorrando otros 30 píxeles verticales y subiendo las fichas hacia la vista inicial del usuario.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):**
+  - Service Worker actualizado a `meteoasturlode-v2249-lean-beach-section`.
+  - Versión oficial elevada a `v2.2.49 🏖️` en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+
 ## [2.2.48] - 2026-10-16
 
 ### 🏖️ Unificación de Cabeceras en Playas y Mareógrafo (Petición Lendo)

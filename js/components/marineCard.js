@@ -1389,15 +1389,10 @@ export function renderMarineCard(data, concejo) {
 
       <!-- 4. CATÁLOGO TURÍSTICO DE PLAYAS Y CALAS DEL CONCEJO -->
       <div class="marine-ports-section">
-        <div class="beach-section-header">
-          <div>
-            <h4 class="ports-title" style="margin-bottom: 2px;">
-              🏖️ Guía de Playas y Calas de ${isCoasting ? concejo.name : `${concejo.name} (en ${interiorRef.name})`}
-            </h4>
-            <span class="beach-section-subtitle">
-              Arenales, calas con encanto, entorno marinero y mejor momento de marea
-            </span>
-          </div>
+        <div class="beach-section-header" style="margin-bottom: 8px;">
+          <h4 class="ports-title" style="margin: 0;">
+            🏖️ Guía de Playas y Calas de ${isCoasting ? concejo.name : `${concejo.name} (en ${interiorRef.name})`}
+          </h4>
         </div>
 
         <!-- BARRA ERGONÓMICA DE WEBCAMS Y SELECTOR DESPLEGABLE DE CATEGORÍAS -->

@@ -8,6 +8,18 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🏖️ Actualización v2.2.49: Supresión de Textos de Relleno en Guía de Playas — 2026-10-16
+- **Erradicación de Poesía Decorativa y Ascenso de Contenido (Petición Expresa de Lendo - «recuerdame la opcion 2» y «pisale»):**
+  1. *Diagnóstico Operativo de Lendo y Princesa:*
+     - Justo sobre la barra de Webcams y el desplegable de playas se ubicaba un subtítulo poético (*«Arenales, calas con encanto, entorno marinero y mejor momento de marea»*) que ocupaba dos líneas de texto gris en teléfonos móviles sin aportar ningún parámetro o dato meteorológico útil.
+  2. *Intervención Técnica en `marineCard.js` y `components.css`:*
+     - **Erradicación de `.beach-section-subtitle`:** Suprimido el elemento de relleno del DOM.
+     - **Acoplamiento Directo:** El título de la guía de playas se conecta de forma inmediata con `.beach-controls-toolbar` ajustando su margen inferior a 8px, logrando un ahorro neto de 30px verticales y acercando la lista de arenales al pulgar.
+  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
+     - Versión oficial elevada a **`v2.2.49 🏖️`** en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+     - Service Worker actualizado a `meteoasturlode-v2249-lean-beach-section` en `sw.js`.
+     - Actualizado `CURRENT_APP_VERSION = '2.2.49'` en `app.js` y query strings de versión en `index.html`.
+
 ## 🏖️ Actualización v2.2.48: Unificación de Cabeceras en Playas y Mareógrafo — 2026-10-16
 - **Compactación y Fusión de Cabeceras (Petición Expresa de Lendo - «empieza con la primera opcion»):**
   1. *Diagnóstico Operativo de Lendo y Princesa:*
