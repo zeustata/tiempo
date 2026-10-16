@@ -10180,3 +10180,165 @@
 .ski-total-hint strong {
   color: #38bdf8;
 }
+
+/* ==========================================================================
+   MODAL DE ALERTA ROJA / EMERGENCIA CIVIL & METEOROLÓGICA (v2.2.34)
+   ========================================================================== */
+.emergency-modal-overlay {
+  background: rgba(10, 15, 29, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  z-index: 10050; /* Prioridad absoluta por encima de cualquier otro modal */
+}
+
+.emergency-modal-card {
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.28) 0%, rgba(15, 23, 42, 0.94) 100%);
+  border: 2px solid rgba(239, 68, 68, 0.95);
+  box-shadow: 0 0 50px rgba(220, 38, 38, 0.55), inset 0 0 30px rgba(239, 68, 68, 0.25);
+  animation: aemetPulseRed 1.5s ease-in-out infinite alternate;
+  max-width: 490px;
+  width: 90%;
+  border-radius: var(--radius-lg, 18px);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.emergency-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(239, 68, 68, 0.35);
+  background: rgba(220, 38, 38, 0.15);
+}
+
+.emergency-modal-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(220, 38, 38, 0.40);
+  border: 1px solid rgba(248, 113, 113, 0.85);
+  color: #ffffff;
+  font-size: 0.80rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+
+.emergency-btn-close {
+  color: #fca5a5;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  line-height: 1;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.emergency-btn-close:hover {
+  transform: scale(1.15);
+  color: #ffffff;
+}
+
+.emergency-modal-body {
+  padding: 20px;
+  color: #f8fafc;
+  line-height: 1.5;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.emergency-alert-title {
+  font-size: 1.18rem;
+  font-weight: 800;
+  color: #fff1f2;
+  margin: 0 0 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1.3;
+}
+
+.emergency-alert-location {
+  font-size: 0.85rem;
+  color: #fecdd3;
+  margin-bottom: 14px;
+  font-weight: 600;
+}
+
+.emergency-alert-desc {
+  font-size: 0.90rem;
+  color: #e2e8f0;
+  margin-bottom: 14px;
+  background: rgba(15, 23, 42, 0.65);
+  padding: 12px 14px;
+  border-radius: var(--radius-md, 12px);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  line-height: 1.45;
+}
+
+.emergency-alert-desc strong {
+  color: #fca5a5;
+}
+
+.emergency-alert-advices {
+  background: rgba(220, 38, 38, 0.16);
+  border-left: 3px solid #ef4444;
+  padding: 10px 14px;
+  border-radius: 4px 8px 8px 4px;
+  font-size: 0.84rem;
+  color: #fecaca;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.emergency-alert-advices strong {
+  color: #ffffff;
+}
+
+.emergency-alert-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.emergency-meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 0.76rem;
+  color: #cbd5e1;
+}
+
+.emergency-modal-footer {
+  padding: 14px 20px 20px;
+  border-top: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.btn-emergency-confirm {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 800;
+  border: 1px solid rgba(254, 202, 202, 0.4);
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(220, 38, 38, 0.45);
+  transition: all 0.2s ease;
+}
+
+.btn-emergency-confirm:hover,
+.btn-emergency-confirm:active {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 22px rgba(220, 38, 38, 0.65);
+}

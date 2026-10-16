@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2233-alertas-pulsantes';
+const CACHE_NAME = 'meteoasturlode-v2234-alertas-rojas-emergencia';
 const STATIC_ASSETS = [
   './',
   './index.html',

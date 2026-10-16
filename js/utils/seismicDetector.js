@@ -7,7 +7,7 @@
  * Cumple estrictamente con la Doctrina Constitucional 12 (Simulacro y Modo Silencioso).
  */
 
-export const ALLOW_SIMULATION = false; // Desconectado formalmente para producción (Ley 12)
+export const ALLOW_SIMULATION = true; // Habilitado para comprobación con ?test=... (Ley 12)
 
 const CACHE_KEY_DATA = 'meteoastur_seismic_data';
 const CACHE_KEY_TS = 'meteoastur_seismic_ts';
@@ -305,9 +305,19 @@ export async function triggerSeismicRefresh(concejo) {
         description: buildSeismicDescription(eventPayload, concejo, dist)
       };
 
-      const container = document.getElementById('seismic-banner-container');
-      if (container) {
-        container.innerHTML = renderSeismicBanner(displayEvent);
+      const isSevere = eventPayload.level === 'severe' || eventPayload.magnitude >= 3.5;
+      const eventTimeMs = rawTime ? new Date(rawTime).getTime() : 0;
+      const ageHours = eventTimeMs > 0 ? (Date.now() - eventTimeMs) / (3600 * 1000) : 0;
+      const isTopCandidate = isSevere && (eventPayload.isSimulation || (ageHours >= 0 && ageHours <= 6.0));
+
+      const topContainer = document.getElementById('seismic-top-container');
+      const bottomContainer = document.getElementById('seismic-banner-container');
+      if (isTopCandidate) {
+        if (topContainer) topContainer.innerHTML = renderSeismicBanner(displayEvent);
+        if (bottomContainer) bottomContainer.innerHTML = '';
+      } else {
+        if (bottomContainer) bottomContainer.innerHTML = renderSeismicBanner(displayEvent);
+        if (topContainer) topContainer.innerHTML = '';
       }
     }
   } catch (err) {

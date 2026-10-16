@@ -1,7 +1,7 @@
 import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=2.0.0';
 import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=2.0.0';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=2.0.0';
-import { renderCurrentWeather } from './components/currentCard.js?v=2.2.12';
+import { renderCurrentWeather } from './components/currentCard.js?v=2.2.34';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=2.2.29';
 import { renderSurfCard } from './components/surfCard.js?v=2.2.32';
 import { renderRoutesCard } from './components/routesCard.js?v=2.2.20';
@@ -24,7 +24,8 @@ import { checkConcejoFolixa } from './utils/festivosData.js?v=2.0.0';
 import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=2.0.0';
 import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=2.0.0';
 import { initGyroGlass } from './utils/gyroGlass.js?v=2.0.0';
-import { triggerSeismicRefresh } from './utils/seismicDetector.js?v=2.0.0';
+import { triggerSeismicRefresh, getSeismicStatus } from './utils/seismicDetector.js?v=2.2.34';
+import { evaluateWeatherAlerts } from './utils/weatherAlerts.js?v=2.2.34';
 import { openShareModal } from './utils/shareCardGenerator.js?v=2.2.25';
 import { toggleWeatherSpeech, stopWeatherSpeech } from './utils/weatherSpeaker.js?v=2.0.0';
 
@@ -41,7 +42,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '2.2.33';
+export const CURRENT_APP_VERSION = '2.2.34';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -70,6 +71,7 @@ class MeteoAsturiasApp {
     this.setupPhenomenaModal();
     this.setupWebcamsModal();
     this.setupAutoLocationModal();
+    this.setupEmergencyModal();
     this.updateGpsButtonDisplay();
     this.setupEventListeners();
     this.setupQuickSearch();
@@ -582,6 +584,165 @@ class MeteoAsturiasApp {
     setTimeout(dismiss, 1800);
   }
 
+  setupEmergencyModal() {
+    const modal = document.getElementById('emergency-alert-modal');
+    const btnClose = document.getElementById('btn-close-emergency-modal');
+    const btnDismiss = document.getElementById('btn-dismiss-emergency');
+
+    const dismiss = () => {
+      if (modal) modal.style.display = 'none';
+      if (this.currentEmergencyAlert && this.currentEmergencyAlert.id) {
+        try {
+          sessionStorage.setItem('meteoastur_emergency_seen_' + this.currentEmergencyAlert.id, 'true');
+        } catch (e) {}
+      }
+      this.hasActiveEmergencyAlert = false;
+    };
+
+    if (btnClose) btnClose.addEventListener('click', dismiss);
+    if (btnDismiss) btnDismiss.addEventListener('click', dismiss);
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) dismiss();
+      });
+    }
+  }
+
+  checkEmergencyRedAlerts(data, concejo) {
+    if (!data || !concejo || typeof window === 'undefined') return;
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const testMode = urlParams.get('test');
+
+    let emergency = null;
+
+    // 1. Detección por simulacro (Ley 12)
+    if (testMode === 'emergencia_roja' || testMode === 'aemet_rojo') {
+      emergency = {
+        id: 'sim_emergencia_roja',
+        title: '🚨 Aviso Rojo Oficial por Temporal Severo',
+        location: `Concejo de ${concejo.name} y Comarca`,
+        desc: `Simulacro Ley 12: Declarado Aviso Rojo por precipitaciones torrenciales extraordinarias (>120 mm) y rachas huracanadas superiores a 130 km/h en ${concejo.name}.`,
+        advices: 'Peligro extremo para vidas y bienes. Evite salir al exterior y evite desplazamientos por carretera. Aléjese de cauces de ríos, ramblas, árboles grandes y cornisas. Siga las instrucciones oficiales del 112 y Protección Civil.',
+        meta: [
+          { label: 'Nivel', value: 'Rojo (Riesgo Extremo)' },
+          { label: 'Vigencia', value: 'Inmediata' },
+          { label: 'Protocolo', value: 'Simulacro Ley 12' }
+        ]
+      };
+    } else if (testMode === 'sismo_severo' || testMode === 'sismo_mar') {
+      emergency = {
+        id: 'sim_sismo_severo',
+        title: '🌍 Sismo Notable en la Zona Marítima Cantábrica',
+        location: `Mar Cantábrico (~35 km de ${concejo.name})`,
+        desc: `Simulacro Ley 12: Detectado movimiento sísmico de <strong>magnitud M 4.2</strong> en la plataforma marina frente a la costa asturiana. Sentido con claridad en poblaciones costeras.`,
+        advices: 'Mantenga la calma. Aléjese de objetos pesados, estanterías y ventanas. No utilice ascensores. Si se encuentra cerca de la orilla del mar o escolleras, retírese a cotas altas de inmediato.',
+        meta: [
+          { label: 'Magnitud', value: 'M 4.2' },
+          { label: 'Profundidad', value: '12 km' },
+          { label: 'Fuente', value: 'Simulacro Ley 12' }
+        ]
+      };
+    } else {
+      // 2. Comprobación real de Avisos Oficiales AEMET
+      try {
+        const aemetStatus = evaluateWeatherAlerts(data, concejo);
+        if (aemetStatus && aemetStatus.hasAlerts && aemetStatus.maxLevel === 'red') {
+          const redAlert = (aemetStatus.alerts || []).find(a => a.level === 'red') || aemetStatus.alerts[0];
+          emergency = {
+            id: 'aemet_red_' + (redAlert.id || redAlert.type || 'alert'),
+            title: redAlert.title || '🚨 Aviso Meteorológico Rojo Oficial',
+            location: `Zona AEMET: ${aemetStatus.zone.name} • ${concejo.name}`,
+            desc: redAlert.desc || 'Situación meteorológica de peligro extremo vigente en la zona.',
+            advices: redAlert.recommendation || 'Extrema precaución. Evite desplazamientos innecesarios y siga las recomendaciones de los servicios de emergencia del 112 Asturias.',
+            meta: [
+              { label: 'Nivel', value: redAlert.levelName || 'Rojo (Riesgo Extremo)' },
+              { label: 'Vigencia', value: redAlert.validity || 'Hoy' },
+              { label: 'Probabilidad', value: redAlert.probability || 'Alta' }
+            ]
+          };
+        }
+      } catch (err) {
+        console.warn('[MeteoAstur] Error evaluando alertas AEMET para modal:', err);
+      }
+
+      // 3. Comprobación real de Sismo Severo / Notable si no había aviso meteorológico rojo
+      if (!emergency) {
+        try {
+          const seismic = getSeismicStatus(concejo);
+          if (seismic && seismic.isActive && (seismic.level === 'severe' || seismic.magnitude >= 3.8)) {
+            // Regla de Protección Civil (v2.2.34): El modal emergente de sismo solo salta en las 2 primeras horas (ventana crítica de shock y réplicas)
+            const eventTimestamp = seismic.rawTime ? new Date(seismic.rawTime).getTime() : 0;
+            const ageHours = eventTimestamp > 0 ? (Date.now() - eventTimestamp) / (3600 * 1000) : 0;
+            const isWithinEmergencyWindow = seismic.isSimulation || (ageHours >= 0 && ageHours <= 2.0);
+
+            if (isWithinEmergencyWindow) {
+              emergency = {
+                id: 'seismic_' + (seismic.rawTime || seismic.magnitude),
+                title: seismic.title || '🌍 Registro Sísmico Notable en la Zona',
+                location: `${seismic.place} (~${seismic.distanceKm} km de ${concejo.name})`,
+                desc: seismic.description || `Sismo de magnitud M ${seismic.magnitude.toFixed(1)} registrado a ~${seismic.distanceKm} km.`,
+                advices: 'Mantenga la calma. Inspeccione su vivienda ante posibles desperfectos. En caso de réplicas, protéjase bajo estructuras sólidas y aléjese de cornisas, fachadas o ventanas.',
+                meta: [
+                  { label: 'Magnitud', value: `M ${seismic.magnitude.toFixed(1)}` },
+                  { label: 'Profundidad', value: `${seismic.depth} km` },
+                  { label: 'Registro', value: seismic.timeLabel },
+                  { label: 'Red', value: seismic.network || 'IGN / EMSC' }
+                ]
+              };
+            }
+          }
+        } catch (err) {
+          console.warn('[MeteoAstur] Error evaluando sismos para modal:', err);
+        }
+      }
+    }
+
+    if (emergency) {
+      this.currentEmergencyAlert = emergency;
+      this.hasActiveEmergencyAlert = true;
+
+      // Cerrar changelog si estuviera abierto para no solapar
+      const changelog = document.getElementById('changelog-modal');
+      if (changelog) changelog.style.display = 'none';
+
+      // Verificar si ya fue confirmado en esta sesión
+      let seen = false;
+      try {
+        seen = sessionStorage.getItem('meteoastur_emergency_seen_' + emergency.id);
+      } catch (e) {}
+
+      if (!seen) {
+        this.showEmergencyModal(emergency);
+      }
+    }
+  }
+
+  showEmergencyModal(emergency) {
+    const modal = document.getElementById('emergency-alert-modal');
+    const content = document.getElementById('emergency-modal-content');
+    if (!modal || !content) return;
+
+    content.innerHTML = `
+      <h3 class="emergency-alert-title">${emergency.title}</h3>
+      <div class="emergency-alert-location">📍 ${emergency.location}</div>
+      <div class="emergency-alert-desc">${emergency.desc}</div>
+      <div class="emergency-alert-advices">
+        <strong>🛡️ Recomendaciones de Autoprotección:</strong><br>
+        ${emergency.advices}
+      </div>
+      <div class="emergency-alert-meta">
+        ${emergency.meta.map(m => `<span class="emergency-meta-pill"><strong>${m.label}:</strong> ${m.value}</span>`).join('')}
+      </div>
+    `;
+
+    setTimeout(() => {
+      modal.style.display = 'flex';
+      const changelog = document.getElementById('changelog-modal');
+      if (changelog) changelog.style.display = 'none';
+    }, 850);
+  }
+
   checkChangelogAutoPrompt() {
     const CURRENT_CHANGELOG_VERSION = CURRENT_APP_VERSION;
     const STORAGE_KEY = 'meteoastur_changelog_seen';
@@ -591,6 +752,11 @@ class MeteoAsturiasApp {
         const changelogModal = document.getElementById('changelog-modal');
         if (changelogModal) {
           setTimeout(() => {
+            // Prioridad Absoluta de Protección Civil (v2.2.34): Si hay emergencia roja activa, no mostrar changelog
+            if (this.hasActiveEmergencyAlert) return;
+            const emergencyModal = document.getElementById('emergency-alert-modal');
+            if (emergencyModal && emergencyModal.style.display === 'flex') return;
+
             // Mostrar modal directamente sin alterar historial en el arranque para evitar que popstate lo cierre
             changelogModal.style.display = 'flex';
           }, 2200);
@@ -2177,6 +2343,8 @@ class MeteoAsturiasApp {
       if (liveContainer) {
         liveContainer.innerHTML = renderCurrentWeather(this.weatherData, this.currentConcejo, this.prefs.units, this.prefs.iconTheme);
       }
+      // Verificación de Alertas Rojas de Emergencia (v2.2.34)
+      this.checkEmergencyRedAlerts(this.weatherData, this.currentConcejo);
     } catch (e) {
       console.error('[MeteoAstur] Error renderizando Vivo:', e);
     }

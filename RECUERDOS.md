@@ -8,6 +8,30 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🚨 Actualización v2.2.34: Protocolo de Alertas Rojas de Emergencia y Jerarquía de Sismos Graves — 2026-10-16
+- **Protocolo de Emergencia Civil Inmediata y Reubicación de Terremotos (Petición Expresa de Lendo):**
+  1. *Diagnóstico Operativo:* Lendo detectó que en el panel de Estación en Vivo, las alertas rojas críticas (avisos meteorológicos extremos de AEMET o sismos significativos) podían pasar desapercibidas si el usuario no hacía scroll por la página. En particular, constató un terremoto real ocurrido a 130 km de su localización (Piedras Blancas) que la app detectaba pero ubicaba al final de la vista (debajo de colada y radiación). Planteó la necesidad operativa de que cualquier alerta roja salte en primer plano como advertencia de emergencia instantánea al abrir la app, con prioridad sobre el modal de novedades (changelog), y que los sismos notables se promocionen a la cabecera.
+  2. *Intervención Técnica en Componentes y Lógica Operativa:*
+     - **Modal de Emergencia Roja (`#emergency-alert-modal` en `index.html`, `components.css` y `app.js`):**
+       - Diseñado en cristal líquido de máxima urgencia (`.emergency-modal-card`, borde `rgba(239, 68, 68, 0.9)`, halo pulsante de 40px).
+       - Evalúa tanto avisos rojos de AEMET (`aemet.nivel === 'rojo'`) como sismos graves (`level === 'severe'` o magnitud >= 3.8 con proximidad relevante) y fenómenos meteorológicos extremos.
+       - Dispara con un retardo de cortesía de 600 ms al renderizar la aplicación.
+       - **Supresión / Postergación del Changelog:** Si hay una alerta roja activa, `checkChangelogAutoPrompt()` se inhibe para no competir ni eclipsar la advertencia de seguridad civil.
+       - Registro en `sessionStorage` (`meteoastur_emergency_seen_[id]`) para no ser intrusivo durante la misma sesión tras haber sido reconocido y aceptado por el usuario (`btn-emergency-confirm`).
+     - **Jerarquía y Promoción de Terremotos (`currentCard.js` y `seismicDetector.js`):**
+       - Sismos severos o sentidos (`level === 'severe'` o `magnitude >= 3.5`) se canalizan a `#seismic-top-container`, integrándose en la cabecera del feed de alertas de la Estación en Vivo junto a AEMET y fenómenos silenciosos.
+       - Sismos menores o lejanos se mantienen en `#seismic-banner-container` en la zona inferior.
+     - **Temporalidad y Ciclo de Vida de Emergencias (Regla de Protección Civil):**
+       - **Diferenciación Sismo vs Meteorología:** Las alertas meteorológicas AEMET persisten durante toda la vigencia oficial del temporal. Los terremotos, al ser instantáneos, tienen ciclo escalonado:
+         - **Ventana de 2 Horas para Modal Emergente:** El modal pop-up rojo de sismo solo se activa si el evento ocurrió hace `<= 2 horas` (fase de shock agudo y posibles réplicas). Después de 2 horas no salta el modal.
+         - **Ventana de 6 Horas en Cabecera:** En la Estación en Vivo, se mantiene en cabecera prioritaria (`#seismic-top-container`) durante las primeras 6 horas; entre las 6 y 24 horas pasa a pie (`#seismic-banner-container`) como registro informativo.
+         - **Extinción a las 24 Horas:** Al cumplirse 24 horas (`MAX_AGE_HOURS = 24`), se elimina automáticamente retornando al silencio absoluto.
+     - **Simulacro Dinámico (Ley 12):**
+       - Integrados los modos de simulación `?test=emergencia_roja`, `?test=aemet_rojo` y `?test=sismo_severo`.
+  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 13 y 14):*
+     - Versión oficial actualizada a **`v2.2.34 🚨`** en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+     - Service Worker actualizado a `meteoasturlode-v2234-alertas-rojas-emergencia` en `sw.js`.
+
 ## 🚨 Actualización v2.2.33: Palpitación Envolvente en Tarjeta AEMET y Alertas Silenciosas — 2026-10-16
 - **Potenciación Visual del Parpadeo y Respiración de Alertas (Petición Expresa de Lendo):**
   1. *Diagnóstico Operativo:* Lendo observó que la tarjeta oficial AEMET (`.aemet-alert-card`) era 100% estática cuando había avisos meteorológicos activos (amarillo, naranja o rojo), careciendo de animación llamativa. Además, en las alertas silenciosas del panel en vivo (Xelu, Borrina, Mar de Fondo, etc.) el halo existente era excesivamente tímido (3,5 segundos con baja variación de opacidad), por lo que solicitó que se viese mucho más ese parpadeo tanto en las alertas silenciosas como en la tarjeta oficial de AEMET.

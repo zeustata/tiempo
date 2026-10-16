@@ -10,6 +10,27 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.34] - 2026-10-16
+
+### 🚨 Protocolo de Alertas Rojas de Emergencia y Jerarquía de Sismos Graves (Petición Lendo)
+- **Modal de Emergencia Roja Instantánea (`#emergency-alert-modal` en `index.html` y `app.js`):**
+  - Si al abrir la app existe una alerta roja meteorológica extrema (AEMET roja, galerna roja, temporal severo) o un terremoto grave próximo (M >= 3.8 / cercanía crítica), la aplicación despliega inmediatamente un modal emergente de emergencia con máxima visibilidad y prioridad operativa.
+  - **Prioridad Absoluta sobre el Changelog:** La alerta roja de emergencia se antepone siempre a las novedades (`#changelog-modal`), postergando el changelog para no eclipsar situaciones de riesgo civil.
+  - Diseñado con estética de alta seguridad en cristal líquido rubí (`.emergency-modal-card`), borde brillante pulsante, datos de magnitud/fenómeno, recomendaciones de protección civil y botón de acuse de recibo.
+- **Jerarquía y Promoción de Terremotos Graves (`currentCard.js` y `seismicDetector.js`):**
+  - Los sismos severos o notables sentidos (`level === 'severe'` o `magnitude >= 3.5`) ya no quedan ocultos al fondo de la estación en vivo.
+  - Ahora se promocionan automáticamente a la cabecera del feed de alertas de la estación en vivo (`#seismic-top-container`), inmediatamente junto a las alertas AEMET y fenómenos silenciosos críticos.
+  - Los sismos menores o distantes siguen mostrándose de forma informativa en el banner inferior (`#seismic-banner-container`).
+- **Temporalidad y Ciclo de Vida de Emergencias (Regla de Protección Civil):**
+  - **Diferenciación Sismo vs Meteorología:** A diferencia de las alertas meteorológicas de AEMET (que se mantienen activas de forma continuada durante toda la vigencia del temporal), los terremotos son fenómenos puntuales e instantáneos.
+  - **Ventana de Emergencia Sísmica de 2 Horas:** El modal emergente a pantalla completa para sismos solo se dispara durante las 2 primeras horas tras el evento (ventana crítica de shock y riesgo de réplicas). Pasadas 2 horas, el pop-up no interrumpe al usuario.
+  - **Escalado en Estación en Vivo:** Terremotos severos se muestran en cabecera (`#seismic-top-container`) durante las primeras 6 horas; de 6 a 24 horas pasan a registro informativo en pie (`#seismic-banner-container`); a las 24 horas expiran y desaparecen por completo.
+- **Simulacro y Pruebas Rápidas (Ley 12):**
+  - Soporte para parámetros de URL `?test=emergencia_roja`, `?test=aemet_rojo` y `?test=sismo_severo` para verificación visual controlada en local.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10 y 13):**
+  - Service Worker actualizado a `meteoasturlode-v2234-alertas-rojas-emergencia`.
+  - Versión oficial actualizada a `v2.2.34 🚨` en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+
 ## [2.2.33] - 2026-10-16
 
 ### 🚨 Palpitación Envolvente en Tarjeta AEMET y Alertas Silenciosas (Petición Lendo)

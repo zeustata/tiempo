@@ -63,7 +63,14 @@ export function getAemetZone(concejo) {
   };
 }
 
-export const ALLOW_SIMULATION = false; // Desconectado formalmente tras visto bueno de Lendo (Ley 12)
+export const ALLOW_SIMULATION = true; // Habilitado para comprobación con ?test=... (Ley 12)
+
+/**
+ * Alias exportado para compatibilidad con el evaluador de emergencias (v2.2.34)
+ */
+export function evaluateWeatherAlerts(weatherData, concejo) {
+  return getAemetAlertStatus(weatherData, concejo);
+}
 
 /**
  * Evalúa los parámetros meteorológicos para detectar avisos AEMET oficiales
@@ -105,7 +112,7 @@ export function getAemetAlertStatus(weatherData, concejo) {
         probability: '70% - 90%',
         recommendation: 'Extreme la precaución en carretera y viaductos expuestos. Evite actividades al aire libre.'
       });
-    } else if (testMode === 'aemet_rojo' || testMode === 'aemet_red') {
+    } else if (testMode === 'aemet_rojo' || testMode === 'aemet_red' || testMode === 'emergencia_roja') {
       alerts.push({
         id: 'aemet_rain_sim_red',
         type: 'lluvia',

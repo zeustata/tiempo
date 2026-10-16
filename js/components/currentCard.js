@@ -292,7 +292,12 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
 
   // Monitor Silencioso de Actividad Sísmica en Asturias y Mar Cantábrico (EMSC Open Data)
   const seismic = getSeismicStatus(concejo);
-  const seismicMarkup = renderSeismicBanner(seismic);
+  const seismicAgeHours = seismic && seismic.rawTime ? (Date.now() - new Date(seismic.rawTime).getTime()) / (3600 * 1000) : 0;
+  const isSeismicSevere = seismic && seismic.isActive && (seismic.level === 'severe' || seismic.magnitude >= 3.5);
+  // Cabecera prioritaria durante las primeras 6 horas del seísmo; de 6h a 24h pasa a pie como registro informativo
+  const isTopCandidate = isSeismicSevere && (seismic.isSimulation || (seismicAgeHours >= 0 && seismicAgeHours <= 6.0));
+  const seismicTopMarkup = isTopCandidate ? renderSeismicBanner(seismic) : '';
+  const seismicBottomMarkup = (!isTopCandidate && seismic && seismic.isActive) ? renderSeismicBanner(seismic) : '';
 
   // Asesor de Colada y Secado de Ropa
   const laundry = calculateLaundryDrying(current, hourly, daily);
@@ -410,6 +415,9 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
 
     <!-- BANNER DINÁMICO DE ALERTA DE VIENTO LATERAL EN VIADUCTOS Y CARRETERA -->
     ${roadWindMarkup}
+
+    <!-- BANNER DINÁMICO DE ACTIVIDAD SÍSMICA SEVERA (PROMOVIDO A CABECERA POR SEGURIDAD v2.2.34) -->
+    <div id="seismic-top-container">${seismicTopMarkup}</div>
 
     <!-- PRONÓSTICO HORARIO 72H / 3 DÍAS (SOLICITADO POR BETA TESTERS) -->
     ${hourlyForecastMarkup}
@@ -585,8 +593,8 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
       <!-- 7. ASESOR DE COLADA Y SECADO (al final, como manda Lendo) -->
       ${laundryMarkup}
 
-      <!-- 8. MONITOR SÍSMICO SILENCIOSO (tras la tarjeta de colada al final, orden de Lendo) -->
-      <div id="seismic-banner-container" class="seismic-bottom-container">${seismicMarkup}</div>
+      <!-- 8. MONITOR SÍSMICO SILENCIOSO (tras la tarjeta de colada para eventos menores) -->
+      <div id="seismic-banner-container" class="seismic-bottom-container">${seismicBottomMarkup}</div>
     </div>
   `;
 }
