@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2246-beach-single-icon-streamline';
+const CACHE_NAME = 'meteoasturlode-v2247-exclusive-accordion-streamline';
 const STATIC_ASSETS = [
   './',
   './index.html',

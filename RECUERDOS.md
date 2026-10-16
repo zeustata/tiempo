@@ -8,6 +8,18 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🏖️ Actualización v2.2.47: Acordeón Exclusivo de Playas y Spots de Surf — 2026-10-16
+- **Autocierre Inteligente y Navegación sin Fatiga Vertical (Petición Expresa de Lendo - «pisale»):**
+  1. *Diagnóstico Operativo de Lendo y Princesa:*
+     - Al interactuar con la guía de arenales o spots de surf, abrir varias tarjetas consecutivas provocaba una acumulación excesiva de bloques expandidos en pantalla, generando una longitud de página desmesurada y obligando al usuario a desplazarse penosamente hacia arriba para volver a acceder al menú de categorías y webcams.
+  2. *Intervención Técnica en `app.js`:*
+     - **Delegación de Autocierre en Fase de Captura:** Añadido listener global para eventos `toggle` en fase de captura (`useCapture: true`) sobre `.beach-accordion-card`. Al detectar la apertura de cualquier tarjeta, el sistema busca en el contenedor activo (`.beaches-grid` o `.surf-spots-grid`) y cierra automáticamente cualquier otra tarjeta previamente abierta (`other.open = false`).
+     - **Reinicio Automático al Filtrar:** Al conmutar de categoría en `#beach-category-select`, todas las tarjetas repliegan su estado a cerrado (`card.open = false`), presentando una lista limpia y sin restos de contenido previo.
+  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
+     - Versión oficial elevada a **`v2.2.47 🏖️`** en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+     - Service Worker actualizado a `meteoasturlode-v2247-exclusive-accordion-streamline` en `sw.js`.
+     - Actualizado `CURRENT_APP_VERSION = '2.2.47'` en `app.js` y query strings de versión en `index.html`.
+
 ## 🏖️ Actualización v2.2.46: Erradicación del Doble Icono en Selector de Playas — 2026-10-16
 - **Pureza Visual y Erradicación de Iconos Redundantes (Petición Expresa de Lendo - «ya sabes el doble icono como en las alertas. investiga» y «pisale»):**
   1. *Diagnóstico Operativo de Lendo:*

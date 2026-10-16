@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.47] - 2026-10-16
+
+### 🏖️ Acordeón Exclusivo de Playas y Spots de Surf (Petición Lendo)
+- **Autocierre Inteligente y Navegación Recogida (`app.js`):**
+  - Implementado oyente global en fase de captura para eventos `toggle` sobre `.beach-accordion-card`. Al abrir una playa o rompiente de surf, cualquier otra ficha previamente desplegada se cierra automáticamente.
+  - Erradicado el crecimiento acumulativo de la página: el usuario puede explorar arenales sin generar un scroll infinito ni perder de vista el menú superior de categorías.
+  - Al cambiar de filtro en el selector desplegable (`#beach-category-select`), todos los acordeones se repliegan para ofrecer una vista compacta y ordenada de la nueva selección.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):**
+  - Service Worker actualizado a `meteoasturlode-v2247-exclusive-accordion-streamline`.
+  - Versión oficial elevada a `v2.2.47 🏖️` en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+
 ## [2.2.46] - 2026-10-16
 
 ### 🏖️ Erradicación del Doble Icono en Selector de Playas (Petición Lendo)
