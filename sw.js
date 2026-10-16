@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2247-exclusive-accordion-streamline';
+const CACHE_NAME = 'meteoasturlode-v2248-unified-marine-header';
 const STATIC_ASSETS = [
   './',
   './index.html',

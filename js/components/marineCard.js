@@ -1207,36 +1207,28 @@ export function renderMarineCard(data, concejo) {
 
   return `
     <div class="marine-card">
-      <div class="section-title-wrap">
-        <div>
-          <h3 class="section-heading">🏖️ Playas & Mareas</h3>
+      <div class="section-title-wrap marine-master-header">
+        <div class="marine-header-text">
+          <h3 class="section-heading">🏖️ Playas & Mareógrafo • ${concejoTitle}</h3>
           <span class="section-subtitle">
             ${isCoasting 
-              ? `Litoral de ${concejo.name} (${coastalData.region}) • Guía costera, mareas y arenales`
-              : `🌲 ${concejo.name} es concejo de interior. Datos enfocados a la costa más cercana: ${interiorRef.name}`
+              ? `Litoral de ${concejo.name} (${coastalData.region})`
+              : `🌲 Interior • Costa de referencia: ${interiorRef.name}`
             }
           </span>
         </div>
-        <div class="sea-state-pill" style="background: ${flagColor}22; color: ${flagColor}; border: 1px solid ${flagColor};">
-          ${flagBadge}
+        <div class="marine-header-badges">
+          <div class="mareografo-live-badge" style="background: ${tideStatus.directionColor}20; color: ${tideStatus.directionColor}; border: 1px solid ${tideStatus.directionColor}60;">
+            ${tideStatus.directionIcon} <strong>${tideStatus.directionName}</strong>
+          </div>
+          <div class="sea-state-pill" style="background: ${flagColor}22; color: ${flagColor}; border: 1px solid ${flagColor};">
+            ${flagBadge}
+          </div>
         </div>
       </div>
 
       <!-- 1. MAREÓGRAFO INTERACTIVO EN TIEMPO REAL (ONDA SINUSOIDAL 72H / SEMANAL) -->
       <div class="marine-widget mareografo-card" style="margin-bottom: 20px;">
-        <div class="mareografo-header">
-          <div class="mareografo-title-wrap">
-            <span class="mareografo-icon">🌊</span>
-            <div>
-              <div class="mareografo-title">Mareógrafo</div>
-              <div class="mareografo-subtitle">${concejoTitle}</div>
-            </div>
-          </div>
-          <div class="mareografo-live-badge" style="background: ${tideStatus.directionColor}20; color: ${tideStatus.directionColor}; border: 1px solid ${tideStatus.directionColor}60;">
-            ${tideStatus.directionIcon} <strong>${tideStatus.directionName}</strong>
-          </div>
-        </div>
-
         <!-- Métricas clave en vivo -->
         <div class="mareografo-metrics-row">
           <div class="tide-metric-pill">

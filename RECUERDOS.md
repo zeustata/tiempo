@@ -8,6 +8,19 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🏖️ Actualización v2.2.48: Unificación de Cabeceras en Playas y Mareógrafo — 2026-10-16
+- **Compactación y Fusión de Cabeceras (Petición Expresa de Lendo - «empieza con la primera opcion»):**
+  1. *Diagnóstico Operativo de Lendo y Princesa:*
+     - Al entrar en el módulo de Playas & Mareas, la interfaz presentaba dos cabeceras consecutivas: la cabecera general de sección (`section-title-wrap`) y la cabecera interna del mareógrafo (`mareografo-header`), duplicando el nombre del concejo y acumulando casi 100px de altura vertical antes de mostrar la primera métrica útil.
+  2. *Intervención Técnica en `marineCard.js` y `components.css`:*
+     - **Cabecera Maestra Consolidada (`.marine-master-header`):** Toda la información contextual de la zona (nombre del concejo, litoral de referencia, indicador de costa/interior) se agrupa en un único bloque de cabecera.
+     - **Agrupación de Insignias (`.marine-header-badges`):** Reubicados el distintivo del mareógrafo en tiempo real (`.mareografo-live-badge` con icono y sentido de marea llenante/vaciante) y la pastilla de estado de mar (`.sea-state-pill`) en una botonera superior flexible y compacta.
+     - **Erradicación de `.mareografo-header`:** Suprimido el bloque redundante dentro de la tarjeta del mareógrafo (`.mareografo-card`), permitiendo que las 4 métricas en vivo comiencen de inmediato y recortando más de 60px de altura muerta.
+  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
+     - Versión oficial elevada a **`v2.2.48 🏖️`** en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+     - Service Worker actualizado a `meteoasturlode-v2248-unified-marine-header` en `sw.js`.
+     - Actualizado `CURRENT_APP_VERSION = '2.2.48'` en `app.js` y query strings de versión en `index.html`.
+
 ## 🏖️ Actualización v2.2.47: Acordeón Exclusivo de Playas y Spots de Surf — 2026-10-16
 - **Autocierre Inteligente y Navegación sin Fatiga Vertical (Petición Expresa de Lendo - «pisale»):**
   1. *Diagnóstico Operativo de Lendo y Princesa:*
