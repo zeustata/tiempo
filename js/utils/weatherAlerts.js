@@ -283,6 +283,10 @@ export function getAemetAlertStatus(weatherData, concejo) {
   else if (alerts.some(a => a.level === 'orange')) maxLevel = 'orange';
   else if (alerts.some(a => a.level === 'yellow')) maxLevel = 'yellow';
 
+  // Ordenar los avisos AEMET por severidad estricta (Doctrina de Protección Civil): Rojo > Naranja > Amarillo
+  const SEVERITY_ORDER = { red: 3, orange: 2, yellow: 1 };
+  alerts.sort((a, b) => (SEVERITY_ORDER[b.level] || 0) - (SEVERITY_ORDER[a.level] || 0));
+
   return {
     hasAlerts: alerts.length > 0,
     maxLevel,

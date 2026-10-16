@@ -299,6 +299,130 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   const seismicTopMarkup = isTopCandidate ? renderSeismicBanner(seismic) : '';
   const seismicBottomMarkup = (!isTopCandidate && seismic && seismic.isActive) ? renderSeismicBanner(seismic) : '';
 
+  // =========================================================================
+  // SISTEMA DE TRIAGE Y JERARQUÍA ESTRICTA DE ALERTAS (DOCTRINA DE PROTECCIÓN CIVIL)
+  // Ordenación por severidad: 🔴 Rojo (3) > 🟠 Naranja (2) > 🟡 Amarillo (1)
+  // =========================================================================
+  function getAlertSeverityWeight(lvl) {
+    if (!lvl) return 0;
+    const l = String(lvl).toLowerCase();
+    if (l === 'red' || l === 'severe' || l === 'historic' || l === 'critical') return 3; // 🔴 ROJO
+    if (l === 'orange') return 2; // 🟠 NARANJA
+    if (l === 'yellow' || l === 'warning' || l === 'amber') return 1; // 🟡 AMARILLO
+    return 0;
+  }
+
+  const activeAlertsPool = [];
+
+  // 1. Tarjeta Oficial AEMET (si tiene avisos activos, asciende a la cabecera del pool de alertas)
+  if (aemetStatus && aemetStatus.hasAlerts && aemetCardMarkup) {
+    activeAlertsPool.push({
+      id: 'aemet',
+      weight: getAlertSeverityWeight(aemetStatus.maxLevel),
+      priority: 10, // Máxima prioridad institucional dentro del mismo nivel de gravedad
+      markup: aemetCardMarkup
+    });
+  }
+
+  // 2. Actividad Sísmica Notable en Cabecera (primeras 6 horas)
+  if (isTopCandidate && seismicTopMarkup) {
+    activeAlertsPool.push({
+      id: 'seismic',
+      weight: getAlertSeverityWeight(seismic.level),
+      priority: 9,
+      markup: `<div id="seismic-top-container">${seismicTopMarkup}</div>`
+    });
+  }
+
+  // 3. Galerna Cantábrica
+  if (galerna && galerna.isActive && galernaMarkup) {
+    activeAlertsPool.push({
+      id: 'galerna',
+      weight: getAlertSeverityWeight(galerna.level),
+      priority: 8,
+      markup: galernaMarkup
+    });
+  }
+
+  // 4. Tormenta Inminente y Convección
+  if (storm && storm.isActive && thunderstormMarkup) {
+    activeAlertsPool.push({
+      id: 'storm',
+      weight: getAlertSeverityWeight(storm.level),
+      priority: 7,
+      markup: thunderstormMarkup
+    });
+  }
+
+  // 5. Viento Lateral en Viaductos y Autovías
+  if (roadWind && roadWind.isActive && roadWindMarkup) {
+    activeAlertsPool.push({
+      id: 'roadWind',
+      weight: getAlertSeverityWeight(roadWind.level),
+      priority: 6,
+      markup: roadWindMarkup
+    });
+  }
+
+  // 6. Nieve y Cota
+  if (snow && snow.isActive && snowMarkup) {
+    activeAlertsPool.push({
+      id: 'snow',
+      weight: getAlertSeverityWeight(snow.level),
+      priority: 5,
+      markup: snowMarkup
+    });
+  }
+
+  // 7. Mar de Fondo y Golpe de Mar
+  if (marFondo && marFondo.isActive && marFondoMarkup) {
+    activeAlertsPool.push({
+      id: 'marFondo',
+      weight: getAlertSeverityWeight(marFondo.level),
+      priority: 4,
+      markup: marFondoMarkup
+    });
+  }
+
+  // 8. Efecto Foehn
+  if (foehn && foehn.isActive && foehnMarkup) {
+    activeAlertsPool.push({
+      id: 'foehn',
+      weight: getAlertSeverityWeight(foehn.level),
+      priority: 3,
+      markup: foehnMarkup
+    });
+  }
+
+  // 9. Escarcha y Placas de Hielo (Alerta Xelu)
+  if (xelu && xelu.isActive && xeluMarkup) {
+    activeAlertsPool.push({
+      id: 'xelu',
+      weight: getAlertSeverityWeight(xelu.level),
+      priority: 2,
+      markup: xeluMarkup
+    });
+  }
+
+  // 10. Borrina Marina y Nieblas
+  if (borrina && borrina.isActive && borrinaMarkup) {
+    activeAlertsPool.push({
+      id: 'borrina',
+      weight: getAlertSeverityWeight(borrina.level),
+      priority: 1,
+      markup: borrinaMarkup
+    });
+  }
+
+  // Ordenar el pool: Mayor severidad primero (3 > 2 > 1); ante igualdad, mayor prioridad
+  activeAlertsPool.sort((a, b) => {
+    if (b.weight !== a.weight) return b.weight - a.weight;
+    return b.priority - a.priority;
+  });
+
+  const hasSeismicTopInPool = activeAlertsPool.some(item => item.id === 'seismic');
+  const sortedAlertsMarkup = activeAlertsPool.map(item => item.markup).join('\n');
+
   // Asesor de Colada y Secado de Ropa
   const laundry = calculateLaundryDrying(current, hourly, daily);
   const laundryMarkup = renderLaundryCard(laundry);
@@ -392,38 +516,15 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
       ${umbrellaMarkup ? `<div class="hero-divider"></div>${umbrellaMarkup}` : ''}
     </div>
 
-    <!-- BANNER DINÁMICO DE EFECTO FOEHN ("VIENTU LES CASTAÑES") -->
-    ${foehnMarkup}
-
-    <!-- BANNER DINÁMICO DE DETECTOR DE GALERNA CANTÁBRICA -->
-    ${galernaMarkup}
-
-    <!-- BANNER DINÁMICO DE DETECTOR DE ESCARCHA Y PLACAS DE HIELO ("ALERTA XELU") -->
-    ${xeluMarkup}
-
-    <!-- BANNER DINÁMICO DE DETECTOR DE NEVADAS Y COTA ("ALERTA NIEVE") -->
-    ${snowMarkup}
-
-    <!-- BANNER DINÁMICO DE DETECTOR DE BORRINA Y NIEBLAS ASTURIANAS -->
-    ${borrinaMarkup}
-
-    <!-- BANNER DINÁMICO DE DETECTOR DE MAR DE FONDO Y GOLPE DE MAR -->
-    ${marFondoMarkup}
-
-    <!-- BANNER DINÁMICO DE ALERTA DE TORMENTA INMINENTE Y CONVECCIÓN -->
-    ${thunderstormMarkup}
-
-    <!-- BANNER DINÁMICO DE ALERTA DE VIENTO LATERAL EN VIADUCTOS Y CARRETERA -->
-    ${roadWindMarkup}
-
-    <!-- BANNER DINÁMICO DE ACTIVIDAD SÍSMICA SEVERA (PROMOVIDO A CABECERA POR SEGURIDAD v2.2.34) -->
-    <div id="seismic-top-container">${seismicTopMarkup}</div>
+    <!-- FEED DE ALERTAS CON TRIAGE JERÁRQUICO POR SEVERIDAD (ROJO > NARANJA > AMARILLO) -->
+    ${sortedAlertsMarkup}
+    ${!hasSeismicTopInPool ? `<div id="seismic-top-container"></div>` : ''}
 
     <!-- PRONÓSTICO HORARIO 72H / 3 DÍAS (SOLICITADO POR BETA TESTERS) -->
     ${hourlyForecastMarkup}
 
-    <!-- TARJETA OFICIAL DE ALERTAS Y AVISOS AEMET -->
-    ${aemetCardMarkup}
+    <!-- TARJETA OFICIAL AEMET EN ESTADO SILENCIOSO / SIN AVISOS (si tiene avisos activos, ya se muestra arriba ordenada por gravedad) -->
+    ${(!aemetStatus || !aemetStatus.hasAlerts) ? aemetCardMarkup : ''}
 
     <!-- SENSORS GRID -->
     <div class="sensors-grid">

@@ -8,6 +8,27 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🚨 Actualización v2.2.35: Sistema de Triage y Jerarquía de Alertas por Severidad (Rojo > Naranja > Amarillo) — 2026-10-16
+- **Triage Dinámico de Emergencias y Prioridad Absoluta de Alertas Rojas (Petición Expresa de Lendo):**
+  1. *Diagnóstico Operativo:* Lendo planteó una cuestión fundamental de seguridad y usabilidad: *«¿Las alertas rojas no deberían estar por encima de las amarillas o naranjas?»*. En el diseño anterior, las alertas silenciosas tenían un orden estático en el DOM (Foehn, Galerna, Xelu...), de modo que una alerta amarilla de Foehn salía por encima de una alerta roja de tormenta o galerna. Además, la tarjeta oficial AEMET estaba fija tras el pronóstico horario de 72h y sus avisos internos se mostraban sin ordenar por severidad.
+  2. *Intervención Técnica en `currentCard.js` y `weatherAlerts.js`:*
+     - **Motor de Triage por Severidad en Estación en Vivo (`currentCard.js`):**
+       - Asignación de pesos matemáticos por nivel de riesgo:
+         🔴 `3` (Rojo / Severe / Historic / Critical)
+         🟠 `2` (Naranja / Orange)
+         🟡 `1` (Amarillo / Warning / Amber)
+       - Colección dinámica en un `activeAlertsPool` de todas las alertas activas en ese momento (AEMET, sismo severo, galerna, tormenta, viaductos, nieve, mar de fondo, foehn, xelu, borrina).
+       - Ordenación estricta por severidad (`weight`), resolviendo empates por prioridad institucional (`priority`).
+       - Las alertas rojas se garantizan siempre en la cima visual del feed.
+     - **Ascenso Inteligente de la Tarjeta Oficial AEMET:**
+       - Si AEMET tiene avisos activos (amarillo, naranja o rojo), asciende de inmediato al feed dinámico de cabecera antes del pronóstico de 72h.
+       - Si la situación está en calma (verde / sin avisos), permanece discretamente tras el pronóstico horario.
+     - **Jerarquía Interna en Avisos AEMET (`weatherAlerts.js`):**
+       - La lista de avisos dentro de la tarjeta oficial se ordena de forma descendente por nivel de gravedad (`Rojo > Naranja > Amarillo`).
+  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 13 y 14):*
+     - Versión oficial elevada a **`v2.2.35 🚨`** en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+     - Service Worker actualizado a `meteoasturlode-v2235-triage-jerarquia-alertas` en `sw.js`.
+
 ## 🚨 Actualización v2.2.34: Protocolo de Alertas Rojas de Emergencia y Jerarquía de Sismos Graves — 2026-10-16
 - **Protocolo de Emergencia Civil Inmediata y Reubicación de Terremotos (Petición Expresa de Lendo):**
   1. *Diagnóstico Operativo:* Lendo detectó que en el panel de Estación en Vivo, las alertas rojas críticas (avisos meteorológicos extremos de AEMET o sismos significativos) podían pasar desapercibidas si el usuario no hacía scroll por la página. En particular, constató un terremoto real ocurrido a 130 km de su localización (Piedras Blancas) que la app detectaba pero ubicaba al final de la vista (debajo de colada y radiación). Planteó la necesidad operativa de que cualquier alerta roja salte en primer plano como advertencia de emergencia instantánea al abrir la app, con prioridad sobre el modal de novedades (changelog), y que los sismos notables se promocionen a la cabecera.

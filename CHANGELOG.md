@@ -10,6 +10,22 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.35] - 2026-10-16
+
+### 🚨 Sistema de Triage y Jerarquía de Alertas por Severidad (Petición Lendo)
+- **Triage Dinámico por Severidad (`currentCard.js`):**
+  - Implementado motor de clasificación y ordenación en tiempo real basado en la Doctrina de Protección Civil:
+    🔴 **Rojo (Peligro Extremo / Peso 3)** > 🟠 **Naranja (Riesgo Importante / Peso 2)** > 🟡 **Amarillo (Riesgo / Peso 1)**.
+  - Toda alerta activa se evalúa dinámicamente y se posiciona en el feed de cabecera estrictamente según su gravedad: cualquier aviso rojo (lluvia torrencial, galerna roja, sismo severo o temporal) se antepone siempre a las advertencias naranjas o amarillas.
+- **Ascenso Inteligente de la Tarjeta Oficial AEMET:**
+  - Cuando AEMET emite avisos activos (amarillo, naranja o rojo), la tarjeta oficial asciende a la cabecera activa y se integra en el flujo de triage por encima del pronóstico horario de 72 horas.
+  - Cuando la situación está en calma (verde / sin avisos), la tarjeta permanece en su ubicación habitual tras el pronóstico horario.
+- **Ordenación Interna de Avisos AEMET (`weatherAlerts.js`):**
+  - Si coinciden múltiples avisos oficiales simultáneos en la zona (ej. aviso rojo por lluvia y amarillo por viento), el listado interno se ordena automáticamente de mayor a menor severidad (`Rojo > Naranja > Amarillo`).
+- **Cache-Busting Garantizado (Leyes 1, 4, 10 y 13):**
+  - Service Worker actualizado a `meteoasturlode-v2235-triage-jerarquia-alertas`.
+  - Versión oficial elevada a `v2.2.35 🚨` en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+
 ## [2.2.34] - 2026-10-16
 
 ### 🚨 Protocolo de Alertas Rojas de Emergencia y Jerarquía de Sismos Graves (Petición Lendo)

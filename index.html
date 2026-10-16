@@ -31,9 +31,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.2.34">
-  <link rel="stylesheet" href="css/components.css?v=2.2.34">
-  <link rel="stylesheet" href="css/weather-themes.css?v=2.2.34">
+  <link rel="stylesheet" href="css/main.css?v=2.2.35">
+  <link rel="stylesheet" href="css/components.css?v=2.2.35">
+  <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
   <!-- Fondo de partículas -->
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.34 🚨</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.35 🚨</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -349,8 +349,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.2.34 🚨</span>
+            <span class="release-version">v2.2.35 🚨</span>
             <span class="release-date">16 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-ui">Triage de Emergencias (Petición Lendo)</span> <strong>Jerarquía Estricta de Alertas por Severidad (Rojo > Naranja > Amarillo)</strong>:
+              <br>• <strong>Ordenación Dinámica por Gravedad:</strong> Las alertas rojas (peligro extremo) encabezan siempre la vista por encima de las naranjas o amarillas.
+              <br>• <strong>Ascenso de la Tarjeta AEMET:</strong> Si existen avisos AEMET activos, la tarjeta asciende a la cabecera activa y se integra en el orden de severidad antes del pronóstico de 72h.
+              <br>• <strong>Jerarquía Interna de Avisos AEMET:</strong> Los avisos múltiples dentro de la tarjeta oficial se ordenan siempre de más a menos graves.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.34 🚨</span>
+            <span class="release-date">16 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-ui">Seguridad &amp; Protección Civil (Petición Lendo)</span> <strong>Prioridad Absoluta de Alertas Rojas en Arranque &amp; Promoción a Cabecera</strong>:
@@ -3503,7 +3517,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=2.2.34').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=2.2.35').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -3533,7 +3547,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.34"></script>
+  <script type="module" src="js/app.js?v=2.2.35"></script>
 
 
 
