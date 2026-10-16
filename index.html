@@ -32,7 +32,7 @@
 
   <!-- Estilos de la Aplicación con Cache Busting -->
   <link rel="stylesheet" href="css/main.css?v=2.2.35">
-  <link rel="stylesheet" href="css/components.css?v=2.2.37">
+  <link rel="stylesheet" href="css/components.css?v=2.2.38">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.37 🌍</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.38 🛡️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -349,8 +349,21 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.2.37 🌍</span>
+            <span class="release-version">v2.2.38 🛡️</span>
             <span class="release-date">16 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-ui">Armonía Visual &amp; Iconografía Integral (Petición Lendo)</span> <strong>Erradicación Total de Iconos Duplicados y Blindaje Indivisible en Alertas Silenciosas</strong>:
+              <br>• <strong>Auditoría y Limpieza Integral:</strong> Erradicado el doble emoji en todos los detectores silenciosos (Efecto Foehn, Galerna Cantábrica, Alerta Xelu, Alerta Nieve, Tormentas Convectivas y Viento en Viaductos), eliminando los glifos incrustados dentro de los títulos.
+              <br>• <strong>Encapsulamiento Indivisible Universal:</strong> Creados los contenedores <code>.foehn-title-group</code>, <code>.galerna-title-group</code>, <code>.xelu-title-group</code>, <code>.snow-title-group</code>, <code>.thunderstorm-title-group</code>, <code>.road-wind-title-group</code> y <code>.mar-fondo-title-group</code> con alineación flex estricta, impidiendo que el icono salte solo a una línea superior huérfana en pantallas móviles.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.37 🌍</span>
+            <span class="release-date">16 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-ui">Armonía Visual &amp; Iconografía (Petición Lendo)</span> <strong>Unificación Indivisible y Erradicación de Iconos Duplicados en Tarjeta Sísmica</strong>:
@@ -3545,7 +3558,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=2.2.37').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=2.2.38').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -3575,7 +3588,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.37"></script>
+  <script type="module" src="js/app.js?v=2.2.38"></script>
 
 
 

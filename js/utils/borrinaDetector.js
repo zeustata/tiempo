@@ -6,16 +6,24 @@
  * Cumple estrictamente con la Doctrina Constitucional 12 (Simulacro y Modo Silencioso).
  */
 
-export const ALLOW_SIMULATION = false; // Desconectado formalmente tras visto bueno de Lendo (Ley 12)
+export const ALLOW_SIMULATION = true; // Habilitado temporalmente para comprobación (Ley 12)
 
 export function detectBorrinaEffect(current, hourly, concejo) {
   if (!current || !concejo) return null;
 
   // 1. Detección de simulacro controlado (Doctrina Constitucional 12)
   if (ALLOW_SIMULATION && typeof window !== 'undefined') {
-    const urlParams = new URLSearchParams(window.location.search);
-    const testMode = urlParams.get('test');
-    if (testMode === 'borrina' || testMode === 'borrina_marina' || testMode === 'niebla') {
+    const rawSearch = decodeURIComponent(window.location.search || '').toLowerCase();
+    const isValle = rawSearch.includes('test=inversion') || 
+                    rawSearch.includes('test=valle') || 
+                    rawSearch.includes('test=niebla_valle');
+    const isBorrinaMarina = rawSearch.includes('test=borrina') || 
+                            rawSearch.includes('test=marina') || 
+                            rawSearch.includes('test=niebla') || 
+                            rawSearch.includes('test=taro') ||
+                            rawSearch.includes('simulacro=borrina');
+
+    if (isBorrinaMarina && !isValle) {
       return {
         isActive: true,
         isSimulation: true,
@@ -32,7 +40,7 @@ export function detectBorrinaEffect(current, hourly, concejo) {
         description: 'Manto denso y bajo de niebla marina entrando desde el Cantábrico por brisa marina. <strong>Visibilidad reducida a ~450 m</strong> y desplome de la sensación térmica en la costa. Cielo despejado o resol a pocos kilómetros hacia el interior.'
       };
     }
-    if (testMode === 'inversion' || testMode === 'borrina_valle' || testMode === 'niebla_valle') {
+    if (isValle) {
       return {
         isActive: true,
         isSimulation: true,

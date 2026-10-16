@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2237-seismic-icon-harmonization';
+const CACHE_NAME = 'meteoasturlode-v2238-silent-alerts-harmonization';
 const STATIC_ASSETS = [
   './',
   './index.html',

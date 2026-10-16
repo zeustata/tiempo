@@ -147,8 +147,10 @@ export function renderMarFondoBanner(swell) {
     <div class="mar-fondo-banner ${swell.level}">
       <div class="mar-fondo-banner-header">
         <div class="mar-fondo-header-left">
-          <span class="mar-fondo-icon">🌊</span>
-          <span class="mar-fondo-title">${swell.title}</span>
+          <div class="mar-fondo-title-group">
+            <span class="mar-fondo-icon">🌊</span>
+            <span class="mar-fondo-title">${swell.title}</span>
+          </div>
           <span class="mar-fondo-badge">${swell.badge}</span>
         </div>
         <button class="btn-explain-sensor-compact btn-open-phenomena" data-phenomenon="${swell.phenomenonId || 'mar_fondo'}" title="Aprende por qué es peligroso el mar de fondo en Asturias">💡 ¿Por qué ocurre?</button>

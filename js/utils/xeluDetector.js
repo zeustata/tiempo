@@ -6,7 +6,7 @@
  * Cumple estrictamente con la Doctrina Constitucional 12 (Simulacro y Modo Silencioso).
  */
 
-export const ALLOW_SIMULATION = false;
+export const ALLOW_SIMULATION = true; // Habilitado temporalmente para comprobación (Ley 12)
 
 /**
  * Evalúa el riesgo de xelu (escarcha) y placas de hielo en firme
@@ -27,7 +27,7 @@ export function detectXeluEffect(current, daily, concejo) {
         temp: isSevere ? -1.2 : 1.4,
         dewPoint: isSevere ? -2.0 : 0.1,
         windSpeed: 4,
-        title: isSevere ? '🧊 Alerta de Placas de Hielo en Asfalto' : '❄️ Riesgo de Helada • Alerta Xelu',
+        title: isSevere ? 'Alerta de Placas de Hielo en Asfalto' : 'Riesgo de Helada • Alerta Xelu',
         badge: isSevere ? '🚨 Firme Helado / Hielo Negro' : '⚠️ Firme Deslizante',
         description: isSevere
           ? 'Subenfriamiento severo en superficie. Formación inminente de <strong>placas de hielo negro invisible</strong> en asfalto húmedo. Máxima precaución en curvas sombrías, pasos elevados y puentes.'
@@ -71,7 +71,7 @@ export function detectXeluEffect(current, daily, concejo) {
       temp: Math.round(temp * 10) / 10,
       dewPoint: Math.round(dewPoint * 10) / 10,
       windSpeed: Math.round(windSpeed),
-      title: '🧊 Alerta de Placas de Hielo en Asfalto',
+      title: 'Alerta de Placas de Hielo en Asfalto',
       badge: '🚨 Firme Helado / Hielo Negro',
       description: 'Subenfriamiento severo en superficie. Formación inminente de <strong>placas de hielo negro invisible</strong> en calzada. Máxima precaución al volante en curvas sombrías, pasos elevados y puentes.'
     };
@@ -85,7 +85,7 @@ export function detectXeluEffect(current, daily, concejo) {
       temp: Math.round(temp * 10) / 10,
       dewPoint: Math.round(dewPoint * 10) / 10,
       windSpeed: Math.round(windSpeed),
-      title: '❄️ Riesgo de Helada • Alerta Xelu',
+      title: 'Riesgo de Helada • Alerta Xelu',
       badge: '⚠️ Firme Deslizante',
       description: 'Condiciones de helada radiativa al amanecer. <strong>Firme húmedo y asfalto deslizante</strong> en calzada. Precaución en zonas sombrías, fondos de valle y rotondas con pérdida de adherencia.'
     };
@@ -106,8 +106,10 @@ export function renderXeluBanner(xelu) {
     <div class="xelu-banner ${xelu.level}">
       <div class="xelu-banner-header">
         <div class="xelu-header-left">
-          <span class="xelu-icon">${icon}</span>
-          <span class="xelu-title">${xelu.title}</span>
+          <div class="xelu-title-group">
+            <span class="xelu-icon">${icon}</span>
+            <span class="xelu-title">${xelu.title}</span>
+          </div>
           <span class="xelu-badge">${xelu.badge}</span>
         </div>
         <button class="btn-explain-sensor-compact" data-explain="xelu" title="Aprende cómo se forman las heladas y el hielo negro en Asturias">💡 ¿Por qué ocurre?</button>

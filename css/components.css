@@ -6389,7 +6389,15 @@
   gap: 8px;
 }
 
-.borrina-title-group {
+.borrina-title-group,
+.seismic-title-group,
+.foehn-title-group,
+.galerna-title-group,
+.xelu-title-group,
+.snow-title-group,
+.road-wind-title-group,
+.thunderstorm-title-group,
+.mar-fondo-title-group {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -6884,12 +6892,6 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 8px;
-}
-
-.seismic-title-group {
-  display: inline-flex;
-  align-items: center;
   gap: 8px;
 }
 

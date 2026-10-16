@@ -38,7 +38,7 @@ export function detectSnowStatus(current, hourly, daily, concejo) {
           startHourStr: '19:00 h',
           hoursUntil: 3,
           concejoAltitude: concejo?.altitude || 25,
-          title: '❄️ Alerta Histórica: Nieve a Nivel del Mar',
+          title: 'Alerta Histórica: Nieve a Nivel del Mar',
           badge: '🚨 Cota Cero / Litoral Cantábrico',
           description: 'Desplome excepcional de la cota de nieve al <strong>nivel del mar (&lt; 150 m)</strong> en las próximas horas. Probabilidad muy alta de que cuaje en playas, paseos marítimos y en las autovías principales (A-8, A-66 "Y"). Máxima prudencia al volante.'
         };
@@ -54,7 +54,7 @@ export function detectSnowStatus(current, hourly, daily, concejo) {
           startHourStr: '18:00 h',
           hoursUntil: 2,
           concejoAltitude: concejo?.altitude || 750,
-          title: '❄️ Temporal de Nieve en Puertos y Cumbres',
+          title: 'Temporal de Nieve en Puertos y Cumbres',
           badge: '🏔️ Nieve Copiosa / Vialidad Invernal',
           description: 'Entrada de frente frío muy activo con <strong>acumulaciones de más de 10-15 cm</strong> previstas en las próximas horas. Imprescindible cadenas o neumáticos de invierno en puertos de montaña (Pajares, Huerna, San Isidro, Tarna).'
         };
@@ -70,7 +70,7 @@ export function detectSnowStatus(current, hourly, daily, concejo) {
         startHourStr: '20:00 h',
         hoursUntil: 4,
         concejoAltitude: concejo?.altitude || 232,
-        title: '❄️ Alerta Nieve en Cotas Bajas y Valles',
+        title: 'Alerta Nieve en Cotas Bajas y Valles',
         badge: '⚠️ Nieve en Zonas Habitadas',
         description: 'La cota de nieve se desploma hacia los <strong>300-400 metros</strong> coincidiendo con precipitación activa en las próximas horas. Riesgo de placas y acumulación en cascos urbanos, fondos de valle y carreteras secundarias.'
       };
@@ -156,7 +156,7 @@ export function detectSnowStatus(current, hourly, daily, concejo) {
       startHourStr,
       hoursUntil,
       concejoAltitude: concejoAlt,
-      title: '❄️ Alerta Histórica: Nieve a Nivel del Mar',
+      title: 'Alerta Histórica: Nieve a Nivel del Mar',
       badge: '🚨 Cota Cero / Litoral Cantábrico',
       description: `Los modelos señalan un desplome de la cota de nieve a nivel del mar (<strong>~${snowLevel} m</strong>) hacia las <strong>${startHourStr}</strong>. Riesgo de que cuaje en playas, paseos marítimos y en las autovías principales (A-8, A-66). Máxima precaución.`
     };
@@ -173,7 +173,7 @@ export function detectSnowStatus(current, hourly, daily, concejo) {
       startHourStr,
       hoursUntil,
       concejoAltitude: concejoAlt,
-      title: '❄️ Alerta Nieve en Cotas Bajas y Valles',
+      title: 'Alerta Nieve en Cotas Bajas y Valles',
       badge: '⚠️ Nieve en Zonas Habitadas',
       description: `Riesgo de nevada con cota situada en torno a <strong>${snowLevel} m</strong> a partir de las <strong>${startHourStr}</strong>. Afecta a fondos de valle, cascos urbanos y carreteras secundarias. Prever dificultades de tráfico y posibles placas.`
     };
@@ -189,7 +189,7 @@ export function detectSnowStatus(current, hourly, daily, concejo) {
     startHourStr,
     hoursUntil,
     concejoAltitude: concejoAlt,
-    title: '❄️ Alerta Nieve en Montaña y Puertos',
+    title: 'Alerta Nieve en Montaña y Puertos',
     badge: '🏔️ Temporal en Cumbres y Puertos',
     description: `Precipitación sólida prevista hacia las <strong>${startHourStr}</strong> con cota a <strong>${snowLevel} m</strong>${roundedSnowCm > 0 ? ` y acumulación estimada de <strong>~${roundedSnowCm} cm</strong>` : ''}. Obligatorio consultar estado de puertos de la Cordillera Cantábrica y portar cadenas.`
   };
@@ -208,8 +208,10 @@ export function renderSnowBanner(snow) {
     <div class="snow-banner ${snow.level}">
       <div class="snow-banner-header">
         <div class="snow-header-left">
-          <span class="snow-icon">${icon}</span>
-          <span class="snow-title">${snow.title}</span>
+          <div class="snow-title-group">
+            <span class="snow-icon">${icon}</span>
+            <span class="snow-title">${snow.title}</span>
+          </div>
           <span class="snow-badge">${snow.badge}</span>
         </div>
         <button class="btn-explain-sensor-compact" data-explain="snow_alert" title="Aprende cómo se calculan las cotas de nieve y el protocolo en Asturias">💡 ¿Por qué ocurre?</button>

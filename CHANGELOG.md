@@ -10,6 +10,24 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.38] - 2026-10-16
+
+### 🛡️ Erradicación Total de Iconos Duplicados y Blindaje Indivisible en Alertas Silenciosas (Petición Lendo)
+- **Auditoría y Desparasitado Integral de Emojis en Títulos:**
+  - Erradicados todos los emojis duplicados incrustados en las cadenas de texto del título en los 6 detectores silenciosos restantes:
+    - *Efecto Foehn (`foehnDetector.js`):* Eliminados tornados y vientos del título (`🌪️`, `🌬️`), dejando el icono de llama `🔥` exclusivo en cabecera.
+    - *Galerna Cantábrica (`galernaDetector.js`):* Eliminadas olas y triángulos del título (`🌊`, `⚠️`), eliminando el choque `🌊 🌊`.
+    - *Alerta Xelu (`xeluDetector.js`):* Eliminados glifos de hielo y copo (`🧊`, `❄️`), eliminando los duplicados `🧊 🧊` y `❄️ ❄️`.
+    - *Alerta Nieve (`snowDetector.js`):* Eliminado el copo de nieve del título (`❄️`), unificando con los iconos de severidad (`🚨`, `🏔️`, `❄️`).
+    - *Tormentas Convectivas (`thunderstormDetector.js`):* Eliminado el rayo repetido del título (`⚡`), erradicando `⚡ ⚡`.
+    - *Viento en Viaductos (`roadWindDetector.js`):* Eliminados los coches y sirenas incrustados (`🚗💨`, `🚨💨`), erradicando `🚗💨 🚗💨` y `🚨 🚨💨`.
+- **Encapsulamiento Indivisible Universal en Pantallas Móviles:**
+  - Extendida la regla de bloque agrupado indivisible (`display: inline-flex; align-items: center; gap: 8px;`) a todas las alertas silenciosas: `.foehn-title-group`, `.galerna-title-group`, `.xelu-title-group`, `.snow-title-group`, `.road-wind-title-group`, `.thunderstorm-title-group` y `.mar-fondo-title-group`.
+  - Impide que en resoluciones reducidas el icono quede huérfano en una línea superior y el texto salte a la siguiente.
+- **Blindaje de Versión y Cache-Busting (Leyes 1, 4, 10, 11, 13 y 14):**
+  - Service Worker actualizado a `meteoasturlode-v2238-silent-alerts-harmonization`.
+  - Versión oficial elevada a `v2.2.38 🛡️` en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+
 ## [2.2.37] - 2026-10-16
 
 ### 🌍 Unificación Indivisible y Erradicación de Iconos Duplicados en Tarjeta Sísmica (Petición Lendo)

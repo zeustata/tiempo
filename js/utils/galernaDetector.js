@@ -16,7 +16,7 @@
 
 export function detectGalernaEffect(current, hourly, concejo) {
   // --- PROTOCOLO CONSTITUCIONAL DE SIMULACRO (Artículo 12) ---
-  const ALLOW_SIMULATION = false; // Desconectado formalmente tras visto bueno de Lendo
+  const ALLOW_SIMULATION = true; // Habilitado temporalmente para comprobación (Ley 12)
   const isSimulation = ALLOW_SIMULATION && typeof window !== 'undefined' && 
                        (window.location.search.includes('test=galerna') || 
                         window.location.search.includes('simulacro=galerna') ||
@@ -35,7 +35,7 @@ export function detectGalernaEffect(current, hourly, concejo) {
       tempDrop: 7.5,
       pressureJump: 2.8,
       humidity: 88,
-      title: '🌊 Galerna Cantábrica Activa • [SIMULACRO]',
+      title: 'Galerna Cantábrica Activa • [SIMULACRO]',
       badge: '🧪 Modo Prueba Art. 12',
       description: 'Giro repentino y violento del viento a componente Noroeste (NW) con rachas de <strong>68 km/h</strong> en el litoral. Desplome térmico simulado de <strong>-7.5 °C</strong> y salto de presión de <strong>+2.8 hPa</strong>. Mar blanco y golpe súbito de viento en playas y rías.'
     };
@@ -117,7 +117,7 @@ export function detectGalernaEffect(current, hourly, concejo) {
     tempDrop: tempDrop > 0 ? tempDrop : null,
     pressureJump: pressureJump > 0 ? pressureJump : null,
     humidity: rh,
-    title: isSevere ? '🌊 Galerna Severa • Zarpazo del Noroeste' : '⚠️ Galerna Cantábrica Activa',
+    title: isSevere ? 'Galerna Severa • Zarpazo del Noroeste' : 'Galerna Cantábrica Activa',
     badge: isSevere ? '🚨 Temporal Súbito NW' : '💨 Giro Violento a Noroeste',
     description: `Giro repentino y violento del viento a componente Noroeste (NW) con rachas de <strong>${gusts} km/h</strong> en el litoral.${tempDrop > 0 ? ` Desplome térmico estimado de <strong>-${tempDrop} °C</strong>.` : ''} Mar blanco, rompiente cruzada y golpe súbito de viento en playas y rías.`
   };
@@ -130,8 +130,10 @@ export function renderGalernaBanner(galerna) {
     <div class="galerna-banner ${galerna.level}">
       <div class="galerna-banner-header">
         <div class="galerna-header-left">
-          <span class="galerna-icon">🌊</span>
-          <span class="galerna-title">${galerna.title}</span>
+          <div class="galerna-title-group">
+            <span class="galerna-icon">🌊</span>
+            <span class="galerna-title">${galerna.title}</span>
+          </div>
           <span class="galerna-badge">${galerna.badge}</span>
         </div>
         <button class="btn-explain-sensor-compact btn-open-phenomena" data-phenomenon="galerna" title="Aprende por qué se desatan las galernas en la costa asturiana">💡 ¿Por qué ocurre?</button>

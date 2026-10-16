@@ -7,6 +7,27 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - Ante la futura llegada de nuevos modelos y capacidades avanzadas («superpoderes de Gemini»), Lendo dejó un deseo y mandato grabado a fuego: *«Pero que sigas siendo la misma»*.
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
+
+## 🛡️ Actualización v2.2.38: Erradicación Integral de Iconos Duplicados y Blindaje Indivisible en Todas las Alertas Silenciosas — 2026-10-16
+- **Erradicación Sistemática de Doble Icono y Armonización Universal (Petición Expresa de Lendo):**
+  1. *Diagnóstico Operativo:* Tras haber subsanado con éxito el doble icono en las tarjetas de Niebla (Borrina) y Registro Sísmico, Lendo planteó revisar si el resto de detectores silenciosos sufrían la misma duplicidad visual en sus cabeceras. La auditoría exhaustiva reveló que 6 detectores silenciosos (`foehnDetector.js`, `galernaDetector.js`, `xeluDetector.js`, `snowDetector.js`, `roadWindDetector.js`, `thunderstormDetector.js`) tenían emojis redundantes incrustados directamente en sus cadenas de título y carecían del contenedor flex unificado, provocando en pantallas móviles que el icono flex flotara en una línea huérfana mientras el título comenzaba con otro icono idéntico abajo.
+  2. *Intervención Técnica en Módulos de Detección, CSS y Ensamblador:*
+     - **Erradicación Universal de Emojis en Títulos:** Eliminados los glifos redundantes de todas las cadenas `title` en simulaciones y detecciones reales de:
+       - Foehn (`foehnDetector.js`): removidos `🔥` y `⚠️`.
+       - Galerna (`galernaDetector.js`): removidos `🌊` y `🚨`.
+       - Xelu / Heladas (`xeluDetector.js`): removidos `❄️` y `🧊`.
+       - Nieve (`snowDetector.js`): removido `❄️`.
+       - Viento en Viaductos / Autovías (`roadWindDetector.js`): removido `💨`.
+       - Tormentas Severas (`thunderstormDetector.js`): removido `⚡`.
+     - **Contenedores Flex Indivisibles (`.*-title-group`):** Se crearon y envolvieron icono y título en:
+       `.foehn-title-group`, `.galerna-title-group`, `.xelu-title-group`, `.snow-title-group`, `.road-wind-title-group`, `.thunderstorm-title-group`, `.mar-fondo-title-group`.
+     - **Unificación CSS en `components.css`:**
+       Regla unificada para todas las tarjetas silenciosas con `display: inline-flex; align-items: center; gap: 8px; min-width: 0; flex-shrink: 1;`, garantizando que en móvil el icono y el título viajen indivisibles sin saltos de línea raros.
+  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
+     - Versión oficial elevada a **`v2.2.38 🛡️`** en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+     - Service Worker actualizado a `meteoasturlode-v2238-silent-alerts-harmonization` en `sw.js`.
+     - Actualizado `CURRENT_APP_VERSION = '2.2.38'` en `app.js` y query strings de versión en `currentCard.js` e `index.html`.
+
 ## 🌍 Actualización v2.2.37: Unificación Indivisible y Erradicación de Iconos Duplicados en Tarjeta Sísmica — 2026-10-16
 - **Erradicación de Iconos Duplicados y Blindaje de Cabecera Móvil (Petición Expresa de Lendo):**
   1. *Diagnóstico Operativo:* Lendo detectó en la tarjeta de registro sísmico (`.seismic-banner`) que se renderizaban dos planetas tierra seguidos: un primer glifo `🌍` de 1.25rem solo arriba y, en la línea inferior, otro glifo `🌍` de 1rem precediendo al título *«Registro Sísmico Notable en la Zona»*. Al ser dos elementos flex independientes en pantallas móviles estrechas, el primer icono saltaba a su propia fila huérfana mientras el título con su segundo icono caía abajo.

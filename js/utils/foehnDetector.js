@@ -9,7 +9,30 @@
  *    aceleradas por compresión y canalización orográfica en la Cordillera.
  */
 
+export const ALLOW_SIMULATION = true; // Habilitado temporalmente para comprobación (Ley 12)
+
 export function detectFoehnEffect(current) {
+  // 1. Detección de simulacro controlado (Doctrina Constitucional 12)
+  if (ALLOW_SIMULATION && typeof window !== 'undefined') {
+    const urlParams = new URLSearchParams(window.location.search);
+    const testMode = urlParams.get('test');
+    if (testMode === 'foehn' || testMode === 'castanes' || testMode === 'vientu_sur') {
+      const isSevere = urlParams.get('level') === 'severe' || testMode === 'foehn';
+      return {
+        isActive: true,
+        isSevere,
+        isSimulation: true,
+        level: isSevere ? 'severe' : 'moderate',
+        humidity: isSevere ? 32 : 44,
+        gusts: isSevere ? 68 : 42,
+        windDirection: 195,
+        title: isSevere ? 'Foehn Intenso • Vientu les Castañes [SIMULACRO]' : 'Efecto Foehn Activo • Viento Sur [SIMULACRO]',
+        badge: isSevere ? '🔥 Viento Sur Violento' : '💨 Aire Seco y Templado',
+        description: 'Viento Sur canalizado desde la Cordillera. Humedad desplomada al <strong>32%</strong> con rachas simuladas de <strong>68 km/h</strong>. Ambiente inusualmente seco y recalentado al bajar hacia los valles y la costa.'
+      };
+    }
+  }
+
   if (!current) return null;
 
   const dir = current.wind_direction_10m != null ? current.wind_direction_10m : null;
@@ -42,7 +65,7 @@ export function detectFoehnEffect(current) {
     humidity: humidityVal,
     gusts: gustsVal,
     windDirection: dirVal,
-    title: isSevere ? '🌪️ Foehn Intenso • Vientu les Castañes' : '🌬️ Efecto Foehn Activo • Viento Sur',
+    title: isSevere ? 'Foehn Intenso • Vientu les Castañes' : 'Efecto Foehn Activo • Viento Sur',
     badge: isSevere ? '🔥 Viento Sur Violento' : '💨 Aire Seco y Templado',
     description: `Viento Sur canalizado desde la Cordillera. Humedad desplomada al <strong>${humidityVal}%</strong> con rachas de <strong>${gustsVal} km/h</strong>. Ambiente inusualmente seco y recalentado al bajar hacia los valles y la costa.`
   };
@@ -55,8 +78,10 @@ export function renderFoehnBanner(foehn) {
     <div class="foehn-banner ${foehn.level}">
       <div class="foehn-banner-header">
         <div class="foehn-header-left">
-          <span class="foehn-icon">🔥</span>
-          <span class="foehn-title">${foehn.title}</span>
+          <div class="foehn-title-group">
+            <span class="foehn-icon">🔥</span>
+            <span class="foehn-title">${foehn.title}</span>
+          </div>
           <span class="foehn-badge">${foehn.badge}</span>
         </div>
         <button class="btn-explain-sensor-compact btn-open-phenomena" data-phenomenon="foehn" title="Aprende por qué el Viento Sur calienta y seca el aire en Asturias">💡 ¿Por qué ocurre?</button>

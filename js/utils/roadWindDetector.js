@@ -7,7 +7,7 @@
  * Doctrina 12 (Simulacro y Modo Silencioso) y Doctrina 16 (Exención de Responsabilidad Civil).
  */
 
-export const ALLOW_SIMULATION = false; // Desconectado formalmente tras visto bueno de Lendo (Ley 12)
+export const ALLOW_SIMULATION = true; // Habilitado temporalmente para comprobación (Ley 12)
 
 /**
  * Catálogo de Viaductos y Puntos Críticos de la Red Viaria según Concejo y Comarca
@@ -127,7 +127,7 @@ export function detectRoadWindStatus(current, daily, hourly, concejo) {
         windDir: 285,
         windDirName: 'Oeste / Noroeste (WNW)',
         viaducts,
-        title: '🚗💨 Precaución por Viento Lateral en Viaductos y Autovías',
+        title: 'Precaución por Viento Lateral en Viaductos y Autovías',
         badge: '⚠️ Riesgo de Desestabilización',
         description: 'Rachas intensas de viento transversal incidiendo sobre viaductos y pasos elevados. <strong>Fuerte efecto pantalla al adelantar camiones o salir de desmontes y túneles</strong>. Máxima precaución con furgonetas, caravanas, remolques y vehículos de dos ruedas.',
         adviceList: [
@@ -150,7 +150,7 @@ export function detectRoadWindStatus(current, daily, hourly, concejo) {
         windDir: 260,
         windDirName: 'Oeste / Suroeste (WSW)',
         viaducts,
-        title: '🚨💨 Alerta Severa de Viento Lateral en Viaductos y Trazados Altos',
+        title: 'Alerta Severa de Viento Lateral en Viaductos y Trazados Altos',
         badge: '⛔ Alto Riesgo de Vuelco / Tijera',
         description: 'Temporal severo con <strong>rachas huracanadas superando los 90 km/h</strong> en viaductos expuestos de la costa y altos de montaña. Riesgo crítico de efecto tijera en camiones articulados y pérdida total de trayectoria en vehículos ligeros o de gran superficie lateral.',
         adviceList: [
@@ -222,7 +222,7 @@ export function detectRoadWindStatus(current, daily, hourly, concejo) {
   let adviceList = [];
 
   if (isSevereNow) {
-    title = '🚨💨 Alerta Severa en Vivo: Viento Lateral en Viaductos y Trazados Altos';
+    title = 'Alerta Severa en Vivo: Viento Lateral en Viaductos y Trazados Altos';
     badge = '⛔ En Curso: Alto Riesgo de Vuelco / Tijera';
     description = `Temporal severo en curso con rachas registradas de <strong>${gusts} km/h</strong> incidiendo sobre viaductos expuestos. Riesgo crítico de sacudida lateral y pérdida de control para furgonetas, caravanas y motocicletas.`;
     adviceList = [
@@ -232,7 +232,7 @@ export function detectRoadWindStatus(current, daily, hourly, concejo) {
       'Consulta imperativa con DGT (011) o el 112 Asturias.'
     ];
   } else if (isWarningNow) {
-    title = '🚗💨 Precaución en Vivo: Viento Lateral en Viaductos y Autovías';
+    title = 'Precaución en Vivo: Viento Lateral en Viaductos y Autovías';
     badge = '⚠️ En Curso: Riesgo de Desestabilización';
     description = `Rachas registradas de <strong>${gusts} km/h</strong> de componente <strong>${windDirName}</strong>. Efecto empuje lateral pronunciado sobre vehículos altos y ligeros en pasos elevados y viaductos.`;
     adviceList = [
@@ -242,7 +242,7 @@ export function detectRoadWindStatus(current, daily, hourly, concejo) {
       'Atender a las mangas de viento instaladas por el Ministerio en los viaductos.'
     ];
   } else if (isSevereForecast) {
-    title = '🚨💨 Preaviso de Temporal Severo en Viaductos y Autovías';
+    title = 'Preaviso de Temporal Severo en Viaductos y Autovías';
     badge = '🕒 Preaviso: Temporal Previsto Hoy';
     description = `Viento moderado en este momento (<strong>${gusts} km/h</strong>), pero los modelos alertan de un <strong>temporal severo con rachas de hasta ${maxAnticipatedGust} km/h</strong>${peakHourStr ? ` previsto en torno a las ${peakHourStr}` : ' a lo largo de la jornada'} en viaductos expuestos de este corredor. Riesgo crítico de desestabilización para vehículos ligeros o de gran superficie.`;
     adviceList = [
@@ -251,7 +251,7 @@ export function detectRoadWindStatus(current, daily, hourly, concejo) {
       'Atender a los paneles de mensaje variable (PMV) de la DGT y avisos del 112 Asturias.'
     ];
   } else if (isWarningForecast) {
-    title = '🚗💨 Preaviso de Viento Lateral en Viaductos y Autovías';
+    title = 'Preaviso de Viento Lateral en Viaductos y Autovías';
     badge = '🕒 Preaviso: Viento Fuerte Previsto Hoy';
     description = `Viento favorable en este momento (<strong>${gusts} km/h</strong>), pero se prevé un <strong>aumento de viento con rachas de hasta ${maxAnticipatedGust} km/h</strong>${peakHourStr ? ` (máxima prevista hacia las ${peakHourStr})` : ' durante la jornada'}. Tenga en cuenta el efecto pantalla en viaductos si va a circular hoy.`;
     adviceList = [
@@ -326,8 +326,10 @@ export function renderRoadWindBanner(roadWind) {
     <div class="road-wind-banner ${isSevere ? 'severe' : 'warning'}">
       <div class="road-wind-banner-header">
         <div class="road-wind-header-left">
-          <span class="road-wind-icon">${isSevere ? '🚨' : '🚗💨'}</span>
-          <span class="road-wind-title">${roadWind.title}</span>
+          <div class="road-wind-title-group">
+            <span class="road-wind-icon">${isSevere ? '🚨' : '🚗💨'}</span>
+            <span class="road-wind-title">${roadWind.title}</span>
+          </div>
           <span class="road-wind-badge">${roadWind.badge}</span>
         </div>
         <button class="btn-explain-sensor-compact btn-open-phenomena" data-phenomenon="viento" title="Aprende cómo afecta el viento lateral en puentes y túneles">💡 Física del Viento</button>

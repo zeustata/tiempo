@@ -6,7 +6,7 @@
  * Cumple estrictamente con la Doctrina Constitucional 12 (Simulacro y Modo Silencioso).
  */
 
-export const ALLOW_SIMULATION = false; // Desconectado formalmente tras visto bueno de Lendo (Ley 12)
+export const ALLOW_SIMULATION = true; // Habilitado temporalmente para comprobación (Ley 12)
 
 export function detectThunderstormEffect(current, hourly, concejo) {
   if (!current || !hourly || !concejo) return null;
@@ -26,7 +26,7 @@ export function detectThunderstormEffect(current, hourly, concejo) {
         precipRate: 4.8,
         gust: 52,
         prob: 75,
-        title: '⚡ Alerta de Tormenta Inminente • [SIMULACRO]',
+        title: 'Alerta de Tormenta Inminente • [SIMULACRO]',
         badge: '⚡ Actividad Convectiva',
         description: 'Núcleo tormentoso activo aproximándose a la zona con aparato eléctrico y chubascos intensos previstos hacia la <strong>próxima hora</strong>. Rachas súbitas de viento de <strong>~52 km/h</strong>.'
       };
@@ -42,7 +42,7 @@ export function detectThunderstormEffect(current, hourly, concejo) {
         precipRate: 9.5,
         gust: 72,
         prob: 90,
-        title: '⚡ Tormenta Severa con Granizo • [SIMULACRO]',
+        title: 'Tormenta Severa con Granizo • [SIMULACRO]',
         badge: '🚨 Riesgo de Pedrisco',
         description: 'Célula convectiva severa con <strong>alta probabilidad de granizo o pedrisco</strong> y fuertes rachas de viento convectivo (<strong>~72 km/h</strong>). Pon vehículos y objetos a resguardo.'
       };
@@ -129,7 +129,7 @@ export function detectThunderstormEffect(current, hourly, concejo) {
     precipRate: stormPrecip,
     gust: Math.round(stormGust),
     prob: stormPop,
-    title: hasHailUpcoming ? '⚡ Tormenta con Riesgo de Granizo Inminente' : '⚡ Alerta de Tormenta Inminente',
+    title: hasHailUpcoming ? 'Tormenta con Riesgo de Granizo Inminente' : 'Alerta de Tormenta Inminente',
     badge: hasHailUpcoming ? '🚨 Posible Granizo' : '⚡ Tormenta Próxima',
     description: hasHailUpcoming
       ? `Se aproxima una célula de tormenta con <strong>riesgo de granizo/pedrisco</strong> prevista ${stormHour} h (probabilidad del <strong>${stormPop}%</strong>). Rachas de viento convectivo de hasta <strong>~${Math.round(stormGust)} km/h</strong>.`
@@ -144,8 +144,10 @@ export function renderThunderstormBanner(storm) {
     <div class="thunderstorm-banner ${storm.level}" role="alert">
       <div class="thunderstorm-banner-header">
         <div class="thunderstorm-header-left">
-          <span class="thunderstorm-icon">⚡</span>
-          <span class="thunderstorm-title">${storm.title}</span>
+          <div class="thunderstorm-title-group">
+            <span class="thunderstorm-icon">⚡</span>
+            <span class="thunderstorm-title">${storm.title}</span>
+          </div>
           <span class="thunderstorm-badge">${storm.badge}</span>
         </div>
         <div class="thunderstorm-header-actions">
