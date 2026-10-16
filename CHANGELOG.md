@@ -10,6 +10,24 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.32] - 2026-10-16
+
+### 🏄‍♂️ Armonización Visual de Tarjetas a 3 Horas de Surf con Diseño y Monotarjeta de 7 Días (Petición Lendo)
+- **Diseño Unificado a 2 Columnas y Cabecera de Marea (`surfCard.js`):**
+  - Las tarjetas de cronograma horario a 3 horas (`.surf-slot-card`) adoptan la estructura visual, tipografías y proporciones de las tarjetas de 7 días:
+    - Cabecera elegante (`.surf-daily-card-header`) con badge de día/hora (`⏱️ Hoy · 14:00`) y estado del mar/marea en ese momento (`🌊 Bajamar 1.15m`).
+    - Fila de badges superiores con estrellas doradas (`slot.starRating.starIcons`), textura marina (`slot.waterTexture`) y energía en kiloJulios (`slot.energy.kj kJ`).
+    - Distribución a 2 columnas equilibradas: Columna 1 con altura de ola, flecha de mar de fondo y período de swell; Columna 2 con insignia de calidad de viento, flecha aerodinámica con grados, velocidad en km/h y orientación.
+- **Carrusel Monotarjeta al 100% y Fluidez Táctil (`components.css`, `main.css` y `app.js`):**
+  - En smartphones, cada tarjeta `.surf-slot-card` ocupa el 100% exacto del ancho útil disponible con `scroll-snap-stop: always;` para avance magnético de slot en slot.
+  - En pantallas medianas y escritorio se ajusta a 350px de ancho ergonómico.
+  - Asignada la directiva `touch-action: pan-x pan-y;` conforme a la Ley 18 para garantizar desplazamiento vertical libre sin congelaciones.
+  - Incluidas `.surf-slot-card` y `.surf-timeline-scroll-hint` en `isInteractiveZone` para blindar los gestos táctiles.
+  - Sustituido el antiguo texto superior por la pastilla táctil en cristal líquido inferior *«👉 Desliza horizontalmente para ver la evolución a 3 horas ➔»*.
+- **Cache-Busting Garantizado (Leyes 1, 4, 10 y 13):**
+  - Service Worker actualizado a `meteoasturlode-v2232-surf-3h-monotarjeta`.
+  - Versión oficial elevada a `v2.2.32 🏄‍♂️` en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+
 ## [2.2.31] - 2026-10-16
 
 ### 🏄‍♂️ Carrusel Monotarjeta al 100% en Surf 7 Días (Aplicación Ley 18 / Feedback Lendo)

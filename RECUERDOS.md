@@ -8,6 +8,23 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🏄‍♂️ Actualización v2.2.32: Armonización Visual de Tarjetas a 3 Horas de Surf con Diseño y Monotarjeta de 7 Días — 2026-10-16
+- **Unificación Visual y Estética de Tarjetas de Surf (Petición Expresa de Lendo):**
+  1. *Diagnóstico Operativo:* Lendo observó que las tarjetas de 3 horas del cronograma de surf (`.surf-slot-card`) mantenían una estructura estrecha antigua (170px con métricas apiladas verticalmente), viéndose desfasadas y de inferior calidad respecto a las nuevas tarjetas de 7 días (`.surf-daily-card`) con su diseño horizontal a 2 columnas. Solicitó dejarlas visualmente iguales para mayor coherencia estética.
+  2. *Intervención Técnica en `surfCard.js`, `components.css` y `main.css`:*
+     - Reestructuradas las tarjetas `.surf-slot-card` para replicar con exactitud el patrón de `.surf-daily-card`:
+       - Cabecera con `.surf-daily-card-header`: insignia de día y hora (`⏱️ Hoy · 14:00`) y estado del mar/marea en ese momento (`🌊 Bajamar 1.15m`).
+       - Fila de badges superiores con estrellas doradas (`slot.starRating.starIcons`), textura marina (`slot.waterTexture.icon` + etiqueta) y energía de ola en kiloJulios (`slot.energy.kj kJ`).
+       - Rejilla a 2 columnas (`.surf-dp-grid-row`): Columna izquierda con altura de ola, flecha de mar de fondo y período; Columna derecha con badge de viento, flecha aerodinámica con rumbo, velocidad en km/h y orientación.
+     - `.surf-timeline-grid`: Reconfigurada con `overflow-x: auto; scroll-snap-type: x mandatory; touch-action: pan-x pan-y; width: 100%;`.
+     - `.surf-slot-card`: Monotarjeta al **100% exacto del ancho de pantalla** en móviles (`flex: 0 0 100%; width: 100%; max-width: 100%`) con fijación magnética `scroll-snap-stop: always;` y 350px en escritorio.
+     - Sustituido el texto superior plano por la pastilla táctil en cristal líquido inferior (`.forecast-scroll-hint.surf-timeline-scroll-hint`).
+     - Blindada en `isInteractiveZone` de `js/app.js` y asignada `touch-action: pan-x pan-y;` en `main.css` y `components.css` para scroll vertical fluido sin interrupciones.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 13 y 14):**
+  - Versión oficial actualizada a **`v2.2.32 🏄‍♂️`** en pie (`#app-version-badge`), modal de novedades (`#changelog-modal`), CSS y scripts.
+  - Service Worker actualizado a `meteoasturlode-v2232-surf-3h-monotarjeta` en `sw.js`.
+  - Query strings actualizadas a `?v=2.2.32` en `index.html` y módulos correspondientes.
+
 ## 🏄‍♂️ Actualización v2.2.31: Carrusel Monotarjeta al 100% en Surf 7 Días (Ley 18) — 2026-10-16
 - **Aplicación Directa de la Ley 18 en Previsión de Surf a 7 Días (Feedback Lendo):**
   1. *Diagnóstico Operativo:* Lendo identificó que al conmutar a la vista de «7 Días» en el widget de Previsión de Surf & Rompiente (`#surf-daily-view`), las 7 tarjetas diarias (`.surf-daily-card`) se apilaban una debajo de otra en una columna vertical interminable, contrastando con el cronograma a 3 horas que sí contaba con scroll lateral.

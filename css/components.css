@@ -3246,11 +3246,17 @@
 
 .surf-timeline-grid {
   display: flex;
-  gap: 12px;
   overflow-x: auto;
-  padding-bottom: 12px;
-  scroll-snap-type: x mandatory;
+  gap: 16px;
+  padding: 4px 0 14px 0;
+  touch-action: pan-x pan-y;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(56, 189, 248, 0.4) rgba(15, 23, 42, 0.3);
   -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .surf-timeline-grid::-webkit-scrollbar {
@@ -3258,31 +3264,50 @@
 }
 
 .surf-timeline-grid::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.4);
-  border-radius: 3px;
+  background: rgba(15, 23, 42, 0.3);
+  border-radius: 4px;
 }
 
 .surf-timeline-grid::-webkit-scrollbar-thumb {
-  background: rgba(56, 189, 248, 0.3);
-  border-radius: 3px;
+  background: rgba(56, 189, 248, 0.35);
+  border-radius: 4px;
+}
+
+.surf-timeline-grid::-webkit-scrollbar-thumb:hover {
+  background: rgba(56, 189, 248, 0.6);
 }
 
 .surf-slot-card {
-  flex: 0 0 170px;
+  flex: 0 0 100%;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
   background: var(--bg-surface-elevated);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
-  padding: 14px 12px;
+  padding: 14px 16px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  scroll-snap-align: start;
   transition: transform 0.2s ease, border-color 0.2s ease;
+  touch-action: pan-x pan-y;
+}
+
+@media (min-width: 769px) {
+  .surf-slot-card {
+    flex: 0 0 350px;
+    max-width: 350px;
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+  }
 }
 
 .surf-slot-card:hover {
   transform: translateY(-2px);
-  border-color: rgba(56, 189, 248, 0.4);
+  border-color: rgba(56, 189, 248, 0.35);
 }
 
 .surf-slot-card.is-past {
@@ -4746,6 +4771,16 @@
   padding: 2px 8px;
   border-radius: 9999px;
   font-family: 'JetBrains Mono', monospace;
+}
+
+.surf-dp-texture-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .surf-dp-grid-row {

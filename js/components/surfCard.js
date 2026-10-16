@@ -849,66 +849,53 @@ export function renderSurfCard(data, concejo) {
 
         <!-- VISTA 1: CRONOGRAMA 3 HORAS (POR DEFECTO) -->
         <div id="surf-timeline-view" class="surf-tab-content active">
-          <div class="surf-timeline-scroll-container">
-            <div class="surf-timeline-scroll-hint">
-              <span>👆 Desliza horizontalmente para ver la evolución a 3 horas de Hoy y Mañana</span>
-            </div>
-            <div class="surf-timeline-grid">
-              ${timelineSlots.map(slot => `
-                <div class="surf-slot-card ${slot.isPast ? 'is-past' : ''}">
-                  <div class="surf-slot-top">
-                    <span class="slot-day">${slot.dayLabel}</span>
-                    <span class="slot-hour">${slot.timeStr}</span>
-                  </div>
-
-                  <!-- Calificación por Estrellas y Textura -->
-                  <div class="slot-rating-row" style="display: flex; justify-content: space-between; align-items: center; padding: 4px 7px; background: ${slot.starRating.color}15; border: 1px solid ${slot.starRating.color}44; border-radius: 6px;">
-                    <span style="font-size: 0.75rem; font-weight: 800; color: ${slot.starRating.color};">${slot.starRating.starIcons}</span>
-                    <span style="font-size: 0.7rem; color: ${slot.waterTexture.color}; font-weight: 600;">${slot.waterTexture.icon} ${slot.waterTexture.label.split(' ')[0]}</span>
-                  </div>
-
-                  <!-- Ola y Swell -->
-                  <div class="slot-metric-row">
-                    <div class="slot-metric-main">
-                      <span class="slot-wave-val">${slot.h}m</span>
-                      <span class="slot-swell-sub" style="display: flex; align-items: center; gap: 4px;">
-                        ${getSurfSwellArrowSvg(slot.swellDeg, '#38bdf8', 11)} Swell: ${slot.swellH}m · ${slot.swellDirObj.short}
-                      </span>
-                    </div>
-                    <div class="slot-period-badge">
-                      <span class="period-num">${slot.period}s</span>
-                      <span class="period-lbl">período</span>
-                    </div>
-                  </div>
-
-                  <!-- Energía kJ -->
-                  <div class="slot-energy-box" style="border-left: 3px solid ${slot.energy.color}; background: rgba(15, 23, 42, 0.65);">
-                    <div class="slot-energy-top">
-                      <span class="slot-energy-kj" style="color: ${slot.energy.color};">⚡ ${slot.energy.kj} kJ</span>
-                      <span class="slot-energy-tag" style="color: ${slot.energy.color};">${slot.energy.shortLabel}</span>
-                    </div>
-                  </div>
-
-                  <!-- Viento y Calidad -->
-                  <div class="slot-wind-box ${slot.surfWind.statusClass}" style="border: 1px solid ${slot.surfWind.color}55;">
-                    <div class="slot-wind-top">
-                      <span class="slot-wind-badge" style="color: ${slot.surfWind.color};">${slot.surfWind.badge}</span>
-                      <span class="slot-wind-speed" style="display: flex; align-items: center; gap: 3px;">
-                        ${getSurfWindArrowSvg(slot.windDeg, slot.surfWind.color, 11)} ${slot.windSpd} km/h
-                      </span>
-                    </div>
-                    <div class="slot-wind-dir">${slot.windDirObj.name}</div>
-                  </div>
-
-                  <!-- Marea en esa hora -->
-                  <div class="slot-tide-row">
-                    <span class="slot-tide-ico">${slot.tideStatus.directionIcon}</span>
-                    <span class="slot-tide-txt">${slot.tideStatus.directionName.split(' ')[0]}</span>
-                    <span class="slot-tide-h">${slot.tideStatus.currentWaterHeight}m</span>
+          <div class="surf-timeline-grid">
+            ${timelineSlots.map(slot => `
+              <div class="surf-slot-card ${slot.isPast ? 'is-past' : ''}">
+                <div class="surf-daily-card-header">
+                  <div class="surf-daily-day-badge">⏱️ ${slot.dayLabel} · ${slot.timeStr}</div>
+                  <div class="surf-daily-date-sub" title="Marea en este tramo">
+                    ${slot.tideStatus.directionIcon} ${slot.tideStatus.directionName.split(' ')[0]} ${slot.tideStatus.currentWaterHeight}m
                   </div>
                 </div>
-              `).join('')}
-            </div>
+
+                <div class="surf-dayparts-list">
+                  <div class="surf-daypart-row-item">
+                    <div class="surf-dp-top-row">
+                      <span class="surf-dp-stars-badge" style="background: ${slot.starRating.color}22; color: ${slot.starRating.color}; border: 1px solid ${slot.starRating.color}66; border-radius: 6px; padding: 2px 7px; font-size: 0.74rem; font-weight: 700;">
+                        ${slot.starRating.starIcons}
+                      </span>
+                      <span class="surf-dp-texture-pill" style="background: ${slot.waterTexture.color}22; color: ${slot.waterTexture.color}; border: 1px solid ${slot.waterTexture.color}66; border-radius: 6px; padding: 2px 7px; font-size: 0.72rem; font-weight: 600;">
+                        ${slot.waterTexture.icon} ${slot.waterTexture.label.split(' ')[0]}
+                      </span>
+                      <div class="surf-dp-energy-pill" style="background: ${slot.energy.color}22; color: ${slot.energy.color}; border: 1px solid ${slot.energy.color}66;">
+                        ⚡ ${slot.energy.kj} kJ • ${slot.energy.shortLabel}
+                      </div>
+                    </div>
+                    
+                    <div class="surf-dp-grid-row">
+                      <div class="surf-dp-wave-col">
+                        <span class="surf-dp-val">${slot.h}m</span>
+                        <span class="surf-dp-swell" style="display: flex; align-items: center; gap: 4px;">
+                          ${getSurfSwellArrowSvg(slot.swellDeg, '#38bdf8', 11)} Swell: ${slot.swellH}m · ${slot.period}s (${slot.swellDirObj.short})
+                        </span>
+                      </div>
+                      <div class="surf-dp-wind-col ${slot.surfWind.statusClass}">
+                        <span class="surf-dp-wind-badge" style="color: ${slot.surfWind.color};">${slot.surfWind.badge}</span>
+                        <span class="surf-dp-wind-spd" style="display: flex; align-items: center; gap: 4px;">
+                          ${getSurfWindArrowSvg(slot.windDeg, slot.surfWind.color, 11)} ${slot.windSpd} km/h (${slot.windDirObj.short})
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+          <div class="forecast-scroll-hint surf-timeline-scroll-hint">
+            <span class="hint-hand">👉</span>
+            <span>Desliza horizontalmente para ver la evolución a 3 horas</span>
+            <span class="hint-arrow">➔</span>
           </div>
         </div>
 

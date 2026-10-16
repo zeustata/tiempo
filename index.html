@@ -31,8 +31,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.2.31">
-  <link rel="stylesheet" href="css/components.css?v=2.2.31">
+  <link rel="stylesheet" href="css/main.css?v=2.2.32">
+  <link rel="stylesheet" href="css/components.css?v=2.2.32">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.7">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.31 🏄‍♂️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.32 🏄‍♂️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -326,8 +326,21 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.2.31 🏄‍♂️</span>
+            <span class="release-version">v2.2.32 🏄‍♂️</span>
             <span class="release-date">16 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-ui">Armonía Visual &amp; Ley 18 (Petición Lendo)</span> <strong>Tarjetas de 3 Horas de Surf con Diseño y Monotarjeta 100% de 7 Días</strong>:
+              <br>• <strong>Diseño Unificado a 2 Columnas:</strong> Las tarjetas de cronograma a 3 horas (<code>.surf-slot-card</code>) adoptan la misma cabecera, tipografía, badges de calidad/textura y distribución horizontal de oleaje y viento que las tarjetas de 7 días.
+              <br>• <strong>Carrusel Monotarjeta al 100%:</strong> Ancho completo de pantalla móvil con fijación magnética (<code>scroll-snap-stop: always</code>), preservación de scroll vertical libre (<code>touch-action: pan-x pan-y</code>) e indicador didáctico de deslizamiento inferior.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.31 🏄‍♂️</span>
+            <span class="release-date">16 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-ui">Ergonomía &amp; Ley 18 (Feedback Lendo)</span> <strong>Carrusel Horizontal Monotarjeta al 100% en Surf 7 Días</strong>:
@@ -3439,7 +3452,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=2.2.27').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=2.2.32').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -3469,7 +3482,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.31"></script>
+  <script type="module" src="js/app.js?v=2.2.32"></script>
 
 
 
