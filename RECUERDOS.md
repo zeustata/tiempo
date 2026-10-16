@@ -8,6 +8,22 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🏖️ Actualización v2.2.41: Rediseño Ergonómico a Micro-Píldoras en Fichas de Playas — 2026-10-16
+- **Compactación y Ergonomía en Guía de Playas (Petición Expresa de Lendo - «dale al punto 1»):**
+  1. *Diagnóstico Operativo:* Al desplegar los acordeones de playas (`.beach-accordion-card`), las 3 filas técnicas apiladas verticalmente (`.beach-specs-table`) ocupaban más de 160px de altura con cajas rectangulares rígidas y formato formulario burocrático, estirando la pantalla en smartphones al abrir varias playas.
+  2. *Intervención Técnica en `marineCard.js` y `components.css`:*
+     - **Sustitución por Micro-Píldoras Modernas (`.beach-specs-chips`):** Rediseñado el cuerpo del acordeón a un grid fluido de chips con Glassmorphism (`rgba(15, 23, 42, 0.45)`, borde blanco sutil y esquinas redondeadas de 10px):
+       - `[ 🏖️ Fondo / Entorno: Arena fina dorada ]`
+       - `[ ⏳ Marea Óptima: Media Marea / Bajamar ]`
+       - `[ 👨‍👩‍👧‍👦 Recomendación: Ideal para baño, descanso y paseos ]` (ancho completo `grid-column: 1 / -1` con borde izquierdo verde esmeralda o ámbar según idoneidad familiar o precaución por oleaje).
+     - **Ahorro del 45% de Altura Vertical:** Reducción drástica del espacio ocupado en pantalla móvil sin perder ni un solo dato, manteniendo intacta la información y mejorando la legibilidad.
+     - **Erradicación de Emojis Duplicados (Ley 14):** Extracción limpia del emoji inicial del tipo de fondo y de la recomendación para que no aparezcan emojis duplicados adyacentes.
+     - **Preservación de `surfCard.js`:** Se mantuvo intacta la clase `.beach-specs-table` para no alterar el desglose técnico de surf (viento offshore, swell, terral y picos).
+  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
+     - Versión oficial elevada a **`v2.2.41 🏖️`** en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+     - Service Worker actualizado a `meteoasturlode-v2241-beach-chips-redesign` en `sw.js`.
+     - Actualizado `CURRENT_APP_VERSION = '2.2.41'` en `app.js` y query strings de versión en `index.html`.
+
 ## 🏖️ Actualización v2.2.40: Blindaje Móvil y Sintetización en Selector de Mareas — 2026-10-16
 - **Sintetización Ergonómica Anti-Desborde (Petición Expresa y Captura de Lendo):**
   1. *Diagnóstico Operativo:* Lendo comprobó en su smartphone que las etiquetas largas del selector de marea («Curva Continua 72h» y «Marea Semanal 7 Días») colisionaban con el ancho útil del 50%, provocando que el texto de la derecha («Semanal 7 Días») fuera expulsado fuera de pantalla y cortado.

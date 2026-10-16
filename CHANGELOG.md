@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.41] - 2026-10-16
+
+### 🏖️ Rediseño Ergonómico a Micro-Píldoras en Fichas de Playas (Petición Lendo)
+- **Transformación de Fichas de Playas a Micro-Píldoras Modernas (`marineCard.js` y `components.css`):**
+  - Sustituidas las 3 filas rectangulares rígidas apiladas (`.beach-specs-table`) por una cuadrícula fluida de micro-píldoras (`.beach-specs-chips`):
+    - `[ 🏖️ Fondo / Entorno: Arena fina dorada ]`
+    - `[ ⏳ Marea Óptima: Media Marea / Bajamar ]`
+    - `[ 👨‍👩‍👧‍👦 Recomendación: Ideal para baño, descanso y paseos ]` (span completo a todo el ancho con acento visual temático).
+  - **Ahorro del 45% de Espacio Vertical:** Compactación extrema sin perder ni una sola línea de datos o recomendaciones turísticas, erradicando el aspecto de formulario administrativo y logrando una estética 100% nativa.
+  - **Erradicación de Emojis Duplicados:** Extracción algorítmica limpia del icono del tipo de fondo y de la recomendación, asegurando que no se repitan emojis adyacentes.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):**
+  - Service Worker actualizado a `meteoasturlode-v2241-beach-chips-redesign`.
+  - Versión oficial elevada a `v2.2.41 🏖️` en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+
 ## [2.2.40] - 2026-10-16
 
 ### 🏖️ Blindaje Móvil y Sintetización en Selector de Mareas (Petición Lendo)

@@ -1367,7 +1367,18 @@ export function renderMarineCard(data, concejo) {
         </div>
 
         <div class="beaches-grid">
-          ${activePlayas.map(p => `
+          ${activePlayas.map(p => {
+            const rawBottom = p.bottom || '🏖️ Arena fina dorada';
+            const emojiMatch = rawBottom.match(/^([\p{Emoji}\u200d\uFE0F]+)\s*(.*)$/u);
+            const bottomIcon = emojiMatch ? emojiMatch[1] : '🏖️';
+            const bottomText = emojiMatch && emojiMatch[2] ? emojiMatch[2] : rawBottom.replace(/^[\p{Emoji}\u200d\uFE0F\s]+/u, '') || rawBottom;
+
+            const isFamily = p.surfLevel ? (p.surfLevel.includes('Baño') || p.surfLevel.includes('Familiar') || p.surfLevel.includes('Todos')) : true;
+            const recIcon = isFamily ? '👨‍👩‍👧‍👦' : '🌊';
+            const recClass = isFamily ? 'chip-family' : 'chip-warning';
+            const recVal = isFamily ? 'Ideal para baño, descanso y paseos' : 'Precaución con el oleaje en días de mar viva';
+
+            return `
             <details class="beach-accordion-card" name="beach-accordion">
               <summary class="beach-accordion-header">
                 <div class="beach-accordion-title-wrap">
@@ -1383,25 +1394,35 @@ export function renderMarineCard(data, concejo) {
               <div class="beach-accordion-body">
                 <div class="beach-card-desc">${p.type}</div>
 
-                <div class="beach-specs-table">
-                  <div class="beach-spec-row">
-                    <span class="spec-label">🏖️ Entorno / Fondo:</span>
-                    <span class="spec-value">${p.bottom || 'Arena fina dorada'}</span>
+                <div class="beach-specs-chips">
+                  <div class="beach-spec-chip">
+                    <span class="beach-chip-icon">${bottomIcon}</span>
+                    <div class="beach-chip-info">
+                      <span class="beach-chip-label">Fondo / Entorno</span>
+                      <span class="beach-chip-value">${bottomText}</span>
+                    </div>
                   </div>
 
-                  <div class="beach-spec-row">
-                    <span class="spec-label">⏳ Marea Óptima:</span>
-                    <span class="spec-value">${p.bestTide || 'Media Marea / Bajamar'}</span>
+                  <div class="beach-spec-chip">
+                    <span class="beach-chip-icon">⏳</span>
+                    <div class="beach-chip-info">
+                      <span class="beach-chip-label">Marea Óptima</span>
+                      <span class="beach-chip-value">${p.bestTide || 'Media Marea / Bajamar'}</span>
+                    </div>
                   </div>
 
-                  <div class="beach-spec-row full-card">
-                    <span class="spec-label">🎯 Recomendación:</span>
-                    <span class="spec-value">${p.surfLevel.includes('Baño') || p.surfLevel.includes('Familiar') || p.surfLevel.includes('Todos') ? '👨‍👩‍👧‍👦 Ideal para baño, descanso y paseos' : '🌊 Precaución con el oleaje en días de mar viva'}</span>
+                  <div class="beach-spec-chip beach-chip-full ${recClass}">
+                    <span class="beach-chip-icon">${recIcon}</span>
+                    <div class="beach-chip-info">
+                      <span class="beach-chip-label">Recomendación</span>
+                      <span class="beach-chip-value">${recVal}</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </details>
-          `).join('')}
+          `;
+          }).join('')}
         </div>
       </div>
 
