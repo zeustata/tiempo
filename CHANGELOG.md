@@ -10,6 +10,21 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.52] - 2026-10-16
+
+### 🏄‍♂️ Armonización y Orden Ergonómico de Surf & Rompientes (Petición Lendo)
+- **Orden de Rompiente y Reorganización de Sensores (`surfCard.js`):**
+  - La tarjeta de Calificación de Estrellas (0-10★) y Textura Marina (Glassy/Choppy) asciende a la primera posición como Hero Card, ofreciendo al surfista el diagnóstico inmediato del día nada más entrar al módulo.
+  - Los 4 sensores técnicos (Altura de Ola Significativa, Período y Swell, Energía Combinada en kJ, y Temperatura con Traje) se consolidan en una cuadrícula simétrica, reduciendo el scroll vertical a más de la mitad.
+- **Supresión de Avisos Redundantes en Previsión:**
+  - Erradicadas las barras redundantes de «Desliza horizontalmente» tanto en el cronograma a 3 horas como en la previsión de 7 días, ganando 70 píxeles de desplazamiento limpio.
+- **Guía de Surf Integrada y Fichas Modernizadas a Micro-Píldoras:**
+  - El botón de «💡 Guía de Surf» se acopla a la cabecera de rompientes en pastilla compacta, eliminando la barra de 44px de alto.
+  - El interior de las fichas de cada arenal (picos bautizados, viento terral específico, swell óptimo, fondo y marea) adopta el sistema moderno de micro-píldoras simétricas a 2 columnas (`.beach-specs-chips`), garantizando total inmunidad al desborde en móvil.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):**
+  - Service Worker actualizado a `meteoasturlode-v2252-surf-ergonomic-order`.
+  - Versión oficial elevada a `v2.2.52 🏄‍♂️` en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+
 ## [2.2.51] - 2026-10-16
 
 ### 🏖️ Desplegable de Playas Conciso y Anti-Recorte (Petición Lendo)

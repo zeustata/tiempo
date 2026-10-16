@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2251-compact-beach-select';
+const CACHE_NAME = 'meteoasturlode-v2252-surf-ergonomic-order';
 const STATIC_ASSETS = [
   './',
   './index.html',

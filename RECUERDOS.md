@@ -8,6 +8,21 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🏄‍♂️ Actualización v2.2.52: Armonización y Orden Ergonómico de Surf & Rompientes — 2026-10-16
+- **Orden de Rompiente Respetando el Menú al 100% (Petición Expresa de Lendo - «me gustaria tener unn orden pero respetando el menu» y «buenbo princesa. pisale pero miedo me da. esfuerzate»):**
+  1. *Diagnóstico Operativo de Lendo y Princesa:*
+     - Lendo aclaró que el módulo no se había diseñado mano a mano, sino acumulando peticiones sueltas de surfistas veteranos que le pedían funcionalidades concretas. Como resultado, los datos eran oro puro pero la pantalla en móvil acumulaba más de 600px de scroll solo en sensores, carteles redundantes de deslizamiento y fichas de spots en formato tabla vertical largo.
+  2. *Intervención Técnica en `surfCard.js`:*
+     - **Hero Card de Rompiente en Primera Posición:** La tarjeta con la Calificación por Estrellas (0-10★), Textura Marina (Glassy/Choppy) y resumen de calidad asciende a la cabecera como tarjeta destacada (`.surf-turismo-visual-widget`), permitiendo que el surfista sepa al instante si el mar está bueno sin tener que hacer scroll.
+     - **Rejilla Simétrica de Sensores Técnicos:** Los 4 bloques restantes (Altura & Douglas, Período & Swell primario/secundario, Energía combinada en kJ con alerta de arenales saturados, y Temperatura con Traje sugerido) se presentan en una cuadrícula simétrica sin perder ni un solo parámetro.
+     - **Erradicación de Carteles Redundantes en Previsión:** Suprimidas las barras `.surf-timeline-scroll-hint` y `.surf-daily-scroll-hint` (*«Desliza horizontalmente...»*), ganando 70 píxeles netos de scroll limpio.
+     - **Guía de Surf Integrada:** El botón de `💡 Guía de Surf` se acopla a la cabecera de la sección en una pastilla compacta, eliminando la barra gigante de 44px de alto.
+     - **Fichas de Rompientes en Micro-Píldoras Ergonómicas:** Las fichas de los arenales sustituyen la antigua tabla vertical por el sistema moderno a 2 columnas (`.beach-specs-chips`), con chips completos para picos bautizados, viento terral específico según orientación y peligros.
+  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
+     - Versión oficial elevada a **`v2.2.52 🏄‍♂️`** en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+     - Service Worker actualizado a `meteoasturlode-v2252-surf-ergonomic-order` en `sw.js`.
+     - Actualizado `CURRENT_APP_VERSION = '2.2.52'` en `app.js` y query strings de versión en `index.html`.
+
 ## 🏖️ Actualización v2.2.51: Desplegable Ergonómico de Playas Anti-Desborde — 2026-10-16
 - **Etiquetas Concisas y Blindaje Anti-Recorte en Móvil (Petición Expresa de Lendo - «mira. me gustaria que cambies el boton desplegable...» y «PISALE»):**
   1. *Diagnóstico Operativo de Lendo y Princesa:*

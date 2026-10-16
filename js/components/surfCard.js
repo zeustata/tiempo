@@ -721,6 +721,46 @@ export function renderSurfCard(data, concejo) {
 
       <!-- 1. GRID DE SENSORES TÉCNICOS DE SWELL, ENERGÍA Y ROMPIENTE -->
       <div class="marine-grid">
+        <!-- HERO CARD: Aptitud y Calidad de la Rompiente (Rating de Estrellas, Textura Marina y Condición) -->
+        <div class="marine-widget surf-turismo-visual-widget">
+          <div class="surf-widget-top">
+            <div class="surf-title-row">
+              <span class="surf-title-icon">🏄‍♂️</span>
+              <div>
+                <div class="surf-title-main" style="display: flex; align-items: center; gap: 8px;">
+                  <span>Calificación & Estrellas</span>
+                  <button class="btn-explain-sensor" data-explain="surf_stars" title="¿Cómo funciona el rating de estrellas doradas y blancas? Pulsa para aprender" aria-label="Explicación del rating de estrellas de surf">💡</button>
+                </div>
+                <div class="surf-title-sub">${isCoasting ? `Playas de ${concejo.name}` : `Costa de ${interiorRef.name}`} • Estándar Surf-Forecast</div>
+              </div>
+            </div>
+            <div class="surf-flag-badge ${surfStarRating.badgeClass}" style="background: ${surfStarRating.color}22; color: ${surfStarRating.color}; border: 1px solid ${surfStarRating.color}88;">
+              ${surfStarRating.starIcons}
+            </div>
+          </div>
+
+          <!-- Leyenda Rápida de Estrellas -->
+          <div class="surf-stars-legend-hint">
+            ⭐ <strong>Doradas:</strong> Terral puro & Swell noble • ⚪ <strong>Blancas:</strong> Olas justas / Glassy • 🚫 <strong>0★:</strong> Chop o Cerrón
+          </div>
+
+          <!-- Indicador de Textura de la Superficie Marina -->
+          <div class="surf-texture-row" style="margin-top: 8px; display: flex; align-items: center; justify-content: space-between; padding: 6px 10px; background: rgba(15, 23, 42, 0.65); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.08);">
+            <div style="display: flex; align-items: center; gap: 7px;">
+              <span style="font-size: 1.1rem;">${waterTexture.icon}</span>
+              <span style="font-size: 0.82rem; font-weight: 700; color: ${waterTexture.color};">${waterTexture.badge}</span>
+            </div>
+            <span style="font-size: 0.72rem; color: #cbd5e1;">${waterTexture.desc}</span>
+          </div>
+
+          <div class="surf-status-banner" style="color: ${surfQuality.color}; margin-top: 8px;">
+            ${surfQuality.status}
+          </div>
+          <div style="font-size: 0.76rem; color: #cbd5e1; margin-top: 4px; line-height: 1.3;">
+            ${surfQuality.desc}
+          </div>
+        </div>
+
         <!-- Altura de Ola Significativa -->
         <div class="marine-widget">
           <div class="t-label-row">
@@ -777,46 +817,6 @@ export function renderSurfCard(data, concejo) {
           <div class="widget-value">${seaTemp} <span class="unit">°C</span></div>
           <div class="widget-detail">${wetsuit.icon} Traje sugerido: <strong>${wetsuit.suit}</strong></div>
           <div class="widget-detail">Sensación marina: <strong>Agua ${wetsuit.tag}</strong></div>
-        </div>
-
-        <!-- Aptitud y Calidad de la Rompiente (Rating de Estrellas, Textura Marina y Condición) -->
-        <div class="marine-widget surf-turismo-visual-widget">
-          <div class="surf-widget-top">
-            <div class="surf-title-row">
-              <span class="surf-title-icon">🏄‍♂️</span>
-              <div>
-                <div class="surf-title-main" style="display: flex; align-items: center; gap: 8px;">
-                  <span>Calificación & Estrellas</span>
-                  <button class="btn-explain-sensor" data-explain="surf_stars" title="¿Cómo funciona el rating de estrellas doradas y blancas? Pulsa para aprender" aria-label="Explicación del rating de estrellas de surf">💡</button>
-                </div>
-                <div class="surf-title-sub">${isCoasting ? `Playas de ${concejo.name}` : `Costa de ${interiorRef.name}`} • Estándar Surf-Forecast</div>
-              </div>
-            </div>
-            <div class="surf-flag-badge ${surfStarRating.badgeClass}" style="background: ${surfStarRating.color}22; color: ${surfStarRating.color}; border: 1px solid ${surfStarRating.color}88;">
-              ${surfStarRating.starIcons}
-            </div>
-          </div>
-
-          <!-- Leyenda Rápida de Estrellas -->
-          <div class="surf-stars-legend-hint">
-            ⭐ <strong>Doradas:</strong> Terral puro & Swell noble • ⚪ <strong>Blancas:</strong> Olas justas / Glassy • 🚫 <strong>0★:</strong> Chop o Cerrón
-          </div>
-
-          <!-- Indicador de Textura de la Superficie Marina -->
-          <div class="surf-texture-row" style="margin-top: 8px; display: flex; align-items: center; justify-content: space-between; padding: 6px 10px; background: rgba(15, 23, 42, 0.65); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.08);">
-            <div style="display: flex; align-items: center; gap: 7px;">
-              <span style="font-size: 1.1rem;">${waterTexture.icon}</span>
-              <span style="font-size: 0.82rem; font-weight: 700; color: ${waterTexture.color};">${waterTexture.badge}</span>
-            </div>
-            <span style="font-size: 0.72rem; color: #cbd5e1;">${waterTexture.desc}</span>
-          </div>
-
-          <div class="surf-status-banner" style="color: ${surfQuality.color}; margin-top: 8px;">
-            ${surfQuality.status}
-          </div>
-          <div style="font-size: 0.76rem; color: #cbd5e1; margin-top: 4px; line-height: 1.3;">
-            ${surfQuality.desc}
-          </div>
         </div>
       </div>
 
@@ -892,11 +892,6 @@ export function renderSurfCard(data, concejo) {
               </div>
             `).join('')}
           </div>
-          <div class="forecast-scroll-hint surf-timeline-scroll-hint">
-            <span class="hint-hand">👉</span>
-            <span>Desliza horizontalmente para ver la evolución a 3 horas</span>
-            <span class="hint-arrow">➔</span>
-          </div>
         </div>
 
         <!-- VISTA 2: PREVISIÓN EXTENDIDA 7 DÍAS (MAÑANA / TARDE) -->
@@ -969,26 +964,18 @@ export function renderSurfCard(data, concejo) {
               </div>
             `).join('')}
           </div>
-          <div class="forecast-scroll-hint surf-daily-scroll-hint">
-            <span class="hint-hand">👉</span>
-            <span>Desliza horizontalmente para ver los 7 días de surf</span>
-            <span class="hint-arrow">➔</span>
-          </div>
         </div>
       </div>
 
       <!-- 3. CATÁLOGO TÉCNICO DE PICOS DE SURF, FONDOS & ROMPIENTES -->
       <div class="marine-ports-section" style="margin-top: 20px;">
-        <div class="beach-section-header" style="margin-bottom: 8px;">
+        <div class="beach-section-header" style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
           <h4 class="ports-title" style="margin: 0; font-size: 1.05rem; line-height: 1.35;">
-            🏖️ Rompientes, Picos de Surf y Fondos de ${surfLocationTitle}
+            🏖️ Rompientes, Picos y Fondos de ${surfLocationTitle}
           </h4>
-        </div>
-
-        <div style="margin: 8px 0 14px 0;">
-          <button class="btn-explain-sensor surf-guide-btn" data-explain="surf" title="Aprender sobre Offshore, Fondos, Izquierdas y Picos" style="width: 100%; justify-content: center; min-height: 44px; box-sizing: border-box;">
+          <button class="btn-explain-sensor surf-guide-btn" data-explain="surf" title="Aprender sobre Offshore, Fondos, Izquierdas y Picos" style="padding: 6px 14px; height: 34px; font-size: 0.8rem; font-weight: 700; border-radius: 8px; display: inline-flex; align-items: center; gap: 6px; background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); cursor: pointer; transition: all 0.2s ease;">
             <span>💡</span>
-            <span>Guía de Surf y Olas</span>
+            <span>Guía de Surf</span>
           </button>
         </div>
 
@@ -1011,60 +998,87 @@ export function renderSurfCard(data, concejo) {
                 <div class="beach-accordion-body">
                   <div class="beach-card-desc">${p.type}</div>
 
-                  <div class="beach-specs-table">
+                  <div class="beach-specs-chips" style="margin-top: 10px;">
                     ${p.picos ? `
-                      <div class="beach-picos-box">
-                        <span class="picos-box-label">📍 PICOS DE SURF:</span>
-                        <span class="picos-box-value">${p.picos}</span>
+                      <div class="beach-spec-chip beach-chip-full" style="background: rgba(14, 116, 144, 0.15); border: 1px solid rgba(56, 189, 248, 0.25);">
+                        <span class="beach-chip-icon">📍</span>
+                        <div class="beach-chip-info">
+                          <span class="beach-chip-label">Picos de Surf Bautizados</span>
+                          <span class="beach-chip-value" style="color: #38bdf8; font-weight: 700;">${p.picos}</span>
+                        </div>
                       </div>
                     ` : ''}
 
                     <!-- Diagnóstico de Viento en Vivo específico para esta playa según su orientación -->
-                    <div class="beach-spec-row ${beachWind.statusClass}" style="border-left: 3px solid ${beachWind.color}; background: rgba(15, 23, 42, 0.55);">
-                      <span class="spec-label">💨 VIENTO EN ESTA PLAYA (${p.facing ? `Mira al ${p.facing}` : 'Costera'}):</span>
-                      <span class="spec-value" style="color: ${beachWind.color}; font-weight: 700;">
-                        ${beachWind.badge} • ${beachWind.shortDesc}
-                      </span>
-                    </div>
-
-                    ${p.bestSwell ? `
-                      <div class="beach-spec-row" style="background: rgba(56, 189, 248, 0.08); border-left: 3px solid #38bdf8;">
-                        <span class="spec-label">🌊 Swell Óptimo:</span>
-                        <span class="spec-value" style="color: #38bdf8; font-weight: 700;">${p.bestSwell}</span>
+                    <div class="beach-spec-chip beach-chip-full ${beachWind.statusClass}" style="border-left: 3px solid ${beachWind.color}; background: rgba(15, 23, 42, 0.65);">
+                      <span class="beach-chip-icon">💨</span>
+                      <div class="beach-chip-info">
+                        <span class="beach-chip-label">Viento en este arenal (${p.facing ? `Mira al ${p.facing}` : 'Costera'})</span>
+                        <span class="beach-chip-value" style="color: ${beachWind.color}; font-weight: 700;">
+                          ${beachWind.badge} • ${beachWind.shortDesc}
+                        </span>
                       </div>
-                    ` : ''}
+                    </div>
 
                     ${p.bestWind ? `
-                      <div class="beach-spec-row" style="background: rgba(16, 185, 129, 0.08); border-left: 3px solid #10b981;">
-                        <span class="spec-label">🧭 Viento Favorable (Terral):</span>
-                        <span class="spec-value" style="color: #34d399; font-weight: 700;">${p.bestWind}</span>
+                      <div class="beach-spec-chip" style="background: rgba(16, 185, 129, 0.08); border-left: 3px solid #10b981;">
+                        <span class="beach-chip-icon">🧭</span>
+                        <div class="beach-chip-info">
+                          <span class="beach-chip-label">Viento Terral Favorable</span>
+                          <span class="beach-chip-value" style="color: #34d399; font-weight: 700;">${p.bestWind}</span>
+                        </div>
                       </div>
                     ` : ''}
 
-                    <div class="beach-spec-row">
-                      <span class="spec-label">🪨 Fondo Marino:</span>
-                      <span class="spec-value">${p.bottom || '🏖️ Arena (Beach Break)'}</span>
+                    ${p.bestSwell ? `
+                      <div class="beach-spec-chip" style="background: rgba(56, 189, 248, 0.08); border-left: 3px solid #38bdf8;">
+                        <span class="beach-chip-icon">🌊</span>
+                        <div class="beach-chip-info">
+                          <span class="beach-chip-label">Swell Óptimo</span>
+                          <span class="beach-chip-value" style="color: #38bdf8; font-weight: 700;">${p.bestSwell}</span>
+                        </div>
+                      </div>
+                    ` : ''}
+
+                    <div class="beach-spec-chip">
+                      <span class="beach-chip-icon">🪨</span>
+                      <div class="beach-chip-info">
+                        <span class="beach-chip-label">Fondo Marino</span>
+                        <span class="beach-chip-value">${p.bottom || '🏖️ Arena (Beach Break)'}</span>
+                      </div>
                     </div>
 
-                    <div class="beach-spec-row">
-                      <span class="spec-label">🔄 Dirección Ola:</span>
-                      <span class="spec-value">${p.waveType || '↔️ Picos A-Frame'}</span>
+                    <div class="beach-spec-chip">
+                      <span class="beach-chip-icon">🔄</span>
+                      <div class="beach-chip-info">
+                        <span class="beach-chip-label">Dirección Ola</span>
+                        <span class="beach-chip-value">${p.waveType || '↔️ Picos A-Frame'}</span>
+                      </div>
                     </div>
 
-                    <div class="beach-spec-row">
-                      <span class="spec-label">⏳ Marea Óptima:</span>
-                      <span class="spec-value">${p.bestTide || 'Media Marea'}</span>
+                    <div class="beach-spec-chip">
+                      <span class="beach-chip-icon">⏳</span>
+                      <div class="beach-chip-info">
+                        <span class="beach-chip-label">Marea Óptima</span>
+                        <span class="beach-chip-value">${p.bestTide || 'Media Marea'}</span>
+                      </div>
                     </div>
 
-                    <div class="beach-spec-row">
-                      <span class="spec-label">🎯 Nivel Técnico:</span>
-                      <span class="spec-value level-badge">${p.surfLevel || 'Todos'}</span>
+                    <div class="beach-spec-chip">
+                      <span class="beach-chip-icon">🎯</span>
+                      <div class="beach-chip-info">
+                        <span class="beach-chip-label">Nivel Técnico</span>
+                        <span class="beach-chip-value level-badge">${p.surfLevel || 'Todos'}</span>
+                      </div>
                     </div>
 
                     ${p.hazards ? `
-                      <div class="beach-spec-row" style="background: rgba(239, 68, 68, 0.06); border-left: 3px solid #ef4444;">
-                        <span class="spec-label">⚠️ Precaución / Peligros:</span>
-                        <span class="spec-value" style="color: #fca5a5; font-size: 0.72rem;">${p.hazards}</span>
+                      <div class="beach-spec-chip beach-chip-full" style="background: rgba(239, 68, 68, 0.06); border-left: 3px solid #ef4444;">
+                        <span class="beach-chip-icon">⚠️</span>
+                        <div class="beach-chip-info">
+                          <span class="beach-chip-label">Precaución / Peligros</span>
+                          <span class="beach-chip-value" style="color: #fca5a5; font-size: 0.74rem;">${p.hazards}</span>
+                        </div>
                       </div>
                     ` : ''}
                   </div>
