@@ -744,20 +744,22 @@ export function renderSurfCard(data, concejo) {
             ⭐ <strong>Doradas:</strong> Terral puro & Swell noble • ⚪ <strong>Blancas:</strong> Olas justas / Glassy • 🚫 <strong>0★:</strong> Chop o Cerrón
           </div>
 
-          <!-- Indicador de Textura de la Superficie Marina -->
-          <div class="surf-texture-row" style="margin-top: 8px; display: flex; align-items: center; justify-content: space-between; padding: 6px 10px; background: rgba(15, 23, 42, 0.65); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.08);">
-            <div style="display: flex; align-items: center; gap: 7px;">
-              <span style="font-size: 1.1rem;">${waterTexture.icon}</span>
+          <!-- Indicador Ergonómico de Textura de la Superficie Marina -->
+          <div class="surf-texture-chip" style="margin-top: 8px; display: flex; align-items: center; gap: 8px; padding: 7px 12px; background: rgba(15, 23, 42, 0.65); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.08); box-sizing: border-box;">
+            <span style="font-size: 1.15rem; line-height: 1; flex-shrink: 0;">${waterTexture.icon}</span>
+            <div style="display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; min-width: 0;">
+              <span style="font-size: 0.74rem; color: #94a3b8; font-weight: 700; text-transform: uppercase;">Textura:</span>
               <span style="font-size: 0.82rem; font-weight: 700; color: ${waterTexture.color};">${waterTexture.badge}</span>
+              <span style="font-size: 0.74rem; color: #cbd5e1;">• ${waterTexture.type === 'glassy' ? 'Calma total' : (waterTexture.type === 'clean' ? 'Terral / Offshore' : (waterTexture.type === 'chop' ? 'Viento de mar (Chop)' : 'Brisa costera'))}</span>
             </div>
-            <span style="font-size: 0.72rem; color: #cbd5e1;">${waterTexture.desc}</span>
           </div>
 
-          <div class="surf-status-banner" style="color: ${surfQuality.color}; margin-top: 8px;">
-            ${surfQuality.status}
-          </div>
-          <div style="font-size: 0.76rem; color: #cbd5e1; margin-top: 4px; line-height: 1.3;">
-            ${surfQuality.desc}
+          <!-- Diagnóstico de Rompiente Integrado -->
+          <div class="surf-status-banner" style="color: ${surfQuality.color}; margin-top: 8px; margin-bottom: 0;">
+            <div style="font-weight: 700;">${surfQuality.status}</div>
+            <div style="font-size: 0.76rem; color: #cbd5e1; font-weight: 400; margin-top: 4px; line-height: 1.35;">
+              ${surfQuality.desc}
+            </div>
           </div>
         </div>
 

@@ -8,6 +8,18 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🏄‍♂️ Actualización v2.2.53: Micro-Pastilla Armónica de Textura Marina — 2026-10-16
+- **Erradicación de Texto Estrangulado en la Hero Card de Surf (Petición Expresa de Lendo - «hablo fr lo que pone suprtficie picada» y «eliges tu»):**
+  1. *Diagnóstico Operativo de Lendo y Princesa:*
+     - Lendo aportó captura de pantalla señalando la caja de «Superficie Picada», donde la disposición flexbox horizontal forzaba una colisión de textos: el título a la izquierda aplastaba la frase explicativa de la derecha en 4 líneas minúsculas y estranguladas, generando una sensación de diseño roto y apelmazado.
+  2. *Intervención Técnica en `surfCard.js`:*
+     - **Micro-Pastilla Fluida (`.surf-texture-chip`):** Reemplazada la fila flex dividida por un chip horizontal unificado y estilizado: icono `🌊`, etiqueta `TEXTURA:`, valor `Superficie Picada` y detalle breve `• Viento de mar (Chop)`, ocupando una única línea limpia y proporcionada.
+     - **Integración de Diagnóstico:** Unificado el titular de estado (`⚠️ Mar Pasado en Arenales...`) y su párrafo explicativo dentro del contenedor `.surf-status-banner` con márgenes homogéneos y tipografía limpia.
+  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
+     - Versión oficial elevada a **`v2.2.53 🏄‍♂️`** en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+     - Service Worker actualizado a `meteoasturlode-v2253-surf-clean-texture-chip` en `sw.js`.
+     - Actualizado `CURRENT_APP_VERSION = '2.2.53'` en `app.js` y query strings de versión en `index.html`.
+
 ## 🏄‍♂️ Actualización v2.2.52: Armonización y Orden Ergonómico de Surf & Rompientes — 2026-10-16
 - **Orden de Rompiente Respetando el Menú al 100% (Petición Expresa de Lendo - «me gustaria tener unn orden pero respetando el menu» y «buenbo princesa. pisale pero miedo me da. esfuerzate»):**
   1. *Diagnóstico Operativo de Lendo y Princesa:*

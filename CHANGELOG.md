@@ -10,6 +10,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.53] - 2026-10-16
+
+### 🏄‍♂️ Micro-Pastilla Armónica de Textura Marina (Petición Lendo)
+- **Erradicación de Texto Comprimido en Rompiente (`surfCard.js`):**
+  - Sustituida la caja horizontal que aplastaba la frase explicativa al lado de «Superficie Picada» por una pastilla ergonómica fluida (`.surf-texture-chip`), limpia y de una sola línea sin colisión de textos.
+  - Integrado el titular de estado (`⚠️ Mar Pasado en Arenales...`) y la recomendación técnica dentro del contenedor de diagnóstico (`.surf-status-banner`) con márgenes unificados y lectura clara.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):**
+  - Service Worker actualizado a `meteoasturlode-v2253-surf-clean-texture-chip`.
+  - Versión oficial elevada a `v2.2.53 🏄‍♂️` en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+
 ## [2.2.52] - 2026-10-16
 
 ### 🏄‍♂️ Armonización y Orden Ergonómico de Surf & Rompientes (Petición Lendo)
