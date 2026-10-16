@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.37] - 2026-10-16
+
+### 🌍 Unificación Indivisible y Erradicación de Iconos Duplicados en Tarjeta Sísmica (Petición Lendo)
+- **Erradicación del Doble Icono del Planeta:**
+  - Corregida la anomalía por la cual la tarjeta de registro sísmico mostraba dos iconos del planeta (uno de mayor tamaño suelto arriba y otro más pequeño delante del título).
+  - Eliminado el glifo `🌍` incrustado dentro de las cadenas de texto del título en `seismicDetector.js`, manteniéndolo exclusivamente en el nodo semántico de icono.
+- **Grupo Indivisible en Cabecera Móvil (`.seismic-title-group` en `components.css`):**
+  - Encapsulados el icono y el título dentro de un contenedor `display: inline-flex; align-items: center; gap: 8px;`, asegurando que en pantallas estrechas de teléfonos móviles el icono nunca se desacople ni salte de línea de forma aislada.
+- **Sanitización Dinámica de Caché Local:**
+  - Incorporada limpieza reactiva en la lectura del almacenamiento local (`parsed.title.replace(/^🌍\s*/, '')`), garantizando la actualización visual inmediata en clientes con eventos guardados en caché sin requerir purgas manuales.
+- **Blindaje de Versión y Cache-Busting (Leyes 1, 4, 10 y 13):**
+  - Service Worker actualizado a `meteoasturlode-v2237-seismic-icon-harmonization`.
+  - Versión oficial elevada a `v2.2.37 🌍` en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+
 ## [2.2.36] - 2026-10-16
 
 ### ☀️ Soberanía Física Inversa & Anti-Falso Nublado en Tiempo Real (Feedback Lendo)

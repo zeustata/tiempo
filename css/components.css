@@ -6887,6 +6887,12 @@
   gap: 8px;
 }
 
+.seismic-title-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .seismic-icon {
   font-size: 1.25rem;
   line-height: 1;

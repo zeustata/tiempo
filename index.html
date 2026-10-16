@@ -32,7 +32,7 @@
 
   <!-- Estilos de la Aplicación con Cache Busting -->
   <link rel="stylesheet" href="css/main.css?v=2.2.35">
-  <link rel="stylesheet" href="css/components.css?v=2.2.35">
+  <link rel="stylesheet" href="css/components.css?v=2.2.37">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.36 ☀️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.37 🌍</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -349,8 +349,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.2.36 ☀️</span>
+            <span class="release-version">v2.2.37 🌍</span>
             <span class="release-date">16 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-ui">Armonía Visual &amp; Iconografía (Petición Lendo)</span> <strong>Unificación Indivisible y Erradicación de Iconos Duplicados en Tarjeta Sísmica</strong>:
+              <br>• <strong>Cero Iconos Repetidos:</strong> Erradicado el glifo duplicado del planeta (<code>🌍</code>) que se renderizaba simultáneamente en el título interno y en la cabecera del registro sísmico.
+              <br>• <strong>Grupo Indivisible en Cabecera Móvil (<code>.seismic-title-group</code>):</strong> Encapsulado el icono <code>🌍</code> y el texto del título en un bloque unificado ergonómico con alineación flex estricta, impidiendo que el icono se desacople o quede solo en una fila superior en pantallas móviles estrechas.
+              <br>• <strong>Sanitización Automática de Caché:</strong> Limpieza en tiempo real de cadenas con emojis residuales en el almacenamiento local para sincronización instantánea sin esperar a la expiración de caché.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.36 ☀️</span>
+            <span class="release-date">16 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-ui">Soberanía Física Inversa (Petición Lendo)</span> <strong>Anti-Falso Nublado y Veracidad en Tiempo Real</strong>:
@@ -3531,7 +3545,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=2.2.36').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=2.2.37').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -3561,7 +3575,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.36"></script>
+  <script type="module" src="js/app.js?v=2.2.37"></script>
 
 
 

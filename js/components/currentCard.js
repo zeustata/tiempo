@@ -9,7 +9,7 @@ import { detectBorrinaEffect, renderBorrinaBanner } from '../utils/borrinaDetect
 import { detectMarFondoEffect, renderMarFondoBanner } from '../utils/marFondoDetector.js?v=2.0.0';
 import { detectThunderstormEffect, renderThunderstormBanner } from '../utils/thunderstormDetector.js?v=1.1.60';
 import { detectRoadWindStatus, renderRoadWindBanner, renderRoadWindSensorPill } from '../utils/roadWindDetector.js?v=1.1.76';
-import { getSeismicStatus, renderSeismicBanner } from '../utils/seismicDetector.js?v=1.1.60';
+import { getSeismicStatus, renderSeismicBanner } from '../utils/seismicDetector.js?v=2.2.37';
 import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=2.2.12';
 import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=1.1.60';
 import { calculateUmbrellaStatus, renderUmbrellaCard } from '../utils/umbrellaAdvisor.js?v=1.1.60';

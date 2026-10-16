@@ -127,7 +127,7 @@ export function getSeismicStatus(concejo) {
         distanceKm: dist,
         network: 'IGN / EMSC',
         sourceUrl: 'https://www.emsc-csem.org/',
-        title: '🌍 Registro Sísmico en Asturias • [SIMULACRO]',
+        title: 'Registro Sísmico en Asturias • [SIMULACRO]',
         badge: '⚠️ Sismo Menor M 3.1',
         description: `Detectado movimiento sísmico de <strong>magnitud M 3.1</strong> localizado en la zona de <strong>Degaña / Ibias</strong> a 10 km de profundidad (a <strong>~${dist} km</strong> de ${concejo.name}). Sin daños reportados.`
       };
@@ -151,7 +151,7 @@ export function getSeismicStatus(concejo) {
         distanceKm: dist,
         network: 'IGN / EMSC',
         sourceUrl: 'https://www.emsc-csem.org/',
-        title: '🌍 Sismo Submarino Cantábrico • [SIMULACRO]',
+        title: 'Sismo Submarino Cantábrico • [SIMULACRO]',
         badge: '🚨 Sismo Notable M 3.8',
         description: `Registrado sismo submarino de <strong>magnitud M 3.8</strong> en la plataforma marina cantábrica a <strong>~${dist} km</strong> de ${concejo.name}. Posiblemente percibido en localidades costeras.`
       };
@@ -180,8 +180,10 @@ export function getSeismicStatus(concejo) {
 
         if (isFresh) {
           const dist = calculateDistanceKm(concejo.lat, concejo.lon, parsed.lat, parsed.lon);
+          const cleanTitle = (parsed.title || '').replace(/^🌍\s*/, '');
           return {
             ...parsed,
+            title: cleanTitle || parsed.title,
             distanceKm: dist,
             timeLabel: formatTimeAgo(parsed.rawTime),
             description: buildSeismicDescription(parsed, concejo, dist)
@@ -272,7 +274,7 @@ export async function triggerSeismicRefresh(concejo) {
 
     const level = mag >= 3.5 ? 'severe' : 'warning';
     const badge = mag >= 3.5 ? `🚨 Sismo Notable M ${mag.toFixed(1)}` : `⚠️ Sismo Menor M ${mag.toFixed(1)}`;
-    const title = mag >= 3.5 ? '🌍 Registro Sísmico Notable en la Zona' : '🌍 Actividad Sísmica Reciente Registrada';
+    const title = mag >= 3.5 ? 'Registro Sísmico Notable en la Zona' : 'Actividad Sísmica Reciente Registrada';
 
     const eventPayload = {
       hasEvent: true,
@@ -337,8 +339,10 @@ export function renderSeismicBanner(seismic) {
     <div class="seismic-banner ${seismic.level}" role="alert">
       <div class="seismic-banner-header">
         <div class="seismic-header-left">
-          <span class="seismic-icon">🌍</span>
-          <span class="seismic-title">${seismic.title}</span>
+          <div class="seismic-title-group">
+            <span class="seismic-icon">🌍</span>
+            <span class="seismic-title">${seismic.title}</span>
+          </div>
           <span class="seismic-badge">${seismic.badge}</span>
         </div>
         <div class="seismic-header-actions">

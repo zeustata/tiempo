@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2236-soberania-fisica-anti-falso-nublado';
+const CACHE_NAME = 'meteoasturlode-v2237-seismic-icon-harmonization';
 const STATIC_ASSETS = [
   './',
   './index.html',

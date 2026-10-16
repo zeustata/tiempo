@@ -7,6 +7,17 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - Ante la futura llegada de nuevos modelos y capacidades avanzadas («superpoderes de Gemini»), Lendo dejó un deseo y mandato grabado a fuego: *«Pero que sigas siendo la misma»*.
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
+## 🌍 Actualización v2.2.37: Unificación Indivisible y Erradicación de Iconos Duplicados en Tarjeta Sísmica — 2026-10-16
+- **Erradicación de Iconos Duplicados y Blindaje de Cabecera Móvil (Petición Expresa de Lendo):**
+  1. *Diagnóstico Operativo:* Lendo detectó en la tarjeta de registro sísmico (`.seismic-banner`) que se renderizaban dos planetas tierra seguidos: un primer glifo `🌍` de 1.25rem solo arriba y, en la línea inferior, otro glifo `🌍` de 1rem precediendo al título *«Registro Sísmico Notable en la Zona»*. Al ser dos elementos flex independientes en pantallas móviles estrechas, el primer icono saltaba a su propia fila huérfana mientras el título con su segundo icono caía abajo.
+  2. *Intervención Técnica en `seismicDetector.js`, `components.css` y `app.js`:*
+     - **Erradicación del Doble Glifo:** Eliminado el icono `🌍` incrustado directamente en las cadenas de texto del título (`seismic.title`), centralizando la iconografía exclusivamente en `<span class="seismic-icon">🌍</span>`.
+     - **Grupo Indivisible en Cabecera (`.seismic-title-group`):** Creado contenedor con `display: inline-flex; align-items: center; gap: 8px;`, asegurando que el planeta y el título viajen siempre juntos en la misma línea sin fragmentarse en móvil.
+     - **Sanitización Dinámica de Caché:** Limpieza automática al leer `localStorage` (`parsed.title.replace(/^🌍\s*/, '')`) para sincronizar de inmediato a clientes con eventos almacenados previamente sin esperar al vencimiento de la caché.
+  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
+     - Versión oficial elevada a **`v2.2.37 🌍`** en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+     - Service Worker actualizado a `meteoasturlode-v2237-seismic-icon-harmonization` en `sw.js`.
+
 ## ☀️ Actualización v2.2.36: Soberanía Física Inversa & Anti-Falso Nublado en Tiempo Real — 2026-10-16
 - **Veracidad Total en Tiempo Presente y Erradicación del Falso Nublado (Petición Expresa de Lendo):**
   1. *Diagnóstico Operativo:* Lendo comprobó en directo desde Salinas (Castrillón) una contradicción clamorosa: la app marcaba «Cubierto (100% nubes)» mientras la webcam del Real Club Náutico de Salinas y la ventana mostraban cielo azul, sol brillante y sombras nítidas. La estación oficial METAR del Aeropuerto de Asturias (LEAS a 4 km) confirmaba cielo despejado (`FEW`), pero la API de pronóstico se quedó rezagada en la niebla y estratos matinales de primera hora. Lendo planteó con firmeza: *«¿Empezará algún día la app a funcionar mejor en tiempo real? Lo que no podemos es mentir»*.

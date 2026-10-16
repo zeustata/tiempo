@@ -24,7 +24,7 @@ import { checkConcejoFolixa } from './utils/festivosData.js?v=2.0.0';
 import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=2.0.0';
 import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=2.0.0';
 import { initGyroGlass } from './utils/gyroGlass.js?v=2.0.0';
-import { triggerSeismicRefresh, getSeismicStatus } from './utils/seismicDetector.js?v=2.2.35';
+import { triggerSeismicRefresh, getSeismicStatus } from './utils/seismicDetector.js?v=2.2.37';
 import { evaluateWeatherAlerts } from './utils/weatherAlerts.js?v=2.2.35';
 import { openShareModal } from './utils/shareCardGenerator.js?v=2.2.25';
 import { toggleWeatherSpeech, stopWeatherSpeech } from './utils/weatherSpeaker.js?v=2.0.0';
@@ -42,7 +42,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '2.2.36';
+export const CURRENT_APP_VERSION = '2.2.37';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -679,7 +679,7 @@ class MeteoAsturiasApp {
             if (isWithinEmergencyWindow) {
               emergency = {
                 id: 'seismic_' + (seismic.rawTime || seismic.magnitude),
-                title: seismic.title || '🌍 Registro Sísmico Notable en la Zona',
+                title: '🌍 ' + (seismic.title ? seismic.title.replace(/^🌍\s*/, '') : 'Registro Sísmico Notable en la Zona'),
                 location: `${seismic.place} (~${seismic.distanceKm} km de ${concejo.name})`,
                 desc: seismic.description || `Sismo de magnitud M ${seismic.magnitude.toFixed(1)} registrado a ~${seismic.distanceKm} km.`,
                 advices: 'Mantenga la calma. Inspeccione su vivienda ante posibles desperfectos. En caso de réplicas, protéjase bajo estructuras sólidas y aléjese de cornisas, fachadas o ventanas.',
