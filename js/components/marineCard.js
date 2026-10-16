@@ -1369,7 +1369,7 @@ export function renderMarineCard(data, concejo) {
       <div class="marine-grid">
         <!-- Temperatura del Agua y Confort -->
         <div class="marine-widget">
-          <div class="widget-label">Temperatura del Agua en Playa</div>
+          <div class="widget-label">Temperatura del Agua</div>
           <div class="widget-value">${seaTemp} <span class="unit">°C</span></div>
           <div class="widget-detail">${isCoasting ? `Playas de ${concejo.name}` : `Costa de ${interiorRef.name}`}</div>
           <div class="widget-detail">Sensación: <strong>${parseFloat(seaTemp) >= 19 ? 'Agradable / Cálida' : (parseFloat(seaTemp) >= 16 ? 'Fresca y vivificante' : 'Fría / Cantábrico')}</strong></div>
@@ -1378,40 +1378,30 @@ export function renderMarineCard(data, concejo) {
         <!-- Estado de la Mar (Douglas) -->
         <div class="marine-widget">
           <div class="t-label-row">
-            <span class="widget-label">Estado de la Mar (Escala Douglas)</span>
+            <span class="widget-label">Estado de la Mar</span>
             <button class="btn-explain-sensor" data-explain="waves" title="¿Cómo entender la altura del oleaje y la escala Douglas? Pulsa para aprender" aria-label="Explicación del estado de la mar">💡</button>
           </div>
           <div class="widget-value">${waveHeight} <span class="unit">m</span></div>
-          <div class="widget-detail">Grado: <strong>Grado ${douglasDegree} (${douglasName})</strong></div>
-          <div class="widget-detail">Tipo de mar: <strong>${h < 1.0 ? 'Mar en calma / Rizada' : 'Oleaje atlántico cantábrico'}</strong></div>
+          <div class="widget-detail">Escala Douglas: <strong>Grado ${douglasDegree} (${douglasName})</strong></div>
+          <div class="widget-detail">Tipo de oleaje: <strong>${h < 1.0 ? 'Mar en calma / Rizada' : 'Oleaje atlántico cantábrico'}</strong></div>
         </div>
 
         <!-- Visibilidad Costera & Viento -->
         <div class="marine-widget">
-          <div class="widget-label">Visibilidad & Viento en Costa</div>
+          <div class="widget-label">Visibilidad & Viento</div>
           <div class="widget-value">${visibilityKm} <span class="unit">km</span></div>
           <div class="widget-detail">Viento en arenal: <strong>${windSpeed} km/h (${windDirObj.name})</strong></div>
           <div class="widget-detail">Ambiente: <strong>${parseFloat(visibilityKm) >= 15 ? 'Cielos limpios y diáfanos' : 'Ligera bruma marina'}</strong></div>
         </div>
 
         <!-- Seguridad y Recomendación de Baño -->
-        <div class="marine-widget surf-turismo-visual-widget">
-          <div class="surf-widget-top">
-            <div class="surf-title-row">
-              <span class="surf-title-icon">🚩</span>
-              <div>
-                <div class="surf-title-main">Seguridad de Baño</div>
-                <div class="surf-title-sub">${isCoasting ? `Litoral de ${concejo.name}` : `Costa de ${interiorRef.name}`}</div>
-              </div>
-            </div>
-            <div class="surf-flag-badge" style="background: ${flagColor}22; color: ${flagColor}; border: 1px solid ${flagColor};">
-              ${flagBadge}
-            </div>
+        <div class="marine-widget">
+          <div class="widget-label">Seguridad de Baño</div>
+          <div class="widget-value" style="color: ${flagColor};">
+            ${douglasDegree <= 1 ? 'Óptima' : (douglasDegree === 2 ? 'Favorable' : (douglasDegree === 3 ? 'Precaución' : 'Exigente'))}
           </div>
-
-          <div class="surf-status-banner" style="color: ${flagColor}; margin-top: 10px;">
-            ${bathStatus}
-          </div>
+          <div class="widget-detail">Condición: <strong style="color: ${flagColor};">${douglasDegree <= 2 ? 'Mar en calma o rizado' : (douglasDegree === 3 ? 'Corrientes y mar picada' : 'Fuerte oleaje / Mar viva')}</strong></div>
+          <div class="widget-detail">Consejo: <strong>${douglasDegree <= 2 ? 'Precaución habitual en agua' : (douglasDegree === 3 ? 'Atención a resacas y bandera' : 'Baño solo expertos o prohibido')}</strong></div>
         </div>
       </div>
 

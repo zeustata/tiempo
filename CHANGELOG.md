@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.43] - 2026-10-16
+
+### 🏖️ Estandarización y Simetría Limpia en Sensores Costeros (Petición Lendo)
+- **Simetría y Armonización 2x2 en Sensores de Costa (`marineCard.js`):**
+  - Rediseñada la 4ª tarjeta (`Seguridad de Baño`) para adoptar exactamente la misma arquitectura y ritmo visual que las tres anteriores (`Temperatura del Agua`, `Estado de la Mar` y `Visibilidad & Viento`).
+  - **Estructura Cuádruple Idéntica:** Etiqueta en mayúsculas (`widget-label`), Métrica Hero destacada (`widget-value`) y exactamente dos líneas de detalle contextual (`widget-detail`), eliminando banners discordantes y alturas dispares.
+  - **Erradicación de Redundancias (Ley 14):** Suprimido el sello duplicado de bandera teórica (que ya preside en grande la cabecera principal), logrando un bloque simétrico que reduce un **30% de altura vertical** y mejora la legibilidad en smartphones.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):**
+  - Service Worker actualizado a `meteoasturlode-v2243-marine-sensors-symmetry`.
+  - Versión oficial elevada a `v2.2.43 🏖️` en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+
 ## [2.2.42] - 2026-10-16
 
 ### 🏖️ Filtros Rápidos Deslizables por Tipo de Playa (Petición Lendo)
