@@ -8,6 +8,21 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🏖️ Actualización v2.2.39: Selector Deslizante en Mareógrafo y Reorganización de Playas y Mareas — 2026-10-16
+- **Simplificación y Ergonomía del Módulo de Playas y Mareas (Petición Expresa de Lendo):**
+  1. *Diagnóstico Operativo:* Lendo planteó revisar y simplificar el módulo de *Playas y Mareas* (`marineCard.js`) para que no fuera tan abrumador, sin renunciar a ningún contenido. El análisis crítico detectó dos problemas principales:
+     - *Doble carrusel horizontal consecutivo:* La gráfica continua sinusoidal de 72h y el carrusel de 7 días estaban apilados verticalmente, forzando dos desplazamientos laterales seguidos con fricción táctil en móvil.
+     - *Redundancias y dispersión:* Doble mención de la bandera de baño (en cabecera y en tarjeta interna) y sensores en 4 bloques muy estirados.
+  2. *Intervención Técnica en `marineCard.js`, `components.css` y `app.js`:*
+     - **Selector Deslizante Segmented Control:** Incorporado conmutador deslizante con glider animado y feedback háptico:
+       `[ 📈 Curva Continua 72h | 📅 Marea Semanal 7 Días ]`.
+       Permite alternar entre la gráfica de 72h (con las 4 mareas del día) y el cuadro de 7 días (con fases lunares y coeficientes), reduciendo la altura vertical del módulo y mostrando solo un carrusel a la vez. Al volver a la curva de 72h, se activa el autocentrado (`scrollTideChartToNow()`) en la hora viva actual.
+     - **Reorganización Armónica de Condiciones Costeras:** Agrupadas las métricas en 4 bloques limpios: Temperatura del agua en playa y sensación, Estado del mar (Escala Douglas) con botón didáctico 💡, Visibilidad & Viento en arenal, y Seguridad de Baño con su bandera teórica oficial y recomendaciones.
+  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
+     - Versión oficial elevada a **`v2.2.39 🏖️`** en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+     - Service Worker actualizado a `meteoasturlode-v2239-marine-card-streamline` en `sw.js`.
+     - Actualizado `CURRENT_APP_VERSION = '2.2.39'` en `app.js` y query strings de versión en `index.html`.
+
 ## 🛡️ Actualización v2.2.38: Erradicación Integral de Iconos Duplicados y Blindaje Indivisible en Todas las Alertas Silenciosas — 2026-10-16
 - **Erradicación Sistemática de Doble Icono y Armonización Universal (Petición Expresa de Lendo):**
   1. *Diagnóstico Operativo:* Tras haber subsanado con éxito el doble icono en las tarjetas de Niebla (Borrina) y Registro Sísmico, Lendo planteó revisar si el resto de detectores silenciosos sufrían la misma duplicidad visual en sus cabeceras. La auditoría exhaustiva reveló que 6 detectores silenciosos (`foehnDetector.js`, `galernaDetector.js`, `xeluDetector.js`, `snowDetector.js`, `roadWindDetector.js`, `thunderstormDetector.js`) tenían emojis redundantes incrustados directamente en sus cadenas de título y carecían del contenedor flex unificado, provocando en pantallas móviles que el icono flex flotara en una línea huérfana mientras el título comenzaba con otro icono idéntico abajo.

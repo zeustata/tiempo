@@ -2,7 +2,7 @@ import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/
 import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=2.2.36';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=2.0.0';
 import { renderCurrentWeather } from './components/currentCard.js?v=2.2.38b';
-import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=2.2.29';
+import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=2.2.39';
 import { renderSurfCard } from './components/surfCard.js?v=2.2.32';
 import { renderRoutesCard } from './components/routesCard.js?v=2.2.20';
 import { renderMountainCard } from './components/mountainCard.js?v=2.2.24';
@@ -42,7 +42,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '2.2.38';
+export const CURRENT_APP_VERSION = '2.2.39';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -1445,6 +1445,35 @@ class MeteoAsturiasApp {
         } else {
           timelineView.style.display = 'block';
           dailyView.style.display = 'none';
+        }
+      }
+    });
+
+    // Delegación global para interruptor deslizante de Playas y Mareas (Curva 72h vs Marea Semanal 7 Días)
+    document.addEventListener('click', (e) => {
+      const switchOption = e.target.closest('.tide-switch-option');
+      if (!switchOption) return;
+
+      this.triggerHaptic();
+      const targetTab = switchOption.dataset.tideTab;
+      const segmentedSwitch = document.getElementById('tide-segmented-switch');
+      if (segmentedSwitch) {
+        segmentedSwitch.dataset.active = targetTab;
+      }
+
+      document.querySelectorAll('.tide-switch-option').forEach(b => b.classList.remove('active'));
+      switchOption.classList.add('active');
+
+      const curveView = document.getElementById('tide-curve-view');
+      const weeklyView = document.getElementById('tide-weekly-view');
+      if (curveView && weeklyView) {
+        if (targetTab === 'weekly') {
+          curveView.style.display = 'none';
+          weeklyView.style.display = 'block';
+        } else {
+          curveView.style.display = 'block';
+          weeklyView.style.display = 'none';
+          scrollTideChartToNow();
         }
       }
     });

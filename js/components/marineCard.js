@@ -1153,7 +1153,7 @@ export function renderMarineCard(data, concejo) {
         </div>
       </div>
 
-      <!-- 1. MAREÓGRAFO INTERACTIVO EN TIEMPO REAL (ONDA SINUSOIDAL VIVA 72H) -->
+      <!-- 1. MAREÓGRAFO INTERACTIVO EN TIEMPO REAL (ONDA SINUSOIDAL 72H / SEMANAL) -->
       <div class="marine-widget mareografo-card" style="margin-bottom: 20px;">
         <div class="mareografo-header">
           <div class="mareografo-title-wrap">
@@ -1199,98 +1199,98 @@ export function renderMarineCard(data, concejo) {
           </div>
         </div>
 
-        <!-- Curva Gráfica Sinusoidal Continua de 72h con Scroll Horizontal -->
-        <div class="tide-chart-container">
-          <div class="tide-scroll-hint-bar">
-            <span class="tide-scroll-hint-pill">👆 Desliza horizontalmente para recorrer las 72h (3 días de marea)</span>
-          </div>
-          <div class="tide-scroll-viewport">
-            ${tideSvg}
+        <!-- SELECTOR ERGONÓMICO DESLIZANTE DE VISTA: CURVA 72H VS SEMANA 7 DÍAS -->
+        <div class="tide-segmented-switch-container">
+          <div class="tide-sliding-segmented-switch" id="tide-segmented-switch" data-active="curve">
+            <div class="tide-switch-glider"></div>
+            <button type="button" class="tide-switch-option active" data-tide-tab="curve">📈 Curva Continua 72h</button>
+            <button type="button" class="tide-switch-option" data-tide-tab="weekly">📅 Marea Semanal 7 Días</button>
           </div>
         </div>
 
-        <!-- Mareas de Hoy (Rejilla Minimalista de Píldoras Simétricas) -->
-        ${(() => {
-          const events = tideStatus.dayData.events || [];
-          return `
-            <div class="tide-today-minimal-grid">
-              ${events.map((ev) => {
-                const isHigh = ev.type === 'high';
-                const isNext = tideStatus.nextEvent && tideStatus.nextEvent.timeStr === ev.timeStr;
-                const accentColor = isHigh ? '#38bdf8' : '#f59e0b';
-                const icon = isHigh ? '🌅' : '🏖️';
-                return `
-                  <div class="tide-mini-pill ${isHigh ? 'high' : 'low'}">
-                    <div class="tide-mini-pill-top">
-                      <span class="tide-mini-icon">${icon}</span>
-                      <span class="tide-mini-name">${ev.name}</span>
+        <!-- SUB-VISTA A: CURVA SINUSOIDAL CONTINUA 72H + MAREAS DE HOY -->
+        <div id="tide-curve-view">
+          <div class="tide-chart-container">
+            <div class="tide-scroll-hint-bar">
+              <span class="tide-scroll-hint-pill">👆 Desliza horizontalmente para recorrer las 72h (3 días de marea)</span>
+            </div>
+            <div class="tide-scroll-viewport">
+              ${tideSvg}
+            </div>
+          </div>
+
+          <!-- Mareas de Hoy (Rejilla Minimalista de Píldoras Simétricas) -->
+          ${(() => {
+            const events = tideStatus.dayData.events || [];
+            return `
+              <div class="tide-today-minimal-grid">
+                ${events.map((ev) => {
+                  const isHigh = ev.type === 'high';
+                  const accentColor = isHigh ? '#38bdf8' : '#f59e0b';
+                  const icon = isHigh ? '🌅' : '🏖️';
+                  return `
+                    <div class="tide-mini-pill ${isHigh ? 'high' : 'low'}">
+                      <div class="tide-mini-pill-top">
+                        <span class="tide-mini-icon">${icon}</span>
+                        <span class="tide-mini-name">${ev.name}</span>
+                      </div>
+                      <div class="tide-mini-time">${ev.timeStr}</div>
+                      <div class="tide-mini-height" style="color: ${accentColor};">${ev.height} <span class="tide-mini-unit">m</span></div>
                     </div>
-                    <div class="tide-mini-time">${ev.timeStr}</div>
-                    <div class="tide-mini-height" style="color: ${accentColor};">${ev.height} <span class="tide-mini-unit">m</span></div>
-                  </div>
-                `;
-              }).join('')}
-            </div>
-          `;
-        })()}
-      </div>
+                  `;
+                }).join('')}
+              </div>
+            `;
+          })()}
+        </div>
 
-      <!-- 2. CUADRO SEMANAL DE MAREAS & COEFICIENTES (7 DÍAS) -->
-      <div class="marine-widget weekly-tides-card" style="margin-bottom: 20px;">
-        <div class="weekly-tides-header">
-          <div class="weekly-title-wrap">
-            <span class="weekly-icon">📅</span>
-            <div>
-              <div class="weekly-title">Marea Semanal</div>
-              <div class="weekly-subtitle">Previsión a 7 días • Fases lunares</div>
-            </div>
+        <!-- SUB-VISTA B: CUADRO SEMANAL DE MAREAS & COEFICIENTES (7 DÍAS) -->
+        <div id="tide-weekly-view" style="display: none;">
+          <div class="weekly-tides-grid">
+            ${weeklyTides.map((day) => `
+              <div class="tide-day-card ${day.isToday ? 'is-today' : ''}">
+                <div class="tide-day-header">
+                  <div class="tide-day-date">
+                    <span class="tide-day-name">${day.dayName}</span>
+                    <span class="tide-day-num">${day.dateFormatted}</span>
+                  </div>
+                  <div class="tide-moon-badge" title="${day.moonInfo.moonName}">
+                    <span class="moon-ico">${day.moonInfo.moonIcon}</span>
+                    <span class="moon-txt">${day.moonInfo.moonName}</span>
+                  </div>
+                </div>
+
+                <!-- Coeficiente y Clasificación -->
+                <div class="tide-coef-row">
+                  <span class="coef-label">Coeficiente:</span>
+                  <span class="coef-number">${day.moonInfo.coefficient}</span>
+                  <span class="coef-tag ${day.moonInfo.tideClass}">${day.moonInfo.tideType}</span>
+                </div>
+
+                <!-- Lista de eventos del día -->
+                <div class="tide-day-events-list">
+                  ${day.events.map(ev => `
+                    <div class="tide-mini-row ${ev.type}">
+                      <span class="mini-icon">${ev.type === 'high' ? '⬆️' : '⬇️'}</span>
+                      <span class="mini-name">${ev.name}</span>
+                      <span class="mini-time">${ev.timeStr}</span>
+                      <span class="mini-height">${ev.height}m</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="forecast-scroll-hint weekly-tides-scroll-hint">
+            <span class="hint-hand">👉</span>
+            <span>Desliza horizontalmente para ver los 7 días de mareas</span>
+            <span class="hint-arrow">➔</span>
           </div>
         </div>
-
-        <div class="weekly-tides-grid">
-          ${weeklyTides.map((day, idx) => `
-            <div class="tide-day-card ${day.isToday ? 'is-today' : ''}">
-              <div class="tide-day-header">
-                <div class="tide-day-date">
-                  <span class="tide-day-name">${day.dayName}</span>
-                  <span class="tide-day-num">${day.dateFormatted}</span>
-                </div>
-                <div class="tide-moon-badge" title="${day.moonInfo.moonName}">
-                  <span class="moon-ico">${day.moonInfo.moonIcon}</span>
-                  <span class="moon-txt">${day.moonInfo.moonName}</span>
-                </div>
-              </div>
-
-              <!-- Coeficiente y Clasificación -->
-              <div class="tide-coef-row">
-                <span class="coef-label">Coeficiente:</span>
-                <span class="coef-number">${day.moonInfo.coefficient}</span>
-                <span class="coef-tag ${day.moonInfo.tideClass}">${day.moonInfo.tideType}</span>
-              </div>
-
-              <!-- Lista de eventos del día -->
-              <div class="tide-day-events-list">
-                ${day.events.map(ev => `
-                  <div class="tide-mini-row ${ev.type}">
-                    <span class="mini-icon">${ev.type === 'high' ? '⬆️' : '⬇️'}</span>
-                    <span class="mini-name">${ev.name}</span>
-                    <span class="mini-time">${ev.timeStr}</span>
-                    <span class="mini-height">${ev.height}m</span>
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-          `).join('')}
-        </div>
-
-        <div class="forecast-scroll-hint weekly-tides-scroll-hint">
-          <span class="hint-hand">👉</span>
-          <span>Desliza horizontalmente para ver los 7 días de mareas</span>
-          <span class="hint-arrow">➔</span>
-        </div>
       </div>
 
-      <!-- 3. GRID DE SENSORES TURÍSTICOS Y CONDICIONES DE PLAYA -->
+      <!-- 2. GRID DE SENSORES COSTEROS Y CONDICIONES DE PLAYA -->
       <div class="marine-grid">
         <!-- Temperatura del Agua y Confort -->
         <div class="marine-widget">
@@ -1298,14 +1298,6 @@ export function renderMarineCard(data, concejo) {
           <div class="widget-value">${seaTemp} <span class="unit">°C</span></div>
           <div class="widget-detail">${isCoasting ? `Playas de ${concejo.name}` : `Costa de ${interiorRef.name}`}</div>
           <div class="widget-detail">Sensación: <strong>${parseFloat(seaTemp) >= 19 ? 'Agradable / Cálida' : (parseFloat(seaTemp) >= 16 ? 'Fresca y vivificante' : 'Fría / Cantábrico')}</strong></div>
-        </div>
-
-        <!-- Visibilidad Costera -->
-        <div class="marine-widget">
-          <div class="widget-label">Visibilidad & Bruma Marina</div>
-          <div class="widget-value">${visibilityKm} <span class="unit">km</span></div>
-          <div class="widget-detail">Viento en costa: <strong>${windSpeed} km/h (${windDirObj.name})</strong></div>
-          <div class="widget-detail">Ambiente: <strong>${parseFloat(visibilityKm) >= 15 ? 'Cielos limpios y diáfanos' : 'Ligera bruma marina'}</strong></div>
         </div>
 
         <!-- Estado de la Mar (Douglas) -->
@@ -1319,13 +1311,21 @@ export function renderMarineCard(data, concejo) {
           <div class="widget-detail">Tipo de mar: <strong>${h < 1.0 ? 'Mar en calma / Rizada' : 'Oleaje atlántico cantábrico'}</strong></div>
         </div>
 
-        <!-- Bandera y Seguridad de Baño -->
+        <!-- Visibilidad Costera & Viento -->
+        <div class="marine-widget">
+          <div class="widget-label">Visibilidad & Viento en Costa</div>
+          <div class="widget-value">${visibilityKm} <span class="unit">km</span></div>
+          <div class="widget-detail">Viento en arenal: <strong>${windSpeed} km/h (${windDirObj.name})</strong></div>
+          <div class="widget-detail">Ambiente: <strong>${parseFloat(visibilityKm) >= 15 ? 'Cielos limpios y diáfanos' : 'Ligera bruma marina'}</strong></div>
+        </div>
+
+        <!-- Seguridad y Recomendación de Baño -->
         <div class="marine-widget surf-turismo-visual-widget">
           <div class="surf-widget-top">
             <div class="surf-title-row">
               <span class="surf-title-icon">🚩</span>
               <div>
-                <div class="surf-title-main">Seguridad & Bandera de Baño</div>
+                <div class="surf-title-main">Seguridad de Baño</div>
                 <div class="surf-title-sub">${isCoasting ? `Litoral de ${concejo.name}` : `Costa de ${interiorRef.name}`}</div>
               </div>
             </div>
@@ -1334,7 +1334,7 @@ export function renderMarineCard(data, concejo) {
             </div>
           </div>
 
-          <div class="surf-status-banner" style="color: ${flagColor};">
+          <div class="surf-status-banner" style="color: ${flagColor}; margin-top: 10px;">
             ${bathStatus}
           </div>
         </div>

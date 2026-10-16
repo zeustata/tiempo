@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.39] - 2026-10-16
+
+### 🏖️ Selector Deslizante en Mareógrafo y Reorganización de Mareas (Petición Lendo)
+- **Selector Ergonómico Segmented Control en Mareógrafo (`marineCard.js` y `components.css`):**
+  - Implementado interruptor deslizante con efecto táctil háptico y glider animado: `[ 📈 Curva Continua 72h | 📅 Marea Semanal 7 Días ]`.
+  - Erradicado el problema de apilamiento de dos carruseles horizontales consecutivos en pantallas móviles, reduciendo la altura vertical del módulo y evitando tropiezos táctiles involuntarios.
+  - Al alternar a la Curva de 72h, se activa automáticamente el autocentrado (`scrollTideChartToNow()`) en la hora viva actual.
+- **Consolidación Armónica del Cuadro de Mando Costero:**
+  - Reorganizada la cuadrícula de condiciones en 4 bloques equilibrados: Temperatura del Agua con sensación térmica, Estado de la Mar (Escala Douglas) con botón didáctico 💡, Visibilidad & Viento en arenal, y Seguridad de Baño con su bandera teórica oficial y recomendaciones.
+  - Eliminada la duplicidad visual de la bandera entre cabecera y cuerpo.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):**
+  - Service Worker actualizado a `meteoasturlode-v2239-marine-card-streamline`.
+  - Versión oficial elevada a `v2.2.39 🏖️` en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+
 ## [2.2.38] - 2026-10-16
 
 ### 🛡️ Erradicación Total de Iconos Duplicados y Blindaje Indivisible en Alertas Silenciosas (Petición Lendo)

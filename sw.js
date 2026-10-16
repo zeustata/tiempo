@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2238-silent-alerts-harmonization';
+const CACHE_NAME = 'meteoasturlode-v2239-marine-card-streamline';
 const STATIC_ASSETS = [
   './',
   './index.html',
