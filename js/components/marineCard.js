@@ -1068,6 +1068,73 @@ export function getDouglasScale(heightM) {
 }
 
 /**
+ * Clasifica y computa categorías temáticas para las playas del concejo activo
+ */
+export function getBeachCategories(playas) {
+  const matchers = [
+    {
+      id: 'familiar',
+      label: 'Familiares',
+      icon: '👨‍👩‍👧‍👦',
+      test: (p) => {
+        const text = `${p.name} ${p.type} ${p.tag || ''} ${p.surfLevel || ''}`.toLowerCase();
+        return text.includes('familiar') || text.includes('tranquil') || text.includes('baño') || 
+               text.includes('urban') || text.includes('resguardad') || text.includes('protegid') || 
+               text.includes('piscina') || text.includes('paseo') || text.includes('sup') || text.includes('ría');
+      }
+    },
+    {
+      id: 'calas',
+      label: 'Calas & Pozas',
+      icon: '🪨',
+      test: (p) => {
+        const text = `${p.name} ${p.type} ${p.tag || ''} ${p.bottom || ''}`.toLowerCase();
+        return text.includes('cala') || text.includes('snorkel') || text.includes('roca') || 
+               text.includes('losa') || text.includes('pedrero') || text.includes('pozo') || 
+               text.includes('cantos') || text.includes('arrecife') || text.includes('acantilad');
+      }
+    },
+    {
+      id: 'surf',
+      label: 'Surf',
+      icon: '🏄‍♂️',
+      test: (p) => {
+        const text = `${p.name} ${p.type} ${p.tag || ''} ${p.waveType || ''} ${p.surfLevel || ''}`.toLowerCase();
+        return text.includes('surf') || text.includes('pico') || text.includes('rompiente') || 
+               text.includes('ola') || text.includes('tubul') || text.includes('swell');
+      }
+    },
+    {
+      id: 'salvaje',
+      label: 'Salvajes & Dunas',
+      icon: '🌿',
+      test: (p) => {
+        const text = `${p.name} ${p.type} ${p.tag || ''}`.toLowerCase();
+        return text.includes('salvaj') || text.includes('monumento natural') || text.includes('duna') || 
+               text.includes('virgen') || text.includes('naturaleza') || text.includes('fiordo') || 
+               text.includes('jurásic') || text.includes('paisaje');
+      }
+    }
+  ];
+
+  const categories = [];
+  matchers.forEach(m => {
+    const count = playas.filter(m.test).length;
+    if (count > 0) {
+      categories.push({
+        id: m.id,
+        label: m.label,
+        icon: m.icon,
+        count: count,
+        test: m.test
+      });
+    }
+  });
+
+  return { matchers, categories };
+}
+
+/**
  * Renderiza el módulo marítimo con Mareógrafo interactivo en tiempo real, 
  * Cuadro semanal de mareas y Catálogo de Playas y Calas de Asturias (Turismo y Baño)
  */
@@ -1080,6 +1147,8 @@ export function renderMarineCard(data, concejo) {
   const interiorRef = !isCoasting ? getNearestCoastalReference(concejo) : null;
   const activePlayas = isCoasting ? coastalData.playas : PLAYAS_POR_CONCEJO[interiorRef.refId].playas;
   const activeCoastName = isCoasting ? coastalData.name : `${interiorRef.name} (más cercana a ${concejo.name} • ${interiorRef.dist})`;
+
+  const { matchers: beachMatchers, categories: beachCategories } = getBeachCategories(activePlayas);
 
   const waveHeight = (marine && typeof marine.wave_height === 'number') ? marine.wave_height.toFixed(1) : (isCoasting ? '1.4' : '1.3');
 
@@ -1359,11 +1428,34 @@ export function renderMarineCard(data, concejo) {
           </div>
         </div>
 
-        <div style="margin: 8px 0 12px 0;">
+        <div style="margin: 8px 0 10px 0;">
           <button class="btn-open-webcams-beach" data-webcam-cat="playas" title="Ver cámaras en directo de arenales asturianos">
             <span>📹</span>
             <span>Ver Webcams de Playas en Directo</span>
           </button>
+        </div>
+
+        ${beachCategories.length > 0 ? `
+          <div class="beach-filters-scroll-wrap" role="tablist" aria-label="Filtrar playas por categoría">
+            <div class="beach-filters-bar">
+              <button type="button" class="beach-filter-pill active" data-beach-filter="all" aria-label="Mostrar todas las playas (${activePlayas.length})">
+                <span class="pill-icon">🏖️</span>
+                <span class="pill-text">Todas</span>
+                <span class="pill-count">${activePlayas.length}</span>
+              </button>
+              ${beachCategories.map(cat => `
+                <button type="button" class="beach-filter-pill" data-beach-filter="${cat.id}" aria-label="Filtrar por playas ${cat.label} (${cat.count})">
+                  <span class="pill-icon">${cat.icon}</span>
+                  <span class="pill-text">${cat.label}</span>
+                  <span class="pill-count">${cat.count}</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
+
+        <div id="beach-empty-filter-msg" class="beach-empty-filter-msg" style="display: none;">
+          ℹ️ No se han encontrado playas en esta categoría para este concejo.
         </div>
 
         <div class="beaches-grid">
@@ -1378,8 +1470,14 @@ export function renderMarineCard(data, concejo) {
             const recClass = isFamily ? 'chip-family' : 'chip-warning';
             const recVal = isFamily ? 'Ideal para baño, descanso y paseos' : 'Precaución con el oleaje en días de mar viva';
 
+            const matchedCats = ['all'];
+            beachMatchers.forEach(m => {
+              if (m.test(p)) matchedCats.push(m.id);
+            });
+            const dataCategories = matchedCats.join(' ');
+
             return `
-            <details class="beach-accordion-card" name="beach-accordion">
+            <details class="beach-accordion-card" name="beach-accordion" data-beach-categories="${dataCategories}">
               <summary class="beach-accordion-header">
                 <div class="beach-accordion-title-wrap">
                   <span class="beach-accordion-icon">🏖️</span>

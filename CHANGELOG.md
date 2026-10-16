@@ -10,6 +10,22 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.42] - 2026-10-16
+
+### 🏖️ Filtros Rápidos Deslizables por Tipo de Playa (Petición Lendo)
+- **Barra de Filtros Horizontales Reactivos (`marineCard.js`, `components.css` y `app.js`):**
+  - Implementada barra horizontal deslizante con pastillas ergonómicas táctiles tipo carrusel con contadores en vivo:
+    - `[ 🏖️ Todas ]`
+    - `[ 👨‍👩‍👧‍👦 Familiares ]` (arenales resguardados, tranquilos, urbanos y aptos para baño/paseos)
+    - `[ 🪨 Calas & Pozas ]` (calas con encanto, pedreros, pozos naturales y fondos de roca/losa)
+    - `[ 🏄‍♂️ Surf ]` (rompientes de olas, picos bautizados, barras de ría y swell activo)
+    - `[ 🌿 Salvajes & Dunas ]` (monumentos naturales, dunas eólicas y arenales vírgenes)
+  - **Erradicación de la Fatiga de Scroll:** En concejos con decenas de arenales (Llanes, Castrillón, Gozón o Villaviciosa), los usuarios pueden acotar instantáneamente lo que buscan con un solo toque en pantalla.
+  - **Aislamiento Gestual Móvil (Leyes 11 y 18):** `touch-action: pan-x pan-y;` y blindaje en `isInteractiveZone` para permitir el desplazamiento horizontal suave sin activar jamás el cambio accidental de pestaña o menú.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):**
+  - Service Worker actualizado a `meteoasturlode-v2242-beach-filters-streamline`.
+  - Versión oficial elevada a `v2.2.42 🏖️` en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+
 ## [2.2.41] - 2026-10-16
 
 ### 🏖️ Rediseño Ergonómico a Micro-Píldoras en Fichas de Playas (Petición Lendo)

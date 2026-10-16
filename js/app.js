@@ -2,7 +2,7 @@ import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/
 import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=2.2.36';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=2.0.0';
 import { renderCurrentWeather } from './components/currentCard.js?v=2.2.38b';
-import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=2.2.41';
+import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=2.2.42';
 import { renderSurfCard } from './components/surfCard.js?v=2.2.32';
 import { renderRoutesCard } from './components/routesCard.js?v=2.2.20';
 import { renderMountainCard } from './components/mountainCard.js?v=2.2.24';
@@ -42,7 +42,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '2.2.41';
+export const CURRENT_APP_VERSION = '2.2.42';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -1478,6 +1478,40 @@ class MeteoAsturiasApp {
       }
     });
 
+    // Delegación global para filtros rápidos de playas por categoría (Playas y Mareas)
+    document.addEventListener('click', (e) => {
+      const filterBtn = e.target.closest('.beach-filter-pill');
+      if (!filterBtn) return;
+
+      this.triggerHaptic();
+      const filterCat = filterBtn.dataset.beachFilter || 'all';
+
+      // Activar visualmente la pastilla seleccionada
+      const filterBar = filterBtn.closest('.beach-filters-bar');
+      if (filterBar) {
+        filterBar.querySelectorAll('.beach-filter-pill').forEach(b => b.classList.remove('active'));
+        filterBtn.classList.add('active');
+      }
+
+      // Filtrar las tarjetas de playas del DOM
+      const beachCards = document.querySelectorAll('.beach-accordion-card');
+      let visibleCount = 0;
+      beachCards.forEach(card => {
+        const cats = card.dataset.beachCategories || '';
+        if (filterCat === 'all' || cats.split(' ').includes(filterCat)) {
+          card.style.display = '';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      const emptyMsg = document.getElementById('beach-empty-filter-msg');
+      if (emptyMsg) {
+        emptyMsg.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+    });
+
     // Delegación global para interruptor deslizante de Cordillera (Estaciones & Esquí vs Puertos & Carreteras)
     document.addEventListener('click', (e) => {
       const switchOption = e.target.closest('.mountain-switch-option');
@@ -1963,6 +1997,7 @@ class MeteoAsturiasApp {
         '.daily-cards-container, .daily-card-rich, .forecast-scroll-hint, ' +
         '.surf-timeline-grid, .surf-slot-card, .surf-timeline-scroll-hint, .surf-daily-cards-grid, .surf-daily-card, .surf-dayparts-list, .surf-daily-scroll-hint, ' +
         '.favorites-pills, .view-tabs, ' +
+        '.beach-filters-scroll-wrap, .beach-filters-bar, .beach-filter-pill, ' +
         '#map-container, .leaflet-container, ' +
         '.modal-overlay, .modal-card, ' +
         'input, textarea, select, button, a'

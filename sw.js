@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2241-beach-chips-redesign';
+const CACHE_NAME = 'meteoasturlode-v2242-beach-filters-streamline';
 const STATIC_ASSETS = [
   './',
   './index.html',
