@@ -1417,9 +1417,8 @@ export function renderMarineCard(data, concejo) {
           </button>
 
           <div class="beach-filter-dropdown-wrapper">
-            <span class="dropdown-filter-icon" id="beach-active-icon">🏖️</span>
             <select id="beach-category-select" class="beach-category-select" aria-label="Filtrar catálogo de playas">
-              <option value="all" selected>Todas las playas (${activePlayas.length})</option>
+              <option value="all" selected>🏖️ Todas las playas (${activePlayas.length})</option>
               ${beachCategories.map(cat => `
                 <option value="${cat.id}">${cat.icon} ${cat.label} (${cat.count})</option>
               `).join('')}

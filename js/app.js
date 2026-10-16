@@ -2,7 +2,7 @@ import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/
 import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=2.2.36';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=2.0.0';
 import { renderCurrentWeather } from './components/currentCard.js?v=2.2.38b';
-import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=2.2.45';
+import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=2.2.46';
 import { renderSurfCard } from './components/surfCard.js?v=2.2.32';
 import { renderRoutesCard } from './components/routesCard.js?v=2.2.20';
 import { renderMountainCard } from './components/mountainCard.js?v=2.2.24';
@@ -42,7 +42,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '2.2.45';
+export const CURRENT_APP_VERSION = '2.2.46';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -1485,15 +1485,6 @@ class MeteoAsturiasApp {
 
       this.triggerHaptic();
       const filterCat = select.value || 'all';
-
-      // Actualizar icono frontal del desplegable
-      const iconSpan = document.getElementById('beach-active-icon');
-      const selectedOption = select.options[select.selectedIndex];
-      if (iconSpan && selectedOption) {
-        const text = selectedOption.textContent || '';
-        const emojiMatch = text.match(/^[\p{Emoji}\u200d\uFE0F]+/u);
-        iconSpan.textContent = emojiMatch ? emojiMatch[0] : '🏖️';
-      }
 
       // Filtrar las tarjetas de playas del DOM
       const beachCards = document.querySelectorAll('.beach-accordion-card');

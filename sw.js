@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2245-beach-dropdown-streamline';
+const CACHE_NAME = 'meteoasturlode-v2246-beach-single-icon-streamline';
 const STATIC_ASSETS = [
   './',
   './index.html',

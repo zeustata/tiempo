@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.46] - 2026-10-16
+
+### 🏖️ Erradicación del Doble Icono en Selector de Playas (Petición Lendo)
+- **Supresión de Span Redundante y Armonización Canónica (`marineCard.js`, `components.css` y `app.js`):**
+  - Eliminado el elemento `<span>` exterior (`#beach-active-icon`) que duplicaba el icono al elegir categorías específicas de playas, generando dos emojis pegados (ej. `👨‍👩‍👧‍👦 👨‍👩‍👧‍👦 Familiares`).
+  - Integrado el emoji `🏖️` en la opción inicial `🏖️ Todas las playas`, homogeneizando todas las opciones del desplegable con su propio icono nativo sin redundancias.
+  - Simplificada la lógica de JavaScript en `app.js`, prescindiendo de manipulaciones del DOM sobre el span externo y garantizando un único icono visible tanto en reposo como en el menú nativo.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):**
+  - Service Worker actualizado a `meteoasturlode-v2246-beach-single-icon-streamline`.
+  - Versión oficial elevada a `v2.2.46 🏖️` en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+
 ## [2.2.45] - 2026-10-16
 
 ### 🏖️ Selector Desplegable de Playas y Omisión de Seguridad de Baño (Petición Lendo)

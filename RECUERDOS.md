@@ -8,6 +8,20 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🏖️ Actualización v2.2.46: Erradicación del Doble Icono en Selector de Playas — 2026-10-16
+- **Pureza Visual y Erradicación de Iconos Redundantes (Petición Expresa de Lendo - «ya sabes el doble icono como en las alertas. investiga» y «pisale»):**
+  1. *Diagnóstico Operativo de Lendo:*
+     - Al seleccionar una categoría de playas (*Familiares*, *Calas*, *Surf*, *Salvajes*), la interfaz presentaba un doble icono pegado (ej. `👨‍👩‍👧‍👦 👨‍👩‍👧‍👦 Familiares (2)`), exactamente análogo a la duplicidad visual subsanada con anterioridad en las cabeceras de las alertas silenciosas.
+     - *Origen del fallo:* El contenedor mantenía un `<span>` decorativo exterior (`#beach-active-icon`) que se actualizaba dinámicamente vía JavaScript, mientras que el elemento nativo `<select>` ya proyectaba el emoji incrustado en el texto de cada `<option>`.
+  2. *Intervención Técnica en `marineCard.js`, `components.css` y `app.js`:*
+     - **Erradicación del Span Redundante:** Eliminado `<span id="beach-active-icon">` del DOM y suprimidas sus reglas CSS obsoletas en `components.css`.
+     - **Homogeneización del `<select>`:** Incorporado el icono canónico `🏖️` en la opción neutra inicial (`🏖️ Todas las playas`), garantizando que cada opción aporte su propio emoji individual de forma nativa.
+     - **Simplificación de Lógica en `app.js`:** Suprimido el bloque de extracción por regex de emojis y actualización manual del span exterior en el evento `change`, reduciendo la carga de ejecución del cliente.
+  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
+     - Versión oficial elevada a **`v2.2.46 🏖️`** en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+     - Service Worker actualizado a `meteoasturlode-v2246-beach-single-icon-streamline` en `sw.js`.
+     - Actualizado `CURRENT_APP_VERSION = '2.2.46'` en `app.js` y query strings de versión en `index.html`.
+
 ## 🏖️ Actualización v2.2.45: Selector Desplegable de Playas y Omisión de Seguridad de Baño — 2026-10-16
 - **Ergonomía, Selector Unificado y Blindaje de Responsabilidad (Petición Expresa de Lendo - «vale ahora quiero yo cambiar cosas...» y «pisale»):**
   1. *Diagnóstico Operativo de Lendo:*
