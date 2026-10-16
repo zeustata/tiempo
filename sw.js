@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2235-triage-jerarquia-alertas';
+const CACHE_NAME = 'meteoasturlode-v2236-soberania-fisica-anti-falso-nublado';
 const STATIC_ASSETS = [
   './',
   './index.html',

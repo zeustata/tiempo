@@ -10,6 +10,21 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.36] - 2026-10-16
+
+### ☀️ Soberanía Física Inversa & Anti-Falso Nublado en Tiempo Real (Feedback Lendo)
+- **Erradicación de Falsos Días Grises ante el Sol Real:**
+  - Corregida la anomalía por la cual los modelos numéricos deterministas (como AROME o ICON) mantenían a Castrillón / Salinas y otras zonas costeras con etiqueta de «Cubierto (100% nubes)» a media mañana debido al rezago de nieblas o estratos matinales que en la realidad física ya se habían disipado por completo (evidenciado en webcams en directo y estaciones oficiales METAR de aeropuertos).
+- **Consenso Cantábrico Simétrico y Bidireccional (`weatherApi.js`):**
+  - Implementada la **Soberanía Física Inversa** como contraparte exacta del filtro anti-falso claro:
+    Si no hay lluvia activa y los sensores físicos detectan radiación solar directa (>= 100 W/m², >= 200 W/m² de radiación global o índice UV >= 1.2), es una imposibilidad física que el cielo esté encapotado al 100%.
+  - El sistema detecta la contradicción física, descarta el código 3 (cubierto) y reclasifica automáticamente el estado a **Soleado / Despejado** (códigos 0, 1 o 2), ajustando la cobertura nubosa al valor real coherente con la insolación.
+- **Protección Standalone Universal:**
+  - Si el usuario selecciona manualmente un modelo individual (desactivando el consenso híbrido de ECMWF), la función `applyStandalonePhysicalSovereignty` aplica la misma garantía física para impedir que ningún modelo mienta sobre el estado del cielo cuando el sol brilla.
+- **Blindaje de Versión y Cache-Busting (Leyes 1, 4, 10 y 13):**
+  - Service Worker actualizado a `meteoasturlode-v2236-soberania-fisica-anti-falso-nublado`.
+  - Versión oficial elevada a `v2.2.36 ☀️` en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+
 ## [2.2.35] - 2026-10-16
 
 ### 🚨 Sistema de Triage y Jerarquía de Alertas por Severidad (Petición Lendo)

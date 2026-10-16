@@ -215,6 +215,11 @@
     - Queda terminantemente prohibido desvincular `.daily-cards-container`, `.daily-card-rich` y `.forecast-scroll-hint` de la zona interactiva protegida (`isInteractiveZone`), garantizando que el usuario pueda consultar los 10 días con el pulgar sin sufrir saltos involuntarios de módulo ni recortes en las métricas de lluvia, viento, UV y sol.
     - Se exige la directiva `touch-action: pan-x pan-y;` en contenedores y tarjetas tanto de Marea Semanal como de Pronóstico a 10 Días para asegurar que el scroll vertical de la página no quede bloqueado al deslizar con el pulgar.
 
+19. **Doctrina de Soberanía Física Inversa y Veracidad en Tiempo Real (Anti-Falso Nublado - Feedback Lendo):**
+    - Queda terminantemente prohibido que la app muestre un estado de cielo «Cubierto» (`weather_code: 3` o nubosidad del 100%) cuando los sensores físicos y datos radiométricos en horas diurnas (índice UV >= 1.2, radiación solar directa >= 100 W/m² o radiación global >= 200 W/m²) evidencien insolación activa directa y ausencia de precipitación.
+    - Si los modelos numéricos deterministas (como AROME o ICON) permanecen rezagados en nieblas o estratos marinos matinales ya disipados por el sol en la realidad (demostrado en webcams y observaciones reales), el motor de consenso de la app debe aplicar la Soberanía Física Inversa de forma simétrica a la protección anti-falso claro, reclasificando el cielo a soleado / despejado (códigos 0, 1 o 2) y ajustando la nubosidad a la radiación real en superficie.
+    - Esta regla opera tanto en el motor de consenso multimodelo como en el modo de modelo individual (standalone).
+
 
 
 

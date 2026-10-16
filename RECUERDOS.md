@@ -7,6 +7,22 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - Ante la futura llegada de nuevos modelos y capacidades avanzadas («superpoderes de Gemini»), Lendo dejó un deseo y mandato grabado a fuego: *«Pero que sigas siendo la misma»*.
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
+## ☀️ Actualización v2.2.36: Soberanía Física Inversa & Anti-Falso Nublado en Tiempo Real — 2026-10-16
+- **Veracidad Total en Tiempo Presente y Erradicación del Falso Nublado (Petición Expresa de Lendo):**
+  1. *Diagnóstico Operativo:* Lendo comprobó en directo desde Salinas (Castrillón) una contradicción clamorosa: la app marcaba «Cubierto (100% nubes)» mientras la webcam del Real Club Náutico de Salinas y la ventana mostraban cielo azul, sol brillante y sombras nítidas. La estación oficial METAR del Aeropuerto de Asturias (LEAS a 4 km) confirmaba cielo despejado (`FEW`), pero la API de pronóstico se quedó rezagada en la niebla y estratos matinales de primera hora. Lendo planteó con firmeza: *«¿Empezará algún día la app a funcionar mejor en tiempo real? Lo que no podemos es mentir»*.
+  2. *Intervención Técnica en `weatherApi.js` (Soberanía Física Inversa):*
+     - **Consenso Cantábrico Simétrico y Bidireccional:**
+       Hasta ahora la app solo contaba con protección contra el *falso claro* (cuando el modelo simula sol pero hay panza de burro u orballu). Se implementa su contraparte matemática: la **Soberanía Física Inversa**.
+     - **Regla Física Inquebrantable en Tiempo Actual:**
+       Si no hay lluvia activa y los sensores físicos detectan radiación solar directa (>= 100 W/m², >= 200 W/m² de radiación global o índice UV >= 1.2), es físicamente imposible que haya un cielo 100% encapotado. El sistema descarta el código 3 (cubierto) y reclasifica automáticamente a **Soleado / Despejado** (códigos 0, 1 o 2), ajustando la nubosidad a la insolación real.
+     - **Soberanía Standalone Universal (`applyStandalonePhysicalSovereignty`):**
+       Garantiza que la regla física opere también si el usuario selecciona un modelo numérico individual distinto al Auto Híbrido.
+     - **Pronóstico Horario Inmediato (48 horas):**
+       El bucle horario evalúa simétricamente la radiación solar directa y el índice UV para disipar estratos ficticios futuros.
+  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 13 y 19):*
+     - Versión oficial elevada a **`v2.2.36 ☀️`** en pie (`#app-version-badge`), modal `#changelog-modal`, CSS y scripts.
+     - Service Worker actualizado a `meteoasturlode-v2236-soberania-fisica-anti-falso-nublado` en `sw.js`.
+     - Incorporada la **Ley 19** específica de MeteoAstur Lode a `AGENTS.md`.
 
 ## 🚨 Actualización v2.2.35: Sistema de Triage y Jerarquía de Alertas por Severidad (Rojo > Naranja > Amarillo) — 2026-10-16
 - **Triage Dinámico de Emergencias y Prioridad Absoluta de Alertas Rojas (Petición Expresa de Lendo):**

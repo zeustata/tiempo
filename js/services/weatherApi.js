@@ -150,6 +150,8 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
     if (weather) {
       if (consensus) {
         applyCantabricoConsensus(weather, consensus);
+      } else {
+        applyStandalonePhysicalSovereignty(weather);
       }
       harmonizeWeatherPrecipitation(weather);
     }
@@ -246,6 +248,26 @@ function applyCantabricoConsensus(weather, consensus) {
       weather.current.weather_code = (eCode >= 50 && eCode <= 67) ? eCode : 51;
       if (ecmwfCloud > rawCloud) weather.current.cloud_cover = ecmwfCloud;
     }
+
+    // C) SOBERANÍA FÍSICA INVERSA (Anti-Falso Nublado / Estratos Matinales Disipados):
+    // Si el modelo numérico crudo marca cielo cubierto (código 3 o nubes >= 75%) pero NO hay precipitación activa,
+    // y la física constata insolación directa (UV >= 1.2 o Radiación Directa >= 100 W/m² o Radiación Global >= 200 W/m²):
+    // Es físicamente imposible un cielo 100% encapotado. Se corrige la nubosidad y el código a soleado/despejado.
+    const isDryCurrent = rawPrecip < 0.1 && ePrecip < 0.1;
+    const isFalseOvercast = isDryCurrent && hasActiveSunlight && (weather.current.weather_code === 3 || rawCloud >= 75);
+
+    if (isFalseOvercast) {
+      let targetCloud = rawCloud;
+      if (ecmwfCloud < rawCloud && ecmwfCloud <= 65) {
+        targetCloud = ecmwfCloud;
+      } else if (rawDirectIrr >= 250 || rawUv >= 2.0) {
+        targetCloud = 15;
+      } else {
+        targetCloud = 35;
+      }
+      weather.current.cloud_cover = targetCloud;
+      weather.current.weather_code = targetCloud <= 20 ? 0 : (targetCloud <= 50 ? 1 : 2);
+    }
   }
 
   // 2. Verificación de pronóstico horario inmediato (primeras 48 horas)
@@ -306,6 +328,72 @@ function applyCantabricoConsensus(weather, consensus) {
         if (weather.hourly.precipitation_probability) {
           weather.hourly.precipitation_probability[i] = Math.max(pop, ePop);
         }
+      }
+
+      // C) Anti-Falso Nublado Horario (Soberanía Física Inversa):
+      const eDirectH = consensus.hourly.direct_normal_irradiance ? (consensus.hourly.direct_normal_irradiance[i] || 0) : 0;
+      const rawDirectH = weather.hourly.direct_normal_irradiance ? (weather.hourly.direct_normal_irradiance[i] || 0) : 0;
+      const rawUvH = weather.hourly.uv_index ? (weather.hourly.uv_index[i] || 0) : 0;
+      const rawSwH = weather.hourly.shortwave_radiation ? (weather.hourly.shortwave_radiation[i] || 0) : 0;
+      const hasHourlySun = rawDirectH >= 100 || eDirectH >= 100 || rawSwH >= 200 || rawUvH >= 1.2;
+      const isDryHourly = precip < 0.1 && ePrecip < 0.1;
+
+      if (isDryHourly && hasHourlySun && weather.hourly.weather_code && (weather.hourly.weather_code[i] === 3 || rawC >= 75)) {
+        let targetHourlyCloud = rawC;
+        if (ecmwfC < rawC && ecmwfC <= 65) {
+          targetHourlyCloud = ecmwfC;
+        } else if (rawDirectH >= 250 || rawUvH >= 2.0) {
+          targetHourlyCloud = 15;
+        } else {
+          targetHourlyCloud = 35;
+        }
+        if (weather.hourly.cloud_cover) weather.hourly.cloud_cover[i] = targetHourlyCloud;
+        weather.hourly.weather_code[i] = targetHourlyCloud <= 20 ? 0 : (targetHourlyCloud <= 50 ? 1 : 2);
+      }
+    }
+  }
+}
+
+/**
+ * Soberanía Física Inversa Standalone:
+ * Garantiza que incluso si el usuario selecciona un modelo numérico individual (sin consenso ECMWF),
+ * el sistema nunca muestre cielo 100% cubierto / nublado si los sensores físicos de radiación y UV
+ * demuestran insolación directa en superficie en ausencia de precipitación.
+ */
+function applyStandalonePhysicalSovereignty(weather) {
+  if (!weather) return;
+
+  // 1. En tiempo actual
+  if (weather.current) {
+    const rawCloud = weather.current.cloud_cover != null ? weather.current.cloud_cover : 100;
+    const rawPrecip = weather.current.precipitation != null ? parseFloat(weather.current.precipitation) : 0;
+    const rawDirectIrr = weather.current.direct_normal_irradiance != null ? parseFloat(weather.current.direct_normal_irradiance) : 0;
+    const rawUv = weather.current.uv_index != null ? parseFloat(weather.current.uv_index) : 0;
+    const rawSw = weather.current.shortwave_radiation != null ? parseFloat(weather.current.shortwave_radiation) : 0;
+    const hasSun = rawDirectIrr >= 100 || rawSw >= 200 || rawUv >= 1.2;
+
+    if (rawPrecip < 0.1 && hasSun && (weather.current.weather_code === 3 || rawCloud >= 75)) {
+      const targetCloud = (rawDirectIrr >= 250 || rawUv >= 2.0) ? 15 : 35;
+      weather.current.cloud_cover = targetCloud;
+      weather.current.weather_code = targetCloud <= 20 ? 0 : (targetCloud <= 50 ? 1 : 2);
+    }
+  }
+
+  // 2. En pronóstico horario
+  if (weather.hourly && weather.hourly.time && weather.hourly.weather_code) {
+    const limit = Math.min(weather.hourly.time.length, 48);
+    for (let i = 0; i < limit; i++) {
+      const rawC = weather.hourly.cloud_cover ? weather.hourly.cloud_cover[i] : 100;
+      const precip = weather.hourly.precipitation ? (weather.hourly.precipitation[i] || 0) : 0;
+      const rawDirectH = weather.hourly.direct_normal_irradiance ? (weather.hourly.direct_normal_irradiance[i] || 0) : 0;
+      const rawUvH = weather.hourly.uv_index ? (weather.hourly.uv_index[i] || 0) : 0;
+      const rawSwH = weather.hourly.shortwave_radiation ? (weather.hourly.shortwave_radiation[i] || 0) : 0;
+      const hasHourlySun = rawDirectH >= 100 || rawSwH >= 200 || rawUvH >= 1.2;
+
+      if (precip < 0.1 && hasHourlySun && (weather.hourly.weather_code[i] === 3 || rawC >= 75)) {
+        const targetCloud = (rawDirectH >= 250 || rawUvH >= 2.0) ? 15 : 35;
+        if (weather.hourly.cloud_cover) weather.hourly.cloud_cover[i] = targetCloud;
+        weather.hourly.weather_code[i] = targetCloud <= 20 ? 0 : (targetCloud <= 50 ? 1 : 2);
       }
     }
   }
