@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.58] - 2026-10-17
+
+### 🎿 Restauración de Visibilidad y Renderizado 2D Nativo en Tablets (Feedback Lendo - Tablet)
+- **Erradicación del Layer Culling y Retorno de Textos y Métricas en Nieve:**
+  - Diagnóstico: en la versión 2.2.56, al forzar aceleración por hardware con `transform: translateZ(0)` e `isolation: isolate` en los iconos, la GPU de tablets Android promovió los SVGs a su propia textura pero descartó el plano 2D de los textos hermanos (`HOY`, temperaturas, etiquetas `09-13h`, viento y nieve fresca), dejando los iconos flotando en rectángulos vacíos.
+  - Intervención técnica en `css/components.css` y `css/main.css`: eliminados todos los `transform: translateZ(0)`, `isolation: isolate`, `backface-visibility: hidden` y `scroll-snap` del carrusel de esquí de 7 días, sus tarjetas, cabeceras, slots y SVGs. Se alineó la estructura al modelo de `.hourly-scroll-container` (que rinde perfectamente en tablets con textos e iconos a la primera).
+  - Emancipación del ciclo de animación en paneles: eliminada la propiedad estática `animation: ... forwards` y `will-change` permanente de `.tab-panel.active`. En `js/app.js`, se introdujo un temporizador de limpieza de clases de animación tras 380 ms, devolviendo al panel su estado 2D estándar y permitiendo a Chromium pintar al instante y sin retrasos todos los textos e iconos en cualquier resolución.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):**
+  - Service Worker actualizado a `meteoasturlode-v2258-tablet-ski-forecast-restored`.
+  - Versión oficial elevada a `v2.2.58 🎿` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.58'` en `app.js` y query strings en `index.html`.
+
 ## [2.2.57] - 2026-10-17
 
 ### ☁️ Calibración Anti-Falsos Orbayus Secos en Cielo Cubierto (Feedback Lendo - Piedras Blancas)

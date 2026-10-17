@@ -1563,18 +1563,14 @@ body {
 
 .tab-panel.active {
   display: block;
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  animation: slideInFromRight 0.38s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
 }
 
 .tab-panel.active.slide-from-right {
-  animation: slideInFromRight 0.38s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+  animation: slideInFromRight 0.35s cubic-bezier(0.2, 0.9, 0.3, 1);
 }
 
 .tab-panel.active.slide-from-left {
-  animation: slideInFromLeft 0.38s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+  animation: slideInFromLeft 0.35s cubic-bezier(0.2, 0.9, 0.3, 1);
 }
 
 @keyframes slideInFromRight {
@@ -2184,9 +2180,6 @@ body:-webkit-full-screen .app-container {
   vertical-align: middle;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
   transition: transform 0.2s ease;
-  transform: translateZ(0);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
 }
 
 .astur-svg-icon:hover {

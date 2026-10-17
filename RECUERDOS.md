@@ -8,6 +8,21 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🎿 Actualización v2.2.58: Restauración de Visibilidad Total y Renderizado 2D Nativo en Tablets — 2026-10-17
+- **Erradicación del Layer Culling y Retorno de Textos y Métricas en Nieve (Feedback Lendo - «ahora desde la tablet peor. salen los iconos pero no la informacion de los 7 dias en el menu de cortillera. en windows y movil, bien pero en la tablet ya ves» y «dale»):**
+  1. *Diagnóstico Científico del Efecto Secundario de la v2.2.56:*
+     - Al forzar aceleración por hardware con `transform: translateZ(0)` e `isolation: isolate` en los iconos (`.ski-day-icon`, `.daypart-icon` y `.astur-svg-icon`), la GPU de Chromium en Android promovió los gráficos vectoriales a su propia textura independiente, pero dejó los elementos de texto hermanos (`HOY`, temperaturas, franjas `09-13h`, viento y `❄️ 0.0 cm`) en el plano 2D de la tarjeta.
+     - Al tener la tarjeta fondo translúcido (`rgba(15, 23, 42, 0.65)`), el compositor gráfico descartó o tapó el plano 2D (*layer culling*), dejando solo los iconos flotando en rectángulos vacíos en la tablet.
+     - En móvil esto no se apreciaba porque la pantalla vertical obliga al usuario a deslizar el dedo hacia abajo para llegar a la tarjeta (lo que fuerza el repintado táctil), y en Windows la GPU de escritorio tiene recursos ilimitados y no descarte capas.
+  2. *Intervención Técnica en CSS y JS:*
+     - **Limpieza de Capas 3D:** Eliminados todos los `transform: translateZ(0)`, `isolation: isolate`, `backface-visibility: hidden` y `scroll-snap` de `.ski-7days-carousel`, `.ski-day-card`, `.ski-day-icon`, `.daypart-icon` y `.astur-svg-icon`.
+     - **Estructura 2D Nativa Homologada:** Alineado el contenedor `.ski-7days-carousel` con `.hourly-scroll-container` (que rinde perfecto en tablet sin retrasos).
+     - **Emancipación de Animaciones en Paneles:** Eliminada la propiedad permanente `animation: slideInFromRight ... forwards;` y `will-change` de `.tab-panel.active`. En `js/app.js`, se introdujo un temporizador de limpieza de clases tras 380 ms (`slide-from-right` / `slide-from-left`), asegurando que tras el deslizamiento el panel regrese a un contenedor 2D estándar y Chromium dibuje instantáneamente textos e iconos.
+  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
+     - Versión oficial elevada a **`v2.2.58 🎿`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.58'` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+     - Service Worker actualizado a `meteoasturlode-v2258-tablet-ski-forecast-restored` en `sw.js`.
+     - Query strings sincronizadas a `?v=2.2.58` en `index.html` (`main.css`, `components.css`, `app.js`).
+
 ## ☁️ Actualización v2.2.57: Calibración Anti-Falsos Orbayus Secos en Cielo Cubierto — 2026-10-17
 - **Fidelidad Física y Eliminación de Falsos Orbayus por Micro-Trazas (Feedback Lendo - «pone orbayu aquí en Castrillón pero está nublado, ¿puedes mirar por qué?» y «pisale»):**
   1. *Diagnóstico Científico y Comparativa de Modelos:*

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2257-anti-false-orbayu-overcast';
+const CACHE_NAME = 'meteoasturlode-v2258-tablet-ski-forecast-restored';
 const STATIC_ASSETS = [
   './',
   './index.html',
