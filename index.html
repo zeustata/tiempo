@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.56 🎿</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.57 ☁️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -349,8 +349,21 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.2.56 🎿</span>
+            <span class="release-version">v2.2.57 ☁️</span>
             <span class="release-date">17 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-fix">Cielo &amp; Pluviometría (Feedback Lendo - Piedras Blancas)</span> <strong>Calibración Anti-Falsos Orbayus Secos en Cielo Cubierto</strong>:
+              <br>• <strong>Coherencia entre Pluviómetro y Humedad en Superficie:</strong> Cuando el modelo reporta un código seco de cielo nublado (código 3 / Cubiertu), una micro-traza aislada de <code>0.1 mm</code> solo se clasifica como llovizna si la humedad relativa supera el 90%.
+              <br>• <strong>Fidelidad a la Atmósfera Real:</strong> Con humedades inferiores al 90% (como el 79% habitual de nubes medias), se descarta la traza matemática como virga y se preserva el estado real del cielo: <strong>Nublado / Cubiertu ☁️</strong>, erradicando falsos orbayus fantasma.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.56 🎿</span>
+            <span class="release-date">17 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-fix">Cordillera &amp; Nieve (Feedback Lendo - Expediente X Tablet)</span> <strong>Blindaje de Renderizado Inmediato de Iconos SVG en Tablets</strong>:
@@ -3825,7 +3838,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.56"></script>
+  <script type="module" src="js/app.js?v=2.2.57"></script>
 
 
 

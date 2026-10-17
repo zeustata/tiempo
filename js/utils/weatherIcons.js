@@ -115,8 +115,14 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     const irr = directIrradiance != null ? parseFloat(directIrradiance) : 0;
     const vis = visibility != null ? parseFloat(visibility) : null;
 
-    // Lluvia física real medible en pluviómetro (>= 0.1 mm) o código WMO explícito de lluvia
-    const isPhysicallyRaining = p >= 0.1;
+    // Lluvia física real medible en pluviómetro:
+    // Para códigos WMO de tiempo seco (0: despejado, 1: mayormente soleado, 2: claros, 3: nublado, 45/48: niebla),
+    // una micro-traza aislada de 0.1 mm solo se convalida como lluvia física activa si la humedad relativa
+    // en superficie acompaña con saturación (h >= 90%). Con h < 90% y código seco (ej. Nublado con 79% de humedad),
+    // 0.1 mm es una virga o artefacto numérico de cuadrícula de AROME que se evapora antes de tocar el suelo.
+    const isDrySkyCode = code <= 3 || code === 45 || code === 48;
+    const isDryTraceVirga = isDrySkyCode && p <= 0.1 && h !== null && h < 90;
+    const isPhysicallyRaining = p >= 0.1 && !isDryTraceVirga;
     let isExplicitRainCode = base.isRain || base.svgKey === 'drizzle' || base.svgKey === 'rain' || base.svgKey === 'storm';
 
     // FILTRO ANTI-ORBAYU FANTASMA (Feedback Lendo / Ley 12):

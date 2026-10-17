@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.57] - 2026-10-17
+
+### ☁️ Calibración Anti-Falsos Orbayus Secos en Cielo Cubierto (Feedback Lendo - Piedras Blancas)
+- **Coherencia Física entre Código del Cielo y Micro-Trazas de Lluvia:**
+  - Diagnóstico: en Castrillón (Piedras Blancas), el cielo estaba encapotado pero seco. Todos los modelos numéricos marcaban código 3 (Nublado / Cubiertu), pero AROME (1.3 km) introducía una micro-traza residual de 0.1 mm con humedad relativa de solo el 79%.
+  - Causa raíz: el clasificador consideraba cualquier valor `>= 0.1 mm` como lluvia física activa en superficie, transformando falsamente el código 3 en `Orbayu / Llovizna ligera 🌦️` a pesar de que las micro-gotas a 1.000 m se evaporaban como virga con 79% de humedad.
+  - Corrección en `weatherIcons.js`: para códigos WMO secos (0, 1, 2, 3, 45, 48), una traza aislada de 0.1 mm solo se convalida como precipitación activa si la humedad relativa en superficie alcanza la saturación (h >= 90%). Con humedades inferiores al 90%, se descarta la virga y se preserva fielmente el estado real: **Nublado / Cubiertu ☁️**.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):**
+  - Service Worker actualizado a `meteoasturlode-v2257-anti-false-orbayu-overcast`.
+  - Versión oficial elevada a `v2.2.57 ☁️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.57'` en `app.js` y query strings en `index.html`.
+
 ## [2.2.56] - 2026-10-17
 
 ### 🎿 Blindaje de Renderizado Inmediato de Iconos SVG en Tablets (Feedback Lendo - Expediente X Tablet)

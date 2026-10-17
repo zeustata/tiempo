@@ -8,6 +8,24 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## ☁️ Actualización v2.2.57: Calibración Anti-Falsos Orbayus Secos en Cielo Cubierto — 2026-10-17
+- **Fidelidad Física y Eliminación de Falsos Orbayus por Micro-Trazas (Feedback Lendo - «pone orbayu aquí en Castrillón pero está nublado, ¿puedes mirar por qué?» y «pisale»):**
+  1. *Diagnóstico Científico y Comparativa de Modelos:*
+     - Lendo constató que la aplicación mostraba *«Orbayu / Llovizna ligera 🌦️»* en Castrillón (Piedras Blancas) mientras en el exterior el cielo estaba completamente cubierto pero seco.
+     - *Auditoría de datos crudos en Open-Meteo:*
+       - ECMWF, ICON y GFS reportaban código 3 (Nublado / Cubiertu) con **0.0 mm**.
+       - AROME (1.3 km), fuente de alta resolución para el consenso de costa, reportaba código 3 con **0.1 mm** de precipitación (la menor cifra no nula posible).
+       - La humedad relativa en Castrillón era del **79%**, muy lejos del umbral de condensación y saturación (90–95%) necesario para el orbayu asturiano en superficie. Con 79%, cualquier micro-gota se evapora en los 1.000 m de caída libre (fenómeno de *virga*).
+  2. *Causa Raíz en el Algoritmo Clasificador:*
+     - En `weatherIcons.js`, la regla consideraba cualquier precipitación `>= 0.1 mm` como lluvia física activa en superficie. Al ser `< 0.5 mm`, el clasificador anulaba el código base 3 y lo reconducía forzosamente a *Caso G: Orbayu*.
+  3. *Intervención Técnica en `js/utils/weatherIcons.js`:*
+     - Se introdujo la variable de discriminación física `isDryTraceVirga`: bajo códigos WMO de tiempo seco (0: despejado, 1: soleado, 2: claros, 3: nublado, 45/48: niebla), una micro-traza de `0.1 mm` solo se valida como lluvia si la humedad relativa alcanza la saturación (`h >= 90%`).
+     - Con humedades inferiores al 90%, se descarta la traza como virga y se preserva intacto el código del cielo: **Nublado / Cubiertu ☁️**.
+  4. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
+     - Versión oficial elevada a **`v2.2.57 ☁️`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.57'` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+     - Service Worker actualizado a `meteoasturlode-v2257-anti-false-orbayu-overcast` en `sw.js`.
+     - Query strings sincronizadas a `?v=2.2.57` en `index.html` (`app.js`).
+
 ## 🎿 Actualización v2.2.56: Blindaje de Renderizado Inmediato de Iconos SVG en Tablets — 2026-10-17
 - **Resolución Científica del «Expediente X del Tablet» (Feedback Lendo - «solo me pasa en el tablet, no están los iconos y tengo que tocar la pantalla para que salgan» y «pisale»):**
   1. *Diagnóstico Científico y Causa Raíz:*
