@@ -10,6 +10,25 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.62] - 2026-10-17
+
+### ☀️ Inmunidad Solar Frente a Falso Orbayu y Primacía del Sol Real (Feedback Lendo - Leyes 21 y 22)
+- **Blindaje e Inmunidad Solar frente a Micro-Trazas Numéricas:**
+  - Diagnóstico físico y técnico: en situaciones donde el sol brilla físicamente (radiación solar directa &ge; 90 W/m², UV &ge; 1.0 o radiación global &ge; 200 W/m²), los modelos numéricos de alta resolución (como AROME) pueden arrojar micro-trazas residuales (&lt; 0.5 mm) o códigos de llovizna WMO 51–57 derivados de nubosidad convectiva dispersa o errores de malla. Antes, estas micro-trazas impedían que la calibración solar entrase en acción (que exigía estrictamente `p < 0.1 mm`), provocando que la app mostrara erróneamente *«Orbayu / Llovizna ligera 🌦️»* bajo pleno sol.
+  - Intervención en `js/utils/weatherIcons.js`:
+    - Incorporada la bandera `isSolarPhantomDrizzle`: si concurre insolación activa diurna (`hasActiveSun`) y la precipitación es una micro-traza (&lt; 0.5 mm) o código de llovizna, se anula categóricamente como lluvia activa (`isPhysicallyRaining = false; isExplicitRainCode = false;`).
+    - En el motor de Calibración Solar Inteligente, se permite que la radiación real sobreescriba micro-trazas (&lt; 0.5 mm), resolviendo el cielo siempre en **☀️ Despejado / Soleyeru**, **🌥️ Resol / Sol tamizáu** o **⛅ Parcialmente nublado / Claros**, y jamás en orbayu.
+  - Intervención en `js/services/weatherApi.js`:
+    - En el consenso multimodelo (tiempo actual y horario 48h) y en modo standalone, si hay sol activo (`hasActiveSunlight`), cualquier micro-traza (&lt; 0.5 mm) con ECMWF seco se purga automáticamente a `0.0 mm` y se corrige el código meteorológico a tiempo seco.
+  - Sincronización en `umbrellaAdvisor.js` y `laundryAdvisor.js`:
+    - El Semáforu del Paragües y el Asesor de Tendido integran inmunidad solar estricta, erradicando falsas alarmas de *«🟡 Orbayando Agora»* o *«🔴 Ni se te ocurra, que te va orpinar»* cuando brilla el sol.
+- **Constitución del Proyecto - Incorporación de las Leyes 21 y 22 (AGENTS.md):**
+  - **Ley 21 (Doctrina de Inmunidad Solar Frente a Falso Orbayu y Primacía del Sol Real):** Prohibición tajante de clasificar la atmósfera como húmeda o lluviosa cuando concurra insolación directa activa, garantizando que los usuarios y beta testers no reciban jamás avisos de orbayu cuando hace sol.
+  - **Ley 22 (Doctrina de Diagnóstico ante Discrepancias Modelo-Realidad y Soberanía de Teledetección):** Reconocimiento de las limitaciones intrínsecas de las mallas teóricas de predicción numérica y protocolo obligatorio de auditoría inmediata cruzando datos crudos de API con el Radar de reflectividad física en tiempo real (RainViewer).
+- **Cache-Busting y Despliegue Oficial:**
+  - Service Worker actualizado a `meteoasturlode-v2262-inmunidad-solar-anti-orbayu` en `sw.js`.
+  - Versión oficial elevada a `v2.2.62 ☀️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.62'` en `app.js` y query strings en `index.html`.
+
 ## [2.2.61] - 2026-10-17
 
 ### ☁️ Consenso Bidireccional Anti-Falsa Lluvia y Virga en Cielo Cubierto (Feedback Lendo - Castrillón)

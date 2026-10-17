@@ -91,6 +91,7 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
   let base = WMO_CODES[code] || { label: 'Variable', icon: '⛅', svgKey: 'cloudy', lucide: 'cloud', bg: 'cloudy', isRain: false, isSnow: false };
 
   const isNight = isDay === 0 || isDay === false;
+  let isSolarPhantomDrizzle = false;
 
   // 1. Si es de noche, adaptar los iconos solares base a nocturnos
   if (isNight) {
@@ -114,6 +115,9 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     const cc = cloudCover != null ? parseFloat(cloudCover) : null;
     const irr = directIrradiance != null ? parseFloat(directIrradiance) : 0;
     const vis = visibility != null ? parseFloat(visibility) : null;
+    const uvVal = uvIndex != null ? parseFloat(uvIndex) : 0;
+    const swVal = shortwaveRadiation != null ? parseFloat(shortwaveRadiation) : 0;
+    const hasActiveSun = !isNight && (irr >= 90 || uvVal >= 1.0 || swVal >= 200);
 
     // Lluvia física real medible en pluviómetro:
     // 1. Para códigos WMO de tiempo seco (0: despejado, 1: mayormente soleado, 2: claros, 3: nublado, 45/48: niebla),
@@ -121,12 +125,17 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     //    en superficie acompaña con saturación (h >= 90%). Con h < 90% y código seco, 0.1 mm es virga.
     // 2. Para códigos de llovizna (51-57), micro-cantidades (< 0.5 mm) requieren humedad atmosférica >= 85%.
     //    Con aire seco en superficie (h < 85%), las micro-gotas se evaporan en los 1.000 m de caída (virga).
+    // 3. INMUNIDAD SOLAR FRENTE A FALSO ORBAYU (Ley 21 - Feedback Lendo):
+    //    Si hay radiación solar directa o insolación activa diurna verificada, cualquier micro-traza
+    //    de llovizna (< 0.5 mm) o código de orbayu es físicamente una virga o artefacto del modelo.
+    //    Queda terminantemente prohibido declarar lluvia activa u orbayu cuando brilla el sol.
     const isDrySkyCode = code <= 3 || code === 45 || code === 48;
     const isDrizzleCode = (code >= 51 && code <= 57) || base.svgKey === 'drizzle';
     const isDryTraceVirga = isDrySkyCode && p <= 0.1 && h !== null && h < 90;
     const isDryDrizzleVirga = isDrizzleCode && p < 1.0 && h !== null && h < 85;
-    const isPhysicallyRaining = p >= 0.1 && !isDryTraceVirga && !isDryDrizzleVirga;
-    let isExplicitRainCode = base.isRain || base.svgKey === 'drizzle' || base.svgKey === 'rain' || base.svgKey === 'storm';
+    isSolarPhantomDrizzle = hasActiveSun && (isDrizzleCode || p < 0.5) && !base.isSnow && code !== 95;
+    const isPhysicallyRaining = p >= 0.1 && !isDryTraceVirga && !isDryDrizzleVirga && !isSolarPhantomDrizzle;
+    let isExplicitRainCode = (base.isRain || base.svgKey === 'drizzle' || base.svgKey === 'rain' || base.svgKey === 'storm') && !isSolarPhantomDrizzle;
 
     // FILTRO ANTI-ORBAYU FANTASMA (Feedback Lendo / Ley 12):
     // Solo anula llovizna si la probabilidad estadística es baja o nula (prob < 40% o sin pop) y:
@@ -135,7 +144,7 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     // Si la probabilidad del ensamble es alta (prob >= 40%), se respeta la lluvia y jamás se anula a 'Nublado'.
     const isUnconfirmedByEnsemble = !hasPop || prob < 40;
     const isZeroPrecipDryHum = !isPhysicallyRaining && isDrizzleCode && h !== null && h < 94;
-    if (isUnconfirmedByEnsemble && (isZeroPrecipDryHum || isDryDrizzleVirga)) {
+    if (isSolarPhantomDrizzle || (isUnconfirmedByEnsemble && (isZeroPrecipDryHum || isDryDrizzleVirga))) {
       isExplicitRainCode = false;
       base = {
         label: isNight ? 'Nublado de noche' : 'Nublado / Cubiertu',
@@ -363,7 +372,7 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
       isResol = false;
     }
 
-    if (p < 0.1 && hasRealSolarLight && (base.isRain || base.svgKey === 'cloudy' || code === 3 || base.svgKey === 'fog')) {
+    if ((p < 0.1 || isSolarPhantomDrizzle || (p < 0.5 && hasRealSolarLight)) && hasRealSolarLight && (base.isRain || base.svgKey === 'cloudy' || code === 3 || base.svgKey === 'fog' || base.svgKey === 'drizzle')) {
       const isClearSky = !isResol && cc !== null && cc <= 25 && irr >= 150;
       base = {
         label: isResol ? 'Resol / Sol tamizáu' : (isClearSky ? 'Despejado / Soleyeru' : 'Parcialmente nublado / Claros'),

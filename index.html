@@ -31,8 +31,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.2.61">
-  <link rel="stylesheet" href="css/components.css?v=2.2.61">
+  <link rel="stylesheet" href="css/main.css?v=2.2.62">
+  <link rel="stylesheet" href="css/components.css?v=2.2.62">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.61 ☁️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.62 ☀️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -349,8 +349,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.2.61 ☁️</span>
+            <span class="release-version">v2.2.62 ☀️</span>
             <span class="release-date">17 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-fix">Doctrina &amp; Veracidad Física (Feedback Lendo - Blindaje Anti-Orbayu con Sol)</span> <strong>Inmunidad Solar Frente a Falso Orbayu y Primacía del Sol Real (Leyes 21 y 22)</strong>:
+              <br>• <strong>Inmunidad Solar frente a Micro-Trazas:</strong> Queda terminantemente prohibido que la app marque «Orbayu / Llovizna ligera» o active partículas de lluvia cuando los sensores físicos constatan radiación solar directa activa o insolación diurna (UV &ge; 1.0 o radiación directa &ge; 90 W/m²). Cualquier micro-traza (&lt; 0.5 mm) o código 51 numérico de AROME bajo el sol se purga a <code>0.0 mm</code> y se resuelve en Soleado (☀️), Resol (🌥️) o Claros (⛅).
+              <br>• <strong>Armonización Transversal:</strong> Filtro replicado en <code>weatherIcons.js</code>, motor de consenso de <code>weatherApi.js</code>, Asesor de Tendido (<code>laundryAdvisor.js</code>) y Semáforu del Paragües (<code>umbrellaAdvisor.js</code>).
+              <br>• <strong>Doctrina Constitucional de Diagnóstico:</strong> Incorporadas formalmente las Leyes 21 y 22 en la Constitución del Proyecto para auditar discrepancias entre modelo predictivo y observación en calle mediante el Radar de teledetección en tiempo real.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.61 ☁️</span>
+            <span class="release-date">17 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-fix">Cielo &amp; Consenso Cantábrico (Feedback Lendo - Castrillón)</span> <strong>Consenso Bidireccional Anti-Falsa Lluvia y Virga en Cielo Cubierto</strong>:
@@ -3860,7 +3874,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=2.2.61').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=2.2.62').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -3890,7 +3904,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.61"></script>
+  <script type="module" src="js/app.js?v=2.2.62"></script>
 
 
 

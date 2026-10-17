@@ -36,10 +36,13 @@ export function calculateLaundryDrying(currentOrData, hourly = null, daily = nul
     }
   }
 
-  // 1. LLUVIA ACTIVA O INMINENTE (Peligro rojo)
+  const directIrr = current.direct_normal_irradiance != null ? parseFloat(current.direct_normal_irradiance) : 0;
+  const currentUv = current.uv_index != null ? parseFloat(current.uv_index) : 0;
+  const currentSw = current.shortwave_radiation != null ? parseFloat(current.shortwave_radiation) : 0;
+  const hasSun = directIrr >= 90 || currentUv >= 1.0 || currentSw >= 200;
   const isDrizzleCode = (current.weather_code >= 51 && current.weather_code <= 57);
-  const isFalseDrizzle = isDrizzleCode && precip < 0.1 && hum < 94;
-  const isRainingNow = (precip >= 0.1 || ((current.weather_code >= 51 && current.weather_code <= 67) || (current.weather_code >= 80 && current.weather_code <= 86))) && !isFalseDrizzle;
+  const isFalseDrizzle = (isDrizzleCode && precip < 0.1 && hum < 94) || (hasSun && precip < 0.5 && isDrizzleCode);
+  const isRainingNow = (precip >= 0.1 || ((current.weather_code >= 51 && current.weather_code <= 67) || (current.weather_code >= 80 && current.weather_code <= 86))) && !isFalseDrizzle && !(hasSun && precip < 0.5);
   if (isRainingNow) {
     return {
       status: 'danger',

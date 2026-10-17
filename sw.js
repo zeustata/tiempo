@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2261-bidirectional-consensus-dry-overcast';
+const CACHE_NAME = 'meteoasturlode-v2262-inmunidad-solar-anti-orbayu';
 const STATIC_ASSETS = [
   './',
   './index.html',

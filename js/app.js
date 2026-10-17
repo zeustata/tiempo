@@ -1,17 +1,17 @@
 import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=2.0.0';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=2.2.61';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=2.2.62';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=2.0.0';
-import { renderCurrentWeather } from './components/currentCard.js?v=2.2.61';
+import { renderCurrentWeather } from './components/currentCard.js?v=2.2.62';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=2.2.51';
 import { renderSurfCard } from './components/surfCard.js?v=2.2.55';
 import { renderRoutesCard } from './components/routesCard.js?v=2.2.20';
 import { renderMountainCard } from './components/mountainCard.js?v=2.2.24';
 import { renderTourismCard } from './components/tourismCard.js?v=2.2.1';
-import { renderForecast } from './components/forecastView.js?v=2.2.61';
+import { renderForecast } from './components/forecastView.js?v=2.2.62';
 import { renderWeatherChart } from './components/chartsView.js?v=2.2.23';
 import { renderAstronomyView } from './components/astronomyCard.js?v=2.2.1';
 import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=2.2.1';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=2.2.61';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=2.2.62';
 import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=2.0.0';
 import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=2.0.0';
 import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=2.0.0';
@@ -42,7 +42,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '2.2.61';
+export const CURRENT_APP_VERSION = '2.2.62';
 
 class MeteoAsturiasApp {
   constructor() {

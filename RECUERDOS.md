@@ -8,6 +8,30 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## ☀️ Actualización v2.2.62: Inmunidad Solar Frente a Falso Orbayu y Primacía del Sol Real — 2026-10-17
+- **Blindaje e Inmunidad Solar Frente a Micro-Trazas Numéricas (Feedback Lendo - «despues de todo lo quie arreglamos tengo una duda», «si me digiste que esta todo parcheado y de repente llueve y me da nublado o sol, que hago?», «no me paso pero estaria bien tenerlo en lA LEY» y «pisale. loq no quiero q testers me mandan mensajes tipo que aqui hace sol y tu app y la app pone orbayo»):**
+  1. *Diagnóstico Científico y Erradicación del Fallo:*
+     - Lendo planteó el escenario crítico que deben afrontar las aplicaciones meteorológicas con beta testers: que un usuario mire al cielo, vea sol radiante o sol tamizáu (resol), y la aplicación indique *«Orbayu / Llovizna ligera 🌦️»*.
+     - *Causa raíz técnica descubierta en la auditoría del código:*
+       - Cuando el modelo numérico de alta resolución (AROME) computa micro-precipitaciones residuales (ej. `0.1 mm` o `0.2 mm`) o códigos WMO 51–57 bajo cielos con insolación directa activa (`direct_normal_irradiance >= 90 W/m²`, `uv_index >= 1.0` o `shortwave_radiation >= 200 W/m²`), la condición del clasificador solar en `weatherIcons.js` exigía estrictamente `p < 0.1 mm`. Al tener `0.1 mm` o `0.2 mm`, la calibración solar quedaba completamente bloqueada y el flujo caía en el *Caso G: Orbayu / Llovizna ligera*.
+       - Además, en `weatherApi.js`, el detector de falso cubierto (`isFalseOvercast`) requería `rawPrecip < 0.1`, impidiendo que la insolación directa corrigiera el código 51 a soleado.
+  2. *Intervención Técnica Integral:*
+     - **Inmunidad Solar en `js/utils/weatherIcons.js`:**
+       - Incorporada la directiva `isSolarPhantomDrizzle = hasActiveSun && (isDrizzleCode || p < 0.5) && !base.isSnow && code !== 95;`.
+       - Si hay sol directo activo o UV moderado en horas diurnas, cualquier micro-traza (&lt; 0.5 mm) se anula categóricamente como lluvia activa (`isPhysicallyRaining = false; isExplicitRainCode = false;`).
+       - En el bloque de Calibración Solar Inteligente, se permite expresamente sobreescribir micro-trazas (&lt; 0.5 mm) cuando hay luz solar real (`hasRealSolarLight`), garantizando que la tarjeta resuelva siempre en **☀️ Despejado / Soleyeru**, **🌥️ Resol / Sol tamizáu** o **⛅ Parcialmente nublado / Claros**, y jamás en llovizna.
+     - **Purga en Consenso y Modo Standalone (`js/services/weatherApi.js`):**
+       - Tanto en el motor de consenso (tiempo actual y horizonte 48h) como en modo standalone, la presencia de radiación solar activa (`hasActiveSunlight` / `hasHourlySun`) con ECMWF seco purga cualquier micro-traza (&lt; 0.5 mm) a `0.0 mm` y convierte el código meteorológico a tiempo seco.
+     - **Blindaje en Asesores (`umbrellaAdvisor.js` y `laundryAdvisor.js`):**
+       - Sincronización de inmunidad solar en el Semáforu del Paragües y en el Asesor de Tendido, impidiendo que una micro-traza numérica encienda avisos de *«🟡 Orbayando Agora»* o *«🔴 Ni se te ocurra, que te va orpinar»* si brilla el sol.
+  3. *Constitución del Proyecto - Incorporación de las Leyes 21 y 22 (AGENTS.md):*
+     - **Ley 21 (Doctrina de Inmunidad Solar Frente a Falso Orbayu y Primacía del Sol Real sobre Micro-Trazas):** Prohibición tajante de clasificar la atmósfera como húmeda o lluviosa en presencia de radiación solar directa activa.
+     - **Ley 22 (Doctrina de Diagnóstico ante Discrepancias Meteorológicas Modelo-Realidad y Soberanía de Teledetección):** Reconocimiento formal de la naturaleza teórica de las mallas matemáticas periódicas y protocolo de auditoría inmediata cruzando datos crudos de API con el Radar de teledetección en tiempo real.
+  4. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
+     - Versión oficial elevada a **`v2.2.62 ☀️`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.62'` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+     - Service Worker actualizado a `meteoasturlode-v2262-inmunidad-solar-anti-orbayu` en `sw.js`.
+     - Query strings sincronizadas a `?v=2.2.62` en `index.html` (`main.css`, `components.css`, `app.js`).
+
 ## ☁️ Actualización v2.2.61: Consenso Bidireccional Anti-Falsa Lluvia y Virga en Cielo Cubierto — 2026-10-17
 - **Filtro Anti-Llovizna Solitaria de AROME y Blindaje de Micro-Precipitaciones (Feedback Lendo - «ahora mira a ver que tiempo te pone. aqui no llueve pero tu pones que si», «pero no entiendo. no se supone que ya esta subsanado con falsas lluvias etc...?», «y pueden convivir todos los demas ajustes que tenemos?» y «pisale»):**
   1. *Diagnóstico Científico y Meteorológico del Fenómeno:*

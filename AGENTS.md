@@ -225,6 +225,17 @@
     - Cuando las rachas instantáneas superen la velocidad media (`hasDistinctGust`), el titular principal del sensor de viento debe renderizar obligatoriamente el **rango dinámico completo en grande** (ej. `6.8 – 16 km/h`), destacando visualmente la racha perceptible en tono luminoso y acompañándola inmediatamente de una leyenda subordinada (`Media: X • Racha: Y km/h`).
     - El bloque tipográfico del anemómetro (`.wind-info` y `.wind-range-val`) debe contar con `min-width: 0; flex: 1;` y escala tipográfica elástica para garantizar inmunidad total al desborde horizontal junto a la rosa de los vientos en cualquier resolución móvil (320px a 380px), en estricto cumplimiento de la Ley 11.
 
+21. **Doctrina de Inmunidad Solar Frente a Falso Orbayu y Primacía del Sol Real sobre Micro-Trazas (Feedback Lendo):**
+    - Queda terminantemente prohibido que la aplicación muestre *"Orbayu / Llovizna ligera"*, active partículas de lluvia en fondo o clasifique la atmósfera como húmeda si los sensores físicos o el modelo constatan radiación solar directa activa o insolación diurna (`hasActiveSunlight` / `hasRealSolarLight`: `direct_normal_irradiance >= 90 W/m²`, `uv_index >= 1.0` o `shortwave_radiation >= 200 W/m²`), incluso si el modelo numérico (AROME) proyecta una micro-traza de precipitación (`< 0.5 mm`) o código WMO de llovizna `51–57`.
+    - El orbayu cantábrico es un fenómeno de condensación en estratos bajos densos con cielo 100% cerrado; si los rayos solares perforan la atmósfera, cualquier micro-traza numérica es físicamente una virga o un artefacto de cálculo del modelo. En presencia de insolación real, la micro-traza se purga a `0.0 mm` y el estado se resuelve imperativamente en **"Despejado / Soleyeru" (☀️)**, **"Resol / Sol tamizáu" (🌥️)** o **"Parcialmente nublado / Claros" (⛅)**, blindando de forma inquebrantable a la aplicación frente a quejas de usuarios o beta testers de *"aquí hace sol y la app pone orbayu"*.
+    - Esta inmunidad rige de forma transversal en el clasificador general de cielo (`weatherIcons.js`), el motor de consenso y standalone (`weatherApi.js`), el Asesor de Tendido (`laundryAdvisor.js`) y el Semáforu del Paragües (`umbrellaAdvisor.js`).
+
+22. **Doctrina de Diagnóstico ante Discrepancias Meteorológicas Modelo-Realidad y Soberanía de Teledetección (Feedback Lendo):**
+    - **Diferenciación entre Lógica de Software y Desfase de Malla:** Se establece que los modelos numéricos predictivos (AROME, ECMWF) operan sobre mallas matemáticas periódicas teóricas (mallas de 1.3 km a 9 km con ciclos de actualización cada varias horas). La aparición de chubascos locales repentinos, microclimas convectivos o variaciones costeras no anticipadas por la malla horaria del modelo no constituye un fallo del código de la aplicación, sino una limitación intrínseca de la física atmosférica predictiva.
+    - **Protocolo Obligatorio de Auditoría Inmediata:** Ante cualquier discrepancia reportada, es preceptivo auditar de inmediato los datos crudos de la API (`precipitation`, `weather_code`, `direct_normal_irradiance` y humedad) en esas coordenadas exactas para discernir con rigor si se trata de un desfase del modelo externo o de un exceso de celo en los filtros de consenso de `weatherApi.js`.
+    - **Primacía del Radar de Teledetección:** Ante la discrepancia entre la vista por la ventana y la previsión horaria, el Radar de Lluvia en tiempo real (reflectividad física por teledetección de RainViewer) constituye la fuente de verdad empírica instantánea para el usuario y el desarrollador.
+
+
 
 
 
