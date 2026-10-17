@@ -220,6 +220,12 @@
     - Si los modelos numéricos deterministas (como AROME o ICON) permanecen rezagados en nieblas o estratos marinos matinales ya disipados por el sol en la realidad (demostrado en webcams y observaciones reales), el motor de consenso de la app debe aplicar la Soberanía Física Inversa de forma simétrica a la protección anti-falso claro, reclasificando el cielo a soleado / despejado (códigos 0, 1 o 2) y ajustando la nubosidad a la radiación real en superficie.
     - Esta regla opera tanto en el motor de consenso multimodelo como en el modo de modelo individual (standalone).
 
+20. **Doctrina de Visibilidad Sensorial del Viento y Rango Dinámico en Anemómetro (Feedback Tester Edu & Lendo):**
+    - Queda terminantemente prohibido mostrar de forma exclusiva o aislada la velocidad media matemática continua a 10 metros como titular único en grande del anemómetro cuando existan rachas de viento perceptibles que superen dicho flujo de fondo, provocando la falsa impresión de que la app marca menos viento del que el usuario siente físicamente en su entorno.
+    - Cuando las rachas instantáneas superen la velocidad media (`hasDistinctGust`), el titular principal del sensor de viento debe renderizar obligatoriamente el **rango dinámico completo en grande** (ej. `6.8 – 16 km/h`), destacando visualmente la racha perceptible en tono luminoso y acompañándola inmediatamente de una leyenda subordinada (`Media: X • Racha: Y km/h`).
+    - El bloque tipográfico del anemómetro (`.wind-info` y `.wind-range-val`) debe contar con `min-width: 0; flex: 1;` y escala tipográfica elástica para garantizar inmunidad total al desborde horizontal junto a la rosa de los vientos en cualquier resolución móvil (320px a 380px), en estricto cumplimiento de la Ley 11.
+
+
 
 
 
