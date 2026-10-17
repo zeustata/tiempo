@@ -31,8 +31,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.2.60">
-  <link rel="stylesheet" href="css/components.css?v=2.2.60">
+  <link rel="stylesheet" href="css/main.css?v=2.2.61">
+  <link rel="stylesheet" href="css/components.css?v=2.2.61">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.60 🎿</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.61 ☁️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -349,8 +349,21 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.2.60 🎿</span>
+            <span class="release-version">v2.2.61 ☁️</span>
             <span class="release-date">17 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-fix">Cielo &amp; Consenso Cantábrico (Feedback Lendo - Castrillón)</span> <strong>Consenso Bidireccional Anti-Falsa Lluvia y Virga en Cielo Cubierto</strong>:
+              <br>• <strong>Filtro Anti-Llovizna Solitaria de AROME:</strong> Si AROME modela micro-precipitación aislada (&lt; 0.6 mm o código 51) pero el modelo de referencia mundial (ECMWF) constata <code>0.0 mm</code> con cielo seco (código 3 = Cubiertu) y humedad no saturada (&lt; 86%), el consenso anula la lluvia fantasma y fija <code>0.0 mm</code> y cielo cubierto.
+              <br>• <strong>Física Atmosférica en Superficie:</strong> En <code>weatherIcons.js</code>, ninguna llovizna (&lt; 0.5 mm) se valida como lluvia si la humedad es &lt; 85%, reconociendo que las micro-gotas se evaporan en los 1.000 m de caída libre (virga).
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.60 🎿</span>
+            <span class="release-date">17 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-fix">Cordillera &amp; Nieve (Feedback Lendo - Blindaje Definitivo Tablet)</span> <strong>Homologación Arquitectónica al Patrón de 24 Horas y Ancho Garantizado</strong>:
@@ -3847,7 +3860,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=2.2.60').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=2.2.61').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -3877,7 +3890,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.60"></script>
+  <script type="module" src="js/app.js?v=2.2.61"></script>
 
 
 

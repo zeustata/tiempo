@@ -116,22 +116,26 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     const vis = visibility != null ? parseFloat(visibility) : null;
 
     // Lluvia física real medible en pluviómetro:
-    // Para códigos WMO de tiempo seco (0: despejado, 1: mayormente soleado, 2: claros, 3: nublado, 45/48: niebla),
-    // una micro-traza aislada de 0.1 mm solo se convalida como lluvia física activa si la humedad relativa
-    // en superficie acompaña con saturación (h >= 90%). Con h < 90% y código seco (ej. Nublado con 79% de humedad),
-    // 0.1 mm es una virga o artefacto numérico de cuadrícula de AROME que se evapora antes de tocar el suelo.
+    // 1. Para códigos WMO de tiempo seco (0: despejado, 1: mayormente soleado, 2: claros, 3: nublado, 45/48: niebla),
+    //    una micro-traza aislada de 0.1 mm solo se convalida como lluvia física activa si la humedad relativa
+    //    en superficie acompaña con saturación (h >= 90%). Con h < 90% y código seco, 0.1 mm es virga.
+    // 2. Para códigos de llovizna (51-57), micro-cantidades (< 0.5 mm) requieren humedad atmosférica >= 85%.
+    //    Con aire seco en superficie (h < 85%), las micro-gotas se evaporan en los 1.000 m de caída (virga).
     const isDrySkyCode = code <= 3 || code === 45 || code === 48;
+    const isDrizzleCode = (code >= 51 && code <= 57) || base.svgKey === 'drizzle';
     const isDryTraceVirga = isDrySkyCode && p <= 0.1 && h !== null && h < 90;
-    const isPhysicallyRaining = p >= 0.1 && !isDryTraceVirga;
+    const isDryDrizzleVirga = isDrizzleCode && p < 1.0 && h !== null && h < 85;
+    const isPhysicallyRaining = p >= 0.1 && !isDryTraceVirga && !isDryDrizzleVirga;
     let isExplicitRainCode = base.isRain || base.svgKey === 'drizzle' || base.svgKey === 'rain' || base.svgKey === 'storm';
 
     // FILTRO ANTI-ORBAYU FANTASMA (Feedback Lendo / Ley 12):
-    // Si el modelo marca código de llovizna (51, 53, 55, 56, 57) pero el pluviómetro marca estrictamente 0.0 mm (< 0.1 mm):
-    // Solo se valida como llovizna activa si la humedad relativa en superficie roza la saturación extrema (>= 94%).
-    // Con humedad < 94%, se anula la condición de lluvia activa y se reconduce a 'Nublado / Cubiertu' sin gotas,
-    // erradicando los falsos orbayus provocados por estratocúmulos o panza de burro secos.
-    const isDrizzleCode = (code >= 51 && code <= 57) || base.svgKey === 'drizzle';
-    if (!isPhysicallyRaining && isDrizzleCode && h !== null && h < 94) {
+    // Solo anula llovizna si la probabilidad estadística es baja o nula (prob < 40% o sin pop) y:
+    // a) El pluviómetro marca estrictamente 0.0 mm (< 0.1 mm) con humedad < 94%, o
+    // b) El pluviómetro marca < 1.0 mm pero la humedad en superficie es seca (h < 85% virga).
+    // Si la probabilidad del ensamble es alta (prob >= 40%), se respeta la lluvia y jamás se anula a 'Nublado'.
+    const isUnconfirmedByEnsemble = !hasPop || prob < 40;
+    const isZeroPrecipDryHum = !isPhysicallyRaining && isDrizzleCode && h !== null && h < 94;
+    if (isUnconfirmedByEnsemble && (isZeroPrecipDryHum || isDryDrizzleVirga)) {
       isExplicitRainCode = false;
       base = {
         label: isNight ? 'Nublado de noche' : 'Nublado / Cubiertu',

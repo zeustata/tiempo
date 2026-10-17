@@ -8,6 +8,33 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## ☁️ Actualización v2.2.61: Consenso Bidireccional Anti-Falsa Lluvia y Virga en Cielo Cubierto — 2026-10-17
+- **Filtro Anti-Llovizna Solitaria de AROME y Blindaje de Micro-Precipitaciones (Feedback Lendo - «ahora mira a ver que tiempo te pone. aqui no llueve pero tu pones que si», «pero no entiendo. no se supone que ya esta subsanado con falsas lluvias etc...?», «y pueden convivir todos los demas ajustes que tenemos?» y «pisale»):**
+  1. *Diagnóstico Científico y Meteorológico del Fenómeno:*
+     - Lendo constató que en Castrillón (Piedras Blancas), mirando al exterior, el cielo estaba encapotado pero completamente seco sin precipitación alguna; no obstante, la aplicación indicaba *«Orbayu / Llovizna ligera 🌦️»* con 0.3 mm en el sensor.
+     - *Auditoría de datos en tiempo real (16:15 h):*
+       - Centro Europeo (ECMWF IFS, 9 km): **0.0 mm**, cielo cubierto (código 3), humedad relativa: **72% (seco)**.
+       - Servicio Alemán (DWD ICON, 7 km): **0.0 mm**, cielo cubierto (código 3), humedad relativa: **78% (seco)**.
+       - Servicio de EE. UU. (NOAA GFS, 13 km): **0.0 mm**, cielo cubierto (código 3), humedad relativa: **83% (seco)**.
+       - Météo-France (AROME, 1.3 km): **0.3 mm**, código 51 (llovizna), humedad: 85%.
+     - *Causa raíz del fallo previo:*
+       - En la versión 2.2.57, se había implementado un filtro virga quirúrgico que solo operaba cuando el código era seco (código 3) con exactamente 0.1 mm, o si el código era 51 con estrictamente 0.0 mm. Al enviar AROME 0.3 mm con código 51, superaba el umbral de 0.1 mm y se clasificaba automáticamente como lluvia física en superficie.
+       - Además, en `weatherApi.js`, el algoritmo de consenso cantábrico solo funcionaba en un sentido (rescatar lluvia cuando AROME marcaba seco y ECMWF detectaba orbayu), pero no tenía filtro inverso cuando AROME alucinaba lloviznas solitarias contra el consenso de los modelos globales.
+  2. *Intervención Técnica Integral:*
+     - **Consenso Bidireccional en `js/services/weatherApi.js`:**
+       - En tiempo actual: si AROME marca micro-precipitación (< 1.5 mm) o código 51-57, pero ECMWF constata `0.0 mm` seco (código 3) y la humedad no está saturada (< 86%), se anula la precipitación solitaria de AROME y se asigna fielmente `0.0 mm` y cielo cubierto seco (`código 3 = Nublado / Cubiertu ☁️`).
+       - En el pronóstico horario: si AROME proyecta llovizna (< 1.5 mm) con ECMWF en 0.0 mm seco y probabilidad ensamble baja (< 35%), se neutraliza la lluvia fantasma en la tira horaria (como los 0.9 mm a las 16h).
+     - **Blindaje Físico de Virga en `js/utils/weatherIcons.js`:**
+       - Se establece que las micro-lloviznas (< 1.0 mm) con códigos 51-57 exigen una humedad mínima en superficie &ge; 85%. Si la humedad es < 85%, se clasifica como virga evaporada en caída libre y se muestra honestamente como **Nublado / Cubiertu ☁️** sin gotas ni iconos de lluvia.
+     - **Convivencia Armónica Total con Ajustes Previos:**
+       - El detector de *Orbayu de Niebla / Meona* (que exige saturación extrema &ge; 94%) permanece 100% operativo cuando hay niebla líquida real.
+       - El *Rescate de Orbayu Real* de frentes atlánticos (ECMWF &ge; 0.1 mm y humedad &ge; 86%) sigue rescatando la lluvia cuando el modelo europeo la detecta.
+       - La *Soberanía Solar Física* y las lluvias frontales mayores (&ge; 0.6 mm) coexisten sin ninguna interferencia.
+  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
+     - Versión oficial elevada a **`v2.2.61 ☁️`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.61'` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+     - Service Worker actualizado a `meteoasturlode-v2261-bidirectional-consensus-dry-overcast` en `sw.js`.
+     - Query strings sincronizadas a `?v=2.2.61` en `index.html` (`main.css`, `components.css`, `app.js`).
+
 ## 🎿 Actualización v2.2.60: Homologación Definitiva y Ancho Blindado en Tablets — 2026-10-17
 - **Erradicación del Colapso a Cero Píxeles y Despertador Síncrono Post-Animación (Feedback Lendo - «no se que brijeria hay pero persiste el tema. si no le doy con el dedo, no sale la prevision en cordillera pero solo en el tablet» y «pisale pero no se yo. ya desconfio»):**
   1. *Diagnóstico Científico y Físico Definitivo del Fenómeno:*

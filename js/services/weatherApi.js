@@ -234,19 +234,44 @@ function applyCantabricoConsensus(weather, consensus) {
       : (consensus.current.relative_humidity_2m != null ? parseFloat(consensus.current.relative_humidity_2m) : 0);
     const eDirectIrr = consensus.current.direct_normal_irradiance != null ? parseFloat(consensus.current.direct_normal_irradiance) : 0;
 
-    const isCurrentDrizzleRescue = rawPrecip < 0.1 &&
-      ((eCode >= 51 && eCode <= 57) || (ePrecip >= 0.1 && ePrecip < 0.5)) &&
-      ePrecip >= 0.1 &&
-      hum >= 86 &&
-      (rawCloud >= 80 || ecmwfCloud >= 80) &&
+    // B) Rescate de Lluvia / Orbayu Real de ECMWF en tiempo actual (sin tope de 0.5 mm):
+    // Si AROME marca seco (< 0.1 mm) o infravalora gravemente un frente (< 0.4 mm cuando ECMWF ve >= 0.5 mm),
+    // pero ECMWF confirma lluvia (ePrecip >= 0.1 mm o código de precipitación >= 50),
+    // con alta humedad (hum >= 85%) o cielo cerrado y sin sol directo:
+    // se adopta la lluvia real de ECMWF (sea 0.2 mm de llovizna o 1.6 mm de diluvio).
+    const isCurrentRainRescue = (ePrecip >= 0.1 || (eCode >= 50 && eCode <= 67) || (eCode >= 80 && eCode <= 82)) &&
+      (rawPrecip < 0.1 || (ePrecip >= 0.5 && rawPrecip < 0.4)) &&
+      hum >= 85 &&
+      (rawCloud >= 75 || ecmwfCloud >= 75) &&
       !hasActiveSunlight &&
       eDirectIrr < 100;
 
-    if (isCurrentDrizzleRescue) {
+    if (isCurrentRainRescue) {
       weather.current.precipitation = ePrecip;
       if (weather.current.rain != null) weather.current.rain = ePrecip;
-      weather.current.weather_code = (eCode >= 50 && eCode <= 67) ? eCode : 51;
+      weather.current.weather_code = (eCode >= 50) ? eCode : 51;
       if (ecmwfCloud > rawCloud) weather.current.cloud_cover = ecmwfCloud;
+    }
+
+    // B2) Filtro Anti-Llovizna Fantasma Solitaria de AROME en tiempo actual (Consenso Bidireccional):
+    // Si AROME marca micro-precipitación (< 0.6 mm) o código de llovizna (51-57), pero el modelo de referencia
+    // mundial (ECMWF) constata que está seco (ePrecip < 0.1 mm) con código de cielo seco (eCode <= 3),
+    // y la atmósfera no está en saturación de llovizna (humedad < 86%):
+    // Se anula la precipitación fantasma solitaria y se adopta el código seco de ECMWF (3 = Cubiertu / Nublado).
+    const rawCode = weather.current.weather_code != null ? parseInt(weather.current.weather_code, 10) : 0;
+    const isPhantomAromeDrizzle = rawPrecip > 0 && rawPrecip < 1.5 &&
+      (rawCode <= 3 || (rawCode >= 50 && rawCode <= 57)) &&
+      ePrecip < 0.1 &&
+      eCode <= 3 &&
+      hum < 86;
+
+    if (isPhantomAromeDrizzle) {
+      weather.current.precipitation = 0;
+      if (weather.current.rain != null) weather.current.rain = 0;
+      weather.current.weather_code = eCode;
+      if (ecmwfCloud >= 80 && weather.current.cloud_cover < 80) {
+        weather.current.cloud_cover = ecmwfCloud;
+      }
     }
 
     // C) SOBERANÍA FÍSICA INVERSA (Anti-Falso Nublado / Estratos Matinales Disipados):
@@ -328,6 +353,24 @@ function applyCantabricoConsensus(weather, consensus) {
         if (weather.hourly.precipitation_probability) {
           weather.hourly.precipitation_probability[i] = Math.max(pop, ePop);
         }
+      }
+
+      // 3. Filtro Anti-Llovizna Fantasma Horaria de AROME:
+      // Si AROME proyecta llovizna (< 1.5 mm) pero el Centro Europeo (ECMWF) tiene 0.0 mm seco (eCode <= 3),
+      // ensamble de probabilidad bajo (ePop < 35%) y humedad no saturada (hum < 86%):
+      // se anula la llovizna solitaria y se preserva el estado seco.
+      const rawHourlyCode = weather.hourly.weather_code ? weather.hourly.weather_code[i] : 0;
+      const isPhantomHourlyDrizzle = precip > 0 && precip < 1.5 &&
+        (rawHourlyCode <= 3 || (rawHourlyCode >= 50 && rawHourlyCode <= 57)) &&
+        ePrecip < 0.1 &&
+        eCode !== null && eCode <= 3 &&
+        hum < 86 && ePop < 35;
+
+      if (isPhantomHourlyDrizzle) {
+        if (weather.hourly.precipitation) weather.hourly.precipitation[i] = 0;
+        if (weather.hourly.rain) weather.hourly.rain[i] = 0;
+        if (weather.hourly.weather_code) weather.hourly.weather_code[i] = eCode;
+        if (weather.hourly.precipitation_probability) weather.hourly.precipitation_probability[i] = ePop;
       }
 
       // C) Anti-Falso Nublado Horario (Soberanía Física Inversa):

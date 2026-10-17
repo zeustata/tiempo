@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2260-tablet-ski-min-width-blindado';
+const CACHE_NAME = 'meteoasturlode-v2261-bidirectional-consensus-dry-overcast';
 const STATIC_ASSETS = [
   './',
   './index.html',

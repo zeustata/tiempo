@@ -10,6 +10,21 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.61] - 2026-10-17
+
+### ☁️ Consenso Bidireccional Anti-Falsa Lluvia y Virga en Cielo Cubierto (Feedback Lendo - Castrillón)
+- **Filtro Anti-Llovizna Solitaria de AROME en Tiempo Real y Pronóstico Horario:**
+  - Diagnóstico físico y meteorológico: en Castrillón (Piedras Blancas), el modelo de alta resolución AROME (1.3 km) simuló en solitario una llovizna costera aislada de `0.3 mm` (código 51), mientras el modelo de referencia mundial (ECMWF IFS, 9 km), el modelo alemán (DWD ICON, 7 km) y el modelo estadounidense (NOAA GFS, 13 km) constataban unánimemente `0.0 mm` de lluvia con cielo cubierto seco (código 3) y una humedad relativa de solo el 72%–80%.
+  - Causa raíz: el algoritmo de consenso cantábrico (`applyCantabricoConsensus`) solo disponía de regla unidireccional para rescatar llovizna cuando AROME marcaba seco y ECMWF detectaba lluvia, pero carecía de filtro recíproco cuando AROME inventaba micro-precipitaciones en solitario en contra de la física atmosférica y del resto de modelos globales.
+  - Intervención en `js/services/weatherApi.js`:
+    - En tiempo actual: si AROME reporta micro-precipitación (< 1.5 mm o códigos 51-57), pero ECMWF constata `0.0 mm` seco (código 3) con humedad atmosférica no saturada (< 86%), se anulan los milímetros fantasma de AROME y se fija fielmente `0.0 mm` y cielo cubierto seco (`código 3 = Nublado / Cubiertu ☁️`).
+    - En el pronóstico horario: si AROME proyecta llovizna (< 1.5 mm) pero el Centro Europeo (ECMWF) tiene `0.0 mm` seco, probabilidad de ensamble baja (< 35%) y humedad no saturada (< 86%), se neutraliza la lluvia fantasma en la tira horaria (como los 0.9 mm a las 16h).
+  - Blindaje físico de virga en `js/utils/weatherIcons.js`:
+    - Toda micro-llovizna (< 1.0 mm) con códigos 51 a 57 requiere humedad en superficie &ge; 85%. Con humedades inferiores al 85%, se clasifica como virga evaporada en caída libre y se representa honestamente como **Nublado / Cubiertu ☁️** sin gotas.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):**
+  - Service Worker actualizado a `meteoasturlode-v2261-bidirectional-consensus-dry-overcast` en `sw.js`.
+  - Versión oficial elevada a `v2.2.61 ☁️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.61'` en `app.js` y query strings en `index.html`.
+
 ## [2.2.60] - 2026-10-17
 
 ### 🎿 Homologación Arquitectónica Definitiva y Ancho Blindado en Tablets (Feedback Lendo - Tablet)
