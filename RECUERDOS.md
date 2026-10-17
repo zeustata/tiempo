@@ -8,6 +8,21 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🧭 Actualización v2.2.54: Rango Dinámico de Viento en Anemómetro — 2026-10-17
+- **Fidelidad Sensorial y Respaldo de Rachas (Feedback Tester Edu y Lendo - «anemometro pone 6 y 7 y esta mas fuerte, racha actual 16 y maximas 31, maldonado 15km» y «dale a la opcion A»):**
+  1. *Diagnóstico Físico y Psicológico:*
+     - El tester Edu reportó desde su domicilio que el viento soplaba con fuerza perceptible, mientras que el anemómetro mostraba en gigante `6.8 km/h`, generando la falsa sensación visual de que la app se quedaba corta.
+     - Lendo detectó que en la app la racha actual sí marcaba `16 km/h` y la racha máxima `31 km/h`, y que otras plataformas como Maldonado (*eltiempo.es*) publicaban `15 km/h` como cifra de cabecera.
+     - *Causa raíz:* La API y el modelo registraban los datos con exactitud milimétrica (`current.wind_speed_10m = 6.8` como media sostenida a 10 metros, y `current.wind_gusts_10m = 16.0` como racha instantánea). Sin embargo, la jerarquía visual otorgaba todo el tamaño tipográfico (`2.2rem`) a la media matemática continua, relegando la racha (que es lo que el ser humano y el entorno sienten físicamente) a un texto secundario pequeño.
+  2. *Intervención Técnica en `currentCard.js` y `components.css`:*
+     - **Opción A (Rango Dinámico en Grande):** Si la racha actual supera al viento continuo sostenido (`hasDistinctGust`), el titular principal del anemómetro renderiza ambas cotas unificadas: `${windSpeed} – ${windGusts} km/h` (`.wind-range-val`), resaltando la racha en tono cian luminoso (`.wind-gust-val`).
+     - **Subtítulo Aclaratorio Inmediato:** Subordinado directamente bajo la cifra, se explicita: `Media: ${windSpeed} • Racha: ${windGusts} km/h` (`.wind-legend-sub`), preservando el dato científico sin ambigüedad.
+     - **Ergonomía Móvil y Blindaje Anti-Desborde (Ley 11):** En pantallas estrechas (≤380px), la tipografía escala suavemente a `1.48rem`, con `min-width: 0; flex: 1;` en el contenedor `.wind-info`, evitando saltos de línea antiestéticos o colisión con la rosa de los vientos.
+  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
+     - Versión oficial elevada a **`v2.2.54 🧭`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.54'` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+     - Service Worker actualizado a `meteoasturlode-v2254-wind-range-anemometer` en `sw.js`.
+     - Query strings sincronizadas a `?v=2.2.54` en `index.html` (CSS y `app.js`) y `currentCard.js?v=2.2.54`.
+
 ## 🏄‍♂️ Actualización v2.2.53: Micro-Pastilla Armónica de Textura Marina — 2026-10-16
 - **Erradicación de Texto Estrangulado en la Hero Card de Surf (Petición Expresa de Lendo - «hablo fr lo que pone suprtficie picada» y «eliges tu»):**
   1. *Diagnóstico Operativo de Lendo y Princesa:*

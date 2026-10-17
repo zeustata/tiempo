@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.54] - 2026-10-17
+
+### 🧭 Rango Dinámico de Viento en Anemómetro (Feedback Edu & Lendo)
+- **Visibilidad Integral de Rachas Perceptibles (`currentCard.js` & `components.css`):**
+  - **Titular en Rango Dinámico (Opción A):** Cuando las rachas son superiores al flujo continuo, el anemómetro muestra el rango completo en tamaño prominente (ej. `6.8 – 16 km/h`), dando el protagonismo que merecen las rachas que el usuario siente físicamente contra casas y árboles.
+  - **Subtítulo Aclaratorio Inmediato:** Añadida una leyenda directa bajo la cifra (`Media: 6.8 • Racha: 16 km/h`) que despeja cualquier duda entre viento sostenido y ráfaga.
+  - **Blindaje Tipográfico y Anti-Desborde Móvil (Ley 11):** Escala de fuentes adaptativa (`1.80rem` a `1.48rem` en pantallas ≤380px) con `min-width: 0; flex: 1;` en el contenedor `.wind-info`, garantizando alineación impoluta con la rosa de los vientos sin riesgo de salto de línea descontrolado.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):**
+  - Service Worker actualizado a `meteoasturlode-v2254-wind-range-anemometer`.
+  - Versión oficial elevada a `v2.2.54 🧭` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.54'` en `app.js` y query strings en `index.html`.
+
 ## [2.2.53] - 2026-10-16
 
 ### 🏄‍♂️ Micro-Pastilla Armónica de Textura Marina (Petición Lendo)

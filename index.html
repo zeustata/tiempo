@@ -32,7 +32,7 @@
 
   <!-- Estilos de la Aplicación con Cache Busting -->
   <link rel="stylesheet" href="css/main.css?v=2.2.35">
-  <link rel="stylesheet" href="css/components.css?v=2.2.53">
+  <link rel="stylesheet" href="css/components.css?v=2.2.54">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.53 🏄‍♂️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.54 🧭</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -349,8 +349,21 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
+            <span class="release-version">v2.2.54 🧭</span>
+            <span class="release-date">17 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-ui">Anemómetro &amp; Viento (Feedback Edu &amp; Lendo)</span> <strong>Rango Dinámico de Viento en Anemómetro (Opción A)</strong>:
+              <br>• <strong>Visibilidad Instantánea de Rachas:</strong> El titular del anemómetro muestra ahora el rango completo de velocidad en grande (ej. <code>6.8 – 16 km/h</code>), destacando tanto la velocidad media sostenida como la racha perceptible en vivo.
+              <br>• <strong>Leyenda Inmediata y Blindaje Móvil (Ley 11):</strong> Subtítulo aclaratorio inmediato (<code>Media: 6.8 • Racha: 16 km/h</code>) y ajuste tipográfico elástico que impide cualquier desborde horizontal junto a la rosa de los vientos en pantallas de 320px a 380px.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
             <span class="release-version">v2.2.53 🏄‍♂️</span>
-            <span class="release-date">16 Oct 2026 (Actual)</span>
+            <span class="release-date">16 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-ui">Ergonomía &amp; Tipografía (Petición Lendo)</span> <strong>Micro-Pastilla Armónica de Textura Marina</strong>:
@@ -3786,7 +3799,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.53"></script>
+  <script type="module" src="js/app.js?v=2.2.54"></script>
 
 
 

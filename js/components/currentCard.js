@@ -210,6 +210,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   const windGusts = units === 'knots' ? (rawGusts * 0.539957).toFixed(1) : rawGusts.toFixed(1);
   const windMaxGustToday = units === 'knots' ? (rawMaxGustToday * 0.539957).toFixed(1) : rawMaxGustToday.toFixed(1);
   const windUnit = units === 'knots' ? 'kt' : 'km/h';
+  const hasDistinctGust = parseFloat(windGusts) > parseFloat(windSpeed);
 
   // Punto de rocío actual (aproximado por Magnus-Tetens)
   const T = current.temperature_2m;
@@ -561,11 +562,24 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
             </div>
           </div>
           <div class="wind-info">
-            <div class="sensor-val">${windSpeed} <small>${windUnit}</small></div>
+            ${hasDistinctGust ? `
+              <div class="sensor-val wind-range-val" title="Velocidad media sostenida: ${windSpeed} ${windUnit} • Racha actual: ${windGusts} ${windUnit}">
+                <span class="wind-base-val">${windSpeed}</span><span class="wind-range-sep"> – </span><span class="wind-gust-val">${windGusts}</span> <small>${windUnit}</small>
+              </div>
+              <div class="sensor-sub wind-legend-sub">
+                <span>Media: <strong>${windSpeed}</strong></span> • <span>Racha: <strong>${windGusts} ${windUnit}</strong></span>
+              </div>
+            ` : `
+              <div class="sensor-val wind-range-val" title="Velocidad continua: ${windSpeed} ${windUnit}">
+                <span class="wind-base-val">${windSpeed}</span> <small>${windUnit}</small>
+              </div>
+              <div class="sensor-sub wind-legend-sub">
+                <span>Viento continuo sostenido</span>
+              </div>
+            `}
             <div class="sensor-sub">Dirección: <strong>${windDir.name} (${current.wind_direction_10m}°)</strong></div>
             <div class="sensor-sub wind-flow-tag">Viene del <strong>${windDir.short}</strong> ➔ sopla al <strong>${windDir.to}</strong></div>
             ${foehn ? `<div class="sensor-sub foehn-sensor-indicator">🔥 Viento Sur: Efecto Foehn Activo</div>` : ''}
-            <div class="sensor-sub">Racha actual: <strong>${windGusts} ${windUnit}</strong></div>
             <div class="sensor-sub">Racha máx. prevista: <strong>${windMaxGustToday} ${windUnit}</strong></div>
             ${roadWindSensorPill}
           </div>

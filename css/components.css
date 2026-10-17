@@ -908,10 +908,66 @@
   z-index: 4;
 }
 
+.wind-info {
+  min-width: 0;
+  flex: 1;
+}
+
 .wind-flow-tag {
   color: #38bdf8 !important;
   font-size: 0.78rem !important;
   font-weight: 700 !important;
+}
+
+/* Rango Dinámico de Viento en Anemómetro (Opción A - Feedback Edu & Lendo v2.2.54) */
+.wind-range-val {
+  font-size: 1.80rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  white-space: nowrap;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 2px;
+  margin-bottom: 4px;
+}
+
+.wind-range-val small {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-left: 2px;
+}
+
+.wind-range-sep {
+  color: var(--text-muted);
+  opacity: 0.55;
+  font-weight: 600;
+  margin: 0 1px;
+}
+
+.wind-gust-val {
+  color: #38bdf8;
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
+}
+
+.wind-legend-sub {
+  font-size: 0.80rem;
+  color: var(--text-muted);
+  margin-top: -1px;
+  margin-bottom: 6px;
+  padding-bottom: 5px;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 380px) {
+  .wind-body {
+    gap: 12px;
+  }
+  .wind-range-val {
+    font-size: 1.48rem;
+  }
 }
 
 /* Pressure & Humidity Gauges */
