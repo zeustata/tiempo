@@ -42,7 +42,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '2.2.59';
+export const CURRENT_APP_VERSION = '2.2.60';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -1563,8 +1563,13 @@ class MeteoAsturiasApp {
       document.querySelectorAll('.resort-forecast-card').forEach(card => {
         const isMatch = card.id === `resort-panel-${resortId}`;
         card.style.display = isMatch ? 'flex' : 'none';
-        if (isMatch) card.classList.add('active');
-        else card.classList.remove('active');
+        if (isMatch) {
+          card.classList.add('active');
+          const c = card.querySelector('.ski-7days-carousel');
+          if (c) void c.offsetWidth;
+        } else {
+          card.classList.remove('active');
+        }
       });
     });
   }
@@ -1883,19 +1888,24 @@ class MeteoAsturiasApp {
     }
 
     if (targetTab === 'mountain') {
-      requestAnimationFrame(() => {
+      const wakeCarousels = () => {
         const carousels = document.querySelectorAll('.ski-7days-carousel');
         carousels.forEach(c => {
-          c.scrollLeft = 1;
+          void c.offsetWidth;
           c.scrollLeft = 0;
         });
-      });
+      };
+      setTimeout(wakeCarousels, 50);
+      setTimeout(wakeCarousels, 400);
     }
 
     // Limpieza de clases de animación tras el deslizamiento para restaurar el renderizado 2D nativo
     setTimeout(() => {
       document.querySelectorAll('.tab-panel').forEach(p => {
         p.classList.remove('slide-from-right', 'slide-from-left');
+      });
+      document.querySelectorAll('.ski-7days-carousel').forEach(c => {
+        void c.offsetWidth;
       });
     }, 380);
 
@@ -2497,13 +2507,13 @@ class MeteoAsturiasApp {
         if (mountainContainer) {
           mountainContainer.innerHTML = renderMountainCard(data, concejo, prefs.iconTheme);
           if (this.activeTab === 'mountain') {
-            requestAnimationFrame(() => {
-              const carousels = document.querySelectorAll('.ski-7days-carousel');
-              carousels.forEach(c => {
-                c.scrollLeft = 1;
-                c.scrollLeft = 0;
+            const wakeCarousels = () => {
+              document.querySelectorAll('.ski-7days-carousel').forEach(c => {
+                void c.offsetWidth;
               });
-            });
+            };
+            setTimeout(wakeCarousels, 50);
+            setTimeout(wakeCarousels, 400);
           }
         }
       } catch (e) {

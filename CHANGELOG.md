@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.60] - 2026-10-17
+
+### 🎿 Homologación Arquitectónica Definitiva y Ancho Blindado en Tablets (Feedback Lendo - Tablet)
+- **Erradicación del Colapso a Cero Píxeles y Homologación al Patrón de 24 Horas:**
+  - Diagnóstico definitivo del fallo en tablets: al utilizar `min-width: 0` junto con flexbox y `overflow-x: auto` en la pestaña de Cordillera, los motores Chromium / Blink en Android en pantallas apaisadas colapsaban el ancho de las tarjetas a cero píxeles durante el ciclo de animación del panel, dejando un hueco vacío que solo recalculaba geometría tras recibir un evento táctil directo (`touchstart` / hit-testing del compositor).
+  - Homologación técnica a la arquitectura infalible de `.hourly-scroll-container`:
+    - En `css/components.css`, `.ski-day-card` se fija con `min-width: 105px; flex: 0 0 auto; box-sizing: border-box;`, garantizando que ninguna tarjeta pueda encoger jamás por debajo de 105px bajo ninguna circunstancia.
+    - Se blinda `.ski-7days-carousel` con `width: 100%; box-sizing: border-box; touch-action: pan-x pan-y;` y `align-items: stretch;`, eliminando reglas disonantes y media queries conflictivas.
+  - Despertador síncrono post-animación en `js/app.js`: añadida invalidación de layout (`void c.offsetWidth;`) al cambiar de pestaña (`switchTab`), a los 400 ms al finalizar la animación de entrada del panel, al alternar entre estaciones (`resort-select-pill`), y al actualizar datos climáticos (`updateViews`), asegurando renderizado 100% inmediato sin requerir ningún toque en pantalla.
+  - Sincronización estricta del Service Worker: actualizada la URL de registro en `index.html` a `sw.js?v=2.2.60` para forzar la actualización inmediata en caché de la PWA en tablets Android.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):**
+  - Service Worker actualizado a `meteoasturlode-v2260-tablet-ski-min-width-blindado`.
+  - Versión oficial elevada a `v2.2.60 🎿` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.60'` en `app.js` y query strings en `index.html`.
+
 ## [2.2.59] - 2026-10-17
 
 ### 🎿 Fin de la Hibernación de Capa y Pintado Instantáneo en Tablets (Feedback Lendo - Tablet)

@@ -8,6 +8,29 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🎿 Actualización v2.2.60: Homologación Definitiva y Ancho Blindado en Tablets — 2026-10-17
+- **Erradicación del Colapso a Cero Píxeles y Despertador Síncrono Post-Animación (Feedback Lendo - «no se que brijeria hay pero persiste el tema. si no le doy con el dedo, no sale la prevision en cordillera pero solo en el tablet» y «pisale pero no se yo. ya desconfio»):**
+  1. *Diagnóstico Científico y Físico Definitivo del Fenómeno:*
+     - Lendo constató que en su tablet en horizontal, al abrir la app o refrescar, el área de los 7 días de previsión en Cordillera aparecía como un hueco azul completamente vacío; pero bastaba con darle con el dedo una o dos veces para que emergiera de golpe toda la información al 100%.
+     - Al analizar el ciclo de vida del renderizado:
+       - En `v2.2.59`, se había intentado un `@media (min-width: 860px)`, pero en tablets con DPR 2.25/2.4 el ancho CSS real suele ser de 800px o 853px, con lo que la media query no aplicaba.
+       - Además, `.ski-day-card` tenía `min-width: 0; flex: 0 0 115px;`. En flexbox dentro de un contenedor con `overflow-x: auto`, si el panel está oculto o animándose con `transform: translateX(...)` (`slide-from-right` / `slide-from-left` de 350 ms), Blink en Android colapsaba el ancho intrínseco de los hijos a 0 píxeles.
+       - Al terminar la animación a los 350 ms, el compositor no realizaba un re-layout síncrono. Cuando Lendo tocaba la pantalla (`touchstart`), el navegador ejecutaba el hit-testing (`CompositorHitTestInfo`) para ver qué tocaba el dedo, descubría el contenedor y repintaba instantáneamente las tarjetas.
+  2. *Intervención Técnica Integral:*
+     - **Homologación Arquitectónica al Patrón Inmune de 24 Horas (`.hourly-card`):**
+       - En `css/components.css`, `.ski-day-card` se fija con **`min-width: 105px; flex: 0 0 auto; box-sizing: border-box;`**. Se erradica por completo `min-width: 0;`, haciendo físicamente imposible que la tarjeta colapse o encoja por debajo de 105px bajo ninguna circunstancia.
+       - En `.ski-7days-carousel`, se añade `width: 100%; box-sizing: border-box; touch-action: pan-x pan-y; align-items: stretch;` y se suprimen media queries y scrollbars conflictivas, garantizando un flujo limpio y armónico idéntico al de la tira horaria.
+     - **Despertador Síncrono Post-Animación y Cambio de Estación en `js/app.js`:**
+       - En `switchTab`, se ejecuta una invalidación de layout (`void c.offsetWidth;`) tanto a los 50 ms como a los 400 ms (justo tras limpiarse las clases de animación del panel `slide-from-right` / `slide-from-left`), asegurando que el compositor despierte y pinte el 100% de los elementos sin esperar a ningún toque.
+       - En el selector de estaciones (`.resort-select-pill`), al activar la nueva ficha se fuerza `void c.offsetWidth;` en su carrusel.
+       - En `updateViews()`, se refuerza la invalidación con doble disparo a 50 ms y 400 ms.
+     - **Actualización Estricta del Service Worker:**
+       - En `index.html`, la llamada de registro del Service Worker se actualizó de la versión congelada `sw.js?v=2.2.38` a **`sw.js?v=2.2.60`**, asegurando que los tablets Android no reutilicen cachés pasadas.
+  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
+     - Versión oficial elevada a **`v2.2.60 🎿`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.60'` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+     - Service Worker actualizado a `meteoasturlode-v2260-tablet-ski-min-width-blindado` en `sw.js`.
+     - Query strings sincronizadas a `?v=2.2.60` en `index.html` (`main.css`, `components.css`, `app.js`).
+
 ## 🎿 Actualización v2.2.59: Fin de la Hibernación de Capa y Pintado Instantáneo en Tablets — 2026-10-17
 - **Erradicación del Falso Carrusel en Pantallas Anchas (Feedback Lendo - «al abrir o actualizar no sale nada de la prevision de los 7 dias. eso si, dandole con el dedo una o dos veces, aparece todo» y «pisale»):**
   1. *Diagnóstico Científico y Físico Definitivo:*
