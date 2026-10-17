@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2255-surf-wind-unlocked';
+const CACHE_NAME = 'meteoasturlode-v2256-tablet-ski-icons-raster';
 const STATIC_ASSETS = [
   './',
   './index.html',

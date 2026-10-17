@@ -42,7 +42,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '2.2.55';
+export const CURRENT_APP_VERSION = '2.2.56';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -1880,6 +1880,17 @@ class MeteoAsturiasApp {
       if (tourismContainer && !tourismContainer.innerHTML.trim()) {
         tourismContainer.innerHTML = renderTourismCard(this.weatherData, this.currentConcejo);
       }
+    }
+
+    if (targetTab === 'mountain') {
+      setTimeout(() => {
+        const carousels = document.querySelectorAll('.ski-7days-carousel');
+        carousels.forEach(c => {
+          c.style.transform = 'translateZ(0)';
+          // Forzar commit de rasterizado en tablets Android / Chromium sin necesidad de toque
+          c.scrollLeft = c.scrollLeft;
+        });
+      }, 60);
     }
 
     const navModal = document.getElementById('nav-modal');

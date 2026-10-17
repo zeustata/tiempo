@@ -8,6 +8,20 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🎿 Actualización v2.2.56: Blindaje de Renderizado Inmediato de Iconos SVG en Tablets — 2026-10-17
+- **Resolución Científica del «Expediente X del Tablet» (Feedback Lendo - «solo me pasa en el tablet, no están los iconos y tengo que tocar la pantalla para que salgan» y «pisale»):**
+  1. *Diagnóstico Científico y Causa Raíz:*
+     - Lendo reportó que en su tablet, al abrir la previsión a 7 días de *Cordillera & Nieve*, los iconos SVG del tiempo en las cabeceras de los días y en los tramos horarios no se dibujaban en pantalla hasta que tocaba el cristal con el dedo.
+     - *Explicación del fenómeno físico y gráfico:* En pantallas panorámicas de tablet (modo apaisado), los 7 días de previsión caben simultáneamente en el viewport sin requerir scroll vertical. En móvil, el usuario debe deslizar el dedo hacia abajo para llegar a ellos (lo que fuerza el evento táctil y repinta los iconos de forma inadvertida). En desktop, el ratón envía eventos `mousemove` continuos que mantienen la GPU despierta.
+     - En tablets Android (Chromium), los gráficos vectoriales SVG con sombras (`filter: drop-shadow`) ubicados dentro de un contenedor con scroll horizontal (`overflow-x: auto`) que a su vez cuelga de un panel animado por hardware (`slideInFromRight` con aceleración GPU) sufren un retraso de rasterizado (*deferred tile rasterization*): Chromium pospone el dibujado de los vectores para ahorrar batería hasta que se produce una interacción táctil explícita (`touchstart`).
+  2. *Intervención Técnica en CSS y JS:*
+     - **Aislamiento de Capa Gráfica Independiente en CSS:** Aplicado `isolation: isolate; transform: translateZ(0); -webkit-backface-visibility: hidden; backface-visibility: hidden;` en `.ski-7days-carousel`, `.ski-day-card`, `.ski-day-icon`, `.daypart-icon` y `.astur-svg-icon`. Con esto, Chromium no subordina el rasterizado de los iconos al ciclo de animación del panel padre y los procesa de inmediato en su propia capa.
+     - **Micro-Despertador en `switchTab('mountain')`:** En `js/app.js`, se introdujo un refresco no destructivo de 60 ms al activar la pestaña de Cordillera para invalidar el estado durmiente de la GPU del tablet y garantizar el pintado instantáneo sin esperar a la interacción táctil.
+  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
+     - Versión oficial elevada a **`v2.2.56 🎿`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.56'` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+     - Service Worker actualizado a `meteoasturlode-v2256-tablet-ski-icons-raster` en `sw.js`.
+     - Query strings sincronizadas a `?v=2.2.56` en `index.html` (`main.css`, `components.css`, `app.js`).
+
 ## 🏄‍♂️ Actualización v2.2.55: Desbloqueo y Visibilidad Total del Viento en Rompientes — 2026-10-17
 - **Emancipación del Viento en Costa y Cifra Directa en Rompientes (Feedback Lendo - «pero no lo veo en rompientes» y «pisale a ver que tal»):**
   1. *Diagnóstico Funcional y Descubrimiento:*

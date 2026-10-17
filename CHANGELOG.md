@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.56] - 2026-10-17
+
+### 🎿 Blindaje de Renderizado Inmediato de Iconos SVG en Tablets (Feedback Lendo - Expediente X Tablet)
+- **Fin del Retraso de Rasterizado en Tablets Android / Chromium:**
+  - Diagnóstico del fenómeno: en pantallas de tablet en apaisado (landscape), donde los 7 días de previsión entran de golpe sin necesidad de scroll vertical, los motores Chromium diferían el rasterizado de los iconos SVG con filtros de sombra dentro de contenedores `overflow-x: auto` hasta que el usuario tocaba la pantalla.
+  - Aplicado aislamiento de capa gráfica independiente (`isolation: isolate; transform: translateZ(0); -webkit-backface-visibility: hidden; backface-visibility: hidden;`) en el carrusel de esquí (`.ski-7days-carousel`), en las tarjetas (`.ski-day-card`), en las cabeceras (`.ski-day-icon`), en los slots horarios (`.daypart-icon`) y en los SVGs vectoriales (`.astur-svg-icon`).
+  - Añadido micro-despertador en `switchTab('mountain')` en `js/app.js` para forzar el commit de rasterizado de la GPU del tablet en 60 ms al entrar en la pestaña.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):**
+  - Service Worker actualizado a `meteoasturlode-v2256-tablet-ski-icons-raster`.
+  - Versión oficial elevada a `v2.2.56 🎿` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.56'` en `app.js` y query strings en `index.html`.
+
 ## [2.2.55] - 2026-10-17
 
 ### 🏄‍♂️ Desbloqueo y Visibilidad Total del Viento en Rompientes (Feedback Lendo)

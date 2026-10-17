@@ -10331,6 +10331,11 @@
   scrollbar-width: thin;
   scrollbar-color: rgba(56, 189, 248, 0.3) transparent;
   touch-action: pan-x pan-y;
+  /* Blindaje GPU Tablet: fuerza capa gráfica propia e impide el retraso de rasterizado en Chromium */
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  isolation: isolate;
 }
 
 .ski-7days-carousel::-webkit-scrollbar {
@@ -10357,6 +10362,7 @@
   text-align: center;
   min-width: 0;
   transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  transform: translateZ(0);
 }
 
 .ski-day-card.gale-warning {
@@ -10394,6 +10400,10 @@
   align-items: center;
   justify-content: center;
   min-height: 26px;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  isolation: isolate;
 }
 
 .ski-day-icon svg {
@@ -10402,6 +10412,8 @@
   height: 24px;
   max-width: 100%;
   flex-shrink: 0;
+  transform: translateZ(0);
+  overflow: visible;
 }
 
 .ski-day-temps {
@@ -10457,6 +10469,10 @@
   align-items: center;
   justify-content: center;
   min-height: 20px;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  isolation: isolate;
 }
 
 .daypart-icon svg {
@@ -10465,6 +10481,8 @@
   height: 18px;
   max-width: 100%;
   flex-shrink: 0;
+  transform: translateZ(0);
+  overflow: visible;
 }
 
 .daypart-wind {
