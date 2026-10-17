@@ -126,6 +126,12 @@ body {
   touch-action: pan-x pan-y;
 }
 
+@media (min-width: 860px) {
+  .ski-7days-carousel {
+    touch-action: auto;
+  }
+}
+
 /* --- HEADER & BARRA SUPERIOR (TARJETA MASTER ULTRA COMPACTA) --- */
 .app-header {
   display: flex;

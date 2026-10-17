@@ -10318,7 +10318,7 @@
   line-height: 1.25;
 }
 
-/* Carrusel táctil horizontal fashion para móvil */
+/* Carrusel táctil horizontal fashion para móvil y cuadrícula fluida para tablets/escritorio */
 .ski-7days-carousel {
   display: flex;
   gap: 8px;
@@ -10329,6 +10329,8 @@
   scrollbar-width: thin;
   scrollbar-color: rgba(56, 189, 248, 0.3) transparent;
   touch-action: pan-x pan-y;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .ski-7days-carousel::-webkit-scrollbar {
@@ -10338,6 +10340,22 @@
 .ski-7days-carousel::-webkit-scrollbar-thumb {
   background: rgba(56, 189, 248, 0.35);
   border-radius: 999px;
+}
+
+/* En tablets en horizontal y escritorios (>= 860px) donde los 7 días caben enteros de golpe:
+   Eliminamos el falso scroll horizontal para que Chromium en Android lo dibuje al instante sin hibernar la capa */
+@media (min-width: 860px) {
+  .ski-7days-carousel {
+    overflow-x: visible;
+    justify-content: space-between;
+    padding: 8px 0 12px;
+  }
+
+  .ski-day-card {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 155px;
+  }
 }
 
 .ski-day-card {

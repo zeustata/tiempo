@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2258-tablet-ski-forecast-restored';
+const CACHE_NAME = 'meteoasturlode-v2259-tablet-ski-instant-render';
 const STATIC_ASSETS = [
   './',
   './index.html',

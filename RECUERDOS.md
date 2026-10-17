@@ -8,6 +8,22 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🎿 Actualización v2.2.59: Fin de la Hibernación de Capa y Pintado Instantáneo en Tablets — 2026-10-17
+- **Erradicación del Falso Carrusel en Pantallas Anchas (Feedback Lendo - «al abrir o actualizar no sale nada de la prevision de los 7 dias. eso si, dandole con el dedo una o dos veces, aparece todo» y «pisale»):**
+  1. *Diagnóstico Científico y Físico Definitivo:*
+     - Las 7 tarjetas del pronóstico de esquí miden en total ~850 px de ancho.
+     - En teléfonos móviles (ancho de viewport ~380 px), las tarjetas no caben, por lo que el carrusel horizontal (`overflow-x: auto`) tiene un desbordamiento real (`scrollWidth > clientWidth`). Chromium reconoce el scroll activo y renderiza inmediatamente.
+     - En Windows (escritorio), la GPU de PC no implementa optimizaciones de hibernación de capas táctiles.
+     - En la **tablet en horizontal** (pantalla de más de 1.000 px de ancho): los 7 días **caben enteros de golpe** (`scrollWidth <= clientWidth`). Al tener la propiedad `overflow-x: auto` sin existir desplazamiento real, el motor Blink de Android clasificaba el contenedor como un área de scroll táctil inactiva (*kNotScrolling*), posponiendo el dibujado de sus elementos hijos hasta que un evento físico de interacción (`touchstart`) forzaba el commit del compositor.
+  2. *Intervención Técnica en CSS y JS:*
+     - **Modo Adaptativo en `css/components.css` y `css/main.css`:** En pantallas anchas (`@media (min-width: 860px)`), se desactiva el falso scroll (`overflow-x: visible; justify-content: space-between; touch-action: auto;`) y se distribuyen las 7 tarjetas de forma proporcional (`flex: 1 1 0; max-width: 155px;`). Al no existir capa de scroll inactiva, la tablet dibuja la previsión completa en el primer milisegundo síncronamente junto con el resto del panel.
+     - **Preservación en Smartphones:** En móviles (< 860px), se mantiene intacto el carrusel táctil suave (`overflow-x: auto`) con tarjeta fija de 115px para deslizar con el pulgar.
+     - **Refuerzo en `js/app.js`:** Añadido un refresco síncrono mediante `requestAnimationFrame` en `switchTab('mountain')` y `updateViews()` para invalidar cualquier estado durmiente del compositor.
+  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
+     - Versión oficial elevada a **`v2.2.59 🎿`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.59'` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+     - Service Worker actualizado a `meteoasturlode-v2259-tablet-ski-instant-render` en `sw.js`.
+     - Query strings sincronizadas a `?v=2.2.59` en `index.html` (`main.css`, `components.css`, `app.js`).
+
 ## 🎿 Actualización v2.2.58: Restauración de Visibilidad Total y Renderizado 2D Nativo en Tablets — 2026-10-17
 - **Erradicación del Layer Culling y Retorno de Textos y Métricas en Nieve (Feedback Lendo - «ahora desde la tablet peor. salen los iconos pero no la informacion de los 7 dias en el menu de cortillera. en windows y movil, bien pero en la tablet ya ves» y «dale»):**
   1. *Diagnóstico Científico del Efecto Secundario de la v2.2.56:*

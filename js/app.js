@@ -42,7 +42,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '2.2.58';
+export const CURRENT_APP_VERSION = '2.2.59';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -1882,6 +1882,16 @@ class MeteoAsturiasApp {
       }
     }
 
+    if (targetTab === 'mountain') {
+      requestAnimationFrame(() => {
+        const carousels = document.querySelectorAll('.ski-7days-carousel');
+        carousels.forEach(c => {
+          c.scrollLeft = 1;
+          c.scrollLeft = 0;
+        });
+      });
+    }
+
     // Limpieza de clases de animación tras el deslizamiento para restaurar el renderizado 2D nativo
     setTimeout(() => {
       document.querySelectorAll('.tab-panel').forEach(p => {
@@ -2486,6 +2496,15 @@ class MeteoAsturiasApp {
         const mountainContainer = document.getElementById('panel-mountain');
         if (mountainContainer) {
           mountainContainer.innerHTML = renderMountainCard(data, concejo, prefs.iconTheme);
+          if (this.activeTab === 'mountain') {
+            requestAnimationFrame(() => {
+              const carousels = document.querySelectorAll('.ski-7days-carousel');
+              carousels.forEach(c => {
+                c.scrollLeft = 1;
+                c.scrollLeft = 0;
+              });
+            });
+          }
         }
       } catch (e) {
         console.error('[MeteoAstur] Error renderizando Cordillera & Nieve:', e);

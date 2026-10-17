@@ -10,6 +10,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.59] - 2026-10-17
+
+### 🎿 Fin de la Hibernación de Capa y Pintado Instantáneo en Tablets (Feedback Lendo - Tablet)
+- **Eliminación del Falso Carrusel en Pantallas Anchas (&ge; 860px):**
+  - Diagnóstico: en la tablet en horizontal (ancho > 1000px), los 7 días de previsión de esquí ocupan ~850px, por lo que caben enteros sin necesidad de scroll. Al tener `overflow-x: auto` sin existir desbordamiento real (`scrollWidth <= clientWidth`), Chromium en Android hibernaba la capa táctil a la espera de un evento de toque (`touchstart`).
+  - Solución técnica en `css/components.css` y `css/main.css`: en pantallas &ge; 860px (tablets en horizontal y ordenadores), se fija `overflow-x: visible; justify-content: space-between;` y `touch-action: auto;`, permitiendo que las 7 tarjetas se distribuyan de forma fija y proporcional (`flex: 1 1 0; max-width: 155px;`) y se pinten de inmediato en el primer milisegundo al abrir o actualizar sin requerir toques en pantalla.
+  - En smartphones (< 860px), se preserva íntegro el carrusel táctil suave (`overflow-x: auto`) adaptado al deslizamiento con el pulgar.
+  - Refuerzo de invalidación en `js/app.js`: añadido un refresco síncrono mediante `requestAnimationFrame` en `switchTab('mountain')` y `updateViews()` para forzar el commit de renderizado.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):**
+  - Service Worker actualizado a `meteoasturlode-v2259-tablet-ski-instant-render`.
+  - Versión oficial elevada a `v2.2.59 🎿` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.59'` en `app.js` y query strings en `index.html`.
+
 ## [2.2.58] - 2026-10-17
 
 ### 🎿 Restauración de Visibilidad y Renderizado 2D Nativo en Tablets (Feedback Lendo - Tablet)
