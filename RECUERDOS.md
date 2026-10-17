@@ -8,6 +8,19 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🏄‍♂️ Actualización v2.2.55: Desbloqueo y Visibilidad Total del Viento en Rompientes — 2026-10-17
+- **Emancipación del Viento en Costa y Cifra Directa en Rompientes (Feedback Lendo - «pero no lo veo en rompientes» y «pisale a ver que tal»):**
+  1. *Diagnóstico Funcional y Descubrimiento:*
+     - Lendo accedió al módulo de *Surf & Rompientes* (`surfCard.js`) buscando verificar el viento en la costa de Salinas, pero constató que no aparecía en los sensores principales.
+     - *Causa raíz:* En el widget «Período y Dirección del Swell», el renderizado del viento estaba programado dentro de un condicional excluyente contra el Swell 2 (`hasSecondary && secSwellDir ? Swell 2 : Viento`). Al existir casi siempre un tren de oleaje secundario en el Cantábrico, la línea del viento quedaba sistemáticamente oculta. Además, la pastilla de textura marina en la Hero Card describía el impacto cualitativo (`Superficie Picada • Viento de mar`), pero carecía de la métrica numérica en km/h.
+  2. *Intervención Técnica en `surfCard.js`:*
+     - **Viento en Costa Permanente e Incondicional:** Desacoplado el viento del oleaje secundario. Ahora conviven ambos armónicamente: Swell 1, Swell 2 (si existe) y una fila dedicada y delimitada con `💨 Viento en costa: X km/h (o rango de rachas)` junto a la flecha SVG orientada y coloreada según sea terral (verde) o de mar (rojo/ámbar).
+     - **Integración Numérica en la Micro-Pastilla de Textura:** El chip `.surf-texture-chip` incorpora la cifra en tiempo real con detección de rachas (ej. `• 7–16 km/h (Chop)`), permitiendo una lectura instantánea sin necesidad de descender al cronograma de 3 horas.
+  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
+     - Versión oficial elevada a **`v2.2.55 🏄‍♂️`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.55'` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+     - Service Worker actualizado a `meteoasturlode-v2255-surf-wind-unlocked` en `sw.js`.
+     - Query strings sincronizadas a `?v=2.2.55` en `index.html` (`app.js`) y `surfCard.js?v=2.2.55`.
+
 ## 🧭 Actualización v2.2.54: Rango Dinámico de Viento en Anemómetro — 2026-10-17
 - **Fidelidad Sensorial y Respaldo de Rachas (Feedback Tester Edu y Lendo - «anemometro pone 6 y 7 y esta mas fuerte, racha actual 16 y maximas 31, maldonado 15km» y «dale a la opcion A»):**
   1. *Diagnóstico Físico y Psicológico:*

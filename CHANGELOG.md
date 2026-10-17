@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.55] - 2026-10-17
+
+### 🏄‍♂️ Desbloqueo y Visibilidad Total del Viento en Rompientes (Feedback Lendo)
+- **Viento en Costa Permanente en la Tarjeta de Swell (`surfCard.js`):**
+  - Desacoplado el renderizado del viento del condicional del Swell 2. Ahora, tanto si hay oleaje secundario como si no, el **Viento en costa** (velocidad media, rachas y flecha aerodinámica con color de terral/onshore) se muestra siempre en su propia línea visible.
+- **Velocidad y Rachas en la Pastilla de Textura Marina:**
+  - Integrada la velocidad en km/h y rango de rachas directamente en el chip `.surf-texture-chip` de la Hero Card (ej. `Textura: Superficie Picada • 7–16 km/h (Chop)`), facilitando la lectura instantánea de la fuerza del aire en el arenal.
+- **Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):**
+  - Service Worker actualizado a `meteoasturlode-v2255-surf-wind-unlocked`.
+  - Versión oficial elevada a `v2.2.55 🏄‍♂️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.55'` en `app.js` y query strings en `index.html`.
+
 ## [2.2.54] - 2026-10-17
 
 ### 🧭 Rango Dinámico de Viento en Anemómetro (Feedback Edu & Lendo)

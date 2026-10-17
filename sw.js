@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2254-wind-range-anemometer';
+const CACHE_NAME = 'meteoasturlode-v2255-surf-wind-unlocked';
 const STATIC_ASSETS = [
   './',
   './index.html',

@@ -666,6 +666,8 @@ export function renderSurfCard(data, concejo) {
   
   // Viento actual
   const windSpeed = Math.round(current.wind_speed_10m || 0);
+  const rawGusts = current.wind_gusts_10m != null ? Math.round(current.wind_gusts_10m) : windSpeed;
+  const hasDistinctGust = rawGusts > windSpeed;
   const windDeg = current.wind_direction_10m !== undefined ? current.wind_direction_10m : 180;
   const windDirObj = getWindDirection(windDeg);
   
@@ -750,7 +752,7 @@ export function renderSurfCard(data, concejo) {
             <div style="display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; min-width: 0;">
               <span style="font-size: 0.74rem; color: #94a3b8; font-weight: 700; text-transform: uppercase;">Textura:</span>
               <span style="font-size: 0.82rem; font-weight: 700; color: ${waterTexture.color};">${waterTexture.badge}</span>
-              <span style="font-size: 0.74rem; color: #cbd5e1;">• ${waterTexture.type === 'glassy' ? 'Calma total' : (waterTexture.type === 'clean' ? 'Terral / Offshore' : (waterTexture.type === 'chop' ? 'Viento de mar (Chop)' : 'Brisa costera'))}</span>
+              <span style="font-size: 0.76rem; color: #38bdf8; font-weight: 700;">• ${hasDistinctGust ? `${windSpeed}–${rawGusts}` : windSpeed} km/h (${(surfWind.name || 'Costero').split(' ')[0]})</span>
             </div>
           </div>
 
@@ -785,8 +787,9 @@ export function renderSurfCard(data, concejo) {
           <div class="widget-detail">🌊 Swell 1 (Principal): ${getSurfSwellArrowSvg(waveDirDeg, '#38bdf8', 13)} <strong>${swellHeight}m · ${wavePeriod}s (${waveDir.name})</strong></div>
           ${hasSecondary && secSwellDir 
             ? `<div class="widget-detail" style="color: #7dd3fc;">🌊 Swell 2 (Secundario): ${getSurfSwellArrowSvg(secSwellDeg, '#7dd3fc', 13)} <strong>${secSwellH}m · ${secSwellPeriod}s (${secSwellDir.name})</strong></div>` 
-            : `<div class="widget-detail">Viento en costa: ${getSurfWindArrowSvg(windDeg, surfWind.color, 13)} <strong>${windSpeed} km/h (${windDirObj.name})</strong></div>`
+            : ''
           }
+          <div class="widget-detail" style="margin-top: 4px; padding-top: 4px; border-top: 1px dashed rgba(255,255,255,0.08);">💨 Viento en costa: ${getSurfWindArrowSvg(windDeg, surfWind.color, 13)} <strong>${hasDistinctGust ? `${windSpeed} – ${rawGusts} km/h` : `${windSpeed} km/h`}</strong> • ${surfWind.name || 'Costero'} (${windDirObj.name})</div>
         </div>
 
         <!-- Energía de la Ola (kJ) -->
