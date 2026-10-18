@@ -8,6 +8,15 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 📜 Incorporación de la Ley 23 a AGENTS.md: Doctrina de Paridad Absoluta de Catálogo, Simetría de Temas y Reglas de Iconografía — 2026-10-18
+- **Blindaje Normativo de Iconografía y Temas (Feedback Expreso de Lendo - «no se si me explique bien. quiero que cualquier tema nuevo tenga los mismo iconos que los demas y si se crea un icono nuevo y luego se agrega un nuevo tema, que se cree ese tema ya con todos los iconos» y «pisale»):**
+  1. *Doctrina de Paridad Bidireccional de Catálogo:*
+     - Queda formalmente consagrado en la Ley 23 de `AGENTS.md` (Parte II: Leyes Específicas de MeteoAstur Lode) que todos los temas visuales de la aplicación deben contar con la totalidad exacta de los iconos del catálogo oficial (`clear-day`, `clear-night`, `partly-cloudy-day`, `partly-cloudy-night`, `cloudy`, `fog`, `drizzle`, `rain`, `showers`, `thunderstorm`, `snow`, `wind`, etc.).
+     - Al crear un tema nuevo: debe nacer con el 100% de los iconos existentes implementados (cero temas incompletos o cojos).
+     - Al crear un icono nuevo: debe diseñarse e implementarse de forma obligatoria y simultánea en la totalidad de temas existentes (permanentes y estacionales).
+  2. *Pautas de Coherencia de Diseño:*
+     - Los nuevos iconos deben inspirarse y regirse en los iconos ya consolidados de cada tema: mismas proporciones, equilibrio en la cantidad de elementos (astros, nubes, partículas) y mismo ritmo y estilo de animación fluida para garantizar armonía visual y rendimiento en dispositivos móviles.
+
 ## 🌦️ Actualización v2.2.68: Nuevo Icono Universal de Chubascos con Sol («Llueve y fai sol») — 2026-10-18
 - **Creación Vectorial Completa del Icono Comodín `showers` (Feedback Lendo - «creo que en los iconos no existe el icono de chubascos (por ejemplo cuando en una hora determinada dan un chaparron y luego sale el sol. El tipico icono que sale una gota una nube y un sol. lo tenemos», «pisale anda que todos lal app lo incorporan y es como un comodin. si en una hora concreta dan posibilidad de nubes, sol y chubascos es imprescindible. crealo para todos los temas que tenemos incluido halloween»):**
   1. *Diagnóstico de la Suite de Iconos:*

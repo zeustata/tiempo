@@ -235,6 +235,15 @@
     - **Protocolo Obligatorio de Auditoría Inmediata:** Ante cualquier discrepancia reportada, es preceptivo auditar de inmediato los datos crudos de la API (`precipitation`, `weather_code`, `direct_normal_irradiance` y humedad) en esas coordenadas exactas para discernir con rigor si se trata de un desfase del modelo externo o de un exceso de celo en los filtros de consenso de `weatherApi.js`.
     - **Primacía del Radar de Teledetección:** Ante la discrepancia entre la vista por la ventana y la previsión horaria, el Radar de Lluvia en tiempo real (reflectividad física por teledetección de RainViewer) constituye la fuente de verdad empírica instantánea para el usuario y el desarrollador.
 
+23. **Doctrina de Paridad Absoluta de Catálogo, Simetría de Temas y Reglas de Iconografía (Feedback Lendo):**
+    - **Principio de Catálogo Completo y Cero Temas Incompletos:** Todos los temas visuales de la aplicación (los 7 actuales y cualquier tema nuevo que se añada en el futuro, permanente o estacional) deben contar con la totalidad exacta de los iconos del catálogo (`clear-day`, `clear-night`, `partly-cloudy-day`, `partly-cloudy-night`, `cloudy`, `fog`, `drizzle`, `rain`, `showers`, `thunderstorm`, `snow`, `wind`, etc.):
+      1. *Al crear un nuevo tema:* Queda terminantemente prohibido incorporar o publicar un nuevo tema visual si no incluye el 100% de los iconos existentes en el catálogo oficial de la app.
+      2. *Al crear un nuevo icono:* Si se incorpora un nuevo icono meteorológico a la aplicación (como el comodín universal de chubascos con sol `showers`), debe diseñarse e implementarse de forma obligatoria y simultánea en la totalidad de los temas existentes.
+    - **Pautas de Diseño e Inspiración en el Set Existente:** Al concebir cualquier icono nuevo, este debe regirse e inspirarse fielmente en los iconos ya consolidados de cada tema:
+      1. *Cantidad y proporción de elementos:* Mantener el mismo balance y volumen de elementos (proporción entre astro solar/lunar, nube y número controlado de gotas o partículas) para no romper la estética ni recargar la tarjeta.
+      2. *Animaciones coherentes:* Respetar el estilo, cadencia y ritmo de animación del set (flotación suave, caída de gotas, pulsos luminosos) garantizando armonía visual y fluidez de rendimiento en dispositivos móviles.
+
+
 
 
 
