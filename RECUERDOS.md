@@ -8,6 +8,25 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 📱 Actualización v2.2.66: Optimización Estricta de Ergonomía Móvil y Blindaje Anti-Desborde en Halloween — 2026-10-18
+- **Blindaje de Ergonomía Móvil y Corrección de Desbordes (Feedback Lendo - «me acabo de dar cuenta que desde windows y tablet perfecto pero desde el movil sobresalen lo iconos y caracteres. Lo ves princesa?» y «pisale»):**
+  1. *Diagnóstico Riguroso en Pantallas Móviles Estrechas (360 px):*
+     - En dispositivos móviles, la cabecera `.theme-card-header` sufría una colisión flex: el contenedor intermedio `.theme-card-info` carecía de `min-width: 0;`, empujando la pastilla `🔒 Bloqueado` hacia el borde exterior donde se recortaba la última letra (mostrando `"🔒 Bloquead"`).
+     - La previsualización de Halloween contenía 10 iconos SVG apretados que sobrecargaban la caja en relación a las demás tarjetas del catálogo (que emplean 6 iconos), mientras que la pastilla de censura `🕵️‍♂️ Top Secret • Revelación en Samhain` ocupaba dos líneas opacando los colores del mosaico.
+  2. *Refactorización CSS Anti-Desborde (Doctrina Constitucional Ley 11):*
+     - En `css/main.css`:
+       - `.theme-card-info` configurado con `min-width: 0;` garantizando contracción limpia en layouts flex reducidos.
+       - `.theme-lock-badge` blindado con `display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; font-size: 0.72rem; flex-shrink: 0; white-space: nowrap;`, impidiendo cualquier recorte o salto de línea.
+       - Previsualización `.theme-card-preview-pixelated .theme-card-preview` adaptada con `display: flex; justify-content: space-around; width: 100%; box-sizing: border-box;`.
+       - Insignia `.badge-top-secret` optimizada a `padding: 4px 10px; font-size: 0.72rem; white-space: nowrap; background: rgba(15, 23, 42, 0.78);`, permitiendo que el brillo de los 6 iconos pixelados resplandezca perfectamente sin abarrotar la caja.
+       - Pie `.theme-card-lock-footer` unificado en `justify-content: center; text-align: center;` con el texto `🎃 Activación automática en Samhain`.
+  3. *Uniformidad Visual con el Resto del Catálogo (Doctrina Constitucional Ley 14):*
+     - En `js/app.js`: reducida la muestra de Halloween a los **6 iconos representativos** (`sun`, `partly-cloudy-day`, `resol`, `wet-fog`, `rain`, `storm`), logrando idéntica proporción métrica que las tarjetas de Emojis Clásicos y Emotivos.
+  4. *Cache-Busting y Despliegue Oficial (Leyes 1, 3, 4, 10, 11 y 13):*
+     - Service Worker actualizado a `meteoasturlode-v2266-ergonomia-movil-halloween` en `sw.js`.
+     - Versión oficial elevada a **`v2.2.66 📱`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.66'` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+     - Query strings sincronizadas a `?v=2.2.66` en `index.html`.
+
 ## 🕵️‍♂️ Actualización v2.2.65: Iconografía de Halloween Pixelada con Censura de Intriga ("Top Secret") — 2026-10-18
 - **Efecto Mosaico Pixelado y Blindaje de Expectación (Feedback Lendo - «ahora quiero que en el boton iconos para eleguir el tema, el de halloeen estén los iconos como pixelados para que se vea que existen pero no se sepan como son hasta el evento» y «pisale»):**
   1. *Conceptualización del Factor Sorpresa y Secreto de Sumario:*

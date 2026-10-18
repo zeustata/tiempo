@@ -43,7 +43,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '2.2.65';
+export const CURRENT_APP_VERSION = '2.2.66';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -1251,15 +1251,11 @@ class MeteoAsturiasApp {
     if (previewHalloween) {
       previewHalloween.innerHTML = `
         <span class="preview-svg" title="Sol Jack-o'-lantern">${getHalloweenWeatherSvg('sun', 28)}</span>
-        <span class="preview-svg" title="Mayormente soleado">${getHalloweenWeatherSvg('mostly-clear-day', 28)}</span>
         <span class="preview-svg" title="Nubes con fantasma">${getHalloweenWeatherSvg('partly-cloudy-day', 28)}</span>
         <span class="preview-svg" title="Resol místico velado">${getHalloweenWeatherSvg('resol', 28)}</span>
         <span class="preview-svg" title="Niebla densa mojada con ectoplasma">${getHalloweenWeatherSvg('wet-fog', 28)}</span>
-        <span class="preview-svg" title="Nublado con murciélago">${getHalloweenWeatherSvg('cloud', 28)}</span>
-        <span class="preview-svg" title="Orbayu con poción mágica">${getHalloweenWeatherSvg('drizzle', 28)}</span>
         <span class="preview-svg" title="Lluvia con araña">${getHalloweenWeatherSvg('rain', 28)}</span>
         <span class="preview-svg" title="Tormenta con castillo gótico">${getHalloweenWeatherSvg('storm', 28)}</span>
-        <span class="preview-svg" title="Luna con bruja volando">${getHalloweenWeatherSvg('clear-night', 28)}</span>
       `;
     }
 

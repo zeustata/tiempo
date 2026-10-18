@@ -10,6 +10,21 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.66] - 2026-10-18
+
+### 📱 Optimización Estricta de Ergonomía Móvil y Blindaje Anti-Desborde en Halloween (Feedback Lendo - Ley 11)
+- **Cabecera Protegida contra Recortes en Pantallas Estrechas:**
+  - Sincronizada la caja de texto `.theme-card-info` con `min-width: 0` y la pastilla `🔒 Bloqueado` con `flex-shrink: 0`, eliminando el desborde y recorte de la última letra ("Bloquead") en smartphones de 360 px.
+  - Subtítulo aligerado a `31 Oct – 1 Nov` sin duplicidad de candados.
+- **Cuadrícula Uniforme de 6 Iconos Esenciales y Mosaico Limpio:**
+  - Reducida la muestra del carrusel de 10 a los **6 iconos estándar** alineados con el resto de colecciones de la aplicación (Sol Jack-o'-lantern, Fantasmita, Resol velado, Niebla mojada, Lluvia con araña y Tormenta con castillo).
+  - La pastilla central pasa al formato ergonómico `🕵️‍♂️ Top Secret` en una sola línea translúcida, permitiendo que los destellos naranja, verde y violeta de los iconos pixelados resplandezcan con total claridad sin tapar la caja.
+- **Pie Simplificado:**
+  - Centralizado en una sola línea limpia: `🎃 Activación automática en Samhain`, erradicando duplicidades y amontonamientos.
+- **Cache-Busting y Despliegue Oficial:**
+  - Service Worker actualizado a `meteoasturlode-v2266-ergonomia-movil-halloween` en `sw.js`.
+  - Versión oficial elevada a `v2.2.66 📱` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.66'` en `app.js` y query strings de versión en `index.html`.
+
 ## [2.2.65] - 2026-10-18
 
 ### 🕵️‍♂️ Iconografía de Halloween Pixelada con Censura de Intriga ("Top Secret") y Blindaje de Expectación (Feedback Lendo)

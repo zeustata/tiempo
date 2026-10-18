@@ -31,8 +31,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.2.65">
-  <link rel="stylesheet" href="css/components.css?v=2.2.65">
+  <link rel="stylesheet" href="css/main.css?v=2.2.66">
+  <link rel="stylesheet" href="css/components.css?v=2.2.66">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.65 🕵️‍♂️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.66 📱</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -349,8 +349,21 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.2.65 🕵️‍♂️</span>
+            <span class="release-version">v2.2.66 📱</span>
             <span class="release-date">18 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-fix">Ergonomía &amp; Móvil (Feedback Lendo - Blindaje Anti-Desborde)</span> <strong>Optimización Estricta de la Tarjeta de Halloween en Pantallas Móviles (Ley 11)</strong>:
+              <br>• <strong>Cabecera sin Recortes:</strong> Sincronizada la cabecera con <code>min-width: 0</code> y pastilla <code>🔒 Bloqueado</code> protegida con <code>flex-shrink: 0</code> para erradicar cualquier recorte de texto en pantallas de 360 px.
+              <br>• <strong>Cuadrícula Uniforme de 6 Iconos:</strong> Ajustada la muestra visual a los 6 fenómenos clave alineados con el resto de tarjetas del catálogo, luciendo su pixelado de misterio bajo una insignia compacta <code>🕵️‍♂️ Top Secret</code> sin saturar el contenedor.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.65 🕵️‍♂️</span>
+            <span class="release-date">18 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-feature">Diseño &amp; Eventos (Feedback Lendo - Misterio y Expectación)</span> <strong>Iconografía de Halloween Pixelada con Censura de Intriga ("Top Secret")</strong>:
@@ -3775,7 +3788,7 @@
               <span class="theme-card-icon">🎃</span>
               <div class="theme-card-info">
                 <h4>Especial Halloween</h4>
-                <span class="theme-card-tag theme-tag-locked">🔒 Solo 31 Oct - 1 Nov</span>
+                <span class="theme-card-tag theme-tag-locked">31 Oct – 1 Nov</span>
               </div>
               <span class="theme-lock-badge">🔒 Bloqueado</span>
             </div>
@@ -3783,12 +3796,11 @@
             <div class="theme-card-preview-pixelated" id="wrap-halloween-preview">
               <div class="theme-card-preview" id="preview-halloween-icons"></div>
               <div class="theme-secret-overlay">
-                <span class="badge-top-secret">🕵️‍♂️ Top Secret • Revelación en Samhain</span>
+                <span class="badge-top-secret">🕵️‍♂️ Top Secret</span>
               </div>
             </div>
             <div class="theme-card-lock-footer">
-              <span class="lock-notice-text">🎃 Activación automática y revelación el 31 de octubre</span>
-              <span class="lock-notice-badge">31 Oct – 1 Nov</span>
+              <span class="lock-notice-text">🎃 Activación automática en Samhain</span>
             </div>
           </div>
         </div>
@@ -3937,7 +3949,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=2.2.65').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=2.2.66').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -3967,7 +3979,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.65"></script>
+  <script type="module" src="js/app.js?v=2.2.66"></script>
 
 
 
