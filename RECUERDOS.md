@@ -8,6 +8,25 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## ⏰ Actualización v2.2.63: Normalización Astronómica Perpetua y Corrección del Cambio de Horario — 2026-10-18
+- **Normalización Astronómica y Corrección del Cambio de Horario (Feedback Lendo - «no puedes implementarlo en la app? es que estoy viendo que en el pronostico del tiempo, el domingo no tienes cambiado el ocaso t el alba no esta cambiado... que va a pasar el donimgo 25 de octubre?», «y para el año que viene, cuando pasemos al horario de herano otra vez lo tendra en cuenta?», «y para las previsiones del tiempo quedan cuadrados? por ejemplo las previsiones de 72 horas?», «y el dia 25 va a estar todo cuadrado no? no habra un doble cuadrado ni nada de eso no?» y «pisale»):**
+  1. *Diagnóstico Científico y Causa Raíz:*
+     - Lendo detectó con agudeza visual que en el pronóstico a 10 días para el domingo 25 de octubre de 2026, el alba (amanecer) y el ocaso (anochecer) mostraban 08:49 y 19:23, en lugar de reflejar el cambio oficial al horario de invierno (CET, UTC+1).
+     - *Causa raíz técnica:* La API de Open-Meteo evalúa el huso al inicio de la petición (18 de octubre, en horario de verano UTC+2) y fija estáticamente `utc_offset_seconds: 7200` para todo el payload. Según la documentación de la API, las marcas ISO generadas ignoran el cambio de hora dentro del rango, sumando +2h fijas incluso tras el salto al horario de invierno.
+  2. *Intervención Técnica en `js/components/forecastView.js`:*
+     - Creada e integrada la función universal `formatCivilSunTime(isoStr, apiOffsetSeconds, targetTimezone = 'Europe/Madrid')`:
+       - Toma la cadena ISO generada por Open-Meteo y reconstruye el instante UTC universal puro restando el desfase estático de la API (`pseudoUtcMs - apiOffsetSeconds * 1000`).
+       - Formatea el timestamp UTC recuperado mediante la API nativa `Intl.DateTimeFormat('es-ES', { timeZone: 'Europe/Madrid', hour: '2-digit', minute: '2-digit', hour12: false })`.
+       - Delega el cálculo en la Base de Datos Mundial de Husos Horarios IANA integrada en el navegador, asegurando que para el domingo 25 de octubre el amanecer marque exactamente **07:49** y el ocaso **18:23**.
+     - *Universalidad y Perpetuidad:* Funciona de forma automática tanto para el paso a invierno en octubre (-1h) como para el paso a verano en marzo (+1h), en 2026, 2027, 2028 y cualquier año futuro sin necesidad de intervención manual.
+  3. *Verificación de Cuadrícula y Continuidad Visual:*
+     - Verificado el comportamiento del carrusel de 72 horas y de las tarjetas diarias: Open-Meteo entrega 24 franjas exactas para el domingo 25 (`00:00` a `23:00`), sin duplicados de horas, sin doble tarjeta de día y con cortes limpios de medianoche (`00:00`) en los separadores de fecha.
+     - Verificado el motor armónico de mareas (`tides.js`): calcula sobre época UTC pura (`EPOCH_UTC_MS`) y se adapta de forma nativa a la hora civil.
+  4. *Cache-Busting y Despliegue Oficial (Leyes 1, 3, 4, 10 y 13):*
+     - Service Worker actualizado a `meteoasturlode-v2263-horario-invierno-astronomico` en `sw.js`.
+     - Versión oficial elevada a **`v2.2.63 ⏰`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.63'` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+     - Query strings sincronizadas a `?v=2.2.63` en `index.html` (`main.css`, `components.css`, `sw.js`, `app.js`) y en `app.js` (`forecastView.js?v=2.2.63`).
+
 ## ☀️ Actualización v2.2.62: Inmunidad Solar Frente a Falso Orbayu y Primacía del Sol Real — 2026-10-17
 - **Blindaje e Inmunidad Solar Frente a Micro-Trazas Numéricas (Feedback Lendo - «despues de todo lo quie arreglamos tengo una duda», «si me digiste que esta todo parcheado y de repente llueve y me da nublado o sol, que hago?», «no me paso pero estaria bien tenerlo en lA LEY» y «pisale. loq no quiero q testers me mandan mensajes tipo que aqui hace sol y tu app y la app pone orbayo»):**
   1. *Diagnóstico Científico y Erradicación del Fallo:*

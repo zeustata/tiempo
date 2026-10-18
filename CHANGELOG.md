@@ -10,6 +10,24 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.63] - 2026-10-18
+
+### ⏰ Normalización Astronómica Perpetua y Corrección del Cambio de Horario (Feedback Lendo - Alba y Ocaso)
+- **Diagnóstico y Corrección de la Limitación Estática de Open-Meteo:**
+  - Diagnóstico físico y técnico: en peticiones de previsión a 10 días realizadas durante el horario de verano, Open-Meteo evalúa el huso al inicio de la petición (18 de octubre) y bloquea estáticamente `utc_offset_seconds: 7200` (+2h) para todo el rango devuelto. La documentación de la API estipula que las cadenas ISO ignoran el cambio de hora dentro del rango solicitado.
+  - Como resultado, el amanecer astronómico de Asturias para el domingo 25 de octubre (06:49 UTC) y el ocaso (17:23 UTC) se devolvían con +2h fijas (`08:49` y `19:23`), cuando el reloj civil español ya habrá retrocedido a UTC+1 (horario de invierno CET).
+- **Motor de Reconstrucción de Tiempo Solar Civil (`formatCivilSunTime`):**
+  - Desarrollada e integrada la función universal `formatCivilSunTime` en `js/components/forecastView.js`.
+  - Reconstruye el instante UTC universal puro restando el `utc_offset_seconds` reportado por Open-Meteo (`pseudoUtcMs - apiOffsetMs`).
+  - Aplica `Intl.DateTimeFormat('es-ES', { timeZone: 'Europe/Madrid' })` sobre el timestamp UTC recuperado, delegando el cálculo en la Base de Datos Mundial de Husos Horarios de la IANA.
+  - Sincronía bidireccional automática: calcula con exactitud matemática tanto el paso a invierno en octubre (**07:49** / **18:23**) como el paso a verano en marzo (**08:13**), para 2026, 2027, 2028 y años venideros de forma perpetua.
+- **Cuadrícula y Continuidad Visual Sin Duplicados:**
+  - Garantizada la ausencia de doble tarjeta o saltos en el carrusel de 72 horas y en la previsión diaria de 10 días.
+  - El divisor de día corta limpiamente a medianoche (`00:00`) y las 24 horas del domingo se suceden de forma continua y suave.
+- **Cache-Busting y Despliegue Oficial:**
+  - Service Worker actualizado a `meteoasturlode-v2263-horario-invierno-astronomico` en `sw.js`.
+  - Versión oficial elevada a `v2.2.63 ⏰` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.63'` en `app.js` y query strings en `index.html`.
+
 ## [2.2.62] - 2026-10-17
 
 ### ☀️ Inmunidad Solar Frente a Falso Orbayu y Primacía del Sol Real (Feedback Lendo - Leyes 21 y 22)

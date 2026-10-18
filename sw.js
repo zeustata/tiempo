@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2262-inmunidad-solar-anti-orbayu';
+const CACHE_NAME = 'meteoasturlode-v2263-horario-invierno-astronomico';
 const STATIC_ASSETS = [
   './',
   './index.html',

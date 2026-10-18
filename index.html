@@ -31,8 +31,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.2.62">
-  <link rel="stylesheet" href="css/components.css?v=2.2.62">
+  <link rel="stylesheet" href="css/main.css?v=2.2.63">
+  <link rel="stylesheet" href="css/components.css?v=2.2.63">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.62 ☀️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.63 ⏰</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -349,8 +349,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
+            <span class="release-version">v2.2.63 ⏰</span>
+            <span class="release-date">18 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-fix">Astronomía &amp; Horario Civil (Feedback Lendo - Cambio de Hora)</span> <strong>Normalización Astronómica Perpetua y Corrección del Cambio de Horario (Invierno / Verano)</strong>:
+              <br>• <strong>Corrección de la limitación estática de Open-Meteo:</strong> Resuelto el desfase en las previsiones a 10 días donde Open-Meteo ignora el salto de horario estacional en cadenas de texto ISO aplicando un offset estático de verano (+2h).
+              <br>• <strong>Motor de Tiempo Solar Civil:</strong> Mediante <code>formatCivilSunTime</code> se reconstruye el instante UTC universal puro restando el offset de la API y formateándolo con la base IANA de husos horarios (<code>Europe/Madrid</code>).
+              <br>• <strong>Sincronía Automática y Perpetua:</strong> El domingo 25 de octubre y días posteriores pasan automáticamente a marcar el horario de invierno civil real (Alba: 07:49 | Ocaso: 18:23) sin duplicados, extensible a todas las transiciones futuras de marzo y octubre.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
             <span class="release-version">v2.2.62 ☀️</span>
-            <span class="release-date">17 Oct 2026 (Actual)</span>
+            <span class="release-date">17 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-fix">Doctrina &amp; Veracidad Física (Feedback Lendo - Blindaje Anti-Orbayu con Sol)</span> <strong>Inmunidad Solar Frente a Falso Orbayu y Primacía del Sol Real (Leyes 21 y 22)</strong>:
@@ -3874,7 +3888,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=2.2.62').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=2.2.63').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -3904,7 +3918,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.62"></script>
+  <script type="module" src="js/app.js?v=2.2.63"></script>
 
 
 

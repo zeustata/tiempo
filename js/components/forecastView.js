@@ -1,6 +1,46 @@
 import { getWeatherInfo, renderWeatherIconHtml, getWindDirection } from '../utils/weatherIcons.js?v=2.2.62';
 
 /**
+ * Normaliza y formatea una marca de tiempo solar (ISO de Open-Meteo) a la hora civil oficial de Asturias/España,
+ * corrigiendo el desfase estático de Open-Meteo en transiciones de cambio de horario estacional (marzo/octubre).
+ */
+export function formatCivilSunTime(isoStr, apiOffsetSeconds = 7200, targetTimezone = 'Europe/Madrid') {
+  if (!isoStr || typeof isoStr !== 'string') return '--:--';
+
+  // Si la cadena ya viene con indicador Z o desfase explícito (+01:00), Date() ya es exacto
+  if (isoStr.endsWith('Z') || /[+-]\d{2}:\d{2}$/.test(isoStr)) {
+    const d = new Date(isoStr);
+    return isNaN(d.getTime()) ? '--:--' : d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  // Descomponer 'YYYY-MM-DDTHH:MM' (o con segundos)
+  const parts = isoStr.split('T');
+  if (parts.length < 2) return '--:--';
+
+  const [year, month, day] = parts[0].split('-').map(Number);
+  const timeTokens = parts[1].split(':').map(Number);
+  const hour = timeTokens[0] || 0;
+  const minute = timeTokens[1] || 0;
+  const second = timeTokens[2] || 0;
+
+  // Open-Meteo genera esta cadena sumando estáticamente apiOffsetSeconds a la hora astronómica UTC pura.
+  // Reconstruimos el instante UTC puro restando ese desfase:
+  const pseudoUtcMs = Date.UTC(year, month - 1, day, hour, minute, second);
+  const realUtcMs = pseudoUtcMs - (apiOffsetSeconds * 1000);
+  const realUtcDate = new Date(realUtcMs);
+
+  if (isNaN(realUtcDate.getTime())) return '--:--';
+
+  // Formatear en la hora civil oficial usando las reglas de la base IANA del huso destino
+  return new Intl.DateTimeFormat('es-ES', {
+    timeZone: targetTimezone,
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false
+  }).format(realUtcDate);
+}
+
+/**
  * Calcula la condición meteorológica representativa para un tramo horario (ej. mañana o tarde)
  * Gradúa la lluvia según la intensidad física en mm/hora (Orbayu vs. Moderada vs. Bastinazu)
  */
@@ -252,13 +292,14 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
     else if (uvMax >= 6) { uvText = 'Alto'; uvClass = 'uv-high'; }
     else if (uvMax >= 3) { uvText = 'Mod.'; uvClass = 'uv-mod'; }
 
+    const apiOffset = (data.weather && data.weather.utc_offset_seconds != null) ? data.weather.utc_offset_seconds : 7200;
     let sunriseStr = '--:--';
     let sunsetStr = '--:--';
     if (daily.sunrise && daily.sunrise[d]) {
-      sunriseStr = new Date(daily.sunrise[d]).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+      sunriseStr = formatCivilSunTime(daily.sunrise[d], apiOffset);
     }
     if (daily.sunset && daily.sunset[d]) {
-      sunsetStr = new Date(daily.sunset[d]).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+      sunsetStr = formatCivilSunTime(daily.sunset[d], apiOffset);
     }
 
     dailyCards += `
