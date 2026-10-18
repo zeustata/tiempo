@@ -10,6 +10,23 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.70] - 2026-10-18
+
+### 🥾 Menú en Acordeón Desplegable de Rutas, Catálogo Extendido de Asturias y Blindaje Ley 16 (Petición Expresa de Lendo)
+- **Menú en Acordeón Desplegable (Doctrina de Playas):**
+  - Transformada la visualización de sendas de un pergamino abierto vertical a un menú interactivo ultracompacto y ergonómico tipo acordeón (basado en `<details class="route-accordion-card" name="route-accordion">`), permitiendo consultar decenas de rutas sin estirar la pantalla móvil.
+  - Al hacer clic o tocar una ruta se despliega suavemente su ficha técnica completa (distancia, duración estimada, desnivel acumulado, punto de inicio, firme del terreno y precauciones específicas de seguridad), cerrando de forma automática cualquier otra senda abierta.
+- **Catálogo Extendido de 44 Sendas Reales y Emblemáticas de Asturias:**
+  - Base de datos exhaustiva y documentada de sendas homologadas (PR-AS, GR, sendas costeras, desfiladeros, vías verdes y cumbres) cubriendo las 8 comarcas asturianas con coordenadas geográficas exactas de cada inicio de ruta.
+- **Cálculo Geodésico de Proximidad por Coordenadas (Haversine):**
+  - Cada senda calcula y muestra en tiempo real la distancia física en línea recta desde las coordenadas del concejo activo (o GPS del usuario) hasta el punto de inicio de la ruta (`📍 A X km de ti`).
+  - Nuevo selector de alcance (`📍 En concejo` vs `🗺️ Toda Asturias por cercanía`) y controles de ordenación rápida (`📍 Por cercanía`, `📏 Más cortas / Más largas`, `⛰️ Mayor / Menor desnivel`) junto con filtros por nivel (`🟢 Fáciles`, `🟡 Medias`, `🔴 Exigentes`).
+- **Blindaje Constitucional de Responsabilidad Individual y Seguridad en Montaña (Ley 16):**
+  - Integrado un aviso legal y de seguridad destacado al pie del módulo, blindando al desarrollador frente a contingencias y recordando la naturaleza teórica de las estimaciones meteorológicas, la obligatoriedad de la prudencia individual, el equipamiento adecuado y el contacto directo con el 112 en emergencias.
+- **Cache-Busting y Despliegue Oficial:**
+  - Service Worker actualizado a `meteoasturlode-v2270-rutas-acordeon-catalogo` en `sw.js`.
+  - Versión oficial elevada a `v2.2.70 🥾` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.70'` en `app.js`, `routesCard.js?v=2.2.70`, `routesData.js?v=2.2.70` y query strings en `index.html`.
+
 ## [2.2.69] - 2026-10-18
 
 ### ⏱️ Indicación Explícita de Franjas Horarias en Pronóstico a 10 Días y Ergonomía Móvil (Feedback Lendo - Ley 11)

@@ -4,7 +4,7 @@ import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedW
 import { renderCurrentWeather } from './components/currentCard.js?v=2.2.64';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=2.2.51';
 import { renderSurfCard } from './components/surfCard.js?v=2.2.55';
-import { renderRoutesCard } from './components/routesCard.js?v=2.2.20';
+import { renderRoutesCard } from './components/routesCard.js?v=2.2.70';
 import { renderMountainCard } from './components/mountainCard.js?v=2.2.64';
 import { renderTourismCard } from './components/tourismCard.js?v=2.2.1';
 import { renderForecast } from './components/forecastView.js?v=2.2.69';
@@ -43,7 +43,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '2.2.69';
+export const CURRENT_APP_VERSION = '2.2.70';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -1614,15 +1614,15 @@ class MeteoAsturiasApp {
       }
     });
 
-    // Delegación global para acordeón exclusivo de playas y spots de surf (autocierre de persianas previas)
+    // Delegación global para acordeón exclusivo de playas, spots de surf y rutas (autocierre de persianas previas)
     document.addEventListener('toggle', (e) => {
-      const details = e.target.closest('.beach-accordion-card');
+      const details = e.target.closest('.beach-accordion-card, .route-accordion-card');
       if (!details || !details.open) return;
 
-      const container = details.closest('.beaches-grid, .surf-spots-grid') || details.parentElement;
+      const container = details.closest('.beaches-grid, .surf-spots-grid, .routes-accordion-container') || details.parentElement;
       if (!container) return;
 
-      container.querySelectorAll('.beach-accordion-card[open]').forEach(other => {
+      container.querySelectorAll('.beach-accordion-card[open], .route-accordion-card[open]').forEach(other => {
         if (other !== details) {
           other.open = false;
         }

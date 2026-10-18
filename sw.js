@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2269-franjas-horarias';
+const CACHE_NAME = 'meteoasturlode-v2270-rutas-acordeon-catalogo';
 const STATIC_ASSETS = [
   './',
   './index.html',

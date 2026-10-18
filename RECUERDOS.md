@@ -42,6 +42,31 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. *Almacenamiento Estático Desacoplado:* El bot vuelca los datos limpios (km abiertos, pistas por dificultad técnica, remontes en servicio y espesores mín/máx) en un archivo JSON estático (`data/snowReport.json`).
     3. *Consumo Directo en Cliente:* `mountainCard.js` lee ese JSON sin sobrecargar a los servidores externos ni ralentizar la carga en clientes, mostrando los partes de nieve actualizados en vivo de forma 100% legal, autónoma y sin fricción.
 
+## 🥾 Actualización v2.2.70: Menú en Acordeón Desplegable de Rutas, Catálogo Extendido de Asturias y Blindaje Ley 16 — 2026-10-18
+- **Evolución Arquitectónica de Rutas & Senderismo (Petición y Feedback Expreso de Lendo - «estoy pensando en rutas y senderismo. me gustaria que las rutas esten en un menu y para ver todos los datos se pueda desplegar como ya hicimos en las playas. me entiendes? explicame», «si pero no puedes buscar mas sendas? asturias esta llena. al mimimizar ya no estorban tanto no? puedes ponerlos por dificultad y por distancia de la coordenada que tenemos», «pisale a ver q tal pero siempre con la constitucion de advertir la responsabilidad de cada uno»):**
+  1. *Diagnóstico de Experiencia de Usuario:*
+     - Anteriormente, el módulo `routesCard.js` desplegaba todas las sendas abiertas verticalmente en fichas completas, generando un pergamino vertical desmesurado que obligaba a scroll masivo en smartphones y limitaba artificialmente el catálogo a solo 6 concejos.
+     - Lendo concibió certeramente aplicar el modelo de éxito de los acordeones de Playas (`marineCard.js` y `surfCard.js`): al comprimirse cada ruta en una barra horizontal de una sola línea en reposo, el módulo respira con holgura y permite albergar un catálogo exhaustivo de senderismo sin sobrecargar la vista.
+  2. *Catálogo Oficial Extendido de Asturias (`routesData.js`):*
+     - Creada una base de datos real y documentada con **44 sendas emblemáticas y homologadas** (PR-AS, GR, sendas costeras, desfiladeros, vías verdes y cumbres) que abarcan todas las comarcas del Principado:
+       - *Centro y Costa:* Senda de los Miradores y Río Raíces (Castrillón), Cabo Peñas y Bañugues-Moniello (Gozón), Cervigón y Camocha (Gijón), Candás-Luanco (Carreño), Ría de Avilés y La Magdalena (Avilés), Trasona (Corvera), Ría de Villaviciosa y Molinos del Profundo (Villaviciosa).
+       - *Occidente:* Cabo Vidio y Miradores (Cudillero), Senda de las Ballenas y Foces del Esva (Valdés), Senda Costera Naviega (Navia), Cascadas de Oneta (Villayón), Cascadas de Nonaya (Salas), Muniellos y Lagunas de Arbás (Cangas del Narcea).
+       - *Valles y Montaña Central:* Desfiladero de Las Xanas (Santo Adriano), Senda del Oso (Proaza / Teverga), Montegrande y Cascada del Xiblu (Teverga), Pista Finlandesa y Naranco (Oviedo), Angliru y Monsacro (Riosa / Morcín), Foces del Pino (Aller), Vía de La Carisa (Lena), Ruta del Alba (Sobrescobio) y Desfiladero de los Arrudos (Caso).
+       - *Oriente y Picos de Europa:* Garganta del Cares, Bulnes y Pandébano (Cabrales), Lagos de Covadonga (Cangas de Onís), Bosque de Peloño (Ponga), Acantilados del Infierno (Ribadesella), Senda Costera, Bufones de Pría y Camín Encantáu (Llanes), Lagos de Saliencia y Lago del Valle (Somiedo).
+  3. *Cálculo Geodésico de Proximidad por Coordenadas (Haversine):*
+     - Cada senda cuenta con coordenadas exactas de su inicio (`lat`, `lon`).
+     - Mediante `calculateDistanceKm`, el motor calcula en tiempo real la distancia física desde las coordenadas del concejo activo (o geolocalización del usuario): `📍 A X km de ti`.
+     - Nuevo selector de alcance (`📍 En concejo` vs `🗺️ Toda Asturias por cercanía`), filtros de nivel (`🟢 Fáciles`, `🟡 Medias`, `🔴 Exigentes`) y selector dinámico de ordenación (`📍 Por cercanía`, `📏 Más cortas / Más largas`, `⛰️ Mayor / Menor desnivel`).
+  4. *Ficha Técnica Desplegable en Acordeón (`routesCard.js` y `components.css`):*
+     - En reposo: Icono temático (`🏖️`, `🏔️`, `🌲`, `🌊`, `🛤️`, `⛰️`), nombre destacado, localización, distancia y distintivo de dificultad con chevron animado `▾`.
+     - Al desplegar: 4 chips técnicos (distancia, duración estimada, desnivel acumulado y punto de inicio/acceso), descripción del recorrido, firme/superficie adaptada a la lluvia reciente y caja de precauciones de seguridad.
+     - Auto-cierre mutuo: al desplegar una senda, el listener global en `app.js` cierra automáticamente cualquier otra ruta abierta.
+  5. *Blindaje Constitucional de Seguridad y Responsabilidad Individual (Ley 16):*
+     - Incorporada una tarjeta destacada al pie del módulo con aviso visible de seguridad en montaña y exención de responsabilidad civil, recordando la exclusividad de la responsabilidad del senderista, el equipamiento indispensable (calzado de taco, abrigo, agua, batería) y la soberanía del 112 en emergencias.
+  6. *Cache-Busting y Despliegue Oficial (Leyes 1, 3, 4, 10, 11, 13 y 16):*
+     - Service Worker actualizado a `meteoasturlode-v2270-rutas-acordeon-catalogo` en `sw.js`.
+     - Versión oficial elevada a **`v2.2.70 🥾`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.70'` en `app.js`, `routesCard.js?v=2.2.70`, `routesData.js?v=2.2.70` y query strings en `index.html`.
+
 ## ⏱️ Actualización v2.2.69: Indicación Explícita de Franjas Horarias en Pronóstico a 10 Días y Ergonomía Móvil — 2026-10-18
 - **Claridad Temporal Inmediata en Botones de Franja (Feedback Lendo - «estaria bien poner entre parentisis el tiempo que abarca para que sepan que mañana incluye la noche y la tarde abarca toda la tarde hasta que cambie de dia», «me vale la opcion a pero te repito que pone 2.4mm ya. miralo a ver», «pisale»):**
   1. *Diagnóstico Funcional y Lingüístico:*

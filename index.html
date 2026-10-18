@@ -31,8 +31,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.2.69">
-  <link rel="stylesheet" href="css/components.css?v=2.2.69">
+  <link rel="stylesheet" href="css/main.css?v=2.2.70">
+  <link rel="stylesheet" href="css/components.css?v=2.2.70">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.69 ⏱️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.70 🥾</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -349,8 +349,23 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.2.69 ⏱️</span>
+            <span class="release-version">v2.2.70 🥾</span>
             <span class="release-date">18 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-feature">Rutas, Senderismo &amp; Ley 16 (Petición Expresa de Lendo)</span> <strong>Menú Acordeón Desplegable, Catálogo Extendido de Asturias y Proximidad Real</strong>:
+              <br>• <strong>Menú Acordeón Desplegable (Doctrina de Playas):</strong> Las sendas se agrupan en un menú interactivo ultracompacto en reposo con icono, nombre, proximidad en km, distancia y distintivo de dificultad, desplegándose suavemente para consultar la ficha completa (distancia, duración, desnivel acumulado, punto de inicio, firme del terreno y advertencias).
+              <br>• <strong>Catálogo Extendido de 44 Sendas Emblemáticas:</strong> Cobertura integral de Asturias (Cares, Xanas, Alba, Arrudos, Muniellos, Peñas, Cervigón, Miradores, Saliencia, Valle de Lago, Peloño, etc.) geolocalizadas con coordenadas exactas.
+              <br>• <strong>Cálculo Geodésico de Proximidad:</strong> Muestra la distancia física en km a cada senda desde el concejo activo, permitiendo alternar entre rutas locales o explorar toda Asturias por cercanía, con ordenación por distancia, longitud y desnivel.
+              <br>• <strong>Blindaje Constitucional de Seguridad y Responsabilidad (Ley 16):</strong> Integrado aviso explícito de seguridad en montaña y exención de responsabilidad civil, recordando la soberanía del 112 y la responsabilidad individual del senderista.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.69 ⏱️</span>
+            <span class="release-date">18 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-feature">Claridad Horaria &amp; Ergonomía Móvil (Feedback Lendo)</span> <strong>Indicación Explícita de Franjas en Pronóstico a 10 Días (Ley 11)</strong>:
@@ -3988,7 +4003,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=2.2.69').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=2.2.70').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4018,7 +4033,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.69"></script>
+  <script type="module" src="js/app.js?v=2.2.70"></script>
 
 
 
