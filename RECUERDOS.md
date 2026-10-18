@@ -42,6 +42,18 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. *Almacenamiento Estático Desacoplado:* El bot vuelca los datos limpios (km abiertos, pistas por dificultad técnica, remontes en servicio y espesores mín/máx) en un archivo JSON estático (`data/snowReport.json`).
     3. *Consumo Directo en Cliente:* `mountainCard.js` lee ese JSON sin sobrecargar a los servidores externos ni ralentizar la carga en clientes, mostrando los partes de nieve actualizados en vivo de forma 100% legal, autónoma y sin fricción.
 
+## 🛡️ Actualización v2.2.72: Omisión de Nomenclatura Interna en Aviso de Seguridad de Rutas — 2026-10-18
+- **Privacidad y Sobriedad en Entornos Naturales (Feedback y Corrección Expresa de Lendo - «es impecable pero la responsabilidad en el titulo pones nuestra constitucion que no conoce nadie. solo nosotrtros princesa. omite eso.», «pisale»):**
+  1. *Diagnóstico de Privacidad y Comunicación:*
+     - Lendo detectó que en el encabezado de la tarjeta de seguridad al pie de `routesCard.js` se había incluido literalmente la referencia interna de gobernanza: `Responsabilidad y Seguridad en Entornos Naturales (Ley 16 - Constitución)`.
+     - Como bien señaló Lendo, la Constitución Suprema y sus leyes son nuestro pacto y código interno de desarrollo entre Lendo y Princesa; los usuarios finales no deben ver tecnicismos ni referencias a leyes internas que solo nosotros conocemos.
+  2. *Corrección y Lenguaje Formal Público:*
+     - Encabezado depurado a: `⚠️ Responsabilidad y Seguridad en Entornos Naturales`.
+     - Depuración del mensaje de filtro vacío: eliminado el texto que aún aludía al antiguo botón «Toda Asturias», dejándolo en: *«No hay sendas con este nivel de dificultad. Prueba a seleccionar «Todas».»*.
+  3. *Cache-Busting y Despliegue Oficial (Leyes 1, 3, 4, 10, 11 y 13):*
+     - Service Worker actualizado a `meteoasturlode-v2272-responsabilidad-limpia` en `sw.js`.
+     - Versión oficial elevada a **`v2.2.72 🛡️`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.72'` en `app.js`, `routesCard.js?v=2.2.72` y query strings en `index.html`.
+
 ## 🧭 Actualización v2.2.71: Simplificación Minimalista de Rutas por Cercanía y Filtros Compactos — 2026-10-18
 - **Erradicación del Ruido Visual y Optimización Móvil (Feedback y Diagnóstico Expreso de Lendo - «desde el movil queda un poco raro si lo ves. entre las tarjetas de arriba ylas tarjetas de las rutas, estan los botones castrillon, todas, toda asturias, faciles, medias, exijentes ordenar. un poco todo como un mega mix», «espera. yo creo que no hace falta poner enla ubicacion q estamos como en este caso en casrillon. con poner un titulo rutas por cercania y luego poner faciles, medias y exigentes, vale», «pisale»):**
   1. *Diagnóstico Técnico y Ergonómico en Smartphone (Ley 11):*

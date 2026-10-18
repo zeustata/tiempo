@@ -10,6 +10,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.72] - 2026-10-18
+
+### 🛡️ Omisión de Nomenclatura Interna en Aviso de Seguridad de Rutas (Instrucción de Lendo)
+- **Privacidad y Sobriedad en Entornos Naturales:**
+  - Corregido el encabezado de la tarjeta de aviso de seguridad en `routesCard.js`, omitiendo la referencia interna de gobernanza (`Ley 16 - Constitución`) para mostrar un título formal, público y cercano a los usuarios: `Responsabilidad y Seguridad en Entornos Naturales`.
+  - Depurado el mensaje mostrado cuando un filtro de dificultad no encuentra coincidencias, eliminando la mención al antiguo botón de ámbito para indicar limpiamente: *«No hay sendas con este nivel de dificultad. Prueba a seleccionar «Todas».»*.
+- **Cache-Busting y Despliegue Oficial:**
+  - Service Worker actualizado a `meteoasturlode-v2272-responsabilidad-limpia` en `sw.js`.
+  - Versión oficial elevada a `v2.2.72 🛡️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.72'` en `app.js`, `routesCard.js?v=2.2.72` y query strings en `index.html`.
+
 ## [2.2.71] - 2026-10-18
 
 ### 🧭 Simplificación Minimalista de Rutas por Cercanía y Filtros Compactos (Feedback Lendo - Ley 11)

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2271-rutas-cercania-limpio';
+const CACHE_NAME = 'meteoasturlode-v2272-responsabilidad-limpia';
 const STATIC_ASSETS = [
   './',
   './index.html',

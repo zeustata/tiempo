@@ -6,7 +6,7 @@
  * y Blindaje Constitucional de Seguridad y Responsabilidad Individual (Ley 16).
  */
 
-import { calculateHikingIndex, getRoutesForConcejo } from '../utils/routesData.js?v=2.2.71';
+import { calculateHikingIndex, getRoutesForConcejo } from '../utils/routesData.js?v=2.2.72';
 
 // Función global de filtrado interactivo por dificultad de rutas
 if (typeof window !== 'undefined') {
@@ -258,14 +258,14 @@ export function renderRoutesCard(data, concejo) {
       <!-- Mensaje cuando un filtro no arroja resultados -->
       <div id="routes-empty-msg" class="routes-empty-message" style="display: none;">
         <span>🔍</span>
-        <p>No hay sendas con este nivel de dificultad en este radio. Prueba a seleccionar <strong>«Toda Asturias»</strong> o <strong>«Todas»</strong>.</p>
+        <p>No hay sendas con este nivel de dificultad. Prueba a seleccionar <strong>«Todas»</strong>.</p>
       </div>
 
-      <!-- 5. AVISO CONSTITUCIONAL DE SEGURIDAD Y RESPONSABILIDAD INDIVIDUAL (LEY 16) -->
+      <!-- 5. AVISO DE SEGURIDAD Y RESPONSABILIDAD INDIVIDUAL -->
       <div class="routes-disclaimer-card">
         <div class="disclaimer-header">
           <span class="disclaimer-icon">⚠️</span>
-          <strong>Responsabilidad y Seguridad en Entornos Naturales (Ley 16 - Constitución)</strong>
+          <strong>Responsabilidad y Seguridad en Entornos Naturales</strong>
         </div>
         <p class="disclaimer-text">
           La práctica del senderismo y montañismo en Asturias se realiza bajo la <strong>exclusiva responsabilidad, juicio y prudencia de cada usuario</strong>. Toda previsión meteorológica, estado del barro y condiciones del firme son estimaciones teóricas orientativas basadas en modelos numéricos. La montaña cantábrica presenta cambios meteorológicos súbitos (niebla cerrada, tormentas eléctricas, vientos severos de cresta y roca caliza resbaladiza). Planifica tu itinerario, consulta siempre partes oficiales de AEMET, utiliza calzado con suela de taco y membrana impermeable, lleva agua, ropa cortavientos de abrigo y teléfono móvil con batería completa. <strong>Ante cualquier emergencia en montaña, avisa de inmediato al 112</strong>.
