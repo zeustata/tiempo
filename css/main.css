@@ -2162,18 +2162,36 @@ body:-webkit-full-screen .app-container {
 .theme-card-preview {
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  padding: 10px 14px;
+  justify-content: space-between;
+  gap: 4px;
+  padding: 8px 10px;
   background: rgba(15, 23, 42, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: var(--radius-sm);
-  font-size: 1.6rem;
+  font-size: clamp(1.15rem, 3.8vw, 1.45rem);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
 }
 
+.theme-card-preview > span,
 .theme-card-preview .preview-svg {
+  flex: 1 1 0;
+  min-width: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.theme-card-preview .preview-svg svg {
+  max-width: 100%;
+  max-height: 26px;
+  height: auto;
+  width: auto;
+  display: block;
 }
 
 /* --- TARJETA DE EVENTO BLOQUEADA (HALLOWEEN / SAMHAIN) --- */
@@ -2202,22 +2220,6 @@ body:-webkit-full-screen .app-container {
   white-space: nowrap;
 }
 
-.theme-lock-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 3px 8px;
-  background: linear-gradient(135deg, #ea580c, #c2410c);
-  color: #ffffff;
-  border-radius: var(--radius-full);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.3px;
-  box-shadow: 0 2px 8px rgba(234, 88, 12, 0.4);
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
 /* --- EFECTO MISTERIO PIXELADO (CENSURA DIGITAL TOP SECRET) --- */
 .theme-card-preview-pixelated {
   position: relative;
@@ -2232,8 +2234,10 @@ body:-webkit-full-screen .app-container {
 .theme-card-preview-pixelated .theme-card-preview {
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  padding: 10px 14px;
+  justify-content: space-between;
+  gap: 4px;
+  padding: 8px 10px;
+  font-size: clamp(1.15rem, 3.8vw, 1.45rem);
   filter: blur(4px) contrast(1.3) saturate(1.4);
   transform: scale(1.02);
   user-select: none;
@@ -2648,6 +2652,27 @@ body:-webkit-full-screen .app-container {
   }
   .splash-brand-title {
     font-size: 1.60rem;
+  }
+
+  /* Blindaje ergonómico en modales y selector de temas para móviles estrechos (Ley Constitucional 11) */
+  #icon-themes-modal.modal-overlay {
+    padding: 10px 8px;
+  }
+  #icon-themes-modal .modal-card {
+    padding: 16px 12px;
+    width: 100%;
+    max-width: 100%;
+  }
+  .icon-theme-card {
+    padding: 12px 10px;
+  }
+  .theme-card-preview {
+    padding: 7px 6px;
+    gap: 2px;
+    font-size: clamp(1.05rem, 3.6vw, 1.35rem);
+  }
+  .theme-card-preview .preview-svg svg {
+    max-height: 24px;
   }
 }
 

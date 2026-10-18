@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2266-ergonomia-movil-halloween';
+const CACHE_NAME = 'meteoasturlode-v2267-ergonomia-iconos-movil';
 const STATIC_ASSETS = [
   './',
   './index.html',

@@ -10,6 +10,19 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.67] - 2026-10-18
+
+### 📱 Erradicación de Badge Superpuesto y Blindaje Flexible de 6 Iconos en Móvil (Feedback Lendo - Ley 11)
+- **Supresión Definitiva de Badge Redundante `🔒 Bloqueado`:**
+  - Eliminado por completo el badge de la cabecera de la tarjeta de Halloween que colisionaba y se superponía sobre el título en pantallas móviles ("Hallow🔒 Bloqueado"), dejando la cabecera totalmente diáfana con `🎃 Especial Halloween` y subtítulo de fechas `31 OCT – 1 NOV`.
+- **Blindaje Flexible de los 6 Iconos de Previsualización en Móvil:**
+  - Refactorizada la clase `.theme-card-preview` y sus elementos hijos (`> span`, `.preview-svg`) con reparto flexible `flex: 1 1 0; min-width: 0;`, garantizando distribución matemática equitativa al 100% del contenedor sin expulsar el 6º icono fuera del borde.
+  - Dimensiones de emojis ajustadas fluidamente con `font-size: clamp(1.15rem, 3.8vw, 1.45rem);` y SVGs vectoriales contenidos con `max-height: 26px; height: auto;`.
+  - En smartphones estrechos (`@media (max-width: 480px)`), se optimizaron los márgenes del modal `#icon-themes-modal` ganando más de 40 px de ancho interior útil para que los 6 fenómenos climáticos luzcan con perfecta simetría y holgura en cualquier dispositivo.
+- **Cache-Busting y Despliegue Oficial:**
+  - Service Worker actualizado a `meteoasturlode-v2267-ergonomia-iconos-movil` en `sw.js`.
+  - Versión oficial elevada a `v2.2.67 📱` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.67'` en `app.js` y query strings de versión en `index.html`.
+
 ## [2.2.66] - 2026-10-18
 
 ### 📱 Optimización Estricta de Ergonomía Móvil y Blindaje Anti-Desborde en Halloween (Feedback Lendo - Ley 11)
