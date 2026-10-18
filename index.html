@@ -31,8 +31,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.2.70">
-  <link rel="stylesheet" href="css/components.css?v=2.2.70">
+  <link rel="stylesheet" href="css/main.css?v=2.2.71">
+  <link rel="stylesheet" href="css/components.css?v=2.2.71">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.70 🥾</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.71 🧭</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -349,8 +349,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.2.70 🥾</span>
+            <span class="release-version">v2.2.71 🧭</span>
             <span class="release-date">18 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-feature">Rutas &amp; Ergonomía Móvil (Feedback Lendo)</span> <strong>Simplificación Minimalista: Rutas por Cercanía y Filtros Compactos</strong>:
+              <br>• <strong>Eliminación de Botones Redundantes:</strong> Supresión de los botones largos de ámbito ("En Concejo" / "Toda Asturias") y del selector de ordenación para evitar saturación visual y saltos de línea irregulares en smartphones.
+              <br>• <strong>Orden Natural por Proximidad Inmutable:</strong> La lista completa de sendas se presenta jerarquizada automáticamente desde la más próxima al concejo actual, garantizando que las rutas locales o vecinas siempre aparezcan al inicio de forma intuitiva.
+              <br>• <strong>Fila Única de Dificultad en Cuadrícula Fija (Ley 11):</strong> Unificada la selección en una sola fila compacta de 4 botones simétricos al 25% (<code>Todas</code>, <code>🟢 Fáciles</code>, <code>🟡 Medias</code>, <code>🔴 Exigentes</code>), con encuadre perfecto en pantallas estrechas.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.70 🥾</span>
+            <span class="release-date">18 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-feature">Rutas, Senderismo &amp; Ley 16 (Petición Expresa de Lendo)</span> <strong>Menú Acordeón Desplegable, Catálogo Extendido de Asturias y Proximidad Real</strong>:
@@ -4003,7 +4017,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=2.2.70').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=2.2.71').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4033,7 +4047,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.70"></script>
+  <script type="module" src="js/app.js?v=2.2.71"></script>
 
 
 

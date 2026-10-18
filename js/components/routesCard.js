@@ -6,23 +6,12 @@
  * y Blindaje Constitucional de Seguridad y Responsabilidad Individual (Ley 16).
  */
 
-import { calculateHikingIndex, getRoutesForConcejo } from '../utils/routesData.js?v=2.2.70';
+import { calculateHikingIndex, getRoutesForConcejo } from '../utils/routesData.js?v=2.2.71';
 
-// Función global de filtrado, alcance y ordenación interactiva de rutas
+// Función global de filtrado interactivo por dificultad de rutas
 if (typeof window !== 'undefined') {
   window.currentRoutesState = window.currentRoutesState || {
-    scope: 'local', // 'local' o 'all'
-    diff: 'all',    // 'all', 'facil', 'media', 'alta'
-    sort: 'prox'    // 'prox', 'length_asc', 'length_desc', 'elev_desc', 'elev_asc'
-  };
-
-  window.setRoutesScope = function(scope, btn) {
-    window.currentRoutesState.scope = scope;
-    const card = btn.closest('.routes-card');
-    if (!card) return;
-    card.querySelectorAll('.route-scope-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    window.updateRoutesView(card);
+    diff: 'all' // 'all', 'facil', 'media', 'alta'
   };
 
   window.setRoutesDiff = function(diff, btn) {
@@ -34,40 +23,21 @@ if (typeof window !== 'undefined') {
     window.updateRoutesView(card);
   };
 
-  window.setRoutesSort = function(select) {
-    window.currentRoutesState.sort = select.value;
-    const card = select.closest('.routes-card');
-    if (!card) return;
-    window.updateRoutesView(card);
-  };
-
   window.updateRoutesView = function(card) {
     if (!card) return;
     const container = card.querySelector('.routes-accordion-container');
     if (!container) return;
 
     const items = Array.from(container.querySelectorAll('.route-accordion-card'));
-    const { scope, diff, sort } = window.currentRoutesState;
+    const { diff } = window.currentRoutesState;
 
     let visibleCount = 0;
 
     items.forEach(item => {
-      const isLocal = item.dataset.isLocal === '1';
       const cat = item.dataset.diffCat;
+      const matchDiff = (diff === 'all' || cat === diff);
 
-      // 1. Filtro de alcance
-      let matchScope = true;
-      if (scope === 'local' && !isLocal) {
-        matchScope = false;
-      }
-
-      // 2. Filtro de dificultad
-      let matchDiff = true;
-      if (diff !== 'all' && cat !== diff) {
-        matchDiff = false;
-      }
-
-      if (matchScope && matchDiff) {
+      if (matchDiff) {
         item.style.display = '';
         visibleCount++;
       } else {
@@ -75,31 +45,6 @@ if (typeof window !== 'undefined') {
         item.open = false;
       }
     });
-
-    // 3. Ordenación en el DOM
-    items.sort((a, b) => {
-      const proxA = parseFloat(a.dataset.proxKm) || 0;
-      const proxB = parseFloat(b.dataset.proxKm) || 0;
-      const lenA = parseFloat(a.dataset.distKm) || 0;
-      const lenB = parseFloat(b.dataset.distKm) || 0;
-      const elevA = parseFloat(a.dataset.elevM) || 0;
-      const elevB = parseFloat(b.dataset.elevM) || 0;
-
-      if (sort === 'prox') {
-        return proxA - proxB;
-      } else if (sort === 'length_asc') {
-        return lenA - lenB;
-      } else if (sort === 'length_desc') {
-        return lenB - lenA;
-      } else if (sort === 'elev_desc') {
-        return elevB - elevA;
-      } else if (sort === 'elev_asc') {
-        return elevA - elevB;
-      }
-      return proxA - proxB;
-    });
-
-    items.forEach(item => container.appendChild(item));
 
     // Contador visible y mensaje de vacío
     const countBadge = card.querySelector('#routes-visible-counter');
@@ -123,27 +68,13 @@ export function renderRoutesCard(data, concejo) {
   // Título limpio sin paréntesis
   const concejoTitle = concejo.name.replace(/\s*\(.*?\)/, '').trim();
 
-  // Rutas locales de este concejo
-  const localRoutes = allRoutes.filter(r => r.isLocal);
-  const hasLocal = localRoutes.length > 0;
-
-  // Estado inicial de scope: si el concejo tiene rutas locales, arranca en 'local', si no en 'all'
-  const initialScope = hasLocal ? 'local' : 'all';
+  // Reiniciar estado
   if (typeof window !== 'undefined' && window.currentRoutesState) {
-    window.currentRoutesState.scope = initialScope;
     window.currentRoutesState.diff = 'all';
-    window.currentRoutesState.sort = 'prox';
   }
 
-  // Orden inicial por proximidad
+  // Orden natural inmutable por proximidad en km
   allRoutes.sort((a, b) => a.distFromUserKm - b.distFromUserKm);
-
-  // Conteo para los botones de dificultad según el scope inicial
-  const activeSet = hasLocal ? localRoutes : allRoutes;
-  const countAll = activeSet.length;
-  const countFacil = activeSet.filter(r => r.diffCat === 'facil').length;
-  const countMedia = activeSet.filter(r => r.diffCat === 'media').length;
-  const countAlta = activeSet.filter(r => r.diffCat === 'alta').length;
 
   return `
     <div class="routes-card">
@@ -204,59 +135,32 @@ export function renderRoutesCard(data, concejo) {
         </div>
       </div>
 
-      <!-- 3. BARRA DE CONTROL ERGONÓMICA (ALCANCE, FILTROS Y ORDENACIÓN) -->
-      <div class="routes-controls-wrapper">
-        <!-- Fila A: Selector de Alcance (En Concejo vs Explorar Toda Asturias) -->
-        <div class="routes-scope-strip">
-          ${hasLocal ? `
-            <button class="route-scope-btn active" onclick="window.setRoutesScope('local', this)">
-              📍 En ${concejoTitle} (${localRoutes.length})
-            </button>
-            <button class="route-scope-btn" onclick="window.setRoutesScope('all', this)">
-              🗺️ Toda Asturias por cercanía (${allRoutes.length})
-            </button>
-          ` : `
-            <button class="route-scope-btn active" onclick="window.setRoutesScope('all', this)">
-              🗺️ Sendas más cercanas a ${concejoTitle} (${allRoutes.length})
-            </button>
-          `}
-        </div>
+      <!-- 3. BARRA DE CONTROL ERGONÓMICA: RUTAS POR CERCANÍA Y FILTROS -->
+      <div class="routes-section-title-bar">
+        <h4 class="routes-section-title">🥾 Rutas por cercanía</h4>
+        <span class="routes-section-subtitle">Ordenadas por distancia desde tu ubicación actual (${concejoTitle})</span>
+      </div>
 
-        <!-- Fila B: Filtros por Dificultad y Selector de Ordenación -->
-        <div class="routes-filter-sort-row">
-          <div class="routes-filter-strip">
-            <button class="route-filter-btn active" onclick="window.setRoutesDiff('all', this)">
-              Todas
-            </button>
-            <button class="route-filter-btn diff-btn-facil" onclick="window.setRoutesDiff('facil', this)">
-              🟢 Fáciles
-            </button>
-            <button class="route-filter-btn diff-btn-media" onclick="window.setRoutesDiff('media', this)">
-              🟡 Medias
-            </button>
-            <button class="route-filter-btn diff-btn-alta" onclick="window.setRoutesDiff('alta', this)">
-              🔴 Exigentes
-            </button>
-          </div>
-
-          <div class="routes-sort-container">
-            <span class="routes-sort-label">Ordenar:</span>
-            <select class="routes-sort-select" onchange="window.setRoutesSort(this)" aria-label="Ordenar sendas">
-              <option value="prox" selected>📍 Por cercanía</option>
-              <option value="length_asc">📏 Más cortas</option>
-              <option value="length_desc">📏 Más largas</option>
-              <option value="elev_desc">⛰️ Mayor desnivel</option>
-              <option value="elev_asc">⛰️ Menor desnivel</option>
-            </select>
-          </div>
-        </div>
+      <!-- FILA ÚNICA DE FILTROS EN CUADRÍCULA COMPACTA (LEY 11) -->
+      <div class="routes-filter-grid">
+        <button class="route-filter-btn active" onclick="window.setRoutesDiff('all', this)">
+          Todas
+        </button>
+        <button class="route-filter-btn diff-btn-facil" onclick="window.setRoutesDiff('facil', this)">
+          🟢 Fáciles
+        </button>
+        <button class="route-filter-btn diff-btn-media" onclick="window.setRoutesDiff('media', this)">
+          🟡 Medias
+        </button>
+        <button class="route-filter-btn diff-btn-alta" onclick="window.setRoutesDiff('alta', this)">
+          🔴 Exigentes
+        </button>
       </div>
 
       <!-- 4. MENÚ EN ACORDEÓN DESPLEGABLE (ARQUITECTURA DE PLAYAS) -->
       <div class="routes-accordion-container">
         ${allRoutes.map(r => {
-          const isInitialVisible = (initialScope === 'all' || r.isLocal);
-          const distLabel = r.distFromUserKm < 1.0 
+          const distLabel = r.distFromUserKm < 0.5 
             ? 'En este concejo' 
             : `A ${r.distFromUserKm} km de ${concejoTitle}`;
 
@@ -266,8 +170,7 @@ export function renderRoutesCard(data, concejo) {
               data-diff-cat="${r.diffCat}"
               data-dist-km="${r.distKm}"
               data-elev-m="${r.elevM}"
-              data-prox-km="${r.distFromUserKm}"
-              style="display: ${isInitialVisible ? '' : 'none'};">
+              data-prox-km="${r.distFromUserKm}">
               
               <summary class="route-accordion-header">
                 <div class="route-accordion-title-wrap">

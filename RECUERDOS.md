@@ -42,6 +42,21 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. *Almacenamiento Estático Desacoplado:* El bot vuelca los datos limpios (km abiertos, pistas por dificultad técnica, remontes en servicio y espesores mín/máx) en un archivo JSON estático (`data/snowReport.json`).
     3. *Consumo Directo en Cliente:* `mountainCard.js` lee ese JSON sin sobrecargar a los servidores externos ni ralentizar la carga en clientes, mostrando los partes de nieve actualizados en vivo de forma 100% legal, autónoma y sin fricción.
 
+## 🧭 Actualización v2.2.71: Simplificación Minimalista de Rutas por Cercanía y Filtros Compactos — 2026-10-18
+- **Erradicación del Ruido Visual y Optimización Móvil (Feedback y Diagnóstico Expreso de Lendo - «desde el movil queda un poco raro si lo ves. entre las tarjetas de arriba ylas tarjetas de las rutas, estan los botones castrillon, todas, toda asturias, faciles, medias, exijentes ordenar. un poco todo como un mega mix», «espera. yo creo que no hace falta poner enla ubicacion q estamos como en este caso en casrillon. con poner un titulo rutas por cercania y luego poner faciles, medias y exigentes, vale», «pisale»):**
+  1. *Diagnóstico Técnico y Ergonómico en Smartphone (Ley 11):*
+     - En la versión v2.2.70, los controles de rutas se distribuían en hasta 5 filas flotantes desarticuladas en pantallas móviles: fila 1 con el botón `📍 En Castrillón (3)`, fila 2 con `🗺️ Toda Asturias por cercanía (44)`, fila 3 con `Todas`, `🟢 Fáciles`, `🟡 Medias`, fila 4 con `🔴 Exigentes` descolgado a la izquierda por falta de ancho, y fila 5 con el selector `Ordenar: [ 📍 Por cercanía ▾ ]`.
+     - Esta configuración generaba una sensación de «mega mix» o caos visual flotando en el vacío entre el panel de diagnóstico meteorológico y las tarjetas desplegables de rutas.
+  2. *Solución Minimalista y Orden Natural Matemático:*
+     - Lendo propuso una solución conceptualmente impecable: suprimir completamente los botones de selección de ámbito (`En concejo` vs `Toda Asturias`) y el selector de ordenación.
+     - Como el motor de proximidad geodésica (`calculateDistanceKm`) ya calcula la distancia física en km de cada senda desde el concejo seleccionado, al ordenar el catálogo por proximidad las sendas locales del propio concejo (o las más próximas) aparecen matemáticamente en las primeras posiciones de forma natural (ej. en Castrillón: Río Bayas a 2.2 km, Playones a 2.4 km y Mirador a 4.5 km).
+  3. *Nueva Cabecera y Cuadrícula Fija al 25% (Ley 11):*
+     - Título unificado y limpio: `🥾 Rutas por cercanía` con subtítulo sutil `Ordenadas por distancia desde tu ubicación actual (Castrillón)`.
+     - Fila única de filtros por nivel técnico en cuadrícula fija de 4 columnas iguales (`.routes-filter-grid` con `grid-template-columns: repeat(4, 1fr)`): `Todas`, `🟢 Fáciles`, `🟡 Medias`, `🔴 Exigentes`. Cero saltos de línea ni botones huérfanos.
+  4. *Cache-Busting y Despliegue Oficial (Leyes 1, 3, 4, 10, 11 y 13):*
+     - Service Worker actualizado a `meteoasturlode-v2271-rutas-cercania-limpio` en `sw.js`.
+     - Versión oficial elevada a **`v2.2.71 🧭`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.71'` en `app.js`, `routesCard.js?v=2.2.71` y query strings en `index.html`.
+
 ## 🥾 Actualización v2.2.70: Menú en Acordeón Desplegable de Rutas, Catálogo Extendido de Asturias y Blindaje Ley 16 — 2026-10-18
 - **Evolución Arquitectónica de Rutas & Senderismo (Petición y Feedback Expreso de Lendo - «estoy pensando en rutas y senderismo. me gustaria que las rutas esten en un menu y para ver todos los datos se pueda desplegar como ya hicimos en las playas. me entiendes? explicame», «si pero no puedes buscar mas sendas? asturias esta llena. al mimimizar ya no estorban tanto no? puedes ponerlos por dificultad y por distancia de la coordenada que tenemos», «pisale a ver q tal pero siempre con la constitucion de advertir la responsabilidad de cada uno»):**
   1. *Diagnóstico de Experiencia de Usuario:*

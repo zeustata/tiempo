@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.71] - 2026-10-18
+
+### 🧭 Simplificación Minimalista de Rutas por Cercanía y Filtros Compactos (Feedback Lendo - Ley 11)
+- **Erradicación del Ruido Visual y Botones Redundantes:**
+  - Supresión completa de los botones largos de selección de alcance (`En Concejo` vs `Toda Asturias`) y del selector de ordenación, eliminando la dispersión en 5 filas de controles flotantes detectada por Lendo en pantallas móviles.
+- **Orden Natural por Proximidad Inmutable:**
+  - Las 44 sendas se presentan de manera inmutable jerarquizadas por proximidad geodésica real en kilómetros desde el concejo activo, garantizando que las sendas propias del concejo o las comarcales más inmediatas encabecen siempre el listado de forma intuitiva y matemática.
+  - Título limpio y directo: `🥾 Rutas por cercanía` con subtítulo explicativo de geolocalización.
+- **Fila Única de Dificultad en Cuadrícula Fija al 25% (Ley 11):**
+  - Condensados los filtros en una única fila compacta de 4 botones (`Todas`, `🟢 Fáciles`, `🟡 Medias`, `🔴 Exigentes`) mediante `grid-template-columns: repeat(4, 1fr)`, garantizando encuadre milimétrico, cero desbordes y máxima ergonomía táctil en smartphones de 320px a 380px.
+- **Cache-Busting y Despliegue Oficial:**
+  - Service Worker actualizado a `meteoasturlode-v2271-rutas-cercania-limpio` en `sw.js`.
+  - Versión oficial elevada a `v2.2.71 🧭` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.71'` en `app.js`, `routesCard.js?v=2.2.71` y query strings en `index.html`.
+
 ## [2.2.70] - 2026-10-18
 
 ### 🥾 Menú en Acordeón Desplegable de Rutas, Catálogo Extendido de Asturias y Blindaje Ley 16 (Petición Expresa de Lendo)
