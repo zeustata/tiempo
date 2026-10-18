@@ -34,6 +34,14 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   6. 🌰 **Amagüestu de Seronda (noviembre):**
      - *Identidad visual:* Castañes asaes en el tambor de fuego de carbón, xarra de sidra dulce recién mayada y hojas doradas de roble y castaño.
 
+## 🤖 Hoja de Ruta de Invierno: Bot Automatizado de Partes de Nieve para Estaciones de Esquí — 2026-10-18
+- **Objetivo y Automatización de Temporada (Petición y Hoja de Ruta de Lendo):**
+  - Actualmente, el módulo de Cordillera & Nieve (`mountainCard.js`, v2.0.1) cuenta con la interfaz completa de dominio esquiable, pistas por colores (verdes, azules, rojas, negras), remontes y espesores, pero opera en base a datos de pretemporada (`0 km`, cerrada) o mediante el simulacro de prueba (`?test=esqui`), derivando al usuario mediante enlace externo a `deporteasturiano.org` y portales oficiales.
+  - **Planificación del Bot para Apertura de Temporada (Diciembre – Abril):**
+    1. *Extracción Automatizada Matinal:* Crear un script ligero / bot (vía GitHub Actions programado a las 08:00 h) que consulte los partes oficiales diarios del Principado de Asturias (`deporteasturiano.org` para Valgrande-Pajares y Fuentes de Invierno) y portales oficiales de San Isidro y Leitariegos.
+    2. *Almacenamiento Estático Desacoplado:* El bot vuelca los datos limpios (km abiertos, pistas por dificultad técnica, remontes en servicio y espesores mín/máx) en un archivo JSON estático (`data/snowReport.json`).
+    3. *Consumo Directo en Cliente:* `mountainCard.js` lee ese JSON sin sobrecargar a los servidores externos ni ralentizar la carga en clientes, mostrando los partes de nieve actualizados en vivo de forma 100% legal, autónoma y sin fricción.
+
 ## 🌦️ Actualización v2.2.68: Nuevo Icono Universal de Chubascos con Sol («Llueve y fai sol») — 2026-10-18
 - **Creación Vectorial Completa del Icono Comodín `showers` (Feedback Lendo - «creo que en los iconos no existe el icono de chubascos (por ejemplo cuando en una hora determinada dan un chaparron y luego sale el sol. El tipico icono que sale una gota una nube y un sol. lo tenemos», «pisale anda que todos lal app lo incorporan y es como un comodin. si en una hora concreta dan posibilidad de nubes, sol y chubascos es imprescindible. crealo para todos los temas que tenemos incluido halloween»):**
   1. *Diagnóstico de la Suite de Iconos:*
