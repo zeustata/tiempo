@@ -31,8 +31,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.2.63">
-  <link rel="stylesheet" href="css/components.css?v=2.2.63">
+  <link rel="stylesheet" href="css/main.css?v=2.2.65">
+  <link rel="stylesheet" href="css/components.css?v=2.2.65">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.63 ⏰</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.65 🕵️‍♂️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -349,8 +349,34 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.2.63 ⏰</span>
+            <span class="release-version">v2.2.65 🕵️‍♂️</span>
             <span class="release-date">18 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-feature">Diseño &amp; Eventos (Feedback Lendo - Misterio y Expectación)</span> <strong>Iconografía de Halloween Pixelada con Censura de Intriga ("Top Secret")</strong>:
+              <br>• <strong>Mosaico de Censura Digital:</strong> Los iconos temáticos de Samhain en el selector de estilos (<code>#icon-themes-modal</code>) se presentan con un elegante efecto de censura pixelada y trama de cuadrícula, permitiendo vislumbrar los destellos de color pero manteniendo en secreto el diseño exacto hasta el 31 de octubre.
+              <br>• <strong>Insignia Flotante Top Secret:</strong> Incorporada la pastilla <code>🕵️‍♂️ Top Secret • Revelación en Samhain</code> sobre la vista previa, despixelándose automáticamente en las fechas oficiales del evento o en modo de prueba.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.64 🎃</span>
+            <span class="release-date">18 Oct 2026</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-feature">Diseño &amp; Eventos (Feedback Lendo - Colección de Temporada)</span> <strong>Nueva Colección Temática Especial Halloween / Samhain con Bloqueo de Calendario</strong>:
+              <br>• <strong>Iconografía Vectorial a Medida:</strong> Creado el catálogo completo en <code>weatherHalloweenIcons.js</code> con calabazas Jack-o'-lantern solares, luna con silueta de bruja volando en escoba, resol místico velado, niebla densa mojada (<code>wet-fog</code>) con ectoplasma y rocío, castillo encantado con tormenta, y murciélagos.
+              <br>• <strong>Tarjeta con Candado en el Catálogo:</strong> Visible e inspeccionable en el selector de estilos (<code>#icon-themes-modal</code>) con badge en negrita <code>🔒 Solo 31 Oct - 1 Nov</code>, aviso de desbloqueo automático y botón de prueba en vivo.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.63 ⏰</span>
+            <span class="release-date">18 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-fix">Astronomía &amp; Horario Civil (Feedback Lendo - Cambio de Hora)</span> <strong>Normalización Astronómica Perpetua y Corrección del Cambio de Horario (Invierno / Verano)</strong>:
@@ -3742,6 +3768,29 @@
             <p class="theme-card-desc">Trazos artísticos a mano alzada con texturas de lápiz y toques cálidos de acuarela.</p>
             <div class="theme-card-preview" id="preview-sketch-icons"></div>
           </div>
+
+          <!-- Tarjeta 8: Especial Halloween / Samhain (Eventual / Bloqueado) -->
+          <div class="icon-theme-card theme-card-locked" id="theme-card-halloween" data-theme="halloween">
+            <div class="theme-card-header">
+              <span class="theme-card-icon">🎃</span>
+              <div class="theme-card-info">
+                <h4>Especial Halloween</h4>
+                <span class="theme-card-tag theme-tag-locked">🔒 Solo 31 Oct - 1 Nov</span>
+              </div>
+              <span class="theme-lock-badge">🔒 Bloqueado</span>
+            </div>
+            <p class="theme-card-desc">Colección temática exclusiva para Samhain y la Noche de Difuntos con calabazas Jack-o'-lantern, niebla densa mojada con ectoplasma, luna con bruja y murciélagos. Se activará automáticamente por defecto el 31 de octubre.</p>
+            <div class="theme-card-preview-pixelated" id="wrap-halloween-preview">
+              <div class="theme-card-preview" id="preview-halloween-icons"></div>
+              <div class="theme-secret-overlay">
+                <span class="badge-top-secret">🕵️‍♂️ Top Secret • Revelación en Samhain</span>
+              </div>
+            </div>
+            <div class="theme-card-lock-footer">
+              <span class="lock-notice-text">🎃 Activación automática y revelación el 31 de octubre</span>
+              <span class="lock-notice-badge">31 Oct – 1 Nov</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -3888,7 +3937,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=2.2.63').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=2.2.65').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -3918,7 +3967,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.63"></script>
+  <script type="module" src="js/app.js?v=2.2.65"></script>
 
 
 

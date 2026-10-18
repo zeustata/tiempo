@@ -10,6 +10,47 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.65] - 2026-10-18
+
+### 🕵️‍♂️ Iconografía de Halloween Pixelada con Censura de Intriga ("Top Secret") y Blindaje de Expectación (Feedback Lendo)
+- **Mosaico Digital de Censura Pixelada en el Catálogo de Estilos:**
+  - Los iconos SVG temáticos de Halloween en el modal de estilos (`#icon-themes-modal`) se protegen con un efecto de desenfoque gaussiano y contraste (`filter: blur(5px) contrast(1.4) saturate(1.3)`), superpuesto a una cuadrícula de píxeles digitales de 5x5 px (`.theme-card-preview-pixelated`).
+  - Permite que los usuarios y beta testers aprecien los reflejos de color (naranja fuego, verde espectral, amarillo lunar y violeta tormentoso), pero manteniendo completamente veladas las siluetas, caras y detalles artísticos hasta la llegada de la fiesta.
+- **Insignia Flotante Top Secret y Despixelado Automático:**
+  - Incorporada la pastilla translúcida con relieve `🕵️‍♂️ Top Secret • Revelación en Samhain` sobre la vista previa.
+  - Al llegar el 31 de octubre o al ejecutar el simulacro de desarrollador (`?test=halloween`), el contenedor se despixela suavemente de forma automática eliminando la censura y revelando la iconografía íntegra en alta definición.
+- **Cache-Busting y Despliegue Oficial:**
+  - Service Worker actualizado a `meteoasturlode-v2265-halloween-misterio-pixelado` en `sw.js`.
+  - Versión oficial elevada a `v2.2.65 🕵️‍♂️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.65'` en `app.js` y query strings de versión en `index.html`.
+
+## [2.2.64] - 2026-10-18
+
+### 🎃 Colección Temática Especial Halloween / Samhain con Bloqueo de Calendario y Modo de Prueba en Vivo (Feedback Lendo)
+- **Iconografía Vectorial Exclusiva de Alta Definición (`weatherHalloweenIcons.js`):**
+  - Creada una suite completa de iconos SVG temáticos para Halloween y la Noche de Difuntos (Samhain tradicional asturiano):
+    - **Jack-o'-Lantern Solar (`sun` / `clear-day`):** Calabaza tallada iluminada con corona de rayos solares dorados y sonrisa resplandeciente.
+    - **Luna con Bruja Volando (`clear-night` / `moon`):** Luna llena misteriosa con la silueta de una bruja montando en escoba surcando el cielo nocturno y estrellas titilantes.
+    - **Fantasmas y Claros (`mostly-clear-day` / `partly-cloudy-day`):** Nubes translúcidas acompañadas de amigables ánimas y espectros flotantes.
+    - **Resol Asturiano Místico (`resol`):** Calabaza Jack-o'-lantern velada con textura mística a través de una telaraña dorada y rayos tamizados.
+    - **Niebla Densa Mojada con Ectoplasma (`wet-fog`):** Cuatro estratos de borrina espectral ondulante verde fluorescente (`#10b981`), salpicada de microgotas de rocío flotante y ánimas sutiles.
+    - **Nubes con Murciélagos (`cloud` / `cloudy`):** Cúmulos oscuros con siluetas de murciélagos al vuelo y ojos brillantes en la sombra.
+    - **Orbayu con Poción Mágica (`drizzle`):** Caldero burbujeante con poción morada y microgotas de llovizna cayendo suavemente.
+    - **Lluvia con Araña (`rain`):** Nube tormentosa con finas gotas violetas y una araña colgando de su hilo de seda.
+    - **Bastinazu y Lluvia Torrencial (`heavy-rain`):** Rayas oblicuas de lluvia intensa empujadas por ráfagas de viento y murciélagos capeando el temporal.
+    - **Tormenta con Castillo Encantado (`storm`):** Mansión o castillo gótico gualdo sobre colina con relámpagos magenta y destellos eléctricos.
+    - **Granizo de Cripta (`hail`):** Nubes de tormenta descargando pedriscu y trozos de hielo cristalino espectral.
+    - **Nevadona con Sombrero de Bruja (`snow` / `heavy-snow`):** Cúmulo de nieve invernal coronado con el icónico sombrero puntiagudo de bruja con hebilla dorada y copos centelleantes.
+- **Tarjeta de Catálogo Bloqueada con Candado y Activación en Calendario:**
+  - Integrada en el modal de estilos (`#icon-themes-modal`) como octava colección con diseño distintivo púrpura-naranja (`.theme-card-locked`).
+  - Badge destacado en negrita `🔒 Solo 31 Oct - 1 Nov` e indicador `🔒 Bloqueado`, informando claramente de su condición de evento temporal sin saturar la selección habitual.
+  - Al pulsar la tarjeta fuera de fecha, el sistema notifica de forma ergonómica que es un set reservado para Samhain.
+- **Modo de Prueba en Vivo ("🧪 Probar ahora"):**
+  - Incorporado un botón interactivo dentro de la tarjeta de catálogo que permite a Lendo y a los beta testers previsualizar la colección completa en tiempo real en todos los paneles y tarjetas de la aplicación sin alterar permanentemente su tema favorito.
+  - Al activar la prueba, un elegante aviso flotante confirma el modo activo y permite recorrer la app viendo todos los fenómenos meteorológicos bajo la ambientación de Halloween.
+- **Cache-Busting y Despliegue Oficial:**
+  - Service Worker actualizado a `meteoasturlode-v2264-halloween-samhain-preview` en `sw.js`.
+  - Versión oficial elevada a `v2.2.64 🎃` en el badge del pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.64'` en `app.js` y query strings de versión en `index.html`.
+
 ## [2.2.63] - 2026-10-18
 
 ### ⏰ Normalización Astronómica Perpetua y Corrección del Cambio de Horario (Feedback Lendo - Alba y Ocaso)

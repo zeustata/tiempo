@@ -1,5 +1,5 @@
 import { CONCEJOS_ASTURIAS, getConcejoById } from '../config/concejos.js';
-import { getWeatherInfo, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=1.1.60';
+import { getWeatherInfo, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=2.2.64';
 
 /**
  * Extrae y sintetiza el estado meteorológico real con calibración solar inteligente (Leyes 7 y 12)

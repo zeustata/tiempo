@@ -1,4 +1,4 @@
-import { getWeatherInfo, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=2.2.24';
+import { getWeatherInfo, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=2.2.64';
 
 /**
  * Red de puertos de montaña estratégicos de la Cordillera Cantábrica en Asturias

@@ -7,7 +7,7 @@
  * Compatible con la Web Share API (WhatsApp, Instagram, Telegram) y descarga directa.
  */
 
-import { getWeatherInfo, renderWeatherIconHtml } from './weatherIcons.js?v=2.2.25';
+import { getWeatherInfo, renderWeatherIconHtml } from './weatherIcons.js?v=2.2.64';
 
 /**
  * Carga un string SVG en un objeto Image en memoria para pintado directo en Canvas HTML5

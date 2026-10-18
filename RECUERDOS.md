@@ -8,6 +8,55 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🕵️‍♂️ Actualización v2.2.65: Iconografía de Halloween Pixelada con Censura de Intriga ("Top Secret") — 2026-10-18
+- **Efecto Mosaico Pixelado y Blindaje de Expectación (Feedback Lendo - «ahora quiero que en el boton iconos para eleguir el tema, el de halloeen estén los iconos como pixelados para que se vea que existen pero no se sepan como son hasta el evento» y «pisale»):**
+  1. *Conceptualización del Factor Sorpresa y Secreto de Sumario:*
+     - Lendo concibió que, para preservar la emoción del evento especial de Halloween / Samhain, los iconos de la tarjeta de catálogo deben aparecer bajo un mosaico pixelado y censurado ("como pixelados para que se vea que existen pero no se sepan como son hasta el evento"), impidiendo que se descubran las formas artísticas antes del 31 de octubre.
+  2. *Desarrollo del Mosaico Digital de Censura (`main.css`):*
+     - Creada la clase `.theme-card-preview-pixelated` que envuelve la previsualización `#preview-halloween-icons`.
+     - Implementado filtro óptico de censura digital: `filter: blur(5px) contrast(1.4) saturate(1.3); image-rendering: pixelated;`.
+     - Superpuesta una trama geométrica de cuadrícula de 5x5 px mediante pseudoelemento `::before` con relieve, recreando el efecto exacto de censura televisiva y de videojuegos.
+     - Diseñada la pastilla flotante central `.badge-top-secret` con texto `🕵️‍♂️ Top Secret • Revelación en Samhain` en acabado liquid glass con borde naranja de neón.
+  3. *Mecanismo de Despixelado Automático y Modo Simulacro (`app.js`, `index.html`):*
+     - Al entrar en la ventana temporal del 31 de octubre o 1 de noviembre, la clase `.unpixelated` desactiva de forma automática la censura y la cuadrícula, mostrando los iconos en vector nítido.
+     - Integrado el conmutador de simulacro de desarrollador vía URL (`?test=halloween`) en cumplimiento estricto de la Ley Constitucional 12, permitiendo probar en cualquier momento la app en modo Halloween despixelado.
+  4. *Cache-Busting y Despliegue Oficial (Leyes 1, 3, 4, 10 y 13):*
+     - Service Worker actualizado a `meteoasturlode-v2265-halloween-misterio-pixelado` en `sw.js`.
+     - Versión oficial elevada a **`v2.2.65 🕵️‍♂️`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.65'` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+     - Query strings sincronizadas a `?v=2.2.65` en `index.html` (`main.css`, `components.css`, `sw.js`, `app.js`).
+
+## 🎃 Actualización v2.2.64: Colección Temática Especial Halloween / Samhain con Bloqueo de Calendario y Modo de Prueba en Vivo — 2026-10-18
+- **Suite de Iconos Especial Halloween / Samhain y Gestión de Eventos Estacionales (Feedback Lendo - «podriamos crear iconos tematicos pero que solo se pongan por defecto el dia del evento? Por ejemplo el dia de Halloween unos iconos (que aun estam por crearse)», «pero quiero verlos antes a ver que tal estan. Puedes ponerlos en el catalogo de Iconos para que se vean pero con una especie de candado o en negrita para que se deduzca que no son elejibles ya que son para una determinada fecha?», «acuerdate que tenemos mas iconos que creamos como la niebla densa mojada por ejemplo» y «pisale»):**
+  1. *Conceptualización Artística y Adaptación al Clima y Mitología Asturiana:*
+     - Lendo propuso crear una colección temática conmemorativa de Halloween / Samhain que se active automáticamente por defecto los días señalados del evento (31 de octubre y 1 de noviembre), pero que esté visible en el catálogo de temas con candado indicando que no es elegible como tema cotidiano fuera de fechas.
+     - Lendo remarcó explícitamente la exigencia de incluir todos los iconos climáticos asturianos específicos creados en el proyecto (niebla densa mojada `wet-fog`, resol asturiano místico `resol`, orbayu `drizzle`, bastinazu `heavy-rain`, pedriscu `hail` y nevadona `heavy-snow`).
+  2. *Creación del Módulo Vectorial Completo (`js/utils/weatherHalloweenIcons.js`):*
+     - Diseñado un catálogo SVG vectorial nativo sin dependencias externas con gradientes temáticos oscuros, púrpuras, naranjas de fuego y verdes espectrales:
+       - **Jack-o'-Lantern Solar (`sun` / `clear-day`):** Calabaza sonriente tallada con ojos brillantes dorados y halo de rayos solares.
+       - **Luna con Bruja Volando (`clear-night` / `moon`):** Luna llena misteriosa con la silueta de una bruja montando su escoba al vuelo nocturno.
+       - **Ánimas y Claros (`partly-cloudy-day` / `mostly-clear-day`):** Nubes translúcidas acompañadas de un fantasmita flotante.
+       - **Resol Místico Velado (`resol`):** Calabaza solar tamizada tras una fina telaraña dorada y rayos velados.
+       - **Niebla Densa Mojada Espectral (`wet-fog`):** Cuatro estratos de borrina ondulante verde fluorescente (`#10b981`), salpicada de microgotas de rocío flotante y ánimas sutiles.
+       - **Nublado con Murciélago (`cloud` / `cloudy`):** Cúmulo nuboso con murciélago en pleno vuelo y ojos vigilantes.
+       - **Orbayu con Poción Mágica (`drizzle`):** Caldero humeante de bruja con poción morada y gotas finas.
+       - **Lluvia con Araña (`rain`):** Nube plomiza con araña descolgándose en su hilo de seda.
+       - **Bastinazu y Temporal (`heavy-rain`):** Fuertes bandas de agua azotadas por ráfagas de viento y murciélago al viento.
+       - **Tormenta con Castillo Encantado (`storm`):** Mansión gótica con ventanales iluminados y relámpago magenta sobre cielo tormentoso.
+       - **Pedriscu de Cripta (`hail`):** Nubes descargando trozos de hielo cristalino espectral.
+       - **Nevadona con Sombrero de Bruja (`snow` / `heavy-snow`):** Cúmulo de nieve invernal coronado con sombrero puntiagudo de bruja.
+  3. *Arquitectura de Bloqueo, Calendario y Modo de Prueba en Vivo (`index.html`, `main.css`, `app.js`):*
+     - En `index.html`: tarjeta `#theme-card-halloween` con clases `.icon-theme-card .theme-card-locked`, etiqueta `🔒 Solo 31 Oct - 1 Nov`, badge `🔒 Bloqueado`, descripción del evento, tira de previsualización `#preview-halloween-icons` y botón de acción `#btn-toggle-halloween-test` («🧪 Probar ahora»).
+     - En `css/main.css`: estilos para `.theme-card-locked` con borde púrpura/naranja resplandeciente (`rgba(168, 85, 247, 0.4)`), badge `.theme-tag-locked` con gradiente ámbar, y botón `.btn-preview-theme`.
+     - En `js/app.js`:
+       - `getEffectiveIconTheme()`: devuelve `'halloween'` si `previewHalloweenMode` está activo o si la fecha del sistema es 31 de octubre o 1 de noviembre (salvo elección manual expresa del usuario).
+       - En `setupIconThemesModal()`: renderizado dinámico de miniaturas SVG de Halloween en el carrusel de la tarjeta.
+       - Botón `btnToggleHalloween`: permite alternar el modo de prueba en vivo en cualquier momento, actualizando instantáneamente todos los paneles de la app y mostrando notificaciones flotantes ergonómicas (`showToast`).
+       - Clic sobre la tarjeta bloqueada: orienta al usuario mediante haptic y notificación indicando la exclusividad de fechas y la opción de usar el botón de prueba.
+  4. *Cache-Busting y Despliegue Oficial (Leyes 1, 3, 4, 10 y 13):*
+     - Service Worker actualizado a `meteoasturlode-v2264-halloween-samhain-preview` en `sw.js`.
+     - Versión oficial elevada a **`v2.2.64 🎃`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.64'` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+     - Query strings sincronizadas a `?v=2.2.64` en `index.html` (`main.css`, `components.css`, `sw.js`, `app.js`) y en `app.js` (`weatherIcons.js?v=2.2.64`, `weatherHalloweenIcons.js?v=2.2.64`).
+
 ## ⏰ Actualización v2.2.63: Normalización Astronómica Perpetua y Corrección del Cambio de Horario — 2026-10-18
 - **Normalización Astronómica y Corrección del Cambio de Horario (Feedback Lendo - «no puedes implementarlo en la app? es que estoy viendo que en el pronostico del tiempo, el domingo no tienes cambiado el ocaso t el alba no esta cambiado... que va a pasar el donimgo 25 de octubre?», «y para el año que viene, cuando pasemos al horario de herano otra vez lo tendra en cuenta?», «y para las previsiones del tiempo quedan cuadrados? por ejemplo las previsiones de 72 horas?», «y el dia 25 va a estar todo cuadrado no? no habra un doble cuadrado ni nada de eso no?» y «pisale»):**
   1. *Diagnóstico Científico y Causa Raíz:*

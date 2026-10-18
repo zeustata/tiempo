@@ -1,23 +1,24 @@
 import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=2.0.0';
 import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=2.2.62';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=2.0.0';
-import { renderCurrentWeather } from './components/currentCard.js?v=2.2.62';
+import { renderCurrentWeather } from './components/currentCard.js?v=2.2.64';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=2.2.51';
 import { renderSurfCard } from './components/surfCard.js?v=2.2.55';
 import { renderRoutesCard } from './components/routesCard.js?v=2.2.20';
-import { renderMountainCard } from './components/mountainCard.js?v=2.2.24';
+import { renderMountainCard } from './components/mountainCard.js?v=2.2.64';
 import { renderTourismCard } from './components/tourismCard.js?v=2.2.1';
-import { renderForecast } from './components/forecastView.js?v=2.2.63';
-import { renderWeatherChart } from './components/chartsView.js?v=2.2.23';
+import { renderForecast } from './components/forecastView.js?v=2.2.64';
+import { renderWeatherChart } from './components/chartsView.js?v=2.2.64';
 import { renderAstronomyView } from './components/astronomyCard.js?v=2.2.1';
 import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=2.2.1';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=2.2.62';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=2.2.64';
 import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=2.0.0';
 import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=2.0.0';
 import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=2.0.0';
 import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=2.0.0';
 import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=2.0.0';
 import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=2.0.0';
+import { getHalloweenWeatherSvg } from './utils/weatherHalloweenIcons.js?v=2.2.64';
 import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=2.0.0';
 import { getTourismPlanExplanation } from './utils/tourismData.js?v=2.0.0';
 import { checkConcejoFolixa } from './utils/festivosData.js?v=2.0.0';
@@ -26,7 +27,7 @@ import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=2.0.0';
 import { initGyroGlass } from './utils/gyroGlass.js?v=2.0.0';
 import { triggerSeismicRefresh, getSeismicStatus } from './utils/seismicDetector.js?v=2.2.38';
 import { evaluateWeatherAlerts } from './utils/weatherAlerts.js?v=2.2.35';
-import { openShareModal } from './utils/shareCardGenerator.js?v=2.2.25';
+import { openShareModal } from './utils/shareCardGenerator.js?v=2.2.64';
 import { toggleWeatherSpeech, stopWeatherSpeech } from './utils/weatherSpeaker.js?v=2.0.0';
 
 const APP_MODULES = [
@@ -42,7 +43,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '2.2.63';
+export const CURRENT_APP_VERSION = '2.2.65';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -55,6 +56,7 @@ class MeteoAsturiasApp {
     this.activeTab = 'live';
     this.autoRefreshTimer = null;
     this.deferredInstallPrompt = null;
+    this.previewHalloweenMode = false;
     
     this.init();
   }
@@ -104,6 +106,14 @@ class MeteoAsturiasApp {
     // Auto-ubicación inteligente silenciosa al iniciar si está activada
     if (this.prefs.autoLocation === true) {
       this.locateUser({ silent: true });
+    }
+
+    // Notificación de simulacro secreto de Halloween (Ley Constitucional 12)
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('test') === 'halloween') {
+      setTimeout(() => {
+        this.showToast('🎃 Simulacro de Halloween activo (Ley Constitucional 12)');
+      }, 1200);
     }
 
     // Cargar datos actualizados en segundo plano/red
@@ -411,7 +421,7 @@ class MeteoAsturiasApp {
     const handleOpenShare = () => {
       this.triggerHaptic();
       if (this.currentConcejo && this.weatherData) {
-        openShareModal(this.currentConcejo, this.weatherData, this.prefs.iconTheme);
+        openShareModal(this.currentConcejo, this.weatherData, this.getEffectiveIconTheme());
       }
     };
 
@@ -1071,7 +1081,7 @@ class MeteoAsturiasApp {
 
     const updateNavHeaderThemeBadge = () => {
       if (badgeTheme) {
-        const theme = this.prefs.iconTheme || 'classic';
+        const theme = this.getEffectiveIconTheme();
         const themeNames = {
           classic: '📱 Emojis Clásicos',
           astur: '🎭 Emojis Emotivos',
@@ -1081,7 +1091,8 @@ class MeteoAsturiasApp {
           glass: '💎 Liquid Glass 3D',
           pixel: '👾 Pixel Art Retro',
           neon: '✨ Minimalista Neón',
-          sketch: '✏️ Dibujo a Mano'
+          sketch: '✏️ Dibujo a Mano',
+          halloween: '🎃 Especial Halloween'
         };
         badgeTheme.textContent = themeNames[theme] || '📱 Emojis Clásicos';
       }
@@ -1165,6 +1176,8 @@ class MeteoAsturiasApp {
     const previewPixel = document.getElementById('preview-pixel-icons');
     const previewNeon = document.getElementById('preview-neon-icons');
     const previewSketch = document.getElementById('preview-sketch-icons');
+    const previewHalloween = document.getElementById('preview-halloween-icons');
+    const btnToggleHalloween = document.getElementById('btn-toggle-halloween-test');
 
     if (!modal) return;
 
@@ -1235,12 +1248,45 @@ class MeteoAsturiasApp {
       `;
     }
 
+    if (previewHalloween) {
+      previewHalloween.innerHTML = `
+        <span class="preview-svg" title="Sol Jack-o'-lantern">${getHalloweenWeatherSvg('sun', 28)}</span>
+        <span class="preview-svg" title="Mayormente soleado">${getHalloweenWeatherSvg('mostly-clear-day', 28)}</span>
+        <span class="preview-svg" title="Nubes con fantasma">${getHalloweenWeatherSvg('partly-cloudy-day', 28)}</span>
+        <span class="preview-svg" title="Resol místico velado">${getHalloweenWeatherSvg('resol', 28)}</span>
+        <span class="preview-svg" title="Niebla densa mojada con ectoplasma">${getHalloweenWeatherSvg('wet-fog', 28)}</span>
+        <span class="preview-svg" title="Nublado con murciélago">${getHalloweenWeatherSvg('cloud', 28)}</span>
+        <span class="preview-svg" title="Orbayu con poción mágica">${getHalloweenWeatherSvg('drizzle', 28)}</span>
+        <span class="preview-svg" title="Lluvia con araña">${getHalloweenWeatherSvg('rain', 28)}</span>
+        <span class="preview-svg" title="Tormenta con castillo gótico">${getHalloweenWeatherSvg('storm', 28)}</span>
+        <span class="preview-svg" title="Luna con bruja volando">${getHalloweenWeatherSvg('clear-night', 28)}</span>
+      `;
+    }
+
     const updateActiveThemeCards = () => {
-      const currentTheme = this.prefs.iconTheme || 'astur';
+      const currentTheme = this.getEffectiveIconTheme();
       modal.querySelectorAll('.icon-theme-card').forEach(card => {
         const theme = card.dataset.theme;
         card.classList.toggle('active', theme === currentTheme);
       });
+      const cardHalloween = document.getElementById('theme-card-halloween');
+      if (cardHalloween) {
+        const now = new Date();
+        const isHalloweenDate = (now.getMonth() === 9 && now.getDate() === 31) || (now.getMonth() === 10 && now.getDate() === 1);
+        const urlParams = new URLSearchParams(window.location.search);
+        const isTestUrl = urlParams.get('test') === 'halloween';
+        const isUnpixelated = isHalloweenDate || isTestUrl || this.previewHalloweenMode;
+        cardHalloween.classList.toggle('unpixelated', isUnpixelated);
+      }
+      if (btnToggleHalloween) {
+        if (this.previewHalloweenMode) {
+          btnToggleHalloween.textContent = '🎃 Quitar prueba';
+          btnToggleHalloween.classList.add('active-preview');
+        } else {
+          btnToggleHalloween.textContent = '🧪 Probar ahora';
+          btnToggleHalloween.classList.remove('active-preview');
+        }
+      }
       if (this.updateNavHeaderThemeBadge) this.updateNavHeaderThemeBadge();
     };
 
@@ -1259,7 +1305,22 @@ class MeteoAsturiasApp {
     modal.querySelectorAll('.icon-theme-card').forEach(card => {
       card.addEventListener('click', () => {
         const theme = card.dataset.theme;
-        if (theme) selectTheme(theme);
+        if (theme === 'halloween') {
+          const now = new Date();
+          const isHalloweenDate = (now.getMonth() === 9 && now.getDate() === 31) || (now.getMonth() === 10 && now.getDate() === 1);
+          const urlParams = new URLSearchParams(window.location.search);
+          const isTestUrl = urlParams.get('test') === 'halloween';
+          if (isHalloweenDate || isTestUrl) {
+            selectTheme('halloween');
+          } else {
+            this.triggerHaptic();
+            this.showToast('🕵️‍♂️ Colección clasificada bajo secreto de sumario. ¡Se revelará y activará el 31 de Octubre!');
+          }
+          return;
+        }
+        if (theme) {
+          selectTheme(theme);
+        }
       });
     });
 
@@ -1284,6 +1345,57 @@ class MeteoAsturiasApp {
     });
 
     updateActiveThemeCards();
+  }
+
+  getEffectiveIconTheme() {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('test') === 'halloween' || this.previewHalloweenMode) return 'halloween';
+    const now = new Date();
+    // Samhain / Noche de Difuntos: 31 de Octubre (mes 9) y 1 de Noviembre (mes 10)
+    const isHalloween = (now.getMonth() === 9 && now.getDate() === 31) || (now.getMonth() === 10 && now.getDate() === 1);
+    if (isHalloween && !localStorage.getItem('meteoastur_explicit_theme')) {
+      return 'halloween';
+    }
+    return this.prefs.iconTheme || 'astur';
+  }
+
+  showToast(message, duration = 3200) {
+    let toast = document.getElementById('meteo-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'meteo-toast';
+      toast.style.cssText = `
+        position: fixed;
+        bottom: 84px;
+        left: 50%;
+        transform: translateX(-50%) translateY(20px);
+        background: rgba(15, 23, 42, 0.95);
+        color: #fff;
+        padding: 11px 20px;
+        border-radius: 9999px;
+        font-size: 0.88rem;
+        font-weight: 600;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.18);
+        z-index: 99999;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.25s ease, transform 0.25s ease;
+        max-width: 90vw;
+        text-align: center;
+        backdrop-filter: blur(8px);
+      `;
+      document.body.appendChild(toast);
+    }
+    toast.textContent = message;
+    requestAnimationFrame(() => {
+      toast.style.opacity = '1';
+      toast.style.transform = 'translateX(-50%) translateY(0)';
+    });
+    if (this._toastTimeout) clearTimeout(this._toastTimeout);
+    this._toastTimeout = setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateX(-50%) translateY(20px)';
+    }, duration);
   }
 
   setupExplainModal() {
@@ -1869,7 +1981,7 @@ class MeteoAsturiasApp {
     }
 
     if (targetTab === 'charts' && this.weatherData) {
-      setTimeout(() => renderWeatherChart('meteo-chart-canvas', this.weatherData.weather.hourly, 48, this.prefs.iconTheme), 50);
+      setTimeout(() => renderWeatherChart('meteo-chart-canvas', this.weatherData.weather.hourly, 48, this.getEffectiveIconTheme()), 50);
     }
 
     if (targetTab === 'marine') {
@@ -2298,7 +2410,7 @@ class MeteoAsturiasApp {
     const compareContainer = document.getElementById('panel-compare');
     if (!compareContainer || !this.weatherData) return;
 
-    compareContainer.innerHTML = renderCompareView(this.currentConcejo, this.weatherData, this.compareConcejoB, this.compareWeatherDataB, this.prefs.iconTheme);
+    compareContainer.innerHTML = renderCompareView(this.currentConcejo, this.weatherData, this.compareConcejoB, this.compareWeatherDataB, this.getEffectiveIconTheme());
 
     const selectB = document.getElementById('compare-select-b');
     if (selectB) {
@@ -2433,6 +2545,7 @@ class MeteoAsturiasApp {
 
   renderAllComponents() {
     if (!this.weatherData) return;
+    const effectiveTheme = this.getEffectiveIconTheme();
 
     // ─── FASE 1: Panel en Vivo (inmediata) ─────────────────────────────────────
     // Se renderiza primero y solo el panel-live que es lo que el usuario ve.
@@ -2441,7 +2554,7 @@ class MeteoAsturiasApp {
     try {
       const liveContainer = document.getElementById('panel-live');
       if (liveContainer) {
-        liveContainer.innerHTML = renderCurrentWeather(this.weatherData, this.currentConcejo, this.prefs.units, this.prefs.iconTheme);
+        liveContainer.innerHTML = renderCurrentWeather(this.weatherData, this.currentConcejo, this.prefs.units, effectiveTheme);
       }
       // Verificación de Alertas Rojas de Emergencia (v2.2.34)
       this.checkEmergencyRedAlerts(this.weatherData, this.currentConcejo);
@@ -2505,7 +2618,7 @@ class MeteoAsturiasApp {
       try {
         const mountainContainer = document.getElementById('panel-mountain');
         if (mountainContainer) {
-          mountainContainer.innerHTML = renderMountainCard(data, concejo, prefs.iconTheme);
+          mountainContainer.innerHTML = renderMountainCard(data, concejo, effectiveTheme);
           if (this.activeTab === 'mountain') {
             const wakeCarousels = () => {
               document.querySelectorAll('.ski-7days-carousel').forEach(c => {
@@ -2534,7 +2647,7 @@ class MeteoAsturiasApp {
       try {
         const forecastContainer = document.getElementById('panel-forecast');
         if (forecastContainer) {
-          forecastContainer.innerHTML = renderForecast(data, prefs.units, prefs.iconTheme);
+          forecastContainer.innerHTML = renderForecast(data, prefs.units, effectiveTheme);
         }
       } catch (e) {
         console.error('[MeteoAstur] Error renderizando Pronóstico:', e);
@@ -2543,7 +2656,7 @@ class MeteoAsturiasApp {
       // 5. Gráfico si está activo
       if (activeTab === 'charts') {
         try {
-          renderWeatherChart('meteo-chart-canvas', data.weather.hourly, 48, prefs.iconTheme);
+          renderWeatherChart('meteo-chart-canvas', data.weather.hourly, 48, effectiveTheme);
         } catch (e) {
           console.error('[MeteoAstur] Error renderizando Gráfica:', e);
         }

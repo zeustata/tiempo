@@ -1,9 +1,10 @@
-const CACHE_NAME = 'meteoasturlode-v2263-horario-invierno-astronomico';
+const CACHE_NAME = 'meteoasturlode-v2265-halloween-misterio-pixelado';
 const STATIC_ASSETS = [
   './',
   './index.html',
   './privacy.html',
   './manifest.json',
+  './js/utils/weatherHalloweenIcons.js',
   './js/utils/festivosData.js',
   './icons/bandera-asturias.svg',
   './icons/icon.svg',

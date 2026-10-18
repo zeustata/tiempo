@@ -4,6 +4,7 @@ import { getNeonWeatherSvg } from './weatherNeonIcons.js?v=2.1.5';
 import { getSketchWeatherSvg } from './weatherSketchIcons.js?v=2.1.5';
 import { getGlassWeatherSvg } from './weatherGlassIcons.js?v=2.1.5';
 import { getFuturoWeatherSvg } from './weatherFuturoIcons.js?v=2.1.5';
+import { getHalloweenWeatherSvg } from './weatherHalloweenIcons.js?v=2.2.64';
 
 /**
  * Mapeo de códigos meteorológicos WMO a descripciones en asturiano/castellano, iconos y clases
@@ -465,6 +466,10 @@ export function renderWeatherIconHtml(weatherInfo, size = 32, theme = 'astur') {
 
   if (theme === 'glass') {
     return getGlassWeatherSvg(weatherInfo.svgKey, size);
+  }
+
+  if (theme === 'halloween') {
+    return getHalloweenWeatherSvg(weatherInfo.svgKey, size);
   }
 
   // Por defecto para 'astur' o cualquier clave personalizada

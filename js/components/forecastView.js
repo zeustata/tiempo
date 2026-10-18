@@ -1,4 +1,4 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection } from '../utils/weatherIcons.js?v=2.2.62';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection } from '../utils/weatherIcons.js?v=2.2.64';
 
 /**
  * Normaliza y formatea una marca de tiempo solar (ISO de Open-Meteo) a la hora civil oficial de Asturias/España,
