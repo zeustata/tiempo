@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2273-rutas-responsive-ubicacion';
+const CACHE_NAME = 'meteoasturlode-v2274-planes-acordeon-catalogo';
 const STATIC_ASSETS = [
   './',
   './index.html',

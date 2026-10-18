@@ -10,6 +10,29 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.74] - 2026-10-18
+
+### 🎭 Planes & Ocio: Lavado de Cara en Acordeón, 36 Destinos y Proximidad Real (Feedback Lendo - Ley 11)
+- **Arquitectura en Acordeón Compacto:**
+  - Migración completa del módulo de ocio (`tourismCard.js`) a un sistema interactivo de acordeones nativos (`<details name="tourism-accordion">`) con exclusión mutua automática entre navegadores, replicando el exitoso modelo de Playas, Surf y Rutas.
+  - El usuario puede navegar de forma ágil por decenas de propuestas culturales y de ocio sin saturar la pantalla ni perder la orientación.
+- **Ampliación Masiva del Catálogo (36 Destinos Asturianos):**
+  - Expansión de 20 a 36 destinos emblemáticos en `tourismData.js`, cubriendo todas las comarcas del Principado con coordenadas geográficas exactas:
+    - *Nuevos destinos incorporados:* Laboral Ciudad de la Cultura, Jardín Botánico Atlántico de Gijón, Museo del Ferrocarril de Asturias, Catedral de Oviedo & Cámara Santa, Museo Arqueológico de Asturias, Parque de la Prehistoria de Teverga, Senda del Oso en Proaza, Museo Etnográfico de Grandas de Salime, Monasterio de Corias en Cangas del Narcea, Ría de Villaviciosa & El Puntal, Jardines de la Fonte Baixa en Luarca, Bufones de Pría en Llanes, Archivo de Indianos en Colombres, Colegiata de San Pedro de Teverga, Iglesia Prerrománica de Santianes de Pravia, y Hayedo de Peloño en Ponga.
+- **Geolocalización Geodésica y Tiempo de Viaje en Tiempo Real:**
+  - Incorporada la fórmula matemática de Haversine (`calculateDistanceKm`) para calcular dinámicamente la distancia física en kilómetros desde las coordenadas del concejo activo hasta cada destino.
+  - Estimación automática de tiempo de conducción en minutos (`~X min en coche`).
+  - Catálogo ordenado automáticamente por proximidad ascendente (los destinos más cercanos a tu ubicación siempre al principio).
+- **Ergonomía Móvil y Ficha Técnica en Cuadrícula 2x2 (Ley 11):**
+  - Ficha técnica desplegable con chips métricos en cuadrícula simétrica de 2x2 (`.tourism-specs-chips`): *Municipio*, *Distancia/Tiempo*, *Categoría* y *Cielo Óptimo*.
+  - Selector ergonómico de filtros climáticos adaptado al 50%/100% (`✨ Todos`, `🌧️ A cubierto`, `☀️ Aire libre`, `🌫️ Bosques & Villas`, `❄️ Montaña & Fuego`), garantizando total inmunidad a desbordes en cualquier smartphone.
+  - Cabecera personalizada por concejo: `🎭 Planes & Ocio en [Concejo]` con badge comarcal y veredicto del cielo actual.
+- **Aviso de Divulgación Cultural y Seguridad (Leyes 15 y 16):**
+  - Adaptada la tarjeta inferior de responsabilidad y divulgación cultural y de seguridad sobria, formal y pública, sin referencias a nomenclaturas internas.
+- **Cache-Busting y Despliegue Oficial:**
+  - Service Worker actualizado a `meteoasturlode-v2274-planes-acordeon-catalogo` en `sw.js`.
+  - Versión oficial elevada a `v2.2.74 🎭` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.74'` en `app.js`, `tourismCard.js?v=2.2.74`, `tourismData.js?v=2.2.74` y query strings en `index.html`.
+
 ## [2.2.73] - 2026-10-18
 
 ### 🏔️ Ficha Técnica en Cuadrícula 2x2 y Personalización por Concejo (Feedback Lendo - Ley 11)

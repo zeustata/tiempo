@@ -10117,173 +10117,285 @@
   line-height: 1.2;
 }
 
-/* Barra de Filtros Ergonómicos */
-.tourism-filters-bar {
-  display: flex;
-  align-items: center;
+/* Barra y Cuadrícula de Filtros Ergonómicos (Ley 11) */
+.tourism-filters-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 6px;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: 8px;
-  margin-bottom: 14px;
-  scrollbar-width: none;
-}
-
-.tourism-filters-bar::-webkit-scrollbar {
-  display: none;
-}
-
-.tourism-filter-chip {
-  flex-shrink: 0;
-  background: rgba(30, 41, 59, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #cbd5e1;
-  font-size: 0.76rem;
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 999px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-family: inherit;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.tourism-filter-chip:hover {
-  background: rgba(56, 189, 248, 0.15);
-  border-color: rgba(56, 189, 248, 0.35);
-  color: #f1f5f9;
-}
-
-.tourism-filter-chip.active {
-  background: rgba(56, 189, 248, 0.25);
-  border-color: #38bdf8;
-  color: #38bdf8;
-  font-weight: 700;
-  box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
-}
-
-/* Rejilla de Tarjetas de Planes */
-.tourism-plans-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.tourism-plan-card {
-  display: flex;
-  flex-direction: column;
-  background: linear-gradient(180deg, rgba(30, 41, 59, 0.55) 0%, rgba(15, 23, 42, 0.75) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 14px;
-  padding: 14px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
-  transition: transform 0.2s ease, border-color 0.2s ease;
+  width: 100%;
   box-sizing: border-box;
+  margin-bottom: 14px;
 }
 
-.tourism-plan-card:hover {
-  border-color: rgba(56, 189, 248, 0.4);
-  transform: translateY(-2px);
+.tourism-filter-btn:first-child {
+  grid-column: span 2;
 }
 
-.tourism-plan-card.plan-recommended {
-  border-color: rgba(56, 189, 248, 0.45);
-  background: linear-gradient(180deg, rgba(14, 165, 233, 0.08) 0%, rgba(15, 23, 42, 0.8) 100%);
-  position: relative;
+@media (min-width: 600px) {
+  .tourism-filters-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .tourism-filter-btn:first-child {
+    grid-column: span 1;
+  }
 }
 
-.plan-card-header {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 10px;
-}
-
-.plan-header-icon-box {
-  width: 40px;
-  height: 40px;
-  background: rgba(15, 23, 42, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 10px;
+.tourism-filter-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  padding: 8px 6px;
+  border-radius: var(--radius-sm, 10px);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  user-select: none;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.4rem;
+  gap: 4px;
+  font-family: inherit;
+}
+
+.tourism-filter-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border-color: rgba(56, 189, 248, 0.4);
+}
+
+.tourism-filter-btn.active {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  color: #ffffff;
+  border-color: #38bdf8;
+  box-shadow: 0 2px 10px rgba(2, 132, 199, 0.35);
+}
+
+@media (max-width: 400px) {
+  .tourism-filter-btn {
+    font-size: 0.72rem;
+    padding: 7px 4px;
+  }
+}
+
+/* Contenedor de Acordeones de Planes & Ocio */
+.tourism-accordion-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.tourism-accordion-card {
+  background: var(--bg-surface-elevated, rgba(30, 41, 59, 0.6));
+  border: 1px solid var(--border-glass, rgba(255, 255, 255, 0.1));
+  border-radius: var(--radius-md, 14px);
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
+  transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.tourism-accordion-card:hover {
+  border-color: rgba(56, 189, 248, 0.4);
+}
+
+.tourism-accordion-card[open] {
+  border-color: rgba(56, 189, 248, 0.5);
+  background: rgba(15, 23, 42, 0.85);
+  box-shadow: 0 4px 20px -2px rgba(56, 189, 248, 0.12);
+}
+
+.tourism-accordion-card.plan-recommended {
+  border-color: rgba(56, 189, 248, 0.35);
+}
+
+.tourism-accordion-header {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  cursor: pointer;
+  user-select: none;
+  min-height: 48px;
+  box-sizing: border-box;
+  transition: background-color 0.2s ease;
+  gap: 10px;
+}
+
+.tourism-accordion-header::-webkit-details-marker,
+.tourism-accordion-header::marker {
+  display: none;
+}
+
+.tourism-accordion-header:hover {
+  background: rgba(56, 189, 248, 0.08);
+}
+
+.tourism-accordion-card[open] .tourism-accordion-header {
+  background: rgba(56, 189, 248, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.tourism-accordion-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
+}
+
+.tourism-accordion-icon {
+  font-size: 1.35rem;
+  line-height: 1;
   flex-shrink: 0;
 }
 
-.plan-header-title-box {
-  flex: 1;
+.tourism-accordion-name-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   min-width: 0;
 }
 
-.plan-badge-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 4px;
-}
-
-.plan-category-badge {
-  font-size: 0.68rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: #94a3b8;
-  letter-spacing: 0.03em;
-}
-
-.plan-tag-highlight {
-  font-size: 0.68rem;
-  font-weight: 700;
-  background: rgba(245, 158, 11, 0.2);
-  color: #fbbf24;
-  border: 1px solid rgba(245, 158, 11, 0.4);
-  padding: 1px 6px;
-  border-radius: 6px;
-}
-
-.plan-tag-ideal {
-  font-size: 0.68rem;
-  font-weight: 700;
-  background: rgba(56, 189, 248, 0.2);
-  color: #38bdf8;
-  border: 1px solid rgba(56, 189, 248, 0.4);
-  padding: 1px 6px;
-  border-radius: 6px;
-}
-
-.plan-tag-local {
-  font-size: 0.68rem;
-  font-weight: 600;
-  background: rgba(148, 163, 184, 0.15);
-  color: #e2e8f0;
-  border: 1px solid rgba(148, 163, 184, 0.3);
-  padding: 1px 6px;
-  border-radius: 6px;
-}
-
-.plan-title {
-  margin: 0 0 2px 0;
+.tourism-card-name {
   font-size: 0.95rem;
   font-weight: 700;
   color: #f8fafc;
-  line-height: 1.25;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.plan-location {
-  font-size: 0.74rem;
+.tourism-card-loc {
+  font-size: 0.76rem;
   color: #94a3b8;
-  display: block;
+  line-height: 1.2;
 }
 
-.plan-desc {
-  margin: 0 0 10px 0;
-  font-size: 0.82rem;
+.tourism-accordion-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.tourism-tag-chip {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 2px 7px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
   color: #cbd5e1;
-  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.tourism-tag-ideal {
+  background: rgba(56, 189, 248, 0.18);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.tourism-accordion-chevron {
+  font-size: 0.95rem;
+  color: #38bdf8;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-block;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.tourism-accordion-card[open] .tourism-accordion-chevron {
+  transform: rotate(180deg);
+}
+
+.tourism-accordion-body {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: fadeIn 0.25s ease-out;
+}
+
+/* Fila de Chips Técnicos de Ocio (Ley 11 Blindaje Anti-Desborde Móvil) */
+.tourism-specs-chips {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+@media (min-width: 640px) {
+  .tourism-specs-chips {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.tourism-spec-chip {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.t-chip-icon {
+  font-size: 1.15rem;
+  flex-shrink: 0;
+}
+
+.t-chip-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.t-chip-label {
+  font-size: 0.68rem;
+  color: #94a3b8;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.t-chip-val {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tourism-card-desc {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  line-height: 1.45;
+}
+
+@media (max-width: 480px) {
+  .tourism-accordion-header {
+    padding: 10px 12px;
+  }
+  .tourism-tag-chip {
+    display: none;
+  }
 }
 
 .plan-tip-box {

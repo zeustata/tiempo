@@ -31,8 +31,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.2.73">
-  <link rel="stylesheet" href="css/components.css?v=2.2.73">
+  <link rel="stylesheet" href="css/main.css?v=2.2.74">
+  <link rel="stylesheet" href="css/components.css?v=2.2.74">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.73 🏔️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.74 🎭</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -349,8 +349,23 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.2.73 🏔️</span>
+            <span class="release-version">v2.2.74 🎭</span>
             <span class="release-date">18 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-feature">Rediseño Integral &amp; Catálogo Masivo (Feedback Lendo)</span> <strong>Planes &amp; Ocio: Lavado de Cara en Acordeón, 36 Destinos y Proximidad Real</strong>:
+              <br>• <strong>Arquitectura en Acordeón Compacto:</strong> Transformado el módulo de ocio de tarjetas fijas a un sistema desplegable en acordeón nativo con exclusión mutua, permitiendo consultar decenas de destinos sin saturar el scroll vertical de la pantalla.
+              <br>• <strong>Ampliación Masiva del Catálogo (36 Destinos Asturianos):</strong> Incorporados los grandes iconos culturales y naturales de las comarcas del Principado: Centro Niemeyer, Mina de Arnao, Acuario de Gijón, Jardín Botánico Atlántico, Laboral Ciudad de la Cultura, Museo del Ferrocarril, Catedral y Cámara Santa de Oviedo, Museo Arqueológico, Parque de la Prehistoria de Teverga, Senda del Oso, Museo Etnográfico de Grandas de Salime, Monasterio de Corias, Bufones de Pría, Archivo de Indianos en Colombres, Ría de Villaviciosa, Jardines de Fonte Baixa en Luarca, Colegiata de Teverga, Hayedo de Peloño y muchos más.
+              <br>• <strong>Geolocalización Geodésica y Tiempo de Viaje en Vivo:</strong> Motor inteligente que calcula la distancia exacta (Haversine) y el tiempo en coche en minutos desde el concejo activo, ordenando todo el catálogo de ocio automáticamente por cercanía.
+              <br>• <strong>Ergonomía Móvil y Ficha Técnica 2x2 (Ley 11):</strong> Cuadrícula compacta de 2x2 para datos clave (Municipio, Distancia/Tiempo, Categoría y Clima Óptimo) y selector de filtros 50%/100% inmune a desbordes en cualquier smartphone.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.73 🏔️</span>
+            <span class="release-date">18 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-feature">Ergonomía &amp; Geolocalización (Feedback Lendo)</span> <strong>Ficha Técnica en Cuadrícula 2x2 y Personalización por Concejo</strong>:
@@ -4043,7 +4058,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=2.2.73').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=2.2.74').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4073,7 +4088,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.73"></script>
+  <script type="module" src="js/app.js?v=2.2.74"></script>
 
 
 

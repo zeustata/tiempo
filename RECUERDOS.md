@@ -42,6 +42,32 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. *Almacenamiento Estático Desacoplado:* El bot vuelca los datos limpios (km abiertos, pistas por dificultad técnica, remontes en servicio y espesores mín/máx) en un archivo JSON estático (`data/snowReport.json`).
     3. *Consumo Directo en Cliente:* `mountainCard.js` lee ese JSON sin sobrecargar a los servidores externos ni ralentizar la carga en clientes, mostrando los partes de nieve actualizados en vivo de forma 100% legal, autónoma y sin fricción.
 
+## 🎭 Actualización v2.2.74: Rediseño Integral de Planes & Ocio en Acordeón, 36 Destinos y Proximidad Real — 2026-10-18
+- **Lavado de Cara, Ampliación del Catálogo y Geolocalización (Petición Expresa de Lendo - «el planes y ocio deberia de tener un lavado de cara», «haz el lavado de cara y de paso añade mas ocio que asturias ttiene mucho mas que ofrecer»):**
+  1. *Arquitectura en Acordeón con Exclusión Mutua:*
+     - Migración completa de `js/components/tourismCard.js` desde tarjetas estáticas desplegadas en scroll infinito a elementos interactivos `<details name="tourism-accordion">`.
+     - Permite explorar ordenadamente decenas de propuestas con apertura y cierre instantáneos, manteniendo siempre visible el contexto de la pantalla.
+  2. *Ampliación Masiva del Catálogo Asturiano a 36 Destinos (Todas las Comarcas):*
+     - Enriquecido `js/utils/tourismData.js` pasando de 20 a 36 destinos imprescindibles, dotados de coordenadas geográficas (`lat`, `lon`), consejos meteorológicos didácticos y contextualizados según el clima:
+       - *Gijón / Comarca de la Sidra / Cabo Peñas:* Laboral Ciudad de la Cultura, Jardín Botánico Atlántico, Museo del Ferrocarril de Asturias, Ría de Villaviciosa & El Puntal, Luanco Marítimo & Museo del Mar.
+       - *Oviedo / Comarca Central:* Catedral de San Salvador & Cámara Santa, Museo Arqueológico de Asturias.
+       - *Valles del Nalón y Caudal:* MUMI (Museo de la Minería de El Entrego), Ecomuseo Minero Valle de Samuño en Langreo.
+       - *Comarca del Camín Real de la Mesa:* Parque de la Prehistoria de Teverga, Senda del Oso (Proaza/Quirós/Teverga), Colegiata Prerrománica de San Pedro de Teverga.
+       - *Bajo Nalón y Pravia:* Iglesia de Santianes de Pravia & Museo del Rey Silo.
+       - *Occidente, Luarca y Oscos-Eo:* Jardines de la Fonte Baixa en Luarca, Museo Etnográfico de Grandas de Salime, Castro de Coaña, Monasterio de San Juan Bautista de Corias en Cangas del Narcea, Ferrería de Mazonovo en Taramundi.
+       - *Oriente, Picos de Europa y Llanes:* Bufones de Pría, Archivo de Indianos & Quinta Guadalupe en Colombres, Hayedo de Peloño en Ponga, Cueva de Tito Bustillo en Ribadesella, Basílica y Santa Cueva de Covadonga, Lagos de Covadonga.
+  3. *Motor Matemático de Proximidad Geodésica y Tiempo de Conducción:*
+     - Incorporada la función Haversine `calculateDistanceKm(lat1, lon1, lat2, lon2)` para calcular la distancia física exacta en línea recta entre el concejo consultado y cada enclave cultural/turístico.
+     - Estimación realista del tiempo en coche en minutos (`driveTimeMin = Math.max(5, Math.round(dist * 1.25))`), reflejando la orografía asturiana.
+     - Ordenación automática ascendente por cercanía, de modo que en cualquier punto de Asturias el usuario encuentra en primer lugar los planes de su propio concejo y limítrofes.
+  4. *Ergonomía Móvil Estricta y Ficha Técnica en Cuadrícula 2x2 (Ley 11):*
+     - Ficha técnica desplegable con 4 chips estructurados en rejilla 2x2 (`.tourism-specs-chips`): *Municipio*, *Distancia / Tiempo*, *Categoría* y *Cielo Óptimo*.
+     - Barra de filtros ergonómicos con botón de inicio al 100% (`✨ Todos (36)`) y 4 botones simétricos al 50% (`🌧️ A cubierto`, `☀️ Aire libre`, `🌫️ Bosques & Villas`, `❄️ Montaña & Fuego`), adaptándose a 5 columnas en pantallas amplias.
+     - Cabecera limpia y personalizada: `🎭 Planes & Ocio en [Concejo]`, pill comarcal de referencia, veredicto meteorológico y descargo de responsabilidad civil y cultural sin mención a leyes internas.
+  5. *Cache-Busting y Despliegue Oficial (Leyes 1, 3, 4, 10, 11 y 13):*
+     - Service Worker actualizado a `meteoasturlode-v2274-planes-acordeon-catalogo` en `sw.js`.
+     - Versión oficial elevada a **`v2.2.74 🎭`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.74'` en `app.js`, `tourismCard.js?v=2.2.74`, `tourismData.js?v=2.2.74` y query strings en `index.html`.
+
 ## 🏔️ Actualización v2.2.73: Ficha Técnica en Cuadrícula 2x2 y Personalización por Concejo — 2026-10-18
 - **Blindaje Anti-Colisión en Móvil y Personalización Geográfica (Feedback y Capturas Expresas de Lendo - «mira en la primera imagen al abrir una senda esta todo descolocado como puedes ver desde el movil. y la segunda imagen es un poco generico que ni pone donde estamos.», «pisale princesa»):**
   1. *Diagnóstico de Colisión de Ficha Técnica (Ley 11):*
