@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2268-icono-chubascos-sol';
+const CACHE_NAME = 'meteoasturlode-v2269-franjas-horarias';
 const STATIC_ASSETS = [
   './',
   './index.html',

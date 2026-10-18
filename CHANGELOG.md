@@ -10,6 +10,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.69] - 2026-10-18
+
+### ⏱️ Indicación Explícita de Franjas Horarias en Pronóstico a 10 Días y Ergonomía Móvil (Feedback Lendo - Ley 11)
+- **Claridad Temporal Inmediata en Botones de Franja:**
+  - Incorporado el rango de horas explícito entre paréntesis en las etiquetas de los dos botones de cada tarjeta de 10 días:
+    - `🌅 MAÑANA (00h - 14h)`
+    - `🌇 TARDE (14h - 24h)`
+  - Resuelve de raíz la ambigüedad en español entre «mañana» como día y «mañana» como franja matinal, clarificando que el bloque matinal abarca desde la medianoche y madrugada (00:00 h, incluyendo eventos nocturnos como bastinazos de madrugada) hasta las 14:00 h, y que la tarde cubre de 14:00 h a medianoche completa (24:00 h).
+- **Blindaje Tipográfico Anti-Desborde en Móvil (Ley 11):**
+  - Implementada la clase `.d-dp-hours` con tamaño reducido (0.64rem / 0.60rem en móviles <= 480px), peso ligero (600) y opacidad atenuada (0.82), garantizando que las etiquetas encajen con perfecta holgura junto a la pastilla de milímetros en pantallas de 320px a 380px sin saltos de línea ni recortes.
+- **Cache-Busting y Despliegue Oficial:**
+  - Service Worker actualizado a `meteoasturlode-v2269-franjas-horarias` en `sw.js`.
+  - Versión oficial elevada a `v2.2.69 ⏱️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.69'` en `app.js`, `forecastView.js?v=2.2.69` y query strings de versión en `index.html`.
+
 ## [2.2.68] - 2026-10-18
 
 ### 🌦️ Nuevo Icono Universal de Chubascos con Sol («Llueve y fai sol») en Toda la Iconografía (Feedback Lendo)

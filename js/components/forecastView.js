@@ -1,4 +1,4 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection } from '../utils/weatherIcons.js?v=2.2.64';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection } from '../utils/weatherIcons.js?v=2.2.69';
 
 /**
  * Normaliza y formatea una marca de tiempo solar (ISO de Open-Meteo) a la hora civil oficial de Asturias/España,
@@ -321,7 +321,7 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
           <!-- Botón Mañana -->
           <div class="d-daypart-btn morning" title="Previsión Mañana (00:00 - 14:00): ${morningWeather.label}${morningWeather.precipSum >= 0.1 ? ` • ${morningWeather.precipSum.toFixed(1)} mm` : ''}">
             <div class="d-dp-header">
-              <span class="d-dp-tag">🌅 MAÑANA</span>
+              <span class="d-dp-tag">🌅 MAÑANA <span class="d-dp-hours">(00h - 14h)</span></span>
               <span class="d-dp-precip ${morningWeather.precipSum >= 0.1 ? (morningWeather.svgKey === 'hail' ? 'has-hail' : (morningWeather.svgKey === 'sleet' ? 'has-sleet' : (morningWeather.isSnow || morningWeather.svgKey.includes('snow') ? (morningWeather.precipSum >= 2.5 ? 'heavy-snow' : 'has-snow') : (morningWeather.precipSum >= 2.5 ? 'heavy-rain' : 'has-rain')))) : ''}">
                 ${morningWeather.precipSum >= 0.1 ? morningWeather.precipSum.toFixed(1) + ' mm' : '0 mm'}
               </span>
@@ -335,7 +335,7 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
           <!-- Botón Tarde -->
           <div class="d-daypart-btn afternoon" title="Previsión Tarde y Noche (14:00 - 24:00): ${afternoonWeather.label}${afternoonWeather.precipSum >= 0.1 ? ` • ${afternoonWeather.precipSum.toFixed(1)} mm` : ''}">
             <div class="d-dp-header">
-              <span class="d-dp-tag">🌇 TARDE</span>
+              <span class="d-dp-tag">🌇 TARDE <span class="d-dp-hours">(14h - 24h)</span></span>
               <span class="d-dp-precip ${afternoonWeather.precipSum >= 0.1 ? (afternoonWeather.svgKey === 'hail' ? 'has-hail' : (afternoonWeather.svgKey === 'sleet' ? 'has-sleet' : (afternoonWeather.isSnow || afternoonWeather.svgKey.includes('snow') ? (afternoonWeather.precipSum >= 2.5 ? 'heavy-snow' : 'has-snow') : (afternoonWeather.precipSum >= 2.5 ? 'heavy-rain' : 'has-rain')))) : ''}">
                 ${afternoonWeather.precipSum >= 0.1 ? afternoonWeather.precipSum.toFixed(1) + ' mm' : '0 mm'}
               </span>

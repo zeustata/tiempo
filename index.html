@@ -31,8 +31,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.2.68">
-  <link rel="stylesheet" href="css/components.css?v=2.2.68">
+  <link rel="stylesheet" href="css/main.css?v=2.2.69">
+  <link rel="stylesheet" href="css/components.css?v=2.2.69">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.68 🌦️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.69 ⏱️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -349,8 +349,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.2.68 🌦️</span>
+            <span class="release-version">v2.2.69 ⏱️</span>
             <span class="release-date">18 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-feature">Claridad Horaria &amp; Ergonomía Móvil (Feedback Lendo)</span> <strong>Indicación Explícita de Franjas en Pronóstico a 10 Días (Ley 11)</strong>:
+              <br>• <strong>Claridad Temporal Total:</strong> Añadido el rango de horas entre paréntesis a las etiquetas de los botones diarios: <code>🌅 MAÑANA (00h - 14h)</code> y <code>🌇 TARDE (14h - 24h)</code>.
+              <br>• <strong>Erradicación de Ambigüedades:</strong> Hace comprensible de inmediato que la franja matinal abarca desde la medianoche y madrugada (incorporando episodios nocturnos como los bastinazos de las 03:00 h) hasta las 14:00 h, y que la tarde cubre de 14:00 h a medianoche completa.
+              <br>• <strong>Blindaje Móvil Estricto (Ley 11):</strong> Estilizado tipográfico compacto y ligero con <code>.d-dp-hours</code> para garantizar encuadre perfecto y cero desbordes en cualquier smartphone de 320px a 380px.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.68 🌦️</span>
+            <span class="release-date">18 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-feature">Iconografía &amp; Clima (Petición Expresa de Lendo - El Comodín Clave)</span> <strong>Nuevo Icono Universal de Chubascos con Sol («Llueve y fai sol»)</strong>:
@@ -3974,7 +3988,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=2.2.68').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=2.2.69').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4004,7 +4018,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.68"></script>
+  <script type="module" src="js/app.js?v=2.2.69"></script>
 
 
 

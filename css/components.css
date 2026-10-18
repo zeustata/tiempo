@@ -2162,6 +2162,14 @@
   gap: 4px;
 }
 
+.d-dp-hours {
+  font-size: 0.64rem;
+  font-weight: 600;
+  opacity: 0.82;
+  letter-spacing: -0.2px;
+  text-transform: none;
+}
+
 .d-daypart-btn.morning .d-dp-tag {
   color: #fbbf24;
 }
@@ -2259,6 +2267,9 @@
   }
   .d-dp-tag {
     font-size: 0.70rem;
+  }
+  .d-dp-hours {
+    font-size: 0.60rem;
   }
   .d-dp-icon {
     font-size: 1.35rem;
