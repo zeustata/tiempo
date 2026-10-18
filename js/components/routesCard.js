@@ -6,7 +6,7 @@
  * y Blindaje Constitucional de Seguridad y Responsabilidad Individual (Ley 16).
  */
 
-import { calculateHikingIndex, getRoutesForConcejo } from '../utils/routesData.js?v=2.2.72';
+import { calculateHikingIndex, getRoutesForConcejo } from '../utils/routesData.js?v=2.2.73';
 
 // Función global de filtrado interactivo por dificultad de rutas
 if (typeof window !== 'undefined') {
@@ -81,9 +81,9 @@ export function renderRoutesCard(data, concejo) {
       <!-- 1. CABECERA LIMPIA Y ERGONÓMICA -->
       <div class="section-title-wrap" style="margin-bottom: 16px;">
         <div>
-          <h3 class="section-heading">🥾 Rutas &amp; Senderismo</h3>
+          <h3 class="section-heading">🥾 Rutas &amp; Senderismo en ${concejoTitle}</h3>
           <span class="section-subtitle">
-            Catálogo de sendas de montaña y costa • Calibrado en ${concejoTitle}
+            Catálogo y condiciones de sendas • Calibrado en tiempo real
           </span>
         </div>
         <div class="sea-state-pill" style="background: ${hike.status === 'danger' ? '#ef444422' : hike.status === 'warning' || hike.status === 'mist' ? '#f59e0b22' : '#10b98122'}; color: ${hike.status === 'danger' ? '#ef4444' : hike.status === 'warning' || hike.status === 'mist' ? '#f59e0b' : '#10b981'}; border: 1px solid ${hike.status === 'danger' ? '#ef444466' : hike.status === 'warning' || hike.status === 'mist' ? '#f59e0b66' : '#10b98166'};">
@@ -95,7 +95,7 @@ export function renderRoutesCard(data, concejo) {
       <div class="routes-diagnostics-panel">
         <div class="routes-summary-banner ${hike.status}">
           <span style="font-size: 1.25rem; line-height: 1;">${hike.icon}</span>
-          <span>${hike.summary}</span>
+          <span><strong>En ${concejoTitle}:</strong> ${hike.summary}</span>
         </div>
 
         <div class="routes-metrics-grid">
@@ -103,19 +103,19 @@ export function renderRoutesCard(data, concejo) {
           <div class="routes-metric-pill">
             <div class="rm-pill-top">
               <span>🪵</span>
-              <span>Firme &amp; Tracción</span>
+              <span>Firme en ${concejoTitle}</span>
             </div>
             <div class="rm-pill-val" style="color: ${hike.mudIndex.color};">
-              ${hike.mudIndex.level.split('/')[0].trim()}
+              ${hike.mudIndex.score <= 1 ? 'Firme Seco' : (hike.mudIndex.score === 2 ? 'Barro Leve' : (hike.mudIndex.score === 3 ? 'Barro Moderado' : 'Barrizal Severo'))}
             </div>
-            <div class="rm-pill-sub">${hike.mudIndex.rain24h} mm lluvia • Nivel ${hike.mudIndex.score}/4</div>
+            <div class="rm-pill-sub">${hike.mudIndex.rain24h} mm lluvia prevista • Nivel ${hike.mudIndex.score}/4</div>
           </div>
 
           <!-- 2. Cota Alta / Clima -->
           <div class="routes-metric-pill">
             <div class="rm-pill-top">
               <span>⛰️</span>
-              <span>Cumbres (+300m)</span>
+              <span>${concejo.isCoastal ? 'Miradores & Cotas' : 'Cumbres & Pasos'}</span>
             </div>
             <div class="rm-pill-val">${hike.windChillHigh}°C</div>
             <div class="rm-pill-sub">Viento: ${hike.windSpeed} km/h • Rachas: ${hike.windGust} km/h</div>
@@ -125,7 +125,7 @@ export function renderRoutesCard(data, concejo) {
           <div class="routes-metric-pill">
             <div class="rm-pill-top">
               <span>🎒</span>
-              <span>Mochila &amp; Equipo</span>
+              <span>Equipo para ${concejoTitle}</span>
             </div>
             <div class="rm-pill-val" style="color: #38bdf8;">
               ${hike.status === 'optimal' ? '👟 Calzado ligero' : '🥾 Bota con taco'}

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2272-responsabilidad-limpia';
+const CACHE_NAME = 'meteoasturlode-v2273-rutas-responsive-ubicacion';
 const STATIC_ASSETS = [
   './',
   './index.html',

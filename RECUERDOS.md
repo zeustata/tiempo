@@ -42,6 +42,23 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. *Almacenamiento Estático Desacoplado:* El bot vuelca los datos limpios (km abiertos, pistas por dificultad técnica, remontes en servicio y espesores mín/máx) en un archivo JSON estático (`data/snowReport.json`).
     3. *Consumo Directo en Cliente:* `mountainCard.js` lee ese JSON sin sobrecargar a los servidores externos ni ralentizar la carga en clientes, mostrando los partes de nieve actualizados en vivo de forma 100% legal, autónoma y sin fricción.
 
+## 🏔️ Actualización v2.2.73: Ficha Técnica en Cuadrícula 2x2 y Personalización por Concejo — 2026-10-18
+- **Blindaje Anti-Colisión en Móvil y Personalización Geográfica (Feedback y Capturas Expresas de Lendo - «mira en la primera imagen al abrir una senda esta todo descolocado como puedes ver desde el movil. y la segunda imagen es un poco generico que ni pone donde estamos.», «pisale princesa»):**
+  1. *Diagnóstico de Colisión de Ficha Técnica (Ley 11):*
+     - En la primera captura enviada por Lendo, al desplegar una senda (`Ruta Fluvial del Agua y Molinos del Río Raíces`), los 4 chips métricos (`Distancia`, `Tiempo Est.`, `Desnivel` e `Inicio / Acceso`) se apiñaban horizontalmente en 4 columnas con apenas 60px por celda en smartphone. Los textos largos colisionaban ("DISTANCIA" montándose sobre el icono de reloj, "TIEMPO EST." sobre la montaña, y los valores numéricos quedaban tapados o desbordados).
+     - *Solución:* Reorganización de `.route-specs-chips` a una cuadrícula simétrica de 2x2 (`grid-template-columns: repeat(2, 1fr)`) en móviles y pantallas estrechas, otorgando ~150px a cada chip con `min-width: 0; overflow: hidden;` y elipsis controlada. En pantallas medianas y de escritorio (>= 640px) se mantienen las 4 columnas.
+  2. *Personalización Directa por Concejo (Erradicación de Textos Genéricos):*
+     - En la segunda captura, el módulo presentaba una cabecera despersonalizada (`🥾 Rutas & Senderismo`), un texto genérico de cumbres (`CUMBRES (+300M)` en Castrillón, donde el relieve es costero) y una métrica de firme confusa (`Leve` a secas).
+     - *Solución Integral:*
+       - Título principal prominente: **`🥾 Rutas & Senderismo en Castrillón`** (vinculado a `${concejoTitle}`).
+       - Banner de diagnóstico con anclaje geográfico: **«En Castrillón: Lluvia o llovizna prevista...»**.
+       - Tarjeta de firme depurada: **`🪵 Firme en Castrillón`** con estados categóricos y comprensibles (`Firme Seco`, `Barro Leve`, `Barro Moderado`, `Barrizal Severo`).
+       - Tarjeta de cota adaptativa: **`⛰️ Miradores & Cotas`** para concejos costeros (como Castrillón) frente a **`⛰️ Cumbres & Pasos`** en concejos de montaña.
+       - Tarjeta de equipo: **`🎒 Equipo para Castrillón`**.
+  3. *Cache-Busting y Despliegue Oficial (Leyes 1, 3, 4, 10, 11 y 13):*
+     - Service Worker actualizado a `meteoasturlode-v2273-rutas-responsive-ubicacion` en `sw.js`.
+     - Versión oficial elevada a **`v2.2.73 🏔️`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.73'` en `app.js`, `routesCard.js?v=2.2.73` y query strings en `index.html`.
+
 ## 🛡️ Actualización v2.2.72: Omisión de Nomenclatura Interna en Aviso de Seguridad de Rutas — 2026-10-18
 - **Privacidad y Sobriedad en Entornos Naturales (Feedback y Corrección Expresa de Lendo - «es impecable pero la responsabilidad en el titulo pones nuestra constitucion que no conoce nadie. solo nosotrtros princesa. omite eso.», «pisale»):**
   1. *Diagnóstico de Privacidad y Comunicación:*

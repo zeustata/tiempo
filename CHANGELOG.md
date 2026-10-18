@@ -10,6 +10,21 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.73] - 2026-10-18
+
+### 🏔️ Ficha Técnica en Cuadrícula 2x2 y Personalización por Concejo (Feedback Lendo - Ley 11)
+- **Blindaje Anti-Colisión en Móvil (Ley 11):**
+  - Reorganizada la visualización de los 4 chips técnicos de ruta (`Distancia`, `Tiempo Est.`, `Desnivel` e `Inicio / Acceso`) de 4 columnas horizontales a una cuadrícula simétrica de 2x2 en pantallas móviles (`.route-specs-chips` con `repeat(2, 1fr)`), otorgando ~150px a cada bloque y eliminando de raíz las colisiones de texto e iconos detectadas por Lendo.
+  - En pantallas medianas y de escritorio (>= 640px) se preservan las 4 columnas horizontales de forma fluida.
+- **Identidad, Personalización y Enfoque Geográfico:**
+  - Título principal personalizado: `🥾 Rutas & Senderismo en [Concejo]` en lugar del título genérico anterior.
+  - Banner de condiciones contextualizado: *«En [Concejo]: Lluvia prevista hacia las...»*.
+  - Métrica de terreno depurada: indicador explícito de tracción (`Firme Seco`, `Barro Leve`, `Barro Moderado`, `Barrizal Severo`).
+  - Relieve adaptativo según el concejo: `Miradores & Cotas` en concejos costeros frente a `Cumbres & Pasos` en concejos montañosos.
+- **Cache-Busting y Despliegue Oficial:**
+  - Service Worker actualizado a `meteoasturlode-v2273-rutas-responsive-ubicacion` en `sw.js`.
+  - Versión oficial elevada a `v2.2.73 🏔️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.73'` en `app.js`, `routesCard.js?v=2.2.73` y query strings en `index.html`.
+
 ## [2.2.72] - 2026-10-18
 
 ### 🛡️ Omisión de Nomenclatura Interna en Aviso de Seguridad de Rutas (Instrucción de Lendo)

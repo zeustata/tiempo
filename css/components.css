@@ -9627,11 +9627,17 @@
   animation: fadeIn 0.25s ease-out;
 }
 
-/* Fila de Chips Técnicos de Ruta */
+/* Fila de Chips Técnicos de Ruta (Ley 11 Blindaje Anti-Desborde Móvil) */
 .route-specs-chips {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 8px;
+}
+
+@media (min-width: 640px) {
+  .route-specs-chips {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 .route-spec-chip {
@@ -9643,6 +9649,8 @@
   align-items: center;
   gap: 8px;
   min-width: 0;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .r-chip-icon {
@@ -9655,14 +9663,19 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
+  overflow: hidden;
+  width: 100%;
 }
 
 .r-chip-label {
   font-size: 0.68rem;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
   color: var(--text-muted);
   letter-spacing: 0.3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .r-chip-val {
