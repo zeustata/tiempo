@@ -32,7 +32,7 @@ export const WMO_CODES = {
   73: { label: 'Nevada moderada', icon: '🌨️', svgKey: 'snow', lucide: 'snowflake', bg: 'snow', isRain: false, isSnow: true },
   75: { label: 'Nevadona fuerte / Copiosa', icon: '❄️', svgKey: 'heavy-snow', lucide: 'snowflake', bg: 'snow', isRain: false, isSnow: true },
   77: { label: 'Granizo menudo / Cinarra', icon: '🌨️', svgKey: 'hail', lucide: 'cloud-hail', bg: 'snow', isRain: false, isSnow: true },
-  80: { label: 'Chubascos de orbayu', icon: '🌦️', svgKey: 'drizzle', lucide: 'cloud-drizzle', bg: 'drizzle', isRain: true, isSnow: false },
+  80: { label: 'Chubascos con sol / Llueve y fai sol', icon: '🌦️', svgKey: 'showers', lucide: 'cloud-sun-rain', bg: 'drizzle', isRain: true, isSnow: false },
   81: { label: 'Chubascos moderados', icon: '🌧️', svgKey: 'rain', lucide: 'cloud-rain', bg: 'rain', isRain: true, isSnow: false },
   82: { label: 'Chubascos violentos / Bastinazu', icon: '⛈️', svgKey: 'storm', lucide: 'cloud-lightning', bg: 'heavy-rain', isRain: true, isSnow: false },
   83: { label: 'Chubascos de aguanieve ligeros', icon: '🌨️', svgKey: 'sleet', lucide: 'cloud-sleet', bg: 'rain', isRain: true, isSnow: true },
@@ -310,12 +310,37 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
       }
       // 🌧️ Caso F: Lluvia moderada (p >= 0.5 mm o códigos 63 / 81 o código 61 con lluvia física >= 0.2 mm)
       else if (p >= 0.5 || code === 63 || code === 81 || (code === 61 && p >= 0.2)) {
+        // Si es de día y hay sol activo o claros mientras cae el chaparrón, es chubasco con sol
+        if (code === 80 || (!isNight && (hasActiveSun || (cc !== null && cc <= 70) || code === 1 || code === 2) && p < 2.5)) {
+          base = {
+            label: 'Chubascos con sol / Llueve y fai sol',
+            icon: '🌦️',
+            svgKey: 'showers',
+            lucide: 'cloud-sun-rain',
+            bg: 'drizzle',
+            isRain: true,
+            isSnow: false
+          };
+        } else {
+          base = {
+            label: 'Lluvia moderada',
+            icon: '🌧️',
+            svgKey: 'rain',
+            lucide: 'cloud-rain',
+            bg: 'rain',
+            isRain: true,
+            isSnow: false
+          };
+        }
+      }
+      // 🌦️ Caso F.1: Chubasco con sol ligero (código 80 o lluvia física diurna con sol/claros)
+      else if (code === 80 || (!isNight && (hasActiveSun || (cc !== null && cc <= 70) || code === 1 || code === 2) && p < 2.5)) {
         base = {
-          label: 'Lluvia moderada',
-          icon: '🌧️',
-          svgKey: 'rain',
-          lucide: 'cloud-rain',
-          bg: 'rain',
+          label: 'Chubascos con sol / Llueve y fai sol',
+          icon: '🌦️',
+          svgKey: 'showers',
+          lucide: 'cloud-sun-rain',
+          bg: 'drizzle',
           isRain: true,
           isSnow: false
         };

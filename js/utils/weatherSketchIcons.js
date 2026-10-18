@@ -212,6 +212,26 @@ export function getSketchWeatherSvg(iconKey, size = 32) {
         </svg>
       `;
 
+    case 'showers':
+    case 'chubascos':
+    case 'sun-rain':
+      // 🌦️ CHUBASCOS CON SOL DIBUJO A MANO
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon sketch-icon" aria-label="Chubascos con Sol Dibujo a Mano">
+          <!-- Sol Acuarela -->
+          <circle cx="16" cy="16" r="8" fill="#fef08a" opacity="0.85" />
+          <path d="M 15.5,8 C 20,7.5 24,11 23.5,16" fill="none" stroke="#d97706" stroke-width="1.8" stroke-linecap="round" />
+          <line x1="16" y1="2" x2="16" y2="5" stroke="#d97706" stroke-width="1.8" stroke-linecap="round" />
+          <line x1="4" y1="14" x2="7" y2="14" stroke="#d97706" stroke-width="1.8" stroke-linecap="round" />
+          <line x1="7" y1="5" x2="9" y2="7" stroke="#d97706" stroke-width="1.8" stroke-linecap="round" />
+          <!-- Nube Trazo Lápiz -->
+          <path d="M 40,31 H 15 A 7,7 0 0 1 13.5,17.5 A 10,10 0 0 1 35.5,18 A 6.5,6.5 0 0 1 40,31 Z" fill="#f8fafc" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <!-- Gotas de lluvia acuarela -->
+          <path d="M 21,35 C 21,35 18,39 18,41 A 2.5,2.5 0 0 0 23,41 C 23,39 21,35 21,35 Z" fill="#38bdf8" stroke="#0284c7" stroke-width="1" />
+          <path d="M 31,36 C 31,36 28,40 28,42 A 2.5,2.5 0 0 0 33,42 C 33,40 31,36 31,36 Z" fill="#38bdf8" stroke="#0284c7" stroke-width="1" />
+        </svg>
+      `;
+
     case 'rain':
     case 'rain-moderate':
       // 🌧️ LLUVIA DIBUJADA A MANO (3 gotas, 0.5 - 2.4 mm/h)

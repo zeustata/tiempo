@@ -291,6 +291,41 @@ export function getGlassWeatherSvg(iconKey, size = 32) {
         </svg>
       `;
 
+    case 'showers':
+    case 'chubascos':
+    case 'sun-rain':
+      // 🌦️ CHUBASCOS CON SOL (CRISTAL 3D): Sol de cristal translúcido + Nube de cristal + Gotas aero glass
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon glass-icon" aria-label="Chubascos con Sol Cristal 3D">
+          <defs>
+            <radialGradient id="glass-shw-sun" cx="35%" cy="35%" r="65%">
+              <stop offset="0%" stop-color="#fffbeb" />
+              <stop offset="40%" stop-color="#fde047" />
+              <stop offset="85%" stop-color="#eab308" />
+              <stop offset="100%" stop-color="#ca8a04" />
+            </radialGradient>
+            <linearGradient id="glass-shw-cloud" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.85" />
+              <stop offset="50%" stop-color="#e0f2fe" stop-opacity="0.65" />
+              <stop offset="100%" stop-color="#bae6fd" stop-opacity="0.8" />
+            </linearGradient>
+            <linearGradient id="glass-shw-drop" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#38bdf8" />
+              <stop offset="100%" stop-color="#0284c7" />
+            </linearGradient>
+          </defs>
+          <!-- Sol de cristal -->
+          <circle cx="16" cy="16" r="9" fill="url(#glass-shw-sun)" filter="url(#glass-shadow)" />
+          <ellipse cx="14" cy="12" rx="4" ry="2" fill="#ffffff" opacity="0.6" transform="rotate(-20 14 12)" />
+          <!-- Nube de cristal -->
+          <path d="M 42,32 H 14 A 7.5,7.5 0 0 1 12.5,17.5 A 11,11 0 0 1 37.5,18 A 7,7 0 0 1 42,32 Z" fill="url(#glass-shw-cloud)" stroke="#7dd3fc" stroke-width="1.2" />
+          <path d="M 15,22 Q 24,15 35,19" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.8" />
+          <!-- Gotas de cristal -->
+          <path d="M 21,35 C 21,35 18,39.5 18,41.5 A 2.5,2.5 0 0 0 23,41.5 C 23,39.5 21,35 21,35 Z" fill="url(#glass-shw-drop)" opacity="0.9" />
+          <path d="M 31,36 C 31,36 28,40.5 28,42.5 A 2.5,2.5 0 0 0 33,42.5 C 33,40.5 31,36 31,36 Z" fill="url(#glass-shw-drop)" opacity="0.9" />
+        </svg>
+      `;
+
     case 'rain':
     case 'rain-moderate':
       // 🌧️ LLUVIA CRISTAL 3D

@@ -8,6 +8,27 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🌦️ Actualización v2.2.68: Nuevo Icono Universal de Chubascos con Sol («Llueve y fai sol») — 2026-10-18
+- **Creación Vectorial Completa del Icono Comodín `showers` (Feedback Lendo - «creo que en los iconos no existe el icono de chubascos (por ejemplo cuando en una hora determinada dan un chaparron y luego sale el sol. El tipico icono que sale una gota una nube y un sol. lo tenemos», «pisale anda que todos lal app lo incorporan y es como un comodin. si en una hora concreta dan posibilidad de nubes, sol y chubascos es imprescindible. crealo para todos los temas que tenemos incluido halloween»):**
+  1. *Diagnóstico de la Suite de Iconos:*
+     - Lendo detectó una carencia histórica en la aplicación: el icono comodín universal de "chubascos con sol" (sol detrás de nube con gotas de lluvia) no existía a nivel vectorial en ninguno de los temas.
+     - En el código WMO 80 (*Chubascos de orbayu*), el sistema utilizaba el emoji `🌦️` pero vectorialmente estaba enlazado a `drizzle` (una nube sola sin sol), perdiendo la representación del sol asomando.
+  2. *Diseño Vectorial en los 7 Temas Gráficos del Ecosistema:*
+     - **Emojis Emotivos (`weatherAsturIcons.js`):** Sol dorado brillante arriba a la izquierda con cara sonriente, nube esponjosa celeste y 2 gotas cristalinas iluminadas cayendo alegremente.
+     - **Futuro Clásico (`weatherFuturoIcons.js`):** Sol esférico 2.5D con rayos y reflejo especular, nube de carrocería satinada y gotas de cristal líquido.
+     - **Liquid Glass 3D (`weatherGlassIcons.js`):** Sol de cristal oro translúcido con refracción, nube aero glass con borde luminoso y gotas vítreas.
+     - **Pixel Art Retro (`weatherPixelIcons.js`):** Sol y nube en cuadrícula arcade de 8 bits con gotas de píxeles azules.
+     - **Minimalista Neón (`weatherNeonIcons.js`):** Líneas finas con filtro resplandeciente (`filter: drop-shadow`) combinando sol dorado neón y nube cian con gotas.
+     - **Dibujo a Mano (`weatherSketchIcons.js`):** Sol y nube acuarelados a mano alzada con trazos de grafito y gotas en aguada azul.
+     - **Especial Halloween (`weatherHalloweenIcons.js`):** Calabaza Jack-o'-lantern solar asomando entre nubes púrpuras de Samhain con gotas de poción verde y morada.
+  3. *Calibración Meteorológica WMO & Lógica Física (`weatherIcons.js`):*
+     - Reconfigurado el código WMO 80 como *Chubascos con sol / Llueve y fai sol* con `svgKey: 'showers'`.
+     - En `getWeatherInfo`: activación inteligente diurna cuando confluyen lluvia física (< 2.5 mm) y claros/radiación solar directa confirmada por satélite o sensores en superficie.
+  4. *Cache-Busting y Despliegue Oficial (Leyes 1, 3, 4, 10, 11 y 13):*
+     - Service Worker actualizado a `meteoasturlode-v2268-icono-chubascos-sol` en `sw.js`.
+     - Versión oficial elevada a **`v2.2.68 🌦️`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.68'` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
+     - Query strings sincronizadas a `?v=2.2.68` en `index.html`.
+
 ## 📱 Actualización v2.2.67: Erradicación de Badge Superpuesto y Blindaje Flexible de 6 Iconos en Móvil — 2026-10-18
 - **Solución Definitiva de Ergonomía Móvil en el Catálogo de Iconos (Feedback Lendo - «siguen los iconos sin caber y el icono de bloqueado tapa la palabra halloween. ese icono no hace falta. ya se ve que no se puede usar namas que en halloween» y «pisale»):**
   1. *Diagnóstico Visual Directo con Capturas del Dispositivo Móvil:*

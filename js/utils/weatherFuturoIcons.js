@@ -328,6 +328,47 @@ export function getFuturoWeatherSvg(key, size = 32) {
         </svg>
       `;
 
+    case 'showers':
+    case 'chubascos':
+    case 'sun-rain':
+      // 🌦️ CHUBASCOS CON SOL (FUTURO CLÁSICO): Sol 2.5D asomando + Nube pulida + Gotas cristalinas
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon futuro-icon" aria-label="Chubascos con Sol Futuro Clásico">
+          <defs>
+            <radialGradient id="futuro-shw-sun" cx="35%" cy="35%" r="65%">
+              <stop offset="0%" stop-color="#fffbeb" />
+              <stop offset="40%" stop-color="#fde047" />
+              <stop offset="85%" stop-color="#f59e0b" />
+              <stop offset="100%" stop-color="#d97706" />
+            </radialGradient>
+            <linearGradient id="futuro-shw-drop" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#38bdf8" />
+              <stop offset="100%" stop-color="#0284c7" />
+            </linearGradient>
+          </defs>
+          <!-- Sol de fondo arriba izquierda -->
+          <g stroke="#f59e0b" stroke-width="2" stroke-linecap="round" opacity="0.9">
+            <line x1="16" y1="3" x2="16" y2="7" />
+            <line x1="3" y1="16" x2="7" y2="16" />
+            <line x1="6" y1="6" x2="9" y2="9" />
+            <line x1="24" y1="6" x2="21" y2="9" />
+          </g>
+          <circle cx="16" cy="16" r="9.5" fill="url(#futuro-shw-sun)" stroke="#f59e0b" stroke-width="0.7" />
+          <ellipse cx="13.5" cy="12.5" rx="3.5" ry="1.8" fill="#ffffff" opacity="0.6" />
+          <!-- Nube en primer plano -->
+          <path d="M 42,32 H 14 A 7.5,7.5 0 0 1 12.5,17.5 A 11,11 0 0 1 37.5,18 A 7,7 0 0 1 42,32 Z" fill="url(#futuro-cloud-main)" stroke="#94a3b8" stroke-width="0.8" />
+          <!-- Gotas cayendo con brillo -->
+          <g transform="translate(19, 39)">
+            <path d="M 0,-5 C -2.8,-1.5 -3,1.8 0,4 C 3,1.8 2.8,-1.5 0,-5 Z" fill="url(#futuro-shw-drop)" />
+            <circle cx="-0.8" cy="-0.5" r="0.7" fill="#ffffff" opacity="0.7" />
+          </g>
+          <g transform="translate(31, 40)">
+            <path d="M 0,-5 C -2.8,-1.5 -3,1.8 0,4 C 3,1.8 2.8,-1.5 0,-5 Z" fill="url(#futuro-shw-drop)" />
+            <circle cx="-0.8" cy="-0.5" r="0.7" fill="#ffffff" opacity="0.7" />
+          </g>
+        </svg>
+      `;
+
     case 'rain':
       // 🌧️ LLUVIA MODERADA (0.5 - 2.4 mm/h): Nube con 3 GOTAS paralelas regulares
       return `

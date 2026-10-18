@@ -268,6 +268,38 @@ export function getNeonWeatherSvg(iconKey, size = 32) {
         </svg>
       `;
 
+    case 'showers':
+    case 'chubascos':
+    case 'sun-rain':
+      // 🌦️ CHUBASCOS CON SOL NEÓN GLOW
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon neon-icon" aria-label="Chubascos con Sol Neón">
+          <defs>
+            <filter id="neon-glow-shw" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <!-- Sol Neón Dorado -->
+          <g stroke="#facc15" stroke-width="2" stroke-linecap="round" filter="url(#neon-glow-shw)" fill="none">
+            <path d="M 10,16 A 7,7 0 0 1 20,9" />
+            <line x1="15" y1="2" x2="15" y2="5" />
+            <line x1="4" y1="13" x2="7" y2="13" />
+            <line x1="7" y1="5" x2="9" y2="7" />
+          </g>
+          <!-- Nube Neón Azul -->
+          <g stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" filter="url(#neon-glow-shw)" fill="none">
+            <path d="M 40,31 H 15 A 6.5,6.5 0 0 1 13.5,18.5 A 9.5,9.5 0 0 1 34.5,19 A 6,6 0 0 1 40,31 Z" />
+            <!-- Gotas Neón -->
+            <line x1="20" y1="36" x2="18" y2="42" />
+            <line x1="30" y1="36" x2="28" y2="42" />
+          </g>
+        </svg>
+      `;
+
     case 'rain':
     case 'rain-moderate':
       // 🌧️ LLUVIA NEÓN (3 trazos neón regulares, 0.5 - 2.4 mm/h)

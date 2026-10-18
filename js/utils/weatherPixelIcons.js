@@ -207,6 +207,30 @@ export function getPixelWeatherSvg(iconKey, size = 32) {
         </svg>
       `;
 
+    case 'showers':
+    case 'chubascos':
+    case 'sun-rain':
+      // 🌦️ CHUBASCOS CON SOL PIXEL ART
+      return `
+        <svg viewBox="0 0 24 24" width="${sz}" height="${sz}" class="astur-svg-icon pixel-icon" shape-rendering="crispEdges" aria-label="Chubascos con Sol Pixel Art">
+          <!-- Sol Pixelado fondo -->
+          <rect x="5" y="1" width="2" height="2" fill="#f59e0b" />
+          <rect x="1" y="5" width="2" height="2" fill="#f59e0b" />
+          <rect x="4" y="3" width="5" height="5" fill="#facc15" />
+          <rect x="5" y="4" width="3" height="3" fill="#fde047" />
+          <rect x="5" y="4" width="1" height="1" fill="#ffffff" />
+          <!-- Nube Pixelada -->
+          <rect x="7" y="8" width="12" height="5" fill="#ffffff" />
+          <rect x="9" y="6" width="8" height="2" fill="#ffffff" />
+          <rect x="5" y="10" width="2" height="3" fill="#ffffff" />
+          <rect x="19" y="10" width="2" height="3" fill="#ffffff" />
+          <rect x="7" y="13" width="12" height="1" fill="#94a3b8" />
+          <!-- Gotas Pixeladas -->
+          <rect x="9" y="15" width="2" height="3" fill="#38bdf8" />
+          <rect x="15" y="16" width="2" height="3" fill="#0284c7" />
+        </svg>
+      `;
+
     case 'rain':
     case 'rain-moderate':
       // 🌧️ LLUVIA PIXEL ART (3 líneas de lluvia, 0.5 - 2.4 mm/h)

@@ -279,6 +279,47 @@ export function getAsturWeatherSvg(iconKey, size = 32) {
         </svg>
       `;
 
+    case 'showers':
+    case 'chubascos':
+    case 'sun-rain':
+      // 🌦️ CHUBASCOS CON SOL / LLUEVE Y FAI SOL (SOL FELIZ ASOMANDO + NUBE TIERNA + GOTAS ALEGREMENTE ILUMINADAS)
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon icon-comic-showers" aria-label="Chubascos con Sol Cómic">
+          <!-- Sol sonriente de fondo arriba-izquierda -->
+          <g fill="#f59e0b" stroke="#d97706" stroke-width="0.8">
+            <rect x="15" y="2" width="3" height="4.5" rx="1.5" />
+            <rect x="2" y="15" width="4.5" height="3" rx="1.5" />
+            <rect x="5" y="5" width="3.5" height="3.5" rx="1.2" transform="rotate(45 6.7 6.7)" />
+            <rect x="23" y="5" width="3.5" height="3.5" rx="1.2" transform="rotate(-45 24.7 6.7)" />
+          </g>
+          <!-- Cuerpo del Sol Dorado -->
+          <circle cx="16" cy="16" r="9" fill="#facc15" stroke="#ca8a04" stroke-width="1.4" />
+          <!-- Colorete tierno del sol -->
+          <ellipse cx="11.5" cy="18" rx="1.6" ry="1" fill="#fb7185" opacity="0.8" />
+          <!-- Ojitos felices del sol -->
+          <ellipse cx="13" cy="14" rx="1.2" ry="1.7" fill="#1e293b" />
+          <circle cx="12.5" cy="13.2" r="0.6" fill="#ffffff" />
+          <ellipse cx="18" cy="14" rx="1.2" ry="1.7" fill="#1e293b" />
+          <circle cx="17.5" cy="13.2" r="0.6" fill="#ffffff" />
+          <path d="M 13.5,17 Q 15.5,19.5 17.5,17" stroke="#991b1b" stroke-width="1" fill="none" stroke-linecap="round" />
+          <!-- Nube Esponjosa Blanca y Celeste en primer plano -->
+          <path d="M 41,31 H 16 A 7.5,7.5 0 0 1 14.5,17 A 10.5,10.5 0 0 1 36.5,17.5 A 7,7 0 0 1 41,31 Z" fill="#ffffff" stroke="#38bdf8" stroke-width="1.8" />
+          <!-- Carita Dulce de la Nube de Chubascos -->
+          <ellipse cx="23" cy="24" rx="1.8" ry="2.2" fill="#0369a1" />
+          <circle cx="22.3" cy="23.2" r="0.8" fill="#ffffff" />
+          <ellipse cx="31" cy="24" rx="1.8" ry="2.2" fill="#0369a1" />
+          <circle cx="30.3" cy="23.2" r="0.8" fill="#ffffff" />
+          <ellipse cx="19" cy="26.5" rx="2" ry="1.2" fill="#fb7185" opacity="0.85" />
+          <ellipse cx="35" cy="26.5" rx="2" ry="1.2" fill="#fb7185" opacity="0.85" />
+          <path d="M 25,26 Q 27,28.5 29,26" stroke="#0369a1" stroke-width="1.4" fill="none" stroke-linecap="round" />
+          <!-- 2 Gotas alegres iluminadas por el sol cayendo con destellos -->
+          <g fill="#0284c7">
+            <path d="M 21,35 C 21,35 18,39.5 18,41.5 A 2.5,2.5 0 0 0 23,41.5 C 23,39.5 21,35 21,35 Z" />
+            <path d="M 32,35 C 32,35 29,39.5 29,41.5 A 2.5,2.5 0 0 0 34,41.5 C 34,39.5 32,35 32,35 Z" fill="#38bdf8" />
+          </g>
+        </svg>
+      `;
+
     case 'rain':
     case 'rain-moderate':
       // 🌧️ LLUVIA: NUBE CONTENTA CON 3 GOTAS (0.5 - 2.4 mm/h)

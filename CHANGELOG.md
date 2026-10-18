@@ -10,6 +10,25 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.68] - 2026-10-18
+
+### 🌦️ Nuevo Icono Universal de Chubascos con Sol («Llueve y fai sol») en Toda la Iconografía (Feedback Lendo)
+- **Creación Vectorial Completa del Icono Comodín `showers`:**
+  - Diseñado e implementado el icono de **Sol asomando detrás de la nube con gotas de lluvia** en los 7 temas gráficos del ecosistema:
+    - **Emojis Emotivos:** Sol dorado radiante con ojos vivaces y sonrisa cálida en esquina superior izquierda, nube esponjosa celeste en primer plano y 2 gotas cristalinas cayendo con destellos luminosos.
+    - **Futuro Clásico (2.5D):** Sol esférico satinado de alta gama con rayos simétricos, nube con sombreado de profundidad y gotas con reflejo especular.
+    - **Liquid Glass 3D:** Esfera de vidrio aero glass con refracción y reflejo oro, nube vítrea translúcida y gotas de cristal azul líquido.
+    - **Pixel Art Retro:** Sol en 8 bits, nube pixelada con sombra y gotas cuadrículas en azul cantábrico.
+    - **Minimalista Neón:** Trazo fino de sol neón dorado con filtro glow, nube azul neón y gotas estilizadas.
+    - **Dibujo a Mano:** Sol a la acuarela con trazos de lápiz orgánicos, nube sombreada a carboncillo y gotas aguadas.
+    - **Especial Halloween:** Calabaza Jack-o'-lantern solar asomando entre las nubes góticas de Samhain con gotas de poción mágica.
+- **Calibración Meteorológica WMO:**
+  - Asignado oficialmente al código WMO 80 (*Chubascos con sol / Llueve y fai sol*).
+  - En `getWeatherInfo`: activación inteligente diurna cuando coexisten lluvia física (< 2.5 mm) y claros/radiación solar directa o nubosidad fragmentada (el clásico chaparrón cantábrico con sol).
+- **Cache-Busting y Despliegue Oficial:**
+  - Service Worker actualizado a `meteoasturlode-v2268-icono-chubascos-sol` en `sw.js`.
+  - Versión oficial elevada a `v2.2.68 🌦️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.68'` en `app.js` y query strings de versión en `index.html`.
+
 ## [2.2.67] - 2026-10-18
 
 ### 📱 Erradicación de Badge Superpuesto y Blindaje Flexible de 6 Iconos en Móvil (Feedback Lendo - Ley 11)

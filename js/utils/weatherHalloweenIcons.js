@@ -246,6 +246,37 @@ export function getHalloweenWeatherSvg(iconKey, size = 32) {
         </svg>
       `;
 
+    case 'showers':
+    case 'chubascos':
+    case 'sun-rain':
+      // 🎃 🌦️ CHUBASCOS CON CALABAZA SOLAR Y POCIÓN MÁGICA
+      return `
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="halloween-svg-icon icon-hw-showers" aria-label="Chubascos con Sol de Halloween">
+          <!-- Calabaza solar ardiente asomando arriba-izquierda -->
+          <ellipse cx="17" cy="16" rx="9" ry="8.5" fill="#ea580c" stroke="#c2410c" stroke-width="1.2" />
+          <ellipse cx="17" cy="16" rx="5.5" ry="8.2" fill="#f97316" />
+          <polygon points="13,14 16,16 12,16" fill="#fef08a" />
+          <polygon points="21,14 22,16 18,16" fill="#fef08a" />
+          <path d="M 13,19 Q 17,23 21,19 Z" fill="#fef08a" />
+          <!-- Rayos de fuego de la calabaza -->
+          <g fill="#f97316" stroke="#ea580c" stroke-width="0.6">
+            <polygon points="17,3 15,6 19,6" />
+            <polygon points="4,16 7,14 7,18" />
+            <polygon points="7,7 10,8 8,11" />
+          </g>
+          <!-- Nube Oscura Gótica con Tinte Púrpura -->
+          <path d="M 42,32 H 14 A 7.5,7.5 0 0 1 12.5,17.5 A 11,11 0 0 1 37.5,18 A 7,7 0 0 1 42,32 Z" fill="#4a044e" stroke="#a855f7" stroke-width="1.8" />
+          <ellipse cx="23" cy="24" rx="2" ry="2.5" fill="#fef08a" />
+          <circle cx="23.5" cy="24" r="1.1" fill="#0f172a" />
+          <ellipse cx="33" cy="24" rx="2" ry="2.5" fill="#fef08a" />
+          <circle cx="32.5" cy="24" r="1.1" fill="#0f172a" />
+          <path d="M 25,27 Q 28,30 31,27" stroke="#fef08a" stroke-width="1.4" fill="none" stroke-linecap="round" />
+          <!-- Gotas de poción mágica morada y verde neón -->
+          <path d="M 20,35 C 20,35 17,40 17,42 A 2.5,2.5 0 0 0 22,42 C 22,40 20,35 20,35 Z" fill="#10b981" stroke="#059669" stroke-width="0.8" />
+          <path d="M 31,35 C 31,35 28,40 28,42 A 2.5,2.5 0 0 0 33,42 C 33,40 31,35 31,35 Z" fill="#c084fc" stroke="#a855f7" stroke-width="0.8" />
+        </svg>
+      `;
+
     case 'rain':
       // 🌧️🕷️ LLUVIA CON TELARAÑA Y ARAÑITA COLGANDO:
       return `
