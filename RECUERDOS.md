@@ -17,6 +17,23 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Pautas de Coherencia de Diseño:*
      - Los nuevos iconos deben inspirarse y regirse en los iconos ya consolidados de cada tema: mismas proporciones, equilibrio en la cantidad de elementos (astros, nubes, partículas) y mismo ritmo y estilo de animación fluida para garantizar armonía visual y rendimiento en dispositivos móviles.
 
+## 📅 Hoja de Ruta de Temas Estacionales: Calendario de Iconografía para Festividades de Asturias (Ley 23) — 2026-10-18
+- **Planificación de Nuevos Temas Festivos en el Ecosistema (Petición y Hoja de Ruta de Lendo):**
+  Conforme a la doctrina de la **Ley 23** (paridad absoluta de catálogo, simetría y pautas de diseño coherentes), se fija en la memoria permanente del proyecto la hoja de ruta para la creación progresiva de las colecciones de iconos conmemorativas de Asturias (al igual que la hoja de ruta del bot para las estaciones de esquí en temporada invernal):
+  
+  1. 🎄 **Navidá Asturiana & L'Angulero (24 de diciembre al 6 de enero):**
+     - *Identidad visual:* Sol y luna invernales con el farol y gorro de pescador de L'Angulero, copos de nieve sobre los Picos de Europa, nubes con acebo, madreñes tradicionales y lluvia fina de ría cantábrica.
+  2. 🎭 **El Gran Antroxu Asturiano (Carnaval – febrero/marzo, según Pascua):**
+     - *Identidad visual:* Sol y luna con antifaces, plumas y caretas de charanga de Xixón y Avilés, nubes y gotas salpicadas de confeti, serpentinas y frixuelos.
+  3. 🔥 **Noche de San Xuan & Solsticio de Verano (23 – 24 de junio):**
+     - *Identidad visual:* Solsticio con destellos de las hogueras de San Lorenzo y Salinas, elementos de la mitología asturiana (la Xana en la fuente, el Cuélebre y el Trasgu).
+  4. 🛶 **Fiesta de les Piragües / Descenso del Sella (primer sábado de agosto):**
+     - *Identidad visual:* Ambiente sellero con montera picona, palas de piragua cruzadas, collares de flores y espíritu fluvial entre Arriondas y Ribadesella.
+  5. 🏛️ **Día d'Asturies & La Santina de Cuadonga (8 de septiembre):**
+     - *Identidad visual:* La Cruz de la Victoria con el Alfa y el Omega, detalles de la bandera azul asturiana, cumbres de Covadonga, gaitas y manzanas de sidra.
+  6. 🌰 **Amagüestu de Seronda (noviembre):**
+     - *Identidad visual:* Castañes asaes en el tambor de fuego de carbón, xarra de sidra dulce recién mayada y hojas doradas de roble y castaño.
+
 ## 🌦️ Actualización v2.2.68: Nuevo Icono Universal de Chubascos con Sol («Llueve y fai sol») — 2026-10-18
 - **Creación Vectorial Completa del Icono Comodín `showers` (Feedback Lendo - «creo que en los iconos no existe el icono de chubascos (por ejemplo cuando en una hora determinada dan un chaparron y luego sale el sol. El tipico icono que sale una gota una nube y un sol. lo tenemos», «pisale anda que todos lal app lo incorporan y es como un comodin. si en una hora concreta dan posibilidad de nubes, sol y chubascos es imprescindible. crealo para todos los temas que tenemos incluido halloween»):**
   1. *Diagnóstico de la Suite de Iconos:*
