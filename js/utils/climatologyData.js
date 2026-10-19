@@ -1,3 +1,5 @@
+import { getAsturiasClimateMemory } from './climateMemoryData.js?v=2.2.81';
+
 /**
  * Normales Climatológicas Oficiales de Asturias (Serie Estándar AEMET / OMM 1991-2020)
  * y Motor de Cálculo de Anomalía Térmica ("Tiempo Habitual")
@@ -94,9 +96,14 @@ const CLIMATE_ZONES = {
 export const HISTORICAL_RECORDS = {
   coast: {
     stationName: 'AEMET Gijón (Musel) / Avilés',
+    stationOfficialName: 'Observatorio Meteorológico Oficial AEMET Gijón (Musel)',
+    stationAltitude: '25 m sobre el nivel del mar',
+    stationLocation: 'Costa Central de Asturias • Puerto de El Musel',
+    stationMunicipality: 'Gijón / Xixón',
+    stationDescription: 'Observatorio costero oficial de referencia AEMET para Castrillón, Gijón, Gozón, Carreño, Avilés y la rasa litoral cantábrica.',
     zoneLabel: 'Litoral Cantábrico',
     zoneIcon: '🌊',
-    stationShort: 'Gijón / Avilés',
+    stationShort: 'Gijón (Musel)',
     months: [
       { maxT: 23.6, maxYear: 2003, minT: -4.8, minYear: 1985, maxRain: 76.5, rainYear: 1993 }, // Ene
       { maxT: 25.8, maxYear: 1990, minT: -3.0, minYear: 1986, maxRain: 65.0, rainYear: 1978 }, // Feb
@@ -107,16 +114,25 @@ export const HISTORICAL_RECORDS = {
       { maxT: 36.4, maxYear: 2022, minT: 9.8, minYear: 1977, maxRain: 82.0, rainYear: 1983 },   // Jul
       { maxT: 35.8, maxYear: 2003, minT: 9.2, minYear: 1986, maxRain: 78.4, rainYear: 2002 },  // Ago
       { maxT: 32.5, maxYear: 1988, minT: 6.8, minYear: 1972, maxRain: 92.4, rainYear: 2000 },  // Sep
-      { maxT: 31.0, maxYear: 2011, minT: 2.5, minYear: 1974, maxRain: 114.0, rainYear: 2000 }, // Oct
+      { 
+        maxT: 31.0, maxYear: 2011, maxDate: '12 de Octubre de 2011', maxContext: 'Medido en el Observatorio del Musel (Gijón) durante un potente episodio de viento sur (efecto Foehn) y advección cálida sahariana.',
+        minT: 2.5, minYear: 1974, minDate: '24 de Octubre de 1974', minContext: 'Medido en Gijón durante una intensa entrada polar ártica temprana.',
+        maxRain: 114.0, rainYear: 2000, rainDate: '26 de Octubre de 2000', rainContext: 'Mayor lluvia en 24h registrada en la costa asturiana por un tren de frentes atlánticos.'
+      }, // Oct
       { maxT: 26.2, maxYear: 2015, minT: -0.8, minYear: 1988, maxRain: 84.5, rainYear: 2019 }, // Nov
       { maxT: 24.5, maxYear: 1985, minT: -3.2, minYear: 1970, maxRain: 96.0, rainYear: 1981 }  // Dic
     ]
   },
   interior: {
     stationName: 'AEMET Oviedo (El Cristo / Buenavista)',
+    stationOfficialName: 'Observatorio Meteorológico Oficial AEMET Oviedo (El Cristo)',
+    stationAltitude: '336 m sobre el nivel del mar',
+    stationLocation: 'Valles Centrales • El Cristo',
+    stationMunicipality: 'Oviedo / Uviéu',
+    stationDescription: 'Observatorio oficial de referencia para Oviedo, Siero, Llanera y las cuencas centrales de Asturias.',
     zoneLabel: 'Valles Centrales',
     zoneIcon: '🏙️',
-    stationShort: 'Oviedo',
+    stationShort: 'Oviedo (El Cristo)',
     months: [
       { maxT: 23.4, maxYear: 2003, minT: -6.0, minYear: 1985, maxRain: 72.0, rainYear: 1996 },
       { maxT: 24.6, maxYear: 1990, minT: -3.8, minYear: 1986, maxRain: 62.4, rainYear: 1978 },
@@ -127,13 +143,22 @@ export const HISTORICAL_RECORDS = {
       { maxT: 37.0, maxYear: 2022, minT: 7.4, minYear: 1977, maxRain: 84.5, rainYear: 1983 },
       { maxT: 36.6, maxYear: 2003, minT: 7.0, minYear: 1986, maxRain: 75.0, rainYear: 2002 },
       { maxT: 33.0, maxYear: 2021, minT: 5.6, minYear: 1972, maxRain: 79.4, rainYear: 2000 },
-      { maxT: 31.5, maxYear: 2011, minT: 0.8, minYear: 1974, maxRain: 95.0, rainYear: 2000 },
+      { 
+        maxT: 31.5, maxYear: 2011, maxDate: '12 de Octubre de 2011', maxContext: 'Medido en El Cristo (Oviedo) con fuerte viento sur recalentado y polvo sahariano.',
+        minT: 0.8, minYear: 1974, minDate: '24 de Octubre de 1974', minContext: 'Escarcha y helada temprana en la capital bajo una entrada ártica.',
+        maxRain: 95.0, rainYear: 2000, rainDate: '26 de Octubre de 2000', rainContext: 'Lluvias torrenciales continuas que desbordaron tramos fluviales del Nalón y Nora.'
+      },
       { maxT: 25.0, maxYear: 2015, minT: -2.2, minYear: 1988, maxRain: 78.0, rainYear: 2019 },
       { maxT: 23.5, maxYear: 1985, minT: -4.5, minYear: 1970, maxRain: 88.0, rainYear: 1981 }
     ]
   },
   occidente: {
     stationName: 'AEMET Cangas del Narcea',
+    stationOfficialName: 'Estación Meteorológica Oficial AEMET Cangas del Narcea',
+    stationAltitude: '380 m sobre el nivel del mar',
+    stationLocation: 'Suroccidente Asturiano • Valle del Narcea',
+    stationMunicipality: 'Cangas del Narcea',
+    stationDescription: 'Estación oficial de referencia para el suroccidente asturiano y valles del Narcea, Allande, Ibias y Tineo.',
     zoneLabel: 'Suroccidente',
     zoneIcon: '🍂',
     stationShort: 'Cangas del Narcea',
@@ -147,13 +172,22 @@ export const HISTORICAL_RECORDS = {
       { maxT: 39.5, maxYear: 2022, minT: 5.0, minYear: 1977, maxRain: 70.0, rainYear: 1983 },
       { maxT: 39.0, maxYear: 2003, minT: 4.8, minYear: 1986, maxRain: 68.0, rainYear: 2002 },
       { maxT: 34.2, maxYear: 2021, minT: 2.2, minYear: 1972, maxRain: 78.0, rainYear: 1999 },
-      { maxT: 32.0, maxYear: 2011, minT: -1.0, minYear: 1974, maxRain: 88.0, rainYear: 2000 },
+      { 
+        maxT: 32.0, maxYear: 2011, maxDate: '12 de Octubre de 2011', maxContext: 'Récord de calor otoñal en los valles del suroccidente asturiano.',
+        minT: -1.0, minYear: 1974, minDate: '25 de Octubre de 1974', minContext: 'Primera helada bajo cero de otoño en el valle.',
+        maxRain: 88.0, rainYear: 2000, rainDate: '26 de Octubre de 2000', rainContext: 'Tromba otoñal atlántica en las cuencas occidentales.'
+      },
       { maxT: 25.5, maxYear: 2015, minT: -4.5, minYear: 1988, maxRain: 72.0, rainYear: 2019 },
       { maxT: 22.5, maxYear: 1985, minT: -7.0, minYear: 1970, maxRain: 80.0, rainYear: 1981 }
     ]
   },
   mountain: {
-    stationName: 'AEMET Pajares / Picos de Europa (Alta Montaña)',
+    stationName: 'AEMET Pajares / Picos de Europa',
+    stationOfficialName: 'Observatorio de Alta Montaña AEMET Puerto de Pajares',
+    stationAltitude: '1.378 m sobre el nivel del mar',
+    stationLocation: 'Cordillera Cantábrica • Puerto de Pajares',
+    stationMunicipality: 'Lena',
+    stationDescription: 'Observatorio oficial de alta montaña para la Cordillera Cantábrica, puertos y Picos de Europa.',
     zoneLabel: 'Picos de Europa / Cordillera',
     zoneIcon: '🏔️',
     stationShort: 'Pajares / Picos',
@@ -167,9 +201,13 @@ export const HISTORICAL_RECORDS = {
       { maxT: 32.0, maxYear: 2022, minT: 2.0, minYear: 1977, maxRain: 88.0, rainYear: 1983 },
       { maxT: 31.8, maxYear: 2003, minT: 1.8, minYear: 1986, maxRain: 82.0, rainYear: 2002 },
       { maxT: 26.4, maxYear: 1988, minT: -2.0, minYear: 1972, maxRain: 125.0, rainYear: 1993 },
-      { maxT: 25.0, maxYear: 2011, minT: -5.0, minYear: 1974, maxRain: 135.0, rainYear: 2000 },
-      { maxT: 20.0, maxYear: 2015, minT: -9.5, minYear: 1988, maxRain: 110.0, rainYear: 2019 },
-      { maxT: 18.5, maxYear: 1985, minT: -12.0, minYear: 1970, maxRain: 115.0, rainYear: 1981 }
+      { 
+        maxT: 25.0, maxYear: 2011, maxDate: '12 de Octubre de 2011', maxContext: 'Inversión térmica y calor insólito en cumbres cordilleranas.',
+        minT: -5.0, minYear: 1974, minDate: '24 de Octubre de 1974', minContext: 'Fuerte helada y cellisca temprana en cotas altas de montaña.',
+        maxRain: 135.0, rainYear: 2000, rainDate: '26 de Octubre de 2000', rainContext: 'Temporal orográfico con precipitaciones torrenciales en vertiente norte.'
+      },
+      { maxT: 20.0, maxYear: 2015, minT: -9.5, minYear: 1988, rainYear: 2019, maxRain: 110.0 },
+      { maxT: 18.5, maxYear: 1985, minT: -12.0, minYear: 1970, rainYear: 1981, maxRain: 115.0 }
     ]
   }
 };
@@ -294,6 +332,9 @@ export function getClimatologyContext(concejo, current, daily) {
   const recordStation = HISTORICAL_RECORDS[zoneKey] || HISTORICAL_RECORDS.interior;
   const monthRecord = recordStation.months[month] || null;
 
+  // Memoria climática asturiana (Tal día como hoy)
+  const memory = getAsturiasClimateMemory(now);
+
   return {
     status,
     badgeClass,
@@ -315,51 +356,142 @@ export function getClimatologyContext(concejo, current, daily) {
     zoneName: zone.name,
     concejoName: concejo.name,
     monthName,
+    memory,
     records: monthRecord ? {
       station: recordStation.stationName,
+      stationOfficialName: recordStation.stationOfficialName || recordStation.stationName,
+      stationAltitude: recordStation.stationAltitude || `${zone.baseAltitude} m snm`,
+      stationLocation: recordStation.stationLocation || recordStation.zoneLabel,
+      stationMunicipality: recordStation.stationMunicipality || recordStation.stationShort,
+      stationDescription: recordStation.stationDescription || '',
       zoneLabel: recordStation.zoneLabel,
       zoneIcon: recordStation.zoneIcon,
       stationShort: recordStation.stationShort,
       maxT: monthRecord.maxT,
       maxYear: monthRecord.maxYear,
+      maxDate: monthRecord.maxDate || `${monthName.charAt(0).toUpperCase() + monthName.slice(1)} de ${monthRecord.maxYear}`,
+      maxContext: monthRecord.maxContext || 'Máxima histórica de la serie oficial.',
       minT: monthRecord.minT,
       minYear: monthRecord.minYear,
+      minDate: monthRecord.minDate || `${monthName.charAt(0).toUpperCase() + monthName.slice(1)} de ${monthRecord.minYear}`,
+      minContext: monthRecord.minContext || 'Mínima histórica de la serie oficial.',
       maxRain: monthRecord.maxRain,
-      rainYear: monthRecord.rainYear
+      rainYear: monthRecord.rainYear,
+      rainDate: monthRecord.rainDate || `${monthName.charAt(0).toUpperCase() + monthName.slice(1)} de ${monthRecord.rainYear}`,
+      rainContext: monthRecord.rainContext || 'Mayor precipitación acumulada en 24h.'
     } : null
   };
 }
 
 /**
- * Renderiza la franja ergonómica de Tiempo Habitual en la Hero Card
+ * Renderiza la tarjeta de Climatología y Memoria de Asturias en la Hero Card
  */
 export function renderClimatologyStrip(clima) {
   if (!clima) return '';
 
+  const rec = clima.records;
+  const mem = clima.memory;
+
   return `
-    <div class="climatology-strip ${clima.badgeClass}">
-      <div class="climatology-top-row">
+    <div class="climatology-strip clima-history-card ${clima.badgeClass}">
+      <!-- 1. CABECERA CON PRESENCIA VISUAL -->
+      <div class="clima-card-header">
+        <div class="clima-header-left">
+          <span class="clima-header-icon">🏛️</span>
+          <div class="clima-header-titles">
+            <span class="clima-card-title">Climatología & Memoria de Asturias</span>
+            <span class="clima-card-sub">Serie oficial 30 años AEMET (1991–2020) • ${clima.zoneName}</span>
+          </div>
+        </div>
         <button class="climatology-badge ${clima.badgeClass} btn-explain-clima" data-explain="climatology" title="Pulsa para aprender sobre el Tiempo Habitual y las Normales de 30 años de AEMET">
           <span class="climatology-icon">${clima.icon}</span>
           <span class="climatology-text">${clima.label}</span>
           <span class="clima-bulb">💡</span>
         </button>
       </div>
-      <div class="climatology-desc-row">
-        <span class="climatology-desc">Habitual en ${clima.periodLabel}: <strong>${clima.normalMax}°C</strong></span>
+
+      <!-- 2. COMPARATIVA VISUAL DIRECTA (HOY VS HABITUAL) -->
+      <div class="clima-compare-row">
+        <div class="clima-compare-box normal-box">
+          <span class="clima-cmp-label">Habitual en ${clima.periodLabel}</span>
+          <span class="clima-cmp-val"><strong>${clima.normalMax}°C</strong> <small class="cmp-note">media de 30 años</small></span>
+        </div>
+        <div class="clima-compare-sep">➔</div>
+        <div class="clima-compare-box today-box ${clima.badgeClass}">
+          <span class="clima-cmp-label">Máxima Prevista Hoy</span>
+          <span class="clima-cmp-val"><strong>${clima.todayMax}°C</strong> <small class="cmp-note">${clima.diffMax >= 0 ? `+${clima.diffMax}` : `${clima.diffMax}`}°C vs media</small></span>
+        </div>
       </div>
-      ${clima.records ? `
-        <div class="climatology-records-row">
-          <div class="climatology-records-header">
-            <span class="records-station-tag">📜 Récords AEMET · ${clima.monthName.charAt(0).toUpperCase() + clima.monthName.slice(1)}:</span>
-            <span class="records-zone-pill" title="Estación oficial de referencia AEMET: ${clima.records.station}">
-              ${clima.records.zoneIcon} ${clima.records.zoneLabel} <small>(${clima.records.stationShort})</small>
+
+      <!-- 3. RÉCORDS HISTÓRICOS Y ESTACIÓN EXACTA DE MEDICIÓN -->
+      ${rec ? `
+        <div class="clima-records-section">
+          <div class="clima-records-top">
+            <span class="records-tag">📜 Récords AEMET · ${clima.monthName.charAt(0).toUpperCase() + clima.monthName.slice(1)}:</span>
+            <span class="records-zone-pill" title="Observatorio oficial: ${rec.stationOfficialName || rec.station}">
+              ${rec.zoneIcon} ${rec.zoneLabel} <small>(${rec.stationShort})</small>
             </span>
           </div>
+
+          <!-- PASTILLAS DE LOS RÉCORDS INTERACTIVAS -->
           <div class="climatology-records-pills">
-            <span class="record-mini-pill" title="Récord histórico de calor para este mes en ${clima.records.station}">🔥 Máx: <strong>${clima.records.maxT}°C</strong> <small>(${clima.records.maxYear})</small></span>
-            <span class="record-mini-pill" title="Récord histórico de frío para este mes en ${clima.records.station}">❄️ Mín: <strong>${clima.records.minT}°C</strong> <small>(${clima.records.minYear})</small></span>
-            <span class="record-mini-pill" title="Mayor precipitación en 24 horas registrada en este mes en ${clima.records.station}">🌧️ 24h: <strong>${clima.records.maxRain} mm</strong> <small>(${clima.records.rainYear})</small></span>
+            <span class="record-mini-pill record-max" title="${rec.maxContext || `Récord de calor en ${rec.station}`}">
+              🔥 Máx: <strong>${rec.maxT}°C</strong> <small>(${rec.maxYear})</small>
+            </span>
+            <span class="record-mini-pill record-min" title="${rec.minContext || `Récord de frío en ${rec.station}`}">
+              ❄️ Mín: <strong>${rec.minT}°C</strong> <small>(${rec.minYear})</small>
+            </span>
+            <span class="record-mini-pill record-rain" title="${rec.rainContext || `Mayor lluvia en 24h en ${rec.station}`}">
+              🌧️ 24h: <strong>${rec.maxRain} mm</strong> <small>(${rec.rainYear})</small>
+            </span>
+          </div>
+
+          <!-- DESPLEGABLE DE DETALLES: DÓNDE SE MIDIÓ EN TU ZONA (RESPONDIENDO A LENDO) -->
+          <details class="clima-station-accordion" open>
+            <summary class="clima-station-summary" title="Toca para ver o colapsar la ubicación de la estación">
+              <span class="st-summary-icon">📍</span>
+              <span class="st-summary-text">Dónde se midió: <strong>${rec.stationOfficialName || rec.station}</strong></span>
+              <span class="st-summary-chevron">▾</span>
+            </summary>
+            <div class="clima-station-content">
+              <div class="st-meta-row">
+                <span>📍 <strong>Ubicación:</strong> ${rec.stationLocation} (${rec.stationAltitude})</span>
+                <span>🏛️ <strong>Municipio:</strong> ${rec.stationMunicipality}</span>
+              </div>
+              <p class="st-desc-text">${rec.stationDescription}</p>
+              <div class="st-events-breakdown">
+                <div class="st-event-item">
+                  <span class="st-ev-badge max">🔥 Calor Récord:</span>
+                  <span class="st-ev-text"><strong>${rec.maxT}°C</strong> el ${rec.maxDate}. ${rec.maxContext}</span>
+                </div>
+                <div class="st-event-item">
+                  <span class="st-ev-badge min">❄️ Frío Récord:</span>
+                  <span class="st-ev-text"><strong>${rec.minT}°C</strong> el ${rec.minDate}. ${rec.minContext}</span>
+                </div>
+                <div class="st-event-item">
+                  <span class="st-ev-badge rain">🌧️ Lluvia Récord:</span>
+                  <span class="st-ev-text"><strong>${rec.maxRain} mm</strong> el ${rec.rainDate}. ${rec.rainContext}</span>
+                </div>
+              </div>
+            </div>
+          </details>
+        </div>
+      ` : ''}
+
+      <!-- 4. SECCIÓN: MEMORIA DEL CLIMA ASTURIANO (TAL DÍA COMO HOY) -->
+      ${mem ? `
+        <div class="clima-memory-block">
+          <div class="clima-memory-header">
+            <div class="clima-memory-title-wrap">
+              <span class="clima-memory-icon">${mem.icon}</span>
+              <span class="clima-memory-heading">Memoria del Clima Asturiano • ${mem.dateLabel}</span>
+            </div>
+            <span class="clima-memory-tag ${mem.tagClass}">${mem.tag}</span>
+          </div>
+          <div class="clima-memory-body">
+            <h4 class="clima-memory-event-title">${mem.title} ${mem.year ? `<small class="memory-year">(${mem.year})</small>` : ''}</h4>
+            <p class="clima-memory-summary">${mem.summary}</p>
+            ${mem.location ? `<div class="clima-memory-loc"><span class="loc-pin">📍</span> <strong>Ámbito:</strong> ${mem.location}</div>` : ''}
           </div>
         </div>
       ` : ''}

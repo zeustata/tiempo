@@ -49,6 +49,32 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. *Almacenamiento Estático Desacoplado:* El bot vuelca los datos limpios (km abiertos, pistas por dificultad técnica, remontes en servicio y espesores mín/máx) en un archivo JSON estático (`data/snowReport.json`).
     3. *Consumo Directo en Cliente:* `mountainCard.js` lee ese JSON sin sobrecargar a los servidores externos ni ralentizar la carga en clientes, mostrando los partes de nieve actualizados en vivo de forma 100% legal, autónoma y sin fricción.
 
+## 📜 Actualización v2.2.81: Climatología de Prestigio & Memoria del Clima Asturiano — 2026-10-19
+- **Transformación Visual, Transparencia de Estaciones y Efemérides Históricas (Feedback y Petición Expresa de Lendo - «a ver. esa tasrjeta deberia de tener mas peso. te pone la maxima en octubre te pone 31 pero sberia darle a ese boton para que te ponga exactamente donde en la zona. arregla esa tarjeta que sea mas visual y añade memoria clima asturiano . a ver q pasa», «pisale princesa»):**
+  1. *Evolución de la Franja a Tarjeta de Prestigio (Liquid Glass):*
+     - La franja climatológica situada bajo la curva térmica de 24h en la Hero Card de la Estación en Vivo pasa de ser una tira menor a una tarjeta completa de alto nivel estético (`.climatology-strip.clima-history-card` en `currentCard.js`, `climatologyData.js` y `components.css`).
+     - Cabecera institucional con título *«🏛️ Climatología & Memoria de Asturias»*, insignia dinámica de balance térmico mensual (*«Cálido respecto a la media»*, *«Fresco respecto a la media»*, etc.) y botón didáctico `💡` para el modal de explicaciones meteorológicas.
+  2. *Caja de Comparativa Directa (Media Histórica 1991-2020 vs. Hoy):*
+     - Bloque simétrico que enfrenta cara a cara la temperatura media habitual del mes (serie climatológica oficial AEMET de 30 años) frente a la máxima prevista para hoy con etiqueta de evaluación visual.
+  3. *Transparencia Absoluta de Récords y Localización de Estaciones (AEMET):*
+     - Resuelve la ambigüedad que desconcertaba al usuario al ver cifras como "31 °C en octubre" sin saber dónde ocurrieron.
+     - Asigna y expone con exactitud la estación oficial de referencia según la zona del concejo:
+       - **Costa:** *Observatorio AEMET Gijón (Musel) a 25 m snm* (Gijón).
+       - **Valles e Interior:** *Observatorio AEMET Oviedo (El Cristo) a 336 m snm* (Oviedo).
+       - **Suroccidente:** *Estación Oficial AEMET Degaña / Ibias* (Cangas del Narcea).
+       - **Cordillera Cantábrica:** *Observatorio AEMET Puerto de Pajares a 1.480 m snm* (Lena).
+     - Cada récord (máxima histórica, mínima histórica y mayor lluvia en 24h) incluye su fecha exacta (día y año) y el contexto meteorológico sinóptico (ola de calor, advección siberiana, temporal marítimo o borrasca atlántica).
+  4. *Acordeón Desplegable Ergonómico (`<details class="clima-station-accordion">`):*
+     - Al tocar la pastilla oficial de la estación, se despliega de forma nativa y sin sobrecarga de JS la ficha detallada con municipio, altitud sobre el nivel del mar y relato explicativo de cada récord.
+     - Blindaje anti-desborde total (Ley 11) con `box-sizing: border-box`, `max-width: 100%` y ancho garantizado en pantallas de 320px a 380px.
+  5. *Nuevo Módulo: Memoria del Clima Asturiano («Tal día como hoy»):*
+     - Creado `js/utils/climateMemoryData.js` con un banco histórico documentado de grandes efemérides meteorológicas del Principado de Asturias (el gran temporal cantábrico del 19 de octubre de 2014, el récord de 31,4 °C del 12 de octubre de 2011, la ciclogénesis Klaus de 2009, el huracán Ophelia de 2017, la ola de frío siberiano de 1985, nevadas históricas de Pajares de 1996, la galerna del Cantábrico de 1961, etc.) y refranero meteorológico estacional asturiano.
+  6. *Didáctica Ampliada en `weatherExplanations.js`:*
+     - Añadida la sección *«5. Memoria del Clima Asturiano y Récords Exactos»* en el tema de climatología, detallando cómo y dónde se homologan las marcas de AEMET.
+  7. *Versionado y Despliegue Oficial:*
+     - Service Worker actualizado a `meteoasturlode-v2281-climatologia-memoria-historica` en `sw.js` (incluyendo `climateMemoryData.js`).
+     - Versión oficial elevada a `v2.2.81 📜` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.81'` en `app.js`, `currentCard.js?v=2.2.81`, `weatherExplanations.js?v=2.2.81`, `climatologyData.js?v=2.2.81` y query strings en `index.html`.
+
 ## ⏱️ Actualización v2.2.80: Barómetro con Detección Predictiva de Ciclogénesis y Borrascas Profundas — 2026-10-19
 - **Inteligencia Predictiva y Escala de Caída Barométrica en 3 Horas (Feedback y Petición Expresa de Lendo - «vamos a por la 2 de momento, el barometro», «mejora el barometro de momento»):**
   1. *Diagnóstico Meteorológico y Estándar Internacional OMM (WMO Code 0200):*

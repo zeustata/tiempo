@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2280-barometro-ciclogenesis-alerta';
+const CACHE_NAME = 'meteoasturlode-v2281-climatologia-memoria-historica';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -47,6 +47,7 @@ const STATIC_ASSETS = [
   './js/utils/gyroGlass.js',
   './js/utils/laundryAdvisor.js',
   './js/utils/climatologyData.js',
+  './js/utils/climateMemoryData.js',
   './js/utils/storage.js',
   './js/utils/umbrellaAdvisor.js',
   './js/utils/borrinaDetector.js',

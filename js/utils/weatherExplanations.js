@@ -810,6 +810,11 @@ export const WEATHER_EXPLANATIONS = {
         icon: '⚖️',
         heading: '4. Datos 100% Públicos, Gratuitos y Abiertos',
         text: 'Esta función utiliza exclusivamente las tablas oficiales de <em>AEMET OpenData</em> publicadas bajo licencia de datos abiertos del Estado Español (Ley 37/2007). Se calcula de forma <strong>autónoma e instantánea en tu dispositivo sin llamadas de red externas, sin cookies ni costes de API</strong>.'
+      },
+      {
+        icon: '📜',
+        heading: '5. Memoria del Clima Asturiano y Récords Exactos',
+        text: 'Cada récord meteorológico mensual indica la <strong>estación oficial homologada exacta de AEMET</strong> donde se registró (Gijón Musel, Oviedo El Cristo, Cangas del Narcea o Pajares), con fecha y contexto físico. Además, el bloque de <em>Memoria del Clima Asturiano</em> rememora cada día del calendario los grandes temporales, ciclogénesis, nevadas históricas y la sabiduría meteorológica popular de nuestra tierra.'
       }
     ]
   },

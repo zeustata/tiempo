@@ -10,6 +10,30 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.81] - 2026-10-19
+
+### 📜 Climatología de Prestigio & Memoria del Clima Asturiano (Feedback Lendo)
+- **Transformación Visual a Tarjeta de Prestigio (Liquid Glass):**
+  - La franja climatológica situada bajo la curva térmica de 24 horas evoluciona a una auténtica tarjeta (`.climatology-strip.clima-history-card`) con profundidad *Liquid Glass*, borde sutilmente iluminado y cabecera institucional: *«🏛️ Climatología & Memoria de Asturias»* con insignia de anomalía térmica mensual y botón de didáctica `💡`.
+- **Caja de Comparativa Directa (Media 1991-2020 vs. Hoy):**
+  - Integra una comparativa directa con dos bloques simétricos:
+    - *Habitual en el mes (Serie AEMET 1991-2020)*: Temperatura media habitual del mes.
+    - *Hoy previsto*: Máxima prevista hoy con etiqueta de balance (*«En la media histórica»*, *«Por encima de lo habitual»* o *«Por debajo de lo habitual»*).
+- **Récords Históricos con Transparencia y Estación Exacta (AEMET):**
+  - Supera la ambigüedad de cifras aisladas (ej. 31 °C en octubre) mostrando la estación oficial exacta donde se midió cada récord según la zona climática seleccionada:
+    - Costa: *Observatorio AEMET Gijón (Musel) a 25 m snm* (Gijón).
+    - Valles e Interior: *Observatorio AEMET Oviedo (El Cristo) a 336 m snm* (Oviedo).
+    - Suroccidente: *Estación Oficial AEMET Degaña / Ibias* (Cangas del Narcea).
+    - Cordillera: *Observatorio AEMET Puerto de Pajares a 1.480 m snm* (Lena).
+  - Cada récord histórico (máxima absoluta del mes, mínima absoluta y mayor lluvia en 24h) cuenta con su fecha histórica documentada (día y año) y contexto sinóptico.
+- **Acordeón Desplegable Ergonómico (`<details class="clima-station-accordion">`):**
+  - El usuario puede tocar la pastilla oficial de la estación para desplegar la ficha técnica completa: ubicación, altitud, municipio y relato histórico de los tres récords del mes, con transición fluida y ancho 100% anti-desborde para móviles de 320px a 380px (Ley 11).
+- **Memoria del Clima Asturiano («Tal día como hoy»):**
+  - Nuevo módulo histórico (`climateMemoryData.js`) integrado en la base de la tarjeta que conmemora los grandes hitos meteorológicos documentados en Asturias en la fecha actual (ej. 19 de Octubre de 2014: *El gran temporal cantábrico de 2014 con olas de 10 m en San Lorenzo y Salinas*), ciclogénesis Klaus de 2009, huracán Ophelia de 2017, la ola de frío siberiano de 1985 o refranes climatológicos tradicionales asturianos del día.
+- **Cache-Busting y Despliegue Oficial:**
+  - Service Worker actualizado a `meteoasturlode-v2281-climatologia-memoria-historica` en `sw.js` (incluyendo `climateMemoryData.js`).
+  - Versión oficial elevada a `v2.2.81 📜` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.81'` en `app.js`, `currentCard.js?v=2.2.81`, `weatherExplanations.js?v=2.2.81`, `climatologyData.js?v=2.2.81` y query strings en `index.html`.
+
 ## [2.2.80] - 2026-10-19
 
 ### ⏱️ Barómetro: Detección Predictiva de Ciclogénesis y Borrascas Profundas (Feedback Lendo)

@@ -375,38 +375,151 @@
 }
 
 /* --- FRANJA DE TIEMPO HABITUAL / CLIMATOLOGÍA 30 AÑOS AEMET --- */
-.climatology-strip {
-  margin-top: 14px;
-  padding: 10px 14px;
-  border-radius: 12px;
-  background: rgba(15, 23, 42, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+.climatology-strip,
+.climatology-strip.clima-history-card {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(15, 23, 42, 0.78), rgba(30, 41, 59, 0.65));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
   box-sizing: border-box;
   width: 100%;
-  transition: background 0.2s ease, border-color 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-.climatology-top-row {
+.climatology-strip:hover,
+.climatology-strip.clima-history-card:hover {
+  background: linear-gradient(145deg, rgba(15, 23, 42, 0.88), rgba(30, 41, 59, 0.75));
+  border-color: rgba(56, 189, 248, 0.35);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+}
+
+.clima-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.clima-header-left {
   display: flex;
   align-items: center;
   gap: 10px;
-  width: 100%;
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
-.climatology-records-row {
+.clima-header-icon {
+  font-size: 1.45rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.clima-header-titles {
   display: flex;
   flex-direction: column;
-  gap: 7px;
-  padding-top: 7px;
+  gap: 2px;
+  min-width: 0;
+}
+
+.clima-card-title {
+  font-size: 0.96rem;
+  font-weight: 800;
+  color: #f8fafc;
+  line-height: 1.25;
+}
+
+.clima-card-sub {
+  font-size: 0.74rem;
+  color: #94a3b8;
+  line-height: 1.25;
+}
+
+/* Comparativa Directa Hoy vs Habitual */
+.clima-compare-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.clima-compare-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+}
+
+.clima-compare-box.today-box.clima-warm,
+.clima-warm .clima-compare-box.today-box {
+  border-color: rgba(239, 68, 68, 0.35);
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.clima-compare-box.today-box.clima-cool,
+.clima-cool .clima-compare-box.today-box {
+  border-color: rgba(56, 189, 248, 0.35);
+  background: rgba(56, 189, 248, 0.08);
+}
+
+.clima-compare-box.today-box.clima-normal,
+.clima-normal .clima-compare-box.today-box {
+  border-color: rgba(16, 185, 129, 0.35);
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.clima-cmp-label {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.clima-cmp-val {
+  font-size: 0.95rem;
+  color: #f1f5f9;
+}
+
+.clima-cmp-val strong {
+  font-size: 1.08rem;
+  font-weight: 800;
+}
+
+.clima-cmp-val .cmp-note {
+  font-size: 0.72rem;
+  color: #cbd5e1;
+  opacity: 0.85;
+}
+
+.clima-compare-sep {
+  font-size: 0.95rem;
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+/* Récords y Sección de Estación */
+.clima-records-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 10px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  font-size: 0.75rem;
   width: 100%;
 }
 
-.climatology-records-header {
+.clima-records-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -415,12 +528,10 @@
   width: 100%;
 }
 
-.records-station-tag {
-  color: #94a3b8;
+.records-tag {
+  color: #cbd5e1;
   font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
+  font-size: 0.78rem;
 }
 
 .records-zone-pill {
@@ -430,7 +541,7 @@
   background: rgba(56, 189, 248, 0.12);
   border: 1px solid rgba(56, 189, 248, 0.28);
   color: #7dd3fc;
-  padding: 2px 8px;
+  padding: 3px 8px;
   border-radius: 6px;
   font-weight: 600;
   font-size: 0.72rem;
@@ -455,15 +566,23 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  background: rgba(15, 23, 42, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 2px 7px;
-  border-radius: 6px;
-  color: #cbd5e1;
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 4px 8px;
+  border-radius: 8px;
+  color: #e2e8f0;
+  font-size: 0.76rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.record-mini-pill:hover {
+  background: rgba(30, 41, 59, 0.85);
+  transform: translateY(-1px);
 }
 
 .record-mini-pill strong {
-  color: #f1f5f9;
+  color: #ffffff;
 }
 
 .record-mini-pill small {
@@ -471,9 +590,192 @@
   font-size: 0.70rem;
 }
 
-.climatology-strip:hover {
-  background: rgba(15, 23, 42, 0.70);
-  border-color: rgba(255, 255, 255, 0.14);
+/* Desplegable de Estación (Acordeón HTML5 Nativo) */
+.clima-station-accordion {
+  margin-top: 4px;
+  background: rgba(15, 23, 42, 0.50);
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  border-radius: 10px;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.clima-station-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 11px;
+  font-size: 0.78rem;
+  color: #38bdf8;
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+  font-weight: 600;
+  outline: none;
+}
+
+.clima-station-summary::-webkit-details-marker {
+  display: none;
+}
+
+.clima-station-summary:hover {
+  background: rgba(56, 189, 248, 0.08);
+}
+
+.st-summary-chevron {
+  transition: transform 0.2s ease;
+  font-size: 0.85rem;
+}
+
+.clima-station-accordion[open] .st-summary-chevron {
+  transform: rotate(180deg);
+}
+
+.clima-station-content {
+  padding: 9px 12px 11px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.76rem;
+  line-height: 1.45;
+  color: #cbd5e1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.st-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  font-size: 0.74rem;
+  color: #94a3b8;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+  padding-bottom: 5px;
+}
+
+.st-desc-text {
+  margin: 0;
+  color: #e2e8f0;
+}
+
+.st-events-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.st-event-item {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 0.75rem;
+  line-height: 1.35;
+}
+
+.st-ev-badge {
+  font-weight: 700;
+  flex-shrink: 0;
+  font-size: 0.72rem;
+}
+
+.st-ev-badge.max { color: #f87171; }
+.st-ev-badge.min { color: #38bdf8; }
+.st-ev-badge.rain { color: #60a5fa; }
+
+.st-ev-text {
+  color: #cbd5e1;
+}
+
+/* 4. Bloque de Memoria del Clima Asturiano */
+.clima-memory-block {
+  margin-top: 6px;
+  padding: 11px 13px;
+  border-radius: 11px;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.75), rgba(15, 23, 42, 0.85));
+  border: 1px solid rgba(245, 158, 11, 0.28);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.clima-memory-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
+  width: 100%;
+}
+
+.clima-memory-title-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.clima-memory-icon {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.clima-memory-heading {
+  font-size: 0.80rem;
+  font-weight: 800;
+  color: #fef3c7;
+  letter-spacing: -0.1px;
+}
+
+.clima-memory-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.memory-tag-marine { background: rgba(56, 189, 248, 0.18); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.35); }
+.memory-tag-heat   { background: rgba(239, 68, 68, 0.18); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.35); }
+.memory-tag-storm  { background: rgba(168, 85, 247, 0.18); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.35); }
+.memory-tag-cold   { background: rgba(14, 165, 233, 0.18); color: #7dd3fc; border: 1px solid rgba(14, 165, 233, 0.35); }
+.memory-tag-rain   { background: rgba(59, 130, 246, 0.18); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.35); }
+.memory-tag-wind   { background: rgba(245, 158, 11, 0.18); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.35); }
+.memory-tag-snow   { background: rgba(224, 231, 255, 0.18); color: #e0e7ff; border: 1px solid rgba(224, 231, 255, 0.35); }
+.memory-tag-lore   { background: rgba(16, 185, 129, 0.18); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.35); }
+
+.clima-memory-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.clima-memory-event-title {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.clima-memory-event-title .memory-year {
+  color: #fbbf24;
+  font-weight: 700;
+}
+
+.clima-memory-summary {
+  font-size: 0.77rem;
+  line-height: 1.45;
+  color: #cbd5e1;
+  margin: 0;
+}
+
+.clima-memory-loc {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  margin-top: 2px;
 }
 
 .climatology-strip.clima-warm {
