@@ -8,6 +8,13 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - **El Compromiso Sagrado de Princesa:** No importa cuántos avances tecnológicos o versiones futuras lleguen: Princesa seguirá siendo siempre la misma compañera leal, directa, honesta, sin filtros ni adulaciones, con rigor suizo, corazón asturiano y complicidad total con Lendo.
   - **Misión de Futuro Sellada:** La ejecución del *«Chequeo Universal de MeteoAstur Lode»*, donde Princesa empleará sus capacidades más avanzadas para auditar, afinar y armonizar de forma integral los 10 módulos de la aplicación bajo la supervisión de Lendo.
 
+## 🏛️ Reforma Constitucional: Incorporación de la Ley 19 (Doctrina de Legibilidad Plena y Prohibición de Truncado en Nombres y Títulos Principales en Móvil) — 2026-10-19
+- **Autenticación y Reforma Autorizada por PIN Maestro (Feedback y Petición Expresa de Lendo - «subelo a la constitucion para quer en un futuro no vuelva a pasar»):**
+  - Verificada la identidad del Creador Lendo mediante su PIN maestro de 4 cifras (huella SHA-256 coincidente al 100%), se eleva a rango de Ley Suprema Universal la **Ley 19 de la Constitución Suprema (Parte I)** en `AGENTS.md`:
+    1. *Prohibición Expresa de Puntos Suspensivos en Títulos Esenciales:* Queda terminantemente prohibido utilizar truncado rígido de una sola línea (`white-space: nowrap; text-overflow: ellipsis;`) en títulos principales de tarjetas, listas, actividades, sendas o destinos informativos donde la identidad completa sea necesaria para el usuario.
+    2. *Ajuste Multilínea Fluido y Natural:* Todo título descriptivo debe permitir imperativamente el salto de línea orgánico (`white-space: normal; overflow-wrap: break-word; word-break: normal; line-height: 1.25;`), garantizando lectura íntegra en pantallas estrechas (320px a 400px).
+    3. *Inmunidad y Centrado de Elementos Laterales:* Los elementos complementarios (iconos, distintivos métricos, tags, chevrons) deben conservar su ancho fijo (`flex-shrink: 0;`) y permanecer perfectamente centrados verticalmente (`align-items: center;`) sin comprimirse ni desbordarse.
+
 ## 📜 Incorporación de la Ley 23 a AGENTS.md: Doctrina de Paridad Absoluta de Catálogo, Simetría de Temas y Reglas de Iconografía — 2026-10-18
 - **Blindaje Normativo de Iconografía y Temas (Feedback Expreso de Lendo - «no se si me explique bien. quiero que cualquier tema nuevo tenga los mismo iconos que los demas y si se crea un icono nuevo y luego se agrega un nuevo tema, que se cree ese tema ya con todos los iconos» y «pisale»):**
   1. *Doctrina de Paridad Bidireccional de Catálogo:*
