@@ -31,8 +31,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.2.77">
-  <link rel="stylesheet" href="css/components.css?v=2.2.77">
+  <link rel="stylesheet" href="css/main.css?v=2.2.78">
+  <link rel="stylesheet" href="css/components.css?v=2.2.78">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.77 🏄‍♂️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.78 💨</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -349,8 +349,23 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.2.77 🏄‍♂️</span>
+            <span class="release-version">v2.2.78 💨</span>
             <span class="release-date">19 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-feature">Meteorología Dinámica &amp; Seguridad (Feedback Lendo)</span> <strong>Anemómetro: Escala de Color y Alerta en Rachas Peligrosas</strong>:
+              <br>• <strong>Escala Gradual AEMET (60-79 km/h Naranja / ≥ 80 km/h Rojo):</strong> En la tarjeta de <em>Anemómetro y Dirección</em> de la Estación en Vivo, las cifras de racha abandonan el blanco estándar para teñirse automáticamente en <strong>Naranja de Precaución</strong> (60 a 79 km/h) o <strong>Rojo de Peligro Severo</strong> (≥ 80 km/h) acompañadas del distintivo de advertencia <code>⚠️</code>.
+              <br>• <strong>Doble Cobertura (Racha Actual + Máxima Prevista):</strong> La escala de severidad aplica tanto a la <strong>racha actual</strong> (en el valor principal y subtítulo desglosado) como a la <strong>racha máxima prevista para hoy</strong>.
+              <br>• <strong>Blindaje de Unidades (km/h vs Nudos):</strong> El umbral se calcula internamente sobre la velocidad matemática base, disparándose con total precisión tanto si la app se visualiza en km/h como en nudos marítimos (kt).
+              <br>• <strong>Simulacro Ley 12 Incorporado:</strong> Verificable en cualquier momento mediante <code>?test=viento</code> (naranja) o <code>?test=viento_severo</code> (rojo).
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.77 🏄‍♂️</span>
+            <span class="release-date">19 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-feature">Armonía Visual &amp; Ergonomía (Feedback Lendo - Ley 14)</span> <strong>Guía de Surf y Rompientes: Cabecera en Dos Niveles Idéntica a Playas</strong>:
@@ -4130,7 +4145,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.77"></script>
+  <script type="module" src="js/app.js?v=2.2.78"></script>
 
 
 

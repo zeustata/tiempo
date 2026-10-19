@@ -8,7 +8,7 @@ import { detectSnowStatus, renderSnowBanner } from '../utils/snowDetector.js?v=2
 import { detectBorrinaEffect, renderBorrinaBanner } from '../utils/borrinaDetector.js?v=2.2.38b';
 import { detectMarFondoEffect, renderMarFondoBanner } from '../utils/marFondoDetector.js?v=2.2.38';
 import { detectThunderstormEffect, renderThunderstormBanner } from '../utils/thunderstormDetector.js?v=2.2.38';
-import { detectRoadWindStatus, renderRoadWindBanner, renderRoadWindSensorPill } from '../utils/roadWindDetector.js?v=2.2.38';
+import { detectRoadWindStatus, renderRoadWindBanner, renderRoadWindSensorPill } from '../utils/roadWindDetector.js?v=2.2.78';
 import { getSeismicStatus, renderSeismicBanner } from '../utils/seismicDetector.js?v=2.2.38';
 import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=2.2.12';
 import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=1.1.60';
@@ -204,13 +204,41 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
 
   // Conversión de viento a nudos si se solicita
   const rawSpeed = current.wind_speed_10m != null ? current.wind_speed_10m : 0;
-  const rawGusts = current.wind_gusts_10m != null ? current.wind_gusts_10m : rawSpeed;
-  const rawMaxGustToday = (daily.wind_gusts_10m_max && daily.wind_gusts_10m_max[0] != null) ? daily.wind_gusts_10m_max[0] : rawGusts;
+  let rawGusts = current.wind_gusts_10m != null ? current.wind_gusts_10m : rawSpeed;
+  let rawMaxGustToday = (daily.wind_gusts_10m_max && daily.wind_gusts_10m_max[0] != null) ? daily.wind_gusts_10m_max[0] : rawGusts;
+
+  // Simulacro de prueba para viento (Doctrina Constitucional 12)
+  if (typeof window !== 'undefined') {
+    const urlParams = new URLSearchParams(window.location.search);
+    const testMode = urlParams.get('test');
+    if (testMode === 'viento' || testMode === 'viento_60' || testMode === 'aemet_viento' || testMode === 'viaductos') {
+      rawGusts = 68.4;
+      rawMaxGustToday = 74.2;
+    } else if (testMode === 'viento_severo' || testMode === 'viento_80' || testMode === 'temporal' || testMode === 'temporal_viaductos' || testMode === 'viaductos_severo') {
+      rawGusts = 85.0;
+      rawMaxGustToday = 96.5;
+    }
+  }
+
   const windSpeed = units === 'knots' ? (rawSpeed * 0.539957).toFixed(1) : rawSpeed.toFixed(1);
   const windGusts = units === 'knots' ? (rawGusts * 0.539957).toFixed(1) : rawGusts.toFixed(1);
   const windMaxGustToday = units === 'knots' ? (rawMaxGustToday * 0.539957).toFixed(1) : rawMaxGustToday.toFixed(1);
   const windUnit = units === 'knots' ? 'kt' : 'km/h';
   const hasDistinctGust = parseFloat(windGusts) > parseFloat(windSpeed);
+
+  // Escala cromática de severidad para rachas (60-79 km/h Naranja con ⚠️, >= 80 km/h Rojo con ⚠️)
+  const getGustSeverity = (gustKmH) => {
+    if (gustKmH >= 80) {
+      return { cssClass: 'wind-val-danger', icon: ' ⚠️' };
+    }
+    if (gustKmH >= 60) {
+      return { cssClass: 'wind-val-warning', icon: ' ⚠️' };
+    }
+    return { cssClass: '', icon: '' };
+  };
+
+  const currentGustSeverity = getGustSeverity(rawGusts);
+  const maxGustSeverity = getGustSeverity(rawMaxGustToday);
 
   // Punto de rocío actual (aproximado por Magnus-Tetens)
   const T = current.temperature_2m;
@@ -564,10 +592,10 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
           <div class="wind-info">
             ${hasDistinctGust ? `
               <div class="sensor-val wind-range-val" title="Velocidad media sostenida: ${windSpeed} ${windUnit} • Racha actual: ${windGusts} ${windUnit}">
-                <span class="wind-base-val">${windSpeed}</span><span class="wind-range-sep"> – </span><span class="wind-gust-val">${windGusts}</span> <small>${windUnit}</small>
+                <span class="wind-base-val">${windSpeed}</span><span class="wind-range-sep"> – </span><span class="wind-gust-val ${currentGustSeverity.cssClass}">${windGusts}</span> <small>${windUnit}</small>
               </div>
               <div class="sensor-sub wind-legend-sub">
-                <span>Media: <strong>${windSpeed}</strong></span> • <span>Racha: <strong>${windGusts} ${windUnit}</strong></span>
+                <span>Media: <strong>${windSpeed}</strong></span> • <span>Racha: <strong class="${currentGustSeverity.cssClass}">${windGusts} ${windUnit}${currentGustSeverity.icon}</strong></span>
               </div>
             ` : `
               <div class="sensor-val wind-range-val" title="Velocidad continua: ${windSpeed} ${windUnit}">
@@ -580,7 +608,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
             <div class="sensor-sub">Dirección: <strong>${windDir.name} (${current.wind_direction_10m}°)</strong></div>
             <div class="sensor-sub wind-flow-tag">Viene del <strong>${windDir.short}</strong> ➔ sopla al <strong>${windDir.to}</strong></div>
             ${foehn ? `<div class="sensor-sub foehn-sensor-indicator">🔥 Viento Sur: Efecto Foehn Activo</div>` : ''}
-            <div class="sensor-sub">Racha máx. prevista: <strong>${windMaxGustToday} ${windUnit}</strong></div>
+            <div class="sensor-sub">Racha máx. prevista: <strong class="${maxGustSeverity.cssClass}">${windMaxGustToday} ${windUnit}${maxGustSeverity.icon}</strong></div>
             ${roadWindSensorPill}
           </div>
         </div>

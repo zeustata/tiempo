@@ -10,6 +10,24 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.78] - 2026-10-19
+
+### 💨 Anemómetro: Escala de Severidad Dinámica y Alerta en Rachas Peligrosas (Feedback Lendo)
+- **Escala Cromática de Alerta según Severidad AEMET:**
+  - En el sensor de *Anemómetro y Dirección* de la Estación en Vivo (`currentCard.js` y `components.css`), las cifras de rachas abandonan el blanco estándar para reflejar dinámicamente el nivel de riesgo:
+    - **< 60 km/h:** Blanco normal / cian (`#38bdf8` en titular y `#f8fafc` en subtítulo).
+    - **60 a 79 km/h (Precaución AEMET):** Tono naranja luminoso (`#f97316`, peso 800) acompañado del distintivo de advertencia `⚠️`.
+    - **≥ 80 km/h (Peligro Severo / Temporal):** Tono rojo intenso (`#ef4444`, peso 800) acompañado de `⚠️` con sutil resplandor de advertencia.
+- **Doble Cobertura (Racha Actual + Máxima Prevista para Hoy):**
+  - La coloración aplica tanto a la **racha actual** en vivo (en el titular `.wind-range-val` y en la leyenda `Media • Racha`) como a la **racha máxima prevista para hoy** (`Racha máx. prevista`).
+- **Blindaje Matemático de Unidades (`km/h` vs `knots`):**
+  - La evaluación se calcula internamente sobre los valores brutos (`rawGusts` y `rawMaxGustToday`), asegurando precisión absoluta tanto en visualización en kilómetros por hora como en nudos marítimos (kt).
+- **Simulacro Ley 12 y Sincronización Vial de Viaductos:**
+  - Posibilidad de verificar visualmente la escala en cualquier momento mediante `?test=viento` (simulación de rachas de 68 y 74 km/h en naranja, con banner y píldora de viaductos A-8/A-66 sincronizados en naranja) y `?test=viento_severo` (rachas de 85 y 96 km/h en rojo con alerta severa vial).
+- **Cache-Busting y Despliegue Oficial:**
+  - Service Worker actualizado a `meteoasturlode-v2278-anemometro-rachas-peligrosas` en `sw.js`.
+  - Versión oficial elevada a `v2.2.78 💨` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.78'` en `app.js`, `currentCard.js?v=2.2.78` y query strings en `index.html`.
+
 ## [2.2.77] - 2026-10-19
 
 ### 🏄‍♂️ Guía de Surf y Rompientes: Cabecera en Dos Niveles Idéntica a Playas (Feedback Lendo - Ley 14)

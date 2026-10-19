@@ -84,7 +84,7 @@ export function getAemetAlertStatus(weatherData, concejo) {
   if (ALLOW_SIMULATION && typeof window !== 'undefined') {
     const urlParams = new URLSearchParams(window.location.search);
     const testMode = urlParams.get('test');
-    if (testMode === 'aemet' || testMode === 'aemet_amarillo' || testMode === 'aemet_yellow' || testMode === 'aemet_viento' || testMode === 'viaductos' || testMode === 'viento_viaductos') {
+    if (testMode === 'aemet' || testMode === 'aemet_amarillo' || testMode === 'aemet_yellow' || testMode === 'aemet_viento' || testMode === 'viaductos' || testMode === 'viento_viaductos' || testMode === 'viento' || testMode === 'viento_60') {
       alerts.push({
         id: 'aemet_wind_sim',
         type: 'viento',

@@ -116,7 +116,7 @@ export function detectRoadWindStatus(current, daily, hourly, concejo) {
   if (ALLOW_SIMULATION && typeof window !== 'undefined') {
     const urlParams = new URLSearchParams(window.location.search);
     const testMode = urlParams.get('test');
-    if (testMode === 'viento_viaductos' || testMode === 'viaductos' || testMode === 'viento_carretera') {
+    if (testMode === 'viento_viaductos' || testMode === 'viaductos' || testMode === 'viento_carretera' || testMode === 'viento' || testMode === 'viento_60' || testMode === 'aemet_viento') {
       return {
         isActive: true,
         isSimulation: true,

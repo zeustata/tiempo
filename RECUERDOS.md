@@ -49,6 +49,22 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. *Almacenamiento Estático Desacoplado:* El bot vuelca los datos limpios (km abiertos, pistas por dificultad técnica, remontes en servicio y espesores mín/máx) en un archivo JSON estático (`data/snowReport.json`).
     3. *Consumo Directo en Cliente:* `mountainCard.js` lee ese JSON sin sobrecargar a los servidores externos ni ralentizar la carga en clientes, mostrando los partes de nieve actualizados en vivo de forma 100% legal, autónoma y sin fricción.
 
+## 💨 Actualización v2.2.78: Anemómetro con Escala Cromática de Rachas Peligrosas y Alerta Visual — 2026-10-19
+- **Escala de Severidad Dinámica en Anemómetro (Feedback y Petición Expresa de Lendo - «quisiera hacer un cambio en el menu principal (Estacion en vivo). en el Anemometro en rachas maximas previstas, a partir de unas rachas peligrosas, cambie el color del blanco que tiene a rojo. por ejemplo cuando las previstas superen los 60», «me gusta tu opcion 2 y me gusta lo del icono y que lo implementes tambien en la racha actual. vaya ojo fino que tienes. pisale»):**
+  1. *Diagnóstico Meteorológico y Escala AEMET:*
+     - Siguiendo los criterios de umbrales de severidad de AEMET y la escala Beaufort, se define una escala de alerta visual de dos tramos para rachas que excedan las condiciones ordinarias:
+       - **< 60 km/h:** Viento normal / no peligroso (color blanco `#f8fafc` o azul `#38bdf8`).
+       - **60 a 79 km/h:** Naranja de Precaución (`#f97316`, peso 800) + icono `⚠️`. Representa racha fuerte con riesgo para viandantes, ramas y conducción.
+       - **≥ 80 km/h:** Rojo de Peligro Severo (`#ef4444`, peso 800) + icono `⚠️`. Representa temporal y racha violenta.
+  2. *Doble Cobertura (Racha Actual + Máxima Prevista para Hoy):*
+     - En `currentCard.js` (función `getGustSeverity`), la escala se evalúa y aplica tanto a la **racha actual** en vivo (en el titular `.wind-range-val > .wind-gust-val` y en el desglose `Media • Racha`) como a la **racha máxima prevista para hoy** (`Racha máx. prevista`).
+  3. *Blindaje de Unidades y Simulacro Ley 12:*
+     - La evaluación se realiza sobre los valores matemáticos base en km/h (`rawGusts` y `rawMaxGustToday`), garantizando paridad exacta al visualizarse en kilómetros por hora o en nudos (`kt`).
+     - Incorporados conmutadores de prueba según la Ley 12: `?test=viento` para comprobar la alerta naranja (68 y 74 km/h en anemómetro, con banner y píldora de viaductos sincronizados en naranja) y `?test=viento_severo` para la alerta roja (85 y 96 km/h con alerta severa vial en viaductos).
+  4. *Versionado y Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v2278-anemometro-rachas-peligrosas` en `sw.js`.
+     - Versión oficial elevada a `v2.2.78 💨` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.78'` en `app.js`, `currentCard.js?v=2.2.78` y query strings en `index.html`.
+
 ## 🏄‍♂️ Actualización v2.2.77: Guía de Surf y Rompientes en Cabecera de Dos Niveles (Ley 14) — 2026-10-19
 - **Arquitectura en Dos Niveles y Armonía Integral con Playas (Feedback y Diagnóstico Expreso de Lendo - «pasa lo mismo en el menu surf y rompientes debajo del boton Guia de surf tambien seria bonito cambiarlo tembien. El nombre de las playas, la pastilla debajo y el desglose», «pisale»):**
   1. *Diagnóstico de Coherencia Visual y Espacio Horizontal:*
