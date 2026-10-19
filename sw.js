@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2283-climatologia-blindaje-antidesborde';
+const CACHE_NAME = 'meteoasturlode-v2284-climatologia-desglose-ultra-minimal';
 const STATIC_ASSETS = [
   './',
   './index.html',

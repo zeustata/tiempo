@@ -49,6 +49,22 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. *Almacenamiento Estático Desacoplado:* El bot vuelca los datos limpios (km abiertos, pistas por dificultad técnica, remontes en servicio y espesores mín/máx) en un archivo JSON estático (`data/snowReport.json`).
     3. *Consumo Directo en Cliente:* `mountainCard.js` lee ese JSON sin sobrecargar a los servidores externos ni ralentizar la carga en clientes, mostrando los partes de nieve actualizados en vivo de forma 100% legal, autónoma y sin fricción.
 
+## ✂️ Actualización v2.2.84: Desglose Climatológico Ultra-Minimizado — 2026-10-19
+- **Depuración de Verborrea y Síntesis Extrema (Feedback y Petición Expresa de Lendo - «yo solo quioero q minimices», «pisale»):**
+  1. *Diagnóstico de Fatiga Visual:*
+     - Tras la compactación de la cabecera en v2.2.83, el contenido interno del desglose seguía conteniendo párrafos descriptivos densos sobre municipios y explicaciones meteorológicas largas de los récords que forzaban columnas de texto excesivamente estrechas ("efecto fideo").
+  2. *Aplicación de Tijera Limpia a lo Esencial:*
+     - Suprimidas las descripciones académicas extensas y las causas meteorológicas repetitivas.
+     - Rediseñado el desglose en 3 pastillas/fichas esenciales ultraligeras:
+       - **1. Comparativa Directa:** Dos cajitas simétricas con temperatura habitual del mes y máxima de hoy.
+       - **2. Estación Oficial y Récords:** Una sola línea limpia (`📍 Medido en: Observatorio Oficial...`) acompañada de las 3 pastillas de récords (Máx, Mín, Lluvia 24h) sin duplicidades de texto.
+       - **3. Memoria Asturiana:** Una sola frase condensada con la efeméride histórica del día (`clima-min-memory-card`).
+  3. *Resultado:*
+     - Altura mínima tanto plegado (~56px) como desplegado (~110px). Lectura limpia, instantánea y sin fricción.
+  4. *Versionado y Despliegue Oficial:*
+     - Service Worker actualizado a `meteoasturlode-v2284-climatologia-desglose-ultra-minimal` en `sw.js`.
+     - Versión oficial elevada a `v2.2.84 ✂️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.84'` en `app.js`, `currentCard.js?v=2.2.84`, `climatologyData.js?v=2.2.84` y query strings en `index.html`.
+
 ## 🛡️ Actualización v2.2.83: Blindaje Anti-Desborde & Ergonomía Móvil (Ley 11) — 2026-10-19
 - **Corrección de Solapamiento Visual en Cabecera de Climatología (Feedback y Petición Expresa de Lendo - «esta superpuesto. lo ves?», «pisale»):**
   1. *Diagnóstico Visual en Terminal Móvil:*

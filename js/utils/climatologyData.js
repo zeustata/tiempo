@@ -428,99 +428,51 @@ export function renderClimatologyStrip(clima) {
         </div>
       </summary>
 
-      <!-- CUERPO DESPLEGABLE CON EL DESGLOSE COMPLETO -->
+      <!-- CUERPO DESPLEGABLE ULTRA-MINIMIZADO (FEEDBACK LENDO v2.2.84) -->
       <div class="clima-expanded-body">
-        <!-- 1. SUB-CABECERA DEL DESGLOSE -->
-        <div class="clima-expanded-header">
-          <div class="clima-sub-meta">
-            <span class="sub-meta-icon">📊</span>
-            <span>Serie oficial 30 años AEMET (1991–2020) • <strong>${clima.zoneName}</strong></span>
-          </div>
-          <button class="btn-explain-clima btn-explain-sensor-compact" data-explain="climatology" onclick="event.stopPropagation()" title="Pulsa para aprender sobre el Tiempo Habitual y las Normales de 30 años de AEMET">
-            <span>💡 ¿Cómo se calcula?</span>
-          </button>
-        </div>
-
-        <!-- 2. COMPARATIVA VISUAL DIRECTA (HOY VS HABITUAL) -->
+        <!-- 1. COMPARATIVA RÁPIDA (HOY VS HABITUAL) -->
         <div class="clima-compare-row">
           <div class="clima-compare-box normal-box">
             <span class="clima-cmp-label">Habitual en ${clima.periodLabel}</span>
-            <span class="clima-cmp-val"><strong>${clima.normalMax}°C</strong> <small class="cmp-note">media de 30 años</small></span>
+            <span class="clima-cmp-val"><strong>${clima.normalMax}°C</strong> <small class="cmp-note">media 30 años</small></span>
           </div>
           <div class="clima-compare-sep">➔</div>
           <div class="clima-compare-box today-box ${clima.badgeClass}">
             <span class="clima-cmp-label">Máxima Prevista Hoy</span>
-            <span class="clima-cmp-val"><strong>${clima.todayMax}°C</strong> <small class="cmp-note">${clima.diffMax >= 0 ? `+${clima.diffMax}` : `${clima.diffMax}`}°C vs media</small></span>
+            <span class="clima-cmp-val"><strong>${clima.todayMax}°C</strong> <small class="cmp-note">${clima.diffMax >= 0 ? `+${clima.diffMax}` : `${clima.diffMax}`}°C</small></span>
           </div>
         </div>
 
-        <!-- 3. RÉCORDS HISTÓRICOS Y ESTACIÓN EXACTA DE MEDICIÓN -->
+        <!-- 2. DÓNDE SE MIDIÓ Y RÉCORDS DEL MES (COMPACTO) -->
         ${rec ? `
-          <div class="clima-records-section">
-            <div class="clima-records-top">
-              <span class="records-tag">📜 Récords AEMET · ${clima.monthName.charAt(0).toUpperCase() + clima.monthName.slice(1)}:</span>
-              <span class="records-zone-pill" title="Observatorio oficial: ${rec.stationOfficialName || rec.station}">
-                ${rec.zoneIcon} ${rec.zoneLabel} <small>(${rec.stationShort})</small>
-              </span>
+          <div class="clima-min-station-card">
+            <div class="clima-min-station-row">
+              <span class="min-st-pin">📍</span>
+              <span class="min-st-text">Medido en: <strong>${rec.stationOfficialName || rec.station}</strong> <small>(${rec.stationAltitude || '25 m'})</small></span>
             </div>
-
-            <!-- PASTILLAS DE LOS RÉCORDS INTERACTIVAS -->
             <div class="climatology-records-pills">
-              <span class="record-mini-pill record-max" title="${rec.maxContext || `Récord de calor en ${rec.station}`}">
+              <span class="record-mini-pill record-max" title="${rec.maxContext || `Récord de calor`}">
                 🔥 Máx: <strong>${rec.maxT}°C</strong> <small>(${rec.maxYear})</small>
               </span>
-              <span class="record-mini-pill record-min" title="${rec.minContext || `Récord de frío en ${rec.station}`}">
+              <span class="record-mini-pill record-min" title="${rec.minContext || `Récord de frío`}">
                 ❄️ Mín: <strong>${rec.minT}°C</strong> <small>(${rec.minYear})</small>
               </span>
-              <span class="record-mini-pill record-rain" title="${rec.rainContext || `Mayor lluvia en 24h en ${rec.station}`}">
+              <span class="record-mini-pill record-rain" title="${rec.rainContext || `Mayor lluvia en 24h`}">
                 🌧️ 24h: <strong>${rec.maxRain} mm</strong> <small>(${rec.rainYear})</small>
               </span>
-            </div>
-
-            <!-- FICHA DE LA ESTACIÓN EXACTA (DÓNDE SE MIDIÓ EN TU ZONA) -->
-            <div class="clima-station-card">
-              <div class="st-card-head">
-                <span class="st-summary-icon">📍</span>
-                <span class="st-summary-text">Dónde se midió: <strong>${rec.stationOfficialName || rec.station}</strong></span>
-              </div>
-              <div class="st-meta-row">
-                <span>📍 <strong>Ubicación:</strong> ${rec.stationLocation} (${rec.stationAltitude})</span>
-                <span>🏛️ <strong>Municipio:</strong> ${rec.stationMunicipality}</span>
-              </div>
-              <p class="st-desc-text">${rec.stationDescription}</p>
-              <div class="st-events-breakdown">
-                <div class="st-event-item">
-                  <span class="st-ev-badge max">🔥 Calor Récord:</span>
-                  <span class="st-ev-text"><strong>${rec.maxT}°C</strong> el ${rec.maxDate}. ${rec.maxContext}</span>
-                </div>
-                <div class="st-event-item">
-                  <span class="st-ev-badge min">❄️ Frío Récord:</span>
-                  <span class="st-ev-text"><strong>${rec.minT}°C</strong> el ${rec.minDate}. ${rec.minContext}</span>
-                </div>
-                <div class="st-event-item">
-                  <span class="st-ev-badge rain">🌧️ Lluvia Récord:</span>
-                  <span class="st-ev-text"><strong>${rec.maxRain} mm</strong> el ${rec.rainDate}. ${rec.rainContext}</span>
-                </div>
-              </div>
             </div>
           </div>
         ` : ''}
 
-        <!-- 4. SECCIÓN: MEMORIA DEL CLIMA ASTURIANO (TAL DÍA COMO HOY) -->
+        <!-- 3. MEMORIA DEL CLIMA ASTURIANO (1 FRASE COMPACTA) -->
         ${mem ? `
-          <div class="clima-memory-block">
-            <div class="clima-memory-header">
-              <div class="clima-memory-title-wrap">
-                <span class="clima-memory-icon">${mem.icon}</span>
-                <span class="clima-memory-heading">Memoria del Clima Asturiano • ${mem.dateLabel}</span>
-              </div>
+          <div class="clima-min-memory-card">
+            <div class="min-mem-head">
+              <span class="min-mem-icon">${mem.icon}</span>
+              <span class="min-mem-title">Memoria Asturiana · ${mem.dateLabel}${mem.year ? ` (${mem.year})` : ''}</span>
               <span class="clima-memory-tag ${mem.tagClass}">${mem.tag}</span>
             </div>
-            <div class="clima-memory-body">
-              <h4 class="clima-memory-event-title">${mem.title} ${mem.year ? `<small class="memory-year">(${mem.year})</small>` : ''}</h4>
-              <p class="clima-memory-summary">${mem.summary}</p>
-              ${mem.location ? `<div class="clima-memory-loc"><span class="loc-pin">📍</span> <strong>Ámbito:</strong> ${mem.location}</div>` : ''}
-            </div>
+            <p class="min-mem-text"><strong>${mem.title}:</strong> ${mem.summary}</p>
           </div>
         ` : ''}
       </div>

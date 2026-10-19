@@ -8,6 +8,21 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Major (X.0.0)**: Cambios arquitectónicos grandes o rediseños completos.
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
+## [2.2.84] - 2026-10-19
+
+### ✂️ Desglose Climatológico Ultra-Minimizado (Feedback Lendo)
+- **Supresión de Parrafadas y Bloques Redundantes:**
+  - Respondiendo a la petición directa de Lendo (*«yo solo quiero q minimices»*), se purga por completo el desglose de la tarjeta climatológica:
+    - Eliminadas las descripciones académicas extensas y la lista repetitiva de municipios.
+    - Suprimidas las explicaciones largas de causas meteorológicas en los récords que generaban columnas de texto comprimidas e incómodas de leer en móviles.
+- **Síntesis Extrema en 3 Fichas Esenciales:**
+  - **1. Comparativa Directa:** Dos cajitas simétricas con temperatura habitual y máxima de hoy.
+  - **2. Estación Oficial y Récords:** Una línea clara (*📍 Medido en: Observatorio Oficial AEMET...*) acompañada de las 3 pastillas de récords (Máx, Mín, Lluvia 24h) sin duplicidades.
+  - **3. Memoria Asturiana:** Una sola frase condensada con la efeméride histórica del día.
+- **Cache-Busting y Despliegue Oficial:**
+  - Service Worker actualizado a `meteoasturlode-v2284-climatologia-desglose-ultra-minimal` en `sw.js`.
+  - Versión oficial elevada a `v2.2.84 ✂️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.84'` en `app.js`, `currentCard.js?v=2.2.84`, `climatologyData.js?v=2.2.84` y query strings en `index.html`.
+
 ## [2.2.83] - 2026-10-19
 
 ### 🛡️ Blindaje Anti-Desborde & Ergonomía Móvil (Ley 11)
