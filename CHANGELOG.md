@@ -10,6 +10,21 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.75] - 2026-10-19
+
+### 🥾 Títulos Multilínea Completos en Rutas & Senderismo y Planes & Ocio (Feedback Lendo - Ley 11)
+- **Erradicación del Truncado con Puntos Suspensivos (Ley 11):**
+  - Sustituida la directiva rígida `white-space: nowrap; text-overflow: ellipsis;` por ajuste multilínea inteligente y natural (`white-space: normal; overflow-wrap: break-word; word-break: normal; line-height: 1.25;`) tanto en títulos de rutas (`.route-card-name`) como en actividades de ocio (`.tourism-card-name`).
+  - Resuelto de raíz el problema reportado por Lendo en smartphones, donde nombres largos quedaban incompletos (ej. *«Centro Niemeyer & Casco His...»*, *«Iglesia de Santian...»*, *«Ruta Fluvial del ...»*, *«Senda Costera de lo...»*).
+- **Visibilidad 100% Íntegra en Pantallas Móviles:**
+  - Los títulos ahora fluyen en una segunda línea limpia cuando el espacio horizontal es limitado, permitiendo leer el nombre completo del destino o senda.
+  - Se mantiene la integridad visual sin desbordes ni compresión de los distintivos laterales de dificultad (`Muy Fácil`, `Fácil`, `Media`), la pastilla `✨ Ideal hoy` ni la flecha desplegable (`▾`), preservando su `flex-shrink: 0;` y centrado vertical armónico.
+- **Homogeneización Tipográfica Móvil (< 640px):**
+  - Aplicada escala simétrica de `0.88rem` e interlineado de `1.25` para títulos en ambas tarjetas (`.route-card-name`, `.tourism-card-name`), y `0.72rem` para subtítulos de ubicación (`.route-card-loc`, `.tourism-card-loc`).
+- **Cache-Busting y Despliegue Oficial:**
+  - Service Worker actualizado a `meteoasturlode-v2275-titulos-completos-rutas-ocio` en `sw.js`.
+  - Versión oficial elevada a `v2.2.75 🥾` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.75'` en `app.js`, `tourismCard.js?v=2.2.75`, `routesCard.js?v=2.2.75` y query strings en `index.html`.
+
 ## [2.2.74] - 2026-10-18
 
 ### 🎭 Planes & Ocio: Lavado de Cara en Acordeón, 36 Destinos y Proximidad Real (Feedback Lendo - Ley 11)

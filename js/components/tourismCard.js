@@ -5,7 +5,7 @@
  * Estética Liquid Glass Pura, Arquitectura en Acordeón, Ergonomía Móvil (Ley 11) y Blindaje Legal (Leyes 15 y 16).
  */
 
-import { getRecommendedPlans } from '../utils/tourismData.js?v=2.2.74';
+import { getRecommendedPlans } from '../utils/tourismData.js?v=2.2.75';
 
 // Función global para filtrar planes por categoría climática
 if (typeof window !== 'undefined' && !window.filterTourismPlans) {

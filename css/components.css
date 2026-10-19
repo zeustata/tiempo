@@ -9547,10 +9547,10 @@
   font-size: 0.95rem;
   font-weight: 700;
   color: #f8fafc;
-  line-height: 1.3;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.25;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .route-card-loc {
@@ -9810,10 +9810,13 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 6px;
   }
-  .route-card-name {
+  .route-card-name,
+  .tourism-card-name {
     font-size: 0.88rem;
+    line-height: 1.25;
   }
-  .route-card-loc {
+  .route-card-loc,
+  .tourism-card-loc {
     font-size: 0.72rem;
   }
 }
@@ -10267,10 +10270,10 @@
   font-size: 0.95rem;
   font-weight: 700;
   color: #f8fafc;
-  line-height: 1.3;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.25;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .tourism-card-loc {

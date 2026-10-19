@@ -42,6 +42,20 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. *Almacenamiento Estático Desacoplado:* El bot vuelca los datos limpios (km abiertos, pistas por dificultad técnica, remontes en servicio y espesores mín/máx) en un archivo JSON estático (`data/snowReport.json`).
     3. *Consumo Directo en Cliente:* `mountainCard.js` lee ese JSON sin sobrecargar a los servidores externos ni ralentizar la carga en clientes, mostrando los partes de nieve actualizados en vivo de forma 100% legal, autónoma y sin fricción.
 
+## 🥾 Actualización v2.2.75: Títulos Multilínea Completos en Rutas y Ocio Móvil — 2026-10-19
+- **Erradicación del Truncado con Puntos Suspensivos y Ergonomía Móvil (Feedback y Diagnóstico Expreso de Lendo - «todo bien menos una cosa si ves el menui planes y ocio y el menu rutas y senderismo, desde el movil quedan cortadas en nombre de las actividades de ocio en el menu planes y ocio y el nombre de las sendas en el menu rutas y senderismo», «pisale»):**
+  1. *Diagnóstico de Causa Raíz:*
+     - Tanto `.route-card-name` como `.tourism-card-name` tenían asignada la regla CSS `white-space: nowrap; overflow: hidden; text-overflow: ellipsis;`.
+     - En teléfonos móviles (360px–400px de ancho útil), el espacio horizontal disponible se estrechaba debido al icono temático izquierdo y los distintivos del margen derecho (`✨ Ideal hoy`, badges de dificultad `Muy Fácil` / `Media` y el chevron `▾`), forzando el truncado prematuro de nombres con más de 18 caracteres.
+  2. *Implementación Multilínea Fluida (Ley 11):*
+     - Reemplazada la restricción por `white-space: normal; overflow-wrap: break-word; word-break: normal; line-height: 1.25;` en `css/components.css`.
+     - Ahora los nombres largos fluyen en dos líneas perfectamente estructuradas sin recortes (100% íntegros), sin deformar las etiquetas métricas ni el indicador de apertura.
+  3. *Homogeneización Tipográfica Móvil (< 640px):*
+     - Unificada la escala tipográfica en `@media (max-width: 640px)` para `.route-card-name` y `.tourism-card-name` a `font-size: 0.88rem; line-height: 1.25;`, y los subtítulos de ubicación a `0.72rem;`.
+  4. *Versionado y Despliegue:*
+     - Cadena de Service Worker actualizada a `meteoasturlode-v2275-titulos-completos-rutas-ocio` en `sw.js`.
+     - Versión elevada a `v2.2.75 🥾` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.75'` en `app.js`, `routesCard.js?v=2.2.75`, `tourismCard.js?v=2.2.75` y query strings en `index.html`.
+
 ## 🎭 Actualización v2.2.74: Rediseño Integral de Planes & Ocio en Acordeón, 36 Destinos y Proximidad Real — 2026-10-18
 - **Lavado de Cara, Ampliación del Catálogo y Geolocalización (Petición Expresa de Lendo - «el planes y ocio deberia de tener un lavado de cara», «haz el lavado de cara y de paso añade mas ocio que asturias ttiene mucho mas que ofrecer»):**
   1. *Arquitectura en Acordeón con Exclusión Mutua:*

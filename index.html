@@ -31,8 +31,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.2.74">
-  <link rel="stylesheet" href="css/components.css?v=2.2.74">
+  <link rel="stylesheet" href="css/main.css?v=2.2.75">
+  <link rel="stylesheet" href="css/components.css?v=2.2.75">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.74 🎭</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.75 🥾</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -349,8 +349,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
+            <span class="release-version">v2.2.75 🥾</span>
+            <span class="release-date">19 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-feature">Ergonomía Móvil &amp; Legibilidad Total (Feedback Lendo)</span> <strong>Títulos Multilínea Completos en Rutas &amp; Senderismo y Planes &amp; Ocio</strong>:
+              <br>• <strong>Erradicación del Truncado con Puntos Suspensivos (Ley 11):</strong> Sustituida la directiva rígida <code>white-space: nowrap</code> por ajuste multilínea inteligente y natural (<code>white-space: normal; overflow-wrap: break-word</code>) en los títulos de tarjetas tanto de Rutas (<code>.route-card-name</code>) como de Planes y Ocio (<code>.tourism-card-name</code>).
+              <br>• <strong>Visibilidad 100% Íntegra en Pantallas Móviles:</strong> Nombres largos como <em>«Centro Niemeyer &amp; Casco Histórico de Avilés»</em>, <em>«Iglesia de Santianes de Pravia»</em> o <em>«Senda del Paisaje Protegido de Cabo Peñas»</em> se leen ahora completos y sin recortes en 2 líneas fluidas, sin invadir ni deformar los distintivos de dificultad (<code>Muy Fácil</code>, <code>Media</code>), la etiqueta <code>✨ Ideal hoy</code> ni el chevron desplegable.
+              <br>• <strong>Tipografía Proporcional y Homogénea:</strong> Ajustada la escala tipográfica a <code>0.88rem</code> e interlineado <code>1.25</code> en dispositivos móviles (&lt; 640px) para mantener un diseño visual compacto, simétrico y perfectamente alineado.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
             <span class="release-version">v2.2.74 🎭</span>
-            <span class="release-date">18 Oct 2026 (Actual)</span>
+            <span class="release-date">18 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-feature">Rediseño Integral &amp; Catálogo Masivo (Feedback Lendo)</span> <strong>Planes &amp; Ocio: Lavado de Cara en Acordeón, 36 Destinos y Proximidad Real</strong>:
@@ -4088,7 +4102,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.74"></script>
+  <script type="module" src="js/app.js?v=2.2.75"></script>
 
 
 
