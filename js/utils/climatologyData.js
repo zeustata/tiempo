@@ -395,35 +395,36 @@ export function renderClimatologyStrip(clima) {
 
   return `
     <details class="climatology-strip clima-history-card clima-accordion-card ${clima.badgeClass}">
-      <!-- RESUMEN COMPACTO EN REPOSO (FILA MÍNIMA ERGONÓMICA) -->
+      <!-- RESUMEN COMPACTO EN REPOSO (CANALIZACIÓN EN 2 FILAS ANTI-COLISIÓN - LEY 11) -->
       <summary class="clima-compact-summary">
-        <div class="clima-sum-left">
-          <span class="clima-sum-icon">🏛️</span>
-          <div class="clima-sum-info">
-            <div class="clima-sum-title-row">
-              <span class="clima-sum-title">Clima · ${clima.monthName.charAt(0).toUpperCase() + clima.monthName.slice(1)}</span>
-              <span class="climatology-badge ${clima.badgeClass} clima-badge-compact" title="${clima.label}">
-                <span class="climatology-icon">${clima.icon}</span>
-                <span class="climatology-text">${clima.label}</span>
-              </span>
-            </div>
-            <div class="clima-sum-metrics">
-              <span class="c-met">Media: <strong>${clima.normalMax}°C</strong></span>
-              <span class="c-sep">·</span>
-              <span class="c-met">Hoy: <strong>${clima.todayMax}°C</strong> <small class="c-diff">(${clima.diffMax >= 0 ? `+${clima.diffMax}` : `${clima.diffMax}`}°C)</small></span>
-              ${rec ? `
-                <span class="c-sep hide-tiny">·</span>
-                <span class="c-met hide-tiny">Récord: <strong>${rec.maxT}°C</strong></span>
-              ` : ''}
-            </div>
+        <!-- Fila 1: Cabecera con Título a la izquierda y Botón Desglose a la derecha (ESPACIO 100% BLINDADO) -->
+        <div class="clima-sum-header-row">
+          <div class="clima-sum-brand">
+            <span class="clima-sum-icon">🏛️</span>
+            <span class="clima-sum-title">Clima · ${clima.monthName.charAt(0).toUpperCase() + clima.monthName.slice(1)}</span>
           </div>
-        </div>
-        <div class="clima-sum-right">
           <span class="clima-toggle-pill" title="Toca para abrir o cerrar el desglose y la memoria histórica">
             <span class="toggle-text-open">Desglose</span>
             <span class="toggle-text-close">Cerrar</span>
             <span class="toggle-chevron">▾</span>
           </span>
+        </div>
+
+        <!-- Fila 2: Distintivo de Balance Térmico e Indicadores Rápidos con 100% de Ancho Libre -->
+        <div class="clima-sum-sub-row">
+          <span class="climatology-badge ${clima.badgeClass} clima-badge-compact" title="${clima.label}">
+            <span class="climatology-icon">${clima.icon}</span>
+            <span class="climatology-text">${clima.label}</span>
+          </span>
+          <div class="clima-sum-metrics">
+            <span class="c-met">Media: <strong>${clima.normalMax}°C</strong></span>
+            <span class="c-sep">·</span>
+            <span class="c-met">Hoy: <strong>${clima.todayMax}°C</strong> <small class="c-diff">(${clima.diffMax >= 0 ? `+${clima.diffMax}` : `${clima.diffMax}`}°C)</small></span>
+            ${rec ? `
+              <span class="c-sep hide-tiny">·</span>
+              <span class="c-met hide-tiny">Récord: <strong>${rec.maxT}°C</strong></span>
+            ` : ''}
+          </div>
         </div>
       </summary>
 

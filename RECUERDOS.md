@@ -49,6 +49,20 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. *Almacenamiento Estático Desacoplado:* El bot vuelca los datos limpios (km abiertos, pistas por dificultad técnica, remontes en servicio y espesores mín/máx) en un archivo JSON estático (`data/snowReport.json`).
     3. *Consumo Directo en Cliente:* `mountainCard.js` lee ese JSON sin sobrecargar a los servidores externos ni ralentizar la carga en clientes, mostrando los partes de nieve actualizados en vivo de forma 100% legal, autónoma y sin fricción.
 
+## 🛡️ Actualización v2.2.83: Blindaje Anti-Desborde & Ergonomía Móvil (Ley 11) — 2026-10-19
+- **Corrección de Solapamiento Visual en Cabecera de Climatología (Feedback y Petición Expresa de Lendo - «esta superpuesto. lo ves?», «pisale»):**
+  1. *Diagnóstico Visual en Terminal Móvil:*
+     - En los screenshots aportados por Lendo se evidenciaba que en pantallas móviles estándar, la pastilla de balance térmico (`[-3.7°C bajo lo habitual]`) saltaba a la segunda línea del encabezado, mientras que el botón flotante `[ Desglose ▾ ]` o `[ Cerrar ▴ ]` (`.clima-sum-right`) se centraba verticalmente a la misma altura, montándose y tapando el distintivo.
+  2. *Canalización en 2 Filas Independientes (Ley 11 de la Constitución Suprema):*
+     - Conforme a la doctrina de blindaje anti-desborde, se reestructura la cabecera en dos filas dedicadas con `width: 100%` y `box-sizing: border-box`:
+       - **Fila 1 (`clima-sum-header-row`):** Aloja exclusivamente el título de la tarjeta (`🏛️ Clima · Mes`) a la izquierda y la pastilla táctil (`[ Desglose ▾ ]` / `[ Cerrar ▴ ]`) a la derecha mediante `justify-content: space-between`. Cero riesgo de colisión.
+       - **Fila 2 (`clima-sum-sub-row`):** Dispone de la totalidad del ancho libre (100%) para la pastilla de balance térmico (`clima-badge-compact`) y las métricas inmediatas de temperatura (`Media vs Hoy y Récord`).
+  3. *Resultado Visual:*
+     - Desaparición total del solapamiento, legibilidad íntegra del distintivo térmico y altura en reposo equilibrada (~56px) con confort táctil garantizado.
+  4. *Versionado y Despliegue Oficial:*
+     - Service Worker actualizado a `meteoasturlode-v2283-climatologia-blindaje-antidesborde` en `sw.js`.
+     - Versión oficial elevada a `v2.2.83 🛡️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.83'` en `app.js`, `currentCard.js?v=2.2.83`, `climatologyData.js?v=2.2.83` y query strings en `index.html`.
+
 ## 📂 Actualización v2.2.82: Climatología Minimizada con Desglose Plegable (Opción 1) — 2026-10-19
 - **Compactación Extrema de Tarjeta y Ergonomía Móvil (Feedback y Petición Expresa de Lendo - «hay q minimizar la tarjeta con desglose. ocupa mucho», «opcione1»):**
   1. *Diagnóstico y Rediseño Ergonómico:*

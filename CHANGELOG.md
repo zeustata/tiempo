@@ -8,6 +8,19 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Major (X.0.0)**: Cambios arquitectónicos grandes o rediseños completos.
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
+## [2.2.83] - 2026-10-19
+
+### 🛡️ Blindaje Anti-Desborde & Ergonomía Móvil (Ley 11)
+- **Canalización Estricta en 2 Filas Independientes (Feedback Lendo):**
+  - Resuelto el solapamiento visual en smartphones estrechos donde el botón de acción (*«Desglose ▾»* / *«Cerrar ▴»*) caía y se montaba directamente encima del distintivo de balance térmico (`[-3.7°C bajo lo habitual]`).
+  - **Fila 1 (Cabecera Superior):** Título a la izquierda (`🏛️ Clima · Mes`) y pastilla de acción interactiva a la derecha (`[ Desglose ▾ ]` / `[ Cerrar ▴ ]`) con ancho útil del 100% blindado contra cualquier solapamiento.
+  - **Fila 2 (Sub-fila de Datos y Balance):** Todo el ancho libre para el distintivo térmico y las métricas inmediatas (`Media: X°C · Hoy: Y°C · Récord: Z°C`).
+- **Comprobación de Ergonomía Móvil:**
+  - Garantiza confort táctil y perfecta holgura visual en cualquier resolución de 320px a 380px conforme a la **Ley 11**.
+- **Cache-Busting y Despliegue Oficial:**
+  - Service Worker actualizado a `meteoasturlode-v2283-climatologia-blindaje-antidesborde` en `sw.js`.
+  - Versión oficial elevada a `v2.2.83 🛡️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.83'` en `app.js`, `currentCard.js?v=2.2.83`, `climatologyData.js?v=2.2.83` y query strings en `index.html`.
+
 ## [2.2.82] - 2026-10-19
 
 ### 📂 Climatología Minimizada con Desglose Plegable (Feedback Lendo - Opción 1)
