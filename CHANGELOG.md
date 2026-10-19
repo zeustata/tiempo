@@ -10,6 +10,21 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.76] - 2026-10-19
+
+### 🏖️ Guía de Playas y Calas: Cabecera en Dos Niveles y Estilo Planes & Ocio (Feedback Lendo - Ley 14)
+- **Arquitectura en Dos Niveles (Nombre Arriba + Pastilla Debajo):**
+  - Reorganizada la cabecera del acordeón de playas (`.beach-accordion-header` en `marineCard.js` y `components.css`) separando el nombre y la pastilla descriptiva en una estructura vertical limpia de dos niveles.
+  - La fila superior (`.beach-card-name`) dispone ahora del 100% del ancho horizontal útil, evitando que la pastilla lateral comprima el texto y fuerce a partir nombres como *«Playa de Salinas»* o *«Playa de Bayas / El Sablón»* en 3 a 5 líneas verticales.
+  - La pastilla descriptiva (`Surf Top Mundial`, `Monumento Natural`, `Familiar`) se posiciona en una segunda fila (`.beach-accordion-subrow`) con formato compacto (`padding: 2px 7px; border-radius: 6px; font-size: 0.70rem;`), dejando la flecha `▾` sola y despejada en el margen derecho.
+- **Tipografía Cristalina Homogénea (Leyes 14 y 19):**
+  - Sustituido el estilo azul grueso de `1rem` y `font-weight: 800` por tipografía blanca (#f8fafc), peso equilibrado (`700`) y escala proporcional (`0.95rem` en PC y `0.88rem` en smartphones `< 640px` con `line-height: 1.25`), gemela al diseño de Planes & Ocio.
+- **Ficha Técnica y Desglose Intactos:**
+  - El contenido interior desplegable (`.beach-accordion-body`) con descripción, chips métricos 2x2 (fondo/entorno, tipo de ola, marea óptima y nivel de baño) se preserva intacto sin alteraciones.
+- **Cache-Busting y Despliegue Oficial:**
+  - Service Worker actualizado a `meteoasturlode-v2276-playas-cabecera-dos-niveles` en `sw.js`.
+  - Versión oficial elevada a `v2.2.76 🏖️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.76'` en `app.js`, `marineCard.js?v=2.2.76` y query strings en `index.html`.
+
 ## [2.2.75] - 2026-10-19
 
 ### 🥾 Títulos Multilínea Completos en Rutas & Senderismo y Planes & Ocio (Feedback Lendo - Ley 11)

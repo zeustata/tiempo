@@ -1438,10 +1438,14 @@ export function renderMarineCard(data, concejo) {
               <summary class="beach-accordion-header">
                 <div class="beach-accordion-title-wrap">
                   <span class="beach-accordion-icon">🏖️</span>
-                  <span class="beach-card-name">${p.name}</span>
+                  <div class="beach-accordion-name-col">
+                    <span class="beach-card-name">${p.name}</span>
+                    <div class="beach-accordion-subrow">
+                      <span class="beach-card-tag">${p.tag || 'Playa'}</span>
+                    </div>
+                  </div>
                 </div>
                 <div class="beach-accordion-meta">
-                  <span class="beach-card-tag">${p.tag || 'Playa'}</span>
                   <span class="beach-accordion-chevron">▾</span>
                 </div>
               </summary>

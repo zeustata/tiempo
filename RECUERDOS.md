@@ -49,6 +49,22 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. *Almacenamiento Estático Desacoplado:* El bot vuelca los datos limpios (km abiertos, pistas por dificultad técnica, remontes en servicio y espesores mín/máx) en un archivo JSON estático (`data/snowReport.json`).
     3. *Consumo Directo en Cliente:* `mountainCard.js` lee ese JSON sin sobrecargar a los servidores externos ni ralentizar la carga en clientes, mostrando los partes de nieve actualizados en vivo de forma 100% legal, autónoma y sin fricción.
 
+## 🏖️ Actualización v2.2.76: Guía de Playas y Calas en Dos Niveles y Estilo Planes & Ocio — 2026-10-19
+- **Arquitectura en Dos Niveles y Refinamiento Tipográfico (Feedback y Diagnóstico Expreso de Lendo - «en el menu Playas y mareas, en gias de playas lo veo un poco grande el nombre de las playas.No se puede poner un como mas como el menu planes y ocio?», «no me entendiste. quiero que salga el nombre de la playa arriba y debajo la pastilla y el desglose que tiene ahora mismo», «eso es. pisale»):**
+  1. *Diagnóstico de Compresión Horizontal:*
+     - En `marineCard.js` y `components.css`, la pastilla de tag (`Surf Top Mundial`, `Monumento Natural`, etc.) y el nombre de la playa compartían la misma fila horizontal dentro de `.beach-accordion-header`.
+     - Al tener `font-size: 1rem; font-weight: 800; color: #38bdf8;` junto a una pastilla de más de 140px, el nombre quedaba arrinconado en ~110px de ancho disponible en móviles, forzándolo a partirse en 3, 4 y hasta 5 líneas verticales (*Playa / de / Salinas* o *Playa / de / Bayas / / El / Sablón*).
+  2. *Reorganización en Dos Niveles (Nombre Arriba + Pastilla Debajo):*
+     - Estructurada una columna `.beach-accordion-name-col` donde la primera fila aloja el nombre de la playa (`.beach-card-name`) con el 100% del ancho útil.
+     - En la segunda fila (`.beach-accordion-subrow`) se sitúa la pastilla descriptiva compacta (`.beach-card-tag`), liberando el margen derecho donde únicamente reposa la flecha `▾` de apertura.
+  3. *Unificación Estética con Planes & Ocio (Leyes 14 y 19):*
+     - Tipografía refinada a `#f8fafc` (blanco cristalino), peso `700` y tamaño homogéneo `0.95rem` en PC y `0.88rem` en smartphones (`@media (max-width: 640px)`) con `line-height: 1.25;`.
+     - Pastilla estilizada con `padding: 2px 7px; border-radius: 6px; font-size: 0.70rem;`.
+     - Desglose y ficha técnica desplegable interior (`.beach-accordion-body`) preservados íntegros al 100%.
+  4. *Versionado y Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v2276-playas-cabecera-dos-niveles` en `sw.js`.
+     - Versión oficial elevada a `v2.2.76 🏖️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.76'` en `app.js`, `marineCard.js?v=2.2.76` y query strings en `index.html`.
+
 ## 🥾 Actualización v2.2.75: Títulos Multilínea Completos en Rutas y Ocio Móvil — 2026-10-19
 - **Erradicación del Truncado con Puntos Suspensivos y Ergonomía Móvil (Feedback y Diagnóstico Expreso de Lendo - «todo bien menos una cosa si ves el menui planes y ocio y el menu rutas y senderismo, desde el movil quedan cortadas en nombre de las actividades de ocio en el menu planes y ocio y el nombre de las sendas en el menu rutas y senderismo», «pisale»):**
   1. *Diagnóstico de Causa Raíz:*
