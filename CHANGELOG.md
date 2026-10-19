@@ -10,6 +10,26 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.79] - 2026-10-19
+
+### 🌧️ Pluviómetro: Escala Cromática de Lluvias Abundantes y Torrenciales (Feedback Lendo)
+- **Escala de Acumulación según Umbrales de Aviso AEMET (mm = l/m²):**
+  - En el sensor de *Pluviómetro Digital* de la Estación en Vivo (`currentCard.js` y `components.css`), las cifras de agua caída y acumulada se transforman dinámicamente:
+    - **< 40 mm:** Blanco estándar / azul (lluvia normal o moderada asturiana).
+    - **40 a 79 mm (Aviso de Lluvias Abundantes):** Tono naranja luminoso (`#f97316`, peso 800) acompañado del distintivo `⚠️`.
+    - **≥ 80 mm (Aviso de Lluvias Torrenciales / Temporal de Agua):** Tono rojo intenso (`#ef4444`, peso 800) acompañado del distintivo `⚠️` con resplandor.
+- **Escala de Intensidad Horaria en Vivo (mm/h):**
+  - La línea de *Intensidad en vivo* evalúa el aguacero en tiempo real:
+    - **15 a 29 mm/h:** Naranja (`#f97316`) + `⚠️` (chaparrón o lluvia fuerte).
+    - **≥ 30 mm/h:** Rojo (`#ef4444`) + `⚠️` (lluvia torrencial con riesgo inminente de anegamiento).
+- **Cobertura Integral en la Ficha del Pluviómetro:**
+  - Aplica al **titular grande** (`.sensor-val`), a la línea de **Total previsto hoy (24h)** y a la **Intensidad en vivo**.
+- **Simulacro Ley 12 Sincronizado:**
+  - Comprobable mediante `?test=lluvia` (acumulación 54,8 mm / intensidad 18,5 mm/h en naranja, con aviso naranja AEMET) y `?test=lluvia_torrencial` (acumulación 94,2 mm / intensidad 38 mm/h en rojo, con aviso rojo AEMET).
+- **Cache-Busting y Despliegue Oficial:**
+  - Service Worker actualizado a `meteoasturlode-v2279-pluviometro-escala-severidad` en `sw.js`.
+  - Versión oficial elevada a `v2.2.79 🌧️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.79'` en `app.js`, `currentCard.js?v=2.2.79` y query strings en `index.html`.
+
 ## [2.2.78] - 2026-10-19
 
 ### 💨 Anemómetro: Escala de Severidad Dinámica y Alerta en Rachas Peligrosas (Feedback Lendo)

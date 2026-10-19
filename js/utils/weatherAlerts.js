@@ -112,7 +112,21 @@ export function getAemetAlertStatus(weatherData, concejo) {
         probability: '70% - 90%',
         recommendation: 'Extreme la precaución en carretera y viaductos expuestos. Evite actividades al aire libre.'
       });
-    } else if (testMode === 'aemet_rojo' || testMode === 'aemet_red' || testMode === 'emergencia_roja') {
+    } else if (testMode === 'lluvia' || testMode === 'lluvia_naranja' || testMode === 'lluvia_40') {
+      alerts.push({
+        id: 'aemet_rain_sim_orange',
+        type: 'lluvia',
+        level: 'orange',
+        levelName: 'Aviso Naranja (Lluvias Abundantes)',
+        levelColor: '#f97316',
+        icon: '🌧️',
+        title: 'Aviso Naranja por Precipitaciones Persistentes',
+        desc: `Simulacro: Precipitaciones copiosas con acumulaciones estimadas de más de 50 mm en 12h en ${concejo.name} y cuencas fluviales de ${aemetZone.name}.`,
+        validity: 'Hoy • Atención en calzadas y ramblas',
+        probability: '70% - 90%',
+        recommendation: 'Precaución por formación de balsas de agua en carreteras y desbordamientos puntuales de alcantarillado.'
+      });
+    } else if (testMode === 'aemet_rojo' || testMode === 'aemet_red' || testMode === 'emergencia_roja' || testMode === 'lluvia_torrencial' || testMode === 'lluvia_roja' || testMode === 'lluvia_severa') {
       alerts.push({
         id: 'aemet_rain_sim_red',
         type: 'lluvia',

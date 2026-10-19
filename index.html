@@ -31,8 +31,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.2.78">
-  <link rel="stylesheet" href="css/components.css?v=2.2.78">
+  <link rel="stylesheet" href="css/main.css?v=2.2.79">
+  <link rel="stylesheet" href="css/components.css?v=2.2.79">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.78 💨</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.79 🌧️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -349,8 +349,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.2.78 💨</span>
+            <span class="release-version">v2.2.79 🌧️</span>
             <span class="release-date">19 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-feature">Meteorología Dinámica &amp; Seguridad (Feedback Lendo)</span> <strong>Pluviómetro: Escala Cromática de Lluvias Abundantes y Torrenciales</strong>:
+              <br>• <strong>Escala de Acumulación (40-79 mm Naranja / ≥ 80 mm Rojo):</strong> En el sensor de <em>Pluviómetro Digital</em> de la Estación en Vivo, las cifras de agua acumulada se tiñen dinámicamente en <strong>Naranja de Precaución</strong> (40 a 79 mm, aviso AEMET de lluvia persistente) o <strong>Rojo de Peligro Severo</strong> (≥ 80 mm, temporal de agua y riesgo de inundación) acompañadas de <code>⚠️</code>.
+              <br>• <strong>Escala de Intensidad Horaria (15-29 mm/h Naranja / ≥ 30 mm/h Rojo):</strong> Si en ese momento descarga un aguacero fuerte o torrencial, la línea de <em>Intensidad en vivo</em> y el total diario previsto se iluminan automáticamente.
+              <br>• <strong>Simulacro Ley 12 Sincronizado:</strong> Comprobable mediante <code>?test=lluvia</code> (naranja) o <code>?test=lluvia_torrencial</code> (rojo).
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.78 💨</span>
+            <span class="release-date">19 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-feature">Meteorología Dinámica &amp; Seguridad (Feedback Lendo)</span> <strong>Anemómetro: Escala de Color y Alerta en Rachas Peligrosas</strong>:
@@ -4145,7 +4159,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.78"></script>
+  <script type="module" src="js/app.js?v=2.2.79"></script>
 
 
 

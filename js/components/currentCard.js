@@ -304,11 +304,44 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
     }
   }
   rainFallenSoFar = Math.round(rainFallenSoFar * 10) / 10;
-  const rainTodayTotal = (daily && daily.precipitation_sum && daily.precipitation_sum[0] != null) ? daily.precipitation_sum[0] : 0;
+  let rainTodayTotal = (daily && daily.precipitation_sum && daily.precipitation_sum[0] != null) ? daily.precipitation_sum[0] : 0;
   const currentPopVal = (hourly && hourly.precipitation_probability && hourly.precipitation_probability[currentHour] != null) ? hourly.precipitation_probability[currentHour] : 0;
   const nextHour = (currentHour + 1) % 24;
   const nextPopVal = (hourly && hourly.precipitation_probability && hourly.precipitation_probability[currentHour + 1] != null) ? hourly.precipitation_probability[currentHour + 1] : currentPopVal;
-  const currentRainIntensity = current.precipitation != null ? current.precipitation : 0;
+  let currentRainIntensity = current.precipitation != null ? current.precipitation : 0;
+
+  // Simulacro de prueba para lluvia (Doctrina Constitucional 12)
+  if (typeof window !== 'undefined') {
+    const urlParams = new URLSearchParams(window.location.search);
+    const testMode = urlParams.get('test');
+    if (testMode === 'lluvia' || testMode === 'lluvia_naranja' || testMode === 'lluvia_40') {
+      rainFallenSoFar = 32.4;
+      rainTodayTotal = 54.8;
+      currentRainIntensity = 18.5;
+    } else if (testMode === 'lluvia_torrencial' || testMode === 'lluvia_roja' || testMode === 'lluvia_severa' || testMode === 'temporal_lluvia') {
+      rainFallenSoFar = 68.5;
+      rainTodayTotal = 94.2;
+      currentRainIntensity = 38.0;
+    }
+  }
+
+  // Escala cromática de severidad para lluvia (40-79 mm Naranja, >= 80 mm Rojo)
+  const getRainAccumSeverity = (mm) => {
+    if (mm >= 80) return { cssClass: 'rain-val-danger', icon: ' ⚠️' };
+    if (mm >= 40) return { cssClass: 'rain-val-warning', icon: ' ⚠️' };
+    return { cssClass: '', icon: '' };
+  };
+
+  // Escala cromática de severidad para intensidad horaria (15-29 mm/h Naranja, >= 30 mm/h Rojo)
+  const getRainIntensitySeverity = (mmPerHour) => {
+    if (mmPerHour >= 30) return { cssClass: 'rain-val-danger', icon: ' ⚠️' };
+    if (mmPerHour >= 15) return { cssClass: 'rain-val-warning', icon: ' ⚠️' };
+    return { cssClass: '', icon: '' };
+  };
+
+  const rainFallenSeverity = getRainAccumSeverity(rainFallenSoFar);
+  const rainTotalSeverity = getRainAccumSeverity(rainTodayTotal);
+  const rainIntensitySeverity = getRainIntensitySeverity(currentRainIntensity);
 
   // Monitor Convectivo y Alerta Silenciosa de Tormenta Inminente
   const storm = detectThunderstormEffect(current, hourly, concejo);
@@ -668,16 +701,16 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
           <button class="btn-explain-sensor" data-explain="rain" title="¿Cómo funciona el pluviómetro y la lluvia? Pulsa para aprender" aria-label="Explicación del pluviómetro">💡</button>
         </div>
         <div class="sensor-body">
-          <div class="sensor-val">${rainFallenSoFar.toFixed(1)} <small>mm (l/m²)</small></div>
+          <div class="sensor-val ${rainFallenSeverity.cssClass}">${rainFallenSoFar.toFixed(1)} <small>mm (l/m²)</small>${rainFallenSeverity.icon}</div>
           <div class="sensor-sub">Agua caída hoy hasta las ${String(currentHour).padStart(2, '0')}:00 h</div>
           <div class="sensor-sub" style="margin-top: 4px;">
-            Total previsto hoy (24h): <strong>${rainTodayTotal.toFixed(1)} mm</strong>
+            Total previsto hoy (24h): <strong class="${rainTotalSeverity.cssClass}">${rainTodayTotal.toFixed(1)} mm${rainTotalSeverity.icon}</strong>
           </div>
           <div class="sensor-sub" style="margin-top: 6px; padding: 4px 8px; background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 6px; font-size: 0.80rem;">
             Probabilidad: <strong>${currentPopVal}%</strong> (${String(currentHour).padStart(2, '0')}h) ➔ <strong>${nextPopVal}%</strong> (${String(nextHour).padStart(2, '0')}h)
           </div>
           <div class="sensor-sub" style="margin-top: 4px;">
-            Intensidad en vivo: <strong>${currentRainIntensity > 0 ? `${currentRainIntensity.toFixed(1)} mm/h` : 'Sin lluvia en este momento'}</strong>
+            Intensidad en vivo: <strong class="${rainIntensitySeverity.cssClass}">${currentRainIntensity > 0 ? `${currentRainIntensity.toFixed(1)} mm/h${rainIntensitySeverity.icon}` : 'Sin lluvia en este momento'}</strong>
           </div>
         </div>
       </div>

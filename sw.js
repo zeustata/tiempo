@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2278-anemometro-rachas-peligrosas';
+const CACHE_NAME = 'meteoasturlode-v2279-pluviometro-escala-severidad';
 const STATIC_ASSETS = [
   './',
   './index.html',

@@ -49,6 +49,27 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. *Almacenamiento Estático Desacoplado:* El bot vuelca los datos limpios (km abiertos, pistas por dificultad técnica, remontes en servicio y espesores mín/máx) en un archivo JSON estático (`data/snowReport.json`).
     3. *Consumo Directo en Cliente:* `mountainCard.js` lee ese JSON sin sobrecargar a los servidores externos ni ralentizar la carga en clientes, mostrando los partes de nieve actualizados en vivo de forma 100% legal, autónoma y sin fricción.
 
+## 🌧️ Actualización v2.2.79: Pluviómetro con Escala Cromática de Lluvias Abundantes y Torrenciales — 2026-10-19
+- **Escala de Severidad Dinámica en Pluviómetro (Feedback y Petición Expresa de Lendo - «ahora podemas haver lo mismo con el pluviometro no?», «pisale»):**
+  1. *Diagnóstico Meteorológico y Umbrales AEMET:*
+     - Extendida la doctrina de armonía visual y alerta temprana (Ley 14) al sensor de *Pluviómetro Digital* en `currentCard.js` y `components.css`:
+       - **Acumulación Diaria (mm = l/m²):**
+         - `< 40 mm:` Lluvia ordinaria asturiana en blanco estándar / azul cielo.
+         - `40 a 79 mm:` **Naranja de Precaución** (`#f97316`, peso 800) + icono `⚠️`. Umbral de aviso AEMET de precipitación copiosa y persistente.
+         - `≥ 80 mm:` **Rojo de Peligro Severo** (`#ef4444`, peso 800) + icono `⚠️`. Lluvia torrencial con riesgo crítico de inundaciones, balsas en carretera y desprendimientos.
+       - **Intensidad Horaria en Vivo (mm/h):**
+         - `15 a 29 mm/h:` **Naranja** (`#f97316`) + `⚠️`. Chaparrón o aguacero fuerte en tiempo real.
+         - `≥ 30 mm/h:` **Rojo** (`#ef4444`) + `⚠️`. Lluvia torrencial inmediata con sobrecarga de alcantarillado.
+  2. *Cobertura Integral de Métricas:*
+     - Aplica al titular principal (`.sensor-val`), a la línea de *Total previsto hoy (24h)* y al desglose de *Intensidad en vivo*.
+  3. *Simulacro Ley 12 Sincronizado:*
+     - Incorporados conmutadores de prueba para verificar visualmente la respuesta:
+       - `?test=lluvia` (alerta naranja en pluviómetro de 54,8 mm / 18,5 mm/h con aviso AEMET naranja de lluvia abundante).
+       - `?test=lluvia_torrencial` (alerta roja en pluviómetro de 94,2 mm / 38 mm/h con aviso AEMET rojo).
+  4. *Versionado y Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v2279-pluviometro-escala-severidad` en `sw.js`.
+     - Versión oficial elevada a `v2.2.79 🌧️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.79'` en `app.js`, `currentCard.js?v=2.2.79` y query strings en `index.html`.
+
 ## 💨 Actualización v2.2.78: Anemómetro con Escala Cromática de Rachas Peligrosas y Alerta Visual — 2026-10-19
 - **Escala de Severidad Dinámica en Anemómetro (Feedback y Petición Expresa de Lendo - «quisiera hacer un cambio en el menu principal (Estacion en vivo). en el Anemometro en rachas maximas previstas, a partir de unas rachas peligrosas, cambie el color del blanco que tiene a rojo. por ejemplo cuando las previstas superen los 60», «me gusta tu opcion 2 y me gusta lo del icono y que lo implementes tambien en la racha actual. vaya ojo fino que tienes. pisale»):**
   1. *Diagnóstico Meteorológico y Escala AEMET:*

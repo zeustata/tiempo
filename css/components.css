@@ -966,6 +966,20 @@
   text-shadow: 0 0 12px rgba(239, 68, 68, 0.5);
 }
 
+.rain-val-warning,
+.sensor-val.rain-val-warning {
+  color: #f97316 !important;
+  font-weight: 800;
+  text-shadow: 0 0 10px rgba(249, 115, 22, 0.35);
+}
+
+.rain-val-danger,
+.sensor-val.rain-val-danger {
+  color: #ef4444 !important;
+  font-weight: 800;
+  text-shadow: 0 0 12px rgba(239, 68, 68, 0.5);
+}
+
 .wind-legend-sub {
   font-size: 0.80rem;
   color: var(--text-muted);
