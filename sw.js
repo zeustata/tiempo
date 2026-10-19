@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2276-playas-cabecera-dos-niveles';
+const CACHE_NAME = 'meteoasturlode-v2277-surf-spots-dos-niveles';
 const STATIC_ASSETS = [
   './',
   './index.html',

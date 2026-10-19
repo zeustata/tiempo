@@ -49,6 +49,20 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. *Almacenamiento Estático Desacoplado:* El bot vuelca los datos limpios (km abiertos, pistas por dificultad técnica, remontes en servicio y espesores mín/máx) en un archivo JSON estático (`data/snowReport.json`).
     3. *Consumo Directo en Cliente:* `mountainCard.js` lee ese JSON sin sobrecargar a los servidores externos ni ralentizar la carga en clientes, mostrando los partes de nieve actualizados en vivo de forma 100% legal, autónoma y sin fricción.
 
+## 🏄‍♂️ Actualización v2.2.77: Guía de Surf y Rompientes en Cabecera de Dos Niveles (Ley 14) — 2026-10-19
+- **Arquitectura en Dos Niveles y Armonía Integral con Playas (Feedback y Diagnóstico Expreso de Lendo - «pasa lo mismo en el menu surf y rompientes debajo del boton Guia de surf tambien seria bonito cambiarlo tembien. El nombre de las playas, la pastilla debajo y el desglose», «pisale»):**
+  1. *Diagnóstico de Coherencia Visual y Espacio Horizontal:*
+     - Siguiendo la reforma visual de Playas & Mareas (v2.2.76), el catálogo de rompientes de surf (`surfCard.js`) presentaba la misma problemática: la pastilla distintiva del spot (`Surf Top Mundial`, `Surf Potente`, `Spot Polivalente`, etc.) compartía la fila con el nombre en `.beach-accordion-header`, restando espacio e incrementando el riesgo de saltos de línea antiestéticos en móviles.
+  2. *Reorganización en Dos Niveles (Nombre Arriba + Pastilla Debajo):*
+     - Adaptada la cabecera del acordeón en `surfCard.js` (líneas 991-1005) para estructurar el nombre del spot (`.beach-card-name`) en la fila superior con el 100% del ancho útil horizontal dentro de `.beach-accordion-name-col`.
+     - La pastilla descriptiva se reubica debajo en su fila secundaria (`.beach-accordion-subrow > .beach-card-tag`), dejando el margen derecho despejado con la flecha `▾` centrada verticalmente.
+  3. *Unificación Estética y Desglose Diagnóstico Intacto (Leyes 14 y 19):*
+     - Reutilización inmediata de las clases unificadas de diseño ya presentes en `components.css`: tipografía en blanco (#f8fafc), peso equilibrado (700) y escala ergonómica en móviles.
+     - El interior del acordeón (`.beach-accordion-body`) se preserva íntegro al 100%: picos bautizados (El Espigón, La Picosa, etc.), diagnóstico en vivo de viento (offshore/onshore), swell óptimo, dirección de mar, fondos y peligros.
+  4. *Versionado y Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v2277-surf-spots-dos-niveles` en `sw.js`.
+     - Versión oficial elevada a `v2.2.77 🏄‍♂️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.77'` en `app.js`, `surfCard.js?v=2.2.77` y query strings en `index.html`.
+
 ## 🏖️ Actualización v2.2.76: Guía de Playas y Calas en Dos Niveles y Estilo Planes & Ocio — 2026-10-19
 - **Arquitectura en Dos Niveles y Refinamiento Tipográfico (Feedback y Diagnóstico Expreso de Lendo - «en el menu Playas y mareas, en gias de playas lo veo un poco grande el nombre de las playas.No se puede poner un como mas como el menu planes y ocio?», «no me entendiste. quiero que salga el nombre de la playa arriba y debajo la pastilla y el desglose que tiene ahora mismo», «eso es. pisale»):**
   1. *Diagnóstico de Compresión Horizontal:*

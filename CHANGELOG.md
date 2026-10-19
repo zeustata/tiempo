@@ -10,6 +10,21 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.77] - 2026-10-19
+
+### 🏄‍♂️ Guía de Surf y Rompientes: Cabecera en Dos Niveles Idéntica a Playas (Feedback Lendo - Ley 14)
+- **Arquitectura en Dos Niveles (Nombre Arriba + Pastilla Debajo):**
+  - Aplicada a las tarjetas de rompientes de surf (`.beach-accordion-card` en `surfCard.js`) la misma arquitectura estructural de dos niveles implementada previamente en Playas & Mareas.
+  - La fila superior (`.beach-card-name`) cuenta con el 100% del ancho horizontal útil dentro de `.beach-accordion-name-col`, asegurando que nombres largos de rompientes (como *«Playa de Salinas / El Espigón»*, *«Playa de Xagó»*, *«Playa de Rodiles»*, *«Playa de San Lorenzo»*) se lean de forma limpia sin estrangulamientos en smartphones.
+  - La etiqueta distintiva del spot (`Surf Top Mundial`, `Surf Potente`, `Spot Polivalente`, `Mítico`) se sitúa en la segunda fila dedicada (`.beach-accordion-subrow > .beach-card-tag`), liberando por completo el lateral derecho donde reposa en solitario la flecha `▾` centrada verticalmente.
+- **Tipografía y Armonía Estética Integral (Ley 14):**
+  - Perfecta alineación visual con el módulo de Playas & Mareas, Planes & Ocio y Rutas, con tipografía nítida en blanco, escala fluida y jerarquía equilibrada.
+- **Ficha Técnica y Desglose Diagnóstico Intactos:**
+  - El acordeón desplegable interior mantiene íntegra toda su analítica avanzada para surfistas: picos bautizados (El Espigón, La Picosa, etc.), diagnóstico en vivo de viento con etiqueta offshore/onshore en color, swell y período óptimos, orientación y tipo de fondo, marea idónea y peligros del fondo.
+- **Cache-Busting y Despliegue Oficial:**
+  - Service Worker actualizado a `meteoasturlode-v2277-surf-spots-dos-niveles` en `sw.js`.
+  - Versión oficial elevada a `v2.2.77 🏄‍♂️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.77'` en `app.js`, `surfCard.js?v=2.2.77` y query strings en `index.html`.
+
 ## [2.2.76] - 2026-10-19
 
 ### 🏖️ Guía de Playas y Calas: Cabecera en Dos Niveles y Estilo Planes & Ocio (Feedback Lendo - Ley 14)
