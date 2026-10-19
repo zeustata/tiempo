@@ -8,7 +8,24 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Major (X.0.0)**: Cambios arquitectónicos grandes o rediseños completos.
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
-- **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
+## [2.2.82] - 2026-10-19
+
+### 📂 Climatología Minimizada con Desglose Plegable (Feedback Lendo - Opción 1)
+- **Compactación Extrema de la Tarjeta en Pantalla Principal (Fila de ~42px):**
+  - Respondiendo al feedback de Lendo (*«hay q minimizar la tarjeta con desglose. ocupa mucho»*), la tarjeta de Climatología y Memoria de Asturias se rediseña como un acordeón nativo HTML5 (`<details class="clima-accordion-card">`) que en su estado de reposo ocupa una única línea horizontal muy delgada bajo la curva térmica.
+  - La fila compacta muestra de forma limpia y condensada: icono `🏛️`, mes, balance térmico mensual, comparativa directa (`Media: X°C · Hoy: Y°C · Récord: Z°C`) y la pastilla táctil de activación `[ Desglose ▾ ]`. Ahorra más del 80% del espacio vertical en pantalla.
+- **Desglose Completo a Demanda:**
+  - Al pulsar la pastilla o cualquier zona del encabezado, se abre suavemente el desglose integral:
+    - Botón de didáctica meteorológica (`💡 ¿Cómo se calcula?`).
+    - Comparativa visual directa (Habitual en el mes vs Máxima prevista hoy).
+    - Récords del mes con pastillas interactivas de Calor, Frío y Lluvia torrencial.
+    - Ficha técnica completa de la estación oficial homologada AEMET (Musel, Cristo, Pajares, etc.), altitud, municipio y contexto sinóptico.
+    - Módulo histórico de la *Memoria del Clima Asturiano («Tal día como hoy»)*.
+- **Fluidez y Ergonomía Móvil Estricta (Ley 11):**
+  - Estructurado mediante `<details>` nativo con rotación de chevron a `180°`, cambio dinámico de etiqueta a *«Cerrar»* y adaptación automática en pantallas estrechas (≤ 380px) mediante reglas responsive sin desbordes.
+- **Cache-Busting y Despliegue Oficial:**
+  - Service Worker actualizado a `meteoasturlode-v2282-climatologia-desglose-compacto` en `sw.js`.
+  - Versión oficial elevada a `v2.2.82 📂` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.82'` en `app.js`, `currentCard.js?v=2.2.82`, `climatologyData.js?v=2.2.82` y query strings en `index.html`.
 
 ## [2.2.81] - 2026-10-19
 

@@ -31,8 +31,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.2.81">
-  <link rel="stylesheet" href="css/components.css?v=2.2.81">
+  <link rel="stylesheet" href="css/main.css?v=2.2.82">
+  <link rel="stylesheet" href="css/components.css?v=2.2.82">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.81 📜</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.82 📂</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -349,8 +349,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.2.81 📜</span>
+            <span class="release-version">v2.2.82 📂</span>
             <span class="release-date">19 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-feature">Optimización de Espacio &amp; Ergonomía Móvil (Feedback Lendo)</span> <strong>Climatología Minimizada con Desglose Plegable (Opción 1)</strong>:
+              <br>• <strong>Fila Mínima en Reposo (~42px):</strong> La tarjeta climatológica se compacta al máximo en una única franja horizontal bajo la curva térmica, mostrando solo la información esencial (temperatura media vs hoy, balance térmico y récord mensual) y ahorrando el 80% del espacio vertical en pantalla.
+              <br>• <strong>Desglose Desplegable Completo a Demanda:</strong> Al pulsar sobre la pastilla de <em>«Desglose ▾»</em>, se despliega suavemente el análisis completo: comparativa detallada, pastillas de récords, ficha de la estación oficial AEMET exacta de tu zona y la efeméride histórica de la <em>Memoria del Clima Asturiano</em>.
+              <br>• <strong>Fluidez Nativa y Cero Fricción:</strong> Implementado mediante acordeón HTML5 con animación fluida, garantizando que la pantalla de inicio permanezca ágil, compacta y limpia.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.81 📜</span>
+            <span class="release-date">19 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-feature">Climatología de Prestigio &amp; Memoria Asturiana (Feedback Lendo)</span> <strong>Tarjeta Histórica Rediseñada y Memoria del Clima Asturiano</strong>:
@@ -4190,7 +4204,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.81"></script>
+  <script type="module" src="js/app.js?v=2.2.82"></script>
 
 
 

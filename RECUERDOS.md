@@ -49,6 +49,30 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. *Almacenamiento Estático Desacoplado:* El bot vuelca los datos limpios (km abiertos, pistas por dificultad técnica, remontes en servicio y espesores mín/máx) en un archivo JSON estático (`data/snowReport.json`).
     3. *Consumo Directo en Cliente:* `mountainCard.js` lee ese JSON sin sobrecargar a los servidores externos ni ralentizar la carga en clientes, mostrando los partes de nieve actualizados en vivo de forma 100% legal, autónoma y sin fricción.
 
+## 📂 Actualización v2.2.82: Climatología Minimizada con Desglose Plegable (Opción 1) — 2026-10-19
+- **Compactación Extrema de Tarjeta y Ergonomía Móvil (Feedback y Petición Expresa de Lendo - «hay q minimizar la tarjeta con desglose. ocupa mucho», «opcione1»):**
+  1. *Diagnóstico y Rediseño Ergonómico:*
+     - Al desplegar todo el contenido enriquecido (comparativa, 3 récords, estación oficial y efemérides) de forma estática en la Hero Card de la Estación en Vivo, la tarjeta superaba los 250px de altura y desplazaba en exceso los sensores y pronósticos horarios.
+     - Se adopta la **Opción 1**: transformación de la tarjeta en un acordeón nativo HTML5 (`<details class="clima-accordion-card">`).
+  2. *Fila Mínima en Reposo (~42px):*
+     - En su estado cerrado por defecto, se presenta como una pastilla delgada de una sola fila horizontal bajo la curva térmica de 24h:
+       - Icono `🏛️`, mes y balance térmico mensual en pastilla compacta (`clima-badge-compact`).
+       - Métricas condensadas: `Media: 14,8°C · Hoy: 19°C (+4,2°C) · Récord: 31,4°C`.
+       - Pastilla interactiva de control: `[ Desglose ▾ ]`.
+     - Reduce en un 80% el espacio vertical consumido en la pantalla principal.
+  3. *Desglose Completo Fluido a Demanda:*
+     - Al pulsar la cabecera o la pastilla, el chevron gira 180°, el texto conmuta a *«Cerrar»* y se despliega con animación fluida (`climaAccordionSlide`):
+       - Sub-cabecera con serie de 30 años (1991-2020) y botón didáctico `💡 ¿Cómo se calcula?`.
+       - Comparativa simétrica Hoy vs Habitual.
+       - Pastillas de Récords históricos (Calor, Frío, Lluvia 24h).
+       - Ficha técnica completa de la estación oficial homologada (Gijón Musel, Oviedo Cristo, Pajares, etc.), altitud y situación sinóptica.
+       - Módulo de efemérides de la *Memoria del Clima Asturiano*.
+  4. *Inmunidad Anti-Desborde (Ley 11):*
+     - En terminales móviles muy estrechos (≤ 380px), la cifra secundaria de récord se oculta de la fila resumen compacta mediante `@media (max-width: 380px) { .clima-sum-metrics .hide-tiny { display: none; } }`, impidiendo cualquier salto de línea forzado o descuadre.
+  5. *Versionado y Despliegue Oficial:*
+     - Service Worker actualizado a `meteoasturlode-v2282-climatologia-desglose-compacto` en `sw.js`.
+     - Versión oficial elevada a `v2.2.82 📂` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.82'` en `app.js`, `currentCard.js?v=2.2.82`, `climatologyData.js?v=2.2.82` y query strings en `index.html`.
+
 ## 📜 Actualización v2.2.81: Climatología de Prestigio & Memoria del Clima Asturiano — 2026-10-19
 - **Transformación Visual, Transparencia de Estaciones y Efemérides Históricas (Feedback y Petición Expresa de Lendo - «a ver. esa tasrjeta deberia de tener mas peso. te pone la maxima en octubre te pone 31 pero sberia darle a ese boton para que te ponga exactamente donde en la zona. arregla esa tarjeta que sea mas visual y añade memoria clima asturiano . a ver q pasa», «pisale princesa»):**
   1. *Evolución de la Franja a Tarjeta de Prestigio (Liquid Glass):*

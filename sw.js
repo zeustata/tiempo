@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2281-climatologia-memoria-historica';
+const CACHE_NAME = 'meteoasturlode-v2282-climatologia-desglose-compacto';
 const STATIC_ASSETS = [
   './',
   './index.html',
