@@ -32,7 +32,9 @@ export const WEATHER_EXPLANATIONS = {
           <ul class="explain-list">
             <li><strong>↗️ Subiendo (+0.8 a +2.0 hPa):</strong> El anticiclón gana fuerza. Viene <em>mejoría clara y el cielo se despejará</em>.</li>
             <li><strong>→ Estable (-0.8 a +0.8 hPa):</strong> Continuidad. El tiempo se mantendrá igual en las próximas horas.</li>
-            <li><strong>↘️ Bajando rápido (-1.0 a -3.0 hPa):</strong> ¡Alerta! Se acerca una <em>borrasca, temporal de viento o lluvia inminente</em>.</li>
+            <li><strong>↘️ Bajando (-1.0 a -2.9 hPa):</strong> Presión en descenso. Se acerca un frente de lluvias o viento.</li>
+            <li><strong>⚠️ Caída rápida (≤ -3.0 hPa / 3h):</strong> Borrasca profunda en aproximación directa. Temporal en 6 a 12 horas.</li>
+            <li><strong>🚨 Desplome súbito (≤ -5.0 hPa / 3h o &lt; 985 hPa):</strong> ¡Alerta máxima! Ciclogénesis explosiva o temporal severo marítimo en el Cantábrico.</li>
           </ul>
         `
       },

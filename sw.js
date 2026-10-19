@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2279-pluviometro-escala-severidad';
+const CACHE_NAME = 'meteoasturlode-v2280-barometro-ciclogenesis-alerta';
 const STATIC_ASSETS = [
   './',
   './index.html',

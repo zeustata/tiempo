@@ -10,6 +10,24 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 - **Sufijo `-beta` / `-rc`**: Versiones preliminares en fase de pruebas activas.
 
+## [2.2.80] - 2026-10-19
+
+### ⏱️ Barómetro: Detección Predictiva de Ciclogénesis y Borrascas Profundas (Feedback Lendo)
+- **Cálculo de Tendencia Barométrica a 3 Horas (Código OMM / WMO 0200):**
+  - En la tarjeta del *Barómetro (Presión MSL)* de la Estación en Vivo (`currentCard.js` y `components.css`), el sistema monitoriza en tiempo real la variación de presión respecto a 3 horas antes (`diffBaro3h` en hPa/3h) para anticipar temporales y galernas antes de que descarguen viento y lluvia:
+    - **Mejoría o Estabilidad (> -1.0 hPa / 3h):** Verde/azul estándar con lectura de ascenso o estabilidad.
+    - **Borrasca Profunda (Caída ≥ 3.0 hPa en 3h o Presión < 995 hPa):** Alerta en **Naranja de Precaución** (`#f97316`) con distintivo `⚠️` en el valor numérico, barra de nivel barométrica en gradiente naranja-rojo, tendencia `trend-warning` y chip inteligente: *«Borrasca Profunda • Caída rápida, temporal en 6-12h»*.
+    - **Ciclogénesis Explosiva / Temporal Severo (Caída ≥ 5.0 hPa en 3h o Presión < 985 hPa):** Alerta en **Rojo de Peligro Severo** (`#ef4444`) con animación de pulso, barra en rojo crítico, tendencia `trend-danger` y chip de alerta roja: *«Ciclogénesis / Temporal Severo • Desplome barométrico muy rápido»*.
+- **Completada la Tríada de Seguridad en Sensores en Vivo:**
+  - Se unifica la escala de vigilancia dinámica entre **Anemómetro (v2.2.78)**, **Pluviómetro (v2.2.79)** y **Barómetro (v2.2.80)** conforme a la Ley 14 de Armonía Visual.
+- **Didáctica Meteorológica Ampliada:**
+  - Actualizado el modal explicativo del barómetro (`weatherExplanations.js`, botón 💡) detallando la escala OMM de 3 horas y qué significa un desplome barométrico en la costa cantábrica.
+- **Simulacro Ley 12 Sincronizado:**
+  - Verificable al instante mediante `?test=presion` (alerta naranja: 992,4 hPa / -3,8 hPa/3h) y `?test=ciclogenesis` (alerta roja: 981,2 hPa / -5,8 hPa/3h).
+- **Cache-Busting y Despliegue Oficial:**
+  - Service Worker actualizado a `meteoasturlode-v2280-barometro-ciclogenesis-alerta` en `sw.js`.
+  - Versión oficial elevada a `v2.2.80 ⏱️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.80'` en `app.js`, `currentCard.js?v=2.2.80`, `weatherExplanations.js?v=2.2.80` y query strings en `index.html`.
+
 ## [2.2.79] - 2026-10-19
 
 ### 🌧️ Pluviómetro: Escala Cromática de Lluvias Abundantes y Torrenciales (Feedback Lendo)

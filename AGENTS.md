@@ -248,6 +248,11 @@
       1. *Cantidad y proporción de elementos:* Mantener el mismo balance y volumen de elementos (proporción entre astro solar/lunar, nube y número controlado de gotas o partículas) para no romper la estética ni recargar la tarjeta.
       2. *Animaciones coherentes:* Respetar el estilo, cadencia y ritmo de animación del set (flotación suave, caída de gotas, pulsos luminosos) garantizando armonía visual y fluidez de rendimiento en dispositivos móviles.
 
+24. **Doctrina del Resol Litoral y Soberanía del Nordeste (Feedback Lendo):**
+    - En el litoral asturiano, en ausencia de un viento nordeste franco, limpio y suficiente (> 12-14 km/h de componente ENE) capaz de barrer la humedad marina y disipar las inversiones térmicas costeras, es prácticamente imposible contar con un cielo 100% completamente despejado (cero nubes / WMO 0).
+    - Queda terminantemente prohibido que el modelo *Auto Híbrido* de la aplicación muestre *"Despejado / Soleyeru" (☀️)* con 0% de nubosidad cuando los modelos de referencia europeos en paralelo (DWD ICON-EU y/o ECMWF IFS) detecten la presencia de nubosidad media (≥ 25%).
+    - En tales condiciones de resol o claru-escuro costero, el motor de consenso debe adoptar obligatoriamente la nubosidad real de los modelos europeos y clasificar el cielo como **"Parcialmente nublado / Claros" (⛅)** (con nubosidad ≥ 35%) o **"Mayormente soleado / Intervalos" (🌤️)** (20% a 34%), extendiendo dicha armonización a las 48 horas del pronóstico horario y calibrando la radiación solar para que el cálculo teórico del modelo no sirva de tapadera a falsos claros.
+
 
 
 

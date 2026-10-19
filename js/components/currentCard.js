@@ -191,16 +191,102 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   const uvInfo = getUVDescription(uvVal);
   const aqiInfo = getAQIDescription(aqi?.european_aqi);
 
-  // Calcular tendencia barométrica
-  let baroTrend = { text: 'Estable', icon: '→', class: 'trend-stable' };
-  if (hourly && hourly.pressure_msl && hourly.pressure_msl.length > 3) {
-    const currentPress = current.pressure_msl;
-    const pastPress = hourly.pressure_msl[Math.max(0, new Date().getHours() - 3)] || currentPress;
-    const diff = currentPress - pastPress;
-    if (diff > 0.8) baroTrend = { text: `+${diff.toFixed(1)} hPa (Subiendo)`, icon: '↗', class: 'trend-up' };
-    else if (diff < -0.8) baroTrend = { text: `${diff.toFixed(1)} hPa (Bajando rápido)`, icon: '↘', class: 'trend-down' };
-    else baroTrend = { text: `${diff >= 0 ? '+' : ''}${diff.toFixed(1)} hPa (Estable)`, icon: '→', class: 'trend-stable' };
+  // 1. Presión actual y simulación de prueba para barómetro (Ley Constitucional 12)
+  let rawPressure = current.pressure_msl != null ? current.pressure_msl : 1013.0;
+  let simulatedBaroDiff = null;
+
+  if (typeof window !== 'undefined') {
+    const urlParams = new URLSearchParams(window.location.search);
+    const testMode = urlParams.get('test');
+    if (testMode === 'presion' || testMode === 'temporal_presion' || testMode === 'borrasca') {
+      rawPressure = 992.4;
+      simulatedBaroDiff = -3.8;
+    } else if (testMode === 'ciclogenesis' || testMode === 'desplome' || testMode === 'temporal_severo_presion') {
+      rawPressure = 981.2;
+      simulatedBaroDiff = -5.8;
+    }
   }
+
+  // 2. Tendencia Barométrica de 3 horas (OMM / WMO Code 0200)
+  let diffBaro3h = 0;
+  if (simulatedBaroDiff !== null) {
+    diffBaro3h = simulatedBaroDiff;
+  } else if (hourly && hourly.pressure_msl && hourly.pressure_msl.length > 3) {
+    const curHourIdx = new Date().getHours();
+    const pastIdx = Math.max(0, curHourIdx - 3);
+    const pastPress = hourly.pressure_msl[pastIdx] != null ? hourly.pressure_msl[pastIdx] : rawPressure;
+    diffBaro3h = Math.round((rawPressure - pastPress) * 10) / 10;
+  }
+
+  // 3. Evaluación de Severidad Barométrica Cantábrica (Aviso AEMET / Ciclogénesis)
+  // - ROJO (Peligro Severo / Ciclogénesis): Caída súbita >= 5.0 hPa en 3h o presión absoluta < 985 hPa
+  // - NARANJA (Precaución / Temporal en camino): Caída fuerte >= 3.0 hPa en 3h o presión < 995 hPa
+  // - NORMAL / VERDE: Variación moderada o ascenso barométrico
+  const isSeverePressureDrop = diffBaro3h <= -5.0 || rawPressure < 985.0;
+  const isWarningPressureDrop = !isSeverePressureDrop && (diffBaro3h <= -3.0 || rawPressure < 995.0);
+
+  let baroSeverity = {
+    valClass: '',
+    icon: '',
+    cardClass: '',
+    fillClass: '',
+    trendText: '',
+    trendClass: 'trend-stable',
+    alertBadgeHtml: ''
+  };
+
+  if (isSeverePressureDrop) {
+    baroSeverity = {
+      valClass: 'baro-val-danger',
+      icon: ' ⚠️',
+      cardClass: 'baro-card-danger',
+      fillClass: 'baro-fill-danger',
+      trendText: `${diffBaro3h.toFixed(1)} hPa/3h (¡Desplome súbito!)`,
+      trendClass: 'trend-danger',
+      alertBadgeHtml: `
+        <div class="baro-alert-pill baro-pill-danger">
+          <span class="baro-pill-icon">🚨</span>
+          <span class="baro-pill-text"><strong>Ciclogénesis / Temporal Severo</strong> • Desplome barométrico muy rápido</span>
+        </div>
+      `
+    };
+  } else if (isWarningPressureDrop) {
+    baroSeverity = {
+      valClass: 'baro-val-warning',
+      icon: ' ⚠️',
+      cardClass: 'baro-card-warning',
+      fillClass: 'baro-fill-warning',
+      trendText: `${diffBaro3h.toFixed(1)} hPa/3h (Bajando fuerte)`,
+      trendClass: 'trend-warning',
+      alertBadgeHtml: `
+        <div class="baro-alert-pill baro-pill-warning">
+          <span class="baro-pill-icon">⚠️</span>
+          <span class="baro-pill-text"><strong>Borrasca Profunda</strong> • Caída rápida, temporal en 6-12h</span>
+        </div>
+      `
+    };
+  } else {
+    let tClass = 'trend-stable';
+    let tText = `${diffBaro3h >= 0 ? '+' : ''}${diffBaro3h.toFixed(1)} hPa (Estable)`;
+    if (diffBaro3h > 0.8) {
+      tClass = 'trend-up';
+      tText = `+${diffBaro3h.toFixed(1)} hPa (Subiendo / Mejoría)`;
+    } else if (diffBaro3h < -0.8) {
+      tClass = 'trend-down';
+      tText = `${diffBaro3h.toFixed(1)} hPa (Bajando)`;
+    }
+    baroSeverity = {
+      valClass: '',
+      icon: '',
+      cardClass: '',
+      fillClass: '',
+      trendText: tText,
+      trendClass: tClass,
+      alertBadgeHtml: ''
+    };
+  }
+
+  const baroGaugePercent = Math.min(100, Math.max(0, ((rawPressure - 980) / (1040 - 980)) * 100));
 
   // Conversión de viento a nudos si se solicita
   const rawSpeed = current.wind_speed_10m != null ? current.wind_speed_10m : 0;
@@ -648,7 +734,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
       </div>
 
       <!-- 2. BARÓMETRO -->
-      <div class="sensor-card">
+      <div class="sensor-card ${baroSeverity.cardClass}">
         <div class="sensor-header">
           <div class="sensor-header-left">
             <span class="sensor-icon">⏱️</span>
@@ -657,16 +743,17 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
           <button class="btn-explain-sensor" data-explain="barometer" title="¿Cómo funciona el barómetro? Pulsa para aprender" aria-label="Explicación del barómetro">💡</button>
         </div>
         <div class="sensor-body">
-          <div class="sensor-val">${current.pressure_msl != null ? current.pressure_msl.toFixed(1) : '1013.0'} <small>hPa</small></div>
-          <div class="sensor-sub">Nivel del mar • Tendencia: <strong class="${baroTrend.class}">${baroTrend.text}</strong></div>
+          <div class="sensor-val ${baroSeverity.valClass}">${rawPressure.toFixed(1)} <small>hPa</small>${baroSeverity.icon}</div>
+          <div class="sensor-sub">Nivel del mar • Tendencia 3h: <strong class="trend-badge ${baroSeverity.trendClass}">${baroSeverity.trendText}</strong></div>
           <div class="pressure-gauge-bar">
-            <div class="gauge-fill" style="width: ${Math.min(100, Math.max(0, ((current.pressure_msl - 980) / (1040 - 980)) * 100))}%;"></div>
+            <div class="gauge-fill ${baroSeverity.fillClass}" style="width: ${baroGaugePercent}%;"></div>
           </div>
           <div class="gauge-labels">
             <span>980 (Borrasca)</span>
             <span>1013 (Normal)</span>
             <span>1040 (Anticiclón)</span>
           </div>
+          ${baroSeverity.alertBadgeHtml}
         </div>
       </div>
 

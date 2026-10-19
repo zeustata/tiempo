@@ -31,8 +31,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.2.79">
-  <link rel="stylesheet" href="css/components.css?v=2.2.79">
+  <link rel="stylesheet" href="css/main.css?v=2.2.80">
+  <link rel="stylesheet" href="css/components.css?v=2.2.80">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.79 🌧️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.80 ⏱️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -349,8 +349,24 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v2.2.79 🌧️</span>
+            <span class="release-version">v2.2.80 ⏱️</span>
             <span class="release-date">19 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-feature">Meteorología Dinámica &amp; Seguridad (Feedback Lendo)</span> <strong>Barómetro: Detección Predictiva de Ciclogénesis y Borrascas Profundas</strong>:
+              <br>• <strong>Alerta Temprana en Desplome Barométrico (OMM / WMO Code 0200):</strong> El sensor de <em>Barómetro (Presión MSL)</em> calcula en tiempo real la caída de presión en las últimas 3 horas (<code>ΔP 3h</code>) para anticipar temporales antes de que llegue la primera racha o lluvia.
+              <br>• <strong>Borrasca Profunda (Naranja ⚠️):</strong> Descenso rápido de <strong>≥ 3.0 hPa en 3h</strong> o presión absoluta <strong>&lt; 995 hPa</strong>. El valor barométrico, la barra de nivel y la insignia de tendencia se tiñen en Naranja de Precaución, desplegando el distintivo inteligente: <em>«Borrasca Profunda • Caída rápida, temporal en 6-12h»</em>.
+              <br>• <strong>Ciclogénesis Explosiva / Temporal Severo (Rojo 🚨):</strong> Desplome súbito de <strong>≥ 5.0 hPa en 3h</strong> o presión extrema <strong>&lt; 985 hPa</strong>. Alerta máxima en rojo pulsante con advertencia crítica: <em>«Ciclogénesis / Temporal Severo • Desplome barométrico muy rápido»</em>.
+              <br>• <strong>Tríada de Alertas Completada:</strong> Se completa la sinergia de vigilancia dinámica junto con el Anemómetro (v2.2.78) y el Pluviómetro (v2.2.79).
+              <br>• <strong>Simulacro Ley 12 Sincronizado:</strong> Comprobable mediante <code>?test=presion</code> (aviso naranja de borrasca) y <code>?test=ciclogenesis</code> (aviso rojo de desplome barométrico).
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v2.2.79 🌧️</span>
+            <span class="release-date">19 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-feature">Meteorología Dinámica &amp; Seguridad (Feedback Lendo)</span> <strong>Pluviómetro: Escala Cromática de Lluvias Abundantes y Torrenciales</strong>:
@@ -4159,7 +4175,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.79"></script>
+  <script type="module" src="js/app.js?v=2.2.80"></script>
 
 
 

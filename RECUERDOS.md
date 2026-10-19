@@ -49,6 +49,29 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. *Almacenamiento Estático Desacoplado:* El bot vuelca los datos limpios (km abiertos, pistas por dificultad técnica, remontes en servicio y espesores mín/máx) en un archivo JSON estático (`data/snowReport.json`).
     3. *Consumo Directo en Cliente:* `mountainCard.js` lee ese JSON sin sobrecargar a los servidores externos ni ralentizar la carga en clientes, mostrando los partes de nieve actualizados en vivo de forma 100% legal, autónoma y sin fricción.
 
+## ⏱️ Actualización v2.2.80: Barómetro con Detección Predictiva de Ciclogénesis y Borrascas Profundas — 2026-10-19
+- **Inteligencia Predictiva y Escala de Caída Barométrica en 3 Horas (Feedback y Petición Expresa de Lendo - «vamos a por la 2 de momento, el barometro», «mejora el barometro de momento»):**
+  1. *Diagnóstico Meteorológico y Estándar Internacional OMM (WMO Code 0200):*
+     - El barómetro es el sensor más predictivo de una estación meteorológica: la presión atmosférica cae horas antes de que se levante el viento o empiece a llover con furia.
+     - Se implementa el cálculo en tiempo real de la tendencia trihoraria (`diffBaro3h` = Presión actual menos Presión hace 3 horas):
+       - **Borrasca Profunda (Naranja de Precaución, `#f97316` + `⚠️`):**
+         - Disparado si la caída en 3 horas es `≤ -3.0 hPa` o si la presión absoluta desciende de `995 hPa`.
+         - La cifra de presión, la barra de nivel (`baro-fill-warning`) y la insignia de tendencia (`trend-warning`) se tiñen de naranja y se activa el chip: *«Borrasca Profunda • Caída rápida, temporal en 6-12h»*.
+       - **Ciclogénesis Explosiva / Temporal Severo (Rojo de Peligro Severo, `#ef4444` + `⚠️` pulsante):**
+         - Disparado si la caída en 3 horas es `≤ -5.0 hPa` (desplome barométrico muy rápido) o si la presión absoluta desciende de `985 hPa`.
+         - La cifra parpadea con resplandor carmesí (`baroDangerPulse`), la barra y la tarjeta se iluminan en rojo (`baro-card-danger`) y se despliega el chip: *«🚨 Ciclogénesis / Temporal Severo • Desplome barométrico muy rápido»*.
+  2. *Cierre de la Tríada de Seguridad en Sensores en Vivo (Ley 14 de Armonía Visual):*
+     - Con el Anemómetro (v2.2.78, rachas), el Pluviómetro (v2.2.79, acumulaciones e intensidad) y el Barómetro (v2.2.80, ciclogénesis), la Estación en Vivo ofrece ahora una cobertura visual de seguridad temprana 100% coordinada y profesional para el Cantábrico.
+  3. *Ergonomía Móvil Estricta (Ley 11):*
+     - El chip de aviso barométrico (`.baro-alert-pill`) incorpora `box-sizing: border-box`, `max-width: 100%` y salto de línea orgánico, garantizando inmunidad absoluta a desbordes en terminales móviles estrechos (320px a 380px).
+  4. *Simulacro Ley 12 Sincronizado:*
+     - Comprobable en cualquier momento mediante:
+       - `?test=presion` (alerta naranja de borrasca profunda: 992,4 hPa / -3,8 hPa/3h).
+       - `?test=ciclogenesis` (alerta roja de ciclogénesis explosiva: 981,2 hPa / -5,8 hPa/3h).
+  5. *Versionado y Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v2280-barometro-ciclogenesis-alerta` en `sw.js`.
+     - Versión oficial elevada a `v2.2.80 ⏱️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.80'` en `app.js`, `currentCard.js?v=2.2.80`, `weatherExplanations.js?v=2.2.80` y query strings en `index.html`.
+
 ## 🌧️ Actualización v2.2.79: Pluviómetro con Escala Cromática de Lluvias Abundantes y Torrenciales — 2026-10-19
 - **Escala de Severidad Dinámica en Pluviómetro (Feedback y Petición Expresa de Lendo - «ahora podemas haver lo mismo con el pluviometro no?», «pisale»):**
   1. *Diagnóstico Meteorológico y Umbrales AEMET:*
