@@ -70,6 +70,10 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   4. *Versionado, Anti-Caché y Despliegue Oficial (Leyes 1, 3, 4, 10 y 13):*
      - Service Worker actualizado a `meteoasturlode-v2285-blindaje-cielo-cubierto-anti-falso-sol` en `sw.js`.
      - Versión oficial elevada a **`v2.2.85 ☁️`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.85'` en `app.js`, `weatherApi.js?v=2.2.85`, `currentCard.js?v=2.2.85` y query strings en `index.html`.
+  5. *Widgets Android Nativos v3 — Sincronización y Refresco Automático a 30 Minutos (Feedback Lendo - «si se puede refrescar los widget cada media hora, mejor»):*
+     - Modificado `android:updatePeriodMillis = 1800000` (30 minutos, mínimo absoluto del framework de Android) en `meteo_widget_info.xml` (4x2 Compacto) y `meteo_widget_info_4x3.xml` (4x3 Estación Completa).
+     - Incorporado `AlarmManager.setInexactRepeating` a 30 minutos con `PendingIntent.FLAG_IMMUTABLE` en `onEnabled` y `onUpdate` tanto en `MeteoWidgetProvider.java` como en `MeteoWidgetMediumProvider.java` para blindar el refresco contra el modo Doze de fabricantes agresivos.
+     - Recompilados con Gradle 8.11.1 y firmados con la clave oficial v2/v3 en `C:\Users\NUC\Downloads\MeteoAstur-v3-Widget.apk` y `MeteoAstur-v3-Widget.aab`.
 
 ## ✂️ Actualización v2.2.84: Desglose Climatológico Ultra-Minimizado — 2026-10-19
 - **Depuración de Verborrea y Síntesis Extrema (Feedback y Petición Expresa de Lendo - «yo solo quioero q minimices», «pisale»):**
