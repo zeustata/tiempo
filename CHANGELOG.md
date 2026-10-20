@@ -8,6 +8,19 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Major (X.0.0)**: Cambios arquitectónicos grandes o rediseños completos.
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
+## [2.2.85] - 2026-10-20
+
+### ☁️ Blindaje de Cielo Cubierto y Corrección de Falso Sol Radiante (Feedback Lendo)
+- **Erradicación del Falso Despejado a Mediodía:**
+  - Corregido el algoritmo de consenso en `js/services/weatherApi.js` (`applyCantabricoConsensus` y `applyStandalonePhysicalSovereignty`): la regla anterior interpretaba la radiación difusa y el índice UV teórico de las horas centrales (12h a 14h, ~3.0 UV y ~270 W/m²) como insolación despejada, forzando erróneamente `cloud_cover = 15` y `weather_code = 0` (☀️ Soleyeru / Despejado).
+- **Respeto Absoluto al Manto Nuboso Real:**
+  - Cuando los modelos de alta resolución y el Centro Europeo coinciden en cielo cerrado (`cloud_cover >= 80%` y `weather_code = 3`), el sistema preserva categóricamente `☁️ Nublado / Cubiertu`, eliminando toda divergencia entre el estado físico de la atmósfera y la pantalla de la app.
+- **Convivencia Armónica con Resol y Filtro Anti-Orbayu Fantasma:**
+  - Se mantiene activo el clasificador de *Resol / Sol tamizáu (🌥️)* cuando el haz directo perfora nubes tenues y el filtro de limpieza que anula lloviznas residuales sin lluvia física en pluviómetro.
+- **Cache-Busting y Despliegue Oficial:**
+  - Service Worker actualizado a `meteoasturlode-v2285-blindaje-cielo-cubierto-anti-falso-sol` en `sw.js`.
+  - Versión oficial elevada a `v2.2.85 ☁️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.85'` en `app.js`, `weatherApi.js?v=2.2.85`, `currentCard.js?v=2.2.85` y query strings en `index.html`.
+
 ## [2.2.84] - 2026-10-19
 
 ### ✂️ Desglose Climatológico Ultra-Minimizado (Feedback Lendo)

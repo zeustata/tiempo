@@ -49,6 +49,28 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. *Almacenamiento Estático Desacoplado:* El bot vuelca los datos limpios (km abiertos, pistas por dificultad técnica, remontes en servicio y espesores mín/máx) en un archivo JSON estático (`data/snowReport.json`).
     3. *Consumo Directo en Cliente:* `mountainCard.js` lee ese JSON sin sobrecargar a los servidores externos ni ralentizar la carga en clientes, mostrando los partes de nieve actualizados en vivo de forma 100% legal, autónoma y sin fricción.
 
+## ☁️ Actualización v2.2.85: Blindaje de Cielo Cubierto y Corrección de Falso Sol Radiante — 2026-10-20
+- **Erradicación del Falso Soleado a Mediodía y Blindaje de Consenso (Feedback y Petición Expresa de Lendo - «me pone nublado que efectivamente esta nublado pero entro en la app me pone un sol radiante cuando entro», «pero ahora tenemos que mirar lo de la app que ya esta subida. san un sol radiante y de eso nada. hay que corregirlo que es lo mas importante», «pisale»):**
+  1. *Diagnóstico Científico y Causa Raíz Descubierta:*
+     - Lendo constató mirando al exterior que en Castrillón (Piedras Blancas) el cielo estaba completamente encapotado y nublado (100% de nubes, sin lluvia), concordando con los widgets de escritorio. Sin embargo, al abrir la web app en producción, aparecía un sol radiante (*«☀️ Despejado / Soleyeru»* con 15% de nubosidad).
+     - *Auditoría en Tiempo Real de Datos API Open-Meteo (12:45 / 13:00 h):*
+       - Tanto AROME como ECMWF entregaban fielmente: `weather_code: 3` (Nublado / Cubiertu) y `cloud_cover: 100%` (o 98% en ECMWF).
+       - No obstante, al encontrarse en las horas centrales del día (12h a 14h), la física de la atmósfera proyectaba valores difusos teóricos de radiación solar: `direct_normal_irradiance: 270.7 W/m²`, `shortwave_radiation: 335.6 W/m²` e `uv_index: 3.05`.
+       - *El fallo en `js/services/weatherApi.js`:* La regla `isFalseOvercast` (Soberanía Física Inversa / Anti-Falso Nublado) evaluaba que si `rawDirectIrr >= 250` o `rawUv >= 2.0` en ausencia de lluvia, el cielo cubierto era un "falso positivo" de nieblas matinales disipadas, sobreescribiendo forzosamente `cloud_cover = 15` y `weather_code = 0` (☀️ Despejado / Soleyeru). En consecuencia, todo día nublado seco a mediodía se transformaba automáticamente en sol radiante sin nubes.
+  2. *Intervención Técnica Integral:*
+     - **Corrección en `js/services/weatherApi.js` (`applyCantabricoConsensus` y `applyStandalonePhysicalSovereignty`):**
+       - Suprimida la sobreescritura arbitraria que convertía días cubiertos en `cloud_cover = 15` y `weather_code = 0`.
+       - **Respeto Estricto al Consenso:** Si ambos modelos coinciden en cielo cerrado (`cloud_cover >= 80%` y `weather_code = 3`), el manto nuboso se preserva al 100% como `☁️ Nublado / Cubiertu`.
+       - **Falso Nublado Restringido a Divergencia Real:** La corrección de falso nublado solo se activa si existe una discrepancia masiva probada entre modelos (AROME encallado en `rawCloud >= 75%` mientras el Centro Europeo constata cielo despejado o abierto `ecmwfCloud <= 50%` con diferencia `>= 30%` y sol activo).
+       - **Limpieza de Códigos Residuales de Lluvia:** Si el modelo traía código residual de precipitación (`>= 50`) pero el pluviómetro marca `0.0 mm` seco, se limpia la lluvia y se adapta el código al estado nuboso real (`3` si `cloud >= 80%`, `2` si hay claros).
+     - **Convivencia Armónica con Clasificador Solar (`weatherIcons.js`):**
+       - El detector de *Resol / Sol tamizáu (🌥️)* sigue operativo cuando el haz directo supera los 450 W/m² perforando el manto, pero con 100% de nubes jamás degrada a *Soleyeru / Despejado*.
+  3. *Resultado de las Pruebas:*
+     - Verificado mediante script de prueba en Castrillón, Gijón, Avilés y Oviedo: todos resuelven con exactitud matemática en `weather_code: 3`, `cloud_cover: 100%` y etiqueta `☁️ Nublado / Cubiertu`.
+  4. *Versionado, Anti-Caché y Despliegue Oficial (Leyes 1, 3, 4, 10 y 13):*
+     - Service Worker actualizado a `meteoasturlode-v2285-blindaje-cielo-cubierto-anti-falso-sol` en `sw.js`.
+     - Versión oficial elevada a **`v2.2.85 ☁️`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.85'` en `app.js`, `weatherApi.js?v=2.2.85`, `currentCard.js?v=2.2.85` y query strings en `index.html`.
+
 ## ✂️ Actualización v2.2.84: Desglose Climatológico Ultra-Minimizado — 2026-10-19
 - **Depuración de Verborrea y Síntesis Extrema (Feedback y Petición Expresa de Lendo - «yo solo quioero q minimices», «pisale»):**
   1. *Diagnóstico de Fatiga Visual:*

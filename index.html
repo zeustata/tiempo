@@ -31,8 +31,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.2.84">
-  <link rel="stylesheet" href="css/components.css?v=2.2.84">
+  <link rel="stylesheet" href="css/main.css?v=2.2.85">
+  <link rel="stylesheet" href="css/components.css?v=2.2.85">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.84 ✂️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.85 ☁️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -349,8 +349,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
+            <span class="release-version">v2.2.85 ☁️</span>
+            <span class="release-date">20 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-fix">Fidelidad y Coherencia Meteorológica (Feedback Lendo)</span> <strong>Blindaje de Cielo Cubierto y Corrección de Falso Sol Radiante</strong>:
+              <br>• <strong>Erradicación del Falso Despejado a Mediodía:</strong> Subsanada la regla de consenso en <code>weatherApi.js</code> que forzaba <em>Soleyeru / Despejado (☀️ 15% nubes)</em> al confundir la radiación difusa y el índice UV teórico de las horas centrales (12h-14h) con cielo limpio.
+              <br>• <strong>Respeto Estricto al Manto Nuboso Real:</strong> Cuando los modelos de alta resolución y el Centro Europeo constatan cielo cubierto (<em>cloud_cover &gt;= 80% y WMO 3</em>), el sistema preserva categóricamente <strong>☁️ Nublado / Cubiertu</strong>, eliminando cualquier discrepancia entre la realidad y la pantalla.
+              <br>• <strong>Convivencia con Resol y Filtro Anti-Falsa Lluvia:</strong> Se mantiene intacto el detector de <em>Resol / Sol tamizáu (🌥️)</em> cuando el sol perfora nubes delgadas y el blindaje que anula lloviznas residuales sin precipitación medible.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
             <span class="release-version">v2.2.84 ✂️</span>
-            <span class="release-date">19 Oct 2026 (Actual)</span>
+            <span class="release-date">19 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-feature">Simplicidad &amp; Síntesis Extrema (Feedback Lendo)</span> <strong>Desglose Climatológico Ultra-Minimizado</strong>:
@@ -4233,7 +4247,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.84"></script>
+  <script type="module" src="js/app.js?v=2.2.85"></script>
 
 
 

@@ -275,28 +275,31 @@ function applyCantabricoConsensus(weather, consensus) {
       }
     }
 
-    // C) SOBERANÍA FÍSICA INVERSA (Anti-Falso Nublado / Estratos Matinales Disipados / Inmunidad Solar - Ley 21):
-    // Si el modelo numérico crudo marca cielo cubierto (código 3 o nubes >= 75%) o llovizna residual con sol activo,
-    // y la física constata insolación directa (UV >= 1.2 o Radiación Directa >= 100 W/m² o Radiación Global >= 200 W/m²):
-    // Es físicamente imposible un cielo 100% encapotado o un orbayu persistente. Se corrige la nubosidad y el código a soleado/despejado.
+    // C) SOBERANÍA FÍSICA Y ARMONIZACIÓN DE FALSOS NUBLADOS / RESIDUOS DE LLUVIA:
+    // 1. Si el modelo traía código residual de precipitación (>= 50) pero está físicamente seco (< 0.1 mm),
+    // se limpia la lluvia y se adapta el código al estado nuboso real (3 si está cubierto, 2 si hay claros).
     const isDryCurrent = (rawPrecip < 0.1 || (hasActiveSunlight && rawPrecip < 0.5)) && ePrecip < 0.1;
-    const isFalseOvercast = isDryCurrent && hasActiveSunlight && (weather.current.weather_code === 3 || weather.current.weather_code >= 50 || rawCloud >= 75);
-
-    if (isFalseOvercast) {
+    if (isDryCurrent && weather.current.weather_code >= 50) {
       if (rawPrecip < 0.5) {
         weather.current.precipitation = 0;
         if (weather.current.rain != null) weather.current.rain = 0;
       }
-      let targetCloud = rawCloud;
-      if (ecmwfCloud < rawCloud && ecmwfCloud <= 65) {
-        targetCloud = ecmwfCloud;
-      } else if (rawDirectIrr >= 250 || rawUv >= 2.0) {
-        targetCloud = 15;
-      } else {
-        targetCloud = 35;
-      }
-      weather.current.cloud_cover = targetCloud;
-      weather.current.weather_code = targetCloud <= 20 ? 0 : (targetCloud <= 50 ? 1 : 2);
+      const effectiveCloud = Math.max(rawCloud, ecmwfCloud);
+      weather.current.weather_code = effectiveCloud >= 80 ? 3 : (effectiveCloud >= 40 ? 2 : 1);
+    }
+
+    // 2. Falso Nublado de AROME (estratos/nieblas residuales matinales disipadas):
+    // SOLO se corrige si AROME se ha quedado encallado en manto cerrado (rawCloud >= 75%)
+    // mientras el Centro Europeo (ECMWF) constata cielo abierto o despejado (ecmwfCloud <= 50%),
+    // existiendo divergencia masiva (rawCloud - ecmwfCloud >= 30%) y sol activo.
+    // Si ambos modelos coinciden en cielo cubierto (>= 75%), se respeta categóricamente el manto nuboso.
+    const isFalseOvercast = isDryCurrent && hasActiveSunlight && rawCloud >= 75 && ecmwfCloud <= 50 && (rawCloud - ecmwfCloud >= 30);
+
+    if (isFalseOvercast) {
+      weather.current.cloud_cover = ecmwfCloud;
+      weather.current.weather_code = consensus.current.weather_code != null && consensus.current.weather_code <= 2
+        ? consensus.current.weather_code
+        : (ecmwfCloud <= 25 ? 0 : 2);
     }
   }
 
@@ -383,22 +386,22 @@ function applyCantabricoConsensus(weather, consensus) {
         if (weather.hourly.precipitation_probability) weather.hourly.precipitation_probability[i] = ePop;
       }
 
-      // C) Anti-Falso Nublado Horario (Soberanía Física Inversa & Inmunidad Solar - Ley 21):
+      // C) Armonización Horaria de Lluvia Residual y Falso Nublado:
       const isDryHourly = (precip < 0.1 || (hasHourlySun && precip < 0.5)) && ePrecip < 0.1;
 
-      if (isDryHourly && hasHourlySun && weather.hourly.weather_code && (weather.hourly.weather_code[i] === 3 || weather.hourly.weather_code[i] >= 50 || rawC >= 75)) {
+      // 1. Limpieza de código de lluvia residual sin precipitación física
+      if (isDryHourly && weather.hourly.weather_code && weather.hourly.weather_code[i] >= 50) {
         if (weather.hourly.precipitation && precip < 0.5) weather.hourly.precipitation[i] = 0;
         if (weather.hourly.rain && precip < 0.5) weather.hourly.rain[i] = 0;
-        let targetHourlyCloud = rawC;
-        if (ecmwfC < rawC && ecmwfC <= 65) {
-          targetHourlyCloud = ecmwfC;
-        } else if (rawDirectH >= 250 || rawUvH >= 2.0) {
-          targetHourlyCloud = 15;
-        } else {
-          targetHourlyCloud = 35;
-        }
-        if (weather.hourly.cloud_cover) weather.hourly.cloud_cover[i] = targetHourlyCloud;
-        weather.hourly.weather_code[i] = targetHourlyCloud <= 20 ? 0 : (targetHourlyCloud <= 50 ? 1 : 2);
+        const effectiveC = Math.max(rawC, ecmwfC);
+        weather.hourly.weather_code[i] = effectiveC >= 80 ? 3 : (effectiveC >= 40 ? 2 : 1);
+      }
+
+      // 2. Falso nublado horario (AROME encallado frente a ECMWF despejado con sol)
+      const isFalseOvercastH = isDryHourly && hasHourlySun && rawC >= 75 && ecmwfC <= 50 && (rawC - ecmwfC >= 30);
+      if (isFalseOvercastH) {
+        if (weather.hourly.cloud_cover) weather.hourly.cloud_cover[i] = ecmwfC;
+        weather.hourly.weather_code[i] = (eCode !== null && eCode <= 2) ? eCode : (ecmwfC <= 25 ? 0 : 2);
       }
     }
   }
@@ -413,7 +416,7 @@ function applyCantabricoConsensus(weather, consensus) {
 function applyStandalonePhysicalSovereignty(weather) {
   if (!weather) return;
 
-  // 1. En tiempo actual
+  // 1. En tiempo actual: limpieza de código residual de lluvia sin agua física
   if (weather.current) {
     const rawCloud = weather.current.cloud_cover != null ? weather.current.cloud_cover : 100;
     const rawPrecip = weather.current.precipitation != null ? parseFloat(weather.current.precipitation) : 0;
@@ -422,18 +425,16 @@ function applyStandalonePhysicalSovereignty(weather) {
     const rawSw = weather.current.shortwave_radiation != null ? parseFloat(weather.current.shortwave_radiation) : 0;
     const hasSun = rawDirectIrr >= 100 || rawSw >= 200 || rawUv >= 1.2;
 
-    if ((rawPrecip < 0.1 || (hasSun && rawPrecip < 0.5)) && hasSun && (weather.current.weather_code === 3 || weather.current.weather_code >= 50 || rawCloud >= 75)) {
+    if ((rawPrecip < 0.1 || (hasSun && rawPrecip < 0.5)) && hasSun && weather.current.weather_code >= 50) {
       if (rawPrecip < 0.5) {
         weather.current.precipitation = 0;
         if (weather.current.rain != null) weather.current.rain = 0;
       }
-      const targetCloud = (rawDirectIrr >= 250 || rawUv >= 2.0) ? 15 : 35;
-      weather.current.cloud_cover = targetCloud;
-      weather.current.weather_code = targetCloud <= 20 ? 0 : (targetCloud <= 50 ? 1 : 2);
+      weather.current.weather_code = rawCloud >= 80 ? 3 : (rawCloud >= 40 ? 2 : 1);
     }
   }
 
-  // 2. En pronóstico horario
+  // 2. En pronóstico horario: limpieza de código residual de lluvia sin agua física
   if (weather.hourly && weather.hourly.time && weather.hourly.weather_code) {
     const limit = Math.min(weather.hourly.time.length, 48);
     for (let i = 0; i < limit; i++) {
@@ -444,14 +445,12 @@ function applyStandalonePhysicalSovereignty(weather) {
       const rawSwH = weather.hourly.shortwave_radiation ? (weather.hourly.shortwave_radiation[i] || 0) : 0;
       const hasHourlySun = rawDirectH >= 100 || rawSwH >= 200 || rawUvH >= 1.2;
 
-      if ((precip < 0.1 || (hasHourlySun && precip < 0.5)) && hasHourlySun && (weather.hourly.weather_code[i] === 3 || weather.hourly.weather_code[i] >= 50 || rawC >= 75)) {
+      if ((precip < 0.1 || (hasHourlySun && precip < 0.5)) && hasHourlySun && weather.hourly.weather_code[i] >= 50) {
         if (precip < 0.5) {
           if (weather.hourly.precipitation) weather.hourly.precipitation[i] = 0;
           if (weather.hourly.rain) weather.hourly.rain[i] = 0;
         }
-        const targetCloud = (rawDirectH >= 250 || rawUvH >= 2.0) ? 15 : 35;
-        if (weather.hourly.cloud_cover) weather.hourly.cloud_cover[i] = targetCloud;
-        weather.hourly.weather_code[i] = targetCloud <= 20 ? 0 : (targetCloud <= 50 ? 1 : 2);
+        weather.hourly.weather_code[i] = rawC >= 80 ? 3 : (rawC >= 40 ? 2 : 1);
       }
     }
   }
