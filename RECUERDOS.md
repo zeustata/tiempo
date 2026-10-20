@@ -70,10 +70,22 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   4. *Versionado, Anti-Caché y Despliegue Oficial (Leyes 1, 3, 4, 10 y 13):*
      - Service Worker actualizado a `meteoasturlode-v2285-blindaje-cielo-cubierto-anti-falso-sol` en `sw.js`.
      - Versión oficial elevada a **`v2.2.85 ☁️`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.85'` en `app.js`, `weatherApi.js?v=2.2.85`, `currentCard.js?v=2.2.85` y query strings en `index.html`.
-  5. *Widgets Android Nativos v3 — Sincronización y Refresco Automático a 30 Minutos (Feedback Lendo - «si se puede refrescar los widget cada media hora, mejor»):*
-     - Modificado `android:updatePeriodMillis = 1800000` (30 minutos, mínimo absoluto del framework de Android) en `meteo_widget_info.xml` (4x2 Compacto) y `meteo_widget_info_4x3.xml` (4x3 Estación Completa).
-     - Incorporado `AlarmManager.setInexactRepeating` a 30 minutos con `PendingIntent.FLAG_IMMUTABLE` en `onEnabled` y `onUpdate` tanto en `MeteoWidgetProvider.java` como en `MeteoWidgetMediumProvider.java` para blindar el refresco contra el modo Doze de fabricantes agresivos.
-     - Recompilados con Gradle 8.11.1 y firmados con la clave oficial v2/v3 en `C:\Users\NUC\Downloads\MeteoAstur-v3-Widget.apk` y `MeteoAstur-v3-Widget.aab`.
+   5. *Widgets Android Nativos v3 — Sincronización, Proximidad y Refresco Automático a 30 Minutos (Feedback Lendo - «si se puede refrescar los widget cada media hora, mejor» y «si entro en la app desde el widget que si se actualiza, al salir actualiza la ubicacion del widget?»):*
+      - **Refresco Automático a 30 Minutos:**
+        - Modificado `android:updatePeriodMillis = 1800000` (30 minutos, mínimo absoluto del framework de Android) en `meteo_widget_info.xml` (4x2 Compacto) y `meteo_widget_info_4x3.xml` (4x3 Estación Completa).
+        - Incorporado `AlarmManager.setInexactRepeating` a 30 minutos con `PendingIntent.FLAG_IMMUTABLE` en `onEnabled` y `onUpdate` tanto en `MeteoWidgetProvider.java` como en `MeteoWidgetMediumProvider.java` para blindar el refresco contra el modo Doze de fabricantes agresivos.
+      - **Sincronización Instantánea de Ubicación al Salir de la App:**
+        - Integrado en `Application.java` un escucha global de ciclo de vida (`ActivityLifecycleCallbacks.onActivityStopped`) y refuerzo en `LauncherActivity.onStop()` que emite automáticamente el broadcast `ACTION_REFRESH_WIDGET`.
+        - *Comportamiento en trayectos (ej. Castrillón -> Gijón):* Al abrir la app en destino, la TWA adquiere la posición GPS fresca del dispositivo. Al salir o minimizar la aplicación para volver al escritorio, el widget lee de inmediato las coordenadas del `LocationManager`, calcula el concejo más próximo y actualiza el widget en menos de 1 segundo sin tener que esperar los 30 minutos.
+      - **Geolocalización por Proximidad en Widget 4x2:**
+        - Incorporado el algoritmo de proximidad euclidiana por coordenadas GPS a `MeteoWidgetProvider.java` (4x2), igualando al widget 4x3.
+      - **Ergonomía Limpia:**
+        - La cabecera de fecha (`widget_date`, arriba a la izquierda) actúa como disparador de refresco manual con respuesta táctil, manteniendo el diseño limpio sin saturar de botones adicionales.
+      - **Binarios Compilados y Oficialmente Firmados en `C:\Users\NUC\Downloads`:**
+        - Recompilados con Gradle 8.11.1 (`versionCode 4`, `versionName "3.0.0"`).
+        - Alineados con `zipalign -v -p 4` y firmados con `apksigner` (esquemas v2 y v3 verificados) y `jarsigner`:
+          - `MeteoAstur-v3-Widget.apk` (4,79 MB): Listo para instalación y pruebas directas.
+          - `MeteoAstur-v3-Widget.aab` (4,91 MB): Listo para publicación en Google Play Console.
 
 ## ✂️ Actualización v2.2.84: Desglose Climatológico Ultra-Minimizado — 2026-10-19
 - **Depuración de Verborrea y Síntesis Extrema (Feedback y Petición Expresa de Lendo - «yo solo quioero q minimices», «pisale»):**
