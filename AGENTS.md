@@ -253,6 +253,18 @@
     - Queda terminantemente prohibido que el modelo *Auto Híbrido* de la aplicación muestre *"Despejado / Soleyeru" (☀️)* con 0% de nubosidad cuando los modelos de referencia europeos en paralelo (DWD ICON-EU y/o ECMWF IFS) detecten la presencia de nubosidad media (≥ 25%).
     - En tales condiciones de resol o claru-escuro costero, el motor de consenso debe adoptar obligatoriamente la nubosidad real de los modelos europeos y clasificar el cielo como **"Parcialmente nublado / Claros" (⛅)** (con nubosidad ≥ 35%) o **"Mayormente soleado / Intervalos" (🌤️)** (20% a 34%), extendiendo dicha armonización a las 48 horas del pronóstico horario y calibrando la radiación solar para que el cálculo teórico del modelo no sirva de tapadera a falsos claros.
 
+25. **Doctrina de Sincronización Automática de Widgets, Refresco a 30 Minutos y Ergonomía Móvil Limpia (Feedback Lendo):**
+    - **Refresco Automático Periódico (Cadencia a 30 Minutos):**
+      - Todo widget de escritorio (4x2 y 4x3) debe programar su ciclo de actualización periódica cada 30 minutos (`android:updatePeriodMillis = 1800000`, límite mínimo estándar del framework de Android), reforzado con `AlarmManager.setInexactRepeating` con `FLAG_IMMUTABLE` para impedir que el modo Doze y los optimizadores de batería de los fabricantes congelen la información en pantalla.
+    - **Sincronización Instantánea y Actualización de Ubicación al Salir de la App:**
+      - La aplicación anfitriona nativa/TWA debe monitorizar el ciclo de vida de la app (`ActivityLifecycleCallbacks.onActivityStopped` y `LauncherActivity.onStop`).
+      - Cuando el usuario abre la app en una nueva ubicación (ej. trayecto de Castrillón a Gijón), la aplicación adquiere las coordenadas GPS reales y frescas del dispositivo.
+      - En el instante en que el usuario sale o minimiza la app para volver a la pantalla de inicio, el sistema emite de inmediato el broadcast `ACTION_REFRESH_WIDGET`, provocando que los widgets lean la posición GPS recién actualizada, calculen por proximidad el concejo más cercano y refresquen los datos meteorológicos en menos de 1 segundo sin tener que esperar el intervalo de media hora.
+    - **Paridad de Geolocalización por Proximidad en Todos los Formatos:**
+      - Tanto el widget compacto (4x2) como el extendido (4x3) deben implementar idéntico algoritmo de cálculo de proximidad euclidiana por coordenadas GPS contra el catálogo oficial de concejos de Asturias.
+    - **Ergonomía Limpia y Botón Visual de Recarga Integrado:**
+      - El widget debe incorporar un botón visual de recarga sutil y armónico (icono 🔄 `ic_widget_sync` en tono celeste luminoso `#BAE6FD`) situado junto a la fecha en la esquina superior izquierda (`widget_date`), manteniendo el marco táctil amplio y confortable tanto en el icono como en la fecha, sin saturar ni colisionar con la marca del widget.
+
 
 
 

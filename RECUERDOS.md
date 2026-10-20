@@ -79,13 +79,14 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
         - *Comportamiento en trayectos (ej. Castrillón -> Gijón):* Al abrir la app en destino, la TWA adquiere la posición GPS fresca del dispositivo. Al salir o minimizar la aplicación para volver al escritorio, el widget lee de inmediato las coordenadas del `LocationManager`, calcula el concejo más próximo y actualiza el widget en menos de 1 segundo sin tener que esperar los 30 minutos.
       - **Geolocalización por Proximidad en Widget 4x2:**
         - Incorporado el algoritmo de proximidad euclidiana por coordenadas GPS a `MeteoWidgetProvider.java` (4x2), igualando al widget 4x3.
-      - **Ergonomía Limpia:**
-        - La cabecera de fecha (`widget_date`, arriba a la izquierda) actúa como disparador de refresco manual con respuesta táctil, manteniendo el diseño limpio sin saturar de botones adicionales.
-      - **Binarios Compilados y Oficialmente Firmados en `C:\Users\NUC\Downloads`:**
-        - Recompilados con Gradle 8.11.1 (`versionCode 4`, `versionName "3.0.0"`).
-        - Alineados con `zipalign -v -p 4` y firmados con `apksigner` (esquemas v2 y v3 verificados) y `jarsigner`:
-          - `MeteoAstur-v3-Widget.apk` (4,79 MB): Listo para instalación y pruebas directas.
-          - `MeteoAstur-v3-Widget.aab` (4,91 MB): Listo para publicación en Google Play Console.
+       - **Ergonomía Limpia y Botón Visual de Recarga Integrado (Feedback Lendo - «no sale el boton de recarga»):**
+         - Incorporado el icono vectorial oficial `ic_widget_sync` (🔄) en tono celeste luminoso (`#BAE6FD`) situado a la derecha de la fecha (`martes, 20/10 🔄`), tanto en el widget 4x2 como en el 4x3.
+         - Marco táctil ergonómico generoso vinculado a `widget_btn_refresh`, `widget_date` y el contenedor `widget_date_sync_group` para un confort táctil óptimo sin colisionar con la marca del widget.
+       - **Binarios Compilados y Oficialmente Firmados en `C:\Users\NUC\Downloads`:**
+         - Recompilados con Gradle 8.11.1 (`versionCode 5`, `versionName "3.0.0"`).
+         - Alineados con `zipalign -v -p 4` y firmados con `apksigner` (esquemas v1, v2 y v3 verificados) y `jarsigner`:
+           - `MeteoAstur-v3-Widget.apk` (4,79 MB): Listo para actualizar directamente vía Telegram/USB.
+           - `MeteoAstur-v3-Widget.aab` (4,91 MB): Listo para publicación en Google Play Console.
 
 ## ✂️ Actualización v2.2.84: Desglose Climatológico Ultra-Minimizado — 2026-10-19
 - **Depuración de Verborrea y Síntesis Extrema (Feedback y Petición Expresa de Lendo - «yo solo quioero q minimices», «pisale»):**
