@@ -8,6 +8,25 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Major (X.0.0)**: Cambios arquitectónicos grandes o rediseños completos.
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
+## [3.0.0] - 2026-10-21
+
+### 🚀 Widgets Nativos de Android & Lanzamiento Oficial en Google Play (Feedback Lendo)
+- **Widgets Oficiales de Escritorio para Android:**
+  - Incorporados los widgets 4x2 Compacto y 4x3 Estación Completa en vivo para la pantalla de inicio de Android.
+  - **Auto-Refresco Inteligente a 30 Minutos:** Actualización automática periódica (`android:updatePeriodMillis = 1800000` y `AlarmManager.setInexactRepeating`) blindada contra el modo Doze sin drenar batería.
+  - **Botón Ergonómico de Sincronización (🔄):** Icono de recarga visual inmediata en tono celeste (`#BAE6FD`) situado junto a la fecha para actualizar al instante con un solo toque.
+  - **Geolocalización Inmediata al Salir de la App:** Al desplazarte entre concejos y minimizar la aplicación, el widget adquiere la nueva ubicación GPS en menos de 1 segundo mediante el broadcast del ciclo de vida.
+  - **Blindaje Anti-Truncado (Ley 19):** Ajuste de tamaño tipográfico (14sp) que garantiza la lectura íntegra sin cortes ni puntos suspensivos de los 78 concejos asturianos en cualquier pantalla.
+  - **Simetría Cromática:** Columnas diarias armonizadas al 100% en azul celeste (`#38BDF8`).
+- **Lanzamiento Oficial en Google Play Store:**
+  - Publicación y aprobación oficial en Google Play Store (`com.zeustata.meteoasturlode`, `versionCode 6`, `versionName "3.0.0"`).
+  - Experiencia 100% nativa a pantalla completa mediante Trusted Web Activity (TWA) con verificación Digital Asset Links (sin barras de navegador CCT).
+- **Consolidación de Mejoras Web:**
+  - Integradas todas las mejoras de la serie v2.2.85: blindaje de cielo cubierto anti-falso sol, acordeón climatológico ultra-minimal y monitorización física del Cantábrico.
+- **Cache-Busting y Despliegue Oficial:**
+  - Service Worker actualizado a `meteoasturlode-v300-widgets-android-nativos-lanzamiento` en `sw.js`.
+  - Versión oficial elevada a `v3.0.0 🚀` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.0'` en `app.js` y query strings `?v=3.0.0` en `index.html`.
+
 ## [2.2.85] - 2026-10-20
 
 ### ☁️ Blindaje de Cielo Cubierto y Corrección de Falso Sol Radiante (Feedback Lendo)

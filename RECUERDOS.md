@@ -49,6 +49,25 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. *Almacenamiento Estático Desacoplado:* El bot vuelca los datos limpios (km abiertos, pistas por dificultad técnica, remontes en servicio y espesores mín/máx) en un archivo JSON estático (`data/snowReport.json`).
     3. *Consumo Directo en Cliente:* `mountainCard.js` lee ese JSON sin sobrecargar a los servidores externos ni ralentizar la carga en clientes, mostrando los partes de nieve actualizados en vivo de forma 100% legal, autónoma y sin fricción.
 
+## 🚀 Hito Histórico: Versión 3.0.0 Oficial, Widgets Nativos de Android y Aprobación en Google Play — 2026-10-21
+- **Aprobación Oficial en Google Play Store & Verificación en Vivo (Feedback y Hito de Lendo - «si ya esta. princesa ya tengo mi witged. porfa poone la novedad 3.0.0», «dale princesa»):**
+  1. *Aprobación de la Pista de Prueba Cerrada en Google Play Console:*
+     - Google Play aprobó oficialmente el paquete de aplicación compilado y firmado (`MeteoAstur-v3-Widget.aab`, `com.zeustata.meteoasturlode`, `versionCode 6`, `versionName "3.0.0"`).
+     - Habilitados los enlaces oficiales de opt-in web (`https://play.google.com/apps/testing/com.zeustata.meteoasturlode`) y acceso directo a Play Store (`https://play.google.com/store/apps/details?id=com.zeustata.meteoasturlode`).
+  2. *Instalación y Verificación Exitosa en el Dispositivo Real de Lendo:*
+     - Lendo constató la instalación en su teléfono móvil con los widgets nativos de escritorio (4x2 Compacto y 4x3 Estación Completa) plenamente operativos:
+       - Refresco automático a 30 minutos sin impacto en batería (Doze compliant).
+       - Botón ergonómico de sincronización visual (🔄) en celeste luminoso (`#BAE6FD`).
+       - Sincronización instantánea de ubicación GPS al salir o minimizar la aplicación.
+       - Blindaje anti-truncado a 14sp con nombres de concejos íntegros (Castrillón, etc.).
+       - Simetría cromática unificada en azul celeste de agua (`#38BDF8`).
+  3. *Elevación Oficial del Ecosistema Web a la Versión 3.0.0 (Leyes 1, 3, 4, 10 y 13):*
+     - Constante centralizada de versión elevada a `CURRENT_APP_VERSION = '3.0.0'` en `js/app.js`, activando el Auto-Prompt en el arranque para todos los usuarios.
+     - Badge del pie de página actualizado a `v3.0.0 🚀` en `index.html`.
+     - Inserción del bloque oficial de versión `v3.0.0 🚀` en `#changelog-modal`.
+     - Renovación de la cadena de caché del Service Worker a `meteoasturlode-v300-widgets-android-nativos-lanzamiento` en `sw.js` y query strings `?v=3.0.0`.
+     - Registro detallado en `CHANGELOG.md` y sincronización con el repositorio central `zeustata/tiempo`.
+
 ## 🧭 Deliberación Estratégica: Dinámica de DANAs en el Cantábrico, Nombramiento Oficial y Doctrina de Estabilidad — 2026-10-21
 - **Reflexión Sinóptica, Análisis de Impacto y Deliberación de Socios (Feedback y Consulta Expresa de Lendo - «princesa. estaba pensando en las danas que hasta tienen nombre», «no pienso nada. solo quiero el cantabrico y como afecta», «q me dices? q hago?», «alguna cosa que pueda mejorar lo q ya tenemos?», «yo creo que todo lo tenemos. dejalo asi. subelo a los recuerdos»):**
   1. *Física y Comportamiento de las DANAs en el Cantábrico y Asturias:*

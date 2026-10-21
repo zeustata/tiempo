@@ -31,8 +31,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=2.2.85">
-  <link rel="stylesheet" href="css/components.css?v=2.2.85">
+  <link rel="stylesheet" href="css/main.css?v=3.0.0">
+  <link rel="stylesheet" href="css/components.css?v=3.0.0">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v2.2.85 ☁️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.0 🚀</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -349,8 +349,26 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
+            <span class="release-version">v3.0.0 🚀</span>
+            <span class="release-date">21 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-feature">Hito Mayor &amp; Lanzamiento Oficial</span> <strong>Widgets Nativos de Android &amp; Publicación en Google Play</strong>:
+              <br>• <strong>Widgets Nativos de Escritorio:</strong> Incorporados los widgets 4x2 Compacto y 4x3 Estación Completa en vivo para la pantalla de inicio de Android.
+              <br>• <strong>Auto-Refresco Inteligente a 30 Minutos:</strong> Actualización automática periódica blindada contra el modo Doze sin drenar batería.
+              <br>• <strong>Botón Ergonómico de Sincronización (🔄):</strong> Icono de recarga visual inmediata en tono celeste para actualizar al instante con un solo toque.
+              <br>• <strong>Geolocalización Inmediata al Salir de la App:</strong> Al desplazarte entre concejos y minimizar la aplicación, el widget adquiere la nueva ubicación GPS en menos de 1 segundo.
+              <br>• <strong>Blindaje Anti-Truncado (Ley 19):</strong> Lectura íntegra sin cortes ni puntos suspensivos de los 78 concejos asturianos en cualquier resolución.
+              <br>• <strong>Distribución Oficial Google Play:</strong> Integración Trusted Web Activity (TWA) con verificación Digital Asset Links a pantalla completa sin barras de navegación.
+              <br>• <strong>Consolidación Web v2.2.85:</strong> Integradas todas las mejoras de blindaje de cielo cubierto anti-falso sol y climatología ultra-minimal.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
             <span class="release-version">v2.2.85 ☁️</span>
-            <span class="release-date">20 Oct 2026 (Actual)</span>
+            <span class="release-date">20 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-fix">Fidelidad y Coherencia Meteorológica (Feedback Lendo)</span> <strong>Blindaje de Cielo Cubierto y Corrección de Falso Sol Radiante</strong>:
@@ -4217,7 +4235,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=2.2.74').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.0.0').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4247,7 +4265,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=2.2.85"></script>
+  <script type="module" src="js/app.js?v=3.0.0"></script>
 
 
 

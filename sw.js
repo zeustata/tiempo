@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v2285-blindaje-cielo-cubierto-anti-falso-sol';
+const CACHE_NAME = 'meteoasturlode-v300-widgets-android-nativos-lanzamiento';
 const STATIC_ASSETS = [
   './',
   './index.html',
