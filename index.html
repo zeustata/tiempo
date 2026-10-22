@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.0 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.1 ⏱️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -349,8 +349,23 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
+            <span class="release-version">v3.0.1 ⏱️</span>
+            <span class="release-date">22 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-fix">Ergonomía Móvil &amp; Rigor Meteorológico (Feedback Lendo)</span> <strong>Blindaje Anti-Corte en Barómetro y Graduación Científica de Avisos</strong>:
+              <br>• <strong>Erradicación del Texto Partido en Móvil (Ley 11 y 19):</strong> Desacoplada la pastilla con la tasa de tendencia barométrica (ej. <em>[-3.2 hPa/3h]</em>) de la etiqueta cualitativa entre paréntesis (<em>Bajando fuerte • Descenso rápido</em>), situándola en su propia línea inferior para evitar la rotura antiestética del recuadro en pantallas estrechas.
+              <br>• <strong>Coherencia Científica entre Presión Absoluta y Tendencia:</strong> Subsanada la contradicción en la que presiones anticiclónicas elevadas (&gt; 1015 hPa) disparaban erróneamente la alerta de <em>«Borrasca Profunda»</em> por el simple hecho de descender más de 3 hPa.
+              <br>• <strong>Graduación Rigurosa de Alertas Barométricas:</strong> Si la presión es alta (&gt;= 1013 hPa), el sistema informa con rigor de <em>«Descenso Rápido de Presión • Retirada anticiclónica, probable frente activo o empeoramiento»</em>; reservando la alerta de <em>«Borrasca Profunda / Vigilancia de temporal»</em> para cuando la presión ya se encuentra en terreno de bajas presiones (&lt; 1013 hPa).
+              <br>• <strong>Simulacro de Verificación (Ley 12):</strong> Habilitado el parámetro <code>?test=baro_alta_caida</code> para comprobar de forma inmediata el comportamiento ante caídas de -3.2 hPa con 1018.4 hPa.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
             <span class="release-version">v3.0.0 🚀</span>
-            <span class="release-date">21 Oct 2026 (Actual)</span>
+            <span class="release-date">21 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-feature">Hito Mayor &amp; Lanzamiento Oficial</span> <strong>Widgets Nativos de Android &amp; Publicación en Google Play</strong>:
@@ -4235,7 +4250,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.0.0').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.0.1').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4265,7 +4280,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.0"></script>
+  <script type="module" src="js/app.js?v=3.0.1"></script>
 
 
 

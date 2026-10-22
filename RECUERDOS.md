@@ -52,6 +52,29 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. *Almacenamiento Estático Desacoplado:* El bot vuelca los datos limpios (km abiertos, pistas por dificultad técnica, remontes en servicio y espesores mín/máx) en un archivo JSON estático (`data/snowReport.json`).
     3. *Consumo Directo en Cliente:* `mountainCard.js` lee ese JSON sin sobrecargar a los servidores externos ni ralentizar la carga en clientes, mostrando los partes de nieve actualizados en vivo de forma 100% legal, autónoma y sin fricción.
 
+## ⏱️ Actualización v3.0.1: Blindaje Anti-Corte en Barómetro y Graduación Rigurosa de Alertas — 2026-10-22
+- **Ergonomía Móvil, Prevención de Rotura Visual y Rigor Meteorológico (Feedback Expreso de Lendo - «mira. fijate en el barometro. al aver un aviso naranja, me salto el avio pero so te fijas el descenso en 3h de 3.0 t 3.2 respectivamente, queda como cortado. no seria mejor bajarlo debajo donde esta entre parentesis (Bajando fuerte) para que no quede como cortado en los moviles? Otra cosa cuando poner borrasca profunda ciuda rapida, temporal en 6-12h. que significa que a ciencia cierta va a ver temporal y si es así que clase? No puede estabilizarse y no seguir bajando?. te lo digo porque en la bombilla hasta que no baja a los 1013 hPa lo consideras Anticiclon? Yo no soy experto asi que explicame», «pisale»):**
+  1. *Subsanación Visual Anti-Corte en Móvil (Leyes Constitucionales 11 y 19):*
+     - En pantallas de smartphones (320px a 380px), la frase `Nivel del mar • Tendencia 3h:` combinada con `[-3.2 hPa/3h (Bajando fuerte)]` provocaba la partición del elemento con borde naranja (`.trend-badge`), dividiendo el recuadro en dos fragmentos partidos antiestéticos.
+     - Se desacopla la métrica numérica de la descripción cualitativa:
+       - La pastilla `.trend-badge` ahora contiene exclusivamente la tasa (ej. `[-3.2 hPa/3h]`) con `display: inline-block; white-space: nowrap;`, impidiendo que el recuadro se quiebre.
+       - La descripción cualitativa entre paréntesis (ej. `(Bajando fuerte • Descenso rápido)`) se canaliza en su propia línea inferior mediante la clase `.baro-trend-label`, con tipografía nítida (0.80rem) y color contextual (naranja/rojo/verde) sin recuadros divididos.
+  2. *Corrección de la Contradicción Científica (Presión Absoluta vs. Tendencia - Ley Constitucional 16):*
+     - Se subsana la incoherencia lógica del código que, ante cualquier caída <= -3.0 hPa/3h, mostraba taxativamente *«Borrasca Profunda • Caída rápida, temporal en 6-12h»*, incluso con presiones netamente anticiclónicas de 1018.4 hPa o 1019.7 hPa (> 1013.25 hPa estándar).
+     - Se gradúa la alerta respetando la física de la atmósfera:
+       - **Presión Alta/Neutra (>= 1013 hPa) y caída <= -3.0 hPa/3h:** Informa con rigor de *«Descenso Rápido de Presión • Retirada anticiclónica, probable frente activo o empeoramiento en 6-12h»*.
+       - **Presión de Borrasca (< 1013 hPa) y caída <= -3.0 hPa/3h:** Muestra *«Aproximación de Borrasca • Caída rápida, vigilancia de temporal en 6-12h»*.
+       - **Presión Muy Baja (< 995 hPa):** Muestra *«Borrasca Profunda • Temporal atlántico en curso»*.
+  3. *Actualización y Rigor en el Diccionario Didáctico (💡):*
+     - Erradicada cualquier mención a «temporal seguro» o garantizado ante descensos de presión.
+     - Incorporada la sección didáctica 5 (*«¿Una bajada de presión significa temporal seguro? Rotundamente NO»*), detallando que la presión puede frenarse y estabilizarse en cualquier instante y explicando la influencia del viento del Sur (efecto Foehn) en Asturias, donde el barómetro cae con fuerza sin que se produzca temporal ni lluvia.
+     - Ajustado el descargo de inestabilidad en `currentCard.js` a *«Caída rápida • Mayor inestabilidad o frente en 6-12h»*, con prudencia total.
+  4. *Simulacro de Verificación (Ley Constitucional 12):*
+     - Habilitado el flag de prueba `?test=baro_alta_caida` para recrear al instante las condiciones de 1018.4 hPa con caída de -3.2 hPa/3h.
+  5. *Cache-Busting y Despliegue Oficial (Leyes 1, 3, 4, 10 y 13):*
+     - Service Worker actualizado a `meteoasturlode-v301-barometro-ergonomia-movil-rigor` en `sw.js`.
+     - Versión oficial elevada a **`v3.0.1 ⏱️`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.1'` en `app.js` y query strings `?v=3.0.1` en `index.html`.
+
 ## 🚀 Hito Histórico: Versión 3.0.0 Oficial, Widgets Nativos de Android y Aprobación en Google Play — 2026-10-21
 - **Aprobación Oficial en Google Play Store & Verificación en Vivo (Feedback y Hito de Lendo - «si ya esta. princesa ya tengo mi witged. porfa poone la novedad 3.0.0», «dale princesa»):**
   1. *Aprobación de la Pista de Prueba Cerrada en Google Play Console:*
