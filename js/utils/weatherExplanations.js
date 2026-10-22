@@ -30,13 +30,18 @@ export const WEATHER_EXPLANATIONS = {
         heading: '4. Cómo leer la tendencia (Últimas 3 horas)',
         text: `
           <ul class="explain-list">
-            <li><strong>↗️ Subiendo (+0.8 a +2.0 hPa):</strong> El anticiclón gana fuerza. Viene <em>mejoría clara y el cielo se despejará</em>.</li>
-            <li><strong>→ Estable (-0.8 a +0.8 hPa):</strong> Continuidad. El tiempo se mantendrá igual en las próximas horas.</li>
-            <li><strong>↘️ Bajando (-1.0 a -2.9 hPa):</strong> Presión en descenso. Se acerca un frente de lluvias o viento.</li>
-            <li><strong>⚠️ Caída rápida (≤ -3.0 hPa / 3h):</strong> Borrasca profunda en aproximación directa. Temporal en 6 a 12 horas.</li>
-            <li><strong>🚨 Desplome súbito (≤ -5.0 hPa / 3h o &lt; 985 hPa):</strong> ¡Alerta máxima! Ciclogénesis explosiva o temporal severo marítimo en el Cantábrico.</li>
+            <li><strong>↗️ Subiendo (+0.8 a +2.0 hPa):</strong> El anticiclón gana fuerza. Tendencia a la <em>mejoría y cielos más despejados</em>.</li>
+            <li><strong>→ Estable (-0.8 a +0.8 hPa):</strong> Continuidad. El tiempo suele mantenerse sin grandes cambios en las próximas horas.</li>
+            <li><strong>↘️ Bajando (-1.0 a -2.9 hPa):</strong> Presión en descenso. Mayor probabilidad de nubes, viento o llegada de un frente. La caída puede frenarse y estabilizarse.</li>
+            <li><strong>⚠️ Caída rápida (≤ -3.0 hPa / 3h):</strong> Pérdida acusada de presión. Indica aproximación de frente activo o cambio notable. No garantiza temporal seguro: la caída puede estabilizarse o deberse a viento Sur.</li>
+            <li><strong>🚨 Desplome súbito (≤ -5.0 hPa / 3h o &lt; 985 hPa):</strong> Desplome barométrico muy rápido. Alerta de ciclogénesis o temporal marítimo severo en el Cantábrico si la presión absoluta es baja.</li>
           </ul>
         `
+      },
+      {
+        icon: '❓',
+        heading: '5. ¿Una bajada de presión significa temporal seguro?',
+        text: '<strong>Rotundamente NO:</strong> En la atmósfera no hay certezas absolutas.<br>• <strong>Puede frenarse y estabilizarse:</strong> El descenso barométrico puede detenerse en cualquier momento si el frente se desgasta o pasa de largo por el Golfo de Vizcaya sin afectarnos de lleno.<br>• <strong>Viento Sur en Asturias (Efecto Foehn):</strong> En el Cantábrico, el viento del Sur a menudo desploma el barómetro localmente en valles y costa mientras luce sol radiante y temperaturas suaves, sin lluvia ni temporal.<br>• El barómetro es una guía de <em>vigilancia y anticipación</em>, nunca una certeza matemática.'
       },
       {
         icon: '🏔️',

@@ -198,12 +198,22 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   if (typeof window !== 'undefined') {
     const urlParams = new URLSearchParams(window.location.search);
     const testMode = urlParams.get('test');
-    if (testMode === 'presion' || testMode === 'temporal_presion' || testMode === 'borrasca') {
+    // Simuladores de presión con alertas (Doctrina Constitucional 12)
+    if (testMode === 'presion' || testMode === 'temporal_presion' || testMode === 'borrasca' || testMode === 'baro_borrasca_profunda') {
       rawPressure = 992.4;
       simulatedBaroDiff = -3.8;
-    } else if (testMode === 'ciclogenesis' || testMode === 'desplome' || testMode === 'temporal_severo_presion') {
+    } else if (testMode === 'ciclogenesis' || testMode === 'desplome' || testMode === 'temporal_severo_presion' || testMode === 'baro_ciclogenesis' || testMode === 'baro_alerta_roja') {
       rawPressure = 981.2;
       simulatedBaroDiff = -5.8;
+    } else if (testMode === 'baro_anticiclon_caida' || testMode === 'baro_alta_caida' || testMode === 'barometro_aviso' || testMode === 'baro_aviso_naranja_alta') {
+      rawPressure = 1018.4;
+      simulatedBaroDiff = -3.2;
+    } else if (testMode === 'baro_borrasca_caida' || testMode === 'baro_aviso_naranja_baja' || testMode === 'baro_baja_caida') {
+      rawPressure = 1008.2;
+      simulatedBaroDiff = -3.4;
+    } else if (testMode === 'baro_subiendo_fuerte') {
+      rawPressure = 1022.0;
+      simulatedBaroDiff = 3.2;
     }
   }
 
@@ -220,17 +230,34 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
 
   // 3. Evaluación de Severidad Barométrica Cantábrica (Aviso AEMET / Ciclogénesis)
   // - ROJO (Peligro Severo / Ciclogénesis): Caída súbita >= 5.0 hPa en 3h o presión absoluta < 985 hPa
-  // - NARANJA (Precaución / Temporal en camino): Caída fuerte >= 3.0 hPa en 3h o presión < 995 hPa
+  // - NARANJA (Precaución / Pérdida rápida de presión): Caída fuerte >= 3.0 hPa en 3h o presión < 995 hPa
   // - NORMAL / VERDE: Variación moderada o ascenso barométrico
   const isSeverePressureDrop = diffBaro3h <= -5.0 || rawPressure < 985.0;
   const isWarningPressureDrop = !isSeverePressureDrop && (diffBaro3h <= -3.0 || rawPressure < 995.0);
+
+  // Calificativo conciso sin redundancias (Feedback Lendo)
+  let baroActionLabel = 'Estable';
+  if (diffBaro3h <= -5.0) {
+    baroActionLabel = 'Desplome súbito';
+  } else if (diffBaro3h <= -3.0) {
+    baroActionLabel = 'Bajando fuerte';
+  } else if (diffBaro3h < -0.8) {
+    baroActionLabel = 'Bajando';
+  } else if (diffBaro3h >= 3.0) {
+    baroActionLabel = 'Subiendo fuerte';
+  } else if (diffBaro3h > 0.8) {
+    baroActionLabel = 'Subiendo';
+  }
+
+  const diffStr = `${diffBaro3h >= 0 ? '+' : ''}${diffBaro3h.toFixed(1)} hPa/3h`;
+  const trendBadgeText = `${diffStr} (${baroActionLabel})`;
 
   let baroSeverity = {
     valClass: '',
     icon: '',
     cardClass: '',
     fillClass: '',
-    trendText: '',
+    trendBadgeText: trendBadgeText,
     trendClass: 'trend-stable',
     alertBadgeHtml: ''
   };
@@ -241,7 +268,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
       icon: ' ⚠️',
       cardClass: 'baro-card-danger',
       fillClass: 'baro-fill-danger',
-      trendText: `${diffBaro3h.toFixed(1)} hPa/3h (¡Desplome súbito!)`,
+      trendBadgeText: trendBadgeText,
       trendClass: 'trend-danger',
       alertBadgeHtml: `
         <div class="baro-alert-pill baro-pill-danger">
@@ -251,36 +278,44 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
       `
     };
   } else if (isWarningPressureDrop) {
+    let alertTitle = 'Aproximación de Borrasca';
+    let alertDesc = 'Caída rápida • Mayor inestabilidad o frente en 6-12h';
+
+    if (rawPressure >= 1013.0) {
+      alertTitle = 'Descenso Rápido de Presión';
+      alertDesc = 'Retirada anticiclónica • Probable frente activo o empeoramiento en 6-12h';
+    } else if (rawPressure < 995.0) {
+      alertTitle = 'Borrasca Profunda';
+      alertDesc = `Presión muy baja (${rawPressure.toFixed(1)} hPa) • Temporal atlántico en curso`;
+    }
+
     baroSeverity = {
       valClass: 'baro-val-warning',
       icon: ' ⚠️',
       cardClass: 'baro-card-warning',
       fillClass: 'baro-fill-warning',
-      trendText: `${diffBaro3h.toFixed(1)} hPa/3h (Bajando fuerte)`,
+      trendBadgeText: trendBadgeText,
       trendClass: 'trend-warning',
       alertBadgeHtml: `
         <div class="baro-alert-pill baro-pill-warning">
           <span class="baro-pill-icon">⚠️</span>
-          <span class="baro-pill-text"><strong>Borrasca Profunda</strong> • Caída rápida, temporal en 6-12h</span>
+          <span class="baro-pill-text"><strong>${alertTitle}</strong> • ${alertDesc}</span>
         </div>
       `
     };
   } else {
     let tClass = 'trend-stable';
-    let tText = `${diffBaro3h >= 0 ? '+' : ''}${diffBaro3h.toFixed(1)} hPa (Estable)`;
     if (diffBaro3h > 0.8) {
       tClass = 'trend-up';
-      tText = `+${diffBaro3h.toFixed(1)} hPa (Subiendo / Mejoría)`;
     } else if (diffBaro3h < -0.8) {
       tClass = 'trend-down';
-      tText = `${diffBaro3h.toFixed(1)} hPa (Bajando)`;
     }
     baroSeverity = {
       valClass: '',
       icon: '',
       cardClass: '',
       fillClass: '',
-      trendText: tText,
+      trendBadgeText: trendBadgeText,
       trendClass: tClass,
       alertBadgeHtml: ''
     };
@@ -744,7 +779,12 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
         </div>
         <div class="sensor-body">
           <div class="sensor-val ${baroSeverity.valClass}">${rawPressure.toFixed(1)} <small>hPa</small>${baroSeverity.icon}</div>
-          <div class="sensor-sub">Nivel del mar • Tendencia 3h: <strong class="trend-badge ${baroSeverity.trendClass}">${baroSeverity.trendText}</strong></div>
+          <div class="sensor-sub baro-sub-container">
+            <div class="baro-sub-label">Nivel del mar • Tendencia 3h:</div>
+            <div class="baro-sub-badge-row">
+              <strong class="trend-badge ${baroSeverity.trendClass}">${baroSeverity.trendBadgeText}</strong>
+            </div>
+          </div>
           <div class="pressure-gauge-bar">
             <div class="gauge-fill ${baroSeverity.fillClass}" style="width: ${baroGaugePercent}%;"></div>
           </div>

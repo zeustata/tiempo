@@ -52,6 +52,26 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. *Almacenamiento Estático Desacoplado:* El bot vuelca los datos limpios (km abiertos, pistas por dificultad técnica, remontes en servicio y espesores mín/máx) en un archivo JSON estático (`data/snowReport.json`).
     3. *Consumo Directo en Cliente:* `mountainCard.js` lee ese JSON sin sobrecargar a los servidores externos ni ralentizar la carga en clientes, mostrando los partes de nieve actualizados en vivo de forma 100% legal, autónoma y sin fricción.
 
+## ⏱️ Actualización v3.0.1: Blindaje Anti-Corte en Barómetro, Pastilla Única sin Redundancias, Rigor Meteorológico & Suite de Simuladores — 2026-10-22
+- **Ergonomía Móvil, Rigor Científico y Simulación (Feedback y Mandato Expreso de Lendo):**
+  1. *Pastilla Única Ergonómica Bajo «Tendencia 3h» (Leyes 11 y 19):*
+     - Desacoplada la variación barométrica a 3h del texto estático, organizando la tarjeta en dos filas limpias: fila superior con el rótulo `.baro-sub-label` (*«Nivel del mar • Tendencia 3h:»*) y fila inferior `.baro-sub-badge-row` con una única pastilla unificada (`.trend-badge`).
+     - Suprimidas las redundancias textuales: se elimina la acumulación de calificativos duplicados (como *"Descenso rápido"* o *"Mejoría del tiempo"*). El badge contiene exclusivamente el valor diferencial y el estado conciso: `[-3.2 hPa/3h (Bajando fuerte)]`, `[+3.2 hPa/3h (Subiendo fuerte)]`, `[-5.8 hPa/3h (Desplome súbito)]`, `[-0.4 hPa/3h (Estable)]`, etc.
+     - Blindaje visual anti-corte en anchos móviles de 320px a 380px, sin colisiones ni recuadros anidados.
+  2. *Rigor Meteorológico y Erradicación de «Temporal Seguro» en la Bombilla (💡):*
+     - En `weatherExplanations.js` (sección 4 y nueva sección 5), se eliminó cualquier afirmación determinista que asegurase la llegada de un temporal por una caída rápida de presión.
+     - Explicado didácticamente que el descenso barométrico puede frenarse y estabilizarse en cualquier momento, así como la física del Viento Sur en Asturias (efecto Foehn), donde la presión se desploma con cielos soleados y sin precipitación.
+     - Subsanada la incoherencia en presiones altas (>= 1013 hPa): cuando la presión absoluta es alta pero cae con fuerza, el aviso se gradúa a *«Descenso Rápido de Presión • Retirada anticiclónica, probable frente en 6-12h»*, reservando *«Borrasca Profunda»* para cuando la presión ya se sitúa en cotas de baja presión (< 1013 hPa).
+  3. *Suite de Simuladores para Alertas Barométricas (Ley 12):*
+     - Incorporados parámetros de prueba controlados para verificar en local todos los estados barométricos:
+       - `?test=baro_anticiclon_caida`: 1018.4 hPa, -3.2 hPa/3h (alerta naranja en alta presión).
+       - `?test=baro_borrasca_caida`: 1008.2 hPa, -3.4 hPa/3h (alerta naranja aproximación de borrasca).
+       - `?test=baro_borrasca_profunda`: 992.4 hPa, -3.8 hPa/3h (alerta naranja borrasca profunda activa).
+       - `?test=baro_ciclogenesis`: 981.2 hPa, -5.8 hPa/3h (alerta roja de ciclogénesis explosiva / temporal violento).
+       - `?test=baro_subiendo_fuerte`: 1022.0 hPa, +3.2 hPa/3h (antidoto anticiclónico / subida fuerte).
+  4. *Blindaje de Ejecución Local y Cero Subida a Red (Leyes 1 y 3):*
+     - Todos los cambios se mantienen estrictamente en local para comprobación directa de Lendo en navegador antes de cualquier commit o despliegue.
+
 ## 🚀 Hito Histórico: Versión 3.0.0 Oficial, Widgets Nativos de Android y Aprobación en Google Play — 2026-10-21
 - **Aprobación Oficial en Google Play Store & Verificación en Vivo (Feedback y Hito de Lendo - «si ya esta. princesa ya tengo mi witged. porfa poone la novedad 3.0.0», «dale princesa»):**
   1. *Aprobación de la Pista de Prueba Cerrada en Google Play Console:*

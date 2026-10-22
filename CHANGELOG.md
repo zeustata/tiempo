@@ -8,6 +8,27 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Major (X.0.0)**: Cambios arquitectónicos grandes o rediseños completos.
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
+
+## [3.0.1] - 2026-10-22
+
+### ⏱️ Blindaje Anti-Corte en Barómetro, Pastilla Única sin Redundancias & Rigor Meteorológico (Feedback Lendo)
+- **Pastilla Única Bajo «Tendencia 3h» (Leyes Constitucionales 11 y 19):**
+  - Desacoplada la variación numérica y su calificación en una fila propia (`.baro-sub-badge-row`) bajo el texto `Nivel del mar • Tendencia 3h:`.
+  - Unificado en una sola pastilla estilizada (`.trend-badge`) con formato directo `[-3.2 hPa/3h (Bajando fuerte)]`, eliminando redundancias como "Descenso rápido" o "Mejoría del tiempo".
+  - Inmunidad total al desborde y lectura 100% holgada en móviles estrechos (320px a 380px).
+- **Rigor Meteorológico y Erradicación de «Temporal Seguro» en la Bombilla (💡):**
+  - Modificado el texto explicativo de `weatherExplanations.js` para erradicar cualquier afirmación de que una bajada de presión garantice un temporal.
+  - Añadida sección específica explicando que la caída puede frenarse y estabilizarse, y el efecto del Viento Sur en Asturias (efecto Foehn) que desploma el barómetro con sol y sin lluvia.
+  - Corregida la contradicción en presiones altas (>= 1013 hPa): nunca clasifica como "Borrasca Profunda" si la presión absoluta es alta, etiquetando con rigor *«Descenso Rápido de Presión • Retirada anticiclónica»*.
+- **Suite de Simuladores para Alertas Barométricas (Ley 12):**
+  - Incorporados parámetros URL de prueba:
+    - `?test=baro_anticiclon_caida` (1018.4 hPa, -3.2 hPa/3h, aviso naranja con alta presión).
+    - `?test=baro_borrasca_caida` (1008.2 hPa, -3.4 hPa/3h, aproximación de borrasca en baja presión).
+    - `?test=baro_borrasca_profunda` (992.4 hPa, -3.8 hPa/3h, borrasca profunda en curso).
+    - `?test=baro_ciclogenesis` (981.2 hPa, -5.8 hPa/3h, alerta roja ciclogénesis súbita).
+    - `?test=baro_subiendo_fuerte` (1022.0 hPa, +3.2 hPa/3h, subida fuerte).
+- **Solo en Local:** Preparado exclusivamente en local para verificación previa antes de cualquier despliegue.
+
 ## [3.0.0] - 2026-10-21
 
 ### 🚀 Widgets Nativos de Android & Lanzamiento Oficial en Google Play (Feedback Lendo)
