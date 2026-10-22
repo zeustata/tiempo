@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v301-barometro-ergonomia-movil-rigor';
+const CACHE_NAME = 'meteoasturlode-v301-barometro-pastilla-unica-limpia';
 const STATIC_ASSETS = [
   './',
   './index.html',

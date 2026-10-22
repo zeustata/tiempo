@@ -1593,34 +1593,25 @@
 .trend-warning { color: #f97316 !important; background: rgba(249, 115, 22, 0.15) !important; border: 1px solid rgba(249, 115, 22, 0.35); }
 .trend-danger { color: #ef4444 !important; background: rgba(239, 68, 68, 0.18) !important; border: 1px solid rgba(239, 68, 68, 0.45); animation: baroDangerPulse 2s infinite ease-in-out; }
 
-/* Subtítulo ergonómico y etiqueta cualitativa del barómetro (Leyes 11 y 19) */
+/* Subtítulo ergonómico y pastilla unificada del barómetro (Leyes 11 y 19) */
 .baro-sub-container {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
   margin-top: 4px;
 }
 
-.baro-sub-top {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 6px;
+.baro-sub-label {
   font-size: 0.86rem;
   color: var(--text-muted);
+  line-height: 1.25;
 }
 
-.baro-trend-label {
-  font-size: 0.80rem;
-  font-weight: 600;
-  line-height: 1.3;
+.baro-sub-badge-row {
+  display: flex;
+  align-items: center;
+  margin-top: 2px;
 }
-
-.baro-trend-label.trend-stable { color: var(--text-dim); }
-.baro-trend-label.trend-up { color: #10b981; }
-.baro-trend-label.trend-down { color: #ef4444; }
-.baro-trend-label.trend-warning { color: #f97316; }
-.baro-trend-label.trend-danger { color: #ef4444; }
 
 /* Sensor Card Severity Borders */
 .sensor-card.baro-card-warning {

@@ -31,8 +31,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=3.0.0">
-  <link rel="stylesheet" href="css/components.css?v=3.0.0">
+  <link rel="stylesheet" href="css/main.css?v=3.0.1">
+  <link rel="stylesheet" href="css/components.css?v=3.0.1">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -354,8 +354,8 @@
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-fix">Ergonomía Móvil &amp; Rigor Meteorológico (Feedback Lendo)</span> <strong>Blindaje Anti-Corte en Barómetro y Graduación Científica de Avisos</strong>:
-              <br>• <strong>Erradicación del Texto Partido en Móvil (Ley 11 y 19):</strong> Desacoplada la pastilla con la tasa de tendencia barométrica (ej. <em>[-3.2 hPa/3h]</em>) de la etiqueta cualitativa entre paréntesis (<em>Bajando fuerte • Descenso rápido</em>), situándola en su propia línea inferior para evitar la rotura antiestética del recuadro en pantallas estrechas.
-              <br>• <strong>Coherencia Científica entre Presión Absoluta y Tendencia:</strong> Subsanada la contradicción en la que presiones anticiclónicas elevadas (&gt; 1015 hPa) disparaban erróneamente la alerta de <em>«Borrasca Profunda»</em> por el simple hecho de descender más de 3 hPa.
+              <br>• <strong>Pastilla Única Bajo «Tendencia 3h» sin Redundancias (Ley 11 y 19):</strong> Canalizada la tasa y estado en una fila dedicada bajo el título en una sola pastilla compacta (ej. <em>[-3.2 hPa/3h (Bajando fuerte)]</em>), erradicando recuadros dobles, textos repetitivos y asegurando holgura total en cualquier móvil.
+              <br>• <strong>Coherencia Científica y Erradicación de «Temporal Seguro»:</strong> Subsanada la contradicción en presiones anticiclónicas (&gt; 1015 hPa) y eliminada del diccionario (💡) cualquier afirmación de temporal garantizado, explicando que la caída puede estabilizarse y el efecto del Viento Sur en Asturias.
               <br>• <strong>Graduación Rigurosa de Alertas Barométricas:</strong> Si la presión es alta (&gt;= 1013 hPa), el sistema informa con rigor de <em>«Descenso Rápido de Presión • Retirada anticiclónica, probable frente activo o empeoramiento»</em>; reservando la alerta de <em>«Borrasca Profunda / Vigilancia de temporal»</em> para cuando la presión ya se encuentra en terreno de bajas presiones (&lt; 1013 hPa).
               <br>• <strong>Simulacro de Verificación (Ley 12):</strong> Habilitado el parámetro <code>?test=baro_alta_caida</code> para comprobar de forma inmediata el comportamiento ante caídas de -3.2 hPa con 1018.4 hPa.
             </li>

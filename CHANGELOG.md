@@ -12,10 +12,10 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 ## [3.0.1] - 2026-10-22
 
 ### ⏱️ Blindaje Anti-Corte en Barómetro & Graduación Rigurosa de Alertas (Feedback Lendo)
-- **Erradicación del Texto Partido en Móvil (Leyes 11 y 19):**
-  - Desacoplada la pastilla compacta con la tasa de tendencia barométrica (ej. `[-3.2 hPa/3h]`) de la etiqueta cualitativa entre paréntesis (`Bajando fuerte • Descenso rápido`).
-  - La pastilla ahora cuenta con `display: inline-block; white-space: nowrap;` impidiendo cualquier partición horizontal.
-  - La etiqueta cualitativa se traslada a su propia línea inferior mediante `.baro-trend-label`, con tipografía limpia y color sincronizado con la severidad, eliminando recuadros rotos en pantallas de 320px a 380px.
+- **Pastilla Única Bajo «Tendencia 3h» sin Redundancias (Leyes 11 y 19):**
+  - Ubicada la tasa y el estado conciso en una fila propia dedicada justo debajo del título (`Nivel del mar • Tendencia 3h:`), todo integrado dentro de una única pastilla compacta (ej. `[-3.2 hPa/3h (Bajando fuerte)]`).
+  - Erradicadas las frases repetitivas redundantes (sin «Descenso rápido»), dejando únicamente términos naturales y precisos (`Bajando fuerte`, `Bajando`, `Estable`, `Subiendo`, `Subiendo fuerte`, `Desplome súbito`).
+  - Eliminados los recuadros dobles y el riesgo de corte en smartphones, ocupando solo 28 caracteres con holgura visual garantizada en cualquier pantalla.
 - **Coherencia Científica entre Presión Absoluta y Tendencia Barométrica:**
   - Corregida la contradicción donde presiones en terreno anticiclónico (> 1015 hPa) activaban erróneamente la etiqueta alarmista de *«Borrasca Profunda • Temporal en 6-12h»* únicamente por superar la tasa de -3.0 hPa/3h.
   - Se gradúa la alerta respetando la física atmosférica:

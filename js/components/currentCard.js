@@ -228,18 +228,21 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   const isSeverePressureDrop = diffBaro3h <= -5.0 || rawPressure < 985.0;
   const isWarningPressureDrop = !isSeverePressureDrop && (diffBaro3h <= -3.0 || rawPressure < 995.0);
 
-  let baroSeverity = {
-    valClass: '',
-    icon: '',
-    cardClass: '',
-    fillClass: '',
-    trendPill: '',
-    trendLabel: '',
-    trendClass: 'trend-stable',
-    alertBadgeHtml: ''
-  };
+  let baroActionLabel = 'Estable';
+  if (diffBaro3h <= -5.0) {
+    baroActionLabel = 'Desplome súbito';
+  } else if (diffBaro3h <= -3.0) {
+    baroActionLabel = 'Bajando fuerte';
+  } else if (diffBaro3h < -0.8) {
+    baroActionLabel = 'Bajando';
+  } else if (diffBaro3h >= 3.0) {
+    baroActionLabel = 'Subiendo fuerte';
+  } else if (diffBaro3h > 0.8) {
+    baroActionLabel = 'Subiendo';
+  }
 
   const diffStr = `${diffBaro3h >= 0 ? '+' : ''}${diffBaro3h.toFixed(1)} hPa/3h`;
+  const trendBadgeText = `${diffStr} (${baroActionLabel})`;
 
   if (isSeverePressureDrop) {
     baroSeverity = {
@@ -247,8 +250,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
       icon: ' ⚠️',
       cardClass: 'baro-card-danger',
       fillClass: 'baro-fill-danger',
-      trendPill: diffStr,
-      trendLabel: '(¡Desplome súbito barométrico!)',
+      trendBadgeText: trendBadgeText,
       trendClass: 'trend-danger',
       alertBadgeHtml: `
         <div class="baro-alert-pill baro-pill-danger">
@@ -274,8 +276,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
       icon: ' ⚠️',
       cardClass: 'baro-card-warning',
       fillClass: 'baro-fill-warning',
-      trendPill: diffStr,
-      trendLabel: '(Bajando fuerte • Descenso rápido)',
+      trendBadgeText: trendBadgeText,
       trendClass: 'trend-warning',
       alertBadgeHtml: `
         <div class="baro-alert-pill baro-pill-warning">
@@ -286,21 +287,17 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
     };
   } else {
     let tClass = 'trend-stable';
-    let tLabel = '(Presión estable)';
     if (diffBaro3h > 0.8) {
       tClass = 'trend-up';
-      tLabel = '(Subiendo / Mejoría del tiempo)';
     } else if (diffBaro3h < -0.8) {
       tClass = 'trend-down';
-      tLabel = '(Bajando / Empeoramiento gradual)';
     }
     baroSeverity = {
       valClass: '',
       icon: '',
       cardClass: '',
       fillClass: '',
-      trendPill: diffStr,
-      trendLabel: tLabel,
+      trendBadgeText: trendBadgeText,
       trendClass: tClass,
       alertBadgeHtml: ''
     };
@@ -765,11 +762,10 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
         <div class="sensor-body">
           <div class="sensor-val ${baroSeverity.valClass}">${rawPressure.toFixed(1)} <small>hPa</small>${baroSeverity.icon}</div>
           <div class="sensor-sub baro-sub-container">
-            <div class="baro-sub-top">
-              <span>Nivel del mar • Tendencia 3h:</span>
-              <strong class="trend-badge ${baroSeverity.trendClass}">${baroSeverity.trendPill}</strong>
+            <div class="baro-sub-label">Nivel del mar • Tendencia 3h:</div>
+            <div class="baro-sub-badge-row">
+              <strong class="trend-badge ${baroSeverity.trendClass}">${baroSeverity.trendBadgeText}</strong>
             </div>
-            <div class="baro-trend-label ${baroSeverity.trendClass}">${baroSeverity.trendLabel}</div>
           </div>
           <div class="pressure-gauge-bar">
             <div class="gauge-fill ${baroSeverity.fillClass}" style="width: ${baroGaugePercent}%;"></div>
