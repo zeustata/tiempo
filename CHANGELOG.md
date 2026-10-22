@@ -8,29 +8,6 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Major (X.0.0)**: Cambios arquitectónicos grandes o rediseños completos.
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
-
-## [3.0.1] - 2026-10-22
-
-### ⏱️ Blindaje Anti-Corte en Barómetro & Graduación Rigurosa de Alertas (Feedback Lendo)
-- **Pastilla Única Bajo «Tendencia 3h» sin Redundancias (Leyes 11 y 19):**
-  - Ubicada la tasa y el estado conciso en una fila propia dedicada justo debajo del título (`Nivel del mar • Tendencia 3h:`), todo integrado dentro de una única pastilla compacta (ej. `[-3.2 hPa/3h (Bajando fuerte)]`).
-  - Erradicadas las frases repetitivas redundantes (sin «Descenso rápido»), dejando únicamente términos naturales y precisos (`Bajando fuerte`, `Bajando`, `Estable`, `Subiendo`, `Subiendo fuerte`, `Desplome súbito`).
-  - Eliminados los recuadros dobles y el riesgo de corte en smartphones, ocupando solo 28 caracteres con holgura visual garantizada en cualquier pantalla.
-- **Coherencia Científica entre Presión Absoluta y Tendencia Barométrica:**
-  - Corregida la contradicción donde presiones en terreno anticiclónico (> 1015 hPa) activaban erróneamente la etiqueta alarmista de *«Borrasca Profunda • Temporal en 6-12h»* únicamente por superar la tasa de -3.0 hPa/3h.
-  - Se gradúa la alerta respetando la física atmosférica:
-    - Con presiones neutras o altas (>= 1013 hPa): *«Descenso Rápido de Presión • Retirada anticiclónica, probable frente activo o empeoramiento en 6-12h»*.
-    - Con presiones en rango de borrasca (< 1013 hPa): *«Aproximación de Borrasca • Caída rápida, vigilancia de temporal en 6-12h»*.
-    - Con presiones muy bajas (< 995 hPa): *«Borrasca Profunda • Temporal atlántico en curso»*.
-- **Diccionario Didáctico Actualizado (Bombilla 💡):**
-  - Erradicada la afirmación categórica de *«temporal seguro»* o garantizado ante caídas de presión en `weatherExplanations.js`.
-  - Añadida la sección pedagógica 5 (*¿Una bajada de presión significa temporal seguro?*), explicando que la presión puede frenarse y estabilizarse en cualquier momento y detallando el caso del Viento Sur en Asturias (efecto Foehn), donde el barómetro cae bruscamente sin lluvia ni temporal.
-- **Simulacro de Verificación (Ley 12):**
-  - Incorporado el parámetro `?test=baro_alta_caida` para simular 1018.4 hPa con -3.2 hPa/3h y verificar el comportamiento visual y textual.
-- **Cache-Busting y Despliegue Oficial:**
-  - Service Worker actualizado a `meteoasturlode-v301-barometro-ergonomia-movil-rigor` en `sw.js`.
-  - Versión oficial elevada a `v3.0.1 ⏱️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.1'` en `app.js` y query strings en `index.html`.
-
 ## [3.0.0] - 2026-10-21
 
 ### 🚀 Widgets Nativos de Android & Lanzamiento Oficial en Google Play (Feedback Lendo)

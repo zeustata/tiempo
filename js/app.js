@@ -1,7 +1,7 @@
 import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=2.0.0';
 import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=2.2.85';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=2.0.0';
-import { renderCurrentWeather } from './components/currentCard.js?v=3.0.1';
+import { renderCurrentWeather } from './components/currentCard.js?v=2.2.85';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=2.2.76';
 import { renderSurfCard } from './components/surfCard.js?v=2.2.77';
 import { renderRoutesCard } from './components/routesCard.js?v=2.2.75';
@@ -19,7 +19,7 @@ import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=2.0.0';
 import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=2.0.0';
 import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=2.0.0';
 import { getHalloweenWeatherSvg } from './utils/weatherHalloweenIcons.js?v=2.2.64';
-import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=3.0.1';
+import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=2.2.81';
 import { getTourismPlanExplanation } from './utils/tourismData.js?v=2.2.74';
 import { checkConcejoFolixa } from './utils/festivosData.js?v=2.0.0';
 import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=2.0.0';
@@ -43,7 +43,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.1';
+export const CURRENT_APP_VERSION = '3.0.0';
 
 class MeteoAsturiasApp {
   constructor() {
