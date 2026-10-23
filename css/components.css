@@ -2764,14 +2764,6 @@
   width: 100%;
 }
 
-@media (min-width: 600px) {
-  .d-dayparts-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-}
-
 .d-daypart-btn {
   display: flex;
   flex-direction: column;
@@ -2792,6 +2784,17 @@
   border-color: rgba(56, 189, 248, 0.45);
   transform: translateY(-1px);
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.32);
+}
+
+.d-daypart-btn.night {
+  background: linear-gradient(135deg, rgba(129, 140, 248, 0.13) 0%, rgba(15, 23, 42, 0.72) 100%);
+  border: 1px solid rgba(129, 140, 248, 0.28);
+  border-left: 3px solid #818cf8;
+}
+
+.d-daypart-btn.night:hover {
+  background: linear-gradient(135deg, rgba(129, 140, 248, 0.22) 0%, rgba(15, 23, 42, 0.88) 100%);
+  border-color: rgba(129, 140, 248, 0.55);
 }
 
 .d-daypart-btn.morning {
@@ -2839,6 +2842,10 @@
   opacity: 0.82;
   letter-spacing: -0.2px;
   text-transform: none;
+}
+
+.d-daypart-btn.night .d-dp-tag {
+  color: #a5b4fc;
 }
 
 .d-daypart-btn.morning .d-dp-tag {

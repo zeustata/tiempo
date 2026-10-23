@@ -9,6 +9,23 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.6] - 2026-10-23
+
+### 🌙 Desglose Horario en 3 Tramos para Pronóstico a 10 Días: Noche, Mañana y Tarde (Feedback Lendo)
+- **Nueva Previsión de Noche y Madrugada (`00h - 08h`):**
+  - Incorporado un tercer botón independiente situado en la parte superior de cada tarjeta diaria de los 10 días.
+  - Asignada física nocturna estricta (`is_day = 0`) para garantizar iconos lunares, nubes nocturnas y nieblas de inversión térmica sin soles fuera de lugar.
+  - Acento estético Liquid Glass índigo/lavanda (`#818cf8` / `#a5b4fc`), borde iluminado y cálculo del acumulado de precipitación nocturna en mm.
+- **Reajuste de Mañana (`08h - 15h`) y Tarde (`15h - 00h`):**
+  - **Mañana (08h - 15h):** Horas matinales y laborales hasta la hora de comer con acento ámbar dorado (`#fbbf24`).
+  - **Tarde y Noche temprana (15h - 00h):** Cobertura de las horas de máxima temperatura, actividad convectiva y ocaso con acento azul cielo cantábrico (`#38bdf8`).
+  - Cobertura de las 24 horas exactas del día (8h + 7h + 9h = 24h) con volumen de precipitación segregado por tramo.
+- **Diseño & Ergonomía Responsive:**
+  - Preservado el padding ergonómico cómodo (`8px 12px` en vertical en móviles) y distribución automática en 3 columnas equilibradas (`grid-template-columns: repeat(3, 1fr)`) en pantallas >= 600px.
+- **Anti-Caché & Sincronización:**
+  - Service Worker actualizado a `meteoasturlode-v306-pronostico-10dias-3tramos-noche-manana-tarde` en `sw.js`.
+  - Versión oficial elevada a `v3.0.6 🌙` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.6'` en `app.js`, `forecastView.js?v=3.0.6`, `currentCard.js?v=3.0.6`, `css/components.css?v=3.0.6` y query strings en `index.html`.
+
 ## [3.0.5] - 2026-10-23
 
 ### 🌊 Ingesta Integral de Avisos Costeros Oficiales AEMET (MeteoAlarm) & Sincronización en Directo

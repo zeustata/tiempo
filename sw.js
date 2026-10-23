@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v305-avisos-costeros-aemet-oficiales';
+const CACHE_NAME = 'meteoasturlode-v306-pronostico-10dias-3tramos-noche-manana-tarde';
 const STATIC_ASSETS = [
   './',
   './index.html',

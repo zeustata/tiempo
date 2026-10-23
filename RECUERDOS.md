@@ -52,6 +52,23 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. *Almacenamiento Estático Desacoplado:* El bot vuelca los datos limpios (km abiertos, pistas por dificultad técnica, remontes en servicio y espesores mín/máx) en un archivo JSON estático (`data/snowReport.json`).
     3. *Consumo Directo en Cliente:* `mountainCard.js` lee ese JSON sin sobrecargar a los servidores externos ni ralentizar la carga en clientes, mostrando los partes de nieve actualizados en vivo de forma 100% legal, autónoma y sin fricción.
 
+## 🌙 Actualización v3.0.6: Desglose Horario en 3 Tramos para Pronóstico a 10 Días (Noche, Mañana y Tarde) — 2026-10-23
+- **Segmentación Horaria Tripartita y Realismo Meteorológico (Feedback Lendo):**
+  1. *Necesidad e Iniciativa de Lendo:*
+     - Lendo propone enriquecer la pestaña de *Pronóstico a 10 Días*, sustituyendo la división binaria previa (00h-14h y 14h-24h) por un desglose completo en 3 tramos independientes por tarjeta diaria:
+       - **Noche:** `00h a 08h` (8 horas: mínimas nocturnas, inversión térmica, heladas / xelu y nieblas).
+       - **Mañana:** `08h a 15h` (7 horas: jornada laboral/escolar y calentamiento diurno hasta la comida).
+       - **Tarde:** `15h a 00h` (9 horas: máxima diurna, convección vespertina y anochecer).
+     - Se aprueba mantener el padding cómodo y estilizado (`8px 12px`) tras comprobar en captura real que existe holgura vertical suficiente en pantallas móviles.
+  2. *Implementación Técnica y Física Lunar:*
+     - En `js/components/forecastView.js` se actualiza `getDaypartWeather` para recibir el parámetro `isDay`, forzando `isDay = 0` en el tramo nocturno (00h a 08h) y garantizando que se muestren iconos de luna o cielos nocturnos sin soles anómalos de madrugada.
+     - En `css/components.css` se añade la clase `.d-daypart-btn.night` con gradiente Liquid Glass índigo/lavanda (`#818cf8` / `#a5b4fc`) y borde lateral iluminado.
+     - En pantallas grandes (>= 600px), el contenedor adopta `grid-template-columns: repeat(3, 1fr)`.
+  3. *Versionado y Anti-Caché:*
+     - Service Worker actualizado a `meteoasturlode-v306-pronostico-10dias-3tramos-noche-manana-tarde` en `sw.js`.
+     - Versión oficial elevada a `v3.0.6 🌙` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.6'` en `app.js`, `forecastView.js?v=3.0.6`, `currentCard.js?v=3.0.6`, `css/components.css?v=3.0.6` y query strings en `index.html`.
+     - Cumplimiento de la **Regla Sagrada**: verificación previa en local antes de cualquier subida.
+
 ## 🌊 Actualización v3.0.5: Ingesta Integral de Avisos Costeros Oficiales AEMET (MeteoAlarm) & Sincronización en Directo — 2026-10-23
 - **Ingesta Oficial de Fenómenos Costeros AEMET (Feedback Lendo - Leyes 15 y 16):**
   1. *Diagnóstico y Resolución del Filtrado de Avisos:*
