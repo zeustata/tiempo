@@ -463,19 +463,21 @@
   gap: 5px;
   padding: 4px 10px;
   border-radius: 20px;
-  background: rgba(56, 189, 248, 0.12);
-  border: 1px solid rgba(56, 189, 248, 0.28);
-  color: #7dd3fc;
+  background: rgba(245, 158, 11, 0.16);
+  border: 1px solid rgba(245, 158, 11, 0.42);
+  color: #fbbf24;
   font-size: 0.72rem;
   font-weight: 700;
   flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
   transition: all 0.2s ease;
 }
 
 .clima-compact-summary:hover .clima-toggle-pill {
-  background: rgba(56, 189, 248, 0.22);
-  border-color: rgba(56, 189, 248, 0.45);
-  color: #ffffff;
+  background: rgba(245, 158, 11, 0.28);
+  border-color: rgba(245, 158, 11, 0.65);
+  color: #fef08a;
+  box-shadow: 0 2px 12px rgba(245, 158, 11, 0.25);
 }
 
 .clima-accordion-card:not([open]) .toggle-text-close {

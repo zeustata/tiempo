@@ -9,6 +9,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.2] - 2026-10-23
+
+### 🟡 Destacado Visual del Desglose Climatológico Mensual & Botón «Ver ▾» (Feedback Lendo)
+- **Pastilla de Apertura en Amarillo Ámbar de Alto Contraste:**
+  - Sustituido el antiguo tono azul cian que pasaba desapercibido por un amarillo ámbar luminoso (`#fbbf24`, `rgba(245, 158, 11, ...)`) con sutil aura de resplandor (`box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15)`).
+  - Efecto hover enriquecido (`#fef08a` / borde reforzado) que invita intuitivamente al toque e interacción en la cabecera de la tarjeta Climatología & Memoria.
+- **Acción Directa y Concisa «Ver ▾»:**
+  - Modificado el texto en reposo de `Desglose` a `Ver ▾` en `js/utils/climatologyData.js`, manteniendo la flecha direccional y la transición fluida a `Cerrar ▴` una vez expandido.
+- **Anti-Caché & Sincronización:**
+  - Service Worker actualizado a `meteoasturlode-v302-clima-boton-ver-amarillo` en `sw.js`.
+  - Versión oficial elevada a `v3.0.2 🟡` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.2'` en `app.js`, `currentCard.js?v=3.0.2`, `climatologyData.js?v=3.0.2` y query strings en `index.html`.
+
 ## [3.0.1] - 2026-10-22
 
 ### ⏱️ Blindaje Anti-Corte en Barómetro, Pastilla Única sin Redundancias & Rigor Meteorológico (Feedback Lendo)

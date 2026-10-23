@@ -404,7 +404,7 @@ export function renderClimatologyStrip(clima) {
             <span class="clima-sum-title">Clima · ${clima.monthName.charAt(0).toUpperCase() + clima.monthName.slice(1)}</span>
           </div>
           <span class="clima-toggle-pill" title="Toca para abrir o cerrar el desglose y la memoria histórica">
-            <span class="toggle-text-open">Desglose</span>
+            <span class="toggle-text-open">Ver</span>
             <span class="toggle-text-close">Cerrar</span>
             <span class="toggle-chevron">▾</span>
           </span>

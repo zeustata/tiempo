@@ -52,6 +52,18 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. *Almacenamiento Estático Desacoplado:* El bot vuelca los datos limpios (km abiertos, pistas por dificultad técnica, remontes en servicio y espesores mín/máx) en un archivo JSON estático (`data/snowReport.json`).
     3. *Consumo Directo en Cliente:* `mountainCard.js` lee ese JSON sin sobrecargar a los servidores externos ni ralentizar la carga en clientes, mostrando los partes de nieve actualizados en vivo de forma 100% legal, autónoma y sin fricción.
 
+## 🟡 Actualización v3.0.2: Destacado Visual del Desglose Climatológico Mensual & Botón «Ver ▾» — 2026-10-23
+- **Diseño, Usabilidad y Visibilidad Mejorada (Feedback y Mandato Expreso de Lendo):**
+  1. *Nueva Pastilla de Apertura en Amarillo Ámbar de Alto Contraste:*
+     - Sustituida la antigua apariencia en azul cian de `.clima-toggle-pill` (que pasaba desapercibida contra el fondo azul/oscuro de la tarjeta) por un tono amarillo ámbar dorado (`color: #fbbf24`, `background: rgba(245, 158, 11, 0.16)`, `border: 1px solid rgba(245, 158, 11, 0.42)`).
+     - Incorporada una sutil aura de resplandor cálido (`box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15)`) y estado hover reforzado (`#fef08a` con `box-shadow: 0 2px 12px rgba(245, 158, 11, 0.25)`), invitando intuitivamente al usuario a pulsar para ver el detalle.
+  2. *Acción Concisa «Ver ▾»:*
+     - Modificado en `js/utils/climatologyData.js` el texto de apertura de `Desglose` a `Ver ▾` junto a la flecha direccional existente, garantizando una llamada a la acción más ágil y directa.
+     - Conservada la transición elástica a `Cerrar ▴` con paleta atenuada cuando el acordeón se encuentra desplegado (`[open]`).
+  3. *Versionado, Anti-Caché y Blindaje Local:*
+     - Service Worker actualizado a `meteoasturlode-v302-clima-boton-ver-amarillo` en `sw.js`.
+     - Versión oficial elevada a `v3.0.2 🟡` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.2'` en `app.js`, `currentCard.js?v=3.0.2`, `climatologyData.js?v=3.0.2` y query strings en `index.html`.
+
 ## ⏱️ Actualización v3.0.1: Blindaje Anti-Corte en Barómetro, Pastilla Única sin Redundancias, Rigor Meteorológico & Suite de Simuladores — 2026-10-22
 - **Ergonomía Móvil, Rigor Científico y Simulación (Feedback y Mandato Expreso de Lendo):**
   1. *Pastilla Única Ergonómica Bajo «Tendencia 3h» (Leyes 11 y 19):*

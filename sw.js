@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v301-barometro-pastilla-unica-local';
+const CACHE_NAME = 'meteoasturlode-v302-clima-boton-ver-amarillo';
 const STATIC_ASSETS = [
   './',
   './index.html',
