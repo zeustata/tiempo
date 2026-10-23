@@ -27,6 +27,27 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Pautas de Coherencia de Diseño:*
      - Los nuevos iconos deben inspirarse y regirse en los iconos ya consolidados de cada tema: mismas proporciones, equilibrio en la cantidad de elementos (astros, nubes, partículas) y mismo ritmo y estilo de animación fluida para garantizar armonía visual y rendimiento en dispositivos móviles.
 
+## 📈 Actualización v3.0.7: Fusión Contextual de «Meteorología Gráfica» en la Estación en Vivo — 2026-10-23
+- **Diagnóstico Arquitectónico y Reflexión de Lendo («aun la veo desubicada teniendo en cuenta todo lo que tenemos. que puedo hacer? es que no quiero sacrificarla» y «pisale»):**
+  1. *El Conflicto de Jerarquía Mental:*
+     - Lendo detectó con gran acierto que «Meteorología Gráfica» desentonaba como pestaña independiente entre «Estación en Vivo» y «Pronóstico a 10 Días».
+     - Mientras que las demás secciones representan horizontes temporales (Hoy, Semana, Radar) o actividades asturianas (Playas, Surf, Rutas, Nieve, Astronomía, Ocio), la suite gráfica no es un destino temático nuevo sino una visualización analítica de los mismos datos horarios que se consultan en el día a día.
+     - Separarla en un menú aislado obligaba al usuario a abandonar la Estación en Vivo para ver la curva de lo que estaba mirando, provocando que la suite quedase infrautilizada.
+  2. *Fusión Contextual con Conmutador Dual Liquid Glass (Opción A):*
+     - En lugar de sacrificar la suite gráfica, se integró de forma directa en la cabecera de la tarjeta horaria de la Estación en Vivo (`.live-hourly-block` en `forecastView.js`).
+     - Se implementó un selector ergonómico de pastillas (`.hourly-view-switcher`) con dos modos:
+       • `[ 📋 Tarjetas ]`: El carrusel clásico horizontal de tarjetas de 72h (`#hourly-cards-view`).
+       • `[ 📈 Curvas ]`: La suite interactiva completa de gráficos multivariable (`#hourly-chart-view`, `.embedded-chart-card`), recalculando dinámicamente Chart.js en su canvas con el inspector táctil en vivo (Live Readout), las curvas térmicas, de lluvia, viento, barómetro, cota de nieve, nubosidad y combinado.
+     - *Memoria de Preferencia:* La elección se guarda automáticamente en `localStorage.getItem('meteoastur_hourly_view')`, permitiendo que cada usuario elija su modo predeterminado sin fricción.
+  3. *Depuración del Menú Principal a 9 Módulos Puros:*
+     - El menú de navegación (`APP_MODULES` en `js/app.js` y `#nav-modal`) queda perfectamente ordenado en 9 módulos claros: 1. Estación en Vivo (con gráficas integradas), 2. Pronóstico a 10 Días, 3. Radar en Directo, 4. Playas & Mareas, 5. Surf & Rompientes, 6. Rutas & Senderismo, 7. Cordillera & Nieve, 8. Astronomía & Cosmos, 9. Planes & Ocio.
+     - Los atajos de teclado para escritorio se unifican limpiamente en los dígitos <kbd>1</kbd> al <kbd>9</kbd>, eliminando la tecla <kbd>0</kbd> aislada.
+  4. *Blindaje y Retrocompatibilidad:*
+     - Enlaces externos o marcadores que utilicen `#charts` son redirigidos de forma transparente a la Estación en Vivo, activando el modo gráfico y desplazando la pantalla suavemente hacia la tarjeta horaria.
+  5. *Anti-Caché Obligatorio (Ley 4):*
+     - Service Worker actualizado a `meteoasturlode-v307-graficas-fusionadas-estacion-en-vivo` en `sw.js`.
+     - Versión oficial incrementada a `v3.0.7 📈` en pie (`#app-version-badge`), `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.7'` en `app.js` y query strings en `index.html`.
+
 ## 📅 Hoja de Ruta de Temas Estacionales: Gran Calendario de Iconografía Festiva de Asturias (Ley 23) — 2026-10-23
 - **Planificación Definitiva de Temas Festivos en el Ecosistema (Petición y Hoja de Ruta de Lendo - «añade todas» y «tienes que saber que hay que crear todos los iconos que tenemos de los genericos mas los nuevos como el resol, etc... ponlo en recuerdos»):**
   Conforme a la doctrina estricta de la **Ley 23** (paridad absoluta de catálogo, simetría y pautas de diseño coherentes), se fija en la memoria permanente del proyecto que **CADA TEMA NUEVO DEBE NACER AL 100% COMPLETO**, implementando obligatoriamente tanto el catálogo de iconos universales como la totalidad de los fenómenos meteorológicos singulares de Asturias:

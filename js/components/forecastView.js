@@ -229,16 +229,109 @@ export function renderHourlyForecastBlock(data, units = 'metric', iconTheme = 'a
     `;
   }
 
+  let isChartMode = false;
+  try {
+    isChartMode = typeof localStorage !== 'undefined' && localStorage.getItem('meteoastur_hourly_view') === 'chart';
+  } catch (e) {}
+
   return `
-    <div class="forecast-block live-hourly-block">
-      <div class="section-title-wrap">
-        <div>
+    <div class="forecast-block live-hourly-block" id="live-hourly-container">
+      <div class="hourly-header-bar">
+        <div class="hourly-title-group">
           <h3 class="section-heading live-hourly-heading">⏱️ Pronóstico Horario (72 Horas)</h3>
-          <span class="section-subtitle">Desliza horizontalmente para ver la evolución hora a hora</span>
+          <span class="section-subtitle">Evolución hora a hora en tarjetas dinámicas o curvas</span>
+        </div>
+
+        <!-- CONMUTADOR ERGONÓMICO DE VISTA HORARIA -->
+        <div class="hourly-view-switcher" role="tablist" aria-label="Modo de visualización horaria">
+          <button type="button" class="btn-hourly-mode ${!isChartMode ? 'active' : ''}" id="btn-mode-cards" data-mode="cards" aria-selected="${!isChartMode ? 'true' : 'false'}" title="Ver pronóstico en tarjetas horarias">
+            <span class="mode-icon">📋</span>
+            <span class="mode-label">Tarjetas</span>
+          </button>
+          <button type="button" class="btn-hourly-mode ${isChartMode ? 'active' : ''}" id="btn-mode-chart" data-mode="chart" aria-selected="${isChartMode ? 'true' : 'false'}" title="Ver suite interactiva de curvas y tendencias">
+            <span class="mode-icon">📈</span>
+            <span class="mode-label">Curvas</span>
+          </button>
         </div>
       </div>
-      <div class="hourly-scroll-container">
+
+      <!-- VISTA 1: CARRUSEL DE TARJETAS HORARIAS -->
+      <div class="hourly-scroll-container" id="hourly-cards-view" style="${isChartMode ? 'display: none;' : ''}">
         ${hourlyCards}
+      </div>
+
+      <!-- VISTA 2: OBSERVATORIO DE CURVAS MULTIVARIABLE (METEOROLOGÍA GRÁFICA) -->
+      <div class="hourly-chart-view" id="hourly-chart-view" style="${!isChartMode ? 'display: none;' : ''}">
+        <div class="chart-card embedded-chart-card">
+          <div class="chart-header-block">
+            <div class="chart-controls-bar">
+              <!-- SELECTOR DESPLEGABLE DE VARIABLES -->
+              <div class="chart-var-dropdown-wrapper" id="chart-var-dropdown-wrapper">
+                <button type="button" class="chart-var-dropdown-btn" id="chart-var-dropdown-btn" aria-haspopup="true" aria-expanded="false">
+                  <span id="chart-active-var-text">🌡️ Térmico</span>
+                  <span class="dropdown-arrow">▾</span>
+                </button>
+                <div class="chart-var-dropdown-menu" id="chart-var-dropdown-menu" style="display: none;">
+                  <button type="button" class="chart-var-item active" data-chart="thermal">
+                    <span>🌡️ Térmico (Temp. & Sensación)</span>
+                    <span class="item-check">✓</span>
+                  </button>
+                  <button type="button" class="chart-var-item" data-chart="precip">
+                    <span>🌧️ Lluvia (Hidrograma & Acumulado)</span>
+                    <span class="item-check"></span>
+                  </button>
+                  <button type="button" class="chart-var-item" data-chart="wind">
+                    <span>💨 Viento (Velocidad & Rachas)</span>
+                    <span class="item-check"></span>
+                  </button>
+                  <button type="button" class="chart-var-item" data-chart="pressure">
+                    <span>⏱️ Barómetro (Presión Atmosférica)</span>
+                    <span class="item-check"></span>
+                  </button>
+                  <button type="button" class="chart-var-item" data-chart="snow">
+                    <span>🏔️ Nieve & Cota (Altitud & Espesor)</span>
+                    <span class="item-check"></span>
+                  </button>
+                  <button type="button" class="chart-var-item" data-chart="clouds">
+                    <span>☁️ Nubosidad (Baja, Media & Alta)</span>
+                    <span class="item-check"></span>
+                  </button>
+                  <button type="button" class="chart-var-item" data-chart="multi">
+                    <span>📊 Combinado (Multivariable Clásico)</span>
+                    <span class="item-check"></span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- SELECTOR DE RANGO DE HORAS -->
+              <div class="chart-range-selector" role="group" aria-label="Rango de horas">
+                <button class="chart-range-btn" data-hours="24">24h</button>
+                <button class="chart-range-btn active" data-hours="48">48h</button>
+                <button class="chart-range-btn" data-hours="72">72h</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TITULARES INTELIGENTES / HITOS CLAVE HORARIOS (SMART DIGEST) -->
+          <div class="chart-smart-digest" id="chart-smart-digest"></div>
+
+          <!-- BARRA DE LECTURA DIRECTA DE DATOS (LIVE INSPECTOR READOUT) -->
+          <div class="chart-live-readout" id="chart-live-readout">
+            <span class="readout-idle">👆 Toca o desliza la curva para ver el detalle de cada hora</span>
+          </div>
+
+          <!-- EL GRÁFICO INMEDIATAMENTE VISIBLE (CON PISTA HORARIA SINCRONIZADA DE CIELO Y VIENTO) -->
+          <div class="chart-scroll-viewport" id="chart-scroll-viewport">
+            <div class="chart-canvas-wrapper" id="chart-canvas-wrapper">
+              <!-- CINTA SUPERIOR SINCRONIZADA DE CIELO Y VIENTO -->
+              <div class="chart-sky-timeline" id="chart-sky-timeline"></div>
+              <canvas id="meteo-chart-canvas"></canvas>
+            </div>
+          </div>
+
+          <!-- MÉTRICAS DE RESUMEN EN REJILLA COMPACTA 2x2 DEBAJO DEL GRÁFICO -->
+          <div class="chart-summary-strip" id="chart-summary-strip"></div>
+        </div>
       </div>
     </div>
   `;

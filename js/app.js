@@ -1,14 +1,14 @@
 import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=2.0.0';
 import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.5';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=2.0.0';
-import { renderCurrentWeather } from './components/currentCard.js?v=3.0.6';
+import { renderCurrentWeather } from './components/currentCard.js?v=3.0.7';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=2.2.76';
 import { renderSurfCard } from './components/surfCard.js?v=2.2.77';
 import { renderRoutesCard } from './components/routesCard.js?v=2.2.75';
 import { renderMountainCard } from './components/mountainCard.js?v=2.2.64';
 import { renderTourismCard } from './components/tourismCard.js?v=2.2.75';
-import { renderForecast } from './components/forecastView.js?v=3.0.6';
-import { renderWeatherChart } from './components/chartsView.js?v=2.2.64';
+import { renderForecast } from './components/forecastView.js?v=3.0.7';
+import { renderWeatherChart } from './components/chartsView.js?v=3.0.7';
 import { renderAstronomyView } from './components/astronomyCard.js?v=2.2.1';
 import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=2.2.1';
 import { getWeatherInfo } from './utils/weatherIcons.js?v=2.2.64';
@@ -31,19 +31,18 @@ import { openShareModal } from './utils/shareCardGenerator.js?v=2.2.64';
 import { toggleWeatherSpeech, stopWeatherSpeech } from './utils/weatherSpeaker.js?v=2.0.0';
 
 const APP_MODULES = [
-  { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, pronóstico horario 72h y alertas', key: '1' },
-  { id: 'charts', icon: '📈', title: 'Meteorología Gráfica', desc: 'Observatorio interactivo: curvas de temperatura, lluvia, viento, barómetro y más', key: '2' },
-  { id: 'forecast', icon: '📅', title: 'Pronóstico a 10 Días', desc: 'Predicción diaria completa con desglose de mañana y tarde', key: '3' },
-  { id: 'radar', icon: '📡', title: 'Radar en Directo', desc: 'Seguimiento de lluvia y tormentas en tiempo real vía satélite', key: '4' },
-  { id: 'marine', icon: '🏖️', title: 'Playas & Mareas', desc: 'Mareógrafo 72h, fases lunares, estado de baño, bandera y calas', key: '5' },
-  { id: 'surf', icon: '🏄‍♂️', title: 'Surf & Rompientes', desc: 'Swell, período, viento offshore/onshore, picos bautizados y fondos', key: '6' },
-  { id: 'routes', icon: '🥾', title: 'Rutas & Senderismo', desc: 'Confort de marcha, índice de barro en sendas y catálogo de rutas asturianas', key: '7' },
-  { id: 'mountain', icon: '🏔️', title: 'Cordillera & Nieve', desc: 'Estado de puertos de montaña, cota de nieve y esquí', key: '8' },
-  { id: 'astronomy', icon: '🔭', title: 'Astronomía & Cosmos', desc: 'Eclipses, lluvias de estrellas, fases lunares y semáforo de visibilidad en Asturias', key: '9' },
-  { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
+  { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, previsión horaria y curvas interactivas', key: '1' },
+  { id: 'forecast', icon: '📅', title: 'Pronóstico a 10 Días', desc: 'Predicción diaria completa con desglose de noche, mañana y tarde', key: '2' },
+  { id: 'radar', icon: '📡', title: 'Radar en Directo', desc: 'Seguimiento de lluvia y tormentas en tiempo real vía satélite', key: '3' },
+  { id: 'marine', icon: '🏖️', title: 'Playas & Mareas', desc: 'Mareógrafo 72h, fases lunares, estado de baño, bandera y calas', key: '4' },
+  { id: 'surf', icon: '🏄‍♂️', title: 'Surf & Rompientes', desc: 'Swell, período, viento offshore/onshore, picos bautizados y fondos', key: '5' },
+  { id: 'routes', icon: '🥾', title: 'Rutas & Senderismo', desc: 'Confort de marcha, índice de barro en sendas y catálogo de rutas asturianas', key: '6' },
+  { id: 'mountain', icon: '🏔️', title: 'Cordillera & Nieve', desc: 'Estado de puertos de montaña, cota de nieve y esquí', key: '7' },
+  { id: 'astronomy', icon: '🔭', title: 'Astronomía & Cosmos', desc: 'Eclipses, lluvias de estrellas, fases lunares y visibilidad en Asturias', key: '8' },
+  { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '9' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.6';
+export const CURRENT_APP_VERSION = '3.0.7';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -187,6 +186,15 @@ class MeteoAsturiasApp {
 
   handleInitialHash() {
     const hash = window.location.hash.replace('#', '');
+    if (hash === 'charts') {
+      this.switchTab('live');
+      this.switchHourlyViewMode('chart');
+      setTimeout(() => {
+        const el = document.getElementById('live-hourly-container');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+      return;
+    }
     const validTabs = APP_MODULES.map(m => m.id);
     if (validTabs.includes(hash)) {
       this.switchTab(hash);
@@ -547,6 +555,17 @@ class MeteoAsturiasApp {
         this.triggerHaptic();
         this.switchTab(btn.dataset.tab);
       });
+    });
+
+    // Conmutador de vista horaria (Tarjetas vs Curvas en Estación en Vivo)
+    document.addEventListener('click', (e) => {
+      const modeBtn = e.target.closest('.btn-hourly-mode');
+      if (modeBtn) {
+        e.preventDefault();
+        this.triggerHaptic();
+        const mode = modeBtn.dataset.mode;
+        this.switchHourlyViewMode(mode);
+      }
     });
 
     // Control animación radar
@@ -1936,6 +1955,16 @@ class MeteoAsturiasApp {
   }
 
   switchTab(targetTab, direction = null) {
+    if (targetTab === 'charts') {
+      this.switchTab('live');
+      this.switchHourlyViewMode('chart');
+      setTimeout(() => {
+        const el = document.getElementById('live-hourly-container');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+      return;
+    }
+
     const tabList = APP_MODULES.map(m => m.id);
     const oldIndex = tabList.indexOf(this.activeTab);
     const newIndex = tabList.indexOf(targetTab);
@@ -1976,8 +2005,12 @@ class MeteoAsturiasApp {
       setTimeout(() => resizeMap(), 280);
     }
 
-    if (targetTab === 'charts' && this.weatherData) {
-      setTimeout(() => renderWeatherChart('meteo-chart-canvas', this.weatherData.weather.hourly, 48, this.getEffectiveIconTheme()), 50);
+    if (targetTab === 'live') {
+      try {
+        if (localStorage.getItem('meteoastur_hourly_view') === 'chart' && this.weatherData?.weather?.hourly) {
+          setTimeout(() => renderWeatherChart('meteo-chart-canvas', this.weatherData.weather.hourly, 48, this.getEffectiveIconTheme()), 40);
+        }
+      } catch (e) {}
     }
 
     if (targetTab === 'marine') {
@@ -2020,6 +2053,35 @@ class MeteoAsturiasApp {
     const navModal = document.getElementById('nav-modal');
     if (navModal && navModal.style.display === 'flex') {
       navModal.style.display = 'none';
+    }
+  }
+
+  switchHourlyViewMode(mode) {
+    const cardsView = document.getElementById('hourly-cards-view');
+    const chartView = document.getElementById('hourly-chart-view');
+    const btnCards = document.getElementById('btn-mode-cards');
+    const btnChart = document.getElementById('btn-mode-chart');
+    const isChart = mode === 'chart';
+
+    if (btnCards) {
+      btnCards.classList.toggle('active', !isChart);
+      btnCards.setAttribute('aria-selected', !isChart ? 'true' : 'false');
+    }
+    if (btnChart) {
+      btnChart.classList.toggle('active', isChart);
+      btnChart.setAttribute('aria-selected', isChart ? 'true' : 'false');
+    }
+    if (cardsView) cardsView.style.display = isChart ? 'none' : 'flex';
+    if (chartView) chartView.style.display = isChart ? 'block' : 'none';
+
+    try {
+      localStorage.setItem('meteoastur_hourly_view', mode);
+    } catch (e) {}
+
+    if (isChart && this.weatherData && this.weatherData.weather && this.weatherData.weather.hourly) {
+      setTimeout(() => {
+        renderWeatherChart('meteo-chart-canvas', this.weatherData.weather.hourly, 48, this.getEffectiveIconTheme());
+      }, 40);
     }
   }
 
@@ -2554,6 +2616,15 @@ class MeteoAsturiasApp {
       }
       // Verificación de Alertas Rojas de Emergencia (v2.2.34)
       this.checkEmergencyRedAlerts(this.weatherData, this.currentConcejo);
+
+      // Si el usuario tenía guardada la vista de Gráfica, renderizar la suite gráfica inmediatamente
+      try {
+        if (localStorage.getItem('meteoastur_hourly_view') === 'chart' && this.weatherData?.weather?.hourly) {
+          setTimeout(() => {
+            renderWeatherChart('meteo-chart-canvas', this.weatherData.weather.hourly, 48, effectiveTheme);
+          }, 40);
+        }
+      } catch (e) {}
     } catch (e) {
       console.error('[MeteoAstur] Error renderizando Vivo:', e);
     }
@@ -2647,15 +2718,6 @@ class MeteoAsturiasApp {
         }
       } catch (e) {
         console.error('[MeteoAstur] Error renderizando Pronóstico:', e);
-      }
-
-      // 5. Gráfico si está activo
-      if (activeTab === 'charts') {
-        try {
-          renderWeatherChart('meteo-chart-canvas', data.weather.hourly, 48, effectiveTheme);
-        } catch (e) {
-          console.error('[MeteoAstur] Error renderizando Gráfica:', e);
-        }
       }
 
       // 6. Comparador si está activo

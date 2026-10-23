@@ -32,7 +32,7 @@
 
   <!-- Estilos de la Aplicación con Cache Busting -->
   <link rel="stylesheet" href="css/main.css?v=3.0.5">
-  <link rel="stylesheet" href="css/components.css?v=3.0.6">
+  <link rel="stylesheet" href="css/components.css?v=3.0.7">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -183,86 +183,6 @@
       <!-- 5. PRONÓSTICO -->
       <div id="panel-forecast" class="tab-panel"></div>
 
-      <!-- 6. METEOROLOGÍA GRÁFICA -->
-      <div id="panel-charts" class="tab-panel">
-        <div class="chart-card">
-          <!-- CABECERA DE METEOROLOGÍA GRÁFICA CON SELECTOR DESPLEGABLE (OPCIÓN B) -->
-          <div class="chart-header-block">
-            <div>
-              <h3 class="section-heading">📈 Meteorología Gráfica</h3>
-              <span class="section-subtitle">Suite de curvas y tendencias multivariable por horas</span>
-            </div>
-            
-            <div class="chart-controls-bar">
-              <!-- SELECTOR DESPLEGABLE DE VARIABLES -->
-              <div class="chart-var-dropdown-wrapper" id="chart-var-dropdown-wrapper">
-                <button type="button" class="chart-var-dropdown-btn" id="chart-var-dropdown-btn" aria-haspopup="true" aria-expanded="false">
-                  <span id="chart-active-var-text">🌡️ Térmico</span>
-                  <span class="dropdown-arrow">▾</span>
-                </button>
-                <div class="chart-var-dropdown-menu" id="chart-var-dropdown-menu" style="display: none;">
-                  <button type="button" class="chart-var-item active" data-chart="thermal">
-                    <span>🌡️ Térmico (Temp. & Sensación)</span>
-                    <span class="item-check">✓</span>
-                  </button>
-                  <button type="button" class="chart-var-item" data-chart="precip">
-                    <span>🌧️ Lluvia (Hidrograma & Acumulado)</span>
-                    <span class="item-check"></span>
-                  </button>
-                  <button type="button" class="chart-var-item" data-chart="wind">
-                    <span>💨 Viento (Velocidad & Rachas)</span>
-                    <span class="item-check"></span>
-                  </button>
-                  <button type="button" class="chart-var-item" data-chart="pressure">
-                    <span>⏱️ Barómetro (Presión Atmosférica)</span>
-                    <span class="item-check"></span>
-                  </button>
-                  <button type="button" class="chart-var-item" data-chart="snow">
-                    <span>🏔️ Nieve & Cota (Altitud & Espesor)</span>
-                    <span class="item-check"></span>
-                  </button>
-                  <button type="button" class="chart-var-item" data-chart="clouds">
-                    <span>☁️ Nubosidad (Baja, Media & Alta)</span>
-                    <span class="item-check"></span>
-                  </button>
-                  <button type="button" class="chart-var-item" data-chart="multi">
-                    <span>📊 Combinado (Multivariable Clásico)</span>
-                    <span class="item-check"></span>
-                  </button>
-                </div>
-              </div>
-
-              <!-- SELECTOR DE RANGO DE HORAS -->
-              <div class="chart-range-selector" role="group" aria-label="Rango de horas">
-                <button class="chart-range-btn" data-hours="24">24h</button>
-                <button class="chart-range-btn active" data-hours="48">48h</button>
-                <button class="chart-range-btn" data-hours="72">72h</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- TITULARES INTELIGENTES / HITOS CLAVE HORARIOS (SMART DIGEST) -->
-          <div class="chart-smart-digest" id="chart-smart-digest"></div>
-
-          <!-- BARRA DE LECTURA DIRECTA DE DATOS (LIVE INSPECTOR READOUT) -->
-          <div class="chart-live-readout" id="chart-live-readout">
-            <span class="readout-idle">👆 Toca o desliza la curva para ver el detalle de cada hora</span>
-          </div>
-
-          <!-- EL GRÁFICO INMEDIATAMENTE VISIBLE (CON PISTA HORARIA SINCRONIZADA DE CIELO Y VIENTO) -->
-          <div class="chart-scroll-viewport" id="chart-scroll-viewport">
-            <div class="chart-canvas-wrapper" id="chart-canvas-wrapper">
-              <!-- CINTA SUPERIOR SINCRONIZADA DE CIELO Y VIENTO (ESTILO WINDY/METEOBLUE) -->
-              <div class="chart-sky-timeline" id="chart-sky-timeline"></div>
-              <canvas id="meteo-chart-canvas"></canvas>
-            </div>
-          </div>
-
-          <!-- MÉTRICAS DE RESUMEN EN REJILLA COMPACTA 2x2 DEBAJO DEL GRÁFICO -->
-          <div class="chart-summary-strip" id="chart-summary-strip"></div>
-        </div>
-      </div>
-
       <!-- 7. OBSERVATORIO ASTRONÓMICO & COSMOS -->
       <div id="panel-astronomy" class="tab-panel"></div>
 
@@ -274,7 +194,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.6 🌙</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.7 📈</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -301,8 +221,7 @@
         <button id="btn-close-modal" class="btn-close" aria-label="Cerrar modal">&times;</button>
       </div>
       <div class="modal-body">
-        <div class="shortcut-row"><kbd>1</kbd> - <kbd>9</kbd><span>Cambiar entre módulos (1: Vivo ... 9: Cosmos)</span></div>
-        <div class="shortcut-row"><kbd>0</kbd><span>Módulo 10: Planes &amp; Ocio Asturiano</span></div>
+        <div class="shortcut-row"><kbd>1</kbd> - <kbd>9</kbd><span>Cambiar entre módulos (1: Vivo ... 9: Planes &amp; Ocio)</span></div>
         <div class="shortcut-row"><kbd>S</kbd> / <kbd>/</kbd><span>Abrir buscador rápido de los 78 concejos</span></div>
         <div class="shortcut-row"><kbd>R</kbd><span>Refrescar datos meteorológicos en directo</span></div>
         <div class="shortcut-row"><kbd>F</kbd><span>Añadir o quitar concejo actual de Favoritos</span></div>
@@ -349,8 +268,23 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v3.0.6 🌙</span>
+            <span class="release-version">v3.0.7 📈</span>
             <span class="release-date">23 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-feature">Integración Contextual (Reflexión &amp; Decisión Lendo)</span> <strong>Fusión de Meteorología Gráfica en la Estación en Vivo</strong>:
+              <br>• <strong>Conmutador Dual Ergonómico (<code>[ 📋 Tarjetas ] | [ 📈 Curvas ]</code>):</strong> La suite completa de gráficos interactivos multivariable (térmico, hidrograma de lluvia, viento, barómetro, cota de nieve, nubosidad y combinado) se integra de forma directa y elegante en la tarjeta de pronóstico horario de la Estación en Vivo.
+              <br>• <strong>Menú Principal Depurado a 9 Módulos Puros:</strong> Eliminada la pestaña redundante que interrumpía la navegación; el menú cuenta ahora con 9 secciones armónicas perfectamente delimitadas entre horizontes temporales y actividades asturianas.
+              <br>• <strong>Memoria de Preferencia y Cero Fricción:</strong> El sistema recuerda la vista favorita del usuario (tarjetas o curvas) mediante <code>localStorage</code>, permitiendo alternar al instante con un solo toque y recalculando el canvas dinámicamente con su inspector táctil.
+              <br>• <strong>Atajos de Teclado Optimizados (<code>1-9</code>):</strong> Los 9 módulos se mapean de forma natural del <kbd>1</kbd> al <kbd>9</kbd> en teclado físico para Windows y escritorio.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v3.0.6 🌙</span>
+            <span class="release-date">23 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-feature">Pronóstico a 10 Días (Feedback Lendo)</span> <strong>Desglose en 3 Tramos Horarios: Noche, Mañana y Tarde</strong>:
@@ -4349,7 +4283,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.6"></script>
+  <script type="module" src="js/app.js?v=3.0.7"></script>
 
 
 

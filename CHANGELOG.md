@@ -9,6 +9,26 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.7] - 2026-10-23
+
+### 📈 Integración Contextual: Fusión de Meteorología Gráfica en la Estación en Vivo (Reflexión & Decisión Lendo)
+- **Diagnóstico y Reorganización de Jerarquía Mental de Navegación:**
+  - Lendo detectó que la pestaña «Meteorología Gráfica» se encontraba desubicada entre «Estación en Vivo» y «Pronóstico a 10 Días», interrumpiendo el relato natural entre la actualidad meteorológica y el horizonte semanal.
+  - Al no ser una actividad temática (como Surf, Rutas o Esquí) ni un horizonte temporal nuevo, sino una visualización analítica de los mismos datos horarios, se aprobó la Opción A: integración contextual en la tarjeta horaria principal sin sacrificar ni una sola línea de código ni capacidad gráfica.
+- **Conmutador Dual Ergonómico (`[ 📋 Tarjetas ] | [ 📈 Curvas ]`):**
+  - Implementado un selector de pastillas Liquid Glass (`.hourly-view-switcher`) en la cabecera de la previsión horaria de la Estación en Vivo (`.live-hourly-block`).
+  - Permite alternar instantáneamente entre el carrusel clásico de tarjetas horizontales de 72h (`#hourly-cards-view`) y la suite interactiva completa de gráficos multivariable (`#hourly-chart-view`).
+  - La suite embebida (`.embedded-chart-card`) conserva intactas todas sus herramientas: selector desplegable de variables (térmico, hidrograma de lluvia, viento y rachas, barómetro, nieve y cota, nubosidad y combinado), selector de rango (24h/48h/72h), titulares inteligentes (Smart Digest), inspector táctil en vivo (Live Readout) y cinta superior de cielo y viento.
+- **Menú Principal Depurado a 9 Módulos Puros:**
+  - El menú de navegación se depura a 9 secciones armónicas: 1. Estación en Vivo (con gráficas integradas), 2. Pronóstico a 10 Días, 3. Radar en Directo, 4. Playas & Mareas, 5. Surf & Rompientes, 6. Rutas & Senderismo, 7. Cordillera & Nieve, 8. Astronomía & Cosmos, 9. Planes & Ocio.
+  - Los atajos de teclado de Windows y escritorio se mapean limpiamente del <kbd>1</kbd> al <kbd>9</kbd>, suprimiendo la tecla huérfana <kbd>0</kbd>.
+- **Memoria de Preferencia y Compatibilidad Retroactiva:**
+  - El sistema recuerda la vista seleccionada por el usuario (`cards` o `chart`) en `localStorage.getItem('meteoastur_hourly_view')`, mostrándola automáticamente en las siguientes aperturas y recargas de concejo.
+  - Soporte de redirección suave para enlaces con hash `#charts`, redirigiendo de forma transparente a la Estación en Vivo, activando el modo gráfico y desplazando la pantalla suavemente a la sección horaria.
+- **Anti-Caché & Sincronización:**
+  - Service Worker actualizado a `meteoasturlode-v307-graficas-fusionadas-estacion-en-vivo` en `sw.js`.
+  - Versión oficial elevada a `v3.0.7 📈` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.7'` en `app.js`, `forecastView.js?v=3.0.7`, `currentCard.js?v=3.0.7`, `chartsView.js?v=3.0.7`, `css/components.css?v=3.0.7` y query strings en `index.html`.
+
 ## [3.0.6] - 2026-10-23
 
 ### 🌙 Desglose Horario en 3 Tramos para Pronóstico a 10 Días: Noche, Mañana y Tarde (Feedback Lendo)

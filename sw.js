@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v306-pronostico-10dias-3tramos-noche-manana-tarde';
+const CACHE_NAME = 'meteoasturlode-v307-graficas-fusionadas-estacion-en-vivo';
 const STATIC_ASSETS = [
   './',
   './index.html',
