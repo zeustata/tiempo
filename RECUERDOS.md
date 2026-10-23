@@ -27,22 +27,93 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Pautas de Coherencia de Diseño:*
      - Los nuevos iconos deben inspirarse y regirse en los iconos ya consolidados de cada tema: mismas proporciones, equilibrio en la cantidad de elementos (astros, nubes, partículas) y mismo ritmo y estilo de animación fluida para garantizar armonía visual y rendimiento en dispositivos móviles.
 
-## 📅 Hoja de Ruta de Temas Estacionales: Calendario de Iconografía para Festividades de Asturias (Ley 23) — 2026-10-18
-- **Planificación de Nuevos Temas Festivos en el Ecosistema (Petición y Hoja de Ruta de Lendo):**
-  Conforme a la doctrina de la **Ley 23** (paridad absoluta de catálogo, simetría y pautas de diseño coherentes), se fija en la memoria permanente del proyecto la hoja de ruta para la creación progresiva de las colecciones de iconos conmemorativas de Asturias (al igual que la hoja de ruta del bot para las estaciones de esquí en temporada invernal):
-  
-  1. 🎄 **Navidá Asturiana & L'Angulero (24 de diciembre al 6 de enero):**
-     - *Identidad visual:* Sol y luna invernales con el farol y gorro de pescador de L'Angulero, copos de nieve sobre los Picos de Europa, nubes con acebo, madreñes tradicionales y lluvia fina de ría cantábrica.
-  2. 🎭 **El Gran Antroxu Asturiano (Carnaval – febrero/marzo, según Pascua):**
-     - *Identidad visual:* Sol y luna con antifaces, plumas y caretas de charanga de Xixón y Avilés, nubes y gotas salpicadas de confeti, serpentinas y frixuelos.
-  3. 🔥 **Noche de San Xuan & Solsticio de Verano (23 – 24 de junio):**
-     - *Identidad visual:* Solsticio con destellos de las hogueras de San Lorenzo y Salinas, elementos de la mitología asturiana (la Xana en la fuente, el Cuélebre y el Trasgu).
-  4. 🛶 **Fiesta de les Piragües / Descenso del Sella (primer sábado de agosto):**
-     - *Identidad visual:* Ambiente sellero con montera picona, palas de piragua cruzadas, collares de flores y espíritu fluvial entre Arriondas y Ribadesella.
-  5. 🏛️ **Día d'Asturies & La Santina de Cuadonga (8 de septiembre):**
-     - *Identidad visual:* La Cruz de la Victoria con el Alfa y el Omega, detalles de la bandera azul asturiana, cumbres de Covadonga, gaitas y manzanas de sidra.
-  6. 🌰 **Amagüestu de Seronda (noviembre):**
-     - *Identidad visual:* Castañes asaes en el tambor de fuego de carbón, xarra de sidra dulce recién mayada y hojas doradas de roble y castaño.
+## 📅 Hoja de Ruta de Temas Estacionales: Gran Calendario de Iconografía Festiva de Asturias (Ley 23) — 2026-10-23
+- **Planificación Definitiva de Temas Festivos en el Ecosistema (Petición y Hoja de Ruta de Lendo - «añade todas» y «tienes que saber que hay que crear todos los iconos que tenemos de los genericos mas los nuevos como el resol, etc... ponlo en recuerdos»):**
+  Conforme a la doctrina estricta de la **Ley 23** (paridad absoluta de catálogo, simetría y pautas de diseño coherentes), se fija en la memoria permanente del proyecto que **CADA TEMA NUEVO DEBE NACER AL 100% COMPLETO**, implementando obligatoriamente tanto el catálogo de iconos universales como la totalidad de los fenómenos meteorológicos singulares de Asturias:
+
+  ### 🎨 Inventario Obligatorio del Catálogo (Paridad Absoluta):
+  1. **Los Genéricos Universales:**
+     - `sun` / `clear-day` (Despejado solar / Soleyeru)
+     - `moon` / `clear-night` (Luna clara nocturna / Despexáu)
+     - `mostly-clear-day` / `mostly-clear-night` (Poco nuboso con claros)
+     - `partly-cloudy-day` / `partly-cloudy-night` (Nuboso / Intervalos nubosos)
+     - `cloudy` (Cubiertu / Nublado continuo)
+     - `fog` (Niebla / Borrina de valle)
+     - `drizzle` (Orbayu / Llovizna fina)
+     - `rain` (Lluvia moderada)
+     - `showers` (Chubascos con sol / Chuviescos)
+     - `storm` (Tormenta eléctrica con rayos)
+     - `snow-light` (Falispos ligeros de nieve)
+     - `snow` (Nevadona / Nieve copiosa)
+     - `wind` (Viento fuerte / Rachas)
+  2. **Los Fenómenos Propios Asturianos (Innegociables por Mandato de Lendo):**
+     - 🌥️ **`resol` (Resol Asturiano):** Sol tamizado tras velo de nubes altas (cirroestratos) con resplandor cálido difuso.
+     - 🌫️🫧 **`wet-fog` (Borrina Húmeda / Niebla Meona):** Niebla marina densa y condensada que moja sin precipitar lluvia visible.
+     - 🌧️💥 **`heavy-rain` / `bastinazu` (Lluvia Fuerte / Bastinazu):** Precipitación torrencial densa de alta intensidad (5 gotas grandes).
+     - 🌨️🧊 **`sleet` (Aguanieve):** Mezcla de lluvia fría y copos semiderretidos en cotas intermedias.
+     - 🧊⚡ **`hail` (Pedriscu / Granizo):** Granizo de tormenta rebotando sobre el suelo.
+     *(Cualquier tema nuevo que se añada debe incluir imperativamente cada uno de estos 18 estados meteorológicos adaptados a su temática festiva).*
+
+  1. 🎃 **Halloween / Samaín Asturiano:**
+     - *Fechas:* **31 de Octubre y 1 de Noviembre** (2 días).
+     - *Estado:* Ya implementado al 100%.
+     - *Identidad visual:* Sol Jack-o'-lantern, brujas volando en luna llena, resol místico con telaraña, niebla de cementerio y lluvia con araña colgante.
+
+  2. 🌰 **Amagüestu de Seronda (Fiesta de San Martín):**
+     - *Fechas:* **9 al 12 de Noviembre** (4 días de impacto concentrado: víspera, fin de semana y día de San Martín: *«Pel San Martín, castañes y sidra sin fin»*).
+     - *Identidad visual:* El tambor de hierro perforado girando sobre brasas y leña humeante, castañes asaes rajadas calientes, xarra de barro con sidra dulce de duernu recién mayada y hojas cobrizas de carbayu (roble).
+
+  3. 🎄 **Navidá Asturiana & L'Angulero:**
+     - *Fechas:* **Packs de Días Clave de Impacto (6 días en total)**:
+       • *Bloque 1:* **24 y 25 de Diciembre** (Nochebuena, llegada de L'Angulero en chalana y Día de Navidad).
+       • *Bloque 2:* **31 de Diciembre y 1 de Enero** (Nochevieja, campanadas y Año Nuevo).
+       • *Bloque 3:* **5 y 6 de Enero** (Cabalgata, Noche mágica de Reyes y Día de Reyes).
+     - *Identidad visual:* L'Angulero con su farol de latón encendido, gorro de lana y chalana de madera por la ría del Nalón (San Juan de la Arena), nieve sobre los hórreos y Picos de Europa, ramas de acebo y madreñes tradicionales.
+
+  4. 🎭 **El Gran Antroxu Asturiano (Gijón, Avilés y Oviedo):**
+     - *Fechas:* **Móvil (Febrero / Marzo)** • Días Centrales: **Viernes a Martes de Carnaval** (5 días: se suprimen el Jueves de Comadres y el Miércoles de Ceniza para concentrar el impacto en los desfiles y la folixa).
+     - *Identidad visual:* Antifaces de charanga venecianos con plumas brillantes, lluvia de confeti y serpentinas multicolores, frixuelos finos de sartén enrollados, casadielles y la Sardina carnavalera.
+
+  5. 🌿 **Semana Santa Asturiana:**
+     - *Fechas:* **Móvil (Marzo / Abril)** • Días Clave: **Jueves Santo a Domingo de Resurrección** (4 días).
+     - *Identidad visual:* Palmas y ramos de laurel bendecidos, faroles procesionales dorados con cirios encendidos, túnicas y capuchones solemnes (procesiones marineras de Luarca, Avilés y Villaviciosa), campanas y brisa serena de primavera.
+
+  6. 🥟 **La Balesquida (El Martes de Campo de Oviedo):**
+     - *Fechas:* **Móvil (Mayo / Junio)** • **1 solo día exclusivo: El Martes de Campo** (el primer martes tras Pentecostés).
+     - *Identidad visual:* Sol radiante sobre el Naranco y el Campo San Francisco con pañuelo verde ovetense, bollu preñáu de chorizo chorreando pimentón, cesta de mimbre de romería y flores de primavera.
+
+  7. 🕯️ **Noche de San Xuan & Solsticio de Verano:**
+     - *Fechas:* **23 y 24 de Junio** (2 días).
+     - *Identidad visual:* La gran Foguera de San Xuan en las playas (San Lorenzo en Gijón, Salinas, etc.), chispas doradas, enrame de fuentes de piedra al amanecer y mitología viva asturiana (la Xana peinándose con peine de oro, el Cuélebre alado y el Trasgu burlón con gorro rojo).
+
+  8. 💥 **La Descarga de Cangas del Narcea (Virgen del Carmen):**
+     - *Fechas:* **16 de Julio** (1 día de máxima intensidad).
+     - *Identidad visual:* Homenaje a la apoteosis pirotécnica del suroccidente: cielo surcado por miles de voladores, estelas de humo blanco, chispas doradas de pólvora y el puente romano sobre el río Naviego.
+
+  9. 🌳 **El Carmín de la Pola (Pola de Siero):**
+     - *Fechas:* **Móvil (Julio)** • **1 solo día exclusivo: El Lunes de Romería del Carmín** (primer lunes tras el 16 de julio: gran romería campestre en el Prau de la Sobrecueva y bajada nocturna del agua).
+     - *Identidad visual:* La madre de las romerías de prao: Prau de la Sobrecueva verde, romeros con cesta y culines, y la célebre bajada nocturna con cubos de agua cayendo refrescantes desde los balcones (*«¡Agua, agua!»*).
+
+  10. 🛶 **Fiesta de les Piragües (Descenso Internacional del Sella):**
+      - *Fechas:* **Móvil (Agosto)** • **1 solo día exclusivo: El Sábado de les Piragües** (primer sábado de agosto tras el 2 de agosto: desfile selleru matinal, salida en Arriondas, llegada en Ribadesella y fiesta de prao).
+      - *Identidad visual:* Montera picona tradicional asturiana, collares gigantes de flores multicolores selleros, palas de piragua cruzadas sobre el río Sella entre Arriondas y Ribadesella, y el tren fluvial festivo.
+
+  11. 🍏 **Fiesta de la Sidra Natural de Gijón:**
+      - *Fechas:* **Último fin de semana de Agosto** (Viernes a Domingo - 3 días).
+      - *Identidad visual:* El Récord Guinness de escanciado simultáneo en la Playa de Poniente con miles de personas levantando el brazo al unísono, botellas verdes inclinadas, culines rompiendo con fuerza y manzanas de pomarada.
+
+  12. 🛶 **El Descenso Folklórico del Nalón (Pola de Laviana):**
+      - *Fechas:* **Último sábado de Agosto** (1 día).
+      - *Identidad visual:* Las embarcaciones artesanales humorísticas y carrozas flotantes de las peñas mineras por el río Nalón, salvavidas coloridos, música de charanga y la tradicional *Sopera*.
+
+  13. 🏛️ **Día d'Asturies & La Santina de Cuadonga:**
+      - *Fechas:* **8 de Septiembre** (1 solo día exclusivo: festividad oficial del Día de Asturias y La Santina de Covadonga).
+      - *Identidad visual:* La Cruz de la Victoria resplandeciente en oro con el Alfa y el Omega, la Santina en la Santa Cueva de Covadonga con el chorro de agua, cumbres de Picos de Europa, bandera azul asturiana, gaita con terciopelo y tamboril.
+
+  ### ⚖️ Balance y Criterio de Diseño Aprobado por Lendo («Más limpio»):
+  - **Concentración Máxima:** Tras el tijeretazo ordenado por Lendo (Antroxu sin Comadres ni Ceniza, Carmín reducido al Lunes de Romería, Piragües reducido al Sábado de carrera y Día de Asturias al 8 de septiembre exclusivo), el total anual de días con temas festivos activos queda en exactamente **32 días** (un **8,7%** del año).
+  - **Sobriedad Meteorológica:** El **91,3% del año** la aplicación permanece en su estado visual estándar sin saturar al usuario, permitiendo que cada festividad entre con frescura y exclusividad en su momento cumbre.
+  - **Cálculo Autónomo Perpetuo:** Todas las fechas móviles se calculan dinámicamente mediante el algoritmo astronómico de Pascua (Butcher/Meeus) y reglas de calendario mensual, garantizando cero mantenimiento manual para cualquier año futuro.
 
 ## 🤖 Hoja de Ruta de Invierno: Bot Automatizado de Partes de Nieve para Estaciones de Esquí — 2026-10-18
 - **Objetivo y Automatización de Temporada (Petición y Hoja de Ruta de Lendo):**
