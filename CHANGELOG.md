@@ -9,6 +9,22 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.5] - 2026-10-23
+
+### 🌊 Ingesta Integral de Avisos Costeros Oficiales AEMET (MeteoAlarm) & Sincronización en Directo
+- **Mapeo de Zonas Marítimas (`Costa - Litoral`):**
+  - Corregido el script automatizado de ingesta (`scripts/fetch_alerts.js`) para capturar los avisos oficiales de fenómenos costeros de AEMET emitidos bajo el identificador MeteoAlarm `Costa - Litoral occidental asturiano` y `Costa - Litoral oriental asturiano`.
+  - Los concejos costeros de Asturias ahora reciben en vivo los avisos de temporal marítimo (oleaje 5–7 m, viento W fuerza 7) tanto en local como en producción.
+- **Iconografía y Clasificación de Fenómenos Costeros (`🌊`):**
+  - Mapeado el tipo de fenómeno `coastal` / `costeros` con el icono marítimo `🌊` en `weatherAlerts.js`.
+  - Clasificación de severidad estricta (Naranja / Amarillo / Rojo) preservando la ordenación por gravedad y los datos de vigencia, probabilidad y recomendaciones oficiales.
+- **Filtrado Activo de Caducidad y Cache-Busting:**
+  - Descarte dinámico de avisos expirados (`expires <= now`) en tiempo real.
+  - Inclusión de parámetro anti-caché dinámico (`?_t=timestamp`) y fallback local en `services/weatherApi.js` para evitar estancamiento en la caché CDN de GitHub.
+- **Anti-Caché & Sincronización:**
+  - Service Worker actualizado a `meteoasturlode-v305-avisos-costeros-aemet-oficiales` en `sw.js`.
+  - Versión oficial elevada a `v3.0.5 🌊` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.5'` en `app.js`, `services/weatherApi.js?v=3.0.5`, `currentCard.js?v=3.0.5`, `weatherAlerts.js?v=3.0.5` y query strings en `index.html`.
+
 ## [3.0.4] - 2026-10-23
 
 ### 🎯 Armonía Visual en Avisos AEMET & Burbuja de Flecha Unificada (Feedback Lendo - Ley 14)

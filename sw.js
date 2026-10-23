@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v304-aemet-burbuja-flecha-armonia';
+const CACHE_NAME = 'meteoasturlode-v305-avisos-costeros-aemet-oficiales';
 const STATIC_ASSETS = [
   './',
   './index.html',

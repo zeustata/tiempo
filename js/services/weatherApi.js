@@ -139,11 +139,16 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
     const isLocalhost = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
     const alertsUrl = isLocalhost 
       ? 'data/avisos-asturias.json' 
-      : 'https://raw.githubusercontent.com/zeustata/tiempo/data/data/avisos-asturias.json';
+      : `https://raw.githubusercontent.com/zeustata/tiempo/data/data/avisos-asturias.json?_t=${Math.floor(Date.now() / 60000)}`;
       
-    const aemetAlertsPromise = fetch(alertsUrl)
-      .then(r => r.ok ? r.json() : null)
-      .catch(() => null);
+    const aemetAlertsPromise = fetch(alertsUrl, { cache: 'no-cache' })
+      .then(r => {
+        if (!r.ok) throw new Error('Alerts fetch failed');
+        return r.json();
+      })
+      .catch(() => {
+        return fetch('data/avisos-asturias.json').then(r => r.ok ? r.json() : null).catch(() => null);
+      });
 
     const [weather, aqi, marine, consensus, aemetAlerts] = await Promise.all([weatherPromise, aqiPromise, marinePromise, consensusPromise, aemetAlertsPromise]);
 

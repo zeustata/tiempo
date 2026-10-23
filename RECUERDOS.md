@@ -52,6 +52,22 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. *Almacenamiento Estático Desacoplado:* El bot vuelca los datos limpios (km abiertos, pistas por dificultad técnica, remontes en servicio y espesores mín/máx) en un archivo JSON estático (`data/snowReport.json`).
     3. *Consumo Directo en Cliente:* `mountainCard.js` lee ese JSON sin sobrecargar a los servidores externos ni ralentizar la carga en clientes, mostrando los partes de nieve actualizados en vivo de forma 100% legal, autónoma y sin fricción.
 
+## 🌊 Actualización v3.0.5: Ingesta Integral de Avisos Costeros Oficiales AEMET (MeteoAlarm) & Sincronización en Directo — 2026-10-23
+- **Ingesta Oficial de Fenómenos Costeros AEMET (Feedback Lendo - Leyes 15 y 16):**
+  1. *Diagnóstico y Resolución del Filtrado de Avisos:*
+     - Lendo advierte que AEMET mantenía avisos costeros activos de nivel naranja por olas de 5 a 7 metros y viento fuerza 7 en el litoral asturiano, pero la aplicación no los mostraba en producción.
+     - Se detectó que el feed oficial de MeteoAlarm emite las alertas marítimas bajo el prefijo `Costa - Litoral occidental asturiano` y `Costa - Litoral oriental asturiano`. El extractor automatizado `scripts/fetch_alerts.js` únicamente comprobaba los nombres terrestres sin prefijo, descartando silenciosamente todas las advertencias costeras.
+     - Se actualizó el mapeo en `scripts/fetch_alerts.js` para capturar tanto `Litoral...` como `Costa - Litoral...`, asignándolos a las zonas AEMET oficiales correspondientes (`633301` y `633302`).
+  2. *Iconografía y Clasificación Dinámica (`🌊`):*
+     - En `js/utils/weatherAlerts.js` se agregó el tipo de fenómeno `coastal` y `costeros` mapeado al icono `🌊`.
+     - Se añadió un filtro estricto de expiración (`expires <= now`) para descartar avisos pasados antes de evaluar el nivel máximo.
+  3. *Blindaje de Red, Cache-Busting y Fallback:*
+     - En `js/services/weatherApi.js` se incorporó un parámetro temporal `?_t=timestamp` y cabecera `cache: no-cache` en la descarga de los avisos, junto a un mecanismo de fallback automático al archivo local si falla el endpoint de GitHub.
+  4. *Versionado y Anti-Caché:*
+     - Service Worker actualizado a `meteoasturlode-v305-avisos-costeros-aemet-oficiales` en `sw.js`.
+     - Versión oficial elevada a `v3.0.5 🌊` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.5'` en `app.js`, `services/weatherApi.js?v=3.0.5`, `currentCard.js?v=3.0.5`, `weatherAlerts.js?v=3.0.5` y query strings en `index.html`.
+     - Cumplimiento de la **Regla Sagrada**: comprobación rigurosa en servidor de pruebas local antes de cualquier subida.
+
 ## 🎯 Actualización v3.0.4: Armonía Visual en Avisos AEMET & Burbuja de Flecha Unificada — 2026-10-23
 - **Armonía Visual y Acabado Integral (Doctrina Constitucional 14 - Feedback Lendo):**
   1. *Unificación de la Flecha de Desglose en AEMET:*

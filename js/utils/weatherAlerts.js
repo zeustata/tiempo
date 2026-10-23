@@ -149,13 +149,12 @@ export function getAemetAlertStatus(weatherData, concejo) {
     const officialAlerts = weatherData.aemetAlerts.zones[aemetZone.aemetCode].alerts;
     
     if (officialAlerts && officialAlerts.length > 0) {
-      usingOfficialAemet = true;
-      
       const typeIcons = {
         'wind': '💨',
         'rain': '🌧️',
         'snow': '❄️',
         'coastal': '🌊',
+        'costeros': '🌊',
         'temperature': '🌡️',
         'thunderstorm': '⛈️',
         'fog': '🌫️',
@@ -174,7 +173,12 @@ export function getAemetAlertStatus(weatherData, concejo) {
         'red': '#ef4444'
       };
 
+      const now = new Date();
       officialAlerts.forEach(a => {
+        // Ignorar avisos cuya vigencia ya haya expirado
+        if (a.expires && new Date(a.expires) <= now) return;
+
+        usingOfficialAemet = true;
         let title = a.headline || `Aviso por ${a.type}`;
         
         alerts.push({
@@ -183,7 +187,7 @@ export function getAemetAlertStatus(weatherData, concejo) {
           level: a.level,
           levelName: levelNames[a.level] || 'Aviso AEMET',
           levelColor: levelColors[a.level] || '#eab308',
-          icon: typeIcons[a.type] || '⚠️',
+          icon: typeIcons[a.type] || (String(a.type).includes('coastal') ? '🌊' : '⚠️'),
           title: title,
           desc: a.description || 'Consulta los detalles en aemet.es',
           validity: `Hasta ${new Date(a.expires).toLocaleString('es-ES', {weekday: 'short', hour: '2-digit', minute:'2-digit'})}`,

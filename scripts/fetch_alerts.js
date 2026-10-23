@@ -5,10 +5,12 @@ const path = require('path');
 const API_URL = 'https://feeds.meteoalarm.org/api/v1/warnings/feeds-spain';
 const OUTPUT_FILE = path.join(__dirname, '../data/avisos-asturias.json');
 
-// Zonas AEMET para Asturias (códigos de Meteoalerta)
+// Zonas AEMET para Asturias (códigos de Meteoalerta / MeteoAlarm)
 const ASTURIAS_ZONES = [
   'Litoral occidental asturiano',
+  'Costa - Litoral occidental asturiano',
   'Litoral oriental asturiano',
+  'Costa - Litoral oriental asturiano',
   'Suroccidental asturiana',
   'Central y Valles mineros',
   'Cordillera y Picos de Europa'
@@ -46,7 +48,9 @@ async function processAlerts() {
     
     const zoneNameToId = {
       'Litoral occidental asturiano': '633301',
+      'Costa - Litoral occidental asturiano': '633301',
       'Litoral oriental asturiano': '633302',
+      'Costa - Litoral oriental asturiano': '633302',
       'Suroccidental asturiana': '633303',
       'Central y Valles mineros': '633304',
       'Cordillera y Picos de Europa': '633305'
@@ -63,9 +67,13 @@ async function processAlerts() {
           
         if (!infoEs || !Array.isArray(infoEs.area)) return;
         
-        // Verificamos si afecta a alguna zona de Asturias
+        // Verificamos si afecta a alguna zona de Asturias (terrestre o costera)
         infoEs.area.forEach(area => {
-          if (ASTURIAS_ZONES.includes(area.areaDesc)) {
+          const rawArea = area.areaDesc ? area.areaDesc.trim() : '';
+          const cleanArea = rawArea.startsWith('Costa - ') ? rawArea.replace('Costa - ', '').trim() : rawArea;
+          const zoneId = zoneNameToId[rawArea] || zoneNameToId[cleanArea];
+
+          if (zoneId) {
             const expires = new Date(infoEs.expires);
             // Ignoramos los caducados y los de nivel verde
             const levelParam = (infoEs.parameter || []).find(p => p.valueName === 'awareness_level');
@@ -74,22 +82,30 @@ async function processAlerts() {
             const levelVal = levelParam ? levelParam.value : '';
             if (expires > now && !levelVal.includes('green')) {
               
-              const zoneId = zoneNameToId[area.areaDesc];
-              
               // Extraer color del nivel
               let color = 'yellow';
               if (levelVal.includes('orange')) color = 'orange';
               if (levelVal.includes('red')) color = 'red';
               
+              const rawType = typeParam ? typeParam.value.toLowerCase() : 'unknown';
+              let alertType = 'unknown';
+              if (rawType.includes('coastal') || rawType.includes('costero')) alertType = 'coastal';
+              else if (rawType.includes('wind') || rawType.includes('viento')) alertType = 'wind';
+              else if (rawType.includes('rain') || rawType.includes('lluvia')) alertType = 'rain';
+              else if (rawType.includes('thunderstorm') || rawType.includes('tormenta')) alertType = 'thunderstorm';
+              else if (rawType.includes('snow') || rawType.includes('nieve')) alertType = 'snow';
+              else if (rawType.includes('fog') || rawType.includes('niebla')) alertType = 'fog';
+              else alertType = rawType;
+
               const alertObj = {
                 id: w.alert.identifier,
-                type: typeParam ? typeParam.value.toLowerCase() : 'unknown',
+                type: alertType,
                 level: color,
                 onset: infoEs.onset,
                 expires: infoEs.expires,
                 headline: infoEs.headline,
-                description: infoEs.description,
-                instruction: infoEs.instruction
+                description: infoEs.description || '',
+                instruction: infoEs.instruction || ''
               };
               
               alertsByZone[zoneId].alerts.push(alertObj);

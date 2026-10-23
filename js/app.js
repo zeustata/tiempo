@@ -1,7 +1,7 @@
 import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=2.0.0';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=2.2.85';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.5';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=2.0.0';
-import { renderCurrentWeather } from './components/currentCard.js?v=3.0.4';
+import { renderCurrentWeather } from './components/currentCard.js?v=3.0.5';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=2.2.76';
 import { renderSurfCard } from './components/surfCard.js?v=2.2.77';
 import { renderRoutesCard } from './components/routesCard.js?v=2.2.75';
@@ -26,7 +26,7 @@ import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomen
 import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=2.0.0';
 import { initGyroGlass } from './utils/gyroGlass.js?v=2.0.0';
 import { triggerSeismicRefresh, getSeismicStatus } from './utils/seismicDetector.js?v=2.2.38';
-import { evaluateWeatherAlerts } from './utils/weatherAlerts.js?v=2.2.35';
+import { evaluateWeatherAlerts } from './utils/weatherAlerts.js?v=3.0.5';
 import { openShareModal } from './utils/shareCardGenerator.js?v=2.2.64';
 import { toggleWeatherSpeech, stopWeatherSpeech } from './utils/weatherSpeaker.js?v=2.0.0';
 
@@ -43,7 +43,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.4';
+export const CURRENT_APP_VERSION = '3.0.5';
 
 class MeteoAsturiasApp {
   constructor() {
