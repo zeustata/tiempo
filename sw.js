@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v302-clima-boton-ver-amarillo';
+const CACHE_NAME = 'meteoasturlode-v303-tarjetas-silenciosas-desplegables';
 const STATIC_ASSETS = [
   './',
   './index.html',

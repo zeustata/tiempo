@@ -75,8 +75,8 @@ export function renderFoehnBanner(foehn) {
   if (!foehn || !foehn.isActive) return '';
 
   return `
-    <div class="foehn-banner ${foehn.level}">
-      <div class="foehn-banner-header">
+    <div class="foehn-banner ${foehn.level} alert-collapsible-card collapsed" role="region" aria-label="${foehn.title}">
+      <div class="foehn-banner-header" onclick="this.closest('.alert-collapsible-card').classList.toggle('collapsed')" title="Toca para ver el desglose o plegar la alerta">
         <div class="foehn-header-left">
           <div class="foehn-title-group">
             <span class="foehn-icon">🔥</span>
@@ -84,9 +84,12 @@ export function renderFoehnBanner(foehn) {
           </div>
           <span class="foehn-badge">${foehn.badge}</span>
         </div>
-        <button class="btn-explain-sensor-compact btn-open-phenomena" data-phenomenon="foehn" title="Aprende por qué el Viento Sur calienta y seca el aire en Asturias">💡 ¿Por qué ocurre?</button>
+        <div class="alert-header-actions" style="display: flex; align-items: center; gap: 8px;">
+          <button class="btn-explain-sensor-compact btn-open-phenomena" data-phenomenon="foehn" onclick="event.stopPropagation()" title="Aprende por qué el Viento Sur calienta y seca el aire en Asturias">💡 ¿Por qué ocurre?</button>
+          <span class="alert-chevron" title="Toca para desglosar o plegar">▼</span>
+        </div>
       </div>
-      <div class="foehn-banner-body">
+      <div class="foehn-banner-body alert-collapsible-body">
         <p class="foehn-desc">${foehn.description}</p>
         <div class="foehn-metrics">
           <span class="foehn-metric-pill">💧 Humedad: <strong>${foehn.humidity}%</strong> (desplomada)</span>

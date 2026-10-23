@@ -205,8 +205,8 @@ export function renderSnowBanner(snow) {
   const icon = snow.level === 'historic' ? '🚨' : (snow.level === 'mountain' ? '🏔️' : '❄️');
 
   return `
-    <div class="snow-banner ${snow.level}">
-      <div class="snow-banner-header">
+    <div class="snow-banner ${snow.level} alert-collapsible-card collapsed" role="region" aria-label="${snow.title}">
+      <div class="snow-banner-header" onclick="this.closest('.alert-collapsible-card').classList.toggle('collapsed')" title="Toca para ver el desglose o plegar la alerta">
         <div class="snow-header-left">
           <div class="snow-title-group">
             <span class="snow-icon">${icon}</span>
@@ -214,9 +214,12 @@ export function renderSnowBanner(snow) {
           </div>
           <span class="snow-badge">${snow.badge}</span>
         </div>
-        <button class="btn-explain-sensor-compact" data-explain="snow_alert" title="Aprende cómo se calculan las cotas de nieve y el protocolo en Asturias">💡 ¿Por qué ocurre?</button>
+        <div class="alert-header-actions" style="display: flex; align-items: center; gap: 8px;">
+          <button class="btn-explain-sensor-compact" data-explain="snow_alert" onclick="event.stopPropagation()" title="Aprende cómo se calculan las cotas de nieve y el protocolo en Asturias">💡 ¿Por qué ocurre?</button>
+          <span class="alert-chevron" title="Toca para desglosar o plegar">▼</span>
+        </div>
       </div>
-      <div class="snow-banner-body">
+      <div class="snow-banner-body alert-collapsible-body">
         <p class="snow-desc">${snow.description}</p>
         <div class="snow-metrics">
           <span class="snow-metric-pill">⏱️ Inicio estimado: <strong>${snow.startHourStr}</strong></span>

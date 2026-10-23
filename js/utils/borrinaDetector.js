@@ -220,8 +220,8 @@ export function renderBorrinaBanner(borrina) {
   if (!borrina || !borrina.isActive) return '';
 
   return `
-    <div class="borrina-banner ${borrina.level} ${borrina.type}">
-      <div class="borrina-banner-header">
+    <div class="borrina-banner ${borrina.level} ${borrina.type} alert-collapsible-card collapsed" role="region" aria-label="${borrina.title}">
+      <div class="borrina-banner-header" onclick="this.closest('.alert-collapsible-card').classList.toggle('collapsed')" title="Toca para ver el desglose o plegar la alerta">
         <div class="borrina-header-left">
           <div class="borrina-title-group">
             <span class="borrina-icon">${getBorrinaSvg(borrina.type)}</span>
@@ -229,9 +229,12 @@ export function renderBorrinaBanner(borrina) {
           </div>
           <span class="borrina-badge">${borrina.badge}</span>
         </div>
-        <button class="btn-explain-sensor-compact btn-open-phenomena" data-phenomenon="${borrina.phenomenonId}" title="Aprende por qué se forma este fenómeno en Asturias">💡 ¿Por qué ocurre?</button>
+        <div class="alert-header-actions" style="display: flex; align-items: center; gap: 8px;">
+          <button class="btn-explain-sensor-compact btn-open-phenomena" data-phenomenon="${borrina.phenomenonId}" onclick="event.stopPropagation()" title="Aprende por qué se forma este fenómeno en Asturias">💡 ¿Por qué ocurre?</button>
+          <span class="alert-chevron" title="Toca para desglosar o plegar">▼</span>
+        </div>
       </div>
-      <div class="borrina-banner-body">
+      <div class="borrina-banner-body alert-collapsible-body">
         <p class="borrina-desc">${borrina.description}</p>
         <div class="borrina-metrics">
           <span class="borrina-metric-pill">💧 Humedad: <strong>${borrina.humidity}%</strong></span>

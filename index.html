@@ -31,8 +31,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=3.0.2">
-  <link rel="stylesheet" href="css/components.css?v=3.0.2">
+  <link rel="stylesheet" href="css/main.css?v=3.0.3">
+  <link rel="stylesheet" href="css/components.css?v=3.0.3">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -274,7 +274,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.2 🟡</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.3 🛡️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -349,8 +349,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v3.0.2 🟡</span>
+            <span class="release-version">v3.0.3 🛡️</span>
             <span class="release-date">23 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-feature">Ergonomía Móvil &amp; Armonía Visual (Feedback Lendo / Prieto)</span> <strong>Tarjetas Silenciosas de Alerta Desplegables con Flecha de Desglose</strong>:
+              <br>• <strong>Modo Compacto por Defecto:</strong> Todas las tarjetas de alerta silenciosa (Viento Lateral en Viaductos, Tormenta Inminente y Granizo, Galerna Cantábrica, Nieve y Cota, Mar de Fondo, Efecto Foehn, Alerta Xelu, Borrina Marina y Actividad Sísmica) se presentan ahora en reposo como una franja compacta de alta legibilidad, evitando sobrecargar o desplazar la vista en móviles estrechos.
+              <br>• <strong>Interacción Táctil y Flecha de Desglose (<code>▼</code> / <code>▲</code>):</strong> Con un solo toque en la cabecera o la flecha circular se desglosa todo el contenido (viaductos sensibles, trazados, métricas viales, explicaciones físicas y cláusulas legales), replicando la ergonomía de la tarjeta de avisos de AEMET.
+              <br>• <strong>Aislamiento Táctil de Botones (<code>💡</code>):</strong> Los accesos didácticos directos a la física del fenómeno abren su panel explicativo con aislamiento de eventos sin alternar el estado de apertura de la tarjeta.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v3.0.2 🟡</span>
+            <span class="release-date">23 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-feature">Diseño &amp; Usabilidad (Feedback Lendo)</span> <strong>Destacado Visual del Desglose Climatológico Mensual</strong>:
@@ -4263,7 +4277,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.0.2').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.0.3').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4293,7 +4307,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.2"></script>
+  <script type="module" src="js/app.js?v=3.0.3"></script>
 
 
 

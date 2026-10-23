@@ -52,6 +52,29 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. *Almacenamiento Estático Desacoplado:* El bot vuelca los datos limpios (km abiertos, pistas por dificultad técnica, remontes en servicio y espesores mín/máx) en un archivo JSON estático (`data/snowReport.json`).
     3. *Consumo Directo en Cliente:* `mountainCard.js` lee ese JSON sin sobrecargar a los servidores externos ni ralentizar la carga en clientes, mostrando los partes de nieve actualizados en vivo de forma 100% legal, autónoma y sin fricción.
 
+## 🛡️ Actualización v3.0.3: Tarjetas Silenciosas de Alerta Desplegables con Flecha de Desglose — 2026-10-23
+- **Ergonomía Móvil y Supresión de Sobrecarga en Alertas (Feedback de Lendo y Beta Tester Prieto):**
+  1. *Arquitectura Colapsable Unificada en Reposo (Leyes 11 y 14):*
+     - Ante el reporte del tester Prieto de que las tarjetas de alerta activa (como el preaviso de viento en viaductos) sobrecargaban en exceso la pantalla inicial del móvil desplazando la estación en vivo más de 500 px, se rediseña la suite completa de tarjetas silenciosas (`.alert-collapsible-card.collapsed` en `css/components.css`).
+     - Al activarse cualquier aviso (sea amarillo o rojo/severo), la tarjeta se muestra por defecto como una elegante franja compacta de unos 50 px de alto, mostrando el icono identificativo, el título de la alerta, el distintivo de gravedad, el botón didáctico `💡` y una flecha circular de desglose (`.alert-chevron` con `▼`).
+     - Afecta a los 9 detectores dinámicos del sistema:
+       1. `roadWindDetector.js` (Viento Lateral en Viaductos y Autovías)
+       2. `thunderstormDetector.js` (Alerta de Tormenta Inminente y Granizo)
+       3. `galernaDetector.js` (Alerta de Galerna Cantábrica)
+       4. `snowDetector.js` (Alerta de Nieve y Cota)
+       5. `marFondoDetector.js` (Alerta de Mar de Fondo y Golpe de Mar)
+       6. `foehnDetector.js` (Efecto Foehn / Viento Sur)
+       7. `xeluDetector.js` (Alerta Xelu / Heladas y Hielo)
+       8. `borrinaDetector.js` (Borrina Marina y Nieblas de Inversión)
+       9. `seismicDetector.js` (Actividad Sísmica Notable EMSC)
+  2. *Interacción Táctil y Aislamiento de Botones:*
+     - Tocar la cabecera o la flecha expande fluidamente el cuerpo completo (`.alert-collapsible-body`), revelando viaductos sensibles, trazados, métricas viales y descargos de seguridad. La flecha rota suavemente a `▲` y otro toque la vuelve a plegar.
+     - Botones didácticos interiores (`💡 Física del Viento`, `💡 ¿Por qué ocurre?`, `📡 Ver Radar`, `🏛️ Ficha EMSC`) blindados con `onclick="event.stopPropagation()"` para abrir sus ventanas explicativas sin alterar el estado de apertura de la tarjeta.
+  3. *Versionado, Anti-Caché y Blindaje Exclusivo en Local:*
+     - Service Worker actualizado a `meteoasturlode-v303-tarjetas-silenciosas-desplegables` en `sw.js`.
+     - Versión oficial elevada a `v3.0.3 🛡️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.3'` en `app.js`, `currentCard.js?v=3.0.3` y query strings en `index.html`.
+     - Cumplimiento estricto de la **Regla Sagrada** de Lendo: cambios aplicados y verificados exclusivamente en entorno local, sin subida a GitHub.
+
 ## 🟡 Actualización v3.0.2: Destacado Visual del Desglose Climatológico Mensual & Botón «Ver ▾» — 2026-10-23
 - **Diseño, Usabilidad y Visibilidad Mejorada (Feedback y Mandato Expreso de Lendo):**
   1. *Nueva Pastilla de Apertura en Amarillo Ámbar de Alto Contraste:*

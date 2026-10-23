@@ -103,8 +103,8 @@ export function renderXeluBanner(xelu) {
   const icon = xelu.level === 'severe' ? '🧊' : '❄️';
 
   return `
-    <div class="xelu-banner ${xelu.level}">
-      <div class="xelu-banner-header">
+    <div class="xelu-banner ${xelu.level} alert-collapsible-card collapsed" role="region" aria-label="${xelu.title}">
+      <div class="xelu-banner-header" onclick="this.closest('.alert-collapsible-card').classList.toggle('collapsed')" title="Toca para ver el desglose o plegar la alerta">
         <div class="xelu-header-left">
           <div class="xelu-title-group">
             <span class="xelu-icon">${icon}</span>
@@ -112,9 +112,12 @@ export function renderXeluBanner(xelu) {
           </div>
           <span class="xelu-badge">${xelu.badge}</span>
         </div>
-        <button class="btn-explain-sensor-compact" data-explain="xelu" title="Aprende cómo se forman las heladas y el hielo negro en Asturias">💡 ¿Por qué ocurre?</button>
+        <div class="alert-header-actions" style="display: flex; align-items: center; gap: 8px;">
+          <button class="btn-explain-sensor-compact" data-explain="xelu" onclick="event.stopPropagation()" title="Aprende cómo se forman las heladas y el hielo negro en Asturias">💡 ¿Por qué ocurre?</button>
+          <span class="alert-chevron" title="Toca para desglosar o plegar">▼</span>
+        </div>
       </div>
-      <div class="xelu-banner-body">
+      <div class="xelu-banner-body alert-collapsible-body">
         <p class="xelu-desc">${xelu.description}</p>
         <div class="xelu-metrics">
           <span class="xelu-metric-pill">🌡️ Aire: <strong>${xelu.temp} °C</strong></span>

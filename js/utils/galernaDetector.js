@@ -127,8 +127,8 @@ export function renderGalernaBanner(galerna) {
   if (!galerna || !galerna.isActive) return '';
 
   return `
-    <div class="galerna-banner ${galerna.level}">
-      <div class="galerna-banner-header">
+    <div class="galerna-banner ${galerna.level} alert-collapsible-card collapsed" role="region" aria-label="${galerna.title}">
+      <div class="galerna-banner-header" onclick="this.closest('.alert-collapsible-card').classList.toggle('collapsed')" title="Toca para ver el desglose o plegar la alerta">
         <div class="galerna-header-left">
           <div class="galerna-title-group">
             <span class="galerna-icon">🌊</span>
@@ -136,9 +136,12 @@ export function renderGalernaBanner(galerna) {
           </div>
           <span class="galerna-badge">${galerna.badge}</span>
         </div>
-        <button class="btn-explain-sensor-compact btn-open-phenomena" data-phenomenon="galerna" title="Aprende por qué se desatan las galernas en la costa asturiana">💡 ¿Por qué ocurre?</button>
+        <div class="alert-header-actions" style="display: flex; align-items: center; gap: 8px;">
+          <button class="btn-explain-sensor-compact btn-open-phenomena" data-phenomenon="galerna" onclick="event.stopPropagation()" title="Aprende por qué se desatan las galernas en la costa asturiana">💡 ¿Por qué ocurre?</button>
+          <span class="alert-chevron" title="Toca para desglosar o plegar">▼</span>
+        </div>
       </div>
-      <div class="galerna-banner-body">
+      <div class="galerna-banner-body alert-collapsible-body">
         <p class="galerna-desc">${galerna.description}</p>
         <div class="galerna-metrics">
           <span class="galerna-metric-pill">🧭 Rumbo: <strong>${galerna.windDirection}° (${galerna.windDirectionLabel})</strong></span>

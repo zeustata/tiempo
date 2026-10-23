@@ -141,8 +141,8 @@ export function renderThunderstormBanner(storm) {
   if (!storm || !storm.isActive) return '';
 
   return `
-    <div class="thunderstorm-banner ${storm.level}" role="alert">
-      <div class="thunderstorm-banner-header">
+    <div class="thunderstorm-banner ${storm.level} alert-collapsible-card collapsed" role="alert" aria-label="${storm.title}">
+      <div class="thunderstorm-banner-header" onclick="this.closest('.alert-collapsible-card').classList.toggle('collapsed')" title="Toca para ver el desglose o plegar la alerta">
         <div class="thunderstorm-header-left">
           <div class="thunderstorm-title-group">
             <span class="thunderstorm-icon">⚡</span>
@@ -150,11 +150,12 @@ export function renderThunderstormBanner(storm) {
           </div>
           <span class="thunderstorm-badge">${storm.badge}</span>
         </div>
-        <div class="thunderstorm-header-actions">
-          <button class="btn-explain-sensor-compact btn-radar-shortcut" data-action="go-radar" title="Abrir radar de lluvia y tormentas en tiempo real">📡 Ver Radar en Directo</button>
+        <div class="thunderstorm-header-actions alert-header-actions" style="display: flex; align-items: center; gap: 8px;">
+          <button class="btn-explain-sensor-compact btn-radar-shortcut" data-action="go-radar" onclick="event.stopPropagation()" title="Abrir radar de lluvia y tormentas en tiempo real">📡 Ver Radar en Directo</button>
+          <span class="alert-chevron" title="Toca para desglosar o plegar">▼</span>
         </div>
       </div>
-      <div class="thunderstorm-banner-body">
+      <div class="thunderstorm-banner-body alert-collapsible-body">
         <p class="thunderstorm-desc">${storm.description}</p>
         <div class="thunderstorm-metrics">
           <span class="thunderstorm-metric-pill">⏰ Momento: <strong>${storm.timeLabel}</strong></span>

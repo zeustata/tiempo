@@ -9,6 +9,22 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.3] - 2026-10-23
+
+### 🛡️ Tarjetas Silenciosas de Alerta Desplegables con Flecha de Desglose (Feedback Lendo / Prieto)
+- **Ergonomía Móvil y Supresión de Sobrecarga Visual (Leyes 11 y 14):**
+  - Todas las tarjetas de alerta silenciosa (Viento Lateral en Viaductos, Tormenta Inminente y Granizo, Galerna Cantábrica, Nieve y Cota, Mar de Fondo, Efecto Foehn, Alerta Xelu, Borrina Marina y Actividad Sísmica) se presentan en estado colapsado (`.alert-collapsible-card.collapsed`) por defecto.
+  - Ocupan únicamente una franja compacta y atractiva (~50 px de alto) con su icono, título, distintivo de nivel, botón didáctico `💡` y una **flecha circular de desglose (`▼`)**, evitando que dominen la pantalla o desplacen la vista en smartphones.
+- **Interacción Táctil Intuitiva:**
+  - Tocar la cabecera o la flecha expande fluidamente el cuerpo completo con viaductos sensibles, trazados, métricas viales y notas preventivas legales de la DGT / Guardia Civil.
+  - La flecha rota con animación suave a `▲`, permitiendo replegar la tarjeta con otro toque.
+  - Aislamiento de eventos (`event.stopPropagation()`) en botones interiores (`💡 Física del Viento`, `📡 Ver Radar`, `🏛️ Ficha EMSC`, etc.) para abrir los paneles didácticos sin cerrar ni alternar la tarjeta.
+- **Anti-Caché & Sincronización:**
+  - Service Worker actualizado a `meteoasturlode-v303-tarjetas-silenciosas-desplegables` en `sw.js`.
+  - Versión oficial elevada a `v3.0.3 🛡️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.3'` en `app.js`, `currentCard.js?v=3.0.3` y query strings en `index.html`.
+- **Modificación Exclusiva en Local (Regla Sagrada):**
+  - Verificación en local previa sin subida a red.
+
 ## [3.0.2] - 2026-10-23
 
 ### 🟡 Destacado Visual del Desglose Climatológico Mensual & Botón «Ver ▾» (Feedback Lendo)

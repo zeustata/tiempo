@@ -8136,6 +8136,60 @@
   margin-bottom: 0;
 }
 
+/* ==========================================================================
+   DOCTRINA DE TARJETAS SILENCIOSAS COLAPSABLES (FEEDBACK LENDO / PRIETO v3.0.3)
+   ========================================================================== */
+.alert-collapsible-card {
+  transition: padding 0.25s ease, margin-bottom 0.25s ease;
+}
+
+.alert-collapsible-card [class*="-banner-header"] {
+  cursor: pointer;
+  user-select: none;
+  transition: margin-bottom 0.2s ease;
+}
+
+.alert-collapsible-card.collapsed {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  margin-bottom: 12px !important;
+}
+
+.alert-collapsible-card.collapsed [class*="-banner-header"] {
+  margin-bottom: 0 !important;
+}
+
+.alert-collapsible-card.collapsed .alert-collapsible-body,
+.alert-collapsible-card.collapsed [class*="-banner-body"] {
+  display: none !important;
+}
+
+.alert-chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: inherit;
+  font-size: 0.72rem;
+  line-height: 1;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease, border-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.alert-collapsible-card [class*="-banner-header"]:hover .alert-chevron {
+  background: rgba(255, 255, 255, 0.24);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.alert-collapsible-card:not(.collapsed) .alert-chevron {
+  transform: rotate(180deg);
+  background: rgba(255, 255, 255, 0.22);
+}
+
 /* --- BANNER DINÁMICO DE VIENTO LATERAL EN VIADUCTOS Y CARRETERA (SEGURIDAD VIAL) --- */
 .road-wind-banner {
   border-radius: var(--radius-lg);
