@@ -348,7 +348,7 @@ export function renderAemetAlertCard(alertStatus, concejo) {
         </div>
         <div class="aemet-header-right" style="display: flex; align-items: center; gap: 8px;">
           <a href="https://www.aemet.es" target="_blank" rel="noopener noreferrer" class="aemet-logo-tag" style="text-decoration: none;" title="Visitar portal oficial de AEMET" onclick="event.stopPropagation()">aemet.es ↗</a>
-          <span class="aemet-chevron" style="color: inherit; opacity: 0.7; font-size: 0.85rem; transition: transform 0.3s ease;">▼</span>
+          <span class="aemet-chevron alert-chevron" title="Toca para desglosar o plegar los avisos oficiales">▼</span>
         </div>
       </div>
 

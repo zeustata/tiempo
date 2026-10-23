@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303-tarjetas-silenciosas-desplegables';
+const CACHE_NAME = 'meteoasturlode-v304-aemet-burbuja-flecha-armonia';
 const STATIC_ASSETS = [
   './',
   './index.html',

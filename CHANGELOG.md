@@ -9,6 +9,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.4] - 2026-10-23
+
+### 🎯 Armonía Visual en Avisos AEMET & Burbuja de Flecha Unificada (Feedback Lendo - Ley 14)
+- **Burbuja Circular Liquid Glass en AEMET (`.alert-chevron`):**
+  - La flecha de la tarjeta oficial de avisos de AEMET sustituye el carácter plano antiguo por la burbuja redondeada translúcida (`24px × 24px`, fondo cristal `rgba(255, 255, 255, 0.12)`, borde luminoso y micro-animación hover), homogeneizando su aspecto al 100% con las alertas silenciosas.
+  - Sincronizado el giro elástico de 180° (`▼` a `▲`) al expandir o colapsar el desglose de los avisos oficiales.
+- **Anti-Caché & Sincronización:**
+  - Service Worker actualizado a `meteoasturlode-v304-aemet-burbuja-flecha-armonia` en `sw.js`.
+  - Versión oficial elevada a `v3.0.4 🎯` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.4'` en `app.js`, `currentCard.js?v=3.0.4`, `weatherAlerts.js?v=3.0.4` y query strings en `index.html`.
+- **Modificación Exclusiva en Local (Regla Sagrada):**
+  - Verificación en local previa sin subida a red.
+
 ## [3.0.3] - 2026-10-23
 
 ### 🛡️ Tarjetas Silenciosas de Alerta Desplegables con Flecha de Desglose (Feedback Lendo / Prieto)

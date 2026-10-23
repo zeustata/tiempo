@@ -10772,8 +10772,15 @@
 /* AEMET Collapsible Logic */
 .aemet-alert-card.has-active-alerts { cursor: pointer; }
 .aemet-alert-card.collapsed .aemet-collapsible-content { display: none; }
-.aemet-alert-card:not(.collapsed) .aemet-chevron { transform: rotate(180deg); }
-.aemet-chevron { display: inline-block; }
+.aemet-alert-card:hover .aemet-chevron,
+.aemet-card-header:hover .aemet-chevron {
+  background: rgba(255, 255, 255, 0.24);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+.aemet-alert-card:not(.collapsed) .aemet-chevron {
+  transform: rotate(180deg);
+  background: rgba(255, 255, 255, 0.22);
+}
 
 /* ==========================================================================
    MÓDULO 10: TURISMO & PLANES DE OCIO CLIMÁTICO (LIQUID GLASS & ERGONOMÍA)

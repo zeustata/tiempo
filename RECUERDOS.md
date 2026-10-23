@@ -52,6 +52,17 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. *Almacenamiento Estático Desacoplado:* El bot vuelca los datos limpios (km abiertos, pistas por dificultad técnica, remontes en servicio y espesores mín/máx) en un archivo JSON estático (`data/snowReport.json`).
     3. *Consumo Directo en Cliente:* `mountainCard.js` lee ese JSON sin sobrecargar a los servidores externos ni ralentizar la carga en clientes, mostrando los partes de nieve actualizados en vivo de forma 100% legal, autónoma y sin fricción.
 
+## 🎯 Actualización v3.0.4: Armonía Visual en Avisos AEMET & Burbuja de Flecha Unificada — 2026-10-23
+- **Armonía Visual y Acabado Integral (Doctrina Constitucional 14 - Feedback Lendo):**
+  1. *Unificación de la Flecha de Desglose en AEMET:*
+     - Lendo detecta que, mientras las tarjetas silenciosas estrenaban la nueva burbuja circular translúcida Liquid Glass con animación elástica, la tarjeta oficial de avisos de AEMET mantenía un carácter `▼` plano sin burbuja de fondo y con opacidad al 70%, restándole protagonismo y coherencia al diseño.
+     - Se actualiza `js/utils/weatherAlerts.js` integrando la clase unificada `.alert-chevron` en el elemento `.aemet-chevron`.
+     - En `css/components.css` se sincroniza la micro-animación hover y el giro dinámico de 180° a `▲` de la burbuja al desplegarse el listado de avisos oficiales.
+  2. *Versionado, Anti-Caché y Blindaje Exclusivo en Local:*
+     - Service Worker actualizado a `meteoasturlode-v304-aemet-burbuja-flecha-armonia` en `sw.js`.
+     - Versión oficial elevada a `v3.0.4 🎯` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.4'` en `app.js`, `currentCard.js?v=3.0.4`, `weatherAlerts.js?v=3.0.4` y query strings en `index.html`.
+     - Cumplimiento de la **Regla Sagrada** de Lendo: cambios aplicados y verificados exclusivamente en local con servidor activo, sin subida a GitHub.
+
 ## 🛡️ Actualización v3.0.3: Tarjetas Silenciosas de Alerta Desplegables con Flecha de Desglose — 2026-10-23
 - **Ergonomía Móvil y Supresión de Sobrecarga en Alertas (Feedback de Lendo y Beta Tester Prieto):**
   1. *Arquitectura Colapsable Unificada en Reposo (Leyes 11 y 14):*
