@@ -142,7 +142,7 @@ export function renderThunderstormBanner(storm) {
 
   return `
     <div class="thunderstorm-banner ${storm.level} alert-collapsible-card collapsed" role="alert" aria-label="${storm.title}">
-      <div class="thunderstorm-banner-header" onclick="this.closest('.alert-collapsible-card').classList.toggle('collapsed')" title="Toca para ver el desglose o plegar la alerta">
+      <div class="thunderstorm-banner-header" onclick="if (!event.target.closest('button, a')) this.closest('.alert-collapsible-card').classList.toggle('collapsed')" title="Toca para ver el desglose o plegar la alerta">
         <div class="thunderstorm-header-left">
           <div class="thunderstorm-title-group">
             <span class="thunderstorm-icon">⚡</span>
@@ -151,7 +151,7 @@ export function renderThunderstormBanner(storm) {
           <span class="thunderstorm-badge">${storm.badge}</span>
         </div>
         <div class="thunderstorm-header-actions alert-header-actions" style="display: flex; align-items: center; gap: 8px;">
-          <button class="btn-explain-sensor-compact btn-radar-shortcut" data-action="go-radar" onclick="event.stopPropagation()" title="Abrir radar de lluvia y tormentas en tiempo real">📡 Ver Radar en Directo</button>
+          <button class="btn-explain-sensor-compact btn-radar-shortcut" data-action="go-radar" title="Abrir radar de lluvia y tormentas en tiempo real">📡 Ver Radar en Directo</button>
           <span class="alert-chevron" title="Toca para desglosar o plegar">▼</span>
         </div>
       </div>

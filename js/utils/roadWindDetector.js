@@ -324,7 +324,7 @@ export function renderRoadWindBanner(roadWind) {
 
   return `
     <div class="road-wind-banner ${isSevere ? 'severe' : 'warning'} alert-collapsible-card collapsed" role="region" aria-label="${roadWind.title}">
-      <div class="road-wind-banner-header" onclick="this.closest('.alert-collapsible-card').classList.toggle('collapsed')" title="Toca para ver el desglose o plegar la alerta">
+      <div class="road-wind-banner-header" onclick="if (!event.target.closest('button, a')) this.closest('.alert-collapsible-card').classList.toggle('collapsed')" title="Toca para ver el desglose o plegar la alerta">
         <div class="road-wind-header-left">
           <div class="road-wind-title-group">
             <span class="road-wind-icon">${isSevere ? '🚨' : '🚗💨'}</span>
@@ -333,7 +333,7 @@ export function renderRoadWindBanner(roadWind) {
           <span class="road-wind-badge">${roadWind.badge}</span>
         </div>
         <div class="alert-header-actions" style="display: flex; align-items: center; gap: 8px;">
-          <button class="btn-explain-sensor-compact btn-open-phenomena" data-phenomenon="viento" onclick="event.stopPropagation()" title="Aprende cómo afecta el viento lateral en puentes y túneles">💡 Física del Viento</button>
+          <button class="btn-explain-sensor-compact" data-explain="wind" title="Aprende cómo afecta el viento lateral en puentes y túneles">💡 Física del Viento</button>
           <span class="alert-chevron" title="Toca para desglosar o plegar">▼</span>
         </div>
       </div>

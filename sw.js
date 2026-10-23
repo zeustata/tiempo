@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v307-graficas-fusionadas-estacion-en-vivo';
+const CACHE_NAME = 'meteoasturlode-v308-fix-alertas-silenciosas-bombillas-didacticas';
 const STATIC_ASSETS = [
   './',
   './index.html',

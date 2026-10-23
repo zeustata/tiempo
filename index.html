@@ -32,7 +32,7 @@
 
   <!-- Estilos de la Aplicación con Cache Busting -->
   <link rel="stylesheet" href="css/main.css?v=3.0.5">
-  <link rel="stylesheet" href="css/components.css?v=3.0.7">
+  <link rel="stylesheet" href="css/components.css?v=3.0.8">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -194,7 +194,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.7 📈</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.8 💡</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -268,8 +268,26 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v3.0.7 📈</span>
+            <span class="release-version">v3.0.8 💡</span>
             <span class="release-date">23 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-fix">Corrección Didáctica (Reporte Lendo)</span> <strong>Restauración de Enlaces y Modales en Alertas Silenciosas</strong>:
+              <br>• <strong>Propagación de Eventos Garantizada:</strong> Reemplazado el <code>event.stopPropagation()</code> inline de los botones por salvaguardas reactivas en las cabeceras plegables (<code>if (!event.target.closest('button, a')) ...</code>), permitiendo que los clics alcancen la delegación global en <code>document</code> sin colapsar ni desplegar accidentalmente las tarjetas.
+              <br>• <strong>Desacople y Conexión Rigurosa de Bombillas Didácticas:</strong>
+                <br>&nbsp;&nbsp;– <em>Física del Viento en Viaductos:</em> Enlazado directamente a <code>WEATHER_EXPLANATIONS.wind</code> (explicación de rachas, Beaufort y puentes expuestos).
+                <br>&nbsp;&nbsp;– <em>Mar de Fondo ("¿Por qué ocurre?"):</em> Enlazado directamente al Diccionario de Fenómenos (<code>WEATHER_PHENOMENA.mar_fondo</code>).
+                <br>&nbsp;&nbsp;– <em>Galerna, Foehn y Borrina:</em> Enlazados a sus correspondientes fichas en el Diccionario de Fenómenos sin interferencia barométrica.
+                <br>&nbsp;&nbsp;– <em>Alerta Xelu y Nieve:</em> Enlazados a sus guías viales de termodinámica e isoterma cero en <code>WEATHER_EXPLANATIONS</code>.
+                <br>&nbsp;&nbsp;– <em>Radar y Seísmos:</em> Acceso directo e ininterrumpido al radar cantábrico en vivo y ficha oficial EMSC.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v3.0.7 📈</span>
+            <span class="release-date">23 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-feature">Integración Contextual (Reflexión &amp; Decisión Lendo)</span> <strong>Fusión de Meteorología Gráfica en la Estación en Vivo</strong>:
@@ -4253,7 +4271,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.0.6').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.0.8').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4283,7 +4301,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.7"></script>
+  <script type="module" src="js/app.js?v=3.0.8"></script>
 
 
 

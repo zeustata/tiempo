@@ -27,6 +27,33 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Pautas de Coherencia de Diseño:*
      - Los nuevos iconos deben inspirarse y regirse en los iconos ya consolidados de cada tema: mismas proporciones, equilibrio en la cantidad de elementos (astros, nubes, partículas) y mismo ritmo y estilo de animación fluida para garantizar armonía visual y rendimiento en dispositivos móviles.
 
+## 💡 Actualización v3.0.8: Restauración de Enlaces y Modales en Alertas Silenciosas — 2026-10-23
+- **Diagnóstico Riguroso y Causa Raíz (Reporte Lendo - «al darle a la bombilla amarilla dentro de la pastilla azul de fisica del viento o en mar de fondo activo... ya no me enlaza a la explicacion como antes... investiga princesa que estas onfire» y «pisale»):**
+  1. *El Origen del Problema en v3.0.3:*
+     - Al incorporar el sistema de tarjetas plegables para las alertas meteorológicas silenciosas en v3.0.3, se agregó un `onclick="event.stopPropagation()"` inline a los botones internos de acción didáctica para evitar que al pulsar la bombilla se colapsara o desplegara la tarjeta entera.
+     - En `js/app.js`, la apertura de modales didácticos (`setupExplainModal` y `setupPhenomenaModal`) opera mediante delegación de eventos en la raíz (`document.addEventListener('click', ...)`).
+     - Al ejecutarse el inline `event.stopPropagation()` en el botón antes de la fase de burbujeo, el evento de clic era abortado antes de llegar a `document`, dejando completamente inoperativas las bombillas en la interfaz.
+  2. *Conflicto de Selectores y Desacople de Diccionarios:*
+     - En `roadWindDetector.js`, el botón didáctico invocaba `data-phenomenon="viento"`. Sin embargo, "viento" no figuraba en `WEATHER_PHENOMENA` (donde están la Galerna, el Mar de Fondo, el Foehn o la Borrina), sino en `WEATHER_EXPLANATIONS.wind` (donde se explican las rachas máximas, la escala Beaufort y la física del viento cruzado en viaductos expuestos de Asturias).
+     - Asimismo, el selector de `setupExplainModal` capturaba cualquier botón con `.btn-explain-sensor-compact` y, al no hallar `data-explain`, recurría por defecto a `'barometer'`, secuestrando los botones antes de que pudieran alcanzar `setupPhenomenaModal`.
+  3. *Solución Arquitectónica Universal:*
+     - **Inversión de Salvaguardas en Cabeceras:** Se eliminaron todos los `onclick="event.stopPropagation()"` inline de los botones y enlaces de las 9 alertas silenciosas (`roadWindDetector.js`, `marFondoDetector.js`, `galernaDetector.js`, `foehnDetector.js`, `borrinaDetector.js`, `xeluDetector.js`, `snowDetector.js`, `thunderstormDetector.js`, `seismicDetector.js`) y de las alertas AEMET (`weatherAlerts.js`). En su lugar, el colapsado se gestiona en la cabecera mediante salvaguarda reactiva:
+       `onclick="if (!event.target.closest('button, a')) this.closest(...).classList.toggle('collapsed')"`
+       garantizando que pulsar cualquier botón o enlace no colapse la tarjeta y permita al evento burbujear con total libertad.
+     - **Mapeo Riguroso de Bombillas y Enlaces:**
+       • `roadWindDetector.js`: `<button class="btn-explain-sensor-compact" data-explain="wind">💡 Física del Viento</button>` -> Abre `WEATHER_EXPLANATIONS.wind`.
+       • `marFondoDetector.js`: `<button class="btn-explain-sensor-compact btn-open-phenomena" data-phenomenon="mar_fondo">💡 ¿Por qué ocurre?</button>` -> Abre el Diccionario de Fenómenos en `WEATHER_PHENOMENA.mar_fondo` con auto-scroll a la tarjeta.
+       • `galernaDetector.js`, `foehnDetector.js`, `borrinaDetector.js`: Abren respectivamente `galerna`, `foehn` y `borrina`/`inversion` en el Diccionario de Fenómenos.
+       • `xeluDetector.js` y `snowDetector.js`: Abren respectivamente `xelu` y `snow_alert` en `WEATHER_EXPLANATIONS`.
+       • `thunderstormDetector.js`: Conduce directamente al radar cantábrico en vivo (`switchTab('radar')`).
+       • `seismicDetector.js` y `weatherAlerts.js`: Abren enlaces externos a `aemet.es ↗` y la ficha EMSC sin colapsar la tarjeta.
+     - **Desacople en `app.js`:**
+       • `setupExplainModal()` ignora explícitamente elementos destinados a fenómenos o accesos directos (`if (e.target.closest('.btn-open-phenomena, .link-open-phenomena, [data-phenomenon], .btn-radar-shortcut, .btn-seismic-shortcut')) return;`).
+       • `setupPhenomenaModal()` añade el selector `[data-phenomenon]` para asegurar la escucha unificada.
+  4. *Anti-Caché & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v308-fix-alertas-silenciosas-bombillas-didacticas` en `sw.js`.
+     - Versión oficial elevada a `v3.0.8 💡` en pie (`#app-version-badge`), `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.8'` en `app.js`, `css/components.css?v=3.0.8`, `sw.js?v=3.0.8` y query strings en `index.html`.
+
 ## 📈 Actualización v3.0.7: Fusión Contextual de «Meteorología Gráfica» en la Estación en Vivo — 2026-10-23
 - **Diagnóstico Arquitectónico y Reflexión de Lendo («aun la veo desubicada teniendo en cuenta todo lo que tenemos. que puedo hacer? es que no quiero sacrificarla» y «pisale»):**
   1. *El Conflicto de Jerarquía Mental:*

@@ -9,6 +9,33 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.8] - 2026-10-23
+
+### 💡 Corrección Didáctica: Restauración de Enlaces y Modales en Alertas Silenciosas (Reporte Lendo)
+- **Diagnóstico Riguroso y Causa Raíz:**
+  - Lendo detectó que en las alertas meteorológicas silenciosas (como la alerta de Viento en Viaductos y Mar de Fondo Activo), al pulsar las pastillas azules con la bombilla didáctica (`💡 Física del Viento`, `💡 ¿Por qué ocurre?`), la aplicación no abría las fichas explicativas.
+  - La causa raíz residía en dos factores combinados:
+    1. *Detención prematura de propagación:* Al implementar el colapsado/desplegado de tarjetas en v3.0.3, se incorporó un `onclick="event.stopPropagation()"` inline en los botones internos para evitar plegar la tarjeta al pulsar. Dado que la apertura de modales en `app.js` opera mediante delegación en `document` (`document.addEventListener('click', ...)`), el evento era abortado antes de llegar a la raíz.
+    2. *Conflicto de selectores y claves didácticas:* En `roadWindDetector.js` se invocaba `data-phenomenon="viento"`, pero el viento vial pertenece al diccionario didáctico de explicaciones (`WEATHER_EXPLANATIONS.wind`) y no al de fenómenos. Asimismo, `setupExplainModal` capturaba prematuramente clases genéricas como `.btn-explain-sensor-compact`, asignando por defecto el barómetro ante atributos no coincidentes.
+- **Solución Arquitectónica Integral:**
+  - **Inversión de Salvaguarda en Cabeceras Plegables:** Reemplazado el `stopPropagation()` inline de los botones por salvaguardas reactivas en las cabeceras (`onclick="if (!event.target.closest('button, a')) this.closest(...).classList.toggle('collapsed')"`). El clic en botones y enlaces no altera el estado de plegado de la tarjeta y fluye libremente hacia la delegación global en `document`.
+  - **Mapeo Riguroso de Bombillas Didácticas en los 9 Detectores:**
+    - `roadWindDetector.js`: `<button class="btn-explain-sensor-compact" data-explain="wind">💡 Física del Viento</button>` -> Abre la ficha de Beaufort, rachas máximas vs velocidad sostenida y efecto en viaductos expuestos de Asturias en `WEATHER_EXPLANATIONS.wind`.
+    - `marFondoDetector.js`: Enlace directo a `WEATHER_PHENOMENA.mar_fondo` en el Diccionario de Fenómenos con apertura y auto-scroll a la tarjeta explicativa.
+    - `galernaDetector.js`: Enlace directo a `WEATHER_PHENOMENA.galerna` (El Zarpazo del Noroeste).
+    - `foehnDetector.js`: Enlace directo a `WEATHER_PHENOMENA.foehn` (Viento Sur y Ábrego seco).
+    - `borrinaDetector.js`: Enlace directo a `WEATHER_PHENOMENA.borrina` (Niebla Marina de Advección) o `inversion`.
+    - `xeluDetector.js`: Enlace directo a `WEATHER_EXPLANATIONS.xelu` (Física de la escarcha, inversión térmica y hielo negro en asfalto).
+    - `snowDetector.js`: Enlace directo a `WEATHER_EXPLANATIONS.snow_alert` (Cálculo físico de cotas, isoterma cero y protocolos viales).
+    - `thunderstormDetector.js`: Acceso directo e instantáneo a la pestaña de Radar Cantábrico en Vivo vía `.btn-radar-shortcut`.
+    - `seismicDetector.js` y `weatherAlerts.js`: Apertura natural de enlaces externos oficiales (ficha sismológica EMSC y portal oficial `aemet.es ↗`) sin colapsar las tarjetas.
+  - **Desacople en `app.js`:**
+    - `setupExplainModal()` ignora proactivamente cualquier elemento con `.btn-open-phenomena`, `[data-phenomenon]`, `.btn-radar-shortcut` o `.btn-seismic-shortcut`.
+    - `setupPhenomenaModal()` incorpora selectores completos `[data-phenomenon]` para garantizar la apertura fluida del diccionario en todos los componentes.
+- **Anti-Caché & Sincronización:**
+  - Service Worker actualizado a `meteoasturlode-v308-fix-alertas-silenciosas-bombillas-didacticas` en `sw.js`.
+  - Versión oficial elevada a `v3.0.8 💡` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.8'` en `app.js`, `css/components.css?v=3.0.8`, `sw.js?v=3.0.8` y query strings en `index.html`.
+
 ## [3.0.7] - 2026-10-23
 
 ### 📈 Integración Contextual: Fusión de Meteorología Gráfica en la Estación en Vivo (Reflexión & Decisión Lendo)

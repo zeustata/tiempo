@@ -145,7 +145,7 @@ export function renderMarFondoBanner(swell) {
 
   return `
     <div class="mar-fondo-banner ${swell.level} alert-collapsible-card collapsed" role="region" aria-label="${swell.title}">
-      <div class="mar-fondo-banner-header" onclick="this.closest('.alert-collapsible-card').classList.toggle('collapsed')" title="Toca para ver el desglose o plegar la alerta">
+      <div class="mar-fondo-banner-header" onclick="if (!event.target.closest('button, a')) this.closest('.alert-collapsible-card').classList.toggle('collapsed')" title="Toca para ver el desglose o plegar la alerta">
         <div class="mar-fondo-header-left">
           <div class="mar-fondo-title-group">
             <span class="mar-fondo-icon">🌊</span>
@@ -154,7 +154,7 @@ export function renderMarFondoBanner(swell) {
           <span class="mar-fondo-badge">${swell.badge}</span>
         </div>
         <div class="alert-header-actions" style="display: flex; align-items: center; gap: 8px;">
-          <button class="btn-explain-sensor-compact btn-open-phenomena" data-phenomenon="${swell.phenomenonId || 'mar_fondo'}" onclick="event.stopPropagation()" title="Aprende por qué es peligroso el mar de fondo en Asturias">💡 ¿Por qué ocurre?</button>
+          <button class="btn-explain-sensor-compact btn-open-phenomena" data-phenomenon="${swell.phenomenonId || 'mar_fondo'}" title="Aprende por qué es peligroso el mar de fondo en Asturias">💡 ¿Por qué ocurre?</button>
           <span class="alert-chevron" title="Toca para desglosar o plegar">▼</span>
         </div>
       </div>

@@ -344,14 +344,14 @@ export function renderAemetAlertCard(alertStatus, concejo) {
 
   // Si hay alertas activas
   return `
-    <div class="aemet-alert-card aemet-${maxLevel} has-active-alerts collapsed" onclick="this.classList.toggle('collapsed')">
-      <div class="aemet-card-header">
+    <div class="aemet-alert-card aemet-${maxLevel} has-active-alerts collapsed">
+      <div class="aemet-card-header" onclick="if (!event.target.closest('button, a')) this.closest('.aemet-alert-card').classList.toggle('collapsed')" title="Toca para ver el desglose o plegar los avisos oficiales">
         <div class="aemet-header-left">
           <span class="aemet-badge-pill pill-${maxLevel}">🚨 AVISOS METEOROLÓGICOS ACTIVOS (${alerts.length})</span>
           <span class="aemet-zone-label">📍 Zona AEMET: <strong>${zone.name}</strong></span>
         </div>
         <div class="aemet-header-right" style="display: flex; align-items: center; gap: 8px;">
-          <a href="https://www.aemet.es" target="_blank" rel="noopener noreferrer" class="aemet-logo-tag" style="text-decoration: none;" title="Visitar portal oficial de AEMET" onclick="event.stopPropagation()">aemet.es ↗</a>
+          <a href="https://www.aemet.es" target="_blank" rel="noopener noreferrer" class="aemet-logo-tag" style="text-decoration: none;" title="Visitar portal oficial de AEMET">aemet.es ↗</a>
           <span class="aemet-chevron alert-chevron" title="Toca para desglosar o plegar los avisos oficiales">▼</span>
         </div>
       </div>
@@ -359,7 +359,7 @@ export function renderAemetAlertCard(alertStatus, concejo) {
       <div class="aemet-collapsible-content">
         <div class="aemet-alerts-list">
           ${alerts.map(a => `
-            <div class="aemet-alert-item item-${a.level}" onclick="event.stopPropagation()">
+            <div class="aemet-alert-item item-${a.level}">
               <div class="alert-item-top">
                 <div class="alert-item-title-wrap">
                   <span class="alert-item-icon">${a.icon}</span>
@@ -392,7 +392,7 @@ export function renderAemetAlertCard(alertStatus, concejo) {
             </div>
           `).join('')}
         </div>
-        <div style="padding: 6px 14px 10px; font-size: 0.72rem; color: var(--text-dim); text-align: right; opacity: 0.9;" onclick="event.stopPropagation()">
+        <div style="padding: 6px 14px 10px; font-size: 0.72rem; color: var(--text-dim); text-align: right; opacity: 0.9;">
           Avisos basados en datos abiertos oficiales de <a href="https://www.aemet.es" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;">aemet.es</a> • App meteorológica independiente
         </div>
       </div>

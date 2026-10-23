@@ -42,7 +42,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '9' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.7';
+export const CURRENT_APP_VERSION = '3.0.8';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -1500,6 +1500,9 @@ class MeteoAsturiasApp {
         }
       }
 
+      // Salvaguarda: ignorar si el botón está destinado al Diccionario de Fenómenos o accesos especiales (radar, seísmos)
+      if (e.target.closest('.btn-open-phenomena, .link-open-phenomena, [data-phenomenon], .btn-radar-shortcut, .btn-seismic-shortcut')) return;
+
       // 2. Sensores y Explicaciones Meteorológicas Estándar
       const btn = e.target.closest('.btn-explain-sensor, .btn-explain-sensor-compact, .btn-explain-clima, .climatology-badge, [data-explain]');
       if (!btn) return;
@@ -1803,7 +1806,7 @@ class MeteoAsturiasApp {
 
     // Delegación global para botones con .btn-open-phenomena o .link-open-phenomena
     document.addEventListener('click', (e) => {
-      const btn = e.target.closest('.btn-open-phenomena, .link-open-phenomena');
+      const btn = e.target.closest('.btn-open-phenomena, .link-open-phenomena, [data-phenomenon]');
       if (!btn) return;
       e.preventDefault();
       e.stopPropagation();

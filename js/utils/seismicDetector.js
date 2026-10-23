@@ -337,7 +337,7 @@ export function renderSeismicBanner(seismic) {
 
   return `
     <div class="seismic-banner ${seismic.level} alert-collapsible-card collapsed" role="alert" aria-label="${seismic.title}">
-      <div class="seismic-banner-header" onclick="this.closest('.alert-collapsible-card').classList.toggle('collapsed')" title="Toca para ver el desglose o plegar la alerta">
+      <div class="seismic-banner-header" onclick="if (!event.target.closest('button, a')) this.closest('.alert-collapsible-card').classList.toggle('collapsed')" title="Toca para ver el desglose o plegar la alerta">
         <div class="seismic-header-left">
           <div class="seismic-title-group">
             <span class="seismic-icon">🌍</span>
@@ -346,7 +346,7 @@ export function renderSeismicBanner(seismic) {
           <span class="seismic-badge">${seismic.badge}</span>
         </div>
         <div class="seismic-header-actions alert-header-actions" style="display: flex; align-items: center; gap: 8px;">
-          <a href="${seismic.sourceUrl}" target="_blank" rel="noopener noreferrer" class="btn-explain-sensor-compact btn-seismic-shortcut" onclick="event.stopPropagation()" title="Ver ficha sismológica oficial en el Centro Sismológico Euromediterráneo (EMSC)">
+          <a href="${seismic.sourceUrl}" target="_blank" rel="noopener noreferrer" class="btn-explain-sensor-compact btn-seismic-shortcut" title="Ver ficha sismológica oficial en el Centro Sismológico Euromediterráneo (EMSC)">
             🏛️ Ficha EMSC
           </a>
           <span class="alert-chevron" title="Toca para desglosar o plegar">▼</span>
