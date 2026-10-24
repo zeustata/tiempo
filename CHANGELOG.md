@@ -9,6 +9,26 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.9] - 2026-10-24
+
+### 🥾 Ergonomía Móvil: Legibilidad Plena y Simetría en Fichas de Rutas & Senderismo (Ley 19 - Reporte Lendo)
+- **Diagnóstico Riguroso y Causa Raíz:**
+  - Lendo detectó que en el módulo de *Rutas & Senderismo*, al desplegar cualquier senda desde un teléfono móvil, las 4 casillas técnicas (`Distancia`, `Tiempo`, `Desnivel`, `Inicio`) mostraban puntos suspensivos (`DISTANC...`, `TIEMPO ...`, `INICIO / ...`, `Pillarn...`), impidiendo leer la información completa.
+  - La causa raíz residía en una combinación de factores en `components.css`:
+    1. *Icono lateral devorando el ancho:* El icono (`📏`, `⏱️`, `⛰️`, `🚩`) estaba alineado en horizontal a la izquierda del texto en una columna de solo ~135px de ancho, robando casi 30px útiles.
+    2. *Truncado rígido forzado:* Las etiquetas y valores tenían asignado `white-space: nowrap; text-overflow: ellipsis;`, provocando que cualquier texto con más de 8 o 9 caracteres fuera recortado violentamente.
+- **Solución Técnica Integral y Cumplimiento Constitucional (Ley 19 y Ley 11):**
+  - **Reorganización Vertical de Chips Métricos (`routesCard.js` y `components.css`):**
+    - Se creó la subcabecera `.r-chip-top` donde conviven de forma compacta el icono (`0.95rem`) y la etiqueta (`0.68rem`), liberando el 100% del ancho de la casilla para los valores numéricos y nombres.
+    - Se simplificaron las etiquetas a términos puros y directos: `Distancia`, `Tiempo`, `Desnivel` e `Inicio`.
+  - **Erradicación de Puntos Suspensivos:** Sustituido el truncado rígido de una sola línea por ajuste multilínea fluido (`white-space: normal; line-height: 1.25; overflow-wrap: break-word; font-size: 0.88rem;`) en `.r-chip-val`, garantizando que puntos de partida descriptivos (ej. *«Playa de Arnao / Santa María del Mar»* o *«Pillarno (Iglesia de San Cipriano)»*) se lean íntegros al 100%.
+  - **Simbiosis Responsiva Móvil-Tablet:**
+    - Móvil: Cuadrícula simétrica 2x2 con holgura visual y excelente ergonomía táctil.
+    - Tablet y Escritorio: Escala automáticamente a 4 columnas en una sola fila horizontal (`grid-template-columns: repeat(4, 1fr)` para pantallas `>= 640px`), logrando un acabado profesional y armónico similar a *AllTrails* y *Strava*.
+- **Anti-Caché Obligatorio (Ley 4):**
+  - Service Worker actualizado a `meteoasturlode-v309-rutas-legibilidad-plena-chips-movil` en `sw.js`.
+  - Versión oficial elevada a `v3.0.9 🥾` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.9'` en `app.js`, `routesCard.js?v=3.0.9`, `css/components.css?v=3.0.9`, `sw.js?v=3.0.9` y query strings en `index.html`.
+
 ## [3.0.8] - 2026-10-23
 
 ### 💡 Corrección Didáctica: Restauración de Enlaces y Modales en Alertas Silenciosas (Reporte Lendo)

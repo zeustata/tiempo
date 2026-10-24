@@ -27,6 +27,23 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Pautas de Coherencia de Diseño:*
      - Los nuevos iconos deben inspirarse y regirse en los iconos ya consolidados de cada tema: mismas proporciones, equilibrio en la cantidad de elementos (astros, nubes, partículas) y mismo ritmo y estilo de animación fluida para garantizar armonía visual y rendimiento en dispositivos móviles.
 
+## 🥾 Actualización v3.0.9: Legibilidad Plena y Simetría Ergonómica en Fichas de Rutas (Ley 19) — 2026-10-24
+- **Diagnóstico Riguroso y Causa Raíz (Reporte Lendo - «fijate cuando estoy en el menu Rutas y senderismo, al entrar en alguna ruta los botones de distancia, tiempo, desniveln inicio, desde el movil al no entrar todo pones puntos suspensidos sin poner ver lo que pone...» y «pisale»):**
+  1. *El Origen de los Puntos Suspensivos:*
+     - Al desplegar las fichas de rutas en dispositivos móviles, las 4 casillas de datos técnicos (`Distancia`, `Tiempo`, `Desnivel`, `Inicio`) truncaban violentamente su contenido (`DISTANC...`, `TIEMPO ...`, `INICIO / ...`, `Pillarn...`).
+     - Esto se debía a que los chips `.route-spec-chip` tenían una disposición horizontal con el icono a la izquierda (`display: flex; gap: 8px;`), devorando casi 30px útiles en una columna que solo disponía de ~135px.
+     - Sumado a ello, tanto las etiquetas (`.r-chip-label`) como los valores (`.r-chip-val`) forzaban `white-space: nowrap; overflow: hidden; text-overflow: ellipsis;`, violando la doctrina de la **Ley 19** de la Constitución Suprema (prohibición expresa de truncado en móvil).
+  2. *Reorganización Vertical Ergonómica y Cumplimiento Constitucional (Leyes 11 y 19):*
+     - **Cabecera Unificada `.r-chip-top`:** En `routesCard.js` y `components.css`, el icono (`0.95rem`) y la etiqueta (`0.68rem`) se agrupan en una fila superior compacta, dejando el 100% del ancho del chip disponible para el dato.
+     - **Ajuste Multilínea Fluido (`.r-chip-val`):** Se eliminó el truncado rígido con elipsis, sustituyéndolo por `white-space: normal; line-height: 1.25; overflow-wrap: break-word; word-break: normal; font-size: 0.88rem;`, permitiendo que nombres largos de inicio (ej. *«Playa de Arnao / Santa María del Mar»* o *«Pillarno (Iglesia de San Cipriano)»*) se lean de forma íntegra sin puntos suspensivos.
+     - **Etiquetas Claras y Directas:** Sustituidos términos sobrecargados por etiquetas concisas: `Distancia`, `Tiempo`, `Desnivel` e `Inicio`.
+  3. *Simbiosis Perfecta Móvil-Tablet:*
+     - En teléfonos móviles: Cuadrícula simétrica 2x2 espaciosa y ergonómica.
+     - En tablets y pantallas anchas: Escala automáticamente a 4 columnas en una sola fila horizontal (`grid-template-columns: repeat(4, 1fr)` en `@media (min-width: 640px)`), garantizando un diseño limpio y equilibrado similar a *AllTrails* y *Strava*.
+  4. *Anti-Caché Obligatorio (Ley 4):*
+     - Service Worker actualizado a `meteoasturlode-v309-rutas-legibilidad-plena-chips-movil` en `sw.js`.
+     - Versión oficial incrementada a `v3.0.9 🥾` en pie (`#app-version-badge`), `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.9'` en `app.js`, `routesCard.js?v=3.0.9`, `css/components.css?v=3.0.9`, `sw.js?v=3.0.9` y query strings en `index.html`.
+
 ## 💡 Actualización v3.0.8: Restauración de Enlaces y Modales en Alertas Silenciosas — 2026-10-23
 - **Diagnóstico Riguroso y Causa Raíz (Reporte Lendo - «al darle a la bombilla amarilla dentro de la pastilla azul de fisica del viento o en mar de fondo activo... ya no me enlaza a la explicacion como antes... investiga princesa que estas onfire» y «pisale»):**
   1. *El Origen del Problema en v3.0.3:*

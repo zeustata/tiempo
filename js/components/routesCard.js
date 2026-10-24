@@ -192,38 +192,38 @@ export function renderRoutesCard(data, concejo) {
 
               <!-- FICHA TÉCNICA DETALLADA AL DESPLEGAR -->
               <div class="route-accordion-body">
-                <!-- Chips Métricos Rápidos -->
+                <!-- Chips Métricos Rápidos (Ley 19 Legibilidad Plena y Simetría Ergonómica) -->
                 <div class="route-specs-chips">
                   <div class="route-spec-chip">
-                    <span class="r-chip-icon">📏</span>
-                    <div class="r-chip-info">
+                    <div class="r-chip-top">
+                      <span class="r-chip-icon">📏</span>
                       <span class="r-chip-label">Distancia</span>
-                      <span class="r-chip-val">${r.dist}</span>
                     </div>
+                    <span class="r-chip-val">${r.dist}</span>
                   </div>
 
                   <div class="route-spec-chip">
-                    <span class="r-chip-icon">⏱️</span>
-                    <div class="r-chip-info">
-                      <span class="r-chip-label">Tiempo Est.</span>
-                      <span class="r-chip-val">${r.time}</span>
+                    <div class="r-chip-top">
+                      <span class="r-chip-icon">⏱️</span>
+                      <span class="r-chip-label">Tiempo</span>
                     </div>
+                    <span class="r-chip-val">${r.time}</span>
                   </div>
 
                   <div class="route-spec-chip">
-                    <span class="r-chip-icon">⛰️</span>
-                    <div class="r-chip-info">
+                    <div class="r-chip-top">
+                      <span class="r-chip-icon">⛰️</span>
                       <span class="r-chip-label">Desnivel</span>
-                      <span class="r-chip-val">${r.elev}</span>
                     </div>
+                    <span class="r-chip-val">${r.elev}</span>
                   </div>
 
                   <div class="route-spec-chip">
-                    <span class="r-chip-icon">🚩</span>
-                    <div class="r-chip-info">
-                      <span class="r-chip-label">Inicio / Acceso</span>
-                      <span class="r-chip-val">${r.startPoint}</span>
+                    <div class="r-chip-top">
+                      <span class="r-chip-icon">🚩</span>
+                      <span class="r-chip-label">Inicio</span>
                     </div>
+                    <span class="r-chip-val">${r.startPoint}</span>
                   </div>
                 </div>
 

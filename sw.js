@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v308-fix-alertas-silenciosas-bombillas-didacticas';
+const CACHE_NAME = 'meteoasturlode-v309-rutas-legibilidad-plena-chips-movil';
 const STATIC_ASSETS = [
   './',
   './index.html',
