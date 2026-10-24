@@ -27,6 +27,26 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Pautas de Coherencia de Diseño:*
      - Los nuevos iconos deben inspirarse y regirse en los iconos ya consolidados de cada tema: mismas proporciones, equilibrio en la cantidad de elementos (astros, nubes, partículas) y mismo ritmo y estilo de animación fluida para garantizar armonía visual y rendimiento en dispositivos móviles.
 
+## ⚡ Actualización v3.0.20: Modelo Híbrido en Cabecera y Blindaje Anti-Aplastamiento de Menú (Ley 11) — 2026-10-24
+- **Diagnóstico y Usabilidad (Feedback de Lendo con captura móvil - «esta mejor pero mira primeramente el nombre Menu y debajo Consenso, no me gusta. casi prefiero Hibrido el de consenso. lo segundo el menu dentro. mira como queda en un movil. te mando foto. de ven los iconos cortados y a medias» y orden de Lendo: «pisale»):**
+  1. *Diagnóstico Operativo:*
+     - Lendo aportó captura de pantalla móvil mostrando:
+       a) En cabecera: el término «Consenso» no resultaba del todo representativo ni claro; se prefiere «Híbrido» para aludir al motor por defecto (consenso cantábrico calibrado AROME 1.3 km + ECMWF).
+       b) En modal de menú: los iconos (`🌟`, `🎨`, `📖`, `📍`) se mostraban cortados exactamente por la mitad superior contra el borde superior de cada tarjeta, y la primera línea de texto de cada título (*«Modelo»*, *«Estilos de»*, *«Diccionario de»*, *«Auto-»*) quedaba oculta fuera del marco.
+     - *Causa Raíz Descubierta:* `.nav-modal-body` tiene `max-height: 72vh; display: flex; flex-direction: column;`. Las tarjetas `.nav-tool-card` tenían `flex-shrink: 1` por omisión. En móviles con pantalla más corta, Flexbox comprimía verticalmente las tarjetas. Debido a `align-items: center` y `overflow: hidden`, el exceso de contenido empujaba la mitad superior fuera del borde superior de la tarjeta, cortando los iconos y la primera línea de texto.
+  2. *Intervención Técnica en `js/app.js`, `index.html`, `css/components.css` y `sw.js`:*
+     - **Cabecera Oficial «Híbrido» (`js/app.js` e `index.html`):**
+       - Actualizada la función `getModelShortName(modelId)` para retornar `'Híbrido'` en el modelo `best_match`.
+       - Actualizado `#header-active-model-name` a `Híbrido` en reposo.
+       - Actualizada la función `getModelBadgeLabel(model)` y el badge `#nav-active-model-badge` a `🌟 Híbrido Cantábrico`.
+     - **Blindaje Anti-Aplastamiento de Tarjetas (`css/components.css` - Ley 11):**
+       - Aplicado `flex-shrink: 0 !important;` en `.nav-tool-card`, blindando de forma inquebrantable el alto natural y la holgura de cada tarjeta frente a cualquier encogimiento por Flexbox.
+       - Optimizado `.nav-tool-icon` con `font-size: 1.7rem; line-height: 1; margin-top: 1px; flex-shrink: 0;`, garantizando iconos 100% íntegros y circulares.
+       - Añadida regla responsive `@media (max-width: 480px)` para `#nav-modal` y `#model-modal`, reduciendo el padding exterior de 20px a 10px y el del modal de 24px a 16px, ganando 48px de anchura útil libre de cortes en móviles estrechos.
+  3. *Anti-Caché Obligatorio (Ley 4):*
+     - Service Worker actualizado a `meteoasturlode-v3020-hibrido-modal-fix` en `sw.js`.
+     - Versión oficial elevada a `v3.0.20 ⚡` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.20'` en `app.js`, `css/main.css?v=3.0.20`, `css/components.css?v=3.0.20`, `sw.js?v=3.0.20` y query strings en `index.html`.
+
 ## 💎 Actualización v3.0.19: Cabecera Gemela Simétrica y Tarjetas Anti-Desborde (Leyes 11 y 14) — 2026-10-24
 - **Diagnóstico y Usabilidad (Feedback de Lendo con capturas móviles - «mira como queda la tarjeta principal de arriba, imagen 1 de webcam y el de menu. ademas cuando entras en el menu, mira como queda, imagen 2» y orden de Lendo: «pisale a ver»):**
   1. *Diagnóstico Operativo:*

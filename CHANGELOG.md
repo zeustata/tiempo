@@ -9,6 +9,26 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.20] - 2026-10-24
+
+### ⚡ Refinamiento de Cabecera y Blindaje Anti-Aplastamiento en Móvil (Feedback Lendo)
+- **Motivación y Diagnóstico Visual:**
+  - Lendo aportó captura de pantalla en móvil señalando:
+    1. Preferencia por el término **«Híbrido»** en vez de «Consenso» bajo el botón de Menú en cabecera.
+    2. Los iconos (`🌟`, `🎨`, `📖`, `📍`) del Menú de Utilidades aparecían cortados horizontalmente por la mitad superior y mutilaban la primera línea de texto de cada tarjeta (*«Modelo»*, *«Estilos de»*, *«Diccionario de»*, *«Auto-»*).
+  - *Diagnóstico Técnico:* En pantallas móviles compactas, `.nav-modal-body` (con `max-height: 72vh; display: flex; flex-direction: column;`) encogía verticalmente las tarjetas porque `.nav-tool-card` carecía de `flex-shrink: 0`. Al encogerse el contenedor con `align-items: center` y `overflow: hidden`, el exceso de contenido se desplazaba hacia arriba cortando la mitad superior de los iconos y de los títulos contra el marco.
+- **Implementación Técnica:**
+  - **Identificación Oficial «Híbrido» en Cabecera (`js/app.js` e `index.html`):**
+    - Sub-badge del botón de Menú actualizado a `Híbrido` en reposo y gestionado dinámicamente con `getModelShortName(modelId)`.
+    - Badge ambarino dentro del modal de menú actualizado a `🌟 Híbrido Cantábrico` (`#nav-active-model-badge`), representando fidedignamente la combinación inteligente de AROME (1.3 km) y ECMWF.
+  - **Blindaje Anti-Aplastamiento de Tarjetas (`css/components.css` - Ley 11):**
+    - Aplicado `flex-shrink: 0 !important;` en `.nav-tool-card`, garantizando que ninguna tarjeta pueda volver a ser aplastada verticalmente en ningún dispositivo móvil.
+    - Alineación perfeccionada de `.nav-tool-icon` con `font-size: 1.7rem; line-height: 1; margin-top: 1px; flex-shrink: 0;`, preservando siempre iconos íntegros, circulares y definidos.
+    - Regla responsive `@media (max-width: 480px)` para `#nav-modal` y `#model-modal`: padding exterior optimizado de 20px a 10px y padding interno de 24px a 16px, ganando 48px de ancho útil para lectura y navegación sin roces.
+- **Anti-Caché Obligatorio (Ley 4):**
+  - Service Worker actualizado a `meteoasturlode-v3020-hibrido-modal-fix` en `sw.js`.
+  - Versión oficial elevada a `v3.0.20 ⚡` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.20'` en `app.js`, `css/main.css?v=3.0.20`, `css/components.css?v=3.0.20`, `sw.js?v=3.0.20` y query strings en `index.html`.
+
 ## [3.0.19] - 2026-10-24
 
 ### 💎 Refinamiento Estético & Blindaje Móvil: Cabecera Gemela Simétrica & Tarjetas Anti-Desborde (Feedback Lendo)

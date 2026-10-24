@@ -43,7 +43,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '9' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.19';
+export const CURRENT_APP_VERSION = '3.0.20';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -213,7 +213,7 @@ class MeteoAsturiasApp {
 
   getModelShortName(modelId) {
     const map = {
-      best_match: 'Consenso',
+      best_match: 'Híbrido',
       ecmwf_ifs025: 'ECMWF',
       meteofrance_seamless: 'AROME',
       icon_seamless: 'ICON',
@@ -228,7 +228,7 @@ class MeteoAsturiasApp {
   getModelBadgeLabel(model) {
     if (!model) return '';
     const map = {
-      best_match: '🌟 Consenso Cantábrico',
+      best_match: '🌟 Híbrido Cantábrico',
       ecmwf_ifs025: '🇪🇺 ECMWF Europa',
       meteofrance_seamless: '🇫🇷 AROME Cantábrico',
       icon_seamless: '🇩🇪 DWD ICON',

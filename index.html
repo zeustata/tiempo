@@ -31,8 +31,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=3.0.19">
-  <link rel="stylesheet" href="css/components.css?v=3.0.19">
+  <link rel="stylesheet" href="css/main.css?v=3.0.20">
+  <link rel="stylesheet" href="css/components.css?v=3.0.20">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -123,7 +123,7 @@
             <span class="compact-trigger-icon" id="current-section-icon">⚙️</span>
             <div class="header-twin-text-col">
               <strong class="compact-trigger-label">Menú</strong>
-              <span class="header-model-sub-badge" id="header-active-model-name">Consenso</span>
+              <span class="header-model-sub-badge" id="header-active-model-name">Híbrido</span>
             </div>
           </div>
         </button>
@@ -242,7 +242,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.19 ⚡</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.20 ⚡</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -316,8 +316,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v3.0.19 💎</span>
+            <span class="release-version">v3.0.20 ⚡</span>
             <span class="release-date">24 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-feature">Refinamiento de Cabecera y Blindaje Anti-Aplastamiento en Móvil</span> <strong>Modelo Híbrido &amp; Blindaje de Tarjetas de Menú</strong>:
+              <br>• <strong>Identificación Precisa «Híbrido»:</strong> El modelo predeterminado de consenso cantábrico se muestra ahora en la cabecera como <code>Híbrido</code> (en lugar de <code>Consenso</code>), reflejando con exactitud la fusión inteligente de <strong>AROME (1.3 km)</strong> con <strong>ECMWF</strong>.
+              <br>• <strong>Blindaje Anti-Aplastamiento de Tarjetas (Ley 11):</strong> Aplicado <code>flex-shrink: 0</code> a las tarjetas del menú para impedir que Flexbox las encoja verticalmente en pantallas de móvil reducidas. Iconos (<code>🌟</code>, <code>🎨</code>, <code>📖</code>, <code>📍</code>) y títulos 100% íntegros, sin cortes superiores ni mutilación de texto.
+              <br>• <strong>Ergonomía de Márgenes en Pantallas Estrechas:</strong> Optimizado el espaciado lateral del modal en resoluciones móviles, ganando 48px útiles de lectura y navegación fluida.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v3.0.19 💎</span>
+            <span class="release-date">24 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-feature">Refinamiento Estético &amp; Blindaje Móvil (Feedback Lendo)</span> <strong>Cabecera Gemela Simétrica &amp; Tarjetas Anti-Desborde</strong>:
@@ -4171,7 +4185,7 @@
             <div class="nav-tool-details">
               <span class="nav-tool-name">Modelo Meteorológico</span>
               <div class="nav-tool-badge-row">
-                <span class="nav-tool-badge badge-warning" id="nav-active-model-badge">🌟 Consenso Cantábrico</span>
+                <span class="nav-tool-badge badge-warning" id="nav-active-model-badge">🌟 Híbrido Cantábrico</span>
               </div>
               <span class="nav-tool-desc">Elige el motor de cálculo: ECMWF, GFS, AROME, ICON...</span>
             </div>
@@ -4514,7 +4528,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.0.19').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.0.20').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4544,7 +4558,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.19"></script>
+  <script type="module" src="js/app.js?v=3.0.20"></script>
 
 
 
