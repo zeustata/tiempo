@@ -897,6 +897,12 @@ export function renderSurfCard(data, concejo) {
               </div>
             `).join('')}
           </div>
+
+          <div class="forecast-scroll-hint surf-timeline-scroll-hint">
+            <span class="hint-hand">👉</span>
+            <span>Desliza horizontalmente para ver cada 3 horas</span>
+            <span class="hint-arrow">➔</span>
+          </div>
         </div>
 
         <!-- VISTA 2: PREVISIÓN EXTENDIDA 7 DÍAS (MAÑANA / TARDE) -->
@@ -968,6 +974,12 @@ export function renderSurfCard(data, concejo) {
                 </div>
               </div>
             `).join('')}
+          </div>
+
+          <div class="forecast-scroll-hint surf-daily-scroll-hint">
+            <span class="hint-hand">👉</span>
+            <span>Desliza horizontalmente para ver los 7 días de surf</span>
+            <span class="hint-arrow">➔</span>
           </div>
         </div>
       </div>

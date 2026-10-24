@@ -4133,12 +4133,9 @@
   width: 100%;
 }
 
-.surf-timeline-scroll-hint {
-  display: flex;
-  align-items: center;
-  font-size: 0.76rem;
-  color: #cbd5e1;
-  margin-bottom: 12px;
+.surf-timeline-scroll-hint,
+.surf-daily-scroll-hint {
+  margin: 10px auto 6px auto;
 }
 
 .surf-timeline-grid {

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3012-rutas-enlaces-gps-wikiloc';
+const CACHE_NAME = 'meteoasturlode-v3013-surf-scroll-hint';
 const STATIC_ASSETS = [
   './',
   './index.html',

@@ -32,7 +32,7 @@
 
   <!-- Estilos de la Aplicación con Cache Busting -->
   <link rel="stylesheet" href="css/main.css?v=3.0.5">
-  <link rel="stylesheet" href="css/components.css?v=3.0.12">
+  <link rel="stylesheet" href="css/components.css?v=3.0.13">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -194,7 +194,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.12 📍</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.13 🏄‍♂️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -268,8 +268,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v3.0.12 📍</span>
+            <span class="release-version">v3.0.13 🏄‍♂️</span>
             <span class="release-date">24 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-feature">Surf &amp; Rompientes (Idea Lendo)</span> <strong>Guía Visual de Desplazamiento Horizontal (Leyes 14 y 18)</strong>:
+              <br>• <strong>Pastillas Didácticas en Cristal Líquido:</strong> Integración de la elegante pastilla interactiva <code>.forecast-scroll-hint</code> en ambas vistas del carrusel de surf (<em>⏱️ 3 Horas</em>: <code>👉 Desliza horizontalmente para ver cada 3 horas ➔</code> y <em>📅 7 Días</em>: <code>👉 Desliza horizontalmente para ver los 7 días de surf ➔</code>).
+              <br>• <strong>Ergonomía Táctil y Descubribilidad en Smartphones:</strong> Al presentarse cada tramo o jornada a pantalla completa al 100% de ancho útil, la pastilla flotante orienta inmediatamente al usuario de que puede recorrer las 72 horas y las 7 jornadas de olas con el pulgar.
+              <br>• <strong>Inmunidad al Swipe Global (Ley 18):</strong> Clases blindadas en el guardián <code>isInteractiveZone()</code> de <code>app.js</code>, garantizando que el deslizamiento horizontal explore con precisión las olas sin conmutar de módulo.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v3.0.12 📍</span>
+            <span class="release-date">24 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-feature">Navegación &amp; Tracks (Idea Lendo)</span> <strong>Enlaces GPS y Wikiloc en Fichas de Rutas (Leyes 15 y 16)</strong>:
@@ -4327,7 +4341,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.0.12').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.0.13').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4357,7 +4371,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.12"></script>
+  <script type="module" src="js/app.js?v=3.0.13"></script>
 
 
 

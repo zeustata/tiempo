@@ -3,7 +3,7 @@ import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from 
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=2.0.0';
 import { renderCurrentWeather } from './components/currentCard.js?v=3.0.7';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=2.2.76';
-import { renderSurfCard } from './components/surfCard.js?v=2.2.77';
+import { renderSurfCard } from './components/surfCard.js?v=3.0.13';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.11';
 import { renderMountainCard } from './components/mountainCard.js?v=2.2.64';
 import { renderTourismCard } from './components/tourismCard.js?v=3.0.10';
@@ -43,7 +43,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '9' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.12';
+export const CURRENT_APP_VERSION = '3.0.13';
 
 class MeteoAsturiasApp {
   constructor() {

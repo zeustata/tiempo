@@ -27,6 +27,26 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Pautas de Coherencia de Diseño:*
      - Los nuevos iconos deben inspirarse y regirse en los iconos ya consolidados de cada tema: mismas proporciones, equilibrio en la cantidad de elementos (astros, nubes, partículas) y mismo ritmo y estilo de animación fluida para garantizar armonía visual y rendimiento en dispositivos móviles.
 
+## 🏄‍♂️ Actualización v3.0.13: Pastillas Didácticas de Desplazamiento Horizontal en Carruseles de Surf (Leyes 14 y 18) — 2026-10-24
+- **Diagnóstico y Ergonomía Móvil (Feedback y Detección de Lendo - «me fije que en el menu de surf, concretamente en prevision 3h/7 dias, debajo no tenemos lo que tenemos en otros menus debajo como como el menu de pronostico a 10 dias. Desliza horizontalmente. Al no verse alomejor el usuario no se da cuenta que tiene que deslizar si quiere ver el pronostico de cada 3 horas o cada dia. te mando captura» y «pisale»):**
+  1. *Diagnóstico Operativo:*
+     - Lendo aportó captura del módulo de *Surf & Rompientes* demostrando que tras el carrusel de 3 horas solo se apreciaba la barra de scroll inferior, sin una indicación clara de que la tarjeta de previsión era deslizante hacia los siguientes tramos horarios o jornadas completas.
+     - En teléfonos móviles, por aplicación de la Ley 18 (encuadre monotarjeta al 100% de ancho útil con `scroll-snap-align: start`), el primer bloque ocupa toda la pantalla. Si no hay una guía explícita, un usuario novel podría asumir que solo se muestra ese tramo y no interactuar con el resto de la previsión de 72 horas o 7 días.
+  2. *Intervención Técnica en `surfCard.js` y `components.css`:*
+     - **Vista de 3 Horas (`#surf-timeline-view`):**
+       Incorporada bajo `.surf-timeline-grid` la pastilla interactiva:
+       `<div class="forecast-scroll-hint surf-timeline-scroll-hint"><span class="hint-hand">👉</span><span>Desliza horizontalmente para ver cada 3 horas</span><span class="hint-arrow">➔</span></div>`.
+     - **Vista de 7 Días (`#surf-daily-view`):**
+       Incorporada bajo `.surf-daily-cards-grid` la pastilla interactiva:
+       `<div class="forecast-scroll-hint surf-daily-scroll-hint"><span class="hint-hand">👉</span><span>Desliza horizontalmente para ver los 7 días de surf</span><span class="hint-arrow">➔</span></div>`.
+     - **Armonización de Estilos en `components.css`:**
+       Limpieza de estilos antiguos en `.surf-timeline-scroll-hint` y unificación con `.forecast-scroll-hint` mediante `margin: 10px auto 6px auto;`, garantizando el brillo de borde cian, fondo de cristal oscuro y micro-animaciones (`hintHandWiggle` y `hintArrowSlide`).
+     - **Blindaje Táctil (Ley 18):**
+       Confirmado que tanto `.surf-timeline-scroll-hint` como `.surf-daily-scroll-hint` figuran en la lista guardiana `isInteractiveZone(target)` en `js/app.js`, blindando el gesto de arrastre con el pulgar para que jamás provoque cambios accidentales de pestaña en el menú principal.
+  3. *Anti-Caché Obligatorio (Ley 4):*
+     - Service Worker actualizado a `meteoasturlode-v3013-surf-scroll-hint` en `sw.js`.
+     - Versión oficial elevada a `v3.0.13 🏄‍♂️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.13'` en `app.js`, `surfCard.js?v=3.0.13`, `css/components.css?v=3.0.13`, `sw.js?v=3.0.13` y query strings en `index.html`.
+
 ## 📍 Actualización v3.0.12: Enlaces Directos de Navegación GPS y Tracks en Fichas de Rutas (Leyes 15 y 16) — 2026-10-24
 - **Diagnóstico y Evaluación Constitucional (Idea Lendo - «y si agregamos un enlace a las rutas en la ficha como lo ves? o es dificil encontrarlo?» y «que es lo que crees que mejor va a funcionar y porsupuesto respetando la constitucion sobre la privacidad y todo lo demas?» y «pisale»):**
   1. *Evaluación Rigurosa de Privacidad y Google Play:*

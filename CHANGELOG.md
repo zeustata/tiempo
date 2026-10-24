@@ -9,6 +9,25 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.13] - 2026-10-24
+
+### 🏄‍♂️ Surf & Rompientes: Guía Visual de Desplazamiento Horizontal en Carruseles (Leyes 14 y 18 - Idea Lendo)
+- **Motivación y Ergonomía Móvil (Reporte Lendo):**
+  - Lendo observó que en el módulo de *Surf & Rompientes*, concretamente en la previsión de *3 Horas* y *7 Días*, al presentarse cada tramo ocupando el 100% del ancho de la pantalla móvil (siguiendo la Ley 18 de carruseles monotarjeta), el usuario nuevo podía no advertir que existía contenido deslizable horizontalmente para explorar las 72 horas y las 7 jornadas de olas.
+- **Implementación Técnica:**
+  - **Pastillas Didácticas en Cristal Líquido (`surfCard.js` y `components.css`):**
+    - Integración bajo el carrusel de 3 horas (`#surf-timeline-view`) de la pastilla interactiva:
+      `👉 Desliza horizontalmente para ver cada 3 horas ➔` (`.forecast-scroll-hint.surf-timeline-scroll-hint`).
+    - Integración bajo el carrusel de 7 días (`#surf-daily-view`) de la pastilla interactiva:
+      `👉 Desliza horizontalmente para ver los 7 días de surf ➔` (`.forecast-scroll-hint.surf-daily-scroll-hint`).
+  - **Blindaje Táctil e Inmunidad al Deslizamiento de Pantalla (Ley 18):**
+    - Ambas clases asociadas están blindadas en el guardián `isInteractiveZone(target)` en `js/app.js`, impidiendo que el arrastre con el pulgar provoque un salto involuntario entre módulos de la aplicación.
+  - **Armonización Visual (Ley 14):**
+    - Bordes en cian translúcido, fondo de cristal oscuro y animaciones sutiles sincronizadas con *Pronóstico a 10 Días* y *Playas & Mareas*.
+- **Anti-Caché Obligatorio (Ley 4):**
+  - Service Worker actualizado a `meteoasturlode-v3013-surf-scroll-hint` en `sw.js`.
+  - Versión oficial elevada a `v3.0.13 🏄‍♂️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.13'` en `app.js`, `surfCard.js?v=3.0.13`, `css/components.css?v=3.0.13`, `sw.js?v=3.0.13` y query strings en `index.html`.
+
 ## [3.0.12] - 2026-10-24
 
 ### 📍 Navegación GPS & Tracks: Enlaces Directos en Fichas de Rutas (Leyes 15 y 16 - Idea Lendo)
