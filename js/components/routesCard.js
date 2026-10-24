@@ -6,7 +6,7 @@
  * y Blindaje Constitucional de Seguridad y Responsabilidad Individual (Ley 16).
  */
 
-import { calculateHikingIndex, getRoutesForConcejo } from '../utils/routesData.js?v=3.0.11';
+import { calculateHikingIndex, getRoutesForConcejo } from '../utils/routesData.js?v=3.0.12';
 
 // Función global de filtrado interactivo por dificultad de rutas
 if (typeof window !== 'undefined') {

@@ -9096,6 +9096,46 @@
   color: #ffffff;
 }
 
+/* Botonera de Acciones en Fichas Didácticas (GPS y Tracks de Rutas) */
+.explain-actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.btn-explain-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: #38bdf8;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 9px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  flex: 1 1 calc(50% - 8px);
+  min-width: 140px;
+  box-sizing: border-box;
+  text-align: center;
+  line-height: 1.25;
+}
+
+.btn-explain-action:hover,
+.btn-explain-action:focus-visible {
+  background: rgba(56, 189, 248, 0.25);
+  border-color: #38bdf8;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
+}
+
 .explain-list {
   margin: 6px 0 0 0;
   padding-left: 18px;

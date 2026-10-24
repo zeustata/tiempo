@@ -9,6 +9,22 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.12] - 2026-10-24
+
+### 📍 Navegación GPS & Tracks: Enlaces Directos en Fichas de Rutas (Leyes 15 y 16 - Idea Lendo)
+- **Motivación y Valor Práctico:**
+  - Lendo planteó la necesidad de poder enlazar directamente las rutas desde su ficha didáctica, analizando la mejor solución para maximizar la utilidad del senderista garantizando el blindaje de privacidad y las directivas de Google Play Store.
+- **Implementación Técnica Integral:**
+  - **Botonera de Acciones en la Ficha Técnica (`routesData.js`, `app.js` y `components.css`):**
+    - Dentro de la tarjeta de *🚩 Punto de Inicio y Accesos*, se integra una botonera ergonómica responsiva con dos utilidades fundamentales:
+      1. `🚗 Cómo llegar al inicio (GPS)`: Enlace universal directo a Google Maps calibrado con las coordenadas geodésicas oficiales (`destination=lat,lon`), iniciando la navegación guiada por voz en el móvil del usuario hacia el aparcamiento o comienzo del sendero.
+      2. `🧭 Tracks en Wikiloc ↗`: Búsqueda directa por el nombre oficial de la senda en Wikiloc para consulta de mapas topográficos con perfiles altimétricos y descarga de archivos GPX para relojes deportivos (Garmin, Suunto, etc.).
+  - **Blindaje Estricto de Privacidad y Legalidad (Leyes 15 y 16):**
+    - Enlaces externos nativos con `rel="noopener noreferrer"` y `target="_blank"`. No se realiza rastreo, no se recopilan datos personales del usuario y se mantiene la exención de responsabilidad civil en actividades en la naturaleza.
+- **Anti-Caché Obligatorio (Ley 4):**
+  - Service Worker actualizado a `meteoasturlode-v3012-rutas-enlaces-gps-wikiloc` en `sw.js`.
+  - Versión oficial elevada a `v3.0.12 📍` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.12'` en `app.js`, `routesCard.js?v=3.0.12`, `routesData.js?v=3.0.12`, `css/components.css?v=3.0.12`, `sw.js?v=3.0.12` y query strings en `index.html`.
+
 ## [3.0.11] - 2026-10-24
 
 ### 🥾 Rutas & Senderismo: Ficha Didáctica y Técnica Oficial de Sendas (➔ Ver Ficha - Idea Lendo)

@@ -1214,6 +1214,9 @@ export function getRouteExplanation(routeId) {
   const route = RUTAS_ASTURIAS_CATALOGO.find(r => r.id === routeId);
   if (!route) return null;
 
+  const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${route.lat},${route.lon}`;
+  const wikilocUrl = `https://es.wikiloc.com/rutas-senderismo?q=${encodeURIComponent(route.name)}`;
+
   return {
     icon: route.typeIcon || '🥾',
     title: route.name,
@@ -1233,7 +1236,17 @@ export function getRouteExplanation(routeId) {
       {
         icon: '🚩',
         heading: 'Punto de Inicio y Accesos',
-        text: `Salida recomendada: ${route.startPoint} (${route.concejoName}). Coordenadas geodésicas de referencia: ${route.lat.toFixed(4)}°N, ${route.lon.toFixed(4)}°W.`
+        text: `Salida recomendada: ${route.startPoint} (${route.concejoName}). Coordenadas geodésicas: ${route.lat.toFixed(4)}°N, ${route.lon.toFixed(4)}°W.`,
+        actionButtons: [
+          {
+            label: '🚗 Cómo llegar al inicio (GPS)',
+            url: mapsUrl
+          },
+          {
+            label: '🧭 Tracks en Wikiloc ↗',
+            url: wikilocUrl
+          }
+        ]
       },
       {
         icon: '⚠️',

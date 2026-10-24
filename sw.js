@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3011-rutas-ficha-didactica-oficial';
+const CACHE_NAME = 'meteoasturlode-v3012-rutas-enlaces-gps-wikiloc';
 const STATIC_ASSETS = [
   './',
   './index.html',

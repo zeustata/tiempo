@@ -21,7 +21,7 @@ import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=2.0.0';
 import { getHalloweenWeatherSvg } from './utils/weatherHalloweenIcons.js?v=2.2.64';
 import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=3.0.1';
 import { getTourismPlanExplanation } from './utils/tourismData.js?v=2.2.74';
-import { getRouteExplanation } from './utils/routesData.js?v=3.0.11';
+import { getRouteExplanation } from './utils/routesData.js?v=3.0.12';
 import { checkConcejoFolixa } from './utils/festivosData.js?v=2.0.0';
 import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=2.0.0';
 import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=2.0.0';
@@ -43,7 +43,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '9' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.11';
+export const CURRENT_APP_VERSION = '3.0.12';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -1481,6 +1481,15 @@ class MeteoAsturiasApp {
                     <div class="explain-card-block">
                       <h4 class="explain-block-title">${sec.icon} ${sec.heading}</h4>
                       <div class="explain-block-text">${sec.text}</div>
+                      ${sec.actionButtons && sec.actionButtons.length > 0 ? `
+                        <div class="explain-actions-row">
+                          ${sec.actionButtons.map(act => `
+                            <a href="${act.url}" target="_blank" rel="noopener noreferrer" class="btn-explain-action">
+                              ${act.label}
+                            </a>
+                          `).join('')}
+                        </div>
+                      ` : ''}
                     </div>
                   `).join('')}
                 </div>

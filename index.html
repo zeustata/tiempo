@@ -32,7 +32,7 @@
 
   <!-- Estilos de la Aplicación con Cache Busting -->
   <link rel="stylesheet" href="css/main.css?v=3.0.5">
-  <link rel="stylesheet" href="css/components.css?v=3.0.11">
+  <link rel="stylesheet" href="css/components.css?v=3.0.12">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -194,7 +194,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.11 🥾</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.12 📍</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -268,8 +268,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v3.0.11 🥾</span>
+            <span class="release-version">v3.0.12 📍</span>
             <span class="release-date">24 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-feature">Navegación &amp; Tracks (Idea Lendo)</span> <strong>Enlaces GPS y Wikiloc en Fichas de Rutas (Leyes 15 y 16)</strong>:
+              <br>• <strong>Navegación GPS al Inicio (<code>🚗 Cómo llegar al inicio</code>):</strong> Enlace universal directo a Google Maps calibrado con las coordenadas geodésicas exactas del punto de salida, abriendo la ruta guiada por voz en el móvil del senderista con cero rastreo ni fricción.
+              <br>• <strong>Buscador Directo de Tracks (<code>🧭 Tracks en Wikiloc ↗</code>):</strong> Conexión limpia con la base de datos de Wikiloc para visualización de mapas topográficos y descarga de tracks GPX para relojes deportivos y dispositivos GPS.
+              <br>• <strong>Privacidad y Blindaje Legal (Leyes 15 y 16):</strong> Enlaces estandarizados con <code>rel="noopener noreferrer"</code>, sin recolección de datos personales, conformes al RGPD y a las directivas de Google Play Store.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v3.0.11 🥾</span>
+            <span class="release-date">24 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-feature">Rutas &amp; Senderismo (Idea Lendo)</span> <strong>Ficha Didáctica Oficial de Sendas (➔ Ver Ficha)</strong>:
@@ -4313,7 +4327,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.0.11').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.0.12').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4343,7 +4357,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.11"></script>
+  <script type="module" src="js/app.js?v=3.0.12"></script>
 
 
 

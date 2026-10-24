@@ -27,6 +27,24 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Pautas de Coherencia de Diseño:*
      - Los nuevos iconos deben inspirarse y regirse en los iconos ya consolidados de cada tema: mismas proporciones, equilibrio en la cantidad de elementos (astros, nubes, partículas) y mismo ritmo y estilo de animación fluida para garantizar armonía visual y rendimiento en dispositivos móviles.
 
+## 📍 Actualización v3.0.12: Enlaces Directos de Navegación GPS y Tracks en Fichas de Rutas (Leyes 15 y 16) — 2026-10-24
+- **Diagnóstico y Evaluación Constitucional (Idea Lendo - «y si agregamos un enlace a las rutas en la ficha como lo ves? o es dificil encontrarlo?» y «que es lo que crees que mejor va a funcionar y porsupuesto respetando la constitucion sobre la privacidad y todo lo demas?» y «pisale»):**
+  1. *Evaluación Rigurosa de Privacidad y Google Play:*
+     - Frente a la alternativa de insertar enlaces manuales a webs de terceros (altamente vulnerables a errores 404 por rediseños municipales o con cookies intrusivas), se optó por una arquitectura de máxima utilidad práctica y cero riesgo legal (**Leyes 15 y 16**).
+     - La apertura de coordenadas en Google Maps y búsquedas por nombre homologado en Wikiloc utiliza enlaces estándar (`rel="noopener noreferrer"` y `target="_blank"`), garantizando que no se recopile ningún dato personal del usuario ni se vulneren las directivas de Google Play Store ni el RGPD.
+  2. *Implementación Técnica de la Botonera de Acciones:*
+     - **Motor de Fichas en `routesData.js`:**
+       Incorporado en la sección `🚩 Punto de Inicio y Accesos` el array `actionButtons`:
+       • `🚗 Cómo llegar al inicio (GPS)`: `https://www.google.com/maps/dir/?api=1&destination=${route.lat},${route.lon}` (conducción guiada por voz hasta el punto de inicio de la senda).
+       • `🧭 Tracks en Wikiloc ↗`: `https://es.wikiloc.com/rutas-senderismo?q=${encodeURIComponent(route.name)}` (mapas topográficos y descarga de tracks GPX).
+     - **Renderizado Dinámico en `app.js` (`setupExplainModal`):**
+       El generador de contenido del modal inyecta automáticamente `.explain-actions-row` si una sección contiene botones de acción, permitiendo su reutilización futura en cualquier otro módulo de la app.
+     - **Estilos Ergonómicos en `components.css`:**
+       `.btn-explain-action` con acabado Liquid Glass, acento azul cantábrico (`#38bdf8`), bordes redondeados y adaptabilidad multilínea flexible (`flex: 1 1 calc(50% - 8px); min-width: 140px;`).
+  3. *Anti-Caché Obligatorio (Ley 4):*
+     - Service Worker actualizado a `meteoasturlode-v3012-rutas-enlaces-gps-wikiloc` en `sw.js`.
+     - Versión oficial elevada a `v3.0.12 📍` en pie (`#app-version-badge`), `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.12'` en `app.js`, `routesCard.js?v=3.0.12`, `routesData.js?v=3.0.12`, `css/components.css?v=3.0.12`, `sw.js?v=3.0.12` y query strings en `index.html`.
+
 ## 🥾 Actualización v3.0.11: Ficha Didáctica y Técnica Oficial en Rutas & Senderismo (➔ Ver Ficha) — 2026-10-24
 - **Diagnóstico y Solicitud de Lendo (Idea Lendo - «se me olvidaba que en plan y ocio cada plan tiene una ficha que pone Ver Ficha. Se podria hacer algo parecido en rutas y senderismo?» y «pisale»):**
   1. *El Valor de la Ficha Enriquecida:*
