@@ -12221,5 +12221,116 @@
   }
 }
 
+/* --- TARJETAS DE UTILIDADES EN MODAL DE MENÚ (v3.0.17) --- */
+.nav-tool-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 14px 18px;
+  background: rgba(30, 41, 59, 0.65);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: left;
+  user-select: none;
+  box-sizing: border-box;
+  color: var(--text-main);
+  text-decoration: none;
+  font-family: inherit;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  gap: 12px;
+}
 
+.nav-tool-card:hover {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: var(--primary);
+  transform: translateX(4px);
+}
 
+.nav-tool-card:active {
+  transform: scale(0.98) !important;
+  background: rgba(56, 189, 248, 0.22);
+}
+
+.nav-tool-card-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  flex: 1;
+}
+
+.nav-tool-icon {
+  font-size: 1.8rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.nav-tool-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  flex: 1;
+}
+
+.nav-tool-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.nav-tool-name {
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.25;
+}
+
+.nav-tool-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: rgba(56, 189, 248, 0.2);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  color: #38bdf8;
+  white-space: nowrap;
+}
+
+.nav-tool-badge.badge-info {
+  background: rgba(168, 85, 247, 0.2);
+  border-color: rgba(168, 85, 247, 0.4);
+  color: #c084fc;
+}
+
+.nav-tool-badge.badge-live {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #f87171;
+}
+
+.nav-tool-desc {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+.nav-tool-chevron {
+  font-size: 1.05rem;
+  color: var(--text-dim);
+  flex-shrink: 0;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.nav-tool-card:hover .nav-tool-chevron {
+  color: var(--primary);
+  transform: translateX(3px);
+}

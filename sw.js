@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3016-module-chips-bar';
+const CACHE_NAME = 'meteoasturlode-v3017-nav-modal-clean';
 const STATIC_ASSETS = [
   './',
   './index.html',

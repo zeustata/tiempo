@@ -9,6 +9,27 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.17] - 2026-10-24
+
+### 🧹 Optimización & Usabilidad: Menú de Utilidades sin Redundancias (Idea Lendo)
+- **Motivación y Limpieza de Interfaz:**
+  - Tras el despliegue de la barra rápida de pestañas (Chips Bar) en v3.0.16, los 9 botones de módulos dentro del modal `#nav-modal` resultaban redundantes.
+  - Lendo observó que sobraban los accesos duplicados a *Estación en Vivo*, *10 Días*, etc., y ordenó eliminarlos del menú modal, preservando el botón de cabecera como `[ 📊 Menú ]` y transformando el interior en un panel limpio y espacioso de herramientas.
+- **Implementación Técnica:**
+  - **Eliminación de Módulos Repetidos del Menú:**
+    - Suprimida la inyección dinámica de `APP_MODULES.map(...)` en `#nav-modal-grid` dentro de `js/app.js`.
+    - Eliminadas las tiras compactas (`.nav-modal-tools-strip`) de dos botones por fila que quedaban comprimidas.
+  - **Reestructuración en 4 Tarjetas Amplias de Utilidades (`.nav-tool-card` en `css/components.css` y `index.html`):**
+    - 🎨 **Estilos de Iconos (`#btn-open-icon-themes`):** Acceso al selector de diseño visual (Liquid Glass, 3D, Minimalista, etc.) con badge dinámico (`#badge-active-icon-theme`) que refleja en tiempo real la colección activa.
+    - 📖 **Diccionario de Fenómenos (`#btn-open-phenomena`):** Acceso didáctico inmediato a la guía de Galernas, Mar de Fondo, Efecto Foehn, Borrina y Aludes.
+    - 📹 **Webcams de Asturias (`#btn-open-webcams`):** Acceso directo al visor de cámaras oficiales de playas, puertos de montaña y estaciones asturianas.
+    - 📍 **Auto-Ubicación GPS (`#btn-toggle-autolocation-nav`):** Conmutador táctil directo para alternar la geolocalización automática del concejo al arrancar la app.
+  - **Diseño Ergonómico y Liquid Glass (Leyes 11 y 14):**
+    - Tarjetas con ancho completo, padding generoso (14px 18px), tipografía jerarquizada, icono destacado, badges temáticos de colores y chevron indicador interactivo.
+- **Anti-Caché Obligatorio (Ley 4):**
+  - Service Worker actualizado a `meteoasturlode-v3017-nav-modal-clean` en `sw.js`.
+  - Versión oficial elevada a `v3.0.17 ⚡` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.17'` en `app.js`, `css/components.css?v=3.0.17`, `sw.js?v=3.0.17` y query strings en `index.html`.
+
 ## [3.0.16] - 2026-10-24
 
 ### ⚡ Ergonomía & Navegación Rápida: Barra Horizontal de Pestañas (Chips Bar - Idea Lendo)

@@ -34,9 +34,10 @@
 - Si Lendo propone una idea, pregunta **"¿qué te parece?"**, solicita opinión o pide analizar una alternativa, **JAMÁS adelantarse modificando el código**.
 - Explicar detalladamente lo entendido, aportar la propuesta o valoración técnica y **esperar el visto bueno explícito de Lendo** antes de tocar cualquier archivo.
 
-### 2. Seguridad, Copia y Retorno a Versión Anterior (Rollback)
+### 2. Seguridad, Copia y Retorno a Versión Anterior (Rollback con Pregunta Obligatoria de Versión)
 - **Tener siempre presente la versión anterior funcional** antes de aplicar cualquier cambio nuevo.
-- Si una modificación produce fallos, errores imprevistos o no queda a gusto de Lendo, se debe poder volver de inmediato al estado funcional previo sin pérdida de datos ni configuraciones.
+- **Prohibición de Rollback a Ciegas y Pregunta Obligatoria de Versión:** Si Lendo ordena revertir o volver atrás (*"revierte", "vuelve a la versión anterior", etc.*), queda **terminantemente prohibido ejecutar un reset o checkout destructivo a ciegas**. Princesa debe **detenerse obligatoriamente**, consultar el historial de Git, presentar a Lendo la lista clara de versiones y commits recientes, y **preguntar con exactitud a qué versión o commit específico desea retornar** antes de tocar cualquier archivo o estado de Git, protegiendo todos los avances previos que funcionaban bien.
+- Si una modificación produce fallos, errores imprevistos o no queda a gusto de Lendo, se debe poder volver de inmediato al estado funcional previo elegido sin pérdida de datos ni configuraciones.
 - Los commits en Git deben ser limpios y atómicos para facilitar cualquier reversión si fuera necesario.
 
 ### 3. Ciclo Seguro: Modificación Local, Verificación Previa y Despliegue Dual

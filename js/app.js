@@ -43,7 +43,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '9' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.16';
+export const CURRENT_APP_VERSION = '3.0.17';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -1096,12 +1096,11 @@ class MeteoAsturiasApp {
     const triggerBtn = document.getElementById('btn-open-nav-modal');
     const modal = document.getElementById('nav-modal');
     const closeBtn = document.getElementById('btn-close-nav');
-    const grid = document.getElementById('nav-modal-grid');
-    const badgeTheme = document.getElementById('badge-active-icon-theme');
 
-    if (!modal || !grid) return;
+    if (!modal) return;
 
     const updateNavHeaderThemeBadge = () => {
+      const badgeTheme = document.getElementById('badge-active-icon-theme');
       if (badgeTheme) {
         const theme = this.getEffectiveIconTheme();
         const themeNames = {
@@ -1118,35 +1117,6 @@ class MeteoAsturiasApp {
         };
         badgeTheme.textContent = themeNames[theme] || '📱 Emojis Clásicos';
       }
-    };
-
-    const renderNavItems = () => {
-      updateNavHeaderThemeBadge();
-      this.updateNavAutoLocationBadge();
-      grid.innerHTML = APP_MODULES.map(m => {
-        const isActive = m.id === this.activeTab;
-        return `
-          <div class="nav-module-card ${isActive ? 'active' : ''}" data-tab="${m.id}">
-            <div class="nav-module-card-left">
-              <span class="nav-module-icon">${m.icon}</span>
-              <div class="nav-module-details">
-                <div class="nav-module-title-row">
-                  <span class="nav-module-name">${m.title}</span>
-                </div>
-                <span class="nav-module-desc">${m.desc}</span>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      grid.querySelectorAll('.nav-module-card').forEach(card => {
-        card.addEventListener('click', () => {
-          this.triggerHaptic();
-          this.switchTab(card.dataset.tab);
-          this.closeModal(modal);
-        });
-      });
     };
 
     const toggleAutoLocBtn = document.getElementById('btn-toggle-autolocation-nav');
@@ -1166,7 +1136,8 @@ class MeteoAsturiasApp {
     if (triggerBtn) {
       triggerBtn.addEventListener('click', () => {
         this.triggerHaptic();
-        renderNavItems();
+        updateNavHeaderThemeBadge();
+        this.updateNavAutoLocationBadge();
         this.openModal(modal);
       });
     }
@@ -1183,7 +1154,10 @@ class MeteoAsturiasApp {
       }
     });
 
-    this.renderNavItems = renderNavItems;
+    this.renderNavItems = () => {
+      updateNavHeaderThemeBadge();
+      this.updateNavAutoLocationBadge();
+    };
     this.updateNavHeaderThemeBadge = updateNavHeaderThemeBadge;
   }
 

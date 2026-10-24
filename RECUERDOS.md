@@ -27,6 +27,30 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Pautas de Coherencia de Diseño:*
      - Los nuevos iconos deben inspirarse y regirse en los iconos ya consolidados de cada tema: mismas proporciones, equilibrio en la cantidad de elementos (astros, nubes, partículas) y mismo ritmo y estilo de animación fluida para garantizar armonía visual y rendimiento en dispositivos móviles.
 
+## 🧹 Actualización v3.0.17: Menú de Utilidades sin Redundancias y Tarjetas Liquid Glass (Leyes 11 y 14) — 2026-10-24
+- **Diagnóstico y Usabilidad (Feedback e Ideas de Lendo - «sobra un poco los botones de los menus no?», «primeramente quitale del menu los botones que deciamos Estacion en vivo, etc ya q la tenemos fuera», «de momento deja el nombre que tiene el boton de cabecera» y «pisale»):**
+  1. *Diagnóstico Operativo:*
+     - Al haberse incorporado con éxito la barra horizontal rápida de pestañas (Chips Bar v3.0.16), los 9 botones de salto de módulo dentro del modal de menú (`#nav-modal`) quedaron obsoletos y generaban redundancia visual.
+     - Lendo ordenó limpiar el menú retirando los 9 accesos a los módulos, manteniendo el botón de la cabecera como `[ 📊 Menú ]` y organizando el modal exclusivamente como un panel espacioso y limpio de utilidades y herramientas.
+  2. *Intervención Técnica en `index.html`, `components.css` y `app.js`:*
+     - **Reestructuración HTML5 en `index.html`:**
+       - Título y subtítulo del modal actualizados a *🛠️ Menú de Utilidades: Herramientas, webcams y personalización*.
+       - Eliminadas las dos tiras compactas (`.nav-modal-tools-strip`) que comprimían los accesos en botones enanos.
+       - Reemplazado el contenido interno de `#nav-modal-grid` por 4 tarjetas completas (`.nav-tool-card`):
+         - 🎨 **Estilos de Iconos (`#btn-open-icon-themes`):** Con badge `#badge-active-icon-theme` que indica la colección activa (Liquid Glass, 3D, Minimalista, etc.).
+         - 📖 **Diccionario de Fenómenos (`#btn-open-phenomena`):** Con badge didáctico violeta para consultar la guía explicativa asturiana.
+         - 📹 **Webcams de Asturias (`#btn-open-webcams`):** Con badge en vivo rojo para saltar directamente a las cámaras de arenales y puertos.
+         - 📍 **Auto-Ubicación GPS (`#btn-toggle-autolocation-nav`):** Con badges `#nav-autoloc-icon` y `#nav-autoloc-text` para conmutar la geolocalización al arrancar la app.
+     - **Diseño Ergonómico y Cristal Líquido en `css/components.css`:**
+       - Tarjetas `.nav-tool-card` al 100% de ancho con fondo semitransparente (`rgba(30, 41, 59, 0.65)`), borde sutil de cristal, efecto elevación y micro-desplazamiento al hover/active.
+       - Títulos jerarquizados, descripciones legibles multilínea (Ley 19), iconos a 1.8rem y chevron indicador.
+     - **Ajustes en `js/app.js` (`setupNavModal`):**
+       - Eliminada la inyección innecesaria de `APP_MODULES.map(...)` en el grid del modal.
+       - Mantenida la actualización en vivo de los badges de estilos de iconos y estado del GPS al abrir el menú y al conmutar ajustes.
+  3. *Anti-Caché Obligatorio (Ley 4):*
+     - Service Worker actualizado a `meteoasturlode-v3017-nav-modal-clean` en `sw.js`.
+     - Versión oficial elevada a `v3.0.17 ⚡` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.17'` en `app.js`, `css/components.css?v=3.0.17`, `sw.js?v=3.0.17` y query strings en `index.html`.
+
 ## ⚡ Actualización v3.0.16: Barra Horizontal Rápida de Pestañas (Chips Bar) en Cristal Líquido (Leyes 14 y 18) — 2026-10-24
 - **Diagnóstico y Ergonomía Móvil (Auditoría Ergonómica Punto 2 - «cual era el punto 2?», explicación técnica y orden de Lendo: «pisale»):**
   1. *Diagnóstico Operativo:*
