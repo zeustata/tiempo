@@ -27,6 +27,23 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Pautas de Coherencia de Diseño:*
      - Los nuevos iconos deben inspirarse y regirse en los iconos ya consolidados de cada tema: mismas proporciones, equilibrio en la cantidad de elementos (astros, nubes, partículas) y mismo ritmo y estilo de animación fluida para garantizar armonía visual y rendimiento en dispositivos móviles.
 
+## 🌟 Actualización v3.0.15: Chevron Minimalista en Oro Asturiano para Botón «Volver Arriba» (Ley 14) — 2026-10-24
+- **Diagnóstico y Refinamiento Estético (Feedback y Elección de Lendo - «funciona perfectamente pero me gustaria que sea algo mas elegante y se memitice mas con la interfaz la flecha?», «pero en color amarillo» y «opcion A»):**
+  1. *Diagnóstico Operativo:*
+     - Lendo constató que la funcionalidad del botón flotante Scroll-to-Top era perfecta, pero el emoji de flecha `⬆️` resultaba tosco al renderizarse de forma rígida y cuadrada por los motores de emojis de Android e iOS, desentonando con el acabado premium de cristal líquido de la aplicación.
+     - Lendo solicitó que fuera más elegante, se mimetizara con la interfaz y estuviera acabado en color amarillo. Entre el chevron curvado y la flecha con tallo, eligió la Opción A (chevron minimalista `︿`).
+  2. *Intervención Técnica en `index.html` y `components.css`:*
+     - **Vectorización SVG (`index.html`):**
+       Sustituido el emoji por un elemento vectorial SVG estilizado `<svg class="scroll-top-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>`.
+     - **Cromática y Cristal Líquido en Oro Asturiano (`components.css`):**
+       - Icono coloreado en el amarillo oro cálido de la Cruz de la Victoria (`#fbbf24`), con filtro de sombra `drop-shadow(0 0 4px rgba(251, 191, 36, 0.4))`.
+       - Fondo de cristal oscuro traslúcido (`rgba(15, 23, 42, 0.68)`) enriquecido con `backdrop-filter: blur(16px) saturate(180%)`.
+       - Borde de cristal con halo dorado suave (`border: 1px solid rgba(251, 191, 36, 0.35)`), reflejo especular superior blanco (`inset 0 1px 1px 0 rgba(255, 255, 255, 0.4)`) y aura dorada ambiental (`0 0 14px rgba(251, 191, 36, 0.22)`).
+       - Respuesta dinámica en hover y pulsación (`transform: translateY(-2px) scale(1.06)`, resplandor expandido a 22px y tono más luminoso `#fef08a`).
+  3. *Anti-Caché Obligatorio (Ley 4):*
+     - Service Worker actualizado a `meteoasturlode-v3015-scroll-top-gold` en `sw.js`.
+     - Versión oficial elevada a `v3.0.15 🌟` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.15'` en `app.js`, `css/components.css?v=3.0.15`, `sw.js?v=3.0.15` y query strings en `index.html`.
+
 ## 🚀 Actualización v3.0.14: Botón Flotante «Volver Arriba» (Scroll-to-Top) en Cristal Líquido (Leyes 11 y 14) — 2026-10-24
 - **Diagnóstico y Ergonomía Móvil (Auditoría Ergonómica con Lendo - «alguna idea para la ergodnomia y orden de la app?», «vamos a empezar con la primera opcion. a ver que tal sale que estas muy on fire» y «pidale y crucemos los dedos»):**
   1. *Diagnóstico Operativo:*

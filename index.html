@@ -32,7 +32,7 @@
 
   <!-- Estilos de la Aplicación con Cache Busting -->
   <link rel="stylesheet" href="css/main.css?v=3.0.5">
-  <link rel="stylesheet" href="css/components.css?v=3.0.14">
+  <link rel="stylesheet" href="css/components.css?v=3.0.15">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -194,7 +194,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.14 🚀</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.15 🌟</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -268,8 +268,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v3.0.14 🚀</span>
+            <span class="release-version">v3.0.15 🌟</span>
             <span class="release-date">24 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-feature">Diseño &amp; Identidad (Feedback Lendo)</span> <strong>Chevron Minimalista en Oro Asturiano (Scroll-to-Top)</strong>:
+              <br>• <strong>Iconografía Vectorial SVG Integrada:</strong> Sustituido el emoji estándar de flecha por un chevron curvado minimalista SVG (<code>︿</code>) ultranítido en trazo fino, mimetizado a la perfección con la interfaz Liquid Glass.
+              <br>• <strong>Cromática en Oro Asturiano (<code>#fbbf24</code>):</strong> Sintonizado con la Cruz de la Victoria y el oro de la bandera de Asturias, con aura dorada suave en reposo y resplandor ambarino al pulsar.
+              <br>• <strong>Profundidad en Cristal Traslúcido:</strong> Filtro de desenfoque enriquecido (<code>blur(16px) saturate(180%)</code>) con reflejo de luz superior blanco para una integración estética absoluta.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v3.0.14 🚀</span>
+            <span class="release-date">24 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-feature">Ergonomía Móvil (Idea Lendo)</span> <strong>Botón Flotante «Volver Arriba» (Scroll-to-Top)</strong>:
@@ -4351,16 +4365,18 @@
     </div>
   </div>
 
-  <!-- BOTÓN FLOTANTE VOLVER ARRIBA (SCROLL-TO-TOP v3.0.14) -->
+  <!-- BOTÓN FLOTANTE VOLVER ARRIBA (SCROLL-TO-TOP v3.0.15 EN ORO ASTURIANO) -->
   <button id="btn-scroll-top" class="btn-scroll-top" aria-label="Volver arriba" title="Volver al inicio de la página">
-    <span class="scroll-top-icon">⬆️</span>
+    <svg class="scroll-top-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M18 15l-6-6-6 6"/>
+    </svg>
   </button>
 
   <!-- Service Worker Registration & Live Auto-Update Engine -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.0.14').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.0.15').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4390,7 +4406,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.14"></script>
+  <script type="module" src="js/app.js?v=3.0.15"></script>
 
 
 

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3014-scroll-to-top';
+const CACHE_NAME = 'meteoasturlode-v3015-scroll-top-gold';
 const STATIC_ASSETS = [
   './',
   './index.html',

@@ -9,6 +9,22 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.15] - 2026-10-24
+
+### 🌟 Diseño & Armonía Visual: Chevron Minimalista en Oro Asturiano (Scroll-to-Top - Ley 14)
+- **Motivación y Mimetizado Visual (Feedback Lendo):**
+  - Tras verificar el funcionamiento impecable del botón «Volver Arriba», Lendo propuso refinar la iconografía para que no utilizara el emoji genérico del sistema operativo (`⬆️`) y se mimetizara orgánicamente con el diseño en cristal líquido de la app, seleccionando un acabado en color amarillo oro asturiano.
+- **Implementación Técnica:**
+  - **Sustitución Vectorial SVG (`index.html` y `components.css`):**
+    - Erradicado el emoji plano y sustituido por un chevron curvado minimalista SVG (<code>︿</code>) con `stroke-width="2.6"` y `stroke-linecap="round"`.
+  - **Cromática en Oro Asturiano (`#fbbf24`):**
+    - Sintonizado cromáticamente con el oro de la Cruz de la Victoria y la bandera de Asturias.
+    - Borde sutil de cristal líquido en oro ámbar (`rgba(251, 191, 36, 0.35)`), resplandor sutil `0 0 14px rgba(251, 191, 36, 0.22)` y fondo oscurecido translúcido enriquecido con `backdrop-filter: blur(16px) saturate(180%)`.
+    - Al pasar el cursor o pulsar: aura dorada intensa (`rgba(251, 191, 36, 0.48)`) y brillo especular superior blanco.
+- **Anti-Caché Obligatorio (Ley 4):**
+  - Service Worker actualizado a `meteoasturlode-v3015-scroll-top-gold` en `sw.js`.
+  - Versión oficial elevada a `v3.0.15 🌟` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.15'` en `app.js`, `css/components.css?v=3.0.15`, `sw.js?v=3.0.15` y query strings en `index.html`.
+
 ## [3.0.14] - 2026-10-24
 
 ### 🚀 Ergonomía Móvil: Botón Flotante «Volver Arriba» (Scroll-to-Top - Idea Lendo)
