@@ -9,6 +9,25 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.11] - 2026-10-24
+
+### 🥾 Rutas & Senderismo: Ficha Didáctica y Técnica Oficial de Sendas (➔ Ver Ficha - Idea Lendo)
+- **Motivación y Arquitectura Didáctica:**
+  - Lendo propuso incorporar en el módulo de *Rutas & Senderismo* un acceso directo a la ficha completa como el que existe en *Planes & Ocio* (`➔ Ver Ficha`), dotando a las sendas asturianas de un dossier interactivo enriquecido.
+- **Implementación Técnica Integral:**
+  - **Función Exportada `getRouteExplanation(routeId)` en `routesData.js`:** Genera dinámicamente un dossier estructurado en 4 bloques temáticos:
+    1. *🗺️ Itinerario y Puntos Clave:* Descripción extendida de panorámicas, cotas y singularidades.
+    2. *🪵 Terreno, Firme y Tracción:* Tipo de superficie y calzado específico aconsejado (bota de taco con membrana o calzado ligero).
+    3. *🚩 Punto de Inicio y Accesos:* Referencia exacta del punto de partida, concejo y coordenadas geodésicas.
+    4. *⚠️ Seguridad y Precauciones Oficiales:* Advertencias de viento en crestas, niebla cantábrica/borrina cerrada y protocolo 112.
+  - **Pastilla Interactiva Liquid Glass (`routesCard.js` y `components.css`):**
+    - Añadido el botón `.route-tip-box.route-tip-btn` al final de cada tarjeta de senda desplegada con el texto `🥾 Guía de la Senda: Itinerario, firme, accesos y seguridad • ➔ Ver ficha`.
+    - Animación fluida al cursor/toque con desplazamiento de la flecha, feedback háptico y apertura instantánea del modal `#explain-modal`.
+  - **Armonía Visual y Cohesión (Ley 14):** Se unifica el ecosistema didáctico de la app entre Turismo y Rutas, compartiendo la misma experiencia premium.
+- **Anti-Caché Obligatorio (Ley 4):**
+  - Service Worker actualizado a `meteoasturlode-v3011-rutas-ficha-didactica-oficial` en `sw.js`.
+  - Versión oficial elevada a `v3.0.11 🥾` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.11'` en `app.js`, `routesCard.js?v=3.0.11`, `routesData.js?v=3.0.11`, `css/components.css?v=3.0.11`, `sw.js?v=3.0.11` y query strings en `index.html`.
+
 ## [3.0.10] - 2026-10-24
 
 ### 🎭 Ergonomía Móvil: Legibilidad Plena y Simetría en Fichas de Planes & Ocio (Leyes 14 y 19 - Reporte Lendo)

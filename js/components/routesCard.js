@@ -6,7 +6,7 @@
  * y Blindaje Constitucional de Seguridad y Responsabilidad Individual (Ley 16).
  */
 
-import { calculateHikingIndex, getRoutesForConcejo } from '../utils/routesData.js?v=2.2.75';
+import { calculateHikingIndex, getRoutesForConcejo } from '../utils/routesData.js?v=3.0.11';
 
 // Función global de filtrado interactivo por dificultad de rutas
 if (typeof window !== 'undefined') {
@@ -249,6 +249,13 @@ export function renderRoutesCard(data, concejo) {
                     </div>
                   </div>
                 ` : ''}
+
+                <!-- Botón didáctico interactivo con la ficha técnica oficial -->
+                <button type="button" class="route-tip-box route-tip-btn btn-explain-route" data-explain-route="${r.id}" title="Toca para abrir la ficha técnica y didáctica de ${r.name}">
+                  <span class="route-tip-icon">🥾</span>
+                  <span class="route-tip-text"><strong>Guía de la Senda:</strong> Itinerario, firme, accesos y seguridad</span>
+                  <span class="route-tip-arrow">➔ Ver ficha</span>
+                </button>
               </div>
             </details>
           `;

@@ -11266,7 +11266,8 @@
   }
 }
 
-.plan-tip-box {
+.plan-tip-box,
+.route-tip-box {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -11287,29 +11288,35 @@
   transition: all 0.2s ease;
 }
 
-.plan-tip-btn {
+.plan-tip-btn,
+.route-tip-btn {
   cursor: pointer;
 }
 
 .plan-tip-btn:hover,
-.plan-tip-btn:focus-visible {
+.plan-tip-btn:focus-visible,
+.route-tip-btn:hover,
+.route-tip-btn:focus-visible {
   background: rgba(56, 189, 248, 0.12);
   border-left-color: #7dd3fc;
   color: #ffffff;
   transform: translateX(2px);
 }
 
-.plan-tip-icon {
+.plan-tip-icon,
+.route-tip-icon {
   flex-shrink: 0;
   font-size: 0.95rem;
 }
 
-.plan-tip-text {
+.plan-tip-text,
+.route-tip-text {
   flex: 1;
   min-width: 0;
 }
 
-.plan-tip-arrow {
+.plan-tip-arrow,
+.route-tip-arrow {
   flex-shrink: 0;
   font-size: 0.8rem;
   color: #38bdf8;
@@ -11318,7 +11325,8 @@
   margin-left: 4px;
 }
 
-.plan-tip-btn:hover .plan-tip-arrow {
+.plan-tip-btn:hover .plan-tip-arrow,
+.route-tip-btn:hover .route-tip-arrow {
   opacity: 1;
   transform: translateX(3px);
 }

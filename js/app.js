@@ -4,7 +4,7 @@ import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedW
 import { renderCurrentWeather } from './components/currentCard.js?v=3.0.7';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=2.2.76';
 import { renderSurfCard } from './components/surfCard.js?v=2.2.77';
-import { renderRoutesCard } from './components/routesCard.js?v=3.0.9';
+import { renderRoutesCard } from './components/routesCard.js?v=3.0.11';
 import { renderMountainCard } from './components/mountainCard.js?v=2.2.64';
 import { renderTourismCard } from './components/tourismCard.js?v=3.0.10';
 import { renderForecast } from './components/forecastView.js?v=3.0.7';
@@ -21,6 +21,7 @@ import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=2.0.0';
 import { getHalloweenWeatherSvg } from './utils/weatherHalloweenIcons.js?v=2.2.64';
 import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=3.0.1';
 import { getTourismPlanExplanation } from './utils/tourismData.js?v=2.2.74';
+import { getRouteExplanation } from './utils/routesData.js?v=3.0.11';
 import { checkConcejoFolixa } from './utils/festivosData.js?v=2.0.0';
 import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=2.0.0';
 import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=2.0.0';
@@ -42,7 +43,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '9' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.10';
+export const CURRENT_APP_VERSION = '3.0.11';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -1459,7 +1460,42 @@ class MeteoAsturiasApp {
         }
       }
 
-      // 1b. Fichas Didácticas de Folixas y Fiestas Locales Asturianas
+      // 1b. Fichas Técnicas y Didácticas de Rutas & Senderismo
+      const routeBtn = e.target.closest('.btn-explain-route, [data-explain-route]');
+      if (routeBtn) {
+        this.triggerHaptic();
+        const routeId = routeBtn.dataset.explainRoute;
+        const routeTopic = getRouteExplanation(routeId);
+        if (routeTopic) {
+          if (titleEl) titleEl.innerHTML = `${routeTopic.icon} ${routeTopic.title}`;
+          if (subtitleEl) subtitleEl.textContent = routeTopic.subtitle;
+          if (contentEl) {
+            contentEl.innerHTML = `
+              <div class="explain-content-wrapper">
+                <div class="explain-top-badge-row">
+                  <span class="explain-icon-large">${routeTopic.icon}</span>
+                  <div class="explain-badge-tag">${routeTopic.badge}</div>
+                </div>
+                <div class="explain-sections-list">
+                  ${routeTopic.sections.map(sec => `
+                    <div class="explain-card-block">
+                      <h4 class="explain-block-title">${sec.icon} ${sec.heading}</h4>
+                      <div class="explain-block-text">${sec.text}</div>
+                    </div>
+                  `).join('')}
+                </div>
+                <div class="explain-footer-note">
+                  🥾 <em>MeteoAstur Lode • Catálogo Oficial de Sendas de Asturias y Seguridad en Montaña</em>
+                </div>
+              </div>
+            `;
+          }
+          this.openModal(modal);
+          return;
+        }
+      }
+
+      // 1c. Fichas Didácticas de Folixas y Fiestas Locales Asturianas
       const folixaBtn = e.target.closest('.btn-explain-folixa, [data-explain-folixa]');
       if (folixaBtn) {
         this.triggerHaptic();

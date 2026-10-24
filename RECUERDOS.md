@@ -27,6 +27,25 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Pautas de Coherencia de Diseño:*
      - Los nuevos iconos deben inspirarse y regirse en los iconos ya consolidados de cada tema: mismas proporciones, equilibrio en la cantidad de elementos (astros, nubes, partículas) y mismo ritmo y estilo de animación fluida para garantizar armonía visual y rendimiento en dispositivos móviles.
 
+## 🥾 Actualización v3.0.11: Ficha Didáctica y Técnica Oficial en Rutas & Senderismo (➔ Ver Ficha) — 2026-10-24
+- **Diagnóstico y Solicitud de Lendo (Idea Lendo - «se me olvidaba que en plan y ocio cada plan tiene una ficha que pone Ver Ficha. Se podria hacer algo parecido en rutas y senderismo?» y «pisale»):**
+  1. *El Valor de la Ficha Enriquecida:*
+     - Lendo propuso dotar al catálogo de *Rutas & Senderismo* de la misma profundidad didáctica que posee *Planes & Ocio*, permitiendo al usuario abrir un dossier detallado de la senda con recomendaciones de terreno, firme, tracción de calzado, accesos y precauciones oficiales de montaña.
+  2. *Arquitectura e Implementación Técnica:*
+     - **Motor de Fichas en `routesData.js` (`getRouteExplanation`):**
+       Construye dinámicamente un objeto temático con icono principal, título, concejo, dificultad y badge con distancia/desnivel/tiempo, alimentando 4 secciones didácticas:
+       • `🗺️ Itinerario y Puntos Clave`: Recorrido completo, miradores y valores paisajísticos.
+       • `🪵 Terreno, Firme y Tracción`: Tipología de firme y recomendación de calzado (bota de montaña con suela de taco o calzado ligero).
+       • `🚩 Punto de Inicio y Accesos`: Salida, concejo y coordenadas geodésicas de referencia.
+       • `⚠️ Seguridad y Precauciones Oficiales`: Alertas de viento en crestas, niebla cantábrica/borrina, cruces delicados y aviso al 112.
+     - **Pastilla Interactiva en `routesCard.js` y `components.css`:**
+       Incorporado el botón `.route-tip-box.route-tip-btn` con texto `🥾 Guía de la Senda: Itinerario, firme, accesos y seguridad • ➔ Ver ficha`. Estilo Liquid Glass con borde azul cantábrico, micro-animación en hover/tap y feedback háptico.
+     - **Desacople e Integración en `app.js`:**
+       Conectado al listener central de `setupExplainModal` mediante `.btn-explain-route, [data-explain-route]`, reutilizando de forma armónica el modal `#explain-modal` existente sin duplicar código (**Ley 14**).
+  3. *Anti-Caché Obligatorio (Ley 4):*
+     - Service Worker actualizado a `meteoasturlode-v3011-rutas-ficha-didactica-oficial` en `sw.js`.
+     - Versión oficial elevada a `v3.0.11 🥾` en pie (`#app-version-badge`), `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.11'` en `app.js`, `routesCard.js?v=3.0.11`, `routesData.js?v=3.0.11`, `css/components.css?v=3.0.11`, `sw.js?v=3.0.11` y query strings en `index.html`.
+
 ## 🎭 Actualización v3.0.10: Legibilidad Plena y Simetría Ergonómica en Fichas de Planes & Ocio (Leyes 14 y 19) — 2026-10-24
 - **Diagnóstico Riguroso y Causa Raíz (Reporte Lendo - «muy bien princesa. Pasa lo mismmo en el menu Planes de ocio. te mando captura» y «pisale»):**
   1. *El Origen de los Puntos Suspensivos:*

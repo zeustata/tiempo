@@ -1206,3 +1206,40 @@ export function calculateHikingIndex(data, concejo) {
     uv: daily?.uv_index_max?.[0] || 4
   };
 }
+
+/**
+ * Obtiene la ficha técnica y didáctica oficial de una ruta de senderismo
+ */
+export function getRouteExplanation(routeId) {
+  const route = RUTAS_ASTURIAS_CATALOGO.find(r => r.id === routeId);
+  if (!route) return null;
+
+  return {
+    icon: route.typeIcon || '🥾',
+    title: route.name,
+    subtitle: `${route.concejoName} • Dificultad ${route.diff}`,
+    badge: `Senda Oficial • ${route.dist} • ${route.elev} • ${route.time}`,
+    sections: [
+      {
+        icon: '🗺️',
+        heading: 'Itinerario y Puntos Clave',
+        text: route.desc
+      },
+      {
+        icon: '🪵',
+        heading: 'Terreno, Firme y Tracción',
+        text: `Superficie: ${route.surface}. ${route.diffRank >= 2 ? 'Se recomienda calzado técnico o bota de montaña con suela de taco para agarre óptimo en roca húmeda, caliza y barro.' : 'Senda apta con calzado deportivo o senderismo ligero.'}`
+      },
+      {
+        icon: '🚩',
+        heading: 'Punto de Inicio y Accesos',
+        text: `Salida recomendada: ${route.startPoint} (${route.concejoName}). Coordenadas geodésicas de referencia: ${route.lat.toFixed(4)}°N, ${route.lon.toFixed(4)}°W.`
+      },
+      {
+        icon: '⚠️',
+        heading: 'Seguridad y Precauciones Oficiales',
+        text: route.caution || 'Atención a cambios repentinos de visibilidad por niebla cantábrica o borrina en zonas altas y rocas resbaladizas tras lluvia. Lleva siempre agua, cortavientos y batería completa en el teléfono móvil.'
+      }
+    ]
+  };
+}
