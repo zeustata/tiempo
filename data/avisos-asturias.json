@@ -1,27 +1,17 @@
 {
-  "updatedAt": "2026-10-23T15:03:24.287Z",
+  "updatedAt": "2026-10-24T15:44:59.399Z",
   "zones": {
     "633301": {
       "name": "Litoral occidental asturiano",
       "alerts": [
         {
-          "id": "2.49.0.0.724.0.ES.261023063609.633301COCO232137369",
-          "type": "coastal",
-          "level": "orange",
-          "onset": "2026-10-23T08:00:00+02:00",
-          "expires": "2026-10-23T22:59:59+02:00",
-          "headline": "Aviso de costeros de nivel naranja. Costa - Litoral occidental asturiano",
-          "description": "Viento del Oeste de 50 a 61 km/h (fuerza 7), amainando por la tarde. Mar combinada del Noroeste de 5 a 7 m.",
-          "instruction": "Esté preparado. Tome precauciones y manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños graves a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
-        },
-        {
-          "id": "2.49.0.0.724.0.ES.261023083808.633301COCO240144688",
+          "id": "2.49.0.0.724.0.ES.261024084209.633301COCO252331329",
           "type": "coastal",
           "level": "yellow",
-          "onset": "2026-10-23T23:00:00+02:00",
-          "expires": "2026-10-24T02:59:59+02:00",
+          "onset": "2026-10-25T17:00:00+01:00",
+          "expires": "2026-10-25T23:59:59+01:00",
           "headline": "Aviso de costeros de nivel amarillo. Costa - Litoral occidental asturiano",
-          "description": "Mar combinada del Noroeste de 4 a 5 m.",
+          "description": "Mar combinada del noroeste superior a 4 metros.",
           "instruction": "Esté atento. Manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños moderados a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
         }
       ]
@@ -30,23 +20,13 @@
       "name": "Litoral oriental asturiano",
       "alerts": [
         {
-          "id": "2.49.0.0.724.0.ES.261023063609.633302COCO232137369",
-          "type": "coastal",
-          "level": "orange",
-          "onset": "2026-10-23T08:00:00+02:00",
-          "expires": "2026-10-23T22:59:59+02:00",
-          "headline": "Aviso de costeros de nivel naranja. Costa - Litoral oriental asturiano",
-          "description": "Viento del Oeste de 50 a 61 km/h (fuerza 7), amainando por la tarde. Mar combinada del Noroeste de 5 a 7 m.",
-          "instruction": "Esté preparado. Tome precauciones y manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños graves a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
-        },
-        {
-          "id": "2.49.0.0.724.0.ES.261023083808.633302COCO240144688",
+          "id": "2.49.0.0.724.0.ES.261024084209.633302COCO252331329",
           "type": "coastal",
           "level": "yellow",
-          "onset": "2026-10-23T23:00:00+02:00",
-          "expires": "2026-10-24T02:59:59+02:00",
+          "onset": "2026-10-25T17:00:00+01:00",
+          "expires": "2026-10-25T23:59:59+01:00",
           "headline": "Aviso de costeros de nivel amarillo. Costa - Litoral oriental asturiano",
-          "description": "Mar combinada del Noroeste de 4 a 5 m.",
+          "description": "Mar combinada del noroeste superior a 4 metros.",
           "instruction": "Esté atento. Manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños moderados a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
         }
       ]
