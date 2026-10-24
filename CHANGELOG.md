@@ -9,6 +9,26 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.16] - 2026-10-24
+
+### ⚡ Ergonomía & Navegación Rápida: Barra Horizontal de Pestañas (Chips Bar - Idea Lendo)
+- **Motivación y Optimización de Interacción (Auditoría Ergonómica Punto 2):**
+  - Para cambiar de sección entre los 9 módulos de la aplicación, el usuario requería realizar múltiples deslizamientos laterales continuos a ciegas o abrir el modal de menú (3 toques y una interrupción visual de pantalla completa).
+  - Lendo ordenó la implementación del Punto 2 de la auditoría ergonómica: una barra de acceso rápido con salto directo en 1 solo toque.
+- **Implementación Técnica:**
+  - **Tira Deslizante de Pestañas Rápidas (`#module-chips-nav` en `index.html` y `components.css`):**
+    - Ubicada estratégicamente bajo la cabecera principal, incorpora las 9 pastillas directas en Liquid Glass: *📊 En Vivo*, *📅 10 Días*, *📡 Radar*, *🏖️ Playas*, *🏄‍♂️ Surf*, *🥾 Rutas*, *🏔️ Nieve*, *🔭 Cosmos* y *🗺️ Ocio*.
+    - Acabado en cristal semitransparente (`rgba(15, 23, 42, 0.62)`), filtro `blur(14px)`, borde sutil y sombras suaves.
+    - Estado activo (`.active`) con gradiente cian translúcido, borde iluminado (`rgba(56, 189, 248, 0.65)`), tipografía en negrita y sutil halo ambiental.
+  - **Sincronización Bidireccional y Auto-Centrado (`switchTab` en `js/app.js`):**
+    - Al tocar cualquier pastilla se ejecuta de inmediato el cambio de módulo con respuesta háptica (`triggerHaptic()`).
+    - Al navegar por cualquier vía (chips, swipe de pantalla, teclado 1-9 o menú modal), la pastilla activa se ilumina y se desplaza suavemente al centro del campo de visión (`chip.scrollIntoView({ inline: 'center' })`).
+  - **Blindaje Táctil e Inmunidad al Deslizamiento Global (Ley 18):**
+    - Las clases `.module-chips-nav, .module-chips-scroll, .module-chip` se incorporan al guardián `isInteractiveZone()` en `js/app.js`, asegurando que el arrastre con el pulgar desplace exclusivamente las pastillas sin cambiar accidentalmente de pantalla.
+- **Anti-Caché Obligatorio (Ley 4):**
+  - Service Worker actualizado a `meteoasturlode-v3016-module-chips-bar` en `sw.js`.
+  - Versión oficial elevada a `v3.0.16 ⚡` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.16'` en `app.js`, `css/components.css?v=3.0.16`, `sw.js?v=3.0.16` y query strings en `index.html`.
+
 ## [3.0.15] - 2026-10-24
 
 ### 🌟 Diseño & Armonía Visual: Chevron Minimalista en Oro Asturiano (Scroll-to-Top - Ley 14)

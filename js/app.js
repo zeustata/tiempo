@@ -43,7 +43,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '9' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.15';
+export const CURRENT_APP_VERSION = '3.0.16';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -85,6 +85,7 @@ class MeteoAsturiasApp {
     initGyroGlass();
     this.setupFullscreen();
     this.setupScrollToTop();
+    this.setupModuleChipsNav();
     this.initParticleCanvas();
 
     // Auto-apertura inmediata del modal de Novedades si hay nueva versión (Doctrina Constitucional 13)
@@ -2031,6 +2032,17 @@ class MeteoAsturiasApp {
     if (iconEl) iconEl.textContent = mod.icon;
     if (titleEl) titleEl.textContent = mod.title;
 
+    // Sincronizar resaltado y auto-centrado de la barra horizontal rápida de pestañas
+    document.querySelectorAll('.module-chip').forEach(chip => {
+      const isMatch = chip.dataset.tab === targetTab;
+      chip.classList.toggle('active', isMatch);
+      if (isMatch) {
+        try {
+          chip.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        } catch (e) {}
+      }
+    });
+
     // Actualizar paneles de contenido con animación de deslizamiento
     document.querySelectorAll('.tab-panel').forEach(p => {
       const isTarget = p.id === 'panel-' + targetTab;
@@ -2251,6 +2263,7 @@ class MeteoAsturiasApp {
         '.weekly-tides-grid, .weekly-tides-card, .tide-day-card, ' +
         '.daily-cards-container, .daily-card-rich, .forecast-scroll-hint, ' +
         '.surf-timeline-grid, .surf-slot-card, .surf-timeline-scroll-hint, .surf-daily-cards-grid, .surf-daily-card, .surf-dayparts-list, .surf-daily-scroll-hint, ' +
+        '.module-chips-nav, .module-chips-scroll, .module-chip, ' +
         '.favorites-pills, .view-tabs, ' +
         '.beach-controls-toolbar, .beach-filter-dropdown-wrapper, ' +
         '#map-container, .leaflet-container, ' +
@@ -2467,6 +2480,19 @@ class MeteoAsturiasApp {
         top: 0,
         behavior: 'smooth'
       });
+    });
+  }
+
+  setupModuleChipsNav() {
+    const container = document.getElementById('module-chips-scroll');
+    if (!container) return;
+
+    container.addEventListener('click', (e) => {
+      const chip = e.target.closest('.module-chip');
+      if (!chip || !chip.dataset.tab) return;
+
+      this.triggerHaptic();
+      this.switchTab(chip.dataset.tab);
     });
   }
 

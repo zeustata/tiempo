@@ -27,6 +27,27 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Pautas de Coherencia de Diseño:*
      - Los nuevos iconos deben inspirarse y regirse en los iconos ya consolidados de cada tema: mismas proporciones, equilibrio en la cantidad de elementos (astros, nubes, partículas) y mismo ritmo y estilo de animación fluida para garantizar armonía visual y rendimiento en dispositivos móviles.
 
+## ⚡ Actualización v3.0.16: Barra Horizontal Rápida de Pestañas (Chips Bar) en Cristal Líquido (Leyes 14 y 18) — 2026-10-24
+- **Diagnóstico y Ergonomía Móvil (Auditoría Ergonómica Punto 2 - «cual era el punto 2?», explicación técnica y orden de Lendo: «pisale»):**
+  1. *Diagnóstico Operativo:*
+     - En la auditoría ergonómica se detectó que el salto entre los 9 módulos obligaba al usuario a realizar múltiples swipes sucesivos con el dedo a ciegas o a recurrir al menú modal superior (`#nav-modal`), requiriendo 3 toques e interrumpiendo visualmente la pantalla completa.
+     - Lendo dio la orden de implementar el Punto 2: una barra de acceso directo horizontal con pastillas compactas en cristal líquido bajo la cabecera.
+  2. *Intervención Técnica en `index.html`, `components.css` y `app.js`:*
+     - **Estructura HTML5 en `index.html`:**
+       Incorporada entre la cabecera y el cuerpo principal la navegación rápida `<nav class="module-chips-nav" id="module-chips-nav">` con 9 botones `<button class="module-chip" data-tab="...">` correspondientes a cada sección (*En Vivo*, *10 Días*, *Radar*, *Playas*, *Surf*, *Rutas*, *Nieve*, *Cosmos*, *Ocio*).
+     - **Diseño Ergonómico y Acabado Liquid Glass en `css/components.css`:**
+       - Contenedor con scroll horizontal oculto (`scrollbar-width: none`), desplazamiento elástico táctil y `touch-action: pan-x pan-y` para no entorpecer el scroll vertical.
+       - Pastillas con fondo translúcido (`rgba(15, 23, 42, 0.62)`), desenfoque de 14px, bordes sutiles y texto estilizado a 0.82rem.
+       - Estado activo (`.active`) con gradiente cian, iluminación perimetral (`rgba(56, 189, 248, 0.65)`), micro-aumento de icono y aura luminosa.
+     - **Sincronización Bidireccional y Auto-Centrado en `js/app.js` (`setupModuleChipsNav` y `switchTab`):**
+       - Delegación de eventos en contenedor de chips que dispara `switchTab` con respuesta háptica instantánea (`triggerHaptic()`).
+       - En `switchTab`, cualquier cambio de módulo (mediante chips, swipe de pantalla, teclas 1-9 o menú) actualiza la clase `.active` y desplaza suavemente la pastilla al centro del campo visual (`chip.scrollIntoView({ inline: 'center' })`).
+     - **Blindaje Táctil (Ley 18):**
+       - Clases `.module-chips-nav, .module-chips-scroll, .module-chip` añadidas a la función guardiana `isInteractiveZone()` en `js/app.js`, blindando el contenedor para que el arrastre de pestañas con el pulgar jamás active el swipe global de la pantalla.
+  3. *Anti-Caché Obligatorio (Ley 4):*
+     - Service Worker actualizado a `meteoasturlode-v3016-module-chips-bar` en `sw.js`.
+     - Versión oficial elevada a `v3.0.16 ⚡` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.16'` en `app.js`, `css/components.css?v=3.0.16`, `sw.js?v=3.0.16` y query strings en `index.html`.
+
 ## 🌟 Actualización v3.0.15: Chevron Minimalista en Oro Asturiano para Botón «Volver Arriba» (Ley 14) — 2026-10-24
 - **Diagnóstico y Refinamiento Estético (Feedback y Elección de Lendo - «funciona perfectamente pero me gustaria que sea algo mas elegante y se memitice mas con la interfaz la flecha?», «pero en color amarillo» y «opcion A»):**
   1. *Diagnóstico Operativo:*
