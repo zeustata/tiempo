@@ -12047,3 +12047,68 @@
   transform: translateY(-1px);
   box-shadow: 0 6px 22px rgba(220, 38, 38, 0.65);
 }
+
+/* --- BOTÓN FLOTANTE VOLVER ARRIBA (SCROLL-TO-TOP v3.0.14) --- */
+.btn-scroll-top {
+  position: fixed;
+  bottom: 24px;
+  right: 20px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.78);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: #38bdf8;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), 0 0 12px rgba(56, 189, 248, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 85;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(16px) scale(0.85);
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-scroll-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.btn-scroll-top:hover {
+  border-color: rgba(56, 189, 248, 0.75);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.45), 0 0 20px rgba(56, 189, 248, 0.45);
+  transform: translateY(-2px) scale(1.06);
+}
+
+.btn-scroll-top:active {
+  transform: translateY(0) scale(0.92);
+  background: rgba(56, 189, 248, 0.18);
+}
+
+.btn-scroll-top .scroll-top-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.btn-scroll-top:hover .scroll-top-icon {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 480px) {
+  .btn-scroll-top {
+    bottom: 20px;
+    right: 16px;
+    width: 44px;
+    height: 44px;
+  }
+}
+

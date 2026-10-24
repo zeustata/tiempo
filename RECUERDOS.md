@@ -27,6 +27,25 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Pautas de Coherencia de Diseño:*
      - Los nuevos iconos deben inspirarse y regirse en los iconos ya consolidados de cada tema: mismas proporciones, equilibrio en la cantidad de elementos (astros, nubes, partículas) y mismo ritmo y estilo de animación fluida para garantizar armonía visual y rendimiento en dispositivos móviles.
 
+## 🚀 Actualización v3.0.14: Botón Flotante «Volver Arriba» (Scroll-to-Top) en Cristal Líquido (Leyes 11 y 14) — 2026-10-24
+- **Diagnóstico y Ergonomía Móvil (Auditoría Ergonómica con Lendo - «alguna idea para la ergodnomia y orden de la app?», «vamos a empezar con la primera opcion. a ver que tal sale que estas muy on fire» y «pidale y crucemos los dedos»):**
+  1. *Diagnóstico Operativo:*
+     - Lendo solicitó ideas para mejorar la ergonomía y el orden de la aplicación. Se realizó una auditoría identificando como punto crítico la fatiga de scroll vertical en pantallas móviles: al desplazarse por listados largos (como el catálogo de senderismo en *Rutas*, las playas en *Playas & Mareas*, los rompientes en *Surf*, o las 24 horas horarias en *En Vivo*), la cabecera con el buscador de concejos, el GPS y el menú queda fuera de la vista, obligando al usuario a realizar múltiples barridos con el dedo para volver arriba.
+     - Lendo seleccionó la primera propuesta: implementar un botón flotante ergonómico de retorno instantáneo a la cabecera.
+  2. *Intervención Técnica en `index.html`, `components.css` y `app.js`:*
+     - **Estructura HTML en `index.html`:**
+       Incorporado justo antes del cierre del body el elemento `<button id="btn-scroll-top" class="btn-scroll-top" aria-label="Volver arriba" title="Volver al inicio de la página"><span class="scroll-top-icon">⬆️</span></button>`.
+     - **Diseño Ergonómico y Acabado Liquid Glass en `css/components.css`:**
+       - Fijado en `position: fixed; bottom: 24px; right: 20px; z-index: 85;` (zona óptima de confort del pulgar derecho, respetando modales en z-index 9999).
+       - Diámetro de 46×46px (44×44px en móviles estrechos), fondo oscuro semitransparente (`rgba(15, 23, 42, 0.78)`), borde en cian cantábrico (`rgba(56, 189, 248, 0.35)`), desenfoque de fondo (`backdrop-filter: blur(12px)`) y sombra con resplandor suave.
+       - Transición elástica de entrada y salida (`opacity: 0; pointer-events: none; transform: translateY(16px) scale(0.85);` hacia `opacity: 1; transform: translateY(0) scale(1);`).
+     - **Motor de Control en `js/app.js` (`setupScrollToTop`):**
+       - Listener de scroll pasivo (`{ passive: true }`) optimizado con `requestAnimationFrame` que activa el botón cuando `window.scrollY > 350`.
+       - Al hacer clic o tocar: dispara respuesta háptica (`triggerHaptic()`) y retorno fluido a la cabecera mediante `window.scrollTo({ top: 0, behavior: 'smooth' })`.
+  3. *Anti-Caché Obligatorio (Ley 4):*
+     - Service Worker actualizado a `meteoasturlode-v3014-scroll-to-top` en `sw.js`.
+     - Versión oficial elevada a `v3.0.14 🚀` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.14'` en `app.js`, `css/components.css?v=3.0.14`, `sw.js?v=3.0.14` y query strings en `index.html`.
+
 ## 🏄‍♂️ Actualización v3.0.13: Pastillas Didácticas de Desplazamiento Horizontal en Carruseles de Surf (Leyes 14 y 18) — 2026-10-24
 - **Diagnóstico y Ergonomía Móvil (Feedback y Detección de Lendo - «me fije que en el menu de surf, concretamente en prevision 3h/7 dias, debajo no tenemos lo que tenemos en otros menus debajo como como el menu de pronostico a 10 dias. Desliza horizontalmente. Al no verse alomejor el usuario no se da cuenta que tiene que deslizar si quiere ver el pronostico de cada 3 horas o cada dia. te mando captura» y «pisale»):**
   1. *Diagnóstico Operativo:*

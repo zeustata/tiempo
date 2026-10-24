@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3013-surf-scroll-hint';
+const CACHE_NAME = 'meteoasturlode-v3014-scroll-to-top';
 const STATIC_ASSETS = [
   './',
   './index.html',

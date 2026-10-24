@@ -43,7 +43,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '9' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.13';
+export const CURRENT_APP_VERSION = '3.0.14';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -84,6 +84,7 @@ class MeteoAsturiasApp {
     this.setupNetworkMonitor();
     initGyroGlass();
     this.setupFullscreen();
+    this.setupScrollToTop();
     this.initParticleCanvas();
 
     // Auto-apertura inmediata del modal de Novedades si hay nueva versión (Doctrina Constitucional 13)
@@ -2439,6 +2440,34 @@ class MeteoAsturiasApp {
         document.webkitExitFullscreen().catch(() => {});
       }
     }
+  }
+
+  setupScrollToTop() {
+    const btn = document.getElementById('btn-scroll-top');
+    if (!btn) return;
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (window.scrollY > 350) {
+            btn.classList.add('visible');
+          } else {
+            btn.classList.remove('visible');
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    btn.addEventListener('click', () => {
+      this.triggerHaptic();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
   }
 
   triggerHaptic() {

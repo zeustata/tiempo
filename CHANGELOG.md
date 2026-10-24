@@ -9,6 +9,24 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.14] - 2026-10-24
+
+### 🚀 Ergonomía Móvil: Botón Flotante «Volver Arriba» (Scroll-to-Top - Idea Lendo)
+- **Motivación y Fatiga de Scroll (Auditoría Ergonómica con Lendo):**
+  - En smartphones de gran formato (6,1" a 6,7"), tras recorrer verticalmente listados extensos (como las sendas de *Rutas*, las playas de *Playas & Mareas*, el catálogo de *Surf*, o las 24 horas del pronóstico en *En Vivo*), la cabecera con el buscador de concejos, el GPS y el menú queda fuera de la pantalla. Volver al inicio requería múltiples barridos manuales con el pulgar.
+- **Implementación Técnica:**
+  - **Botón Flotante en Cristal Líquido (`#btn-scroll-top` en `index.html` y `components.css`):**
+    - Botón circular de 46×46px (44×44px en móviles compactos) ubicado en `position: fixed; bottom: 24px; right: 20px; z-index: 85;`, alineado con la zona de confort ergonómico del pulgar derecho.
+    - Acabado estético Liquid Glass con fondo oscuro semitransparente (`rgba(15, 23, 42, 0.78)`), borde en cian cantábrico (`rgba(56, 189, 248, 0.35)`), desenfoque de fondo (`backdrop-filter: blur(12px)`) y sutil resplandor azul.
+  - **Despliegue Inteligente por Umbral de Scroll (`setupScrollToTop()` en `js/app.js`):**
+    - Listener pasivo optimizado a 60 fps con `requestAnimationFrame` que monitorea `window.scrollY`.
+    - Permanece oculto e inerte en reposo (`opacity: 0; pointer-events: none; transform: translateY(16px) scale(0.85);`) y emerge con animación elástica suave (`.visible`) cuando el usuario supera los 350px de desplazamiento vertical.
+  - **Scroll Suave y Respuesta Háptica:**
+    - Al tocar el botón, se dispara micro-vibración háptica (`triggerHaptic()`) y retorno suave inmediato a la cabecera con `window.scrollTo({ top: 0, behavior: 'smooth' })`.
+- **Anti-Caché Obligatorio (Ley 4):**
+  - Service Worker actualizado a `meteoasturlode-v3014-scroll-to-top` en `sw.js`.
+  - Versión oficial elevada a `v3.0.14 🚀` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.14'` en `app.js`, `css/components.css?v=3.0.14`, `sw.js?v=3.0.14` y query strings en `index.html`.
+
 ## [3.0.13] - 2026-10-24
 
 ### 🏄‍♂️ Surf & Rompientes: Guía Visual de Desplazamiento Horizontal en Carruseles (Leyes 14 y 18 - Idea Lendo)
