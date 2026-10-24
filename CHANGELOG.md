@@ -9,6 +9,24 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.21] - 2026-10-24
+
+### 🤫 Doctrina de Silencio en Calma: AEMET en Modo Silencioso Estricto (Idea Lendo & Princesa)
+- **Motivación y Diagnóstico Operativo:**
+  - Lendo y Princesa analizaron la redundancia de la tarjeta institucional verde de AEMET (*«🟢 SIN AVISOS ACTIVOS - Situación en calma»*), la cual ocupaba más de 120px de altura en la pantalla para reportar una ausencia de fenómenos adversos.
+  - Al contrastarlo con el ecosistema de detectores asturianos inteligentes ya existentes (Galerna, Foehn, Xelu, Nieve, Borrina, Mar de Fondo, Tormentas, Viento en Viaductos y Terremotos) que son 100% silenciosos cuando no hay peligro, se identificó la asimetría de diseño y se acordó unificar la doctrina de silencio en calma.
+- **Implementación Técnica:**
+  - **Modo Silencioso Estricto en `weatherAlerts.js`:**
+    - La función `renderAemetAlertCard(alertStatus, concejo)` ahora retorna cadena vacía (`''`) cuando `!hasAlerts`, eliminando de raíz la tarjeta verde estática.
+    - Se preserva íntegramente la generación de la tarjeta oficial enriquecida (amarilla, naranja o roja) ante avisos activos de AEMET o simulacros controlados (`?test=aemet` - Ley 12).
+  - **Limpieza de Placeholder en `currentCard.js`:**
+    - Eliminada la inyección de la tarjeta en estado de calma en `currentCard.js`.
+    - La tarjeta de alertas oficial se renderiza exclusivamente cuando asciende con prioridad institucional al `activeAlertsPool` jerárquico por severidad (Rojo > Naranja > Amarillo), visible sobre el pronóstico horario.
+    - Se ganan más de 120px de altura útil en pantalla, permitiendo al usuario conectar de inmediato con el tiempo horario de lluvia, viento y temperatura.
+- **Anti-Caché Obligatorio (Ley 4):**
+  - Service Worker actualizado a `meteoasturlode-v3021-aemet-silence-mode` en `sw.js`.
+  - Versión oficial elevada a `v3.0.21 ⚡` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.21'` en `app.js`, `weatherAlerts.js?v=3.0.21`, `sw.js?v=3.0.21` y query strings en `index.html`.
+
 ## [3.0.20] - 2026-10-24
 
 ### ⚡ Refinamiento de Cabecera y Blindaje Anti-Aplastamiento en Móvil (Feedback Lendo)

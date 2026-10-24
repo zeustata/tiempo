@@ -1,5 +1,5 @@
 import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=2.2.64';
-import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=3.0.5';
+import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=3.0.21';
 import { renderHourlyForecastBlock } from './forecastView.js?v=3.0.7';
 import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=3.0.3';
 import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=3.0.3';
@@ -706,8 +706,6 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
     <!-- PRONÓSTICO HORARIO 72H / 3 DÍAS (SOLICITADO POR BETA TESTERS) -->
     ${hourlyForecastMarkup}
 
-    <!-- TARJETA OFICIAL AEMET EN ESTADO SILENCIOSO / SIN AVISOS (si tiene avisos activos, ya se muestra arriba ordenada por gravedad) -->
-    ${(!aemetStatus || !aemetStatus.hasAlerts) ? aemetCardMarkup : ''}
 
     <!-- SENSORS GRID -->
     <div class="sensors-grid">

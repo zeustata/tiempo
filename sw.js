@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3020-hibrido-modal-fix';
+const CACHE_NAME = 'meteoasturlode-v3021-aemet-silence-mode';
 const STATIC_ASSETS = [
   './',
   './index.html',

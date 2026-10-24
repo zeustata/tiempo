@@ -242,7 +242,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.20 ⚡</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.21 ⚡</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -316,8 +316,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v3.0.20 ⚡</span>
+            <span class="release-version">v3.0.21 ⚡</span>
             <span class="release-date">24 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-feature">Doctrina de Silencio en Calma &amp; Ergonomía de Avisos</span> <strong>AEMET en Modo Silencioso Estricto</strong>:
+              <br>• <strong>Supresión de Tarjeta Verde en Calma:</strong> Eliminada la tarjeta estática de 120px que se mostraba en días tranquilos indicando que no había avisos adversos. La portada ahorra más de 120px de espacio vertical, permitiendo al usuario acceder de inmediato al pronóstico por horas sin relleno innecesario.
+              <br>• <strong>Activación Exclusiva ante Alertas Reales:</strong> La tarjeta institucional de AEMET ahora solo despierta y se visualiza cuando existe un peligro meteorológico real en vigor (avisos amarillos, naranjas o rojos por temporal costero, galerna, viento o nieve), integrándose en el feed de triage de alertas con máximo impacto visual.
+              <br>• <strong>Coherencia Integral con Detectores Asturianos:</strong> Se unifica la filosofía del sistema para que todos los detectores (Galerna, Foehn, Xelu, Nieve, Borrina, Mar de Fondo y AEMET) operen en modo 100% silencioso cuando no hay alertas que reportar.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v3.0.20 ⚡</span>
+            <span class="release-date">24 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-feature">Refinamiento de Cabecera y Blindaje Anti-Aplastamiento en Móvil</span> <strong>Modelo Híbrido &amp; Blindaje de Tarjetas de Menú</strong>:
@@ -4528,7 +4542,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.0.20').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.0.21').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4558,7 +4572,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.20"></script>
+  <script type="module" src="js/app.js?v=3.0.21"></script>
 
 
 

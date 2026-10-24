@@ -27,6 +27,24 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Pautas de Coherencia de Diseño:*
      - Los nuevos iconos deben inspirarse y regirse en los iconos ya consolidados de cada tema: mismas proporciones, equilibrio en la cantidad de elementos (astros, nubes, partículas) y mismo ritmo y estilo de animación fluida para garantizar armonía visual y rendimiento en dispositivos móviles.
 
+## 🤫 Actualización v3.0.21: Doctrina de Silencio en Calma (AEMET Silenciosa & Portada Limpia) — 2026-10-24
+- **Diagnóstico y Usabilidad (Propuesta Lendo & Princesa - «vale. quieres quitar la tarjeta de aemet si no hay peligros no?», «pero sabes que tenemos mas avisos silenciosos no?», «osea que me animas que aemet lo deje tambien en silencio?», «vale pisale pero que salga si tiene alertas»):**
+  1. *Diagnóstico Operativo:*
+     - Lendo y Princesa identificaron que la tarjeta verde institucional de AEMET (*«🟢 SIN AVISOS ACTIVOS»*) ocupaba 120px fijos de altura en la pestaña *En Vivo* simplemente para confirmar ausencia de peligro.
+     - Lendo formuló una observación crucial sobre la arquitectura de la app: todos los detectores meteorológicos locales asturianos (Galerna, Foehn, Xelu, Nieve, Borrina, Mar de Fondo, Tormentas, Viento en Viaductos y Sismicidad) operan ya bajo la doctrina de silencio estricto (invisibles al 100% en calma, emergiendo únicamente cuando el fenómeno se activa).
+     - La tarjeta verde de AEMET era la única anomalía que rompía esa regla de oro.
+  2. *Intervención Técnica en `weatherAlerts.js` y `currentCard.js`:*
+     - **Modo Silencioso Estricto en `js/utils/weatherAlerts.js`:**
+       - La función `renderAemetAlertCard(alertStatus, concejo)` ahora devuelve cadena vacía (`''`) cuando `!hasAlerts`, eliminando el bloque estático en calma.
+       - Mantiene al 100% la generación de la tarjeta oficial enriquecida (con colores institucionales amarillo, naranja o rojo, avisos desglosados y recomendaciones) ante avisos activos de AEMET o simulacros controlados (`?test=aemet` - Ley 12).
+     - **Limpieza de Inyección en `js/components/currentCard.js`:**
+       - Suprimida la inyección residual `${(!aemetStatus || !aemetStatus.hasAlerts) ? aemetCardMarkup : ''}` que se situaba bajo el pronóstico horario.
+       - En situación de calma, la interfaz salta directamente desde la tarjeta principal y anomalía climatológica al pronóstico horario, ahorrando más de 120px de scroll innecesario.
+       - Ante cualquier alerta activa real o simulada, AEMET ingresa con prioridad 10 al `activeAlertsPool` jerárquico y se ubica en lo más alto del feed de alertas sobre el pronóstico por horas.
+  3. *Anti-Caché Obligatorio (Ley 4):*
+     - Service Worker actualizado a `meteoasturlode-v3021-aemet-silence-mode` en `sw.js`.
+     - Versión oficial elevada a `v3.0.21 ⚡` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.21'` en `app.js`, `weatherAlerts.js?v=3.0.21`, `sw.js?v=3.0.21` y query strings en `index.html`.
+
 ## ⚡ Actualización v3.0.20: Modelo Híbrido en Cabecera y Blindaje Anti-Aplastamiento de Menú (Ley 11) — 2026-10-24
 - **Diagnóstico y Usabilidad (Feedback de Lendo con captura móvil - «esta mejor pero mira primeramente el nombre Menu y debajo Consenso, no me gusta. casi prefiero Hibrido el de consenso. lo segundo el menu dentro. mira como queda en un movil. te mando foto. de ven los iconos cortados y a medias» y orden de Lendo: «pisale»):**
   1. *Diagnóstico Operativo:*

@@ -319,27 +319,9 @@ export function getAemetAlertStatus(weatherData, concejo) {
 export function renderAemetAlertCard(alertStatus, concejo) {
   const { hasAlerts, maxLevel, zone, alerts } = alertStatus;
 
-  if (!hasAlerts) {
-    return `
-      <div class="aemet-alert-card aemet-green">
-        <div class="aemet-card-header">
-          <div class="aemet-header-left">
-            <span class="aemet-badge-pill pill-green">🟢 SIN AVISOS ACTIVOS</span>
-            <span class="aemet-zone-label">📍 Zona AEMET: <strong>${zone.name}</strong></span>
-          </div>
-          <a href="https://www.aemet.es" target="_blank" rel="noopener noreferrer" class="aemet-logo-tag" style="text-decoration: none;" title="Visitar portal oficial de AEMET">aemet.es ↗</a>
-        </div>
-        <div class="aemet-body-calm">
-          <span class="calm-icon">🌤️</span>
-          <div class="calm-text">
-            <strong>Situación en calma:</strong> No hay avisos meteorológicos adversos vigentes hoy para ${concejo.name}. Condiciones normales según umbrales de <a href="https://www.aemet.es" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;">AEMET</a>.
-          </div>
-        </div>
-        <div style="padding: 4px 14px 8px; font-size: 0.70rem; color: var(--text-dim); text-align: right; opacity: 0.85;">
-          Fuente oficial de avisos: <a href="https://www.aemet.es" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;">aemet.es</a> • App independiente no gubernamental
-        </div>
-      </div>
-    `;
+  // Si no hay avisos adversos vigentes, modo silencioso estricto (cero ruido visual en calma)
+  if (!hasAlerts || !alerts || alerts.length === 0) {
+    return '';
   }
 
   // Si hay alertas activas
