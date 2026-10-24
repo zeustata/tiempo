@@ -9,6 +9,29 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.19] - 2026-10-24
+
+### 💎 Refinamiento Estético & Blindaje Móvil: Cabecera Gemela Simétrica & Tarjetas Anti-Desborde (Feedback Lendo)
+- **Motivación y Diagnóstico Visual:**
+  - Lendo aportó capturas de pantalla de la versión en móvil evidenciando problemas estéticos:
+    1. Asimetría vertical entre los botones de Webcams y Menú en la cabecera.
+    2. Texto de modelo kilométrico y cortado (*"Auto Híbrido de Consen..."*).
+    3. Reversión accidental del icono del menú a `📊` en lugar de `⚙️` al cambiar de pestaña.
+    4. Colisión del badge del modelo sobre la flecha `➔` en el modal de menú y aparición de una barra horizontal de scroll indeseada.
+- **Implementación Técnica:**
+  - **Cabecera Gemela Simétrica (`.header-twin-text-col` en `index.html` y `css/main.css`):**
+    - Ambos botones (`Webcams` y `Menú`) comparten exactamente la misma estructura de dos líneas:
+      - *Webcams*: Título arriba y micro-badge `● En Directo` abajo.
+      - *Menú*: Título arriba y nombre conciso del modelo activo abajo (`Consenso`, `ECMWF`, `AROME`, `GFS`, etc.) mediante `getModelShortName()`.
+    - Eliminada la sobrescritura del icono en `switchTab` de `js/app.js`, manteniendo de forma fija e inmutable el engranaje `⚙️` en el botón de Menú.
+  - **Tarjetas del Menú Reestructuradas y Anti-Desborde (Ley 11 en `css/components.css` e `index.html`):**
+    - Implementada la fila dedicada `.nav-tool-badge-row` para que el badge de cada tarjeta viva en su propia línea intermedia, eliminando al 100% las colisiones con el título y con la flecha `➔`.
+    - La flecha `➔` (`.nav-tool-chevron`) queda centrada verticalmente con `align-self: center` y holgura reservada a la derecha.
+    - Blindaje estricto con `overflow-x: hidden !important;` en `.modal-nav-modules` y `.nav-modal-body` para erradicar cualquier barra de desplazamiento horizontal en pantallas móviles.
+- **Anti-Caché Obligatorio (Ley 4):**
+  - Service Worker actualizado a `meteoasturlode-v3019-header-menu-perfect` en `sw.js`.
+  - Versión oficial elevada a `v3.0.19 ⚡` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.19'` en `app.js`, `css/main.css?v=3.0.19`, `css/components.css?v=3.0.19`, `sw.js?v=3.0.19` y query strings en `index.html`.
+
 ## [3.0.18] - 2026-10-24
 
 ### 📹 Ergonomía & Cabecera Inteligente: Webcams en Portada & Modelo en Menú (Idea Lendo & Princesa - Opción 2)

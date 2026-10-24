@@ -31,8 +31,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=3.0.18">
-  <link rel="stylesheet" href="css/components.css?v=3.0.18">
+  <link rel="stylesheet" href="css/main.css?v=3.0.19">
+  <link rel="stylesheet" href="css/components.css?v=3.0.19">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -104,14 +104,16 @@
         </div>
       </div>
 
-      <!-- 3. Fila 2: Webcams en Vivo y Menú con chivato de Modelo al 50% (v3.0.18) -->
+      <!-- 3. Fila 2: Webcams en Vivo y Menú con chivato de Modelo al 50% (v3.0.19 Gemelos Simétricos) -->
       <div class="compact-controls-grid">
         <!-- Selector de Webcams en Vivo -->
         <button class="webcam-nav-trigger compact-nav-trigger" id="btn-open-webcams-header" title="Ver webcams oficiales en directo de arenales y puertos de Asturias" aria-label="Ver webcams en directo">
           <div class="compact-trigger-content">
             <span class="compact-trigger-icon">📹</span>
-            <strong class="compact-trigger-label">Webcams</strong>
-            <span class="header-live-badge"><span class="live-dot"></span><span class="header-live-text">En vivo</span></span>
+            <div class="header-twin-text-col">
+              <strong class="compact-trigger-label">Webcams</strong>
+              <span class="header-live-sub-badge"><span class="live-dot"></span>En Directo</span>
+            </div>
           </div>
         </button>
 
@@ -119,9 +121,9 @@
         <button class="section-nav-trigger compact-nav-trigger" id="btn-open-nav-modal" title="Toca para abrir utilidades y configuración" aria-label="Abrir menú de herramientas">
           <div class="compact-trigger-content">
             <span class="compact-trigger-icon" id="current-section-icon">⚙️</span>
-            <div class="header-menu-text-col">
+            <div class="header-twin-text-col">
               <strong class="compact-trigger-label">Menú</strong>
-              <span class="header-model-sub-badge" id="header-active-model-name">ECMWF</span>
+              <span class="header-model-sub-badge" id="header-active-model-name">Consenso</span>
             </div>
           </div>
         </button>
@@ -240,7 +242,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.18 ⚡</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.19 ⚡</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -314,8 +316,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v3.0.18 📹</span>
+            <span class="release-version">v3.0.19 💎</span>
             <span class="release-date">24 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-feature">Refinamiento Estético &amp; Blindaje Móvil (Feedback Lendo)</span> <strong>Cabecera Gemela Simétrica &amp; Tarjetas Anti-Desborde</strong>:
+              <br>• <strong>Botones Gemelos Simétricos en Cabecera:</strong> Alineación vertical idéntica al 50% entre <em>Webcams</em> (con micro-badge <code>● En Directo</code>) y <em>Menú</em> (con icono <code>⚙️</code> blindado y modelo activo conciso, ej. <code>Consenso</code>, <code>ECMWF</code>, <code>AROME</code>). Cero desniveles y cero textos cortados con puntos suspensivos.
+              <br>• <strong>Tarjeta de Modelo y Utilidades Sin Colisiones (Ley 11):** Reestructurado el interior de las tarjetas del menú para que los badges informativos vivan en su propia línea inferior, eliminando cualquier choque con la flecha lateral <code>➔</code>.
+              <br>• <strong>Supresión Definitiva del Scroll Horizontal:</strong> Bloqueado cualquier desbordamiento con <code>overflow-x: hidden</code> estricto, garantizando tarjetas 100% encuadradas y fluidas en todos los anchos de pantalla.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v3.0.18 📹</span>
+            <span class="release-date">24 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-feature">Ergonomía &amp; Cabecera Inteligente (Idea Lendo &amp; Princesa)</span> <strong>Webcams en Portada &amp; Modelo Integrado en Menú</strong>:
@@ -4153,11 +4169,11 @@
           <div class="nav-tool-card-left">
             <span class="nav-tool-icon" id="current-model-icon">🌟</span>
             <div class="nav-tool-details">
-              <div class="nav-tool-title-row">
-                <span class="nav-tool-name">Modelo Meteorológico</span>
-                <span class="nav-tool-badge badge-warning" id="nav-active-model-badge">ECMWF IFS</span>
+              <span class="nav-tool-name">Modelo Meteorológico</span>
+              <div class="nav-tool-badge-row">
+                <span class="nav-tool-badge badge-warning" id="nav-active-model-badge">🌟 Consenso Cantábrico</span>
               </div>
-              <span class="nav-tool-desc">Elige el motor de cálculo: ECMWF Europeo, GFS, AROME, ICON...</span>
+              <span class="nav-tool-desc">Elige el motor de cálculo: ECMWF, GFS, AROME, ICON...</span>
             </div>
           </div>
           <span class="nav-tool-chevron">➔</span>
@@ -4167,8 +4183,8 @@
           <div class="nav-tool-card-left">
             <span class="nav-tool-icon">🎨</span>
             <div class="nav-tool-details">
-              <div class="nav-tool-title-row">
-                <span class="nav-tool-name">Estilos de Iconos</span>
+              <span class="nav-tool-name">Estilos de Iconos</span>
+              <div class="nav-tool-badge-row">
                 <span class="nav-tool-badge" id="badge-active-icon-theme">💎 Liquid Glass 3D</span>
               </div>
               <span class="nav-tool-desc">Personaliza el diseño visual: Liquid Glass, 3D, Minimalista, Neón...</span>
@@ -4181,9 +4197,9 @@
           <div class="nav-tool-card-left">
             <span class="nav-tool-icon">📖</span>
             <div class="nav-tool-details">
-              <div class="nav-tool-title-row">
-                <span class="nav-tool-name">Diccionario de Fenómenos</span>
-                <span class="nav-tool-badge badge-info">Didáctico</span>
+              <span class="nav-tool-name">Diccionario de Fenómenos</span>
+              <div class="nav-tool-badge-row">
+                <span class="nav-tool-badge badge-info">Didáctico Asturiano</span>
               </div>
               <span class="nav-tool-desc">Guía interactiva de galernas, mar de fondo, foehn, borrina y aludes</span>
             </div>
@@ -4195,8 +4211,8 @@
           <div class="nav-tool-card-left">
             <span class="nav-tool-icon" id="nav-autoloc-icon">📍</span>
             <div class="nav-tool-details">
-              <div class="nav-tool-title-row">
-                <span class="nav-tool-name">Auto-Ubicación GPS</span>
+              <span class="nav-tool-name">Auto-Ubicación GPS</span>
+              <div class="nav-tool-badge-row">
                 <span class="nav-tool-badge" id="nav-autoloc-text">Auto-GPS: Sí</span>
               </div>
               <span class="nav-tool-desc">Detectar concejo automáticamente al iniciar la app</span>
@@ -4498,7 +4514,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.0.18').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.0.19').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4528,7 +4544,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.18"></script>
+  <script type="module" src="js/app.js?v=3.0.19"></script>
 
 
 

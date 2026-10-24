@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3018-header-webcams';
+const CACHE_NAME = 'meteoasturlode-v3019-header-menu-perfect';
 const STATIC_ASSETS = [
   './',
   './index.html',

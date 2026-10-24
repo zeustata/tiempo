@@ -43,7 +43,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '9' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.18';
+export const CURRENT_APP_VERSION = '3.0.19';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -211,6 +211,35 @@ class MeteoAsturiasApp {
     }
   }
 
+  getModelShortName(modelId) {
+    const map = {
+      best_match: 'Consenso',
+      ecmwf_ifs025: 'ECMWF',
+      meteofrance_seamless: 'AROME',
+      icon_seamless: 'ICON',
+      gfs_seamless: 'GFS',
+      jma_seamless: 'JMA',
+      gem_seamless: 'GEM',
+      bom_access: 'BOM'
+    };
+    return map[modelId] || 'Auto';
+  }
+
+  getModelBadgeLabel(model) {
+    if (!model) return '';
+    const map = {
+      best_match: '🌟 Consenso Cantábrico',
+      ecmwf_ifs025: '🇪🇺 ECMWF Europa',
+      meteofrance_seamless: '🇫🇷 AROME Cantábrico',
+      icon_seamless: '🇩🇪 DWD ICON',
+      gfs_seamless: '🇺🇸 NOAA GFS',
+      jma_seamless: '🇯🇵 JMA Japón',
+      gem_seamless: '🇨🇦 GEM Canadá',
+      bom_access: '🇦🇺 BOM Australia'
+    };
+    return map[model.id] || `${model.flag} ${model.name}`;
+  }
+
   updateModelTriggerDisplay() {
     if (!this.currentModel) return;
     const iconEl = document.getElementById('current-model-icon');
@@ -218,12 +247,12 @@ class MeteoAsturiasApp {
 
     const headerSubModel = document.getElementById('header-active-model-name');
     if (headerSubModel) {
-      headerSubModel.textContent = this.currentModel.name;
+      headerSubModel.textContent = this.getModelShortName(this.currentModel.id);
     }
 
     const navModelBadge = document.getElementById('nav-active-model-badge');
     if (navModelBadge) {
-      navModelBadge.textContent = `${this.currentModel.flag} ${this.currentModel.name}`;
+      navModelBadge.textContent = this.getModelBadgeLabel(this.currentModel);
     }
   }
 
@@ -2021,12 +2050,6 @@ class MeteoAsturiasApp {
     if (direction === 'backward' || (direction === null && newIndex < oldIndex && newIndex !== -1)) {
       animClass = 'slide-from-left';
     }
-
-    // Actualizar indicador de sección activa
-    const iconEl = document.getElementById('current-section-icon');
-    const titleEl = document.getElementById('current-section-title');
-    if (iconEl) iconEl.textContent = mod.icon;
-    if (titleEl) titleEl.textContent = mod.title;
 
     // Sincronizar resaltado y auto-centrado de la barra horizontal rápida de pestañas
     document.querySelectorAll('.module-chip').forEach(chip => {

@@ -356,20 +356,39 @@ body {
   box-shadow: 0 4px 14px rgba(56, 189, 248, 0.25);
 }
 
-.header-live-badge {
+/* Botones gemelos simétricos Webcams / Menú (v3.0.19) */
+.header-twin-text-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  line-height: 1.15;
+  gap: 2px;
+  min-width: 0;
+}
+
+.header-live-sub-badge {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 1px 6px;
-  background: rgba(239, 68, 68, 0.18);
-  border: 1px solid rgba(239, 68, 68, 0.45);
-  border-radius: 999px;
-  font-size: 0.65rem;
+  gap: 5px;
+  font-size: 0.68rem;
   font-weight: 700;
   color: #f87171;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  line-height: 1.2;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.header-model-sub-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #38bdf8;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  line-height: 1;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .live-dot {
@@ -379,6 +398,7 @@ body {
   background-color: #ef4444;
   box-shadow: 0 0 6px #ef4444;
   animation: pulseLiveDot 2s infinite ease-in-out;
+  flex-shrink: 0;
 }
 
 @keyframes pulseLiveDot {
@@ -389,28 +409,6 @@ body {
   50% {
     transform: scale(1.35);
     opacity: 0.4;
-  }
-}
-
-.header-menu-text-col {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  line-height: 1.1;
-  gap: 1px;
-}
-
-.header-model-sub-badge {
-  font-size: 0.62rem;
-  font-weight: 600;
-  color: #38bdf8;
-  letter-spacing: 0.02em;
-  white-space: nowrap;
-}
-
-@media (max-width: 360px) {
-  .header-live-text {
-    display: none;
   }
 }
 

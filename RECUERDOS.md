@@ -27,6 +27,27 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Pautas de Coherencia de Diseño:*
      - Los nuevos iconos deben inspirarse y regirse en los iconos ya consolidados de cada tema: mismas proporciones, equilibrio en la cantidad de elementos (astros, nubes, partículas) y mismo ritmo y estilo de animación fluida para garantizar armonía visual y rendimiento en dispositivos móviles.
 
+## 💎 Actualización v3.0.19: Cabecera Gemela Simétrica y Tarjetas Anti-Desborde (Leyes 11 y 14) — 2026-10-24
+- **Diagnóstico y Usabilidad (Feedback de Lendo con capturas móviles - «mira como queda la tarjeta principal de arriba, imagen 1 de webcam y el de menu. ademas cuando entras en el menu, mira como queda, imagen 2» y orden de Lendo: «pisale a ver»):**
+  1. *Diagnóstico Operativo:*
+     - Lendo aportó 2 capturas de pantalla de la app en móvil mostrando:
+       a) En cabecera: marcada asimetría entre Webcams y Menú, texto del modelo desbordado y cortado (*"Auto Híbrido de Consen..."*) e icono del menú mutando accidentalmente a `📊`.
+       b) En modal de menú: colisión directa del badge largo del modelo sobre la flecha `➔` y aparición de una barra de scroll horizontal antiestética en el marco inferior.
+  2. *Intervención Técnica en `index.html`, `main.css`, `components.css` y `app.js`:*
+     - **Cabecera Gemela Simétrica en `index.html` y `main.css` (`.header-twin-text-col`):**
+       - Unificada la estructura interna de ambos botones (`Webcams` y `Menú`) con exactamente las mismas proporciones:
+         - *Webcams*: Título `Webcams` y sub-badge `● En Directo`.
+         - *Menú*: Título `Menú` y sub-badge con el nombre conciso del modelo activo (`Consenso`, `ECMWF`, `AROME`, `GFS`, `ICON`) calculado mediante la nueva función `getModelShortName()`.
+       - En `js/app.js` (`switchTab`): eliminada la sobreescritura del icono de sección para mantener de forma permanente e inmutable el icono `⚙️` en el botón de Menú.
+     - **Reestructuración de Tarjetas en `#nav-modal` y Blindaje Anti-Desborde (`index.html` y `components.css`):**
+       - Implementado el contenedor dedicado `.nav-tool-badge-row` para alojar los badges en una fila independiente entre el título y la descripción, impidiendo que choquen con el título o con el chevron `➔`.
+       - Flecha `➔` (`.nav-tool-chevron`) alineada con `align-self: center` y holgura fija a la derecha.
+       - Blindaje estricto `overflow-x: hidden !important;` en `.modal-nav-modules` y `.nav-modal-body` (Ley 11), suprimiendo de raíz cualquier scroll horizontal en móviles.
+       - En `js/app.js`: implementada la función `getModelBadgeLabel()` para asignar nombres limpios y equilibrados a cada motor (ej: `🌟 Consenso Cantábrico`, `🇪🇺 ECMWF Europa`, `🇫🇷 AROME Cantábrico`).
+  3. *Anti-Caché Obligatorio (Ley 4):*
+     - Service Worker actualizado a `meteoasturlode-v3019-header-menu-perfect` en `sw.js`.
+     - Versión oficial elevada a `v3.0.19 ⚡` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.19'` en `app.js`, `css/main.css?v=3.0.19`, `css/components.css?v=3.0.19`, `sw.js?v=3.0.19` y query strings en `index.html`.
+
 ## 📹 Actualización v3.0.18: Cabecera Inteligente (Webcams en Vivo en Portada y Modelo en Menú) — 2026-10-24
 - **Diagnóstico y Usabilidad (Propuesta Lendo & Princesa - «puedes cambiar de la pagina principal el boton de Modelo y meterlo por el de Webcams que esta dentro del boton Menu? que te parece?», «princesa tienes alguna sujerencia mejor que quede bien?» y elección de Lendo: «yo elijo la opcion de mi princesa. la 2»):**
   1. *Diagnóstico Operativo:*
