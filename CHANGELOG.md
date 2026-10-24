@@ -9,6 +9,23 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.18] - 2026-10-24
+
+### 📹 Ergonomía & Cabecera Inteligente: Webcams en Portada & Modelo en Menú (Idea Lendo & Princesa - Opción 2)
+- **Motivación y Diseño de Interacción:**
+  - Lendo planteó cambiar el botón de *Modelo* de la portada por el de *Webcams* que estaba dentro del Menú para facilitar la consulta visual del tiempo real.
+  - Princesa propuso la **Opción 2 («Cabecera Inteligente»)**: además del trueque, dotar al botón de Webcams de un micro-badge animado de emisión en directo (*● En vivo*), actualizar el icono del Menú a `⚙️` y mantener en el propio botón de Menú un indicador sutil con el modelo meteorológico activo (ej. `ECMWF`, `AROME`, `GFS`). Lendo eligió la Opción 2.
+- **Implementación Técnica:**
+  - **Cabecera Principal (`compact-controls-grid` en `index.html` y `css/main.css`):**
+    - **Botón Izquierdo (`#btn-open-webcams-header`):** Acceso directo en 1 toque al visor de cámaras asturianas con icono `📹`, etiqueta `Webcams` y badge `.header-live-badge` con punto rojo palpitante `@keyframes pulseLiveDot` y texto responsivo que se oculta suavemente en pantallas menores de 360px sin romper el marco (Ley 11).
+    - **Botón Derecho (`#btn-open-nav-modal`):** Actualizado con icono de herramientas `⚙️`, etiqueta `Menú` y micro-badge `#header-active-model-name` que muestra en vivo el motor de predicción activo sin recargar la vista.
+  - **Menú de Utilidades Reorganizado (`#nav-modal` en `index.html` y `js/app.js`):**
+    - Incorporada como primera tarjeta del menú el **Modelo Meteorológico** (`#btn-open-model-modal`) con badge `#nav-active-model-badge` en color ambarino (`.badge-warning`), icono dinámico de la bandera del modelo (`#current-model-icon`) y descripción de los motores de cálculo (ECMWF, GFS, AROME, ICON).
+    - Sincronización automática de badges en `this.updateModelTriggerDisplay()` al iniciar la app, al abrir el menú y al conmutar entre modelos.
+- **Anti-Caché Obligatorio (Ley 4):**
+  - Service Worker actualizado a `meteoasturlode-v3018-header-webcams` en `sw.js`.
+  - Versión oficial elevada a `v3.0.18 ⚡` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.18'` en `app.js`, `css/main.css?v=3.0.18`, `css/components.css?v=3.0.18`, `sw.js?v=3.0.18` y query strings en `index.html`.
+
 ## [3.0.17] - 2026-10-24
 
 ### 🧹 Optimización & Usabilidad: Menú de Utilidades sin Redundancias (Idea Lendo)

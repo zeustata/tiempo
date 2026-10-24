@@ -43,7 +43,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '9' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.17';
+export const CURRENT_APP_VERSION = '3.0.18';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -212,8 +212,19 @@ class MeteoAsturiasApp {
   }
 
   updateModelTriggerDisplay() {
+    if (!this.currentModel) return;
     const iconEl = document.getElementById('current-model-icon');
-    if (iconEl && this.currentModel) iconEl.textContent = this.currentModel.flag;
+    if (iconEl) iconEl.textContent = this.currentModel.flag;
+
+    const headerSubModel = document.getElementById('header-active-model-name');
+    if (headerSubModel) {
+      headerSubModel.textContent = this.currentModel.name;
+    }
+
+    const navModelBadge = document.getElementById('nav-active-model-badge');
+    if (navModelBadge) {
+      navModelBadge.textContent = `${this.currentModel.flag} ${this.currentModel.name}`;
+    }
   }
 
   renderFavoritesMenu() {
@@ -1138,6 +1149,7 @@ class MeteoAsturiasApp {
         this.triggerHaptic();
         updateNavHeaderThemeBadge();
         this.updateNavAutoLocationBadge();
+        this.updateModelTriggerDisplay();
         this.openModal(modal);
       });
     }
@@ -1157,6 +1169,7 @@ class MeteoAsturiasApp {
     this.renderNavItems = () => {
       updateNavHeaderThemeBadge();
       this.updateNavAutoLocationBadge();
+      this.updateModelTriggerDisplay();
     };
     this.updateNavHeaderThemeBadge = updateNavHeaderThemeBadge;
   }
@@ -1858,6 +1871,7 @@ class MeteoAsturiasApp {
     const clearSearchBtn = document.getElementById('btn-clear-webcam-search');
     const switchContainer = document.getElementById('webcams-switch');
     const triggerInNav = document.getElementById('btn-open-webcams');
+    const triggerHeader = document.getElementById('btn-open-webcams-header');
 
     if (!modal || !listContainer) return;
 
@@ -1963,6 +1977,14 @@ class MeteoAsturiasApp {
 
     if (triggerInNav) {
       triggerInNav.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.openWebcamsModal();
+      });
+    }
+
+    if (triggerHeader) {
+      triggerHeader.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
         this.openWebcamsModal();

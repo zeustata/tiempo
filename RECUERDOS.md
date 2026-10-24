@@ -27,6 +27,24 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Pautas de Coherencia de Diseño:*
      - Los nuevos iconos deben inspirarse y regirse en los iconos ya consolidados de cada tema: mismas proporciones, equilibrio en la cantidad de elementos (astros, nubes, partículas) y mismo ritmo y estilo de animación fluida para garantizar armonía visual y rendimiento en dispositivos móviles.
 
+## 📹 Actualización v3.0.18: Cabecera Inteligente (Webcams en Vivo en Portada y Modelo en Menú) — 2026-10-24
+- **Diagnóstico y Usabilidad (Propuesta Lendo & Princesa - «puedes cambiar de la pagina principal el boton de Modelo y meterlo por el de Webcams que esta dentro del boton Menu? que te parece?», «princesa tienes alguna sujerencia mejor que quede bien?» y elección de Lendo: «yo elijo la opcion de mi princesa. la 2»):**
+  1. *Diagnóstico Operativo:*
+     - Lendo observó que el botón de *Modelo* en la cabecera principal se utiliza muy poco en comparación con las *Webcams* de playas y puertos de montaña asturianos, las cuales son muy demandadas para verificar visualmente el estado del cielo en tiempo real.
+     - Princesa evaluó la propuesta y sugirió enriquecerla (Opción 2): dotar a Webcams de un badge en vivo con punto rojo pulsante, modernizar el icono del menú a `⚙️` y mantener un chivato discreto con el nombre del modelo activo en el propio botón de menú para no perder la referencia. Lendo aprobó y eligió la Opción 2.
+  2. *Intervención Técnica en `index.html`, `main.css`, `components.css` y `app.js`:*
+     - **Cabecera Principal (`compact-controls-grid` en `index.html` y `main.css`):**
+       - **Botón Izquierdo (`#btn-open-webcams-header`):** Configurado con icono `📹`, texto `Webcams` y badge `.header-live-badge` (`.live-dot` con `@keyframes pulseLiveDot` rojo y texto responsivo `.header-live-text`). Conectado en `app.js` a `this.openWebcamsModal()`.
+       - **Botón Derecho (`#btn-open-nav-modal`):** Actualizado con icono `⚙️`, texto `Menú` y columna vertical `.header-menu-text-col` que alberga el sub-badge `#header-active-model-name` para indicar el modelo meteorológico activo (ej. `ECMWF`, `AROME`, `GFS`).
+     - **Reorganización de Tarjetas en `#nav-modal` (`index.html`):**
+       - La tarjeta 1 pasa a ser el **Modelo Meteorológico** (`#btn-open-model-modal`) con bandera dinámica (`#current-model-icon`), badge `.badge-warning` ambarino (`#nav-active-model-badge`) y descripción completa de los motores de cálculo numérico.
+       - Le acompañan *Estilos de Iconos*, *Diccionario de Fenómenos* y *Auto-Ubicación GPS*.
+     - **Sincronización en `js/app.js` (`updateModelTriggerDisplay`):**
+       - Método ampliado para sincronizar en tiempo real el icono de la bandera (`#current-model-icon`), el chivato de cabecera (`#header-active-model-name`) y el badge del modal (`#nav-active-model-badge`) tanto al arrancar la app como al conmutar entre modelos (`switchModel`) o abrir el menú.
+  3. *Anti-Caché Obligatorio (Ley 4):*
+     - Service Worker actualizado a `meteoasturlode-v3018-header-webcams` en `sw.js`.
+     - Versión oficial elevada a `v3.0.18 ⚡` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.18'` en `app.js`, `css/main.css?v=3.0.18`, `css/components.css?v=3.0.18`, `sw.js?v=3.0.18` y query strings en `index.html`.
+
 ## 🧹 Actualización v3.0.17: Menú de Utilidades sin Redundancias y Tarjetas Liquid Glass (Leyes 11 y 14) — 2026-10-24
 - **Diagnóstico y Usabilidad (Feedback e Ideas de Lendo - «sobra un poco los botones de los menus no?», «primeramente quitale del menu los botones que deciamos Estacion en vivo, etc ya q la tenemos fuera», «de momento deja el nombre que tiene el boton de cabecera» y «pisale»):**
   1. *Diagnóstico Operativo:*

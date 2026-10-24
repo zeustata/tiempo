@@ -12316,6 +12316,12 @@
   color: #f87171;
 }
 
+.nav-tool-badge.badge-warning {
+  background: rgba(245, 158, 11, 0.2);
+  border-color: rgba(245, 158, 11, 0.4);
+  color: #fbbf24;
+}
+
 .nav-tool-desc {
   font-size: 0.82rem;
   color: var(--text-dim);
