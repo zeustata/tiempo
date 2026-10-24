@@ -27,6 +27,19 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Pautas de Coherencia de Diseño:*
      - Los nuevos iconos deben inspirarse y regirse en los iconos ya consolidados de cada tema: mismas proporciones, equilibrio en la cantidad de elementos (astros, nubes, partículas) y mismo ritmo y estilo de animación fluida para garantizar armonía visual y rendimiento en dispositivos móviles.
 
+## 🎭 Actualización v3.0.10: Legibilidad Plena y Simetría Ergonómica en Fichas de Planes & Ocio (Leyes 14 y 19) — 2026-10-24
+- **Diagnóstico Riguroso y Causa Raíz (Reporte Lendo - «muy bien princesa. Pasa lo mismmo en el menu Planes de ocio. te mando captura» y «pisale»):**
+  1. *El Origen de los Puntos Suspensivos:*
+     - Lendo detectó que al desplegar cualquier ficha del módulo *Planes & Ocio* en smartphone, las casillas técnicas (`Municipio`, `Distancia`, `Categoría`, `Cielo Óptimo`) truncaban su contenido (`21.4 km (~...`, `Patrimoni...`, `☀️ Días de...`).
+     - Al igual que ocurría en Rutas, los chips `.tourism-spec-chip` disponían el icono en horizontal devorando el ancho útil y forzaban `text-overflow: ellipsis; white-space: nowrap;` en el valor.
+  2. *Reorganización Vertical Ergonómica y Cumplimiento Constitucional (Leyes 11, 14 y 19):*
+     - **Cabecera Unificada `.t-chip-top`:** En `tourismCard.js` y `components.css`, el icono (`0.95rem`) y la etiqueta (`0.68rem`) se agrupan en una fila superior compacta, dejando el 100% del ancho del chip para los datos.
+     - **Ajuste Multilínea Fluido (`.t-chip-val`):** Se eliminó el truncado rígido con puntos suspensivos, aplicando `white-space: normal; line-height: 1.25; overflow-wrap: break-word; word-break: normal; font-size: 0.88rem;`. Ahora se leen íntegros los minutos de trayecto en coche (`21.4 km (~27 min)`), categorías extensas (`Patrimonio de la Humanidad`) y descripciones de cielo óptimo.
+     - **Doctrina de Armonía Visual (Ley 14):** Se extiende con total simetría el diseño de cuadrícula 2x2 en móviles que escala automáticamente a 4x1 en horizontal (`grid-template-columns: repeat(4, 1fr)`) en pantallas `>= 640px` (tablets y PC).
+  3. *Anti-Caché Obligatorio (Ley 4):*
+     - Service Worker actualizado a `meteoasturlode-v3010-planes-ocio-legibilidad-plena-chips-movil` en `sw.js`.
+     - Versión oficial incrementada a `v3.0.10 🎭` en pie (`#app-version-badge`), `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.10'` en `app.js`, `tourismCard.js?v=3.0.10`, `css/components.css?v=3.0.10`, `sw.js?v=3.0.10` y query strings en `index.html`.
+
 ## 🥾 Actualización v3.0.9: Legibilidad Plena y Simetría Ergonómica en Fichas de Rutas (Ley 19) — 2026-10-24
 - **Diagnóstico Riguroso y Causa Raíz (Reporte Lendo - «fijate cuando estoy en el menu Rutas y senderismo, al entrar en alguna ruta los botones de distancia, tiempo, desniveln inicio, desde el movil al no entrar todo pones puntos suspensidos sin poner ver lo que pone...» y «pisale»):**
   1. *El Origen de los Puntos Suspensivos:*

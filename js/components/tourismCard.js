@@ -79,39 +79,39 @@ export function renderTourismCard(weatherData, concejo) {
           </div>
         </summary>
 
-        <!-- CUERPO DESPLEGABLE CON FICHA Y CHIPS 2X2 (LEY 11) -->
+        <!-- CUERPO DESPLEGABLE CON FICHA Y CHIPS 2X2 (LEYES 11, 14 Y 19) -->
         <div class="tourism-accordion-body">
           <div class="tourism-specs-chips">
             <div class="tourism-spec-chip">
-              <span class="t-chip-icon">📍</span>
-              <div class="t-chip-info">
+              <div class="t-chip-top">
+                <span class="t-chip-icon">📍</span>
                 <span class="t-chip-label">Municipio</span>
-                <span class="t-chip-val">${p.town}</span>
               </div>
+              <span class="t-chip-val">${p.town}</span>
             </div>
 
             <div class="tourism-spec-chip">
-              <span class="t-chip-icon">🚗</span>
-              <div class="t-chip-info">
+              <div class="t-chip-top">
+                <span class="t-chip-icon">🚗</span>
                 <span class="t-chip-label">Distancia</span>
-                <span class="t-chip-val">${p.distFromUserKm} km (~${p.driveTimeMin} min)</span>
               </div>
+              <span class="t-chip-val">${p.distFromUserKm} km (~${p.driveTimeMin} min)</span>
             </div>
 
             <div class="tourism-spec-chip">
-              <span class="t-chip-icon">🏷️</span>
-              <div class="t-chip-info">
+              <div class="t-chip-top">
+                <span class="t-chip-icon">🏷️</span>
                 <span class="t-chip-label">Categoría</span>
-                <span class="t-chip-val">${p.tag}</span>
               </div>
+              <span class="t-chip-val">${p.tag}</span>
             </div>
 
             <div class="tourism-spec-chip">
-              <span class="t-chip-icon">⛅</span>
-              <div class="t-chip-info">
+              <div class="t-chip-top">
+                <span class="t-chip-icon">⛅</span>
                 <span class="t-chip-label">Cielo Óptimo</span>
-                <span class="t-chip-val">${weatherLabel}</span>
               </div>
+              <span class="t-chip-val">${weatherLabel}</span>
             </div>
           </div>
 

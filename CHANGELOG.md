@@ -9,6 +9,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.10] - 2026-10-24
+
+### 🎭 Ergonomía Móvil: Legibilidad Plena y Simetría en Fichas de Planes & Ocio (Leyes 14 y 19 - Reporte Lendo)
+- **Diagnóstico Riguroso y Causa Raíz:**
+  - Lendo detectó que en el módulo de *Planes & Ocio*, al desplegar cualquier enclave o actividad desde un dispositivo móvil, las casillas técnicas recortaban su contenido con puntos suspensivos (`21.4 km (~...`, `Patrimoni...`, `☀️ Días de...`).
+  - Siguiendo el mismo patrón estructural que en Rutas, los chips `.tourism-spec-chip` disponían el icono a la izquierda robando anchura útil y forzaban `text-overflow: ellipsis; white-space: nowrap;` en el valor.
+- **Solución Técnica Integral y Cumplimiento de Armonía Visual (Leyes 14 y 19):**
+  - **Subcabecera Unificada `.t-chip-top` (`tourismCard.js` y `components.css`):** El icono (`📍`, `🚗`, `🏷️`, `⛅`) convive en la fila superior con la etiqueta (`Municipio`, `Distancia`, `Categoría`, `Cielo Óptimo`), dejando el 100% del ancho del chip para la información.
+  - **Ajuste Multilínea Fluido (`.t-chip-val`):** Implementado `white-space: normal; line-height: 1.25; overflow-wrap: break-word; font-size: 0.88rem;` eliminando los puntos suspensivos en tiempos en coche, categorías largas y estados de cielo.
+  - **Simbiosis Responsiva Móvil-Tablet:** Cuadrícula 2x2 en pantallas móviles que escala fluidamente a 4x1 en horizontal (`grid-template-columns: repeat(4, 1fr)`) en pantallas `>= 640px`.
+- **Anti-Caché Obligatorio (Ley 4):**
+  - Service Worker actualizado a `meteoasturlode-v3010-planes-ocio-legibilidad-plena-chips-movil` en `sw.js`.
+  - Versión oficial elevada a `v3.0.10 🎭` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.10'` en `app.js`, `tourismCard.js?v=3.0.10`, `css/components.css?v=3.0.10`, `sw.js?v=3.0.10` y query strings en `index.html`.
+
 ## [3.0.9] - 2026-10-24
 
 ### 🥾 Ergonomía Móvil: Legibilidad Plena y Simetría en Fichas de Rutas & Senderismo (Ley 19 - Reporte Lendo)

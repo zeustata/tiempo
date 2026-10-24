@@ -11182,11 +11182,13 @@
   animation: fadeIn 0.25s ease-out;
 }
 
-/* Fila de Chips Técnicos de Ocio (Ley 11 Blindaje Anti-Desborde Móvil) */
+/* Fila de Chips Técnicos de Ocio (Ley 11, Ley 14 y Ley 19 Legibilidad Plena Móvil) */
 .tourism-specs-chips {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (min-width: 640px) {
@@ -11198,41 +11200,54 @@
 .tourism-spec-chip {
   background: rgba(15, 23, 42, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 10px;
-  padding: 8px 10px;
+  border-radius: 8px;
+  padding: 9px 11px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 4px;
+  box-sizing: border-box;
+  min-width: 0;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.tourism-spec-chip:hover {
+  background: rgba(15, 23, 42, 0.8);
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+.t-chip-top {
   display: flex;
   align-items: center;
-  gap: 8px;
-  box-sizing: border-box;
+  gap: 6px;
+  width: 100%;
   min-width: 0;
 }
 
 .t-chip-icon {
-  font-size: 1.15rem;
+  font-size: 0.95rem;
+  line-height: 1;
   flex-shrink: 0;
-}
-
-.t-chip-info {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
 }
 
 .t-chip-label {
   font-size: 0.68rem;
-  color: #94a3b8;
-  font-weight: 600;
+  color: var(--text-muted);
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.3px;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 
 .t-chip-val {
-  font-size: 0.82rem;
+  font-size: 0.88rem;
   font-weight: 700;
   color: #f1f5f9;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
+  line-height: 1.25;
 }
 
 .tourism-card-desc {

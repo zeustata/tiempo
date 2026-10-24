@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v309-rutas-legibilidad-plena-chips-movil';
+const CACHE_NAME = 'meteoasturlode-v3010-planes-ocio-legibilidad-plena-chips-movil';
 const STATIC_ASSETS = [
   './',
   './index.html',
