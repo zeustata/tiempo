@@ -27,6 +27,19 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Pautas de Coherencia de Diseño:*
      - Los nuevos iconos deben inspirarse y regirse en los iconos ya consolidados de cada tema: mismas proporciones, equilibrio en la cantidad de elementos (astros, nubes, partículas) y mismo ritmo y estilo de animación fluida para garantizar armonía visual y rendimiento en dispositivos móviles.
 
+## 📌 Tarea Pendiente y Hoja de Ruta: Consenso Cantábrico en Widgets Nativos de Android (4x2 y 4x3) — 2026-10-25
+- **Diagnóstico y Usabilidad (Feedback Lendo - «no queria despertarte pero me mosquea q el widget ponga soleado y entres en la app y ponga nublado que es lo que hay» y «quiero que lo dejes en tareas pendientes ya que cambiar esas cosas retrasarian todo»):**
+  1. *Diagnóstico Operativo de la Discrepancia Widget vs App:*
+     - Lendo constató en Piedras Blancas (Castrillón) que en el cielo real había un manto nuboso completo grisáceo. Al consultar el widget de escritorio de Android, marcaba «Solín • Despejado» (código 0, soleado). Sin embargo, al abrir la web app, esta mostraba correctamente «Nublado» (código 3).
+     - *Causa Raíz:* La web app cuenta con el algoritmo de Consenso Cantábrico (`applyCantabricoConsensus` en `weatherApi.js`), el cual contrasta en tiempo real el modelo de alta resolución (AROME) con el Centro Europeo (ECMWF IFS). Si AROME simula un micro-claro o falso soleado (< 50% nubes) pero no hay radiación solar activa y ECMWF detecta cielo cerrado (98% nubes), la app invalida el falso claro y adopta «Nublado». Por el contrario, los widgets nativos de Android (`MeteoWidgetProvider.java` y `MeteoWidgetMediumProvider.java`) fueron programados con una llamada HTTP simple y directa a Open-Meteo sin filtro de consenso, tragándose en bruto el código 0 de AROME.
+  2. *Decisión Estratégica de Lendo (Prioridad de Producción v3.0.23):*
+     - Para no introducir riesgos, pruebas precipitadas ni retrasar la subida oficial a Google Play de la versión **v3.0.23** (`versionCode 8`, `MeteoAstur_Lode_v3.0.23_PlayStore.aab`), el código nativo y la versión actual se mantienen 100% estables e intactos.
+  3. *Solución Técnica Diseñada para Futura Actualización (v3.0.24 / v3.1):*
+     - En `MeteoWidgetProvider.java` (4x2) y `MeteoWidgetMediumProvider.java` (4x3):
+       - Solicitar en la petición principal `cloud_cover` y radiación directa (`direct_normal_irradiance`, `uv_index`).
+       - Contrastar con ECMWF IFS (`models=ecmwf_ifs025&current=weather_code,cloud_cover,direct_normal_irradiance`).
+       - Aplicar en Java la regla de consenso: si el modelo local indica soleado (`weather_code <= 1` o `cloud_cover < 50%`) pero no hay sol activo (`direct_normal_irradiance < 100 W/m²`, `uv < 1.0`) y ECMWF reporta manto cubierto (`cloud_cover >= 80%`), forzar `weather_code = 3` (Nublado) en el tiempo actual y en la previsión diaria de hoy, asegurando paridad visual 1:1 total entre el widget de escritorio y la web app.
+
 ## 🛡️ Actualización v3.0.23: Modo Oscuro Soberano Android & Blindaje de Botones del Sistema — 2026-10-25
 - **Diagnóstico y Usabilidad (Feedback Lendo - «ya se subio la revision de la 3.0.22 pero hay un problema. el icono esta bien ahora y yo al tener gestos los botones no se ven pero al instalar la actualizacion en el movil de un amigo que tiene botones y encima tiene el tema en blanco. queda fatal. casi ni se ven los botones te mando la captura», «eso era lo que queria hacer. que siempre ejecute el modo oscuro en la app. se puede hacer aunque los telegonos tengan el modo normal?», «vale»):**
   1. *Diagnóstico del Conflicto de Navegación en Modo Claro:*
