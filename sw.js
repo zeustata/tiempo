@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3022-dock-icons-standalone';
+const CACHE_NAME = 'meteoasturlode-v3023-dark-navigation';
 const STATIC_ASSETS = [
   './',
   './index.html',

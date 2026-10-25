@@ -1,90 +1,106 @@
-Add-Type -AssemblyName System.Drawing
-
 $tiempoDir = "C:\Users\NUC\Downloads\IA\Tiempo"
 $widgetDir = "C:\Users\NUC\Downloads\MeteoAstur_Android_Widget"
-$newBlueSrc = "$tiempoDir\icons\source_icon_blue.jpg"
 
-Write-Output "==> 1. Actualizando iconos en mipmaps de Android con nuevo diseño azul puro..."
-$blueImg = [System.Drawing.Image]::FromFile($newBlueSrc)
-
-function Resize-Mipmap($source, $dim, $outPath) {
-    $bmp = New-Object System.Drawing.Bitmap($dim, $dim)
-    $g = [System.Drawing.Graphics]::FromImage($bmp)
-    $g.InterpolationMode = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
-    $g.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::HighQuality
-    $g.PixelOffsetMode = [System.Drawing.Drawing2D.PixelOffsetMode]::HighQuality
-    $g.CompositingQuality = [System.Drawing.Drawing2D.CompositingQuality]::HighQuality
-    $g.DrawImage($source, 0, 0, $dim, $dim)
-    $bmp.Save($outPath, [System.Drawing.Imaging.ImageFormat]::Png)
-    $g.Dispose()
-    $bmp.Dispose()
-}
-
-$densities = @(
-    @{ name = "mdpi"; size = 48 },
-    @{ name = "hdpi"; size = 72 },
-    @{ name = "xhdpi"; size = 96 },
-    @{ name = "xxhdpi"; size = 144 },
-    @{ name = "xxxhdpi"; size = 192 }
-)
-
-foreach ($d in $densities) {
-    $folder = "$widgetDir\app\src\main\res\mipmap-$($d.name)"
-    if (Test-Path $folder) {
-        Resize-Mipmap $blueImg $d.size "$folder\ic_maskable.png"
-        Resize-Mipmap $blueImg $d.size "$folder\ic_launcher.png"
-        Write-Output "  Actualizado mipmap-$($d.name): $($d.size)x$($d.size)"
-    }
-}
-
-Resize-Mipmap $blueImg 512 "$widgetDir\store_icon.png"
-
-# Ajustar ic_launcher.xml para eliminar el fondo blanco
-$icLauncherXml = @"
-<?xml version="1.0" encoding="utf-8"?>
-<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
-    <background android:drawable="@mipmap/ic_maskable" />
-    <foreground android:drawable="@android:color/transparent" />
-</adaptive-icon>
-"@
-[System.IO.File]::WriteAllText("$widgetDir\app\src\main\res\mipmap-anydpi-v26\ic_launcher.xml", $icLauncherXml.Trim())
-Write-Output "  ic_launcher.xml actualizado: fondo azul puro directo sin capa blanca"
-
-$blueImg.Dispose()
-
-Write-Output "==> 2. Ajustando navegación transparente/azul noche en build.gradle y twa-manifest..."
-$gradlePath = "$widgetDir\app\build.gradle"
-$gradleContent = [System.IO.File]::ReadAllText($gradlePath)
-$gradleContent = $gradleContent.Replace("navigationColorDark: '#000000'", "navigationColorDark: '#070D17'")
-$gradleContent = $gradleContent.Replace("navigationDividerColor: '#000000'", "navigationDividerColor: '#070D17'")
-$gradleContent = $gradleContent.Replace("navigationDividerColorDark: '#000000'", "navigationDividerColorDark: '#070D17'")
-[System.IO.File]::WriteAllText($gradlePath, $gradleContent)
-
-$twaPath = "$widgetDir\twa-manifest.json"
-if (Test-Path $twaPath) {
-    $twaContent = [System.IO.File]::ReadAllText($twaPath)
-    $twaContent = $twaContent.Replace('"navigationColorDark": "#000000"', '"navigationColorDark": "#070D17"')
-    $twaContent = $twaContent.Replace('"navigationDividerColor": "#000000"', '"navigationDividerColor": "#070D17"')
-    $twaContent = $twaContent.Replace('"navigationDividerColorDark": "#000000"', '"navigationDividerColorDark": "#070D17"')
-    [System.IO.File]::WriteAllText($twaPath, $twaContent)
-}
-
-Write-Output "==> 3. Configurando transparencia de navegación en LauncherActivity.java..."
+Write-Output "==> 1. Asegurando LauncherActivity.java con Modo Oscuro Soberano..."
 $launcherJavaPath = "$widgetDir\app\src\main\java\com\zeustata\meteoasturlode\LauncherActivity.java"
-$launcherJava = [System.IO.File]::ReadAllText($launcherJavaPath)
-if ($launcherJava -notmatch 'setNavigationBarColor') {
-    $insertCode = @"
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+$launcherJava = @"
+package com.zeustata.meteoasturlode;
+
+import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.View;
+import android.view.WindowInsetsController;
+import androidx.browser.customtabs.CustomTabColorSchemeParams;
+import androidx.browser.customtabs.CustomTabsCallback;
+import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.browser.trusted.TrustedWebActivityIntentBuilder;
+import com.google.androidbrowserhelper.trusted.TwaLauncher;
+import com.google.androidbrowserhelper.trusted.splashscreens.SplashScreenStrategy;
+
+public class LauncherActivity
+        extends com.google.androidbrowserhelper.trusted.LauncherActivity {
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        try {
+            sendBroadcast(new android.content.Intent(this, MeteoWidgetProvider.class).setAction(MeteoWidgetProvider.ACTION_REFRESH_WIDGET));
+            sendBroadcast(new android.content.Intent(this, MeteoWidgetMediumProvider.class).setAction(MeteoWidgetMediumProvider.ACTION_REFRESH_WIDGET_4X3));
+        } catch (Exception ignored) {}
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        int nightColor = Color.parseColor("#070D17");
+        getWindow().setNavigationBarColor(nightColor);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             getWindow().setNavigationBarContrastEnforced(false);
         }
-        getWindow().setNavigationBarColor(android.graphics.Color.parseColor("#070D17"));
-"@
-    $launcherJava = $launcherJava.Replace("super.onCreate(savedInstanceState);", "super.onCreate(savedInstanceState);`n$insertCode")
-    [System.IO.File]::WriteAllText($launcherJavaPath, $launcherJava)
-    Write-Output "  LauncherActivity.java configurado con barra de navegación integrada #070D17"
-}
 
-Write-Output "==> 4. Compilando APK con Gradle..."
+        // Blindaje de botones del sistema (3 botones): obligar a que los iconos sean blancos/claros
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            WindowInsetsController controller = getWindow().getInsetsController();
+            if (controller != null) {
+                controller.setSystemBarsAppearance(0, WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS);
+            }
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int flags = getWindow().getDecorView().getSystemUiVisibility();
+            flags &= ~View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+            getWindow().getDecorView().setSystemUiVisibility(flags);
+        }
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        }
+    }
+
+    @Override
+    protected TwaLauncher createTwaLauncher() {
+        return new TwaLauncher(this) {
+            @Override
+            public void launch(
+                    TrustedWebActivityIntentBuilder twaBuilder,
+                    CustomTabsCallback callback,
+                    SplashScreenStrategy splashStrategy,
+                    Runnable completionCallback,
+                    TwaLauncher.FallbackStrategy fallbackStrategy) {
+
+                int nightColor = Color.parseColor("#070D17");
+                CustomTabColorSchemeParams nightParams = new CustomTabColorSchemeParams.Builder()
+                        .setToolbarColor(nightColor)
+                        .setNavigationBarColor(nightColor)
+                        .setNavigationBarDividerColor(nightColor)
+                        .build();
+
+                // Cerrojo soberano de modo oscuro para Chrome / TWA
+                twaBuilder.setDefaultColorSchemeParams(nightParams);
+                twaBuilder.setColorSchemeParams(CustomTabsIntent.COLOR_SCHEME_LIGHT, nightParams);
+                twaBuilder.setColorSchemeParams(CustomTabsIntent.COLOR_SCHEME_DARK, nightParams);
+                twaBuilder.setColorScheme(CustomTabsIntent.COLOR_SCHEME_DARK);
+
+                super.launch(twaBuilder, callback, splashStrategy, completionCallback, fallbackStrategy);
+            }
+        };
+    }
+
+    @Override
+    protected Uri getLaunchingUrl() {
+        return super.getLaunchingUrl();
+    }
+}
+"@
+[System.IO.File]::WriteAllText($launcherJavaPath, $launcherJava)
+Write-Output "  LauncherActivity.java listo."
+
+Write-Output "==> 2. Compilando APK de prueba con Gradle..."
 $env:JAVA_HOME = "C:\Users\NUC\.bubblewrap\jdk\jdk-17.0.11+9"
 $env:PATH = "$env:JAVA_HOME\bin;$env:PATH"
 
@@ -98,12 +114,12 @@ try {
 
 # Buscar APK generado
 $candidateApk = "$widgetDir\app\build\outputs\apk\release\app-release.apk"
-$targetApk = "C:\Users\NUC\Downloads\MeteoAstur_Lode_v3.0.22_TEST.apk"
+$targetApk = "C:\Users\NUC\Downloads\MeteoAstur_Lode_v3.0.23_TEST.apk"
 
 if (Test-Path $candidateApk) {
     Copy-Item $candidateApk $targetApk -Force
     Write-Output "=========================================================="
-    Write-Output "EXITO TOTAL: APK generado y firmado correctamente en:"
+    Write-Output "EXITO TOTAL: APK v3.0.23 generado con icono oficial e intacto en:"
     Write-Output "  $targetApk"
     Write-Output "Tamaño: $((Get-Item $targetApk).Length) bytes"
     Write-Output "Fecha: $((Get-Item $targetApk).LastWriteTime)"

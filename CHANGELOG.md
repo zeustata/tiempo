@@ -9,6 +9,27 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.23] - 2026-10-25
+
+### 🛡️ Modo Oscuro Soberano Android: Blindaje de Barra Inferior & Contraste 100% de Botones (Feedback Lendo)
+- **Motivación y Diagnóstico Operativo:**
+  - Al instalar la app en terminales con navegación por 3 botones clásicos (`◁ ○ □`) y el tema del sistema configurado en blanco/modo claro (*Light Mode*), la barra de navegación del sistema se renderizaba como un bloque blanco sólido (`#FFFFFF`) y los botones en blanco/gris claro casi invisible.
+  - **Causa Raíz:** Chrome Custom Tabs (TWA) operaba bajo `COLOR_SCHEME_SYSTEM` sin configuración explícita para `COLOR_SCHEME_LIGHT`, forzando la barra blanca en teléfonos con tema claro. Simultáneamente, al detectar el `<meta name="theme-color" content="#070d17">` del contenido web, Chrome configuraba los botones en blanco, produciendo una colisión de blanco sobre blanco.
+- **Implementación Técnica:**
+  - **Sobrescritura de `createTwaLauncher()` en `LauncherActivity.java`:**
+    - Configurado el intent de TWA para forzar de manera estricta `twaBuilder.setColorScheme(CustomTabsIntent.COLOR_SCHEME_DARK)`, obligando a Chrome a correr siempre en modo oscuro sin seguir el tema claro del teléfono.
+    - Asignados parámetros de color azul noche (`#070D17`) de forma explícita tanto a `COLOR_SCHEME_DARK`, `defaultColorSchemeParams` como a `COLOR_SCHEME_LIGHT`.
+  - **Control de Contraste en Ventana Nativa (`WindowInsetsController`):**
+    - En `LauncherActivity.onCreate()`, se asignó `setNavigationBarColor(#070D17)` y se desactivó el flag de botones claros (`APPEARANCE_LIGHT_NAVIGATION_BARS = 0` en API 30+ y `~SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR` en API 26-29), forzando a Android a pintar los 3 botones en blanco puro con máximo contraste.
+  - **Declaración Web «Dark-Only»:**
+    - Añadido `<meta name="color-scheme" content="dark">` en `index.html` y `color-scheme: dark;` en `:root` de `css/main.css`.
+  - **Paquetes Generados y Firmados:**
+    - `MeteoAstur_Lode_v3.0.23_TEST.apk` (4,492,911 bytes, versionCode 8) para pruebas locales directas.
+    - `MeteoAstur_Lode_v3.0.23_PlayStore.aab` (4,638,531 bytes, versionCode 8) para Google Play Store.
+- **Anti-Caché Obligatorio (Ley 4):**
+  - Service Worker actualizado a `meteoasturlode-v3023-dark-navigation` en `sw.js`.
+  - Versión oficial elevada a `v3.0.23 🛡️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.23'` en `app.js`, `manifest.json?v=3.0.23`, `css/main.css?v=3.0.23` y `css/components.css?v=3.0.23`.
+
 ## [3.0.22] - 2026-10-25
 
 ### 🛡️ Refinamiento Android: Iconos Adaptativos en Dock & Navegación Fija Standalone (Tester Prieto & Lendo)

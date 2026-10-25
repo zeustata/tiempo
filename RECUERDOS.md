@@ -27,6 +27,22 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Pautas de Coherencia de Diseño:*
      - Los nuevos iconos deben inspirarse y regirse en los iconos ya consolidados de cada tema: mismas proporciones, equilibrio en la cantidad de elementos (astros, nubes, partículas) y mismo ritmo y estilo de animación fluida para garantizar armonía visual y rendimiento en dispositivos móviles.
 
+## 🛡️ Actualización v3.0.23: Modo Oscuro Soberano Android & Blindaje de Botones del Sistema — 2026-10-25
+- **Diagnóstico y Usabilidad (Feedback Lendo - «ya se subio la revision de la 3.0.22 pero hay un problema. el icono esta bien ahora y yo al tener gestos los botones no se ven pero al instalar la actualizacion en el movil de un amigo que tiene botones y encima tiene el tema en blanco. queda fatal. casi ni se ven los botones te mando la captura», «eso era lo que queria hacer. que siempre ejecute el modo oscuro en la app. se puede hacer aunque los telegonos tengan el modo normal?», «vale»):**
+  1. *Diagnóstico del Conflicto de Navegación en Modo Claro:*
+     - En dispositivos con navegación por 3 botones clásicos (`◁ ○ □`) y el sistema operativo configurado en Modo Claro (Light Mode), la barra de navegación inferior se dibujaba como un bloque blanco opaco (`#FFFFFF`) y los botones en color blanco/gris pálido, volviéndose prácticamente invisibles.
+     - *Causa Raíz:* Google Chrome Custom Tabs (TWA) operaba bajo `COLOR_SCHEME_SYSTEM` sin definir parámetros específicos para `COLOR_SCHEME_LIGHT`. Al detectar el sistema en blanco, Chrome activaba su plantilla clara (barra blanca). Simultáneamente, al leer `<meta name="theme-color" content="#070d17">`, Chrome interpretaba que la web era oscura y ordenaba al sistema renderizar los botones en blanco, provocando la invisibilidad de los botones por colisión de blanco sobre blanco.
+  2. *Intervención Técnica y Triple Cerrojo «Dark-Only»:*
+     - *Nivel TWA / Chrome:* Sobrescrito `createTwaLauncher()` en `LauncherActivity.java` para interceptar la construcción del intent. Se forzó `twaBuilder.setColorScheme(CustomTabsIntent.COLOR_SCHEME_DARK)` y se asignó `#070D17` de forma explícita tanto a `COLOR_SCHEME_DARK`, `defaultColorSchemeParams` como a `COLOR_SCHEME_LIGHT`.
+     - *Nivel Ventana Nativa:* En `LauncherActivity.onCreate()`, se configuró `getWindow().setNavigationBarColor(#070D17)` y se desactivó el flag de botones oscuros (`controller.setSystemBarsAppearance(0, APPEARANCE_LIGHT_NAVIGATION_BARS)` en Android 11+ y `~SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR` en Android 8-10), forzando a Android a pintar los 3 botones en blanco puro de alto contraste.
+     - *Nivel Web:* Declarado `<meta name="color-scheme" content="dark">` en `index.html` y `color-scheme: dark;` en `:root` de `css/main.css`.
+  3. *Compilación Oficial:*
+     - Paquete de prueba local: [MeteoAstur_Lode_v3.0.23_TEST.apk](file:///C:/Users/NUC/Downloads/MeteoAstur_Lode_v3.0.23_TEST.apk) (4,492,911 bytes, versionCode 8, versionName 3.0.23).
+     - Paquete de producción oficial: [MeteoAstur_Lode_v3.0.23_PlayStore.aab](file:///C:/Users/NUC/Downloads/MeteoAstur_Lode_v3.0.23_PlayStore.aab) (4,638,531 bytes, versionCode 8, versionName 3.0.23) listo para Google Play Console.
+  4. *Anti-Caché Obligatorio (Ley 4):*
+     - Service Worker actualizado a `meteoasturlode-v3023-dark-navigation` en `sw.js`.
+     - Versión oficial elevada a `v3.0.23 🛡️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.23'` en `app.js`, `manifest.json?v=3.0.23` y query strings en `index.html`.
+
 ## 🛡️ Actualización v3.0.22: Refinamiento Android (Iconos Adaptativos en Dock & Navegación Fija Standalone) — 2026-10-25
 - **Diagnóstico y Usabilidad (Feedback Tester Prieto & Lendo - «tenemos el tester prieto, el perfeccionista que quiere que arreglemos dos detalles... primero el icono de la app... el icono que sale en la pantalla de la app para abrir la app no esta completo... segundo detalle tiene que ver con los botones de navegacion...», «no se ve la forma entera del escudo triene que ser algo mas pequeño el escudo para que salga entero. sigue saliendo la barra de arriba y los botones de navegacion siguen sin ser transparentes y negros» y «pisale»):**
   1. *Diagnóstico y Resolución del Icono en Escritorio / Dock (Honor MagicOS / Android):*

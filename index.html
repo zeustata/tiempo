@@ -6,6 +6,7 @@
   <title>MeteoAstur Lode | Estación Meteorológica Integral</title>
   <meta name="description" content="Estación meteorológica avanzada para Asturias: radar de precipitaciones, estado del mar Cantábrico, cotas de nieve en cordillera y datos en tiempo real de los concejos asturianos.">
   <meta name="theme-color" content="#070d17">
+  <meta name="color-scheme" content="dark">
 
   <!-- Meta tags para prevenir caché persistente en navegadores móviles -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -21,7 +22,7 @@
   <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
 
   <!-- Manifest PWA (Cross-platform Android / Windows / iOS) -->
-  <link rel="manifest" href="manifest.json?v=3.0.22">
+  <link rel="manifest" href="manifest.json?v=3.0.23">
 
   <!-- Leaflet CSS & JS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
@@ -31,8 +32,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=3.0.20">
-  <link rel="stylesheet" href="css/components.css?v=3.0.20">
+  <link rel="stylesheet" href="css/main.css?v=3.0.23">
+  <link rel="stylesheet" href="css/components.css?v=3.0.23">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -242,7 +243,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.22 🛡️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.23 🛡️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -316,8 +317,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v3.0.22 🛡️</span>
+            <span class="release-version">v3.0.23 🛡️</span>
             <span class="release-date">25 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-feature">Modo Oscuro Soberano &amp; Ergonomía de Sistema</span> <strong>Cerrojo de Navegación 100% Oscura en Cualquier Tema</strong>:
+              <br>• <strong>Blindaje de Barra Inferior en Teléfonos con Modo Claro:</strong> Forzado el esquema de color oscuro obligatorio a nivel de actividad nativa y Chrome Custom Tabs (<code>COLOR_SCHEME_DARK</code>). Si el dispositivo móvil está configurado en tema blanco/normal, la barra inferior de navegación permanece inmutablemente en azul noche profundo (<code>#070D17</code>), eliminando la barra blanca residual.
+              <br>• <strong>Contraste Nítido de Botones del Sistema (<code>◁ ○ □</code>):</strong> Desactivado el flag de iconos claros sobre la ventana nativa (<code>APPEARANCE_LIGHT_NAVIGATION_BARS = 0</code>). Los 3 botones de navegación clásicos se dibujan siempre con iconos blancos de máximo contraste, 100% visibles y perfectamente integrados.
+              <br>• <strong>Declaración Web «Dark-Only»:</strong> Incorporada la directiva <code>color-scheme: dark</code> en metadatos y CSS global para garantizar que los motores de renderizado nunca inviertan colores ni apliquen estilos claros.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v3.0.22 🛡️</span>
+            <span class="release-date">25 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-feature">Refinamiento Android &amp; Ergonomía de Sistema</span> <strong>Iconos Adaptativos en Dock &amp; Botones de Navegación Fijos</strong>:
