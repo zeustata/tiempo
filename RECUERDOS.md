@@ -46,6 +46,7 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - En `manifest.json`, modo `"display": "standalone"`, y en `build.gradle`, `themeColorDark: '#070D17'` y `navigationColorDark: '#070D17'`, garantizando navegación 100% fija, transparente y sin barras negras ni cortes.
   3. *Compilación y Firma de APK de Prueba Local:*
      - Compilado con Gradle 8.11.1 y firmado criptográficamente con la clave oficial (`signing.keystore`, alias `my-key-alias`, esquema v2) el paquete [MeteoAstur_Lode_v3.0.22_TEST.apk](file:///C:/Users/NUC/Downloads/MeteoAstur_Lode_v3.0.22_TEST.apk) (4,578,455 bytes, versionCode 7, versionName 3.0.22) depositado en la carpeta Descargas de Lendo.
+     - Compilado y firmado el paquete oficial de producción para Google Play Store [MeteoAstur_Lode_v3.0.22_PlayStore.aab](file:///C:/Users/NUC/Downloads/MeteoAstur_Lode_v3.0.22_PlayStore.aab) (4,721,892 bytes, versionCode 7, versionName 3.0.22) listo para subir a Google Play Console junto al icono oficial [icono_meteoastur_512x512.png](file:///C:/Users/NUC/Downloads/icono_meteoastur_512x512.png).
   4. *Anti-Caché Obligatorio (Ley 4):*
      - Service Worker actualizado a `meteoasturlode-v3022-dock-icons-standalone` en `sw.js`.
      - Versión oficial elevada a `v3.0.22 🛡️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.22'` en `app.js`, `sw.js?v=3.0.22` y query strings en `index.html`.
