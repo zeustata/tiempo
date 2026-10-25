@@ -1,6 +1,6 @@
 Add-Type -AssemblyName System.Drawing
 
-$srcPath = "C:\Users\NUC\.gemini\antigravity-ide\brain\a90f5eee-4afd-46ca-86b5-bd5e8adadd52\meteoastur_icon_shield_1791146355399.jpg"
+$srcPath = "C:\Users\NUC\Downloads\IA\Tiempo\icons\source_icon_blue.jpg"
 $img = [System.Drawing.Image]::FromFile($srcPath)
 
 function Resize-Image($source, $w, $h, $outPath) {
@@ -17,11 +17,19 @@ function Resize-Image($source, $w, $h, $outPath) {
     Write-Output "Generated: $outPath ($w x $h)"
 }
 
+# Iconos estándar y adaptativos (ahora son idénticos porque la base es 100% azul de borde a borde y el escudo está en la safe zone)
 Resize-Image $img 512 512 "C:\Users\NUC\Downloads\IA\Tiempo\icons\icon-512.png"
 Resize-Image $img 192 192 "C:\Users\NUC\Downloads\IA\Tiempo\icons\icon-192.png"
 Resize-Image $img 512 512 "C:\Users\NUC\Downloads\IA\Tiempo\icons\icon-maskable-512.png"
 Resize-Image $img 192 192 "C:\Users\NUC\Downloads\IA\Tiempo\icons\icon-maskable-192.png"
-Resize-Image $img 512 512 "C:\Users\NUC\Downloads\MeteoAstur - Google Play package\icon-512-v2.png"
+
+# Copias para paquete de empaquetado si existe
+$pkgDir = "C:\Users\NUC\Downloads\MeteoAstur - Google Play package"
+if (Test-Path $pkgDir) {
+    Resize-Image $img 512 512 "$pkgDir\icon-maskable-512.png"
+    Resize-Image $img 512 512 "$pkgDir\icon-512.png"
+    Resize-Image $img 512 512 "$pkgDir\icon-512-v2.png"
+}
 
 $img.Dispose()
 Write-Output "All icons exported successfully!"

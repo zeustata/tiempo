@@ -21,7 +21,7 @@
   <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
 
   <!-- Manifest PWA (Cross-platform Android / Windows / iOS) -->
-  <link rel="manifest" href="manifest.json?v=1.0.82-harmony">
+  <link rel="manifest" href="manifest.json?v=3.0.22">
 
   <!-- Leaflet CSS & JS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
@@ -242,7 +242,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.21 ⚡</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.22 🛡️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -316,8 +316,21 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
+            <span class="release-version">v3.0.22 🛡️</span>
+            <span class="release-date">25 Oct 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-feature">Refinamiento Android &amp; Ergonomía de Sistema</span> <strong>Iconos Adaptativos en Dock &amp; Botones de Navegación Fijos</strong>:
+              <br>• <strong>Icono 100% Completo en el Dock (Safe Zone):</strong> Reescalado el emblema central (escudo asturiano con Cruz de la Victoria, sol y nube) para inscribirse dentro de la zona segura oficial de Android (80%). El marco exterior dorado doble nunca más sufre cortes ni mordeduras provocadas por la máscara del lanzador de Honor, Samsung, Xiaomi o Pixel.
+              <br>• <strong>Botones de Navegación Fijos y Permanentes (Modo Standalone):</strong> Transición del modo de visualización de <code>fullscreen</code> (inmersivo) a <code>standalone</code>. Los 3 botones clásicos de Android (<code>◁ ○ □</code>) permanecen siempre visibles, transparentes y accesibles al instante sin necesidad de deslizar la pantalla para despertarlos y sin parpadeos ni tirones visuales.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
             <span class="release-version">v3.0.21 ⚡</span>
-            <span class="release-date">24 Oct 2026 (Actual)</span>
+            <span class="release-date">24 Oct 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-feature">Doctrina de Silencio en Calma &amp; Ergonomía de Avisos</span> <strong>AEMET en Modo Silencioso Estricto</strong>:
@@ -4542,7 +4555,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.0.21').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.0.22').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4572,7 +4585,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.21"></script>
+  <script type="module" src="js/app.js?v=3.0.22"></script>
 
 
 

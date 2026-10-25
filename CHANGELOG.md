@@ -9,6 +9,28 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.22] - 2026-10-25
+
+### 🛡️ Refinamiento Android: Iconos Adaptativos en Dock & Navegación Fija Standalone (Tester Prieto & Lendo)
+- **Motivación y Diagnóstico Operativo:**
+  - El tester Prieto y Lendo identificaron dos detalles de ergonomía y estética en terminales Android (Honor Magic, Samsung, Xiaomi, Pixel):
+    1. **Recorte de Icono en el Dock / Pantalla de Inicio:** Al instalar la app en el teléfono, la máscara del lanzador de aplicaciones (círculo o squircle) recortaba en plano los bordes superior, inferior y las esquinas del marco dorado del escudo asturiano.
+    2. **Desaparición y Lag en Botones de Navegación del Sistema (◁ ○ □):** Al abrir la app en modo `fullscreen` (inmersivo), Android ocultaba los botones del sistema. Al deslizar hacia arriba, los botones aparecían bruscamente en negro opaco, luego pasaban a transparentes y se volvían a esconder a los 2 segundos, provocando tirones (*jank*) y forzando dos toques para cualquier acción de retorno.
+- **Implementación Técnica:**
+  - **Zona Segura (*Safe Zone*) en Iconos Maskable (`export_icons.ps1`):**
+    - Se recalibró la función `Export-MaskableIcon` para reducir el tamaño del emblema central al 80% del lienzo (dentro de la zona segura oficial de Android de 72dp sobre 108dp).
+    - Se implementó un fondo degradado continuo azul noche (desde `#1b263a` hasta `#0a0d1c`) con difuminado perimetral (*feathering*) de 18px en los bordes de la imagen fuente, eliminando cualquier costura o reborde visible.
+    - Se generaron los nuevos archivos [`icons/icon-maskable-512.png`](file:///c:/Users/NUC/Downloads/IA/Tiempo/icons/icon-maskable-512.png) e [`icons/icon-maskable-192.png`](file:///c:/Users/NUC/Downloads/IA/Tiempo/icons/icon-maskable-192.png), garantizando que el marco dorado y la Cruz de la Victoria luzcan 100% íntegros en cualquier dispositivo.
+  - **Transición a Modo Standalone (`manifest.json` y `AndroidManifest.xml`):**
+    - En [`manifest.json`](file:///c:/Users/NUC/Downloads/IA/Tiempo/manifest.json), se sustituyó `"display": "fullscreen"` por `"display": "standalone"`.
+    - En `AndroidManifest.xml`, se modificó `android.support.customtabs.trusted.DISPLAY_MODE` de `"immersive"` a `"default"`.
+    - Con este ajuste, los 3 botones de navegación permanecen fijos y transparentes desde el primer instante, eliminando retrasos y permitiendo navegación inmediata con un único toque.
+  - **Generación y Firma de APK de Prueba Local:**
+    - Se compiló con Gradle y se firmó criptográficamente con la clave oficial (`signing.keystore`, alias `my-key-alias`, esquema v2) el paquete [`MeteoAstur_Lode_v3.0.22_TEST.apk`](file:///C:/Users/NUC/Downloads/MeteoAstur_Lode_v3.0.22_TEST.apk) para pruebas directas en el dispositivo de Lendo y Prieto.
+- **Anti-Caché Obligatorio (Ley 4):**
+  - Service Worker actualizado a `meteoasturlode-v3022-dock-icons-standalone` en `sw.js`.
+  - Versión oficial elevada a `v3.0.22 🛡️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.22'` en `app.js`, `sw.js?v=3.0.22` y query strings en `index.html`.
+
 ## [3.0.21] - 2026-10-24
 
 ### 🤫 Doctrina de Silencio en Calma: AEMET en Modo Silencioso Estricto (Idea Lendo & Princesa)

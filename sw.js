@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3021-aemet-silence-mode';
+const CACHE_NAME = 'meteoasturlode-v3022-dock-icons-standalone';
 const STATIC_ASSETS = [
   './',
   './index.html',

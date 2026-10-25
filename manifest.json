@@ -5,9 +5,8 @@
   "description": "Estación meteorológica integral, radar en directo, mar Cantábrico y cotas de nieve para Asturias.",
   "start_url": "index.html",
   "scope": "./",
-  "display": "fullscreen",
+  "display": "standalone",
   "display_override": [
-    "fullscreen",
     "standalone",
     "minimal-ui"
   ],

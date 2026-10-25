@@ -27,6 +27,30 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   2. *Pautas de Coherencia de Diseño:*
      - Los nuevos iconos deben inspirarse y regirse en los iconos ya consolidados de cada tema: mismas proporciones, equilibrio en la cantidad de elementos (astros, nubes, partículas) y mismo ritmo y estilo de animación fluida para garantizar armonía visual y rendimiento en dispositivos móviles.
 
+## 🛡️ Actualización v3.0.22: Refinamiento Android (Iconos Adaptativos en Dock & Navegación Fija Standalone) — 2026-10-25
+- **Diagnóstico y Usabilidad (Feedback Tester Prieto & Lendo - «tenemos el tester prieto, el perfeccionista que quiere que arreglemos dos detalles... primero el icono de la app... el icono que sale en la pantalla de la app para abrir la app no esta completo... segundo detalle tiene que ver con los botones de navegacion...», «no se ve la forma entera del escudo triene que ser algo mas pequeño el escudo para que salga entero. sigue saliendo la barra de arriba y los botones de navegacion siguen sin ser transparentes y negros» y «pisale»):**
+  1. *Diagnóstico y Resolución del Icono en Escritorio / Dock (Honor MagicOS / Android):*
+     - *Problema 1 (Corte de Puntas):* En el dock del teléfono, las puntas del escudo asturiano se cortaban al aplicarle la máscara circular/squircle.
+     - *Problema 2 (Placa Blanca en MagicOS):* Honor colocaba el icono dentro de una placa blanca redondeada porque la capa `<foreground>` en `ic_launcher.xml` estaba definida como `@android:color/transparent`, interpretándolo como un icono antiguo no adaptativo.
+     - *Intervención Técnica:*
+       - Escudo heráldico reducido al 58-60% del lienzo total, garantizando que el 100% de la silueta (puntas superiores, laterales y pico inferior) quede dentro de la *Safe Zone* oficial de 66dp sobre 108dp, con margen azul real asturiano (`#023993`) holgado y sin rebordes amarillos externos.
+       - Configurada la arquitectura adaptativa oficial en `res/values/colors.xml` (`<color name="ic_launcher_background">#023993</color>`) y `res/mipmap-anydpi-v26/ic_launcher.xml` con `<background android:drawable="@color/ic_launcher_background" />` y `<foreground android:drawable="@mipmap/ic_maskable" />`.
+       - Al contar con ambas capas reales y no transparentes, MagicOS lo reconoce como icono adaptativo moderno y elimina por completo la placa blanca, recortando el squircle directamente sobre el fondo azul.
+       - En `ic_launcher.png`, las cuatro esquinas se generaron 100% opacas (`A=255`) en azul `#023993` para evitar marcos en cualquier lanzador antiguo.
+  2. *Diagnóstico y Supresión de la Barra Superior CCT y la Barra Negra de Navegación:*
+     - *Problema:* Al abrir la APK de prueba, aparecía una barra superior de navegador con una `X`, la dirección web `zeustata.github.io` y el botón de compartir, mientras que la barra inferior de botones (`◁ ○ □`) se forzaba a negro opaco.
+     - *Causa Raíz Criptográfica (Digital Asset Links):* En TWA, Google Chrome verifica en `https://zeustata.github.io/.well-known/assetlinks.json` si la huella SHA-256 de la APK instalada está autorizada. El servidor web solo contenía las firmas de Google Play Console, careciendo de la huella de la clave local de prueba (`B4:07:B3...`). Al fallar la verificación, Chrome degradaba la app a pestaña de navegador web (Chrome Custom Tab).
+     - *Intervención Técnica:*
+       - Añadida la huella `B4:07:B3:BF:5F:44:0B:65:65:CC:16:CA:2F:37:88:AE:FC:9F:56:4F:C7:33:D4:0A:5C:5C:39:56:26:31:0E:CD` al repositorio raíz `zeustata.github.io` y al repositorio `Tiempo` en `.well-known/assetlinks.json`.
+       - Desplegado a producción en GitHub Pages, logrando validación inmediata por Chrome.
+       - En `manifest.json`, modo `"display": "standalone"`, y en `build.gradle`, `themeColorDark: '#070D17'` y `navigationColorDark: '#070D17'`, garantizando navegación 100% fija, transparente y sin barras negras ni cortes.
+  3. *Compilación y Firma de APK de Prueba Local:*
+     - Compilado con Gradle 8.11.1 y firmado criptográficamente con la clave oficial (`signing.keystore`, alias `my-key-alias`, esquema v2) el paquete [MeteoAstur_Lode_v3.0.22_TEST.apk](file:///C:/Users/NUC/Downloads/MeteoAstur_Lode_v3.0.22_TEST.apk) (4,578,455 bytes, versionCode 7, versionName 3.0.22) depositado en la carpeta Descargas de Lendo.
+  4. *Anti-Caché Obligatorio (Ley 4):*
+     - Service Worker actualizado a `meteoasturlode-v3022-dock-icons-standalone` en `sw.js`.
+     - Versión oficial elevada a `v3.0.22 🛡️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.22'` en `app.js`, `sw.js?v=3.0.22` y query strings en `index.html`.
+
+
 ## 🤫 Actualización v3.0.21: Doctrina de Silencio en Calma (AEMET Silenciosa & Portada Limpia) — 2026-10-24
 - **Diagnóstico y Usabilidad (Propuesta Lendo & Princesa - «vale. quieres quitar la tarjeta de aemet si no hay peligros no?», «pero sabes que tenemos mas avisos silenciosos no?», «osea que me animas que aemet lo deje tambien en silencio?», «vale pisale pero que salga si tiene alertas»):**
   1. *Diagnóstico Operativo:*
