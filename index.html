@@ -32,8 +32,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=3.0.23">
-  <link rel="stylesheet" href="css/components.css?v=3.0.23.2">
+  <link rel="stylesheet" href="css/main.css?v=3.0.23.3">
+  <link rel="stylesheet" href="css/components.css?v=3.0.23.3">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -318,9 +318,14 @@
         <div class="changelog-release current">
           <div class="release-header">
             <span class="release-version">v3.0.23 🛡️</span>
-            <span class="release-date">25 Oct 2026 (Actual)</span>
+            <span class="release-date">26 Oct 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
+            <li><span class="tag tag-ui">En Vivo &amp; Identidad Asturiana</span> <strong>Tarjeta Principal Compacta &amp; Jerarquía Bilingüe (Azul y Oro)</strong>:
+              <br>• <strong>Toponimia Oficial en Dos Tonos:</strong> Nombre en castellano destacado en blanco nítido (<code>.loc-name-es</code>) y nombre en asturianu un 16% más pequeño subordinado en el dorado noble de la Cruz de la Victoria (<code>.loc-name-ast</code>, <code>#fbbf24</code>), con filtro anti-duplicados para concejos con nombre único y localidades secundarias en gris compacto.
+              <br>• <strong>Condición Meteorológica Estilizada:</strong> Desacople elegante entre la descripción en castellano y el término tradicional asturiano en oro (ej. <em>Despejado • Soleyeru</em> o <em>Llovizna ligera • Orbayu llixeru</em>).
+              <br>• <strong>Compactación Ergonómica:</strong> Reducción de acolchados y márgenes internos en la Hero Card, ahorrando hasta 30px de altura en móvil y eliminando desbordes o saltos de línea antiestéticos.
+            </li>
             <li><span class="tag tag-feature">Modo Oscuro Soberano &amp; Ergonomía de Sistema</span> <strong>Cerrojo de Navegación 100% Oscura en Cualquier Tema</strong>:
               <br>• <strong>Blindaje de Barra Inferior en Teléfonos con Modo Claro:</strong> Forzado el esquema de color oscuro obligatorio a nivel de actividad nativa y Chrome Custom Tabs (<code>COLOR_SCHEME_DARK</code>). Si el dispositivo móvil está configurado en tema blanco/normal, la barra inferior de navegación permanece inmutablemente en azul noche profundo (<code>#070D17</code>), eliminando la barra blanca residual.
               <br>• <strong>Contraste Nítido de Botones del Sistema (<code>◁ ○ □</code>):</strong> Desactivado el flag de iconos claros sobre la ventana nativa (<code>APPEARANCE_LIGHT_NAVIGATION_BARS = 0</code>). Los 3 botones de navegación clásicos se dibujan siempre con iconos blancos de máximo contraste, 100% visibles y perfectamente integrados.
@@ -4583,7 +4588,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.0.23.2').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.0.23.3').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4613,7 +4618,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.23.2"></script>
+  <script type="module" src="js/app.js?v=3.0.23.3"></script>
 
 
 

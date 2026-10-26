@@ -40,7 +40,23 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - Contrastar con ECMWF IFS (`models=ecmwf_ifs025&current=weather_code,cloud_cover,direct_normal_irradiance`).
        - Aplicar en Java la regla de consenso: si el modelo local indica soleado (`weather_code <= 1` o `cloud_cover < 50%`) pero no hay sol activo (`direct_normal_irradiance < 100 W/m²`, `uv < 1.0`) y ECMWF reporta manto cubierto (`cloud_cover >= 80%`), forzar `weather_code = 3` (Nublado) en el tiempo actual y en la previsión diaria de hoy, asegurando paridad visual 1:1 total entre el widget de escritorio y la web app.
 
-## 🛡️ Actualización v3.0.23: Modo Oscuro Soberano Android & Blindaje de Botones del Sistema — 2026-10-25
+## 🛡️ Actualización v3.0.23: Modo Oscuro Soberano Android, Balizas Solares & Tarjeta Bilingüe Compacta — 2026-10-25 / 2026-10-26
+- **Ampliación Ergonómica: Tarjeta Principal Compacta & Jerarquía Bilingüe Azul y Oro Asturiano (Feedback Lendo - «quisiera hacer un poco mas compacta la primera tarjetadel menu en vivo... que cambie segun el nombre con color del azul al amarillo como la bandera de asturias. y lo mismo el tiempo que hace. pone en castellano Despejado y luego en asturiano lo mismo. como lo ves?» y «pisale a la 1 a ver que pasa y ponlo en el changelog por si hay que revertir ésto último»):**
+  1. *Diagnóstico Operativo:*
+     - Lendo constató que la tarjeta principal (*Hero Weather Card*) de la pestaña "En Vivo" ocupaba una altura excesiva en pantallas móviles. Tanto el nombre del concejo como la descripción meteorológica mostraban el término en castellano y en asturiano con el mismo tamaño tipográfico gigante (100%) y una barra separadora fija (`/`), como `Candamo / Candamu (Grullos / San Román)` o `Parcialmente nublado / Claros`, generando saltos de línea antiestéticos y empujando verticalmente los sensores y la temperatura.
+  2. *Implementación Técnica (`currentCard.js`, `components.css`, `main.css`, `app.js`, `index.html`):*
+     - **Toponimia Oficial en Dos Tonos (`formatLocationTitle`):**
+       - Desglose inteligente del nombre oficial: el término en castellano se destaca en blanco nítido (`.loc-name-es`), mientras que el término tradicional en asturianu se subordina un 16% más pequeño (`.loc-name-ast`, `font-size: 0.84em; font-weight: 700;`) bañado en el **oro noble de la Cruz de la Victoria** (`#fbbf24`), complementando el fondo azul de la aplicación como los colores de la bandera de Asturias.
+       - *Filtro Anti-Duplicados:* Concejos con toponimia idéntica (ej. *Villaviciosa*, *Ponga*, *Caso*) suprimen la barra para no repetir la palabra innecesariamente.
+       - *Parroquias y Localidades:* Las localidades entre paréntesis `(Grullos / San Román)` se subordinan en gris suave compacto (`.location-locality`, `#cbd5e1`), manteniendo la máxima legibilidad sin recargar.
+     - **Condición Meteorológica Estilizada (`formatConditionTitle`):**
+       - Separación elegante de los términos bilingües: el estado meteorológico en castellano (`.cond-name-es`) se acompaña del término asturiano en oro (`.cond-name-ast`, ej. *Despejado • Soleyeru*, *Nublado • Cubiertu*, *Llovizna ligera • Orbayu llixeru*).
+     - **Compactación Ergonómica de la Hero Card:**
+       - Reducción del acolchado interno (`padding: 20px 22px;` en escritorio y `15px 14px;` en móvil) y márgenes de cabecera (`margin-bottom: 12px;`, `padding-top: 10px;`), logrando un ahorro vertical de hasta 30px en dispositivos móviles sin apelotonar los elementos.
+  3. *Anti-Caché Obligatorio (Ley 4) & Registro:*
+     - Service Worker actualizado a `meteoasturlode-v3023-3-hero-compact-astur` en `sw.js`.
+     - Versión oficial en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.23'` en `app.js`, `currentCard.js?v=3.0.23.3`, `css/main.css?v=3.0.23.3` y `css/components.css?v=3.0.23.3`.
+     - Changelog unificado en `CHANGELOG.md` e `index.html`.
 - **Diagnóstico y Usabilidad (Feedback Lendo - «ya se subio la revision de la 3.0.22 pero hay un problema. el icono esta bien ahora y yo al tener gestos los botones no se ven pero al instalar la actualizacion en el movil de un amigo que tiene botones y encima tiene el tema en blanco. queda fatal. casi ni se ven los botones te mando la captura», «eso era lo que queria hacer. que siempre ejecute el modo oscuro en la app. se puede hacer aunque los telegonos tengan el modo normal?», «vale»):**
   1. *Diagnóstico del Conflicto de Navegación en Modo Claro:*
      - En dispositivos con navegación por 3 botones clásicos (`◁ ○ □`) y el sistema operativo configurado en Modo Claro (Light Mode), la barra de navegación inferior se dibujaba como un bloque blanco opaco (`#FFFFFF`) y los botones en color blanco/gris pálido, volviéndose prácticamente invisibles.

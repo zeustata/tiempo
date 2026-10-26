@@ -9,7 +9,23 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
-## [3.0.23] - 2026-10-25
+## [3.0.23] - 2026-10-25 / 2026-10-26
+
+### 💛 Tarjeta Principal Compacta & Jerarquía Bilingüe Azul y Oro Asturiano (Feedback Lendo)
+- **Motivación y Diagnóstico Operativo:**
+  - Lendo observó que la tarjeta principal (*Hero Weather Card*) de la pestaña "En Vivo" ocupaba una altura excesiva en pantallas móviles. Tanto el concejo como la condición del tiempo mostraban el nombre en castellano y en asturiano con el mismo tamaño tipográfico gigante (100%) y una barra separadora fija (`/`), como `Candamo / Candamu (Grullos / San Román)` o `Parcialmente nublado / Claros`, generando saltos de línea antiestéticos y empujando verticalmente los sensores y la temperatura.
+- **Implementación Técnica (`js/components/currentCard.js`, `css/components.css`, `css/main.css`):**
+  - **Toponimia Oficial en Dos Tonos (`formatLocationTitle`):**
+    - Desglose inteligente del nombre oficial: el término en castellano se destaca en blanco nítido (`.loc-name-es`), mientras que el término tradicional en asturianu se subordina un 16% más pequeño (`.loc-name-ast`, `font-size: 0.84em; font-weight: 700;`) bañado en el **oro noble de la Cruz de la Victoria** (`#fbbf24`), complementando el fondo azul de la aplicación como los colores de la bandera de Asturias.
+    - **Filtro Anti-Duplicados:** Concejos con toponimia idéntica (ej. *Villaviciosa*, *Ponga*, *Caso*) suprimen la barra para no repetir la palabra innecesariamente.
+    - **Parroquias y Localidades:** Las localidades entre paréntesis `(Grullos / San Román)` se subordinan en gris suave compacto (`.location-locality`, `#cbd5e1`), manteniendo la máxima legibilidad sin recargar.
+  - **Condición Meteorológica Estilizada (`formatConditionTitle`):**
+    - Separación elegante de los términos bilingües: el estado meteorológico en castellano (`.cond-name-es`) se acompaña del término asturiano en oro (`.cond-name-ast`, ej. *Despejado • Soleyeru*, *Nublado • Cubiertu*, *Llovizna ligera • Orbayu llixeru*).
+  - **Compactación Ergonómica de la Hero Card:**
+    - Reducción del acolchado interno (`padding: 20px 22px;` en escritorio y `15px 14px;` en móvil) y márgenes de cabecera (`margin-bottom: 12px;`, `padding-top: 10px;`), logrando un ahorro vertical de hasta 30px en dispositivos móviles sin apelotonar los elementos.
+- **Anti-Caché Obligatorio (Ley 4):**
+  - Service Worker actualizado a `meteoasturlode-v3023-3-hero-compact-astur` en `sw.js`.
+  - Versión oficial en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.23'` en `app.js`, `currentCard.js?v=3.0.23.3`, `css/main.css?v=3.0.23.3` y `css/components.css?v=3.0.23.3`.
 
 ### 🛡️ Modo Oscuro Soberano Android: Blindaje de Barra Inferior & Contraste 100% de Botones (Feedback Lendo)
 - **Motivación y Diagnóstico Operativo:**

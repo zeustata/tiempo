@@ -2072,7 +2072,12 @@ kbd {
   }
 
   /* Alineación uniforme de todas las tarjetas en móvil */
-  .hero-weather-card,
+  .hero-weather-card {
+    padding: 15px 14px;
+    border-radius: var(--radius-md);
+    margin-bottom: 14px;
+  }
+
   .sensor-card,
   .forecast-block,
   .marine-card,

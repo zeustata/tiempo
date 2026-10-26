@@ -16,15 +16,61 @@ import { calculateUmbrellaStatus, renderUmbrellaCard } from '../utils/umbrellaAd
 import { checkConcejoFolixa } from '../utils/festivosData.js?v=1.1.85';
 
 /**
- * Formatea el título del concejo subordinando las localidades entre paréntesis (ej. Piedras Blancas / Salinas)
+ * Formatea el título del concejo con jerarquía bilingüe (Castellano principal, Asturianu en oro asturiano)
+ * y subordina las localidades entre paréntesis (ej. Piedras Blancas / Salinas)
  */
 function formatLocationTitle(name) {
   if (!name) return '';
-  const match = name.match(/^(.*?)\s*(\(.*?\))$/);
-  if (match) {
-    return `${match[1]} <span class="location-locality">${match[2]}</span>`;
+  
+  // Extraer posibles localidades entre paréntesis: ej. (Grullos / San Román) o (Piedras Blancas / Salinas)
+  const parenMatch = name.match(/^(.*?)\s*(\(.*?\))$/);
+  const mainPart = parenMatch ? parenMatch[1].trim() : name.trim();
+  const localityPart = parenMatch ? parenMatch[2].trim() : '';
+
+  let titleHtml = '';
+  if (mainPart.includes('/')) {
+    const parts = mainPart.split('/');
+    const esName = parts[0].trim();
+    const astName = parts.slice(1).join('/').trim();
+    if (esName.toLowerCase() === astName.toLowerCase()) {
+      titleHtml = `<span class="loc-name-es">${esName}</span>`;
+    } else {
+      titleHtml = `<span class="loc-name-es">${esName}</span><span class="loc-divider">/</span><span class="loc-name-ast">${astName}</span>`;
+    }
+  } else {
+    titleHtml = `<span class="loc-name-es">${mainPart}</span>`;
   }
-  return name;
+
+  if (localityPart) {
+    titleHtml += ` <span class="location-locality">${localityPart}</span>`;
+  }
+  return titleHtml;
+}
+
+/**
+ * Formatea la condición meteorológica con jerarquía bilingüe (Castellano principal, Asturianu en oro asturiano)
+ */
+function formatConditionTitle(label) {
+  if (!label) return '';
+  if (label.includes('/')) {
+    const parts = label.split('/');
+    const es = parts[0].trim();
+    const ast = parts.slice(1).join('/').trim();
+    if (es.toLowerCase() === ast.toLowerCase()) {
+      return `<span class="cond-name-es">${es}</span>`;
+    }
+    return `<span class="cond-name-es">${es}</span> <span class="cond-divider">•</span> <span class="cond-name-ast">${ast}</span>`;
+  }
+  const parenMatch = label.match(/^(.*?)\s*\((.*?)\)$/);
+  if (parenMatch) {
+    const first = parenMatch[1].trim();
+    const second = parenMatch[2].trim();
+    if (first.toLowerCase().startsWith('orbayu')) {
+      return `<span class="cond-name-es">${second}</span> <span class="cond-divider">•</span> <span class="cond-name-ast">${first}</span>`;
+    }
+    return `<span class="cond-name-es">${first}</span> <span class="cond-subtext">(${second})</span>`;
+  }
+  return `<span class="cond-name-es">${label}</span>`;
 }
 
 /**
@@ -677,7 +723,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
           </div>
         </div>
         <div class="temp-info-block">
-          <div class="condition-name" title="${weatherInfo.isSolarCalibrated ? (weatherInfo.isResol ? '☀️ Calibración Solar Inteligente: Resol / Sol tamizado activo atravesando las nubes con radiación solar directa en superficie' : '☀️ Calibración Solar Inteligente: Sensores físicos en tierra confirman sol y claros') : ''}">${weatherInfo.label}</div>
+          <div class="condition-name" title="${weatherInfo.isSolarCalibrated ? (weatherInfo.isResol ? '☀️ Calibración Solar Inteligente: Resol / Sol tamizado activo atravesando las nubes con radiación solar directa en superficie' : '☀️ Calibración Solar Inteligente: Sensores físicos en tierra confirman sol y claros') : ''}">${formatConditionTitle(weatherInfo.label)}</div>
           <div class="temp-feels">Sensación térmica: <strong>${Math.round(current.apparent_temperature)}°C</strong></div>
           <div class="hero-actions-toolbar">
             <button class="btn-hero-camera btn-open-share-card" id="btn-hero-share" title="Generar estampa visual de este concejo para WhatsApp o Instagram" aria-label="Compartir estampa">📸</button>

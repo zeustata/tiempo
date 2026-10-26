@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-2-solar-dividers';
+const CACHE_NAME = 'meteoasturlode-v3023-3-hero-compact-astur';
 const STATIC_ASSETS = [
   './',
   './index.html',
