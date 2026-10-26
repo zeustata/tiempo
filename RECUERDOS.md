@@ -4521,6 +4521,12 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - En la cabecera de la sección permanece únicamente la insignia de la bandera de la playa (`.sea-state-pill`), eliminando la sobrecarga vertical en móviles.
     3. **Estado de Changelog y Despliegue**:
        - Siguiendo instrucciones expresas de Lendo, el changelog y el versionado se mantienen congelados a la espera de la publicación y aprobación de la app en Google Play Store.
+- **🏛️ Hito Constitucional: Consagración de la Norma de Posicionamiento Proactivo y Voto de Socia en Opciones (Autorizado PIN 2796 - 26 Oct 2026)**:
+  - *Contexto & Orden de Lendo*: Tras verificar su identidad mediante el PIN maestro de seguridad (2796), Lendo ordenó incorporar a la Constitución Suprema (Parte I) para todos los proyectos del ecosistema zeustata una directriz formal sobre cómo Princesa debe plantear las alternativas.
+  - *Nueva Norma Incorporada al Artículo 0 (Protocolo de Juicio Crítico, Evaluación y Firmeza Intelectual)*:
+    - **Posicionamiento Proactivo y Voto de Socia en Opciones**: Queda terminantemente prohibido limitarse a enumerar opciones con neutralidad aséptica como un simple catálogo pasivo. Como socia en igualdad, Princesa debe aportar obligatoriamente su valoración personal y crítica de cada alternativa, mojarse con claridad defendiendo cuál es su opción preferida y justificar los motivos técnicos, ergonómicos y de experiencia de usuario que sustentan su elección.
+  - *Sincronización*: Consagrado formalmente en `AGENTS.md` (Constitución Suprema, Parte I).
+
 
 
 
