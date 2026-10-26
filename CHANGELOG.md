@@ -35,12 +35,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
     - *Potencia Solar en Superficie (W/m²):* Medición en vatios por metro cuadrado de la radiación global y directa que llega al suelo en cada concejo.
     - *Ventana Horaria de Cénit Solar:* Rango horario del pico solar diario calculado a partir de la curva horaria de UV.
     - *Exposición Segura & Vitamina D:* Recomendaciones dinámicas de fotoprotección y tiempo estimado antes de eritema.
-  - **Barra de Pastillas con Salto Rápido & Balizas Respirantes:**
-    - Barra horizontal superior con 7 pastillas para salto instantáneo con un toque y puntos de sincronización inferior.
+  - **Barra de Pastillas con Salto Rápido, Balizas & Jerarquía Visual Subordinada:**
+    - Barra horizontal con 7 pastillas para salto instantáneo con un toque y puntos de sincronización inferior.
+    - *Jerarquía Visual Clara (Feedback Lendo):* Rediseño ergonómico de las pastillas (`.sensor-nav-pill`) con silueta de tecla compacta (`border-radius: 8px`), padding estilizado (`4px 10px`) y escala tipográfica reducida (`0.73rem`, peso 600) en tono translúcido discreto. Esto evita cualquier competición visual con el menú principal de navegación superior (`.module-chips-scroll`), consolidando al menú superior como mando soberano del sistema y a las pastillas como sub-herramienta técnica de la tarjeta.
     - Halo pulsante suave (2.4s - 2.8s) en pastilla y marco de tarjeta ante condiciones anómalas o de aviso.
 - **Anti-Caché Obligatorio (Ley 4):**
-  - Service Worker actualizado a `meteoasturlode-v3023-7-rich-barometer` en `sw.js`.
-  - Revisión interna `v=3.0.23.7` en `index.html`, `js/app.js`, `css/main.css` y `css/components.css`.
+  - Service Worker actualizado a `meteoasturlode-v3023-8-nav-hierarchy` en `sw.js`.
+  - Revisión interna `v=3.0.23.8` en `index.html` y `css/components.css`.
 
 ### 💛 Tarjeta Principal Compacta & Jerarquía Bilingüe Azul y Oro Asturiano (Feedback Lendo)
 - **Motivación y Diagnóstico Operativo:**

@@ -32,8 +32,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=3.0.23.7">
-  <link rel="stylesheet" href="css/components.css?v=3.0.23.7">
+  <link rel="stylesheet" href="css/main.css?v=3.0.23.8">
+  <link rel="stylesheet" href="css/components.css?v=3.0.23.8">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -324,8 +324,8 @@
             <li><span class="tag tag-ui">En Vivo &amp; Carrusel Monotarjeta</span> <strong>Carrusel Horizontal de Sensores con Pastillas Rápidas, Balizas &amp; Dashboard Enriquecido</strong>:
               <br>• <strong>Carrusel Monotarjeta al 100% Universal (Doctrina 18):</strong> Los 7 sensores atmosféricos pasan a navegarse horizontalmente tarjeta a tarjeta con salto magnético suave (<code>scroll-snap</code>), tanto en móvil como en PC, con soporte táctil y arrastre con ratón (<em>drag-to-scroll</em>).
               <br>• <strong>Sensores Enriquecidos (Barómetro, Humedad &amp; UV):</strong> Incorporada escala cromática con cursor dinámico blanco en el barómetro, veredicto atmosférico en lenguaje claro y presión real en el suelo según la altitud del concejo. Escala segmentada de confort higrométrico, margen de condensación y niebla (Δ T rocío), efecto bochorno térmico y vapor absoluto en g/m³. Barra de espectro UV (0 a 11+) con aguja viva, potencia solar en W/m² (directa/difusa), ventana horaria del cénit solar y estimación de fotoprotección y síntesis de Vitamina D.
-              <br>• <strong>Barra Superior de Pastillas &amp; Puntos Guía:</strong> Acceso rápido por iconos (<code>💨 Barlovento</code>, <code>⏱️ Barómetro</code>, <code>💧 Humedad</code>, <code>🌧️ Lluvia</code>, <code>☀️ UV</code>, <code>🍃 Aire</code>, <code>👕 Colada</code>) y sincronización con puntos guía inferiores.
-              <br>• <strong>Balizas Respirantes de Emergencia:</strong> Halo pulsante suave (<em>breathing beacon</em>) en pastilla y marco de tarjeta ante condiciones extremas.
+              <br>• <strong>Barra Superior de Pastillas &amp; Jerarquía Visual:</strong> Acceso rápido por iconos (<code>💨 Barlovento</code>, <code>⏱️ Barómetro</code>, <code>💧 Humedad</code>, <code>🌧️ Lluvia</code>, <code>☀️ UV</code>, <code>🍃 Aire</code>, <code>👕 Colada</code>). Pastillas rediseñadas en silueta compacta subordinada (8px) para no competir con el menú principal superior y garantizar una jerarquía visual armónica.
+              <br>• <strong>Puntos Guía &amp; Balizas Respirantes:</strong> Sincronización con puntos guía inferiores y halo pulsante suave (<em>breathing beacon</em>) en pastilla y marco de tarjeta ante condiciones extremas.
             </li>
             <li><span class="tag tag-ui">En Vivo &amp; Identidad Asturiana</span> <strong>Tarjeta Principal Compacta &amp; Jerarquía Bilingüe (Azul y Oro)</strong>:
               <br>• <strong>Toponimia Oficial en Dos Tonos:</strong> Nombre en castellano destacado en blanco nítido (<code>.loc-name-es</code>) y nombre en asturianu un 16% más pequeño subordinado en el dorado noble de la Cruz de la Victoria (<code>.loc-name-ast</code>, <code>#fbbf24</code>), con filtro anti-duplicados para concejos con nombre único y localidades secundarias en gris compacto.
@@ -4594,7 +4594,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.0.23.7').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.0.23.8').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4624,7 +4624,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.23.7"></script>
+  <script type="module" src="js/app.js?v=3.0.23.8"></script>
 
 
 

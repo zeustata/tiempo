@@ -66,12 +66,13 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - *Potencia Solar en Superficie (W/m²):* Medición en vatios por metro cuadrado de la radiación global y directa que llega al suelo en cada concejo.
        - *Ventana Horaria de Cénit Solar:* Rango horario del pico solar diario calculado a partir de la curva horaria de UV.
        - *Exposición Segura & Vitamina D:* Recomendaciones dinámicas de fotoprotección y tiempo estimado antes de eritema.
-     - **Barra de Pastillas con Salto Rápido & Balizas Respirantes:**
-       - Barra horizontal superior con 7 pastillas para salto instantáneo con un toque y puntos de sincronización inferior.
+     - **Barra de Pastillas con Salto Rápido, Balizas & Jerarquía Visual Subordinada:**
+       - Barra horizontal con 7 pastillas para salto instantáneo con un toque y puntos de sincronización inferior.
+       - *Jerarquía Visual Clara (Feedback Lendo - «no quiero que cambies nada. solo que se note que los de arriba sonmas importantes», «pisale en local a ver q tal» y «subelo»):* Rediseño ergonómico de las pastillas (`.sensor-nav-pill`) con silueta de tecla compacta (`border-radius: 8px`), padding estilizado (`4px 10px` frente a los `8px 14px` de la cabecera) y tipografía subordinada (`0.73rem`, peso 600) en tono translúcido suave. De esta forma se erradica la competición visual con el menú superior de la app (`.module-chips-scroll`), consolidando con nitidez que el menú superior es el mando soberano del sistema y las pastillas son sub-herramientas de la consola de instrumentación.
        - Halo pulsante suave (2.4s - 2.8s) en pastilla y marco de tarjeta ante condiciones anómalas o de aviso.
   3. *Anti-Caché Obligatorio (Ley 4) & Registro:*
-     - Service Worker actualizado a `meteoasturlode-v3023-7-rich-barometer` en `sw.js`.
-     - Revisión interna `v=3.0.23.7` en `index.html`, `js/app.js`, `css/main.css` y `css/components.css`.
+     - Service Worker actualizado a `meteoasturlode-v3023-8-nav-hierarchy` en `sw.js`.
+     - Revisión interna `v=3.0.23.8` en `index.html` y `css/components.css`.
      - Documentado en `CHANGELOG.md` e `index.html`.
 - **Ampliación Ergonómica: Tarjeta Principal Compacta & Jerarquía Bilingüe Azul y Oro Asturiano (Feedback Lendo - «quisiera hacer un poco mas compacta la primera tarjetadel menu en vivo... que cambie segun el nombre con color del azul al amarillo como la bandera de asturias. y lo mismo el tiempo que hace. pone en castellano Despejado y luego en asturiano lo mismo. como lo ves?» y «pisale a la 1 a ver que pasa y ponlo en el changelog por si hay que revertir ésto último»):**
   1. *Diagnóstico Operativo:*

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-7-rich-barometer';
+const CACHE_NAME = 'meteoasturlode-v3023-8-nav-hierarchy';
 const STATIC_ASSETS = [
   './',
   './index.html',
