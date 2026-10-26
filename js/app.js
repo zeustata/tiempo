@@ -2070,7 +2070,7 @@ class MeteoAsturiasApp {
     }
 
     if (targetTab === 'astronomy') {
-      renderAstronomyView('panel-astronomy', 'all');
+      renderAstronomyView('panel-astronomy', 'all', this.weatherData, this.currentConcejo);
     }
 
     if (targetTab === 'tourism' && this.weatherData && this.currentConcejo) {
@@ -2821,6 +2821,16 @@ class MeteoAsturiasApp {
         } catch (e) {
           console.error('[MeteoAstur] Error renderizando Comparador:', e);
         }
+      }
+
+      // 7. Módulo Astronomía (si está activo o ya renderizado)
+      try {
+        const astroContainer = document.getElementById('panel-astronomy');
+        if (astroContainer && (activeTab === 'astronomy' || astroContainer.innerHTML.trim())) {
+          renderAstronomyView('panel-astronomy', 'all', data, concejo);
+        }
+      } catch (e) {
+        console.error('[MeteoAstur] Error actualizando Astronomía:', e);
       }
     }, 0);
   }

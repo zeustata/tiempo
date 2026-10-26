@@ -266,14 +266,131 @@ export function getMoonPhaseDetails(date = new Date()) {
   };
 }
 
+let cachedWeatherData = null;
+let cachedConcejo = null;
+
+/**
+ * Calcula los tramos exactos de Hora Dorada y Hora Azul para el día y concejo activo
+ */
+export function getGoldenAndBlueHours(weatherData, concejo) {
+  let sunriseDate = null;
+  let sunsetDate = null;
+
+  if (weatherData && weatherData.weather && weatherData.weather.daily) {
+    const daily = weatherData.weather.daily;
+    if (daily.sunrise && daily.sunrise[0]) {
+      sunriseDate = new Date(daily.sunrise[0]);
+    }
+    if (daily.sunset && daily.sunset[0]) {
+      sunsetDate = new Date(daily.sunset[0]);
+    }
+  }
+
+  // Estimación astronómica por defecto si no hay API cargada
+  if (!sunriseDate || isNaN(sunriseDate.getTime()) || !sunsetDate || isNaN(sunsetDate.getTime())) {
+    const today = new Date();
+    sunriseDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 8, 25);
+    sunsetDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 19, 15);
+  }
+
+  // Cálculos de intervalos de luz en minutos
+  // Amanecer:
+  // Hora Azul: 35 min antes del orto hasta 10 min antes del orto
+  const blueMorningStart = new Date(sunriseDate.getTime() - 35 * 60 * 1000);
+  const blueMorningEnd = new Date(sunriseDate.getTime() - 10 * 60 * 1000);
+
+  // Hora Dorada matutina: desde el orto hasta 45 min después
+  const goldenMorningStart = new Date(sunriseDate.getTime());
+  const goldenMorningEnd = new Date(sunriseDate.getTime() + 45 * 60 * 1000);
+
+  // Atardecer:
+  // Hora Dorada vespertina: 45 min antes del ocaso hasta el ocaso
+  const goldenEveningStart = new Date(sunsetDate.getTime() - 45 * 60 * 1000);
+  const goldenEveningEnd = new Date(sunsetDate.getTime());
+
+  // Hora Azul vespertina: 10 min después del ocaso hasta 35 min después
+  const blueEveningStart = new Date(sunsetDate.getTime() + 10 * 60 * 1000);
+  const blueEveningEnd = new Date(sunsetDate.getTime() + 35 * 60 * 1000);
+
+  const formatH = (d) => {
+    return d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: false });
+  };
+
+  // Calidad fotográfica del atardecer según nubosidad prevista
+  let cloudCoverSunset = null;
+  if (weatherData && weatherData.weather && weatherData.weather.hourly && weatherData.weather.hourly.time) {
+    const sunsetHour = sunsetDate.getHours();
+    const times = weatherData.weather.hourly.time;
+    for (let i = 0; i < times.length; i++) {
+      const t = new Date(times[i]);
+      if (t.getDate() === sunsetDate.getDate() && t.getHours() === sunsetHour) {
+        if (weatherData.weather.hourly.cloud_cover && weatherData.weather.hourly.cloud_cover[i] != null) {
+          cloudCoverSunset = weatherData.weather.hourly.cloud_cover[i];
+        }
+        break;
+      }
+    }
+  }
+
+  let photoQuality = {
+    badge: '🟢 Visibilidad Óptima',
+    badgeClass: 'photo-optimo',
+    desc: 'Cielos diáfanos: luz pura y horizonte nítido sobre la costa y cumbres.'
+  };
+
+  if (cloudCoverSunset !== null) {
+    if (cloudCoverSunset > 75) {
+      photoQuality = {
+        badge: '⚪ Luz Plana y Difusa',
+        badgeClass: 'photo-cubierto',
+        desc: `Cielo cubierto (${cloudCoverSunset}% de nubes): sol oculto tras el manto gris.`
+      };
+    } else if (cloudCoverSunset > 30) {
+      photoQuality = {
+        badge: '🟡 Luz Dramática',
+        badgeClass: 'photo-nubes',
+        desc: `Nubes y claros (${cloudCoverSunset}%): contrastes vivos y rayos crepusculares.`
+      };
+    } else {
+      photoQuality = {
+        badge: '🟢 Luz Óptima',
+        badgeClass: 'photo-optimo',
+        desc: `Cielos despejados (${cloudCoverSunset}%): horizonte nítido y sombras suaves.`
+      };
+    }
+  }
+
+  return {
+    concejoName: concejo ? concejo.name : 'Asturias',
+    morning: {
+      blue: `${formatH(blueMorningStart)} - ${formatH(blueMorningEnd)}`,
+      golden: `${formatH(goldenMorningStart)} - ${formatH(goldenMorningEnd)}`
+    },
+    evening: {
+      golden: `${formatH(goldenEveningStart)} - ${formatH(goldenEveningEnd)}`,
+      blue: `${formatH(blueEveningStart)} - ${formatH(blueEveningEnd)}`
+    },
+    sunriseStr: formatH(sunriseDate),
+    sunsetStr: formatH(sunsetDate),
+    photoQuality
+  };
+}
+
 /**
  * Renderiza el módulo completo de Astronomía
  */
-export function renderAstronomyView(containerId, currentFilter = 'all') {
+export function renderAstronomyView(containerId, currentFilter = 'all', weatherData = null, concejo = null) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
+  if (weatherData) cachedWeatherData = weatherData;
+  if (concejo) cachedConcejo = concejo;
+
+  const targetWeatherData = weatherData || cachedWeatherData;
+  const targetConcejo = concejo || cachedConcejo;
+
   const moon = getMoonPhaseDetails();
+  const sunData = getGoldenAndBlueHours(targetWeatherData, targetConcejo);
   const now = new Date();
 
   // Filtrar exclusivamente los eventos activos o futuros (excluir fenómenos culminados en el pasado)
@@ -327,6 +444,77 @@ export function renderAstronomyView(containerId, currentFilter = 'all') {
         </div>
       </div>
 
+      <!-- 2. MOMENTOS MÁGICOS DE LUZ: HORA DORADA & HORA AZUL (VARIANTE 1) -->
+      <div class="sun-magic-card">
+        <div class="sun-magic-header">
+          <div class="sun-magic-title-wrap">
+            <span class="sun-magic-icon">📸</span>
+            <div>
+              <h4 class="sun-magic-title">Luz Natural & Hora Mágica</h4>
+              <span class="sun-magic-subtitle">Ventanas fotográficas hoy en ${sunData.concejoName}</span>
+            </div>
+          </div>
+          <button class="btn-explain-sensor" data-explain="golden_hour" title="¿Qué son la Hora Dorada y la Hora Azul? Pulsa para aprender" aria-label="Explicación de la hora dorada y azul">💡</button>
+        </div>
+
+        <div class="sun-magic-sections">
+          <!-- Bloque Amanecer -->
+          <div class="sun-magic-group">
+            <div class="sun-magic-group-title">
+              <span>🌅 Amanecer • Orto a las ${sunData.sunriseStr}</span>
+            </div>
+            <div class="sun-magic-grid">
+              <div class="sun-pill sun-pill-blue">
+                <div class="sun-pill-header">
+                  <span class="sun-pill-name">Hora Azul</span>
+                  <span class="sun-pill-dot">🔵</span>
+                </div>
+                <span class="sun-pill-time">${sunData.morning.blue}</span>
+                <span class="sun-pill-desc">Crepúsculo frío y faros encendidos</span>
+              </div>
+              <div class="sun-pill sun-pill-golden">
+                <div class="sun-pill-header">
+                  <span class="sun-pill-name">Hora Dorada</span>
+                  <span class="sun-pill-dot">🟡</span>
+                </div>
+                <span class="sun-pill-time">${sunData.morning.golden}</span>
+                <span class="sun-pill-desc">Primeros rayos y luz rasante suave</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bloque Atardecer -->
+          <div class="sun-magic-group">
+            <div class="sun-magic-group-title">
+              <span>🌇 Atardecer • Ocaso a las ${sunData.sunsetStr}</span>
+            </div>
+            <div class="sun-magic-grid">
+              <div class="sun-pill sun-pill-golden">
+                <div class="sun-pill-header">
+                  <span class="sun-pill-name">Hora Dorada</span>
+                  <span class="sun-pill-dot">🟡</span>
+                </div>
+                <span class="sun-pill-time">${sunData.evening.golden}</span>
+                <span class="sun-pill-desc">Tonos ocres, dorados y sombras largas</span>
+              </div>
+              <div class="sun-pill sun-pill-blue">
+                <div class="sun-pill-header">
+                  <span class="sun-pill-name">Hora Azul</span>
+                  <span class="sun-pill-dot">🔵</span>
+                </div>
+                <span class="sun-pill-time">${sunData.evening.blue}</span>
+                <span class="sun-pill-desc">Azul cobalto y luces en el horizonte</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Semáforo de Calidad Fotográfica -->
+        <div class="sun-magic-visibility-footer">
+          <span class="sun-magic-status-badge ${sunData.photoQuality.badgeClass}">${sunData.photoQuality.badge}</span>
+          <span class="sun-magic-status-text">${sunData.photoQuality.desc}</span>
+        </div>
+      </div>
 
       <!-- BARRA DE SEMÁFORO Y FILTROS -->
       <div class="astronomy-filter-bar">
@@ -424,7 +612,7 @@ export function renderAstronomyView(containerId, currentFilter = 'all') {
   container.querySelectorAll('.astro-chip').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const filter = e.currentTarget.dataset.filter;
-      renderAstronomyView(containerId, filter);
+      renderAstronomyView(containerId, filter, cachedWeatherData, cachedConcejo);
     });
   });
 }

@@ -51,6 +51,35 @@ export const WEATHER_EXPLANATIONS = {
     ]
   },
 
+  golden_hour: {
+    icon: '📸',
+    title: '¿Qué son la Hora Dorada y la Hora Azul?',
+    subtitle: 'La física de la luz solar en amaneceres y atardeceres en Asturias',
+    badge: 'Ángulo Solar +6° a -8° respecto al Horizonte',
+    sections: [
+      {
+        icon: '🟡',
+        heading: '1. La Hora Dorada (Golden Hour)',
+        text: 'Ocurre cuando el Sol se sitúa entre <strong>0° (el horizonte) y +6° de elevación</strong>, tanto al amanecer como en los 45 minutos previos a la puesta de sol.<br>Al atravesar los rayos solares una capa mucho más gruesa de atmósfera, la dispersión de Rayleigh elimina las ondas azules y deja pasar únicamente tonos cálidos, ocres y anaranjados con sombras largas y suaves.'
+      },
+      {
+        icon: '🔵',
+        heading: '2. La Hora Azul (Blue Hour)',
+        text: 'Tiene lugar durante el <strong>crepúsculo civil y náutico</strong>, cuando el Sol está entre <strong>-4° y -8° bajo el horizonte</strong>.<br>El cielo adquiere un azul cobalto profundo y saturado, generando un equilibrio visual mágico entre la luz natural fría del cielo y las luces cálidas de faros, paseos y villas marineras.'
+      },
+      {
+        icon: '🚦',
+        heading: '3. El factor de la nubosidad en Asturias',
+        text: 'Para disfrutar de la Hora Dorada y Azul en su máximo esplendor, la nubosidad en el horizonte debe ser baja (&lt; 30-40%). Con nubes medias y altas, el atardecer puede teñirse de rojos y púrpuras espectaculares ("cielo arrebolado"); con cielo cubierto bajo o lluvia, la luz se vuelve plana y difusa.'
+      },
+      {
+        icon: '🌊',
+        heading: '4. Rincones Mágicos de Asturias',
+        text: 'En el litoral cantábrico (Cabo Peñas, arenales de Salinas, San Lorenzo, calas de Llanes y acantilados de Busto), la combinación del reflejo del mar con la Hora Dorada y la Hora Azul ofrece uno de los espectáculos visuales más deslumbrantes de la península.'
+      }
+    ]
+  },
+
   wind: {
     icon: '🧭',
     title: '¿Cómo interpretar el Viento y las Ráfagas?',

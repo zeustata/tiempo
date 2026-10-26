@@ -30,6 +30,21 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
   - Service Worker actualizado a `meteoasturlode-v3023-dark-navigation` en `sw.js`.
   - Versión oficial elevada a `v3.0.23 🛡️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.23'` en `app.js`, `manifest.json?v=3.0.23`, `css/main.css?v=3.0.23` y `css/components.css?v=3.0.23`.
 
+### 📸 Luz Natural, Hora Dorada & Hora Azul en Astronomía (Idea Lendo & Princesa)
+- **Motivación y Diagnóstico Operativo:**
+  - Lendo y Princesa concibieron la integración de las fases de iluminación solar natural (Hora Dorada y Hora Azul) para enriquecer el disfrute paisajístico, fotográfico y recreativo del litoral y cumbres de Asturias, resolviendo el dilema de color sin interferir con los temas climáticos de lluvia o nubes.
+- **Implementación Técnica (`js/components/astronomyCard.js`, `css/components.css`, `js/utils/weatherExplanations.js`):**
+  - **Cálculo Solar Dinámico (`getGoldenAndBlueHours`):** Intervalos de iluminación calculados en tiempo real respecto al orto y ocaso de cada concejo asturiano:
+    - *Amanecer:* Hora Azul matutina (crepúsculo frío antes del orto) y Hora Dorada matutina (primeros rayos rasantes suaves).
+    - *Atardecer:* Hora Dorada vespertina (tonos ocres, dorados y sombras largas) y Hora Azul vespertina (azul cobalto crepuscular y faros costeros).
+  - **Cuadrícula 2x2 en Liquid Glass:** Presentación simétrica de 4 micro-pastillas con halos ámbar (`#fbbf24`) y azul cobalto (`#38bdf8`), protegida contra desbordes en cualquier resolución móvil (Ley 11).
+  - **Semáforo Fotográfico Inteligente:** Cruce dinámico con la nubosidad prevista (`cloud_cover`) a la hora del ocaso para catalogar en vivo la visibilidad: *🟢 Visibilidad Óptima* (despejado), *🟡 Luz Dramática* (nubes y claros) o *⚪ Luz Plana y Difusa* (cubierto).
+  - **Suite Didáctica ("Explícame"):** Nueva guía pedagógica `golden_hour` accesible mediante botón `💡` en la cabecera, detallando la física de la dispersión de Rayleigh, ángulos cenitales (+6° a -8°) y rincones de Asturias.
+
+### 🏖️ Síntesis Visual y Ergonomía en Playas & Mareógrafo (Feedback Lendo)
+- **Reubicación de Marea en Nivel de Agua:** La pastilla de tendencia (`Subiendo (Llenante)` / `Bajando (Vaciante)`) se integra dentro de la primera tarjeta de métricas, situada justo encima de la altura del agua, liberando la cabecera superior donde ahora solo permanece la bandera de la playa.
+- **Limpieza de Guía de Playas y Calas:** Suprimida la barra redundante de herramientas (`.beach-controls-toolbar`), eliminando el botón duplicado de Webcams y el selector de filtrado por categorías, dando acceso directo y limpio al catálogo de arenales en acordeón.
+
 ## [3.0.22] - 2026-10-25
 
 ### 🛡️ Refinamiento Android: Iconos Adaptativos en Dock & Navegación Fija Standalone (Tester Prieto & Lendo)

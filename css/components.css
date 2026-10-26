@@ -8630,6 +8630,220 @@
   white-space: nowrap;
 }
 
+/* --- ASTRONOMÍA: LUZ NATURAL, HORA DORADA & HORA AZUL (VARIANTE 1) --- */
+.sun-magic-card {
+  background: rgba(15, 23, 42, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius-lg, 20px);
+  padding: 18px 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.sun-magic-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.sun-magic-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sun-magic-icon {
+  font-size: 1.8rem;
+  background: rgba(251, 191, 36, 0.12);
+  padding: 8px;
+  border-radius: 14px;
+  border: 1px solid rgba(251, 191, 36, 0.25);
+  line-height: 1;
+}
+
+.sun-magic-title {
+  font-size: 1.15rem;
+  margin: 0;
+  color: #ffffff;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.sun-magic-subtitle {
+  font-size: 0.8rem;
+  color: #cbd5e1;
+  margin-top: 2px;
+  display: block;
+}
+
+.sun-magic-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+.sun-magic-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.sun-magic-group-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sun-magic-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sun-pill {
+  background: rgba(30, 41, 59, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-sizing: border-box;
+  min-width: 0;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.sun-pill:hover {
+  transform: translateY(-2px);
+}
+
+.sun-pill-golden {
+  border-left: 3px solid #fbbf24;
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.08) 0%, rgba(15, 23, 42, 0.4) 100%);
+}
+
+.sun-pill-blue {
+  border-left: 3px solid #38bdf8;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.08) 0%, rgba(15, 23, 42, 0.4) 100%);
+}
+
+.sun-pill-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.sun-pill-name {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.sun-pill-dot {
+  font-size: 0.72rem;
+  line-height: 1;
+}
+
+.sun-pill-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.98rem;
+  font-weight: 800;
+  letter-spacing: -0.2px;
+  white-space: nowrap;
+}
+
+.sun-pill-golden .sun-pill-time {
+  color: #fbbf24;
+}
+
+.sun-pill-blue .sun-pill-time {
+  color: #38bdf8;
+}
+
+.sun-pill-desc {
+  font-size: 0.7rem;
+  color: #cbd5e1;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sun-magic-visibility-footer {
+  margin-top: 14px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-sizing: border-box;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.sun-magic-status-badge {
+  font-size: 0.74rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.photo-optimo {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.photo-nubes {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.photo-cubierto {
+  background: rgba(148, 163, 184, 0.2);
+  color: #cbd5e1;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+}
+
+.sun-magic-status-text {
+  font-size: 0.78rem;
+  color: #e2e8f0;
+  flex: 1 1 180px;
+}
+
+@media (max-width: 400px) {
+  .sun-magic-card {
+    padding: 14px 12px;
+  }
+  .sun-pill {
+    padding: 8px 10px;
+  }
+  .sun-pill-time {
+    font-size: 0.88rem;
+  }
+}
+
 /* FILTROS Y SEMÁFORO */
 .astronomy-filter-bar {
   display: flex;

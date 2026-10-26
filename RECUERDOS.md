@@ -4539,6 +4539,20 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - Retiradas más de 140 líneas de reglas CSS obsoletas vinculadas a la barra de control de playas.
     4. **Estado de Changelog y Despliegue**:
        - Conforme a las directrices de Lendo, el changelog y el versionado se mantienen congelados a la espera de la publicación de la app en Google Play Store.
+- **📸 Hito Técnico Cumplido: Módulo de Luz Natural, Hora Dorada & Hora Azul en Astronomía (Idea Lendo & Princesa - 26 Oct 2026)**:
+  - *Contexto & Detección de Lendo*: Lendo y Princesa concibieron la integración de las horas dorada y azul. Se descartó aplicarlo como tinte a las tarjetas horarias para no colisionar con los temas dinámicos de lluvia/nublado ni contradecir la física de días cubiertos, eligiéndose como ubicación noble el módulo de Astronomía & Cosmos.
+  - *Arquitectura Implementada en Local (`js/components/astronomyCard.js`, `css/components.css`, `js/app.js`, `js/utils/weatherExplanations.js`)*:
+    1. **Cálculo Solar Dinámico (`getGoldenAndBlueHours`)**:
+       - Determinación matemática de los intervalos de iluminación para amanecer (Hora Azul previa al orto y Hora Dorada posterior) y atardecer (Hora Dorada previa al ocaso y Hora Azul crepuscular) según los datos de orto y ocaso de cada concejo asturiano.
+    2. **Cuadrícula 2x2 en Liquid Glass (`.sun-magic-card`)**:
+       - Presentación simétrica de 4 micro-pastillas con halos ámbar y azul cobalto, protegida contra desbordes en móviles (Ley 11).
+    3. **Semáforo Fotográfico Inteligente**:
+       - Cruce dinámico con la nubosidad prevista (`cloud_cover`) a la hora del ocaso para evaluar la visibilidad: *🟢 Visibilidad Óptima*, *🟡 Luz Dramática* o *⚪ Luz Plana y Difusa*.
+    4. **Suite Didáctica ("Explícame")**:
+       - Entrada pedagógica `golden_hour` con botón `💡` en la cabecera, detallando dispersión de Rayleigh, ángulos cenitales (+6° a -8°) y rincones de Asturias.
+    5. **Registro en Changelog**:
+       - Siguiendo orden estricta de Lendo, se incorpora la documentación en `CHANGELOG.md` e `index.html` bajo la versión `[3.0.23]` sin incrementar el número de versión.
+
 
 
 
