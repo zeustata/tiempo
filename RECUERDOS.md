@@ -4510,6 +4510,17 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - Eliminación de la redundancia textual (`Nivel 1 (Débil)`).
     4. **Anti-Caché & Despliegue Dual `v1.0.92-mountainorder`**:
        - Sincronización en `sw.js`, `index.html`, `components.css` y `mountainCard.js`.
+- **🏖️ Hito Técnico Cumplido: Reubicación de Insignia de Tendencia Mareal en Nivel de Agua Actual (Feedback Lendo - 26 Oct 2026)**:
+  - *Contexto & Detección de Lendo*: Lendo propuso reubicar la pastilla de marea (`Subiendo (Llenante)` / `Bajando (Vaciante)`) dentro del módulo del mareógrafo, ubicándola justo encima del `Nivel de Agua Actual` para descongestionar la cabecera superior de la tarjeta de playas y conectar la tendencia directamente con la cifra en metros.
+  - *Solución Definitiva en Local (`js/components/marineCard.js`, `css/components.css`)*:
+    1. **Reubicación Ergonómica en `tide-metric-pill`**:
+       - Extracción de `.mareografo-live-badge` de `.marine-header-badges`.
+       - Integración dentro de la primera tarjeta de métricas, situada inmediatamente antes de `.t-label` (`Nivel de Agua Actual`) y del valor numérico (`${tideStatus.currentWaterHeight} m`).
+    2. **Ajuste Fino de Estilos (`css/components.css`)**:
+       - Ajuste de `.mareografo-live-badge` con `align-self: flex-start; padding: 4px 10px; font-size: 0.78rem; border-radius: 10px; margin-bottom: 2px;` para integrarse con elegancia sin robar protagonismo al número ni desbordar la pastilla.
+       - En la cabecera de la sección permanece únicamente la insignia de la bandera de la playa (`.sea-state-pill`), eliminando la sobrecarga vertical en móviles.
+    3. **Estado de Changelog y Despliegue**:
+       - Siguiendo instrucciones expresas de Lendo, el changelog y el versionado se mantienen congelados a la espera de la publicación y aprobación de la app en Google Play Store.
 
 
 

@@ -1218,9 +1218,6 @@ export function renderMarineCard(data, concejo) {
           </span>
         </div>
         <div class="marine-header-badges">
-          <div class="mareografo-live-badge" style="background: ${tideStatus.directionColor}20; color: ${tideStatus.directionColor}; border: 1px solid ${tideStatus.directionColor}60;">
-            ${tideStatus.directionIcon} <strong>${tideStatus.directionName}</strong>
-          </div>
           <div class="sea-state-pill" style="background: ${flagColor}22; color: ${flagColor}; border: 1px solid ${flagColor};">
             ${flagBadge}
           </div>
@@ -1232,6 +1229,9 @@ export function renderMarineCard(data, concejo) {
         <!-- Métricas clave en vivo -->
         <div class="mareografo-metrics-row">
           <div class="tide-metric-pill">
+            <div class="mareografo-live-badge" style="background: ${tideStatus.directionColor}20; color: ${tideStatus.directionColor}; border: 1px solid ${tideStatus.directionColor}60;">
+              ${tideStatus.directionIcon} <strong>${tideStatus.directionName}</strong>
+            </div>
             <span class="t-label">Nivel de Agua Actual</span>
             <span class="t-value" style="color: ${tideStatus.directionColor};">${tideStatus.currentWaterHeight} <span class="t-unit">m</span></span>
           </div>
