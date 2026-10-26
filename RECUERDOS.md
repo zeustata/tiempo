@@ -62,14 +62,14 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
      - Incorporada la cabecera `.astronomy-section-header` con icono cósmico (`🌌`), título en blanco puro y subtítulo explicativo.
      - Transformadas las fichas en componentes interactivos `<details class="astro-accordion-card">` con botón de flecha circular animado (`▾` a 180°), reduciendo la altura plegada de 220px a solo 75px (~70% de ahorro en scroll móvil).
      - Adoptada la Opción A (voto unánime Lendo y Princesa): el primer evento astronómico arranca desplegado (`open`) para ofrecer información inmediata sin interacción previa, mientras que el resto permanecen plegados, con autocierre exclusivo en `js/app.js` al abrir cualquier otro acontecimiento.
-- **Ampliación Cromática: Contraste Sutil Día / Noche en Pronóstico Horario (Opción C - Feedback Lendo & Princesa):**
+- **Ampliación Cromática & Divisores Solares: Contraste Día / Noche, Crepúsculo y Balizas de Ocaso/Amanecer (Idea Lendo & Princesa):**
   1. *Diagnóstico Operativo:*
-     - Lendo y Princesa identificaron el valor ergonómico de contrastar visualmente el día y la noche en el carrusel de 72 horas para que el usuario aprecie el ciclo solar de un vistazo, evitando colores amarillentos o dorados que choquen con los temas climáticos de lluvia o gris pizarra.
+     - Lendo y Princesa identificaron el valor ergonómico de contrastar visualmente el día y la noche en el carrusel de 72 horas para que el usuario aprecie el ciclo solar de un vistazo. Tras una primera prueba en vivo, Lendo solicitó suavizar la oscuridad general, crear una transición para la primera y última hora de oscuridad (crepúsculo) e incorporar divisores dedicados de Ocaso y Amanecer con sus horas exactas.
   2. *Implementación Técnica (`forecastView.js`, `components.css`, `app.js`, `sw.js`):*
-     - Inyección dinámica de clases `.is-day` y `.is-night` en `.hourly-card` cruzando en vivo con `hourly.is_day[i]`.
-     - Gradiente nocturno profundo en Liquid Glass (`linear-gradient(180deg, rgba(12, 19, 34, 0.82) 0%, rgba(6, 11, 20, 0.90) 100%)`) con halo perimetral sutil azul noche (`rgba(56, 189, 248, 0.16)`) y hora en tono atenuado `#94a3b8`.
-     - Preservación diurna luminosa (`.hourly-card.is-day`) con cristal estándar y reflejo blanco superior.
-     - Anti-caché garantizado con elevación interna a `v3.0.23.1` y service worker `meteoasturlode-v3023-1-hourly-contrast` con auto-prompt ajustado a 800ms según la Ley 13.
+     - Balizas verticales esbeltas (Opción 1 elegida por Lendo y Princesa) `.hourly-sun-divider` con ancho de 36px (idénticas en silueta al divisor de días `📅`) e integradas en el punto exacto de la transición solar: `🌇 Ocaso • HH:MM` y `🌅 Amanecer • HH:MM`.
+     - Inyección dinámica de clases `.is-day`, `.is-night` y la nueva clase crepuscular `.is-twilight` (`.twilight-dusk` con halo cálido y `.twilight-dawn` con halo matutino al 40% de opacidad).
+     - Noche general suavizada al 55-60% traslúcido, eliminando la sensación de bloque oscuro rígido.
+     - Anti-caché garantizado con elevación interna a `v3.0.23.2` y service worker `meteoasturlode-v3023-2-solar-dividers`.
 
 ## 🛡️ Actualización v3.0.22: Refinamiento Android (Iconos Adaptativos en Dock & Navegación Fija Standalone) — 2026-10-25
 - **Diagnóstico y Usabilidad (Feedback Tester Prieto & Lendo - «tenemos el tester prieto, el perfeccionista que quiere que arreglemos dos detalles... primero el icono de la app... el icono que sale en la pantalla de la app para abrir la app no esta completo... segundo detalle tiene que ver con los botones de navegacion...», «no se ve la forma entera del escudo triene que ser algo mas pequeño el escudo para que salga entero. sigue saliendo la barra de arriba y los botones de navegacion siguen sin ser transparentes y negros» y «pisale»):**

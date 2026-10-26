@@ -149,8 +149,23 @@ export function renderHourlyForecastBlock(data, units = 'metric', iconTheme = 'a
   const liveSw = cur?.shortwave_radiation != null ? cur.shortwave_radiation : null;
   const unitLabel = units === 'knots' ? 'kt' : 'km/h';
 
+  const daily = data.weather ? data.weather.daily : null;
+  const apiOffset = (data.weather && data.weather.utc_offset_seconds != null) ? data.weather.utc_offset_seconds : 7200;
+
+  // Mapa de eventos solares por fecha 'YYYY-MM-DD'
+  const sunEventsByDay = {};
+  if (daily && daily.time) {
+    for (let d = 0; d < daily.time.length; d++) {
+      const dayKey = daily.time[d];
+      const sunriseStr = daily.sunrise && daily.sunrise[d] ? formatCivilSunTime(daily.sunrise[d], apiOffset) : null;
+      const sunsetStr = daily.sunset && daily.sunset[d] ? formatCivilSunTime(daily.sunset[d], apiOffset) : null;
+      sunEventsByDay[dayKey] = { sunriseStr, sunsetStr };
+    }
+  }
+
   let hourlyCards = '';
   let lastDayDateStr = null;
+  let prevIsDay = (startIndex > 0 && hourly.is_day && hourly.is_day[startIndex - 1] != null) ? hourly.is_day[startIndex - 1] : null;
 
   for (let i = startIndex; i < startIndex + 72 && i < hourly.time.length; i++) {
     const timeDate = new Date(hourly.time[i]);
@@ -187,6 +202,55 @@ export function renderHourlyForecastBlock(data, units = 'metric', iconTheme = 'a
 
     const hourLabel = timeDate.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
     const isDay = (hourly.is_day && hourly.is_day[i] != null) ? hourly.is_day[i] : (timeDate.getHours() >= 8 && timeDate.getHours() < 21 ? 1 : 0);
+
+    // Detección de transición solar entre horas (Ocaso o Amanecer)
+    if (prevIsDay !== null && prevIsDay !== isDay) {
+      const isoDateKey = (hourly.time && hourly.time[i]) ? hourly.time[i].substring(0, 10) : '';
+      const sunEvents = sunEventsByDay[isoDateKey] || {};
+
+      if (prevIsDay === 1 && isDay === 0) {
+        // Puesta de Sol (Ocaso)
+        const sunsetText = sunEvents.sunsetStr && sunEvents.sunsetStr !== '--:--' ? `Ocaso • ${sunEvents.sunsetStr}` : 'Ocaso';
+        hourlyCards += `
+          <div class="hourly-sun-divider sunset">
+            <div class="sun-divider-badge sunset" title="Puesta de sol prevista a las ${sunEvents.sunsetStr || ''}">
+              <span class="sun-divider-icon">🌇</span>
+              <span class="sun-divider-text">${sunsetText}</span>
+            </div>
+          </div>
+        `;
+      } else if (prevIsDay === 0 && isDay === 1) {
+        // Salida de Sol (Amanecer)
+        const sunriseText = sunEvents.sunriseStr && sunEvents.sunriseStr !== '--:--' ? `Amanecer • ${sunEvents.sunriseStr}` : 'Amanecer';
+        hourlyCards += `
+          <div class="hourly-sun-divider sunrise">
+            <div class="sun-divider-badge sunrise" title="Salida de sol prevista a las ${sunEvents.sunriseStr || ''}">
+              <span class="sun-divider-icon">🌅</span>
+              <span class="sun-divider-text">${sunriseText}</span>
+            </div>
+          </div>
+        `;
+      }
+    }
+    prevIsDay = isDay;
+
+    // Detección de horas crepusculares (primera y última hora de oscuridad)
+    const prevDayVal = (i > 0 && hourly.is_day && hourly.is_day[i - 1] != null) ? hourly.is_day[i - 1] : isDay;
+    const nextDayVal = (i + 1 < hourly.time.length && hourly.is_day && hourly.is_day[i + 1] != null) ? hourly.is_day[i + 1] : isDay;
+    const isFirstNightHour = (!isDay && prevDayVal === 1);
+    const isLastNightHour = (!isDay && nextDayVal === 1);
+
+    let dayNightClass = 'is-day';
+    if (!isDay) {
+      if (isFirstNightHour) {
+        dayNightClass = 'is-night is-twilight twilight-dusk';
+      } else if (isLastNightHour) {
+        dayNightClass = 'is-night is-twilight twilight-dawn';
+      } else {
+        dayNightClass = 'is-night';
+      }
+    }
+
     const pop = hourly.precipitation_probability ? (hourly.precipitation_probability[i] || 0) : 0;
     const precipMm = hourly.precipitation ? (hourly.precipitation[i] || 0) : 0;
     const code = hourly.weather_code[i];
@@ -207,7 +271,7 @@ export function renderHourlyForecastBlock(data, units = 'metric', iconTheme = 'a
     const windDir = getWindDirection(windDeg);
 
     hourlyCards += `
-      <div class="hourly-card ${isDay ? 'is-day' : 'is-night'}">
+      <div class="hourly-card ${dayNightClass}">
         <span class="h-time">${hourLabel}</span>
         <span class="h-icon" title="${weather.label}${precipMm >= 0.1 ? ` (${precipMm.toFixed(1)} mm)` : ''}">${renderWeatherIconHtml(weather, 28, iconTheme)}</span>
         <span class="h-temp">${temp}°C</span>

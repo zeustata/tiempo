@@ -33,7 +33,7 @@
 
   <!-- Estilos de la Aplicación con Cache Busting -->
   <link rel="stylesheet" href="css/main.css?v=3.0.23">
-  <link rel="stylesheet" href="css/components.css?v=3.0.23.1">
+  <link rel="stylesheet" href="css/components.css?v=3.0.23.2">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -335,8 +335,9 @@
               <br>• <strong>Reubicación de Marea en Vivo:</strong> Distintivo de sentido de marea integrado dentro de la tarjeta de Nivel de Agua Actual, dejando la cabecera despejada.
               <br>• <strong>Guía Limpia de Playas:</strong> Suprimida la barra de herramientas redundante de Webcams y filtros desplegables, dando acceso directo al catálogo ordenado de arenales.
             </li>
-            <li><span class="tag tag-ui">Pronóstico Horario</span> <strong>Contraste Sutil Día / Noche (Opción C)</strong>:
-              <br>• <strong>Diferenciación Visual en 72 Horas:</strong> Identificación inmediata de los ciclos de luz y oscuridad a lo largo del carrusel sin alterar los colores del clima: cristal nocturno más profundo y opaco (<code>.is-night</code>) con sutil halo azul noche, y cristal diurno luminoso (<code>.is-day</code>).
+            <li><span class="tag tag-ui">Pronóstico Horario</span> <strong>Ritmo Solar, Crepúsculo &amp; Divisores de Ocaso y Amanecer</strong>:
+              <br>• <strong>Balizas de Ocaso y Amanecer:</strong> Separadores verticales esbeltos intercalados en el punto exacto de la puesta (<code>🌇 Ocaso • HH:MM</code>) y salida (<code>🌅 Amanecer • HH:MM</code>) del sol.
+              <br>• <strong>Transición Crepuscular y Noche Suavizada:</strong> Cristal nocturno ligero al 60% y horas de transición crepuscular (<code>.is-twilight</code>) con sutiles halos ámbar al atardecer y celeste al amanecer, logrando un degradado orgánico de 72 horas.
             </li>
           </ul>
         </div>
@@ -4582,7 +4583,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.0.23.1').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.0.23.2').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4612,7 +4613,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.23.1"></script>
+  <script type="module" src="js/app.js?v=3.0.23.2"></script>
 
 
 

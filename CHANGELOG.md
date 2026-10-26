@@ -53,13 +53,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Reubicación de Marea en Nivel de Agua:** La pastilla de tendencia (`Subiendo (Llenante)` / `Bajando (Vaciante)`) se integra dentro de la primera tarjeta de métricas, situada justo encima de la altura del agua, liberando la cabecera superior donde ahora solo permanece la bandera de la playa.
 - **Limpieza de Guía de Playas y Calas:** Suprimida la barra redundante de herramientas (`.beach-controls-toolbar`), eliminando el botón duplicado de Webcams y el selector de filtrado por categorías, dando acceso directo y limpio al catálogo de arenales en acordeón.
 
-### ⏱️ Contraste Sutil Día / Noche en Pronóstico Horario (Opción C - Idea Lendo & Princesa)
+### ⏱️ Contraste Día/Noche, Crepúsculo & Divisores Solares en Horario (Idea Lendo & Princesa)
 - **Motivación y Diagnóstico Operativo:**
-  - Lendo y Princesa concibieron una diferenciación visual sutil entre horas diurnas y nocturnas en el carrusel de 72 horas para facilitar la lectura del paso del tiempo y los ciclos de orto y ocaso, sin sobrecargar cromáticamente las tarjetas ni provocar choques con los temas dinámicos de lluvia, nieve o nublado.
+  - Lendo y Princesa concibieron una diferenciación visual sutil entre horas diurnas y nocturnas en el carrusel de 72 horas para facilitar la lectura del paso del tiempo y los ciclos de orto y ocaso, integrando transiciones crepusculares suaves y balizas solares que marquen el punto exacto de la puesta y salida del sol.
 - **Implementación Técnica (`js/components/forecastView.js`, `css/components.css`):**
-  - **Inyección Dinámica de Clases (`is-day` / `is-night`):** Cruzado en tiempo real con el parámetro solar `hourly.is_day[i]` de Open-Meteo para aplicar la clase correspondiente a cada una de las 72 tarjetas horarias.
-  - **Gradiente Nocturno Profundo en Liquid Glass:** Tarjetas nocturnas (`.hourly-card.is-night`) vestidas con un cristal traslúcido un 10% más oscuro (`rgba(12, 19, 34, 0.82)` a `rgba(6, 11, 20, 0.90)`), halo perimetral sutil azul noche (`rgba(56, 189, 248, 0.16)`) y etiquetas horarias atenuadas (`#94a3b8`).
-  - **Preservación Diurna Luminosa:** Tarjetas diurnas (`.hourly-card.is-day`) que conservan el cristal elevado estándar con reflejo blanco superior, creando una onda rítmica orgánica y armónica a lo largo de las 72 horas.
+  - **Pastillas Divisorias de Ocaso y Amanecer (Opción 1):** Inserción de balizas verticales esbeltas (36px, idénticas en formato al divisor de días `📅`) en el instante exacto del orto y el ocaso:
+    - *`🌇 Ocaso • HH:MM`* con degradado cálido crepuscular ámbar/dorado.
+    - *`🌅 Amanecer • HH:MM`* con degradado cobalto/dorado matutino.
+  - **Transición Crepuscular Inteligente (`.is-twilight`):**
+    - *Primera hora de oscuridad (`.twilight-dusk`):* Cristal suavizado al 40% con sutil resplandor ocre cálido (`#fde68a`).
+    - *Última hora de oscuridad (`.twilight-dawn`):* Cristal suavizado al 40% con sutil resplandor celeste matutino (`#bae6fd`).
+  - **Noche Suavizada y Transparente:** Tarjetas nocturnas intermedias (`.hourly-card.is-night`) rebajadas al 55-60% de opacidad, logrando una onda rítmica natural sin bloques oscuros densos.
+  - **Preservación Diurna Luminosa:** Tarjetas diurnas (`.hourly-card.is-day`) que conservan el cristal elevado estándar con reflejo blanco superior.
 
 ## [3.0.22] - 2026-10-25
 
