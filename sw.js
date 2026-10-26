@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-3-hero-compact-astur';
+const CACHE_NAME = 'meteoasturlode-v3023-5-sensors-carousel-monocard';
 const STATIC_ASSETS = [
   './',
   './index.html',

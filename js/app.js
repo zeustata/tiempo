@@ -1,7 +1,7 @@
 import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=2.0.0';
 import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.5';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=2.0.0';
-import { renderCurrentWeather } from './components/currentCard.js?v=3.0.23.3';
+import { renderCurrentWeather } from './components/currentCard.js?v=3.0.23.5';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=2.2.76';
 import { renderSurfCard } from './components/surfCard.js?v=3.0.13';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.11';
@@ -2246,6 +2246,7 @@ class MeteoAsturiasApp {
     const isInteractiveZone = (target) => {
       if (!target) return false;
       return target.closest(
+        '.sensors-carousel-section, .sensors-nav-toolbar, .sensor-nav-pill, .sensors-carousel, .sensor-card, .sensors-dots-indicator, .sensor-dot, ' +
         '.hourly-scroll-container, .live-hourly-block, .hourly-card, .hourly-day-divider, ' +
         '.chart-scroll-viewport, #chart-canvas-wrapper, #meteo-chart-canvas, ' +
         '.chart-smart-digest, .digest-chip, ' +
@@ -2707,6 +2708,7 @@ class MeteoAsturiasApp {
       const liveContainer = document.getElementById('panel-live');
       if (liveContainer) {
         liveContainer.innerHTML = renderCurrentWeather(this.weatherData, this.currentConcejo, this.prefs.units, effectiveTheme);
+        this.initSensorsCarousel();
       }
       // Verificación de Alertas Rojas de Emergencia (v2.2.34)
       this.checkEmergencyRedAlerts(this.weatherData, this.currentConcejo);
@@ -3149,6 +3151,111 @@ class MeteoAsturiasApp {
     }
 
     animate();
+  }
+
+  /**
+   * Controlador interactivo para el Carrusel Monotarjeta de Sensores (Ley 18)
+   * Sincroniza las píldoras de acceso rápido, balizas de emergencia y paginador de puntos
+   */
+  initSensorsCarousel() {
+    const carousel = document.getElementById('sensors-carousel');
+    const toolbar = document.getElementById('sensors-nav-toolbar');
+    const dotsContainer = document.getElementById('sensors-dots-indicator');
+    if (!carousel) return;
+
+    const pills = toolbar ? toolbar.querySelectorAll('.sensor-nav-pill') : [];
+    const dots = dotsContainer ? dotsContainer.querySelectorAll('.sensor-dot') : [];
+    const cards = carousel.querySelectorAll('.sensor-card');
+
+    if (!cards.length) return;
+
+    const updateActiveIndicator = (idx) => {
+      pills.forEach((p, i) => {
+        p.classList.toggle('active', i === idx);
+        if (i === idx && toolbar) {
+          p.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      });
+      dots.forEach((d, i) => {
+        d.classList.toggle('active', i === idx);
+      });
+    };
+
+    const scrollToSensor = (index) => {
+      const idx = parseInt(index, 10);
+      if (cards[idx]) {
+        const targetLeft = cards[idx].offsetLeft - carousel.offsetLeft;
+        carousel.scrollTo({ left: targetLeft, behavior: 'smooth' });
+        updateActiveIndicator(idx);
+      }
+    };
+
+    pills.forEach(pill => {
+      pill.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = pill.getAttribute('data-sensor-target');
+        scrollToSensor(target);
+      });
+    });
+
+    dots.forEach(dot => {
+      dot.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = dot.getAttribute('data-sensor-target');
+        scrollToSensor(target);
+      });
+    });
+
+    let scrollTimeout = null;
+    carousel.addEventListener('scroll', () => {
+      if (scrollTimeout) cancelAnimationFrame(scrollTimeout);
+      scrollTimeout = requestAnimationFrame(() => {
+        const scrollLeft = carousel.scrollLeft;
+        const cardWidth = cards[0].offsetWidth || carousel.offsetWidth;
+        if (cardWidth > 0) {
+          const activeIdx = Math.min(cards.length - 1, Math.max(0, Math.round(scrollLeft / cardWidth)));
+          updateActiveIndicator(activeIdx);
+        }
+      });
+    }, { passive: true });
+
+    // Soporte de arrastre suave con ratón en PC (Desktop drag-to-scroll)
+    let isDragging = false;
+    let startX = 0;
+    let scrollStart = 0;
+    let hasDragged = false;
+
+    carousel.addEventListener('mousedown', (e) => {
+      if (e.button !== 0) return;
+      if (e.target.closest('button, a, input, select, .btn-explain-sensor')) return;
+      isDragging = true;
+      hasDragged = false;
+      startX = e.pageX;
+      scrollStart = carousel.scrollLeft;
+      carousel.style.scrollBehavior = 'auto';
+      carousel.style.scrollSnapType = 'none';
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const dist = e.pageX - startX;
+      if (Math.abs(dist) > 5) hasDragged = true;
+      carousel.scrollLeft = scrollStart - dist;
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (!isDragging) return;
+      isDragging = false;
+      carousel.style.scrollBehavior = 'smooth';
+      carousel.style.scrollSnapType = 'x mandatory';
+      if (hasDragged) {
+        const cardWidth = cards[0].offsetWidth || carousel.offsetWidth;
+        if (cardWidth > 0) {
+          const targetIdx = Math.min(cards.length - 1, Math.max(0, Math.round(carousel.scrollLeft / cardWidth)));
+          scrollToSensor(targetIdx);
+        }
+      }
+    });
   }
 }
 

@@ -697,6 +697,13 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   // Pronóstico Horario Detallado (72 Horas / 3 Días) en Vivo
   const hourlyForecastMarkup = renderHourlyForecastBlock(data, units, iconTheme);
 
+  // Alertas dinámicas para las balizas de los sensores
+  const windPillAlert = rawGusts >= 80 ? 'has-alert-danger' : (rawGusts >= 60 ? 'has-alert-warning' : '');
+  const baroPillAlert = isSeverePressureDrop ? 'has-alert-danger' : (isWarningPressureDrop ? 'has-alert-warning' : '');
+  const rainPillAlert = (currentRainIntensity >= 30 || rainTodayTotal >= 80) ? 'has-alert-danger' : ((currentRainIntensity >= 15 || rainTodayTotal >= 40) ? 'has-alert-warning' : '');
+  const uvPillAlert = (uvVal != null && uvVal >= 8) ? 'has-alert-warning' : '';
+  const aqiPillAlert = (aqi?.european_aqi && aqi.european_aqi >= 4) ? 'has-alert-warning' : '';
+
   return `
     <!-- HERO WEATHER CARD (Tiempo, Ubicación y Temperatura) -->
     <div class="hero-weather-card ${weatherInfo.bg}">
@@ -753,10 +760,49 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
     ${hourlyForecastMarkup}
 
 
-    <!-- SENSORS GRID -->
-    <div class="sensors-grid">
-      <!-- 1. ANEMÓMETRO Y DIRECCIÓN -->
-      <div class="sensor-card">
+    <!-- SECCIÓN DE SENSORES Y ESTACIÓN EN VIVO (CARRUSEL HORIZONTAL MONOTARJETA CON SALTO RÁPIDO) -->
+    <div class="sensors-carousel-section">
+      <!-- BARRA DE ACCESO RÁPIDO CON BALIZAS DE EMERGENCIA VIVAS -->
+      <div class="sensors-nav-toolbar" id="sensors-nav-toolbar">
+        <button type="button" class="sensor-nav-pill active ${windPillAlert}" data-sensor-target="0" title="Ver Anemómetro">
+          <span class="sensor-nav-icon">🧭</span>
+          <span class="sensor-nav-label">Viento</span>
+          ${windPillAlert ? '<span class="sensor-nav-dot"></span>' : ''}
+        </button>
+        <button type="button" class="sensor-nav-pill ${baroPillAlert}" data-sensor-target="1" title="Ver Barómetro">
+          <span class="sensor-nav-icon">⏱️</span>
+          <span class="sensor-nav-label">Presión</span>
+          ${baroPillAlert ? '<span class="sensor-nav-dot"></span>' : ''}
+        </button>
+        <button type="button" class="sensor-nav-pill" data-sensor-target="2" title="Ver Humedad y Rocío">
+          <span class="sensor-nav-icon">💧</span>
+          <span class="sensor-nav-label">Humedad</span>
+        </button>
+        <button type="button" class="sensor-nav-pill ${rainPillAlert}" data-sensor-target="3" title="Ver Pluviómetro">
+          <span class="sensor-nav-icon">🌧️</span>
+          <span class="sensor-nav-label">Lluvia</span>
+          ${rainPillAlert ? '<span class="sensor-nav-dot"></span>' : ''}
+        </button>
+        <button type="button" class="sensor-nav-pill ${uvPillAlert}" data-sensor-target="4" title="Ver Radiación y UV">
+          <span class="sensor-nav-icon">☀️</span>
+          <span class="sensor-nav-label">UV / Sol</span>
+          ${uvPillAlert ? '<span class="sensor-nav-dot"></span>' : ''}
+        </button>
+        <button type="button" class="sensor-nav-pill ${aqiPillAlert}" data-sensor-target="5" title="Ver Calidad del Aire">
+          <span class="sensor-nav-icon">🍃</span>
+          <span class="sensor-nav-label">Aire</span>
+          ${aqiPillAlert ? '<span class="sensor-nav-dot"></span>' : ''}
+        </button>
+        <button type="button" class="sensor-nav-pill" data-sensor-target="6" title="Ver Asesor de Colada">
+          <span class="sensor-nav-icon">🧺</span>
+          <span class="sensor-nav-label">Colada</span>
+        </button>
+      </div>
+
+      <!-- CONTENEDOR CARRUSEL HORIZONTAL DE SENSORES -->
+      <div class="sensors-carousel" id="sensors-carousel">
+        <!-- 1. ANEMÓMETRO Y DIRECCIÓN -->
+        <div class="sensor-card sensor-card-wind ${windPillAlert ? (windPillAlert === 'has-alert-danger' ? 'card-alert-danger' : 'card-alert-warning') : ''}" data-sensor-index="0" id="sensor-card-wind">
         <div class="sensor-header">
           <div class="sensor-header-left">
             <span class="sensor-icon">🧭</span>
@@ -813,7 +859,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
       </div>
 
       <!-- 2. BARÓMETRO -->
-      <div class="sensor-card ${baroSeverity.cardClass}">
+      <div class="sensor-card sensor-card-barometer ${baroSeverity.cardClass}" data-sensor-index="1" id="sensor-card-barometer">
         <div class="sensor-header">
           <div class="sensor-header-left">
             <span class="sensor-icon">⏱️</span>
@@ -842,7 +888,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
       </div>
 
       <!-- 3. HIGRÓMETRO & ROCÍO -->
-      <div class="sensor-card">
+      <div class="sensor-card sensor-card-humidity" data-sensor-index="2" id="sensor-card-humidity">
         <div class="sensor-header">
           <div class="sensor-header-left">
             <span class="sensor-icon">💧</span>
@@ -863,7 +909,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
       </div>
 
       <!-- 4. PLUVIÓMETRO -->
-      <div class="sensor-card">
+      <div class="sensor-card sensor-card-rain ${rainPillAlert ? (rainPillAlert === 'has-alert-danger' ? 'card-alert-danger' : 'card-alert-warning') : ''}" data-sensor-index="3" id="sensor-card-rain">
         <div class="sensor-header">
           <div class="sensor-header-left">
             <span class="sensor-icon">🌧️</span>
@@ -887,7 +933,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
       </div>
 
       <!-- 5. ÍNDICE UV & RADIACIÓN -->
-      <div class="sensor-card">
+      <div class="sensor-card sensor-card-uv" data-sensor-index="4" id="sensor-card-uv">
         <div class="sensor-header">
           <div class="sensor-header-left">
             <span class="sensor-icon">☀️</span>
@@ -905,7 +951,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
       </div>
 
       <!-- 6. CALIDAD DEL AIRE & PÓLENES -->
-      <div class="sensor-card">
+      <div class="sensor-card sensor-card-aqi" data-sensor-index="5" id="sensor-card-aqi">
         <div class="sensor-header">
           <div class="sensor-header-left">
             <span class="sensor-icon">🍃</span>
@@ -939,6 +985,18 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
 
       <!-- 7. ASESOR DE COLADA Y SECADO (al final, como manda Lendo) -->
       ${laundryMarkup}
+      </div>
+
+      <!-- PAGINADOR DE PUNTOS DISCRETOS -->
+      <div class="sensors-dots-indicator" id="sensors-dots-indicator">
+        <span class="sensor-dot active" data-sensor-target="0"></span>
+        <span class="sensor-dot" data-sensor-target="1"></span>
+        <span class="sensor-dot" data-sensor-target="2"></span>
+        <span class="sensor-dot" data-sensor-target="3"></span>
+        <span class="sensor-dot" data-sensor-target="4"></span>
+        <span class="sensor-dot" data-sensor-target="5"></span>
+        <span class="sensor-dot" data-sensor-target="6"></span>
+      </div>
 
       <!-- 8. MONITOR SÍSMICO SILENCIOSO (tras la tarjeta de colada para eventos menores) -->
       <div id="seismic-banner-container" class="seismic-bottom-container">${seismicBottomMarkup}</div>

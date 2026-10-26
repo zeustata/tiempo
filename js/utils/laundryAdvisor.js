@@ -176,7 +176,7 @@ export function calculateLaundryDrying(currentOrData, hourly = null, daily = nul
 
 export function renderLaundryCard(laundry) {
   return `
-    <div class="sensor-card laundry-sensor-card" id="sensor-card-laundry">
+    <div class="sensor-card laundry-sensor-card" id="sensor-card-laundry" data-sensor-index="6">
       <div class="sensor-header">
         <div class="sensor-header-left">
           <span class="sensor-icon">${laundry.icon}</span>

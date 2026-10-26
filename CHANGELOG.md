@@ -11,6 +11,28 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ## [3.0.23] - 2026-10-25 / 2026-10-26
 
+### 🎠 Carrusel Horizontal de Sensores con Pastillas Rápidas & Balizas Respirantes de Alerta (Feedback Lendo & Princesa)
+- **Motivación y Diagnóstico Operativo:**
+  - Lendo planteó hacer que las tarjetas de sensores situadas debajo de la previsión de 72 horas (Anemómetro, Barómetro, Humedad, Pluviómetro, Radiación UV, Calidad del Aire y Asesor de Colada) fueran deslizables horizontalmente en lugar de requerir un largo desplazamiento vertical por la portada.
+  - Al mismo tiempo, identificó que en móviles las tarjetas tenían alturas desiguales (por ejemplo, el anemómetro resultaba sensiblemente más largo que el barómetro por el tamaño de la brújula y textos secundarios), por lo que era necesario igualar sus alturas sin rellenar con texto artificial y verificar si convenía alertar en caso de emergencia.
+- **Implementación Técnica (`js/components/currentCard.js`, `js/utils/laundryAdvisor.js`, `css/components.css`, `css/main.css`, `js/app.js`):**
+  - **Carrusel Monotarjeta al 100% en Móvil (Doctrina 18 & Ley 11):**
+    - Contenedor `.sensors-carousel` con desplazamiento horizontal magnético (`overflow-x: auto; scroll-snap-type: x mandatory;`).
+    - En pantallas móviles, cada sensor ocupa exactamente el ancho completo disponible (`flex: 0 0 100%; width: 100%; max-width: 100%; box-sizing: border-box; scroll-snap-align: start; scroll-snap-stop: always;`).
+    - **Armonización de Altura Sin Relleno:** Ajustado el cuadrante de la brújula en móvil a 80x80px y unificadas las 7 tarjetas con estructura `display: flex; flex-direction: column; justify-content: space-between; min-height: 275px;`, garantizando una altura idéntica y equilibrada en cualquier dispositivo móvil sin añadir textos de relleno.
+    - **Preservación Incondicional del Scroll Vertical:** Directiva estricta `touch-action: pan-x pan-y;` en el contenedor y tarjetas, permitiendo que el usuario se desplace verticalmente por la página apoyando el pulgar en cualquier sensor sin congelar la pantalla.
+    - **Aislamiento de Gestos (`isInteractiveZone`):** Protegido el carrusel en `app.js` para que deslizar entre sensores nunca active el cambio de pestañas general de la app.
+    - **Modo Cuadrícula en Escritorio:** En pantallas grandes (>768px), el carrusel se transforma fluidamente en una cuadrícula simétrica espaciosa (`grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));`).
+  - **Barra de Pastillas con Salto Rápido & Indicador de Puntos:**
+    - Barra superior ergonómica `.sensors-nav-toolbar` con pastillas compactas para cada sensor (`💨 Barlovento`, `⏱️ Barómetro`, `💧 Humedad`, `🌧️ Lluvia`, `☀️ UV`, `🍃 Aire`, `👕 Colada`), permitiendo saltar instantáneamente a cualquier sensor con un toque.
+    - Indicador inferior de 7 puntos (`.sensor-dot`) con sincronización bidireccional suave: al deslizar horizontalmente, un observador con `requestAnimationFrame` actualiza la pastilla y el punto activo en tiempo real.
+  - **Balizas Respirantes de Alerta (*Breathing Halo*):**
+    - En sustitución de parpadeos estroboscópicos agresivos (prohibidos por accesibilidad y ergonomía), se implementó un halo respirante continuo de 2.4s a 2.8s (`pillBeaconPulseDanger`, `pillBeaconPulseWarning`, `cardBeaconPulseDanger`, `cardBeaconPulseWarning`).
+    - Si un sensor entra en aviso (viento fuerte, presión anormal, lluvia activa, radiación muy alta o aire desfavorable), la pastilla superior muestra un punto de alerta y la tarjeta emite un resplandor perimetral sutil que hace inmediatamente reconocible la anomalía incluso si el sensor está fuera de la pantalla.
+- **Anti-Caché Obligatorio (Ley 4):**
+  - Service Worker actualizado a `meteoasturlode-v3023-4-sensors-carousel` en `sw.js`.
+  - Revisión interna `v=3.0.23.4` en `index.html`, `js/app.js`, `css/main.css` y `css/components.css`.
+
 ### 💛 Tarjeta Principal Compacta & Jerarquía Bilingüe Azul y Oro Asturiano (Feedback Lendo)
 - **Motivación y Diagnóstico Operativo:**
   - Lendo observó que la tarjeta principal (*Hero Weather Card*) de la pestaña "En Vivo" ocupaba una altura excesiva en pantallas móviles. Tanto el concejo como la condición del tiempo mostraban el nombre en castellano y en asturiano con el mismo tamaño tipográfico gigante (100%) y una barra separadora fija (`/`), como `Candamo / Candamu (Grullos / San Román)` o `Parcialmente nublado / Claros`, generando saltos de línea antiestéticos y empujando verticalmente los sensores y la temperatura.
