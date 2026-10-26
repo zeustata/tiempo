@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-dark-navigation';
+const CACHE_NAME = 'meteoasturlode-v3023-1-hourly-contrast';
 const STATIC_ASSETS = [
   './',
   './index.html',

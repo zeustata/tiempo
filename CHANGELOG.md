@@ -53,6 +53,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Reubicación de Marea en Nivel de Agua:** La pastilla de tendencia (`Subiendo (Llenante)` / `Bajando (Vaciante)`) se integra dentro de la primera tarjeta de métricas, situada justo encima de la altura del agua, liberando la cabecera superior donde ahora solo permanece la bandera de la playa.
 - **Limpieza de Guía de Playas y Calas:** Suprimida la barra redundante de herramientas (`.beach-controls-toolbar`), eliminando el botón duplicado de Webcams y el selector de filtrado por categorías, dando acceso directo y limpio al catálogo de arenales en acordeón.
 
+### ⏱️ Contraste Sutil Día / Noche en Pronóstico Horario (Opción C - Idea Lendo & Princesa)
+- **Motivación y Diagnóstico Operativo:**
+  - Lendo y Princesa concibieron una diferenciación visual sutil entre horas diurnas y nocturnas en el carrusel de 72 horas para facilitar la lectura del paso del tiempo y los ciclos de orto y ocaso, sin sobrecargar cromáticamente las tarjetas ni provocar choques con los temas dinámicos de lluvia, nieve o nublado.
+- **Implementación Técnica (`js/components/forecastView.js`, `css/components.css`):**
+  - **Inyección Dinámica de Clases (`is-day` / `is-night`):** Cruzado en tiempo real con el parámetro solar `hourly.is_day[i]` de Open-Meteo para aplicar la clase correspondiente a cada una de las 72 tarjetas horarias.
+  - **Gradiente Nocturno Profundo en Liquid Glass:** Tarjetas nocturnas (`.hourly-card.is-night`) vestidas con un cristal traslúcido un 10% más oscuro (`rgba(12, 19, 34, 0.82)` a `rgba(6, 11, 20, 0.90)`), halo perimetral sutil azul noche (`rgba(56, 189, 248, 0.16)`) y etiquetas horarias atenuadas (`#94a3b8`).
+  - **Preservación Diurna Luminosa:** Tarjetas diurnas (`.hourly-card.is-day`) que conservan el cristal elevado estándar con reflejo blanco superior, creando una onda rítmica orgánica y armónica a lo largo de las 72 horas.
+
 ## [3.0.22] - 2026-10-25
 
 ### 🛡️ Refinamiento Android: Iconos Adaptativos en Dock & Navegación Fija Standalone (Tester Prieto & Lendo)

@@ -43,7 +43,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '9' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.23';
+export const CURRENT_APP_VERSION = '3.0.23.1';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -831,7 +831,7 @@ class MeteoAsturiasApp {
 
             // Mostrar modal directamente sin alterar historial en el arranque para evitar que popstate lo cierre
             changelogModal.style.display = 'flex';
-          }, 2200);
+          }, 800);
         }
       }
     } catch (e) {

@@ -207,7 +207,7 @@ export function renderHourlyForecastBlock(data, units = 'metric', iconTheme = 'a
     const windDir = getWindDirection(windDeg);
 
     hourlyCards += `
-      <div class="hourly-card">
+      <div class="hourly-card ${isDay ? 'is-day' : 'is-night'}">
         <span class="h-time">${hourLabel}</span>
         <span class="h-icon" title="${weather.label}${precipMm >= 0.1 ? ` (${precipMm.toFixed(1)} mm)` : ''}">${renderWeatherIconHtml(weather, 28, iconTheme)}</span>
         <span class="h-temp">${temp}°C</span>
