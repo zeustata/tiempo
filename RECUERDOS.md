@@ -55,6 +55,13 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   4. *Anti-Caché Obligatorio (Ley 4):*
      - Service Worker actualizado a `meteoasturlode-v3023-dark-navigation` en `sw.js`.
      - Versión oficial elevada a `v3.0.23 🛡️` en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '3.0.23'` en `app.js`, `manifest.json?v=3.0.23` y query strings en `index.html`.
+- **Ampliación Ergonómica: Cabecera y Acordeón Interactivo en Efemérides Astronómicas (Feedback Lendo & Princesa):**
+  1. *Diagnóstico Operativo:*
+     - Lendo identificó dos necesidades de usabilidad en la pantalla de Astronomía: la necesidad de estructurar la sección con un título identificativo («Próximos Acontecimientos») sobre el semáforo de visibilidad, y de plegar las fichas de eventos astronómicos en un formato acordeón con flecha para evitar un scroll vertical excesivo en móviles.
+  2. *Implementación Técnica (`astronomyCard.js`, `components.css`, `app.js`):*
+     - Incorporada la cabecera `.astronomy-section-header` con icono cósmico (`🌌`), título en blanco puro y subtítulo explicativo.
+     - Transformadas las fichas en componentes interactivos `<details class="astro-accordion-card">` con botón de flecha circular animado (`▾` a 180°), reduciendo la altura plegada de 220px a solo 75px (~70% de ahorro en scroll móvil).
+     - Adoptada la Opción A (voto unánime Lendo y Princesa): el primer evento astronómico arranca desplegado (`open`) para ofrecer información inmediata sin interacción previa, mientras que el resto permanecen plegados, con autocierre exclusivo en `js/app.js` al abrir cualquier otro acontecimiento.
 
 ## 🛡️ Actualización v3.0.22: Refinamiento Android (Iconos Adaptativos en Dock & Navegación Fija Standalone) — 2026-10-25
 - **Diagnóstico y Usabilidad (Feedback Tester Prieto & Lendo - «tenemos el tester prieto, el perfeccionista que quiere que arreglemos dos detalles... primero el icono de la app... el icono que sale en la pantalla de la app para abrir la app no esta completo... segundo detalle tiene que ver con los botones de navegacion...», «no se ve la forma entera del escudo triene que ser algo mas pequeño el escudo para que salga entero. sigue saliendo la barra de arriba y los botones de navegacion siguen sin ser transparentes y negros» y «pisale»):**

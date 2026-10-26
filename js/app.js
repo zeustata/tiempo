@@ -1671,15 +1671,15 @@ class MeteoAsturiasApp {
       }
     });
 
-    // Delegación global para acordeón exclusivo de playas, spots de surf y rutas (autocierre de persianas previas)
+    // Delegación global para acordeón exclusivo de playas, spots de surf, rutas y astronomía (autocierre de persianas previas)
     document.addEventListener('toggle', (e) => {
-      const details = e.target.closest('.beach-accordion-card, .route-accordion-card');
+      const details = e.target.closest('.beach-accordion-card, .route-accordion-card, .astro-accordion-card');
       if (!details || !details.open) return;
 
-      const container = details.closest('.beaches-grid, .surf-spots-grid, .routes-accordion-container') || details.parentElement;
+      const container = details.closest('.beaches-grid, .surf-spots-grid, .routes-accordion-container, .astronomy-events-grid') || details.parentElement;
       if (!container) return;
 
-      container.querySelectorAll('.beach-accordion-card[open], .route-accordion-card[open]').forEach(other => {
+      container.querySelectorAll('.beach-accordion-card[open], .route-accordion-card[open], .astro-accordion-card[open]').forEach(other => {
         if (other !== details) {
           other.open = false;
         }

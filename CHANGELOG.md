@@ -41,6 +41,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
   - **Semáforo Fotográfico Inteligente:** Cruce dinámico con la nubosidad prevista (`cloud_cover`) a la hora del ocaso para catalogar en vivo la visibilidad: *🟢 Visibilidad Óptima* (despejado), *🟡 Luz Dramática* (nubes y claros) o *⚪ Luz Plana y Difusa* (cubierto).
   - **Suite Didáctica ("Explícame"):** Nueva guía pedagógica `golden_hour` accesible mediante botón `💡` en la cabecera, detallando la física de la dispersión de Rayleigh, ángulos cenitales (+6° a -8°) y rincones de Asturias.
 
+### 🌌 Cabecera y Acordeón Interactivo en Efemérides Astronómicas (Feedback Lendo & Princesa)
+- **Motivación y Diagnóstico Operativo:**
+  - Lendo detectó dos oportunidades ergonómicas clave en la pantalla de Astronomía: la ausencia de un título identificativo sobre el semáforo de visibilidad que estructurara el bloque, y el exceso de scroll vertical provocado por el despliegue íntegro de todas las fichas de eventos astronómicos hasta finales de 2027.
+- **Implementación Técnica (`js/components/astronomyCard.js`, `css/components.css`, `js/app.js`):**
+  - **Cabecera de Sección Estructurada:** Incorporado el título `🌌 Próximos Acontecimientos` con subtítulo explicativo (`Efemérides celestes y calendario astronómico`) justo encima de la barra de filtros del semáforo.
+  - **Arquitectura de Acordeón Plegable con Chevron Rotatorio:** Fichas transformadas en componentes interactivos `<details class="astro-accordion-card">` con botón de flecha circular animado (`▾` a 180°), reduciendo la altura plegada de 220px a solo 75px (~70% de ahorro en scroll móvil).
+  - **Inmediatez y Autocierre Exclusivo (Opción A):** El primer acontecimiento (el más inminente en el tiempo) arranca abierto por defecto (`open`) para visibilidad inmediata sin clics, mientras que el resto permanecen compactados. Integrado en el listener global de persianas de `app.js` para repliegue automático de las tarjetas previas al abrir un nuevo evento.
+
 ### 🏖️ Síntesis Visual y Ergonomía en Playas & Mareógrafo (Feedback Lendo)
 - **Reubicación de Marea en Nivel de Agua:** La pastilla de tendencia (`Subiendo (Llenante)` / `Bajando (Vaciante)`) se integra dentro de la primera tarjeta de métricas, situada justo encima de la altura del agua, liberando la cabecera superior donde ahora solo permanece la bandera de la playa.
 - **Limpieza de Guía de Playas y Calas:** Suprimida la barra redundante de herramientas (`.beach-controls-toolbar`), eliminando el botón duplicado de Webcams y el selector de filtrado por categorías, dando acceso directo y limpio al catálogo de arenales en acordeón.

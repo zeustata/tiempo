@@ -516,6 +516,17 @@ export function renderAstronomyView(containerId, currentFilter = 'all', weatherD
         </div>
       </div>
 
+      <!-- CABECERA DE SECCIÓN: PRÓXIMOS ACONTECIMIENTOS -->
+      <div class="astronomy-section-header">
+        <div class="astronomy-section-title-wrap">
+          <span class="astronomy-section-icon">🌌</span>
+          <div>
+            <h4 class="astronomy-section-title">Próximos Acontecimientos</h4>
+            <span class="astronomy-section-subtitle">Efemérides celestes y calendario astronómico</span>
+          </div>
+        </div>
+      </div>
+
       <!-- BARRA DE SEMÁFORO Y FILTROS -->
       <div class="astronomy-filter-bar">
         <div class="astronomy-filter-title">
@@ -537,14 +548,14 @@ export function renderAstronomyView(containerId, currentFilter = 'all', weatherD
         </div>
       </div>
 
-      <!-- LISTADO DE EVENTOS ASTRONÓMICOS -->
+      <!-- LISTADO DE EVENTOS ASTRONÓMICOS EN ACORDEÓN -->
       <div class="astronomy-events-grid">
         ${filteredEvents.length === 0 ? `
           <div class="astro-empty-state" style="grid-column: 1 / -1; padding: 30px 20px; text-align: center; color: var(--text-dim);">
             <span style="font-size: 2rem; display: block; margin-bottom: 8px;">🌌</span>
             <p>No hay eventos próximos para el filtro seleccionado.</p>
           </div>
-        ` : filteredEvents.map(evt => {
+        ` : filteredEvents.map((evt, idx) => {
           const eventDate = new Date(evt.datePeak);
           const diffDays = Math.ceil((eventDate - now) / (1000 * 60 * 60 * 24));
           
@@ -557,7 +568,6 @@ export function renderAstronomyView(containerId, currentFilter = 'all', weatherD
             countdownText = `⏳ En ${diffDays} días`;
           }
 
-
           let semaforoClass = 'badge-green';
           let semaforoIcon = '🟢';
           if (evt.visibility === 'spain') {
@@ -568,32 +578,46 @@ export function renderAstronomyView(containerId, currentFilter = 'all', weatherD
             semaforoIcon = '🔴';
           }
 
+          // Opción A: Primer evento abierto por defecto para inmediatez, resto plegados
+          const isOpen = idx === 0 ? 'open' : '';
+
           return `
-            <div class="astro-event-card ${evt.visibility}">
-              <div class="astro-event-header">
-                <div class="astro-event-type-row">
-                  <span class="astro-type-pill">${evt.typeLabel}</span>
-                  <span class="astro-countdown-pill ${diffDays <= 3 && diffDays >= 0 ? 'urgent' : ''}">${countdownText}</span>
+            <details class="astro-event-card astro-accordion-card ${evt.visibility}" name="astro-accordion" ${isOpen}>
+              <summary class="astro-accordion-header">
+                <div class="astro-accordion-summary-content">
+                  <div class="astro-event-header">
+                    <div class="astro-event-type-row">
+                      <span class="astro-type-pill">${evt.typeLabel}</span>
+                      <span class="astro-countdown-pill ${diffDays <= 3 && diffDays >= 0 ? 'urgent' : ''}">${countdownText}</span>
+                    </div>
+                    <div class="astro-traffic-badge ${semaforoClass}">
+                      <span>${semaforoIcon} ${evt.visibilityLabel}</span>
+                    </div>
+                  </div>
+
+                  <div class="astro-accordion-title-row">
+                    <div class="astro-accordion-name-col">
+                      <h4 class="astro-event-title">${evt.icon} ${evt.title}</h4>
+                      <div class="astro-event-date">📅 ${evt.displayDate}</div>
+                    </div>
+                    <span class="astro-accordion-chevron" aria-hidden="true">▾</span>
+                  </div>
                 </div>
-                <div class="astro-traffic-badge ${semaforoClass}">
-                  <span>${semaforoIcon} ${evt.visibilityLabel}</span>
+              </summary>
+
+              <div class="astro-accordion-body">
+                <p class="astro-event-desc">${evt.visibilityDesc}</p>
+
+                <div class="astro-event-tips-box">
+                  <div class="astro-tip-item">
+                    <strong>📍 Observación en Asturias:</strong> ${evt.asturiasTip}
+                  </div>
+                  <div class="astro-tip-item equipment">
+                    <strong>🔭 Instrumento recomendado:</strong> ${evt.equipment}
+                  </div>
                 </div>
               </div>
-
-              <h4 class="astro-event-title">${evt.icon} ${evt.title}</h4>
-              <div class="astro-event-date">📅 ${evt.displayDate}</div>
-
-              <p class="astro-event-desc">${evt.visibilityDesc}</p>
-
-              <div class="astro-event-tips-box">
-                <div class="astro-tip-item">
-                  <strong>📍 Observación en Asturias:</strong> ${evt.asturiasTip}
-                </div>
-                <div class="astro-tip-item equipment">
-                  <strong>🔭 Instrumento recomendado:</strong> ${evt.equipment}
-                </div>
-              </div>
-            </div>
+            </details>
           `;
         }).join('')}
       </div>
