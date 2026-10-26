@@ -41,17 +41,21 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - Aplicar en Java la regla de consenso: si el modelo local indica soleado (`weather_code <= 1` o `cloud_cover < 50%`) pero no hay sol activo (`direct_normal_irradiance < 100 W/m²`, `uv < 1.0`) y ECMWF reporta manto cubierto (`cloud_cover >= 80%`), forzar `weather_code = 3` (Nublado) en el tiempo actual y en la previsión diaria de hoy, asegurando paridad visual 1:1 total entre el widget de escritorio y la web app.
 
 ## 🛡️ Actualización v3.0.23: Modo Oscuro Soberano Android, Balizas Solares & Tarjeta Bilingüe Compacta — 2026-10-25 / 2026-10-26
-- **Carrusel Horizontal Monotarjeta Universal & Sensores Enriquecidos (Feedback Lendo - «estaba pensando en hacer que las tarjetas debajo de la prevision de 72 horas sean deslizables horizontalmente...», «pero salen todos a la vez. tienes arriba el carusel pero salen todos», «todo bien pero hay alguna tarjeta que deberia de rellenar sinceramente. parecen muy pobres. investiga», «pisale socia»):**
+- **Carrusel Horizontal Monotarjeta Universal & Sensores Enriquecidos (Feedback Lendo - «estaba pensando en hacer que las tarjetas debajo de la prevision de 72 horas sean deslizables horizontalmente...», «pero salen todos a la vez. tienes arriba el carusel pero salen todos», «todo bien pero hay alguna tarjeta que deberia de rellenar sinceramente. parecen muy pobres. investiga», «el que queda un poco suave es el barometro», «dale pisale princesa»):**
   1. *Diagnóstico Operativo y Ergonómico:*
      - Lendo concibió que los 7 sensores atmosféricos (Anemómetro, Barómetro, Humedad, Pluviómetro, Radiación UV, Calidad del Aire y Asesor de Colada) debían deslizarse horizontalmente en lugar de requerir scroll vertical continuo.
      - Al implantar el formato monotarjeta al 100% (275px de altura fija para todos), se detectó que en escritorio una regla residual de rejilla los mostraba en bloque, corrigiéndose para que en cualquier pantalla (móvil, tablet y PC con arrastre de ratón) se muestre estrictamente una única tarjeta por slide.
-     - Asimismo, Lendo constató que mientras el Anemómetro y la Colada lucían muy ricos, las tarjetas de **Humedad** y **Radiación UV** se veían «muy pobres» y con espacio vacío desaprovechado, acordándose enriquecerlas con datos científicos reales sin texto de relleno ficticio.
+     - Asimismo, Lendo constató que mientras el Anemómetro y la Colada lucían muy ricos, las tarjetas de **Humedad** y **Radiación UV** se veían «muy pobres», enriqueciéndose con datos científicos reales. Posteriormente, identificó que el **Barómetro** quedaba «un poco suave», dotándose de aguja dinámica, veredicto atmosférico en lenguaje natural y cálculo de presión en superficie real.
   2. *Implementación Técnica (`currentCard.js`, `components.css`, `app.js`, `sw.js`):*
      - **Carrusel Monotarjeta al 100% Universal (Doctrina 18 & Ley 11):**
        - `.sensors-carousel` con `overflow-x: auto; scroll-snap-type: x mandatory;`.
        - Cada sensor ocupa exactamente el ancho total disponible (`flex: 0 0 100%; width: 100%; max-width: 100%; box-sizing: border-box; scroll-snap-align: start; scroll-snap-stop: always;`).
        - *Soporte de Arrastre en PC (Drag-to-Scroll):* Movimiento fluido con ratón y snapping magnético automático al sensor más próximo al soltar.
        - *Preservación Incondicional del Scroll Vertical:* Directiva estricta `touch-action: pan-x pan-y;` en contenedor y tarjetas.
+     - **Enriquecimiento del Barómetro (Presión MSL y Superficie):**
+       - *Medidor Cromático con Aguja Viva:* Barra de presión continua (980 a 1040 hPa) con cursor blanco dinámico (`.pressure-gauge-pointer`) que marca con precisión milimétrica la presión atmosférica del concejo.
+       - *Veredicto Atmosférico en Lenguaje Humano:* Interpretación instantánea del estado de la atmósfera (*Anticiclón potente con cielo despejado / Tiempo firme / Presión normal / Baja presión inestable / Borrasca activa*).
+       - *Presión Real en Superficie según Altitud:* Cálculo de la presión real que soporta el suelo y el cuerpo en la cota del concejo (`surface_pressure` en hPa cruzado con los metros de altitud).
      - **Enriquecimiento del Higrómetro (Humedad y Punto de Rocío):**
        - *Medidor de Confort Higrométrico:* Barra segmentada con escala cantábrica (*Seco <40% • Confort 40-65% • Húmedo 65-85% • Saturado >85%*).
        - *Margen de Rocío / Alerta de Niebla (Δ T):* Diferencial térmico en tiempo real (`T - Rocío`) con micro-badge cromático: alerta de saturación inminente / orpín si Δ T <= 1.5°C o serena nocturna si Δ T <= 3.5°C.
@@ -66,8 +70,8 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - Barra horizontal superior con 7 pastillas para salto instantáneo con un toque y puntos de sincronización inferior.
        - Halo pulsante suave (2.4s - 2.8s) en pastilla y marco de tarjeta ante condiciones anómalas o de aviso.
   3. *Anti-Caché Obligatorio (Ley 4) & Registro:*
-     - Service Worker actualizado a `meteoasturlode-v3023-6-rich-sensors` en `sw.js`.
-     - Revisión interna `v=3.0.23.6` en `index.html`, `js/app.js`, `css/main.css` y `css/components.css`.
+     - Service Worker actualizado a `meteoasturlode-v3023-7-rich-barometer` en `sw.js`.
+     - Revisión interna `v=3.0.23.7` en `index.html`, `js/app.js`, `css/main.css` y `css/components.css`.
      - Documentado en `CHANGELOG.md` e `index.html`.
 - **Ampliación Ergonómica: Tarjeta Principal Compacta & Jerarquía Bilingüe Azul y Oro Asturiano (Feedback Lendo - «quisiera hacer un poco mas compacta la primera tarjetadel menu en vivo... que cambie segun el nombre con color del azul al amarillo como la bandera de asturias. y lo mismo el tiempo que hace. pone en castellano Despejado y luego en asturiano lo mismo. como lo ves?» y «pisale a la 1 a ver que pasa y ponlo en el changelog por si hay que revertir ésto último»):**
   1. *Diagnóstico Operativo:*

@@ -14,13 +14,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 ### 🎠 Carrusel Horizontal Monotarjeta Universal & Sensores Enriquecidos (Feedback Lendo & Princesa)
 - **Motivación y Diagnóstico Operativo:**
   - Lendo planteó hacer que las tarjetas de sensores situadas debajo de la previsión de 72 horas (Anemómetro, Barómetro, Humedad, Pluviómetro, Radiación UV, Calidad del Aire y Asesor de Colada) fueran deslizables horizontalmente en lugar de requerir un largo desplazamiento vertical por la portada.
-  - Al revisar las tarjetas en el formato monotarjeta de 275px, Lendo constató que mientras el Anemómetro y la Colada lucían muy completos, las tarjetas de **Humedad** y **Radiación UV** se veían «muy pobres» y vacías, requiriendo un enriquecimiento técnico genuino con datos meteorológicos reales sin meter texto de relleno.
+  - Al revisar las tarjetas en el formato monotarjeta de 275px, Lendo constató que mientras el Anemómetro y la Colada lucían muy completos, las tarjetas de **Humedad** y **Radiación UV** se veían «muy pobres» y vacías, requiriendo un enriquecimiento técnico genuino. Tras enriquecerlas, Lendo advirtió con acierto que el **Barómetro** quedaba ahora como el más «suave», acordándose dotarlo de aguja viva, veredicto en lenguaje natural y presión en superficie real.
 - **Implementación Técnica (`js/components/currentCard.js`, `css/components.css`, `js/app.js`, `sw.js`):**
   - **Carrusel Monotarjeta al 100% Universal (Doctrina 18 & Ley 11):**
     - Contenedor `.sensors-carousel` con desplazamiento horizontal magnético (`overflow-x: auto; scroll-snap-type: x mandatory;`).
     - Tanto en móvil como en PC y tablet, cada sensor ocupa exactamente el ancho completo disponible (`flex: 0 0 100%; width: 100%; max-width: 100%; box-sizing: border-box; scroll-snap-align: start; scroll-snap-stop: always;`).
     - **Soporte de Arrastre en Escritorio (Drag-to-Scroll):** Interacción suave con ratón en PC, permitiendo agarrar y arrastrar las tarjetas con snapping magnético automático al soltar.
     - **Preservación Incondicional del Scroll Vertical:** Directiva estricta `touch-action: pan-x pan-y;` en contenedor y tarjetas, permitiendo el scroll vertical continuo apoyando el dedo en cualquier punto.
+  - **Enriquecimiento del Barómetro (Presión MSL y Superficie):**
+    - *Medidor Cromático con Aguja Viva:* Barra de presión continua (980 a 1040 hPa) con cursor blanco dinámico (`.pressure-gauge-pointer`) que marca con precisión milimétrica la presión atmosférica del concejo.
+    - *Veredicto Atmosférico en Lenguaje Humano:* Interpretación instantánea del estado de la atmósfera (*Anticiclón potente con cielo despejado / Tiempo firme / Presión normal / Baja presión inestable / Borrasca activa*).
+    - *Presión Real en Superficie según Altitud:* Cálculo de la presión real que soporta el suelo y el cuerpo en la cota del concejo (`surface_pressure` en hPa cruzado con los metros de altitud).
   - **Enriquecimiento del Higrómetro (Humedad y Punto de Rocío):**
     - *Medidor de Confort Higrométrico:* Barra segmentada con escala cantábrica (*Seco <40% • Confort 40-65% • Húmedo 65-85% • Saturado >85%*).
     - *Margen de Rocío / Alerta de Niebla (Δ T):* Diferencial térmico en tiempo real (`T - Rocío`) con indicador cromático: alerta de saturación inminente / orpín si Δ T <= 1.5°C o serena nocturna si Δ T <= 3.5°C.
@@ -35,8 +39,8 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
     - Barra horizontal superior con 7 pastillas para salto instantáneo con un toque y puntos de sincronización inferior.
     - Halo pulsante suave (2.4s - 2.8s) en pastilla y marco de tarjeta ante condiciones anómalas o de aviso.
 - **Anti-Caché Obligatorio (Ley 4):**
-  - Service Worker actualizado a `meteoasturlode-v3023-6-rich-sensors` en `sw.js`.
-  - Revisión interna `v=3.0.23.6` en `index.html`, `js/app.js`, `css/main.css` y `css/components.css`.
+  - Service Worker actualizado a `meteoasturlode-v3023-7-rich-barometer` en `sw.js`.
+  - Revisión interna `v=3.0.23.7` en `index.html`, `js/app.js`, `css/main.css` y `css/components.css`.
 
 ### 💛 Tarjeta Principal Compacta & Jerarquía Bilingüe Azul y Oro Asturiano (Feedback Lendo)
 - **Motivación y Diagnóstico Operativo:**

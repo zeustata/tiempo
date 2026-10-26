@@ -1824,27 +1824,54 @@
 }
 
 /* Pressure & Humidity Gauges */
-.pressure-gauge-bar, .humidity-progress {
+.pressure-gauge-bar {
+  position: relative;
   height: 8px;
-  background: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(to right, #ef4444 0%, #06b6d4 35%, #10b981 70%, #fbbf24 100%);
   border-radius: 4px;
-  overflow: hidden;
-  margin: 12px 0 6px;
+  margin: 10px 0 4px;
 }
 
-.gauge-fill {
-  height: 100%;
-  background: linear-gradient(to right, #38bdf8, #10b981);
-  transition: width 0.4s ease;
+.pressure-gauge-pointer {
+  position: absolute;
+  top: -3px;
+  width: 4px;
+  height: 14px;
+  background: #ffffff;
+  border-radius: 2px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.8), 0 0 4px #ffffff;
+  transform: translateX(-50%);
+  transition: left 0.4s ease;
 }
 
-.gauge-fill.baro-fill-warning {
-  background: linear-gradient(to right, #f97316, #ef4444) !important;
+.baro-badge-optimal {
+  background: rgba(251, 191, 36, 0.12) !important;
+  border-color: rgba(251, 191, 36, 0.35) !important;
+  color: #fde68a !important;
 }
 
-.gauge-fill.baro-fill-danger {
-  background: linear-gradient(to right, #ef4444, #b91c1c) !important;
-  box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+.baro-badge-good {
+  background: rgba(16, 185, 129, 0.12) !important;
+  border-color: rgba(16, 185, 129, 0.35) !important;
+  color: #6ee7b7 !important;
+}
+
+.baro-badge-neutral {
+  background: rgba(56, 189, 248, 0.08) !important;
+  border-color: rgba(56, 189, 248, 0.22) !important;
+  color: #bae6fd !important;
+}
+
+.baro-badge-warn {
+  background: rgba(245, 158, 11, 0.12) !important;
+  border-color: rgba(245, 158, 11, 0.35) !important;
+  color: #fde047 !important;
+}
+
+.baro-badge-danger {
+  background: rgba(239, 68, 68, 0.12) !important;
+  border-color: rgba(239, 68, 68, 0.35) !important;
+  color: #fca5a5 !important;
 }
 
 .hum-bar {

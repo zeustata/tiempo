@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-6-rich-sensors';
+const CACHE_NAME = 'meteoasturlode-v3023-7-rich-barometer';
 const STATIC_ASSETS = [
   './',
   './index.html',

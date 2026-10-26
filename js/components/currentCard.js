@@ -369,6 +369,23 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
 
   const baroGaugePercent = Math.min(100, Math.max(0, ((rawPressure - 980) / (1040 - 980)) * 100));
 
+  // Métricas enriquecidas del Barómetro (Superficie y Diagnóstico Humano)
+  const surfacePressure = current.surface_pressure != null ? current.surface_pressure.toFixed(1) : null;
+  const concejoAltitude = concejo?.altitude != null ? concejo.altitude : (concejo?.altitud != null ? concejo.altitud : null);
+
+  let baroVerdict = { icon: '⛅', text: 'Presión normal: tiempo tranquilo sin temporales a la vista', class: 'baro-badge-neutral' };
+  if (rawPressure >= 1024.0) {
+    baroVerdict = { icon: '🛡️', text: 'Anticiclón potente: atmósfera muy estable y cielo despejado', class: 'baro-badge-optimal' };
+  } else if (rawPressure >= 1016.0) {
+    baroVerdict = { icon: '☀️', text: 'Tiempo firme: el anticiclón bloquea la entrada de lluvias', class: 'baro-badge-good' };
+  } else if (rawPressure >= 1009.0) {
+    baroVerdict = { icon: '⛅', text: 'Presión normal: tiempo tranquilo sin temporales a la vista', class: 'baro-badge-neutral' };
+  } else if (rawPressure >= 1000.0) {
+    baroVerdict = { icon: '☁️', text: 'Baja presión: aire inestable con nubes y posible lluvia', class: 'baro-badge-warn' };
+  } else {
+    baroVerdict = { icon: '🌀', text: 'Borrasca activa: fuerte inestabilidad y viento o lluvias', class: 'baro-badge-danger' };
+  }
+
   // Conversión de viento a nudos si se solicita
   const rawSpeed = current.wind_speed_10m != null ? current.wind_speed_10m : 0;
   let rawGusts = current.wind_gusts_10m != null ? current.wind_gusts_10m : rawSpeed;
@@ -945,8 +962,8 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
               <strong class="trend-badge ${baroSeverity.trendClass}">${baroSeverity.trendBadgeText}</strong>
             </div>
           </div>
-          <div class="pressure-gauge-bar">
-            <div class="gauge-fill ${baroSeverity.fillClass}" style="width: ${baroGaugePercent}%;"></div>
+          <div class="pressure-gauge-bar" title="Escala barométrica OMM: ${rawPressure.toFixed(1)} hPa">
+            <div class="pressure-gauge-pointer" style="left: ${baroGaugePercent.toFixed(1)}%;"></div>
           </div>
           <div class="gauge-labels">
             <span>980 (Borrasca)</span>
@@ -954,6 +971,14 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
             <span>1040 (Anticiclón)</span>
           </div>
           ${baroSeverity.alertBadgeHtml}
+          <div class="sensor-mini-badges">
+            <div class="sensor-mini-badge ${baroVerdict.class}">
+              <span>${baroVerdict.icon} ${baroVerdict.text}</span>
+            </div>
+            <div class="sensor-mini-badge baro-badge-neutral">
+              <span>🏔️ Presión en suelo: <strong>${surfacePressure || rawPressure.toFixed(1)} hPa</strong> ${concejoAltitude ? `(${concejoAltitude} m altitud)` : '• Cota concejo'} • Tendencia: <strong>${baroActionLabel}</strong></span>
+            </div>
+          </div>
         </div>
       </div>
 
