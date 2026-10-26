@@ -407,12 +407,82 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   const currentGustSeverity = getGustSeverity(rawGusts);
   const maxGustSeverity = getGustSeverity(rawMaxGustToday);
 
-  // Punto de rocío actual (aproximado por Magnus-Tetens)
+  // Punto de rocío actual (aproximado por Magnus-Tetens) y métricas higrométricas enriquecidas
   const T = current.temperature_2m;
   const RH = current.relative_humidity_2m;
   const a = 17.27, b = 237.7;
   const alpha = ((a * T) / (b + T)) + Math.log(RH / 100);
   const dewPoint = ((b * alpha) / (a - alpha)).toFixed(1);
+
+  // Margen de condensación / niebla (Delta T)
+  const deltaDewVal = Math.max(0, T - parseFloat(dewPoint));
+  const deltaDew = deltaDewVal.toFixed(1);
+  let fogRisk = { label: 'Sin riesgo de condensación', class: 'hum-risk-safe', icon: '✨' };
+  if (deltaDewVal <= 1.5) {
+    fogRisk = { label: 'Saturación • Riesgo alto de orpín o niebla', class: 'hum-risk-danger', icon: '🌫️' };
+  } else if (deltaDewVal <= 3.5) {
+    fogRisk = { label: 'Alta humedad • Formación de serena', class: 'hum-risk-warning', icon: '💧' };
+  }
+
+  // Aporte higrométrico / sensación térmica (bochorno)
+  const apparentTemp = current.apparent_temperature != null ? current.apparent_temperature : T;
+  const humidexDiff = (apparentTemp - T).toFixed(1);
+  let humidexLabel = 'Sensación térmica en equilibrio';
+  if (humidexDiff >= 0.8) {
+    humidexLabel = `Bochorno: +${humidexDiff}°C sobre el termómetro`;
+  } else if (humidexDiff <= -0.8) {
+    humidexLabel = `Sensación reducida en ${Math.abs(humidexDiff)}°C (fresco)`;
+  }
+
+  // Vapor de agua en el aire (Humedad Absoluta en g/m³)
+  const absHumidity = ((216.7 * (6.112 * Math.exp((17.67 * T) / (T + 243.5)) * (RH / 100))) / (273.15 + T)).toFixed(1);
+
+  // Métricas enriquecidas de Radiación Solar & UV
+  const uvMarkerPercent = uvVal != null ? Math.min(100, Math.max(0, (uvVal / 11) * 100)).toFixed(1) : '0';
+  const globalSolar = current.shortwave_radiation != null 
+    ? Math.round(current.shortwave_radiation) 
+    : (current.direct_normal_irradiance != null ? Math.round(current.direct_normal_irradiance) : 0);
+  
+  let solarPowerText = `${globalSolar} W/m²`;
+  if (globalSolar <= 10) {
+    solarPowerText = `${globalSolar} W/m² (Noche / Manto cubierto)`;
+  } else if (globalSolar < 250) {
+    solarPowerText = `${globalSolar} W/m² (Radiación difusa)`;
+  } else {
+    solarPowerText = `${globalSolar} W/m² (Insolación activa)`;
+  }
+
+  let peakHoursText = '13:00 - 16:30 h';
+  if (hourly && hourly.uv_index) {
+    const todayUvs = hourly.uv_index.slice(0, 24);
+    const maxUvToday = Math.max(...todayUvs);
+    if (maxUvToday >= 1.5) {
+      const peakStart = todayUvs.findIndex(u => u >= maxUvToday * 0.75);
+      let peakEnd = 23;
+      for (let h = 23; h >= 0; h--) {
+        if (todayUvs[h] >= maxUvToday * 0.75) {
+          peakEnd = h;
+          break;
+        }
+      }
+      if (peakStart !== -1) {
+        peakHoursText = `${String(peakStart).padStart(2, '0')}:00 - ${String(peakEnd + 1).padStart(2, '0')}:00 h`;
+      }
+    } else {
+      peakHoursText = 'Radiación tenue (cielo cubierto)';
+    }
+  }
+
+  let burnTimeAdvice = 'Exposición segura • Síntesis de Vitamina D';
+  if (uvVal >= 8) {
+    burnTimeAdvice = 'Quemadura en < 15 min • Fotoprotector FPS 50+ obligatorio';
+  } else if (uvVal >= 6) {
+    burnTimeAdvice = 'Quemadura en < 25 min • Protección alta (FPS 50)';
+  } else if (uvVal >= 3) {
+    burnTimeAdvice = 'Protección recomendada tras 45 min de sol continuo';
+  } else {
+    burnTimeAdvice = 'Exposición segura • Síntesis moderada de Vitamina D';
+  }
 
   // Estado Oficial de Alertas AEMET
   const aemetStatus = getAemetAlertStatus(data, concejo);
@@ -898,12 +968,23 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
         </div>
         <div class="sensor-body">
           <div class="sensor-val">${current.relative_humidity_2m}<small>%</small></div>
-          <div class="sensor-sub">Punto de Rocío: <strong>${dewPoint}°C</strong></div>
-          <div class="humidity-progress">
-            <div class="hum-bar" style="width: ${current.relative_humidity_2m}%;"></div>
+          <div class="sensor-sub">Punto de Rocío: <strong>${dewPoint}°C</strong> • Vapor: <strong>${absHumidity} g/m³</strong></div>
+          <div class="humidity-gauge-bar" title="Escala de humedad cantábrica: ${current.relative_humidity_2m}%">
+            <div class="humidity-gauge-fill" style="width: ${current.relative_humidity_2m}%;"></div>
           </div>
-          <div class="sensor-hint">
-            ${current.relative_humidity_2m > 85 ? 'Humedad cantábrica muy alta (ambiente propicio para orpín/borrina)' : 'Nivel de humedad confortable'}
+          <div class="gauge-labels">
+            <span>Seco (&lt;40%)</span>
+            <span>Confort (40-65%)</span>
+            <span>Húmedo (65-85%)</span>
+            <span>Saturado (&gt;85%)</span>
+          </div>
+          <div class="sensor-mini-badges">
+            <div class="sensor-mini-badge ${fogRisk.class}">
+              <span>${fogRisk.icon} Margen Rocío: <strong>Δ ${deltaDew}°C</strong> (${fogRisk.label})</span>
+            </div>
+            <div class="sensor-mini-badge hum-badge-neutral">
+              <span>🌡️ ${humidexLabel}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -943,9 +1024,24 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
         </div>
         <div class="sensor-body">
           <div class="sensor-val" style="color: ${uvVal != null ? uvInfo.color : 'var(--text-dim)'};">${uvVal != null ? `${uvVal.toFixed(1)} <small class="uv-level">(${uvInfo.level})</small>` : '<span style="font-size: 1.35rem; font-weight: 700; color: var(--text-dim);">No disponible</span>'}</div>
-          <div class="sensor-sub">${uvVal != null ? 'Máximo previsto en la jornada' : 'No computado por este modelo'}</div>
-          <div class="sensor-hint" style="border-left: 3px solid ${uvVal != null ? uvInfo.color : 'rgba(148, 163, 184, 0.4)'}; padding-left: 8px; margin-top: 8px;">
-            ${uvInfo.advice}
+          <div class="sensor-sub">Máx. previsto hoy • Potencia: <strong>${solarPowerText}</strong></div>
+          <div class="uv-spectrum-bar" title="Escala UV OMM: ${uvVal != null ? uvVal.toFixed(1) : 0}">
+            <div class="uv-spectrum-pointer" style="left: ${uvMarkerPercent}%;"></div>
+          </div>
+          <div class="gauge-labels">
+            <span>0 (Bajo)</span>
+            <span>3 (Mod)</span>
+            <span>6 (Alto)</span>
+            <span>8 (M.Alto)</span>
+            <span>11+ (Extremo)</span>
+          </div>
+          <div class="sensor-mini-badges">
+            <div class="sensor-mini-badge uv-badge-neutral">
+              <span>⏱️ Cénit / Pico solar: <strong>${peakHoursText}</strong></span>
+            </div>
+            <div class="sensor-mini-badge ${uvVal >= 6 ? 'uv-badge-warn' : 'uv-badge-safe'}">
+              <span>🛡️ ${burnTimeAdvice}</span>
+            </div>
           </div>
         </div>
       </div>

@@ -41,27 +41,33 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - Aplicar en Java la regla de consenso: si el modelo local indica soleado (`weather_code <= 1` o `cloud_cover < 50%`) pero no hay sol activo (`direct_normal_irradiance < 100 W/m²`, `uv < 1.0`) y ECMWF reporta manto cubierto (`cloud_cover >= 80%`), forzar `weather_code = 3` (Nublado) en el tiempo actual y en la previsión diaria de hoy, asegurando paridad visual 1:1 total entre el widget de escritorio y la web app.
 
 ## 🛡️ Actualización v3.0.23: Modo Oscuro Soberano Android, Balizas Solares & Tarjeta Bilingüe Compacta — 2026-10-25 / 2026-10-26
-- **Carrusel Horizontal de Sensores Monotarjeta 100% con Pastillas Rápidas & Balizas Respirantes de Alerta (Feedback Lendo - «estaba pensando en hacer que las tarjetas debajo de la prevision de 72 horas sean deslizables horizontalmente... antes deberian de tener un tamaño igual en un movil... y en el carusel, si hay alguna alerta que pusimos, podemos hacer que parpadee en el coler de la emergencia o es demasiado?», «probamos en local? y añadimos a la misma version en changelog?»):**
+- **Carrusel Horizontal Monotarjeta Universal & Sensores Enriquecidos (Feedback Lendo - «estaba pensando en hacer que las tarjetas debajo de la prevision de 72 horas sean deslizables horizontalmente...», «pero salen todos a la vez. tienes arriba el carusel pero salen todos», «todo bien pero hay alguna tarjeta que deberia de rellenar sinceramente. parecen muy pobres. investiga», «pisale socia»):**
   1. *Diagnóstico Operativo y Ergonómico:*
-     - Lendo concibió que los 7 sensores atmosféricos (Anemómetro, Barómetro, Humedad, Pluviómetro, Radiación UV, Calidad del Aire y Asesor de Colada) resultaban muy largos en desplazamiento vertical continuo y que en móvil tenían alturas desparejas (el anemómetro ocupaba sensiblemente más altura vertical que el barómetro o la humedad).
-     - Se planteó la necesidad de igualar sus alturas sin inventar textos de relleno artificiales, permitir salto directo a cualquier sensor, y resolver la señalización de alertas sin caer en parpadeos molestos o estroboscópicos.
-  2. *Implementación Técnica (`currentCard.js`, `laundryAdvisor.js`, `components.css`, `main.css`, `app.js`):*
-     - **Carrusel Monotarjeta al 100% en Móvil (Doctrina 18 & Ley 11):**
-       - Contenedor `.sensors-carousel` con `overflow-x: auto; scroll-snap-type: x mandatory;`.
+     - Lendo concibió que los 7 sensores atmosféricos (Anemómetro, Barómetro, Humedad, Pluviómetro, Radiación UV, Calidad del Aire y Asesor de Colada) debían deslizarse horizontalmente en lugar de requerir scroll vertical continuo.
+     - Al implantar el formato monotarjeta al 100% (275px de altura fija para todos), se detectó que en escritorio una regla residual de rejilla los mostraba en bloque, corrigiéndose para que en cualquier pantalla (móvil, tablet y PC con arrastre de ratón) se muestre estrictamente una única tarjeta por slide.
+     - Asimismo, Lendo constató que mientras el Anemómetro y la Colada lucían muy ricos, las tarjetas de **Humedad** y **Radiación UV** se veían «muy pobres» y con espacio vacío desaprovechado, acordándose enriquecerlas con datos científicos reales sin texto de relleno ficticio.
+  2. *Implementación Técnica (`currentCard.js`, `components.css`, `app.js`, `sw.js`):*
+     - **Carrusel Monotarjeta al 100% Universal (Doctrina 18 & Ley 11):**
+       - `.sensors-carousel` con `overflow-x: auto; scroll-snap-type: x mandatory;`.
        - Cada sensor ocupa exactamente el ancho total disponible (`flex: 0 0 100%; width: 100%; max-width: 100%; box-sizing: border-box; scroll-snap-align: start; scroll-snap-stop: always;`).
-       - *Armonización de Altura Sin Relleno:* Ajustado el cuadrante de la brújula en móvil a 80x80px y unificadas las 7 tarjetas con estructura `display: flex; flex-direction: column; justify-content: space-between; min-height: 275px;`, garantizando una altura idéntica y equilibrada en cualquier dispositivo móvil sin añadir textos de relleno.
-       - *Preservación Incondicional del Scroll Vertical:* Directiva estricta `touch-action: pan-x pan-y;` en el contenedor y tarjetas, permitiendo que el usuario se desplace verticalmente por la página apoyando el pulgar en cualquier sensor sin congelar la pantalla.
-       - *Aislamiento de Gestos (`isInteractiveZone`):* Protegido el carrusel en `app.js` para que deslizar entre sensores nunca active el cambio de pestañas general de la app.
-       - *Modo Cuadrícula en Escritorio:* En pantallas grandes (>768px), el carrusel se transforma fluidamente en una cuadrícula simétrica espaciosa (`grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));`).
-     - **Barra de Pastillas con Salto Rápido & Indicador de Puntos:**
-       - Barra superior ergonómica `.sensors-nav-toolbar` con pastillas compactas para cada sensor (`💨 Barlovento`, `⏱️ Barómetro`, `💧 Humedad`, `🌧️ Lluvia`, `☀️ UV`, `🍃 Aire`, `👕 Colada`), permitiendo saltar instantáneamente a cualquier sensor con un toque.
-       - Indicador inferior de 7 puntos (`.sensor-dot`) con sincronización bidireccional suave: al deslizar horizontalmente, un observador con `requestAnimationFrame` actualiza la pastilla y el punto activo en tiempo real.
-     - **Balizas Respirantes de Alerta (*Breathing Halo*):**
-       - En sustitución de parpadeos estroboscópicos agresivos (prohibidos por accesibilidad y ergonomía), se implementó un halo respirante continuo de 2.4s a 2.8s (`pillBeaconPulseDanger`, `pillBeaconPulseWarning`, `cardBeaconPulseDanger`, `cardBeaconPulseWarning`).
-       - Si un sensor entra en aviso (viento fuerte, presión anormal, lluvia activa, radiación muy alta o aire desfavorable), la pastilla superior muestra un punto de alerta y la tarjeta emite un resplandor perimetral sutil que hace inmediatamente reconocible la anomalía incluso si el sensor está fuera de la pantalla.
+       - *Soporte de Arrastre en PC (Drag-to-Scroll):* Movimiento fluido con ratón y snapping magnético automático al sensor más próximo al soltar.
+       - *Preservación Incondicional del Scroll Vertical:* Directiva estricta `touch-action: pan-x pan-y;` en contenedor y tarjetas.
+     - **Enriquecimiento del Higrómetro (Humedad y Punto de Rocío):**
+       - *Medidor de Confort Higrométrico:* Barra segmentada con escala cantábrica (*Seco <40% • Confort 40-65% • Húmedo 65-85% • Saturado >85%*).
+       - *Margen de Rocío / Alerta de Niebla (Δ T):* Diferencial térmico en tiempo real (`T - Rocío`) con micro-badge cromático: alerta de saturación inminente / orpín si Δ T <= 1.5°C o serena nocturna si Δ T <= 3.5°C.
+       - *Efecto Bochorno / Humidex:* Cuantificación del aporte de la humedad a la sensación térmica respecto al termómetro.
+       - *Vapor de Agua Absoluto:* Contenido hídrico real en gramos por metro cúbico de aire (`g/m³`).
+     - **Enriquecimiento de la Radiación Solar & Índice UV:**
+       - *Medidor de Espectro UV (0 a 11+):* Barra cromática de degradado con cursor dinámico blanco posicionado en el valor actual (*Verde 0-2 • Amarillo 3-5 • Naranja 6-7 • Rojo 8-10 • Violeta 11+*).
+       - *Potencia Solar en Superficie (W/m²):* Medición en vatios por metro cuadrado de la radiación global y directa que llega al suelo en cada concejo.
+       - *Ventana Horaria de Cénit Solar:* Rango horario del pico solar diario calculado a partir de la curva horaria de UV.
+       - *Exposición Segura & Vitamina D:* Recomendaciones dinámicas de fotoprotección y tiempo estimado antes de eritema.
+     - **Barra de Pastillas con Salto Rápido & Balizas Respirantes:**
+       - Barra horizontal superior con 7 pastillas para salto instantáneo con un toque y puntos de sincronización inferior.
+       - Halo pulsante suave (2.4s - 2.8s) en pastilla y marco de tarjeta ante condiciones anómalas o de aviso.
   3. *Anti-Caché Obligatorio (Ley 4) & Registro:*
-     - Service Worker actualizado a `meteoasturlode-v3023-4-sensors-carousel` en `sw.js`.
-     - Revisión interna `v=3.0.23.4` en `index.html`, `js/app.js`, `css/main.css` y `css/components.css`.
+     - Service Worker actualizado a `meteoasturlode-v3023-6-rich-sensors` en `sw.js`.
+     - Revisión interna `v=3.0.23.6` en `index.html`, `js/app.js`, `css/main.css` y `css/components.css`.
      - Documentado en `CHANGELOG.md` e `index.html`.
 - **Ampliación Ergonómica: Tarjeta Principal Compacta & Jerarquía Bilingüe Azul y Oro Asturiano (Feedback Lendo - «quisiera hacer un poco mas compacta la primera tarjetadel menu en vivo... que cambie segun el nombre con color del azul al amarillo como la bandera de asturias. y lo mismo el tiempo que hace. pone en castellano Despejado y luego en asturiano lo mismo. como lo ves?» y «pisale a la 1 a ver que pasa y ponlo en el changelog por si hay que revertir ésto último»):**
   1. *Diagnóstico Operativo:*

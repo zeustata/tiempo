@@ -11,27 +11,32 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ## [3.0.23] - 2026-10-25 / 2026-10-26
 
-### 🎠 Carrusel Horizontal de Sensores con Pastillas Rápidas & Balizas Respirantes de Alerta (Feedback Lendo & Princesa)
+### 🎠 Carrusel Horizontal Monotarjeta Universal & Sensores Enriquecidos (Feedback Lendo & Princesa)
 - **Motivación y Diagnóstico Operativo:**
   - Lendo planteó hacer que las tarjetas de sensores situadas debajo de la previsión de 72 horas (Anemómetro, Barómetro, Humedad, Pluviómetro, Radiación UV, Calidad del Aire y Asesor de Colada) fueran deslizables horizontalmente en lugar de requerir un largo desplazamiento vertical por la portada.
-  - Al mismo tiempo, identificó que en móviles las tarjetas tenían alturas desiguales (por ejemplo, el anemómetro resultaba sensiblemente más largo que el barómetro por el tamaño de la brújula y textos secundarios), por lo que era necesario igualar sus alturas sin rellenar con texto artificial y verificar si convenía alertar en caso de emergencia.
-- **Implementación Técnica (`js/components/currentCard.js`, `js/utils/laundryAdvisor.js`, `css/components.css`, `css/main.css`, `js/app.js`):**
-  - **Carrusel Monotarjeta al 100% en Móvil (Doctrina 18 & Ley 11):**
+  - Al revisar las tarjetas en el formato monotarjeta de 275px, Lendo constató que mientras el Anemómetro y la Colada lucían muy completos, las tarjetas de **Humedad** y **Radiación UV** se veían «muy pobres» y vacías, requiriendo un enriquecimiento técnico genuino con datos meteorológicos reales sin meter texto de relleno.
+- **Implementación Técnica (`js/components/currentCard.js`, `css/components.css`, `js/app.js`, `sw.js`):**
+  - **Carrusel Monotarjeta al 100% Universal (Doctrina 18 & Ley 11):**
     - Contenedor `.sensors-carousel` con desplazamiento horizontal magnético (`overflow-x: auto; scroll-snap-type: x mandatory;`).
-    - En pantallas móviles, cada sensor ocupa exactamente el ancho completo disponible (`flex: 0 0 100%; width: 100%; max-width: 100%; box-sizing: border-box; scroll-snap-align: start; scroll-snap-stop: always;`).
-    - **Armonización de Altura Sin Relleno:** Ajustado el cuadrante de la brújula en móvil a 80x80px y unificadas las 7 tarjetas con estructura `display: flex; flex-direction: column; justify-content: space-between; min-height: 275px;`, garantizando una altura idéntica y equilibrada en cualquier dispositivo móvil sin añadir textos de relleno.
-    - **Preservación Incondicional del Scroll Vertical:** Directiva estricta `touch-action: pan-x pan-y;` en el contenedor y tarjetas, permitiendo que el usuario se desplace verticalmente por la página apoyando el pulgar en cualquier sensor sin congelar la pantalla.
-    - **Aislamiento de Gestos (`isInteractiveZone`):** Protegido el carrusel en `app.js` para que deslizar entre sensores nunca active el cambio de pestañas general de la app.
-    - **Modo Cuadrícula en Escritorio:** En pantallas grandes (>768px), el carrusel se transforma fluidamente en una cuadrícula simétrica espaciosa (`grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));`).
-  - **Barra de Pastillas con Salto Rápido & Indicador de Puntos:**
-    - Barra superior ergonómica `.sensors-nav-toolbar` con pastillas compactas para cada sensor (`💨 Barlovento`, `⏱️ Barómetro`, `💧 Humedad`, `🌧️ Lluvia`, `☀️ UV`, `🍃 Aire`, `👕 Colada`), permitiendo saltar instantáneamente a cualquier sensor con un toque.
-    - Indicador inferior de 7 puntos (`.sensor-dot`) con sincronización bidireccional suave: al deslizar horizontalmente, un observador con `requestAnimationFrame` actualiza la pastilla y el punto activo en tiempo real.
-  - **Balizas Respirantes de Alerta (*Breathing Halo*):**
-    - En sustitución de parpadeos estroboscópicos agresivos (prohibidos por accesibilidad y ergonomía), se implementó un halo respirante continuo de 2.4s a 2.8s (`pillBeaconPulseDanger`, `pillBeaconPulseWarning`, `cardBeaconPulseDanger`, `cardBeaconPulseWarning`).
-    - Si un sensor entra en aviso (viento fuerte, presión anormal, lluvia activa, radiación muy alta o aire desfavorable), la pastilla superior muestra un punto de alerta y la tarjeta emite un resplandor perimetral sutil que hace inmediatamente reconocible la anomalía incluso si el sensor está fuera de la pantalla.
+    - Tanto en móvil como en PC y tablet, cada sensor ocupa exactamente el ancho completo disponible (`flex: 0 0 100%; width: 100%; max-width: 100%; box-sizing: border-box; scroll-snap-align: start; scroll-snap-stop: always;`).
+    - **Soporte de Arrastre en Escritorio (Drag-to-Scroll):** Interacción suave con ratón en PC, permitiendo agarrar y arrastrar las tarjetas con snapping magnético automático al soltar.
+    - **Preservación Incondicional del Scroll Vertical:** Directiva estricta `touch-action: pan-x pan-y;` en contenedor y tarjetas, permitiendo el scroll vertical continuo apoyando el dedo en cualquier punto.
+  - **Enriquecimiento del Higrómetro (Humedad y Punto de Rocío):**
+    - *Medidor de Confort Higrométrico:* Barra segmentada con escala cantábrica (*Seco <40% • Confort 40-65% • Húmedo 65-85% • Saturado >85%*).
+    - *Margen de Rocío / Alerta de Niebla (Δ T):* Diferencial térmico en tiempo real (`T - Rocío`) con indicador cromático: alerta de saturación inminente / orpín si Δ T <= 1.5°C o serena nocturna si Δ T <= 3.5°C.
+    - *Efecto Bochorno / Humidex:* Cuantificación del aporte de la humedad a la sensación térmica respecto al termómetro.
+    - *Vapor de Agua Absoluto:* Contenido hídrico real en gramos por metro cúbico de aire (`g/m³`).
+  - **Enriquecimiento de la Radiación Solar & Índice UV:**
+    - *Medidor de Espectro UV (0 a 11+):* Barra cromática de degradado con cursor dinámico blanco posicionado en el valor actual (*Verde 0-2 • Amarillo 3-5 • Naranja 6-7 • Rojo 8-10 • Violeta 11+*).
+    - *Potencia Solar en Superficie (W/m²):* Medición en vatios por metro cuadrado de la radiación global y directa que llega al suelo en cada concejo.
+    - *Ventana Horaria de Cénit Solar:* Rango horario del pico solar diario calculado a partir de la curva horaria de UV.
+    - *Exposición Segura & Vitamina D:* Recomendaciones dinámicas de fotoprotección y tiempo estimado antes de eritema.
+  - **Barra de Pastillas con Salto Rápido & Balizas Respirantes:**
+    - Barra horizontal superior con 7 pastillas para salto instantáneo con un toque y puntos de sincronización inferior.
+    - Halo pulsante suave (2.4s - 2.8s) en pastilla y marco de tarjeta ante condiciones anómalas o de aviso.
 - **Anti-Caché Obligatorio (Ley 4):**
-  - Service Worker actualizado a `meteoasturlode-v3023-4-sensors-carousel` en `sw.js`.
-  - Revisión interna `v=3.0.23.4` en `index.html`, `js/app.js`, `css/main.css` y `css/components.css`.
+  - Service Worker actualizado a `meteoasturlode-v3023-6-rich-sensors` en `sw.js`.
+  - Revisión interna `v=3.0.23.6` en `index.html`, `js/app.js`, `css/main.css` y `css/components.css`.
 
 ### 💛 Tarjeta Principal Compacta & Jerarquía Bilingüe Azul y Oro Asturiano (Feedback Lendo)
 - **Motivación y Diagnóstico Operativo:**
