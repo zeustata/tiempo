@@ -1148,8 +1148,6 @@ export function renderMarineCard(data, concejo) {
   const activePlayas = isCoasting ? coastalData.playas : PLAYAS_POR_CONCEJO[interiorRef.refId].playas;
   const activeCoastName = isCoasting ? coastalData.name : `${interiorRef.name} (más cercana a ${concejo.name} • ${interiorRef.dist})`;
 
-  const { matchers: beachMatchers, categories: beachCategories } = getBeachCategories(activePlayas);
-
   const waveHeight = (marine && typeof marine.wave_height === 'number') ? marine.wave_height.toFixed(1) : (isCoasting ? '1.4' : '1.3');
 
   const windSpeed = Math.round(current.wind_speed_10m || 10);
@@ -1386,33 +1384,10 @@ export function renderMarineCard(data, concejo) {
 
       <!-- 4. CATÁLOGO TURÍSTICO DE PLAYAS Y CALAS DEL CONCEJO -->
       <div class="marine-ports-section">
-        <div class="beach-section-header" style="margin-bottom: 8px;">
+        <div class="beach-section-header" style="margin-bottom: 12px;">
           <h4 class="ports-title" style="margin: 0;">
             🏖️ Guía de Playas y Calas de ${isCoasting ? concejo.name : `${concejo.name} (en ${interiorRef.name})`}
           </h4>
-        </div>
-
-        <!-- BARRA ERGONÓMICA DE WEBCAMS Y SELECTOR DESPLEGABLE DE CATEGORÍAS -->
-        <div class="beach-controls-toolbar">
-          <button type="button" class="btn-open-webcams-beach beach-webcams-btn" data-webcam-cat="playas" title="Ver cámaras en directo de arenales asturianos" aria-label="Ver webcams de playas en directo">
-            <span class="webcam-btn-icon">📹</span>
-            <span class="webcam-btn-text">Webcams</span>
-            <span class="webcam-live-dot" title="En directo">●</span>
-          </button>
-
-          <div class="beach-filter-dropdown-wrapper">
-            <select id="beach-category-select" class="beach-category-select" aria-label="Filtrar catálogo de playas">
-              <option value="all" selected>🏖️ Playas</option>
-              ${beachCategories.map(cat => `
-                <option value="${cat.id}">${cat.icon} ${cat.label}</option>
-              `).join('')}
-            </select>
-            <span class="dropdown-chevron">▾</span>
-          </div>
-        </div>
-
-        <div id="beach-empty-filter-msg" class="beach-empty-filter-msg" style="display: none;">
-          ℹ️ No se han encontrado playas en esta categoría para este concejo.
         </div>
 
         <div class="beaches-grid">
@@ -1427,14 +1402,8 @@ export function renderMarineCard(data, concejo) {
             const recClass = isFamily ? 'chip-family' : 'chip-warning';
             const recVal = isFamily ? 'Ideal para baño, descanso y paseos' : 'Precaución con el oleaje en días de mar viva';
 
-            const matchedCats = ['all'];
-            beachMatchers.forEach(m => {
-              if (m.test(p)) matchedCats.push(m.id);
-            });
-            const dataCategories = matchedCats.join(' ');
-
             return `
-            <details class="beach-accordion-card" name="beach-accordion" data-beach-categories="${dataCategories}">
+            <details class="beach-accordion-card" name="beach-accordion">
               <summary class="beach-accordion-header">
                 <div class="beach-accordion-title-wrap">
                   <span class="beach-accordion-icon">🏖️</span>

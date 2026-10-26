@@ -1671,34 +1671,6 @@ class MeteoAsturiasApp {
       }
     });
 
-    // Delegación global para selector desplegable de categorías de playas (Playas y Mareas)
-    document.addEventListener('change', (e) => {
-      const select = e.target.closest('#beach-category-select');
-      if (!select) return;
-
-      this.triggerHaptic();
-      const filterCat = select.value || 'all';
-
-      // Filtrar las tarjetas de playas del DOM y cerrar acordeones
-      const beachCards = document.querySelectorAll('.beach-accordion-card');
-      let visibleCount = 0;
-      beachCards.forEach(card => {
-        card.open = false;
-        const cats = card.dataset.beachCategories || '';
-        if (filterCat === 'all' || cats.split(' ').includes(filterCat)) {
-          card.style.display = '';
-          visibleCount++;
-        } else {
-          card.style.display = 'none';
-        }
-      });
-
-      const emptyMsg = document.getElementById('beach-empty-filter-msg');
-      if (emptyMsg) {
-        emptyMsg.style.display = visibleCount === 0 ? 'block' : 'none';
-      }
-    });
-
     // Delegación global para acordeón exclusivo de playas, spots de surf y rutas (autocierre de persianas previas)
     document.addEventListener('toggle', (e) => {
       const details = e.target.closest('.beach-accordion-card, .route-accordion-card');

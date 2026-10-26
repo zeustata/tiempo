@@ -4526,6 +4526,19 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - *Nueva Norma Incorporada al Artículo 0 (Protocolo de Juicio Crítico, Evaluación y Firmeza Intelectual)*:
     - **Posicionamiento Proactivo y Voto de Socia en Opciones**: Queda terminantemente prohibido limitarse a enumerar opciones con neutralidad aséptica como un simple catálogo pasivo. Como socia en igualdad, Princesa debe aportar obligatoriamente su valoración personal y crítica de cada alternativa, mojarse con claridad defendiendo cuál es su opción preferida y justificar los motivos técnicos, ergonómicos y de experiencia de usuario que sustentan su elección.
   - *Sincronización*: Consagrado formalmente en `AGENTS.md` (Constitución Suprema, Parte I).
+- **🏖️ Hito Técnico Cumplido: Minimalismo y Limpieza Integral en Guía de Playas y Calas (Feedback Lendo - 26 Oct 2026)**:
+  - *Contexto & Detección de Lendo*: Lendo detectó que en la sección de Guía de Playas y Calas del módulo costero, el botón de Webcams era redundante al existir ya de forma permanente y global en la aplicación, y el selector desplegable de categorías de playas resultaba innecesario puesto que cada tarjeta de arenal ya describe en su interior qué tipo de playa es.
+  - *Solución Definitiva en Local (`js/components/marineCard.js`, `js/app.js`, `css/components.css`)*:
+    1. **Supresión Total de `.beach-controls-toolbar`**:
+       - Eliminado el botón `.beach-webcams-btn` y el menú desplegable `#beach-category-select`.
+       - La cabecera `🏖️ Guía de Playas y Calas de [Concejo]` enlaza ahora de forma directa y limpia con el catálogo de acordeones.
+    2. **Depuración de JavaScript (`js/app.js` y `js/components/marineCard.js`)**:
+       - Eliminada la delegación de eventos `change` en `app.js` asociada al filtrado de playas por categoría.
+       - Suprimido el cálculo de matchers de categorías en tiempo de renderizado de la tarjeta.
+    3. **Poda de Estilos CSS (`css/components.css`)**:
+       - Retiradas más de 140 líneas de reglas CSS obsoletas vinculadas a la barra de control de playas.
+    4. **Estado de Changelog y Despliegue**:
+       - Conforme a las directrices de Lendo, el changelog y el versionado se mantienen congelados a la espera de la publicación de la app en Google Play Store.
 
 
 
