@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-16-footer-accordion';
+const CACHE_NAME = 'meteoasturlode-v3023-17-pluviometer-aesthetic';
 const STATIC_ASSETS = [
   './',
   './index.html',

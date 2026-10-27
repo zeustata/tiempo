@@ -646,6 +646,37 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   const rainTotalSeverity = getRainAccumSeverity(rainTodayTotal);
   const rainIntensitySeverity = getRainIntensitySeverity(currentRainIntensity);
 
+  // Cálculos estéticos y ergonómicos para el Pluviómetro Digital
+  let rainProgressPercent = 0;
+  if (rainTodayTotal > 0) {
+    rainProgressPercent = Math.min(100, Math.max(0, Math.round((rainFallenSoFar / rainTodayTotal) * 100)));
+  } else if (rainFallenSoFar > 0) {
+    rainProgressPercent = 100;
+  }
+  let rainBarClass = 'rain-fill-normal';
+  if (rainFallenSoFar >= 80 || rainTodayTotal >= 80 || currentRainIntensity >= 30) {
+    rainBarClass = 'rain-fill-danger';
+  } else if (rainFallenSoFar >= 40 || rainTodayTotal >= 40 || currentRainIntensity >= 15) {
+    rainBarClass = 'rain-fill-warning';
+  }
+
+  let rainLiveStatusText = '💧 Pluviómetro en reposo • Sin lluvia ahora';
+  let rainLiveStatusClass = 'rain-badge-neutral';
+  if (currentRainIntensity >= 30) {
+    rainLiveStatusText = `🚨 Torrencial en vivo: <strong>${currentRainIntensity.toFixed(1)} mm/h</strong> ⚠️`;
+    rainLiveStatusClass = 'rain-badge-danger';
+  } else if (currentRainIntensity >= 15) {
+    rainLiveStatusText = `⚠️ Lluvia muy fuerte: <strong>${currentRainIntensity.toFixed(1)} mm/h</strong> ⚠️`;
+    rainLiveStatusClass = 'rain-badge-warning';
+  } else if (currentRainIntensity >= 5) {
+    rainLiveStatusText = `🌧️ Lluvia moderada: <strong>${currentRainIntensity.toFixed(1)} mm/h</strong>`;
+    rainLiveStatusClass = 'rain-badge-active';
+  } else if (currentRainIntensity > 0) {
+    rainLiveStatusText = `🌧️ Orbayu / Lluvia débil: <strong>${currentRainIntensity.toFixed(1)} mm/h</strong>`;
+    rainLiveStatusClass = 'rain-badge-active';
+  }
+  const popTrendIcon = nextPopVal > currentPopVal ? '📈' : (nextPopVal < currentPopVal ? '📉' : '⏱️');
+
   // Monitor Convectivo y Alerta Silenciosa de Tormenta Inminente
   const storm = detectThunderstormEffect(current, hourly, concejo);
   const thunderstormMarkup = renderThunderstormBanner(storm);
@@ -1175,15 +1206,24 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
         </div>
         <div class="sensor-body">
           <div class="sensor-val ${rainFallenSeverity.cssClass}">${rainFallenSoFar.toFixed(1)} <small>mm (l/m²)</small>${rainFallenSeverity.icon}</div>
-          <div class="sensor-sub">Agua caída hoy hasta las ${String(currentHour).padStart(2, '0')}:00 h</div>
-          <div class="sensor-sub" style="margin-top: 4px;">
-            Total previsto hoy (24h): <strong class="${rainTotalSeverity.cssClass}">${rainTodayTotal.toFixed(1)} mm${rainTotalSeverity.icon}</strong>
+          <div class="sensor-sub">
+            Agua caída hasta las ${String(currentHour).padStart(2, '0')}:00 h • Total 24h: <strong class="${rainTotalSeverity.cssClass}">${rainTodayTotal.toFixed(1)} mm${rainTotalSeverity.icon}</strong>
           </div>
-          <div class="sensor-sub" style="margin-top: 6px; padding: 4px 8px; background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 6px; font-size: 0.80rem;">
-            Probabilidad: <strong>${currentPopVal}%</strong> (${String(currentHour).padStart(2, '0')}h) ➔ <strong>${nextPopVal}%</strong> (${String(nextHour).padStart(2, '0')}h)
+          <div class="rain-gauge-bar" title="Progreso de acumulación de lluvia hoy: ${rainFallenSoFar.toFixed(1)} mm de ${rainTodayTotal.toFixed(1)} mm (${rainProgressPercent}%)">
+            <div class="rain-gauge-fill ${rainBarClass}" style="width: ${rainProgressPercent}%;"></div>
           </div>
-          <div class="sensor-sub" style="margin-top: 4px;">
-            Intensidad en vivo: <strong class="${rainIntensitySeverity.cssClass}">${currentRainIntensity > 0 ? `${currentRainIntensity.toFixed(1)} mm/h${rainIntensitySeverity.icon}` : 'Sin lluvia en este momento'}</strong>
+          <div class="gauge-labels rain-gauge-labels">
+            <span>0 mm</span>
+            <span>${rainProgressPercent > 0 ? `${rainProgressPercent}% de la jornada` : 'En reposo'}</span>
+            <span>Total: ${rainTodayTotal.toFixed(1)} mm</span>
+          </div>
+          <div class="sensor-mini-badges">
+            <div class="sensor-mini-badge rain-badge-prob">
+              <span>${popTrendIcon} Probabilidad: <strong>${currentPopVal}%</strong> (${String(currentHour).padStart(2, '0')}h) ➔ <strong>${nextPopVal}%</strong> (${String(nextHour).padStart(2, '0')}h)</span>
+            </div>
+            <div class="sensor-mini-badge ${rainLiveStatusClass}">
+              <span>${rainLiveStatusText}</span>
+            </div>
           </div>
         </div>
       </div>
