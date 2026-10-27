@@ -40,6 +40,18 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - Contrastar con ECMWF IFS (`models=ecmwf_ifs025&current=weather_code,cloud_cover,direct_normal_irradiance`).
        - Aplicar en Java la regla de consenso: si el modelo local indica soleado (`weather_code <= 1` o `cloud_cover < 50%`) pero no hay sol activo (`direct_normal_irradiance < 100 W/m²`, `uv < 1.0`) y ECMWF reporta manto cubierto (`cloud_cover >= 80%`), forzar `weather_code = 3` (Nublado) en el tiempo actual y en la previsión diaria de hoy, asegurando paridad visual 1:1 total entre el widget de escritorio y la web app.
 
+## 💎 Refinamiento Visual y Ergonomía Móvil: Botones Gemelos Adelgazados (Webcams & Ajustes) con Destellos Perimetrales — 2026-10-27
+- **Eliminación de Subtítulos y Destello Perimetral Continuo (Feedback Lendo - «quiero adelgazar un poco los botones de arriba WebCams y Menu. quiero quiterle al boton de webcam el subtitulo de en directo... y el boton de menu cambiarlo a ajustes, quitandole el subtitulo... no. el punto rojo o azul no. el destello que rodea en rojo el boton de webcam que sube y baja el brillo y hacer lo mismo con el otro boton pero en azul» y «pisale»):**
+  1. *Diagnóstico Operativo y Solución de Diseño:*
+     - Los botones superiores de cabecera (*Webcams* y *Menú*) contaban con dos líneas verticales de texto (título principal y subtítulo inferior *"● En Directo"* y *"Híbrido"*), lo que incrementaba su altura total a 38px-44px y sobrecargaba la cabecera en smartphones.
+     - Lendo solicitó adelgazar ambos botones, eliminar los subtítulos inferiores, renombrar *"Menú"* a *"Ajustes"* y aplicar a ambos un destello exterior que suba y baje de brillo (rojo para Webcams y azul para Ajustes), sin puntos interiores.
+  2. *Implementación Técnica Realizada (`index.html`, `css/main.css`, `sw.js`):*
+     - **Estructura Monolínea Pura (`index.html`):** Eliminados los contenedores `.header-twin-text-col`, subtítulos y badges interiores. La estructura interna queda reducida exclusivamente a su icono y etiqueta en una sola línea horizontal: `[ 📹 Webcams ]` a la izquierda y `[ ⚙️ Ajustes ]` a la derecha.
+     - **Adelgazamiento Vertical (`css/main.css`):** Reducido `min-height` de 38px a 32px y padding vertical a 4px en `.compact-nav-trigger`, recuperando espacio vertical útil en pantallas móviles.
+     - **Destello Perimetral Rojo en Webcams (`@keyframes webcamRedGlow`):** Animación fluida continua de respiración perimetral (2.4s) que modula `border-color` (de 0.35 a 0.95) y `box-shadow` (halo exterior difuminado rojo de hasta 12px y brillo interior suave), transmitiendo señal viva de cámara en directo.
+     - **Destello Perimetral Azul en Ajustes (`@keyframes settingsBlueGlow`):** Animación gemela simétrica (2.4s) que modula el borde y halo exterior en el azul primario de la app (`#38bdf8`), aportando coherencia y elegancia tecnológica.
+     - **Anti-Caché Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v3023-12-header-twins-glow` en `sw.js` y querys `js/app.js?v=3.0.23.12` y `css/main.css?v=3.0.23.12` en `index.html`.
+
 ## 🌧️ Armonización Hidrometeorológica Integral: Sincronización Matemática de Precipitación (Pluviómetro, 72h y 10 Días) — 2026-10-27
 - **Paridad Numérica Absoluta en Toda la App (Feedback Lendo - «me fije que la tarjeta del pluviometro no siempre dice la cantidad que va a caer y prevista en ese dia que la que dice las tarjetas de pronostico de 73 horas o la de 10 dias sumando las cantidades del mismo dia. a que se debe?» y «pisale»):**
   1. *Diagnóstico Operativo y Causa Raíz:*

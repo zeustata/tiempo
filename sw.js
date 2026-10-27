@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-11-precipitation-sync';
+const CACHE_NAME = 'meteoasturlode-v3023-12-header-twins-glow';
 const STATIC_ASSETS = [
   './',
   './index.html',
