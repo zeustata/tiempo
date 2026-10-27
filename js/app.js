@@ -572,6 +572,18 @@ class MeteoAsturiasApp {
       });
     }
 
+    // Desplegable de Fuentes y Aviso Legal en Footer (Ley 11 Ergonomía Móvil)
+    const toggleLegalBtn = document.getElementById('btn-toggle-footer-legal');
+    const legalPanel = document.getElementById('footer-sources-panel');
+    if (toggleLegalBtn && legalPanel) {
+      toggleLegalBtn.addEventListener('click', () => {
+        this.triggerHaptic();
+        const isHidden = legalPanel.style.display === 'none' || !legalPanel.style.display;
+        legalPanel.style.display = isHidden ? 'block' : 'none';
+        toggleLegalBtn.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+      });
+    }
+
     // Delegación global de botones de apertura de Webcams (playas y montaña)
     document.addEventListener('click', (e) => {
       const btn = e.target.closest('.btn-open-webcams-beach, .btn-open-webcams-mountain');

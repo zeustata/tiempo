@@ -40,6 +40,21 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - Contrastar con ECMWF IFS (`models=ecmwf_ifs025&current=weather_code,cloud_cover,direct_normal_irradiance`).
        - Aplicar en Java la regla de consenso: si el modelo local indica soleado (`weather_code <= 1` o `cloud_cover < 50%`) pero no hay sol activo (`direct_normal_irradiance < 100 W/m²`, `uv < 1.0`) y ECMWF reporta manto cubierto (`cloud_cover >= 80%`), forzar `weather_code = 3` (Nublado) en el tiempo actual y en la previsión diaria de hoy, asegurando paridad visual 1:1 total entre el widget de escritorio y la web app.
 
+## 📜 Desplegable Ergonómico de Fuentes y Aviso Legal en Footer (Ley 11 & Ley 15) — 2026-10-27
+- **Optimización de Espacio Vertical y Blindaje Legal (Feedback Lendo - «la politica deprivacidad, la parte de abajo no se podria despues de donde politica de privacidas no se puede poner una flecha tipica pequeña para desglosar y asi ocupe menor?» y «pisale si es legal»):**
+  1. *Diagnóstico de Ergonomía Móvil y Cumplimiento Legal:*
+     - Lendo constató que el pie de página (*app-footer*) consumía un exceso de altura en pantallas de smartphone al mantener permanentemente visibles en texto plano las fuentes de datos (Open-Meteo, AEMET, RainViewer) y el aviso legal de desarrollo independiente.
+     - *Validación Legal Estricta (Google Play & Datos Abiertos):*
+       - Para garantizar el cumplimiento absoluto de las políticas para desarrolladores de Google Play Store y el Reglamento General de Protección de Datos (RGPD), el enlace principal directo a `privacy.html` (`🔒 Política de Privacidad`) permanece **100% visible, explícito e interactivo en primer plano en todo momento**.
+       - Los textos secundarios de atribución a las APIs abiertas y el descargo gubernamental se canalizan en un desplegable interactivo accesible a un solo toque.
+  2. *Implementación Técnica Realizada (`index.html`, `components.css`, `app.js`, `sw.js`):*
+     - **Botón Desplegable Ergonómico con Flecha:** Justo junto al enlace de privacidad se integró el botón `.btn-footer-legal` con pastilla compacta y flecha interactiva rotatoria (`▾` a `▲`).
+     - **Panel Colapsado por Defecto:** El contenedor `#footer-sources-panel` permanece oculto de inicio (`display: none;`), ahorrando más de 55 píxeles de scroll vertical en el móvil. Al pulsarlo, se despliega con animación fluida `fadeInDown`.
+     - **Sincronización Total de Versión y Cache-Busting (Ley 4):**
+       - `CACHE_NAME`: Actualizado a `meteoasturlode-v3023-16-footer-accordion` en `sw.js`.
+       - Registro de Service Worker: Actualizado a `sw.js?v=3.0.23.16` en `index.html`.
+       - Assets de aplicación: Query strings actualizadas a `v=3.0.23.16`.
+
 ## 🧭 Instrumento Aero-Meteorológico de Precisión: Nuevo Compás y Veredicto Beaufort — 2026-10-27
 - **Elevación de Acabado Visual en Anemómetro (Feedback en Vivo de Lendo y Beta Testers - «el anemometro y direcion lo veo muy pobre ahora. hablo de la brujula. ya me dijeron varios testers... era el compas que me parece muy soso. lo demas me dices... recuerda que lo basico tiene que ser igual pero mejorado. la flecha del viento hacia el viento no puede perderse» y «pisale»):**
   1. *Diagnóstico de Diseño:*

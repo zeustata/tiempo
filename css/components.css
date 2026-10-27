@@ -13159,3 +13159,54 @@
   to { transform: rotate(360deg); }
 }
 
+/* Botón Desplegable de Fuentes y Aviso Legal en Footer (Ley 11 Ergonomía Móvil) */
+.btn-footer-legal {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  color: var(--text-dim);
+  font-size: 0.74rem;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-footer-legal:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: var(--primary);
+  color: var(--text-main);
+}
+
+.footer-legal-arrow {
+  font-size: 0.75rem;
+  transition: transform 0.25s ease;
+  display: inline-block;
+  color: var(--primary);
+}
+
+.btn-footer-legal[aria-expanded="true"] .footer-legal-arrow {
+  transform: rotate(180deg);
+}
+
+.footer-sources-collapsible {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm, 8px);
+  font-size: 0.74rem;
+  color: var(--text-dim);
+  line-height: 1.55;
+  animation: fadeInDown 0.25s ease;
+  box-sizing: border-box;
+}
+
+

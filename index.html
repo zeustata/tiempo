@@ -32,8 +32,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=3.0.23.15">
-  <link rel="stylesheet" href="css/components.css?v=3.0.23.15">
+  <link rel="stylesheet" href="css/main.css?v=3.0.23.16">
+  <link rel="stylesheet" href="css/components.css?v=3.0.23.16">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -242,12 +242,16 @@
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
         </div>
-        <div style="margin-top: 8px;">
+        <div style="margin-top: 8px; display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;">
           <a href="privacy.html" style="color: var(--text-dim); font-size: 0.82rem; text-decoration: underline; transition: color 0.2s ease;">🔒 Política de Privacidad</a>
+          <button type="button" id="btn-toggle-footer-legal" class="btn-footer-legal" aria-expanded="false" title="Desglosar fuentes de datos y aviso legal" aria-label="Desglosar fuentes y aviso legal">
+            <span class="footer-legal-tag">Fuentes &amp; Legal</span>
+            <span class="footer-legal-arrow">▾</span>
+          </button>
         </div>
         <div id="last-updated" style="margin-top: 6px; font-size: 0.78rem; color: var(--text-dim);"></div>
       </div>
-      <div class="footer-sources" style="margin-top: 10px; font-size: 0.76rem; color: var(--text-dim); line-height: 1.6;">
+      <div id="footer-sources-panel" class="footer-sources-collapsible" style="display: none;">
         <span>Fuentes de datos abiertas: <a href="https://open-meteo.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: underline;">Open-Meteo</a> • <a href="https://www.aemet.es" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: underline;">AEMET OpenData</a> • <a href="https://www.rainviewer.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: underline;">RainViewer</a></span>
         <div style="margin-top: 4px; font-size: 0.72rem; color: var(--text-dim); opacity: 0.9;">
           ⚠️ Aplicación de desarrollo independiente no gubernamental. Fuente oficial de avisos: <a href="https://www.aemet.es" target="_blank" rel="noopener noreferrer" style="color: var(--text-dim); text-decoration: underline;">aemet.es</a>
@@ -4301,7 +4305,7 @@
             <div class="nav-tool-details">
               <span class="nav-tool-name">Buscar Actualización</span>
               <div class="nav-tool-badge-row">
-                <span class="nav-tool-badge badge-warning" id="nav-update-badge">v3.0.23.15 · Limpiar caché</span>
+                <span class="nav-tool-badge badge-warning" id="nav-update-badge">v3.0.23.16 · Limpiar caché</span>
               </div>
               <span class="nav-tool-desc">Descargar inmediatamente la última versión de la red y purgar memoria</span>
             </div>
@@ -4602,7 +4606,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.0.23.15').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.0.23.16').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4632,7 +4636,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.23.15"></script>
+  <script type="module" src="js/app.js?v=3.0.23.16"></script>
 
 
 
