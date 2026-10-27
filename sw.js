@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-14-anti-cache-guardian';
+const CACHE_NAME = 'meteoasturlode-v3023-15-compass-precision';
 const STATIC_ASSETS = [
   './',
   './index.html',

@@ -424,6 +424,46 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   const currentGustSeverity = getGustSeverity(rawGusts);
   const maxGustSeverity = getGustSeverity(rawMaxGustToday);
 
+  // Veredicto Práctico de Viento (Escala Beaufort y Confort Eólico Asturiano)
+  const getWindVerdict = (speedKmH, gustsKmH) => {
+    const s = parseFloat(speedKmH) || 0;
+    const g = parseFloat(gustsKmH) || s;
+    if (g >= 75 || s >= 62) {
+      return {
+        icon: '🚨',
+        label: 'Temporal / Bastinazu: viento duro, riesgo de ramas',
+        badgeClass: 'wind-badge-danger'
+      };
+    }
+    if (g >= 50 || s >= 39) {
+      return {
+        icon: '⚠️',
+        label: 'Viento fuerte / Frescachón: silba en tendidos',
+        badgeClass: 'wind-badge-warning'
+      };
+    }
+    if (g >= 30 || s >= 20) {
+      return {
+        icon: '💨',
+        label: 'Brisa moderada: mueve ramas y levanta polvo',
+        badgeClass: 'wind-badge-moderate'
+      };
+    }
+    if (s >= 6) {
+      return {
+        icon: '🌬️',
+        label: 'Brisa suave: perceptible en cara y mueve hojas',
+        badgeClass: 'wind-badge-gentle'
+      };
+    }
+    return {
+      icon: '🍃',
+      label: 'Calma chicha / Ventolín: humo asciende vertical',
+      badgeClass: 'wind-badge-calm'
+    };
+  };
+  const windVerdict = getWindVerdict(rawSpeed, rawGusts);
+
   // Punto de rocío actual (aproximado por Magnus-Tetens) y métricas higrométricas enriquecidas
   const T = current.temperature_2m;
   const RH = current.relative_humidity_2m;
@@ -909,24 +949,120 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
         <div class="sensor-body wind-body">
           <div class="compass-wrapper">
             <div class="compass-dial" title="Rosa de los vientos: Viento del ${windDir.name} (${current.wind_direction_10m}°), entra por el ${windDir.name} y sopla hacia el ${windDir.toName}">
-              <div class="compass-axis-v"></div>
-              <div class="compass-axis-h"></div>
-              <span class="compass-cardinal card-n">N</span>
-              <span class="compass-cardinal card-e">E</span>
-              <span class="compass-cardinal card-s">S</span>
-              <span class="compass-cardinal card-w">O</span>
+              <!-- Esfera Náutica / Aeroespacial de Precisión -->
+              <svg class="compass-dial-svg" viewBox="0 0 100 100" width="98" height="98" aria-hidden="true">
+                <defs>
+                  <radialGradient id="compassBg" cx="50%" cy="45%" r="50%">
+                    <stop offset="0%" stop-color="#0f172a" />
+                    <stop offset="70%" stop-color="#090d16" />
+                    <stop offset="100%" stop-color="#020617" />
+                  </radialGradient>
+                  <linearGradient id="bezelRing" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.6" />
+                    <stop offset="50%" stop-color="#1e293b" stop-opacity="0.8" />
+                    <stop offset="100%" stop-color="#0284c7" stop-opacity="0.5" />
+                  </linearGradient>
+                  <linearGradient id="glassReflection" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#ffffff" stop-opacity="0.18" />
+                    <stop offset="60%" stop-color="#ffffff" stop-opacity="0.02" />
+                    <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+                  </linearGradient>
+                </defs>
+
+                <!-- Fondo base y biseles concéntricos -->
+                <circle cx="50" cy="50" r="48" fill="url(#compassBg)" />
+                <circle cx="50" cy="50" r="47.5" fill="none" stroke="url(#bezelRing)" stroke-width="1.2" />
+                <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255, 255, 255, 0.07)" stroke-width="0.8" />
+                <circle cx="50" cy="50" r="35" fill="none" stroke="rgba(56, 189, 248, 0.15)" stroke-width="0.6" stroke-dasharray="1.5, 3" />
+
+                <!-- Rosa de los vientos asturiana de 8 puntas (marca de agua en claroscuro) -->
+                <!-- Puntas principales (N, S, E, O) -->
+                <polygon points="50,50 47,40 50,26" fill="rgba(56, 189, 248, 0.12)" />
+                <polygon points="50,50 53,40 50,26" fill="rgba(56, 189, 248, 0.05)" />
+                <polygon points="50,50 40,47 26,50" fill="rgba(56, 189, 248, 0.05)" />
+                <polygon points="50,50 40,53 26,50" fill="rgba(56, 189, 248, 0.12)" />
+                <polygon points="50,50 47,60 50,74" fill="rgba(56, 189, 248, 0.05)" />
+                <polygon points="50,50 53,60 50,74" fill="rgba(56, 189, 248, 0.12)" />
+                <polygon points="50,50 60,47 74,50" fill="rgba(56, 189, 248, 0.12)" />
+                <polygon points="50,50 60,53 74,50" fill="rgba(56, 189, 248, 0.05)" />
+
+                <!-- Puntas secundarias (NE, SE, SO, NO) -->
+                <polygon points="50,50 50,42 66,34" fill="rgba(56, 189, 248, 0.08)" />
+                <polygon points="50,50 58,50 66,34" fill="rgba(56, 189, 248, 0.03)" />
+                <polygon points="50,50 58,50 66,66" fill="rgba(56, 189, 248, 0.08)" />
+                <polygon points="50,50 50,58 66,66" fill="rgba(56, 189, 248, 0.03)" />
+                <polygon points="50,50 50,58 34,66" fill="rgba(56, 189, 248, 0.08)" />
+                <polygon points="50,50 42,50 34,66" fill="rgba(56, 189, 248, 0.03)" />
+                <polygon points="50,50 42,50 34,34" fill="rgba(56, 189, 248, 0.08)" />
+                <polygon points="50,50 50,42 34,34" fill="rgba(56, 189, 248, 0.03)" />
+
+                <!-- Ticks radiales cada 30 grados -->
+                <line x1="71" y1="13.6" x2="69" y2="17.1" stroke="rgba(148, 163, 184, 0.35)" stroke-width="0.8" />
+                <line x1="86.4" y1="29" x2="82.9" y2="31" stroke="rgba(148, 163, 184, 0.35)" stroke-width="0.8" />
+                <line x1="86.4" y1="71" x2="82.9" y2="69" stroke="rgba(148, 163, 184, 0.35)" stroke-width="0.8" />
+                <line x1="71" y1="86.4" x2="69" y2="82.9" stroke="rgba(148, 163, 184, 0.35)" stroke-width="0.8" />
+                <line x1="29" y1="86.4" x2="31" y2="82.9" stroke="rgba(148, 163, 184, 0.35)" stroke-width="0.8" />
+                <line x1="13.6" y1="71" x2="17.1" y2="69" stroke="rgba(148, 163, 184, 0.35)" stroke-width="0.8" />
+                <line x1="13.6" y1="29" x2="17.1" y2="31" stroke="rgba(148, 163, 184, 0.35)" stroke-width="0.8" />
+                <line x1="29" y1="13.6" x2="31" y2="17.1" stroke="rgba(148, 163, 184, 0.35)" stroke-width="0.8" />
+
+                <!-- Ticks medianos en intercardinales (45°, 135°, 225°, 315°) -->
+                <line x1="80.4" y1="19.6" x2="77.6" y2="22.4" stroke="rgba(56, 189, 248, 0.55)" stroke-width="1.2" />
+                <line x1="80.4" y1="80.4" x2="77.6" y2="77.6" stroke="rgba(148, 163, 184, 0.55)" stroke-width="1.2" />
+                <line x1="19.6" y1="80.4" x2="22.4" y2="77.6" stroke="rgba(148, 163, 184, 0.55)" stroke-width="1.2" />
+                <line x1="19.6" y1="19.6" x2="22.4" y2="22.4" stroke="rgba(148, 163, 184, 0.55)" stroke-width="1.2" />
+
+                <!-- Ticks mayores cardinales (N, S, E, O) -->
+                <line x1="50" y1="5" x2="50" y2="10" stroke="#38bdf8" stroke-width="1.8" />
+                <line x1="50" y1="95" x2="50" y2="90" stroke="#94a3b8" stroke-width="1.5" />
+                <line x1="95" y1="50" x2="90" y2="50" stroke="#94a3b8" stroke-width="1.5" />
+                <line x1="5" y1="50" x2="10" y2="50" stroke="#94a3b8" stroke-width="1.5" />
+
+                <!-- Puntos cardinales con tipografía técnica nítida -->
+                <text x="50" y="19" text-anchor="middle" font-size="8.5" font-weight="900" fill="#38bdf8" font-family="system-ui, -apple-system, sans-serif">N</text>
+                <text x="83.5" y="52.8" text-anchor="middle" font-size="7.5" font-weight="800" fill="#cbd5e1" font-family="system-ui, -apple-system, sans-serif">E</text>
+                <text x="50" y="86.5" text-anchor="middle" font-size="7.5" font-weight="800" fill="#cbd5e1" font-family="system-ui, -apple-system, sans-serif">S</text>
+                <text x="16.5" y="52.8" text-anchor="middle" font-size="7.5" font-weight="800" fill="#cbd5e1" font-family="system-ui, -apple-system, sans-serif">O</text>
+
+                <!-- Reflejo cenital convexo de cristal de zafiro -->
+                <path d="M 8,42 A 44,44 0 0,1 92,42 A 44,22 0 0,0 8,42 Z" fill="url(#glassReflection)" />
+              </svg>
+
+              <!-- Aguja / Veleta Aerodinámica Giratoria (transform: rotate(grados)) -->
               <div class="compass-needle" style="transform: rotate(${current.wind_direction_10m}deg);">
-                <svg class="wind-arrow-svg" viewBox="0 0 92 92" width="92" height="92" aria-hidden="true">
-                  <!-- Origen / Cola de veleta en el borde exterior (donde entra el viento) -->
-                  <path d="M40 15 L46 23 L52 15 L46 12 Z" fill="#94a3b8" stroke="#cbd5e1" stroke-width="1" />
-                  <circle cx="46" cy="23" r="2" fill="#f59e0b" />
-                  <!-- Fuste aerodinámico -->
-                  <line x1="46" y1="23" x2="46" y2="36" stroke="#38bdf8" stroke-width="2.8" stroke-linecap="round" />
-                  <!-- Punta de flecha apuntando directamente al centro (hacia el observador) -->
-                  <polygon points="46,43 39,32 46,35 53,32" fill="#38bdf8" stroke="#0284c7" stroke-width="1" />
+                <svg class="wind-arrow-svg" viewBox="0 0 100 100" width="98" height="98" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="needleShaft" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stop-color="#0284c7" />
+                      <stop offset="50%" stop-color="#38bdf8" />
+                      <stop offset="100%" stop-color="#7dd3fc" />
+                    </linearGradient>
+                    <filter id="needleGlow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feDropShadow dx="0" dy="0" stdDeviation="1.5" flood-color="#38bdf8" flood-opacity="0.6"/>
+                    </filter>
+                  </defs>
+
+                  <!-- ORIGEN EXTERIOR: Aletas de cola de veleta y perla ámbar de entrada de viento -->
+                  <polygon points="44,8 47,19 45,20 41,12" fill="#94a3b8" stroke="#cbd5e1" stroke-width="0.6" opacity="0.9" />
+                  <polygon points="56,8 53,19 55,20 59,12" fill="#94a3b8" stroke="#cbd5e1" stroke-width="0.6" opacity="0.9" />
+                  <line x1="50" y1="12" x2="50" y2="20" stroke="#cbd5e1" stroke-width="2" stroke-linecap="round" />
+                  <circle cx="50" cy="20" r="2.8" fill="#f59e0b" stroke="#ffffff" stroke-width="0.8" />
+
+                  <!-- CUERPO / FUSTE AERODINÁMICO CON VOLUMEN -->
+                  <line x1="50" y1="20" x2="50" y2="39" stroke="url(#needleShaft)" stroke-width="3" stroke-linecap="round" filter="url(#needleGlow)" />
+                  <line x1="50" y1="21" x2="50" y2="38" stroke="#f0f9ff" stroke-width="1.2" stroke-linecap="round" />
+
+                  <!-- PUNTA DE FLECHA TRIDIMENSIONAL APUNTANDO AL CENTRO -->
+                  <polygon points="50,47 42,35 50,38" fill="#0284c7" stroke="#0369a1" stroke-width="0.6" />
+                  <polygon points="50,47 58,35 50,38" fill="#38bdf8" stroke="#7dd3fc" stroke-width="0.6" />
+                  <line x1="50" y1="38" x2="50" y2="47" stroke="#ffffff" stroke-width="0.8" />
                 </svg>
               </div>
-              <div class="compass-center-dot"></div>
+
+              <!-- Pivote central concéntrico con aro de titanio y zafiro -->
+              <div class="compass-center-dot">
+                <div class="compass-center-inner"></div>
+              </div>
             </div>
           </div>
           <div class="wind-info">
@@ -950,6 +1086,11 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
             ${foehn ? `<div class="sensor-sub foehn-sensor-indicator">🔥 Viento Sur: Efecto Foehn Activo</div>` : ''}
             <div class="sensor-sub">Racha máx. prevista: <strong class="${maxGustSeverity.cssClass}">${windMaxGustToday} ${windUnit}${maxGustSeverity.icon}</strong></div>
             ${roadWindSensorPill}
+            <div class="sensor-mini-badges wind-verdict-row">
+              <div class="sensor-mini-badge ${windVerdict.badgeClass}">
+                <span>${windVerdict.icon} <strong>${windVerdict.label}</strong></span>
+              </div>
+            </div>
           </div>
         </div>
       </div>

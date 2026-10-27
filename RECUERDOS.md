@@ -40,6 +40,36 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - Contrastar con ECMWF IFS (`models=ecmwf_ifs025&current=weather_code,cloud_cover,direct_normal_irradiance`).
        - Aplicar en Java la regla de consenso: si el modelo local indica soleado (`weather_code <= 1` o `cloud_cover < 50%`) pero no hay sol activo (`direct_normal_irradiance < 100 W/m²`, `uv < 1.0`) y ECMWF reporta manto cubierto (`cloud_cover >= 80%`), forzar `weather_code = 3` (Nublado) en el tiempo actual y en la previsión diaria de hoy, asegurando paridad visual 1:1 total entre el widget de escritorio y la web app.
 
+## 🧭 Instrumento Aero-Meteorológico de Precisión: Nuevo Compás y Veredicto Beaufort — 2026-10-27
+- **Elevación de Acabado Visual en Anemómetro (Feedback en Vivo de Lendo y Beta Testers - «el anemometro y direcion lo veo muy pobre ahora. hablo de la brujula. ya me dijeron varios testers... era el compas que me parece muy soso. lo demas me dices... recuerda que lo basico tiene que ser igual pero mejorado. la flecha del viento hacia el viento no puede perderse» y «pisale»):**
+  1. *Diagnóstico de Diseño:*
+     - Lendo y varios beta testers contrastaron que, frente al refinamiento *liquid glass* de la app, el compás de viento lucía plano, soso y deslucido (un círculo oscuro elemental de 92px con dos líneas tenues al 8% de opacidad y una flecha SVG esquemática).
+     - La tarjeta carecía además de una pastilla de veredicto o interpretación práctica del viento (al estilo de las integradas en Humedad, UV y Barómetro).
+  2. *Implementación Técnica y Artística Realizada (`currentCard.js`, `components.css`, `sw.js`, `index.html`):*
+     - **Preservación Incondicional del Principio Físico Asturiano:** La flecha mantiene al 100% su semántica original: se posiciona en el cuadrante exacto por donde entra el viento (`current.wind_direction_10m`) y apunta hacia el centro del dial/observador.
+     - **Esfera Náutica / Aeroespacial de Precisión en SVG:**
+       - Biseles concéntricos aeroespaciales en degradado cian (`#38bdf8`) y pizarra profundo.
+       - Marcas grabadas (*ticks*) de precisión cada 30°, con marcas mayores en cardinales e intermedias en los 4 rumbos intercardinales (NE, SE, SO, NO).
+       - Rosa de los vientos asturiana de 8 puntas grabada en el fondo en claroscuro translúcido.
+       - Tipografía técnica nítida para N (en cian eléctrico) y E, S, O (en plata níveo).
+       - Reflejo cenital convexo de lente de cristal de zafiro (`glassReflection`).
+     - **Veleta Aerodinámica Tridimensional (Needle Pro):**
+       - Aletas dobles estabilizadoras de perfil alar en la cola y perla de origen en ámbar (`#f59e0b`) marcando la entrada del flujo de aire.
+       - Fuste aerodinámico en degradado cian con núcleo incandescente blanco (`#f0f9ff`) y filtro drop-shadow con halo luminoso.
+       - Cabeza de flecha tridimensional facetada en claroscuro apuntando con volumen hacia el centro.
+       - Pivote central concéntrico con corona de titanio y joya de zafiro (`compass-center-dot` con `compass-center-inner`).
+     - **Veredicto Práctico Eólico (Escala Beaufort Asturiana):**
+       - Incorporación de la función `getWindVerdict(speed, gusts)` que evalúa la severidad y añade una pastilla de impacto visible:
+         * Calma chicha / Ventolín (0-5 km/h): `🍃 Humo asciende casi vertical`.
+         * Brisa suave (6-19 km/h): `🌬️ Perceptible en cara y mueve hojas`.
+         * Brisa moderada (20-38 km/h): `💨 Mueve ramas y levanta polvo`.
+         * Viento fuerte / Frescachón (39-61 km/h): `⚠️ Silba en tendidos y balancea árboles`.
+         * Temporal / Bastinazu (≥ 62 km/h): `🚨 Viento duro, riesgo de ramas`.
+     - **Sincronización Total de Versión y Cache-Busting (Ley 4):**
+       - `CACHE_NAME`: Actualizado a `meteoasturlode-v3023-15-compass-precision` en `sw.js`.
+       - Registro de Service Worker: Actualizado a `sw.js?v=3.0.23.15` en `index.html`.
+       - Assets de aplicación: Query strings actualizadas a `v=3.0.23.15`.
+
 ## 🛡️ Blindaje Anti-Caché Universal & Botón de Rescate Instantáneo en Ajustes — 2026-10-27
 - **Eliminación Definitiva de Congelamientos de Versión en Android y PWAs (Feedback en Vivo de Lendo - «ademas ya actualizo en la app de windows pero la de android cada vez la odio mas. que mierda pasa con las actualizaciones que ya estan subidas... ahora ya cargo pero explicame como es lo que quieres hacer para no desesperar» y «pisale a ver»):**
   1. *Diagnóstico de la Causa Raíz en Android:*
