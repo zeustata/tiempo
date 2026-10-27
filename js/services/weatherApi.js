@@ -512,4 +512,22 @@ function harmonizeWeatherPrecipitation(weather) {
       daily.precipitation_probability_max[d] = Math.max(daily.precipitation_probability_max[d] || 0, dayMaxPop);
     }
   }
+
+  // Sincronización Matemática Integral de Precipitación Diaria (daily.precipitation_sum):
+  // Garantiza que el total diario coincida exactamente con la suma discretizada de las 24 horas
+  // de hourly.precipitation, resolviendo la discrepancia entre el Pluviómetro, el carrusel de 72h
+  // y los tramos de la tarjeta a 10 días (Noche + Mañana + Tarde).
+  if (weather.daily && Array.isArray(weather.daily.time) && Array.isArray(weather.daily.precipitation_sum)) {
+    const daily = weather.daily;
+    for (let d = 0; d < daily.time.length; d++) {
+      const dayDateStr = daily.time[d];
+      let dayPrecipSum = 0;
+      for (let i = 0; i < hourly.time.length; i++) {
+        if (hourly.time[i].startsWith(dayDateStr)) {
+          dayPrecipSum += (hourly.precipitation[i] || 0);
+        }
+      }
+      daily.precipitation_sum[d] = Math.round(dayPrecipSum * 10) / 10;
+    }
+  }
 }

@@ -547,18 +547,27 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   const now = new Date();
   const todayPrefix = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
   let rainFallenSoFar = 0;
+  let rainTodayTotalCalculated = 0;
   if (hourly && Array.isArray(hourly.precipitation) && Array.isArray(hourly.time)) {
     for (let i = 0; i < hourly.time.length; i++) {
       if (hourly.time[i].startsWith(todayPrefix)) {
+        const pVal = (parseFloat(hourly.precipitation[i]) || 0);
+        rainTodayTotalCalculated += pVal;
         const hourPart = parseInt(hourly.time[i].substring(11, 13), 10);
         if (hourPart <= currentHour) {
-          rainFallenSoFar += (parseFloat(hourly.precipitation[i]) || 0);
+          rainFallenSoFar += pVal;
         }
       }
     }
   }
   rainFallenSoFar = Math.round(rainFallenSoFar * 10) / 10;
-  let rainTodayTotal = (daily && daily.precipitation_sum && daily.precipitation_sum[0] != null) ? daily.precipitation_sum[0] : 0;
+  rainTodayTotalCalculated = Math.round(rainTodayTotalCalculated * 10) / 10;
+  let rainTodayTotal = (daily && daily.precipitation_sum && daily.precipitation_sum[0] != null) 
+    ? Math.max(daily.precipitation_sum[0], rainTodayTotalCalculated) 
+    : rainTodayTotalCalculated;
+  if (rainFallenSoFar > rainTodayTotal) {
+    rainTodayTotal = rainFallenSoFar;
+  }
   const currentPopVal = (hourly && hourly.precipitation_probability && hourly.precipitation_probability[currentHour] != null) ? hourly.precipitation_probability[currentHour] : 0;
   const nextHour = (currentHour + 1) % 24;
   const nextPopVal = (hourly && hourly.precipitation_probability && hourly.precipitation_probability[currentHour + 1] != null) ? hourly.precipitation_probability[currentHour + 1] : currentPopVal;

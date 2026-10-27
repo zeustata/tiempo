@@ -127,7 +127,7 @@ function getDaypartWeather(hourly, dayDateStr, startHour, endHour, fallbackCode,
   }
 
   const info = getWeatherInfo(dominantCode, isDay, maxPrecipPerHour, popMax);
-  return { ...info, precipSum, maxPrecipPerHour, popMax };
+  return { ...info, precipSum: Math.round(precipSum * 10) / 10, maxPrecipPerHour: Math.round(maxPrecipPerHour * 10) / 10, popMax };
 }
 
 /**
