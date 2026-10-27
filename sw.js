@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-13-cantabrico-orbayu-rescue';
+const CACHE_NAME = 'meteoasturlode-v3023-14-anti-cache-guardian';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -85,18 +85,33 @@ self.addEventListener('activate', (e) => {
   );
 });
 
-// Estrategia NETWORK-FIRST para garantizar que móviles y PC siempre vean la última versión
+// Escuchar mensajes desde la app (ej: forzar salto de espera)
+self.addEventListener('message', (event) => {
+  if (event.data && (event.data.action === 'skipWaiting' || event.data === 'skipWaiting')) {
+    self.skipWaiting();
+  }
+});
+
+// Estrategia NETWORK-FIRST con bypass de caché de disco para archivos locales
 self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET') return;
 
   // Si no es petición HTTP/HTTPS (ej: chrome-extension), ignorar
   if (!e.request.url.startsWith('http')) return;
 
+  const isLocalAsset = e.request.url.includes(self.location.origin);
+
+  // Blindaje anti-congelamiento Android: Para archivos de la app (HTML, JS, CSS),
+  // obligamos al navegador a consultar a la red (no-cache) saltándose el max-age=600 de disco
+  const fetchPromise = isLocalAsset
+    ? fetch(e.request, { cache: 'no-cache' })
+    : fetch(e.request);
+
   e.respondWith(
-    fetch(e.request)
+    fetchPromise
       .then((networkResponse) => {
         // Si la red responde correctamente y es un archivo local/estático, actualizamos la copia en caché en segundo plano
-        if (networkResponse && networkResponse.status === 200 && e.request.url.includes(self.location.origin)) {
+        if (networkResponse && networkResponse.status === 200 && isLocalAsset) {
           const responseClone = networkResponse.clone();
           caches.open(CACHE_NAME).then((cache) => {
             cache.put(e.request, responseClone);

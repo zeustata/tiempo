@@ -40,6 +40,26 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - Contrastar con ECMWF IFS (`models=ecmwf_ifs025&current=weather_code,cloud_cover,direct_normal_irradiance`).
        - Aplicar en Java la regla de consenso: si el modelo local indica soleado (`weather_code <= 1` o `cloud_cover < 50%`) pero no hay sol activo (`direct_normal_irradiance < 100 W/m²`, `uv < 1.0`) y ECMWF reporta manto cubierto (`cloud_cover >= 80%`), forzar `weather_code = 3` (Nublado) en el tiempo actual y en la previsión diaria de hoy, asegurando paridad visual 1:1 total entre el widget de escritorio y la web app.
 
+## 🛡️ Blindaje Anti-Caché Universal & Botón de Rescate Instantáneo en Ajustes — 2026-10-27
+- **Eliminación Definitiva de Congelamientos de Versión en Android y PWAs (Feedback en Vivo de Lendo - «ademas ya actualizo en la app de windows pero la de android cada vez la odio mas. que mierda pasa con las actualizaciones que ya estan subidas... ahora ya cargo pero explicame como es lo que quieres hacer para no desesperar» y «pisale a ver»):**
+  1. *Diagnóstico de la Causa Raíz en Android:*
+     - Lendo constató que, tras subir una actualización a GitHub, la aplicación en Windows reflejaba los cambios al instante, pero en la app de Android (TWA / WebAPK) seguía mostrándose la interfaz y lógica antiguas sin actualizar, generando gran frustración e incertidumbre.
+     - *Mecanismo Técnico Identificado:*
+       a) **Caché HTTP de Disco de GitHub Pages:** Los servidores de GitHub envían una cabecera `Cache-Control: max-age=600` (10 minutos) en los archivos estáticos (`index.html`, scripts y estilos). En Windows, al refrescar o abrir una pestaña, el motor del navegador envía `max-age=0` y se salta dicha directiva. Sin embargo, en Android (donde una TWA no tiene barra de direcciones ni botón de F5/recargar), Chrome y el WebView leen de forma estricta los archivos directamente desde el almacenamiento de disco del teléfono sin hacer peticiones a la red durante esos 10 minutos.
+       b) **Persistencia de Procesos en RAM:** Al cerrar la app deslizando la tarjeta en la multitarea de Android, el proceso compartido de Chrome o WebView en segundo plano no se destruye de la memoria interna, manteniendo en RAM la instancia vieja de los scripts.
+       c) **Ausencia de Mecanismo de Forzado Interno:** La app carecía de una herramienta visual para que el usuario o tester pudiera forzar una purga limpia sin tener que salir a los ajustes del sistema operativo de Android.
+  2. *Implementación de la Solución Integral en 3 Niveles:*
+     - **Bypass Forzado de Caché de Disco en Service Worker (`sw.js`):** En el evento `fetch` del Service Worker, todas las peticiones hacia recursos propios de la app (`e.request.url.includes(self.location.origin)`) se despachan ahora obligatoriamente con `{ cache: 'no-cache' }`. Esto le quita la venda a Android, obligando al navegador a contrastar siempre los archivos con GitHub mediante peticiones condicionales (ETag / If-None-Match) y eliminando el retraso de 10 minutos.
+     - **Botón de Rescate de Actualización en Ajustes (`btn-force-update-nav`):** Se integró una nueva tarjeta de utilidades en el modal de Ajustes con diseño armónico (`nav-tool-card`), badge identificador `v3.0.23.14 · Limpiar caché` y animación de giro fluida (`@keyframes spinUpdate`). Al pulsarlo:
+       1. Notifica visualmente al usuario («⏳ Purgando y descargando...»).
+       2. Purga y destruye todas las instancias de caché local del navegador (`caches.delete()`).
+       3. Desregistra cualquier Service Worker activo.
+       4. Realiza una redirección limpia forzada (`window.location.replace`) con timestamp numérico anti-caché en la URL (`?v=timestamp`), destruyendo cualquier caché residual en 350 ms.
+     - **Sincronización Total de Versión y Cache-Busting (Ley 4):**
+       - `CACHE_NAME`: Actualizado a `meteoasturlode-v3023-14-anti-cache-guardian` en `sw.js`.
+       - Registro de Service Worker: Actualizado a `sw.js?v=3.0.23.14` en `index.html`.
+       - Assets de aplicación: Query strings actualizadas a `v=3.0.23.14` en `index.html`.
+
 ## 🌧️ Rescate Soberano de Orbayu Meón Cantábrico & Blindaje por Saturación — 2026-10-27
 - **Paridad Real de Llovizna Fina en Auto Híbrido y Francés (Feedback en Vivo de Lendo - «todo perfecto. mira ahora mismo esta orbayando y el modelo europeo lo pone pero el hibrido y el frances pone nublado. investiga. Maldonado tambien» y «pisale anda que vaya dia hoy»):**
   1. *Diagnóstico Operativo y Meteorológico en Tiempo Real:*

@@ -265,7 +265,15 @@
     - **Paridad de Geolocalización por Proximidad en Todos los Formatos:**
       - Tanto el widget compacto (4x2) como el extendido (4x3) deben implementar idéntico algoritmo de cálculo de proximidad euclidiana por coordenadas GPS contra el catálogo oficial de concejos de Asturias.
     - **Ergonomía Limpia y Botón Visual de Recarga Integrado:**
-      - El widget debe incorporar un botón visual de recarga sutil y armónico (icono 🔄 `ic_widget_sync` en tono celeste luminoso `#BAE6FD`) situado junto a la fecha en la esquina superior izquierda (`widget_date`), manteniendo el marco táctil amplio y confortable tanto en el icono como en la fecha, sin saturar ni colisionar con la marca del widget.
+26. **Doctrina de Blindaje Anti-Caché de Disco y Botón de Rescate Instantáneo en Ajustes (Feedback Lendo):**
+    - **Bypass de Caché de Disco en Service Worker (`sw.js`):**
+      - En el evento `fetch` del Service Worker, toda petición hacia recursos propios de la aplicación (`self.location.origin`) debe despacharse imperativamente con `{ cache: 'no-cache' }`. Esto obliga al navegador móvil y a las TWAs/WebAPKs de Android a contrastar siempre la versión con el servidor remoto (mediante ETag o comprobación condicional), neutralizando el congelamiento de 10 minutos provocado por la cabecera `Cache-Control: max-age=600` de GitHub Pages.
+    - **Botón Salvavidas de Forzado Limpio en el Menú de Ajustes (`btn-force-update-nav`):**
+      - La aplicación debe mantener de forma permanente una tarjeta o botón visible en el menú de Ajustes (`🔄 Buscar Actualización`) que, con un solo toque, ejecute:
+        1. Respuesta visual táctil e inmediata de carga (*«⏳ Purgando y descargando...»* y animación `@keyframes spinUpdate`).
+        2. Purga y destrucción completa de las memorias de almacenamiento local del navegador (`caches.delete()`).
+        3. Desregistro de los Service Workers instalados.
+        4. Redirección y recarga forzada con marca temporal única en la URL (`?v=timestamp`), destruyendo cualquier proceso estancado en la memoria RAM de Android y cargando la última versión publicada en menos de 400 milisegundos.
 
 
 

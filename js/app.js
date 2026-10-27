@@ -1181,6 +1181,41 @@ class MeteoAsturiasApp {
       });
     }
 
+    const forceUpdateBtn = document.getElementById('btn-force-update-nav');
+    if (forceUpdateBtn) {
+      forceUpdateBtn.addEventListener('click', async () => {
+        this.triggerHaptic();
+        const badge = document.getElementById('nav-update-badge');
+        const icon = document.getElementById('nav-update-icon');
+        if (badge) badge.textContent = '⏳ Purgando y descargando...';
+        if (icon) icon.classList.add('nav-update-spinning');
+        forceUpdateBtn.style.pointerEvents = 'none';
+        forceUpdateBtn.style.opacity = '0.75';
+
+        try {
+          if ('caches' in window) {
+            const cacheNames = await caches.keys();
+            await Promise.all(cacheNames.map(name => caches.delete(name)));
+          }
+          if ('serviceWorker' in navigator) {
+            const regs = await navigator.serviceWorker.getRegistrations();
+            for (const r of regs) {
+              await r.unregister();
+            }
+          }
+        } catch (err) {
+          console.warn('[Cache Purge] Error limpiando:', err);
+        }
+
+        // Timestamp anti-caché radical para destruir cualquier caché persistente de Chrome/Android
+        setTimeout(() => {
+          const cleanUrl = new URL(window.location.origin + window.location.pathname);
+          cleanUrl.searchParams.set('v', Date.now().toString());
+          window.location.replace(cleanUrl.toString());
+        }, 350);
+      });
+    }
+
     if (triggerBtn) {
       triggerBtn.addEventListener('click', () => {
         this.triggerHaptic();

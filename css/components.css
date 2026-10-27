@@ -13122,3 +13122,14 @@
     gap: 10px;
   }
 }
+
+.nav-update-spinning {
+  animation: spinUpdate 0.8s linear infinite !important;
+  display: inline-block !important;
+}
+
+@keyframes spinUpdate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
