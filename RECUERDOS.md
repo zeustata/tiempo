@@ -40,28 +40,28 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - Contrastar con ECMWF IFS (`models=ecmwf_ifs025&current=weather_code,cloud_cover,direct_normal_irradiance`).
        - Aplicar en Java la regla de consenso: si el modelo local indica soleado (`weather_code <= 1` o `cloud_cover < 50%`) pero no hay sol activo (`direct_normal_irradiance < 100 W/m²`, `uv < 1.0`) y ECMWF reporta manto cubierto (`cloud_cover >= 80%`), forzar `weather_code = 3` (Nublado) en el tiempo actual y en la previsión diaria de hoy, asegurando paridad visual 1:1 total entre el widget de escritorio y la web app.
 
-## 🌧️ Rediseño Estético del Pluviómetro Digital: Barra de Cristal Líquido y Mini-Badges Unificados — 2026-10-27
-- **Elevación de Acabado Visual y Preservación Rigurosa de Alertas (Feedback Lendo - «la siguiente tarjeta que veo sosa es el pluviometro», «hay que tener en cuenta que la tarjeta sea igual, date cuenta que tiene alertas la tarjeta, solo la quiero mas estetica» y «pisale»):**
-  1. *Diagnóstico y Objetivos de Diseño:*
-     - Lendo detectó que tras modernizar el anemómetro con la brújula AeroGlass Pro, el pluviómetro digital (`#sensor-card-rain`) presentaba un aspecto plano y desalineado estéticamente con el resto del carrusel de sensores (Humedad, UV, Barómetro y Viento).
-     - *Requisito Estricto:* Preservar el 100% de la funcionalidad, métricas y estados de alerta existentes (baliza viva en la toolbar, borde pulsante de alerta amarilla/naranja/roja, severidad de lluvia acumulada, severidad de intensidad horaria e iconografía de aviso).
+## 🌧️ Rediseño Estético del Pluviómetro Digital: Vaso Medidor Probeta Hellmann de Cristal — 2026-10-27
+- **Instrumento Físico Visual y Proporción Armónica con el Anemómetro (Feedback Lendo - «no entiendo la mejora», «dimelo tu q somos socios», «me gusta princesa» y «pisale»):**
+  1. *Diagnóstico Crítico y Sinceridad de Socia:*
+     - Tras la primera iteración (que solo incorporaba una barra delgada horizontal), Lendo constató con honestidad que la mejora no se apreciaba («no entiendo la mejora») porque con 0.0 mm en reposo la barra quedaba vacía y la tarjeta continuaba siendo mero texto plano.
+     - *Decisión Conjunta de Diseño:* Transformar el pluviómetro en un auténtico instrumento meteorológico físico visual con personalidad propia, adoptando el estándar de la meteorología oficial: la **Probeta Graduada de Cristal tipo Hellmann**, manteniendo simetría de layout de dos columnas con el Anemómetro.
   2. *Implementación Técnica Realizada (`currentCard.js`, `components.css`, `index.html`, `sw.js`, `app.js`):*
-     - **Barra de Progreso de Cristal Líquido (`.rain-gauge-bar`, `.rain-gauge-fill`):**
-       - Cálculo reactivo del porcentaje de precipitación caída hasta la hora actual respecto al total previsto de 24 horas: `rainProgressPercent = Math.min(100, Math.round((rainFallenSoFar / rainTodayTotal) * 100))`.
-       - Gradiente cromático dinámico según severidad:
-         - Modo normal: Gradiente cian/azul (`#0284c7` a `#38bdf8`) con resplandor suave.
-         - Modo aviso (≥ 40 mm acumulados o ≥ 15 mm/h): Gradiente ambarino (`#d97706` a `#fbbf24`) con resplandor dorado.
-         - Modo peligro (≥ 80 mm acumulados o ≥ 30 mm/h): Gradiente rojo vivo (`#dc2626` a `#f87171`) con animación de latido de emergencia `baroDangerPulse`.
-     - **Regla Graduada con Sub-etiquetas de Escala (`.rain-gauge-labels`):**
-       - Muestra en 3 puntos: `0 mm`, el avance porcentual (`X% de la jornada` o `En reposo`), y el total previsto (`Total 24h: X.X mm`).
-     - **Mini-Badges Ergonómicos Unificados (`.sensor-mini-badges`, `.sensor-mini-badge`):**
-       - Reemplazo de bloques planos con estilos inline por pastillas de cristal ahumado unificadas:
-         1. *Badge de Probabilidad de Precipitación:* Icono de tendencia (`📈`, `📉` o `⏱️`) con transición horaria (`X% (H h) ➔ Y% (H+1 h)`).
-         2. *Badge de Intensidad en Vivo:* Muestra el estado del pluviómetro (`💧 Pluviómetro en reposo`, `🌧️ Orbayu / Lluvia débil`, `🌧️ Lluvia moderada`, `⚠️ Lluvia muy fuerte` o `🚨 Torrencial en vivo`) con su métrica exacta en mm/h y estilo visual reactivo.
+     - **Vaso Medidor Pluviométrico en SVG Vectorial (`renderRainBeakerSvg`):**
+       - Cilindro de cristal de laboratorio con base de titanio/platino, boca ensanchada, reflejos volumétricos de luz 3D y marcas graduadas de precisión en blanco/cian/ámbar/rojo (`0`, `20`, `40`, `60` y `80 mm`).
+       - Nivel de agua líquida reactivo: el líquido azul zafiro sube dentro del tubo con menisco curvo brillante proporcional a la lluvia caída hoy (`rainFallenSoFar` sobre escala de 80 mm). En días secos (0 mm), el cristal se aprecia transparente e impoluto.
+       - Gotas de lluvia vivas animadas: si llueve en tiempo real (`currentRainIntensity > 0`), dos gotas de lluvia animadas entran por la boca del vaso (`beakerDropFall`).
+       - Cromatismo según severidad:
+         - Normal: azul cian zafiro translúcido.
+         - Aviso (≥ 40 mm o ≥ 15 mm/h): gradiente ámbar dorado.
+         - Peligro (≥ 80 mm o ≥ 30 mm/h): gradiente rojo vivo pulsante.
+     - **Diseño de Dos Columnas Ergonómico (`.rain-body`, `.rain-beaker-wrapper`, `.rain-info`):**
+       - Columna izquierda: Vaso medidor de 70px de ancho con sombra de profundidad.
+       - Columna derecha: Métrica grande (`0.0 mm`), texto descriptivo y mini-badges compactos de probabilidad (`Prob: X% ➔ Y%`) y estado (`💧 En reposo • Sin lluvia` o intensidad viva en mm/h).
+       - Totalmente blindado contra desbordes en móviles de 320px a 380px.
      - **Sincronización Total de Versión y Cache-Busting (Ley 4):**
-       - `CACHE_NAME`: Actualizado a `meteoasturlode-v3023-17-pluviometer-aesthetic` en `sw.js`.
-       - Query strings de assets actualizadas a `v=3.0.23.17` en `index.html` y `app.js`.
-       - Badge de actualización en Ajustes actualizado a `v3.0.23.17 · Limpiar caché`.
+       - `CACHE_NAME`: Actualizado a `meteoasturlode-v3023-18-pluviometer-beaker` en `sw.js`.
+       - Query strings de assets actualizadas a `v=3.0.23.18` en `index.html` y `app.js`.
+       - Badge de actualización en Ajustes actualizado a `v3.0.23.18 · Limpiar caché`.
 
 ## 📜 Desplegable Ergonómico de Fuentes y Aviso Legal en Footer (Ley 11 & Ley 15) — 2026-10-27
 - **Optimización de Espacio Vertical y Blindaje Legal (Feedback Lendo - «la politica deprivacidad, la parte de abajo no se podria despues de donde politica de privacidas no se puede poner una flecha tipica pequeña para desglosar y asi ocupe menor?» y «pisale si es legal»):**

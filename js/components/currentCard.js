@@ -216,6 +216,128 @@ function renderMiniThermalCurve24h(hourly) {
 }
 
 /**
+ * Renderiza el Vaso Medidor de Cristal Pluviométrico (Estilo Probeta Hellmann Oficial)
+ */
+function renderRainBeakerSvg(rainFallenSoFar, currentRainIntensity) {
+  const maxGaugeMm = 80;
+  const clampedRain = Math.min(maxGaugeMm, Math.max(0, rainFallenSoFar));
+  const usableHeight = 89; // Distancia entre la marca de 0 mm (y=114) y la de 80 mm (y=25)
+  const waterFillHeight = Math.round((clampedRain / maxGaugeMm) * usableHeight);
+  const waterY = 114 - waterFillHeight;
+  
+  let waterGradId = 'rainWaterNormal';
+  let surfaceColor = '#7dd3fc';
+  if (rainFallenSoFar >= 80 || currentRainIntensity >= 30) {
+    waterGradId = 'rainWaterDanger';
+    surfaceColor = '#fca5a5';
+  } else if (rainFallenSoFar >= 40 || currentRainIntensity >= 15) {
+    waterGradId = 'rainWaterWarning';
+    surfaceColor = '#fde047';
+  }
+
+  const isRaining = currentRainIntensity > 0;
+
+  return `
+    <svg class="rain-beaker-svg" viewBox="0 0 72 130" width="70" height="126" aria-hidden="true">
+      <defs>
+        <!-- Gradientes para el agua según severidad -->
+        <linearGradient id="rainWaterNormal" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#0284c7" stop-opacity="0.85" />
+          <stop offset="50%" stop-color="#38bdf8" stop-opacity="0.95" />
+          <stop offset="100%" stop-color="#0369a1" stop-opacity="0.85" />
+        </linearGradient>
+        <linearGradient id="rainWaterWarning" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#d97706" stop-opacity="0.85" />
+          <stop offset="50%" stop-color="#fbbf24" stop-opacity="0.95" />
+          <stop offset="100%" stop-color="#b45309" stop-opacity="0.85" />
+        </linearGradient>
+        <linearGradient id="rainWaterDanger" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#dc2626" stop-opacity="0.85" />
+          <stop offset="50%" stop-color="#f87171" stop-opacity="0.95" />
+          <stop offset="100%" stop-color="#991b1b" stop-opacity="0.85" />
+        </linearGradient>
+        <!-- Reflejo cristal cilíndrico -->
+        <linearGradient id="beakerGlassGleam" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#ffffff" stop-opacity="0.22" />
+          <stop offset="25%" stop-color="#ffffff" stop-opacity="0.06" />
+          <stop offset="80%" stop-color="#ffffff" stop-opacity="0.02" />
+          <stop offset="100%" stop-color="#ffffff" stop-opacity="0.16" />
+        </linearGradient>
+        <!-- Base de titanio / platino -->
+        <linearGradient id="beakerBaseGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#475569" />
+          <stop offset="50%" stop-color="#1e293b" />
+          <stop offset="100%" stop-color="#0f172a" />
+        </linearGradient>
+        <clipPath id="beakerInnerClip">
+          <rect x="22" y="16" width="28" height="98" rx="4" />
+        </clipPath>
+        <filter id="waterGlow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="2" result="blur" />
+          <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
+      </defs>
+
+      <!-- BASE DE APOYO DEL PLUVIÓMETRO -->
+      <path d="M 12 122 L 60 122 C 61 122 62 123 62 124 L 62 126 C 62 127 61 128 60 128 L 12 128 C 11 128 10 127 10 126 L 10 124 C 10 123 11 122 12 122 Z" fill="url(#beakerBaseGrad)" stroke="rgba(255,255,255,0.2)" stroke-width="0.8" />
+      <line x1="16" y1="122" x2="56" y2="122" stroke="#38bdf8" stroke-width="1" stroke-opacity="0.4" />
+
+      <!-- FONDO OSCURO DEL TUBO DE VIDRIO -->
+      <rect x="22" y="16" width="28" height="98" rx="4" fill="rgba(10, 15, 29, 0.75)" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1.2" />
+
+      <!-- LÍQUIDO ACUMULADO (CLIPPEADO AL INTERIOR) -->
+      <g clip-path="url(#beakerInnerClip)">
+        ${waterFillHeight > 0 ? `
+          <rect x="22" y="${waterY}" width="28" height="${waterFillHeight}" fill="url(#${waterGradId})" filter="url(#waterGlow)" />
+          <!-- Menisco / Superficie del agua -->
+          <ellipse cx="36" cy="${waterY}" rx="14" ry="2.5" fill="${surfaceColor}" opacity="0.9" />
+          <line x1="24" y1="${waterY}" x2="48" y2="${waterY}" stroke="#ffffff" stroke-width="0.8" stroke-opacity="0.8" />
+        ` : `
+          <!-- Fondo en reposo seco con brillo basal -->
+          <line x1="24" y1="113" x2="48" y2="113" stroke="rgba(56, 189, 248, 0.4)" stroke-width="1.5" />
+        `}
+      </g>
+
+      <!-- REFLEJO DE CRISTAL (BRILLO LATERAL Y VOLUMEN 3D) -->
+      <rect x="22" y="16" width="28" height="98" rx="4" fill="url(#beakerGlassGleam)" pointer-events="none" />
+      <line x1="25" y1="18" x2="25" y2="112" stroke="#ffffff" stroke-width="1" stroke-opacity="0.35" stroke-linecap="round" />
+
+      <!-- BOCA / LABIO SUPERIOR DEL VASO -->
+      <path d="M 19 16 C 19 14.5 21 13 23 13 L 49 13 C 51 13 53 14.5 53 16 Z" fill="none" stroke="rgba(56, 189, 248, 0.5)" stroke-width="1.2" />
+      <ellipse cx="36" cy="16" rx="15" ry="2.2" fill="rgba(56, 189, 248, 0.15)" stroke="rgba(255, 255, 255, 0.5)" stroke-width="0.8" />
+
+      <!-- GRADUACIÓN Y MARCAS MILIMÉTRICAS A LA DERECHA -->
+      <!-- 80 mm (Peligro) -->
+      <line x1="42" y1="25" x2="50" y2="25" stroke="#ef4444" stroke-width="1.5" />
+      <text x="53" y="27" font-size="7.5" font-weight="700" fill="#fca5a5" font-family="system-ui, sans-serif">80</text>
+
+      <!-- 60 mm -->
+      <line x1="45" y1="47" x2="50" y2="47" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+
+      <!-- 40 mm (Aviso) -->
+      <line x1="42" y1="70" x2="50" y2="70" stroke="#f59e0b" stroke-width="1.5" />
+      <text x="53" y="72" font-size="7.5" font-weight="700" fill="#fde047" font-family="system-ui, sans-serif">40</text>
+
+      <!-- 20 mm -->
+      <line x1="43" y1="92" x2="50" y2="92" stroke="#38bdf8" stroke-width="1.2" />
+      <text x="53" y="94" font-size="7" font-weight="600" fill="#7dd3fc" font-family="system-ui, sans-serif">20</text>
+
+      <!-- 0 mm (Base) -->
+      <line x1="42" y1="114" x2="50" y2="114" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" />
+      <text x="53" y="116" font-size="7" font-weight="600" fill="#94a3b8" font-family="system-ui, sans-serif">0</text>
+
+      <!-- GOTAS DE LLUVIA ANIMADAS SI LLUEVE EN VIVO -->
+      ${isRaining ? `
+        <g class="beaker-rain-drops">
+          <line class="beaker-drop drop-1" x1="33" y1="2" x2="33" y2="9" stroke="#38bdf8" stroke-width="1.6" stroke-linecap="round" />
+          <line class="beaker-drop drop-2" x1="39" y1="-3" x2="39" y2="4" stroke="#7dd3fc" stroke-width="1.4" stroke-linecap="round" />
+        </g>
+      ` : ''}
+    </svg>
+  `;
+}
+
+/**
  * Renderiza el dashboard principal con alineación uniforme y todos los sensores de la estación
  */
 export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme = 'astur') {
@@ -660,19 +782,19 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
     rainBarClass = 'rain-fill-warning';
   }
 
-  let rainLiveStatusText = '💧 Pluviómetro en reposo • Sin lluvia ahora';
+  let rainLiveStatusText = '💧 En reposo • Sin lluvia';
   let rainLiveStatusClass = 'rain-badge-neutral';
   if (currentRainIntensity >= 30) {
-    rainLiveStatusText = `🚨 Torrencial en vivo: <strong>${currentRainIntensity.toFixed(1)} mm/h</strong> ⚠️`;
+    rainLiveStatusText = `🚨 Torrencial: <strong>${currentRainIntensity.toFixed(1)} mm/h</strong> ⚠️`;
     rainLiveStatusClass = 'rain-badge-danger';
   } else if (currentRainIntensity >= 15) {
-    rainLiveStatusText = `⚠️ Lluvia muy fuerte: <strong>${currentRainIntensity.toFixed(1)} mm/h</strong> ⚠️`;
+    rainLiveStatusText = `⚠️ Muy fuerte: <strong>${currentRainIntensity.toFixed(1)} mm/h</strong> ⚠️`;
     rainLiveStatusClass = 'rain-badge-warning';
   } else if (currentRainIntensity >= 5) {
-    rainLiveStatusText = `🌧️ Lluvia moderada: <strong>${currentRainIntensity.toFixed(1)} mm/h</strong>`;
+    rainLiveStatusText = `🌧️ Moderada: <strong>${currentRainIntensity.toFixed(1)} mm/h</strong>`;
     rainLiveStatusClass = 'rain-badge-active';
   } else if (currentRainIntensity > 0) {
-    rainLiveStatusText = `🌧️ Orbayu / Lluvia débil: <strong>${currentRainIntensity.toFixed(1)} mm/h</strong>`;
+    rainLiveStatusText = `🌧️ Orbayu: <strong>${currentRainIntensity.toFixed(1)} mm/h</strong>`;
     rainLiveStatusClass = 'rain-badge-active';
   }
   const popTrendIcon = nextPopVal > currentPopVal ? '📈' : (nextPopVal < currentPopVal ? '📉' : '⏱️');
@@ -1204,25 +1326,21 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
           </div>
           <button class="btn-explain-sensor" data-explain="rain" title="¿Cómo funciona el pluviómetro y la lluvia? Pulsa para aprender" aria-label="Explicación del pluviómetro">💡</button>
         </div>
-        <div class="sensor-body">
-          <div class="sensor-val ${rainFallenSeverity.cssClass}">${rainFallenSoFar.toFixed(1)} <small>mm (l/m²)</small>${rainFallenSeverity.icon}</div>
-          <div class="sensor-sub">
-            Agua caída hasta las ${String(currentHour).padStart(2, '0')}:00 h • Total 24h: <strong class="${rainTotalSeverity.cssClass}">${rainTodayTotal.toFixed(1)} mm${rainTotalSeverity.icon}</strong>
+        <div class="sensor-body rain-body">
+          <div class="rain-beaker-wrapper" title="Vaso medidor pluviométrico: ${rainFallenSoFar.toFixed(1)} mm acumulados hoy">
+            ${renderRainBeakerSvg(rainFallenSoFar, currentRainIntensity)}
           </div>
-          <div class="rain-gauge-bar" title="Progreso de acumulación de lluvia hoy: ${rainFallenSoFar.toFixed(1)} mm de ${rainTodayTotal.toFixed(1)} mm (${rainProgressPercent}%)">
-            <div class="rain-gauge-fill ${rainBarClass}" style="width: ${rainProgressPercent}%;"></div>
-          </div>
-          <div class="gauge-labels rain-gauge-labels">
-            <span>0 mm</span>
-            <span>${rainProgressPercent > 0 ? `${rainProgressPercent}% de la jornada` : 'En reposo'}</span>
-            <span>Total: ${rainTodayTotal.toFixed(1)} mm</span>
-          </div>
-          <div class="sensor-mini-badges">
-            <div class="sensor-mini-badge rain-badge-prob">
-              <span>${popTrendIcon} Probabilidad: <strong>${currentPopVal}%</strong> (${String(currentHour).padStart(2, '0')}h) ➔ <strong>${nextPopVal}%</strong> (${String(nextHour).padStart(2, '0')}h)</span>
-            </div>
-            <div class="sensor-mini-badge ${rainLiveStatusClass}">
-              <span>${rainLiveStatusText}</span>
+          <div class="rain-info">
+            <div class="sensor-val ${rainFallenSeverity.cssClass}">${rainFallenSoFar.toFixed(1)} <small>mm (l/m²)</small>${rainFallenSeverity.icon}</div>
+            <div class="sensor-sub">Caído hoy hasta las ${String(currentHour).padStart(2, '0')}:00 h</div>
+            <div class="sensor-sub">Total 24h: <strong class="${rainTotalSeverity.cssClass}">${rainTodayTotal.toFixed(1)} mm${rainTotalSeverity.icon}</strong></div>
+            <div class="sensor-mini-badges rain-mini-badges">
+              <div class="sensor-mini-badge rain-badge-prob">
+                <span>${popTrendIcon} Prob: <strong>${currentPopVal}%</strong> ➔ <strong>${nextPopVal}%</strong> (${String(nextHour).padStart(2, '0')}h)</span>
+              </div>
+              <div class="sensor-mini-badge ${rainLiveStatusClass}">
+                <span>${rainLiveStatusText}</span>
+              </div>
             </div>
           </div>
         </div>
