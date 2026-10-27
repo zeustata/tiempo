@@ -40,6 +40,18 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - Contrastar con ECMWF IFS (`models=ecmwf_ifs025&current=weather_code,cloud_cover,direct_normal_irradiance`).
        - Aplicar en Java la regla de consenso: si el modelo local indica soleado (`weather_code <= 1` o `cloud_cover < 50%`) pero no hay sol activo (`direct_normal_irradiance < 100 W/m²`, `uv < 1.0`) y ECMWF reporta manto cubierto (`cloud_cover >= 80%`), forzar `weather_code = 3` (Nublado) en el tiempo actual y en la previsión diaria de hoy, asegurando paridad visual 1:1 total entre el widget de escritorio y la web app.
 
+## 🛡️ Corrección de Precisión: Blindaje de Carga en Cima (Anti-Salto Vertical de Sensores) — 2026-10-27
+- **Aislamiento Horizontal Estricto y Anclaje en Cero (Feedback Lendo - «me di cuenta que cuando abro la app o conando la refresco, se carga en mitad de la app del menu en vivo, en vez de arriva del todo donde esta la tarjeta MeteoAsturLode», «pisale pero no subas el changelog» y «subelo»):**
+  1. *Diagnóstico Operativo:*
+     - Tras la implantación del carrusel horizontal de sensores monotarjeta, al iniciar o refrescar la aplicación, la pantalla pegaba un tirón vertical indeseado hacia abajo, situando el foco visual en la barra de sensores en lugar de permanecer arriba del todo con la tarjeta de cabecera **MeteoAsturLode**.
+     - *Causa Raíz:* Al montar el contenedor `#sensors-carousel` con `scroll-snap`, se emitía un evento de scroll inicial que ejecutaba `updateActiveIndicator(0)` sobre la primera pastilla (*Anemómetro*), invocando la función nativa `p.scrollIntoView(...)`. Dicha función burbujea por todo el DOM forzando a la ventana (`window`) a desplazarse verticalmente hasta centrar la pastilla.
+  2. *Implementación Técnica (`app.js`, `index.html`, `sw.js`):*
+     - **Erradicación de `scrollIntoView()` en Barras Horizontales:** Sustituido tanto en las pastillas de sensores (`#sensors-nav-toolbar`) como en las pestañas principales (`#module-chips-scroll`) por desplazamiento exclusivo de sus contenedores internos mediante `container.scrollTo({ left: offset, behavior: 'smooth' })`. El auto-centrado horizontal se mantiene idéntico, fluido y magnético, garantizando un impacto cero en el eje vertical (`window.scrollY`).
+     - **Bloqueo de Memoria de Scroll en Refresco:** Implementado `if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }` en `init()` para evitar que navegadores móviles restauren scrolls intermedios obsoletos.
+     - **Anclaje en Cero:** Llamada obligatoria a `window.scrollTo(0, 0)` durante el arranque y al cerrarse la pantalla de splash cinemático, garantizando que el usuario aterrice siempre viendo la cabecera completa.
+     - **Preservación del Changelog (Orden Expresa Lendo):** Se mantiene inalterado `CHANGELOG.md` y la versión de aplicación `CURRENT_APP_VERSION = '3.0.23'` para no disparar de forma innecesaria modales de novedades a los usuarios.
+     - **Anti-Caché Garantizado (Ley 4):** Service Worker actualizado a `meteoasturlode-v3023-9-scroll-fix` en `sw.js` y query `js/app.js?v=3.0.23.9` en `index.html`.
+
 ## 🛡️ Actualización v3.0.23: Modo Oscuro Soberano Android, Balizas Solares & Tarjeta Bilingüe Compacta — 2026-10-25 / 2026-10-26
 - **Carrusel Horizontal Monotarjeta Universal & Sensores Enriquecidos (Feedback Lendo - «estaba pensando en hacer que las tarjetas debajo de la prevision de 72 horas sean deslizables horizontalmente...», «pero salen todos a la vez. tienes arriba el carusel pero salen todos», «todo bien pero hay alguna tarjeta que deberia de rellenar sinceramente. parecen muy pobres. investiga», «el que queda un poco suave es el barometro», «dale pisale princesa»):**
   1. *Diagnóstico Operativo y Ergonómico:*

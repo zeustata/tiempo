@@ -62,6 +62,12 @@ class MeteoAsturiasApp {
   }
 
   async init() {
+    // Bloqueo estricto de memoria de scroll del navegador para arrancar siempre arriba
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+
     this.setupSplashScreen();
     this.updateSearchTriggerDisplay();
     this.updateModelTriggerDisplay();
@@ -199,7 +205,7 @@ class MeteoAsturiasApp {
       return;
     }
     const validTabs = APP_MODULES.map(m => m.id);
-    if (validTabs.includes(hash)) {
+    if (validTabs.includes(hash) && hash !== 'live') {
       this.switchTab(hash);
     }
   }
@@ -640,6 +646,7 @@ class MeteoAsturiasApp {
       if (dismissed) return;
       dismissed = true;
       splash.classList.add('splash-exit');
+      window.scrollTo(0, 0);
       setTimeout(() => {
         if (splash && splash.parentNode) {
           splash.remove();
@@ -2024,12 +2031,19 @@ class MeteoAsturiasApp {
     }
 
     // Sincronizar resaltado y auto-centrado de la barra horizontal rápida de pestañas
+    const chipsContainer = document.getElementById('module-chips-scroll');
     document.querySelectorAll('.module-chip').forEach(chip => {
       const isMatch = chip.dataset.tab === targetTab;
       chip.classList.toggle('active', isMatch);
-      if (isMatch) {
+      if (isMatch && chipsContainer) {
         try {
-          chip.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+          const chipLeft = chip.offsetLeft;
+          const chipWidth = chip.offsetWidth;
+          const containerWidth = chipsContainer.offsetWidth;
+          chipsContainer.scrollTo({
+            left: chipLeft - (containerWidth / 2) + (chipWidth / 2),
+            behavior: 'smooth'
+          });
         } catch (e) {}
       }
     });
@@ -3171,9 +3185,18 @@ class MeteoAsturiasApp {
 
     const updateActiveIndicator = (idx) => {
       pills.forEach((p, i) => {
-        p.classList.toggle('active', i === idx);
-        if (i === idx && toolbar) {
-          p.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        const isActive = i === idx;
+        p.classList.toggle('active', isActive);
+        if (isActive && toolbar) {
+          try {
+            const pillLeft = p.offsetLeft;
+            const pillWidth = p.offsetWidth;
+            const toolbarWidth = toolbar.offsetWidth;
+            toolbar.scrollTo({
+              left: pillLeft - (toolbarWidth / 2) + (pillWidth / 2),
+              behavior: 'smooth'
+            });
+          } catch (e) {}
         }
       });
       dots.forEach((d, i) => {

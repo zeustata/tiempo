@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-8-nav-hierarchy';
+const CACHE_NAME = 'meteoasturlode-v3023-9-scroll-fix';
 const STATIC_ASSETS = [
   './',
   './index.html',
