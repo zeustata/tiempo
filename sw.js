@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-12-header-twins-glow';
+const CACHE_NAME = 'meteoasturlode-v3023-13-cantabrico-orbayu-rescue';
 const STATIC_ASSETS = [
   './',
   './index.html',

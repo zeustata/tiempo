@@ -139,16 +139,16 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
     const isAutoModel = !modelParam || modelParam === 'best_match';
     const consensusPromise = isAutoModel
       ? fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=weather_code,cloud_cover,direct_normal_irradiance,shortwave_radiation,precipitation,relative_humidity_2m&hourly=weather_code,cloud_cover,direct_normal_irradiance,shortwave_radiation,precipitation,rain,precipitation_probability,relative_humidity_2m&models=ecmwf_ifs025&timezone=Europe%2FMadrid&forecast_days=2`)
-          .then(r => r.ok ? r.json() : null)
-          .catch(() => null)
+        .then(r => r.ok ? r.json() : null)
+        .catch(() => null)
       : Promise.resolve(null);
 
     // 5. Avisos Oficiales AEMET (desde JSON estático actualizado por GitHub Actions)
     const isLocalhost = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
-    const alertsUrl = isLocalhost 
-      ? 'data/avisos-asturias.json' 
+    const alertsUrl = isLocalhost
+      ? 'data/avisos-asturias.json'
       : `https://raw.githubusercontent.com/zeustata/tiempo/data/data/avisos-asturias.json?_t=${Math.floor(Date.now() / 60000)}`;
-      
+
     const aemetAlertsPromise = fetch(alertsUrl, { cache: 'no-cache' })
       .then(r => {
         if (!r.ok) throw new Error('Alerts fetch failed');
@@ -222,9 +222,20 @@ function applyCantabricoConsensus(weather, consensus) {
     const eCode = consensus.current.weather_code != null ? parseInt(consensus.current.weather_code, 10) : 0;
     const rawPrecip = weather.current.precipitation != null ? parseFloat(weather.current.precipitation) : 0;
     const rawCode = weather.current.weather_code != null ? parseInt(weather.current.weather_code, 10) : 0;
-    const hum = weather.current.relative_humidity_2m != null 
-      ? parseFloat(weather.current.relative_humidity_2m) 
-      : (consensus.current.relative_humidity_2m != null ? parseFloat(consensus.current.relative_humidity_2m) : 0);
+    
+    // Adopción de humedad máxima en superficie (si el Centro Europeo constata saturación cantábrica >= 94%, se respeta):
+    const hum = Math.max(
+      weather.current.relative_humidity_2m != null ? parseFloat(weather.current.relative_humidity_2m) : 0,
+      consensus.current.relative_humidity_2m != null ? parseFloat(consensus.current.relative_humidity_2m) : 0
+    );
+    weather.current.relative_humidity_2m = hum;
+
+    const nowHour = new Date().getHours();
+    const curEPop = (consensus.hourly && consensus.hourly.precipitation_probability && consensus.hourly.precipitation_probability[nowHour] != null) ? consensus.hourly.precipitation_probability[nowHour] : 0;
+    const curEPrecip = (consensus.hourly && consensus.hourly.precipitation && consensus.hourly.precipitation[nowHour] != null) ? consensus.hourly.precipitation[nowHour] : 0;
+    const curECode = (consensus.hourly && consensus.hourly.weather_code && consensus.hourly.weather_code[nowHour] != null) ? consensus.hourly.weather_code[nowHour] : null;
+    const curAromeCode = (weather.hourly && weather.hourly.weather_code && weather.hourly.weather_code[nowHour] != null) ? weather.hourly.weather_code[nowHour] : null;
+    const curAromePrecip = (weather.hourly && weather.hourly.precipitation && weather.hourly.precipitation[nowHour] != null) ? weather.hourly.precipitation[nowHour] : 0;
 
     // VERIFICACIÓN SOLAR OBJETIVA (BLINDAJE CONTRA EL SOL FICTICIO SIMULADO POR AROME):
     // Cuando AROME simula un falso claro o desfase frontal, calcula matemáticamente radiación directa muy alta (400+ W/m²).
@@ -269,9 +280,25 @@ function applyCantabricoConsensus(weather, consensus) {
       if (ecmwfCloud > rawCloud) weather.current.cloud_cover = ecmwfCloud;
     }
 
+    // B1.1) Rescate Soberano de Orbayu Meón Cantábrico en tiempo actual (Saturación y Ensamble):
+    // Resuelve el caso donde el bloque instantáneo de la API marca 0.0 mm por latencia de 15 minutos,
+    // pero la atmósfera costera está en saturación condensada (humedad >= 94%, nubes >= 80%, sin sol directo)
+    // y ECMWF o AROME prevén llovizna en la hora en curso (código 51-57, ePop >= 25% o precip >= 0.1 mm).
+    const isOrbayuCondition = hum >= 94 && Math.max(rawCloud, ecmwfCloud) >= 80 && eDirectIrr < 100 &&
+      (curEPop >= 25 || (curECode >= 50 && curECode <= 57) || (curAromeCode >= 50 && curAromeCode <= 57) || curEPrecip >= 0.1 || curAromePrecip >= 0.1);
+
+    if (isOrbayuCondition) {
+      weather.current.weather_code = 51; // Orbayu / Llovizna fina
+      if (weather.current.precipitation < 0.1) {
+        weather.current.precipitation = Math.max(curEPrecip, curAromePrecip, 0.1);
+        if (weather.current.rain != null) weather.current.rain = weather.current.precipitation;
+      }
+      if (ecmwfCloud > rawCloud) weather.current.cloud_cover = ecmwfCloud;
+    }
+
     // B2) Filtro Anti-Llovizna Fantasma Solitaria de AROME en tiempo actual (Consenso Bidireccional & Inmunidad Solar):
     const isSolarDrizzleGhost = hasTrueSunlight && rawPrecip > 0 && rawPrecip < 0.5 && ePrecip < 0.1;
-    const isPhantomAromeDrizzle = (rawPrecip > 0 && rawPrecip < 1.5 &&
+    const isPhantomAromeDrizzle = !isOrbayuCondition && (rawPrecip > 0 && rawPrecip < 1.5 &&
       (rawCode <= 3 || (rawCode >= 50 && rawCode <= 57)) &&
       ePrecip < 0.1 &&
       eCode <= 3 &&
@@ -287,7 +314,7 @@ function applyCantabricoConsensus(weather, consensus) {
     }
 
     // C) SOBERANÍA FÍSICA Y ARMONIZACIÓN DE FALSOS NUBLADOS / RESIDUOS DE LLUVIA:
-    const isDryCurrent = (rawPrecip < 0.1 || (hasTrueSunlight && rawPrecip < 0.5)) && ePrecip < 0.1;
+    const isDryCurrent = !isOrbayuCondition && (rawPrecip < 0.1 || (hasTrueSunlight && rawPrecip < 0.5)) && ePrecip < 0.1 && curEPrecip < 0.1 && curAromePrecip < 0.1;
     if (isDryCurrent && weather.current.weather_code >= 50) {
       if (rawPrecip < 0.5) {
         weather.current.precipitation = 0;
@@ -314,7 +341,7 @@ function applyCantabricoConsensus(weather, consensus) {
       const rawC = weather.hourly.cloud_cover ? weather.hourly.cloud_cover[i] : 100;
       const ecmwfC = consensus.hourly.cloud_cover ? consensus.hourly.cloud_cover[i] : 0;
       const eDirectIrrH = consensus.hourly.direct_normal_irradiance ? consensus.hourly.direct_normal_irradiance[i] : 0;
-      
+
       // A) Armonización de Falso Claro Horario (frentes en avance detectados por ECMWF):
       const isFalseClearH = rawC < 50 && ecmwfC >= 60 && (ecmwfC - rawC >= 20) && (eDirectIrrH < 250 || ecmwfC >= 70);
 
@@ -337,15 +364,26 @@ function applyCantabricoConsensus(weather, consensus) {
       const precip = weather.hourly.precipitation ? (weather.hourly.precipitation[i] || 0) : 0;
       const ePrecipH = consensus.hourly.precipitation ? (consensus.hourly.precipitation[i] || 0) : 0;
       const eCodeH = consensus.hourly.weather_code ? consensus.hourly.weather_code[i] : null;
-      const humH = weather.hourly.relative_humidity_2m 
-        ? weather.hourly.relative_humidity_2m[i] 
+      const humH = weather.hourly.relative_humidity_2m
+        ? weather.hourly.relative_humidity_2m[i]
         : (consensus.hourly.relative_humidity_2m ? consensus.hourly.relative_humidity_2m[i] : 80);
 
+      // B) Enriquecimiento Probabilístico y de Saturación Horaria (Ensamble Mundial de 51 miembros de ECMWF):
+      if (weather.hourly.precipitation_probability && ePop > pop) {
+        weather.hourly.precipitation_probability[i] = ePop;
+      }
+      if (weather.hourly.relative_humidity_2m && consensus.hourly.relative_humidity_2m) {
+        const eHumH = consensus.hourly.relative_humidity_2m[i] || 0;
+        if (eHumH > (weather.hourly.relative_humidity_2m[i] || 0)) {
+          weather.hourly.relative_humidity_2m[i] = eHumH;
+        }
+      }
+
       // 1. Rescate de Orbayu Fino Real (0.1 - 0.4 mm):
-      const isDrizzleRescue = precip < 0.1 &&
+      const isDrizzleRescue = (precip < 0.1 || (precip < 0.5 && eCodeH >= 50 && eCodeH <= 57)) &&
         ((eCodeH >= 51 && eCodeH <= 57) || (ePrecipH >= 0.1 && ePrecipH < 0.5)) &&
         ePrecipH >= 0.1 &&
-        (ePop >= 35 || humH >= 78) &&
+        (ePop >= 30 || humH >= 78) &&
         (rawC >= 65 || ecmwfC >= 65) &&
         eDirectIrrH < 100;
 
@@ -357,8 +395,8 @@ function applyCantabricoConsensus(weather, consensus) {
         eDirectIrrH < 100;
 
       if (isDrizzleRescue || isFrontalRainRescue) {
-        if (weather.hourly.precipitation) weather.hourly.precipitation[i] = ePrecipH;
-        if (weather.hourly.rain) weather.hourly.rain[i] = ePrecipH;
+        if (weather.hourly.precipitation) weather.hourly.precipitation[i] = Math.max(precip, ePrecipH);
+        if (weather.hourly.rain) weather.hourly.rain[i] = Math.max(precip, ePrecipH);
         if (weather.hourly.weather_code && eCodeH) {
           weather.hourly.weather_code[i] = eCodeH;
         }
@@ -406,6 +444,23 @@ function applyCantabricoConsensus(weather, consensus) {
  */
 function applyStandalonePhysicalSovereignty(weather) {
   if (!weather) return;
+
+  // 0. Sincronización de Nowcasting con la hora en curso:
+  // Si el bloque instantáneo 'current' viene rezagado (p < 0.1 y código <= 3) pero el modelo predice
+  // para la hora en curso lluvia o llovizna activa (código >= 50 y precip >= 0.1 mm) bajo cielo cubierto y sin sol directo:
+  if (weather.current && weather.hourly && weather.hourly.time) {
+    const nowHour = new Date().getHours();
+    const hPrecip = weather.hourly.precipitation ? (weather.hourly.precipitation[nowHour] || 0) : 0;
+    const hCode = weather.hourly.weather_code ? weather.hourly.weather_code[nowHour] : null;
+    const curCloud = weather.current.cloud_cover != null ? weather.current.cloud_cover : 100;
+    const curDirectIrr = weather.current.direct_normal_irradiance != null ? weather.current.direct_normal_irradiance : 0;
+
+    if (weather.current.precipitation < 0.1 && weather.current.weather_code <= 3 && hCode >= 50 && hPrecip >= 0.1 && curCloud >= 75 && curDirectIrr < 100) {
+      weather.current.weather_code = hCode;
+      weather.current.precipitation = hPrecip;
+      if (weather.current.rain != null) weather.current.rain = hPrecip;
+    }
+  }
 
   // 1. En tiempo actual: limpieza de código residual de lluvia sin agua física
   if (weather.current) {
@@ -530,4 +585,4 @@ function harmonizeWeatherPrecipitation(weather) {
       daily.precipitation_sum[d] = Math.round(dayPrecipSum * 10) / 10;
     }
   }
-}
+}
