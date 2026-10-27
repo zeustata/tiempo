@@ -1294,6 +1294,17 @@ body {
   font-weight: 500;
 }
 
+.model-module-cadence {
+  font-size: 0.74rem;
+  color: #fbbf24;
+  font-weight: 600;
+  margin-top: 3px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  line-height: 1.35;
+}
+
 .model-tag-pill {
   padding: 2px 7px;
   border-radius: 4px;

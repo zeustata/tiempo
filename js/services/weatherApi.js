@@ -10,8 +10,9 @@ export const WEATHER_MODELS = [
     flag: '🌟',
     resolution: '1 - 3 km',
     tag: 'Calibrado Cantábrico',
-    description: 'Algoritmo inteligente de consenso cantábrico con soberanía de AROME (1.3 km) en tiempo real y protección contra falsos claros costeros de ECMWF.',
-    bestFor: 'Máxima fidelidad en costa y valles con protección estricta anti-orballu fantasma.'
+    runCadence: 'Consenso dinámico en tiempo real (AROME 1.3 km + ECMWF 9 km)',
+    description: 'Algoritmo inteligente de consenso cantábrico con soberanía de AROME (1.3 km) en tiempo real y protección estricta contra falsos claros o desfases frontales de ECMWF.',
+    bestFor: 'Máxima fidelidad en costa y valles con protección estricta anti-orballu fantasma y blindaje frontal.'
   },
   {
     id: 'ecmwf_ifs025',
@@ -21,6 +22,7 @@ export const WEATHER_MODELS = [
     flag: '🇪🇺',
     resolution: '9 km',
     tag: 'Referencia Mundial',
+    runCadence: 'Pasadas cada 6 h (00z, 06z, 12z, 18z) • Retardo cálculo ~4-5 h',
     description: 'El modelo numérico global más prestigioso, robusto y fiable del mundo para medio y corto plazo.',
     bestFor: 'Evolución de frentes atlánticos, presiones y tendencias a 3-7 días.'
   },
@@ -32,6 +34,7 @@ export const WEATHER_MODELS = [
     flag: '🇫🇷',
     resolution: '1.3 km',
     tag: 'Hiper-Resolución',
+    runCadence: 'Pasadas cada 3 h • Retardo cálculo ~3-4 h (propenso a desfases en frentes)',
     description: 'Modelo de altísima resolución adaptado al Cantábrico. Modela con enorme fidelidad microclimas, valles y brisas de costa.',
     bestFor: 'Valles profundos, nieblas costeras y orografía de Picos de Europa.'
   },
@@ -43,6 +46,7 @@ export const WEATHER_MODELS = [
     flag: '🇩🇪',
     resolution: '7 km',
     tag: 'Rápida Actualización',
+    runCadence: 'Pasadas cada 3-6 h • Rápida disponibilidad (~2-3 h de retardo)',
     description: 'Modelo europeo de alta frecuencia con excelente tratamiento de nubosidad, chubascos y rachas de viento.',
     bestFor: 'Detección de rachas súbitas de viento y chubascos rápidos.'
   },
@@ -54,6 +58,7 @@ export const WEATHER_MODELS = [
     flag: '🇺🇸',
     resolution: '13 km',
     tag: 'Global Clásico',
+    runCadence: 'Pasadas cada 6 h (00z, 06z, 12z, 18z) • Retardo cálculo ~4 h',
     description: 'El modelo numérico global de referencia de la Administración Nacional Oceánica y Atmosférica de EE. UU.',
     bestFor: 'Comparativa sinóptica y contraste internacional entre modelos.'
   },
@@ -65,6 +70,7 @@ export const WEATHER_MODELS = [
     flag: '🇬🇧',
     resolution: '10 km',
     tag: 'Frentes Atlánticos',
+    runCadence: '2 pasadas principales (00z, 12z) • Retardo cálculo ~4 h',
     description: 'El modelo británico de referencia histórica para borrascas profundas del Atlántico Norte y temporales en el Golfo de Vizcaya.',
     bestFor: 'Evolución de frentes borrascosos que entran por el Cantábrico y mar picado.'
   },
@@ -76,6 +82,7 @@ export const WEATHER_MODELS = [
     flag: '🇨🇦',
     resolution: '15 km',
     tag: 'Especialista Polar',
+    runCadence: '2 pasadas principales (00z, 12z) • Retardo cálculo ~4 h',
     description: 'Modelo global de Canadá altamente reconocido por su precisión identificando advecciones de aire ártico marítimo, olas de frío polar y ciclogénesis.',
     bestFor: 'Entradas frías invernales, nevadas en cotas medias-bajas y contraste polar.'
   },
@@ -87,6 +94,7 @@ export const WEATHER_MODELS = [
     flag: '🇯🇵',
     resolution: '10 km',
     tag: 'Humedad Oceánica',
+    runCadence: 'Pasadas cada 6 h (00z, 06z, 12z, 18z) • Retardo cálculo ~4 h',
     description: 'Modelo numérico japonés de gran prestigio por su cálculo de la humedad marítima, frentes cálidos y lluvia convectiva oceánica.',
     bestFor: 'Evaluación de saturación de humedad, lloviznas marítimas y nubosidad baja.'
   }
@@ -208,14 +216,28 @@ function applyCantabricoConsensus(weather, consensus) {
     const rawUv = weather.current.uv_index != null ? parseFloat(weather.current.uv_index) : 0;
     const rawSw = weather.current.shortwave_radiation != null ? parseFloat(weather.current.shortwave_radiation) : 0;
 
-    // SOBERANÍA SOLAR FÍSICA INQUEBRANTABLE EN TIEMPO ACTUAL:
-    // Si los sensores y el modelo de alta resolución detectan haz solar directo real (radiación directa >= 100 W/m²,
-    // radiación global >= 200 W/m² o UV >= 1.0), es físicamente imposible que haya un cielo 100% encapotado.
-    // Prohibido clasificar como "falso claro" si hay radiación solar activa verificable.
-    const hasActiveSunlight = rawDirectIrr >= 100 || rawSw >= 200 || rawUv >= 1.0;
+    const eDirectIrr = consensus.current.direct_normal_irradiance != null ? parseFloat(consensus.current.direct_normal_irradiance) : 0;
+    const eSw = consensus.current.shortwave_radiation != null ? parseFloat(consensus.current.shortwave_radiation) : 0;
+    const ePrecip = consensus.current.precipitation != null ? parseFloat(consensus.current.precipitation) : 0;
+    const eCode = consensus.current.weather_code != null ? parseInt(consensus.current.weather_code, 10) : 0;
+    const rawPrecip = weather.current.precipitation != null ? parseFloat(weather.current.precipitation) : 0;
+    const rawCode = weather.current.weather_code != null ? parseInt(weather.current.weather_code, 10) : 0;
+    const hum = weather.current.relative_humidity_2m != null 
+      ? parseFloat(weather.current.relative_humidity_2m) 
+      : (consensus.current.relative_humidity_2m != null ? parseFloat(consensus.current.relative_humidity_2m) : 0);
 
-    // A) Solo se corrige el falso claro si no hay sol directo activo, ECMWF constata un manto cerrado (>= 80%) y la divergencia es masiva (>= 35%)
-    const isFalseClear = !hasActiveSunlight && rawCloud < 50 && ecmwfCloud >= 80 && (ecmwfCloud - rawCloud >= 35);
+    // VERIFICACIÓN SOLAR OBJETIVA (BLINDAJE CONTRA EL SOL FICTICIO SIMULADO POR AROME):
+    // Cuando AROME simula un falso claro o desfase frontal, calcula matemáticamente radiación directa muy alta (400+ W/m²).
+    // Para que el sol sea considerado real y no un mero cálculo de AROME, debe estar respaldado por ECMWF (eDirectIrr >= 80 W/m²)
+    // o por una nubosidad moderada en el Centro Europeo (ecmwfCloud <= 50%).
+    // Si ECMWF constata manto cubierto (>= 60%) y radiación deprimida (< 100 W/m²), la radiación de AROME se descarta como espejismo numérico.
+    const hasTrueSunlight = (rawDirectIrr >= 100 || rawSw >= 200 || rawUv >= 1.0) && (eDirectIrr >= 80 || ecmwfCloud <= 50);
+
+    // A) Detección y corrección de Falso Claro (Avance Frontal de ECMWF):
+    // Se activa si ECMWF detecta frente en avance o cielo cerrado (ecmwfCloud >= 60%),
+    // mientras AROME se ha quedado dormido con un claro ficticio (rawCloud < 50% con divergencia >= 20%),
+    // y ECMWF confirma ausencia de haz solar abrasador (eDirectIrr < 250 o ecmwfCloud >= 70).
+    const isFalseClear = !hasTrueSunlight && rawCloud < 50 && ecmwfCloud >= 60 && (ecmwfCloud - rawCloud >= 20) && (eDirectIrr < 250 || ecmwfCloud >= 70);
 
     if (isFalseClear) {
       weather.current.cloud_cover = ecmwfCloud;
@@ -230,25 +252,14 @@ function applyCantabricoConsensus(weather, consensus) {
       }
     }
 
-    // B) Rescate de Orbayu Cantábrico Real en tiempo actual:
-    const rawPrecip = weather.current.precipitation != null ? parseFloat(weather.current.precipitation) : 0;
-    const ePrecip = consensus.current.precipitation != null ? parseFloat(consensus.current.precipitation) : 0;
-    const eCode = consensus.current.weather_code != null ? parseInt(consensus.current.weather_code, 10) : 0;
-    const hum = weather.current.relative_humidity_2m != null 
-      ? parseFloat(weather.current.relative_humidity_2m) 
-      : (consensus.current.relative_humidity_2m != null ? parseFloat(consensus.current.relative_humidity_2m) : 0);
-    const eDirectIrr = consensus.current.direct_normal_irradiance != null ? parseFloat(consensus.current.direct_normal_irradiance) : 0;
-
-    // B) Rescate de Lluvia / Orbayu Real de ECMWF en tiempo actual (sin tope de 0.5 mm):
-    // Si AROME marca seco (< 0.1 mm) o infravalora gravemente un frente (< 0.4 mm cuando ECMWF ve >= 0.5 mm),
-    // pero ECMWF confirma lluvia (ePrecip >= 0.1 mm o código de precipitación >= 50),
-    // con alta humedad (hum >= 85%) o cielo cerrado y sin sol directo:
-    // se adopta la lluvia real de ECMWF (sea 0.2 mm de llovizna o 1.6 mm de diluvio).
+    // B) Rescate Soberano de Lluvia / Orbayu Real de ECMWF en tiempo actual:
+    // Si ECMWF confirma precipitación activa (ePrecip >= 0.1 mm o código WMO >= 50) sin sol en ECMWF (eDirectIrr < 100),
+    // bajo condiciones cantábricas húmedas (hum >= 75% o ecmwfCloud >= 65%),
+    // mientras AROME sigue marcando seco (< 0.1 mm) o subestimando severamente (< 0.3 mm con ECMWF >= 0.4 mm):
+    // SE ADOPTA INMEDIATAMENTE LA LLUVIA Y NUBOSIDAD REAL DEL CENTRO EUROPEO.
     const isCurrentRainRescue = (ePrecip >= 0.1 || (eCode >= 50 && eCode <= 67) || (eCode >= 80 && eCode <= 82)) &&
-      (rawPrecip < 0.1 || (ePrecip >= 0.5 && rawPrecip < 0.4)) &&
-      hum >= 85 &&
-      (rawCloud >= 75 || ecmwfCloud >= 75) &&
-      !hasActiveSunlight &&
+      (rawPrecip < 0.1 || (ePrecip >= 0.4 && rawPrecip < 0.3)) &&
+      (hum >= 75 || ecmwfCloud >= 65) &&
       eDirectIrr < 100;
 
     if (isCurrentRainRescue) {
@@ -259,17 +270,12 @@ function applyCantabricoConsensus(weather, consensus) {
     }
 
     // B2) Filtro Anti-Llovizna Fantasma Solitaria de AROME en tiempo actual (Consenso Bidireccional & Inmunidad Solar):
-    // Si AROME marca micro-precipitación (< 0.6 mm) o código de llovizna (51-57), pero el modelo de referencia
-    // mundial (ECMWF) constata que está seco (ePrecip < 0.1 mm) con código de cielo seco (eCode <= 3),
-    // y la atmósfera no está en saturación de llovizna (humedad < 86% o hay sol directo activo):
-    // Se anula la precipitación fantasma solitaria y se adopta el código seco de ECMWF (o soleado si hay sol).
-    const rawCode = weather.current.weather_code != null ? parseInt(weather.current.weather_code, 10) : 0;
-    const isSolarDrizzleGhost = hasActiveSunlight && rawPrecip > 0 && rawPrecip < 0.5 && ePrecip < 0.1;
+    const isSolarDrizzleGhost = hasTrueSunlight && rawPrecip > 0 && rawPrecip < 0.5 && ePrecip < 0.1;
     const isPhantomAromeDrizzle = (rawPrecip > 0 && rawPrecip < 1.5 &&
       (rawCode <= 3 || (rawCode >= 50 && rawCode <= 57)) &&
       ePrecip < 0.1 &&
       eCode <= 3 &&
-      (hum < 86 || hasActiveSunlight)) || isSolarDrizzleGhost;
+      (hum < 86 || hasTrueSunlight)) || isSolarDrizzleGhost;
 
     if (isPhantomAromeDrizzle) {
       weather.current.precipitation = 0;
@@ -281,9 +287,7 @@ function applyCantabricoConsensus(weather, consensus) {
     }
 
     // C) SOBERANÍA FÍSICA Y ARMONIZACIÓN DE FALSOS NUBLADOS / RESIDUOS DE LLUVIA:
-    // 1. Si el modelo traía código residual de precipitación (>= 50) pero está físicamente seco (< 0.1 mm),
-    // se limpia la lluvia y se adapta el código al estado nuboso real (3 si está cubierto, 2 si hay claros).
-    const isDryCurrent = (rawPrecip < 0.1 || (hasActiveSunlight && rawPrecip < 0.5)) && ePrecip < 0.1;
+    const isDryCurrent = (rawPrecip < 0.1 || (hasTrueSunlight && rawPrecip < 0.5)) && ePrecip < 0.1;
     if (isDryCurrent && weather.current.weather_code >= 50) {
       if (rawPrecip < 0.5) {
         weather.current.precipitation = 0;
@@ -293,13 +297,8 @@ function applyCantabricoConsensus(weather, consensus) {
       weather.current.weather_code = effectiveCloud >= 80 ? 3 : (effectiveCloud >= 40 ? 2 : 1);
     }
 
-    // 2. Falso Nublado de AROME (estratos/nieblas residuales matinales disipadas):
-    // SOLO se corrige si AROME se ha quedado encallado en manto cerrado (rawCloud >= 75%)
-    // mientras el Centro Europeo (ECMWF) constata cielo abierto o despejado (ecmwfCloud <= 50%),
-    // existiendo divergencia masiva (rawCloud - ecmwfCloud >= 30%) y sol activo.
-    // Si ambos modelos coinciden en cielo cubierto (>= 75%), se respeta categóricamente el manto nuboso.
-    const isFalseOvercast = isDryCurrent && hasActiveSunlight && rawCloud >= 75 && ecmwfCloud <= 50 && (rawCloud - ecmwfCloud >= 30);
-
+    // Falso Nublado de AROME (nieblas residuales ya disipadas con sol verificado en ECMWF)
+    const isFalseOvercast = isDryCurrent && hasTrueSunlight && rawCloud >= 75 && ecmwfCloud <= 50 && (rawCloud - ecmwfCloud >= 30);
     if (isFalseOvercast) {
       weather.current.cloud_cover = ecmwfCloud;
       weather.current.weather_code = consensus.current.weather_code != null && consensus.current.weather_code <= 2
@@ -312,10 +311,14 @@ function applyCantabricoConsensus(weather, consensus) {
   if (weather.hourly && weather.hourly.time && consensus.hourly && consensus.hourly.time) {
     const limit = Math.min(weather.hourly.time.length, consensus.hourly.time.length, 48);
     for (let i = 0; i < limit; i++) {
-      // A) Armonización de falso claro (únicamente bajo cobertura masiva de ECMWF >= 80%)
       const rawC = weather.hourly.cloud_cover ? weather.hourly.cloud_cover[i] : 100;
       const ecmwfC = consensus.hourly.cloud_cover ? consensus.hourly.cloud_cover[i] : 0;
-      if (rawC < 50 && ecmwfC >= 80 && (ecmwfC - rawC >= 35)) {
+      const eDirectIrrH = consensus.hourly.direct_normal_irradiance ? consensus.hourly.direct_normal_irradiance[i] : 0;
+      
+      // A) Armonización de Falso Claro Horario (frentes en avance detectados por ECMWF):
+      const isFalseClearH = rawC < 50 && ecmwfC >= 60 && (ecmwfC - rawC >= 20) && (eDirectIrrH < 250 || ecmwfC >= 70);
+
+      if (isFalseClearH) {
         if (weather.hourly.cloud_cover) weather.hourly.cloud_cover[i] = ecmwfC;
         if (weather.hourly.weather_code && consensus.hourly.weather_code) {
           weather.hourly.weather_code[i] = consensus.hourly.weather_code[i];
@@ -328,85 +331,68 @@ function applyCantabricoConsensus(weather, consensus) {
         }
       }
 
-      // B) Armonización y Rescate de Orbayu Real / Lluvia Frontal:
+      // B) Armonización y Rescate de Orbayu Real / Lluvia Frontal Horaria:
       const pop = weather.hourly.precipitation_probability ? (weather.hourly.precipitation_probability[i] || 0) : 0;
       const ePop = consensus.hourly.precipitation_probability ? (consensus.hourly.precipitation_probability[i] || 0) : 0;
       const precip = weather.hourly.precipitation ? (weather.hourly.precipitation[i] || 0) : 0;
-      const ePrecip = consensus.hourly.precipitation ? (consensus.hourly.precipitation[i] || 0) : 0;
-      const eCode = consensus.hourly.weather_code ? consensus.hourly.weather_code[i] : null;
-      const hum = weather.hourly.relative_humidity_2m 
+      const ePrecipH = consensus.hourly.precipitation ? (consensus.hourly.precipitation[i] || 0) : 0;
+      const eCodeH = consensus.hourly.weather_code ? consensus.hourly.weather_code[i] : null;
+      const humH = weather.hourly.relative_humidity_2m 
         ? weather.hourly.relative_humidity_2m[i] 
         : (consensus.hourly.relative_humidity_2m ? consensus.hourly.relative_humidity_2m[i] : 80);
-      const eDirectIrr = consensus.hourly.direct_normal_irradiance ? consensus.hourly.direct_normal_irradiance[i] : 0;
-      const rawDirectH = weather.hourly.direct_normal_irradiance ? (weather.hourly.direct_normal_irradiance[i] || 0) : 0;
-      const rawUvH = weather.hourly.uv_index ? (weather.hourly.uv_index[i] || 0) : 0;
-      const rawSwH = weather.hourly.shortwave_radiation ? (weather.hourly.shortwave_radiation[i] || 0) : 0;
-      const hasHourlySun = rawDirectH >= 100 || eDirectIrr >= 100 || rawSwH >= 200 || rawUvH >= 1.2;
 
       // 1. Rescate de Orbayu Fino Real (0.1 - 0.4 mm):
-      // Si AROME marca seco pero ECMWF ve llovizna con ensamble (PoP >= 40%), humedad >= 86%,
-      // cielo cubierto (>= 80%) y sin haz solar directo en ECMWF (< 100 W/m²).
       const isDrizzleRescue = precip < 0.1 &&
-        ((eCode >= 51 && eCode <= 57) || (ePrecip >= 0.1 && ePrecip < 0.5)) &&
-        ePrecip >= 0.1 &&
-        ePop >= 40 &&
-        hum >= 86 &&
-        (rawC >= 80 || ecmwfC >= 80) &&
-        eDirectIrr < 100;
+        ((eCodeH >= 51 && eCodeH <= 57) || (ePrecipH >= 0.1 && ePrecipH < 0.5)) &&
+        ePrecipH >= 0.1 &&
+        (ePop >= 35 || humH >= 78) &&
+        (rawC >= 65 || ecmwfC >= 65) &&
+        eDirectIrrH < 100;
 
-      // 2. Lluvia Frontal Significativa (>= 0.5 mm):
-      // Si el ensamble ve lluvia clara (PoP >= 60% en AROME o ECMWF), acumulación >= 0.5 mm y nubosidad >= 60%.
-      const isFrontalRainRescue = precip < 0.1 &&
-        (pop >= 60 || ePop >= 60) &&
-        ePrecip >= 0.5 &&
-        (rawC >= 60 || ecmwfC >= 60);
+      // 2. Lluvia Frontal Significativa (>= 0.3 mm):
+      const isFrontalRainRescue = precip < 0.2 &&
+        (pop >= 45 || ePop >= 45 || ePrecipH >= 0.4) &&
+        ePrecipH >= 0.3 &&
+        (rawC >= 60 || ecmwfC >= 60) &&
+        eDirectIrrH < 100;
 
       if (isDrizzleRescue || isFrontalRainRescue) {
-        if (weather.hourly.precipitation) weather.hourly.precipitation[i] = ePrecip;
-        if (weather.hourly.rain) weather.hourly.rain[i] = ePrecip;
-        if (weather.hourly.weather_code && (weather.hourly.weather_code[i] < 50) && eCode) {
-          weather.hourly.weather_code[i] = eCode;
+        if (weather.hourly.precipitation) weather.hourly.precipitation[i] = ePrecipH;
+        if (weather.hourly.rain) weather.hourly.rain[i] = ePrecipH;
+        if (weather.hourly.weather_code && eCodeH) {
+          weather.hourly.weather_code[i] = eCodeH;
         }
         if (weather.hourly.precipitation_probability) {
-          weather.hourly.precipitation_probability[i] = Math.max(pop, ePop);
+          weather.hourly.precipitation_probability[i] = Math.max(pop, ePop, 60);
+        }
+        if (weather.hourly.cloud_cover) {
+          weather.hourly.cloud_cover[i] = Math.max(rawC, ecmwfC, 75);
         }
       }
 
       // 3. Filtro Anti-Llovizna Fantasma Horaria de AROME:
-      // Si AROME proyecta llovizna (< 1.5 mm) pero el Centro Europeo (ECMWF) tiene 0.0 mm seco (eCode <= 3),
-      // ensamble de probabilidad bajo (ePop < 35%) y humedad no saturada (hum < 86%):
-      // se anula la llovizna solitaria y se preserva el estado seco.
       const rawHourlyCode = weather.hourly.weather_code ? weather.hourly.weather_code[i] : 0;
-      const isSolarHourlyGhost = hasHourlySun && precip > 0 && precip < 0.5 && ePrecip < 0.1;
+      const isSolarHourlyGhost = eDirectIrrH >= 100 && precip > 0 && precip < 0.5 && ePrecipH < 0.1;
       const isPhantomHourlyDrizzle = (precip > 0 && precip < 1.5 &&
         (rawHourlyCode <= 3 || (rawHourlyCode >= 50 && rawHourlyCode <= 57)) &&
-        ePrecip < 0.1 &&
-        eCode !== null && eCode <= 3 &&
-        (hum < 86 || hasHourlySun) && ePop < 45) || isSolarHourlyGhost;
+        ePrecipH < 0.1 &&
+        eCodeH !== null && eCodeH <= 3 &&
+        (humH < 86 || eDirectIrrH >= 100) && ePop < 45) || isSolarHourlyGhost;
 
       if (isPhantomHourlyDrizzle) {
         if (weather.hourly.precipitation) weather.hourly.precipitation[i] = 0;
         if (weather.hourly.rain) weather.hourly.rain[i] = 0;
-        if (weather.hourly.weather_code) weather.hourly.weather_code[i] = (eCode !== null && eCode <= 3) ? eCode : 1;
+        if (weather.hourly.weather_code) weather.hourly.weather_code[i] = (eCodeH !== null && eCodeH <= 3) ? eCodeH : 1;
         if (weather.hourly.precipitation_probability) weather.hourly.precipitation_probability[i] = ePop;
       }
 
-      // C) Armonización Horaria de Lluvia Residual y Falso Nublado:
-      const isDryHourly = (precip < 0.1 || (hasHourlySun && precip < 0.5)) && ePrecip < 0.1;
-
-      // 1. Limpieza de código de lluvia residual sin precipitación física
+      // C) Armonización Horaria de Lluvia Residual:
+      const isDryHourly = precip < 0.1 && ePrecipH < 0.1;
       if (isDryHourly && weather.hourly.weather_code && weather.hourly.weather_code[i] >= 50) {
         if (weather.hourly.precipitation && precip < 0.5) weather.hourly.precipitation[i] = 0;
         if (weather.hourly.rain && precip < 0.5) weather.hourly.rain[i] = 0;
         const effectiveC = Math.max(rawC, ecmwfC);
         weather.hourly.weather_code[i] = effectiveC >= 80 ? 3 : (effectiveC >= 40 ? 2 : 1);
-      }
-
-      // 2. Falso nublado horario (AROME encallado frente a ECMWF despejado con sol)
-      const isFalseOvercastH = isDryHourly && hasHourlySun && rawC >= 75 && ecmwfC <= 50 && (rawC - ecmwfC >= 30);
-      if (isFalseOvercastH) {
-        if (weather.hourly.cloud_cover) weather.hourly.cloud_cover[i] = ecmwfC;
-        weather.hourly.weather_code[i] = (eCode !== null && eCode <= 2) ? eCode : (ecmwfC <= 25 ? 0 : 2);
       }
     }
   }

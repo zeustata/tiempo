@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-9-scroll-fix';
+const CACHE_NAME = 'meteoasturlode-v3023-10-cantabrico-consensus-fix';
 const STATIC_ASSETS = [
   './',
   './index.html',

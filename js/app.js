@@ -1083,6 +1083,7 @@ class MeteoAsturiasApp {
                   ${m.tag ? `<span class="model-tag-pill" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; border-color: rgba(56, 189, 248, 0.4);">${m.tag}</span>` : ''}
                 </div>
                 <span class="model-module-agency">${m.agency}</span>
+                ${m.runCadence ? `<span class="model-module-cadence">⏱️ ${m.runCadence}</span>` : ''}
                 <span class="model-module-desc">${m.description}</span>
                 <span class="model-module-ideal">🎯 ${m.bestFor}</span>
               </div>
