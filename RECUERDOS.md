@@ -40,6 +40,15 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - Contrastar con ECMWF IFS (`models=ecmwf_ifs025&current=weather_code,cloud_cover,direct_normal_irradiance`).
        - Aplicar en Java la regla de consenso: si el modelo local indica soleado (`weather_code <= 1` o `cloud_cover < 50%`) pero no hay sol activo (`direct_normal_irradiance < 100 W/m²`, `uv < 1.0`) y ECMWF reporta manto cubierto (`cloud_cover >= 80%`), forzar `weather_code = 3` (Nublado) en el tiempo actual y en la previsión diaria de hoy, asegurando paridad visual 1:1 total entre el widget de escritorio y la web app.
 
+## 🌥️ Blindaje del Consenso Cantábrico Frente al Resol de Mediodía & Calibración Fiel de Resol (75-90% Nubes) — 2026-10-28
+- **Diagnóstico en Vivo y Corrección Inmediata (Feedback Lendo - «Y ahora que esta pasando? Das otra vez un sol completo y hay sol y nubes. sale el sol y se va o hace resol. mirando el cielo esta un 90% gris un 10% azul... subelo antes que se percaten los testers»):**
+  - *Causa Raíz Detectada con Datos en Bruto (13:45 h):*
+    1. AROME (`meteofrance_seamless`) simulaba `0%` de nubes en Gijón y `1%` en Castrillón (Código `0`, Despejado), mientras que el Centro Europeo (`ecmwf_ifs025`) registraba fielmente `69%-77%` de nubes en Gijón (Código `2`) y `86%-97%` de nubes en Castrillón (Código `3`) con `296-313 W/m²` de radiación filtrada por ese 10%-20% de claros.
+    2. En `weatherApi.js`, la cláusula `eDirectIrr >= 80` dentro de `hasTrueSunlight` se activaba con los `296-313 W/m²` del mediodía solar y bloqueaba `isFalseClear`, dejando pasar el `0%` de nubes de AROME.
+  - *Solución Aplicada (`weatherApi.js`, `weatherIcons.js`, `storage.js`, `app.js`, `index.html`, `sw.js`):*
+    1. **Prioridad de Nubosidad Real de ECMWF (`isFalseClear` / `isFalseClearH`):** Siempre que AROME simule cielo despejado (`rawCloud < 50%`) pero ECMWF constate cielo cargado (`ecmwfCloud >= 55%` con divergencia `>= 25%`), el Híbrido adopta la nubosidad, código y radiación de ECMWF sin ser bloqueado por el resol de mediodía.
+    2. **Detector de Resol / Sol Tamizáu (`🌥️`) desde 75% de Nubes y 180 W/m² (`weatherIcons.js`):** Con `cc >= 75%` y radiación filtrada (`irr >= 180 W/m²` o `sw >= 280 W/m²` con `irr >= 120 W/m²`), el sistema clasifica el estado como **`🌥️ Resol / Sol tamizáu`** (y **`⛅ Parcialmente nublado / Claros`** entre `50%` y `74%` de nubes).
+
 ## 🍃 Corrección del Umbral de Baliza en Pastilla de Calidad del Aire (Escala Europea 0-100) — 2026-10-28
 - **Diagnóstico y Corrección de Falsa Alerta Naranja (Feedback Lendo - «Mira en la tarjeta de calidad del aire, el boton de arriba esta distinto a los demas colores con un punto naranja y un aura naranja. por que?» y «primero sube a internet el cambio hacho del boton de la calidad de aire»):**
   - *Causa:* La condición `aqi.european_aqi >= 4` empleaba por error la escala de 1 a 5 en lugar de la escala europea de Open-Meteo (`0 a 100+`), encendiendo el punto naranja incluso con aire bueno (`22`).

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-22-sensor-pills-beacons';
+const CACHE_NAME = 'meteoasturlode-v3023-23-resol-consensus';
 const STATIC_ASSETS = [
   './',
   './index.html',

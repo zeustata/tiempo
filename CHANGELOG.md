@@ -46,7 +46,10 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
     - Corregido el umbral de activación del punto y aura naranja (`has-alert-warning`) en la pastilla `🍃 Aire` de `currentCard.js`, pasando de la escala antigua `>= 4` a la escala real del Índice Europeo de Calidad del Aire (`0 a 100+`: aviso naranja `> 60` o polen alto; alerta roja `> 80`).
   - **Sistema Completo de Balizas Vivas en Pastillas de Sensores (Feedback Lendo & Princesa):**
     - Incorporado el aviso naranja (`has-alert-warning`) en la pastilla `💧 Humedad` ante saturación crítica / niebla inminente (`Humedad >= 94%` y `Δ T <= 1.5°C`) y la alerta roja (`has-alert-danger`) en `☀️ UV / Sol` para radiación extrema (`UV >= 11`), manteniendo `🧺 Colada` siempre neutro.
-  - Service Worker actualizado a `meteoasturlode-v3023-22-sensor-pills-beacons` en `sw.js`.
+  - **Blindaje del Consenso Cantábrico frente a Resol de Mediodía & Calibración de Resol (Feedback Lendo):**
+    - Corregida en `weatherApi.js` la condición `isFalseClear` / `isFalseClearH` para que el resol filtrado de mediodía (`200-350 W/m²` en ECMWF) nunca desactive el rescate de nubosidad del Centro Europeo (`>= 55%` nubes) cuando el modelo francés AROME pinta un falso cielo despejado (`0%-1%` nubes).
+    - Calibrado el detector de **Resol / Sol tamizáu (`🌥️`)** en `weatherIcons.js` para coberturas nubosas altas (`>= 75%` nubes) con radiación filtrada (`>= 180 W/m²` directa o `>= 280 W/m²` global), mostrando fielmente *Resol / Sol tamizáu* o *Parcialmente nublado / Claros* en lugar de un falso *Despejado*.
+  - Service Worker actualizado a `meteoasturlode-v3023-23-resol-consensus` en `sw.js`.
   - Revisión interna `v=3.0.23.8` en `index.html` y `css/components.css`.
 
 ### 💛 Tarjeta Principal Compacta & Jerarquía Bilingüe Azul y Oro Asturiano (Feedback Lendo)

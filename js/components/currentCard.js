@@ -1,4 +1,4 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=2.2.64';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=3.0.23.23';
 import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=3.0.21';
 import { renderHourlyForecastBlock } from './forecastView.js?v=3.0.7';
 import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=3.0.3';

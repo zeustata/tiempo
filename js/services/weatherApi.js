@@ -242,13 +242,13 @@ function applyCantabricoConsensus(weather, consensus) {
     // Para que el sol sea considerado real y no un mero cálculo de AROME, debe estar respaldado por ECMWF (eDirectIrr >= 80 W/m²)
     // o por una nubosidad moderada en el Centro Europeo (ecmwfCloud <= 50%).
     // Si ECMWF constata manto cubierto (>= 60%) y radiación deprimida (< 100 W/m²), la radiación de AROME se descarta como espejismo numérico.
-    const hasTrueSunlight = (rawDirectIrr >= 100 || rawSw >= 200 || rawUv >= 1.0) && (eDirectIrr >= 80 || ecmwfCloud <= 50);
+    const hasTrueSunlight = (rawDirectIrr >= 100 || rawSw >= 200 || rawUv >= 1.0) && ecmwfCloud <= 50 && eDirectIrr >= 150;
 
     // A) Detección y corrección de Falso Claro (Avance Frontal de ECMWF):
     // Se activa si ECMWF detecta frente en avance o cielo cerrado (ecmwfCloud >= 60%),
     // mientras AROME se ha quedado dormido con un claro ficticio (rawCloud < 50% con divergencia >= 20%),
     // y ECMWF confirma ausencia de haz solar abrasador (eDirectIrr < 250 o ecmwfCloud >= 70).
-    const isFalseClear = !hasTrueSunlight && rawCloud < 50 && ecmwfCloud >= 60 && (ecmwfCloud - rawCloud >= 20) && (eDirectIrr < 250 || ecmwfCloud >= 70);
+    const isFalseClear = rawCloud < 50 && ecmwfCloud >= 55 && (ecmwfCloud - rawCloud >= 25);
 
     if (isFalseClear) {
       weather.current.cloud_cover = ecmwfCloud;
@@ -343,7 +343,7 @@ function applyCantabricoConsensus(weather, consensus) {
       const eDirectIrrH = consensus.hourly.direct_normal_irradiance ? consensus.hourly.direct_normal_irradiance[i] : 0;
 
       // A) Armonización de Falso Claro Horario (frentes en avance detectados por ECMWF):
-      const isFalseClearH = rawC < 50 && ecmwfC >= 60 && (ecmwfC - rawC >= 20) && (eDirectIrrH < 250 || ecmwfC >= 70);
+      const isFalseClearH = rawC < 50 && ecmwfC >= 55 && (ecmwfC - rawC >= 25);
 
       if (isFalseClearH) {
         if (weather.hourly.cloud_cover) weather.hourly.cloud_cover[i] = ecmwfC;

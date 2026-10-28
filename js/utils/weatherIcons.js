@@ -384,21 +384,21 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     let hasRealSolarLight = false;
     let isResol = false;
 
-    if (cc !== null && cc >= 85) {
-      // Cobertura casi total o total (85% a 100% de nubes):
-      // BLINDAJE ANTI-FALSO RESOL: Se exige obligatoriamente haz solar directo real (irr >= directMinResol)
-      // para perforar el velo nuboso. Se elimina el falso positivo por radiación UV difusa.
-      if (hasDirectBeam) {
+    if (cc !== null && cc >= 75) {
+      // Cobertura nubosa alta o muy alta (75% a 100% de nubes, p. ej. 85-90% gris con 10% de claros):
+      // Si el haz solar directo logra filtrarse (irr >= 180 W/m² o radiación global >= 280 W/m² con irr >= 120 W/m²),
+      // se clasifica fielmente como Resol / Sol tamizáu (🌥️), evitando tanto el falso "Despejado" como el "Nublado cerrado" sin matices.
+      if (hasDirectBeam || irr >= 180 || (sw >= 280 && irr >= 120)) {
         hasRealSolarLight = true;
         isResol = true;
       }
     } else {
-      // Cobertura < 85% o sin dato de nubosidad: desempate por radiación para claros
+      // Cobertura < 75% o sin dato de nubosidad: desempate por radiación para claros
       hasRealSolarLight = (irr >= 90 || uv >= thresholds.uvModerate || sw >= thresholds.swGlobalHigh);
       isResol = false;
     }
 
-    if ((p < 0.1 || isSolarPhantomDrizzle || (p < 0.5 && hasRealSolarLight)) && hasRealSolarLight && (base.isRain || base.svgKey === 'cloudy' || code === 3 || base.svgKey === 'fog' || base.svgKey === 'drizzle')) {
+    if ((p < 0.1 || isSolarPhantomDrizzle || (p < 0.5 && hasRealSolarLight)) && hasRealSolarLight && (isResol || base.isRain || base.svgKey === 'cloudy' || code === 3 || base.svgKey === 'fog' || base.svgKey === 'drizzle')) {
       const isClearSky = !isResol && cc !== null && cc <= 25 && irr >= 150;
       base = {
         label: isResol ? 'Resol / Sol tamizáu' : (isClearSky ? 'Despejado / Soleyeru' : 'Parcialmente nublado / Claros'),

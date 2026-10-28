@@ -76,7 +76,7 @@ export function isFavorite(concejoId) {
   return prefs.favorites.includes(concejoId);
 }
 
-const WEATHER_CACHE_PREFIX = 'meteoastur_weather_cache_';
+const WEATHER_CACHE_PREFIX = 'meteoastur_weather_cache_v2_';
 
 export function getCachedWeather(concejoId, modelId = 'best_match') {
   try {
