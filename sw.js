@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-25-tide-pill-mobile-fit';
+const CACHE_NAME = 'meteoasturlode-v3023-26-tide-stacked-right';
 const STATIC_ASSETS = [
   './',
   './index.html',

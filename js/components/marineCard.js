@@ -1297,15 +1297,15 @@ export function renderMarineCard(data, concejo) {
                     ? '<span class="tide-mini-status next">⏳ Próxima</span>'
                     : (isPast ? '<span class="tide-mini-status past">Pasada</span>' : '<span class="tide-mini-status upcoming">Hoy</span>');
                   return `
-                    <div class="tide-mini-pill ${isHigh ? 'high' : 'low'} ${isNext ? 'is-next' : ''} ${isPast ? 'is-past' : ''}">
-                      <div class="tide-mini-pill-left">
+                    <div class="tide-mini-pill ${isHigh ? 'high' : 'low'} ${isNext ? 'is-next' : ''} ${isPast ? 'is-past' : ''}" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; width: 100%; flex: 0 0 100%; box-sizing: border-box; padding: 10px 14px; gap: 12px;">
+                      <div class="tide-mini-pill-left" style="display: flex; align-items: center; gap: 10px; min-width: 0;">
                         <span class="tide-mini-icon">${icon}</span>
-                        <div class="tide-mini-title-group">
+                        <div class="tide-mini-title-group" style="display: flex; flex-direction: column; align-items: flex-start; gap: 3px;">
                           <span class="tide-mini-name">${ev.name}</span>
                           ${statusBadge}
                         </div>
                       </div>
-                      <div class="tide-mini-pill-right">
+                      <div class="tide-mini-pill-right" style="display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 2px; flex-shrink: 0; margin-left: auto; text-align: right;">
                         <span class="tide-mini-time">${ev.timeStr}</span>
                         <span class="tide-mini-height" style="color: ${accentColor};">${ev.height} <span class="tide-mini-unit">m</span></span>
                       </div>
