@@ -44,7 +44,9 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
     - Sustituidos los carteles textuales de desplazamiento (`👉 Desliza horizontalmente...`) y ocultada la barra de scroll horizontal nativa (`scrollbar-width: none`) en **Pronóstico a 10 Días**, **Surf & Rompientes (3 Horas y 7 Días)** y **Playas & Mareas (7 Días)**, adoptando el paginador interactivo de puntos y píldora luminosa (`.sensors-dots-indicator` / `.sensor-dot`) mediante `bindCarouselDots` en `js/app.js`.
   - **Calibración de Baliza en Pastilla de Calidad del Aire (Feedback Lendo):**
     - Corregido el umbral de activación del punto y aura naranja (`has-alert-warning`) en la pastilla `🍃 Aire` de `currentCard.js`, pasando de la escala antigua `>= 4` a la escala real del Índice Europeo de Calidad del Aire (`0 a 100+`: aviso naranja `> 60` o polen alto; alerta roja `> 80`).
-  - Service Worker actualizado a `meteoasturlode-v3023-21-aqi-pill-scale` en `sw.js`.
+  - **Sistema Completo de Balizas Vivas en Pastillas de Sensores (Feedback Lendo & Princesa):**
+    - Incorporado el aviso naranja (`has-alert-warning`) en la pastilla `💧 Humedad` ante saturación crítica / niebla inminente (`Humedad >= 94%` y `Δ T <= 1.5°C`) y la alerta roja (`has-alert-danger`) en `☀️ UV / Sol` para radiación extrema (`UV >= 11`), manteniendo `🧺 Colada` siempre neutro.
+  - Service Worker actualizado a `meteoasturlode-v3023-22-sensor-pills-beacons` en `sw.js`.
   - Revisión interna `v=3.0.23.8` en `index.html` y `css/components.css`.
 
 ### 💛 Tarjeta Principal Compacta & Jerarquía Bilingüe Azul y Oro Asturiano (Feedback Lendo)

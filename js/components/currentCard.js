@@ -990,7 +990,9 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   const windPillAlert = rawGusts >= 80 ? 'has-alert-danger' : (rawGusts >= 60 ? 'has-alert-warning' : '');
   const baroPillAlert = isSeverePressureDrop ? 'has-alert-danger' : (isWarningPressureDrop ? 'has-alert-warning' : '');
   const rainPillAlert = (currentRainIntensity >= 30 || rainTodayTotal >= 80) ? 'has-alert-danger' : ((currentRainIntensity >= 15 || rainTodayTotal >= 40) ? 'has-alert-warning' : '');
-  const uvPillAlert = (uvVal != null && uvVal >= 8) ? 'has-alert-warning' : '';
+  const isBeaconSim = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('test') === 'balizas_sensores';
+  const humPillAlert = (isBeaconSim || (RH >= 94 && deltaDewVal <= 1.5)) ? 'has-alert-warning' : '';
+  const uvPillAlert = (isBeaconSim || (uvVal != null && uvVal >= 11)) ? 'has-alert-danger' : ((uvVal != null && uvVal >= 8) ? 'has-alert-warning' : '');
   const hasHighPollen = (aqi?.grass_pollen != null && aqi.grass_pollen >= 50) || (aqi?.birch_pollen != null && aqi.birch_pollen >= 75) || (aqi?.alder_pollen != null && aqi.alder_pollen >= 75);
   const aqiPillAlert = (aqi?.european_aqi != null && aqi.european_aqi > 80) ? 'has-alert-danger' : (((aqi?.european_aqi != null && aqi.european_aqi > 60) || hasHighPollen) ? 'has-alert-warning' : '');
 
@@ -1064,9 +1066,10 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
           <span class="sensor-nav-label">Presión</span>
           ${baroPillAlert ? '<span class="sensor-nav-dot"></span>' : ''}
         </button>
-        <button type="button" class="sensor-nav-pill" data-sensor-target="2" title="Ver Humedad y Rocío">
+        <button type="button" class="sensor-nav-pill ${humPillAlert}" data-sensor-target="2" title="Ver Humedad y Rocío">
           <span class="sensor-nav-icon">💧</span>
           <span class="sensor-nav-label">Humedad</span>
+          ${humPillAlert ? '<span class="sensor-nav-dot"></span>' : ''}
         </button>
         <button type="button" class="sensor-nav-pill ${rainPillAlert}" data-sensor-target="3" title="Ver Pluviómetro">
           <span class="sensor-nav-icon">🌧️</span>
