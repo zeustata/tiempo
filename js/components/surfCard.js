@@ -791,11 +791,6 @@ export function renderSurfCard(data, concejo) {
               ? `⚡ Energía Combinada: <strong>${waveEnergy.primaryKj} kJ</strong> (Swell 1) + <strong>${waveEnergy.secondaryKj} kJ</strong> (Swell 2)` 
               : waveEnergy.desc}
           </div>
-          ${isBeachBreakOverload ? `
-            <div style="margin-top: 8px; padding: 7px 11px; background: rgba(249, 115, 22, 0.15); border: 1px solid rgba(249, 115, 22, 0.4); border-radius: 8px; font-size: 0.74rem; color: #fdba74; line-height: 1.35;">
-              ⚠️ <strong>Aviso para Arenales Abiertos:</strong> Con ${waveHeight}m y ${waveEnergy.kj} kJ, playas abiertas como Salinas o San Lorenzo suelen saturarse en barras cerronas continuas con fuertes corrientes. Recomendado buscar calas o esquinas al abrigo.
-            </div>
-          ` : ''}
         </div>
 
         <!-- Temperatura Marina y Traje Recomendado -->

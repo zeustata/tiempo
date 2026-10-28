@@ -56,8 +56,8 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
     - Ajustado `applyCantabricoConsensus` en `weatherApi.js` para rescatar la nubosidad real del Centro Europeo (ECMWF `>= 16%` cuando AROME marca `<= 15%` con diferencia `>= 15%`, o ECMWF `>= 40%` cuando AROME marca `< 50%` con diferencia `>= 20%`) e incorporados `direct_normal_irradiance` y `shortwave_radiation` en la petición horaria principal.
     - Calibrado `getWeatherInfo` en `weatherIcons.js` para clasificar con exactitud diurna: `0-15%` `☀️ Despejado / Soleyeru`, `16-40%` `🌤️ Mayormente soleado / Despejáu`, `41-74%` `⛅ Parcialmente nublado / Claros` y `75-100%` (con radiación filtrada) `🌥️ Resol / Sol tamizáu`.
   - **Adelgazamiento y Claridad en Tarjeta Principal de Surf (`Calificación & Estrellas` - Feedback Lendo):**
-    - Eliminada la pastilla duplicada en la cabecera de *Surf & Rompientes* y la franja fija de leyenda teórica (`.surf-stars-legend-hint`), estructurando la primera tarjeta en 3 filas limpias (Cabecera `.t-label-row` con `💡`, fila destacada con badge de estrellas y estado, y barra unificada de Textura + Viento).
-  - Service Worker actualizado a `meteoasturlode-v3023-29-compact-surf-card` en `sw.js`.
+    - Eliminada la pastilla duplicada en la cabecera de *Surf & Rompientes* y la franja fija de leyenda teórica (`.surf-stars-legend-hint`), estructurando la primera tarjeta en 3 filas limpias (Cabecera `.t-label-row` con `💡`, fila destacada con badge de estrellas y estado, y barra unificada de Textura + Viento), además de retirar el recuadro naranja redundante en la tarjeta de **⚡ Energía de la Ola**.
+  - Service Worker actualizado a `meteoasturlode-v3023-30-clean-energy-card` en `sw.js`.
   - Revisión interna `v=3.0.23.8` en `index.html` y `css/components.css`.
 
 ### 💛 Tarjeta Principal Compacta & Jerarquía Bilingüe Azul y Oro Asturiano (Feedback Lendo)

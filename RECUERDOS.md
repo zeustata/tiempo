@@ -47,6 +47,7 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     2. Unificada la cabecera de `.surf-turismo-visual-widget` con el formato `.t-label-row` del resto de sensores (`🏄‍♂️ Calificación & Estrellas` a la izquierda y botón `💡` a la derecha) evitando colisiones con el badge de estrellas (Ley 11).
     3. Suprimida la franja gris fija `.surf-stars-legend-hint` (cuya explicación didáctica ya reside en el modal de la bombilla `💡`).
     4. Estructurada la tarjeta en 3 bloques limpios: fila principal con badge de estrellas + veredicto directo, barra compacta de una línea con **Textura + Viento**, y resumen inferior, manteniendo intacto el sistema de estrellas en las previsiones de *3 Horas* y *7 Días*.
+    5. Eliminado en la tarjeta de **⚡ Energía de la Ola (Combinada)** el recuadro naranja redundante de aviso para arenales abiertos (`isBeachBreakOverload`), ya cubierto por la bombilla didáctica `💡` y la primera tarjeta.
 
 ## 🌤️ Escala Solar-Nubosa de 4 Peldaños (0-15% Despejado, 16-40% Mayormente Soleado, 41-74% Sol y Nubes, 75-100% Resol) — 2026-10-28
 - **Diagnóstico en Vivo en Piedras Blancas (Feedback Lendo - «te voy diciendo el tiempo que hace ahora mismo para que compares. el cielo esta mas azul que nubes pero hace sol y nubes. viendo el cielo diria que es mas bien un mayormente soleado o sol y nubes», «si» y «subelo»):**
