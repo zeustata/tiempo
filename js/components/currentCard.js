@@ -6,7 +6,7 @@ import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetect
 import { detectXeluEffect, renderXeluBanner } from '../utils/xeluDetector.js?v=3.0.3';
 import { detectSnowStatus, renderSnowBanner } from '../utils/snowDetector.js?v=3.0.3';
 import { detectBorrinaEffect, renderBorrinaBanner } from '../utils/borrinaDetector.js?v=3.0.3';
-import { detectMarFondoEffect, renderMarFondoBanner } from '../utils/marFondoDetector.js?v=3.0.3';
+import { detectMarFondoEffect, renderMarFondoBanner } from '../utils/marFondoDetector.js?v=3.0.23.41';
 import { detectThunderstormEffect, renderThunderstormBanner } from '../utils/thunderstormDetector.js?v=3.0.3';
 import { detectRoadWindStatus, renderRoadWindBanner, renderRoadWindSensorPill } from '../utils/roadWindDetector.js?v=3.0.3';
 import { getSeismicStatus, renderSeismicBanner } from '../utils/seismicDetector.js?v=3.0.3';

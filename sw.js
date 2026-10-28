@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-40-marine-unified-sst';
+const CACHE_NAME = 'meteoasturlode-v3023-41-mar-fondo-aemet-kj';
 const STATIC_ASSETS = [
   './',
   './index.html',

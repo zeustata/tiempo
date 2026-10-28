@@ -25,12 +25,16 @@ export function detectMarFondoEffect(marine, concejo) {
         isActive: true,
         isSimulation: true,
         level: 'warning',
-        waveHeight: 2.8,
+        waveHeight: 4.2,
         period: 14,
+        energyKj: 2717,
+        energyColor: '#ef4444',
+        energyIcon: '🔴',
+        energyLabel: 'Pesada',
         direction: 'NW (315°)',
-        title: 'Mar de Fondo Activo • Resaca en Playas [SIMULACRO]',
-        badge: '⚠️ Resaca y Mar Tendido',
-        description: 'Oleaje atlántico de período largo (<strong>14 s</strong>) con fuerte masa de agua. Resaca engañosa y corrientes de retorno peligrosas en la orilla de las playas. Precaución en el baño.',
+        title: 'Mar de Fondo Fuerte • Precaución en el Litoral [SIMULACRO]',
+        badge: '⚠️ Mar Combinada >= 4 m',
+        description: 'Oleaje atlántico de <strong>4,2 m</strong> y período largo (<strong>14 s</strong>, <strong>2.717 kJ</strong>) en umbral de aviso costero AEMET. Fuertes corrientes de resaca y rompiente pesada en el litoral.',
         phenomenonId: 'mar_fondo'
       };
     }
@@ -40,26 +44,30 @@ export function detectMarFondoEffect(marine, concejo) {
         isActive: true,
         isSimulation: true,
         level: 'severe',
-        waveHeight: 4.6,
+        waveHeight: 5.6,
         period: 16,
+        energyKj: 5519,
+        energyColor: '#ef4444',
+        energyIcon: '🔴',
+        energyLabel: 'Pesada',
         direction: 'WNW (295°)',
         title: 'Golpe de Mar Severo • Peligro en Espigones y Paseos [SIMULACRO]',
         badge: '🚨 Peligro en la Costa',
-        description: 'Mar de fondo masivo y muy energético con olas de <strong>4,6 m</strong> y período de <strong>16 s</strong>. Alto riesgo de que series de olas sobrepasen espigones, acantilados y paseos marítimos. Aléjate del borde costero.',
+        description: 'Temporal marítimo severo con olas de <strong>5,6 m</strong> y período de <strong>16 s</strong> (<strong>5.519 kJ</strong>). Alto riesgo de que series de olas sobrepasen espigones, acantilados y paseos marítimos. Aléjate del borde costero.',
         phenomenonId: 'mar_fondo'
       };
     }
   }
 
   // 2. Solo activo para concejos costeros
-  const isCoast = concejo.type === 'coast' || 
-                  (concejo.region && concejo.region.toLowerCase().includes('costa')) ||
-                  concejo.id === 'castrillon' || concejo.id === 'gijon' || concejo.id === 'gozon' ||
-                  concejo.id === 'llanes' || concejo.id === 'ribadesella' || concejo.id === 'carreno' ||
-                  concejo.id === 'aviles' || concejo.id === 'valdes' || concejo.id === 'tapia' ||
-                  concejo.id === 'cudillero' || concejo.id === 'villaviciosa' || concejo.id === 'colunga' ||
-                  concejo.id === 'soto_barco' || concejo.id === 'navia' || concejo.id === 'franco' ||
-                  concejo.id === 'coana' || concejo.id === 'ribadedeva';
+  const isCoast = concejo.type === 'coast' ||
+    (concejo.region && concejo.region.toLowerCase().includes('costa')) ||
+    concejo.id === 'castrillon' || concejo.id === 'gijon' || concejo.id === 'gozon' ||
+    concejo.id === 'llanes' || concejo.id === 'ribadesella' || concejo.id === 'carreno' ||
+    concejo.id === 'aviles' || concejo.id === 'valdes' || concejo.id === 'tapia' ||
+    concejo.id === 'cudillero' || concejo.id === 'villaviciosa' || concejo.id === 'colunga' ||
+    concejo.id === 'soto_barco' || concejo.id === 'navia' || concejo.id === 'franco' ||
+    concejo.id === 'coana' || concejo.id === 'ribadedeva';
 
   if (!isCoast || !marine) return null;
 
@@ -92,19 +100,40 @@ export function detectMarFondoEffect(marine, concejo) {
     dirText = `${dirText} (${d}°)`;
   }
 
-  // 3. Calibración Rigurosa de Niveles (Amarillo y Rojo)
-  // A) Nivel Rojo (Severo):
-  //    - Olas de más de 3.8m con período largo (>= 12s)
-  //    - O mar muy grueso / temporal severo directo (>= 4.8m)
-  const isSevere = (h >= 3.8 && t >= 12) || (h >= 4.8);
+  // 3. Calibración en Simbiosis 100% con Umbrales Oficiales de AEMET Meteoalerta (Costa de Asturias):
+  // - Menos de 4.0 m: 100% silencioso en portada (armonía con Verde AEMET; 2-3 m es oleaje habitual en el Cantábrico).
+  // - Nivel Amarillo (warning): Mar combinada de 4.0 m a 4.9 m (Umbral Amarillo AEMET en litoral asturiano).
+  // - Nivel Naranja/Rojo (severe): Mar combinada >= 5.0 m (Umbral Naranja/Rojo AEMET de temporal costero severo).
+  const isSevere = h >= 5.0;
+  const isWarning = !isSevere && h >= 4.0;
 
-  // B) Nivel Amarillo (Aviso / Resaca activa):
-  //    - Olas de 2.0m a 3.8m con período largo (>= 11s)
-  //    - Olas de 3.2m a 4.8m con período normal
-  const isWarning = !isSevere && (
-    (h >= 2.0 && t >= 11) ||
-    (h >= 3.2 && t >= 8)
-  );
+  // Cálculo físico de Potencia de la Ola en kiloJulios (E = 11 * H^2 * T + Swell secundario)
+  const h1 = swellHeight || waveHeight || h;
+  const t1 = Math.max(1, t || 10);
+  const h2 = typeof currentMarine.secondary_swell_wave_height === 'number' ? currentMarine.secondary_swell_wave_height : 0;
+  const t2 = typeof currentMarine.secondary_swell_wave_period === 'number' ? Math.max(1, currentMarine.secondary_swell_wave_period) : 1;
+  const energyKj = Math.round(11 * (h1 * h1) * t1 + (h2 > 0 ? 11 * (h2 * h2) * t2 : 0));
+
+  let energyColor = '#10b981';
+  let energyIcon = '🟢';
+  let energyLabel = 'Suave';
+  if (energyKj >= 1100) {
+    energyColor = '#ef4444';
+    energyIcon = '🔴';
+    energyLabel = 'Pesada';
+  } else if (energyKj >= 650) {
+    energyColor = '#a855f7';
+    energyIcon = '🟣';
+    energyLabel = 'Muy Potente';
+  } else if (energyKj >= 350) {
+    energyColor = '#f97316';
+    energyIcon = '🟠';
+    energyLabel = 'Sólida';
+  } else if (energyKj >= 180) {
+    energyColor = '#fbbf24';
+    energyIcon = '🟡';
+    energyLabel = 'Divertida';
+  }
 
   if (isSevere) {
     return {
@@ -112,10 +141,14 @@ export function detectMarFondoEffect(marine, concejo) {
       level: 'severe',
       waveHeight: Math.round(h * 10) / 10,
       period: Math.round(t),
+      energyKj,
+      energyColor,
+      energyIcon,
+      energyLabel,
       direction: dirText,
       title: 'Golpe de Mar Severo • Peligro en Espigones y Paseos',
       badge: '🚨 Peligro en la Costa',
-      description: `Mar de fondo atlántico muy energético (<strong>${(Math.round(h * 10) / 10).toString().replace('.', ',')} m</strong> con período de <strong>${Math.round(t)} s</strong>). Alto riesgo de golpes de mar repentinos superando escolleras, rocas y paseos costeros. Extrema la precaución y mantén la distancia de seguridad.`,
+      description: `Temporal marítimo severo en umbral naranja/rojo AEMET (<strong>${(Math.round(h * 10) / 10).toString().replace('.', ',')} m</strong>, <strong>${Math.round(t)} s</strong> y <strong>${energyKj} kJ</strong>). Alto riesgo de golpes de mar repentinos superando escolleras, rocas y paseos costeros. Extrema la precaución y mantén la distancia de seguridad.`,
       phenomenonId: 'mar_fondo'
     };
   }
@@ -126,10 +159,14 @@ export function detectMarFondoEffect(marine, concejo) {
       level: 'warning',
       waveHeight: Math.round(h * 10) / 10,
       period: Math.round(t),
+      energyKj,
+      energyColor,
+      energyIcon,
+      energyLabel,
       direction: dirText,
-      title: 'Mar de Fondo Activo • Resaca en Playas',
-      badge: '⚠️ Resaca y Mar Tendido',
-      description: `Entrada de mar de fondo en el litoral (<strong>${(Math.round(h * 10) / 10).toString().replace('.', ',')} m</strong> con período de <strong>${Math.round(t)} s</strong>). Fuerte resaca y corrientes de resaca invisibles en orillas y rompientes de baño. Atención a las banderas de la playa.`,
+      title: 'Mar de Fondo Fuerte • Precaución en el Litoral',
+      badge: '⚠️ Mar Combinada >= 4 m',
+      description: `Mar combinada fuerte en umbral de aviso costero AEMET (<strong>${(Math.round(h * 10) / 10).toString().replace('.', ',')} m</strong>, <strong>${Math.round(t)} s</strong> y <strong>${energyKj} kJ</strong>). Fuerte resaca y rompiente pesada en playas, espigones y pedreros del litoral.`,
       phenomenonId: 'mar_fondo'
     };
   }
@@ -161,6 +198,7 @@ export function renderMarFondoBanner(swell) {
       <div class="mar-fondo-banner-body alert-collapsible-body">
         <p class="mar-fondo-desc">${swell.description}</p>
         <div class="mar-fondo-metrics">
+          ${swell.energyKj ? `<span class="mar-fondo-metric-pill" style="background: ${swell.energyColor}22; color: ${swell.energyColor}; border: 1px solid ${swell.energyColor}77; font-weight: 700;">⚡ Potencia: <strong>${swell.energyKj} kJ</strong> (${swell.energyIcon} ${swell.energyLabel})</span>` : ''}
           <span class="mar-fondo-metric-pill">🌊 Oleaje: <strong>${swell.waveHeight} m</strong></span>
           <span class="mar-fondo-metric-pill">⏱️ Período: <strong>${swell.period} s</strong></span>
           <span class="mar-fondo-metric-pill">🧭 Dirección: <strong>${swell.direction}</strong></span>

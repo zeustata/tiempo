@@ -61,7 +61,9 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
     - Unificadas *Potencia de la Ola (`kJ`)*, *Altura Significativa (`m`)* y *Período & Dirección (`seg`)* en una única tarjeta maestra de ancho completo (`grid-column: 1 / -1`) con acabado azul marino oscuro uniforme (`rgba(15, 23, 42, 0.58)` / borde `rgba(56, 189, 248, 0.28)`) en los tres bloques y sus tres bombillas didácticas (`💡`), retirando la tarjeta duplicada de *Temperatura del Agua* en Surf, ocultando los tramos de **3 Horas** que ya hayan pasado y limpiando el icono repetido en la cabecera de *Previsión de Surf & Rompiente*.
   - **Tarjeta Unificada `🌊 Temperatura del Agua & Estado de la Mar` con Media Histórica AEMET en Playas & Mareógrafo (Feedback Lendo):**
     - Eliminada la tarjeta repetida de *Visibilidad & Viento* y unificadas **🌡️ Temperatura del Agua** (incorporando comparativa en vivo frente a la media histórica mensual de AEMET en el Cantábrico) y **🌊 Estado de la Mar (Escala Douglas + `💡`)** en una sola tarjeta maestra a ancho completo (`grid-column: 1 / -1`).
-  - Service Worker actualizado a `meteoasturlode-v3023-40-marine-unified-sst` en `sw.js`.
+  - **Simbiosis con AEMET (`>= 4.0 m`) y Píldora de kiloJulios (`kJ`) en Alerta Silenciosa de Mar de Fondo (Feedback Lendo):**
+    - Calibrado `marFondoDetector.js` al umbral oficial costero de AEMET Meteoalerta en Asturias (`4.0 a 4.9 m` amarillo, `>= 5.0 m` severo; silencioso por debajo de `4.0 m` para evitar falsas alertas en días ordinarios de otoño/invierno) e incorporada la píldora coloreada de potencia en kiloJulios (`⚡ Potencia: kJ`).
+  - Service Worker actualizado a `meteoasturlode-v3023-41-mar-fondo-aemet-kj` en `sw.js`.
   - Revisión interna `v=3.0.23.8` en `index.html` y `css/components.css`.
 
 ### 💛 Tarjeta Principal Compacta & Jerarquía Bilingüe Azul y Oro Asturiano (Feedback Lendo)
