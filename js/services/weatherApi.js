@@ -116,7 +116,7 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
   try {
     // 1. Meteorología Completa de Alta Resolución (con soporte para modelo específico)
     const modelQuery = modelParam ? `&models=${encodeURIComponent(modelParam)}` : '';
-    const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,weather_code,cloud_cover,pressure_msl,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m,direct_normal_irradiance,uv_index,shortwave_radiation&hourly=temperature_2m,relative_humidity_2m,dew_point_2m,apparent_temperature,precipitation_probability,precipitation,rain,snowfall,snow_depth,weather_code,pressure_msl,surface_pressure,cloud_cover,visibility,wind_speed_10m,wind_direction_10m,wind_gusts_10m,uv_index,is_day,freezing_level_height&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,uv_index_max,precipitation_sum,rain_sum,showers_sum,snowfall_sum,precipitation_hours,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max,wind_direction_10m_dominant&timezone=Europe%2FMadrid&forecast_days=10${modelQuery}`;
+    const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,weather_code,cloud_cover,pressure_msl,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m,direct_normal_irradiance,uv_index,shortwave_radiation&hourly=temperature_2m,relative_humidity_2m,dew_point_2m,apparent_temperature,precipitation_probability,precipitation,rain,snowfall,snow_depth,weather_code,pressure_msl,surface_pressure,cloud_cover,visibility,wind_speed_10m,wind_direction_10m,wind_gusts_10m,uv_index,is_day,freezing_level_height,direct_normal_irradiance,shortwave_radiation&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,uv_index_max,precipitation_sum,rain_sum,showers_sum,snowfall_sum,precipitation_hours,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max,wind_direction_10m_dominant&timezone=Europe%2FMadrid&forecast_days=10${modelQuery}`;
 
     const weatherPromise = fetch(weatherUrl).then(r => {
       if (!r.ok) throw new Error('Error al consultar datos meteorológicos');
@@ -211,7 +211,7 @@ function applyCantabricoConsensus(weather, consensus) {
   // 1. Verificación del tiempo actual en vivo
   if (weather.current && consensus.current) {
     const rawCloud = weather.current.cloud_cover != null ? weather.current.cloud_cover : 100;
-    const ecmwfCloud = consensus.current.cloud_cover != null ? consensus.current.cloud_cover : 0;
+    const ecmwfCloud = Math.max(consensus.current.cloud_cover != null ? consensus.current.cloud_cover : 0, (consensus.hourly && consensus.hourly.cloud_cover && consensus.hourly.cloud_cover[new Date().getHours()] != null) ? consensus.hourly.cloud_cover[new Date().getHours()] : 0);
     const rawDirectIrr = weather.current.direct_normal_irradiance != null ? parseFloat(weather.current.direct_normal_irradiance) : 0;
     const rawUv = weather.current.uv_index != null ? parseFloat(weather.current.uv_index) : 0;
     const rawSw = weather.current.shortwave_radiation != null ? parseFloat(weather.current.shortwave_radiation) : 0;
@@ -248,7 +248,7 @@ function applyCantabricoConsensus(weather, consensus) {
     // Se activa si ECMWF detecta frente en avance o cielo cerrado (ecmwfCloud >= 60%),
     // mientras AROME se ha quedado dormido con un claro ficticio (rawCloud < 50% con divergencia >= 20%),
     // y ECMWF confirma ausencia de haz solar abrasador (eDirectIrr < 250 o ecmwfCloud >= 70).
-    const isFalseClear = rawCloud < 50 && ecmwfCloud >= 55 && (ecmwfCloud - rawCloud >= 25);
+    const isFalseClear = (rawCloud <= 15 && ecmwfCloud >= 16 && (ecmwfCloud - rawCloud >= 15)) || (rawCloud < 50 && ecmwfCloud >= 40 && (ecmwfCloud - rawCloud >= 20));
 
     if (isFalseClear) {
       weather.current.cloud_cover = ecmwfCloud;
@@ -343,7 +343,7 @@ function applyCantabricoConsensus(weather, consensus) {
       const eDirectIrrH = consensus.hourly.direct_normal_irradiance ? consensus.hourly.direct_normal_irradiance[i] : 0;
 
       // A) Armonización de Falso Claro Horario (frentes en avance detectados por ECMWF):
-      const isFalseClearH = rawC < 50 && ecmwfC >= 55 && (ecmwfC - rawC >= 25);
+      const isFalseClearH = (rawC <= 15 && ecmwfC >= 16 && (ecmwfC - rawC >= 15)) || (rawC < 50 && ecmwfC >= 40 && (ecmwfC - rawC >= 20));
 
       if (isFalseClearH) {
         if (weather.hourly.cloud_cover) weather.hourly.cloud_cover[i] = ecmwfC;

@@ -398,14 +398,19 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
       isResol = false;
     }
 
-    if ((p < 0.1 || isSolarPhantomDrizzle || (p < 0.5 && hasRealSolarLight)) && hasRealSolarLight && (isResol || base.isRain || base.svgKey === 'cloudy' || code === 3 || base.svgKey === 'fog' || base.svgKey === 'drizzle')) {
-      const isClearSky = !isResol && cc !== null && cc <= 25 && irr >= 150;
+    if ((p < 0.1 || isSolarPhantomDrizzle || (p < 0.5 && hasRealSolarLight)) && hasRealSolarLight && (isResol || base.isRain || base.svgKey === 'cloudy' || code === 3 || base.svgKey === 'fog' || base.svgKey === 'drizzle' || (cc !== null && code <= 2))) {
+      const isClearSky = !isResol && cc !== null && cc <= 15 && (irr >= 150 || code === 0);
+      const isMostlyClearSky = !isResol && !isClearSky && cc !== null && cc <= 40;
       base = {
-        label: isResol ? 'Resol / Sol tamizáu' : (isClearSky ? 'Despejado / Soleyeru' : 'Parcialmente nublado / Claros'),
-        icon: isResol ? '🌥️' : (isClearSky ? '☀️' : '⛅'),
-        svgKey: isResol ? 'resol' : (isClearSky ? 'clear-day' : 'partly-cloudy-day'),
+        label: isResol
+          ? 'Resol / Sol tamizáu'
+          : (isClearSky
+            ? 'Despejado / Soleyeru'
+            : (isMostlyClearSky ? 'Mayormente soleado / Despejáu' : 'Parcialmente nublado / Claros')),
+        icon: isResol ? '🌥️' : (isClearSky ? '☀️' : (isMostlyClearSky ? '🌤️' : '⛅')),
+        svgKey: isResol ? 'resol' : (isClearSky ? 'clear-day' : (isMostlyClearSky ? 'mostly-clear-day' : 'partly-cloudy-day')),
         lucide: isResol ? 'cloud-sun' : (isClearSky ? 'sun' : 'cloud-sun'),
-        bg: isClearSky ? 'clear-day' : 'partly-cloudy',
+        bg: (isClearSky || isMostlyClearSky) ? 'clear-day' : 'partly-cloudy',
         isRain: false,
         isSnow: false,
         isSolarCalibrated: true,

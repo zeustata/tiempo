@@ -52,7 +52,10 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
   - **Carrusel Monotarjeta Esbelto en Mareas de Hoy (Doctrina 18 - Feedback Lendo):**
     - Convertida la rejilla `2x2` de las 4 mareas diarias bajo la curva sinusoidal de 72h en un carrusel horizontal monotarjeta de una sola fila (`#tide-today-carousel`) con diseño interior en línea (`🌅 Pleamar / 🏖️ Bajamar`, etiqueta `Pasada / ⏳ Próxima`, hora y altura) y paginador interactivo de 4 puntos (`#tide-today-dots`), ahorrando más de 95px de scroll vertical.
     - Reubicada y compactada la pastilla de bandera de baño (`🟢 Bandera Verde (Teórica)` / `🟡 Bandera Amarilla (Teórica)` / `🔴 Bandera Roja (Teórica)`) en una sola línea dentro de `.mareografo-card` (justo encima de *Nivel de Agua Actual*), despejando la cabecera principal.
-  - Service Worker actualizado a `meteoasturlode-v3023-27-compact-beach-flag` en `sw.js`.
+  - **Calibración de Escala Solar-Nubosa de 4 Peldaños (0-15% Despejado, 16-40% Mayormente Soleado, 41-74% Sol y Nubes, 75-100% Resol - Feedback Lendo):**
+    - Ajustado `applyCantabricoConsensus` en `weatherApi.js` para rescatar la nubosidad real del Centro Europeo (ECMWF `>= 16%` cuando AROME marca `<= 15%` con diferencia `>= 15%`, o ECMWF `>= 40%` cuando AROME marca `< 50%` con diferencia `>= 20%`) e incorporados `direct_normal_irradiance` y `shortwave_radiation` en la petición horaria principal.
+    - Calibrado `getWeatherInfo` en `weatherIcons.js` para clasificar con exactitud diurna: `0-15%` `☀️ Despejado / Soleyeru`, `16-40%` `🌤️ Mayormente soleado / Despejáu`, `41-74%` `⛅ Parcialmente nublado / Claros` y `75-100%` (con radiación filtrada) `🌥️ Resol / Sol tamizáu`.
+  - Service Worker actualizado a `meteoasturlode-v3023-28-solar-cloud-scale` en `sw.js`.
   - Revisión interna `v=3.0.23.8` en `index.html` y `css/components.css`.
 
 ### 💛 Tarjeta Principal Compacta & Jerarquía Bilingüe Azul y Oro Asturiano (Feedback Lendo)

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-27-compact-beach-flag';
+const CACHE_NAME = 'meteoasturlode-v3023-28-solar-cloud-scale';
 const STATIC_ASSETS = [
   './',
   './index.html',
