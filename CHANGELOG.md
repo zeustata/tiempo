@@ -58,8 +58,8 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
   - **Adelgazamiento y Claridad en Tarjeta Principal de Surf (`Calificación & Estrellas` - Feedback Lendo):**
     - Eliminada la pastilla duplicada en la cabecera de *Surf & Rompientes* y la franja fija de leyenda teórica (`.surf-stars-legend-hint`), estructurando la primera tarjeta en 3 filas limpias (Cabecera `.t-label-row` con `💡`, fila destacada con badge de estrellas y estado, y barra unificada de Textura + Viento), además de retirar el recuadro naranja redundante en la tarjeta de **⚡ Energía de la Ola**.
   - **Tarjeta Unificada `🌊 Fuerza y Dinámica del Oleaje` con Protagonismo en kiloJulios (`kJ` - Feedback Lendo & Edu):**
-    - Unificadas *Potencia de la Ola (`kJ`)*, *Altura Significativa (`m`)* y *Período & Dirección (`seg`)* en una única tarjeta maestra de ancho completo (`grid-column: 1 / -1`) con acabado luminoso unificado (`${waveEnergy.color}16` / `${waveEnergy.color}66`) y sus tres bombillas didácticas (`💡`), retirando la tarjeta duplicada de *Temperatura del Agua* en Surf (ya disponible en *Playas & Mareas*).
-  - Service Worker actualizado a `meteoasturlode-v3023-36-surf-unified-glow` en `sw.js`.
+    - Unificadas *Potencia de la Ola (`kJ`)*, *Altura Significativa (`m`)* y *Período & Dirección (`seg`)* en una única tarjeta maestra de ancho completo (`grid-column: 1 / -1`) con acabado azul marino oscuro uniforme (`rgba(15, 23, 42, 0.58)` / borde `rgba(56, 189, 248, 0.28)`) en los tres bloques y sus tres bombillas didácticas (`💡`), retirando la tarjeta duplicada de *Temperatura del Agua* en Surf (ya disponible en *Playas & Mareas*).
+  - Service Worker actualizado a `meteoasturlode-v3023-37-surf-dark-blue-boxes` en `sw.js`.
   - Revisión interna `v=3.0.23.8` en `index.html` y `css/components.css`.
 
 ### 💛 Tarjeta Principal Compacta & Jerarquía Bilingüe Azul y Oro Asturiano (Feedback Lendo)

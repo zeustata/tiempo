@@ -754,7 +754,7 @@ export function renderSurfCard(data, concejo) {
           </div>
 
           <!-- Botón/Bloque Protagonista Superior (100% Ancho): Energía Combinada en kiloJulios (kJ) -->
-          <div style="background: ${waveEnergy.color}16; border: 1px solid ${waveEnergy.color}66; border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; box-sizing: border-box;">
+          <div style="background: rgba(15, 23, 42, 0.58); border: 1px solid rgba(56, 189, 248, 0.28); border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; box-sizing: border-box;">
             <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
               <span style="font-size: 0.72rem; font-weight: 700; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.04em;">⚡ Potencia de la Ola (kiloJulios)</span>
               <button class="btn-explain-sensor" data-explain="surf_energy" title="¿Qué es la energía de la ola en kJ y multiswell? Pulsa para aprender" aria-label="Explicación de la energía de la ola">💡</button>
@@ -772,7 +772,7 @@ export function renderSurfCard(data, concejo) {
           <!-- Bloque 2 y 3 Apilados Verticalmente (100% Ancho Adaptable en Móvil y Monitor Horizontal): Altura + Período -->
           <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; width: 100%;">
             <!-- Fila 1: Altura Significativa -->
-            <div style="width: 100%; background: ${waveEnergy.color}16; border: 1px solid ${waveEnergy.color}66; border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; box-sizing: border-box;">
+            <div style="width: 100%; background: rgba(15, 23, 42, 0.58); border: 1px solid rgba(56, 189, 248, 0.28); border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; box-sizing: border-box;">
               <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; width: 100%;">
                 <span style="font-size: 0.72rem; font-weight: 700; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.04em;">🌊 Altura del Oleaje (Significativa)</span>
                 <button class="btn-explain-sensor" data-explain="waves" title="Explicación de la altura del oleaje y escala Douglas" aria-label="Explicación del oleaje">💡</button>
@@ -788,7 +788,7 @@ export function renderSurfCard(data, concejo) {
             </div>
 
             <!-- Fila 2: Período y Dirección -->
-            <div style="width: 100%; background: ${waveEnergy.color}16; border: 1px solid ${waveEnergy.color}66; border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; box-sizing: border-box;">
+            <div style="width: 100%; background: rgba(15, 23, 42, 0.58); border: 1px solid rgba(56, 189, 248, 0.28); border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; box-sizing: border-box;">
               <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; width: 100%;">
                 <span style="font-size: 0.72rem; font-weight: 700; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.04em;">⏱️ Período & Dirección del Swell</span>
                 <button class="btn-explain-sensor" data-explain="swell" title="Explicación del período en segundos y dirección del swell" aria-label="Explicación del período">💡</button>
