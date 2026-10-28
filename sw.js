@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-41-mar-fondo-aemet-kj';
+const CACHE_NAME = 'meteoasturlode-v3023-42-borrina-aemet-vis';
 const STATIC_ASSETS = [
   './',
   './index.html',

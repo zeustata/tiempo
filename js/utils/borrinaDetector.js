@@ -98,25 +98,15 @@ export function detectBorrinaEffect(current, hourly, concejo) {
   }
 
   // 1. EVALUACIÓN BORRINA MARINA (COSTA ASTURIANA)
+  // Simbiosis OMM / AEMET: Solo se declara Niebla/Borrina si existe visibilidad horizontal <= 1.000 m
+  // o código oficial WMO de niebla (45/48). Queda prohibido disparar alerta de niebla en noches despejadas (> 1.000 m de visibilidad) solo por humedad.
   if (isCoast) {
-    const isNight = current.is_day === 0 || current.is_day === false;
     const isFogCode = weatherCode === 45 || weatherCode === 48;
-    const isLowVis = visibility != null && visibility <= 2000;
-    
-    // Calibración Fiel del Litoral Cantábrico (Feedback Lendo / Ley 15):
-    // De noche, el enfriamiento radiativo costero atrapa la borrina marina baja con humedad >= 88% y margen de rocío <= 1.8°C.
-    // De día, se exige mayor saturación (>= 92% y margen <= 1.2°C) para no confundir con resol o brisas húmedas.
-    const minRhTrigger = isNight ? 88 : 92;
-    const maxSpreadTrigger = isNight ? 1.8 : 1.2;
-    const isMarineDewMatch = rh >= minRhTrigger && dewSpread <= maxSpreadTrigger;
-    const isMarineBreeze = speed <= 25; // la borrina entra con viento flojo o brisa marina suave
+    const isRealFogVis = visibility != null ? (visibility <= 1000) : isFogCode;
+    const isMarineSaturated = rh >= 92 && dewSpread <= 1.5 && speed <= 25;
 
-    const minRhSustain = isNight ? 86 : 90;
-    const maxSpreadSustain = isNight ? 2.0 : 1.5;
-
-    if ((isFogCode || isLowVis || (isMarineDewMatch && isMarineBreeze)) && rh >= minRhSustain && dewSpread <= maxSpreadSustain) {
-      // Calibración estricta del Cantábrico: solo es 'severe' (rojo) si la visibilidad es realmente un muro de niebla (<= 200 m)
-      // o si hay niebla cerrada con saturación máxima y código WMO 45/48. Si la visibilidad es mayor (ej. 300-800 m), se califica como warning (amarillo).
+    if (isRealFogVis && (isFogCode || isMarineSaturated)) {
+      // Umbral Oficial AEMET Meteoalerta para Nieblas: <= 200 m (Severo / Rojo) | 201-1000 m (Aviso Amarillo)
       const isSevere = visibility != null ? (visibility <= 200) : (rh >= 98 && isFogCode);
       return {
         isActive: true,
@@ -129,21 +119,19 @@ export function detectBorrinaEffect(current, hourly, concejo) {
         visibility,
         phenomenonId: 'borrina',
         title: isSevere ? 'Borrina Marina Densa • Litoral Cantábrico' : 'Borrina Marina Activa • Costa Asturiana',
-        badge: isSevere ? '🚨 Visibilidad Muy Reducida' : '⚠️ Visibilidad Reducida',
-        description: `Manto denso de niebla marina arrastrado desde el mar Cantábrico hacia el litoral (humedad del <strong>${rh}%</strong>). Desplome de la sensación térmica en playas y paseos costeros.${visibility ? ` Visibilidad horizontal estimada en <strong>~${visibility} m</strong>.` : ''} Hacia el interior suele predominar cielo más abierto.`
+        badge: isSevere ? '🚨 Visibilidad <= 200 m (Umbral AEMET)' : '⚠️ Visibilidad Reducida (<= 1 km)',
+        description: `Manto denso de niebla marina arrastrado desde el mar Cantábrico hacia el litoral (humedad del <strong>${rh}%</strong>). Desplome de la sensación térmica en playas y paseos costeros.${visibility ? ` Visibilidad horizontal reducida a <strong>~${visibility} m</strong>.` : ''} Hacia el interior suele predominar cielo más abierto.`
       };
     }
   }
 
   // 2. EVALUACIÓN NIEBLA DE VALLE / INVERSIÓN TÉRMICA (INTERIOR Y CUENCAS)
   if (!isCoast) {
-    const currentHour = new Date().getHours();
-    const isNightOrMorning = currentHour <= 12 || currentHour >= 20;
     const isFogCode = weatherCode === 45 || weatherCode === 48;
-    const isLowVis = visibility != null && visibility <= 2000;
-    const isValleyInversion = rh >= 93 && dewSpread <= 1.0 && speed <= 10 && (isNightOrMorning || isFogCode || isLowVis);
+    const isRealFogVis = visibility != null ? (visibility <= 1000) : isFogCode;
+    const isValleyInversion = rh >= 93 && dewSpread <= 1.2 && speed <= 12 && isRealFogVis;
 
-    if (isValleyInversion) {
+    if (isValleyInversion || (isFogCode && isRealFogVis && rh >= 90)) {
       const isSevere = visibility != null ? (visibility <= 200) : (rh >= 98 && isFogCode);
       return {
         isActive: true,
@@ -156,8 +144,8 @@ export function detectBorrinaEffect(current, hourly, concejo) {
         visibility,
         phenomenonId: 'inversion',
         title: isSevere ? 'Niebla de Valle Zarrada • Inversión Térmica' : 'Niebla de Valle • Inversión Térmica',
-        badge: isSevere ? '🚨 Niebla Densa en Fondo de Cuenca' : '⚠️ Visibilidad Reducida en Valle',
-        description: `Bolsa de aire frío y húmedo atrapada en el fondo del valle por inversión térmica matinal (humedad del <strong>${rh}%</strong>).${visibility ? ` Visibilidad de <strong>~${visibility} m</strong> en carreteras de cuenca.` : ''} Ambiente despejado, templado y soleado en cotas altas y cumbres montañosas.`
+        badge: isSevere ? '🚨 Visibilidad <= 200 m (Umbral AEMET)' : '⚠️ Visibilidad Reducida en Valle',
+        description: `Bolsa de aire frío y húmedo atrapada en el fondo del valle por inversión térmica (humedad del <strong>${rh}%</strong>).${visibility ? ` Visibilidad reducida a <strong>~${visibility} m</strong> en carreteras de cuenca.` : ''} Ambiente despejado, templado y soleado en cotas altas y cumbres montañosas.`
       };
     }
   }
