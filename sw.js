@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-39-surf-clean-header';
+const CACHE_NAME = 'meteoasturlode-v3023-40-marine-unified-sst';
 const STATIC_ASSETS = [
   './',
   './index.html',

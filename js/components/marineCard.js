@@ -1361,34 +1361,65 @@ export function renderMarineCard(data, concejo) {
         </div>
       </div>
 
-      <!-- 2. GRID DE SENSORES COSTEROS Y CONDICIONES DE PLAYA -->
+      <!-- 2. TARJETA UNIFICADA: TEMPERATURA DEL AGUA (CON MEDIA HISTÓRICA AEMET) & ESTADO DE LA MAR -->
       <div class="marine-grid">
-        <!-- Temperatura del Agua y Confort -->
-        <div class="marine-widget">
-          <div class="widget-label">Temperatura del Agua</div>
-          <div class="widget-value">${seaTemp} <span class="unit">°C</span></div>
-          <div class="widget-detail">${isCoasting ? `Playas de ${concejo.name}` : `Costa de ${interiorRef.name}`}</div>
-          <div class="widget-detail">Sensación: <strong>${parseFloat(seaTemp) >= 19 ? 'Agradable / Cálida' : (parseFloat(seaTemp) >= 16 ? 'Fresca y vivificante' : 'Fría / Cantábrico')}</strong></div>
-        </div>
+        ${(() => {
+          const histMeans = [13.0, 12.5, 12.7, 13.5, 15.2, 17.6, 19.8, 20.8, 19.6, 17.5, 15.3, 13.8];
+          const monthNames = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+          const mIdx = now.getMonth();
+          const histMean = histMeans[mIdx];
+          const monthName = monthNames[mIdx];
+          const currT = parseFloat(seaTemp);
+          const diff = +(currT - histMean).toFixed(1);
+          const diffSign = diff > 0 ? `+${diff.toFixed(1)}` : diff.toFixed(1);
+          const anomColor = diff >= 0.4 ? '#f59e0b' : (diff <= -0.4 ? '#38bdf8' : '#10b981');
+          const anomText = Math.abs(diff) <= 0.2
+            ? `En la media histórica de ${monthName} (${histMean.toFixed(1)} °C)`
+            : `${diffSign} °C ${diff > 0 ? 'sobre' : 'bajo'} la media de ${monthName} (${histMean.toFixed(1)} °C)`;
+          const feelText = currT >= 19 ? 'Agradable / Cálida' : (currT >= 16 ? 'Fresca y vivificante' : 'Fría / Cantábrico');
 
-        <!-- Estado de la Mar (Douglas) -->
-        <div class="marine-widget">
-          <div class="t-label-row">
-            <span class="widget-label">Estado de la Mar</span>
-            <button class="btn-explain-sensor" data-explain="waves" title="¿Cómo entender la altura del oleaje y la escala Douglas? Pulsa para aprender" aria-label="Explicación del estado de la mar">💡</button>
-          </div>
-          <div class="widget-value">${waveHeight} <span class="unit">m</span></div>
-          <div class="widget-detail">Escala Douglas: <strong>Grado ${douglasDegree} (${douglasName})</strong></div>
-          <div class="widget-detail">Tipo de oleaje: <strong>${h < 1.0 ? 'Mar en calma / Rizada' : 'Oleaje atlántico cantábrico'}</strong></div>
-        </div>
+          return `
+            <div class="marine-widget surf-energy-widget" style="grid-column: 1 / -1; width: 100%; box-sizing: border-box;">
+              <div class="t-label-row" style="margin-bottom: 8px;">
+                <span class="widget-label">🌊 Temperatura del Agua & Estado de la Mar</span>
+              </div>
 
-        <!-- Visibilidad Costera & Viento -->
-        <div class="marine-widget">
-          <div class="widget-label">Visibilidad & Viento</div>
-          <div class="widget-value">${visibilityKm} <span class="unit">km</span></div>
-          <div class="widget-detail">Viento en arenal: <strong>${windSpeed} km/h (${windDirObj.name})</strong></div>
-          <div class="widget-detail">Ambiente: <strong>${parseFloat(visibilityKm) >= 15 ? 'Cielos limpios y diáfanos' : 'Ligera bruma marina'}</strong></div>
-        </div>
+              <!-- Bloque 1: Temperatura del Agua + Comparativa Media Histórica AEMET -->
+              <div style="width: 100%; background: rgba(15, 23, 42, 0.58); border: 1px solid rgba(56, 189, 248, 0.28); border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 5px; box-sizing: border-box; margin-bottom: 8px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap; width: 100%;">
+                  <span style="font-size: 0.72rem; font-weight: 700; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.04em;">🌡️ Temperatura del Agua (${isCoasting ? concejoTitle : interiorRef.name.split(' (')[0]})</span>
+                  <span style="font-size: 0.72rem; font-weight: 700; color: ${anomColor}; background: ${anomColor}1f; border: 1px solid ${anomColor}66; padding: 2px 8px; border-radius: 999px;">
+                    📊 AEMET: ${anomText}
+                  </span>
+                </div>
+                <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; width: 100%; margin-top: 2px;">
+                  <div style="font-size: 1.55rem; font-weight: 800; color: #38bdf8; line-height: 1.1;">
+                    ${seaTemp} <span style="font-size: 0.85rem; font-weight: 600; color: #94a3b8;">°C</span>
+                  </div>
+                  <div style="font-size: 0.78rem; color: #cbd5e1;">
+                    Sensación: <strong>${feelText}</strong>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bloque 2: Estado de la Mar (Escala Douglas) -->
+              <div style="width: 100%; background: rgba(15, 23, 42, 0.58); border: 1px solid rgba(56, 189, 248, 0.28); border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; box-sizing: border-box;">
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; width: 100%;">
+                  <span style="font-size: 0.72rem; font-weight: 700; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.04em;">🌊 Estado de la Mar (Oleaje Significativo)</span>
+                  <button class="btn-explain-sensor" data-explain="waves" title="¿Cómo entender la altura del oleaje y la escala Douglas? Pulsa para aprender" aria-label="Explicación del estado de la mar">💡</button>
+                </div>
+                <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; width: 100%;">
+                  <div style="font-size: 1.45rem; font-weight: 800; color: #f8fafc; line-height: 1.1;">
+                    ${waveHeight} <span style="font-size: 0.82rem; font-weight: 600; color: #94a3b8;">metros</span>
+                  </div>
+                  <div style="font-size: 0.78rem; color: #cbd5e1;">
+                    Escala Douglas: <strong>Grado ${douglasDegree} (${douglasName})</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        })()}
       </div>
 
       <!-- 4. CATÁLOGO TURÍSTICO DE PLAYAS Y CALAS DEL CONCEJO -->
