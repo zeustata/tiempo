@@ -55,7 +55,9 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
   - **Calibración de Escala Solar-Nubosa de 4 Peldaños (0-15% Despejado, 16-40% Mayormente Soleado, 41-74% Sol y Nubes, 75-100% Resol - Feedback Lendo):**
     - Ajustado `applyCantabricoConsensus` en `weatherApi.js` para rescatar la nubosidad real del Centro Europeo (ECMWF `>= 16%` cuando AROME marca `<= 15%` con diferencia `>= 15%`, o ECMWF `>= 40%` cuando AROME marca `< 50%` con diferencia `>= 20%`) e incorporados `direct_normal_irradiance` y `shortwave_radiation` en la petición horaria principal.
     - Calibrado `getWeatherInfo` en `weatherIcons.js` para clasificar con exactitud diurna: `0-15%` `☀️ Despejado / Soleyeru`, `16-40%` `🌤️ Mayormente soleado / Despejáu`, `41-74%` `⛅ Parcialmente nublado / Claros` y `75-100%` (con radiación filtrada) `🌥️ Resol / Sol tamizáu`.
-  - Service Worker actualizado a `meteoasturlode-v3023-28-solar-cloud-scale` en `sw.js`.
+  - **Adelgazamiento y Claridad en Tarjeta Principal de Surf (`Calificación & Estrellas` - Feedback Lendo):**
+    - Eliminada la pastilla duplicada en la cabecera de *Surf & Rompientes* y la franja fija de leyenda teórica (`.surf-stars-legend-hint`), estructurando la primera tarjeta en 3 filas limpias (Cabecera `.t-label-row` con `💡`, fila destacada con badge de estrellas y estado, y barra unificada de Textura + Viento).
+  - Service Worker actualizado a `meteoasturlode-v3023-29-compact-surf-card` en `sw.js`.
   - Revisión interna `v=3.0.23.8` en `index.html` y `css/components.css`.
 
 ### 💛 Tarjeta Principal Compacta & Jerarquía Bilingüe Azul y Oro Asturiano (Feedback Lendo)

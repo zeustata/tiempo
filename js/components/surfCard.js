@@ -716,52 +716,34 @@ export function renderSurfCard(data, concejo) {
             }
           </span>
         </div>
-        <div class="sea-state-pill" style="background: ${surfStarRating.color}22; color: ${surfStarRating.color}; border: 1px solid ${surfStarRating.color}66;">
-          ${surfStarRating.shortIcons} • ${surfStarRating.summary}
-        </div>
       </div>
 
       <!-- 1. GRID DE SENSORES TÉCNICOS DE SWELL, ENERGÍA Y ROMPIENTE -->
       <div class="marine-grid">
-        <!-- HERO CARD: Aptitud y Calidad de la Rompiente (Rating de Estrellas, Textura Marina y Condición) -->
+        <!-- HERO CARD: Aptitud y Calidad de la Rompiente (Compacta y Legible) -->
         <div class="marine-widget surf-turismo-visual-widget">
-          <div class="surf-widget-top">
-            <div class="surf-title-row">
-              <span class="surf-title-icon">🏄‍♂️</span>
-              <div>
-                <div class="surf-title-main" style="display: flex; align-items: center; gap: 8px;">
-                  <span>Calificación & Estrellas</span>
-                  <button class="btn-explain-sensor" data-explain="surf_stars" title="¿Cómo funciona el rating de estrellas doradas y blancas? Pulsa para aprender" aria-label="Explicación del rating de estrellas de surf">💡</button>
-                </div>
-                <div class="surf-title-sub">${isCoasting ? `Playas de ${concejo.name}` : `Costa de ${interiorRef.name}`} • Estándar Surf-Forecast</div>
-              </div>
-            </div>
-            <div class="surf-flag-badge ${surfStarRating.badgeClass}" style="background: ${surfStarRating.color}22; color: ${surfStarRating.color}; border: 1px solid ${surfStarRating.color}88;">
+          <div class="t-label-row">
+            <span class="widget-label">🏄‍♂️ Calificación & Estrellas (${isCoasting ? concejoTitle : cleanInteriorName})</span>
+            <button class="btn-explain-sensor" data-explain="surf_stars" title="¿Cómo funciona el rating de estrellas doradas y blancas? Pulsa para aprender" aria-label="Explicación del rating de estrellas de surf">💡</button>
+          </div>
+
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-top: 6px;">
+            <div class="surf-flag-badge ${surfStarRating.badgeClass}" style="background: ${surfStarRating.color}22; color: ${surfStarRating.color}; border: 1px solid ${surfStarRating.color}88; font-size: 0.92rem; padding: 5px 12px; border-radius: 8px; font-weight: 800;">
               ${surfStarRating.starIcons}
             </div>
-          </div>
-
-          <!-- Leyenda Rápida de Estrellas -->
-          <div class="surf-stars-legend-hint">
-            ⭐ <strong>Doradas:</strong> Terral puro & Swell noble • ⚪ <strong>Blancas:</strong> Olas justas / Glassy • 🚫 <strong>0★:</strong> Chop o Cerrón
-          </div>
-
-          <!-- Indicador Ergonómico de Textura de la Superficie Marina -->
-          <div class="surf-texture-chip" style="margin-top: 8px; display: flex; align-items: center; gap: 8px; padding: 7px 12px; background: rgba(15, 23, 42, 0.65); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.08); box-sizing: border-box;">
-            <span style="font-size: 1.15rem; line-height: 1; flex-shrink: 0;">${waterTexture.icon}</span>
-            <div style="display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; min-width: 0;">
-              <span style="font-size: 0.74rem; color: #94a3b8; font-weight: 700; text-transform: uppercase;">Textura:</span>
-              <span style="font-size: 0.82rem; font-weight: 700; color: ${waterTexture.color};">${waterTexture.badge}</span>
-              <span style="font-size: 0.76rem; color: #38bdf8; font-weight: 700;">• ${hasDistinctGust ? `${windSpeed}–${rawGusts}` : windSpeed} km/h (${(surfWind.name || 'Costero').split(' ')[0]})</span>
+            <div style="font-size: 0.88rem; font-weight: 700; color: ${surfQuality.color};">
+              ${surfQuality.status}
             </div>
           </div>
 
-          <!-- Diagnóstico de Rompiente Integrado -->
-          <div class="surf-status-banner" style="color: ${surfQuality.color}; margin-top: 8px; margin-bottom: 0;">
-            <div style="font-weight: 700;">${surfQuality.status}</div>
-            <div style="font-size: 0.76rem; color: #cbd5e1; font-weight: 400; margin-top: 4px; line-height: 1.35;">
-              ${surfQuality.desc}
-            </div>
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 10px; padding: 7px 10px; background: rgba(15, 23, 42, 0.55); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.07);">
+            <span style="font-size: 0.8rem; font-weight: 700; color: ${waterTexture.color};">${waterTexture.icon} ${waterTexture.badge}</span>
+            <span style="color: rgba(255,255,255,0.25);">•</span>
+            <span style="font-size: 0.8rem; font-weight: 700; color: #38bdf8;">💨 ${hasDistinctGust ? `${windSpeed}–${rawGusts}` : windSpeed} km/h (${(surfWind.name || 'Costero').split(' ')[0]})</span>
+          </div>
+
+          <div class="widget-detail" style="margin-top: 8px; line-height: 1.35; color: #cbd5e1;">
+            ${surfQuality.desc}
           </div>
         </div>
 

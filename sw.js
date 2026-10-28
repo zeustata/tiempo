@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-28-solar-cloud-scale';
+const CACHE_NAME = 'meteoasturlode-v3023-29-compact-surf-card';
 const STATIC_ASSETS = [
   './',
   './index.html',

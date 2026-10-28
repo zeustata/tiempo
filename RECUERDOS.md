@@ -40,6 +40,14 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - Contrastar con ECMWF IFS (`models=ecmwf_ifs025&current=weather_code,cloud_cover,direct_normal_irradiance`).
        - Aplicar en Java la regla de consenso: si el modelo local indica soleado (`weather_code <= 1` o `cloud_cover < 50%`) pero no hay sol activo (`direct_normal_irradiance < 100 W/m²`, `uv < 1.0`) y ECMWF reporta manto cubierto (`cloud_cover >= 80%`), forzar `weather_code = 3` (Nublado) en el tiempo actual y en la previsión diaria de hoy, asegurando paridad visual 1:1 total entre el widget de escritorio y la web app.
 
+## 🏄‍♂️ Adelgazamiento y Legibilidad de la Primera Tarjeta de Surf & Rompientes (Calificación & Estrellas) — 2026-10-28
+- **Optimización Visual y Supresión de Redundancias (Feedback Lendo - «estoy en surf y rompientesla primnera tarjeta me gustaria que sea mas legible y compacta. Hablo de Clasificacion y estrellas. me parece un poco lioso. que me dices?», «dale al camino 1 en local a ver como queda» y «subelo»):**
+  - *Solución aplicada en `js/components/surfCard.js` (Camino 1):*
+    1. Eliminada la pastilla duplicada de estrellas en la cabecera superior `.section-title-wrap`.
+    2. Unificada la cabecera de `.surf-turismo-visual-widget` con el formato `.t-label-row` del resto de sensores (`🏄‍♂️ Calificación & Estrellas` a la izquierda y botón `💡` a la derecha) evitando colisiones con el badge de estrellas (Ley 11).
+    3. Suprimida la franja gris fija `.surf-stars-legend-hint` (cuya explicación didáctica ya reside en el modal de la bombilla `💡`).
+    4. Estructurada la tarjeta en 3 bloques limpios: fila principal con badge de estrellas + veredicto directo, barra compacta de una línea con **Textura + Viento**, y resumen inferior, manteniendo intacto el sistema de estrellas en las previsiones de *3 Horas* y *7 Días*.
+
 ## 🌤️ Escala Solar-Nubosa de 4 Peldaños (0-15% Despejado, 16-40% Mayormente Soleado, 41-74% Sol y Nubes, 75-100% Resol) — 2026-10-28
 - **Diagnóstico en Vivo en Piedras Blancas (Feedback Lendo - «te voy diciendo el tiempo que hace ahora mismo para que compares. el cielo esta mas azul que nubes pero hace sol y nubes. viendo el cielo diria que es mas bien un mayormente soleado o sol y nubes», «si» y «subelo»):**
   - *Causa detectada (15:15 h en Castrillón):* Tres de los cuatro modelos (ECMWF `25%-45%`, GFS `39%` e ICON `52%`) detectaban las nubes bajas costeras, pero AROME marcaba `0%` de nubes. Como `isFalseClear` en `weatherApi.js` solo rescataba la nubosidad de ECMWF a partir de `>= 55%`, el `25%-45%` de ECMWF no se rescataba y se mostraba el `0%` falso de AROME (`☀️ Despejado`).
