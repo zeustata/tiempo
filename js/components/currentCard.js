@@ -991,7 +991,8 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   const baroPillAlert = isSeverePressureDrop ? 'has-alert-danger' : (isWarningPressureDrop ? 'has-alert-warning' : '');
   const rainPillAlert = (currentRainIntensity >= 30 || rainTodayTotal >= 80) ? 'has-alert-danger' : ((currentRainIntensity >= 15 || rainTodayTotal >= 40) ? 'has-alert-warning' : '');
   const uvPillAlert = (uvVal != null && uvVal >= 8) ? 'has-alert-warning' : '';
-  const aqiPillAlert = (aqi?.european_aqi && aqi.european_aqi >= 4) ? 'has-alert-warning' : '';
+  const hasHighPollen = (aqi?.grass_pollen != null && aqi.grass_pollen >= 50) || (aqi?.birch_pollen != null && aqi.birch_pollen >= 75) || (aqi?.alder_pollen != null && aqi.alder_pollen >= 75);
+  const aqiPillAlert = (aqi?.european_aqi != null && aqi.european_aqi > 80) ? 'has-alert-danger' : (((aqi?.european_aqi != null && aqi.european_aqi > 60) || hasHighPollen) ? 'has-alert-warning' : '');
 
   return `
     <!-- HERO WEATHER CARD (Tiempo, Ubicación y Temperatura) -->

@@ -40,6 +40,11 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - Contrastar con ECMWF IFS (`models=ecmwf_ifs025&current=weather_code,cloud_cover,direct_normal_irradiance`).
        - Aplicar en Java la regla de consenso: si el modelo local indica soleado (`weather_code <= 1` o `cloud_cover < 50%`) pero no hay sol activo (`direct_normal_irradiance < 100 W/m²`, `uv < 1.0`) y ECMWF reporta manto cubierto (`cloud_cover >= 80%`), forzar `weather_code = 3` (Nublado) en el tiempo actual y en la previsión diaria de hoy, asegurando paridad visual 1:1 total entre el widget de escritorio y la web app.
 
+## 🍃 Corrección del Umbral de Baliza en Pastilla de Calidad del Aire (Escala Europea 0-100) — 2026-10-28
+- **Diagnóstico y Corrección de Falsa Alerta Naranja (Feedback Lendo - «Mira en la tarjeta de calidad del aire, el boton de arriba esta distinto a los demas colores con un punto naranja y un aura naranja. por que?» y «primero sube a internet el cambio hacho del boton de la calidad de aire»):**
+  - *Causa:* La condición `aqi.european_aqi >= 4` empleaba por error la escala de 1 a 5 en lugar de la escala europea de Open-Meteo (`0 a 100+`), encendiendo el punto naranja incluso con aire bueno (`22`).
+  - *Solución aplicada en `currentCard.js`:* Aviso naranja (`has-alert-warning`) únicamente cuando `european_aqi > 60` (*Pobre*) o hay nivel alto de polen (`gramíneas >= 50` o `abedul/aliso >= 75`), y alerta roja (`has-alert-danger`) cuando `european_aqi > 80` (*Muy Desfavorable*).
+
 ## 🏛️ Reforma Constitucional (Ley 18) & Unificación de Paginador de Puntos en Carruseles Monotarjeta — 2026-10-28
 - **Unificación Visual y Reforma Autorizada por PIN Maestro (Feedback Lendo - «me gusta mucho los puntos que tienes debajo de el menu de en vivo para pasar las tarjetas... mucho mas vistoso que el dedo con desliza para pasar», «que sea para todas las aplicaciones con tarjetas deslizables» y «ahora si princesa. subelo»):**
   1. *Diagnóstico y Armonía Visual (Leyes 14 y 18):*

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-20-carousel-dots-fix';
+const CACHE_NAME = 'meteoasturlode-v3023-21-aqi-pill-scale';
 const STATIC_ASSETS = [
   './',
   './index.html',
