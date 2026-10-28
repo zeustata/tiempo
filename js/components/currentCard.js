@@ -1,14 +1,14 @@
 import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=3.0.23.28';
 import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=3.0.21';
 import { renderHourlyForecastBlock } from './forecastView.js?v=3.0.23.28';
-import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=3.0.3';
-import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=3.0.3';
-import { detectXeluEffect, renderXeluBanner } from '../utils/xeluDetector.js?v=3.0.3';
-import { detectSnowStatus, renderSnowBanner } from '../utils/snowDetector.js?v=3.0.3';
+import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=3.0.23.43';
+import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=3.0.23.43';
+import { detectXeluEffect, renderXeluBanner } from '../utils/xeluDetector.js?v=3.0.23.43';
+import { detectSnowStatus, renderSnowBanner } from '../utils/snowDetector.js?v=3.0.23.43';
 import { detectBorrinaEffect, renderBorrinaBanner } from '../utils/borrinaDetector.js?v=3.0.23.42';
 import { detectMarFondoEffect, renderMarFondoBanner } from '../utils/marFondoDetector.js?v=3.0.23.41';
 import { detectThunderstormEffect, renderThunderstormBanner } from '../utils/thunderstormDetector.js?v=3.0.3';
-import { detectRoadWindStatus, renderRoadWindBanner, renderRoadWindSensorPill } from '../utils/roadWindDetector.js?v=3.0.3';
+import { detectRoadWindStatus, renderRoadWindBanner, renderRoadWindSensorPill } from '../utils/roadWindDetector.js?v=3.0.23.43';
 import { getSeismicStatus, renderSeismicBanner } from '../utils/seismicDetector.js?v=3.0.3';
 import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=2.2.12';
 import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=3.0.2';
@@ -825,8 +825,8 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
     if (!lvl) return 0;
     const l = String(lvl).toLowerCase();
     if (l === 'red' || l === 'severe' || l === 'historic' || l === 'critical') return 3; // 🔴 ROJO
-    if (l === 'orange') return 2; // 🟠 NARANJA
-    if (l === 'yellow' || l === 'warning' || l === 'amber') return 1; // 🟡 AMARILLO
+    if (l === 'orange' || l === 'valleys') return 2; // 🟠 NARANJA
+    if (l === 'yellow' || l === 'warning' || l === 'amber' || l === 'moderate' || l === 'mountain') return 1; // 🟡 AMARILLO
     return 0;
   }
 

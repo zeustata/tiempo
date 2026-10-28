@@ -167,13 +167,18 @@ export function detectRoadWindStatus(current, daily, hourly, concejo) {
   const gusts = current.wind_gusts_10m != null ? Math.round(current.wind_gusts_10m) : speed;
   const windDir = current.wind_direction_10m != null ? Math.round(current.wind_direction_10m) : 0;
 
-  // Analizar previsión diaria y pico horario en las próximas 24 horas (Visión Dual Ley Específica 12.10)
-  const dailyMaxGust = Math.round((daily?.wind_gusts_10m_max && daily.wind_gusts_10m_max[0] != null) ? daily.wind_gusts_10m_max[0] : gusts);
+  // Analizar pico horario en las próximas 6 horas (ventana operativa inmediata en simbiosis con AEMET)
   let peakGustHourly = 0;
   let peakHourIndex = -1;
   let peakHourStr = '';
   if (hourly && Array.isArray(hourly.wind_gusts_10m) && Array.isArray(hourly.time)) {
-    for (let i = 0; i < Math.min(hourly.wind_gusts_10m.length, 24); i++) {
+    const now = new Date();
+    const nowLocalHourStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}T${String(now.getHours()).padStart(2, '0')}`;
+    let startIdx = hourly.time.findIndex(t => t.startsWith(nowLocalHourStr));
+    if (startIdx === -1) startIdx = 0;
+    const endIdx = Math.min(hourly.wind_gusts_10m.length, startIdx + 6);
+
+    for (let i = startIdx; i < endIdx; i++) {
       const g = typeof hourly.wind_gusts_10m[i] === 'number' ? Math.round(hourly.wind_gusts_10m[i]) : 0;
       if (g > peakGustHourly) {
         peakGustHourly = g;
@@ -185,7 +190,7 @@ export function detectRoadWindStatus(current, daily, hourly, concejo) {
       peakHourStr = `${String(d.getHours()).padStart(2, '0')}:00 h`;
     }
   }
-  const maxAnticipatedGust = Math.max(gusts, dailyMaxGust, peakGustHourly);
+  const maxAnticipatedGust = Math.max(gusts, peakGustHourly);
 
   // Determinar dirección cardinal legible aproximada
   let windDirName = 'Variable';
@@ -198,16 +203,16 @@ export function detectRoadWindStatus(current, daily, hourly, concejo) {
   else if (windDir >= 247.5 && windDir < 292.5) windDirName = 'Oeste (W)';
   else if (windDir >= 292.5 && windDir < 337.5) windDirName = 'Noroeste (NW)';
 
-  // 2. Umbrales de evaluación vial con Visión Dual (En vivo vs Preaviso)
-  const isSevereNow = gusts >= 85;
-  const isWarningNow = gusts >= 65 && gusts < 85;
-  const isSevereForecast = !isSevereNow && !isWarningNow && maxAnticipatedGust >= 85;
-  const isWarningForecast = !isSevereNow && !isWarningNow && !isSevereForecast && maxAnticipatedGust >= 65;
+  // 2. Umbrales de evaluación vial en Simbiosis Oficial AEMET Asturias (Amarillo >= 70 km/h, Naranja >= 90 km/h)
+  const isSevereNow = gusts >= 90;
+  const isWarningNow = gusts >= 70 && gusts < 90;
+  const isSevereForecast = !isSevereNow && !isWarningNow && maxAnticipatedGust >= 90;
+  const isWarningForecast = !isSevereNow && !isWarningNow && !isSevereForecast && maxAnticipatedGust >= 70;
 
   const isSevere = isSevereNow || isSevereForecast;
   const isWarning = isWarningNow || isWarningForecast;
-  const isCaution = !isSevere && !isWarning && (gusts >= 45 || maxAnticipatedGust >= 45);
-  const isForecast = isSevereForecast || isWarningForecast || (isCaution && gusts < 45);
+  const isCaution = !isSevere && !isWarning && (gusts >= 50 || maxAnticipatedGust >= 55);
+  const isForecast = isSevereForecast || isWarningForecast || (isCaution && gusts < 50);
 
   const isBannerActive = isSevere || isWarning;
 

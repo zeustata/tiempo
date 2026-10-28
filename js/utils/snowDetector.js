@@ -113,7 +113,16 @@ export function detectSnowStatus(current, hourly, daily, concejo) {
     // Estimación física de cota de nieve: habitualmente ~250-300 metros por debajo de la isoterma 0 °C
     const estimatedSnowLevel = Math.max(0, freezingLevel - 280);
 
-    const isSnowRisk = snowVal >= 0.1 || SNOW_WMO_CODES.includes(wmo) || (precip >= 0.2 && estimatedSnowLevel <= concejoAlt + 120);
+    // En concejos costeros o de valle bajo (<= 350 m), solo activar alerta local si la cota baja de 800 m;
+    // en concejos de interior/montaña (> 350 m), si la cota baja de 1.350 m (puertos y cumbres principales).
+    const maxRelevantSnowLevel = concejoAlt <= 350 ? 800 : 1350;
+    const isLevelRelevant = estimatedSnowLevel <= maxRelevantSnowLevel || estimatedSnowLevel <= concejoAlt + 250;
+
+    const isSnowRisk = isLevelRelevant && (
+      snowVal >= 0.1 ||
+      SNOW_WMO_CODES.includes(wmo) ||
+      (precip >= 0.2 && estimatedSnowLevel <= concejoAlt + 120)
+    );
 
     if (isSnowRisk) {
       if (firstSnowIdx === -1) {
@@ -127,7 +136,7 @@ export function detectSnowStatus(current, hourly, daily, concejo) {
   }
 
   // Si no hay riesgo de nieve en la ventana de las próximas horas, silencio absoluto (Modo Silencioso)
-  if (firstSnowIdx === -1 && totalSnowCm < 0.2 && !hasSnowWmo) {
+  if (firstSnowIdx === -1 || (totalSnowCm < 0.2 && !hasSnowWmo && minFreezingLevel > concejoAlt + 450)) {
     return null;
   }
 
@@ -144,9 +153,9 @@ export function detectSnowStatus(current, hourly, daily, concejo) {
 
   const roundedSnowCm = Math.round(totalSnowCm * 10) / 10;
 
-  // 4. Clasificación de Severidad según la cota y el concejo
-  // A) Cota Cero / Nivel del Mar (< 200 m) — Evento histórico o excepcional
-  if (snowLevel <= 200 || concejoAlt <= 100 && (totalSnowCm >= 0.3 || hasSnowWmo)) {
+  // 4. Clasificación de Severidad según la cota real de nieve y su impacto sobre el concejo
+  // A) Cota Cero / Nivel del Mar (<= 200 m) — Evento histórico o excepcional
+  if (snowLevel <= 200) {
     return {
       isActive: true,
       isSimulation: false,
@@ -162,8 +171,8 @@ export function detectSnowStatus(current, hourly, daily, concejo) {
     };
   }
 
-  // B) Cotas Bajas y Valles Habitados (200 m - 600 m)
-  if (snowLevel <= 600 || concejoAlt <= 500) {
+  // B) Cotas Bajas y Valles Habitados (200 m - 600 m, o nevando directamente en la cota del concejo)
+  if (snowLevel <= 600 || snowLevel <= concejoAlt + 150) {
     return {
       isActive: true,
       isSimulation: false,

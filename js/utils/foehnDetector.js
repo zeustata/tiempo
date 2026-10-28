@@ -39,6 +39,8 @@ export function detectFoehnEffect(current) {
   const rh = current.relative_humidity_2m != null ? current.relative_humidity_2m : null;
   const speed = current.wind_speed_10m != null ? current.wind_speed_10m : 0;
   const gusts = current.wind_gusts_10m != null ? current.wind_gusts_10m : speed;
+  const temp = current.temperature_2m != null ? current.temperature_2m : null;
+  const precip = current.precipitation != null ? current.precipitation : 0;
 
   if (dir == null || rh == null) return null;
 
@@ -46,14 +48,18 @@ export function detectFoehnEffect(current) {
   const isSouthSector = dir >= 135 && dir <= 225;
   if (!isSouthSector) return null;
 
-  // 2. Comprobar desplome de humedad relativa (< 52% en clima atlántico asturiano)
-  if (rh >= 52) return null;
+  // 2. Comprobar ausencia de lluvia (el Foehn cantábrico produce sombra pluviométrica y ambiente seco)
+  if (precip > 0.1) return null;
 
-  // 3. Comprobar actividad de viento o racha
-  if (gusts < 28 && speed < 16) return null;
+  // 3. Comprobar desplome de humedad relativa (<= 48% en clima atlántico asturiano) y ambiente templado (>= 15.5 °C)
+  if (rh > 48) return null;
+  if (temp != null && temp < 15.5) return null;
 
-  // Determinar severidad
-  const isSevere = rh <= 38 || gusts >= 52;
+  // 4. Comprobar actividad real de viento Sur canalizado (rachas >= 38 km/h o sostenido >= 20 km/h)
+  if (gusts < 38 && speed < 20) return null;
+
+  // Determinar severidad (riesgo extremo de propagación forestal y turbonadas de Sur)
+  const isSevere = (rh <= 35 && gusts >= 50) || gusts >= 65;
   const humidityVal = Math.round(rh);
   const gustsVal = Math.round(gusts);
   const dirVal = Math.round(dir);

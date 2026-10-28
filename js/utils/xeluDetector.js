@@ -37,8 +37,9 @@ export function detectXeluEffect(current, daily, concejo) {
   }
 
   const temp = current.temperature_2m;
-  if (temp == null || temp > 3.0) {
-    // Si la mínima del día tampoco es fría, silencio absoluto
+  if (temp == null || temp > 5.5) return null;
+  if (temp > 3.0) {
+    // Si la temperatura actual supera 3.0 °C y la mínima del día tampoco es fría, silencio absoluto
     const todayMin = (daily && daily.temperature_2m_min && daily.temperature_2m_min[0] != null) 
       ? daily.temperature_2m_min[0] 
       : 10;
@@ -52,12 +53,13 @@ export function detectXeluEffect(current, daily, concejo) {
   const dewPoint = (b * alpha) / (a - alpha);
 
   const windSpeed = current.wind_speed_10m || 0;
+  const precip = current.precipitation != null ? current.precipitation : 0;
   const currentHour = new Date().getHours();
   const isNightOrMorning = currentHour >= 21 || currentHour <= 10;
 
   // 3. Reglas de disparo físico
-  const isFreezing = temp <= 0.5 || dewPoint <= -0.5;
-  const isNearFrost = temp <= 2.8 && (temp - dewPoint) <= 2.2 && windSpeed <= 15;
+  const isFreezing = temp <= 0.5 || (temp <= 1.5 && dewPoint <= -0.5);
+  const isNearFrost = temp <= 2.8 && (temp - dewPoint) <= 2.2 && windSpeed <= 15 && precip < 0.5;
 
   if (!isNightOrMorning && !isFreezing) {
     return null;

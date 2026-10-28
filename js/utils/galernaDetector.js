@@ -43,13 +43,15 @@ export function detectGalernaEffect(current, hourly, concejo) {
 
   if (!current || !concejo) return null;
 
-  // 1. Ámbito: Solo concejos de costa o con fachada litoral directa
+  // 1. Ámbito: Solo concejos de costa o con fachada litoral directa (los 21 concejos costeros de Asturias)
+  const COASTAL_CONCEJO_IDS = [
+    'castropol', 'vegadeo', 'tapiadecasariego', 'tapia', 'elfranco', 'franco', 'coana', 'navia',
+    'valdes', 'cudillero', 'murosdenalon', 'sotodelbarco', 'soto_barco', 'castrillon', 'aviles',
+    'gozon', 'carreno', 'gijon', 'villaviciosa', 'colunga', 'caravia', 'ribadesella', 'llanes', 'ribadedeva'
+  ];
   const isCoast = concejo.type === 'coast' || 
                   (concejo.region && concejo.region.toLowerCase().includes('costa')) ||
-                  concejo.id === 'castrillon' || concejo.id === 'gijon' || concejo.id === 'gozon' ||
-                  concejo.id === 'llanes' || concejo.id === 'ribadesella' || concejo.id === 'carreno' ||
-                  concejo.id === 'aviles' || concejo.id === 'valdes' || concejo.id === 'tapia' ||
-                  concejo.id === 'cudillero' || concejo.id === 'villaviciosa' || concejo.id === 'colunga';
+                  COASTAL_CONCEJO_IDS.includes(concejo.id);
 
   if (!isCoast) return null;
 
@@ -62,17 +64,19 @@ export function detectGalernaEffect(current, hourly, concejo) {
 
   if (dir == null || currentTemp == null) return null;
 
-  // 2. Sector de viento: Debe ser de componente Noroeste (WNW a NNW: 270° a 345°)
+  // 2. Sector de viento: Debe ser de componente Oeste-Noroeste a Nor-Noroeste (270° a 345°)
   const isNwSector = dir >= 270 && dir <= 345;
   if (!isNwSector) return null;
 
-  // 3. Rachas de viento activas (mínimo 45 km/h o sostenido >= 30 km/h)
-  if (gusts < 45 && speed < 30) return null;
+  // 3. Rachas de viento activas (mínimo 48 km/h o sostenido >= 32 km/h)
+  if (gusts < 48 && speed < 32) return null;
 
-  // 4. Análisis del cambio térmico y barométrico con datos horarios (últimas 1-3 horas)
+  // 4. Análisis físico del cambio térmico, barométrico y cinemático (últimas 1-3 horas)
   let tempDrop = 0;
   let pressureJump = 0;
-  let hasThermalCollapse = false;
+  let gustJump = 0;
+  let hadWindShift = false;
+  let hasGalernaSignature = false;
 
   if (hourly && Array.isArray(hourly.time) && Array.isArray(hourly.temperature_2m)) {
     const now = new Date();
@@ -80,8 +84,8 @@ export function detectGalernaEffect(current, hourly, concejo) {
     let nowIndex = hourly.time.findIndex(t => t.startsWith(nowLocalHourStr));
     if (nowIndex === -1) nowIndex = Math.min(now.getHours(), hourly.time.length - 1);
 
-    // Comparar con la temperatura de 1 a 3 horas antes
-    const lookback = Math.max(0, nowIndex - 2);
+    // Comparar con las 3 horas previas
+    const lookback = Math.max(0, nowIndex - 3);
     const prevTemps = hourly.temperature_2m.slice(lookback, nowIndex);
     const maxPrevTemp = prevTemps.length > 0 ? Math.max(...prevTemps) : currentTemp;
 
@@ -94,14 +98,26 @@ export function detectGalernaEffect(current, hourly, concejo) {
       pressureJump = Math.max(0, Math.round((currentPress - minPrevPress) * 10) / 10);
     }
 
-    // Se considera colapso térmico si cayó >= 3.5 °C tras calor/bochorno previo o si el viento roló súbitamente con racha fuerte
-    hasThermalCollapse = tempDrop >= 3.5;
+    // Aceleración brusca de racha y giro de dirección respecto a las horas previas
+    if (Array.isArray(hourly.wind_gusts_10m)) {
+      const prevGusts = hourly.wind_gusts_10m.slice(lookback, nowIndex);
+      const minPrevGust = prevGusts.length > 0 ? Math.min(...prevGusts) : gusts;
+      gustJump = Math.max(0, Math.round(gusts - minPrevGust));
+    }
+
+    if (Array.isArray(hourly.wind_direction_10m)) {
+      const prevDirs = hourly.wind_direction_10m.slice(lookback, nowIndex);
+      hadWindShift = prevDirs.some(d => d != null && (d < 245 || d > 350));
+    }
+
+    // Firma física estricta de Galerna (evita falsos positivos en borrascas invernales constantes del NW):
+    // Requiere desplome térmico real (>= 3.5 °C) tras ambiente templado previo (maxPrevTemp >= 16 °C),
+    // o bien giro brusco de viento (hadWindShift) con salto violento de racha (>= 22 km/h) y caída térmica (>= 2.2 °C).
+    hasGalernaSignature = (tempDrop >= 3.5 && maxPrevTemp >= 16.0) ||
+                          (hadWindShift && gustJump >= 22 && tempDrop >= 2.2 && (pressureJump >= 1.2 || rh >= 78));
   }
 
-  // Si no tenemos histórico horario pero la racha es >= 58 km/h en sector NW con humedad marina muy alta
-  const isSuddenGalerna = (hasThermalCollapse && gusts >= 45) || (gusts >= 58 && rh >= 80);
-
-  if (!isSuddenGalerna) return null;
+  if (!hasGalernaSignature) return null;
 
   // Severidad
   const isSevere = gusts >= 65 || tempDrop >= 6.0;

@@ -65,7 +65,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
     - Calibrado `marFondoDetector.js` al umbral oficial costero de AEMET Meteoalerta en Asturias (`4.0 a 4.9 m` amarillo, `>= 5.0 m` severo; silencioso por debajo de `4.0 m` para evitar falsas alertas en días ordinarios de otoño/invierno) e incorporada la píldora coloreada de potencia en kiloJulios (`⚡ Potencia: kJ`).
   - **Blindaje Anti-Falsas Alarmas Nocturnas en Alerta Silenciosa de Borrina (`<= 1.000 m` OMM / `<= 200 m` AEMET - Feedback Lendo):**
     - Calibrado `borrinaDetector.js` para exigir visibilidad horizontal reducida (`<= 1.000 m`) o código oficial WMO de niebla (`45/48`), evitando que salte en noches despejadas solo por humedad alta, y fijando el nivel severo en `<= 200 m` (umbral oficial AEMET).
-  - Service Worker actualizado a `meteoasturlode-v3023-42-borrina-aemet-vis` en `sw.js`.
+  - **Calibración Integral de Detectores Silenciosos Restantes en Simbiosis AEMET / OMM (`galernaDetector.js`, `snowDetector.js`, `roadWindDetector.js`, `foehnDetector.js`, `xeluDetector.js`, `currentCard.js` - Feedback Lendo):**
+    - *Galerna Cantábrica:* Eliminados falsos positivos en temporales invernales del NW sin caída térmica, exigiendo desplome térmico real o giro súbito con salto de racha, y actualizados los 21 concejos costeros.
+    - *Alerta Nieve:* Corregida la clasificación de nieve en valles (`snowLevel <= 600 m` o en cota del concejo) para evitar avisos falsos en concejos de costa cuando nieva en alta montaña.
+    - *Viento en Viaductos:* Sincronizado con los umbrales oficiales de AEMET en Asturias (`>= 70 km/h` amarillo, `>= 90 km/h` severo) y ventana operativa de 6 horas.
+    - *Efecto Foehn y Alerta Xelu:* Exigida ausencia de lluvia, ambiente templado (`>= 15.5 °C`) y rachas `>= 38 km/h` en Foehn; filtro térmico actual (`<= 5.5 °C`) en Xelu; y mapeo completo de pesos en el triaje de `currentCard.js`.
+  - Service Worker actualizado a `meteoasturlode-v3023-43-detectors-aemet-symbiosis` en `sw.js`.
   - Revisión interna `v=3.0.23.8` en `index.html` y `css/components.css`.
 
 ### 💛 Tarjeta Principal Compacta & Jerarquía Bilingüe Azul y Oro Asturiano (Feedback Lendo)
