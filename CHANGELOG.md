@@ -51,7 +51,8 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
     - Calibrado el detector de **Resol / Sol tamizáu (`🌥️`)** en `weatherIcons.js` para coberturas nubosas altas (`>= 75%` nubes) con radiación filtrada (`>= 180 W/m²` directa o `>= 280 W/m²` global), mostrando fielmente *Resol / Sol tamizáu* o *Parcialmente nublado / Claros* en lugar de un falso *Despejado*.
   - **Carrusel Monotarjeta Esbelto en Mareas de Hoy (Doctrina 18 - Feedback Lendo):**
     - Convertida la rejilla `2x2` de las 4 mareas diarias bajo la curva sinusoidal de 72h en un carrusel horizontal monotarjeta de una sola fila (`#tide-today-carousel`) con diseño interior en línea (`🌅 Pleamar / 🏖️ Bajamar`, etiqueta `Pasada / ⏳ Próxima`, hora y altura) y paginador interactivo de 4 puntos (`#tide-today-dots`), ahorrando más de 95px de scroll vertical.
-  - Service Worker actualizado a `meteoasturlode-v3023-26-tide-stacked-right` en `sw.js`.
+    - Reubicada y compactada la pastilla de bandera de baño (`🟢 Bandera Verde (Teórica)` / `🟡 Bandera Amarilla (Teórica)` / `🔴 Bandera Roja (Teórica)`) en una sola línea dentro de `.mareografo-card` (justo encima de *Nivel de Agua Actual*), despejando la cabecera principal.
+  - Service Worker actualizado a `meteoasturlode-v3023-27-compact-beach-flag` en `sw.js`.
   - Revisión interna `v=3.0.23.8` en `index.html` y `css/components.css`.
 
 ### 💛 Tarjeta Principal Compacta & Jerarquía Bilingüe Azul y Oro Asturiano (Feedback Lendo)

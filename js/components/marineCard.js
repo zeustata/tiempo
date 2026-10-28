@@ -1163,24 +1163,20 @@ export function renderMarineCard(data, concejo) {
   let flagBadge = '🟢 Bandera Verde (Teórica)';
   let bathStatus = 'Condiciones meteorológicas teóricas favorables. Precaución habitual en el agua.';
 
-  if (douglasDegree <= 1) {
+  if (douglasDegree <= 2) {
     flagBadge = '🟢 Bandera Verde (Teórica)';
     flagColor = '#10b981';
-    bathStatus = 'Condiciones meteorológicas teóricas óptimas. Mar en calma o rizado.';
-  } else if (douglasDegree === 2) {
-    flagBadge = '🟢 Bandera Verde / Amarilla (Teórica)';
-    flagColor = '#10b981';
-    bathStatus = 'Mar favorable en previsión con oleaje suave. Prestar atención a corrientes locales.';
-  } else if (douglasDegree === 3) {
+    bathStatus = douglasDegree <= 1
+      ? 'Condiciones meteorológicas teóricas óptimas. Mar en calma o rizado.'
+      : 'Mar favorable en previsión con oleaje suave. Prestar atención a corrientes locales.';
+  } else if (douglasDegree <= 4) {
     flagBadge = '🟡 Bandera Amarilla (Teórica)';
     flagColor = '#f59e0b';
-    bathStatus = 'Precaución en el baño. Oleaje marcado y probables corrientes de resaca.';
-  } else if (douglasDegree === 4) {
-    flagBadge = '🔴 Bandera Amarilla / Roja (Teórica)';
-    flagColor = '#f59e0b';
-    bathStatus = 'Fuerte oleaje con corrientes activas. Baño exigente, solo nadadores experimentados.';
+    bathStatus = douglasDegree === 3
+      ? 'Precaución en el baño. Oleaje marcado y probables corrientes de resaca.'
+      : 'Fuerte oleaje con corrientes activas. Baño exigente, solo nadadores experimentados.';
   } else {
-    flagBadge = '🔴 Bandera Roja / Temporal (Teórica)';
+    flagBadge = '🔴 Bandera Roja (Teórica)';
     flagColor = '#ef4444';
     bathStatus = '🚨 Temporal costero / Mar gruesa activa. Baño desaconsejado o prohibido en arenales expuestos.';
   }
@@ -1215,15 +1211,15 @@ export function renderMarineCard(data, concejo) {
             }
           </span>
         </div>
-        <div class="marine-header-badges">
-          <div class="sea-state-pill" style="background: ${flagColor}22; color: ${flagColor}; border: 1px solid ${flagColor};">
-            ${flagBadge}
-          </div>
-        </div>
       </div>
 
       <!-- 1. MAREÓGRAFO INTERACTIVO EN TIEMPO REAL (ONDA SINUSOIDAL 72H / SEMANAL) -->
       <div class="marine-widget mareografo-card" style="margin-bottom: 14px;">
+        <div class="mareografo-flag-top-row" style="display: flex; justify-content: center; margin-bottom: 10px;">
+          <div class="sea-state-pill" style="background: ${flagColor}22; color: ${flagColor}; border: 1px solid ${flagColor}; padding: 4px 12px; font-size: 0.78rem; font-weight: 700; border-radius: 999px; white-space: nowrap; max-width: 100%; box-sizing: border-box; text-align: center;">
+            ${flagBadge}
+          </div>
+        </div>
         <!-- Métricas clave en vivo -->
         <div class="mareografo-metrics-row">
           <div class="tide-metric-pill">

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-26-tide-stacked-right';
+const CACHE_NAME = 'meteoasturlode-v3023-27-compact-beach-flag';
 const STATIC_ASSETS = [
   './',
   './index.html',

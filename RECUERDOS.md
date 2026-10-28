@@ -42,6 +42,7 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 
 ## 🌊 Adelgazamiento de Playas & Mareas: Carrusel Monotarjeta en Mareas de Hoy con 4 Puntos (Doctrina 18) — 2026-10-28
 - **Optimización de Scroll Vertical y Armonía con Carruseles (Feedback Lendo - «quiero adelgazar un poco los menus para que no haya mucho scroll de arriba a abajo. si te fijas hay para hoy 4 botones que ponen las mareas bajas y altas de hoy. Quiero que se convierta en tarjeta deslizable con los puntos debajo como hicimos hoy con otras tarjetas», «pisale» y «subelo»):**
+  - Reubicada la pastilla de bandera de baño desde la cabecera `.marine-master-header` al interior superior de `.mareografo-card` (justo antes de *Nivel de Agua Actual*) con formato monolínea conciso (`🟢 Bandera Verde (Teórica)`, `🟡 Bandera Amarilla (Teórica)`, `🔴 Bandera Roja (Teórica)`).
   - Sustituida la rejilla `2x2` de `.tide-today-minimal-grid` en `marineCard.js` y `components.css` por un carrusel horizontal monotarjeta (`#tide-today-carousel`) con dos columnas simétricas: a la izquierda `Pleamar/Bajamar` sobre el badge `Pasada/⏳ Próxima/Hoy`, y a la derecha la hora del evento (`23:46`) apilada encima de los metros (`0.7 m`), dejando el centro totalmente despejado en móviles y acompañado del paginador interactivo `#tide-today-dots` sincronizado en `app.js`.
 
 ## 🌥️ Blindaje del Consenso Cantábrico Frente al Resol de Mediodía & Calibración Fiel de Resol (75-90% Nubes) — 2026-10-28
