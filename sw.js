@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-23-resol-consensus';
+const CACHE_NAME = 'meteoasturlode-v3023-24-tide-today-carousel';
 const STATIC_ASSETS = [
   './',
   './index.html',

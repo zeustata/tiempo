@@ -40,6 +40,10 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - Contrastar con ECMWF IFS (`models=ecmwf_ifs025&current=weather_code,cloud_cover,direct_normal_irradiance`).
        - Aplicar en Java la regla de consenso: si el modelo local indica soleado (`weather_code <= 1` o `cloud_cover < 50%`) pero no hay sol activo (`direct_normal_irradiance < 100 W/m²`, `uv < 1.0`) y ECMWF reporta manto cubierto (`cloud_cover >= 80%`), forzar `weather_code = 3` (Nublado) en el tiempo actual y en la previsión diaria de hoy, asegurando paridad visual 1:1 total entre el widget de escritorio y la web app.
 
+## 🌊 Adelgazamiento de Playas & Mareas: Carrusel Monotarjeta en Mareas de Hoy con 4 Puntos (Doctrina 18) — 2026-10-28
+- **Optimización de Scroll Vertical y Armonía con Carruseles (Feedback Lendo - «quiero adelgazar un poco los menus para que no haya mucho scroll de arriba a abajo. si te fijas hay para hoy 4 botones que ponen las mareas bajas y altas de hoy. Quiero que se convierta en tarjeta deslizable con los puntos debajo como hicimos hoy con otras tarjetas», «pisale» y «subelo»):**
+  - Sustituida la rejilla `2x2` de `.tide-today-minimal-grid` en `marineCard.js` y `components.css` por un carrusel horizontal monotarjeta (`#tide-today-carousel`) con disposición horizontal de 1 sola línea (`🌅 Pleamar` / `🏖️ Bajamar`, estado `Pasada` / `⏳ Próxima`, hora en tipografía técnica y altura en pastilla) acompañado del paginador interactivo `#tide-today-dots` sincronizado en `app.js`.
+
 ## 🌥️ Blindaje del Consenso Cantábrico Frente al Resol de Mediodía & Calibración Fiel de Resol (75-90% Nubes) — 2026-10-28
 - **Diagnóstico en Vivo y Corrección Inmediata (Feedback Lendo - «Y ahora que esta pasando? Das otra vez un sol completo y hay sol y nubes. sale el sol y se va o hace resol. mirando el cielo esta un 90% gris un 10% azul... subelo antes que se percaten los testers»):**
   - *Causa Raíz Detectada con Datos en Bruto (13:45 h):*

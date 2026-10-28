@@ -49,7 +49,9 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
   - **Blindaje del Consenso Cantábrico frente a Resol de Mediodía & Calibración de Resol (Feedback Lendo):**
     - Corregida en `weatherApi.js` la condición `isFalseClear` / `isFalseClearH` para que el resol filtrado de mediodía (`200-350 W/m²` en ECMWF) nunca desactive el rescate de nubosidad del Centro Europeo (`>= 55%` nubes) cuando el modelo francés AROME pinta un falso cielo despejado (`0%-1%` nubes).
     - Calibrado el detector de **Resol / Sol tamizáu (`🌥️`)** en `weatherIcons.js` para coberturas nubosas altas (`>= 75%` nubes) con radiación filtrada (`>= 180 W/m²` directa o `>= 280 W/m²` global), mostrando fielmente *Resol / Sol tamizáu* o *Parcialmente nublado / Claros* en lugar de un falso *Despejado*.
-  - Service Worker actualizado a `meteoasturlode-v3023-23-resol-consensus` en `sw.js`.
+  - **Carrusel Monotarjeta Esbelto en Mareas de Hoy (Doctrina 18 - Feedback Lendo):**
+    - Convertida la rejilla `2x2` de las 4 mareas diarias bajo la curva sinusoidal de 72h en un carrusel horizontal monotarjeta de una sola fila (`#tide-today-carousel`) con diseño interior en línea (`🌅 Pleamar / 🏖️ Bajamar`, etiqueta `Pasada / ⏳ Próxima`, hora y altura) y paginador interactivo de 4 puntos (`#tide-today-dots`), ahorrando más de 95px de scroll vertical.
+  - Service Worker actualizado a `meteoasturlode-v3023-24-tide-today-carousel` en `sw.js`.
   - Revisión interna `v=3.0.23.8` en `index.html` y `css/components.css`.
 
 ### 💛 Tarjeta Principal Compacta & Jerarquía Bilingüe Azul y Oro Asturiano (Feedback Lendo)

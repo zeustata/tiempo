@@ -2,7 +2,7 @@ import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/
 import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.23.23';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=3.0.23.23';
 import { renderCurrentWeather } from './components/currentCard.js?v=3.0.23.23';
-import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.23.19';
+import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.23.24';
 import { renderSurfCard } from './components/surfCard.js?v=3.0.23.19';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.11';
 import { renderMountainCard } from './components/mountainCard.js?v=2.2.64';
@@ -1723,6 +1723,7 @@ class MeteoAsturiasApp {
           weeklyView.style.display = 'none';
           scrollTideChartToNow();
           this.bindCarouselDots('weekly-tides-carousel', 'weekly-tides-dots', '.tide-day-card');
+          this.bindCarouselDots('tide-today-carousel', 'tide-today-dots', '.tide-mini-pill');
         }
       }
     });
@@ -2315,7 +2316,7 @@ class MeteoAsturiasApp {
         '.chart-smart-digest, .digest-chip, ' +
         '.ski-7days-carousel, .ski-day-card, ' +
         '.tide-scroll-viewport, .tide-svg-chart, ' +
-        '.weekly-tides-grid, .weekly-tides-card, .tide-day-card, ' +
+        '.weekly-tides-grid, .weekly-tides-card, .tide-day-card, .tide-today-minimal-grid, .tide-mini-pill, ' +
         '.daily-cards-container, .daily-card-rich, .forecast-scroll-hint, ' +
         '.surf-timeline-grid, .surf-slot-card, .surf-timeline-scroll-hint, .surf-daily-cards-grid, .surf-daily-card, .surf-dayparts-list, .surf-daily-scroll-hint, ' +
         '.module-chips-nav, .module-chips-scroll, .module-chip, ' +
@@ -2816,6 +2817,7 @@ class MeteoAsturiasApp {
           marineContainer.innerHTML = renderMarineCard(data, concejo);
           scrollTideChartToNow();
           this.bindCarouselDots('weekly-tides-carousel', 'weekly-tides-dots', '.tide-day-card');
+          this.bindCarouselDots('tide-today-carousel', 'tide-today-dots', '.tide-mini-pill');
         }
       } catch (e) {
         console.error('[MeteoAstur] Error renderizando Playas & Mareas:', e);

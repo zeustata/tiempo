@@ -13331,3 +13331,123 @@
   display: none !important;
   height: 0 !important;
 }
+
+
+/* --- CARRUSEL HORIZONTAL COMPACTO DE MAREAS DE HOY (DOCTRINA 18) --- */
+#tide-today-carousel.tide-today-minimal-grid {
+  display: flex !important;
+  overflow-x: auto !important;
+  gap: 14px !important;
+  padding: 4px 0 6px 0 !important;
+  margin-top: 12px !important;
+  touch-action: pan-x pan-y !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+  -webkit-overflow-scrolling: touch !important;
+  scroll-snap-type: x mandatory !important;
+  scroll-behavior: smooth !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+#tide-today-carousel.tide-today-minimal-grid::-webkit-scrollbar {
+  display: none !important;
+  height: 0 !important;
+}
+
+#tide-today-carousel .tide-mini-pill {
+  flex: 0 0 100% !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  scroll-snap-align: start !important;
+  scroll-snap-stop: always !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 11px 16px !important;
+  gap: 12px !important;
+  touch-action: pan-x pan-y !important;
+}
+
+#tide-today-carousel .tide-mini-pill.is-next {
+  border-color: rgba(56, 189, 248, 0.45);
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.16);
+}
+
+#tide-today-carousel .tide-mini-pill-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+#tide-today-carousel .tide-mini-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+#tide-today-carousel .tide-mini-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+#tide-today-carousel .tide-mini-name {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+#tide-today-carousel .tide-mini-status {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+  letter-spacing: 0.2px;
+}
+
+#tide-today-carousel .tide-mini-status.next {
+  background: rgba(56, 189, 248, 0.18);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  color: #38bdf8;
+}
+
+#tide-today-carousel .tide-mini-status.past {
+  background: rgba(148, 163, 184, 0.12);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  color: #94a3b8;
+}
+
+#tide-today-carousel .tide-mini-status.upcoming {
+  background: rgba(245, 158, 11, 0.14);
+  border: 1px solid rgba(245, 158, 11, 0.32);
+  color: #fbbf24;
+}
+
+#tide-today-carousel .tide-mini-pill-right {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+#tide-today-carousel .tide-mini-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.18rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+#tide-today-carousel .tide-mini-height {
+  font-size: 0.96rem;
+  font-weight: 800;
+  background: rgba(15, 23, 42, 0.55);
+  padding: 3px 9px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}

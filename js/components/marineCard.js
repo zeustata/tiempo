@@ -1281,26 +1281,40 @@ export function renderMarineCard(data, concejo) {
             </div>
           </div>
 
-          <!-- Mareas de Hoy (Rejilla Minimalista de Píldoras Simétricas) -->
+          <!-- Mareas de Hoy (Carrusel Horizontal Monotarjeta con Puntos Interactivos - Doctrina 18) -->
           ${(() => {
             const events = tideStatus.dayData.events || [];
+            const nextTimeStr = tideStatus.nextEvent ? tideStatus.nextEvent.timeStr : null;
             return `
-              <div class="tide-today-minimal-grid">
+              <div class="tide-today-minimal-grid" id="tide-today-carousel">
                 ${events.map((ev) => {
                   const isHigh = ev.type === 'high';
                   const accentColor = isHigh ? '#38bdf8' : '#f59e0b';
                   const icon = isHigh ? '🌅' : '🏖️';
+                  const isNext = nextTimeStr && ev.timeStr === nextTimeStr;
+                  const isPast = typeof ev.timeHours === 'number' ? ev.timeHours < tideStatus.currentHours : false;
+                  const statusBadge = isNext
+                    ? '<span class="tide-mini-status next">⏳ Próxima</span>'
+                    : (isPast ? '<span class="tide-mini-status past">Pasada</span>' : '<span class="tide-mini-status upcoming">Hoy</span>');
                   return `
-                    <div class="tide-mini-pill ${isHigh ? 'high' : 'low'}">
-                      <div class="tide-mini-pill-top">
+                    <div class="tide-mini-pill ${isHigh ? 'high' : 'low'} ${isNext ? 'is-next' : ''} ${isPast ? 'is-past' : ''}">
+                      <div class="tide-mini-pill-left">
                         <span class="tide-mini-icon">${icon}</span>
-                        <span class="tide-mini-name">${ev.name}</span>
+                        <div class="tide-mini-title-group">
+                          <span class="tide-mini-name">${ev.name}</span>
+                          ${statusBadge}
+                        </div>
                       </div>
-                      <div class="tide-mini-time">${ev.timeStr}</div>
-                      <div class="tide-mini-height" style="color: ${accentColor};">${ev.height} <span class="tide-mini-unit">m</span></div>
+                      <div class="tide-mini-pill-right">
+                        <span class="tide-mini-time">${ev.timeStr}</span>
+                        <span class="tide-mini-height" style="color: ${accentColor};">${ev.height} <span class="tide-mini-unit">m</span></span>
+                      </div>
                     </div>
                   `;
                 }).join('')}
+              </div>
+              <div class="sensors-dots-indicator carousel-dots-indicator" id="tide-today-dots">
+                ${events.map((ev, idx) => `<span class="sensor-dot ${idx === 0 ? 'active' : ''}" data-sensor-target="${idx}" title="${ev.name} (${ev.timeStr})"></span>`).join('')}
               </div>
             `;
           })()}
