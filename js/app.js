@@ -2,12 +2,12 @@ import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/
 import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.5';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=2.0.0';
 import { renderCurrentWeather } from './components/currentCard.js?v=3.0.23.18';
-import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=2.2.76';
-import { renderSurfCard } from './components/surfCard.js?v=3.0.13';
+import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.23.19';
+import { renderSurfCard } from './components/surfCard.js?v=3.0.23.19';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.11';
 import { renderMountainCard } from './components/mountainCard.js?v=2.2.64';
 import { renderTourismCard } from './components/tourismCard.js?v=3.0.10';
-import { renderForecast } from './components/forecastView.js?v=3.0.23.2';
+import { renderForecast } from './components/forecastView.js?v=3.0.23.19';
 import { renderWeatherChart } from './components/chartsView.js?v=3.0.7';
 import { renderAstronomyView } from './components/astronomyCard.js?v=2.2.1';
 import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=2.2.1';
@@ -1722,6 +1722,7 @@ class MeteoAsturiasApp {
           curveView.style.display = 'block';
           weeklyView.style.display = 'none';
           scrollTideChartToNow();
+          this.bindCarouselDots('weekly-tides-carousel', 'weekly-tides-dots', '.tide-day-card');
         }
       }
     });
@@ -2308,7 +2309,7 @@ class MeteoAsturiasApp {
     const isInteractiveZone = (target) => {
       if (!target) return false;
       return target.closest(
-        '.sensors-carousel-section, .sensors-nav-toolbar, .sensor-nav-pill, .sensors-carousel, .sensor-card, .sensors-dots-indicator, .sensor-dot, ' +
+        '.sensors-carousel-section, .sensors-nav-toolbar, .sensor-nav-pill, .sensors-carousel, .sensor-card, .sensors-dots-indicator, .carousel-dots-indicator, .sensor-dot, ' +
         '.hourly-scroll-container, .live-hourly-block, .hourly-card, .hourly-day-divider, ' +
         '.chart-scroll-viewport, #chart-canvas-wrapper, #meteo-chart-canvas, ' +
         '.chart-smart-digest, .digest-chip, ' +
@@ -2814,6 +2815,7 @@ class MeteoAsturiasApp {
         if (marineContainer) {
           marineContainer.innerHTML = renderMarineCard(data, concejo);
           scrollTideChartToNow();
+          this.bindCarouselDots('weekly-tides-carousel', 'weekly-tides-dots', '.tide-day-card');
         }
       } catch (e) {
         console.error('[MeteoAstur] Error renderizando Playas & Mareas:', e);
@@ -2824,6 +2826,8 @@ class MeteoAsturiasApp {
         const surfContainer = document.getElementById('panel-surf');
         if (surfContainer) {
           surfContainer.innerHTML = renderSurfCard(data, concejo);
+          this.bindCarouselDots('surf-timeline-carousel', 'surf-timeline-dots', '.surf-slot-card');
+          this.bindCarouselDots('surf-daily-carousel', 'surf-daily-dots', '.surf-daily-card');
         }
       } catch (e) {
         console.error('[MeteoAstur] Error renderizando Surf & Rompientes:', e);
@@ -2873,6 +2877,7 @@ class MeteoAsturiasApp {
         const forecastContainer = document.getElementById('panel-forecast');
         if (forecastContainer) {
           forecastContainer.innerHTML = renderForecast(data, prefs.units, effectiveTheme);
+          this.bindCarouselDots('forecast-10d-carousel', 'forecast-10d-dots', '.daily-card-rich');
         }
       } catch (e) {
         console.error('[MeteoAstur] Error renderizando Pronóstico:', e);
@@ -3331,6 +3336,98 @@ class MeteoAsturiasApp {
 }
 
 // Iniciar aplicación al cargar el DOM
+MeteoAsturiasApp.prototype.bindCarouselDots = function(carouselId, dotsId, cardSelector) {
+  const carousel = document.getElementById(carouselId);
+  const dotsContainer = document.getElementById(dotsId);
+  if (!carousel || !dotsContainer || carousel.dataset.dotsBound === '1') return;
+  carousel.dataset.dotsBound = '1';
+
+  const dots = dotsContainer.querySelectorAll('.sensor-dot');
+  const cards = carousel.querySelectorAll(cardSelector);
+  if (!cards.length || !dots.length) return;
+
+  const updateActiveDot = (idx) => {
+    dots.forEach((d, i) => {
+      d.classList.toggle('active', i === idx);
+    });
+  };
+
+  const findClosestCardIndex = () => {
+    const scrollLeft = carousel.scrollLeft;
+    let closestIdx = 0;
+    let minDiff = Infinity;
+    cards.forEach((card, i) => {
+      const cardPos = card.offsetLeft - carousel.offsetLeft;
+      const diff = Math.abs(scrollLeft - cardPos);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestIdx = i;
+      }
+    });
+    return closestIdx;
+  };
+
+  const scrollToCard = (index) => {
+    const idx = parseInt(index, 10);
+    if (cards[idx]) {
+      const targetLeft = cards[idx].offsetLeft - carousel.offsetLeft;
+      carousel.scrollTo({ left: targetLeft, behavior: 'smooth' });
+      updateActiveDot(idx);
+    }
+  };
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = dot.getAttribute('data-sensor-target');
+      scrollToCard(target);
+    });
+  });
+
+  let scrollTimeout = null;
+  carousel.addEventListener('scroll', () => {
+    if (scrollTimeout) cancelAnimationFrame(scrollTimeout);
+    scrollTimeout = requestAnimationFrame(() => {
+      const activeIdx = findClosestCardIndex();
+      updateActiveDot(activeIdx);
+    });
+  }, { passive: true });
+
+  // Soporte de arrastre suave con ratón en PC (Desktop drag-to-scroll)
+  let isDragging = false;
+  let startX = 0;
+  let scrollStart = 0;
+  let hasDragged = false;
+
+  carousel.addEventListener('mousedown', (e) => {
+    if (e.button !== 0) return;
+    if (e.target.closest('button, a, input, select, .btn-explain-sensor')) return;
+    isDragging = true;
+    hasDragged = false;
+    startX = e.pageX;
+    scrollStart = carousel.scrollLeft;
+    carousel.style.scrollBehavior = 'auto';
+    carousel.style.scrollSnapType = 'none';
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const dist = e.pageX - startX;
+    if (Math.abs(dist) > 5) hasDragged = true;
+    carousel.scrollLeft = scrollStart - dist;
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    carousel.style.scrollBehavior = 'smooth';
+    carousel.style.scrollSnapType = 'x mandatory';
+    if (hasDragged) {
+      const targetIdx = findClosestCardIndex();
+      scrollToCard(targetIdx);
+    }
+  });
+};
 document.addEventListener('DOMContentLoaded', () => {
   window.meteoApp = new MeteoAsturiasApp();
 });

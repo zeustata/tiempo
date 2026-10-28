@@ -1308,7 +1308,7 @@ export function renderMarineCard(data, concejo) {
 
         <!-- SUB-VISTA B: CUADRO SEMANAL DE MAREAS & COEFICIENTES (7 DÍAS) -->
         <div id="tide-weekly-view" style="display: none;">
-          <div class="weekly-tides-grid">
+          <div class="weekly-tides-grid" id="weekly-tides-carousel">
             ${weeklyTides.map((day) => `
               <div class="tide-day-card ${day.isToday ? 'is-today' : ''}">
                 <div class="tide-day-header">
@@ -1344,10 +1344,9 @@ export function renderMarineCard(data, concejo) {
             `).join('')}
           </div>
 
-          <div class="forecast-scroll-hint weekly-tides-scroll-hint">
-            <span class="hint-hand">👉</span>
-            <span>Desliza horizontalmente para ver los 7 días de mareas</span>
-            <span class="hint-arrow">➔</span>
+          <!-- Indicador de Puntos de Paginación (Doctrina 18 - Carrusel Mareas 7 Días) -->
+          <div class="sensors-dots-indicator carousel-dots-indicator" id="weekly-tides-dots">
+            ${weeklyTides.map((day, idx) => `<span class="sensor-dot ${idx === 0 ? 'active' : ''}" data-sensor-target="${idx}" title="${day.dayName}"></span>`).join('')}
           </div>
         </div>
       </div>

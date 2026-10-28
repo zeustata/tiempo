@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-18-pluviometer-beaker';
+const CACHE_NAME = 'meteoasturlode-v3023-20-carousel-dots-fix';
 const STATIC_ASSETS = [
   './',
   './index.html',

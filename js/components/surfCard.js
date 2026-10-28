@@ -854,7 +854,7 @@ export function renderSurfCard(data, concejo) {
 
         <!-- VISTA 1: CRONOGRAMA 3 HORAS (POR DEFECTO) -->
         <div id="surf-timeline-view" class="surf-tab-content active">
-          <div class="surf-timeline-grid">
+          <div class="surf-timeline-grid" id="surf-timeline-carousel">
             ${timelineSlots.map(slot => `
               <div class="surf-slot-card ${slot.isPast ? 'is-past' : ''}">
                 <div class="surf-daily-card-header">
@@ -898,16 +898,14 @@ export function renderSurfCard(data, concejo) {
             `).join('')}
           </div>
 
-          <div class="forecast-scroll-hint surf-timeline-scroll-hint">
-            <span class="hint-hand">👉</span>
-            <span>Desliza horizontalmente para ver cada 3 horas</span>
-            <span class="hint-arrow">➔</span>
+          <div class="sensors-dots-indicator carousel-dots-indicator" id="surf-timeline-dots">
+            ${timelineSlots.map((slot, idx) => `<span class="sensor-dot ${idx === 0 ? 'active' : ''}" data-sensor-target="${idx}" title="${slot.dayLabel} ${slot.timeStr}"></span>`).join('')}
           </div>
         </div>
 
         <!-- VISTA 2: PREVISIÓN EXTENDIDA 7 DÍAS (MAÑANA / TARDE) -->
         <div id="surf-daily-view" class="surf-tab-content" style="display: none;">
-          <div class="surf-daily-cards-grid">
+          <div class="surf-daily-cards-grid" id="surf-daily-carousel">
             ${dailyForecast.map(day => `
               <div class="surf-daily-card">
                 <div class="surf-daily-card-header">
@@ -976,10 +974,8 @@ export function renderSurfCard(data, concejo) {
             `).join('')}
           </div>
 
-          <div class="forecast-scroll-hint surf-daily-scroll-hint">
-            <span class="hint-hand">👉</span>
-            <span>Desliza horizontalmente para ver los 7 días de surf</span>
-            <span class="hint-arrow">➔</span>
+          <div class="sensors-dots-indicator carousel-dots-indicator" id="surf-daily-dots">
+            ${dailyForecast.map((day, idx) => `<span class="sensor-dot ${idx === 0 ? 'active' : ''}" data-sensor-target="${idx}" title="${day.dayTitle}"></span>`).join('')}
           </div>
         </div>
       </div>

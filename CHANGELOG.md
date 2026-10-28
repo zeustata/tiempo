@@ -40,7 +40,9 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
     - *Jerarquía Visual Clara (Feedback Lendo):* Rediseño ergonómico de las pastillas (`.sensor-nav-pill`) con silueta de tecla compacta (`border-radius: 8px`), padding estilizado (`4px 10px`) y escala tipográfica reducida (`0.73rem`, peso 600) en tono translúcido discreto. Esto evita cualquier competición visual con el menú principal de navegación superior (`.module-chips-scroll`), consolidando al menú superior como mando soberano del sistema y a las pastillas como sub-herramienta técnica de la tarjeta.
     - Halo pulsante suave (2.4s - 2.8s) en pastilla y marco de tarjeta ante condiciones anómalas o de aviso.
 - **Anti-Caché Obligatorio (Ley 4):**
-  - Service Worker actualizado a `meteoasturlode-v3023-8-nav-hierarchy` en `sw.js`.
+  - **Unificación Universal de Puntos Guía en Todos los Carruseles (Doctrina 18 - Feedback Lendo):**
+    - Sustituidos los carteles textuales de desplazamiento (`👉 Desliza horizontalmente...`) y ocultada la barra de scroll horizontal nativa (`scrollbar-width: none`) en **Pronóstico a 10 Días**, **Surf & Rompientes (3 Horas y 7 Días)** y **Playas & Mareas (7 Días)**, adoptando el paginador interactivo de puntos y píldora luminosa (`.sensors-dots-indicator` / `.sensor-dot`) mediante `bindCarouselDots` en `js/app.js`.
+  - Service Worker actualizado a `meteoasturlode-v3023-20-carousel-dots-fix` en `sw.js`.
   - Revisión interna `v=3.0.23.8` en `index.html` y `css/components.css`.
 
 ### 💛 Tarjeta Principal Compacta & Jerarquía Bilingüe Azul y Oro Asturiano (Feedback Lendo)

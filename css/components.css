@@ -13313,3 +13313,21 @@
 }
 
 
+
+
+/* --- OCULTACIÓN DE SCROLLBAR HORIZONTAL EN CARRUSELES CON PAGINADOR DE PUNTOS --- */
+#weekly-tides-carousel,
+#forecast-10d-carousel,
+#surf-timeline-carousel,
+#surf-daily-carousel {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+#weekly-tides-carousel::-webkit-scrollbar,
+#forecast-10d-carousel::-webkit-scrollbar,
+#surf-timeline-carousel::-webkit-scrollbar,
+#surf-daily-carousel::-webkit-scrollbar {
+  display: none !important;
+  height: 0 !important;
+}

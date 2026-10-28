@@ -597,13 +597,11 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
             <span class="section-subtitle">Evolución diaria completa • Modelo ECMWF / ICON</span>
           </div>
         </div>
-        <div class="daily-cards-container">
+        <div class="daily-cards-container" id="forecast-10d-carousel">
           ${dailyCards}
         </div>
-        <div class="forecast-scroll-hint">
-          <span class="hint-hand">👉</span>
-          <span>Desliza horizontalmente para ver los 10 días</span>
-          <span class="hint-arrow">➔</span>
+        <div class="sensors-dots-indicator carousel-dots-indicator" id="forecast-10d-dots">
+          ${daily.time.map((_, idx) => `<span class="sensor-dot ${idx === 0 ? 'active' : ''}" data-sensor-target="${idx}" title="Ir al día ${idx + 1}"></span>`).join('')}
         </div>
       </div>
     </div>

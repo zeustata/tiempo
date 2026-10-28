@@ -40,6 +40,17 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
        - Contrastar con ECMWF IFS (`models=ecmwf_ifs025&current=weather_code,cloud_cover,direct_normal_irradiance`).
        - Aplicar en Java la regla de consenso: si el modelo local indica soleado (`weather_code <= 1` o `cloud_cover < 50%`) pero no hay sol activo (`direct_normal_irradiance < 100 W/m²`, `uv < 1.0`) y ECMWF reporta manto cubierto (`cloud_cover >= 80%`), forzar `weather_code = 3` (Nublado) en el tiempo actual y en la previsión diaria de hoy, asegurando paridad visual 1:1 total entre el widget de escritorio y la web app.
 
+## 🏛️ Reforma Constitucional (Ley 18) & Unificación de Paginador de Puntos en Carruseles Monotarjeta — 2026-10-28
+- **Unificación Visual y Reforma Autorizada por PIN Maestro (Feedback Lendo - «me gusta mucho los puntos que tienes debajo de el menu de en vivo para pasar las tarjetas... mucho mas vistoso que el dedo con desliza para pasar», «que sea para todas las aplicaciones con tarjetas deslizables» y «ahora si princesa. subelo»):**
+  1. *Diagnóstico y Armonía Visual (Leyes 14 y 18):*
+     - Lendo señaló que el indicador de puntos interactivos con píldora azul luminosa bajo el carrusel de sensores de **En Vivo** resultaba mucho más limpio y vistoso que el cartel antiguo con el icono de la mano (`👉 Desliza horizontalmente... ➔`) y la rayita de scrollbar que aún aparecían en **Pronóstico a 10 Días** y **Surf & Rompientes**.
+  2. *Implementación Técnica (`forecastView.js`, `surfCard.js`, `marineCard.js`, `components.css`, `app.js`, `index.html`, `sw.js`):*
+     - Sustituido `.forecast-scroll-hint` por `.sensors-dots-indicator.carousel-dots-indicator` en **Pronóstico a 10 Días** (`#forecast-10d-dots`), **Surf 3 Horas** (`#surf-timeline-dots`), **Surf 7 Días** (`#surf-daily-dots`) y **Mareas 7 Días** (`#weekly-tides-dots`).
+     - Incorporado el método `bindCarouselDots(carouselId, dotsId, cardSelector)` en `js/app.js` con cálculo dinámico de posición (`offsetLeft`), sincronización en vivo al deslizar, salto directo al pulsar cualquier punto y soporte *drag-to-scroll* con ratón en escritorio.
+     - Ocultada la barra de scroll horizontal nativa (`scrollbar-width: none !important; ::-webkit-scrollbar { display: none !important; }`) en los cuatro carruseles y blindada la clase `.carousel-dots-indicator` dentro de `isInteractiveZone()`.
+  3. *Reforma Constitucional Sincronizada en Todo el Ecosistema (Ley 6 y Ley 8):*
+     - Verificado el PIN maestro de 4 cifras de Lendo, se amplía el **Artículo 18 de la Constitución Suprema (Parte I)** en todos los proyectos (`Tiempo`, `Portal_Policia_Gijon`, `Porras`, `Biweger` y `ConstitucionIA`) estableciendo la obligatoriedad del paginador interactivo de puntos y la prohibición de carteles pasivos con el icono de la mano bajo carruseles de tarjetas deslizables.
+
 ## 🌧️ Rediseño Estético del Pluviómetro Digital: Vaso Medidor Probeta Hellmann de Cristal — 2026-10-27
 - **Instrumento Físico Visual y Proporción Armónica con el Anemómetro (Feedback Lendo - «no entiendo la mejora», «dimelo tu q somos socios», «me gusta princesa» y «pisale»):**
   1. *Diagnóstico Crítico y Sinceridad de Socia:*
