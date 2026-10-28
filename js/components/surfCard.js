@@ -433,9 +433,9 @@ function getSurfTimelineSlots(data, concejo) {
   const slots = [];
   const targetHours = [8, 11, 14, 17, 20];
 
-  [0, 1].forEach(dayOffset => {
+  [0, 1, 2].forEach(dayOffset => {
     const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + dayOffset);
-    const dayLabel = dayOffset === 0 ? 'Hoy' : 'Mañana';
+    const dayLabel = dayOffset === 0 ? 'Hoy' : (dayOffset === 1 ? 'Mañana' : 'Pasado');
     const dayName = d.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' });
 
     targetHours.forEach(hour => {
@@ -450,6 +450,7 @@ function getSurfTimelineSlots(data, concejo) {
 
       const timeStr = `${String(hour).padStart(2, '0')}:00`;
       const isPast = dayOffset === 0 && now.getHours() > (hour + 1);
+      if (isPast) return;
 
       // Métricas de oleaje
       const rawH = marineHourly?.wave_height ? marineHourly.wave_height[idx] : null;
@@ -515,7 +516,7 @@ function getSurfTimelineSlots(data, concejo) {
     });
   });
 
-  return slots;
+  return slots.slice(0, 10);
 }
 
 /**

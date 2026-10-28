@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-37-surf-dark-blue-boxes';
+const CACHE_NAME = 'meteoasturlode-v3023-38-surf-no-past-slots';
 const STATIC_ASSETS = [
   './',
   './index.html',
