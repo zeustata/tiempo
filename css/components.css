@@ -4706,7 +4706,7 @@
 }
 
 /* --- ENERGÍA DE OLA Y CRONOGRAMA DE SURF A 3 HORAS --- */
-.surf-energy-widget {
+.surf-energy-widget { grid-column: 1 / -1; width: 100%; box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 8px;

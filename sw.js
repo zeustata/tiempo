@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-30-clean-energy-card';
+const CACHE_NAME = 'meteoasturlode-v3023-36-surf-unified-glow';
 const STATIC_ASSETS = [
   './',
   './index.html',

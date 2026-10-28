@@ -747,58 +747,71 @@ export function renderSurfCard(data, concejo) {
           </div>
         </div>
 
-        <!-- Altura de Ola Significativa -->
-        <div class="marine-widget">
-          <div class="t-label-row">
-            <span class="widget-label">Altura del Oleaje (Significativa)</span>
-            <button class="btn-explain-sensor" data-explain="waves" title="¿Cómo entender la altura del oleaje, mar de fondo y escala Douglas? Pulsa para aprender" aria-label="Explicación del oleaje y escala Douglas">💡</button>
+        <!-- Tarjeta Unificada: Fuerza y Dinámica del Oleaje (Energía kJ Protagonista + Altura y Período) -->
+        <div class="marine-widget surf-energy-widget" style="grid-column: 1 / -1; width: 100%; box-sizing: border-box;">
+          <div class="t-label-row" style="margin-bottom: 8px;">
+            <span class="widget-label">🌊 Fuerza y Dinámica del Oleaje</span>
           </div>
-          <div class="widget-value">${waveHeight} <span class="unit">metros</span></div>
-          <div class="widget-detail">Escala Douglas: <strong>Grado ${douglasDegree} (${douglasName})</strong></div>
-          <div class="widget-detail">Mar de fondo (Swell): <strong>${swellHeight} m</strong></div>
-          <div class="widget-detail">Mar de viento (Chop): <strong>${windWaveH} m</strong></div>
-        </div>
 
-        <!-- Período y Dirección del Swell -->
-        <div class="marine-widget">
-          <div class="t-label-row">
-            <span class="widget-label">Período y Dirección del Swell</span>
-            <button class="btn-explain-sensor" data-explain="swell" title="¿Qué es el período en segundos y la dirección del swell? Pulsa para aprender" aria-label="Explicación del período y dirección del swell">💡</button>
+          <!-- Botón/Bloque Protagonista Superior (100% Ancho): Energía Combinada en kiloJulios (kJ) -->
+          <div style="background: ${waveEnergy.color}16; border: 1px solid ${waveEnergy.color}66; border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; box-sizing: border-box;">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+              <span style="font-size: 0.72rem; font-weight: 700; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.04em;">⚡ Potencia de la Ola (kiloJulios)</span>
+              <button class="btn-explain-sensor" data-explain="surf_energy" title="¿Qué es la energía de la ola en kJ y multiswell? Pulsa para aprender" aria-label="Explicación de la energía de la ola">💡</button>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-top: 4px;">
+              <div style="font-size: 1.65rem; font-weight: 800; color: ${waveEnergy.color}; line-height: 1.1;">
+                ${waveEnergy.kj} <span style="font-size: 0.85rem; font-weight: 600; color: #94a3b8;">kJ</span>
+              </div>
+              <span class="surf-energy-pill ${waveEnergy.badgeClass}" style="background: ${waveEnergy.color}24; color: ${waveEnergy.color}; border: 1px solid ${waveEnergy.color}77; font-size: 0.78rem; padding: 4px 10px; border-radius: 999px; font-weight: 700;">
+                ${waveEnergy.icon} ${waveEnergy.label}
+              </span>
+            </div>
           </div>
-          <div class="widget-value">${wavePeriod} <span class="unit">segundos</span></div>
-          <div class="widget-detail">🌊 Swell 1 (Principal): ${getSurfSwellArrowSvg(waveDirDeg, '#38bdf8', 13)} <strong>${swellHeight}m · ${wavePeriod}s (${waveDir.name})</strong></div>
+
+          <!-- Bloque 2 y 3 Apilados Verticalmente (100% Ancho Adaptable en Móvil y Monitor Horizontal): Altura + Período -->
+          <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; width: 100%;">
+            <!-- Fila 1: Altura Significativa -->
+            <div style="width: 100%; background: ${waveEnergy.color}16; border: 1px solid ${waveEnergy.color}66; border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; box-sizing: border-box;">
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; width: 100%;">
+                <span style="font-size: 0.72rem; font-weight: 700; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.04em;">🌊 Altura del Oleaje (Significativa)</span>
+                <button class="btn-explain-sensor" data-explain="waves" title="Explicación de la altura del oleaje y escala Douglas" aria-label="Explicación del oleaje">💡</button>
+              </div>
+              <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; width: 100%;">
+                <div style="font-size: 1.45rem; font-weight: 800; color: #f8fafc; line-height: 1.1;">
+                  ${waveHeight} <span style="font-size: 0.82rem; font-weight: 600; color: #94a3b8;">metros</span>
+                </div>
+                <div style="font-size: 0.78rem; color: #cbd5e1;">
+                  Escala Douglas: <strong>Grado ${douglasDegree} (${douglasName})</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Fila 2: Período y Dirección -->
+            <div style="width: 100%; background: ${waveEnergy.color}16; border: 1px solid ${waveEnergy.color}66; border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; box-sizing: border-box;">
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; width: 100%;">
+                <span style="font-size: 0.72rem; font-weight: 700; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.04em;">⏱️ Período & Dirección del Swell</span>
+                <button class="btn-explain-sensor" data-explain="swell" title="Explicación del período en segundos y dirección del swell" aria-label="Explicación del período">💡</button>
+              </div>
+              <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; width: 100%;">
+                <div style="font-size: 1.45rem; font-weight: 800; color: #38bdf8; line-height: 1.1;">
+                  ${wavePeriod} <span style="font-size: 0.82rem; font-weight: 600; color: #94a3b8;">segundos</span>
+                </div>
+                <div style="font-size: 0.78rem; color: #cbd5e1; display: inline-flex; align-items: center; gap: 5px;">
+                  ${getSurfSwellArrowSvg(waveDirDeg, '#38bdf8', 13)} <strong>${waveDir.name} (${waveDirDeg}°)</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="widget-detail" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px;">
+            <span>🌊 Swell 1 (Fondo): ${getSurfSwellArrowSvg(waveDirDeg, '#38bdf8', 12)} <strong>${swellHeight} m · ${wavePeriod} s (${waveDir.name})</strong></span>
+            <span>💨 Chop (Viento): <strong>${windWaveH} m</strong></span>
+          </div>
           ${hasSecondary && secSwellDir 
-            ? `<div class="widget-detail" style="color: #7dd3fc;">🌊 Swell 2 (Secundario): ${getSurfSwellArrowSvg(secSwellDeg, '#7dd3fc', 13)} <strong>${secSwellH}m · ${secSwellPeriod}s (${secSwellDir.name})</strong></div>` 
+            ? `<div class="widget-detail" style="color: #7dd3fc; margin-top: 4px;">🌊 Swell 2 (Secundario): ${getSurfSwellArrowSvg(secSwellDeg, '#7dd3fc', 12)} <strong>${secSwellH} m · ${secSwellPeriod} s (${secSwellDir.name})</strong> • <strong>${waveEnergy.primaryKj} + ${waveEnergy.secondaryKj} kJ</strong></div>` 
             : ''
           }
-          <div class="widget-detail" style="margin-top: 4px; padding-top: 4px; border-top: 1px dashed rgba(255,255,255,0.08);">💨 Viento en costa: ${getSurfWindArrowSvg(windDeg, surfWind.color, 13)} <strong>${hasDistinctGust ? `${windSpeed} – ${rawGusts} km/h` : `${windSpeed} km/h`}</strong> • ${surfWind.name || 'Costero'} (${windDirObj.name})</div>
-        </div>
-
-        <!-- Energía de la Ola (kJ) -->
-        <div class="marine-widget surf-energy-widget">
-          <div class="t-label-row">
-            <span class="widget-label">⚡ Energía de la Ola (Combinada)</span>
-            <button class="btn-explain-sensor" data-explain="surf_energy" title="¿Qué es la energía de la ola en kJ y multiswell? Pulsa para aprender" aria-label="Explicación de la energía de la ola">💡</button>
-          </div>
-          <div class="widget-value" style="color: ${waveEnergy.color};">${waveEnergy.kj} <span class="unit">kJ (kiloJulios)</span></div>
-          <div class="surf-energy-badge-row">
-            <span class="surf-energy-pill ${waveEnergy.badgeClass}" style="background: ${waveEnergy.color}22; color: ${waveEnergy.color}; border: 1px solid ${waveEnergy.color}66;">
-              ${waveEnergy.icon} ${waveEnergy.label}
-            </span>
-          </div>
-          <div class="widget-detail" style="margin-top: 6px;">
-            ${waveEnergy.hasSecondary 
-              ? `⚡ Energía Combinada: <strong>${waveEnergy.primaryKj} kJ</strong> (Swell 1) + <strong>${waveEnergy.secondaryKj} kJ</strong> (Swell 2)` 
-              : waveEnergy.desc}
-          </div>
-        </div>
-
-        <!-- Temperatura Marina y Traje Recomendado -->
-        <div class="marine-widget">
-          <div class="widget-label">Temperatura del Agua & Neopreno</div>
-          <div class="widget-value">${seaTemp} <span class="unit">°C</span></div>
-          <div class="widget-detail">${wetsuit.icon} Traje sugerido: <strong>${wetsuit.suit}</strong></div>
-          <div class="widget-detail">Sensación marina: <strong>Agua ${wetsuit.tag}</strong></div>
         </div>
       </div>
 
