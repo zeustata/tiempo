@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-43-detectors-aemet-symbiosis';
+const CACHE_NAME = 'meteoasturlode-v3023-44-overcast-93-cloudy';
 const STATIC_ASSETS = [
   './',
   './index.html',

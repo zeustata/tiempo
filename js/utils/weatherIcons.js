@@ -384,10 +384,23 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     let hasRealSolarLight = false;
     let isResol = false;
 
-    if (cc !== null && cc >= 75) {
-      // Cobertura nubosa alta o muy alta (75% a 100% de nubes, p. ej. 85-90% gris con 10% de claros):
+    if (cc !== null && cc >= 93) {
+      // Cielo cerrado / tapado (93% a 100% de nubes):
+      // Cuando el cielo se cierra tras una mañana de resol, Open-Meteo aún arrastra en direct_normal_irradiance
+      // el promedio de los 60 minutos previos (~200-250 W/m²). Para no pisar el "Nublado / Cubiertu" (☁️)
+      // con un Resol caducado, con >= 93% de nubes solo se admite Resol si existe un haz solar directo
+      // extraordinario que supere el umbral estacional estricto (hasDirectBeam: >= 450 W/m² en otoño/primavera).
+      if (hasDirectBeam) {
+        hasRealSolarLight = true;
+        isResol = true;
+      } else {
+        hasRealSolarLight = false;
+        isResol = false;
+      }
+    } else if (cc !== null && cc >= 75) {
+      // Cobertura nubosa alta (75% a 92% de nubes, p. ej. 85-90% gris con 10-25% de claridad):
       // Si el haz solar directo logra filtrarse (irr >= 180 W/m² o radiación global >= 280 W/m² con irr >= 120 W/m²),
-      // se clasifica fielmente como Resol / Sol tamizáu (🌥️), evitando tanto el falso "Despejado" como el "Nublado cerrado" sin matices.
+      // se clasifica fielmente como Resol / Sol tamizáu (🌥️).
       if (hasDirectBeam || irr >= 180 || (sw >= 280 && irr >= 120)) {
         hasRealSolarLight = true;
         isResol = true;

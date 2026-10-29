@@ -70,7 +70,9 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
     - *Alerta Nieve:* Corregida la clasificación de nieve en valles (`snowLevel <= 600 m` o en cota del concejo) para evitar avisos falsos en concejos de costa cuando nieva en alta montaña.
     - *Viento en Viaductos:* Sincronizado con los umbrales oficiales de AEMET en Asturias (`>= 70 km/h` amarillo, `>= 90 km/h` severo) y ventana operativa de 6 horas.
     - *Efecto Foehn y Alerta Xelu:* Exigida ausencia de lluvia, ambiente templado (`>= 15.5 °C`) y rachas `>= 38 km/h` en Foehn; filtro térmico actual (`<= 5.5 °C`) en Xelu; y mapeo completo de pesos en el triaje de `currentCard.js`.
-  - Service Worker actualizado a `meteoasturlode-v3023-43-detectors-aemet-symbiosis` en `sw.js`.
+  - **Corte en `92%` de Nubes entre `Resol` (`75–92%`) y `Nublado / Cubiertu` (`93–100%` - Feedback Lendo):**
+    - Ajustado `getWeatherInfo` en `weatherIcons.js` para que cuando el cielo se tapone al `93–100%` (`weather_code: 3`), la radiación media arrastrada de la hora previa en Open-Meteo (`~200–250 W/m²`) no pise el estado real **`☁️ Nublado / Cubiertu`** con un *Resol* caducado.
+  - Service Worker actualizado a `meteoasturlode-v3023-44-overcast-93-cloudy` en `sw.js`.
   - Revisión interna `v=3.0.23.8` en `index.html` y `css/components.css`.
 
 ### 💛 Tarjeta Principal Compacta & Jerarquía Bilingüe Azul y Oro Asturiano (Feedback Lendo)
