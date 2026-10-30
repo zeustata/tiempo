@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-45-resol-late-year-calibrate';
+const CACHE_NAME = 'meteoasturlode-v3023-46-solar-rescue-salinas';
 const STATIC_ASSETS = [
   './',
   './index.html',

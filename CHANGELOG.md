@@ -74,7 +74,9 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
     - Ajustado `getWeatherInfo` en `weatherIcons.js` para que cuando el cielo se tapone al `93–100%` (`weather_code: 3`), la radiación media arrastrada de la hora previa en Open-Meteo (`~200–250 W/m²`) no pise el estado real **`☁️ Nublado / Cubiertu`** con un *Resol* caducado.
   - **Calibración Fina de Resol Potente Otoñal bajo Manto Denso (Ley 27 - Feedback Lendo):**
     - Ajustado weatherIcons.js para que con cc >= 93%, si el sol otoñal perfora con fuerza real (irr >= 250 W/m² y sw >= 320 W/m² o irr >= 300 W/m²), muestre 🌥️ Resol, preservando ☁️ Nublado cuando la radiación cae o arrastra inercia (< 250 W/m²).
-  - Service Worker actualizado a `meteoasturlode-v3023-45-resol-late-year-calibrate` en `sw.js`.
+  - **Rescate Soberano de Radiación Solar Real de ECMWF frente a Ceguera de AROME en Costa (Ley 27 - Feedback Lendo):**
+    - Integrado en pplyCantabricoConsensus (weatherApi.js) el rescate de insolación cuando AROME se queda ciego a oscuras (< 180 W/m²) pero el Centro Europeo ECMWF constata sol real perforando el manto (>= 250 W/m² directa y >= 320 W/m² global), rescatando fielmente el resol/sol con nubes de Salinas y Castrillón sin alterar el nublado de ayer.
+  - Service Worker actualizado a `meteoasturlode-v3023-46-solar-rescue-salinas` en `sw.js`.
   - Revisión interna `v=3.0.23.8` en `index.html` y `css/components.css`.
 
 ### 💛 Tarjeta Principal Compacta & Jerarquía Bilingüe Azul y Oro Asturiano (Feedback Lendo)

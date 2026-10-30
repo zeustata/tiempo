@@ -263,6 +263,24 @@ function applyCantabricoConsensus(weather, consensus) {
       }
     }
 
+    // C) Rescate Soberano de Radiación Solar Real / Resol Perforante de ECMWF (Ley 27):
+    // Cuando AROME se queda "a oscuras" o subestima severamente el haz solar (rawDirectIrr < 180 W/m² con cielo encapotado),
+    // pero el Centro Europeo (ECMWF) constata que el sol logra perforar el manto con fuerza de resol otoñal
+    // (eDirectIrr >= 250 W/m² y eSw >= 320 W/m²):
+    // SE ADOPTA LA RADIACIÓN SOLAR REAL DE ECMWF (erradicando la ceguera de AROME en la costa).
+    const isSolarRescue = (rawDirectIrr < 180) && (eDirectIrr >= 250 && eSw >= 320);
+    if (isSolarRescue) {
+      if (consensus.current.direct_normal_irradiance != null) {
+        weather.current.direct_normal_irradiance = consensus.current.direct_normal_irradiance;
+      }
+      if (consensus.current.shortwave_radiation != null) {
+        weather.current.shortwave_radiation = consensus.current.shortwave_radiation;
+      }
+      if (consensus.current.uv_index != null) {
+        weather.current.uv_index = consensus.current.uv_index;
+      }
+    }
+
     // B) Rescate Soberano de Lluvia / Orbayu Real de ECMWF en tiempo actual:
     // Si ECMWF confirma precipitación activa (ePrecip >= 0.1 mm o código WMO >= 50) sin sol en ECMWF (eDirectIrr < 100),
     // bajo condiciones cantábricas húmedas (hum >= 75% o ecmwfCloud >= 65%),
