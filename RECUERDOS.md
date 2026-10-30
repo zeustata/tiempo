@@ -3,6 +3,17 @@
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
 
+## 🛡️ Blindaje de Ámbito de Sublocalidad y Altitud por Concejo (v3.0.23.49) — 2026-10-30
+- **Problema detectado por Lendo (Captura `media_1793370000575_6a9d41b3.jpg`):**
+  - Al buscar o cambiar de concejo a Oviedo desde Castrillón, la Hero Card de Oviedo mostraba `Oviedo / Uviéu` y debajo la pastilla azul `Piedras Blancas` con `Altitud: 25 m`.
+- **Causa raíz:**
+  - La variable `this.activeLocalidad` en `js/app.js` no se recalculaba ni reseteaba en `switchConcejo()`, persistiendo en memoria la sublocalidad del concejo anterior.
+- **Solución implementada y verificada en local:**
+  1. En `js/app.js` (`switchConcejo`): recalcular `this.activeLocalidad` con `resolveSubLocalidad()` para el concejo destino según las coordenadas GPS, pasando a `null` si el concejo no tiene desglose.
+  2. En `js/components/currentCard.js`: blindaje estricto de `displayLocality` y de la altitud. Concejos monocéntricos como Oviedo, Gijón o Avilés quedan inmunes y muestran exclusivamente su altitud oficial (232 m en Oviedo) sin pastilla azul.
+- **Cache-Busting:** Actualizado a `v=3.0.23.49` y `meteoasturlode-v3023-49-sublocality-scope-fix`.
+- **Verificación local:** Comprobado por Lendo en `localhost:8080` antes del despliegue oficial a la red (Leyes 1, 3 y 9).
+
 ## Erradicacion de Barras en Localidades y Fallback Limpio a Capital Municipal (v3.0.23.48) - 2026-10-30
 - **Problema detectado por Lendo (Captura media_1793369142419_3bfb2fa0.jpg):** En la Hero Card de Castrillon (y concejos bicentricos como Siero, Langreo, Corvera, etc.), al iniciar la aplicacion antes del calculo GPS o por defecto, la pastilla azul mostraba Piedras Blancas / Salinas con la barra divisoria.
 - **Solucion implementada:** En js/components/currentCard.js (formatLocationTitle), si no hay todavia fijacion GPS de sublocalidad activa, se limpia cualquier barra divisoria (defaultLocality.split('/')[0].trim()), mostrando siempre y de forma limpia la capital municipal (Piedras Blancas, Pola de Siero, La Felguera, Nubledo, etc.) sin barras apelotonadas. Al obtener senal GPS, si el usuario se encuentra fisicamente en Salinas (playa o paseo), la pastilla conmuta automaticamente a Salinas y ajusta la altitud exacta a 5 m.

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-48-clean-sublocality-capital';
+const CACHE_NAME = 'meteoasturlode-v3023-49-sublocality-scope-fix';
 const STATIC_ASSETS = [
   './',
   './index.html',

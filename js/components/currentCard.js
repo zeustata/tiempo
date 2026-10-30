@@ -48,7 +48,7 @@ function formatLocationTitle(name, activeLocalidad = null) {
     defaultLocality = defaultLocality.split('/')[0].trim();
   }
 
-  const displayLocality = activeLocalidad ? activeLocalidad.name : defaultLocality;
+  const displayLocality = rawLocality ? (activeLocalidad ? activeLocalidad.name : defaultLocality) : '';
   if (displayLocality) {
     titleHtml += `<div class="location-locality-badge">${displayLocality}</div>`;
   }
@@ -1011,7 +1011,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
         <div class="hero-location-block">
           <span class="location-badge">${concejo.badge}</span>
           <h2 class="location-title">${formatLocationTitle(concejo.name, activeLocalidad)}</h2>
-          <p class="location-meta">Altitud: ${activeLocalidad?.altitude != null ? activeLocalidad.altitude : concejo.altitude} m • ${concejo.region}</p>
+          <p class="location-meta">Altitud: ${(activeLocalidad?.altitude != null && concejo.name && concejo.name.includes('(')) ? activeLocalidad.altitude : concejo.altitude} m • ${concejo.region}</p>
         </div>
         <div class="hero-icon-block" title="${weatherInfo.label}">
           ${renderWeatherIconHtml(weatherInfo, 54, iconTheme)}

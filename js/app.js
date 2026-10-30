@@ -1,7 +1,7 @@
 import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo, resolveSubLocalidad } from './config/concejos.js?v=2.0.0';
 import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.23.46';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=3.0.23.28';
-import { renderCurrentWeather } from './components/currentCard.js?v=3.0.23.48';
+import { renderCurrentWeather } from './components/currentCard.js?v=3.0.23.49';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.23.40';
 import { renderSurfCard } from './components/surfCard.js?v=3.0.23.39';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.11';
@@ -2587,6 +2587,8 @@ class MeteoAsturiasApp {
     stopWeatherSpeech();
     this.currentConcejo = getConcejoById(concejoId) || this.currentConcejo;
     this.prefs.lastConcejo = concejoId;
+    // Recalcular localidad activa para el nuevo concejo (evita arrastrar localidades ajenas como Piedras Blancas a Oviedo)
+    this.activeLocalidad = this.userCoords ? resolveSubLocalidad(this.currentConcejo.id, this.userCoords.lat, this.userCoords.lon) : null;
     savePreferences(this.prefs);
 
     this.updateSearchTriggerDisplay();

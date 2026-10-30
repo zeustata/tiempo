@@ -9,6 +9,10 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.23.49] - 2026-10-30
+### Fixed
+- **Blindaje de Alcance de Sublocalidad y Altitud por Concejo:** Corregido el bug donde la sublocalidad activa por GPS (ej. `Piedras Blancas`) quedaba en memoria al cambiar o buscar otros concejos como Oviedo o Gijón. Ahora `switchConcejo` recalcula o resetea la sublocalidad para el concejo destino, y `currentCard.js` blinda tanto la pastilla azul como la altitud para concejos monocéntricos (Oviedo muestra sus 232 m limpios).
+
 ## [3.0.23.48] - 2026-10-30
 ### Fixed
 - Localidades limpias sin barras en Hero Card: fijacion por defecto en capital municipal y conmutacion exacta por GPS.
