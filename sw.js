@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-46-solar-rescue-salinas';
+const CACHE_NAME = 'meteoasturlode-v3023-47-localidad-altitud-gps';
 const STATIC_ASSETS = [
   './',
   './index.html',

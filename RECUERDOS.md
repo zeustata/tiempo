@@ -121,6 +121,11 @@ ICONO | ESTADO EN METEOASTUR LODE              | NUBES (cc)  | RAD. DIRECTA (irr
         - *Solución:* Incorporado rescate en pplyCantabricoConsensus: si AROME marca < 180 W/m² pero ECMWF constata sol real perforante (>= 250 W/m² y sw >= 320 W/m²), se adopta la radiación de ECMWF.
         - *Test Ley 27 superado:* El caso de ayer (239 W/m² y 304 W/m²) sigue dando Nublado (PASS) y hoy se rescata el sol real de Salinas/Castrillón (PASS).
 
+    14. **Geolocalización Dinámica de Sublocalidad y Altitud Exacta en Cabecera (currentCard.js, concejos.js, pp.js — 2026-10-30):**
+        - *Diseño de Identidad Local (Feedback Lendo):* Eliminado el texto administrativo fijo con paréntesis (Piedras Blancas / Salinas) bajo el nombre del concejo.
+        - *Estructura visual:* Arriba el nombre del concejo en grande y blanco (ej. Castrillón), y debajo la localidad exacta en azul luminoso (#38bdf8) resuelta por GPS en local (Piedras Blancas a 25 m o Salinas a 5 m a nivel del mar).
+        - *Cero ruido en concejos urbanos:* En Gijón, Oviedo o Avilés se muestra únicamente el concejo sin inventarse barrios.
+
 ## 🌤️ Escala Solar-Nubosa de 4 Peldaños (0-15% Despejado, 16-40% Mayormente Soleado, 41-74% Sol y Nubes, 75-100% Resol) — 2026-10-28
 - **Diagnóstico en Vivo en Piedras Blancas (Feedback Lendo - «te voy diciendo el tiempo que hace ahora mismo para que compares. el cielo esta mas azul que nubes pero hace sol y nubes. viendo el cielo diria que es mas bien un mayormente soleado o sol y nubes», «si» y «subelo»):**
   - *Causa detectada (15:15 h en Castrillón):* Tres de los cuatro modelos (ECMWF `25%-45%`, GFS `39%` e ICON `52%`) detectaban las nubes bajas costeras, pero AROME marcaba `0%` de nubes. Como `isFalseClear` en `weatherApi.js` solo rescataba la nubosidad de ECMWF a partir de `>= 55%`, el `25%-45%` de ECMWF no se rescataba y se mostraba el `0%` falso de AROME (`☀️ Despejado`).

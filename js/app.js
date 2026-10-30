@@ -1,7 +1,7 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo } from './config/concejos.js?v=2.0.0';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo, resolveSubLocalidad } from './config/concejos.js?v=2.0.0';
 import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.23.46';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=3.0.23.28';
-import { renderCurrentWeather } from './components/currentCard.js?v=3.0.23.46';
+import { renderCurrentWeather } from './components/currentCard.js?v=3.0.23.47';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.23.40';
 import { renderSurfCard } from './components/surfCard.js?v=3.0.23.39';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.11';
@@ -57,6 +57,8 @@ class MeteoAsturiasApp {
     this.autoRefreshTimer = null;
     this.deferredInstallPrompt = null;
     this.previewHalloweenMode = false;
+    this.userCoords = null;
+    this.activeLocalidad = null;
     
     this.init();
   }
@@ -2664,14 +2666,19 @@ class MeteoAsturiasApp {
     }
 
     const onGeoSuccess = (pos) => {
+      this.userCoords = { lat: pos.coords.latitude, lon: pos.coords.longitude };
+      this.activeLocalidad = resolveSubLocalidad(this.currentConcejo?.id, pos.coords.latitude, pos.coords.longitude);
       const closest = findClosestConcejo(pos.coords.latitude, pos.coords.longitude);
       this.updateGpsButtonDisplay();
       if (closest) {
         if (closest.id !== this.currentConcejo.id) {
           console.log(`[MeteoAstur] GPS detectó concejo: ${closest.name}`);
+          this.activeLocalidad = resolveSubLocalidad(closest.id, pos.coords.latitude, pos.coords.longitude);
           this.switchConcejo(closest.id);
         } else if (!silent && gpsLabel) {
           gpsLabel.textContent = '✓ Aquí';
+          this.activeLocalidad = resolveSubLocalidad(closest.id, pos.coords.latitude, pos.coords.longitude);
+          this.renderActiveModule();
           setTimeout(() => {
             this.updateGpsButtonDisplay();
           }, 1400);
@@ -2771,7 +2778,7 @@ class MeteoAsturiasApp {
     try {
       const liveContainer = document.getElementById('panel-live');
       if (liveContainer) {
-        liveContainer.innerHTML = renderCurrentWeather(this.weatherData, this.currentConcejo, this.prefs.units, effectiveTheme);
+        liveContainer.innerHTML = renderCurrentWeather(this.weatherData, this.currentConcejo, this.prefs.units, effectiveTheme, this.activeLocalidad);
         this.initSensorsCarousel();
       }
       // Verificación de Alertas Rojas de Emergencia (v2.2.34)

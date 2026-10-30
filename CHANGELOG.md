@@ -76,7 +76,9 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
     - Ajustado weatherIcons.js para que con cc >= 93%, si el sol otoñal perfora con fuerza real (irr >= 250 W/m² y sw >= 320 W/m² o irr >= 300 W/m²), muestre 🌥️ Resol, preservando ☁️ Nublado cuando la radiación cae o arrastra inercia (< 250 W/m²).
   - **Rescate Soberano de Radiación Solar Real de ECMWF frente a Ceguera de AROME en Costa (Ley 27 - Feedback Lendo):**
     - Integrado en pplyCantabricoConsensus (weatherApi.js) el rescate de insolación cuando AROME se queda ciego a oscuras (< 180 W/m²) pero el Centro Europeo ECMWF constata sol real perforando el manto (>= 250 W/m² directa y >= 320 W/m² global), rescatando fielmente el resol/sol con nubes de Salinas y Castrillón sin alterar el nublado de ayer.
-  - Service Worker actualizado a `meteoasturlode-v3023-46-solar-rescue-salinas` en `sw.js`.
+  - **Geolocalización Dinámica de Sublocalidad y Altitud Exacta en Cabecera (Feedback Lendo):**
+    - Eliminados los paréntesis apelotonados (Piedras Blancas / Salinas). Ahora se muestra el concejo en blanco grande, la localidad exacta del usuario resuelta por proximidad GPS en azul cielo luminoso (#38bdf8) debajo, y su altitud real (Altitud: 5 m en Salinas frente a 25 m en Piedras Blancas), manteniendo los concejos urbanos (Gijón, Oviedo) limpios sin barrios artificiales.
+  - Service Worker actualizado a `meteoasturlode-v3023-47-localidad-altitud-gps` en `sw.js`.
   - Revisión interna `v=3.0.23.8` en `index.html` y `css/components.css`.
 
 ### 💛 Tarjeta Principal Compacta & Jerarquía Bilingüe Azul y Oro Asturiano (Feedback Lendo)

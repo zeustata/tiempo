@@ -1021,6 +1021,77 @@ export function calculateDistanceKm(lat1, lon1, lat2, lon2) {
   return R * c;
 }
 
+/**
+ * Catálogo de Sublocalidades Relevantes y Puntos de Interés por Concejo
+ * Permite resolver la localidad exacta según las coordenadas del GPS del usuario (Ley Específica de Geolocalización).
+ */
+export const SUB_LOCALIDADES = {
+  castrillon: [
+    { name: 'Piedras Blancas', lat: 43.5558, lon: -5.9744, altitude: 25 },
+    { name: 'Salinas', lat: 43.5760, lon: -5.9620, altitude: 5 },
+    { name: 'Arnao', lat: 43.5780, lon: -5.9810, altitude: 12 },
+    { name: 'Santiago del Monte', lat: 43.5636, lon: -6.0346, altitude: 127 },
+    { name: 'Bayas', lat: 43.5730, lon: -6.0280, altitude: 45 }
+  ],
+  siero: [
+    { name: 'Pola de Siero', lat: 43.3911, lon: -5.6611, altitude: 215 },
+    { name: 'Lugones', lat: 43.4042, lon: -5.8197, altitude: 160 },
+    { name: 'El Berrón', lat: 43.3833, lon: -5.6980, altitude: 190 }
+  ],
+  langreo: [
+    { name: 'La Felguera', lat: 43.3108, lon: -5.6917, altitude: 210 },
+    { name: 'Sama', lat: 43.2981, lon: -5.6833, altitude: 220 },
+    { name: 'Ciaño', lat: 43.2842, lon: -5.6680, altitude: 235 }
+  ],
+  sanmartindelreyaurelio: [
+    { name: 'El Entrego', lat: 43.2861, lon: -5.6472, altitude: 230 },
+    { name: 'Sotrondio', lat: 43.2736, lon: -5.6028, altitude: 245 }
+  ],
+  corvera: [
+    { name: 'Nubledo', lat: 43.5350, lon: -5.8940, altitude: 35 },
+    { name: 'Las Vegas', lat: 43.5390, lon: -5.9180, altitude: 25 },
+    { name: 'Trasona', lat: 43.5480, lon: -5.8820, altitude: 20 }
+  ],
+  llanera: [
+    { name: 'Posada de Llanera', lat: 43.4411, lon: -5.8528, altitude: 165 },
+    { name: 'Lugo de Llanera', lat: 43.4319, lon: -5.8239, altitude: 155 }
+  ],
+  valdes: [
+    { name: 'Luarca', lat: 43.5417, lon: -6.5333, altitude: 15 },
+    { name: 'Trevías', lat: 43.5180, lon: -6.4420, altitude: 45 }
+  ],
+  villaviciosa: [
+    { name: 'Villaviciosa', lat: 43.4811, lon: -5.4336, altitude: 10 },
+    { name: 'Tazones', lat: 43.5410, lon: -5.3980, altitude: 8 }
+  ]
+};
+
+/**
+ * Resuelve la sublocalidad más cercana dentro del concejo si existen coordenadas del usuario.
+ * Si no hay coordenadas o el concejo no tiene desglose (ej. Gijón, Oviedo, Avilés), devuelve null.
+ */
+export function resolveSubLocalidad(concejoId, userLat, userLon) {
+  if (!concejoId || userLat == null || userLon == null) return null;
+  const list = SUB_LOCALIDADES[concejoId];
+  if (!list || list.length === 0) return null;
+
+  let closest = list[0];
+  let minDist = Infinity;
+  for (const item of list) {
+    const d = calculateDistanceKm(userLat, userLon, item.lat, item.lon);
+    if (d < minDist) {
+      minDist = d;
+      closest = item;
+    }
+  }
+
+  // Solo asociar la localidad si el usuario está a un radio razonable (<= 6 km)
+  if (minDist <= 6.0) {
+    return closest;
+  }
+  return null;
+}
+
 export function findClosestConcejo(lat, lon) {
   let closest = CONCEJOS_ASTURIAS[0];
   let minDist = Infinity;

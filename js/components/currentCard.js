@@ -19,13 +19,13 @@ import { checkConcejoFolixa } from '../utils/festivosData.js?v=1.1.85';
  * Formatea el título del concejo con jerarquía bilingüe (Castellano principal, Asturianu en oro asturiano)
  * y subordina las localidades entre paréntesis (ej. Piedras Blancas / Salinas)
  */
-function formatLocationTitle(name) {
+function formatLocationTitle(name, activeLocalidad = null) {
   if (!name) return '';
   
   // Extraer posibles localidades entre paréntesis: ej. (Grullos / San Román) o (Piedras Blancas / Salinas)
-  const parenMatch = name.match(/^(.*?)\s*(\(.*?\))$/);
+  const parenMatch = name.match(/^(.*?)\s*(\((.*?)\))$/);
   const mainPart = parenMatch ? parenMatch[1].trim() : name.trim();
-  const localityPart = parenMatch ? parenMatch[2].trim() : '';
+  const rawLocality = parenMatch ? parenMatch[3].trim() : '';
 
   let titleHtml = '';
   if (mainPart.includes('/')) {
@@ -41,8 +41,9 @@ function formatLocationTitle(name) {
     titleHtml = `<span class="loc-name-es">${mainPart}</span>`;
   }
 
-  if (localityPart) {
-    titleHtml += ` <span class="location-locality">${localityPart}</span>`;
+  const displayLocality = activeLocalidad ? activeLocalidad.name : (rawLocality ? rawLocality : '');
+  if (displayLocality) {
+    titleHtml += `<div class="location-locality-badge">${displayLocality}</div>`;
   }
   return titleHtml;
 }
@@ -340,7 +341,7 @@ function renderRainBeakerSvg(rainFallenSoFar, currentRainIntensity) {
 /**
  * Renderiza el dashboard principal con alineación uniforme y todos los sensores de la estación
  */
-export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme = 'astur') {
+export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme = 'astur', activeLocalidad = null) {
   const current = data.weather.current;
   const hourly = data.weather.hourly;
   const daily = data.weather.daily;
@@ -1002,8 +1003,8 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
       <div class="hero-top-row">
         <div class="hero-location-block">
           <span class="location-badge">${concejo.badge}</span>
-          <h2 class="location-title">${formatLocationTitle(concejo.name)}</h2>
-          <p class="location-meta">Altitud: ${concejo.altitude} m • ${concejo.region}</p>
+          <h2 class="location-title">${formatLocationTitle(concejo.name, activeLocalidad)}</h2>
+          <p class="location-meta">Altitud: ${activeLocalidad?.altitude != null ? activeLocalidad.altitude : concejo.altitude} m • ${concejo.region}</p>
         </div>
         <div class="hero-icon-block" title="${weatherInfo.label}">
           ${renderWeatherIconHtml(weatherInfo, 54, iconTheme)}
