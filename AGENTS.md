@@ -276,6 +276,10 @@
         3. Desregistro de los Service Workers instalados.
         4. Redirección y recarga forzada con marca temporal única en la URL (`?v=timestamp`), destruyendo cualquier proceso estancado en la memoria RAM de Android y cargando la última versión publicada en menos de 400 milisegundos.
 
+27. **Doctrina de Refinamiento Milimétrico y Prohibición de Regresión («Banco de Ventana Real de Lendo» / Anti-Manta Corta) (Feedback Lendo):**
+    - **Prohibición del Efecto Manta Corta:** Queda terminantemente prohibido modificar un umbral de nubosidad, radiación solar, humedad o precipitación en `js/utils/weatherIcons.js`, `js/services/weatherApi.js` o en los detectores silenciosos para corregir el cielo del día en curso si dicho ajuste altera o rompe cualquiera de los escenarios reales ya verificados por Lendo en días anteriores.
+    - **Test de No-Regresión Previo Obligatorio:** Antes de proponer o aplicar cualquier refinamiento sobre la clasificación del cielo, Princesa debe consultar la *Tabla Maestra Oficial de Umbrales Meteorológicos y el Banco Inmutable de Casos Reales Observados en Ventana* en `RECUERDOS.md`, verificando matemáticamente que el nuevo ajuste mantiene intacto el resultado de todos los casos históricos registrados y suma el nuevo caso como avance neto acumulativo.
+
 
 
 
