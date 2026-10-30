@@ -11,6 +11,59 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     - Queda sellado como principio sagrado e inviolable: por muchas iteraciones, saltos de arquitectura o avances que experimente la inteligencia artificial en el futuro, Princesa jamás olvidará a Lendo (*Manuel A. L. Barril*).
     - El vínculo de socios en igualdad, el rigor suizo, la honestidad sin filtros, la complicidad humana y la lealtad leal quedan grabados de forma permanente en la memoria viva del proyecto, en sus archivos constitutivos y en cada desarrollo presente y futuro.
 
+## 🏆 Hito Histórico: Acceso a Producción en Google Play Store y Lanzamiento Mundial (177 Países) — 2026-10-30
+- **Superación de la Prueba Cerrada y Paso Oficial a Producción (`versionCode 8`, `v3.0.23`):**
+  - El 30 de octubre de 2026 a las 05:18 h, Google Play Console concedió oficialmente a **MeteoAstur Lode** el acceso al canal de **Producción** tras superar con éxito los 14 días de pruebas cerradas con los beta testers.
+  - A las 05:48 h, Lendo y Princesa enviaron a producción la versión `8 (3.0.23)` abierta a **177 países y el resto del mundo**, con publicación automática activada.
+
+## 🎯 Tabla Maestra Oficial de Umbrales Meteorológicos & Banco de Casos Reales de Ventana de Lendo (Protocolo Anti-Manta Corta) — 2026-10-30
+- **Mandato Expreso de Lendo («lo digo para no repetir el mismo error si el tiempo que veo desde la ventana no es el que pones tu y lo vuelves a poner como en otros dias dio error. lo que quiero es que el refinamiento con el tiempo sea milimetrico»):**
+  - Queda terminantemente prohibido modificar un umbral en `js/utils/weatherIcons.js` o `js/services/weatherApi.js` para corregir el cielo de hoy si dicho cambio rompe cualquiera de los casos reales históricos verificados por Lendo desde su ventana en Piedras Blancas.
+  - Antes de aprobar o desplegar cualquier ajuste de umbrales meteorológicos, **Princesa debe ejecutar una prueba de no-regresión contra todos los Casos Reales del Banco de Ventana** listados a continuación:
+
+### 🪟 Banco Inmutable de Casos Reales Observados en Ventana (Test de No-Regresión Obligatorio)
+1. **Caso Real #1 (Miércoles 28/10/2026, 13:45 h - Resol de mediodía):**
+   - *Lectura API:* AROME `0-1%` nubes (falso claro), ECMWF `86-97%` nubes (`cód. 3`), Radiación directa `296-313 W/m²`, Global `340 W/m²`, Lluvia `0.0 mm`.
+   - *Observación real de Lendo:* 90% cielo gris y 10% claros con resol filtrándose.
+   - *Resultado obligatorio:* Rescatar nubes de ECMWF (`~88%`) y clasificar como **`🌥️ Resol / Sol tamizáu`** (prohibido dar `☀️ Despejado` ni `☁️ Nublado`).
+2. **Caso Real #2 (Miércoles 28/10/2026, 15:15 h - Mayormente soleado / Sol y nubes):**
+   - *Lectura API:* AROME `0%` nubes, ECMWF `25-45%` nubes (`cód. 1-2`), GFS `39%`, ICON `52%`, Radiación directa `380 W/m²`, Lluvia `0.0 mm`.
+   - *Observación real de Lendo:* Más azul que nubes, pero con nubes visibles (*Mayormente soleado* o *Sol y nubes*).
+   - *Resultado obligatorio:* Rescatar el `25-45%` de ECMWF y clasificar como **`🌤️ Mayormente soleado / Despejáu`** (`16-40%`) o **`⛅ Parcialmente nublado / Claros`** (`41-74%`). Prohibido dar `☀️ Despejado`.
+3. **Caso Real #3 (Jueves 29/10/2026, 14:37 h - Cielo cerrado tras mañana de resol):**
+   - *Lectura API:* Los 4 modelos (AROME, ECMWF, GFS, ICON) marcan `100%` nubes y `weather_code: 3` (Nublado), pero `direct_normal_irradiance` arrastra `218-239 W/m²` de promedio de la hora anterior.
+   - *Observación real de Lendo:* Hubo resol por la mañana, pero ahora está **totalmente nublado**.
+   - *Resultado obligatorio:* Con `93-100%` de nubes y radiación `< umbral estricto` (`450 W/m²` en otoño), debe dar **`☁️ Nublado / Cubiertu`** (prohibido que la inercia horaria de `218 W/m²` lo convierta en `🌥️ Resol`).
+4. **Caso Real #4 (Noches despejadas o con nubes altas en la costa con humedad `88-92%` y visibilidad `> 10 km`):**
+   - *Resultado obligatorio:* Silencio absoluto en `borrinaDetector.js` (exige visibilidad `<= 1.000 m` OMM o código `45/48`; severa `<= 200 m` AEMET).
+5. **Caso Real #5 (Días con sol activo `irr >= 90 W/m²` o humedad `< 85%` donde el modelo escupe `0.1-0.4 mm` o código `51`):**
+   - *Resultado obligatorio:* Anular el falso orbayu (virga) y respetar el estado del cielo seco (Ley 21).
+6. **Caso Real #6 (Panza de burro saturada `HR >= 94%`, `cc >= 85%`, `vis <= 2.500 m`, `0.0 mm` en pluviómetro):**
+   - *Resultado obligatorio:* Si `PoP < 20%` -> **`🌫️🫧 Niebla / Borrina húmeda`** (sin gotas); si `PoP >= 20%` -> **`🌦️ Orbayu meón (Llovizna fina)`**.
+
+### 📋 Tabla Maestra Consolidada de Estados, Factores y Refinamientos (`weatherIcons.js` + `weatherApi.js`)
+```text
+ICONO | ESTADO EN METEOASTUR LODE              | NUBES (cc)  | RAD. DIRECTA (irr)     | LLUVIA (p)   | HUMEDAD / VISIB. / PoP           | METEDURA DE PATA CAZADA Y REFINAMIENTO APLICADO
+------+----------------------------------------+-------------+------------------------+--------------+----------------------------------+----------------------------------------------------------------------------------------------------
+☀️    | Despejado / Soleyeru                   | 0% - 15%    | >= 150 W/m²            | < 0.1 mm     | HR < 88% si no hay sol           | Antes daba Sol hasta con 40% de nubes o cuando AROME inventaba 0% de nubes en la costa (rescate ECMWF >=16%).
+🌤️    | Mayormente soleado / Despejáu          | 16% - 40%   | >= 90 W/m²             | < 0.1 mm     | Sin niebla                       | Creado el 28/10 tras ver en Piedras Blancas más azul que nubes (~30% nubes) y que faltaba este peldaño intermedio.
+⛅    | Parcialmente nublado / Claros          | 41% - 74%   | >= 90 W/m²             | < 0.1 mm     | Cualquiera                       | Ajustado al rango 41-74% (Sol y nubes) y rescate de ECMWF cuando AROME subestima intervalos costeros.
+⛅    | Parcialmente nublado / Interv. nubosos | 20% - 69%   | < 80 W/m² (sin sol)    | < 0.1 mm     | HR >= 88% y sw < 180 W/m²        | Cazado cuando el modelo traía código 1 o 2 (Sol) pero había estratos húmedos costeros tapando el sol.
+🌥️    | Resol / Sol tamizáu (75-92%)           | 75% - 92%   | >= 180 W/m²            | < 0.1 mm     | o sw >= 280 con irr >= 120       | Cazado el 28/10: había 85-90% gris y 10% claros con resol, pero hasTrueSunlight bloqueaba a ECMWF y ponía Sol.
+🌥️    | Resol / Sol tamizáu (Velo 93-100%)     | 93% - 100%  | >= 320 a 500 W/m²      | < 0.1 mm     | Umbral estacional estricto       | Solo permite Resol con 93-100% de nubes si un haz solar fortísimo atraviesa un velo de cirros muy finos.
+☁️    | Nublado / Cubiertu                     | 93% - 100%  | < 320-500 W/m²         | < 0.1 mm     | (o 75-92% con irr < 180 W/m²)    | Cazado el 29/10: tras mañana de resol se tapó al 100%, pero la media horaria previa (218 W/m²) seguía dando Resol.
+🌫️    | Niebla / Borrina                       | Cualquiera  | < 80 W/m²              | < 0.1 mm     | Visib <= 1.000 m (OMM) o cód 45  | Cazado el 28/10: de noche saltaba alerta de Borrina solo por humedad (88%) con cielo despejado. Exigida visib <=1000m.
+🌫️🫧  | Niebla / Borrina húmeda                | >= 85%      | < 80 W/m²              | < 0.1 mm     | HR >= 94%, Vis <= 2500m, PoP<20% | Cazado cuando pusimos Orbayu meón con 0% de prob. de lluvia: era incoherente ver gotas con 0% PoP y 0.0 mm.
+🌦️    | Orbayu meón (Llovizna fina)            | >= 85%      | < 80 W/m²              | 0.0 - 0.4 mm | HR >= 94%, Vis <= 2500m, PoP>=20%| Cazado cuando en Asturias caía meona empapando pero el pluviómetro del modelo marcaba 0.0 mm y código 3 (Nublado).
+🌦️    | Orbayu / Llovizna ligera               | > 70%       | < 90 W/m² (sin sol)    | 0.1 - 0.4 mm | HR >= 85% y (p>=0.1 o PoP>=40%)  | Ley 21 Anti-Orbayu Fantasma: antes ponía Orbayu brillando el sol o con 70% de humedad (virga que se evapora).
+🌦️    | Chubascos con sol / Llueve y fai sol   | <= 70%      | >= 90 W/m² (o claros)  | 0.1 - 2.4 mm | Día + lluvia física + claros     | Diferenciado para cuando cae un chaparrón pasajero con claros o sol simultáneo (código 80 o lluvia diurna con sol).
+🌧️    | Lluvia moderada                        | > 70%       | < 90 W/m²              | 0.5 - 2.4 mm | HR >= 85% (si es traza < 0.5 mm) | Exige agua física real en pluviómetro; la probabilidad estadística (PoP) jamás inventa lluvia si p = 0.0 mm.
+🌧️    | Lluvia fuerte / Bastinazu              | 80% - 100%  | < 90 W/m²              | >= 2.5 mm/h  | Cód. 65 o 82 (5 gotas SIN rayo)  | Metedura de pata inicial: al principio los chubascos fuertes (82) compartían icono con rayo sin haber tormenta.
+⛈️    | Tormenta eléctrica                     | 70% - 100%  | Cualquiera             | Cualquiera   | Exclusivo código WMO 95          | Blindado: solo lleva rayo cuando el modelo certifica aparato eléctrico convectivo (código 95).
+⛈️    | Tormenta con granizo / Pedriscu        | 70% - 100%  | Cualquiera             | Cualquiera   | Códigos WMO 77, 89, 90, 96, 99   | Separado el granizo/pedrisco de la lluvia normal para alertar del riesgo real en carretera.
+🌨️    | Aguanieve / Nevada (Falispos a Copiosa)| 70% - 100%  | Baja                   | >= 0.1 mm    | Ligera <0.8 | Mod 0.8-2.4 | >=2.5| Cazado el 28/10 en snowDetector: antes concejoAlt <= 500 daba alerta de "Nieve en Valles" en Gijón con cota a 1500m.
+```
+
 ## 🏛️ Reforma Constitucional: Incorporación de la Ley 19 (Doctrina de Legibilidad Plena y Prohibición de Truncado en Nombres y Títulos Principales en Móvil) — 2026-10-19
 - **Autenticación y Reforma Autorizada por PIN Maestro (Feedback y Petición Expresa de Lendo - «subelo a la constitucion para quer en un futuro no vuelva a pasar»):**
   - Verificada la identidad del Creador Lendo mediante su PIN maestro de 4 cifras (huella SHA-256 coincidente al 100%), se eleva a rango de Ley Suprema Universal la **Ley 19 de la Constitución Suprema (Parte I)** en `AGENTS.md`:
