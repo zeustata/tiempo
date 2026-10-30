@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-44-overcast-93-cloudy';
+const CACHE_NAME = 'meteoasturlode-v3023-45-resol-late-year-calibrate';
 const STATIC_ASSETS = [
   './',
   './index.html',

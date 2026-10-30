@@ -385,12 +385,14 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     let isResol = false;
 
     if (cc !== null && cc >= 93) {
-      // Cielo cerrado / tapado (93% a 100% de nubes):
-      // Cuando el cielo se cierra tras una mañana de resol, Open-Meteo aún arrastra en direct_normal_irradiance
-      // el promedio de los 60 minutos previos (~200-250 W/m²). Para no pisar el "Nublado / Cubiertu" (☁️)
-      // con un Resol caducado, con >= 93% de nubes solo se admite Resol si existe un haz solar directo
-      // extraordinario que supere el umbral estacional estricto (hasDirectBeam: >= 450 W/m² en otoño/primavera).
-      if (hasDirectBeam) {
+      // Cielo cerrado / tapado según modelo (93% a 100% de nubes):
+      // Distingue entre:
+      // a) Nublado cerrado real o inercia de la hora previa (ayer 14:37 h: irr=218 W/m², sw=292 W/m² -> Nublado / Cubiertu).
+      // b) Resol potente real en vivo bajo velo nuboso (hoy 13:20 h: irr=266-362 W/m², sw=338-410 W/m² -> Resol / Sol tamizáu).
+      // A finales de otoño/invierno, con el sol bajo (máx astronómico ~500 W/m²), un resol real activo
+      // perfora con irr >= 250 W/m² y sw >= 320 W/m² (o irr >= 300 W/m² directo).
+      const hasPotentResolLateYear = (irr >= 250 && sw >= 320) || irr >= 300;
+      if (hasDirectBeam || hasPotentResolLateYear) {
         hasRealSolarLight = true;
         isResol = true;
       } else {

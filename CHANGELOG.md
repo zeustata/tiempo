@@ -72,7 +72,9 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
     - *Efecto Foehn y Alerta Xelu:* Exigida ausencia de lluvia, ambiente templado (`>= 15.5 °C`) y rachas `>= 38 km/h` en Foehn; filtro térmico actual (`<= 5.5 °C`) en Xelu; y mapeo completo de pesos en el triaje de `currentCard.js`.
   - **Corte en `92%` de Nubes entre `Resol` (`75–92%`) y `Nublado / Cubiertu` (`93–100%` - Feedback Lendo):**
     - Ajustado `getWeatherInfo` en `weatherIcons.js` para que cuando el cielo se tapone al `93–100%` (`weather_code: 3`), la radiación media arrastrada de la hora previa en Open-Meteo (`~200–250 W/m²`) no pise el estado real **`☁️ Nublado / Cubiertu`** con un *Resol* caducado.
-  - Service Worker actualizado a `meteoasturlode-v3023-44-overcast-93-cloudy` en `sw.js`.
+  - **Calibración Fina de Resol Potente Otoñal bajo Manto Denso (Ley 27 - Feedback Lendo):**
+    - Ajustado weatherIcons.js para que con cc >= 93%, si el sol otoñal perfora con fuerza real (irr >= 250 W/m² y sw >= 320 W/m² o irr >= 300 W/m²), muestre 🌥️ Resol, preservando ☁️ Nublado cuando la radiación cae o arrastra inercia (< 250 W/m²).
+  - Service Worker actualizado a `meteoasturlode-v3023-45-resol-late-year-calibrate` en `sw.js`.
   - Revisión interna `v=3.0.23.8` en `index.html` y `css/components.css`.
 
 ### 💛 Tarjeta Principal Compacta & Jerarquía Bilingüe Azul y Oro Asturiano (Feedback Lendo)
