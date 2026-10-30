@@ -41,7 +41,14 @@ function formatLocationTitle(name, activeLocalidad = null) {
     titleHtml = `<span class="loc-name-es">${mainPart}</span>`;
   }
 
-  const displayLocality = activeLocalidad ? activeLocalidad.name : (rawLocality ? rawLocality : '');
+  // Extraer localidad y limpiar barras: si tiene varias localidades separadas por barra (ej. Piedras Blancas / Salinas),
+  // se escoge la activa por GPS; si no hay GPS, se toma la primera (la capital municipal) sin mostrar jamás barras apelotonadas.
+  let defaultLocality = rawLocality;
+  if (defaultLocality.includes('/')) {
+    defaultLocality = defaultLocality.split('/')[0].trim();
+  }
+
+  const displayLocality = activeLocalidad ? activeLocalidad.name : defaultLocality;
   if (displayLocality) {
     titleHtml += `<div class="location-locality-badge">${displayLocality}</div>`;
   }

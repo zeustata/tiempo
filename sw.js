@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-47-localidad-altitud-gps';
+const CACHE_NAME = 'meteoasturlode-v3023-48-clean-sublocality-capital';
 const STATIC_ASSETS = [
   './',
   './index.html',

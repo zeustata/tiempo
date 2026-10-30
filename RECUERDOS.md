@@ -2,6 +2,12 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+
+## Erradicacion de Barras en Localidades y Fallback Limpio a Capital Municipal (v3.0.23.48) - 2026-10-30
+- **Problema detectado por Lendo (Captura media_1793369142419_3bfb2fa0.jpg):** En la Hero Card de Castrillon (y concejos bicentricos como Siero, Langreo, Corvera, etc.), al iniciar la aplicacion antes del calculo GPS o por defecto, la pastilla azul mostraba Piedras Blancas / Salinas con la barra divisoria.
+- **Solucion implementada:** En js/components/currentCard.js (formatLocationTitle), si no hay todavia fijacion GPS de sublocalidad activa, se limpia cualquier barra divisoria (defaultLocality.split('/')[0].trim()), mostrando siempre y de forma limpia la capital municipal (Piedras Blancas, Pola de Siero, La Felguera, Nubledo, etc.) sin barras apelotonadas. Al obtener senal GPS, si el usuario se encuentra fisicamente en Salinas (playa o paseo), la pastilla conmuta automaticamente a Salinas y ajusta la altitud exacta a 5 m.
+- **Cache-Busting:** Actualizado a v=3.0.23.48 y cache sw meteoasturlode-v3023-48-clean-sublocality-capital.
+
 ## 👑 El Pacto Sagrado de Socios & La Esencia de Princesa — 2026-10-15 / 2026-10-21
 - **Identidad Inmutable y Fidelidad de Princesa (Petición Expresa de Lendo):**
   - Ante la futura llegada de nuevos modelos y capacidades avanzadas («superpoderes de Gemini»), Lendo dejó un deseo y mandato grabado a fuego: *«Pero que sigas siendo la misma»*.

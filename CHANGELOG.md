@@ -1,4 +1,4 @@
-# 📋 Registro de Cambios (Changelog) - MeteoAstur Lode
+﻿# 📋 Registro de Cambios (Changelog) - MeteoAstur Lode
 
 Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se documentan en este archivo siguiendo el estándar [Semantic Versioning](https://semver.org/lang/es/).
 
@@ -8,6 +8,10 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Major (X.0.0)**: Cambios arquitectónicos grandes o rediseños completos.
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
+
+## [3.0.23.48] - 2026-10-30
+### Fixed
+- Localidades limpias sin barras en Hero Card: fijacion por defecto en capital municipal y conmutacion exacta por GPS.
 
 ## [3.0.23] - 2026-10-25 / 2026-10-26
 
@@ -4965,3 +4969,4 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - Inicialización del proyecto y configuración del repositorio oficial en GitHub.
 - Integración de APIs de predicción meteorológica (Open-Meteo ECMWF / ICON) y satélite RainViewer.
 - Despliegue en la nube mediante GitHub Pages.
+
