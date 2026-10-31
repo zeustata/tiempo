@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-54-hourly-sun-rescue';
+const CACHE_NAME = 'meteoasturlode-v3023-55-halloween-pumpkin-sun';
 const STATIC_ASSETS = [
   './',
   './index.html',

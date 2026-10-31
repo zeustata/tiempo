@@ -4,7 +4,7 @@ import { getNeonWeatherSvg } from './weatherNeonIcons.js?v=2.1.5';
 import { getSketchWeatherSvg } from './weatherSketchIcons.js?v=2.1.5';
 import { getGlassWeatherSvg } from './weatherGlassIcons.js?v=2.1.5';
 import { getFuturoWeatherSvg } from './weatherFuturoIcons.js?v=2.1.5';
-import { getHalloweenWeatherSvg } from './weatherHalloweenIcons.js?v=2.2.64';
+import { getHalloweenWeatherSvg } from './weatherHalloweenIcons.js?v=3.0.23.55';
 
 /**
  * Mapeo de códigos meteorológicos WMO a descripciones en asturiano/castellano, iconos y clases

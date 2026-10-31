@@ -9,6 +9,10 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.23.55] - 2026-10-31
+### Fixed
+- **Proporción y Equilibrio Visual de Halloween (Reporte Lendo):** Rediseñado el SVG temático de *Mayormente soleado* (`mostly-clear-day` en `weatherHalloweenIcons.js`). La gran Calabaza Solar Jack-o'-lantern con llamaradas solares pasa a ser la protagonista absoluta ocupando el 75% del marco visual con su sonrisa y ojos de fuego totalmente despejados, y la nube nocturna gótica se compacta en la esquina inferior derecha como elemento subordinado disperso sin ocultar el sol.
+
 ## [3.0.23.54] - 2026-10-31
 ### Fixed
 - **Calibración Continua Solar y Erradicación del Zigzag Horario (Leyes 20 y 27 - Reporte Lendo):**

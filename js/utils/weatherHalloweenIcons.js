@@ -81,25 +81,38 @@ export function getHalloweenWeatherSvg(iconKey, size = 32) {
       `;
 
     case 'mostly-clear-day':
-      // 🌤️🎃 MAYORMENTE SOLEADO: Calabaza sonriente con suave nube gótica
+      // 🌤️🎃 MAYORMENTE SOLEADO: Gran Calabaza solar radiante (75% protagonista) con rayos ardientes y pequeña nube secundaria
       return `
-        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="halloween-svg-icon icon-hw-mostly-clear" aria-label="Calabaza con nubes dispersas">
-          <!-- Calabaza solar al fondo -->
-          <g transform="translate(-2, -2)">
-            <ellipse cx="28" cy="18" rx="10" ry="9" fill="#f97316" stroke="#c2410c" stroke-width="1.4" />
-            <ellipse cx="28" cy="18" rx="6.5" ry="9" fill="#fb923c" />
-            <path d="M 27,9 Q 29,6 30,5" stroke="#15803d" stroke-width="1.5" fill="none" />
-            <polygon points="24,15 26,17 23,17" fill="#fef08a" />
-            <polygon points="32,15 33,17 30,17" fill="#fef08a" />
-            <path d="M 24,20 Q 28,24 32,20 Z" fill="#fef08a" />
+        <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="halloween-svg-icon icon-hw-mostly-clear" aria-label="Calabaza solar predominante con nube dispersa">
+          <!-- Rayos solares superiores e izquierdos de la calabaza -->
+          <g fill="#f97316" stroke="#ea580c" stroke-width="0.8">
+            <polygon points="20,2 18,7 22,7" />
+            <polygon points="7,9 12,12 10,15" />
+            <polygon points="2,22 7,20 7,24" />
+            <polygon points="31,6 30,11 34,10" />
           </g>
-          <!-- Nube nocturna de tono pizarra/púrpura -->
-          <path d="M 38,37 H 14 A 8,8 0 0 1 12,22 A 11,11 0 0 1 35,21 A 7.5,7.5 0 0 1 38,37 Z" fill="#334155" stroke="#1e293b" stroke-width="1.6" />
-          <!-- Ojos amigables en la nube -->
-          <circle cx="21" cy="29" r="1.6" fill="#f8fafc" />
-          <circle cx="29" cy="29" r="1.6" fill="#f8fafc" />
-          <circle cx="21" cy="29" r="0.8" fill="#0f172a" />
-          <circle cx="29" cy="29" r="0.8" fill="#0f172a" />
+          <!-- Gran Calabaza Solar luminosa (predominante) -->
+          <g>
+            <ellipse cx="21" cy="23" rx="13.5" ry="12.5" fill="#ea580c" stroke="#c2410c" stroke-width="1.4" />
+            <ellipse cx="21" cy="23" rx="9" ry="12.2" fill="#f97316" />
+            <ellipse cx="21" cy="23" rx="4.8" ry="12" fill="#fb923c" />
+            <!-- Tallo verde -->
+            <path d="M 20,11 C 19,7 23,5 24,3 C 22,5 21,8 22,11 Z" fill="#22c55e" stroke="#15803d" stroke-width="0.8" />
+            <!-- Ojos triangulares brillantes con fuego -->
+            <polygon points="15,18 18.5,22 13,22" fill="#fef08a" stroke="#ca8a04" stroke-width="0.6" />
+            <polygon points="27,18 29,22 23.5,22" fill="#fef08a" stroke="#ca8a04" stroke-width="0.6" />
+            <!-- Sonrisa luminosa -->
+            <path d="M 14,26 Q 21,34 28,26 L 26,27 L 25,29 L 23,27 L 21,29 L 19,27 L 17,29 L 16,27 Z" fill="#fef08a" stroke="#ca8a04" stroke-width="0.8" />
+          </g>
+          <!-- Nubecita compacta subordinada abajo a la derecha (no tapa la cara) -->
+          <g>
+            <path d="M 43,40 H 25 A 5,5 0 0 1 23,31 A 7,7 0 0 1 38,29 A 5,5 0 0 1 43,40 Z" fill="#334155" stroke="#1e293b" stroke-width="1.3" />
+            <!-- Ojos curiosos en la nube pequeña -->
+            <circle cx="31" cy="35" r="1.1" fill="#f8fafc" />
+            <circle cx="36" cy="35" r="1.1" fill="#f8fafc" />
+            <circle cx="31.3" cy="35" r="0.5" fill="#0f172a" />
+            <circle cx="36.3" cy="35" r="0.5" fill="#0f172a" />
+          </g>
         </svg>
       `;
 

@@ -9,6 +9,17 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - **Alcance Universal (Ley 6):**
   - Incorporada como **Artículo 20 de la Constitución Suprema (Parte I)** y sincronizada de inmediato en todos los repositorios del ecosistema zeustata (`Tiempo`, `Portal_Policia_Gijon`, `Porras`).
 
+## 🎃 Calibración Visual de Calabaza Solar y Claros de Halloween (v3.0.23.55) — 2026-10-31
+- **Observación y Agudeza Visual de Lendo:**
+  - Lendo observó que a las 18:00 h el pronóstico indicaba *Mayormente soleado*, pero el icono temático de Halloween mostraba paradójicamente menos calabaza/sol que el de *Parcialmente nublado / Claros*, pareciendo más sombrío a pesar de ser un estado de mayor insolación.
+- **Causa Raíz en el SVG (`weatherHalloweenIcons.js`):**
+  - En `mostly-clear-day`, la nube ocupaba un área desproporcionada tapando el 70% inferior de la calabaza, dejando solo un fragmento de la parte superior.
+- **Rediseño Vectorial Armónico:**
+  - La Gran Calabaza Solar se sitúa en el centro neurálgico (`rx=13.5`, `ry=12.5`) con llamaradas ardientes en la parte superior e izquierda, con sus ojos triangulares de fuego y sonrisa mellada 100% visibles.
+  - La nube se redimensiona a formato mini-nube dispersa subordinada abajo a la derecha (`x=25` a `43`), respetando fielmente el concepto meteorológico de cielo mayormente soleado (75% sol / 25% nube dispersa).
+- **Cache-Busting:** Actualizado a `v=3.0.23.55` y Service Worker `meteoasturlode-v3023-55-halloween-pumpkin-sun`.
+- **Verificación Local:** Comprobado por Lendo en `localhost:8080` antes del despliegue (Leyes 1, 3 y 9).
+
 ## ☀️ Calibración Continua Solar y Erradicación del Zigzag Horario (v3.0.23.54) — 2026-10-31
 - **Observación y Reporte Real de Lendo (Captura de Webcam Salinas & Piedras Blancas):**
   - Lendo detectó un comportamiento errático en la tira de previsión por horas: a las 13h marcaba Resol, a las 14h Nublado, a las 15h Parcialmente nublado, a las 16h y 17h Nublado, a las 18h Parcialmente nublado y tras el ocaso Despejado.
