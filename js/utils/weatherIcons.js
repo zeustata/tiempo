@@ -163,10 +163,13 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     // y el código en bruto es 3 (Cubierto) o 45/48 (Niebla), pero la atmósfera está en condensación líquida activa:
     // Humedad extrema (h >= 94%), cielo cerrado (cc >= 85% o código 3/45/48), ausencia de radiación solar directa
     // y techo bajo con visibilidad reducida (<= 2500 m, o h >= 95% si no hay sensor de visibilidad).
-    const isOvercastSky = (cc !== null && cc >= 85) || code === 3 || code === 45 || code === 48;
+    // Banco de Ventana Real Lendo (Ley 27): Si el código es 3 (Cubierto) pero ves el Gorfolí a 13 km, NO es niebla.
+    // Para clasificar Niebla / Borrina en superficie, el código oficial de la OMM debe ser explícitamente 45 o 48,
+    // o bien la visibilidad real debe estar corroborada con cota de niebla efectiva sin cielo nublado alto ordinario.
+    const isExplicitFogSky = code === 45 || code === 48;
     const hasNoSunBeam = irr < 80;
     const isFogMistCondition = vis !== null ? (vis <= 2500) : (h !== null && h >= 95);
-    const isFogMeonaActive = !isPhysicallyRaining && !isExplicitRainCode && h !== null && h >= 94 && isOvercastSky && hasNoSunBeam && isFogMistCondition;
+    const isFogMeonaActive = !isPhysicallyRaining && !isExplicitRainCode && isExplicitFogSky && h !== null && h >= 94 && hasNoSunBeam && isFogMistCondition;
 
     if (isFogMeonaActive) {
       // Coherencia visual estricta y honestidad matemática (Feedback Lendo):

@@ -9,6 +9,10 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.23.50] - 2026-10-31
+### Fixed
+- **Calibración Milimétrica de Niebla (Banco de Ventana Lendo - Ley 27):** Eliminada la degradación errática de días cubiertos ordinarios (código WMO 3) a Niebla. Se blinda el clasificador para exigir código explícito de niebla (45/48), evitando que lecturas de visibilidad anómalas del ensemble enmascaren horizontes limpios donde se divisa la montaña (el Gorfolí visible a 13 km).
+
 ## [3.0.23.49] - 2026-10-30
 ### Fixed
 - **Blindaje de Alcance de Sublocalidad y Altitud por Concejo:** Corregido el bug donde la sublocalidad activa por GPS (ej. `Piedras Blancas`) quedaba en memoria al cambiar o buscar otros concejos como Oviedo o Gijón. Ahora `switchConcejo` recalcula o resetea la sublocalidad para el concejo destino, y `currentCard.js` blinda tanto la pastilla azul como la altitud para concejos monocéntricos (Oviedo muestra sus 232 m limpios).

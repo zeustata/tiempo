@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-49-sublocality-scope-fix';
+const CACHE_NAME = 'meteoasturlode-v3023-50-fog-precision-fix';
 const STATIC_ASSETS = [
   './',
   './index.html',

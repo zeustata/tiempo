@@ -3,6 +3,17 @@
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
 
+## 🔭 Caso Real #3: Calibración Milimétrica de Niebla y Visibilidad Real (v3.0.23.50) — 2026-10-31
+- **Observación real de Lendo desde su ventana en Piedras Blancas:**
+  - Cielo cubierto matutino en otoño sin lluvia ($0.0\text{ mm}$), humedad $94\%$, pero con atmósfera límpida en superficie: el pico Gorfolí se divisa perfectamente a $13\text{ km}$ de distancia en línea recta.
+- **Anomalía detectada en los modelos:**
+  - El ensemble Best-Match arrojaba un valor errático de visibilidad de $260\text{ m}$, mientras ICON ($15.780\text{ m}$) y GFS ($24.140\text{ m}$) confirmaban excelente visibilidad.
+  - El código meteorológico oficial era $3$ (Cubierto), pero el detector de niebla lo degradaba erróneamente a `Niebla / Borrina húmeda`.
+- **Ajuste y Blindaje de No-Regresión (Ley 27):**
+  - En `js/utils/weatherIcons.js`: se restringe la activación de niebla para exigir código explícito WMO ($45$ o $48$). El código $3$ permanece fielmente como `Nublado / Cubiertu`.
+  - Superada con éxito la suite completa de pruebas del Banco de Ventana Real (Resol de mediodía, Sol y nubes, Niebla real y Orbayu).
+- **Cache-Busting:** Actualizado a `v=3.0.23.50` y `meteoasturlode-v3023-50-fog-precision-fix`.
+
 ## 🛡️ Blindaje de Ámbito de Sublocalidad y Altitud por Concejo (v3.0.23.49) — 2026-10-30
 - **Problema detectado por Lendo (Captura `media_1793370000575_6a9d41b3.jpg`):**
   - Al buscar o cambiar de concejo a Oviedo desde Castrillón, la Hero Card de Oviedo mostraba `Oviedo / Uviéu` y debajo la pastilla azul `Piedras Blancas` con `Altitud: 25 m`.
