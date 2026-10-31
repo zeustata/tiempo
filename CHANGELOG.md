@@ -9,6 +9,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.23.54] - 2026-10-31
+### Fixed
+- **Calibración Continua Solar y Erradicación del Zigzag Horario (Leyes 20 y 27 - Reporte Lendo):**
+  - **Continuidad de Radiación Solar en la Tira Horaria (forecastView.js):** Eliminado el corte de radiación que pasaba null a partir de la tercera hora. Toda la predicción horaria diurna se alimenta ahora de los arrays de radiación directa (direct_normal_irradiance) y global (shortwave_radiation) calculados por los modelos numéricos.
+  - **Corrección Estructural en Clasificador de Iconos (weatherIcons.js):** Blindada la condición de isSolarPhantomDrizzle para exigir código de precipitación o lluvia medible (p > 0 mm), impidiendo que jornadas secas con sol y nubes (código WMO 2) fuesen forzadas por error a cielo nublado cerrado.
+  - **Armonización Horaria con ECMWF (weatherApi.js):** Sincronizada la armonización de falso cubierto para adoptar los claros y sol radiante previstos por el Centro Europeo cuando el modelo base pronostica erráticamente nubes al 100% sin agua en el suelo.
+
 ## [3.0.23.53] - 2026-10-31
 ### Fixed
 - **Armonía Integral Liquid Glass en Tarjetas Principales (Ley 14):** Integradas las tarjetas de Radar (`.radar-wrapper`), Rutas (`.routes-card`) y Cosmos (`.astronomy-hero-card`) en el motor universal de cristal líquido esmerilado (`backdrop-filter: blur(24px)`, bisel y halo de luz). Se unifica la opacidad visual frente al fondo animado en los 9 menús de la aplicación.

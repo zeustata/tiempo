@@ -134,7 +134,8 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     const isDrizzleCode = (code >= 51 && code <= 57) || base.svgKey === 'drizzle';
     const isDryTraceVirga = isDrySkyCode && p <= 0.1 && h !== null && h < 90;
     const isDryDrizzleVirga = isDrizzleCode && p < 1.0 && h !== null && h < 85;
-    isSolarPhantomDrizzle = hasActiveSun && (isDrizzleCode || p < 0.5) && !base.isSnow && code !== 95;
+    const hasPrecipOrRainCode = isDrizzleCode || base.isRain || (p > 0 && p < 0.5);
+    isSolarPhantomDrizzle = hasActiveSun && hasPrecipOrRainCode && !base.isSnow && code !== 95;
     const isPhysicallyRaining = p >= 0.1 && !isDryTraceVirga && !isDryDrizzleVirga && !isSolarPhantomDrizzle;
     let isExplicitRainCode = (base.isRain || base.svgKey === 'drizzle' || base.svgKey === 'rain' || base.svgKey === 'storm') && !isSolarPhantomDrizzle;
 

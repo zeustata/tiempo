@@ -359,6 +359,14 @@ function applyCantabricoConsensus(weather, consensus) {
       const rawC = weather.hourly.cloud_cover ? weather.hourly.cloud_cover[i] : 100;
       const ecmwfC = consensus.hourly.cloud_cover ? consensus.hourly.cloud_cover[i] : 0;
       const eDirectIrrH = consensus.hourly.direct_normal_irradiance ? consensus.hourly.direct_normal_irradiance[i] : 0;
+      const pop = weather.hourly.precipitation_probability ? (weather.hourly.precipitation_probability[i] || 0) : 0;
+      const ePop = consensus.hourly.precipitation_probability ? (consensus.hourly.precipitation_probability[i] || 0) : 0;
+      const precip = weather.hourly.precipitation ? (weather.hourly.precipitation[i] || 0) : 0;
+      const ePrecipH = consensus.hourly.precipitation ? (consensus.hourly.precipitation[i] || 0) : 0;
+      const eCodeH = consensus.hourly.weather_code ? consensus.hourly.weather_code[i] : null;
+      const humH = weather.hourly.relative_humidity_2m
+        ? weather.hourly.relative_humidity_2m[i]
+        : (consensus.hourly.relative_humidity_2m ? consensus.hourly.relative_humidity_2m[i] : 80);
 
       // A) Armonización de Falso Claro Horario (frentes en avance detectados por ECMWF):
       const isFalseClearH = (rawC <= 15 && ecmwfC >= 16 && (ecmwfC - rawC >= 15)) || (rawC < 50 && ecmwfC >= 40 && (ecmwfC - rawC >= 20));
@@ -376,15 +384,21 @@ function applyCantabricoConsensus(weather, consensus) {
         }
       }
 
-      // B) Armonización y Rescate de Orbayu Real / Lluvia Frontal Horaria:
-      const pop = weather.hourly.precipitation_probability ? (weather.hourly.precipitation_probability[i] || 0) : 0;
-      const ePop = consensus.hourly.precipitation_probability ? (consensus.hourly.precipitation_probability[i] || 0) : 0;
-      const precip = weather.hourly.precipitation ? (weather.hourly.precipitation[i] || 0) : 0;
-      const ePrecipH = consensus.hourly.precipitation ? (consensus.hourly.precipitation[i] || 0) : 0;
-      const eCodeH = consensus.hourly.weather_code ? consensus.hourly.weather_code[i] : null;
-      const humH = weather.hourly.relative_humidity_2m
-        ? weather.hourly.relative_humidity_2m[i]
-        : (consensus.hourly.relative_humidity_2m ? consensus.hourly.relative_humidity_2m[i] : 80);
+      // A2) Armonización y Rescate de Falso Nublado Horario (Ley 27 & Banco de Ventana Lendo):
+      // Si el modelo base se queda "encapotado" al 100% (código 3) pero no llueve en ningún modelo (<0.1 mm)
+      // y ECMWF prevé sol/claros con radiación solar directa potente (eDirectIrrH >= 200 W/m² y eCodeH <= 2):
+      // SE ADOPTA LA PREVISIÓN SOLEADA REAL DE ECMWF (erradica baches de nubes grises falsas al mediodía).
+      const isFalseOvercastH = (precip < 0.1 && ePrecipH < 0.1) && rawC >= 80 && ecmwfC <= 70 && eDirectIrrH >= 200 && eCodeH !== null && eCodeH <= 2;
+      if (isFalseOvercastH) {
+        if (weather.hourly.cloud_cover) weather.hourly.cloud_cover[i] = ecmwfC;
+        if (weather.hourly.weather_code) weather.hourly.weather_code[i] = eCodeH;
+        if (weather.hourly.direct_normal_irradiance && consensus.hourly.direct_normal_irradiance) {
+          weather.hourly.direct_normal_irradiance[i] = consensus.hourly.direct_normal_irradiance[i];
+        }
+        if (weather.hourly.shortwave_radiation && consensus.hourly.shortwave_radiation) {
+          weather.hourly.shortwave_radiation[i] = consensus.hourly.shortwave_radiation[i];
+        }
+      }
 
       // B) Enriquecimiento Probabilístico y de Saturación Horaria (Ensamble Mundial de 51 miembros de ECMWF):
       if (weather.hourly.precipitation_probability && ePop > pop) {

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-53-liquid-glass-harmony';
+const CACHE_NAME = 'meteoasturlode-v3023-54-hourly-sun-rescue';
 const STATIC_ASSETS = [
   './',
   './index.html',

@@ -9,6 +9,21 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - **Alcance Universal (Ley 6):**
   - Incorporada como **Artículo 20 de la Constitución Suprema (Parte I)** y sincronizada de inmediato en todos los repositorios del ecosistema zeustata (`Tiempo`, `Portal_Policia_Gijon`, `Porras`).
 
+## ☀️ Calibración Continua Solar y Erradicación del Zigzag Horario (v3.0.23.54) — 2026-10-31
+- **Observación y Reporte Real de Lendo (Captura de Webcam Salinas & Piedras Blancas):**
+  - Lendo detectó un comportamiento errático en la tira de previsión por horas: a las 13h marcaba Resol, a las 14h Nublado, a las 15h Parcialmente nublado, a las 16h y 17h Nublado, a las 18h Parcialmente nublado y tras el ocaso Despejado.
+  - En la realidad, tanto la cámara web del Náutico de Salinas como la ventana en Piedras Blancas mostraban cielo azul con intervalos de nubes y sol brillante continuo con más de 450 W/m² de radiación.
+- **Diagnóstico Quirúrgico (Tres Factores Concatenados):**
+  1. En forecastView.js, la calibración solar solo pasaba radiación a la hora actual y siguiente (startIndex + 1), pasando null para las horas posteriores. La función de iconos interpretaba radiación 0 W/m² y quedaba a merced de los baches brutos del modelo.
+  2. En weatherIcons.js, la detección de orballu fantasma (isSolarPhantomDrizzle) comprobaba p < 0.5. En días completamente secos (p = 0.0 mm), esa condición daba true y degradaba erróneamente códigos secos de sol y nubes (código 2) a Nublado / Cubiertu.
+  3. En weatherApi.js, el modelo base ensamble simulaba ondas de nubes al 99% sin lluvia, mientras ECMWF predecía cielo con claros (código 2) y radiación solar continua.
+- **Solución Estructural Permanente (Leyes 20 y 27):**
+  - En forecastView.js: se suministran los arrays horarios de radiación directa y global (hourly.direct_normal_irradiance y hourly.shortwave_radiation) para todas las horas diurnas de la predicción.
+  - En weatherIcons.js: isSolarPhantomDrizzle exige estrictamente código de lluvia o precipitación medible (p > 0), protegiendo todos los días secos y soleados del año.
+  - En weatherApi.js: armonización de falso nublado (isFalseOvercastH) donde el consenso adopta los claros de ECMWF si el modelo base se encapota al 100% sin lluvia.
+- **Cache-Busting:** Actualizado a v=3.0.23.54 y Service Worker meteoasturlode-v3023-54-hourly-sun-rescue.
+- **Verificación Local:** Comprobado por Lendo en localhost:8080 antes del despliegue (Leyes 1, 3 y 9).
+
 ## 💎 Armonización Integral de Cristal Líquido en Tarjetas Principales (v3.0.23.53) — 2026-10-31
 - **Observación y Petición de Lendo:**
   - De los 9 menús de la app, las tarjetas principales de En Vivo, 10 Días, Playas, Surf y Montaña presentaban una textura de cristal líquido esmerilada y opaca frente al fondo en movimiento, mientras que Radar, Rutas y Cosmos se veían transparentes debido a que sus clases no estaban vinculadas a la regla universal de Apple Liquid Glass.

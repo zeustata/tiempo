@@ -254,12 +254,17 @@ export function renderHourlyForecastBlock(data, units = 'metric', iconTheme = 'a
     const pop = hourly.precipitation_probability ? (hourly.precipitation_probability[i] || 0) : 0;
     const precipMm = hourly.precipitation ? (hourly.precipitation[i] || 0) : 0;
     const code = hourly.weather_code[i];
-    // Calibración Solar en Nowcasting: se aplica exclusivamente a la hora en curso y a la siguiente hora inmediata,
-    // preservando al 100% la previsión general del modelo numérico para el resto de horas y días.
+    // Calibración Solar Inteligente Continua:
+    // Para la hora en curso y la siguiente inmediata se puede priorizar la lectura en vivo instantánea si existe;
+    // para el resto de horas diurnas se utilizan los arrays de radiación directa y global previstos por el modelo horario.
+    const hourlyDirectIrr = (hourly.direct_normal_irradiance && hourly.direct_normal_irradiance[i] != null) ? hourly.direct_normal_irradiance[i] : null;
+    const hourlyUv = (hourly.uv_index && hourly.uv_index[i] != null) ? hourly.uv_index[i] : null;
+    const hourlySw = (hourly.shortwave_radiation && hourly.shortwave_radiation[i] != null) ? hourly.shortwave_radiation[i] : null;
+
     const isImmediateNextHour = (i === startIndex || i === startIndex + 1);
-    const useDirectIrr = isImmediateNextHour ? liveDirectIrr : null;
-    const useUv = isImmediateNextHour ? liveUv : null;
-    const useSw = isImmediateNextHour ? liveSw : null;
+    const useDirectIrr = (isImmediateNextHour && liveDirectIrr != null) ? liveDirectIrr : hourlyDirectIrr;
+    const useUv = (isImmediateNextHour && liveUv != null) ? liveUv : hourlyUv;
+    const useSw = (isImmediateNextHour && liveSw != null) ? liveSw : hourlySw;
 
     const cloudCoverHour = (hourly.cloud_cover && hourly.cloud_cover[i] != null) ? hourly.cloud_cover[i] : null;
     const humHour = (hourly.relative_humidity_2m && hourly.relative_humidity_2m[i] != null) ? hourly.relative_humidity_2m[i] : null;
