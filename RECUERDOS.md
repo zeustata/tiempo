@@ -9,6 +9,17 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - **Alcance Universal (Ley 6):**
   - Incorporada como **Artículo 20 de la Constitución Suprema (Parte I)** y sincronizada de inmediato en todos los repositorios del ecosistema zeustata (`Tiempo`, `Portal_Policia_Gijon`, `Porras`).
 
+## 🔄 Sincronización Integral entre Tarjetas y Visores (v3.0.23.56) — 2026-10-31
+- **Auditoría Preventiva Solicitada por Lendo (Chequeo General de Incoherencias):**
+  - Lendo solicitó una revisión exhaustiva para erradicar posibles contradicciones entre las distintas vistas de predicción de la aplicación.
+- **Diagnóstico y 4 Incoherencias de Sincronización Subsanadas:**
+  1. *Desfase Hero Card vs Carrusel Horario (`weatherApi.js`):* La tarjeta actual en vivo utilizaba un umbral más restrictivo de falso cubierto (`ecmwfCloud <= 50%`), mientras que el pronóstico horario rescataba sol con hasta el 70% de nubes en ECMWF. Se sincronizó el bloque `current` con el criterio horario para que la Hero Card y la primera hora del carrusel marquen exactamente la misma condición.
+  2. *Corte de Radiación en Curvas y Compartir (`chartsView.js` & `shareCardGenerator.js`):* Ambas vistas mantenían la lógica antigua que pasaba `null` de radiación a partir de la tercera hora, provocando que la gráfica horaria mostrara nublado en horas donde el carrusel de tarjetas mostraba claros. Se suministraron los arrays completos de `direct_normal_irradiance` y `shortwave_radiation`.
+  3. *Contaminación Nocturna en el Botón "Tarde" a 10 Días (`forecastView.js`):* En el tramo de 15:00 a 24:00 h, el bloque nocturno (19:00 a 24:00 h) superaba en número de horas al bloque diurno (15:00 a 18:00 h). Se ajustó `getDaypartWeather` para que el cielo seco pondere prioritariamente las horas de insolación diurna con su radiación media, preservando el cálculo total de lluvia acumulada en las 9 horas.
+  4. *Sincronización de Importación ES6:* Actualizadas las cadenas de versión a `v=3.0.23.56` en todos los módulos interconectados.
+- **Cache-Busting:** Actualizado a `v=3.0.23.56` y Service Worker `meteoasturlode-v3023-56-full-cross-card-sync`.
+- **Verificación Local:** Comprobado por Lendo en `localhost:8080` antes del despliegue (Leyes 1, 3 y 9).
+
 ## 🎃 Calibración Visual de Calabaza Solar y Claros de Halloween (v3.0.23.55) — 2026-10-31
 - **Observación y Agudeza Visual de Lendo:**
   - Lendo observó que a las 18:00 h el pronóstico indicaba *Mayormente soleado*, pero el icono temático de Halloween mostraba paradójicamente menos calabaza/sol que el de *Parcialmente nublado / Claros*, pareciendo más sombrío a pesar de ser un estado de mayor insolación.

@@ -1,4 +1,4 @@
-import { getWeatherInfo, getWindDirection, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=2.2.64';
+import { getWeatherInfo, getWindDirection, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=3.0.23.56';
 
 /**
  * 📈 METEOROLOGÍA GRÁFICA (Suite Multivariable de Observatorio Horario)
@@ -206,11 +206,14 @@ function renderCurrentChart() {
     const precipMm = hourlyData.precipitation ? (hourlyData.precipitation[i] || 0) : 0;
     const wCode = weatherCodes[i] != null ? weatherCodes[i] : 0;
 
-    // Nowcasting
+    // Calibración Solar Inteligente Continua en Curvas Horarias (sincronizada con vista de tarjetas)
+    const hourlyDirectIrr = (hourlyData.direct_normal_irradiance && hourlyData.direct_normal_irradiance[i] != null) ? hourlyData.direct_normal_irradiance[i] : null;
+    const hourlyUv = (hourlyData.uv_index && hourlyData.uv_index[i] != null) ? hourlyData.uv_index[i] : null;
+    const hourlySw = (hourlyData.shortwave_radiation && hourlyData.shortwave_radiation[i] != null) ? hourlyData.shortwave_radiation[i] : null;
     const isImmediate = (i === startIndex || i === startIndex + 1);
-    const useUv = (isImmediate && hourlyData.uv_index && hourlyData.uv_index[i] != null) ? hourlyData.uv_index[i] : null;
-    const useDirectIrr = (isImmediate && hourlyData.direct_normal_irradiance && hourlyData.direct_normal_irradiance[i] != null) ? hourlyData.direct_normal_irradiance[i] : null;
-    const useSw = (isImmediate && hourlyData.shortwave_radiation && hourlyData.shortwave_radiation[i] != null) ? hourlyData.shortwave_radiation[i] : null;
+    const useDirectIrr = (isImmediate && hourlyDirectIrr != null) ? hourlyDirectIrr : hourlyDirectIrr;
+    const useUv = (isImmediate && hourlyUv != null) ? hourlyUv : hourlyUv;
+    const useSw = (isImmediate && hourlySw != null) ? hourlySw : hourlySw;
     const cloudCoverHour = (hourlyData.cloud_cover && hourlyData.cloud_cover[i] != null) ? hourlyData.cloud_cover[i] : null;
     const humHour = (hourlyData.relative_humidity_2m && hourlyData.relative_humidity_2m[i] != null) ? hourlyData.relative_humidity_2m[i] : null;
     const visHour = (hourlyData.visibility && hourlyData.visibility[i] != null) ? hourlyData.visibility[i] : null;

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-55-halloween-pumpkin-sun';
+const CACHE_NAME = 'meteoasturlode-v3023-56-full-cross-card-sync';
 const STATIC_ASSETS = [
   './',
   './index.html',

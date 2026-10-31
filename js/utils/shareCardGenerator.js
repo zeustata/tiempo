@@ -7,7 +7,7 @@
  * Compatible con la Web Share API (WhatsApp, Instagram, Telegram) y descarga directa.
  */
 
-import { getWeatherInfo, renderWeatherIconHtml } from './weatherIcons.js?v=2.2.64';
+import { getWeatherInfo, renderWeatherIconHtml } from './weatherIcons.js?v=3.0.23.56';
 
 /**
  * Carga un string SVG en un objeto Image en memoria para pintado directo en Canvas HTML5
@@ -357,7 +357,10 @@ export async function generateShareCardCanvas(concejo, weatherData, iconTheme = 
       const cloudCover = (hourly.cloud_cover && hourly.cloud_cover[idx] != null) ? hourly.cloud_cover[idx] : null;
       const hHum = (hourly.relative_humidity_2m && hourly.relative_humidity_2m[idx] != null) ? hourly.relative_humidity_2m[idx] : null;
       const isImmediate = (step === 0);
-      const hWeather = getWeatherInfo(code, isDay, precip, pop, isImmediate ? directIrr : null, isImmediate ? currentUv : null, isImmediate ? currentSw : null, cloudCover, hHum);
+      const hDirectIrr = (hourly.direct_normal_irradiance && hourly.direct_normal_irradiance[idx] != null) ? hourly.direct_normal_irradiance[idx] : (isImmediate ? directIrr : null);
+      const hUv = (hourly.uv_index && hourly.uv_index[idx] != null) ? hourly.uv_index[idx] : (isImmediate ? currentUv : null);
+      const hSw = (hourly.shortwave_radiation && hourly.shortwave_radiation[idx] != null) ? hourly.shortwave_radiation[idx] : (isImmediate ? currentSw : null);
+      const hWeather = getWeatherInfo(code, isDay, precip, pop, hDirectIrr, hUv, hSw, cloudCover, hHum);
       const hIcon = hWeather ? hWeather.icon : '☀️';
       const hTemp = Math.round(hourly.temperature_2m[idx]);
       const hWind = hourly.wind_speed_10m ? Math.round(hourly.wind_speed_10m[idx]) : (hourly.windspeed_10m ? Math.round(hourly.windspeed_10m[idx]) : 0);

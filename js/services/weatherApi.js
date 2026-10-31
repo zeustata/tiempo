@@ -342,13 +342,20 @@ function applyCantabricoConsensus(weather, consensus) {
       weather.current.weather_code = effectiveCloud >= 80 ? 3 : (effectiveCloud >= 40 ? 2 : 1);
     }
 
-    // Falso Nublado de AROME (nieblas residuales ya disipadas con sol verificado en ECMWF)
-    const isFalseOvercast = isDryCurrent && hasTrueSunlight && rawCloud >= 75 && ecmwfCloud <= 50 && (rawCloud - ecmwfCloud >= 30);
+    // Falso Nublado en tiempo actual (sincronizado con rescate horario: Ley 27 & Banco de Ventana)
+    // Si AROME se encapota al 100% (rawCloud >= 80%) en tiempo seco pero ECMWF constata sol/claros (eDirectIrr >= 200 o hasTrueSunlight) con ecmwfCloud <= 70%
+    const isFalseOvercast = isDryCurrent && ((hasTrueSunlight && rawCloud >= 75 && ecmwfCloud <= 50) || (rawCloud >= 80 && ecmwfCloud <= 70 && eDirectIrr >= 200 && eCode <= 2));
     if (isFalseOvercast) {
       weather.current.cloud_cover = ecmwfCloud;
       weather.current.weather_code = consensus.current.weather_code != null && consensus.current.weather_code <= 2
         ? consensus.current.weather_code
         : (ecmwfCloud <= 25 ? 0 : 2);
+      if (consensus.current.direct_normal_irradiance != null && (!weather.current.direct_normal_irradiance || weather.current.direct_normal_irradiance < consensus.current.direct_normal_irradiance)) {
+        weather.current.direct_normal_irradiance = consensus.current.direct_normal_irradiance;
+      }
+      if (consensus.current.shortwave_radiation != null && (!weather.current.shortwave_radiation || weather.current.shortwave_radiation < consensus.current.shortwave_radiation)) {
+        weather.current.shortwave_radiation = consensus.current.shortwave_radiation;
+      }
     }
   }
 

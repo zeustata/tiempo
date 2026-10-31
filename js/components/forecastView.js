@@ -1,4 +1,4 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection } from '../utils/weatherIcons.js?v=3.0.23.45';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection } from '../utils/weatherIcons.js?v=3.0.23.56';
 
 /**
  * Normaliza y formatea una marca de tiempo solar (ISO de Open-Meteo) a la hora civil oficial de Asturias/España,
@@ -55,6 +55,12 @@ function getDaypartWeather(hourly, dayDateStr, startHour, endHour, fallbackCode,
   let precipSum = 0;
   let maxPrecipPerHour = 0;
   const codes = [];
+  const daytimeCodes = [];
+  let sumDirectIrr = 0;
+  let sumSw = 0;
+  let sumHum = 0;
+  let sumCloud = 0;
+  let samplesCount = 0;
 
   for (let i = 0; i < hourly.time.length; i++) {
     const tStr = hourly.time[i];
@@ -68,9 +74,21 @@ function getDaypartWeather(hourly, dayDateStr, startHour, endHour, fallbackCode,
         if (pop > popMax) popMax = pop;
         precipSum += p;
         if (p > maxPrecipPerHour) maxPrecipPerHour = p;
-        if (hourly.weather_code && hourly.weather_code[i] != null) {
-          codes.push(hourly.weather_code[i]);
+        
+        const hCode = hourly.weather_code && hourly.weather_code[i] != null ? hourly.weather_code[i] : null;
+        if (hCode != null) {
+          codes.push(hCode);
+          const hourIsDay = (hourly.is_day && hourly.is_day[i] != null) ? hourly.is_day[i] : (h >= 8 && h < 20 ? 1 : 0);
+          if (hourIsDay === 1) {
+            daytimeCodes.push(hCode);
+          }
         }
+
+        if (hourly.direct_normal_irradiance && hourly.direct_normal_irradiance[i] != null) sumDirectIrr += hourly.direct_normal_irradiance[i];
+        if (hourly.shortwave_radiation && hourly.shortwave_radiation[i] != null) sumSw += hourly.shortwave_radiation[i];
+        if (hourly.relative_humidity_2m && hourly.relative_humidity_2m[i] != null) sumHum += hourly.relative_humidity_2m[i];
+        if (hourly.cloud_cover && hourly.cloud_cover[i] != null) sumCloud += hourly.cloud_cover[i];
+        samplesCount++;
       }
     }
   }
@@ -119,14 +137,20 @@ function getDaypartWeather(hourly, dayDateStr, startHour, endHour, fallbackCode,
       }
     }
   } else {
-    // Si no llueve, elegir el código más frecuente de nubosidad/sol
+    // Si no llueve: si es tramo diurno o mixto (ej. Tarde), priorizar las horas con luz solar activa
+    const targetCodesPool = (isDay === 1 && daytimeCodes.length > 0) ? daytimeCodes : codes;
     const counts = {};
-    for (const c of codes) counts[c] = (counts[c] || 0) + 1;
+    for (const c of targetCodesPool) counts[c] = (counts[c] || 0) + 1;
     dominantCode = Object.keys(counts).reduce((a, b) => counts[a] >= counts[b] ? a : b);
     dominantCode = Number(dominantCode);
   }
 
-  const info = getWeatherInfo(dominantCode, isDay, maxPrecipPerHour, popMax);
+  const avgDirectIrr = samplesCount > 0 ? (sumDirectIrr / samplesCount) : null;
+  const avgSw = samplesCount > 0 ? (sumSw / samplesCount) : null;
+  const avgHum = samplesCount > 0 ? (sumHum / samplesCount) : null;
+  const avgCloud = samplesCount > 0 ? (sumCloud / samplesCount) : null;
+
+  const info = getWeatherInfo(dominantCode, isDay, maxPrecipPerHour, popMax, avgDirectIrr, null, avgSw, avgCloud, avgHum, null);
   return { ...info, precipSum: Math.round(precipSum * 10) / 10, maxPrecipPerHour: Math.round(maxPrecipPerHour * 10) / 10, popMax };
 }
 

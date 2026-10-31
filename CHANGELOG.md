@@ -9,6 +9,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.23.56] - 2026-10-31
+### Fixed
+- **Armonización y Sincronización Integral entre Tarjetas y Vistas (Auditoría Integral Lendo & Princesa):**
+  - **Sincronización Tiempo Actual en Vivo (`weatherApi.js`):** Equiparado el umbral de rescate de falso cubierto en el bloque instantáneo (`weather.current`) con el del pronóstico horario (`ecmwfCloud <= 70` con radiación directa o sol verificado en ECMWF), logrando coherencia matemática perfecta entre la Hero Card grande y la primera tarjeta del carrusel.
+  - **Continuidad Solar en Gráficas y Compartir (`chartsView.js` & `shareCardGenerator.js`):** Eliminado el corte de radiación que degradaba a nublado en el visor interactivo de Curvas (`[ 📈 Curvas ]`) y en la tarjeta de compartir por redes sociales. Ahora ambas vistas consumen los arrays de radiación directa y global de cada hora.
+  - **Ponderación Solar Diurna en la Tarde a 10 Días (`forecastView.js`):** En el tramo `🌇 TARDE` (15h a 24h), el estado del cielo en ausencia de lluvia pasa a evaluar prioritariamente las horas con luz solar activa (`is_day = 1`, 15h a 18h/20h) incorporando la radiación media, impidiendo que el cielo despejado o encapotado nocturno contamine el icono de la tarde.
+  - **Anti-Caché ES6 Integral:** Unificados los sufijos de versión a `v=3.0.23.56` en todos los `import` cruzados entre módulos.
+
 ## [3.0.23.55] - 2026-10-31
 ### Fixed
 - **Proporción y Equilibrio Visual de Halloween (Reporte Lendo):** Rediseñado el SVG temático de *Mayormente soleado* (`mostly-clear-day` en `weatherHalloweenIcons.js`). La gran Calabaza Solar Jack-o'-lantern con llamaradas solares pasa a ser la protagonista absoluta ocupando el 75% del marco visual con su sonrisa y ojos de fuego totalmente despejados, y la nube nocturna gótica se compacta en la esquina inferior derecha como elemento subordinado disperso sin ocultar el sol.
