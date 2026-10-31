@@ -3,6 +3,12 @@
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
 
+## 🏛️ Reforma Constitucional: Aprobación del Artículo 20 (Dificultad, Riesgo y Prudencia Quirúrgica) — 2026-10-31
+- **Iniciativa de Lendo (PIN Maestro 2796 verificado):**
+  - Mandato expreso: ante cualquier futura corrección o propuesta técnica, Princesa debe evaluar obligatoriamente el nivel de dificultad técnica (1 al 10) y el porcentaje de probabilidad de fallo o efecto colateral (0% al 100%), defendiendo la vía conservadora cuando no compense arriesgar lo que ya funciona bien.
+- **Alcance Universal (Ley 6):**
+  - Incorporada como **Artículo 20 de la Constitución Suprema (Parte I)** y sincronizada de inmediato en todos los repositorios del ecosistema zeustata (`Tiempo`, `Portal_Policia_Gijon`, `Porras`).
+
 ## 💎 Armonización Integral de Cristal Líquido en Tarjetas Principales (v3.0.23.53) — 2026-10-31
 - **Observación y Petición de Lendo:**
   - De los 9 menús de la app, las tarjetas principales de En Vivo, 10 Días, Playas, Surf y Montaña presentaban una textura de cristal líquido esmerilada y opaca frente al fondo en movimiento, mientras que Radar, Rutas y Cosmos se veían transparentes debido a que sus clases no estaban vinculadas a la regla universal de Apple Liquid Glass.
