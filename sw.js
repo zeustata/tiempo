@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-51-halloween-auto-event';
+const CACHE_NAME = 'meteoasturlode-v3023-52-borrina-silent-fix';
 const STATIC_ASSETS = [
   './',
   './index.html',

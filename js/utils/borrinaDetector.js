@@ -101,11 +101,14 @@ export function detectBorrinaEffect(current, hourly, concejo) {
   // Simbiosis OMM / AEMET: Solo se declara Niebla/Borrina si existe visibilidad horizontal <= 1.000 m
   // o código oficial WMO de niebla (45/48). Queda prohibido disparar alerta de niebla en noches despejadas (> 1.000 m de visibilidad) solo por humedad.
   if (isCoast) {
+    // Banco de Ventana Lendo & Webcams (Ley 27): Si ves la playa en la webcam y el Gorfolí a 13 km, NO hay borrina.
+    // Para declarar Alerta de Borrina Marina, el código oficial de la OMM debe ser 45 o 48 (Niebla marina en superficie).
+    // Jamás se dispara por humedad alta aislada bajo cielo nublado ordinario (código 3).
     const isFogCode = weatherCode === 45 || weatherCode === 48;
-    const isRealFogVis = visibility != null ? (visibility <= 1000) : isFogCode;
-    const isMarineSaturated = rh >= 92 && dewSpread <= 1.5 && speed <= 25;
+    const isRealFogVis = visibility != null ? (visibility <= 1000) : false;
+    const isMarineSaturated = rh >= 94 && dewSpread <= 1.0 && speed <= 25;
 
-    if (isRealFogVis && (isFogCode || isMarineSaturated)) {
+    if (isFogCode && (isRealFogVis || isMarineSaturated)) {
       // Umbral Oficial AEMET Meteoalerta para Nieblas: <= 200 m (Severo / Rojo) | 201-1000 m (Aviso Amarillo)
       const isSevere = visibility != null ? (visibility <= 200) : (rh >= 98 && isFogCode);
       return {
@@ -128,10 +131,10 @@ export function detectBorrinaEffect(current, hourly, concejo) {
   // 2. EVALUACIÓN NIEBLA DE VALLE / INVERSIÓN TÉRMICA (INTERIOR Y CUENCAS)
   if (!isCoast) {
     const isFogCode = weatherCode === 45 || weatherCode === 48;
-    const isRealFogVis = visibility != null ? (visibility <= 1000) : isFogCode;
-    const isValleyInversion = rh >= 93 && dewSpread <= 1.2 && speed <= 12 && isRealFogVis;
+    const isRealFogVis = visibility != null ? (visibility <= 1000) : false;
+    const isValleyInversion = rh >= 94 && dewSpread <= 1.0 && speed <= 12 && isRealFogVis;
 
-    if (isValleyInversion || (isFogCode && isRealFogVis && rh >= 90)) {
+    if (isFogCode && (isValleyInversion || (isRealFogVis && rh >= 90))) {
       const isSevere = visibility != null ? (visibility <= 200) : (rh >= 98 && isFogCode);
       return {
         isActive: true,

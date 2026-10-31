@@ -9,6 +9,10 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.23.52] - 2026-10-31
+### Fixed
+- **Blindaje del Detector de Borrina Marina (Ley 27 & Webcams):** Corregido falso positivo de alerta silenciosa de Borrina Marina bajo cielo cubierto ordinario (código WMO 3). Se exige código oficial de niebla (45/48) para activar la alerta, evitando que datos erráticos de visibilidad del ensemble disparen alertas cuando las webcams litorales (Salinas) confirman horizonte marino despejado.
+
 ## [3.0.23.51] - 2026-10-31
 ### Added
 - **Activación Sorpresa Universal de Halloween (31 Oct & 1 Nov):** Los iconos especiales de Halloween (calabazas, fantasmas y detalles de Samhain) se activan ahora por defecto para todos los usuarios al abrir la app durante estas dos jornadas festivas. Si un usuario prefiere volver a su tema habitual, se le respeta mediante opt-out en Ajustes, y el 2 de noviembre la app regresa automáticamente a su tema predeterminado.

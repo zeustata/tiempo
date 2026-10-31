@@ -3,6 +3,15 @@
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
 
+## 🌊 Blindaje de Alerta de Borrina Marina y Armonía con Webcams (v3.0.23.52) — 2026-10-31
+- **Observación de Lendo:**
+  - Mientras la Hero Card mostraba `Nublado / Cubiertu`, el detector secundario disparaba la alerta amarilla de `Borrina Marina Activa` citando visibilidad reducida a $\le 1\text{ km}$, cuando la webcam de Salinas confirmaba horizonte limpio sin niebla sobre el mar.
+- **Causa raíz:**
+  - En `js/utils/borrinaDetector.js`, la condición de saturación costera ($rh \ge 92\%$, $dewSpread \le 1.5$) combinada con la visibilidad errática del ensemble ($260\text{ m}$) disparaba la alerta sin exigir código oficial WMO de niebla.
+- **Corrección y Armonía (Leyes 14 y 27):**
+  - Se blinda `borrinaDetector.js` exigiendo imperativamente código $45$ o $48$ (Niebla en superficie) para emitir alertas de Borrina Marina o Niebla de Valle. Bajo código $3$, el banner permanece en silencio absoluto.
+- **Cache-Busting:** Actualizado a `v=3.0.23.52` y `meteoasturlode-v3023-52-borrina-silent-fix`.
+
 ## 🎃 Activación Sorpresa Universal de Halloween y Difuntos (v3.0.23.51) — 2026-10-31
 - **Visión de Lendo:**
   - Los días señalados de fiesta (31 de octubre y 1 de noviembre), la colección temática de iconos de Halloween debe saltar como sorpresa predeterminada para todos los usuarios al abrir la aplicación, sin exigir que tengan que entrar a Ajustes a seleccionarla.
