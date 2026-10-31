@@ -9,6 +9,10 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.23.53] - 2026-10-31
+### Fixed
+- **Armonía Integral Liquid Glass en Tarjetas Principales (Ley 14):** Integradas las tarjetas de Radar (`.radar-wrapper`), Rutas (`.routes-card`) y Cosmos (`.astronomy-hero-card`) en el motor universal de cristal líquido esmerilado (`backdrop-filter: blur(24px)`, bisel y halo de luz). Se unifica la opacidad visual frente al fondo animado en los 9 menús de la aplicación.
+
 ## [3.0.23.52] - 2026-10-31
 ### Fixed
 - **Blindaje del Detector de Borrina Marina (Ley 27 & Webcams):** Corregido falso positivo de alerta silenciosa de Borrina Marina bajo cielo cubierto ordinario (código WMO 3). Se exige código oficial de niebla (45/48) para activar la alerta, evitando que datos erráticos de visibilidad del ensemble disparen alertas cuando las webcams litorales (Salinas) confirman horizonte marino despejado.

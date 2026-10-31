@@ -3,6 +3,14 @@
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
 
+## 💎 Armonización Integral de Cristal Líquido en Tarjetas Principales (v3.0.23.53) — 2026-10-31
+- **Observación y Petición de Lendo:**
+  - De los 9 menús de la app, las tarjetas principales de En Vivo, 10 Días, Playas, Surf y Montaña presentaban una textura de cristal líquido esmerilada y opaca frente al fondo en movimiento, mientras que Radar, Rutas y Cosmos se veían transparentes debido a que sus clases no estaban vinculadas a la regla universal de Apple Liquid Glass.
+- **Solución Quirúrgica y Armonía (Ley 14):**
+  - En `css/components.css`: se incorporaron `.radar-wrapper`, `.routes-card` y `.astronomy-hero-card` a la regla unificada de cristal líquido (`backdrop-filter: blur(24px) saturate(190%)`, bisel superior y halo especular interactivo), manteniendo intacto el menú Ocio (acordeones sueltos) por decisión de diseño.
+- **Cache-Busting:** Actualizado a `v=3.0.23.53` y `meteoasturlode-v3023-53-liquid-glass-harmony`.
+- **Verificación Local:** Comprobado por Lendo en `localhost:8080` antes del commit y push a la red (Leyes 1, 3 y 9).
+
 ## 🌊 Blindaje de Alerta de Borrina Marina y Armonía con Webcams (v3.0.23.52) — 2026-10-31
 - **Observación de Lendo:**
   - Mientras la Hero Card mostraba `Nublado / Cubiertu`, el detector secundario disparaba la alerta amarilla de `Borrina Marina Activa` citando visibilidad reducida a $\le 1\text{ km}$, cuando la webcam de Salinas confirmaba horizonte limpio sin niebla sobre el mar.

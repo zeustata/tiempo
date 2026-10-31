@@ -6,6 +6,9 @@
 .marine-card,
 .mountain-card,
 .astronomy-card,
+.astronomy-hero-card,
+.routes-card,
+.radar-wrapper,
 .surf-card,
 .laundry-card {
   background: var(--bg-surface);
@@ -30,6 +33,9 @@
 .low-perf .marine-card,
 .low-perf .mountain-card,
 .low-perf .astronomy-card,
+.low-perf .astronomy-hero-card,
+.low-perf .routes-card,
+.low-perf .radar-wrapper,
 .low-perf .surf-card,
 .low-perf .laundry-card {
   backdrop-filter: blur(12px) saturate(150%);
@@ -47,6 +53,9 @@
 .low-perf .marine-card::after,
 .low-perf .mountain-card::after,
 .low-perf .astronomy-card::after,
+.low-perf .astronomy-hero-card::after,
+.low-perf .routes-card::after,
+.low-perf .radar-wrapper::after,
 .low-perf .surf-card::after,
 .low-perf .laundry-card::after {
   display: none;
@@ -65,6 +74,9 @@
 .marine-card::after,
 .mountain-card::after,
 .astronomy-card::after,
+.astronomy-hero-card::after,
+.routes-card::after,
+.radar-wrapper::after,
 .surf-card::after,
 .laundry-card::after {
   content: '';
@@ -9162,13 +9174,8 @@
 }
 
 .astronomy-hero-card {
-  background: rgba(15, 23, 42, 0.45);
-  border: 1px solid rgba(147, 197, 253, 0.22);
-  border-radius: var(--radius-lg, 20px);
   padding: 22px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
-  position: relative;
-  overflow: hidden;
+  margin-bottom: 24px;
 }
 
 .astronomy-hero-card::before {
