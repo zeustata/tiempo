@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-50-fog-precision-fix';
+const CACHE_NAME = 'meteoasturlode-v3023-51-halloween-auto-event';
 const STATIC_ASSETS = [
   './',
   './index.html',

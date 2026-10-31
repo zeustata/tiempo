@@ -9,6 +9,10 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.23.51] - 2026-10-31
+### Added
+- **Activación Sorpresa Universal de Halloween (31 Oct & 1 Nov):** Los iconos especiales de Halloween (calabazas, fantasmas y detalles de Samhain) se activan ahora por defecto para todos los usuarios al abrir la app durante estas dos jornadas festivas. Si un usuario prefiere volver a su tema habitual, se le respeta mediante opt-out en Ajustes, y el 2 de noviembre la app regresa automáticamente a su tema predeterminado.
+
 ## [3.0.23.50] - 2026-10-31
 ### Fixed
 - **Calibración Milimétrica de Niebla (Banco de Ventana Lendo - Ley 27):** Eliminada la degradación errática de días cubiertos ordinarios (código WMO 3) a Niebla. Se blinda el clasificador para exigir código explícito de niebla (45/48), evitando que lecturas de visibilidad anómalas del ensemble enmascaren horizontes limpios donde se divisa la montaña (el Gorfolí visible a 13 km).

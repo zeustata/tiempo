@@ -3,6 +3,15 @@
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
 
+## 🎃 Activación Sorpresa Universal de Halloween y Difuntos (v3.0.23.51) — 2026-10-31
+- **Visión de Lendo:**
+  - Los días señalados de fiesta (31 de octubre y 1 de noviembre), la colección temática de iconos de Halloween debe saltar como sorpresa predeterminada para todos los usuarios al abrir la aplicación, sin exigir que tengan que entrar a Ajustes a seleccionarla.
+- **Implementación Técnica:**
+  - En `js/app.js` (`getEffectiveIconTheme`): durante el 31 de octubre y 1 de noviembre, el tema devuelto por defecto es `halloween`, suprimiendo la barrera previa del flag antiguo.
+  - Se añade mecanismo de opt-out respetuoso (`meteoastur_halloween_optout_2026`) en `selectTheme()` si el usuario decide cambiarlo voluntariamente a otro tema durante las fechas.
+  - Retorno automático transparente al tema habitual a partir del 2 de noviembre.
+- **Cache-Busting:** Actualizado a `v=3.0.23.51` y `meteoasturlode-v3023-51-halloween-auto-event`.
+
 ## 🔭 Caso Real #3: Calibración Milimétrica de Niebla y Visibilidad Real (v3.0.23.50) — 2026-10-31
 - **Observación real de Lendo desde su ventana en Piedras Blancas:**
   - Cielo cubierto matutino en otoño sin lluvia ($0.0\text{ mm}$), humedad $94\%$, pero con atmósfera límpida en superficie: el pico Gorfolí se divisa perfectamente a $13\text{ km}$ de distancia en línea recta.

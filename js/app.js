@@ -1,7 +1,7 @@
 import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo, resolveSubLocalidad } from './config/concejos.js?v=2.0.0';
 import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.23.46';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=3.0.23.28';
-import { renderCurrentWeather } from './components/currentCard.js?v=3.0.23.50';
+import { renderCurrentWeather } from './components/currentCard.js?v=3.0.23.51';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.23.40';
 import { renderSurfCard } from './components/surfCard.js?v=3.0.23.39';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.11';
@@ -1385,6 +1385,14 @@ class MeteoAsturiasApp {
       this.triggerHaptic();
       try {
         localStorage.setItem('meteoastur_explicit_theme', 'true');
+        const now = new Date();
+        const isHalloweenDate = (now.getMonth() === 9 && now.getDate() === 31) || (now.getMonth() === 10 && now.getDate() === 1);
+        if (isHalloweenDate && themeId !== 'halloween') {
+          // El usuario ha elegido explícitamente otro tema durante los días de Halloween
+          localStorage.setItem('meteoastur_halloween_optout_' + now.getFullYear(), 'true');
+        } else if (themeId === 'halloween') {
+          localStorage.removeItem('meteoastur_halloween_optout_' + now.getFullYear());
+        }
       } catch (e) {}
       this.prefs.iconTheme = themeId;
       savePreferences(this.prefs);
@@ -1444,8 +1452,12 @@ class MeteoAsturiasApp {
     const now = new Date();
     // Samhain / Noche de Difuntos: 31 de Octubre (mes 9) y 1 de Noviembre (mes 10)
     const isHalloween = (now.getMonth() === 9 && now.getDate() === 31) || (now.getMonth() === 10 && now.getDate() === 1);
-    if (isHalloween && !localStorage.getItem('meteoastur_explicit_theme')) {
-      return 'halloween';
+    // Sorpresa Universal por defecto: salta automáticamente para todos salvo que el usuario lo cambie expresamente en Ajustes
+    if (isHalloween) {
+      const isOptOut = localStorage.getItem('meteoastur_halloween_optout_' + now.getFullYear()) === 'true';
+      if (!isOptOut) {
+        return 'halloween';
+      }
     }
     return this.prefs.iconTheme || 'astur';
   }
