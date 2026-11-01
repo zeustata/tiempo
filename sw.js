@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-56-full-cross-card-sync';
+const CACHE_NAME = 'meteoasturlode-v3023-57-clear-sky-ecmwf-rescue';
 const STATIC_ASSETS = [
   './',
   './index.html',

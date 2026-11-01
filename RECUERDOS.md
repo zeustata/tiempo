@@ -3,6 +3,20 @@
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
 
+## ☀️ Rescate de Cielo Despejado Real de ECMWF frente a Nubes Fantasma de Mesoescala (v3.0.23.57) — 2026-11-01
+- **Observación y Capturas Reales de Lendo (Piedras Blancas y Webcam Salinas):**
+  - A las 17:21 h, en Piedras Blancas el cielo estaba completamente azul y despejado (0% nubes, solo estelas de condensación de aviones y sol bajo limpio) y la webcam del Real Club Náutico de Salinas confirmaba cielo raso al 100%.
+  - Sin embargo, la app mostraba «Parcialmente nublado / Claros» debido a que AROME marcaba 67% de nubes (código 2), ICON 73% y GFS 53%.
+  - El Centro Europeo (ECMWF IFS) era el único modelo que clavaba la realidad: 10% de nubes y código 0 (Despejado) con 341 W/m² de radiación solar directa.
+- **Diagnóstico y Causa Raíz en el Consenso:**
+  - El filtro `isFalseOvercast` solo rescataba el sol de ECMWF si AROME se encapotaba al 80% o más.
+  - Al quedarse AROME en un 67% (tramo intermedio 41-74%), la app adoptaba ese 67% y caía en «Parcialmente nublado / Claros».
+- **Solución Quirúrgica de No-Regresión (Ley 20 & Ley 27):**
+  - En `js/services/weatherApi.js` (`applyCantabricoConsensus`): incorporado `isFalseCloudyInterval` e `isFalseCloudyIntervalH`. Si ECMWF constata cielo despejado limpio (`ecmwfCloud <= 15%` y `eCode === 0`) con sol activo (`direct_normal_irradiance >= 150 W/m²`) en tiempo seco (0.0 mm), pero AROME infla un falso intervalo nuboso (`rawCloud >= 35%` o `code === 2`), el Consenso adopta la nubosidad y el código despejado de ECMWF.
+  - Superados con éxito el 100% de los tests contra los 6 casos históricos del Banco de Ventana.
+- **Cache-Busting:** Actualizado a `v=3.0.23.57` y Service Worker `meteoasturlode-v3023-57-clear-sky-ecmwf-rescue`.
+- **Verificación Local:** Comprobado en servidor de pruebas `http://localhost:8080` (Leyes 1, 3 y 9).
+
 ## 🌰 Hoja de Ruta de Iconografía: Doctrina de Luz y Fidelidad Térmica para el Amagüestu & Creación Integral de Eventos Post-Play Store — 2026-11-01
 - **Acuerdo y Decisión Estratégica de Lendo (Cero Riesgos en Producción & Fidelidad Meteorológica Estricta):**
   - **Prudencia Absoluta de Producción:** Mientras la versión enviada a Google Play Store (`v3.0.23`, `versionCode: 8`) se encuentre en proceso de revisión, el código de la aplicación permanece 100% congelado y blindado contra modificaciones imprevistas.
@@ -150,6 +164,10 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
    - *Resultado obligatorio:* Anular el falso orbayu (virga) y respetar el estado del cielo seco (Ley 21).
 6. **Caso Real #6 (Panza de burro saturada `HR >= 94%`, `cc >= 85%`, `vis <= 2.500 m`, `0.0 mm` en pluviómetro):**
    - *Resultado obligatorio:* Si `PoP < 20%` -> **`🌫️🫧 Niebla / Borrina húmeda`** (sin gotas); si `PoP >= 20%` -> **`🌦️ Orbayu meón (Llovizna fina)`**.
+7. **Caso Real #7 (Domingo 01/11/2026, 17:21 h - Despejado con 0 nubes en Piedras Blancas y Salinas vs Falso Intervalo de AROME 67%):**
+   - *Lectura API:* AROME `67%` nubes (`cód. 2`), ICON `73%`, GFS `53%`, ECMWF `10%` nubes (`cód. 0`, Despejado), Radiación directa `341-405 W/m²`, Lluvia `0.0 mm`.
+   - *Observación real de Lendo:* Cielo azul raso y puro con sol poniéndose, 0% nubes reales en Piedras Blancas y Salinas (webcam Náutico).
+   - *Resultado obligatorio:* Rescatar el cielo despejado de ECMWF (`<= 15%` nubes, cód. `0`) y clasificar como **`☀️ Despejado / Soleyeru`**.
 
 ### 📋 Tabla Maestra Consolidada de Estados, Factores y Refinamientos (`weatherIcons.js` + `weatherApi.js`)
 ```text

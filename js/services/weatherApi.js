@@ -263,6 +263,27 @@ function applyCantabricoConsensus(weather, consensus) {
       }
     }
 
+    // A1.1) Rescate Soberano de Cielo Despejado de ECMWF (Ley 27 & Banco de Ventana Caso Real #7):
+    // Cuando el Centro Europeo (ECMWF) certifica cielo despejado limpio (ecmwfCloud <= 15% y eCode === 0)
+    // con radiación solar directa activa (eDirectIrr >= 150 W/m² o rawDirectIrr >= 150 W/m²) en tiempo seco (sin lluvia),
+    // pero AROME/modelo base simula un falso intervalo nuboso (rawCloud >= 35% o código 2):
+    // SE ADOPTA EL CIELO DESPEJADO REAL DE ECMWF (erradica nubes fantasma costeras en atardeceres y mañanas).
+    const isFalseCloudyInterval = (rawPrecip < 0.1 && ePrecip < 0.1) &&
+      ecmwfCloud <= 15 && eCode === 0 &&
+      (eDirectIrr >= 150 || rawDirectIrr >= 150) &&
+      (rawCloud >= 35 || rawCode === 2);
+
+    if (isFalseCloudyInterval) {
+      weather.current.cloud_cover = ecmwfCloud;
+      weather.current.weather_code = 0;
+      if (consensus.current.direct_normal_irradiance != null && (!weather.current.direct_normal_irradiance || weather.current.direct_normal_irradiance < consensus.current.direct_normal_irradiance)) {
+        weather.current.direct_normal_irradiance = consensus.current.direct_normal_irradiance;
+      }
+      if (consensus.current.shortwave_radiation != null && (!weather.current.shortwave_radiation || weather.current.shortwave_radiation < consensus.current.shortwave_radiation)) {
+        weather.current.shortwave_radiation = consensus.current.shortwave_radiation;
+      }
+    }
+
     // C) Rescate Soberano de Radiación Solar Real / Resol Perforante de ECMWF (Ley 27):
     // Cuando AROME se queda "a oscuras" o subestima severamente el haz solar (rawDirectIrr < 180 W/m² con cielo encapotado),
     // pero el Centro Europeo (ECMWF) constata que el sol logra perforar el manto con fuerza de resol otoñal
@@ -383,6 +404,25 @@ function applyCantabricoConsensus(weather, consensus) {
         if (weather.hourly.weather_code && consensus.hourly.weather_code) {
           weather.hourly.weather_code[i] = consensus.hourly.weather_code[i];
         }
+        if (weather.hourly.direct_normal_irradiance && consensus.hourly.direct_normal_irradiance) {
+          weather.hourly.direct_normal_irradiance[i] = consensus.hourly.direct_normal_irradiance[i];
+        }
+        if (weather.hourly.shortwave_radiation && consensus.hourly.shortwave_radiation) {
+          weather.hourly.shortwave_radiation[i] = consensus.hourly.shortwave_radiation[i];
+        }
+      }
+
+      // A1.1) Rescate Soberano de Cielo Despejado Horario de ECMWF (Ley 27 & Banco de Ventana Caso Real #7):
+      const rawCodeH = weather.hourly.weather_code ? weather.hourly.weather_code[i] : null;
+      const rawDirectIrrH = weather.hourly.direct_normal_irradiance ? weather.hourly.direct_normal_irradiance[i] : 0;
+      const isFalseCloudyIntervalH = (precip < 0.1 && ePrecipH < 0.1) &&
+        ecmwfC <= 15 && eCodeH === 0 &&
+        (eDirectIrrH >= 150 || rawDirectIrrH >= 150) &&
+        (rawC >= 35 || rawCodeH === 2);
+
+      if (isFalseCloudyIntervalH) {
+        if (weather.hourly.cloud_cover) weather.hourly.cloud_cover[i] = ecmwfC;
+        if (weather.hourly.weather_code) weather.hourly.weather_code[i] = 0;
         if (weather.hourly.direct_normal_irradiance && consensus.hourly.direct_normal_irradiance) {
           weather.hourly.direct_normal_irradiance[i] = consensus.hourly.direct_normal_irradiance[i];
         }
