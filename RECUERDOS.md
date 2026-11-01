@@ -177,7 +177,11 @@ ICONO | ESTADO EN METEOASTUR LODE              | NUBES (cc)  | RAD. DIRECTA (irr
   2. *Pautas de Coherencia de Diseño:*
      - Los nuevos iconos deben inspirarse y regirse en los iconos ya consolidados de cada tema: mismas proporciones, equilibrio en la cantidad de elementos (astros, nubes, partículas) y mismo ritmo y estilo de animación fluida para garantizar armonía visual y rendimiento en dispositivos móviles.
 
-## 📌 Tarea Pendiente y Hoja de Ruta: Consenso Cantábrico en Widgets Nativos de Android (4x2 y 4x3) — 2026-10-25
+## 📌 Tarea Pendiente y Hoja de Ruta: Consenso Cantábrico en Widgets Nativos de Android (4x2 y 4x3) — Actualizado 2026-11-01
+- **Confirmación en Producción (Feedback Lendo - «hola princesa. hoy los estas bordando. estas acertando totalmente. es una pena que el witget no diga lo mismo. una vez subido a la play store hay que arreglarlo»):**
+  - La web app clava el tiempo en vivo al 100% gracias al motor de Consenso Cantábrico y la calibración continua de radiación solar.
+  - El widget nativo de Android (4x2 y 4x3) se desfasa porque consulta la API en bruto y se traga los códigos erráticos de nublado sin pasar por el consenso.
+  - **Estrategia acordada:** Dejarlo como tarea prioritaria número 1 para acometer inmediatamente tras la publicación oficial de la versión actual en Google Play Store, evitando tocar el APK/AAB durante la fase de revisión.
 - **Diagnóstico y Usabilidad (Feedback Lendo - «no queria despertarte pero me mosquea q el widget ponga soleado y entres en la app y ponga nublado que es lo que hay» y «quiero que lo dejes en tareas pendientes ya que cambiar esas cosas retrasarian todo»):**
   1. *Diagnóstico Operativo de la Discrepancia Widget vs App:*
      - Lendo constató en Piedras Blancas (Castrillón) que en el cielo real había un manto nuboso completo grisáceo. Al consultar el widget de escritorio de Android, marcaba «Solín • Despejado» (código 0, soleado). Sin embargo, al abrir la web app, esta mostraba correctamente «Nublado» (código 3).
