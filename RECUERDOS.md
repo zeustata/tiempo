@@ -3,6 +3,19 @@
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
 
+## 🌰 Hoja de Ruta de Iconografía: Doctrina de Luz y Fidelidad Térmica para el Amagüestu & Creación Integral de Eventos Post-Play Store — 2026-11-01
+- **Acuerdo y Decisión Estratégica de Lendo (Cero Riesgos en Producción & Fidelidad Meteorológica Estricta):**
+  - **Prudencia Absoluta de Producción:** Mientras la versión enviada a Google Play Store (`v3.0.23`, `versionCode: 8`) se encuentre en proceso de revisión, el código de la aplicación permanece 100% congelado y blindado contra modificaciones imprevistas.
+  - **Doctrina de Luz Solar y Fidelidad Térmica (Lección de Halloween):**
+    - Queda establecido como principio obligatorio que los iconos festivos deben transmitir con total nitidez y de un solo vistazo el estado meteorológico real en la calle, sin inducir a equívoco al usuario.
+    - **Exploración Visual para el Amagüestu («Soy tus ojos, recuerda»):**
+      - Se probarán variantes bajo la mirada directa de Lendo: desde un sol dorado otoñal acompañado de castañes asaes hasta una **Castaña Solar con rayos radiantes** (asada, con corte ardiente de luz dorada interior y llamaradas/rayos potentes que transmitan inequívocamente despejado y calor).
+      - Lendo será el juez visual supremo: si la castaña solar con rayos canta *Despejado* con total nitidez y fuerza, será la elegida; si se percibe oscura o confusa, se adoptará el sol con la castaña compañera.
+    - En `mostly-clear-day` (Mayormente soleado), el elemento solar dominará el 75% a 80% del área visual de forma indiscutible, relegando la mini-nube a un elemento secundario en una esquina sin opacar el núcleo radiante.
+- **Planificación de Creación Sistemática Post-Lanzamiento:**
+  - Tras la aprobación oficial en Google Play Store y el ajuste del Consenso Cantábrico en los widgets nativos (Prioridad 1), Princesa implementará de forma sistemática e integral las colecciones completas de los eventos festivos programados en el calendario anual (Amagüestu, Navidá & L'Angulero, Antroxu, Semana Santa, La Balesquida, San Xuan, La Descarga, El Carmín, Les Piragües, Fiesta de la Sidra, Descenso del Nalón y Día d'Asturies).
+  - Cada colección se desarrollará con la paridad absoluta exigida por la **Ley 23** (los 18 estados meteorológicos exactos: 13 genéricos y los 5 fenómenos singulares asturianos: resol, borrina meona, bastinazu, aguanieve y pedrisco), dejando el catálogo cerrado, probado y libre de mantenimiento futuro.
+
 ## 🏛️ Reforma Constitucional: Aprobación del Artículo 20 (Dificultad, Riesgo y Prudencia Quirúrgica) — 2026-10-31
 - **Iniciativa de Lendo (PIN Maestro 2796 verificado):**
   - Mandato expreso: ante cualquier futura corrección o propuesta técnica, Princesa debe evaluar obligatoriamente el nivel de dificultad técnica (1 al 10) y el porcentaje de probabilidad de fallo o efecto colateral (0% al 100%), defendiendo la vía conservadora cuando no compense arriesgar lo que ya funciona bien.
