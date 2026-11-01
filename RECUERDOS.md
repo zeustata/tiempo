@@ -17,6 +17,17 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - **Cache-Busting:** Actualizado a `v=3.0.23.57` y Service Worker `meteoasturlode-v3023-57-clear-sky-ecmwf-rescue`.
 - **Verificación Local:** Comprobado en servidor de pruebas `http://localhost:8080` (Leyes 1, 3 y 9).
 
+## 🔬 Hoja de Ruta de Innovación: Motor Astronómico de Pureza Solar Relativa («Modo Dios») — 2026-11-01
+- **Iniciativa y Visión de Lendo (El factor horario estacional y cambio de hora):**
+  - Lendo constató la enorme asimetría física entre estaciones: no es lo mismo un 1 de noviembre a las 19:00 h con horario de invierno (noche cerrada, sol a -8.4° bajo el horizonte, 0 W/m²) que un 1 de agosto a las 19:00 h con horario de verano UTC+2 (sol radiante a 28.7° sobre el horizonte con 758 W/m² de haz directo).
+  - Asimismo, al atardecer en otoño (17:15 h), con el cielo 100% azul y despejado, la inclinación baja del sol solo permite generar físicamente entre 180 y 250 W/m², lo que puede engañar a umbrales fijos estáticos haciéndoles creer que hay nubes cuando en realidad el cielo está raso.
+- **Concepto del Motor de Pureza Solar Relativa (Clearness Index Dinámico):**
+  - En lugar de umbrales estáticos por meses (ej. 150 o 380 W/m²), calcular el techo astronómico teórico máximo de radiación directa (DNI) y global (GHI) para cada minuto y concejo de Asturias según latitud (43.5° N), longitud (-6.0° W), día del año y huso horario (UTC+1 invierno / UTC+2 verano).
+  - Comparar la radiación medida contra ese techo dinámico: si a las 17:15 h llegan 230 W/m² sobre un máximo posible de 250 W/m², el índice de pureza es del 92% (Despejado rotundo).
+- **Dictamen del Artículo 20 (Prudencia y Hoja de Ruta Futura):**
+  - *Dificultad técnica:* 6/10. *Riesgo de regresión:* 45% (alteraría la calibración consolidada de Resol y Panza de burro).
+  - *Decisión unánime de socios:* Se guarda en la hoja de ruta de innovación futura para acometer con simulaciones y banco de pruebas tras el lanzamiento oficial en Google Play Store y los widgets nativos.
+
 ## 🌰 Hoja de Ruta de Iconografía: Doctrina de Luz y Fidelidad Térmica para el Amagüestu & Creación Integral de Eventos Post-Play Store — 2026-11-01
 - **Acuerdo y Decisión Estratégica de Lendo (Cero Riesgos en Producción & Fidelidad Meteorológica Estricta):**
   - **Prudencia Absoluta de Producción:** Mientras la versión enviada a Google Play Store (`v3.0.23`, `versionCode: 8`) se encuentre en proceso de revisión, el código de la aplicación permanece 100% congelado y blindado contra modificaciones imprevistas.
