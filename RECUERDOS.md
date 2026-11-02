@@ -2,6 +2,26 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📍 Persistencia Permanente de Sublocalidad y Auto-GPS al Iniciar (v3.0.23.63) — 2026-11-02
+- **Feedback Crítico de Tester Real (Estela en Salinas):**
+  - Estela se encontraba en **Salinas** (Castrillón). Al pulsar el botón GPS, la app resolvió y mostró correctamente *«Castrillón (Salinas) • Altitud: 5 m»*.
+  - No obstante, al cerrar la app y volver a abrirla siguiendo en Salinas, la cabecera volvía a mostrar *«Piedras Blancas»*.
+- **Diagnóstico y Causa Raíz Técnica:**
+  - En `js/utils/storage.js`, las preferencias guardadas en `localStorage` solo registraban `lastConcejo: 'castrillon'`, pero no guardaban `lastLocalidad` ni `lastCoords`.
+  - En el constructor de `js/app.js`, `this.activeLocalidad` arrancaba como `null`, forzando a la Hero Card a renderizar la primera localidad por defecto del concejo (la capital municipal Piedras Blancas).
+  - Además, la condición de auto-ubicación silenciosa exigía `this.prefs.autoLocation === true`; si el modal de bienvenida había sido cerrado sin pulsar activar, quedaba en `false` o `null` y la app no consultaba el GPS al arrancar.
+- **Solución Quirúrgica Aplicada:**
+  - En `js/utils/storage.js`: añadida la serialización de `lastLocalidad` y `lastCoords`, y activado `autoLocation: true` por defecto.
+  - En `js/app.js`:
+    - El constructor recupera de inmediato `this.prefs.lastLocalidad` y `this.prefs.lastCoords`, garantizando que la app arranque en 0 ms mostrando Salinas (5 m) o Quintueles (105 m) sin ningún parpadeo ni retroceso.
+    - `onGeoSuccess` persiste inmediatamente `lastConcejo`, `lastLocalidad`, `lastCoords` y `autoLocation = true` en `localStorage`.
+    - La auto-ubicación al arrancar se ejecuta siempre en segundo plano salvo desactivación expresa del usuario (`autoLocation !== false`).
+- **Verificación Técnica:**
+  - 50 archivos JavaScript analizados con 0 errores sintácticos.
+  - Pruebas unitarias de persistencia superadas al 100%.
+- **Cache-Busting:**
+  - Incremento a `v3.0.23.63` en `index.html`, `sw.js` y `js/app.js` con Service Worker `meteoasturlode-v3023-63-persistent-sublocality-autolocation`.
+
 ## 📍 Expansión de Catálogo de Sublocalidades y Blindaje de Fronteras Asturianas (v3.0.23.62) — 2026-11-02
 - **Contexto y Solicitud de Lendo:**
   - Los padres de Lendo residen en **Quintueles**, localidad costera perteneciente administrativamente a **Villaviciosa**.

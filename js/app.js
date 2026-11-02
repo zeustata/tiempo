@@ -1,6 +1,6 @@
 import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo, resolveSubLocalidad } from './config/concejos.js?v=3.0.23.62';
 import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.23.58';
-import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=3.0.23.28';
+import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=3.0.23.63';
 import { renderCurrentWeather } from './components/currentCard.js?v=3.0.23.62';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.23.40';
 import { renderSurfCard } from './components/surfCard.js?v=3.0.23.39';
@@ -57,8 +57,8 @@ class MeteoAsturiasApp {
     this.autoRefreshTimer = null;
     this.deferredInstallPrompt = null;
     this.previewHalloweenMode = false;
-    this.userCoords = null;
-    this.activeLocalidad = null;
+    this.userCoords = this.prefs.lastCoords || null;
+    this.activeLocalidad = this.prefs.lastLocalidad || null;
     
     this.init();
   }
@@ -113,8 +113,8 @@ class MeteoAsturiasApp {
     // Comprobar si se abrió desde un acceso directo PWA (hash URL)
     this.handleInitialHash();
 
-    // Auto-ubicación inteligente silenciosa al iniciar si está activada
-    if (this.prefs.autoLocation === true) {
+    // Auto-ubicación inteligente silenciosa al iniciar siempre (a menos que se haya desactivado expresamente)
+    if (this.prefs.autoLocation !== false) {
       this.locateUser({ silent: true });
     }
 
@@ -166,7 +166,7 @@ class MeteoAsturiasApp {
         console.log('[MeteoAstur] Reanudación detectada: actualizando datos del tiempo y versión...');
         this.loadWeather(this.currentConcejo.id);
 
-        if (this.prefs.autoLocation === true) {
+        if (this.prefs.autoLocation !== false) {
           this.locateUser({ silent: true });
         }
 
@@ -2619,6 +2619,7 @@ class MeteoAsturiasApp {
     this.prefs.lastConcejo = concejoId;
     // Recalcular localidad activa para el nuevo concejo (evita arrastrar localidades ajenas como Piedras Blancas a Oviedo)
     this.activeLocalidad = this.userCoords ? resolveSubLocalidad(this.currentConcejo.id, this.userCoords.lat, this.userCoords.lon) : null;
+    this.prefs.lastLocalidad = this.activeLocalidad;
     savePreferences(this.prefs);
 
     this.updateSearchTriggerDisplay();
@@ -2699,16 +2700,23 @@ class MeteoAsturiasApp {
 
     const onGeoSuccess = (pos) => {
       this.userCoords = { lat: pos.coords.latitude, lon: pos.coords.longitude };
-      this.activeLocalidad = resolveSubLocalidad(this.currentConcejo?.id, pos.coords.latitude, pos.coords.longitude);
       const closest = findClosestConcejo(pos.coords.latitude, pos.coords.longitude);
       this.updateGpsButtonDisplay();
       if (closest) {
         this.activeLocalidad = resolveSubLocalidad(closest.id, pos.coords.latitude, pos.coords.longitude);
+        
+        // Persistir siempre la ubicación exacta en memoria permanente
+        this.prefs.lastConcejo = closest.id;
+        this.prefs.lastLocalidad = this.activeLocalidad;
+        this.prefs.lastCoords = this.userCoords;
+        this.prefs.autoLocation = true;
+        savePreferences(this.prefs);
+
         if (closest.id !== this.currentConcejo.id) {
           console.log(`[MeteoAstur] GPS detectó concejo: ${closest.name}`);
           this.switchConcejo(closest.id);
         } else {
-          // Si ya estamos en el concejo detectado, refrescar componentes para reflejar la sublocalidad activa (ej. La Fresneda)
+          // Si ya estamos en el concejo detectado, refrescar componentes para reflejar la sublocalidad activa (ej. Salinas o La Fresneda)
           this.renderAllComponents();
           if (!silent && gpsLabel) {
             gpsLabel.textContent = '✓ Aquí';

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-62-sublocalidades-expansion';
+const CACHE_NAME = 'meteoasturlode-v3023-63-persistent-sublocality-autolocation';
 const STATIC_ASSETS = [
   './',
   './index.html',

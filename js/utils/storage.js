@@ -9,17 +9,25 @@ export function getPreferences() {
     if (!raw) {
       return {
         lastConcejo: 'gijon',
+        lastLocalidad: null,
+        lastCoords: null,
         favorites: [], // Vacío por defecto
         units: 'metric', // metric (km/h) | knots (kt)
         model: 'best_match',
         iconTheme: 'astur', // astur (emojis emotivos cómic por defecto)
         autoRefresh: true,
-        autoLocation: null // null: aún no preguntado; true: auto-GPS activo; false: concejo fijo
+        autoLocation: true // Auto-GPS activo por defecto
       };
     }
     const parsed = JSON.parse(raw);
-    if (parsed.autoLocation === undefined) {
-      parsed.autoLocation = null;
+    if (parsed.autoLocation === undefined || parsed.autoLocation === null) {
+      parsed.autoLocation = true;
+    }
+    if (parsed.lastLocalidad === undefined) {
+      parsed.lastLocalidad = null;
+    }
+    if (parsed.lastCoords === undefined) {
+      parsed.lastCoords = null;
     }
     if (!Array.isArray(parsed.favorites)) {
       parsed.favorites = [];
@@ -38,12 +46,14 @@ export function getPreferences() {
   } catch (e) {
     return {
       lastConcejo: 'gijon',
+      lastLocalidad: null,
+      lastCoords: null,
       favorites: [],
       units: 'metric',
       model: 'best_match',
       iconTheme: 'astur',
       autoRefresh: true,
-      autoLocation: null
+      autoLocation: true
     };
   }
 }

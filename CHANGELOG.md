@@ -9,6 +9,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.23.63] - 2026-11-02
+### Fixed
+- **Persistencia Permanente de Sublocalidad y Auto-GPS al Iniciar (Reporte Tester Estela en Salinas):**
+  - **Memoria de Sublocalidad y Coordenadas (`storage.js` & `app.js`):** La app ahora persiste `lastLocalidad` y `lastCoords` en `localStorage` cada vez que el GPS fija posición. Al cerrar y volver a abrir la app, recupera inmediatamente la sublocalidad exacta (ej. **Salinas** a 5 m o **Quintueles** a 105 m) en 0 ms, eliminando el retroceso erróneo a la capital municipal (Piedras Blancas).
+  - **Geolocalización Inmediata al Abrir (`app.js`):** Eliminada la restricción que impedía la auto-ubicación silenciosa al arrancar. La app geolocaliza automáticamente en segundo plano al iniciar y al pulsar el botón GPS, actualizando la posición en vivo sin depender de ajustes pasivos.
+
 ## [3.0.23.62] - 2026-11-02
 ### Added
 - **Expansión del Catálogo de Sublocalidades Asturianas:**
