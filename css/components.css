@@ -211,6 +211,20 @@
   animation: heroWeatherFloat 3.2s ease-in-out infinite;
   transform-origin: center center;
   will-change: transform;
+  cursor: pointer;
+  border-radius: 16px;
+  padding: 4px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.2s ease;
+}
+
+.hero-icon-block:hover {
+  filter: drop-shadow(0 8px 18px rgba(56, 189, 248, 0.45));
+}
+
+.hero-icon-block:active {
+  transform: scale(0.92);
 }
 
 @keyframes heroWeatherFloat {

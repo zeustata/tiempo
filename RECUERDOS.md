@@ -3,6 +3,17 @@
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
 
+## ✨ Atajo Ergonómico Interactivo: Acceso a Estilos de Iconos desde la Hero Card (v3.0.23.58) — 2026-11-02
+- **Propuesta y Visión de Lendo (Ergonomía y Cero Sobrecarga Visual):**
+  - Lendo propuso habilitar un acceso directo al catálogo de Estilos de Iconos directamente al pulsar el icono del tiempo en la pantalla principal de En Vivo, evitando tener que navegar por Ajustes.
+  - Conforme al criterio consensuado de socios («la píldora sobrecargaría el menú En Vivo»), se descartó añadir carteles, botones extra o badges secundarios para preservar la pureza visual y la limpieza de cristal líquido (Leyes 11 y 14).
+- **Implementación Técnica Quirúrgica:**
+  - En `js/components/currentCard.js`: el contenedor `.hero-icon-block` adopta el rol interactivo `btn-open-icon-themes-trigger`, `role="button"`, `tabindex="0"` y título accesible.
+  - En `css/components.css`: micro-interacción elegante con `cursor: pointer`, sutil resplandor cian al hover (`filter: drop-shadow(0 8px 18px rgba(56, 189, 248, 0.45))`) y compresión elástica táctil al toque (`transform: scale(0.92)`).
+  - En `js/app.js`: delegación de eventos táctil, click y teclado (Enter/Espacio) con vibración háptica suave para desplegar el modal `#icon-themes-modal`.
+- **Cache-Busting:** Actualizado a `v=3.0.23.58` y Service Worker `meteoasturlode-v3023-58-hero-icon-shortcut`.
+- **Verificación Local:** Comprobado en servidor de pruebas `http://localhost:8080` (Leyes 1, 3 y 9).
+
 ## ☀️ Rescate de Cielo Despejado Real de ECMWF frente a Nubes Fantasma de Mesoescala (v3.0.23.57) — 2026-11-01
 - **Observación y Capturas Reales de Lendo (Piedras Blancas y Webcam Salinas):**
   - A las 17:21 h, en Piedras Blancas el cielo estaba completamente azul y despejado (0% nubes, solo estelas de condensación de aviones y sol bajo limpio) y la webcam del Real Club Náutico de Salinas confirmaba cielo raso al 100%.

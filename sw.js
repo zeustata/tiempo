@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-57-clear-sky-ecmwf-rescue';
+const CACHE_NAME = 'meteoasturlode-v3023-58-hero-icon-shortcut';
 const STATIC_ASSETS = [
   './',
   './index.html',

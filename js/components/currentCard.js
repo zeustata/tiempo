@@ -1,6 +1,6 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=3.0.23.57';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=3.0.23.58';
 import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=3.0.21';
-import { renderHourlyForecastBlock } from './forecastView.js?v=3.0.23.57';
+import { renderHourlyForecastBlock } from './forecastView.js?v=3.0.23.58';
 import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=3.0.23.43';
 import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=3.0.23.43';
 import { detectXeluEffect, renderXeluBanner } from '../utils/xeluDetector.js?v=3.0.23.43';
@@ -1013,7 +1013,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
           <h2 class="location-title">${formatLocationTitle(concejo.name, activeLocalidad)}</h2>
           <p class="location-meta">Altitud: ${(activeLocalidad?.altitude != null && concejo.name && concejo.name.includes('(')) ? activeLocalidad.altitude : concejo.altitude} m • ${concejo.region}</p>
         </div>
-        <div class="hero-icon-block" title="${weatherInfo.label}">
+        <div class="hero-icon-block btn-open-icon-themes-trigger" role="button" tabindex="0" title="${weatherInfo.label} • Toca para cambiar estilo de iconos" aria-label="Cambiar estilo de iconos del tiempo">
           ${renderWeatherIconHtml(weatherInfo, 54, iconTheme)}
         </div>
       </div>

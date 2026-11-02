@@ -1,24 +1,24 @@
 import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo, resolveSubLocalidad } from './config/concejos.js?v=2.0.0';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.23.57';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.23.58';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=3.0.23.28';
-import { renderCurrentWeather } from './components/currentCard.js?v=3.0.23.57';
+import { renderCurrentWeather } from './components/currentCard.js?v=3.0.23.58';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.23.40';
 import { renderSurfCard } from './components/surfCard.js?v=3.0.23.39';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.11';
 import { renderMountainCard } from './components/mountainCard.js?v=2.2.64';
 import { renderTourismCard } from './components/tourismCard.js?v=3.0.10';
-import { renderForecast } from './components/forecastView.js?v=3.0.23.57';
-import { renderWeatherChart } from './components/chartsView.js?v=3.0.23.57';
+import { renderForecast } from './components/forecastView.js?v=3.0.23.58';
+import { renderWeatherChart } from './components/chartsView.js?v=3.0.23.58';
 import { renderAstronomyView } from './components/astronomyCard.js?v=2.2.1';
 import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=2.2.1';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=3.0.23.57';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=3.0.23.58';
 import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=2.0.0';
 import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=2.0.0';
 import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=2.0.0';
 import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=2.0.0';
 import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=2.0.0';
 import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=2.0.0';
-import { getHalloweenWeatherSvg } from './utils/weatherHalloweenIcons.js?v=3.0.23.57';
+import { getHalloweenWeatherSvg } from './utils/weatherHalloweenIcons.js?v=3.0.23.58';
 import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=3.0.1';
 import { getTourismPlanExplanation } from './utils/tourismData.js?v=2.2.74';
 import { getRouteExplanation } from './utils/routesData.js?v=3.0.12';
@@ -1423,13 +1423,31 @@ class MeteoAsturiasApp {
       });
     });
 
+    const openThemesModal = () => {
+      this.triggerHaptic();
+      updateActiveThemeCards();
+      this.openModal(modal);
+    };
+
     if (triggerBtn) {
-      triggerBtn.addEventListener('click', () => {
-        this.triggerHaptic();
-        updateActiveThemeCards();
-        this.openModal(modal);
-      });
+      triggerBtn.addEventListener('click', openThemesModal);
     }
+
+    // Atajo ergonómico directo: pulsar el icono del tiempo en la Hero Card de En Vivo
+    document.addEventListener('click', (e) => {
+      const heroIconTrigger = e.target.closest('.hero-icon-block, .btn-open-icon-themes-trigger');
+      if (heroIconTrigger) {
+        e.preventDefault();
+        openThemesModal();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if ((e.key === 'Enter' || e.key === ' ') && e.target.closest('.hero-icon-block, .btn-open-icon-themes-trigger')) {
+        e.preventDefault();
+        openThemesModal();
+      }
+    });
 
     if (closeBtn) {
       closeBtn.addEventListener('click', () => {
