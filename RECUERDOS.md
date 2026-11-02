@@ -3,6 +3,23 @@
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
 
+## 🔧 Subsanación Crítica: Refresco de Sublocalidad Activa en Mismo Concejo (v3.0.23.61) — 2026-11-02
+- **Diagnóstico en Producción (Captura de pantalla de usuario en La Fresneda):**
+  - Tras el despliegue de v3.0.23.60, el usuario en La Fresneda ya fue correctamente asignado al concejo de **Siero** (eliminando el desvío a Noreña).
+  - No obstante, la cabecera mostraba *«Siero Pola de Siero • Altitud: 215 m»* en vez de *«Siero (La Fresneda) • Altitud: 175 m»*.
+- **Causa Raíz Quirúrgica (Llamada a método inexistente en app.js):**
+  - Al resolverse la geolocalización cuando el usuario ya se encontraba en el concejo destino (closest.id === this.currentConcejo.id), la rama de éxito ejecutaba this.renderActiveModule().
+  - Dicho método no existía en la clase MeteoAsturiasApp (el método canónico maestro de repintado es this.renderAllComponents()).
+  - Esto provocaba un TypeError no controlado en tiempo de ejecución de JavaScript, abortando la actualización del DOM y dejando congelada la sublocalidad por defecto municipal (Pola de Siero a 215 m).
+  - Asimismo, si la geolocalización se disparaba en modo silencioso (silent: true) en el arranque, la condición omitía el repintado si el concejo coincidía.
+- **Solución Aplicada:**
+  - En js/app.js (locateUser -> onGeoSuccess):
+    - Se garantiza la resolución previa e incondicional de this.activeLocalidad = resolveSubLocalidad(closest.id, ...).
+    - Si closest.id === this.currentConcejo.id, se invoca de inmediato this.renderAllComponents(), repintando la cabecera tanto en modo silencioso como interactivo con el nombre de la sublocalidad (La Fresneda) y su altitud real (175 m).
+- **Cache-Busting y Verificación:**
+  - Incremento a v3.0.23.61 en index.html, js/app.js y Service Worker meteoasturlode-v3023-61-sublocalidad-refresh-fix.
+  - 50 archivos JavaScript validados con 0 errores.
+
 ## 📍 Precisión Geográfica Multilocular y Corrección de Enclaves: La Fresneda en Siero (v3.0.23.60) — 2026-11-02
 - **Feedback Crítico de Usuario Real (Amigo de Lendo en La Fresneda):**
   - Un usuario real ubicado físicamente en la Urbanización La Fresneda reportó que la geolocalización de la app lo ubicaba erróneamente en el concejo de **Noreña**.

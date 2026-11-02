@@ -2703,17 +2703,19 @@ class MeteoAsturiasApp {
       const closest = findClosestConcejo(pos.coords.latitude, pos.coords.longitude);
       this.updateGpsButtonDisplay();
       if (closest) {
+        this.activeLocalidad = resolveSubLocalidad(closest.id, pos.coords.latitude, pos.coords.longitude);
         if (closest.id !== this.currentConcejo.id) {
           console.log(`[MeteoAstur] GPS detectó concejo: ${closest.name}`);
-          this.activeLocalidad = resolveSubLocalidad(closest.id, pos.coords.latitude, pos.coords.longitude);
           this.switchConcejo(closest.id);
-        } else if (!silent && gpsLabel) {
-          gpsLabel.textContent = '✓ Aquí';
-          this.activeLocalidad = resolveSubLocalidad(closest.id, pos.coords.latitude, pos.coords.longitude);
-          this.renderActiveModule();
-          setTimeout(() => {
-            this.updateGpsButtonDisplay();
-          }, 1400);
+        } else {
+          // Si ya estamos en el concejo detectado, refrescar componentes para reflejar la sublocalidad activa (ej. La Fresneda)
+          this.renderAllComponents();
+          if (!silent && gpsLabel) {
+            gpsLabel.textContent = '✓ Aquí';
+            setTimeout(() => {
+              this.updateGpsButtonDisplay();
+            }, 1400);
+          }
         }
       }
     };
