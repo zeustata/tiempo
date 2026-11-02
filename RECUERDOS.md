@@ -2,6 +2,26 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📍 Expansión de Catálogo de Sublocalidades y Blindaje de Fronteras Asturianas (v3.0.23.62) — 2026-11-02
+- **Contexto y Solicitud de Lendo:**
+  - Los padres de Lendo residen en **Quintueles**, localidad costera perteneciente administrativamente a **Villaviciosa**.
+  - Al estar Quintueles situada geográficamente mucho más cerca del casco urbano de Gijón (~6.5 km) que de la capital de Villaviciosa (~14 km), un cálculo centrado únicamente en capitales municipales situaría por error el GPS en Gijón.
+- **Implementación y Ampliación de Núcleos Estratégicos:**
+  - En `js/config/concejos.js` (`SUB_LOCALIDADES`):
+    - **Villaviciosa:** Incorporados **Quintueles** (lat: 43.5383, lon: -5.5800, alt: 105 m) y **Quintes** (lat: 43.5350, lon: -5.5550, alt: 120 m).
+    - **Gozón:** Incorporados **Luanco** (15 m), **Bañugues** (20 m) y **Verdicio** (35 m).
+    - **Carreño:** Incorporados **Candás** (20 m) y **Perlora** (25 m).
+    - **Cangas de Onís:** Incorporados **Cangas de Onís** (87 m) y el santuario de **Covadonga** (260 m).
+    - **Llanes:** Incorporados **Llanes** (15 m), **Posada de Llanes** (30 m) y **Nueva de Llanes** (25 m).
+  - En `js/components/currentCard.js`:
+    - `formatLocationTitle`: optimizado para mostrar la pastilla destacada de la sublocalidad activa incluso en concejos sin desglose entre paréntesis en su nombre oficial (ej. Llanes o Cangas de Onís), suprimiendo duplicidades si el núcleo coincide exactamente con la capital.
+    - Altitud de la estación: enlazada directamente a la altitud real de la sublocalidad activa (`activeLocalidad.altitude`), reflejando con exactitud 105 m en Quintueles, 260 m en Covadonga o 30 m en Posada de Llanes.
+- **Verificación Técnica en Local:**
+  - 10 pruebas unitarias con coordenadas GPS reales (Quintueles, Quintes, Luanco, Candás, Covadonga, Posada de Llanes, La Fresneda, Piedras Blancas, Oviedo, Gijón) superadas con 100% de éxito.
+  - 50 archivos JavaScript analizados con 0 errores de sintaxis.
+- **Cache-Busting:**
+  - `v3.0.23.62` aplicado en `index.html`, `js/app.js`, `js/config/concejos.js` y Service Worker `meteoasturlode-v3023-62-sublocalidades-expansion`.
+
 
 ## 🔧 Subsanación Crítica: Refresco de Sublocalidad Activa en Mismo Concejo (v3.0.23.61) — 2026-11-02
 - **Diagnóstico en Producción (Captura de pantalla de usuario en La Fresneda):**

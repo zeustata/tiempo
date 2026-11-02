@@ -1063,7 +1063,27 @@ export const SUB_LOCALIDADES = {
   ],
   villaviciosa: [
     { name: 'Villaviciosa', lat: 43.4811, lon: -5.4336, altitude: 10 },
-    { name: 'Tazones', lat: 43.5410, lon: -5.3980, altitude: 8 }
+    { name: 'Tazones', lat: 43.5410, lon: -5.3980, altitude: 8 },
+    { name: 'Quintueles', lat: 43.5383, lon: -5.5800, altitude: 105 },
+    { name: 'Quintes', lat: 43.5350, lon: -5.5550, altitude: 120 }
+  ],
+  gozon: [
+    { name: 'Luanco', lat: 43.6150, lon: -5.7890, altitude: 15 },
+    { name: 'Bañugues', lat: 43.6260, lon: -5.8180, altitude: 20 },
+    { name: 'Verdicio', lat: 43.6280, lon: -5.8740, altitude: 35 }
+  ],
+  carreno: [
+    { name: 'Candás', lat: 43.5900, lon: -5.7670, altitude: 20 },
+    { name: 'Perlora', lat: 43.5830, lon: -5.7480, altitude: 25 }
+  ],
+  cangasdeonis: [
+    { name: 'Cangas de Onís', lat: 43.3511, lon: -5.1278, altitude: 87 },
+    { name: 'Covadonga', lat: 43.3130, lon: -5.0560, altitude: 260 }
+  ],
+  llanes: [
+    { name: 'Llanes', lat: 43.4197, lon: -4.7547, altitude: 15 },
+    { name: 'Posada de Llanes', lat: 43.4110, lon: -4.8320, altitude: 30 },
+    { name: 'Nueva de Llanes', lat: 43.4420, lon: -4.9450, altitude: 25 }
   ]
 };
 

@@ -9,6 +9,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.23.62] - 2026-11-02
+### Added
+- **Expansión del Catálogo de Sublocalidades Asturianas:**
+  - **Villaviciosa:** Incorporadas **Quintueles** (105 m) y **Quintes** (120 m), garantizando la correcta asignación a su concejo frente a la cercanía de Gijón.
+  - **Gozón:** Incorporados **Luanco** (15 m), **Bañugues** (20 m) y **Verdicio** (35 m).
+  - **Carreño:** Incorporados **Candás** (20 m) y **Perlora** (25 m).
+  - **Cangas de Onís:** Incorporados **Cangas de Onís** (87 m) y el santuario de **Covadonga** (260 m).
+  - **Llanes:** Incorporados **Llanes** (15 m), **Posada de Llanes** (30 m) y **Nueva de Llanes** (25 m).
+### Fixed
+- **Visualización Universal de Sublocalidad y Altitud:** La pastilla destacada de sublocalidad se muestra ahora de forma uniforme en todos los concejos con catálogo multilocular, enlazando la altitud exacta de la estación ('105 m' en Quintueles, '260 m' en Covadonga, '175 m' en La Fresneda).
+
 ## [3.0.23.56] - 2026-10-31
 ### Fixed
 - **Armonización y Sincronización Integral entre Tarjetas y Vistas (Auditoría Integral Lendo & Princesa):**
