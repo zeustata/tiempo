@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-58-hero-icon-shortcut';
+const CACHE_NAME = 'meteoasturlode-v3023-59-playstore-share-card';
 const STATIC_ASSETS = [
   './',
   './index.html',

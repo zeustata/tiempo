@@ -3,6 +3,24 @@
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
 
+## 🎨 Doctrina de Compartición de Postales y Distintivo Oficial de Google Play (v3.0.23.59) — 2026-11-02
+- **Propuesta y Visión de Lendo (Evolución Post-Publicación en Google Play):**
+  - Con la publicación oficial de *MeteoAstur Lode* en producción global en Google Play Store (`com.zeustata.meteoasturlode`), Lendo ordenó actualizar la estampa postal compartible (`shareCardGenerator.js`) para reemplazar el enlace antiguo a GitHub Pages por el destino oficial de la tienda.
+  - Al realizar la primera prueba en local, Lendo detectó con precisión suiza dos aspectos clave de producto y diseño:
+    1. Una imagen (`.png`) es un mapa plano de píxeles y no admite enlaces HTML interactivos: pretender colocar una URL clicable en una foto frustra al usuario al pulsarla en el móvil.
+    2. El texto largo de la derecha colisionaba y se superponía con el bloque central de créditos institucionales en una única línea de 896 px.
+- **Doctrina de Compartición y Solución Técnica Quirúrgica:**
+  - **Separación de Identidad y Conversión:**
+    - **En el lienzo Canvas:** Se erradican URLs falsas o enlaces simulados. El pie institucional se reorganiza en dos niveles con holgura geométrica garantizada:
+      - *Fila superior (Y = footerY - 6):* `MeteoAstur Lode` (blanco 700 20px) + `• Manuel A. L. Barril (zeustata)` (gris 500 17px) a la izquierda, y a la derecha una **pastilla Liquid Glass oficial** (`▶ Disponible en Google Play`) con fondo cian translúcido (`rgba(56, 189, 248, 0.10)`), borde sutil (`rgba(56, 189, 248, 0.35)`) y tipografía Inter 600 en celeste brillante `#38bdf8`, dejando más de 200 px de aire libre y cero colisiones.
+      - *Fila inferior (Y = footerY + 24):* `Datos oficiales: Open-Meteo & AEMET • Red de los 78 concejos` en gris institucional `#64748b` (400 14px).
+    - **En la Web Share API (WhatsApp / Telegram / Redes):** Todo el peso de la conversión clicable reside en el mensaje nativo que acompaña a la imagen:  
+      `Mira cómo está el tiempo hoy en [Concejo] (X°C). Descárgate gratis la app en Google Play: https://play.google.com/store/apps/details?id=com.zeustata.meteoasturlode`
+- **Cache-Busting y Despliegue:**
+  - Versión incrementada a `v3.0.23.59` en `index.html`, `js/app.js` y `js/utils/shareCardGenerator.js`.
+  - Service Worker actualizado con nuevo nombre de caché: `meteoasturlode-v3023-59-playstore-share-card`.
+- **Verificación Local:** Comprobado en servidor de pruebas `http://localhost:8080` (Leyes 1, 3 y 9), con 50 archivos JavaScript analizados y 0 errores sintácticos.
+
 ## ✨ Atajo Ergonómico Interactivo: Acceso a Estilos de Iconos desde la Hero Card (v3.0.23.58) — 2026-11-02
 - **Propuesta y Visión de Lendo (Ergonomía y Cero Sobrecarga Visual):**
   - Lendo propuso habilitar un acceso directo al catálogo de Estilos de Iconos directamente al pulsar el icono del tiempo en la pantalla principal de En Vivo, evitando tener que navegar por Ajustes.

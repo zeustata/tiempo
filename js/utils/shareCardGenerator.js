@@ -7,7 +7,7 @@
  * Compatible con la Web Share API (WhatsApp, Instagram, Telegram) y descarga directa.
  */
 
-import { getWeatherInfo, renderWeatherIconHtml } from './weatherIcons.js?v=3.0.23.56';
+import { getWeatherInfo, renderWeatherIconHtml } from './weatherIcons.js?v=3.0.23.59';
 
 /**
  * Carga un string SVG en un objeto Image en memoria para pintado directo en Canvas HTML5
@@ -451,28 +451,57 @@ export async function generateShareCardCanvas(concejo, weatherData, iconTheme = 
     ctx.textAlign = 'left';
   }
 
-  // 9. Pie Institucional de Firma y Autoría
-  const footerY = cardY + cardH - 50;
+  // 9. Pie Institucional de Firma y Autoría (2 filas sin colisiones)
+  const footerY = cardY + cardH - 52;
   ctx.strokeStyle = 'rgba(255, 255, 255, 0.10)';
   ctx.lineWidth = 1.5;
   ctx.beginPath();
-  ctx.moveTo(cardX + 44, footerY - 35);
-  ctx.lineTo(cardX + cardW - 44, footerY - 35);
+  ctx.moveTo(cardX + 44, footerY - 32);
+  ctx.lineTo(cardX + cardW - 44, footerY - 32);
   ctx.stroke();
 
+  // Fila Superior: Título + Autoría a la izquierda
   ctx.font = '700 20px "Inter", -apple-system, sans-serif';
   ctx.fillStyle = '#ffffff';
-  ctx.fillText('MeteoAstur Lode', cardX + 44, footerY);
-
-  ctx.font = '500 18px "Inter", -apple-system, sans-serif';
-  ctx.fillStyle = '#64748b';
-  ctx.fillText('•  Manuel A. L. Barril (zeustata)  •  Open-Meteo & AEMET', cardX + 220, footerY);
-
-  ctx.font = '700 18px "Inter", -apple-system, sans-serif';
-  ctx.fillStyle = '#38bdf8';
-  ctx.textAlign = 'right';
-  ctx.fillText('zeustata.github.io/tiempo', cardX + cardW - 44, footerY);
   ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
+  ctx.fillText('MeteoAstur Lode', cardX + 44, footerY - 6);
+
+  const titleWidth = ctx.measureText('MeteoAstur Lode').width;
+
+  ctx.font = '500 17px "Inter", -apple-system, sans-serif';
+  ctx.fillStyle = '#94a3b8';
+  ctx.fillText('•  Manuel A. L. Barril (zeustata)', cardX + 44 + titleWidth + 14, footerY - 6);
+
+  // Distintivo oficial Google Play a la derecha (Pastilla Liquid Glass elegante)
+  const badgeText = '▶ Disponible en Google Play';
+  ctx.font = '600 15px "Inter", -apple-system, sans-serif';
+  const badgeTextWidth = ctx.measureText(badgeText).width;
+  const badgeW = badgeTextWidth + 28;
+  const badgeH = 30;
+  const badgeX = cardX + cardW - 44 - badgeW;
+  const badgeY = footerY - 24;
+
+  ctx.save();
+  drawRoundRectFallback(ctx, badgeX, badgeY, badgeW, badgeH, 15);
+  ctx.fillStyle = 'rgba(56, 189, 248, 0.10)';
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(56, 189, 248, 0.35)';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  ctx.fillStyle = '#38bdf8';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(badgeText, badgeX + badgeW / 2, badgeY + badgeH / 2);
+  ctx.restore();
+
+  // Fila Inferior: Fuentes oficiales
+  ctx.font = '400 14px "Inter", -apple-system, sans-serif';
+  ctx.fillStyle = '#64748b';
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
+  ctx.fillText('Datos oficiales: Open-Meteo & AEMET • Red de los 78 concejos', cardX + 44, footerY + 24);
 
   return canvas;
 }
@@ -516,9 +545,11 @@ export function openShareModal(concejo, weatherData, iconTheme = 'astur') {
           canvas.toBlob(async (blob) => {
             if (!blob) return;
             const file = new File([blob], `meteoastur-${concejo.id}.png`, { type: 'image/png' });
+            const playStoreUrl = 'https://play.google.com/store/apps/details?id=com.zeustata.meteoasturlode';
             const shareData = {
               title: `El tiempo en ${concejo.name} • MeteoAstur Lode`,
-              text: `Mira cómo está el tiempo hoy en ${concejo.name} (${Math.round(weatherData.weather.current.temperature_2m)}°C). Generado con MeteoAstur Lode: https://zeustata.github.io/tiempo/`,
+              text: `Mira cómo está el tiempo hoy en ${concejo.name} (${Math.round(weatherData.weather.current.temperature_2m)}°C). Descárgate gratis la app en Google Play: ${playStoreUrl}`,
+              url: playStoreUrl,
               files: [file]
             };
 
@@ -536,7 +567,7 @@ export function openShareModal(concejo, weatherData, iconTheme = 'astur') {
                 await navigator.share({
                   title: shareData.title,
                   text: shareData.text,
-                  url: 'https://zeustata.github.io/tiempo/'
+                  url: playStoreUrl
                 });
               } catch (err) {
                 downloadCanvasImage(canvas, concejo.id);

@@ -28,7 +28,7 @@ import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=2.0.0';
 import { initGyroGlass } from './utils/gyroGlass.js?v=2.0.0';
 import { triggerSeismicRefresh, getSeismicStatus } from './utils/seismicDetector.js?v=2.2.38';
 import { evaluateWeatherAlerts } from './utils/weatherAlerts.js?v=3.0.5';
-import { openShareModal } from './utils/shareCardGenerator.js?v=2.2.64';
+import { openShareModal } from './utils/shareCardGenerator.js?v=3.0.23.59';
 import { toggleWeatherSpeech, stopWeatherSpeech } from './utils/weatherSpeaker.js?v=2.0.0';
 
 const APP_MODULES = [
