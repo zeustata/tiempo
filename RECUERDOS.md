@@ -3,6 +3,22 @@
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
 
+## 📱 Hoja de Ruta Técnica: Rediseño Tricolor de Widgets Nativos Android (4x2 y 4x3) & Consenso Cantábrico — 2026-11-02
+- **Acuerdo de Socios y Filosofía («Para que no se muera el paciente»):**
+  - Con *MeteoAstur Lode* ya publicada en producción en Google Play, Lendo y Princesa analizaron la próxima gran iteración de los widgets de escritorio Android (4x2 Compacto y 4x3 Estación Completa) con un criterio compartido de máxima prudencia, diálogo pausado y cero precipitación técnica.
+- **Análisis de Iconografía y Diagnóstico Estético de Lendo (El fallo de los "Empalmes"):**
+  - Se debatió la posibilidad de añadir un botón selector de estilo de iconos en el propio widget.
+  - Al evaluar el tema Clásico, Lendo detectó con agudeza clínica un defecto estético evidente: varios iconos genéricos son "empalmes" o collages artificiales (como la *borrina húmeda*, que mezcla una nube con barras y gotas superpuestas de forma tosca, quedando confusa y borrosa en pantallas de inicio de 4x2).
+  - **Decisión unánime de socios:** No incorporar temas con empalmes al widget. Se preserva con firmeza el **Tema Astur** (por su limpieza vectorial, siluetas redondeadas y legibilidad inmediata a distancia en el escritorio) y se pospone la alternancia hasta diseñar desde cero un lote minimalista suizo hecho a mano para Asturias sin parches ni remiendos.
+- **Directrices Aprobadas para la Próxima Compilación (MeteoAstur_Android_Widget):**
+  1. **Consenso Cantábrico en Java:** Replicar en MeteoWidgetProvider.java y MeteoWidgetMediumProvider.java el algoritmo de contraste AROME vs ECMWF IFS, eliminando el desajuste donde el widget marcaba sol falso cuando la calle y la web app estaban cubiertas.
+  2. **Contorno y Separadores Tricolor Diagonales (Identidad de Marca MeteoAstur Lode):**
+     - El marco exterior de ambos widgets y las líneas separadoras internas adoptarán un degradado diagonal a 315° que viaja desde la esquina superior izquierda a la inferior derecha.
+     - Progresión cromática exacta del logotipo: **Blanco (Meteo #FFFFFF) -> Azul Cantábrico (Astur #38BDF8) -> Oro Viejo (Lode #FACC15)**.
+     - *Ingeniería en Android:* Dado que <stroke> no admite gradientes directos en el SDK de Android, se implementará con la técnica nativa de <layer-list> con un fondo de gradiente a 315° y una capa superior con margen interior (inset) de 1.5 dp en cristal oscuro (#070D18), garantizando renderizado acelerado por hardware a 60 fps sin consumo de batería.
+  3. **Protocolo Seguro de Pruebas (Fase APK Local):**
+     - Antes de enviar cualquier paquete a revisión en Google Play, se compilará una APK firmada de prueba (build_android_apk.ps1) para que Lendo la instale en su móvil y evalúe personalmente el contraste, los reflejos del degradado tricolor y la legibilidad bajo la luz solar en su pantalla de inicio.
+
 ## 🎨 Doctrina de Compartición de Postales y Distintivo Oficial de Google Play (v3.0.23.59) — 2026-11-02
 - **Propuesta y Visión de Lendo (Evolución Post-Publicación en Google Play):**
   - Con la publicación oficial de *MeteoAstur Lode* en producción global en Google Play Store (`com.zeustata.meteoasturlode`), Lendo ordenó actualizar la estampa postal compartible (`shareCardGenerator.js`) para reemplazar el enlace antiguo a GitHub Pages por el destino oficial de la tienda.
