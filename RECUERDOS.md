@@ -3,6 +3,24 @@
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
 
+## 📍 Precisión Geográfica Multilocular y Corrección de Enclaves: La Fresneda en Siero (v3.0.23.60) — 2026-11-02
+- **Feedback Crítico de Usuario Real (Amigo de Lendo en La Fresneda):**
+  - Un usuario real ubicado físicamente en la Urbanización La Fresneda reportó que la geolocalización de la app lo ubicaba erróneamente en el concejo de **Noreña**.
+- **Diagnóstico y Causa Raíz Geográfica (La trampa del enclave):**
+  - La Fresneda pertenece administrativa, legal y municipalmente a **Siero** (parroquia de Viella/La Fresneda).
+  - Sin embargo, Noreña es un concejo enclavado justo en el centro de Siero.
+  - La capital de Siero (Pola de Siero) dista 10.86 km al este de La Fresneda, mientras que el núcleo de Noreña dista solo 4.22 km (y Oviedo 5.51 km).
+  - Al calcular findClosestConcejo la distancia exclusivamente contra las capitales municipales, la distancia euclídea mínima asignaba falsamente al usuario a Noreña (y a los vecinos de Lugones los asignaba a Oviedo o Noreña).
+- **Solución Técnica Sistémica:**
+  - En js/config/concejos.js:
+    - Incorporada **La Fresneda** a las sublocalidades de Siero (SUB_LOCALIDADES.siero con lat: 43.3917, lon: -5.7950, altitude: 175).
+    - Actualizado findClosestConcejo(lat, lon) con **medición multilocular**: la distancia a un concejo se evalúa considerando tanto su punto central como todos sus núcleos poblacionales reconocidos en SUB_LOCALIDADES.
+  - **Efecto Inmediato:** En La Fresneda, la distancia calculada a Siero pasa de 10.86 km a **0.00 km**, venciendo limpiamente a Noreña (4.22 km) y a Oviedo (5.51 km). La cabecera muestra con orgullo institucional su concejo real: **Siero** y debajo en pastilla destacada **La Fresneda • 175 m**, blindando simultáneamente la detección de fronteras en Salinas (Castrillón), Trasona (Corvera), Lugones (Siero) y Tazones (Villaviciosa).
+- **Cache-Busting y Despliegue:**
+  - Incremento a v3.0.23.60 en index.html, js/app.js y js/config/concejos.js.
+  - Service Worker actualizado: meteoasturlode-v3023-60-geo-sublocalidades.
+- **Verificación Local:** 50 archivos JS analizados con 0 errores sintácticos y 7 tests de coordenadas superados con 100% de éxito.
+
 ## 📱 Hoja de Ruta Técnica: Rediseño Tricolor de Widgets Nativos Android (4x2 y 4x3) & Consenso Cantábrico — 2026-11-02
 - **Acuerdo de Socios y Filosofía («Para que no se muera el paciente»):**
   - Con *MeteoAstur Lode* ya publicada en producción en Google Play, Lendo y Princesa analizaron la próxima gran iteración de los widgets de escritorio Android (4x2 Compacto y 4x3 Estación Completa) con un criterio compartido de máxima prudencia, diálogo pausado y cero precipitación técnica.

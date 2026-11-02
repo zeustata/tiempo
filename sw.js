@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-59-playstore-share-card';
+const CACHE_NAME = 'meteoasturlode-v3023-60-geo-sublocalidades';
 const STATIC_ASSETS = [
   './',
   './index.html',

@@ -1036,6 +1036,7 @@ export const SUB_LOCALIDADES = {
   siero: [
     { name: 'Pola de Siero', lat: 43.3911, lon: -5.6611, altitude: 215 },
     { name: 'Lugones', lat: 43.4042, lon: -5.8197, altitude: 160 },
+    { name: 'La Fresneda', lat: 43.3917, lon: -5.7950, altitude: 175 },
     { name: 'El Berrón', lat: 43.3833, lon: -5.6980, altitude: 190 }
   ],
   langreo: [
@@ -1097,7 +1098,20 @@ export function findClosestConcejo(lat, lon) {
   let minDist = Infinity;
 
   CONCEJOS_ASTURIAS.forEach(c => {
-    const d = calculateDistanceKm(lat, lon, c.lat, c.lon);
+    let d = calculateDistanceKm(lat, lon, c.lat, c.lon);
+
+    // Medición multilocular: comprobar también los núcleos poblacionales registrados
+    // para evitar distorsiones en enclaves (ej. Noreña dentro de Siero) o concejos extensos (Lugones, La Fresneda, Salinas, etc.)
+    const subList = SUB_LOCALIDADES[c.id];
+    if (subList && subList.length > 0) {
+      for (const sub of subList) {
+        const dSub = calculateDistanceKm(lat, lon, sub.lat, sub.lon);
+        if (dSub < d) {
+          d = dSub;
+        }
+      }
+    }
+
     if (d < minDist) {
       minDist = d;
       closest = c;

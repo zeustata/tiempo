@@ -1,4 +1,4 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo, resolveSubLocalidad } from './config/concejos.js?v=2.0.0';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo, resolveSubLocalidad } from './config/concejos.js?v=3.0.23.60';
 import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.23.58';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=3.0.23.28';
 import { renderCurrentWeather } from './components/currentCard.js?v=3.0.23.58';
