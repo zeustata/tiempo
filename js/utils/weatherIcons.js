@@ -118,7 +118,8 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     const vis = visibility != null ? parseFloat(visibility) : null;
     const uvVal = uvIndex != null ? parseFloat(uvIndex) : 0;
     const swVal = shortwaveRadiation != null ? parseFloat(shortwaveRadiation) : 0;
-    const hasActiveSun = !isNight && (irr >= 90 || uvVal >= 1.0 || swVal >= 200);
+    // Detección de sol activo real (exige radiación solar directa efectiva y cielo no cerrado)
+    const hasActiveSun = !isNight && ((irr >= 120 && (cc === null || cc < 80)) || ((code === 1 || code === 2) && (cc === null || cc < 75)));
 
     // Lluvia física real medible en pluviómetro:
     // 1. Para códigos WMO de tiempo seco (0: despejado, 1: mayormente soleado, 2: claros, 3: nublado, 45/48: niebla),
@@ -126,16 +127,17 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     //    en superficie acompaña con saturación (h >= 90%). Con h < 90% y código seco, 0.1 mm es virga.
     // 2. Para códigos de llovizna (51-57), micro-cantidades (< 0.5 mm) requieren humedad atmosférica >= 85%.
     //    Con aire seco en superficie (h < 85%), las micro-gotas se evaporan en los 1.000 m de caída (virga).
-    // 3. INMUNIDAD SOLAR FRENTE A FALSO ORBAYU (Ley 21 - Feedback Lendo):
-    //    Si hay radiación solar directa o insolación activa diurna verificada, cualquier micro-traza
-    //    de llovizna (< 0.5 mm) o código de orbayu es físicamente una virga o artefacto del modelo.
-    //    Queda terminantemente prohibido declarar lluvia activa u orbayu cuando brilla el sol.
+    // 3. INMUNIDAD SOLAR FRENTE A FALSO ORBAYU (Feedback Lendo - Precisión 15h 0.5mm/81%):
+    //    Solo se considera llovizna fantasma si hace sol de verdad (cielo no cubierto), la lluvia es una
+    //    micro-traza (< 0.25 mm) y la probabilidad del ensamble es baja o moderada (< 60%).
+    //    Si la probabilidad es alta (>= 60%) o la precipitación alcanza 0.3-0.5 mm con cielo cubierto, la lluvia es física y real.
     const isDrySkyCode = code <= 3 || code === 45 || code === 48;
     const isDrizzleCode = (code >= 51 && code <= 57) || base.svgKey === 'drizzle';
     const isDryTraceVirga = isDrySkyCode && p <= 0.1 && h !== null && h < 90;
     const isDryDrizzleVirga = isDrizzleCode && p < 1.0 && h !== null && h < 85;
-    const hasPrecipOrRainCode = isDrizzleCode || base.isRain || (p > 0 && p < 0.5);
-    isSolarPhantomDrizzle = hasActiveSun && hasPrecipOrRainCode && !base.isSnow && code !== 95;
+    const isTracePrecip = p < 0.25;
+    const isLowOrModeratePop = !hasPop || prob < 60;
+    isSolarPhantomDrizzle = hasActiveSun && isTracePrecip && isLowOrModeratePop && (isDrizzleCode || (p > 0 && p < 0.25)) && !base.isSnow && code !== 95;
     const isPhysicallyRaining = p >= 0.1 && !isDryTraceVirga && !isDryDrizzleVirga && !isSolarPhantomDrizzle;
     let isExplicitRainCode = (base.isRain || base.svgKey === 'drizzle' || base.svgKey === 'rain' || base.svgKey === 'storm') && !isSolarPhantomDrizzle;
 

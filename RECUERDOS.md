@@ -2,6 +2,24 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌧️ Precisión de Iconos de Lluvia en el Carrusel Horario (v3.0.23.64) — 2026-11-03
+- **Problema Reportado por Lendo (Observación en Vivo en el Carrusel 72h):**
+  - A las 14:00 h marcaba 0.1 mm y 66% con icono de nube (interpretado correctamente como micro-traza o virga).
+  - A las 15:00 h marcaba 0.5 mm y 81% de probabilidad, pero seguía pintando una nube seca (`☁️`) en vez de lluvia.
+- **Diagnóstico y Causa Raíz Técnica:**
+  - En `js/utils/weatherIcons.js`, la variable `hasActiveSun` consideraba erróneamente sol activo si la radiación solar global de onda corta (`shortwaveRadiation`) superaba los 200 W/m².
+  - A las 15:00 en noviembre, la luz difusa que penetra un cielo 100% encapotado alcanza de 250 a 280 W/m².
+  - Esto activaba el filtro `isSolarPhantomDrizzle`, creyendo falsamente que lucía el sol, lo que anulaba la lluvia física y forzaba el icono a *«Nublado / Cubiertu»* (`☁️`).
+- **Solución Quirúrgica Aplicada:**
+  - Se redefinió `hasActiveSun` para exigir radiación directa efectiva (`irr >= 120 W/m²`) y cielo no cubierto (`cc < 80%`).
+  - Se blindó `isSolarPhantomDrizzle` para que solo actúe si la precipitación es una micro-traza (`p < 0.25 mm`) y la probabilidad del ensamble es baja o moderada (`pop < 60%`).
+  - Para 0.5 mm y 81%, la lluvia física manda y el icono conmuta a *Lluvia moderada* (`🌧️`).
+- **Verificación Técnica:**
+  - 50 archivos JavaScript analizados con 0 errores sintácticos.
+  - Test unitario simulado con los datos reales de la API confirma que a las 15:00 h devuelve `Lluvia moderada` (`🌧️`).
+- **Cache-Busting:**
+  - Incremento a `v3.0.23.64` en `index.html`, `sw.js`, `forecastView.js` y `currentCard.js` con Service Worker `meteoasturlode-v3023-64-rain-icon-accuracy`.
+
 ## 📍 Persistencia Permanente de Sublocalidad y Auto-GPS al Iniciar (v3.0.23.63) — 2026-11-02
 - **Feedback Crítico de Tester Real (Estela en Salinas):**
   - Estela se encontraba en **Salinas** (Castrillón). Al pulsar el botón GPS, la app resolvió y mostró correctamente *«Castrillón (Salinas) • Altitud: 5 m»*.

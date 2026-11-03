@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-63-persistent-sublocality-autolocation';
+const CACHE_NAME = 'meteoasturlode-v3023-64-rain-icon-accuracy';
 const STATIC_ASSETS = [
   './',
   './index.html',

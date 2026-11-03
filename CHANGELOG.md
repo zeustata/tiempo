@@ -9,6 +9,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.23.64] - 2026-11-03
+### Fixed
+- **Precisión de Iconos Horarios y Filtro de Lluvia Fantasma (Reporte Crítico Lendo):**
+  - **Detección Fiel de Lluvia Moderada e Intensa (`weatherIcons.js`):** Subsanado el bug donde horas con precipitación significativa (ej. 0.5 mm) y alta probabilidad del ensamble (81%) mostraban erróneamente un icono de nube seca (`☁️`).
+  - **Calibración Solar Estricta:** El filtro de lluvia fantasma (`isSolarPhantomDrizzle`) ahora exige radiación directa efectiva (`direct_normal_irradiance >= 120 W/m²`) y cielo no cubierto (`cloud_cover < 80%`), impidiendo que la radiación difusa diurna a través de nubes cerradas en otoño/invierno falsee la lluvia activa a cielo nublado.
+  - **Prevalencia de la Lluvia Real:** Si la probabilidad es alta (`pop >= 60%`) o la lluvia es medible (`p >= 0.25 mm`), la lluvia física prevalece siempre, mostrando su correspondiente icono de lluvia (`🌧️`) u orbayu (`💧`).
+
 ## [3.0.23.63] - 2026-11-02
 ### Fixed
 - **Persistencia Permanente de Sublocalidad y Auto-GPS al Iniciar (Reporte Tester Estela en Salinas):**
