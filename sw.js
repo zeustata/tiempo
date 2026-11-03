@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-67-real-orbayu-accuracy';
+const CACHE_NAME = 'meteoasturlode-v3023-68-orbayu-resol-sovereignty';
 const STATIC_ASSETS = [
   './',
   './index.html',

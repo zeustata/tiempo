@@ -2,6 +2,31 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌦️ Soberanía Absoluta del Agua frente al Resol y Calibración Cantábrica de Mediodía (v3.0.23.68) — 2026-11-03
+- **Observación Quirúrgica en Vivo de Lendo (Piedras Blancas, 13:20 h):**
+  - Lendo detectó que la app marcaba *«Resol / Sol tamizáu»* cuando en la calle estaba cayendo un orbayu visible: *«ahora pones resol y está orbayando, poco pero está. Es verdad que hay mucha luz»*.
+- **Causa Raíz Meteorológica:**
+  - A las 13:15 h, AROME emitía `weather_code: 53` (llovizna/orbayu) pero con `0.0 mm` en pluviómetro instantáneo.
+  - Al subir la temperatura a 13.7 °C a mediodía, la humedad relativa bajó al 72%–78% (dilatación térmica del aire cálido costero).
+  - Un filtro previo anulaba la llovizna si `h < 88%` con 0.0 mm por sospecha de virga. Una vez convertida a cielo seco nublado, la intensa luminosidad de mediodía (SW: 213–264 W/m²) activaba el Resol seco.
+- **Solución y Doctrina de Soberanía del Agua:**
+  1. *Ajuste del Umbral de Virga Cantábrica:* Se reajustó el umbral de humedad relativa a `h < 70%` en `weatherApi.js` y `weatherIcons.js`. En la costa asturiana a mediodía (13–15 °C), humedades del 70% al 78% con código 51-57 precipitan al suelo con certeza física.
+  2. *Soberanía Absoluta del Agua frente al Resol:* En `weatherIcons.js`, el Resol queda restringido estrictamente a tiempo seco (`!base.isRain && !isDrizzleCode`). Si hay llovizna activa con alta luminosidad diurna, el sistema conmuta fielmente a *«Orbayu con sol / Llueve y fai sol (🌦️)»* o *«Orbayu (🌦️)»*, pero **jamás** a un Resol seco sin paraguas.
+  3. *Sincronización en Widgets Nativos Android:* Se replicó exactamente esta lógica en `MeteoWidgetProvider.java` y `MeteoWidgetMediumProvider.java`.
+- **Cache-Busting & Verificación:**
+  - Actualización a `v3.0.23.68` en `index.html`, `sw.js`, `js/app.js` y `currentCard.js` con Service Worker `meteoasturlode-v3023-68-orbayu-resol-sovereignty`.
+  - Verificado en servidor local `http://localhost:8080`.
+
+## 📱 Lanzamiento Oficial a Google Play en Revisión: Widgets Tricolor 315°, Consenso Cantábrico y Resol (v3.0.24 - Build 9) — 2026-11-03
+- **Hito de Publicación en Google Play Console:**
+  - Incremento a `versionCode 9` y `versionName "3.0.24"` en `app/build.gradle` y `twa-manifest.json`.
+  - Compilado y firmado el bundle oficial `MeteoAstur_Lode_v3.0.24_bundle9.aab` con `signing.keystore`.
+  - Subida a Google Play Console completada con éxito por Lendo y puesta en estado **«En revisión»** para distribución a todos los usuarios.
+- **Novedades Incorporadas en el Paquete Nativo:**
+  1. *Marco y Separadores Tricolor Diagonales a 315°:* Técnica `<layer-list>` con degradado continuo de la marca (Blanco `#FFFFFF`, Azul Cantábrico `#38BDF8`, Oro Viejo `#FACC15`) y cristal oscuro interior `#070D18`.
+  2. *Consenso Cantábrico en Java:* Contraste en paralelo con ECMWF IFS (`ecmwf_ifs025`), blindaje anti-falsos claros y rescate de orbayu real.
+  3. *Soporte Nativo de Resol:* Vectorial oficial `ic_weather_resol.xml` (tema Astur: sol de cómic con corona dorada asomando tras la nube translúcida) con detección de haz solar (DNI >= 250–300 W/m²).
+
 ## 🌦️ Calibración del Orbayu Asturiano y Sincronización Total con el Carrusel 72h (v3.0.23.67) — 2026-11-03
 - **Observación Crítica en Vivo de Lendo (Piedras Blancas, 11:00 h):**
   - Lendo observó por su ventana que estaba cayendo un orbayu continuo en Piedras Blancas. Sin embargo, la app marcaba *«Nublado / Cubiertu ☁️»*.

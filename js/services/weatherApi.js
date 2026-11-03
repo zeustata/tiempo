@@ -319,15 +319,15 @@ function applyCantabricoConsensus(weather, consensus) {
       if (ecmwfCloud > rawCloud) weather.current.cloud_cover = ecmwfCloud;
     }
 
-    // B1.1) Rescate Soberano de Orbayu Meón Cantábrico en tiempo actual (Saturación y Ensamble):
-    // Resuelve el caso donde el bloque instantáneo de la API marca 0.0 mm por latencia de 15 minutos,
-    // pero la atmósfera costera está en saturación condensada (humedad >= 94%, nubes >= 80%, sin sol directo)
-    // y ECMWF o AROME prevén llovizna en la hora en curso (código 51-57, ePop >= 25% o precip >= 0.1 mm).
-    const isOrbayuCondition = hum >= 94 && Math.max(rawCloud, ecmwfCloud) >= 80 && eDirectIrr < 100 &&
-      (curEPop >= 25 || (curECode >= 50 && curECode <= 57) || (curAromeCode >= 50 && curAromeCode <= 57) || curEPrecip >= 0.1 || curAromePrecip >= 0.1);
+    // B1.1) Rescate Soberano de Orbayu Cantábrico en tiempo actual (Saturación, AROME y Ensamble):
+    // Resuelve el caso donde el bloque instantáneo de la API marca 0.0 mm por latencia de 15 minutos o microgotas,
+    // pero la atmósfera costera está en saturación condensada (humedad >= 90%) o AROME detecta llovizna activa (51-57)
+    // con humedad cantábrica (hum >= 70%), cielo cubierto (>= 75%) y sin haz solar abrasador.
+    const isAromeConfirmedDrizzle = (rawCode >= 50 && rawCode <= 57) && (Math.max(rawCloud, ecmwfCloud) >= 75) && hum >= 70 && !hasTrueSunlight;
+    const isOrbayuCondition = ((hum >= 90 && (curEPop >= 25 || (curECode >= 50 && curECode <= 57) || (curAromeCode >= 50 && curAromeCode <= 57) || curEPrecip >= 0.1 || curAromePrecip >= 0.1)) || isAromeConfirmedDrizzle) && Math.max(rawCloud, ecmwfCloud) >= 80 && eDirectIrr < 180;
 
     if (isOrbayuCondition) {
-      weather.current.weather_code = 51; // Orbayu / Llovizna fina
+      weather.current.weather_code = (rawCode >= 50 && rawCode <= 57) ? rawCode : 51; // Orbayu / Llovizna activa
       if (weather.current.precipitation < 0.1) {
         weather.current.precipitation = Math.max(curEPrecip, curAromePrecip, 0.1);
         if (weather.current.rain != null) weather.current.rain = weather.current.precipitation;

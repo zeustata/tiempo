@@ -135,7 +135,7 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     const isDrySkyCode = code <= 3 || code === 45 || code === 48;
     const isDrizzleCode = (code >= 51 && code <= 57) || base.svgKey === 'drizzle';
     const isDryTraceVirga = isDrySkyCode && p <= 0.1 && h !== null && h < 90;
-    const isDryDrizzleVirga = isDrizzleCode && p < 1.0 && h !== null && h < 85;
+    const isDryDrizzleVirga = isDrizzleCode && p < 1.0 && h !== null && h < 70;
     const isTracePrecip = p < 0.25;
     const isLowOrModeratePop = !hasPop || prob < 60;
     isSolarPhantomDrizzle = hasActiveSun && isTracePrecip && isLowOrModeratePop && (isDrizzleCode || (p > 0 && p < 0.25)) && !base.isSnow && code !== 95;
@@ -148,7 +148,7 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     // b) El pluviómetro marca < 1.0 mm pero la humedad en superficie es seca (h < 85% virga).
     // Si la probabilidad del ensamble es alta (prob >= 40%), se respeta la lluvia y jamás se anula a 'Nublado'.
     const isUnconfirmedByEnsemble = !hasPop || prob < 40;
-    const isZeroPrecipDryHum = !isPhysicallyRaining && isDrizzleCode && h !== null && h < 88;
+    const isZeroPrecipDryHum = !isPhysicallyRaining && isDrizzleCode && h !== null && h < 70;
     if (isSolarPhantomDrizzle || (isUnconfirmedByEnsemble && (isZeroPrecipDryHum || isDryDrizzleVirga))) {
       isExplicitRainCode = false;
       base = {
@@ -420,23 +420,49 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
       isResol = false;
     }
 
-    if ((p < 0.1 || isSolarPhantomDrizzle || (p < 0.5 && hasRealSolarLight)) && hasRealSolarLight && (isResol || base.isRain || base.svgKey === 'cloudy' || code === 3 || base.svgKey === 'fog' || base.svgKey === 'drizzle' || (cc !== null && code <= 2))) {
-      const isClearSky = !isResol && cc !== null && cc <= 15 && (irr >= 150 || code === 0);
-      const isMostlyClearSky = !isResol && !isClearSky && cc !== null && cc <= 40;
+    // SOBERANÍA ABSOLUTA DEL AGUA: El Resol por definición ocurre en tiempo seco (sin lluvia ni llovizna).
+    // Si hay llovizna o precipitación física activa y el sol asoma o hay gran luminosidad difusa,
+    // se clasifica fielmente como 'Orbayu con sol / Llueve y fai sol' (🌦️).
+    const isDrizzleCode = (code >= 51 && code <= 57) || base.svgKey === 'drizzle';
+    const isRainActive = (base.isRain || isDrizzleCode || p >= 0.1) && !isSolarPhantomDrizzle;
+
+    if (isRainActive && hasRealSolarLight && !isNight) {
       base = {
-        label: isResol
-          ? 'Resol / Sol tamizáu'
-          : (isClearSky
-            ? 'Despejado / Soleyeru'
-            : (isMostlyClearSky ? 'Mayormente soleado / Despejáu' : 'Parcialmente nublado / Claros')),
-        icon: isResol ? '🌥️' : (isClearSky ? '☀️' : (isMostlyClearSky ? '🌤️' : '⛅')),
-        svgKey: isResol ? 'resol' : (isClearSky ? 'clear-day' : (isMostlyClearSky ? 'mostly-clear-day' : 'partly-cloudy-day')),
-        lucide: isResol ? 'cloud-sun' : (isClearSky ? 'sun' : 'cloud-sun'),
+        label: 'Orbayu con sol / Llueve y fai sol',
+        icon: '🌦️',
+        svgKey: 'showers',
+        lucide: 'cloud-sun-rain',
+        bg: 'drizzle',
+        isRain: true,
+        isSnow: false,
+        isSolarCalibrated: true,
+        isResol: false
+      };
+    } else if (!isRainActive && (p < 0.1 || isSolarPhantomDrizzle) && hasRealSolarLight && isResol) {
+      base = {
+        label: 'Resol / Sol tamizáu',
+        icon: '🌥️',
+        svgKey: 'resol',
+        lucide: 'cloud-sun',
+        bg: 'partly-cloudy',
+        isRain: false,
+        isSnow: false,
+        isSolarCalibrated: true,
+        isResol: true
+      };
+    } else if (!isRainActive && (p < 0.1 || isSolarPhantomDrizzle) && hasRealSolarLight && (base.svgKey === 'cloudy' || code === 3 || base.svgKey === 'fog' || (cc !== null && code <= 2))) {
+      const isClearSky = cc !== null && cc <= 15 && (irr >= 150 || code === 0);
+      const isMostlyClearSky = !isClearSky && cc !== null && cc <= 40;
+      base = {
+        label: isClearSky ? 'Despejado / Soleyeru' : (isMostlyClearSky ? 'Mayormente soleado / Despejáu' : 'Parcialmente nublado / Claros'),
+        icon: isClearSky ? '☀️' : (isMostlyClearSky ? '🌤️' : '⛅'),
+        svgKey: isClearSky ? 'clear-day' : (isMostlyClearSky ? 'mostly-clear-day' : 'partly-cloudy-day'),
+        lucide: isClearSky ? 'sun' : 'cloud-sun',
         bg: (isClearSky || isMostlyClearSky) ? 'clear-day' : 'partly-cloudy',
         isRain: false,
         isSnow: false,
         isSolarCalibrated: true,
-        isResol: isResol
+        isResol: false
       };
     }
 
