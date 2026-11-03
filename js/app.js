@@ -1277,7 +1277,6 @@ class MeteoAsturiasApp {
     const previewHalloween = document.getElementById('preview-halloween-icons');
     const btnToggleHalloween = document.getElementById('btn-toggle-halloween-test');
     const previewAmaguestu = document.getElementById('preview-amaguestu-icons');
-    const btnToggleAmaguestu = document.getElementById('btn-toggle-amaguestu-test');
 
     if (!modal) return;
 
@@ -1403,34 +1402,12 @@ class MeteoAsturiasApp {
         const isUnpixelated = isAmaguestuDate || isTestUrl || this.previewAmaguestuMode;
         cardAmaguestu.classList.toggle('unpixelated', isUnpixelated);
       }
-      if (btnToggleAmaguestu) {
-        if (this.previewAmaguestuMode) {
-          btnToggleAmaguestu.textContent = '🌰 Quitar prueba';
-          btnToggleAmaguestu.classList.add('active-preview');
-        } else {
-          btnToggleAmaguestu.textContent = '🧪 Probar ahora';
-          btnToggleAmaguestu.classList.remove('active-preview');
-        }
-      }
+
       if (this.updateNavHeaderThemeBadge) this.updateNavHeaderThemeBadge();
     };
 
     
-    if (btnToggleAmaguestu) {
-      btnToggleAmaguestu.addEventListener('click', (e) => {
-        e.stopPropagation();
-        this.triggerHaptic();
-        this.previewAmaguestuMode = !this.previewAmaguestuMode;
-        if (this.previewAmaguestuMode) {
-          this.previewHalloweenMode = false;
-          this.showToast('🌰 Modo de prueba del Amagüestu activado');
-        } else {
-          this.showToast('ℹ️ Modo de prueba desactivado');
-        }
-        updateActiveThemeCards();
-        this.renderAllComponents();
-      });
-    }
+
 
     const selectTheme = (themeId) => {
       this.triggerHaptic();

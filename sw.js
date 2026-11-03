@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-65-amaguestu-icons';
+const CACHE_NAME = 'meteoasturlode-v3023-66-amaguestu-topsecret-lock';
 const STATIC_ASSETS = [
   './',
   './index.html',

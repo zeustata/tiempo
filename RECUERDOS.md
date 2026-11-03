@@ -2,6 +2,15 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🔒 Blindaje Hermético de Censura Top Secret para el Amagüestu (v3.0.23.66) — 2026-11-03
+- **Detección Crítica de Lendo (Protección Absoluta del Factor Sorpresa):**
+  - Lendo detectó que en la primera subida se había dejado a la vista de cualquier usuario el botón `[ 🧪 Probar ahora ]` en el pie de la tarjeta del Amagüestu, lo que comprometía el secreto del evento antes del 9 de noviembre.
+- **Acción Quirúrgica de Bloqueo:**
+  - En `index.html`: supresión inmediata del botón `#btn-toggle-amaguestu-test`. La tarjeta queda 100% cerrada y hermética con el cartel informativo de activación automática en San Martín y el sello `🕵️‍♂️ Top Secret`.
+  - En `js/app.js`: limpieza de manejadores y blindaje del acceso exclusivo para Lendo y desarrollador vía URL (`?test=amaguestu`).
+- **Cache-Busting:**
+  - Sincronización a `v3.0.23.66` en `index.html` y Service Worker `meteoasturlode-v3023-66-amaguestu-topsecret-lock` en `sw.js`.
+
 ## 🌰 Colección Oficial "Especial Amagüestu de Seronda" con Censura Top Secret y Modo de Prueba (v3.0.23.65) — 2026-11-03
 - **Iniciativa y Mandato de Lendo (Doctrina de Luz Solar y Fidelidad Térmica):**
   - Con la cercanía de las fechas del Amagüestu y San Martín (9 al 12 de Noviembre), Lendo ordenó crear la colección temática de iconos conmemorativa del Amagüestu, aplicando con rigor la lección aprendida de Halloween: **los iconos tienen que ser inequívocamente reconocibles de un solo vistazo y transmitir la luz real del cielo**, sin figuras oscuras que simulen eclipses o tormentas.
