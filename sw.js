@@ -1,10 +1,11 @@
-const CACHE_NAME = 'meteoasturlode-v3023-64-rain-icon-accuracy';
+const CACHE_NAME = 'meteoasturlode-v3023-65-amaguestu-icons';
 const STATIC_ASSETS = [
   './',
   './index.html',
   './privacy.html',
   './manifest.json',
   './js/utils/weatherHalloweenIcons.js',
+  './js/utils/weatherAmaguestuIcons.js',
   './js/utils/festivosData.js',
   './icons/bandera-asturias.svg',
   './icons/icon.svg',

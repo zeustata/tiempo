@@ -2326,6 +2326,22 @@ body:-webkit-full-screen .app-container {
   font-size: 0.70rem;
   white-space: nowrap;
 }
+#theme-card-amaguestu.theme-card-locked {
+  background: linear-gradient(135deg, rgba(217, 119, 6, 0.12) 0%, rgba(120, 53, 15, 0.18) 100%), rgba(30, 41, 59, 0.6);
+  border: 1.5px solid rgba(217, 119, 6, 0.45);
+}
+
+#theme-card-amaguestu.theme-card-locked:hover {
+  background: linear-gradient(135deg, rgba(217, 119, 6, 0.20) 0%, rgba(120, 53, 15, 0.26) 100%), rgba(51, 65, 85, 0.75);
+  border-color: #d97706;
+  box-shadow: 0 8px 24px -4px rgba(217, 119, 6, 0.35);
+}
+
+#theme-card-amaguestu .theme-card-tag.theme-tag-locked {
+  color: #fbbf24;
+  background: rgba(217, 119, 6, 0.2);
+}
+
 
 /* --- EFECTO MISTERIO PIXELADO (CENSURA DIGITAL TOP SECRET) --- */
 .theme-card-preview-pixelated {
@@ -2475,6 +2491,26 @@ body:-webkit-full-screen .app-container {
 .halloween-svg-icon.icon-hw-wet-fog {
   filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.5));
 }
+/* --- ICONOS VECTORIALES SVG AMAGÜESTU --- */
+.amaguestu-svg-icon {
+  display: inline-block;
+  vertical-align: middle;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.4));
+  transition: transform 0.2s ease;
+}
+
+.amaguestu-svg-icon:hover {
+  transform: scale(1.12);
+}
+
+.amaguestu-svg-icon.icon-amg-sun {
+  filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.65));
+}
+
+.amaguestu-svg-icon.icon-amg-moon {
+  filter: drop-shadow(0 0 8px rgba(254, 240, 138, 0.45));
+}
+
 
 /* --- ICONOS VECTORIALES SVG ESTILU ASTURIANU --- */
 .astur-svg-icon {

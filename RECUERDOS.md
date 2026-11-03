@@ -2,6 +2,41 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌰 Colección Oficial "Especial Amagüestu de Seronda" con Censura Top Secret y Modo de Prueba (v3.0.23.65) — 2026-11-03
+- **Iniciativa y Mandato de Lendo (Doctrina de Luz Solar y Fidelidad Térmica):**
+  - Con la cercanía de las fechas del Amagüestu y San Martín (9 al 12 de Noviembre), Lendo ordenó crear la colección temática de iconos conmemorativa del Amagüestu, aplicando con rigor la lección aprendida de Halloween: **los iconos tienen que ser inequívocamente reconocibles de un solo vistazo y transmitir la luz real del cielo**, sin figuras oscuras que simulen eclipses o tormentas.
+  - Se configuró la tarjeta bajo censura digital: **difuminada, pixelada y con el sello Top Secret**, con activación automática programada para San Martín y conmutador de prueba para desarrollador.
+- **Implementación Vectorial Integral (Ley 23 - Paridad Absoluta de 20 Estados):**
+  - Creado el módulo autónomo `js/utils/weatherAmaguestuIcons.js` con cobertura 100% artesanal y sin dependencias externas:
+    1. *Despejado / Soleyeru (`clear-day` / `sun`):* Gran sol dorado otoñal radiante (`#f59e0b`, `#fbbf24`) dominando con rayos prominentes, acompañado en primer plano por el tradicional cucurucho cónico de papel de periódico con rayitas de prensa, del que asoman castañas asadas calientes con corte en cruz y volutas de humo caliente subiendo hacia el sol. Inconfundible cielo soleado y memoria visual del amagüestu.
+    2. *Noche Clara / Despexáu (`clear-night` / `moon`):* Luna llena dorada con cráteres suaves, estrellas titilantes y cucurucho de castañas asadas humeando al sereno.
+    3. *Mayormente Soleado / Claros (`mostly-clear-day`):* Sol dominante al 75% con mini-nube ligera y cucurucho de castañas asadas.
+    4. *Poco Nuboso Noche (`mostly-clear-night`):* Luna clara con velo nuboso tenue y cucurucho.
+    5. *Intervalos Nubosos (`partly-cloudy-day` / `cloud-sun`):* Sol dorado brillante tras nube blanca esponjosa y la Castañina asada risueña (personaje con ojos pillos y sonrisa dorada) asomando grandota por detrás de la nube saludando con humo caliente, replicando la magia del fantasma de Halloween.
+    6. *Intervalos Noche (`partly-cloudy-night` / `cloud-moon`):* Luna creciente y nube nocturna con castañina asomando.
+    7. *Resol Asturiano (`resol`):* Núcleo solar tamizado ámbar con halo circular difuso de cirroestratos, hojas de carbayu y cucurucho humeante.
+    8. *Nublado / Cubiertu (`cloudy` / `cloud`):* Nube otoñal gris definida con el tradicional tamboril de chapa perforado sobre brasas incandescentes con manivela y columna de humo ascendente.
+    9. *Niebla / Borrina (`fog` / `borrina`):* Franjas horizontales de niebla atmosférica nítida con humo blanco tenue de amagüestu.
+    10. *Borrina Húmeda / Niebla Meona (`wet-fog`):* Bancos de bruma condensada con gotas perladas brillantes (`#38bdf8`) y castaña húmeda.
+    11. *Orbayu Llixeru (`drizzle` / `orbayu`):* Finas agujas celestes de llovizna con castaña calentina resguardada.
+    12. *Chubascos con Sol / Llueve y Fai Sol (`showers` / `chubascos`):* Sol brillante tras nube con gotas diagonales de lluvia y castaña sonriente.
+    13. *Lluvia Moderada (`rain`):* Nube de lluvia con gotas continuas y la tradicional xarra panzuda de barro con sidra dulce de duernu.
+    14. *Lluvia Fuerte / Bastinazu (`heavy-rain`):* Nube densa con cortina torrencial de 5 chorros y salpicaduras en el suelo.
+    15. *Tormenta Eléctrica (`storm`):* Nube pizarra con rayo zigzag dorado (`#facc15`) y chispas de brasa viva saltando.
+    16. *Aguanieve (`sleet`):* Gotas de lluvia fría alternadas con cristales geométricos de hielo.
+    17. *Falispos de Nieve (`snow-light`):* Copos ligeros de 6 puntas cayendo sobre castaña.
+    18. *Nevada Moderada (`snow`):* Nube invernal con copos simétricos y castaña abrigada con bufandina roja asturiana.
+    19. *Nevadona Copiosa (`heavy-snow` / `nevadona`):* Cúmulo denso con copos dobles copiosos y manto de nieve en la base.
+    20. *Granizo / Pedriscu (`hail`):* Nube de tormenta con piedras facetadas de pedrisco blanco y estelas de impacto.
+- **Arquitectura de Censura Top Secret y Modo de Prueba en Vivo:**
+  - En `index.html`: incorporada la tarjeta `#theme-card-amaguestu` con clase `.theme-card-locked`, envoltorio pixelado `#wrap-amaguestu-preview`, badge `🕵️‍♂️ Top Secret` y botón interactivo `#btn-toggle-amaguestu-test` (*«🧪 Probar ahora»* / *«🌰 Quitar prueba»*).
+  - En `css/main.css`: estilos temáticos para la tarjeta con gradiente ámbar-castaña y sombras de profundidad.
+  - En `js/app.js`: integración en el selector modal de temas, soporte de conmutador en tiempo real sin recargar, soporte de parámetro URL (`?test=amaguestu`) conforme a la Ley 12 (Doctrina de Simulacro), y ventana de activación por defecto del 9 al 12 de Noviembre con respeto al opt-out del usuario.
+- **Verificación Técnica:**
+  - 49 archivos JS analizados con 0 errores sintácticos.
+  - Test unitario simulado (`test_amaguestu_render.cjs`) confirma que los 20 estados y todos los códigos WMO renderizan SVGs válidos con estilo Amagüestu.
+  - Servidor local levantado en `http://localhost:8080` para inspección visual directa de Lendo (Leyes 1, 3 y 9).
+
 ## 🌧️ Precisión de Iconos de Lluvia en el Carrusel Horario (v3.0.23.64) — 2026-11-03
 - **Problema Reportado por Lendo (Observación en Vivo en el Carrusel 72h):**
   - A las 14:00 h marcaba 0.1 mm y 66% con icono de nube (interpretado correctamente como micro-traza o virga).
