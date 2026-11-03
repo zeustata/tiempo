@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-66-amaguestu-topsecret-lock';
+const CACHE_NAME = 'meteoasturlode-v3023-67-real-orbayu-accuracy';
 const STATIC_ASSETS = [
   './',
   './index.html',

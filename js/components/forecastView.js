@@ -276,23 +276,24 @@ export function renderHourlyForecastBlock(data, units = 'metric', iconTheme = 'a
     }
 
     const pop = hourly.precipitation_probability ? (hourly.precipitation_probability[i] || 0) : 0;
-    const precipMm = hourly.precipitation ? (hourly.precipitation[i] || 0) : 0;
-    const code = hourly.weather_code[i];
-    // Calibración Solar Inteligente Continua:
-    // Para la hora en curso y la siguiente inmediata se puede priorizar la lectura en vivo instantánea si existe;
-    // para el resto de horas diurnas se utilizan los arrays de radiación directa y global previstos por el modelo horario.
+    const isCurrentHourSlot = (i === startIndex);
+    const precipMm = (isCurrentHourSlot && cur?.precipitation != null) ? cur.precipitation : (hourly.precipitation ? (hourly.precipitation[i] || 0) : 0);
+    const code = (isCurrentHourSlot && cur?.weather_code != null) ? cur.weather_code : hourly.weather_code[i];
+    // Calibración Solar e Hidrometeórica Inteligente Continua:
+    // Para la hora en curso y la siguiente inmediata se sincroniza la lectura en vivo instantánea de la estación;
+    // para el resto de horas se utilizan los arrays previstos por el modelo horario.
     const hourlyDirectIrr = (hourly.direct_normal_irradiance && hourly.direct_normal_irradiance[i] != null) ? hourly.direct_normal_irradiance[i] : null;
     const hourlyUv = (hourly.uv_index && hourly.uv_index[i] != null) ? hourly.uv_index[i] : null;
     const hourlySw = (hourly.shortwave_radiation && hourly.shortwave_radiation[i] != null) ? hourly.shortwave_radiation[i] : null;
 
-    const isImmediateNextHour = (i === startIndex || i === startIndex + 1);
+    const isImmediateNextHour = (isCurrentHourSlot || i === startIndex + 1);
     const useDirectIrr = (isImmediateNextHour && liveDirectIrr != null) ? liveDirectIrr : hourlyDirectIrr;
     const useUv = (isImmediateNextHour && liveUv != null) ? liveUv : hourlyUv;
     const useSw = (isImmediateNextHour && liveSw != null) ? liveSw : hourlySw;
 
-    const cloudCoverHour = (hourly.cloud_cover && hourly.cloud_cover[i] != null) ? hourly.cloud_cover[i] : null;
-    const humHour = (hourly.relative_humidity_2m && hourly.relative_humidity_2m[i] != null) ? hourly.relative_humidity_2m[i] : null;
-    const visHour = (hourly.visibility && hourly.visibility[i] != null) ? hourly.visibility[i] : null;
+    const cloudCoverHour = (isCurrentHourSlot && cur?.cloud_cover != null) ? cur.cloud_cover : ((hourly.cloud_cover && hourly.cloud_cover[i] != null) ? hourly.cloud_cover[i] : null);
+    const humHour = (isCurrentHourSlot && cur?.relative_humidity_2m != null) ? cur.relative_humidity_2m : ((hourly.relative_humidity_2m && hourly.relative_humidity_2m[i] != null) ? hourly.relative_humidity_2m[i] : null);
+    const visHour = (isCurrentHourSlot && cur?.visibility != null) ? cur.visibility : ((hourly.visibility && hourly.visibility[i] != null) ? hourly.visibility[i] : null);
     const weather = getWeatherInfo(code, isDay, precipMm, pop, useDirectIrr, useUv, useSw, cloudCoverHour, humHour, visHour);
     const temp = Math.round(hourly.temperature_2m[i]);
     const windSpeed = units === 'knots' ? (hourly.wind_speed_10m[i] * 0.539957).toFixed(0) : Math.round(hourly.wind_speed_10m[i]);

@@ -148,7 +148,7 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     // b) El pluviómetro marca < 1.0 mm pero la humedad en superficie es seca (h < 85% virga).
     // Si la probabilidad del ensamble es alta (prob >= 40%), se respeta la lluvia y jamás se anula a 'Nublado'.
     const isUnconfirmedByEnsemble = !hasPop || prob < 40;
-    const isZeroPrecipDryHum = !isPhysicallyRaining && isDrizzleCode && h !== null && h < 94;
+    const isZeroPrecipDryHum = !isPhysicallyRaining && isDrizzleCode && h !== null && h < 88;
     if (isSolarPhantomDrizzle || (isUnconfirmedByEnsemble && (isZeroPrecipDryHum || isDryDrizzleVirga))) {
       isExplicitRainCode = false;
       base = {

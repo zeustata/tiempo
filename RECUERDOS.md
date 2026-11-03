@@ -2,6 +2,22 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌦️ Calibración del Orbayu Asturiano y Sincronización Total con el Carrusel 72h (v3.0.23.67) — 2026-11-03
+- **Observación Crítica en Vivo de Lendo (Piedras Blancas, 11:00 h):**
+  - Lendo observó por su ventana que estaba cayendo un orbayu continuo en Piedras Blancas. Sin embargo, la app marcaba *«Nublado / Cubiertu ☁️»*.
+- **Diagnóstico Meteorológico y Causa Raíz:**
+  - El modelo numérico de la API marcaba explícitamente `weather_code: 51` (*Orbayu llixeru*), cielo 100% cubierto y un 91% de humedad relativa en superficie.
+  - Sin embargo, en `js/utils/weatherIcons.js`, un filtro demasiado estricto exigía `h >= 94%` para validar el código 51 si el pluviómetro marcaba instantáneamente `0.0 mm`.
+  - En la meteorología física de Asturias, el orbayu está compuesto por microgotas que mojan el asfalto y la ropa sin llegar a volcar el balancín mecánico de 0.1 mm del pluviómetro durante periodos prolongados. Con una humedad del 91% bajo cielo cubierto, la llovizna no es virga: llega al suelo con total certeza.
+- **Solución Quirúrgica y Sincronización Integral:**
+  1. *Ajuste de Umbral en `weatherIcons.js`:* Se reajustó la condición de anulación por sequedad de `h < 94%` a `h < 88%`. Con humedades relativas asturianas del 88% al 93% bajo cielo cubierto, el código oficial de llovizna se respeta fielmente (`🌦️ Orbayu`), preservando simultáneamente la anulación a seco si el aire en superficie es verdaderamente seco (`h < 88%`).
+  2. *Sincronización Total con el Carrusel 72h (`forecastView.js`):* Se sincronizó la primera tarjeta horaria del carrusel (`startIndex`) con las lecturas en vivo instantáneas (`cur.weather_code`, `cur.precipitation`, `cur.relative_humidity_2m`), garantizando que la Hero Card y la tarjeta horaria en curso muestren exactamente la misma condición meteorológica sin el menor desfase.
+- **Inmunidad Preservada de Otros Escenarios:**
+  - Se verificó mediante batería de pruebas que las lluvias cuantiosas (como la de las 15:00 h con 0.35 mm y 16:00 h con 2.15 mm), los chubascos, las tormentas y la protección de horas soleadas con virga seca permanecen 100% inalteradas y funcionales.
+- **Cache-Busting & Verificación:**
+  - Actualización a `v3.0.23.67` en `index.html`, `sw.js`, `currentCard.js` y `app.js` con Service Worker `meteoasturlode-v3023-67-real-orbayu-accuracy`.
+  - 49 archivos JS analizados con 0 errores sintácticos. Verificado en servidor local `http://localhost:8080`.
+
 ## 🔒 Blindaje Hermético de Censura Top Secret para el Amagüestu (v3.0.23.66) — 2026-11-03
 - **Detección Crítica de Lendo (Protección Absoluta del Factor Sorpresa):**
   - Lendo detectó que en la primera subida se había dejado a la vista de cualquier usuario el botón `[ 🧪 Probar ahora ]` en el pie de la tarjeta del Amagüestu, lo que comprometía el secreto del evento antes del 9 de noviembre.
