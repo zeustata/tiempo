@@ -2,6 +2,13 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🚴 Módulo Oficial de Ciclismo en Ruta & Viento Dinámico (v3.0.24.9) — 2026-11-04
+- **Ampliación de Horas de Salida y Ritmos Ciclistas (Instrucción de Lendo):**
+  1. *Horas Rápidas de Salida:* Ampliadas para cubrir mañanas completas y tardes: 8:00, 9:00, 10:00, 11:00, 12:00, 13:00, 16:00, 17:00, 18:00, 19:00.
+  2. *Espectro Completo de Velocidades:* Añadidos los ritmos de 16 km/h (Paseo) y 32 km/h (Semipro / Grupeta), quedando la escala en: 16 km/h (Paseo), 20 km/h (Tranquilo), 24 km/h (Medio), 28 km/h (Avanzado) y 32 km/h (Semipro).
+  3. *Recálculo Dinámico Tridimensional de Viento por Velocidad:* A diferente velocidad media, el tiempo total y la hora exacta de paso por cada tramo cambian radicalmente. El simulador recalcula el paso tramo a tramo, la rotación horaria del viento y la puntuación de confort. Cambiar la velocidad auto-recalcula la ruta óptima para ese ritmo y la carga de inmediato debajo sin obligar al ciclista a buscarla manualmente.
+  4. *Ergonomía Móvil y Anti-Caché:* Contenedor deslizable horizontal suave para las 5 pastillas de ritmo (scroll-x, scrollbar-width: none) inmune a pantallas estrechas. Actualizado Service Worker a meteoasturlode-v3024-9-speeds-hours-recalc y query strings v=3.0.24.9.
+
 ## 🚴 Módulo Oficial de Ciclismo en Ruta & Viento Dinámico (v3.0.24.1) — 2026-11-04
 - **Génesis de la Innovación (Iniciativa de Lendo y su Jefe de Sala cicloturista):**
   - Planteamiento del reto ciclista asturiano: conocer con antelación el impacto real del viento por tramos y puertos según la hora de salida elegida (ej. 9:00 AM) y el rumbo cambiante del ciclista.

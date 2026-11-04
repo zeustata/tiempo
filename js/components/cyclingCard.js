@@ -6,8 +6,8 @@
  * selector táctil ergonómico sin diálogos gigantes de Android y blindaje de seguridad ciclista.
  */
 
-import { getCyclingRoutesForConcejo, getCyclingRouteById, CYCLING_ROUTES } from '../utils/cyclingData.js?v=3.0.24.8';
-import { simulateRouteConditions, rankRoutesForDeparture } from '../utils/cyclingAdvisor.js?v=3.0.24.8';
+import { getCyclingRoutesForConcejo, getCyclingRouteById, CYCLING_ROUTES } from '../utils/cyclingData.js?v=3.0.24.9';
+import { simulateRouteConditions, rankRoutesForDeparture } from '../utils/cyclingAdvisor.js?v=3.0.24.9';
 
 /**
  * Renderiza la vista principal del módulo de Ciclismo & Viento
@@ -27,7 +27,7 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
 
   // REGLA DE ORO DE LENDO:
   // Si no se ha elegido una ruta manual específica, o si la seleccionada no pertenece a este concejo,
-  // se auto-carga directamente la ruta ÓPTIMA sugerida por el consejero para esta hora.
+  // se auto-carga directamente la ruta ÓPTIMA sugerida por el consejero para esta hora y ritmo.
   let activeRoute = bestRoute;
   if (selectedRouteId) {
     const manualRoute = getCyclingRouteById(selectedRouteId);
@@ -37,12 +37,14 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
   // Simulación para la ruta activa que se pinta debajo
   const sim = simulateRouteConditions(activeRoute, selectedHour, selectedSpeed, hourly);
 
-  // Horas rápidas de salida
-  const quickHours = [8, 9, 10, 11, 16, 17];
+  // Horas rápidas de salida (mañanas y tardes ampliadas a petición de Lendo)
+  const quickHours = [8, 9, 10, 11, 12, 13, 16, 17, 18, 19];
   const speeds = [
+    { value: 16, label: '16 km/h', sub: 'Paseo' },
     { value: 20, label: '20 km/h', sub: 'Tranquilo' },
     { value: 24, label: '24 km/h', sub: 'Medio' },
-    { value: 28, label: '28 km/h', sub: 'Rápido' }
+    { value: 28, label: '28 km/h', sub: 'Avanzado' },
+    { value: 32, label: '32 km/h', sub: 'Semipro' }
   ];
 
   return `
@@ -67,11 +69,11 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
         }
       }
       .btn-speed-pill {
-        flex: 1;
-        min-width: 0;
+        flex: 1 0 74px;
+        min-width: 74px;
         text-align: center;
         padding: 6px 4px;
-        font-size: 0.76rem;
+        font-size: 0.74rem;
         font-weight: 700;
         border-radius: 8px;
         cursor: pointer;
@@ -198,13 +200,13 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
               </div>
             </div>
 
-            <!-- Ritmo medio (Pastillas ergonómicas al 33%) -->
+            <!-- Ritmo medio (Pastillas ergonómicas con scroll horizontal) -->
             <div>
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                 <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-main);">⚡ Ritmo en llano:</span>
-                <span style="font-size: 0.78rem; font-weight: 700; color: var(--accent, #facc15);">${selectedSpeed} km/h</span>
+                <span style="font-size: 0.78rem; font-weight: 700; color: var(--accent, #facc15);">${selectedSpeed} km/h (${speeds.find(s => s.value === selectedSpeed)?.sub || ''})</span>
               </div>
-              <div style="display: flex; gap: 6px; width: 100%; box-sizing: border-box;">
+              <div style="display: flex; gap: 5px; width: 100%; box-sizing: border-box; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; -webkit-overflow-scrolling: touch;">
                 ${speeds.map(s => `
                   <button type="button" class="btn-speed-pill ${s.value === selectedSpeed ? 'active' : ''}" data-speed="${s.value}" style="border: 1px solid ${s.value === selectedSpeed ? 'var(--accent, #facc15)' : 'rgba(255,255,255,0.1)'}; background: ${s.value === selectedSpeed ? 'rgba(250, 204, 21, 0.2)' : 'rgba(255,255,255,0.04)'}; color: ${s.value === selectedSpeed ? 'var(--accent, #facc15)' : 'var(--text-dim)'};">
                     ${s.label}

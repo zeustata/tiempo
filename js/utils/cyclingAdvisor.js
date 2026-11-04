@@ -2,7 +2,7 @@
  * METEOASTUR LODE - Motor Físico y Consejero de Viento Dinámico para Ciclismo
  * Desarrollado por Manuel A. L. Barril (Lendo) y Princesa.
  * Cálculo vectorial del viento relativo (en cola, de cara, cruzado),
- * simulación de avance temporal del ciclista y recomendación de rutas según la hora.
+ * simulación de avance temporal del ciclista y recomendación de rutas según la hora y la velocidad.
  */
 
 /**
@@ -20,16 +20,8 @@ export function getAngularDifference(bearingA, bearingB) {
  * - 45° < diff < 135°: Viento lateral / cruzado (peligro de desestabilización con llantas de perfil)
  */
 export function evaluateRelativeWind(cyclistBearingDeg, windDirectionDeg, windSpeedKmh, windGustsKmh = 0) {
-  const diff = getAngularDifference(cyclistBearingDeg, windDirectionDeg);
-
-  // Componente efectiva a lo largo del eje de la bicicleta (km/h)
-  // cos(0°) = 1 (a favor total), cos(180°) = -1 (de cara total)
-  // Como windDirection es de DÓNDE viene el viento:
-  // Si viento viene de 180° (Sur) y ciclista va a 0° (Norte), ciclista va hacia el Norte empujado por viento del Sur -> A favor (diff = 180° respecto al origen del viento).
   // Nota física de navegación meteorológica:
-  // La dirección del viento (windDirection) indica de DÓNDE SOPLA (ej. 360° = sopla DESDE el norte HACIA el sur).
-  // El rumbo del ciclista (cyclistBearing) indica HACIA DÓNDE AVANZA (ej. 180° = va hacia el sur).
-  // Por tanto, si viento viene del 360° (Norte) y el ciclista va hacia el 180° (Sur), van en la MISMA dirección (viento de cola).
+  // windDirection indica de DÓNDE SOPLA (ej. 360° = sopla DESDE el norte HACIA el sur).
   // La dirección hacia donde empuja el viento es (windDirection + 180) % 360.
   const windVectorHeading = (windDirectionDeg + 180) % 360;
   const relativeAngle = getAngularDifference(cyclistBearingDeg, windVectorHeading);
@@ -76,7 +68,7 @@ export function evaluateRelativeWind(cyclistBearingDeg, windDirectionDeg, windSp
 
 /**
  * Simula el paso del ciclista tramo a tramo según su velocidad media y la hora de salida.
- * Extrae las condiciones meteorológicas horarias correspondientes.
+ * Extrae las condiciones meteorológicas horarias correspondientes en tiempo real.
  */
 export function simulateRouteConditions(route, startHour = 9, avgSpeedKmh = 24, hourlyData = null) {
   if (!route || !route.tramos || route.tramos.length === 0) return null;
@@ -97,13 +89,19 @@ export function simulateRouteConditions(route, startHour = 9, avgSpeedKmh = 24, 
   const pops = hourlyData?.precipitation_probability || [];
   const weatherCodes = hourlyData?.weather_code || [];
 
+  // Inteligencia de proyección horaria:
+  // Si la hora de salida ya pasó hoy por la tarde (ej. son las 16h y se elige las 9h),
+  // la simulación se proyecta automáticamente para la mañana siguiente (+24h en array Open-Meteo).
+  const now = new Date();
+  const currentHour = now.getHours();
+  const dayOffsetHours = (startHour < currentHour && currentHour >= 14) ? 24 : 0;
+
   route.tramos.forEach((tramo, index) => {
-    // Cálculo del tiempo en este tramo: ajusta la velocidad según la pendiente
-    // Si sube (> 3%), la velocidad baja; si baja (< -2%), la velocidad sube
+    // Cálculo del tiempo en este tramo: ajusta la velocidad según la pendiente y el ritmo medio
     let tramoSpeed = avgSpeedKmh;
-    if (tramo.avgGradePct > 6) tramoSpeed = Math.max(10, avgSpeedKmh * 0.5);
-    else if (tramo.avgGradePct > 3) tramoSpeed = Math.max(14, avgSpeedKmh * 0.7);
-    else if (tramo.avgGradePct < -3) tramoSpeed = Math.min(50, avgSpeedKmh * 1.5);
+    if (tramo.avgGradePct > 6) tramoSpeed = Math.max(8, avgSpeedKmh * 0.45);
+    else if (tramo.avgGradePct > 3) tramoSpeed = Math.max(12, avgSpeedKmh * 0.65);
+    else if (tramo.avgGradePct < -3) tramoSpeed = Math.min(55, avgSpeedKmh * 1.55);
 
     const tramoMinutes = Math.round((tramo.km / tramoSpeed) * 60);
     const startMinuteOfTramo = elapsedMinutes;
@@ -111,7 +109,7 @@ export function simulateRouteConditions(route, startHour = 9, avgSpeedKmh = 24, 
     elapsedMinutes = endMinuteOfTramo;
 
     // Hora del día en la que transcurre el tramo
-    const currentSimulatedDecimalHour = startHour + (startMinuteOfTramo / 60);
+    const currentSimulatedDecimalHour = dayOffsetHours + startHour + (startMinuteOfTramo / 60);
     const currentHourIndex = Math.min(times.length - 1, Math.max(0, Math.floor(currentSimulatedDecimalHour)));
 
     // Extraer datos del tramo
@@ -159,7 +157,6 @@ export function simulateRouteConditions(route, startHour = 9, avgSpeedKmh = 24, 
   const crosswindPct = Math.round((totalCrosswindKm / totalDistanceKm) * 100);
 
   // Puntuación de confort ciclista (0 a 100):
-  // Bonifica viento a favor (+), penaliza viento en contra (-) y ráfagas fuertes
   let score = 75 + (tailwindPct * 0.25) - (headwindPct * 0.35);
   if (maxGustKmh >= 40) score -= 20;
   else if (maxGustKmh >= 30) score -= 10;
@@ -185,13 +182,13 @@ export function simulateRouteConditions(route, startHour = 9, avgSpeedKmh = 24, 
   // Generación de consejo inteligente personalizado
   let advisorMessage = '';
   if (headwindPct > 50) {
-    advisorMessage = `Ruta con viento en contra predominante (${headwindPct}% del trayecto). Te exigirá un alto gasto de vatios.`;
+    advisorMessage = `Ruta con viento en contra predominante (${headwindPct}% del trayecto a ${avgSpeedKmh} km/h). Alto gasto de vatios.`;
   } else if (tailwindPct > 45) {
-    advisorMessage = `Excelente elección para salir a las ${startHour}:00 h: disfrutarás de viento a favor durante el ${tailwindPct}% de la ruta.`;
+    advisorMessage = `Excelente elección a ${avgSpeedKmh} km/h: disfrutarás de viento a favor durante el ${tailwindPct}% de la ruta.`;
   } else if (crosswindPct > 50) {
     advisorMessage = `Predomina el viento lateral (${crosswindPct}%). Precaución en bajadas rápidas si montas ruedas de perfil.`;
   } else {
-    advisorMessage = `Condiciones equilibradas para rodar con salida a las ${startHour}:00 h. Ritmo cómodo y viento moderado.`;
+    advisorMessage = `Condiciones equilibradas rodando a ${avgSpeedKmh} km/h con salida a las ${startHour}:00 h. Ritmo cómodo.`;
   }
 
   const formatTotalTime = (mins) => {
@@ -203,6 +200,7 @@ export function simulateRouteConditions(route, startHour = 9, avgSpeedKmh = 24, 
   return {
     routeId: route.id,
     startHour,
+    isProjectedTomorrow: dayOffsetHours > 0,
     totalDurationFormatted: formatTotalTime(elapsedMinutes),
     totalDurationMinutes: elapsedMinutes,
     avgSpeedKmh,
@@ -219,7 +217,7 @@ export function simulateRouteConditions(route, startHour = 9, avgSpeedKmh = 24, 
 }
 
 /**
- * Compara y ordena un conjunto de rutas para recomendar cuál es la mejor a una hora concreta.
+ * Compara y ordena un conjunto de rutas para recomendar cuál es la mejor a una hora y velocidad concretas.
  */
 export function rankRoutesForDeparture(routes, startHour = 9, avgSpeedKmh = 24, hourlyData = null) {
   if (!routes || routes.length === 0) return [];
@@ -232,8 +230,6 @@ export function rankRoutesForDeparture(routes, startHour = 9, avgSpeedKmh = 24, 
     };
   });
 
-  // Ordenar de mayor a menor puntuación ciclista
   ranked.sort((a, b) => (b.simulation?.score || 0) - (a.simulation?.score || 0));
   return ranked;
 }
-

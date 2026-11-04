@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-8-auto-optimal-routes';
+const CACHE_NAME = 'meteoasturlode-v3024-9-speeds-hours-recalc';
 const STATIC_ASSETS = [
   './',
   './index.html',
