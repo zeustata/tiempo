@@ -1042,17 +1042,35 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
         </div>
       </div>
 
-      <!-- MINI-GRÁFICO TÉRMICO CONTINUO 24H (CURVA SUAVE CON PUNTO VIVO HORARIO) -->
-      ${renderMiniThermalCurve24h(hourly)}
+      <!-- CARRUSEL COMPACTO DE HERRAMIENTAS HERO (CURVA TÉRMICA, CLIMA MENSUAL Y SEMÁFORU PARAGÜES - LEY 18) -->
+      <div class="hero-widgets-carousel-wrap">
+        <div class="hero-widgets-carousel" id="hero-widgets-carousel">
+          <!-- Slide 1: Curva Térmica Hoy -->
+          <div class="hero-widget-slide">
+            ${renderMiniThermalCurve24h(hourly)}
+          </div>
+
+          <!-- Slide 2: Clima y Memoria Asturiana (con desglose interactivo) -->
+          <div class="hero-widget-slide">
+            ${climaStripMarkup || ''}
+          </div>
+
+          <!-- Slide 3: Semáforu del Paragües (Cielo Noble / Orbayu / Bastinazu) -->
+          <div class="hero-widget-slide">
+            ${umbrellaMarkup || ''}
+          </div>
+        </div>
+
+        <!-- Paginador Interactivo de Puntos Discretos (Ley 18) -->
+        <div class="hero-widgets-dots" id="hero-widgets-dots">
+          <span class="sensor-dot active" data-sensor-target="0" title="Ver Curva Térmica 24h"></span>
+          <span class="sensor-dot" data-sensor-target="1" title="Ver Clima y Normales del Mes"></span>
+          <span class="sensor-dot" data-sensor-target="2" title="Ver Semáforu del Paragües"></span>
+        </div>
+      </div>
 
       <!-- BANNER DESTACADO DE FOLIXAS Y FIESTAS LOCALES (HOXE TAMOS DE FOLIXA) -->
       ${folixaBannerMarkup ? `<div class="hero-divider"></div>${folixaBannerMarkup}` : ''}
-
-      <!-- FRANJA ERGONÓMICA DE TIEMPO HABITUAL (ANOMALÍA CLIMATOLÓGICA 30 AÑOS AEMET) -->
-      ${climaStripMarkup ? `<div class="hero-divider"></div>${climaStripMarkup}` : ''}
-
-      <!-- SEMÁFORU DEL PARAGÜES (Nowcasting Asturiano Inmediato 8h) -->
-      ${umbrellaMarkup ? `<div class="hero-divider"></div>${umbrellaMarkup}` : ''}
     </div>
 
     <!-- FEED DE ALERTAS CON TRIAGE JERÁRQUICO POR SEVERIDAD (ROJO > NARANJA > AMARILLO) -->

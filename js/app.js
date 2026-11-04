@@ -2414,6 +2414,7 @@ class MeteoAsturiasApp {
     const isInteractiveZone = (target) => {
       if (!target) return false;
       return target.closest(
+        '.hero-widgets-carousel-wrap, .hero-widgets-carousel, .hero-widget-slide, .hero-widgets-dots, .clima-accordion-card, .clima-compact-summary, .mini-thermal-widget, ' +
         '.sensors-carousel-section, .sensors-nav-toolbar, .sensor-nav-pill, .sensors-carousel, .sensor-card, .sensors-dots-indicator, .carousel-dots-indicator, .sensor-dot, ' +
         '.hourly-scroll-container, .live-hourly-block, .hourly-card, .hourly-day-divider, ' +
         '.chart-scroll-viewport, #chart-canvas-wrapper, #meteo-chart-canvas, ' +
@@ -3108,6 +3109,7 @@ class MeteoAsturiasApp {
       if (liveContainer) {
         liveContainer.innerHTML = renderCurrentWeather(this.weatherData, this.currentConcejo, this.prefs.units, effectiveTheme, this.activeLocalidad);
         this.initSensorsCarousel();
+        this.bindCarouselDots('hero-widgets-carousel', 'hero-widgets-dots', '.hero-widget-slide');
       }
       // Verificación de Alertas Rojas de Emergencia (v2.2.34)
       this.checkEmergencyRedAlerts(this.weatherData, this.currentConcejo);

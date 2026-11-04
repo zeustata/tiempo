@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-12-tourism-bottom-sheet-actions';
+const CACHE_NAME = 'meteoasturlode-v3024-13-hero-widgets-carousel';
 const STATIC_ASSETS = [
   './',
   './index.html',

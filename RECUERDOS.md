@@ -2,6 +2,20 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌟 Carrusel Ergonómico Hero: Curva Térmica, Clima y Semáforu del Paragües (v3.0.24.13) — 2026-11-04
+- **Compactación Visual de la Tarjeta Principal En Vivo (Iniciativa de Lendo):**
+  1. *De 3 Bloques Apilados a 1 Carrusel Monotarjeta 100% (Ley 18):*
+     - En lugar de ocupar una altura vertical excesiva en la tarjeta principal de tiempo en vivo, los 3 componentes clave se han unificado en un carrusel horizontal con encuadre magnético:
+       - **Slide 1:** 📈 *Curva Térmica Hoy* (gráfico suave continuo de 24h con punto vivo horario).
+       - **Slide 2:** 🏛️ *Clima Noviembre* (anomalía de 30 años de AEMET con su botón interactivo **«Ver» / «Cerrar»** y desglose de récords y memoria asturiana 100% operativo).
+       - **Slide 3:** 🌂 *Semáforu del Paragües* (evaluación inmediata de nowcasting de 8h: *Cielo Noble*, aviso de inicio de orbayu o bastinazu).
+  2. *Paginador Interactivo de 3 Puntos Discretos:*
+     - Puntos bajo el carrusel con expansión luminosa en píldora al estar activos, permitiendo saltar a cualquier tarjeta con un toque rápido.
+  3. *Inmunidad Táctil y Protección Gestual (Ley 18):*
+     - Integrado en el guardián `isInteractiveZone` de `app.js` para impedir el cambio accidental de pestaña al deslizar.
+     - Directiva obligatoria `touch-action: pan-x pan-y;` para garantizar un scroll vertical sedoso sin congelamientos.
+  4. *Cache-Busting & Despliegue:* Service Worker actualizado a `meteoasturlode-v3024-13-hero-widgets-carousel` y query strings `v=3.0.24.13`. Servidor local cerrado.
+
 ## 🎭 Modernización Ergonómica de Planes & Ocio con Fichas GPS (v3.0.24.12) — 2026-11-04
 - **Erradicación del Scroll Infinito y Accesos Interactivos GPS/Horarios (Iniciativa de Lendo):**
   1. *Superación del Scroll Infinito de 36 Acordeones:* Sustitución de los 36 acordeones verticales por la arquitectura moderna de Tarjeta Protagonista, idéntica a la adoptada con éxito en Ciclismo y Senderismo.

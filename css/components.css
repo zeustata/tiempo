@@ -13491,3 +13491,86 @@
   line-height: 1.15;
   white-space: nowrap;
 }
+
+/* ==========================================================================
+   CARRUSEL ERGONÓMICO HERO (CURVA TÉRMICA, CLIMA MENSUAL Y SEMÁFORU PARAGÜES)
+   Doctrina de Aislamiento Táctil y Monotarjeta 100% (Ley 18)
+   ========================================================================== */
+.hero-widgets-carousel-wrap {
+  width: 100%;
+  margin-top: 12px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.hero-widgets-carousel {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pan-y !important;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 2px 0;
+}
+
+.hero-widgets-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.hero-widget-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.hero-widget-slide .mini-thermal-widget {
+  margin: 0;
+  max-width: 100%;
+  width: 100%;
+}
+
+.hero-widget-slide .climatology-strip {
+  margin-top: 0;
+  max-width: 100%;
+  width: 100%;
+}
+
+.hero-widget-slide .umbrella-advisor-strip {
+  margin-top: 0;
+  max-width: 100%;
+  width: 100%;
+}
+
+.hero-widgets-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.hero-widgets-dots .sensor-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-widgets-dots .sensor-dot.active {
+  width: 20px;
+  background: var(--primary, #38bdf8);
+  border-color: rgba(56, 189, 248, 0.6);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+}
