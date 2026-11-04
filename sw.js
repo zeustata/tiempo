@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-18-cycling-wind-badges';
+const CACHE_NAME = 'meteoasturlode-v3024-19-radar-actions-bar';
 const STATIC_ASSETS = [
   './',
   './index.html',

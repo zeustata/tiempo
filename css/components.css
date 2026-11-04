@@ -3998,6 +3998,82 @@
   box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
 }
 
+/* Barra de Acciones del Radar: Botones Centrar y Reproducir bajo el visor */
+.radar-actions-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 12px;
+}
+
+.btn-radar-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 14px;
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid var(--border-glass, rgba(255, 255, 255, 0.15));
+  border-radius: var(--radius-md, 12px);
+  color: var(--text-main, #f8fafc);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+  width: 100%;
+  backdrop-filter: blur(8px);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+@media (hover: hover) {
+  .btn-radar-action:hover {
+    background: rgba(56, 189, 248, 0.18);
+    border-color: var(--primary, #38bdf8);
+    color: var(--primary, #38bdf8);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px -3px rgba(56, 189, 248, 0.3);
+  }
+}
+
+.btn-radar-action:active {
+  background: rgba(56, 189, 248, 0.32) !important;
+  border-color: var(--primary, #38bdf8) !important;
+  color: var(--primary, #38bdf8) !important;
+  transform: scale(0.96) !important;
+  transition: transform 0.1s ease !important;
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.4) !important;
+}
+
+.btn-radar-action.active {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(217, 119, 6, 0.18)) !important;
+  border-color: var(--accent-gold, #f59e0b) !important;
+  color: var(--accent-gold, #f59e0b) !important;
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.3);
+}
+
+@media (max-width: 480px) {
+  .radar-actions-bar {
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .btn-radar-action {
+    padding: 9px 8px;
+    font-size: 0.80rem;
+    min-height: 42px;
+    gap: 5px;
+    letter-spacing: -0.2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
 
 @media (max-width: 650px) {
   .radar-wrapper {

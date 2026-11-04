@@ -33,7 +33,7 @@
 
   <!-- Estilos de la Aplicación con Cache Busting -->
   <link rel="stylesheet" href="css/main.css?v=3.0.24.15">
-  <link rel="stylesheet" href="css/components.css?v=3.0.24.16">
+  <link rel="stylesheet" href="css/components.css?v=3.0.24.19">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -188,11 +188,6 @@
               <span class="section-subtitle">Seguimiento de lluvia y tormentas en tiempo real vía satélite</span>
               <span id="radar-time-display" style="font-size: 0.9rem; color: var(--primary); display: block; margin-top: 4px;">Cargando satélite...</span>
             </div>
-
-            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-              <button id="btn-radar-center" class="btn-header" title="Centrar mapa en Asturias">🎯 Centrar Asturias</button>
-              <button id="btn-radar-play" class="btn-header">▶️ Reproducir Radar</button>
-            </div>
           </div>
           <!-- Barra de Control Temporal del Radar (Línea de tiempo interactiva) -->
           <div class="radar-timeline-toolbar">
@@ -212,6 +207,11 @@
             </div>
           </div>
           <div id="map-container"></div>
+          <!-- Botones de Acción Primaria del Radar: Centrar y Reproducir en la misma línea bajo el mapa -->
+          <div class="radar-actions-bar">
+            <button id="btn-radar-center" class="btn-radar-action" title="Centrar mapa en Asturias">🎯 Centrar Asturias</button>
+            <button id="btn-radar-play" class="btn-radar-action" title="Iniciar o pausar animación del radar">▶️ Reproducir Radar</button>
+          </div>
         </div>
       </div>
 
@@ -4664,7 +4664,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.24.18"></script>
+  <script type="module" src="js/app.js?v=3.0.24.19"></script>
 
 
 

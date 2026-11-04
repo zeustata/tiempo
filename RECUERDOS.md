@@ -2,6 +2,24 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📡 Ergonomía del Radar: Botones Centrar y Reproducir en Línea Bajo el Visor (v3.0.24.19) — 2026-11-04
+- **Optimización de Interfaz y Thumb Zone en Móvil (Iniciativa de Lendo):**
+  1. *Diagnóstico y Propuesta de Lendo:*
+     - En la pestaña del Radar (#panel-radar), la barra superior acumulaba el título, el badge del concejo, el subtítulo y el texto de estado junto a los botones de acción (Centrar Asturias y Reproducir Radar), generando sobrecarga visual en la cabecera.
+     - Lendo propuso reubicar ambos botones en una misma línea horizontal justo debajo del mapa de radar.
+  2. *Implementación Técnica & Ergonomía Móvil (Leyes 11 y 21):*
+     - En index.html:
+       - Retirados los botones tn-radar-center y tn-radar-play de .radar-controls-bar, dejando la cabecera limpia y puramente informativa.
+       - Creado nuevo contenedor .radar-actions-bar justo debajo de #map-container.
+     - En css/components.css:
+       - Maquetación con display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; box-sizing: border-box; margin-top: 12px;.
+       - Nueva clase .btn-radar-action con estética Liquid Glass, altura ergonómica min-height: 44px (42px en pantallas estrechas <= 480px), microinteracciones hover/active y estado .active en gradiente ámbar al reproducir la animación.
+       - Inmunidad total al desborde horizontal (white-space: nowrap; text-overflow: ellipsis; max-width: 100%;).
+  3. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a meteoasturlode-v3024-19-radar-actions-bar.
+     - Query strings actualizadas a =3.0.24.19 en index.html (css/components.css y js/app.js).
+     - Commit atómico y sincronización a zeustata/Tiempo en GitHub.
+
 ## 🚴 Semáforo Dinámico de Viento en Ciclismo y Selector Ergonómico (v3.0.24.18) — 2026-11-04
 - **Visibilidad Total del Impacto Eólico en Tiempo Real (Iniciativa de Lendo):**
   1. *Diagnóstico de Transparencia Didáctica:*
