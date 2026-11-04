@@ -1294,6 +1294,7 @@
 /* --- SENSORS CAROUSEL & DASHBOARD SUITE --- */
 .sensors-carousel-section {
   width: 100%;
+  margin-top: 20px;
   margin-bottom: 24px;
   position: relative;
 }
@@ -1304,8 +1305,8 @@
   gap: 6px;
   overflow-x: auto;
   overflow-y: hidden;
-  padding: 2px 2px 8px 2px;
-  margin-bottom: 6px;
+  padding: 2px 2px 3px 2px;
+  margin-bottom: 4px;
   scrollbar-width: none;
   touch-action: pan-x pan-y;
   -webkit-overflow-scrolling: touch;

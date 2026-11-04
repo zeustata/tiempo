@@ -2,6 +2,17 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🧭 Reequilibrio de Jerarquía en la Barra de Sensores y Estación en Vivo (v3.0.24.16) — 2026-11-04
+- **Optimización de Proximidad Gestáltica (Iniciativa de Lendo):**
+  1. *Diagnóstico de Proximidad:*
+     - La barra de pastillas rápidas de la estación en vivo (`.sensors-nav-toolbar` con `[Viento]`, `[Presión]`, `[Humedad]`...) se encontraba a ~16px del bloque superior (Pronóstico 72h) y a ~14px de la tarjeta de sensor inferior, flotando de forma ambigua en tierra de nadie.
+  2. *Reequilibrio Funcional:*
+     - En `css/components.css`:
+       - Añadido margen superior a la sección (`.sensors-carousel-section { margin-top: 20px; }`) para despegar las pastillas del pronóstico horario de 72h.
+       - Reducido el padding inferior de las pastillas a `3px` y `margin-bottom: 4px;`, logrando una distancia íntima de solo **~7px** respecto a la tarjeta de anemómetro/barómetro.
+     - Resultado: los botones quedan visualmente anclados y soldados a la tarjeta que conmutan, garantizando una comprensión inmediata para el usuario.
+  3. *Cache-Busting & Despliegue:* Service Worker actualizado a `meteoasturlode-v3024-16-sensors-nav-spacing` y query strings `v=3.0.24.16` en `index.html` y `css/components.css`.
+
 ## 📱 Encuadre Íntegro de las Dos Primeras Tarjetas en Móvil (v3.0.24.15) — 2026-11-04
 - **Optimización Vertical Integral "Above the Fold" (Estrategia y Directriz de Lendo):**
   1. *Objetivo Ergonómico:*
