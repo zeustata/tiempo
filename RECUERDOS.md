@@ -2,6 +2,19 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📐 Reequilibrio de Jerarquía y Distancias en la Barra de Chips (v3.0.24.14) — 2026-11-04
+- **Optimización de Espaciado y Agrupación Visual (Detección Clínica de Lendo):**
+  1. *Diagnóstico de Jerarquía Gestáltica:*
+     - La barra horizontal de navegación rápida por módulos (`.module-chips-nav`) gobierna los paneles dinámicos inferiores (`hero-weather-card`, radar, playas, etc.).
+     - Sin embargo, presentaba una distancia hacia arriba (cabecera máster) de ~12px frente a 24px hacia abajo (tarjeta de contenido), dando una sensación visual anómala de apego al header y alejamiento del bloque interactivo que realmente conmuta.
+  2. *Reequilibrio Quirúrgico de Márgenes y Rellenos:*
+     - En `css/components.css`:
+       - Margen móvil (`<= 480px`): reajustado de `-8px 0 14px 0` a `2px 0 6px 0`.
+       - Margen de escritorio: reajustado de `-6px 0 16px 0` a `2px 0 8px 0`.
+       - Padding inferior del scroll horizontal (`.module-chips-scroll`): reducido de `10px` a `4px`, preservando el resplandor luminoso (*glow*) de selección sin recortar el marco.
+     - Separación resultante: ~18px-20px respecto al header superior y ~10px respecto a la tarjeta inferior, logrando una perfecta asociación visual funcional.
+  3. *Cache-Busting & Despliegue:* Service Worker actualizado a `meteoasturlode-v3024-14-chips-nav-spacing` y query strings `v=3.0.24.14` en `index.html`. Servidor local detenido para liberar puertos.
+
 ## 🌟 Carrusel Ergonómico Hero: Curva Térmica, Clima y Semáforu del Paragües (v3.0.24.13) — 2026-11-04
 - **Compactación Visual de la Tarjeta Principal En Vivo (Iniciativa de Lendo):**
   1. *De 3 Bloques Apilados a 1 Carrusel Monotarjeta 100% (Ley 18):*

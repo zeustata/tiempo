@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-13-hero-widgets-carousel';
+const CACHE_NAME = 'meteoasturlode-v3024-14-chips-nav-spacing';
 const STATIC_ASSETS = [
   './',
   './index.html',
