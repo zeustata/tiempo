@@ -256,12 +256,15 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
           <div style="flex: 1; min-width: 0;">
             <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap; margin-bottom: 4px;">
               <strong style="font-size: 0.88rem; color: var(--text-main);">Consejero de Viento (${selectedHour}:00 h)</strong>
-              <span style="font-size: 0.72rem; font-weight: 800; padding: 2px 7px; border-radius: 10px; background: ${bestSim?.badgeColor || '#22c55e'}; color: #000;">
-                ${bestSim?.badgeLabel || 'Óptima 🚀'}
+              <span style="font-size: 0.72rem; font-weight: 800; padding: 2px 7px; border-radius: 10px; background: ${activeRoute.id === bestRoute.id ? (bestSim?.badgeColor || '#22c55e') : (sim?.badgeColor || '#facc15')}; color: #000;">
+                ${activeRoute.id === bestRoute.id ? (bestSim?.badgeLabel || 'Óptima 🚀') : (sim?.badgeLabel || 'Exigente ⚠️')}
               </span>
             </div>
             <p style="margin: 0; font-size: 0.8rem; color: var(--text-dim); line-height: 1.4; word-break: break-word;">
-              Ruta más favorable cargada: <strong style="color: var(--primary);">${bestRoute.name}</strong>. ${bestSim?.advisorMessage || ''}
+              ${activeRoute.id === bestRoute.id
+                ? `Ruta más favorable cargada: <strong style="color: var(--primary);">${bestRoute.name}</strong>. ${bestSim?.advisorMessage || ''}`
+                : `Viendo selección manual: <strong style="color: #facc15;">${activeRoute.name}</strong>. ${sim?.advisorMessage || ''} <span style="display:block; margin-top:3px; font-size:0.74rem; color:#94a3b8;">(💡 La más favorable hoy en tu zona es <em style="color:var(--primary); font-weight:700;">${bestRoute.name}</em> con ${bestSim?.badgeLabel}).</span>`
+              }
             </p>
           </div>
         </div>
@@ -286,6 +289,9 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
             </span>
           </div>
           <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
+            <span style="font-size: 0.68rem; font-weight: 800; padding: 2px 6px; border-radius: 6px; background: ${sim?.badgeColor || '#22c55e'}; color: #000; white-space: nowrap;">
+              ${sim?.badgeLabel || 'Buena 👍'}
+            </span>
             <span style="font-size: 0.75rem; color: var(--accent, #facc15); font-weight: 800;">
               ${activeRoute.distanceKm} km
             </span>
@@ -302,6 +308,9 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
           <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 6px; flex-wrap: wrap;">
             <h3 style="margin: 0; font-size: 1.05rem; font-weight: 800; color: var(--text-main); line-height: 1.3; flex: 1; min-width: 180px;">${activeRoute.name}</h3>
             <div style="display: flex; gap: 4px; align-items: center; flex-wrap: wrap;">
+              <span style="font-size: 0.72rem; font-weight: 800; padding: 2px 7px; border-radius: 8px; background: ${sim?.badgeColor || '#22c55e'}; color: #000; white-space: nowrap;">
+                ${sim?.badgeLabel || 'Buena 👍'}
+              </span>
               <span style="font-size: 0.7rem; font-weight: 800; padding: 2px 7px; border-radius: 8px; background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3); white-space: nowrap;">
                 🔄 Circular (Vuelta a casa)
               </span>
@@ -440,21 +449,28 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
                 <span style="font-size: 0.76rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 6px;">
                   📍 Rutas por ${concejo.name} y Comarca (${localRoutes.length})
                 </span>
-                ${localRoutes.map(r => `
+                ${localRoutes.map(r => {
+                  const rSim = simulateRouteConditions(r, selectedHour, selectedSpeed, hourly);
+                  return `
                   <div class="cycling-route-item ${r.id === activeRoute.id ? 'selected' : ''}" data-route-id="${r.id}">
                     <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px;">
                       <strong style="font-size: 0.84rem; color: var(--text-main);">${r.name}</strong>
-                      <span style="font-size: 0.76rem; font-weight: 800; color: var(--accent, #facc15); white-space: nowrap;">${r.distanceKm} km</span>
+                      <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
+                        <span style="font-size: 0.68rem; font-weight: 800; padding: 2px 6px; border-radius: 6px; background: ${rSim?.badgeColor || '#22c55e'}; color: #000; white-space: nowrap;">
+                          ${rSim?.badgeLabel || ''}
+                        </span>
+                        <span style="font-size: 0.76rem; font-weight: 800; color: var(--accent, #facc15); white-space: nowrap;">${r.distanceKm} km</span>
+                      </div>
                     </div>
-                    <div style="display: flex; gap: 6px; align-items: center; font-size: 0.72rem; color: var(--text-dim); flex-wrap: wrap;">
+                    <div style="display: flex; gap: 6px; align-items: center; font-size: 0.72rem; color: var(--text-dim); flex-wrap: wrap; margin-top: 2px;">
                       <span>+${r.elevationGainM} m</span>
                       <span>•</span>
                       <span>${r.difficulty}</span>
                       <span>•</span>
-                      <span style="color: #22c55e;">🔄 Circular</span>
+                      ${rSim?.headwindPct >= 50 ? `<span style="color: var(--danger, #ef4444); font-weight: 700;">🔴 ${rSim.headwindPct}% de cara</span>` : (rSim?.tailwindPct >= 40 ? `<span style="color: var(--success, #22c55e); font-weight: 700;">🟢 ${rSim.tailwindPct}% a favor</span>` : `<span>🟡 ${rSim?.crosswindPct || 0}% cruzado</span>`)}
                     </div>
                   </div>
-                `).join('')}
+                `; }).join('')}
               </div>
             ` : ''}
 
@@ -463,21 +479,28 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
                 <span style="font-size: 0.76rem; font-weight: 800; color: var(--accent, #facc15); text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 6px;">
                   🌟 Grandes Clásicas de Asturias (${otherRoutes.length})
                 </span>
-                ${otherRoutes.map(r => `
+                ${otherRoutes.map(r => {
+                  const rSim = simulateRouteConditions(r, selectedHour, selectedSpeed, hourly);
+                  return `
                   <div class="cycling-route-item ${r.id === activeRoute.id ? 'selected' : ''}" data-route-id="${r.id}">
                     <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px;">
                       <strong style="font-size: 0.84rem; color: var(--text-main);">${r.name}</strong>
-                      <span style="font-size: 0.76rem; font-weight: 800; color: var(--accent, #facc15); white-space: nowrap;">${r.distanceKm} km</span>
+                      <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
+                        <span style="font-size: 0.68rem; font-weight: 800; padding: 2px 6px; border-radius: 6px; background: ${rSim?.badgeColor || '#22c55e'}; color: #000; white-space: nowrap;">
+                          ${rSim?.badgeLabel || ''}
+                        </span>
+                        <span style="font-size: 0.76rem; font-weight: 800; color: var(--accent, #facc15); white-space: nowrap;">${r.distanceKm} km</span>
+                      </div>
                     </div>
-                    <div style="display: flex; gap: 6px; align-items: center; font-size: 0.72rem; color: var(--text-dim); flex-wrap: wrap;">
+                    <div style="display: flex; gap: 6px; align-items: center; font-size: 0.72rem; color: var(--text-dim); flex-wrap: wrap; margin-top: 2px;">
                       <span>+${r.elevationGainM} m</span>
                       <span>•</span>
                       <span>${r.difficulty}</span>
                       <span>•</span>
-                      <span style="color: #22c55e;">🔄 Circular</span>
+                      ${rSim?.headwindPct >= 50 ? `<span style="color: var(--danger, #ef4444); font-weight: 700;">🔴 ${rSim.headwindPct}% de cara</span>` : (rSim?.tailwindPct >= 40 ? `<span style="color: var(--success, #22c55e); font-weight: 700;">🟢 ${rSim.tailwindPct}% a favor</span>` : `<span>🟡 ${rSim?.crosswindPct || 0}% cruzado</span>`)}
                     </div>
                   </div>
-                `).join('')}
+                `; }).join('')}
               </div>
             ` : ''}
 

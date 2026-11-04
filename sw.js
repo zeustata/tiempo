@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-17-tab-panels-alignment';
+const CACHE_NAME = 'meteoasturlode-v3024-18-cycling-wind-badges';
 const STATIC_ASSETS = [
   './',
   './index.html',

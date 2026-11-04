@@ -2,6 +2,22 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🚴 Semáforo Dinámico de Viento en Ciclismo y Selector Ergonómico (v3.0.24.18) — 2026-11-04
+- **Visibilidad Total del Impacto Eólico en Tiempo Real (Iniciativa de Lendo):**
+  1. *Diagnóstico de Transparencia Didáctica:*
+     - Aunque el motor vectorial calculaba el viento relativo de cada ruta, el usuario tenía la percepción de que «todas las rutas salían buenas u óptimas» porque el Consejero inteligente auto-cargaba por defecto la #1 más favorable del día y el desplegable modal no mostraba la calificación en vivo de las demás.
+  2. *Semáforo Dinámico en el Selector de Rutas (Bottom Sheet):*
+     - En `cyclingCard.js`: cada una de las 31 rutas de Asturias evalúa su simulación para la hora y velocidad activa y muestra su chapa eólica en color:
+       - 🟢 **Óptima 🚀** / 🔵 **Buena 👍** (viento a favor o favorable).
+       - 🟡 **Exigente ⚠️** (más del 50% de viento frontal, ej. *Alto de Pulide* con 76% de cara).
+       - 🔴 **Desfavorable 🛑** (rutas críticas con viento severo de cara, ej. *L'Angliru* con 88% de cara).
+     - Subtítulo interactivo que muestra el dato exacto (`🔴 76% de cara`, `🟢 45% a favor`).
+  3. *Chapas Eólicas en Tarjeta Ficha y Botón Disparador:*
+     - El botón selector de ruta y la cabecera de la ficha detallada incorporan la chapa de confort eólico (`sim.badgeLabel`) garantizando visibilidad inmediata.
+  4. *Consejero Inteligente Contextual:*
+     - Si el usuario selecciona manualmente una ruta desfavorable o exigente, el recuadro superior se tiñe de amarillo/rojo avisando de la dureza del viento frontal y recordando cuál es la más favorable del concejo.
+  5. *Cache-Busting & Despliegue:* Service Worker actualizado a `meteoasturlode-v3024-18-cycling-wind-badges`, query strings `v=3.0.24.18` en `index.html` y `js/app.js`.
+
 ## 📏 Unificación Exacta de Separación Superior en Rutas, Ciclismo y Ocio (v3.0.24.17) — 2026-11-04
 - **Erradicación de Asimetrías entre Pestañas (Detección de Lendo):**
   1. *Diagnóstico de Espaciado:*
