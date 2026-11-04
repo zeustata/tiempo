@@ -2,6 +2,22 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📱 Encuadre Íntegro de las Dos Primeras Tarjetas en Móvil (v3.0.24.15) — 2026-11-04
+- **Optimización Vertical Integral "Above the Fold" (Estrategia y Directriz de Lendo):**
+  1. *Objetivo Ergonómico:*
+     - Lograr que tanto la tarjeta superior de cabecera máster (`MeteoAsturLode`) como la tarjeta principal de la localidad (`hero-weather-card` con su carrusel de herramientas y paginador de 3 puntos) entren al 100% en la pantalla inicial de un smartphone sin necesidad de scroll vertical.
+  2. *Adelgazamiento de la 1ª Tarjeta (Cabecera Máster):*
+     - Acercamiento al menú: `margin-bottom` de la cabecera reducido a `4px` (antes 16px).
+     - Botones de acción (`Webcams`, `Ajustes`, `Auto` y `Favs`): altura reducida a `28px` (antes 38px y 32px) con relleno optimizado (`padding: 3px 8px`).
+     - Hueco entre filas de controles reducido a `6px` (antes 12px) y padding de tarjeta ajustado a `8px 12px`.
+     - *Ahorro en cabecera: ~38px*.
+  3. *Ajuste No Intrusivo en la 2ª Tarjeta (Localidad):*
+     - Contenido, gráfico, iconos, tipografías y temperaturas 100% intactos.
+     - Reducción del padding vertical exterior de la tarjeta a `10px 12px` (antes 15px 14px).
+     - Margen del carrusel de herramientas a `8px` y de los puntos a `5px`.
+     - *Ahorro combinado total: ~50px de altura vertical*.
+  4. *Cache-Busting & Despliegue:* Service Worker actualizado a `meteoasturlode-v3024-15-two-cards-fit` y query strings `v=3.0.24.15` en `index.html`, `css/main.css` y `css/components.css`.
+
 ## 📐 Reequilibrio de Jerarquía y Distancias en la Barra de Chips (v3.0.24.14) — 2026-11-04
 - **Optimización de Espaciado y Agrupación Visual (Detección Clínica de Lendo):**
   1. *Diagnóstico de Jerarquía Gestáltica:*

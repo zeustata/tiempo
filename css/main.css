@@ -2060,8 +2060,44 @@ kbd {
   }
 
   .app-header {
-    padding: 12px 14px;
-    gap: 12px;
+    padding: 8px 12px;
+    gap: 6px;
+  }
+
+  .app-header.app-header-master {
+    padding: 8px 12px;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+
+  .split-control-btn {
+    min-height: 28px;
+  }
+
+  .split-btn-icon-side {
+    width: 36px;
+  }
+
+  .split-btn-action {
+    padding: 3px 6px;
+    font-size: 0.78rem;
+  }
+
+  .compact-nav-trigger {
+    padding: 3px 8px;
+    min-height: 28px;
+  }
+
+  .compact-trigger-content {
+    gap: 5px;
+  }
+
+  .compact-trigger-icon {
+    font-size: 1rem;
+  }
+
+  .compact-trigger-label {
+    font-size: 0.80rem;
   }
 
   .brand-title-row h1,
@@ -2114,7 +2150,7 @@ kbd {
 
   /* Alineación uniforme de todas las tarjetas en móvil */
   .hero-weather-card {
-    padding: 15px 14px;
+    padding: 10px 12px;
     border-radius: var(--radius-md);
     margin-bottom: 14px;
   }

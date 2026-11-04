@@ -7337,7 +7337,7 @@
   .hero-weather-card {
     width: 100%;
     box-sizing: border-box;
-    padding: 15px 14px;
+    padding: 10px 12px;
     border-radius: var(--radius-md);
     margin-bottom: 14px;
   }
@@ -13498,7 +13498,7 @@
    ========================================================================== */
 .hero-widgets-carousel-wrap {
   width: 100%;
-  margin-top: 12px;
+  margin-top: 8px;
   position: relative;
   box-sizing: border-box;
 }
@@ -13554,7 +13554,7 @@
   justify-content: center;
   align-items: center;
   gap: 6px;
-  margin-top: 8px;
+  margin-top: 5px;
   width: 100%;
 }
 

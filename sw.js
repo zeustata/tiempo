@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-14-chips-nav-spacing';
+const CACHE_NAME = 'meteoasturlode-v3024-15-two-cards-fit';
 const STATIC_ASSETS = [
   './',
   './index.html',
