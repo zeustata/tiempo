@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-5-cycling-wind-advisor';
+const CACHE_NAME = 'meteoasturlode-v3024-6-circular-routes';
 const STATIC_ASSETS = [
   './',
   './index.html',

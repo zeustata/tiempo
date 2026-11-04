@@ -223,9 +223,14 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
         <div style="margin-bottom: 10px;">
           <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 6px; flex-wrap: wrap;">
             <h3 style="margin: 0; font-size: 1.05rem; font-weight: 800; color: var(--text-main); line-height: 1.3; flex: 1; min-width: 180px;">${activeRoute.name}</h3>
-            <span style="font-size: 0.72rem; font-weight: 700; padding: 2px 7px; border-radius: 8px; background: rgba(255,255,255,0.1); color: var(--text-dim); white-space: nowrap;">
-              ${activeRoute.difficulty} • ${activeRoute.profileType}
-            </span>
+            <div style="display: flex; gap: 4px; align-items: center; flex-wrap: wrap;">
+              <span style="font-size: 0.7rem; font-weight: 800; padding: 2px 7px; border-radius: 8px; background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3); white-space: nowrap;">
+                🔄 Circular (Vuelta a casa)
+              </span>
+              <span style="font-size: 0.72rem; font-weight: 700; padding: 2px 7px; border-radius: 8px; background: rgba(255,255,255,0.1); color: var(--text-dim); white-space: nowrap;">
+                ${activeRoute.difficulty} • ${activeRoute.profileType}
+              </span>
+            </div>
           </div>
           <span style="font-size: 0.78rem; color: var(--primary); display: block; margin-top: 3px;">
             ${activeRoute.subtitle}
