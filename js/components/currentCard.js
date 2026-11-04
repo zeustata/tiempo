@@ -133,12 +133,12 @@ function renderMiniThermalCurve24h(hourly) {
   const maxTemp = Math.max(...temps);
   const range = Math.max(1, maxTemp - minTemp);
 
-  // Dimensiones del lienzo SVG
-  const width = 300;
-  const height = 40;
-  const paddingX = 14;
-  const paddingTop = 12;
-  const paddingBottom = 8;
+  // Dimensiones del lienzo SVG HD (Resolución ampliada a 800x60 para nitidez impecable en pantallas anchas)
+  const width = 800;
+  const height = 60;
+  const paddingX = 24;
+  const paddingTop = 16;
+  const paddingBottom = 12;
   const graphH = height - paddingTop - paddingBottom;
   const stepX = (width - paddingX * 2) / (temps.length - 1);
 
@@ -203,16 +203,16 @@ function renderMiniThermalCurve24h(hourly) {
           <!-- Área sombreada -->
           <path d="${dArea}" fill="url(#thermalAreaGrad)" />
 
-          <!-- Línea suave continua -->
-          <path d="${dCurve}" fill="none" stroke="url(#thermalCurveGrad)" stroke-width="2.2" stroke-linecap="round" />
+          <!-- Línea suave continua con vector-effect para grosor constante y nítido -->
+          <path d="${dCurve}" fill="none" stroke="url(#thermalCurveGrad)" stroke-width="2.5" vector-effect="non-scaling-stroke" stroke-linecap="round" />
 
-          <!-- Etiquetas discretas de mínima y máxima -->
-          <text x="${maxPt.x}" y="${Math.max(8, maxPt.y - 4)}" fill="#fbbf24" font-size="7.5" font-family="'JetBrains Mono', monospace" font-weight="800" text-anchor="middle">↑${Math.round(maxTemp)}°</text>
-          <text x="${minPt.x}" y="${Math.min(height - 1, minPt.y + 7.5)}" fill="#38bdf8" font-size="7.5" font-family="'JetBrains Mono', monospace" font-weight="800" text-anchor="middle">↓${Math.round(minTemp)}°</text>
+          <!-- Etiquetas discretas de mínima y máxima vectoriales nítidas -->
+          <text x="${maxPt.x}" y="${Math.max(12, maxPt.y - 6)}" fill="#fbbf24" font-size="11" font-family="'JetBrains Mono', monospace" font-weight="800" text-anchor="middle">↑${Math.round(maxTemp)}°</text>
+          <text x="${minPt.x}" y="${Math.min(height - 2, minPt.y + 11)}" fill="#38bdf8" font-size="11" font-family="'JetBrains Mono', monospace" font-weight="800" text-anchor="middle">↓${Math.round(minTemp)}°</text>
 
           <!-- Punto vivo actual con pulso visual -->
-          <circle cx="${curX.toFixed(1)}" cy="${curY.toFixed(1)}" r="4.5" fill="#38bdf8" opacity="0.35" class="thermal-live-pulse" />
-          <circle cx="${curX.toFixed(1)}" cy="${curY.toFixed(1)}" r="2.8" fill="#ffffff" stroke="#0284c7" stroke-width="1.4" />
+          <circle cx="${curX.toFixed(1)}" cy="${curY.toFixed(1)}" r="6" fill="#38bdf8" opacity="0.35" class="thermal-live-pulse" />
+          <circle cx="${curX.toFixed(1)}" cy="${curY.toFixed(1)}" r="3.5" fill="#ffffff" stroke="#0284c7" stroke-width="1.8" vector-effect="non-scaling-stroke" />
         </svg>
       </div>
       <div class="mini-thermal-timeline">

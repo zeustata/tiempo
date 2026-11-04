@@ -2,6 +2,22 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📈 Curva Térmica HD: Alta Definición en Pantallas Horizontales y Monitores (v3.0.24.21) — 2026-11-04
+- **Resolución Vectorial Nítida e Inmunidad al Estiramiento (Detección de Lendo):**
+  1. *Diagnóstico de Lendo en Pantalla Horizontal/Monitor de Escritorio:*
+     - Al alternar en el carrusel de herramientas de la estación en vivo (`hero-widgets-carousel`) hacia la **Curva Térmica Hoy**, en pantallas anchas u orientadas en horizontal, el gráfico se apreciaba borroso, aplanado y con mala resolución ("efecto estiramiento").
+     - *Causa técnica:* El lienzo SVG utilizaba una cuadrícula interna fija de baja densidad (`viewBox="0 0 300 40"` con `preserveAspectRatio="none"`). Al estirarse en un monitor de más de 1200px, los 300px virtuales se multiplicaban por 4x o 5x deformando los trazos, las tipografías y el círculo del pulso horario en una elipse achatada.
+  2. *Corrección Técnica en Alta Definición (Leyes 11 y 14):*
+     - En `js/components/currentCard.js`:
+       - Cuadrícula interna del lienzo ampliada a **800x60** (densidad vectorial casi 3x superior).
+       - Inclusión de directivas vectoriales `vector-effect="non-scaling-stroke"` en la curva y en el punto horario, garantizando un grosor físico exacto, fino y afilado de 2.5px sin importar la anchura del contenedor.
+       - Tipografías vectoriales `JetBrains Mono` escaladas con nitidez absoluta para los marcadores de máxima (`↑`) y mínima (`↓`).
+       - El marcador horario vivo preserva su radio esférico proporcional perfecto.
+  3. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-21-thermal-curve-hd`.
+     - Query strings actualizadas a `v=3.0.24.21` en `index.html` y en la importación de `currentCard.js` dentro de `js/app.js`.
+     - Commit atómico y sincronización a `zeustata/Tiempo` en GitHub.
+
 ## 📡 Depuración Visual y Estilización Compacta del Radar (v3.0.24.20) — 2026-11-04
 - **Eliminación de Redundancias y Estilización de Botones (Feedback Visual de Lendo):**
   1. *Diagnóstico de Lendo sobre Capturas Reales de Smartphone:*
