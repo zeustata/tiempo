@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-26-live-hourly-clean-header';
+const CACHE_NAME = 'meteoasturlode-v3024-27-clean-mountain-marine';
 const STATIC_ASSETS = [
   './',
   './index.html',

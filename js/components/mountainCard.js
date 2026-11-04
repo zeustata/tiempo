@@ -789,10 +789,9 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
 
   return `
     <div class="mountain-card">
-      <div class="section-title-wrap">
+      <div class="section-title-wrap" style="margin-bottom: 8px;">
         <div>
-          <h3 class="section-heading">🏔️ Cordillera & Nieve</h3>
-          <span class="section-subtitle">Estándar Snow-Forecast para Esquí • Estado de Puertos y Cota de Nieve en Asturias</span>
+          <h3 class="section-heading" style="margin-bottom: 0;">🏔️ Cordillera & Nieve</h3>
         </div>
         <div class="altitude-pill">
           Altitud ${concejo.name}: <strong>${concejo.altitude} m</strong>

@@ -1201,16 +1201,14 @@ export function renderMarineCard(data, concejo) {
 
   return `
     <div class="marine-card">
-      <div class="section-title-wrap marine-master-header">
+      <div class="section-title-wrap marine-master-header" style="margin-bottom: 8px;">
         <div class="marine-header-text">
-          <h3 class="section-heading">🏖️ Playas & Mareógrafo • ${concejoTitle}</h3>
-          <span class="section-subtitle">
-            ${isCoasting 
-              ? `Litoral de ${concejo.name} (${coastalData.region})`
-              : `🌲 Interior • Costa de referencia: ${interiorRef.name}`
-            }
-          </span>
+          <h3 class="section-heading" style="margin-bottom: 0;">🏖️ Playas & Mareógrafo • ${concejoTitle}</h3>
         </div>
+        ${!isCoasting ? `
+        <div class="altitude-pill" style="font-size: 0.74rem;">
+          Ref: <strong>${interiorRef.name.split(' (')[0]}</strong>
+        </div>` : ''}
       </div>
 
       <!-- 1. MAREÓGRAFO INTERACTIVO EN TIEMPO REAL (ONDA SINUSOIDAL 72H / SEMANAL) -->

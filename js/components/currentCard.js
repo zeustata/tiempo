@@ -21,7 +21,7 @@ import { checkConcejoFolixa } from '../utils/festivosData.js?v=1.1.85';
  */
 function formatLocationTitle(name, activeLocalidad = null) {
   if (!name) return '';
-  
+
   // Extraer posibles localidades entre paréntesis: ej. (Grullos / San Román) o (Piedras Blancas / Salinas)
   const parenMatch = name.match(/^(.*?)\s*(\((.*?)\))$/);
   const mainPart = parenMatch ? parenMatch[1].trim() : name.trim();
@@ -116,7 +116,7 @@ function renderMiniThermalCurve24h(hourly) {
   // Filtrar las 24 horas del día natural de hoy
   const now = new Date();
   const todayPrefix = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-  
+
   const temps = [];
   const hours = [];
   for (let i = 0; i < hourly.time.length; i++) {
@@ -167,7 +167,7 @@ function renderMiniThermalCurve24h(hourly) {
   const curMin = now.getMinutes();
   const hourFraction = Math.min(23, curHour + curMin / 60);
   const curX = paddingX + hourFraction * stepX;
-  
+
   // Interpolación de Y y temperatura para el punto vivo
   const baseIdx = Math.min(points.length - 2, Math.floor(hourFraction));
   const tFrac = hourFraction - baseIdx;
@@ -235,7 +235,7 @@ function renderRainBeakerSvg(rainFallenSoFar, currentRainIntensity) {
   const usableHeight = 89; // Distancia entre la marca de 0 mm (y=114) y la de 80 mm (y=25)
   const waterFillHeight = Math.round((clampedRain / maxGaugeMm) * usableHeight);
   const waterY = 114 - waterFillHeight;
-  
+
   let waterGradId = 'rainWaterNormal';
   let surfaceColor = '#7dd3fc';
   if (rainFallenSoFar >= 80 || currentRainIntensity >= 30) {
@@ -356,7 +356,7 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   const hourly = data.weather.hourly;
   const daily = data.weather.daily;
   const aqi = data.aqi?.current;
-  
+
   const currentHour = new Date().getHours();
   const currentPop = (hourly && hourly.precipitation_probability && hourly.precipitation_probability[currentHour] != null) ? hourly.precipitation_probability[currentHour] : null;
   const directIrr = current.direct_normal_irradiance != null ? current.direct_normal_irradiance : null;
@@ -629,10 +629,10 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
 
   // Métricas enriquecidas de Radiación Solar & UV
   const uvMarkerPercent = uvVal != null ? Math.min(100, Math.max(0, (uvVal / 11) * 100)).toFixed(1) : '0';
-  const globalSolar = current.shortwave_radiation != null 
-    ? Math.round(current.shortwave_radiation) 
+  const globalSolar = current.shortwave_radiation != null
+    ? Math.round(current.shortwave_radiation)
     : (current.direct_normal_irradiance != null ? Math.round(current.direct_normal_irradiance) : 0);
-  
+
   let solarPowerText = `${globalSolar} W/m²`;
   if (globalSolar <= 10) {
     solarPowerText = `${globalSolar} W/m² (Noche / Manto cubierto)`;
@@ -735,8 +735,8 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   }
   rainFallenSoFar = Math.round(rainFallenSoFar * 10) / 10;
   rainTodayTotalCalculated = Math.round(rainTodayTotalCalculated * 10) / 10;
-  let rainTodayTotal = (daily && daily.precipitation_sum && daily.precipitation_sum[0] != null) 
-    ? Math.max(daily.precipitation_sum[0], rainTodayTotalCalculated) 
+  let rainTodayTotal = (daily && daily.precipitation_sum && daily.precipitation_sum[0] != null)
+    ? Math.max(daily.precipitation_sum[0], rainTodayTotalCalculated)
     : rainTodayTotalCalculated;
   if (rainFallenSoFar > rainTodayTotal) {
     rainTodayTotal = rainFallenSoFar;

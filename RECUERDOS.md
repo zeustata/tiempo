@@ -2,6 +2,21 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏔️🏖️ Reducción de Scroll en Cordillera & Nieve y Playas & Mareógrafo (v3.0.24.27) — 2026-11-04
+- **Optimización de Altura Útil y Despeje Visual de Cabeceras (Iniciativa de Lendo):**
+  1. *Diagnóstico de Lendo sobre Paneles con Exceso de Desplazamiento Vertical:*
+     - En **Cordillera & Nieve**, el subtítulo de dos líneas (*"Estándar Snow-Forecast para Esquí • Estado de Puertos..."*) empujaba la barra unificada de cotas y aludes muy abajo.
+     - En **Playas & Mareógrafo**, el subtítulo del litoral alargaba la cabecera innecesariamente antes del gráfico interactivo de mareas.
+  2. *Implementación Técnica (Leyes 11 y 14):*
+     - En `js/components/mountainCard.js`:
+       - Eliminado el subtítulo redundante. Título `🏔️ Cordillera & Nieve` alineado en una sola fila directa junto a la pastilla `Altitud [Concejo]: X m`. Margen inferior reducido a 8px. Ahorro de ~35px.
+     - En `js/components/marineCard.js`:
+       - Eliminado el subtítulo de costa redundante. En concejos de interior, se despliega una pastilla compacta lateral (`Ref: [Localidad]`) a la derecha del título `🏖️ Playas & Mareógrafo • [Concejo]`. Ahorro de ~30px.
+  3. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-27-clean-mountain-marine`.
+     - Query strings actualizadas a `v=3.0.24.27` en `index.html` y en las importaciones de `marineCard.js` y `mountainCard.js` en `js/app.js`.
+     - Commit atómico y sincronización a `zeustata/Tiempo` en GitHub.
+
 ## 🕛 Pronóstico Horario 72h: Cabecera Compacta y Reducción de Scroll (v3.0.24.26) — 2026-11-04
 - **Depuración Visual y Optimización de Altura en Panel En Vivo (Iniciativa de Lendo):**
   1. *Diagnóstico de Lendo sobre Scroll Excesivo:*
