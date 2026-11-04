@@ -2,6 +2,19 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏄‍♂️ Síntesis de Subtítulo en Previsión de Surf & Rompientes (v3.0.24.30) — 2026-11-05
+- **Reducción de Scroll y Concisión Visual (Iniciativa de Lendo):**
+  1. *Diagnóstico de Lendo:*
+     - En el visor de **Previsión de Surf & Rompiente**, el subtítulo contenía un texto descriptivo redundante de 2 líneas (*"Evolución de oleaje, swell, estrellas, energía kJ y viento en [Concejo]"*).
+  2. *Implementación Técnica (Leyes 11 y 14):*
+     - En `js/components/surfCard.js`:
+       - Subtítulo sintetizado a una sola línea directa: `Evolución en [Concejo]`.
+       - Ahorro de ~18px de scroll vertical, acercando el interruptor segmentado de *3 Horas / 7 Días* a la zona de alcance del pulgar.
+  3. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-30-surf-forecast-short-sub`.
+     - Query strings actualizadas a `v=3.0.24.30` en `index.html` y en la importación de `surfCard.js` dentro de `js/app.js`.
+     - Commit atómico y sincronización a `zeustata/Tiempo` en GitHub.
+
 ## 🏄‍♂️ Reorganización del Swell y Compactación en Surf & Rompientes (v3.0.24.29) — 2026-11-05
 - **Reubicación Estratégica del Swell 1 y Swell 2 (Iniciativa de Lendo):**
   1. *Diagnóstico de Lendo sobre Lógica de Información y Scroll:*

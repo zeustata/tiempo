@@ -824,7 +824,7 @@ export function renderSurfCard(data, concejo) {
           <div class="surf-timeline-title-wrap">
             <div>
               <div class="surf-timeline-title">Previsión de Surf & Rompiente</div>
-              <div class="surf-timeline-subtitle">Evolución de oleaje, swell, estrellas, energía kJ y viento en ${concejo.name}</div>
+              <div class="surf-timeline-subtitle">Evolución en ${concejo.name}</div>
             </div>
           </div>
         </div>
