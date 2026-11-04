@@ -2,6 +2,20 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏄‍♂️ Reorganización del Swell y Compactación en Surf & Rompientes (v3.0.24.29) — 2026-11-05
+- **Reubicación Estratégica del Swell 1 y Swell 2 (Iniciativa de Lendo):**
+  1. *Diagnóstico de Lendo sobre Lógica de Información y Scroll:*
+     - En el panel de **Surf & Rompientes**, la primera tarjeta evaluaba las estrellas y la textura del mar (`Glassy`), pero para comprobar los datos del tren de fondo (Swell 1 y Swell 2 secundario) el usuario debía bajar hasta el final de la segunda tarjeta (*Fuerza y Dinámica del Oleaje*), donde quedaban descolgados y alargaban el scroll.
+  2. *Implementación Técnica (Leyes 11 y 14):*
+     - En `js/components/surfCard.js`:
+       - **Tarjeta 1 (Calificación & Estrellas):** Integrado un bloque compacto justo bajo la pastilla de Glassy/Viento con la información completa de `Swell 1 (Fondo)` (altura, período, dirección de la ola) y `Chop` de viento, junto con el desglose del `Swell 2 (Secundario)` y energía combinada si está activo.
+       - **Tarjeta 2 (Fuerza y Dinámica del Oleaje):** Eliminadas las líneas redundantes del pie de la tarjeta, dejándola centrada exclusivamente en los kiloJulios (kJ), la altura significativa y el período general.
+       - Ahorro de ~40px de scroll vertical y unificación coherente del diagnóstico de olas en la tarjeta protagonista.
+  3. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-29-surf-swell-reorganization`.
+     - Query strings actualizadas a `v=3.0.24.29` en `index.html` y en la importación de `surfCard.js` dentro de `js/app.js`.
+     - Commit atómico y sincronización a `zeustata/Tiempo` en GitHub.
+
 ## 🏄‍♂️ Reducción de Scroll en Surf & Rompientes (v3.0.24.28) — 2026-11-04
 - **Depuración de Cabecera y Optimización de Entrada a la Pestaña de Surf (Iniciativa de Lendo):**
   1. *Diagnóstico de Lendo sobre Desplazamiento Vertical:*

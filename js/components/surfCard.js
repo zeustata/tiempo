@@ -741,6 +741,18 @@ export function renderSurfCard(data, concejo) {
             <span style="font-size: 0.8rem; font-weight: 700; color: #38bdf8;">💨 ${hasDistinctGust ? `${windSpeed}–${rawGusts}` : windSpeed} km/h (${(surfWind.name || 'Costero').split(' ')[0]})</span>
           </div>
 
+          <!-- Swell 1 (Fondo) y Swell 2 (Secundario) incorporados en la tarjeta de Calificación -->
+          <div style="margin-top: 8px; padding: 8px 10px; background: rgba(15, 23, 42, 0.40); border-radius: 8px; border: 1px solid rgba(56, 189, 248, 0.18); display: flex; flex-direction: column; gap: 4px; font-size: 0.78rem;">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px;">
+              <span>🌊 Swell 1 (Fondo): ${getSurfSwellArrowSvg(waveDirDeg, '#38bdf8', 12)} <strong>${swellHeight} m · ${wavePeriod} s (${waveDir.name})</strong></span>
+              <span style="color: #94a3b8;">💨 Chop: <strong>${windWaveH} m</strong></span>
+            </div>
+            ${hasSecondary && secSwellDir ? `
+            <div style="color: #7dd3fc; border-top: 1px dashed rgba(255, 255, 255, 0.1); padding-top: 4px; margin-top: 2px;">
+              🌊 Swell 2 (Secundario): ${getSurfSwellArrowSvg(secSwellDeg, '#7dd3fc', 12)} <strong>${secSwellH} m · ${secSwellPeriod} s (${secSwellDir.name})</strong> • <strong>${waveEnergy.primaryKj} + ${waveEnergy.secondaryKj} kJ</strong>
+            </div>` : ''}
+          </div>
+
           <div class="widget-detail" style="margin-top: 8px; line-height: 1.35; color: #cbd5e1;">
             ${surfQuality.desc}
           </div>
@@ -803,14 +815,6 @@ export function renderSurfCard(data, concejo) {
             </div>
           </div>
 
-          <div class="widget-detail" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px;">
-            <span>🌊 Swell 1 (Fondo): ${getSurfSwellArrowSvg(waveDirDeg, '#38bdf8', 12)} <strong>${swellHeight} m · ${wavePeriod} s (${waveDir.name})</strong></span>
-            <span>💨 Chop (Viento): <strong>${windWaveH} m</strong></span>
-          </div>
-          ${hasSecondary && secSwellDir 
-            ? `<div class="widget-detail" style="color: #7dd3fc; margin-top: 4px;">🌊 Swell 2 (Secundario): ${getSurfSwellArrowSvg(secSwellDeg, '#7dd3fc', 12)} <strong>${secSwellH} m · ${secSwellPeriod} s (${secSwellDir.name})</strong> • <strong>${waveEnergy.primaryKj} + ${waveEnergy.secondaryKj} kJ</strong></div>` 
-            : ''
-          }
         </div>
       </div>
 
