@@ -2,6 +2,30 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏄‍♂️ Carrusel Horizontal Tripartito en Surf & Rompientes (v3.0.24.31) — 2026-11-05
+- **Reducción Drástica de Scroll Vertical y Ergonomía Universal (Iniciativa de Lendo):**
+  1. *Diagnóstico y Propuesta de Lendo:*
+     - En el panel de **Surf & Rompientes**, la acumulación vertical de los tres grandes bloques (*Calificación & Estrellas*, *Fuerza y Dinámica del Oleaje* y *Previsión de Surf a 3h y 7 días*) generaba un desplazamiento vertical kilométrico para acceder a los picos y rompientes.
+     - Lendo ordenó empaquetar las tres tarjetas en scroll horizontal con tres botones inferiores ergonómicos para alternar entre ellas, garantizando una respuesta táctil y visual adaptada tanto a móviles como a tablets y Windows/escritorio.
+  2. *Implementación Técnica (Leyes 11, 14 y 18):*
+     - En `js/components/surfCard.js`:
+       - Creada la envolvente `.surf-carousel-wrap` con el carrusel `.surf-cards-carousel` y tres diapositivas `.surf-carousel-slide` (`data-slide-index="0"`, `1`, `2`).
+       - Slide 0: *🏄‍♂️ Calificación & Estrellas*.
+       - Slide 1: *🌊 Fuerza y Dinámica del Oleaje* (Energía kJ, Altura Douglas y Período).
+       - Slide 2: *⏱️ Previsión de Surf & Rompiente* (Visor dual: 3 Horas y 7 Días mañana/tarde).
+       - Creada la barra de navegación ergonómica inferior `.surf-nav-toolbar` con tres botones tipo pastilla luminosa: `[ 🏄‍♂️ Calificación ]`, `[ ⚡ Fuerza & Olas ]` y `[ ⏱️ Previsión ]`.
+     - En `css/components.css`:
+       - Definidas las clases de carrusel con `scroll-snap-type: x mandatory`, salto estricto de una en una (`scroll-snap-stop: always`), monotarjeta al 100% (`flex: 0 0 100%`), `touch-action: pan-x pan-y` para no congelar el scroll vertical de la página (Ley 18), y supresión de barras de scroll nativas.
+       - En tablet y desktop (`>= 768px`), el contenedor se enmarca centrado con `max-width: 820px` para evitar distorsiones en pantallas anchas.
+     - En `js/app.js`:
+       - Desarrollado el método `initSurfCardsCarousel()` con sincronización bidireccional: clic en botón desplaza suavemente al slide objetivo; arrastre táctil o con ratón en PC actualiza la píldora activa en tiempo real.
+       - Blindaje en `isInteractiveZone` para aislar el carrusel de surf del gesto swipe global entre pestañas de la aplicación.
+       - Añadido refresco de dimensiones de scroll en `switchTab` (`targetTab === 'surf'`).
+  3. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-31-surf-tripartite-carousel`.
+     - Query strings actualizadas a `v=3.0.24.31` en `index.html`, `components.css` y en la importación de `surfCard.js` dentro de `js/app.js`.
+
+
 ## 🏄‍♂️ Síntesis de Subtítulo en Previsión de Surf & Rompientes (v3.0.24.30) — 2026-11-05
 - **Reducción de Scroll y Concisión Visual (Iniciativa de Lendo):**
   1. *Diagnóstico de Lendo:*

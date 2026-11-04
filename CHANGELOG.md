@@ -1,4 +1,4 @@
-﻿# 📋 Registro de Cambios (Changelog) - MeteoAstur Lode
+# 📋 Registro de Cambios (Changelog) - MeteoAstur Lode
 
 Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se documentan en este archivo siguiendo el estándar [Semantic Versioning](https://semver.org/lang/es/).
 
@@ -8,6 +8,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Major (X.0.0)**: Cambios arquitectónicos grandes o rediseños completos.
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
+
+
+## [3.0.24.31] - 2026-11-05
+### Added
+- **Carrusel Horizontal Tripartito en Surf & Rompientes (Iniciativa de Lendo):**
+  - **Empaquetado Ergonómico de 3 Tarjetas Maestras (`surfCard.js`):** Integradas *Calificación & Estrellas*, *Fuerza y Dinámica del Oleaje* y *Previsión de Surf (3h / 7 días)* en un carrusel horizontal fluido con salto magnético de una en una (`scroll-snap-stop: always`).
+  - **Barra de 3 Botones de Navegación Rápida:** Incorporada una botonera inferior ergonómica tipo pastilla (`[ 🏄‍♂️ Calificación ]`, `[ ⚡ Fuerza & Olas ]` y `[ ⏱️ Previsión ]`) para alternar con un solo clic o toque táctil entre las tres vistas.
+  - **Reducción de Scroll del 60%:** Eliminada la acumulación vertical kilométrica, permitiendo que las rompientes y picos queden a la vista de inmediato.
+  - **Ergonomía Adaptable a Móvil, Tablet y Escritorio (`components.css` & `app.js`):** En móvil ocupa el 100% útil sin desbordes con preservación del scroll vertical (`touch-action: pan-x pan-y`); en tablet y PC se centra a 820px para no deformar las gráficas. Soporte para arrastre con ratón en Windows y aislamiento del gesto swipe global (`isInteractiveZone`).
 
 ## [3.0.23.64] - 2026-11-03
 ### Fixed

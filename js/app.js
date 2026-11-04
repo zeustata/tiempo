@@ -3,7 +3,7 @@ import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from 
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=3.0.23.63';
 import { renderCurrentWeather } from './components/currentCard.js?v=3.0.24.23';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.24.27';
-import { renderSurfCard } from './components/surfCard.js?v=3.0.24.30';
+import { renderSurfCard } from './components/surfCard.js?v=3.0.24.31';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.24.17';
 import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.24.18';
 import { renderMountainCard } from './components/mountainCard.js?v=3.0.24.27';
@@ -2260,6 +2260,15 @@ class MeteoAsturiasApp {
       setTimeout(wakeCarousels, 400);
     }
 
+    if (targetTab === 'surf') {
+      const wakeSurfCarousels = () => {
+        const sc = document.getElementById('surf-cards-carousel');
+        if (sc) void sc.offsetWidth;
+      };
+      setTimeout(wakeSurfCarousels, 50);
+      setTimeout(wakeSurfCarousels, 400);
+    }
+
     // Limpieza de clases de animación tras el deslizamiento para restaurar el renderizado 2D nativo
     setTimeout(() => {
       document.querySelectorAll('.tab-panel').forEach(p => {
@@ -2423,6 +2432,7 @@ class MeteoAsturiasApp {
         '.tide-scroll-viewport, .tide-svg-chart, ' +
         '.weekly-tides-grid, .weekly-tides-card, .tide-day-card, .tide-today-minimal-grid, .tide-mini-pill, ' +
         '.daily-cards-container, .daily-card-rich, .forecast-scroll-hint, ' +
+        '.surf-carousel-wrap, .surf-cards-carousel, .surf-carousel-slide, .surf-nav-toolbar, .surf-nav-pill, ' +
         '.surf-timeline-grid, .surf-slot-card, .surf-timeline-scroll-hint, .surf-daily-cards-grid, .surf-daily-card, .surf-dayparts-list, .surf-daily-scroll-hint, ' +
         '.module-chips-nav, .module-chips-scroll, .module-chip, ' +
         '.favorites-pills, .view-tabs, ' +
@@ -3165,6 +3175,7 @@ class MeteoAsturiasApp {
         const surfContainer = document.getElementById('panel-surf');
         if (surfContainer) {
           surfContainer.innerHTML = renderSurfCard(data, concejo);
+          this.initSurfCardsCarousel();
           this.bindCarouselDots('surf-timeline-carousel', 'surf-timeline-dots', '.surf-slot-card');
           this.bindCarouselDots('surf-daily-carousel', 'surf-daily-dots', '.surf-daily-card');
         }
@@ -3682,6 +3693,106 @@ class MeteoAsturiasApp {
           const targetIdx = Math.min(cards.length - 1, Math.max(0, Math.round(carousel.scrollLeft / cardWidth)));
           scrollToSensor(targetIdx);
         }
+      }
+    });
+  }
+
+  /**
+   * Controlador ergonómico para el Carrusel Tripartito de Surf (Leyes 11, 14 y 18)
+   * Sincroniza las 3 tarjetas maestras (Calificación, Fuerza y Previsión) con sus 3 botones
+   */
+  initSurfCardsCarousel() {
+    const carousel = document.getElementById('surf-cards-carousel');
+    const toolbar = document.getElementById('surf-nav-toolbar');
+    if (!carousel) return;
+
+    const pills = toolbar ? toolbar.querySelectorAll('.surf-nav-pill') : [];
+    const slides = carousel.querySelectorAll('.surf-carousel-slide');
+    if (!slides.length) return;
+
+    const updateActivePill = (idx) => {
+      pills.forEach((p, i) => {
+        p.classList.toggle('active', i === idx);
+      });
+    };
+
+    const scrollToSlide = (index) => {
+      const idx = parseInt(index, 10);
+      if (slides[idx]) {
+        const targetLeft = slides[idx].offsetLeft - carousel.offsetLeft;
+        carousel.scrollTo({ left: targetLeft, behavior: 'smooth' });
+        updateActivePill(idx);
+      }
+    };
+
+    pills.forEach(pill => {
+      pill.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = pill.getAttribute('data-surf-target');
+        scrollToSlide(target);
+      });
+    });
+
+    let scrollTimeout = null;
+    carousel.addEventListener('scroll', () => {
+      if (scrollTimeout) cancelAnimationFrame(scrollTimeout);
+      scrollTimeout = requestAnimationFrame(() => {
+        const scrollLeft = carousel.scrollLeft;
+        let closestIdx = 0;
+        let minDiff = Infinity;
+        slides.forEach((slide, idx) => {
+          const slidePos = slide.offsetLeft - carousel.offsetLeft;
+          const diff = Math.abs(scrollLeft - slidePos);
+          if (diff < minDiff) {
+            minDiff = diff;
+            closestIdx = idx;
+          }
+        });
+        updateActivePill(closestIdx);
+      });
+    }, { passive: true });
+
+    // Soporte de arrastre con ratón en escritorio (Windows drag-to-scroll)
+    let isDragging = false;
+    let startX = 0;
+    let scrollStart = 0;
+    let hasDragged = false;
+
+    carousel.addEventListener('mousedown', (e) => {
+      if (e.button !== 0) return;
+      if (e.target.closest('button, a, input, select, .btn-explain-sensor, .surf-slot-card, .surf-daily-card, .surf-timeline-grid, .surf-daily-cards-grid')) return;
+      isDragging = true;
+      hasDragged = false;
+      startX = e.pageX;
+      scrollStart = carousel.scrollLeft;
+      carousel.style.scrollBehavior = 'auto';
+      carousel.style.scrollSnapType = 'none';
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const dist = e.pageX - startX;
+      if (Math.abs(dist) > 5) hasDragged = true;
+      carousel.scrollLeft = scrollStart - dist;
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (!isDragging) return;
+      isDragging = false;
+      carousel.style.scrollBehavior = 'smooth';
+      carousel.style.scrollSnapType = 'x mandatory';
+      if (hasDragged) {
+        let closestIdx = 0;
+        let minDiff = Infinity;
+        slides.forEach((slide, idx) => {
+          const slidePos = slide.offsetLeft - carousel.offsetLeft;
+          const diff = Math.abs(carousel.scrollLeft - slidePos);
+          if (diff < minDiff) {
+            minDiff = diff;
+            closestIdx = idx;
+          }
+        });
+        scrollToSlide(closestIdx);
       }
     });
   }

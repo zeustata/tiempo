@@ -13653,3 +13653,141 @@
   border-color: rgba(56, 189, 248, 0.6);
   box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
 }
+
+/* ==========================================================================
+   CARRUSEL TRIPARTITO DE SURF (CALIFICACIÓN, FUERZA & PREVISIÓN)
+   Doctrina de Aislamiento Táctil y Monotarjeta 100% (Leyes 11, 14 y 18)
+   ========================================================================== */
+.surf-carousel-wrap {
+  width: 100%;
+  margin-top: 6px;
+  margin-bottom: 14px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.surf-cards-carousel {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: flex-start !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  scroll-snap-type: x mandatory !important;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pan-y !important; /* Ley 18: Preservación Incondicional del Scroll Vertical */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 4px 2px 6px 2px;
+  cursor: grab;
+}
+
+.surf-cards-carousel:active {
+  cursor: grabbing;
+}
+
+.surf-cards-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.surf-carousel-slide {
+  flex: 0 0 100% !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  scroll-snap-align: start !important;
+  scroll-snap-stop: always !important; /* Ley 18: Salto estricto de una en una */
+}
+
+.surf-carousel-slide .marine-widget {
+  margin: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.surf-carousel-slide .surf-timeline-widget {
+  padding: 16px 18px !important;
+  border-radius: var(--radius-md) !important;
+}
+
+/* 3 Botones de Navegación Ergonómica */
+.surf-nav-toolbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  margin-bottom: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+}
+
+.surf-nav-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 15px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  color: #94a3b8;
+  font-size: 0.80rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+
+.surf-nav-pill:hover {
+  background: rgba(30, 41, 59, 0.75);
+  border-color: rgba(56, 189, 248, 0.35);
+  color: #f1f5f9;
+}
+
+.surf-nav-pill.active {
+  background: rgba(56, 189, 248, 0.18);
+  border-color: rgba(56, 189, 248, 0.55);
+  color: #38bdf8;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
+  transform: translateY(-1px);
+}
+
+.surf-nav-pill .surf-nav-icon {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.surf-nav-pill .surf-nav-label {
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 380px) {
+  .surf-nav-toolbar {
+    gap: 5px;
+  }
+  .surf-nav-pill {
+    padding: 6px 10px;
+    font-size: 0.72rem;
+    gap: 4px;
+  }
+}
+
+@media (min-width: 768px) {
+  .surf-carousel-wrap {
+    max-width: 820px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .surf-nav-pill {
+    padding: 8px 20px;
+    font-size: 0.84rem;
+  }
+}
