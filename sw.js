@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3023-68-orbayu-resol-sovereignty';
+const CACHE_NAME = 'meteoasturlode-v3024-5-cycling-wind-advisor';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -24,6 +24,9 @@ const STATIC_ASSETS = [
   './js/components/marineCard.js',
   './js/components/surfCard.js',
   './js/components/routesCard.js',
+  './js/components/cyclingCard.js',
+  './js/utils/cyclingData.js',
+  './js/utils/cyclingAdvisor.js',
   './js/components/mountainCard.js',
   './js/components/tourismCard.js',
   './js/components/forecastView.js',

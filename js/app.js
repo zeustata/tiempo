@@ -5,6 +5,7 @@ import { renderCurrentWeather } from './components/currentCard.js?v=3.0.23.62';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.23.40';
 import { renderSurfCard } from './components/surfCard.js?v=3.0.23.39';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.11';
+import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.24.1';
 import { renderMountainCard } from './components/mountainCard.js?v=2.2.64';
 import { renderTourismCard } from './components/tourismCard.js?v=3.0.10';
 import { renderForecast } from './components/forecastView.js?v=3.0.23.68';
@@ -39,9 +40,10 @@ const APP_MODULES = [
   { id: 'marine', icon: '🏖️', title: 'Playas & Mareas', desc: 'Mareógrafo 72h, fases lunares, estado de baño, bandera y calas', key: '4' },
   { id: 'surf', icon: '🏄‍♂️', title: 'Surf & Rompientes', desc: 'Swell, período, viento offshore/onshore, picos bautizados y fondos', key: '5' },
   { id: 'routes', icon: '🥾', title: 'Rutas & Senderismo', desc: 'Confort de marcha, índice de barro en sendas y catálogo de rutas asturianas', key: '6' },
-  { id: 'mountain', icon: '🏔️', title: 'Cordillera & Nieve', desc: 'Estado de puertos de montaña, cota de nieve y esquí', key: '7' },
-  { id: 'astronomy', icon: '🔭', title: 'Astronomía & Cosmos', desc: 'Eclipses, lluvias de estrellas, fases lunares y visibilidad en Asturias', key: '8' },
-  { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '9' }
+  { id: 'cycling', icon: '🚴', title: 'Ciclismo & Viento', desc: 'Orientación de marcha, viento relativo en contra/favor y puertos de carretera', key: '7' },
+  { id: 'mountain', icon: '🏔️', title: 'Cordillera & Nieve', desc: 'Estado de puertos de montaña, cota de nieve y esquí', key: '8' },
+  { id: 'astronomy', icon: '🔭', title: 'Astronomía & Cosmos', desc: 'Eclipses, lluvias de estrellas, fases lunares y visibilidad en Asturias', key: '9' },
+  { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
 export const CURRENT_APP_VERSION = '3.0.23';
@@ -55,6 +57,9 @@ class MeteoAsturiasApp {
     this.compareConcejoB = getConcejoById(this.currentConcejo.id === 'gijon' ? 'oviedo' : 'gijon');
     this.compareWeatherDataB = null;
     this.activeTab = 'live';
+    this.selectedCyclingRouteId = null;
+    this.selectedCyclingHour = 9;
+    this.selectedCyclingSpeed = 24;
     this.autoRefreshTimer = null;
     this.deferredInstallPrompt = null;
     this.previewHalloweenMode = false;
@@ -2864,6 +2869,55 @@ class MeteoAsturiasApp {
   }
 
 
+
+  initCyclingCardEvents() {
+    const routeSelect = document.getElementById('cycling-route-select');
+    if (routeSelect) {
+      routeSelect.addEventListener('change', (e) => {
+        this.selectedCyclingRouteId = e.target.value;
+        this.refreshCyclingPanel();
+      });
+    }
+
+    document.querySelectorAll('.btn-hour-pill').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const hour = parseInt(e.currentTarget.dataset.hour, 10);
+        if (!isNaN(hour)) {
+          this.selectedCyclingHour = hour;
+          this.refreshCyclingPanel();
+        }
+      });
+    });
+
+    document.querySelectorAll('.btn-speed-pill').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const speed = parseInt(e.currentTarget.dataset.speed, 10);
+        if (!isNaN(speed)) {
+          this.selectedCyclingSpeed = speed;
+          this.refreshCyclingPanel();
+        }
+      });
+    });
+  }
+
+  refreshCyclingPanel() {
+    try {
+      const container = document.getElementById('panel-cycling');
+      if (container && this.weatherData && this.currentConcejo) {
+        container.innerHTML = renderCyclingCard(
+          this.weatherData,
+          this.currentConcejo,
+          this.selectedCyclingRouteId,
+          this.selectedCyclingHour,
+          this.selectedCyclingSpeed
+        );
+        this.initCyclingCardEvents();
+      }
+    } catch (e) {
+      console.error('[MeteoAstur] Error actualizando panel de ciclismo:', e);
+    }
+  }
+
   renderAllComponents() {
     if (!this.weatherData) return;
     const effectiveTheme = this.getEffectiveIconTheme();
@@ -2947,6 +3001,17 @@ class MeteoAsturiasApp {
         }
       } catch (e) {
         console.error('[MeteoAstur] Error renderizando Rutas & Senderismo:', e);
+      }
+
+      // 2d. Módulo Ciclismo en Ruta & Viento Dinámico (v3.0.24)
+      try {
+        const cyclingContainer = document.getElementById('panel-cycling');
+        if (cyclingContainer) {
+          cyclingContainer.innerHTML = renderCyclingCard(data, concejo, this.selectedCyclingRouteId, this.selectedCyclingHour, this.selectedCyclingSpeed);
+          this.initCyclingCardEvents();
+        }
+      } catch (e) {
+        console.error('[MeteoAstur] Error renderizando Ciclismo:', e);
       }
 
       // 3. Módulo Montaña

@@ -2,6 +2,18 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🚴 Módulo Oficial de Ciclismo en Ruta & Viento Dinámico (v3.0.24.1) — 2026-11-04
+- **Génesis de la Innovación (Iniciativa de Lendo y su Jefe de Sala cicloturista):**
+  - Planteamiento del reto ciclista asturiano: conocer con antelación el impacto real del viento por tramos y puertos según la hora de salida elegida (ej. 9:00 AM) y el rumbo cambiante del ciclista.
+- **Arquitectura e Innovación Matemática:**
+  1. *Catálogo Oficial de Rutas Asturianas (`cyclingData.js`):* Trazados clásicos por concejos (La Madera, La Tabla, Costa de los Cabos, Subida mítica a Los Lagos de Covadonga, Desfiladero de Los Beyos, Cima del Naranco, L'Angliru, Pillarno, Bajo Nalón), desglosados en tramos vectoriales con rumbo de marcha (`bearingDeg`), pendiente, altitud y coordenadas.
+  2. *Motor Físico de Viento Dinámico (`cyclingAdvisor.js`):* Cálculo vectorial del ángulo relativo entre el rumbo de la bicicleta y el vector del viento de Open-Meteo. Clasificación en viento en cola/a favor (🟢), viento de cara/en contra (🔴) y viento lateral/cruzado (🟡). Alerta de ráfagas desestabilizadoras para ruedas de perfil alto.
+  3. *Simulación Temporal de Avance:* Avanza el reloj según el ritmo del ciclista (20, 24 o 28 km/h), calculando la hora de paso exacta y el gradiente térmico por altitud en cada puerto.
+  4. *Consejero Inteligente de Salida:* Recomienda activamente la ruta más favorable para la hora seleccionada.
+  5. *Blindaje Legal y Ergonómico (Leyes 11 y 16):* Pestaña `🚴 Ciclismo` ubicada entre Rutas y Nieve, diseño anti-desborde móvil y advertencias de seguridad vial (DGT 1.5 m y uso de casco).
+- **Verificación Local:**
+  - Servidor local activo en `http://localhost:8080` para inspección previa de Lendo antes de cualquier commit o despliegue.
+
 ## 🌦️ Soberanía Absoluta del Agua frente al Resol y Calibración Cantábrica de Mediodía (v3.0.23.68) — 2026-11-03
 - **Observación Quirúrgica en Vivo de Lendo (Piedras Blancas, 13:20 h):**
   - Lendo detectó que la app marcaba *«Resol / Sol tamizáu»* cuando en la calle estaba cayendo un orbayu visible: *«ahora pones resol y está orbayando, poco pero está. Es verdad que hay mucha luz»*.

@@ -152,6 +152,10 @@
           <span class="chip-icon">🥾</span>
           <span class="chip-label">Rutas</span>
         </button>
+        <button class="module-chip" data-tab="cycling" aria-label="Ver Ciclismo y Viento">
+          <span class="chip-icon">🚴</span>
+          <span class="chip-label">Ciclismo</span>
+        </button>
         <button class="module-chip" data-tab="mountain" aria-label="Ver Cordillera y Nieve">
           <span class="chip-icon">🏔️</span>
           <span class="chip-label">Nieve</span>
@@ -219,6 +223,9 @@
 
       <!-- 3c. RUTAS & SENDERISMO (v1.1.51) -->
       <div id="panel-routes" class="tab-panel"></div>
+
+      <!-- 3d. CICLISMO EN RUTA & PUERTOS (v3.0.24) -->
+      <div id="panel-cycling" class="tab-panel"></div>
 
       <!-- 4. MONTAÑA & NIEVE -->
       <div id="panel-mountain" class="tab-panel"></div>
@@ -4627,7 +4634,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.0.23.68').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.0.24.1').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4657,7 +4664,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.23.68"></script>
+  <script type="module" src="js/app.js?v=3.0.24.5"></script>
 
 
 
