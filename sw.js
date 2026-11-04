@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-21-thermal-curve-hd';
+const CACHE_NAME = 'meteoasturlode-v3024-22-thermal-curve-mobile-hd';
 const STATIC_ASSETS = [
   './',
   './index.html',

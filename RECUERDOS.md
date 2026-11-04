@@ -2,6 +2,25 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📈 Curva Térmica: Optimización Tipográfica y Punto Horario de Alta Visibilidad Móvil (v3.0.24.22) — 2026-11-04
+- **Calibración Óptica Integral Smartphone + Escritorio (Feedback de Lendo):**
+  1. *Diagnóstico de Lendo tras despliegue HD:*
+     - Aunque la resolución en monitor mejoró notablemente, en pantallas de teléfono móvil estrechas las cifras de máximas y mínimas (`↑14°`, `↓5°`) y el punto horario de "Ahora" se percibían diminutos y casi inapreciables.
+     - *Causa:* La reducción proporcional de un lienzo virtual ancho en 340px físicos reducía el tamaño visual de la fuente 11 a menos de 5px reales.
+  2. *Ajustes de Visibilidad y Calibración Móvil (Leyes 11 y 14):*
+     - En `js/components/currentCard.js`:
+       - Altura de lienzo incrementada a **800x80** (con paddings equilibrados de 26px arriba y 20px abajo).
+       - Tipografía `JetBrains Mono` duplicada a **`font-size: 22` con `font-weight: 900`** para las marcas extremas, logrando lectura nítida e instantánea en móvil.
+       - Punto horario actual reescalado con contorno grueso: radio central **r=8** (con borde de 3px) y halo de pulso vivo **r=14** (expansivo de 10 a 18).
+       - Grosor de la línea spline fijado en `stroke-width="3"` con trazo continuo no deformable.
+     - En `css/components.css`:
+       - Altura del envolvente SVG `.mini-thermal-svg-wrap` ampliada de `42px` a **`54px`**, otorgando holgura vertical sin romper la simetría con las tarjetas de Clima y Semáforo del Paraguas.
+       - Animación `@keyframes thermalPulseAnim` actualizada a radios de 10 a 18 para el pulso respiratorio vivo.
+  3. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-22-thermal-curve-mobile-hd`.
+     - Query strings actualizadas a `v=3.0.24.22` en `index.html` (`css/components.css` y `js/app.js`) y `currentCard.js`.
+     - Commit atómico y sincronización a `zeustata/Tiempo` en GitHub.
+
 ## 📈 Curva Térmica HD: Alta Definición en Pantallas Horizontales y Monitores (v3.0.24.21) — 2026-11-04
 - **Resolución Vectorial Nítida e Inmunidad al Estiramiento (Detección de Lendo):**
   1. *Diagnóstico de Lendo en Pantalla Horizontal/Monitor de Escritorio:*
