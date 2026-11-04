@@ -4,10 +4,10 @@ import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedW
 import { renderCurrentWeather } from './components/currentCard.js?v=3.0.23.62';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.23.40';
 import { renderSurfCard } from './components/surfCard.js?v=3.0.23.39';
-import { renderRoutesCard } from './components/routesCard.js?v=3.0.24.11';
-import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.24.10';
+import { renderRoutesCard } from './components/routesCard.js?v=3.0.24.17';
+import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.24.17';
 import { renderMountainCard } from './components/mountainCard.js?v=2.2.64';
-import { renderTourismCard } from './components/tourismCard.js?v=3.0.24.12';
+import { renderTourismCard } from './components/tourismCard.js?v=3.0.24.17';
 import { renderForecast } from './components/forecastView.js?v=3.0.23.68';
 import { renderWeatherChart } from './components/chartsView.js?v=3.0.23.58';
 import { renderAstronomyView } from './components/astronomyCard.js?v=2.2.1';

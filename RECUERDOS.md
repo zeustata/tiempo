@@ -2,6 +2,16 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📏 Unificación Exacta de Separación Superior en Rutas, Ciclismo y Ocio (v3.0.24.17) — 2026-11-04
+- **Erradicación de Asimetrías entre Pestañas (Detección de Lendo):**
+  1. *Diagnóstico de Espaciado:*
+     - Al alternar entre las pestañas del menú principal, en 7 secciones (En Vivo, 10 Días, Radar, Playas, Surf, Nieve, Cosmos) la primera tarjeta arrancaba a una distancia perfecta respecto a la barra de chips.
+     - En cambio, en **Rutas, Ciclismo y Ocio**, la primera tarjeta aparecía 10 píxeles más descolgada debido a un `padding: 10px 8px;` residual en sus contenedores envolventes (`.routes-module-wrapper`, `.cycling-module-wrapper` y `.tourism-module-wrapper`).
+  2. *Corrección y Estandarización Universal:*
+     - Ajustado el padding envolvente en los tres módulos a `padding: 0 0 10px 0;`.
+     - Ahora las 10 pestañas de la aplicación arrancan con la **misma distancia visual milimétrica** respecto a la barra horizontal de chips.
+  3. *Cache-Busting & Despliegue:* Service Worker actualizado a `meteoasturlode-v3024-17-tab-panels-alignment`, query strings `v=3.0.24.17` en `index.html` y `js/app.js` (para `routesCard.js`, `cyclingCard.js` y `tourismCard.js`). Servidor de pruebas detenido.
+
 ## 🧭 Reequilibrio de Jerarquía en la Barra de Sensores y Estación en Vivo (v3.0.24.16) — 2026-11-04
 - **Optimización de Proximidad Gestáltica (Iniciativa de Lendo):**
   1. *Diagnóstico de Proximidad:*

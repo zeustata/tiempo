@@ -52,7 +52,7 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null) {
   return `
     <style>
       .routes-module-wrapper {
-        padding: 10px 8px;
+        padding: 0 0 10px 0;
         max-width: 900px;
         margin: 0 auto;
         box-sizing: border-box;

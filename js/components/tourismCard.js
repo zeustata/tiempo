@@ -37,7 +37,7 @@ export function renderTourismCard(weatherData, concejo, selectedPlanId = null) {
   return `
     <style>
       .tourism-module-wrapper {
-        padding: 10px 8px;
+        padding: 0 0 10px 0;
         max-width: 900px;
         margin: 0 auto;
         box-sizing: border-box;

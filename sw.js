@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-16-sensors-nav-spacing';
+const CACHE_NAME = 'meteoasturlode-v3024-17-tab-panels-alignment';
 const STATIC_ASSETS = [
   './',
   './index.html',
