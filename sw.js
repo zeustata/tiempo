@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-9-speeds-hours-recalc';
+const CACHE_NAME = 'meteoasturlode-v3024-10-cycling-solid-glass';
 const STATIC_ASSETS = [
   './',
   './index.html',

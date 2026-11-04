@@ -56,6 +56,36 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
         box-sizing: border-box;
         overflow-x: hidden;
       }
+      .cycling-card {
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.94) 0%, rgba(11, 19, 43, 0.96) 100%);
+        border: 1px solid rgba(56, 189, 248, 0.22);
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        margin-bottom: 12px;
+        padding: 14px 12px;
+        box-sizing: border-box;
+      }
+      .cycling-advisor-card {
+        background: linear-gradient(135deg, rgba(8, 14, 28, 0.96) 0%, rgba(15, 23, 42, 0.94) 100%);
+        border: 1px solid rgba(56, 189, 248, 0.35);
+        border-radius: 14px;
+        padding: 12px;
+        margin-bottom: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(56, 189, 248, 0.2);
+        box-sizing: border-box;
+      }
+      .cycling-disclaimer-card {
+        background: rgba(11, 19, 43, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        padding: 10px 12px;
+        font-size: 0.72rem;
+        color: var(--text-dim);
+        line-height: 1.4;
+        box-sizing: border-box;
+      }
       .cycling-metrics-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -163,7 +193,7 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
     <div class="cycling-module-wrapper">
       
       <!-- CABECERA DEL MÓDULO -->
-      <div class="card card-glass" style="margin-bottom: 12px; border-radius: 14px; padding: 14px 12px; border: 1px solid rgba(255,255,255,0.08); background: var(--bg-card); box-sizing: border-box;">
+      <div class="cycling-card">
         <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 10px;">
           <div style="display: flex; align-items: center; gap: 8px; max-width: 100%;">
             <span style="font-size: 1.5rem;">🚴</span>
@@ -220,7 +250,7 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
       </div>
 
       <!-- TARJETA DEL CONSEJERO INTELIGENTE (AUTO-CARGA DE LA RUTA ÓPTIMA DEBAJO) -->
-      <div class="card card-glass" style="margin-bottom: 12px; border-radius: 14px; padding: 12px; border: 1px solid rgba(56, 189, 248, 0.25); background: linear-gradient(135deg, rgba(7, 13, 24, 0.95), rgba(15, 23, 42, 0.85)); box-sizing: border-box;">
+      <div class="cycling-advisor-card">
         <div style="display: flex; align-items: flex-start; gap: 8px;">
           <span style="font-size: 1.3rem; line-height: 1;">💡</span>
           <div style="flex: 1; min-width: 0;">
@@ -265,7 +295,7 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
       </div>
 
       <!-- FICHA DETALLADA DE LA RUTA SELECCIONADA -->
-      <div class="card card-glass" style="margin-bottom: 12px; border-radius: 14px; padding: 14px 12px; border: 1px solid rgba(255,255,255,0.08); background: var(--bg-card); box-sizing: border-box;">
+      <div class="cycling-card">
         
         <!-- Título y métricas de la ruta -->
         <div style="margin-bottom: 10px;">
@@ -383,8 +413,8 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
 
       </div>
 
-      <!-- DESCARGO LEGAL Y CONSEJOS DE SEGURIDAD VIAL (SIN REFERENCIA A REGLAS INTERNAS) -->
-      <div class="card card-glass" style="border-radius: 12px; padding: 10px 12px; border: 1px solid rgba(255,255,255,0.05); background: rgba(0,0,0,0.3); font-size: 0.72rem; color: var(--text-dim); line-height: 1.4; box-sizing: border-box;">
+      <!-- DESCARGO LEGAL Y CONSEJOS DE SEGURIDAD VIAL -->
+      <div class="cycling-disclaimer-card">
         <strong>🛡️ Seguridad Ciclista &amp; Exención de Responsabilidad:</strong>
         Estimaciones meteorológicas orientativas. Respeta la distancia de seguridad obligatoria de 1.5 m (DGT), uso de casco homologado, luces reglamentarias en túneles y chaleco cortavientos para descensos fríos.
       </div>

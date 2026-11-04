@@ -2,6 +2,15 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🚴 Módulo Oficial de Ciclismo en Ruta & Viento Dinámico (v3.0.24.10) — 2026-11-04
+- **Corrección de Opacidad y Unificación Visual Liquid Glass (Ley 14):**
+  1. *Causa raíz resuelta:* Se detectó que las tarjetas de Ciclismo utilizaban `background: var(--bg-card);`, una variable inexistente en el CSS global que provocaba que el panel quedara con fondo 100% transparente sobre el cielo activo.
+  2. *Acabado opaco reglamentario:* Implementadas las clases específicas `.cycling-card`, `.cycling-advisor-card` y `.cycling-disclaimer-card`:
+     - Fondo oscuro cantábrico profundo con opacidad del 94%–96% (`rgba(15, 23, 42, 0.94)` a `rgba(11, 19, 43, 0.96)`).
+     - Efecto Liquid Glass con desenfoque (`backdrop-filter: blur(20px) saturate(180%)`).
+     - Borde cian sutil (`rgba(56, 189, 248, 0.22)`) y sombra de profundidad tridimensional.
+  3. *Cache-Busting & Despliegue:* Service Worker actualizado a `meteoasturlode-v3024-10-cycling-solid-glass` y query strings `v=3.0.24.10`. Servidor local detenido para liberar puertos.
+
 ## 🚴 Módulo Oficial de Ciclismo en Ruta & Viento Dinámico (v3.0.24.9) — 2026-11-04
 - **Ampliación de Horas de Salida y Ritmos Ciclistas (Instrucción de Lendo):**
   1. *Horas Rápidas de Salida:* Ampliadas para cubrir mañanas completas y tardes: 8:00, 9:00, 10:00, 11:00, 12:00, 13:00, 16:00, 17:00, 18:00, 19:00.
