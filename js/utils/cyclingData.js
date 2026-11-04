@@ -1,5 +1,5 @@
 /**
- * METEOASTUR LODE - Catálogo Oficial de Rutas Ciclistas de Carretera de Asturias
+ * METEOASTUR LODE - Catálogo Oficial de Rutas Ciclistas de Carretera de Asturias (30 Grandes Clásicas)
  * Desarrollado por Manuel A. L. Barril (Lendo) y Princesa.
  * Rutas clásicas de carretera organizadas por concejos de salida y comarcas.
  * REGLA DE ORO DE LENDO: Todas las rutas son estrictamente CIRCULARES (salida y regreso a casa).
@@ -174,6 +174,26 @@ export const CYCLING_ROUTES = [
       { name: 'Trasona ➔ Embalse de San Andrés ➔ Serín ➔ Gijón', km: 23, bearingDeg: 105, elevGain: 230, avgGradePct: 1.2, endAlt: 15, coord: { lat: 43.520, lon: -5.730 } }
     ]
   },
+  {
+    id: 'gijon-fito-costa',
+    name: 'Gran Fondo de La Rasa: Gijón ➔ Villaviciosa ➔ Fito',
+    subtitle: 'El desafío de los dos valles orientales y regreso costero',
+    startConcejo: 'gijon',
+    concejos: ['gijon', 'villaviciosa', 'colunga', 'carreno'],
+    distanceKm: 76,
+    elevationGainM: 980,
+    maxAltitudeM: 597,
+    difficulty: 'Exigente',
+    profileType: 'Media Montaña / Gran Fondo',
+    isCircular: true,
+    description: 'Salida de Gijón por el Infanzón y la ría de Villaviciosa hasta Colunga. Ascensión al Alto del Fito y retorno rodando por Venta de las Ranas de vuelta a Gijón.',
+    tramos: [
+      { name: 'Gijón ➔ Infanzón ➔ Ría de Villaviciosa', km: 24, bearingDeg: 110, elevGain: 280, avgGradePct: 2.1, endAlt: 20, coord: { lat: 43.480, lon: -5.430 } },
+      { name: 'Villaviciosa ➔ Colunga ➔ Alto del Fito (Norte)', km: 18, bearingDeg: 135, elevGain: 510, avgGradePct: 5.8, endAlt: 597, coord: { lat: 43.435, lon: -5.195 } },
+      { name: 'Descenso a Colunga ➔ Venta de Las Ranas', km: 20, bearingDeg: 295, elevGain: 110, avgGradePct: -2.8, endAlt: 140, coord: { lat: 43.490, lon: -5.520 } },
+      { name: 'Venta de Las Ranas ➔ Peón ➔ Regreso a Gijón', km: 14, bearingDeg: 285, elevGain: 80, avgGradePct: -1.2, endAlt: 15, coord: { lat: 43.530, lon: -5.660 } }
+    ]
+  },
 
   // ─────────────────────────────────────────────────────────────────────────────
   // 3. COMARCA DE CANGAS DE ONÍS & PICOS DE EUROPA (CIRCULARES A CANGAS)
@@ -281,9 +301,376 @@ export const CYCLING_ROUTES = [
       { name: 'Viapará ➔ Cueña les Cabres (23.5%) ➔ Cima Angliru', km: 7, bearingDeg: 215, elevGain: 760, avgGradePct: 12.8, endAlt: 1570, coord: { lat: 43.220, lon: -5.940 } },
       { name: 'Descenso extremo y regreso seguro a Oviedo', km: 26, bearingDeg: 15, elevGain: 50, avgGradePct: -4.8, endAlt: 230, coord: { lat: 43.280, lon: -5.880 } }
     ]
+  },
+
+  // ─────────────────────────────────────────────────────────────────────────────
+  // 5. COMARCA DEL ORIENTE & COSTA DE LOS BUFONES (LLANES, RIBADESELLA, PANES)
+  // ─────────────────────────────────────────────────────────────────────────────
+  {
+    id: 'llanes-valle-oscuru-borbolla',
+    name: 'Circuito de Llanes: Valle Oscuru & La Borbolla',
+    subtitle: 'Entre los bufones marinos y los valles escondidos del Cuera',
+    startConcejo: 'llanes',
+    concejos: ['llanes', 'ribadedeva'],
+    distanceKm: 46,
+    elevationGainM: 520,
+    maxAltitudeM: 260,
+    difficulty: 'Media',
+    profileType: 'Costa / Rompepiernas',
+    isCircular: true,
+    description: 'Salida de la villa de Llanes hacia San Roque del Acebal para adentrarse en el idílico Valle Oscuru. Ascensión al Alto de La Borbolla y regreso por Colombres y la costa llanisca.',
+    tramos: [
+      { name: 'Llanes ➔ San Roque del Acebal ➔ Valle Oscuru', km: 13, bearingDeg: 115, elevGain: 160, avgGradePct: 2.1, endAlt: 180, coord: { lat: 43.400, lon: -4.680 } },
+      { name: 'Valle Oscuru ➔ Subida Alto de La Borbolla', km: 9, bearingDeg: 95, elevGain: 190, avgGradePct: 3.8, endAlt: 260, coord: { lat: 43.385, lon: -4.600 } },
+      { name: 'La Borbolla ➔ Descenso a Colombres (Ribadedeva)', km: 11, bearingDeg: 60, elevGain: 40, avgGradePct: -3.2, endAlt: 85, coord: { lat: 43.375, lon: -4.540 } },
+      { name: 'Colombres ➔ Llanes por la carretera de la costa', km: 13, bearingDeg: 280, elevGain: 130, avgGradePct: 1.4, endAlt: 15, coord: { lat: 43.420, lon: -4.750 } }
+    ]
+  },
+  {
+    id: 'ribadesella-cuevas-sella',
+    name: 'Circuito de Ribadesella: Cuevas del Agua & Valles del Sella',
+    subtitle: 'El curso del gran río salmonero hasta la desembocadura',
+    startConcejo: 'ribadesella',
+    concejos: ['ribadesella', 'parres', 'caravia'],
+    distanceKm: 42,
+    elevationGainM: 460,
+    maxAltitudeM: 220,
+    difficulty: 'Fácil / Media',
+    profileType: 'Costa / Rompepiernas',
+    isCircular: true,
+    description: 'Salida de la playa de Santa Marina en Ribadesella remontando el río Sella hacia Cuevas del Agua. Ascensión suave por los valles interiores y retorno circular a Ribadesella.',
+    tramos: [
+      { name: 'Ribadesella ➔ Margen del Sella ➔ Cuevas del Agua', km: 10, bearingDeg: 195, elevGain: 90, avgGradePct: 1.4, endAlt: 60, coord: { lat: 43.430, lon: -5.080 } },
+      { name: 'Cuevas ➔ Collado de Caravia (Subida)', km: 12, bearingDeg: 285, elevGain: 210, avgGradePct: 3.2, endAlt: 220, coord: { lat: 43.450, lon: -5.190 } },
+      { name: 'Caravia ➔ Berbes ➔ Mirador del Cantábrico', km: 10, bearingDeg: 55, elevGain: 80, avgGradePct: -1.8, endAlt: 90, coord: { lat: 43.475, lon: -5.120 } },
+      { name: 'Berbes ➔ Descenso a Ribadesella Centro', km: 10, bearingDeg: 95, elevGain: 80, avgGradePct: -2.1, endAlt: 10, coord: { lat: 43.460, lon: -5.060 } }
+    ]
+  },
+  {
+    id: 'panes-hermida-penamellera',
+    name: 'Desfiladero de Peñamellera & Valle Bajo del Cares',
+    subtitle: 'La puerta oriental entre Picos de Europa y Cantabria',
+    startConcejo: 'penamellerabaja',
+    concejos: ['penamellerabaja', 'penamelleraalta'],
+    distanceKm: 52,
+    elevationGainM: 610,
+    maxAltitudeM: 380,
+    difficulty: 'Media',
+    profileType: 'Media Montaña',
+    isCircular: true,
+    description: 'Salida de Panes remontando las aguas bravas del Cares hacia Alles y Peñamellera Alta. Vistas imponentes de la mole caliza del Cuera y retorno en suave bajada a Panes.',
+    tramos: [
+      { name: 'Panes ➔ Vega de Siejo ➔ Alles (Peñamellera Alta)', km: 14, bearingDeg: 275, elevGain: 220, avgGradePct: 2.8, endAlt: 260, coord: { lat: 43.325, lon: -4.700 } },
+      { name: 'Alles ➔ Alto de Ortiguero (Aproximación)', km: 12, bearingDeg: 260, elevGain: 210, avgGradePct: 3.4, endAlt: 380, coord: { lat: 43.315, lon: -4.810 } },
+      { name: 'Ortiguero ➔ Valle del Cares ➔ Buelles', km: 14, bearingDeg: 80, elevGain: 60, avgGradePct: -3.0, endAlt: 70, coord: { lat: 43.330, lon: -4.640 } },
+      { name: 'Buelles ➔ Paso del Deva ➔ Regreso a Panes', km: 12, bearingDeg: 125, elevGain: 120, avgGradePct: 1.2, endAlt: 50, coord: { lat: 43.320, lon: -4.580 } }
+    ]
+  },
+
+  // ─────────────────────────────────────────────────────────────────────────────
+  // 6. COMARCA DEL OCCIDENTE (LUARCA, NAVIA, VEGADEO, CANGAS DEL NARCEA)
+  // ─────────────────────────────────────────────────────────────────────────────
+  {
+    id: 'luarca-aristebano-paredes',
+    name: 'Circuito de Luarca: Alto de Aristébano & Valle de Paredes',
+    subtitle: 'Tierra de vaqueiros de alzada y brañas legendarias',
+    startConcejo: 'valdes',
+    concejos: ['valdes', 'tineo'],
+    distanceKm: 48,
+    elevationGainM: 740,
+    maxAltitudeM: 540,
+    difficulty: 'Exigente',
+    profileType: 'Media Montaña',
+    isCircular: true,
+    description: 'Salida del puerto pesquero de Luarca adentrándose en el interior vaqueiro. Ascensión regular al Alto de Aristébano, descenso por el sobrecogedor Valle de Paredes y regreso a Luarca.',
+    tramos: [
+      { name: 'Luarca ➔ Barcia ➔ Subida Alto de Aristébano', km: 16, bearingDeg: 175, elevGain: 480, avgGradePct: 4.8, endAlt: 540, coord: { lat: 43.460, lon: -6.510 } },
+      { name: 'Aristébano ➔ Descenso a San Pedro de Paredes', km: 11, bearingDeg: 120, elevGain: 40, avgGradePct: -4.2, endAlt: 180, coord: { lat: 43.435, lon: -6.425 } },
+      { name: 'Valle de Paredes ➔ Canero (Garganta del Esva)', km: 12, bearingDeg: 15, elevGain: 70, avgGradePct: -1.5, endAlt: 30, coord: { lat: 43.520, lon: -6.450 } },
+      { name: 'Canero ➔ Villar ➔ Regreso a Luarca', km: 9, bearingDeg: 285, elevGain: 150, avgGradePct: 2.1, endAlt: 20, coord: { lat: 43.540, lon: -6.535 } }
+    ]
+  },
+  {
+    id: 'navia-coana-doiras',
+    name: 'Ría de Navia: Castros de Coaña & Embalse de Doiras',
+    subtitle: 'El río Navia entre castros celtas y meandros profundos',
+    startConcejo: 'navia',
+    concejos: ['navia', 'coana', 'boal'],
+    distanceKm: 54,
+    elevationGainM: 680,
+    maxAltitudeM: 420,
+    difficulty: 'Media',
+    profileType: 'Media Montaña',
+    isCircular: true,
+    description: 'De la ría de Navia remontando hacia el mítico Castro de Coaña. Enlace de media montaña hacia el embalse de Doiras y retorno en suave bajada por la ribera de Boal.',
+    tramos: [
+      { name: 'Navia ➔ Mohías ➔ Castro de Coaña', km: 11, bearingDeg: 215, elevGain: 180, avgGradePct: 2.6, endAlt: 160, coord: { lat: 43.515, lon: -6.745 } },
+      { name: 'Coaña ➔ Subida hacia Mirador de Doiras', km: 15, bearingDeg: 195, elevGain: 310, avgGradePct: 4.1, endAlt: 420, coord: { lat: 43.425, lon: -6.815 } },
+      { name: 'Doiras ➔ Ribera del río Navia ➔ San Luis', km: 14, bearingDeg: 35, elevGain: 60, avgGradePct: -3.2, endAlt: 90, coord: { lat: 43.480, lon: -6.760 } },
+      { name: 'San Luis ➔ Puerto de Vega ➔ Entrada a Navia', km: 14, bearingDeg: 350, elevGain: 130, avgGradePct: 1.5, endAlt: 15, coord: { lat: 43.540, lon: -6.720 } }
+    ]
+  },
+  {
+    id: 'vegadeo-ria-eo-garganta',
+    name: 'Vegadeo & Ría del Eo ➔ Alto de La Garganta',
+    subtitle: 'El coloso del occidente asturiano sobre la ría gallega',
+    startConcejo: 'vegadeo',
+    concejos: ['vegadeo', 'taramundi', 'castropol'],
+    distanceKm: 62,
+    elevationGainM: 890,
+    maxAltitudeM: 877,
+    difficulty: 'Exigente / Épica',
+    profileType: 'Alta Montaña',
+    isCircular: true,
+    description: 'Salida de Vegadeo cruzando la fértil vega del Suarón hacia Villanueva de Oscos para coronar el exigente Alto de La Garganta. Vistas inmensas de la ría del Eo en el descenso.',
+    tramos: [
+      { name: 'Vegadeo ➔ Valle de Taramundi (Aproximación)', km: 14, bearingDeg: 195, elevGain: 210, avgGradePct: 2.5, endAlt: 240, coord: { lat: 43.360, lon: -7.110 } },
+      { name: 'Taramundi ➔ Subida exigente Alto de La Garganta', km: 16, bearingDeg: 145, elevGain: 640, avgGradePct: 5.6, endAlt: 877, coord: { lat: 43.320, lon: -6.990 } },
+      { name: 'Descenso técnico La Garganta ➔ San Tirso de Abres', km: 18, bearingDeg: 325, elevGain: 50, avgGradePct: -4.8, endAlt: 50, coord: { lat: 43.400, lon: -7.140 } },
+      { name: 'San Tirso ➔ Ría del Eo ➔ Regreso a Vegadeo', km: 14, bearingDeg: 45, elevGain: 90, avgGradePct: 1.0, endAlt: 10, coord: { lat: 43.465, lon: -7.050 } }
+    ]
+  },
+  {
+    id: 'cangas-narcea-acebo',
+    name: 'Cangas del Narcea & Cima del Santuario del Acebo',
+    subtitle: 'El altar ciclista del suroccidente asturiano',
+    startConcejo: 'cangasdelnarcea',
+    concejos: ['cangasdelnarcea'],
+    distanceKm: 46,
+    elevationGainM: 920,
+    maxAltitudeM: 1174,
+    difficulty: 'Exigente',
+    profileType: 'Alta Montaña',
+    isCircular: true,
+    description: 'Salida de la villa de Cangas del Narcea para encarar los 9 km de ascensión continua hasta el Santuario de Nuestra Señora del Acebo (1.174 m). Descenso por Carballo y regreso a Cangas.',
+    tramos: [
+      { name: 'Cangas del Narcea ➔ Subida Cima del Acebo', km: 11, bearingDeg: 95, elevGain: 790, avgGradePct: 7.2, endAlt: 1174, coord: { lat: 43.175, lon: -6.505 } },
+      { name: 'Santuario del Acebo ➔ Descenso a Robledo', km: 10, bearingDeg: 185, elevGain: 30, avgGradePct: -6.2, endAlt: 620, coord: { lat: 43.140, lon: -6.530 } },
+      { name: 'Robledo ➔ Valle del río Cibea ➔ Corias', km: 13, bearingDeg: 310, elevGain: 60, avgGradePct: -2.8, endAlt: 360, coord: { lat: 43.190, lon: -6.565 } },
+      { name: 'Corias (Monasterio) ➔ Regreso a Cangas del Narcea', km: 12, bearingDeg: 145, elevGain: 40, avgGradePct: 1.1, endAlt: 380, coord: { lat: 43.180, lon: -6.550 } }
+    ]
+  },
+
+  // ─────────────────────────────────────────────────────────────────────────────
+  // 7. COMARCA DEL CAUDAL & MONTAÑA CENTRAL (LENA, MIERES, ALLER)
+  // ─────────────────────────────────────────────────────────────────────────────
+  {
+    id: 'lena-cobertoria-barzana',
+    name: 'Pola de Lena ➔ Alto de La Cobertoria & Quirós',
+    subtitle: 'El paso mítico de la Cordillera entre valles mineros',
+    startConcejo: 'lena',
+    concejos: ['lena', 'quiros', 'morcin'],
+    distanceKm: 45,
+    elevationGainM: 1150,
+    maxAltitudeM: 1173,
+    difficulty: 'Épica',
+    profileType: 'Alta Montaña',
+    isCircular: true,
+    description: 'Salida de Pola de Lena atacando las duras rampas iniciales de La Cobertoria (hasta el 12%). Descenso vertiginoso hacia Bárzana de Quirós y regreso circular por Santa Eulalia de Morcín.',
+    tramos: [
+      { name: 'Pola de Lena ➔ Piedracea ➔ Alto de La Cobertoria', km: 10, bearingDeg: 285, elevGain: 870, avgGradePct: 8.7, endAlt: 1173, coord: { lat: 43.170, lon: -5.910 } },
+      { name: 'Descenso La Cobertoria ➔ Bárzana (Valle de Quirós)', km: 11, bearingDeg: 310, elevGain: 40, avgGradePct: -7.1, endAlt: 410, coord: { lat: 43.205, lon: -6.015 } },
+      { name: 'Bárzana ➔ Embalse de Valdemurrio ➔ Caranga', km: 11, bearingDeg: 350, elevGain: 80, avgGradePct: -2.1, endAlt: 240, coord: { lat: 43.265, lon: -6.040 } },
+      { name: 'Caranga ➔ Morcín ➔ Regreso a Pola de Lena', km: 13, bearingDeg: 125, elevGain: 160, avgGradePct: 1.5, endAlt: 310, coord: { lat: 43.160, lon: -5.830 } }
+    ]
+  },
+  {
+    id: 'mieres-padrun-olloniego',
+    name: 'Circuito de Mieres: Alto del Padrún & La Rebollada',
+    subtitle: 'El repecho tradicional de la cuenca del Caudal',
+    startConcejo: 'mieres',
+    concejos: ['mieres', 'oviedo', 'ribera_de_arriba'],
+    distanceKm: 36,
+    elevationGainM: 480,
+    maxAltitudeM: 375,
+    difficulty: 'Fácil / Media',
+    profileType: 'Rompepiernas',
+    isCircular: true,
+    description: 'Salida de Mieres remontando la antigua N-630 hacia el Alto del Padrún. Bajada hacia Olloniego bordeando el río Nalón y regreso por Soto de Ribera y Ujo.',
+    tramos: [
+      { name: 'Mieres ➔ Ablaña ➔ Alto del Padrún (Subida)', km: 10, bearingDeg: 345, elevGain: 210, avgGradePct: 3.8, endAlt: 375, coord: { lat: 43.290, lon: -5.795 } },
+      { name: 'Descenso Padrún ➔ Olloniego (Puente Viejo)', km: 8, bearingDeg: 330, elevGain: 30, avgGradePct: -4.0, endAlt: 150, coord: { lat: 43.305, lon: -5.830 } },
+      { name: 'Olloniego ➔ Soto de Ribera ➔ Baiña', km: 9, bearingDeg: 165, elevGain: 110, avgGradePct: 1.6, endAlt: 210, coord: { lat: 43.275, lon: -5.810 } },
+      { name: 'Baiña ➔ La Peña ➔ Regreso a Mieres', km: 9, bearingDeg: 145, elevGain: 130, avgGradePct: 1.4, endAlt: 220, coord: { lat: 43.250, lon: -5.775 } }
+    ]
+  },
+  {
+    id: 'aller-collaona-moreda',
+    name: 'Valle del Aller: Cabañaquinta & Alto de La Colladona',
+    subtitle: 'El puente montañoso entre las dos cuencas mineras',
+    startConcejo: 'aller',
+    concejos: ['aller', 'laviana'],
+    distanceKm: 48,
+    elevationGainM: 780,
+    maxAltitudeM: 850,
+    difficulty: 'Exigente',
+    profileType: 'Media Montaña',
+    isCircular: true,
+    description: 'De Cabañaquinta encarando las rampas de La Colladona que separan el Caudal del Nalón. Descenso panorámico hacia Pola de Laviana y regreso circular por Moreda de Aller.',
+    tramos: [
+      { name: 'Cabañaquinta ➔ Corigüela ➔ Alto de La Colladona', km: 12, bearingDeg: 45, elevGain: 470, avgGradePct: 5.4, endAlt: 850, coord: { lat: 43.185, lon: -5.580 } },
+      { name: 'Descenso Colladona ➔ Pola de Laviana', km: 11, bearingDeg: 35, elevGain: 40, avgGradePct: -5.8, endAlt: 290, coord: { lat: 43.245, lon: -5.560 } },
+      { name: 'Laviana ➔ Blimea ➔ El Entrego', km: 12, bearingDeg: 310, elevGain: 80, avgGradePct: -1.0, endAlt: 230, coord: { lat: 43.285, lon: -5.635 } },
+      { name: 'El Entrego ➔ Moreda ➔ Regreso a Cabañaquinta', km: 13, bearingDeg: 195, elevGain: 190, avgGradePct: 2.1, endAlt: 420, coord: { lat: 43.160, lon: -5.620 } }
+    ]
+  },
+
+  // ─────────────────────────────────────────────────────────────────────────────
+  // 8. COMARCA DEL NALÓN (LAVIANA, LANGREO, SOBRESCOBIO)
+  // ─────────────────────────────────────────────────────────────────────────────
+  {
+    id: 'laviana-colladona-tarna',
+    name: 'Circuito de Laviana: Valles del Nalón & Alto de Santo Emiliano',
+    subtitle: 'El corazón minero entre castilletes y cumbres verdes',
+    startConcejo: 'laviana',
+    concejos: ['laviana', 'langreo', 'san_martin_del_rey_aurelio', 'mieres'],
+    distanceKm: 45,
+    elevationGainM: 710,
+    maxAltitudeM: 520,
+    difficulty: 'Media',
+    profileType: 'Media Montaña',
+    isCircular: true,
+    description: 'Salida de Pola de Laviana recorriendo la vega del Nalón hacia Sama y La Felguera. Ascensión a Santo Emiliano con bajada a Mieres y retorno por el valle de Carrocera.',
+    tramos: [
+      { name: 'Pola de Laviana ➔ El Entrego ➔ Sama de Langreo', km: 14, bearingDeg: 305, elevGain: 80, avgGradePct: -0.8, endAlt: 215, coord: { lat: 43.295, lon: -5.680 } },
+      { name: 'Sama ➔ Subida Alto de Santo Emiliano', km: 7, bearingDeg: 245, elevGain: 305, avgGradePct: 5.2, endAlt: 520, coord: { lat: 43.280, lon: -5.735 } },
+      { name: 'Santo Emiliano ➔ Descenso a Mieres del Camín', km: 8, bearingDeg: 215, elevGain: 35, avgGradePct: -4.5, endAlt: 220, coord: { lat: 43.250, lon: -5.770 } },
+      { name: 'Mieres ➔ Valle de Carrocera ➔ Regreso a Laviana', km: 16, bearingDeg: 75, elevGain: 290, avgGradePct: 2.4, endAlt: 290, coord: { lat: 43.245, lon: -5.560 } }
+    ]
+  },
+  {
+    id: 'langreo-santo-emiliano-felguera',
+    name: 'Vuelta Minera de Langreo: Santo Emiliano & Valle de Samuño',
+    subtitle: 'Pistas asfaltadas entre bocaminas históricas y robledales',
+    startConcejo: 'langreo',
+    concejos: ['langreo', 'mieres'],
+    distanceKm: 34,
+    elevationGainM: 420,
+    maxAltitudeM: 520,
+    difficulty: 'Fácil / Media',
+    profileType: 'Rompepiernas',
+    isCircular: true,
+    description: 'Salida de La Felguera subiendo Santo Emiliano por su vertiente norte. Descenso hacia el pozo San Luis en Samuño y regreso llaneando por el parque fluvial del Nalón.',
+    tramos: [
+      { name: 'La Felguera ➔ Sama ➔ Alto de Santo Emiliano', km: 10, bearingDeg: 235, elevGain: 300, avgGradePct: 4.5, endAlt: 520, coord: { lat: 43.280, lon: -5.735 } },
+      { name: 'Santo Emiliano ➔ Valle de Samuño (Descenso)', km: 9, bearingDeg: 125, elevGain: 30, avgGradePct: -3.8, endAlt: 240, coord: { lat: 43.275, lon: -5.670 } },
+      { name: 'Samuño ➔ Ciaño ➔ Parque del Nalón', km: 8, bearingDeg: 35, elevGain: 40, avgGradePct: 0.8, endAlt: 215, coord: { lat: 43.290, lon: -5.655 } },
+      { name: 'Ciaño ➔ Paseo Fluvial ➔ Regreso a La Felguera', km: 7, bearingDeg: 320, elevGain: 50, avgGradePct: 1.0, endAlt: 210, coord: { lat: 43.310, lon: -5.690 } }
+    ]
+  },
+
+  // ─────────────────────────────────────────────────────────────────────────────
+  // 9. VALLES DEL OSO & CAMÍN REAL (GRADO, TEVERGA, BELMONTE)
+  // ─────────────────────────────────────────────────────────────────────────────
+  {
+    id: 'grado-cabrunana-candamo',
+    name: 'Circuito de Grado: Alto de La Cabruñana & Vega del Cubia',
+    subtitle: 'La vega moscona y el balcón hacia el Bajo Nalón',
+    startConcejo: 'grado',
+    concejos: ['grado', 'pravia', 'candamo'],
+    distanceKm: 42,
+    elevationGainM: 560,
+    maxAltitudeM: 375,
+    difficulty: 'Media',
+    profileType: 'Rompepiernas',
+    isCircular: true,
+    description: 'Salida de la villa de Grado encarando el clásico Alto de La Cabruñana por la N-634. Bajada hacia Cornellana bordeando el río Narcea y retorno circular por San Román a Grado.',
+    tramos: [
+      { name: 'Grado ➔ Subida Alto de La Cabruñana', km: 11, bearingDeg: 285, elevGain: 310, avgGradePct: 4.2, endAlt: 375, coord: { lat: 43.395, lon: -6.140 } },
+      { name: 'Cabruñana ➔ Descenso a Cornellana (Río Narcea)', km: 9, bearingDeg: 295, elevGain: 25, avgGradePct: -4.0, endAlt: 50, coord: { lat: 43.415, lon: -6.160 } },
+      { name: 'Cornellana ➔ San Román de Candamo', km: 11, bearingDeg: 75, elevGain: 120, avgGradePct: 1.8, endAlt: 80, coord: { lat: 43.450, lon: -6.070 } },
+      { name: 'Candamo ➔ Aces ➔ Regreso a Grado Centro', km: 11, bearingDeg: 165, elevGain: 105, avgGradePct: 1.2, endAlt: 65, coord: { lat: 43.385, lon: -6.070 } }
+    ]
+  },
+  {
+    id: 'teverga-ventana-proaza',
+    name: 'Valles del Oso: San Martín de Teverga ➔ Puerto de Ventana',
+    subtitle: 'El coloso natural de los osos pardos y hayedos de Valdelagranda',
+    startConcejo: 'teverga',
+    concejos: ['teverga', 'proaza'],
+    distanceKm: 48,
+    elevationGainM: 950,
+    maxAltitudeM: 1587,
+    difficulty: 'Épica',
+    profileType: 'Alta Montaña',
+    isCircular: true,
+    description: 'De San Martín de Teverga subiendo los 14 km del Puerto de Ventana hasta la frontera con León (1.587 m). Descenso panorámico por el desfiladero de Peñas Juntas y regreso a Teverga.',
+    tramos: [
+      { name: 'San Martín de Teverga ➔ Páramo ➔ Puerto de Ventana', km: 14, bearingDeg: 195, elevGain: 890, avgGradePct: 6.4, endAlt: 1587, coord: { lat: 43.075, lon: -6.010 } },
+      { name: 'Descenso técnico Ventana ➔ La Plaza (Teverga)', km: 14, bearingDeg: 15, elevGain: 20, avgGradePct: -6.2, endAlt: 460, coord: { lat: 43.160, lon: -6.100 } },
+      { name: 'Teverga ➔ Desfiladero de Peñas Juntas ➔ Proaza', km: 10, bearingDeg: 35, elevGain: 15, avgGradePct: -2.5, endAlt: 210, coord: { lat: 43.250, lon: -6.020 } },
+      { name: 'Proaza ➔ Senda Fluvial ➔ Regreso a Teverga', km: 10, bearingDeg: 215, elevGain: 25, avgGradePct: 2.4, endAlt: 460, coord: { lat: 43.160, lon: -6.100 } }
+    ]
+  },
+  {
+    id: 'belmonte-espina-somiedo',
+    name: 'Belmonte de Miranda & Alto de La Espina',
+    subtitle: 'Tierra de oro romano y desfiladeros fluviales',
+    startConcejo: 'belmontedemiranda',
+    concejos: ['belmontedemiranda', 'salas', 'somiedo'],
+    distanceKm: 54,
+    elevationGainM: 880,
+    maxAltitudeM: 650,
+    difficulty: 'Exigente',
+    profileType: 'Media Montaña',
+    isCircular: true,
+    description: 'Salida de Belmonte remontando el valle del Pigüeña. Subida hacia La Espina con vistas de la sierra de Begega y retorno circular a Belmonte por Almurfe.',
+    tramos: [
+      { name: 'Belmonte ➔ Alvariza ➔ Subida Alto de La Espina', km: 16, bearingDeg: 315, elevGain: 480, avgGradePct: 4.2, endAlt: 650, coord: { lat: 43.375, lon: -6.345 } },
+      { name: 'La Espina ➔ Descenso a Salas', km: 12, bearingDeg: 45, elevGain: 40, avgGradePct: -4.5, endAlt: 240, coord: { lat: 43.415, lon: -6.260 } },
+      { name: 'Salas ➔ Cornellana (Vega del Narcea)', km: 12, bearingDeg: 110, elevGain: 60, avgGradePct: -1.8, endAlt: 50, coord: { lat: 43.415, lon: -6.160 } },
+      { name: 'Cornellana ➔ Cañón del Pigüeña ➔ Regreso a Belmonte', km: 14, bearingDeg: 215, elevGain: 300, avgGradePct: 2.1, endAlt: 200, coord: { lat: 43.280, lon: -6.215 } }
+    ]
+  },
+
+  // ─────────────────────────────────────────────────────────────────────────────
+  // 10. COMARCA DE LA SIDRA (VILLAVICIOSA, NAVA, CABRANES, BIMENES)
+  // ─────────────────────────────────────────────────────────────────────────────
+  {
+    id: 'villaviciosa-buenos-aires-puntal',
+    name: 'Circuito de Villaviciosa: Alto de Buenos Aires & El Puntal',
+    subtitle: 'Entre pomaradas, la ría protegida y el puerto de Tazones',
+    startConcejo: 'villaviciosa',
+    concejos: ['villaviciosa', 'colunga'],
+    distanceKm: 40,
+    elevationGainM: 490,
+    maxAltitudeM: 380,
+    difficulty: 'Fácil / Media',
+    profileType: 'Costa / Rompepiernas',
+    isCircular: true,
+    description: 'Salida de la capital manzanera subiendo el Alto de Buenos Aires por carreteras tranquilas entre manzanos. Descenso hacia el puerto de El Puntal y regreso bordeando la ría a Villaviciosa.',
+    tramos: [
+      { name: 'Villaviciosa ➔ Amandi ➔ Alto de Buenos Aires', km: 11, bearingDeg: 145, elevGain: 310, avgGradePct: 4.2, endAlt: 380, coord: { lat: 43.445, lon: -5.410 } },
+      { name: 'Buenos Aires ➔ Descenso a Selorio', km: 10, bearingDeg: 45, elevGain: 30, avgGradePct: -3.8, endAlt: 40, coord: { lat: 43.510, lon: -5.370 } },
+      { name: 'Selorio ➔ Rodiles ➔ Puerto de El Puntal', km: 9, bearingDeg: 295, elevGain: 60, avgGradePct: 1.2, endAlt: 15, coord: { lat: 43.535, lon: -5.430 } },
+      { name: 'El Puntal ➔ Margen de la Ría ➔ Regreso a Villaviciosa', km: 10, bearingDeg: 195, elevGain: 90, avgGradePct: 1.0, endAlt: 20, coord: { lat: 43.480, lon: -5.435 } }
+    ]
+  },
+  {
+    id: 'nava-faya-lobos-bimenes',
+    name: 'Vuelta a la Comarca Sidrera: Nava & Faya de Los Lobos',
+    subtitle: 'Valles angostos, sierras calcáreas y sidra natural',
+    startConcejo: 'nava',
+    concejos: ['nava', 'bimenes', 'laviana'],
+    distanceKm: 44,
+    elevationGainM: 630,
+    maxAltitudeM: 680,
+    difficulty: 'Media / Exigente',
+    profileType: 'Media Montaña',
+    isCircular: true,
+    description: 'De Nava subiendo hacia Bimenes y coronando el mítico Alto de La Faya de los Lobos. Vistas aéreas de Peñamayor y descenso rápido cerrando el círculo en Nava.',
+    tramos: [
+      { name: 'Nava ➔ Martimporra (Bimenes) ➔ Subida Faya', km: 13, bearingDeg: 215, elevGain: 420, avgGradePct: 4.8, endAlt: 680, coord: { lat: 43.315, lon: -5.545 } },
+      { name: 'Alto de La Faya de Los Lobos ➔ Descenso a Barredos', km: 10, bearingDeg: 185, elevGain: 20, avgGradePct: -4.9, endAlt: 280, coord: { lat: 43.275, lon: -5.560 } },
+      { name: 'Barredos ➔ El Entrego ➔ Valles de Bimenes', km: 11, bearingDeg: 345, elevGain: 110, avgGradePct: 1.8, endAlt: 340, coord: { lat: 43.330, lon: -5.580 } },
+      { name: 'Bimenes ➔ Priandi ➔ Regreso a Nava Centro', km: 10, bearingDeg: 45, elevGain: 80, avgGradePct: -2.1, endAlt: 240, coord: { lat: 43.355, lon: -5.505 } }
+    ]
   }
 ];
 
+/**
+ * Obtiene las rutas ciclistas que parten de un concejo o discurren por él.
+ */
 export function getCyclingRoutesForConcejo(concejoId) {
   if (!concejoId) return CYCLING_ROUTES;
   const directMatches = CYCLING_ROUTES.filter(r => r.concejos.includes(concejoId) || r.startConcejo === concejoId);
@@ -291,6 +678,9 @@ export function getCyclingRoutesForConcejo(concejoId) {
   return CYCLING_ROUTES;
 }
 
+/**
+ * Busca una ruta por su ID único
+ */
 export function getCyclingRouteById(routeId) {
   return CYCLING_ROUTES.find(r => r.id === routeId) || CYCLING_ROUTES[0];
 }
