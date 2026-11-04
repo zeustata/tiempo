@@ -2823,6 +2823,7 @@ class MeteoAsturiasApp {
   }
 
   async loadWeather(concejoId) {
+    this.selectedCyclingRouteId = null; // Reset al cambiar localidad para auto-cargar la óptima
     const concejo = getConcejoById(concejoId);
     if (!concejo) return;
 
@@ -2871,24 +2872,62 @@ class MeteoAsturiasApp {
 
 
   initCyclingCardEvents() {
-    const routeSelect = document.getElementById('cycling-route-select');
-    if (routeSelect) {
-      routeSelect.addEventListener('change', (e) => {
-        this.selectedCyclingRouteId = e.target.value;
-        this.refreshCyclingPanel();
+    // 1. Abrir modal ergonómico compacto (adiós al diálogo nativo gigante de Android)
+    const btnOpen = document.getElementById('btn-open-cycling-picker');
+    const modal = document.getElementById('cycling-routes-modal');
+    const btnClose = document.getElementById('btn-close-cycling-modal');
+
+    if (btnOpen && modal) {
+      btnOpen.addEventListener('click', () => {
+        modal.style.display = 'flex';
+        modal.setAttribute('aria-hidden', 'false');
       });
     }
 
-    document.querySelectorAll('.btn-hour-pill').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const hour = parseInt(e.currentTarget.dataset.hour, 10);
-        if (!isNaN(hour)) {
-          this.selectedCyclingHour = hour;
+    if (btnClose && modal) {
+      btnClose.addEventListener('click', () => {
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+      });
+    }
+
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.style.display = 'none';
+          modal.setAttribute('aria-hidden', 'true');
+        }
+      });
+    }
+
+    // 2. Selección de ruta en el modal táctil compacto
+    document.querySelectorAll('.cycling-route-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        const routeId = e.currentTarget.dataset.routeId;
+        if (routeId) {
+          this.selectedCyclingRouteId = routeId;
+          if (modal) {
+            modal.style.display = 'none';
+            modal.setAttribute('aria-hidden', 'true');
+          }
           this.refreshCyclingPanel();
         }
       });
     });
 
+    // 3. Cambio de hora: auto-carga la ruta ÓPTIMA para esa hora (Instrucción de Lendo)
+    document.querySelectorAll('.btn-hour-pill').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const hour = parseInt(e.currentTarget.dataset.hour, 10);
+        if (!isNaN(hour)) {
+          this.selectedCyclingHour = hour;
+          this.selectedCyclingRouteId = null; // Auto-resetea para cargar directamente la óptima debajo
+          this.refreshCyclingPanel();
+        }
+      });
+    });
+
+    // 4. Cambio de ritmo
     document.querySelectorAll('.btn-speed-pill').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const speed = parseInt(e.currentTarget.dataset.speed, 10);

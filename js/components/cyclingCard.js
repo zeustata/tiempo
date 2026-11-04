@@ -2,12 +2,12 @@
  * METEOASTUR LODE - Componente de Tarjeta de Ciclismo & Viento Dinámico
  * Desarrollado por Manuel A. L. Barril (Lendo) y Princesa.
  * Cálculo de viento relativo (en contra, a favor, cruzado) según rumbo de marcha,
- * simulador de paso horario por tramos y puertos, y blindaje de seguridad ciclista (Ley 16).
- * Blindaje ergonómico y anti-desborde para pantallas móviles de 320px a 380px (Ley Constitucional 11).
+ * simulador de paso horario por tramos y puertos, auto-carga de ruta óptima según hora/concejo,
+ * selector táctil ergonómico sin diálogos gigantes de Android y blindaje de seguridad ciclista.
  */
 
-import { getCyclingRoutesForConcejo, getCyclingRouteById, CYCLING_ROUTES } from '../utils/cyclingData.js?v=3.0.24.5';
-import { simulateRouteConditions, rankRoutesForDeparture } from '../utils/cyclingAdvisor.js?v=3.0.24.5';
+import { getCyclingRoutesForConcejo, getCyclingRouteById, CYCLING_ROUTES } from '../utils/cyclingData.js?v=3.0.24.8';
+import { simulateRouteConditions, rankRoutesForDeparture } from '../utils/cyclingAdvisor.js?v=3.0.24.8';
 
 /**
  * Renderiza la vista principal del módulo de Ciclismo & Viento
@@ -19,16 +19,23 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
   const localRoutes = getCyclingRoutesForConcejo(concejo.id);
   const otherRoutes = CYCLING_ROUTES.filter(r => !localRoutes.some(lr => lr.id === r.id));
 
-  // Ruta activa: la seleccionada explícitamente o la primera local
-  const activeRoute = selectedRouteId ? getCyclingRouteById(selectedRouteId) : localRoutes[0] || CYCLING_ROUTES[0];
+  // Clasificación para el consejero inteligente (evalúa las de la localidad activa)
+  const candidateRoutes = localRoutes.length > 0 ? localRoutes : CYCLING_ROUTES;
+  const ranked = rankRoutesForDeparture(candidateRoutes, selectedHour, selectedSpeed, hourly);
+  const bestRoute = ranked[0]?.route || candidateRoutes[0] || CYCLING_ROUTES[0];
+  const bestSim = ranked[0]?.simulation || null;
 
-  // Simulación para la ruta activa
+  // REGLA DE ORO DE LENDO:
+  // Si no se ha elegido una ruta manual específica, o si la seleccionada no pertenece a este concejo,
+  // se auto-carga directamente la ruta ÓPTIMA sugerida por el consejero para esta hora.
+  let activeRoute = bestRoute;
+  if (selectedRouteId) {
+    const manualRoute = getCyclingRouteById(selectedRouteId);
+    if (manualRoute) activeRoute = manualRoute;
+  }
+
+  // Simulación para la ruta activa que se pinta debajo
   const sim = simulateRouteConditions(activeRoute, selectedHour, selectedSpeed, hourly);
-
-  // Clasificación para el consejero inteligente (evalúa las de la zona activa)
-  const ranked = rankRoutesForDeparture(localRoutes.length > 0 ? localRoutes : CYCLING_ROUTES, selectedHour, selectedSpeed, hourly);
-  const bestRoute = ranked[0]?.route || activeRoute;
-  const bestSim = ranked[0]?.simulation || sim;
 
   // Horas rápidas de salida
   const quickHours = [8, 9, 10, 11, 16, 17];
@@ -46,32 +53,6 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
         margin: 0 auto;
         box-sizing: border-box;
         overflow-x: hidden;
-      }
-      #cycling-route-select {
-        color-scheme: dark !important;
-        background-color: #0b132b !important;
-        color: #f8fafc !important;
-        border: 1px solid rgba(56, 189, 248, 0.4) !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        box-sizing: border-box !important;
-      }
-      #cycling-route-select optgroup {
-        background-color: #070d18 !important;
-        color: #38bdf8 !important;
-        font-weight: 800 !important;
-        font-style: normal !important;
-        padding: 6px 4px !important;
-      }
-      #cycling-route-select option {
-        background-color: #0f172a !important;
-        color: #ffffff !important;
-        padding: 10px 12px !important;
-        font-weight: 600 !important;
-      }
-      #cycling-route-select option:checked {
-        background-color: #1e3a8a !important;
-        color: #facc15 !important;
       }
       .cycling-metrics-grid {
         display: grid;
@@ -108,6 +89,72 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
         transition: all 0.2s ease;
         text-align: center;
         box-sizing: border-box;
+      }
+      /* Selector ergonómico de rutas táctil (Adiós al diálogo gigante de Android) */
+      .cycling-route-trigger {
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: rgba(15, 23, 42, 0.85);
+        border: 1px solid rgba(56, 189, 248, 0.35);
+        color: #ffffff;
+        font-size: 0.84rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        cursor: pointer;
+        text-align: left;
+        box-sizing: border-box;
+        transition: border-color 0.2s ease, background 0.2s ease;
+      }
+      .cycling-route-trigger:active {
+        background: rgba(56, 189, 248, 0.15);
+      }
+      /* Modal flotante de selección de rutas */
+      .cycling-modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        z-index: 9999;
+        display: none;
+        align-items: flex-end;
+        justify-content: center;
+      }
+      .cycling-modal-sheet {
+        background: #0b132b;
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        border-radius: 20px 20px 0 0;
+        width: 100%;
+        max-width: 600px;
+        max-height: 80vh;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 -10px 30px rgba(0,0,0,0.6);
+        animation: slideUpCycling 0.25s ease-out;
+      }
+      @keyframes slideUpCycling {
+        from { transform: translateY(100%); }
+        to { transform: translateY(0); }
+      }
+      .cycling-route-item {
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid rgba(255,255,255,0.06);
+        background: rgba(255,255,255,0.03);
+        margin-bottom: 6px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        transition: background 0.15s ease;
+      }
+      .cycling-route-item:active, .cycling-route-item.selected {
+        background: rgba(56, 189, 248, 0.15);
+        border-color: rgba(56, 189, 248, 0.5);
       }
     </style>
 
@@ -170,50 +217,49 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
         </div>
       </div>
 
-      <!-- TARJETA DEL CONSEJERO INTELIGENTE (¿QUÉ RUTA RECOMIENDA EL VIENTO A ESA HORA?) -->
+      <!-- TARJETA DEL CONSEJERO INTELIGENTE (AUTO-CARGA DE LA RUTA ÓPTIMA DEBAJO) -->
       <div class="card card-glass" style="margin-bottom: 12px; border-radius: 14px; padding: 12px; border: 1px solid rgba(56, 189, 248, 0.25); background: linear-gradient(135deg, rgba(7, 13, 24, 0.95), rgba(15, 23, 42, 0.85)); box-sizing: border-box;">
         <div style="display: flex; align-items: flex-start; gap: 8px;">
           <span style="font-size: 1.3rem; line-height: 1;">💡</span>
           <div style="flex: 1; min-width: 0;">
             <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap; margin-bottom: 4px;">
               <strong style="font-size: 0.88rem; color: var(--text-main);">Consejero de Viento (${selectedHour}:00 h)</strong>
-              <span style="font-size: 0.72rem; font-weight: 800; padding: 2px 7px; border-radius: 10px; background: ${bestSim.badgeColor}; color: #000;">
-                ${bestSim.badgeLabel}
+              <span style="font-size: 0.72rem; font-weight: 800; padding: 2px 7px; border-radius: 10px; background: ${bestSim?.badgeColor || '#22c55e'}; color: #000;">
+                ${bestSim?.badgeLabel || 'Óptima 🚀'}
               </span>
             </div>
             <p style="margin: 0; font-size: 0.8rem; color: var(--text-dim); line-height: 1.4; word-break: break-word;">
-              Ruta aconsejada: <strong style="color: var(--primary);">${bestRoute.name}</strong>. ${bestSim.advisorMessage}
+              Ruta más favorable cargada: <strong style="color: var(--primary);">${bestRoute.name}</strong>. ${bestSim?.advisorMessage || ''}
             </p>
           </div>
         </div>
       </div>
 
-      <!-- SELECTOR DE RUTA ESPECÍFICA CON OPTGROUP -->
+      <!-- SELECTOR TÁCTIL ERGONÓMICO DE RUTA (DISPARADOR DEL MODAL COMPACTO) -->
       <div style="margin-bottom: 12px; display: flex; flex-direction: column; gap: 5px;">
-        <label for="cycling-route-select" style="font-size: 0.82rem; font-weight: 700; color: var(--text-main);">
-          📍 Selecciona trazado ciclista:
-        </label>
-        <select id="cycling-route-select" style="padding: 10px 12px; border-radius: 12px; font-size: 0.84rem; font-weight: 600; outline: none; cursor: pointer;">
-          ${localRoutes.length > 0 ? `
-            <optgroup label="📍 Rutas por ${concejo.name} y Comarca (${localRoutes.length})">
-              ${localRoutes.map(r => `
-                <option value="${r.id}" ${r.id === activeRoute.id ? 'selected' : ''}>
-                  ${r.name} (${r.distanceKm} km • +${r.elevationGainM}m)
-                </option>
-              `).join('')}
-            </optgroup>
-          ` : ''}
-
-          ${otherRoutes.length > 0 ? `
-            <optgroup label="🌟 Grandes Clásicas de Asturias (${otherRoutes.length})">
-              ${otherRoutes.map(r => `
-                <option value="${r.id}" ${r.id === activeRoute.id ? 'selected' : ''}>
-                  ${r.name} (${r.distanceKm} km • +${r.elevationGainM}m)
-                </option>
-              `).join('')}
-            </optgroup>
-          ` : ''}
-        </select>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <label style="font-size: 0.82rem; font-weight: 700; color: var(--text-main);">
+            📍 Trazado ciclista activo:
+          </label>
+          <span style="font-size: 0.72rem; color: var(--primary); font-weight: 700;">
+            ${localRoutes.length} rutas en ${concejo.name}
+          </span>
+        </div>
+        
+        <button type="button" id="btn-open-cycling-picker" class="cycling-route-trigger" aria-label="Cambiar trazado ciclista">
+          <div style="display: flex; align-items: center; gap: 6px; overflow: hidden; min-width: 0;">
+            <span style="font-size: 0.95rem;">🗺️</span>
+            <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.84rem;">
+              ${activeRoute.name}
+            </span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
+            <span style="font-size: 0.75rem; color: var(--accent, #facc15); font-weight: 800;">
+              ${activeRoute.distanceKm} km
+            </span>
+            <span style="font-size: 0.8rem; color: var(--primary);">▾</span>
+          </div>
+        </button>
       </div>
 
       <!-- FICHA DETALLADA DE LA RUTA SELECCIONADA -->
@@ -282,7 +328,7 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
           </div>
         </div>
 
-        <!-- DESGLOSE DE TRAMOS PASO A PASO (DISEÑO BLINDADO MÓVIL) -->
+        <!-- DESGLOSE DE TRAMOS PASO A PASO -->
         <div>
           <h4 style="margin: 0 0 8px 0; font-size: 0.88rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 6px;">
             <span>⏱️</span> Tramos &amp; Horas (${String(selectedHour).padStart(2, '0')}:00 h)
@@ -335,10 +381,77 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
 
       </div>
 
-      <!-- DESCARGO LEGAL Y CONSEJOS DE SEGURIDAD VIAL (LEY 16) -->
+      <!-- DESCARGO LEGAL Y CONSEJOS DE SEGURIDAD VIAL (SIN REFERENCIA A REGLAS INTERNAS) -->
       <div class="card card-glass" style="border-radius: 12px; padding: 10px 12px; border: 1px solid rgba(255,255,255,0.05); background: rgba(0,0,0,0.3); font-size: 0.72rem; color: var(--text-dim); line-height: 1.4; box-sizing: border-box;">
-        <strong>🛡️ Seguridad Ciclista &amp; Exención de Responsabilidad (Ley 16):</strong>
-        Estimaciones teóricas orientativas. Respeta la distancia de seguridad obligatoria de 1.5 m (DGT), uso de casco homologado y luces reglamentarias.
+        <strong>🛡️ Seguridad Ciclista &amp; Exención de Responsabilidad:</strong>
+        Estimaciones meteorológicas orientativas. Respeta la distancia de seguridad obligatoria de 1.5 m (DGT), uso de casco homologado, luces reglamentarias en túneles y chaleco cortavientos para descensos fríos.
+      </div>
+
+      <!-- BOTTOM SHEET / MODAL ERGONÓMICO DE RUTAS (SIN DIÁLOGOS GIGANTES) -->
+      <div id="cycling-routes-modal" class="cycling-modal-backdrop" aria-hidden="true">
+        <div class="cycling-modal-sheet">
+          
+          <div style="padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <h3 style="margin: 0; font-size: 1.05rem; font-weight: 800; color: var(--text-main);">Selecciona trazado ciclista</h3>
+              <span style="font-size: 0.75rem; color: var(--text-dim);">Toca una ruta para calcular el viento</span>
+            </div>
+            <button type="button" id="btn-close-cycling-modal" style="background: rgba(255,255,255,0.08); border: none; color: var(--text-main); font-size: 1.1rem; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+              ✕
+            </button>
+          </div>
+
+          <div style="padding: 12px 14px; overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch;">
+            
+            ${localRoutes.length > 0 ? `
+              <div style="margin-bottom: 12px;">
+                <span style="font-size: 0.76rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 6px;">
+                  📍 Rutas por ${concejo.name} y Comarca (${localRoutes.length})
+                </span>
+                ${localRoutes.map(r => `
+                  <div class="cycling-route-item ${r.id === activeRoute.id ? 'selected' : ''}" data-route-id="${r.id}">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px;">
+                      <strong style="font-size: 0.84rem; color: var(--text-main);">${r.name}</strong>
+                      <span style="font-size: 0.76rem; font-weight: 800; color: var(--accent, #facc15); white-space: nowrap;">${r.distanceKm} km</span>
+                    </div>
+                    <div style="display: flex; gap: 6px; align-items: center; font-size: 0.72rem; color: var(--text-dim); flex-wrap: wrap;">
+                      <span>+${r.elevationGainM} m</span>
+                      <span>•</span>
+                      <span>${r.difficulty}</span>
+                      <span>•</span>
+                      <span style="color: #22c55e;">🔄 Circular</span>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            ` : ''}
+
+            ${otherRoutes.length > 0 ? `
+              <div>
+                <span style="font-size: 0.76rem; font-weight: 800; color: var(--accent, #facc15); text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 6px;">
+                  🌟 Grandes Clásicas de Asturias (${otherRoutes.length})
+                </span>
+                ${otherRoutes.map(r => `
+                  <div class="cycling-route-item ${r.id === activeRoute.id ? 'selected' : ''}" data-route-id="${r.id}">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px;">
+                      <strong style="font-size: 0.84rem; color: var(--text-main);">${r.name}</strong>
+                      <span style="font-size: 0.76rem; font-weight: 800; color: var(--accent, #facc15); white-space: nowrap;">${r.distanceKm} km</span>
+                    </div>
+                    <div style="display: flex; gap: 6px; align-items: center; font-size: 0.72rem; color: var(--text-dim); flex-wrap: wrap;">
+                      <span>+${r.elevationGainM} m</span>
+                      <span>•</span>
+                      <span>${r.difficulty}</span>
+                      <span>•</span>
+                      <span style="color: #22c55e;">🔄 Circular</span>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            ` : ''}
+
+          </div>
+
+        </div>
       </div>
 
     </div>

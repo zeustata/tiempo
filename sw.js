@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-7-31-circular-routes';
+const CACHE_NAME = 'meteoasturlode-v3024-8-auto-optimal-routes';
 const STATIC_ASSETS = [
   './',
   './index.html',
