@@ -332,8 +332,7 @@ export function renderHourlyForecastBlock(data, units = 'metric', iconTheme = 'a
     <div class="forecast-block live-hourly-block" id="live-hourly-container">
       <div class="hourly-header-bar">
         <div class="hourly-title-group">
-          <h3 class="section-heading live-hourly-heading">⏱️ Pronóstico Horario (72 Horas)</h3>
-          <span class="section-subtitle">Evolución hora a hora en tarjetas dinámicas o curvas</span>
+          <h3 class="section-heading live-hourly-heading" style="margin-bottom: 0;">⏱️ Pronóstico Horario (72 Horas)</h3>
         </div>
 
         <!-- CONMUTADOR ERGONÓMICO DE VISTA HORARIA -->

@@ -2,6 +2,23 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🕛 Pronóstico Horario 72h: Cabecera Compacta y Reducción de Scroll (v3.0.24.26) — 2026-11-04
+- **Depuración Visual y Optimización de Altura en Panel En Vivo (Iniciativa de Lendo):**
+  1. *Diagnóstico de Lendo sobre Scroll Excesivo:*
+     - En el bloque de **Pronóstico Horario (72 Horas)** dentro de la pestaña En Vivo, existía un subtítulo redundante (*"Evolución hora a hora en tarjetas dinámicas o curvas"*).
+     - Al estar los botones de conmutación de Tarjetas/Curvas a la derecha, el subtítulo obligaba a descolgar la sección y aumentaba el scroll antes de ver la primera hora.
+  2. *Implementación Técnica (Leyes 11 y 14):*
+     - En `js/components/forecastView.js`:
+       - Eliminado el subtítulo `.section-subtitle` en `renderHourlyForecastBlock()`.
+       - Margen inferior del título `h3.section-heading` ajustado a `0`, alineándolo con elegancia simétrica con los botones conmutadores de modo (`Tarjetas` / `Curvas`).
+       - Ganancia de ~20px de altura útil "above the fold" en la estación en vivo.
+     - En `js/components/currentCard.js`:
+       - Query string de importación de `forecastView.js` actualizada para propagar la nueva versión.
+  3. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-26-live-hourly-clean-header`.
+     - Query strings actualizadas a `v=3.0.24.26` en `index.html`, `js/app.js` y `js/components/currentCard.js`.
+     - Commit atómico y sincronización a `zeustata/Tiempo` en GitHub.
+
 ## 📅 Pronóstico a 10 Días: Cabecera Compacta y Reducción de Scroll (v3.0.24.25) — 2026-11-04
 - **Eliminación de Subtítulo Redundante y Optimización de Altura (Iniciativa de Lendo):**
   1. *Diagnóstico de Lendo:*
