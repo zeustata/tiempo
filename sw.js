@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-24-hero-clima-autocollapse';
+const CACHE_NAME = 'meteoasturlode-v3024-25-forecast-clean-header';
 const STATIC_ASSETS = [
   './',
   './index.html',

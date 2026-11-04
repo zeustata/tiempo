@@ -2,6 +2,20 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📅 Pronóstico a 10 Días: Cabecera Compacta y Reducción de Scroll (v3.0.24.25) — 2026-11-04
+- **Eliminación de Subtítulo Redundante y Optimización de Altura (Iniciativa de Lendo):**
+  1. *Diagnóstico de Lendo:*
+     - En el panel de **10 Días**, la cabecera incluía un subtítulo redundante (*"Evolución diaria completa • Modelo ECMWF / ICON"*) que consumía espacio vertical y obligaba al usuario a hacer scroll innecesario para ver las tarjetas diarias.
+  2. *Implementación Técnica (Leyes 11 y 14):*
+     - En `js/components/forecastView.js`:
+       - Eliminado el elemento `.section-subtitle`.
+       - Margen inferior del envolvente `.section-title-wrap` reducido a `8px`, pegando el título `📅 Pronóstico a 10 Días` a las tarjetas diarias.
+       - Ganancia de ~25px de altura útil "above the fold" en smartphones.
+  3. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-25-forecast-clean-header`.
+     - Query strings actualizadas a `v=3.0.24.25` en `index.html` y en la importación de `forecastView.js` dentro de `js/app.js`.
+     - Commit atómico y sincronización a `zeustata/Tiempo` en GitHub.
+
 ## 🌌 Auto-Cierre Inteligente del Desglose Climatológico en Carrusel Hero (v3.0.24.24) — 2026-11-04
 - **Erradicación de Huecos Vacíos por Desfase de Alturas (Detección de Lendo):**
   1. *Diagnóstico del Fallo de Experiencia de Usuario:*

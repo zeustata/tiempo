@@ -621,10 +621,9 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
     <div class="forecast-section">
       <!-- 10 DÍAS (TARJETAS ENRIQUECIDAS VERTICALES) -->
       <div class="forecast-block">
-        <div class="section-title-wrap">
+        <div class="section-title-wrap" style="margin-bottom: 8px;">
           <div>
-            <h3 class="section-heading">📅 Pronóstico a 10 Días</h3>
-            <span class="section-subtitle">Evolución diaria completa • Modelo ECMWF / ICON</span>
+            <h3 class="section-heading" style="margin-bottom: 0;">📅 Pronóstico a 10 Días</h3>
           </div>
         </div>
         <div class="daily-cards-container" id="forecast-10d-carousel">
