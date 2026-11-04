@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-10-cycling-solid-glass';
+const CACHE_NAME = 'meteoasturlode-v3024-11-hiking-bottom-sheet';
 const STATIC_ASSETS = [
   './',
   './index.html',

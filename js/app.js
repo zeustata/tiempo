@@ -4,7 +4,7 @@ import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedW
 import { renderCurrentWeather } from './components/currentCard.js?v=3.0.23.62';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.23.40';
 import { renderSurfCard } from './components/surfCard.js?v=3.0.23.39';
-import { renderRoutesCard } from './components/routesCard.js?v=3.0.11';
+import { renderRoutesCard } from './components/routesCard.js?v=3.0.24.11';
 import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.24.10';
 import { renderMountainCard } from './components/mountainCard.js?v=2.2.64';
 import { renderTourismCard } from './components/tourismCard.js?v=3.0.10';
@@ -57,6 +57,7 @@ class MeteoAsturiasApp {
     this.compareConcejoB = getConcejoById(this.currentConcejo.id === 'gijon' ? 'oviedo' : 'gijon');
     this.compareWeatherDataB = null;
     this.activeTab = 'live';
+    this.selectedHikingRouteId = null;
     this.selectedCyclingRouteId = null;
     this.selectedCyclingHour = 9;
     this.selectedCyclingSpeed = 24;
@@ -2676,6 +2677,8 @@ class MeteoAsturiasApp {
   async switchConcejo(concejoId) {
     stopWeatherSpeech();
     this.currentConcejo = getConcejoById(concejoId) || this.currentConcejo;
+    this.selectedHikingRouteId = null; // Auto-resetea para cargar directamente la óptima de la nueva localidad
+    this.selectedCyclingRouteId = null; // Auto-resetea para cargar directamente la óptima de la nueva localidad
     this.prefs.lastConcejo = concejoId;
     // Recalcular localidad activa para el nuevo concejo (evita arrastrar localidades ajenas como Piedras Blancas a Oviedo)
     this.activeLocalidad = this.userCoords ? resolveSubLocalidad(this.currentConcejo.id, this.userCoords.lat, this.userCoords.lon) : null;
@@ -2940,6 +2943,67 @@ class MeteoAsturiasApp {
     });
   }
 
+  initRoutesCardEvents() {
+    // 1. Abrir modal ergonómico de selección de sendas (Bottom Sheet)
+    const btnOpen = document.getElementById('btn-open-routes-picker');
+    const modal = document.getElementById('hiking-routes-modal');
+    const btnClose = document.getElementById('btn-close-hiking-modal');
+
+    if (btnOpen && modal) {
+      btnOpen.addEventListener('click', () => {
+        modal.style.display = 'flex';
+        modal.setAttribute('aria-hidden', 'false');
+      });
+    }
+
+    if (btnClose && modal) {
+      btnClose.addEventListener('click', () => {
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+      });
+    }
+
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.style.display = 'none';
+          modal.setAttribute('aria-hidden', 'true');
+        }
+      });
+    }
+
+    // 2. Selección de senda en el modal
+    document.querySelectorAll('.routes-item-card').forEach(item => {
+      item.addEventListener('click', (e) => {
+        const routeId = e.currentTarget.dataset.routeId;
+        if (routeId) {
+          this.selectedHikingRouteId = routeId;
+          if (modal) {
+            modal.style.display = 'none';
+            modal.setAttribute('aria-hidden', 'true');
+          }
+          this.refreshRoutesPanel();
+        }
+      });
+    });
+  }
+
+  refreshRoutesPanel() {
+    try {
+      const container = document.getElementById('panel-routes');
+      if (container && this.weatherData && this.currentConcejo) {
+        container.innerHTML = renderRoutesCard(
+          this.weatherData,
+          this.currentConcejo,
+          this.selectedHikingRouteId
+        );
+        this.initRoutesCardEvents();
+      }
+    } catch (e) {
+      console.error('[MeteoAstur] Error actualizando panel de rutas:', e);
+    }
+  }
+
   refreshCyclingPanel() {
     try {
       const container = document.getElementById('panel-cycling');
@@ -3033,11 +3097,12 @@ class MeteoAsturiasApp {
         console.error('[MeteoAstur] Error renderizando Surf & Rompientes:', e);
       }
 
-      // 2c. Módulo Rutas & Senderismo (v1.1.51)
+      // 2c. Módulo Rutas & Senderismo (v3.0.24.11)
       try {
         const routesContainer = document.getElementById('panel-routes');
         if (routesContainer) {
-          routesContainer.innerHTML = renderRoutesCard(data, concejo);
+          routesContainer.innerHTML = renderRoutesCard(data, concejo, this.selectedHikingRouteId);
+          this.initRoutesCardEvents();
         }
       } catch (e) {
         console.error('[MeteoAstur] Error renderizando Rutas & Senderismo:', e);
