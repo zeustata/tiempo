@@ -1233,23 +1233,45 @@ export function getTourismPlanExplanation(planId) {
   const plan = PLANES_ASTURIAS_CATALOGO.find(p => p.id === planId);
   if (!plan) return null;
 
+  const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${plan.lat},${plan.lon}`;
+  const infoSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(plan.title + ' ' + plan.town + ' horarios visita oficial')}`;
+
+  const baseSections = plan.sections ? [...plan.sections] : [
+    {
+      icon: '📍',
+      heading: 'Descripción del Enclave',
+      text: plan.desc
+    },
+    {
+      icon: '💡',
+      heading: 'Por qué visitarlo hoy',
+      text: plan.tip
+    }
+  ];
+
+  // Añadir sección de Accesos y Horarios Oficiales con botones de acción directa
+  baseSections.push({
+    icon: '🚗',
+    heading: 'Accesos, Ubicación y Horarios de Visita',
+    text: `Ubicación: ${plan.town} (${plan.distInfo}). Coordenadas GPS: ${plan.lat.toFixed(4)}°N, ${plan.lon.toFixed(4)}°W. Los horarios de apertura y tarifas pueden variar según temporada o festivos. Consulta la información oficial antes de desplazarte.`,
+    actionButtons: [
+      {
+        label: '🚗 Cómo llegar (Google Maps GPS)',
+        url: mapsUrl
+      },
+      {
+        label: '🕒 Consultar Horarios y Web Oficial ↗',
+        url: infoSearchUrl
+      }
+    ]
+  });
+
   return {
     icon: plan.icon,
     title: plan.title,
     subtitle: `${plan.town} • ${plan.tag}`,
     badge: `Plan ${plan.tag} • ${plan.distInfo}`,
-    sections: plan.sections || [
-      {
-        icon: '📍',
-        heading: 'Descripción del Enclave',
-        text: plan.desc
-      },
-      {
-        icon: '💡',
-        heading: 'Por qué visitarlo hoy',
-        text: plan.tip
-      }
-    ]
+    sections: baseSections
   };
 }
 

@@ -7,7 +7,7 @@ import { renderSurfCard } from './components/surfCard.js?v=3.0.23.39';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.24.11';
 import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.24.10';
 import { renderMountainCard } from './components/mountainCard.js?v=2.2.64';
-import { renderTourismCard } from './components/tourismCard.js?v=3.0.10';
+import { renderTourismCard } from './components/tourismCard.js?v=3.0.24.12';
 import { renderForecast } from './components/forecastView.js?v=3.0.23.68';
 import { renderWeatherChart } from './components/chartsView.js?v=3.0.23.58';
 import { renderAstronomyView } from './components/astronomyCard.js?v=2.2.1';
@@ -58,6 +58,7 @@ class MeteoAsturiasApp {
     this.compareWeatherDataB = null;
     this.activeTab = 'live';
     this.selectedHikingRouteId = null;
+    this.selectedTourismPlanId = null;
     this.selectedCyclingRouteId = null;
     this.selectedCyclingHour = 9;
     this.selectedCyclingSpeed = 24;
@@ -1612,6 +1613,15 @@ class MeteoAsturiasApp {
                     <div class="explain-card-block">
                       <h4 class="explain-block-title">${sec.icon} ${sec.heading}</h4>
                       <div class="explain-block-text">${sec.text}</div>
+                      ${sec.actionButtons && sec.actionButtons.length > 0 ? `
+                        <div class="explain-actions-row">
+                          ${sec.actionButtons.map(act => `
+                            <a href="${act.url}" target="_blank" rel="noopener noreferrer" class="btn-explain-action">
+                              ${act.label}
+                            </a>
+                          `).join('')}
+                        </div>
+                      ` : ''}
                     </div>
                   `).join('')}
                 </div>
@@ -2233,7 +2243,8 @@ class MeteoAsturiasApp {
     if (targetTab === 'tourism' && this.weatherData && this.currentConcejo) {
       const tourismContainer = document.getElementById('panel-tourism');
       if (tourismContainer && !tourismContainer.innerHTML.trim()) {
-        tourismContainer.innerHTML = renderTourismCard(this.weatherData, this.currentConcejo);
+        tourismContainer.innerHTML = renderTourismCard(this.weatherData, this.currentConcejo, this.selectedTourismPlanId);
+        this.initTourismCardEvents();
       }
     }
 
@@ -2678,6 +2689,7 @@ class MeteoAsturiasApp {
     stopWeatherSpeech();
     this.currentConcejo = getConcejoById(concejoId) || this.currentConcejo;
     this.selectedHikingRouteId = null; // Auto-resetea para cargar directamente la óptima de la nueva localidad
+    this.selectedTourismPlanId = null; // Auto-resetea para cargar directamente la óptima de la nueva localidad
     this.selectedCyclingRouteId = null; // Auto-resetea para cargar directamente la óptima de la nueva localidad
     this.prefs.lastConcejo = concejoId;
     // Recalcular localidad activa para el nuevo concejo (evita arrastrar localidades ajenas como Piedras Blancas a Oviedo)
@@ -2988,6 +3000,67 @@ class MeteoAsturiasApp {
     });
   }
 
+  initTourismCardEvents() {
+    // 1. Abrir modal ergonómico de planes (Bottom Sheet)
+    const btnOpen = document.getElementById('btn-open-tourism-picker');
+    const modal = document.getElementById('tourism-plans-modal');
+    const btnClose = document.getElementById('btn-close-tourism-modal');
+
+    if (btnOpen && modal) {
+      btnOpen.addEventListener('click', () => {
+        modal.style.display = 'flex';
+        modal.setAttribute('aria-hidden', 'false');
+      });
+    }
+
+    if (btnClose && modal) {
+      btnClose.addEventListener('click', () => {
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+      });
+    }
+
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.style.display = 'none';
+          modal.setAttribute('aria-hidden', 'true');
+        }
+      });
+    }
+
+    // 2. Selección de plan en el modal
+    document.querySelectorAll('.tourism-item-card').forEach(item => {
+      item.addEventListener('click', (e) => {
+        const planId = e.currentTarget.dataset.planId;
+        if (planId) {
+          this.selectedTourismPlanId = planId;
+          if (modal) {
+            modal.style.display = 'none';
+            modal.setAttribute('aria-hidden', 'true');
+          }
+          this.refreshTourismPanel();
+        }
+      });
+    });
+  }
+
+  refreshTourismPanel() {
+    try {
+      const container = document.getElementById('panel-tourism');
+      if (container && this.weatherData && this.currentConcejo) {
+        container.innerHTML = renderTourismCard(
+          this.weatherData,
+          this.currentConcejo,
+          this.selectedTourismPlanId
+        );
+        this.initTourismCardEvents();
+      }
+    } catch (e) {
+      console.error('[MeteoAstur] Error actualizando panel de turismo:', e);
+    }
+  }
+
   refreshRoutesPanel() {
     try {
       const container = document.getElementById('panel-routes');
@@ -3142,7 +3215,8 @@ class MeteoAsturiasApp {
       try {
         const tourismContainer = document.getElementById('panel-tourism');
         if (tourismContainer) {
-          tourismContainer.innerHTML = renderTourismCard(data, concejo);
+          tourismContainer.innerHTML = renderTourismCard(data, concejo, this.selectedTourismPlanId);
+          this.initTourismCardEvents();
         }
       } catch (e) {
         console.error('[MeteoAstur] Error renderizando Planes & Ocio:', e);

@@ -2,6 +2,18 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🎭 Modernización Ergonómica de Planes & Ocio con Fichas GPS (v3.0.24.12) — 2026-11-04
+- **Erradicación del Scroll Infinito y Accesos Interactivos GPS/Horarios (Iniciativa de Lendo):**
+  1. *Superación del Scroll Infinito de 36 Acordeones:* Sustitución de los 36 acordeones verticales por la arquitectura moderna de Tarjeta Protagonista, idéntica a la adoptada con éxito en Ciclismo y Senderismo.
+  2. *Tarjeta Protagonista del Plan Activo:* Visualización limpia y destacada con métricas rápidas (municipio, distancia en km, tiempo en coche, idoneidad climática y consejo didáctico *«Por qué hoy»*).
+  3. *Consejero Inteligente de Ocio:* Evalúa el cielo del concejo en tiempo real para auto-cargar el plan óptimo (planes bajo techo si orbaya o llueve; aire libre/costa si hay sol).
+  4. *Selector Táctil en Modal Bottom Sheet:* Disparador táctil `📍 Plan de ocio seleccionado` que despliega desde abajo los 36 planes de Asturias ordenados por cercanía en km.
+  5. *Fichas Didácticas con Navegación GPS y Horarios Oficiales (Corrección de Lendo):*
+     - Añadidos botones de acción directa en el modal didáctico:
+       - `🚗 Cómo llegar (Google Maps GPS)`: Navegación directa con coordenadas geodésicas.
+       - `🕒 Consultar Horarios y Web Oficial ↗`: Búsqueda de horarios y tarifas oficiales.
+  6. *Cache-Busting & Despliegue:* Service Worker actualizado a `meteoasturlode-v3024-12-tourism-bottom-sheet-actions` y query strings `v=3.0.24.12`. Servidor local cerrado.
+
 ## 🥾 Modernización Ergonómica de Rutas & Senderismo (v3.0.24.11) — 2026-11-04
 - **Erradicación del Scroll Infinito y Arquitectura de Senda Protagonista (Iniciativa de Lendo):**
   1. *Superación del Acordeón Vertical Antiguo:* Se sustituyó la lista kilométrica de 44 acordeones por una arquitectura ejecutiva y limpia, exactamente homologada al éxito ergonómico de Ciclismo.
