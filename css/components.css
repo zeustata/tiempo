@@ -13583,6 +13583,7 @@
 
 .hero-widgets-carousel {
   display: flex;
+  align-items: flex-start;
   overflow-x: auto;
   overflow-y: hidden;
   scroll-snap-type: x mandatory;

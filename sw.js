@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-23-thermal-curve-no-overlap';
+const CACHE_NAME = 'meteoasturlode-v3024-24-hero-clima-autocollapse';
 const STATIC_ASSETS = [
   './',
   './index.html',

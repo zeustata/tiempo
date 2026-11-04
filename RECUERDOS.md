@@ -2,6 +2,22 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌌 Auto-Cierre Inteligente del Desglose Climatológico en Carrusel Hero (v3.0.24.24) — 2026-11-04
+- **Erradicación de Huecos Vacíos por Desfase de Alturas (Detección de Lendo):**
+  1. *Diagnóstico del Fallo de Experiencia de Usuario:*
+     - En el carrusel de herramientas de la cabecera en vivo (`#hero-widgets-carousel`), la tarjeta central (Clima y Memoria 30 años) incluye un botón de "Ver" que despliega las estadísticas climáticas mediante un `<details>`.
+     - Si el usuario desplegaba el desglose y luego deslizaba horizontalmente hacia la **Curva Térmica** (Slide 0) o hacia el **Semáforo del Paraguas** (Slide 2), el carrusel retenía la altura del acordeón abierto (~400px), dejando las otras tarjetas colgadas arriba con un enorme vacío negro por debajo.
+  2. *Corrección Funcional y Arquitectura CSS (Leyes 11 y 18):*
+     - En `css/components.css`:
+       - Añadido `align-items: flex-start;` a `.hero-widgets-carousel`, desacoplando la altura forzada entre tarjetas adyacentes.
+     - En `js/app.js`:
+       - En `bindCarouselDots()`, se monitoriza la navegación tanto táctil (`scroll`) como por pulsación en los puntos (`scrollToCard`): en cuanto el usuario abandona la tarjeta 1 de Clima, el acordeón se pliega automáticamente (`openClima.open = false`).
+       - El contenedor recupera instantáneamente su altura esbelta y compacta de forma natural y sin saltos bruscos.
+  3. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-24-hero-clima-autocollapse`.
+     - Query strings actualizadas a `v=3.0.24.24` en `index.html` (`css/components.css` y `js/app.js`).
+     - Commit atómico y sincronización a `zeustata/Tiempo` en GitHub.
+
 ## 📈 Curva Térmica: Despeje Anti-Solape de la Mínima (Sin Pisar el Trazo) (v3.0.24.23) — 2026-11-04
 - **Perfeccionamiento de Confort Visual y Cero Solapes (Propuesta de Lendo):**
   1. *Diagnóstico de Lendo:*

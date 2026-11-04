@@ -3722,6 +3722,11 @@ MeteoAsturiasApp.prototype.bindCarouselDots = function(carouselId, dotsId, cardS
   const scrollToCard = (index) => {
     const idx = parseInt(index, 10);
     if (cards[idx]) {
+      // Si salimos de la tarjeta de Clima desplegada en hero-widgets-carousel, autocerrar el acordeón para evitar vacío
+      if (carouselId === 'hero-widgets-carousel' && idx !== 1) {
+        const openClima = carousel.querySelector('.clima-accordion-card[open]');
+        if (openClima) openClima.open = false;
+      }
       const targetLeft = cards[idx].offsetLeft - carousel.offsetLeft;
       carousel.scrollTo({ left: targetLeft, behavior: 'smooth' });
       updateActiveDot(idx);
@@ -3737,11 +3742,18 @@ MeteoAsturiasApp.prototype.bindCarouselDots = function(carouselId, dotsId, cardS
   });
 
   let scrollTimeout = null;
+  let lastReportedIdx = -1;
   carousel.addEventListener('scroll', () => {
     if (scrollTimeout) cancelAnimationFrame(scrollTimeout);
     scrollTimeout = requestAnimationFrame(() => {
       const activeIdx = findClosestCardIndex();
       updateActiveDot(activeIdx);
+      // Autocierre de acordeón si el usuario desliza con el dedo fuera de la tarjeta de Clima (Slide 1)
+      if (carouselId === 'hero-widgets-carousel' && activeIdx !== 1 && lastReportedIdx === 1) {
+        const openClima = carousel.querySelector('.clima-accordion-card[open]');
+        if (openClima) openClima.open = false;
+      }
+      lastReportedIdx = activeIdx;
     });
   }, { passive: true });
 
