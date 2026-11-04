@@ -2,6 +2,23 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📈 Curva Térmica: Despeje Anti-Solape de la Mínima (Sin Pisar el Trazo) (v3.0.24.23) — 2026-11-04
+- **Perfeccionamiento de Confort Visual y Cero Solapes (Propuesta de Lendo):**
+  1. *Diagnóstico de Lendo:*
+     - En la curva térmica de 24h, mientras que la temperatura máxima (`↑`) flotaba limpiamente por encima de la cresta sin tocar la línea, la temperatura mínima (`↓`) se solapaba y pisaba el trazo en la zona inferior.
+     - *Causa:* Margen inferior insuficiente en el lienzo SVG (`paddingBottom = 20` frente a una tipografía de altura 22), lo que empujaba la etiqueta contra el fondo forzando a que se dibujara encima de la curva.
+  2. *Solución y Despeje Integral (Leyes 11 y 14):*
+     - En `js/components/currentCard.js`:
+       - Altura del lienzo SVG ampliada a **800x96** con `paddingBottom` ampliado a **28px** (ganando holgura limpia).
+       - Desplazamiento vertical de la mínima reajustado a `y = minPt.y + 25`: ahora cuelga de forma holgada por debajo del valle sin rozar jamás la línea.
+       - Resultado: Máxima limpia por encima y mínima limpia por debajo; trazo de la curva 100% visible y continuo de 00h a 23h.
+     - En `css/components.css`:
+       - Altura de envolvente `.mini-thermal-svg-wrap` adaptada a **`58px`** garantizando fluidez y proporciones perfectas.
+  3. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-23-thermal-curve-no-overlap`.
+     - Query strings actualizadas a `v=3.0.24.23` en `index.html` (`css/components.css` y `js/app.js`) y `currentCard.js`.
+     - Commit atómico y sincronización a `zeustata/Tiempo` en GitHub.
+
 ## 📈 Curva Térmica: Optimización Tipográfica y Punto Horario de Alta Visibilidad Móvil (v3.0.24.22) — 2026-11-04
 - **Calibración Óptica Integral Smartphone + Escritorio (Feedback de Lendo):**
   1. *Diagnóstico de Lendo tras despliegue HD:*

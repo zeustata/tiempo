@@ -133,12 +133,12 @@ function renderMiniThermalCurve24h(hourly) {
   const maxTemp = Math.max(...temps);
   const range = Math.max(1, maxTemp - minTemp);
 
-  // Dimensiones del lienzo SVG HD (Resolución ampliada a 800x80 con escala tipográfica legible en móvil)
+  // Dimensiones del lienzo SVG HD (Resolución ampliada a 800x96 con holgura vertical anti-solape para mínima y máxima)
   const width = 800;
-  const height = 80;
+  const height = 96;
   const paddingX = 32;
   const paddingTop = 26;
-  const paddingBottom = 20;
+  const paddingBottom = 28;
   const graphH = height - paddingTop - paddingBottom;
   const stepX = (width - paddingX * 2) / (temps.length - 1);
 
@@ -206,9 +206,9 @@ function renderMiniThermalCurve24h(hourly) {
           <!-- Línea suave continua con vector-effect para grosor constante y nítido -->
           <path d="${dCurve}" fill="none" stroke="url(#thermalCurveGrad)" stroke-width="3" vector-effect="non-scaling-stroke" stroke-linecap="round" />
 
-          <!-- Etiquetas discretas de mínima y máxima vectoriales grandes y legibles en móvil -->
+          <!-- Etiquetas discretas de mínima y máxima vectoriales: máxima limpia por encima y mínima limpia por debajo sin pisar el trazo -->
           <text x="${maxPt.x}" y="${Math.max(18, maxPt.y - 8)}" fill="#fbbf24" font-size="22" font-family="'JetBrains Mono', monospace" font-weight="900" text-anchor="middle">↑${Math.round(maxTemp)}°</text>
-          <text x="${minPt.x}" y="${Math.min(height - 4, minPt.y + 20)}" fill="#38bdf8" font-size="22" font-family="'JetBrains Mono', monospace" font-weight="900" text-anchor="middle">↓${Math.round(minTemp)}°</text>
+          <text x="${minPt.x}" y="${Math.min(height - 4, minPt.y + 25)}" fill="#38bdf8" font-size="22" font-family="'JetBrains Mono', monospace" font-weight="900" text-anchor="middle">↓${Math.round(minTemp)}°</text>
 
           <!-- Punto vivo actual con pulso visual y gran visibilidad móvil -->
           <circle cx="${curX.toFixed(1)}" cy="${curY.toFixed(1)}" r="14" fill="#38bdf8" opacity="0.4" class="thermal-live-pulse" />
