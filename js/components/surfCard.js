@@ -707,16 +707,14 @@ export function renderSurfCard(data, concejo) {
 
   return `
     <div class="marine-card">
-      <div class="section-title-wrap">
+      <div class="section-title-wrap" style="margin-bottom: 8px;">
         <div>
-          <h3 class="section-heading">🏄‍♂️ Surf & Rompientes</h3>
-          <span class="section-subtitle">
-            ${isCoasting 
-              ? `Dinámica marina y picos de ${concejo.name} (${coastalData.region}) • Swell Cantábrico`
-              : `🌲 ${concejo.name} es concejo de interior. Rompientes enfocadas a la costa más cercana: ${interiorRef.name}`
-            }
-          </span>
+          <h3 class="section-heading" style="margin-bottom: 0;">🏄‍♂️ Surf & Rompientes</h3>
         </div>
+        ${!isCoasting ? `
+        <div class="altitude-pill" style="font-size: 0.74rem;">
+          Ref: <strong>${interiorRef.name.split(' (')[0]}</strong>
+        </div>` : ''}
       </div>
 
       <!-- 1. GRID DE SENSORES TÉCNICOS DE SWELL, ENERGÍA Y ROMPIENTE -->

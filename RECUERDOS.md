@@ -2,6 +2,19 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏄‍♂️ Reducción de Scroll en Surf & Rompientes (v3.0.24.28) — 2026-11-04
+- **Depuración de Cabecera y Optimización de Entrada a la Pestaña de Surf (Iniciativa de Lendo):**
+  1. *Diagnóstico de Lendo sobre Desplazamiento Vertical:*
+     - En el panel de **Surf & Rompientes**, la cabecera acumulaba dos líneas de subtítulo (*"Dinámica marina y picos de [Concejo]... • Swell Cantábrico"*), retrasando la aparición de la tarjeta de calificación de olas.
+  2. *Implementación Técnica (Leyes 11 y 14):*
+     - En `js/components/surfCard.js`:
+       - Eliminado el subtítulo redundante. Título `🏄‍♂️ Surf & Rompientes` alineado con margen de 8px (y pastilla de referencia discreta para concejos de interior).
+       - Ganancia de ~30px de altura útil "above the fold" para que el semáforo de estrellas, el swell y la altura de ola entren de inmediato en pantalla.
+  3. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-28-clean-surf-header`.
+     - Query strings actualizadas a `v=3.0.24.28` en `index.html` y en la importación de `surfCard.js` dentro de `js/app.js`.
+     - Commit atómico y sincronización a `zeustata/Tiempo` en GitHub.
+
 ## 🏔️🏖️ Reducción de Scroll en Cordillera & Nieve y Playas & Mareógrafo (v3.0.24.27) — 2026-11-04
 - **Optimización de Altura Útil y Despeje Visual de Cabeceras (Iniciativa de Lendo):**
   1. *Diagnóstico de Lendo sobre Paneles con Exceso de Desplazamiento Vertical:*
