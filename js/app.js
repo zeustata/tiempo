@@ -645,7 +645,7 @@ class MeteoAsturiasApp {
     if (playBtn) {
       playBtn.addEventListener('click', () => {
         const isPlaying = playRadarAnimation();
-        playBtn.innerHTML = isPlaying ? '⏸️ Pausar' : '▶️ Reproducir Radar';
+        playBtn.innerHTML = isPlaying ? '⏸️ Pausar' : '▶️ Reproducir';
         playBtn.classList.toggle('active', isPlaying);
       });
     }

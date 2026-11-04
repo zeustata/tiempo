@@ -200,7 +200,7 @@ export function pauseRadarAnimation() {
     isPlaying = false;
     const playBtn = document.getElementById('btn-radar-play');
     if (playBtn) {
-      playBtn.innerHTML = '▶️ Reproducir Radar';
+      playBtn.innerHTML = '▶️ Reproducir';
       playBtn.classList.remove('active');
     }
   }

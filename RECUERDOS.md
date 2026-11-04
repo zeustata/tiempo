@@ -2,6 +2,29 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📡 Depuración Visual y Estilización Compacta del Radar (v3.0.24.20) — 2026-11-04
+- **Eliminación de Redundancias y Estilización de Botones (Feedback Visual de Lendo):**
+  1. *Diagnóstico de Lendo sobre Capturas Reales de Smartphone:*
+     - *Imagen 1:* Los botones inferiores (Centrar Asturias y Reproducir Radar) se apreciaban excesivamente grandes y ajustados contra los márgenes de la tarjeta.
+     - *Imagen 2:* La cabecera superior estaba sobrecargada con elementos duplicados:
+       - La chapa de ubicación (Castrillón...) era redundante (el mapa ya centra la localidad y existe botón de centrado).
+       - La hora de proyección (Proyección Inmediata...) estaba repetida (el slider inferior ya incorpora la chapa central morada y botón de "Ahora").
+       - El subtítulo ocupaba dos líneas largas y pesadas.
+  2. *Refactorización y Armonía Visual (Leyes 11 y 14):*
+     - En `index.html`:
+       - Eliminadas las etiquetas `#radar-active-location` y `#radar-time-display`.
+       - Subtítulo acortado a una sola línea limpia: `Tiempo real vía satélite`.
+       - Textos de botones sintetizados: `🎯 Centrar` y `▶️ Reproducir` (o `⏸️ Pausar`).
+     - En `js/app.js` y `js/components/mapRadar.js`:
+       - Sincronizados los textos dinámicos de alternancia del botón de reproducción a `▶️ Reproducir` y `⏸️ Pausar`.
+     - En `css/components.css`:
+       - Botones `.btn-radar-action` compactados y estilizados: `min-height: 36px` (34px en pantallas `<= 480px`), padding fino (`5px 8px`), fuente `0.78rem` y radio `8px`.
+       - Separación superior de `8px`, ganando holgura total y eliminando cualquier tensión visual en pantallas móviles estrechas.
+  3. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-20-radar-clean-ui`.
+     - Query strings actualizadas a `v=3.0.24.20` en `index.html` (`css/components.css` y `js/app.js`).
+     - Commit atómico y sincronización a `zeustata/Tiempo` en GitHub.
+
 ## 📡 Ergonomía del Radar: Botones Centrar y Reproducir en Línea Bajo el Visor (v3.0.24.19) — 2026-11-04
 - **Optimización de Interfaz y Thumb Zone en Móvil (Iniciativa de Lendo):**
   1. *Diagnóstico y Propuesta de Lendo:*
