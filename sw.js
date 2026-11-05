@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-40-surf-explain-mobile-anti-overflow';
+const CACHE_NAME = 'meteoasturlode-v3024-41-surf-beach-spot-clean-header';
 const STATIC_ASSETS = [
   './',
   './index.html',

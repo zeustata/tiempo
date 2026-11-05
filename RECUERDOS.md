@@ -2,6 +2,20 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏄‍♂️ Eliminación de Título Redundante en Ficha de Rompientes (v3.0.24.41) — 2026-11-05
+- **Optimización de Espacio y Supresión de Título Duplicado (Propuesta Lendo):**
+  1. *Diagnóstico de Lendo:*
+     - En la sección *Rompientes, Picos y Fondos*, el selector ya identificaba la playa activa (`[ 🏖️ Playa de Salinas  Elegir ▼ ]`). Inmediatamente debajo, la tarjeta de especificaciones volvía a repetir `Playa de Salinas`, recortándose además en móvil como `Playa de ...` por falta de espacio frente a la pastilla de categoría. Lendo señaló con acierto la redundancia: si el botón selector ya muestra el nombre, no hace falta repetirlo.
+  2. *Implementación Técnica (Leyes 11 y 14):*
+     - En `js/components/surfCard.js`:
+       - Eliminado el encabezado `<h5>${p.name}</h5>` y el icono repetido dentro de `.surf-beach-spot-card`.
+       - La tarjeta arranca directamente con la descripción del arenal (`p.type`) en un contenedor flexible alineado con la pastilla de categoría (`p.tag`).
+     - En `css/components.css`:
+       - Ajustado `.surf-spot-card-header` a `align-items: flex-start; gap: 10px;` para que la descripción y el badge armonicen con total naturalidad sin colisiones.
+  3. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-41-surf-beach-spot-clean-header`.
+     - Query strings actualizadas a `v=3.0.24.41` en `index.html`, `components.css` y `surfCard.js` en `app.js`.
+
 ## 🏄‍♂️ Blindaje Móvil y Erradicación de Scroll Horizontal en Modal Didáctico (v3.0.24.40) — 2026-11-05
 - **Blindaje Estricto contra Desborde y Partición de Palabras en Rating de Surf (Reporte Crítico de Lendo con 3 Capturas):**
   1. *Diagnóstico de Lendo:*

@@ -10,6 +10,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
 
+## [3.0.24.41] - 2026-11-05
+### Changed
+- **Eliminación de Título Redundante en Ficha de Rompientes de Surf (Propuesta Lendo):**
+  - **Cero Redundancia Visual:** Suprimida la repetición del nombre de la playa (`Playa de ...`) e icono duplicado dentro de la tarjeta de especificaciones, ya que el selector activo situado inmediatamente encima (`[ 🏖️ Playa de Salinas  Elegir ▼ ]`) ya define la identidad con absoluta claridad.
+  - **Cabecera Fluida a Ancho Completo:** La tarjeta arranca directamente con la descripción del arenal a ancho completo y su etiqueta de categoría (`[ Surf Top Mundial ]`), eliminando la colisión horizontal que provocaba el truncamiento del título en móviles.
+
 ## [3.0.24.40] - 2026-11-05
 ### Fixed
 - **Blindaje Móvil y Erradicación de Scroll Horizontal en Modal Didáctico (Reporte Lendo con 3 Capturas):**

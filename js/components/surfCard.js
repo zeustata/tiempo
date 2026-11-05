@@ -1048,18 +1048,20 @@ export function renderSurfCard(data, concejo, selectedBeachName = null) {
               const isVisible = p.name === selectedBeach.name;
               return `
                 <div class="surf-beach-spot-card ${isVisible ? 'active' : ''}" data-beach-name="${p.name}" style="${isVisible ? '' : 'display: none;'}">
-                  <div class="surf-spot-card-header">
-                    <div style="display: flex; align-items: center; gap: 8px; min-width: 0;">
-                      <span style="font-size: 1.15rem; flex-shrink: 0;">🏖️</span>
-                      <div style="min-width: 0;">
-                        <h5 style="margin: 0; font-size: 0.96rem; font-weight: 800; color: #ffffff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${p.name}</h5>
-                        <span style="font-size: 0.74rem; color: #94a3b8;">${p.type || (p.facing ? `Arenal orientado al ${p.facing}` : 'Rompiente costera')}</span>
+                  ${(p.type || p.tag) ? `
+                    <div class="surf-spot-card-header">
+                      <div style="flex: 1; min-width: 0;">
+                        <p style="margin: 0; font-size: 0.82rem; color: #cbd5e1; line-height: 1.45;">
+                          ${p.type || (p.facing ? `Arenal orientado al ${p.facing}` : 'Rompiente costera')}
+                        </p>
                       </div>
+                      ${p.tag ? `
+                        <span class="beach-card-tag" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); font-size: 0.72rem; font-weight: 800; padding: 3px 8px; border-radius: 6px; flex-shrink: 0; white-space: nowrap;">
+                          ${p.tag}
+                        </span>
+                      ` : ''}
                     </div>
-                    <span class="beach-card-tag" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); font-size: 0.7rem; font-weight: 800; padding: 2px 8px; border-radius: 6px; flex-shrink: 0;">
-                      ${p.tag || 'Spot'}
-                    </span>
-                  </div>
+                  ` : ''}
 
                   <div class="beach-specs-chips" style="margin-top: 10px;">
                     ${p.picos ? `
