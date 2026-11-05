@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-32-surf-top-toolbar-single-row';
+const CACHE_NAME = 'meteoasturlode-v3024-33-surf-closed-card-padding';
 const STATIC_ASSETS = [
   './',
   './index.html',

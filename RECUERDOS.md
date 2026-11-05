@@ -2,6 +2,20 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏄‍♂️ Cierre Completo de Tarjetas y Holgura de Esquinas en Surf (v3.0.24.33) — 2026-11-05
+- **Calibración de Altura Dinámica y Preservación de Bordes (Reporte de Lendo con Captura):**
+  1. *Diagnóstico de Lendo:*
+     - Al observar el fondo de la tarjeta de Calificación (y extensivo a las demás), el marco no se cerraba: el borde inferior horizontal, sus dos esquinas redondeadas y su sombra quedaban guillotinados visualmente.
+  2. *Causa Raíz:*
+     - La fórmula de altura dinámica fijaba la altura exterior del carrusel exactamente al `offsetHeight` de la tarjeta interna. Al tener el carrusel `padding` interior y la propiedad `overflow-y: hidden`, el navegador recortaba los últimos 10px inferiores donde reside el borde de cierre y el `border-radius`.
+  3. *Implementación Técnica (Leyes 11 y 14):*
+     - En `css/components.css`: ampliado el acolchado inferior del carrusel `.surf-cards-carousel` a `padding: 4px 4px 16px 4px;` para dar holgura a la curvatura.
+     - En `js/app.js`: calibrada la fórmula a `carousel.style.height = (h + 22) + 'px';` tanto en el arranque como al deslizar y al alternar entre 3 Horas y 7 Días, garantizando que el borde horizontal inferior, las esquinas redondeadas y la sombra de cristal cierren al 100% en las 3 tarjetas.
+  4. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-33-surf-closed-card-padding`.
+     - Query strings actualizadas a `v=3.0.24.33` en `index.html`, `components.css` y en la importación de `surfCard.js` dentro de `js/app.js`.
+
+
 ## 🏄‍♂️ Botonera Superior en Fila Única y Supresión de Hueco en Surf (v3.0.24.32) — 2026-11-05
 - **Optimización Ergonómica y Eliminación de Espacio Muerto (Reporte de Lendo con Captura):**
   1. *Diagnóstico de Lendo:*

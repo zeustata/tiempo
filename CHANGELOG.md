@@ -10,6 +10,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
 
+## [3.0.24.33] - 2026-11-05
+### Fixed
+- **Cierre Completo de Tarjetas y Holgura de Esquinas en Surf (Reporte Lendo):**
+  - **Calibración de Altura Dinámica (`app.js`):** Ajustada la fórmula de cálculo dinámico (`h + 22px`) para compensar el acolchado del carrusel, impidiendo que `overflow-y: hidden` guillotina los últimos píxeles del marco.
+  - **Acolchado Inferior Protector (`components.css`):** Establecido `padding: 4px 4px 16px 4px;` en el contenedor `.surf-cards-carousel`, logrando que el borde horizontal inferior, sus esquinas redondeadas y su sombra de cristal cierren al 100% en las tres tarjetas.
+
 ## [3.0.24.32] - 2026-11-05
 ### Changed
 - **Botonera Superior en Fila Única y Supresión de Hueco Muerto en Surf (Reporte Lendo):**
