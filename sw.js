@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-43-clean-selectors-labels';
+const CACHE_NAME = 'meteoasturlode-v3024-44-clean-cycling-selector-label';
 const STATIC_ASSETS = [
   './',
   './index.html',

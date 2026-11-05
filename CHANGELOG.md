@@ -10,6 +10,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
 
+## [3.0.24.44] - 2026-11-05
+### Changed
+- **Depuración Minimalista en Selector de Ciclismo (Reporte Lendo con Captura):**
+  - **Erradicación de Colisión de 4 Líneas:** Suprimido el bloque recargado (`📍 Trazado ciclista activo:` y `5 rutas en Castrillón (Piedras Blancas / Salinas)`) que colisionaba partiéndose en 4 líneas apretadas en pantallas móviles.
+  - **Unificación Armónica (Doctrina Regla 14):** Sustituido por la etiqueta limpia y directa `Rutas ciclistas:`, completando la armonía visual junto a `Sendas:`, `Plan de ocio:` y `Arenal y Rompientes:`.
+
 ## [3.0.24.43] - 2026-11-05
 ### Changed
 - **Simplificación y Depuración Minimalista en Cabeceras de Selectores Desplegables (Propuesta Lendo):**

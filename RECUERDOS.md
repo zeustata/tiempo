@@ -2,6 +2,18 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🚴‍♂️ Depuración Minimalista en Selector de Ciclismo (v3.0.24.44) — 2026-11-05
+- **Erradicación de Ruido y Colisión de 4 Líneas en Selector Ciclista (Reporte Lendo con Captura):**
+  1. *Diagnóstico de Lendo:*
+     - Lendo aportó captura del módulo de Ciclismo donde se evidenciaba que, al llevar el concejo parroquias entre paréntesis (`Castrillón (Piedras Blancas / Salinas)`), la etiqueta superior del selector colisionaba dividiéndose en 4 líneas de texto apretadas y antiestéticas.
+  2. *Implementación Técnica (Leyes 11 y 14):*
+     - En `js/components/cyclingCard.js`:
+       - Eliminado el contenedor flex con el contador de rutas y el nombre del concejo en azul.
+       - Sustituido por la etiqueta sobria `<label>Rutas ciclistas:</label>`, logrando la armonía absoluta junto a `Sendas:`, `Plan de ocio:` y `Arenal y Rompientes:`.
+  3. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-44-clean-cycling-selector-label`.
+     - Query strings actualizadas a `v=3.0.24.44` en `index.html`, `components.css` y la importación de `cyclingCard.js` en `app.js`.
+
 ## 🎯 Depuración Minimalista en Cabeceras de Desplegables (v3.0.24.43) — 2026-11-05
 - **Supresión de Textos Sobrecargados y Contadores Azules en Selectores (Propuesta Lendo con 3 Capturas):**
   1. *Diagnóstico de Lendo:*

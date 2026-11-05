@@ -272,14 +272,9 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
 
       <!-- SELECTOR TÁCTIL ERGONÓMICO DE RUTA (DISPARADOR DEL MODAL COMPACTO) -->
       <div style="margin-bottom: 12px; display: flex; flex-direction: column; gap: 5px;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <label style="font-size: 0.82rem; font-weight: 700; color: var(--text-main);">
-            📍 Trazado ciclista activo:
-          </label>
-          <span style="font-size: 0.72rem; color: var(--primary); font-weight: 700;">
-            ${localRoutes.length} rutas en ${concejo.name}
-          </span>
-        </div>
+        <label style="font-size: 0.82rem; font-weight: 700; color: var(--text-main);">
+          Rutas ciclistas:
+        </label>
         
         <button type="button" id="btn-open-cycling-picker" class="cycling-route-trigger" aria-label="Cambiar trazado ciclista">
           <div style="display: flex; align-items: center; gap: 6px; overflow: hidden; min-width: 0;">
