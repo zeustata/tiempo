@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-47-vertical-beach-specs-chips';
+const CACHE_NAME = 'meteoasturlode-v3024-48-clean-surf-specs-mobile-sync';
 const STATIC_ASSETS = [
   './',
   './index.html',

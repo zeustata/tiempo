@@ -2,6 +2,17 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🔄 Blindaje de Registro Service Worker y Actualización OTA para Android (v3.0.24.48) — 2026-11-05
+- **Sincronización del Registro de Service Worker para Google Play y Móviles (Doctrina Reglas 4 y 7):**
+  1. *Diagnóstico de Lendo:*
+     - Lendo comprobó que en Windows la versión nueva cargó de inmediato, pero en Android la PWA mantenía en memoria la versión antigua debido al comportamiento agresivo de caché del WebView / TWA de Chrome.
+  2. *Causa Raíz:*
+     - En `index.html`, la llamada de registro tenía una query string obsoleta congelada (`navigator.serviceWorker.register('sw.js?v=3.0.24.18')`), lo que impedía que Android forzara la verificación inmediata de script URL.
+  3. *Implementación Técnica (Leyes 4 y 7):*
+     - Actualizada la llamada de registro en `index.html` a `sw.js?v=3.0.24.48`.
+     - Actualizado `CACHE_NAME` a `meteoasturlode-v3024-48-clean-surf-specs-mobile-sync` en `sw.js`.
+     - Sincronizadas las cadenas de versión de `components.css` y `app.js` a `v=3.0.24.48`.
+
 ## 🏄‍♂️ Reingeniería Ergonómica Vertical de Ficha Técnica de Playas y Surf (v3.0.24.47) — 2026-11-05
 - **Erradicación de Títulos Cortados con Elipsis y Texto Estrangulado (Reporte Lendo con Captura):**
   1. *Diagnóstico de Lendo:*

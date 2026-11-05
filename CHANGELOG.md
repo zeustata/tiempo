@@ -10,6 +10,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
 
+## [3.0.24.48] - 2026-11-05
+### Changed
+- **Blindaje de Registro Service Worker y Forzado OTA para Android & Google Play (Doctrina Reglas 4 y 7):**
+  - **Sincronización de URL de Registro en `index.html`:** Actualizada la llamada `navigator.serviceWorker.register` con query string oficial a `sw.js?v=3.0.24.48`, eliminando la referencia congelada antigua.
+  - **Activación Inmediata de Caché:** Generada la nueva firma de caché `meteoasturlode-v3024-48-clean-surf-specs-mobile-sync` para forzar la invalidación transparente de cachés residuales en dispositivos móviles Android y usuarios de la Play Store.
+
 ## [3.0.24.47] - 2026-11-05
 ### Changed
 - **Reingeniería Ergonómica Vertical de Micro-Píldoras Técnicas en Ficha de Playas y Surf (Reporte Lendo con Captura):**
