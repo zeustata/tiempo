@@ -2,6 +2,24 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏄‍♂️ Fijación de Viewport para Modal de Surf (Portal Body & 100dvh) (v3.0.24.38) — 2026-11-05
+- **Erradicación del Scroll Forzado en Selección de Playas de Surf (Reporte Crítico de Lendo con Capturas):**
+  1. *Diagnóstico de Lendo:*
+     - Al presionar el botón selector de playa, el fondo de la pantalla se oscurecía con efecto borroso (Imagen 1), pero la ventana modal no aparecía visible, obligando al usuario a realizar un scroll largo hacia abajo para encontrar la lista de arenales al final de la página (Imagen 2).
+  2. *Causa Raíz Identificada:*
+     - El elemento `#surf-spots-modal` estaba contenido dentro de `<div class="marine-card">`.
+     - Por especificación de los navegadores web modernos, cualquier elemento con `backdrop-filter: blur(...)` crea un nuevo bloque de contención (*containing block*) que anula la referencia `position: fixed` respecto al viewport de la pantalla y la confina al tamaño del contenedor padre (que mide casi 2.000 px de alto). Por tanto, `align-items: flex-end` enviaba la hoja modal al final absoluto de la tarjeta.
+  3. *Implementación Técnica (Leyes 11, 14 y 18):*
+     - En `js/components/surfCard.js`:
+       - Creado contenedor envolvente `.surf-module-wrapper` y extraído `#surf-spots-modal` fuera de `.marine-card`, eliminando cualquier conflicto de *containing block*.
+     - En `css/components.css`:
+       - Definido `.surf-spots-modal-backdrop` con `top: 0; left: 0; right: 0; bottom: 0; width: 100vw; height: 100dvh; z-index: 99999;` para garantizar anclaje magnético al marco visible en smartphones.
+     - En `js/app.js`:
+       - En `initSurfSpotsSelectorEvents()`, el modal se vincula como portal directo en `document.body` (`document.body.appendChild(modal)`), garantizando su posicionamiento en el viewport independientemente de la posición de scroll de la página.
+  4. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-38-surf-modal-portal-viewport`.
+     - Query strings actualizadas a `v=3.0.24.38` en `index.html`, `components.css` y en `js/app.js`.
+
 ## 🏄‍♂️ Selector Ergonómico de Arenales de Surf estilo Rutas/Ciclismo (v3.0.24.37) — 2026-11-05
 - **Arquitectura de Rompiente Protagonista Activa con Bottom Sheet Modal (Petición de Lendo):**
   1. *Diagnóstico y Petición de Lendo:*

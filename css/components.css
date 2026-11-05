@@ -13862,10 +13862,17 @@
 .surf-spots-modal-backdrop {
   position: fixed;
   inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
   background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  z-index: 9999;
+  z-index: 99999;
   display: none;
   align-items: flex-end;
   justify-content: center;
@@ -13878,10 +13885,12 @@
   width: 100%;
   max-width: 600px;
   max-height: 80vh;
+  max-height: 80dvh;
   display: flex;
   flex-direction: column;
   box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.6);
   animation: slideUpSurfSpots 0.25s ease-out;
+  margin: 0 auto;
 }
 
 @keyframes slideUpSurfSpots {

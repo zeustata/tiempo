@@ -3,7 +3,7 @@ import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from 
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=3.0.23.63';
 import { renderCurrentWeather } from './components/currentCard.js?v=3.0.24.23';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.24.27';
-import { renderSurfCard } from './components/surfCard.js?v=3.0.24.37';
+import { renderSurfCard } from './components/surfCard.js?v=3.0.24.38';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.24.17';
 import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.24.18';
 import { renderMountainCard } from './components/mountainCard.js?v=3.0.24.27';
@@ -3828,9 +3828,19 @@ class MeteoAsturiasApp {
    * Despliega el Bottom Sheet táctil y actualiza en 0ms la tarjeta protagonista elegida
    */
   initSurfSpotsSelectorEvents() {
+    // Si ya existía un modal previo huérfano en document.body (de un concejo anterior), lo eliminamos
+    const orphanModals = document.querySelectorAll('body > #surf-spots-modal');
+    orphanModals.forEach(m => m.remove());
+
     const btnOpen = document.getElementById('btn-open-surf-spot-picker');
     const modal = document.getElementById('surf-spots-modal');
     const btnClose = document.getElementById('btn-close-surf-spots-modal');
+
+    // Mover el modal a document.body para garantizar que position: fixed sea 100% relativo al viewport
+    // eliminando cualquier trampa de backdrop-filter o transforms de contenedores padre
+    if (modal && modal.parentElement !== document.body) {
+      document.body.appendChild(modal);
+    }
 
     if (btnOpen && modal) {
       btnOpen.addEventListener('click', () => {

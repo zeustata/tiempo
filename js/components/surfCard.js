@@ -708,7 +708,8 @@ export function renderSurfCard(data, concejo, selectedBeachName = null) {
   const concejoTitle = concejo.name.replace(/\s*\(.*?\)/, '');
 
   return `
-    <div class="marine-card">
+    <div class="surf-module-wrapper">
+      <div class="marine-card">
       <div class="section-title-wrap" style="margin-bottom: 8px;">
         <div>
           <h3 class="section-heading" style="margin-bottom: 0;">🏄‍♂️ Surf & Rompientes</h3>
@@ -1148,45 +1149,6 @@ export function renderSurfCard(data, concejo, selectedBeachName = null) {
               `;
             }).join('')}
           </div>
-
-          <!-- BOTTOM SHEET / MODAL ERGONÓMICO DE SELECCIÓN DE ARENAL / ROMPIENTE -->
-          <div id="surf-spots-modal" class="surf-spots-modal-backdrop" aria-hidden="true" style="display: none;">
-            <div class="surf-spots-modal-sheet">
-              <div style="padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <h3 style="margin: 0; font-size: 1.05rem; font-weight: 800; color: #ffffff;">Selecciona arenal o rompiente</h3>
-                  <span style="font-size: 0.75rem; color: #94a3b8;">Toca una playa para ver su ficha técnica</span>
-                </div>
-                <button type="button" id="btn-close-surf-spots-modal" style="background: rgba(255,255,255,0.08); border: none; color: #ffffff; font-size: 1.1rem; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;" aria-label="Cerrar selector">
-                  ✕
-                </button>
-              </div>
-
-              <div style="padding: 12px 14px; overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch; max-height: 60vh;">
-                ${activePlayas.map(p => {
-                  const beachWind = getBeachSpecificWindCondition(p.facingDeg || 355, windDeg, windSpeed);
-                  const isSelected = p.name === selectedBeach.name;
-                  return `
-                    <div class="surf-spot-item-card ${isSelected ? 'selected' : ''}" data-beach-name="${p.name}" data-beach-sub="${p.facing ? `Mira al ${p.facing}` : 'Costera'} · ${p.tag || 'Spot de Surf'}">
-                      <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px;">
-                        <strong style="font-size: 0.88rem; color: #ffffff;">🏖️ ${p.name}</strong>
-                        <span style="font-size: 0.7rem; font-weight: 800; padding: 2px 7px; border-radius: 6px; background: ${beachWind.color}; color: #000; white-space: nowrap;">
-                          ${beachWind.badge}
-                        </span>
-                      </div>
-                      <div style="display: flex; gap: 8px; align-items: center; font-size: 0.72rem; color: #94a3b8; margin-top: 4px; flex-wrap: wrap;">
-                        <span>🧭 ${p.facing ? `Mira al ${p.facing}` : 'Costera'}</span>
-                        <span>•</span>
-                        <span>🌊 ${p.bottom || 'Arena'}</span>
-                        <span>•</span>
-                        <span style="color: #38bdf8;">${p.surfLevel || 'Todos'}</span>
-                      </div>
-                    </div>
-                  `;
-                }).join('')}
-              </div>
-            </div>
-          </div>
         ` : `
           <div style="padding: 16px; text-align: center; background: rgba(15, 23, 42, 0.5); border-radius: 12px; border: 1px solid rgba(255,255,255,0.06); color: #94a3b8; font-size: 0.82rem;">
             No hay arenales registrados específicamente en este sector costero.
@@ -1200,7 +1162,49 @@ export function renderSurfCard(data, concejo, selectedBeachName = null) {
         Las calificaciones (0-10★), energía en kJ y alturas de ola son cálculos físicos teóricos del oleaje mar adentro. <strong>Las condiciones locales en rompientes, barras y corrientes pueden ser muy cambiantes y peligrosas</strong>. Cada surfista entra al mar bajo su exclusiva responsabilidad, criterio y preparación física.
       </div>
     </div>
-  `;
+
+    <!-- BOTTOM SHEET / MODAL ERGONÓMICO DE SELECCIÓN DE ARENAL / ROMPIENTE (FUERA DE MARINE-CARD) -->
+    ${activePlayas.length > 0 ? `
+      <div id="surf-spots-modal" class="surf-spots-modal-backdrop" aria-hidden="true" style="display: none;">
+        <div class="surf-spots-modal-sheet">
+          <div style="padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <h3 style="margin: 0; font-size: 1.05rem; font-weight: 800; color: #ffffff;">Selecciona arenal o rompiente</h3>
+              <span style="font-size: 0.75rem; color: #94a3b8;">Toca una playa para ver su ficha técnica</span>
+            </div>
+            <button type="button" id="btn-close-surf-spots-modal" style="background: rgba(255,255,255,0.08); border: none; color: #ffffff; font-size: 1.1rem; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;" aria-label="Cerrar selector">
+              ✕
+            </button>
+          </div>
+
+          <div style="padding: 12px 14px; overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch; max-height: 60vh;">
+            ${activePlayas.map(p => {
+              const beachWind = getBeachSpecificWindCondition(p.facingDeg || 355, windDeg, windSpeed);
+              const isSelected = p.name === selectedBeach.name;
+              return `
+                <div class="surf-spot-item-card ${isSelected ? 'selected' : ''}" data-beach-name="${p.name}" data-beach-sub="${p.facing ? `Mira al ${p.facing}` : 'Costera'} · ${p.tag || 'Spot de Surf'}">
+                  <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px;">
+                    <strong style="font-size: 0.88rem; color: #ffffff;">🏖️ ${p.name}</strong>
+                    <span style="font-size: 0.7rem; font-weight: 800; padding: 2px 7px; border-radius: 6px; background: ${beachWind.color}; color: #000; white-space: nowrap;">
+                      ${beachWind.badge}
+                    </span>
+                  </div>
+                  <div style="display: flex; gap: 8px; align-items: center; font-size: 0.72rem; color: #94a3b8; margin-top: 4px; flex-wrap: wrap;">
+                    <span>🧭 ${p.facing ? `Mira al ${p.facing}` : 'Costera'}</span>
+                    <span>•</span>
+                    <span>🌊 ${p.bottom || 'Arena'}</span>
+                    <span>•</span>
+                    <span style="color: #38bdf8;">${p.surfLevel || 'Todos'}</span>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      </div>
+    ` : ''}
+  </div>
+`;
 }
 
 

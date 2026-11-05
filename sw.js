@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-37-surf-spots-bottomsheet';
+const CACHE_NAME = 'meteoasturlode-v3024-38-surf-modal-portal-viewport';
 const STATIC_ASSETS = [
   './',
   './index.html',

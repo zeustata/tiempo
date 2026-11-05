@@ -10,6 +10,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
 
+## [3.0.24.38] - 2026-11-05
+### Fixed
+- **Fijación de Viewport y Portal Root para Modal de Surf (Reporte Lendo):**
+  - **Extracción de Bloque Contenedor:** Modal `#surf-spots-modal` extraído fuera de `.marine-card` hacia `.surf-module-wrapper`, evitando que `backdrop-filter` confine `position: fixed` a la altura de la tarjeta.
+  - **Portal en `document.body` (`app.js`):** El modal se vincula directamente a la raíz de la página con `height: 100dvh` y `z-index: 99999`, apareciendo al instante anclado al marco inferior de la pantalla sin requerir scroll.
+
 ## [3.0.24.37] - 2026-11-05
 ### Added
 - **Selector Ergonómico de Arenales de Surf (Estilo Rutas & Ciclismo) (Petición Lendo):**
