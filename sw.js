@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-39-surf-explain-cards-responsive';
+const CACHE_NAME = 'meteoasturlode-v3024-40-surf-explain-mobile-anti-overflow';
 const STATIC_ASSETS = [
   './',
   './index.html',

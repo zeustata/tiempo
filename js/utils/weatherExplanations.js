@@ -608,7 +608,7 @@ export const WEATHER_EXPLANATIONS = {
             <div class="surf-rating-star-card star-gold">
               <div class="surf-rating-star-badge-row">
                 <span class="explain-badge-pts explain-badge-gold">⭐ Estrellas Doradas</span>
-                <span style="font-size: 0.74rem; font-weight: 700; color: #facc15;">Offshore Puro</span>
+                <span class="surf-rating-star-tag tag-gold">Offshore Puro</span>
               </div>
               <div class="surf-rating-star-desc">
                 <strong style="color: #e2e8f0; display: block; margin-bottom: 2px;">Condición meteorológica:</strong>
@@ -623,7 +623,7 @@ export const WEATHER_EXPLANATIONS = {
             <div class="surf-rating-star-card star-white">
               <div class="surf-rating-star-badge-row">
                 <span class="explain-badge-pts explain-badge-white">⚪ Estrellas Blancas</span>
-                <span style="font-size: 0.74rem; font-weight: 700; color: #cbd5e1;">Glassy / Brisas</span>
+                <span class="surf-rating-star-tag tag-white">Glassy / Brisas</span>
               </div>
               <div class="surf-rating-star-desc">
                 <strong style="color: #e2e8f0; display: block; margin-bottom: 2px;">Condición meteorológica:</strong>
@@ -638,7 +638,7 @@ export const WEATHER_EXPLANATIONS = {
             <div class="surf-rating-star-card star-zero">
               <div class="surf-rating-star-badge-row">
                 <span class="explain-badge-pts explain-badge-zero">🚫 0★ Sin Estrellas</span>
-                <span style="font-size: 0.74rem; font-weight: 700; color: #f87171;">Onshore / Pasado</span>
+                <span class="surf-rating-star-tag tag-zero">Onshore / Pasado</span>
               </div>
               <div class="surf-rating-star-desc">
                 <strong style="color: #e2e8f0; display: block; margin-bottom: 2px;">Condición meteorológica:</strong>

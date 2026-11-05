@@ -2,6 +2,26 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏄‍♂️ Blindaje Móvil y Erradicación de Scroll Horizontal en Modal Didáctico (v3.0.24.40) — 2026-11-05
+- **Blindaje Estricto contra Desborde y Partición de Palabras en Rating de Surf (Reporte Crítico de Lendo con 3 Capturas):**
+  1. *Diagnóstico de Lendo:*
+     - Al examinar en el móvil el modal de `surf_stars`, la cabecera de las tarjetas de estrellas mostraba textos partidos verticalmente (`Offsh` arriba y `Puro` abajo; `Onshor` / `/` / `Pasado` en 3 líneas) y aparecía una barra de scroll horizontal activa en la parte inferior, desplazando el contenido y cortando los títulos en el margen izquierdo.
+  2. *Causas Técnicas Identificadas:*
+     - **Sangría de Paddings Anidados:** `#explain-modal` heredaba los paddings de escritorio de `.modal-overlay` (20px), `.modal-card` (24px) y `.explain-modal-body` (12px), perdiendo más de 150px de ancho útil en pantallas móviles y dejando apenas 180px para el contenido.
+     - **Colisión Flex Rígida:** En `.surf-rating-star-badge-row`, el badge izquierdo (~140px con `white-space: nowrap`) dejaba menos de 35px para el texto descriptivo derecho, provocando partición forzada de sílabas por el navegador.
+     - **Activación de Overflow-X:** Al desbordar el contenido por milímetros, `overflow-y: auto` disparó automáticamente `overflow-x: auto`, activando la barra de scroll horizontal.
+  3. *Implementación Técnica (Leyes 11 y 14):*
+     - En `css/components.css`:
+       - En `@media (max-width: 480px)`: fijados paddings compactos en `#explain-modal.modal-overlay` (10px 8px), `.modal-explain-card` (ancho 100%, max-width 100%, padding 14px 10px 10px) y `.explain-modal-body` (padding 10px 6px 18px), recuperando más de 50px de anchura útil.
+       - Añadido `overflow-x: hidden !important;` en `.modal-explain-card`, `.explain-modal-body`, `.explain-content-wrapper`, `.explain-card-block` y `.surf-rating-explain-group`.
+       - En `.surf-rating-star-badge-row`: aplicado `flex-wrap: wrap; gap: 6px; width: 100%; box-sizing: border-box;`.
+       - Creadas clases `.surf-rating-star-tag` (`.tag-gold`, `.tag-white`, `.tag-zero`) con `white-space: nowrap; font-size: 0.74rem; font-weight: 700;` para blindar los textos derechos contra cualquier partición.
+     - En `js/utils/weatherExplanations.js`:
+       - Vinculadas las clases `.surf-rating-star-tag` a las etiquetas `Offshore Puro`, `Glassy / Brisas` y `Onshore / Pasado`.
+  4. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-40-surf-explain-mobile-anti-overflow`.
+     - Query strings actualizadas a `v=3.0.24.40` en `index.html`, `components.css` y en `js/app.js`.
+
 ## 🏄‍♂️ Rediseño Ergonómico de la Guía de Rating de Surf en Móvil (v3.0.24.39) — 2026-11-05
 - **Erradicación de Tablas Comprimidas e Ilegibles en Ficha Didáctica de Estrellas (Reporte Crítico de Lendo con 3 Capturas):**
   1. *Diagnóstico de Lendo:*

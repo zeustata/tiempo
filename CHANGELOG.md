@@ -10,6 +10,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
 
+## [3.0.24.40] - 2026-11-05
+### Fixed
+- **Blindaje Móvil y Erradicación de Scroll Horizontal en Modal Didáctico (Reporte Lendo con 3 Capturas):**
+  - **Descompresión Ergonómica Móvil (Doctrina Regla 11):** En `#explain-modal` se reducen los paddings anidados acumulados (overlay a 8px, modal-card al 100% de ancho con 14px 10px, y modal-body a 10px 6px), recuperando más de 50px de ancho útil de lectura en pantallas móviles.
+  - **Flex-Wrap y Pastillas Nowrap en Rating de Estrellas:** Reorganizada la fila de insignias (`.surf-rating-star-badge-row`) con `flex-wrap: wrap; gap: 6px;` y creadas las clases `.surf-rating-star-tag` protegidas con `white-space: nowrap;`, evitando la partición forzada de palabras (`Offsh` / `Puro`, `Onshor` / `Pasado`).
+  - **Cero Scroll Lateral:** Fijado `overflow-x: hidden !important;` en `.modal-explain-card`, `.explain-modal-body`, `.explain-card-block` y `.surf-rating-explain-group`, erradicando la barra de desplazamiento horizontal inferior.
+
 ## [3.0.24.39] - 2026-11-05
 ### Fixed
 - **Rediseño Ergonómico de la Guía de Rating de Surf (Reporte Lendo con 3 Capturas):**

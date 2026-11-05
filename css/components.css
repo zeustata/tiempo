@@ -14007,24 +14007,89 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 6px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.surf-rating-star-tag {
+  font-size: 0.74rem;
+  font-weight: 700;
+  white-space: nowrap;
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.surf-rating-star-tag.tag-gold {
+  color: #fef08a;
+  background: rgba(250, 204, 21, 0.15);
+  border: 1px solid rgba(250, 204, 21, 0.3);
+}
+
+.surf-rating-star-tag.tag-white {
+  color: #f1f5f9;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.surf-rating-star-tag.tag-zero {
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
 .surf-rating-star-desc {
   font-size: 0.80rem;
   color: #cbd5e1;
   line-height: 1.4;
+  word-break: break-word;
 }
 
 @media (max-width: 480px) {
+  #explain-modal.modal-overlay {
+    padding: 10px 8px !important;
+  }
   .modal-explain-card {
-    width: 95% !important;
-    max-height: 90vh !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 92vh !important;
+    padding: 14px 10px 10px !important;
+    overflow-x: hidden !important;
   }
   .explain-modal-body {
-    padding: 12px 12px 20px !important;
+    padding: 10px 6px 18px !important;
+    overflow-x: hidden !important;
+  }
+  .explain-content-wrapper {
+    overflow-x: hidden !important;
+    max-width: 100% !important;
   }
   .explain-card-block {
-    padding: 12px 10px !important;
+    padding: 10px 8px !important;
+    overflow-x: hidden !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .surf-rating-explain-group {
+    overflow-x: hidden !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .surf-rating-factor-card,
+  .surf-rating-star-card {
+    padding: 8px 10px !important;
+    overflow-x: hidden !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .surf-rating-scale-row {
+    font-size: 0.78rem;
+    gap: 6px;
+  }
+  .surf-rating-star-desc {
+    font-size: 0.78rem;
   }
 }
