@@ -10,6 +10,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
 
+## [3.0.24.35] - 2026-11-05
+### Fixed
+- **Erradicación Total de Aura y Bordes Puros en Surf (Reporte Lendo):**
+  - **Supresión de Box-Shadow (`components.css`):** Fijado `box-shadow: none !important;` en todas las tarjetas del carrusel de Surf (`.marine-widget`, `.surf-turismo-visual-widget`, `.surf-energy-widget`, `.surf-timeline-widget`), suprimiendo al 100% cualquier halo, resplandor o aura difusa perimetral.
+  - **Líneas Puras:** Las tarjetas se definen con absoluta nitidez y limpieza mediante su marco vectorial de cristal.
+
+## [3.0.24.34] - 2026-11-05
+### Fixed
+- **Eliminación de Sombra Negra Proyectada y Resplandor Limpio en Surf (Reporte Lendo):**
+  - **Sustitución de Box-Shadow (`components.css`):** Sustituida la sombra negra de caída por un resplandor de cristal ambiental cian uniforme (`0 0 14px rgba(56, 189, 248, 0.16)`), suprimiendo la mancha o franja oscura inferior.
+  - **Sellado al Milímetro (`app.js`):** Ajustada la fórmula de altura dinámica a `h + 8px` con `padding-bottom: 6px`, dejando el cierre del marco exacto sin holguras sobrantes.
+
 ## [3.0.24.33] - 2026-11-05
 ### Fixed
 - **Cierre Completo de Tarjetas y Holgura de Esquinas en Surf (Reporte Lendo):**

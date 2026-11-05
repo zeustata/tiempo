@@ -13681,7 +13681,7 @@
   gap: 12px;
   width: 100%;
   box-sizing: border-box;
-  padding: 4px 4px 16px 4px;
+  padding: 4px 2px 6px 2px;
   cursor: grab;
   transition: height 0.22s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -13709,11 +13709,19 @@
   width: 100% !important;
   max-width: 100% !important;
   box-sizing: border-box !important;
+  box-shadow: none !important;
+}
+
+.surf-carousel-slide .surf-turismo-visual-widget,
+.surf-carousel-slide .surf-energy-widget,
+.surf-carousel-slide .surf-timeline-widget {
+  box-shadow: none !important;
 }
 
 .surf-carousel-slide .surf-timeline-widget {
   padding: 16px 18px !important;
   border-radius: var(--radius-md) !important;
+  box-shadow: none !important;
 }
 
 /* 3 Botones de Navegación Ergonómica (Fila Única Inquebrantable en Cualquier Móvil) */

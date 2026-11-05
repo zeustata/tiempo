@@ -2,6 +2,34 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏄‍♂️ Erradicación Total de Aura y Bordes Puros en Surf (v3.0.24.35) — 2026-11-05
+- **Supresión Total de Box-Shadow en Carrusel de Surf (Reporte de Lendo):**
+  1. *Diagnóstico de Lendo:*
+     - Lendo reportó seguir percibiendo un halo o aura perimetral alrededor de las 3 tarjetas del carrusel marítimo.
+  2. *Causa Raíz:*
+     - Las tarjetas tenían directivas de `box-shadow` que proyectaban un halo de desenfoque difuso alrededor del marco de cristal.
+  3. *Implementación Técnica (Leyes 11 y 14):*
+     - En `css/components.css`: aplicado `box-shadow: none !important;` de forma estricta a `.marine-widget`, `.surf-turismo-visual-widget`, `.surf-energy-widget` y `.surf-timeline-widget` dentro de `.surf-carousel-slide`.
+     - Las tarjetas se delimitan exclusivamente por su línea vectorial de cristal (`border: 1px solid var(--border-glass)`), suprimiendo al 100% cualquier halo, resplandor difuso o aura perimetral.
+  4. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-35-surf-no-aura-clean-borders`.
+     - Query strings actualizadas a `v=3.0.24.35` en `index.html`, `components.css` y en la importación de `surfCard.js` dentro de `js/app.js`.
+
+
+## 🏄‍♂️ Eliminación de Mancha Oscura y Resplandor Limpio en Surf (v3.0.24.34) — 2026-11-05
+- **Sustitución de Sombra Negra por Resplandor de Cristal (Reporte de Lendo con Captura):**
+  1. *Diagnóstico de Lendo:*
+     - Tras cerrarse el marco de la tarjeta, aparecía una franja o sombra más oscura justo debajo del borde inferior antes de la sección de Rompientes.
+  2. *Causa Raíz:*
+     - La tarjeta tenía heredado un `box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3)` que proyectaba un halo negro 8px hacia abajo con 32px de difuminado. Al concederse holgura inferior, esa sombra negra se hacía visible creando un parche oscuro sobre el fondo azul.
+  3. *Implementación Técnica (Leyes 11 y 14):*
+     - En `css/components.css`: sustituida la sombra negra de caída por un resplandor ambiental cian sutil y uniforme (`box-shadow: 0 0 14px rgba(56, 189, 248, 0.16) !important;`), idéntico al resto de módulos, eliminando cualquier mancha o parche negro.
+     - Acolchado del carrusel ajustado con precisión a `padding: 4px 2px 6px 2px;` y fórmula de altura en `js/app.js` fijada a `h + 8px`, dejando el cierre del marco sellado al milímetro sin espacios muertos.
+  4. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-34-surf-clean-glow-no-shadow`.
+     - Query strings actualizadas a `v=3.0.24.34` en `index.html`, `components.css` y en la importación de `surfCard.js` dentro de `js/app.js`.
+
+
 ## 🏄‍♂️ Cierre Completo de Tarjetas y Holgura de Esquinas en Surf (v3.0.24.33) — 2026-11-05
 - **Calibración de Altura Dinámica y Preservación de Bordes (Reporte de Lendo con Captura):**
   1. *Diagnóstico de Lendo:*

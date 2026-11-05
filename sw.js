@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-33-surf-closed-card-padding';
+const CACHE_NAME = 'meteoasturlode-v3024-35-surf-no-aura-clean-borders';
 const STATIC_ASSETS = [
   './',
   './index.html',
