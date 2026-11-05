@@ -2,6 +2,18 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏖️ Depuración Minimalista en Cabecera de Guía de Playas (v3.0.24.46) — 2026-11-05
+- **Limpieza de Paréntesis y Parroquias en Cabecera de Playas (Reporte Lendo con Captura):**
+  1. *Diagnóstico de Lendo:*
+     - Lendo detectó con captura que en la cabecera de la Guía de Playas (`marineCard.js`) se mostraba `🏖️ Guía de Playas y Calas de Castrillón (Piedras Blancas / Salinas)`, saltando de línea y sobrecargando la zona inmediatamente superior al selector de playas.
+  2. *Implementación Técnica (Leyes 11 y 14):*
+     - En `js/components/marineCard.js`:
+       - Limpiado el nombre del concejo con `.split(' (')[0].trim()` tanto para la localidad principal como para referencias de interior.
+       - Título estandarizado a `🏖️ Guía de Playas y Calas de ${beachLocationTitle}`, mostrando `🏖️ Guía de Playas y Calas de Castrillón`.
+  3. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-46-clean-beaches-guide-title`.
+     - Query strings actualizadas a `v=3.0.24.46` en `index.html` y en la importación de `marineCard.js` en `app.js`.
+
 ## 🏖️ Selector Ergonómico Bottom Sheet en Guía de Playas y Calas (v3.0.24.45) — 2026-11-05
 - **Unificación Arquitectónica de Guía de Playas con el Patrón Ergonómico Universal (Propuesta Lendo):**
   1. *Diagnóstico de Lendo:*

@@ -10,6 +10,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
 
+## [3.0.24.46] - 2026-11-05
+### Changed
+- **Depuración Minimalista en Cabecera de Guía de Playas (Reporte Lendo con Captura):**
+  - **Erradicación de Paréntesis y Localidades Secundarias:** Suprimido el sufijo parroquial redundante (`(Piedras Blancas / Salinas)`) en el título de la sección de playas (`marineCard.js`), evitando que el texto salte de línea y sobrecargue la vista superior.
+  - **Coherencia con Módulo Surf (Doctrina Regla 14):** El título se estandariza limpiamente a `🏖️ Guía de Playas y Calas de [Concejo]` (ej. `🏖️ Guía de Playas y Calas de Castrillón`).
+
 ## [3.0.24.45] - 2026-11-05
 ### Changed
 - **Modernización y Selector Ergonómico Táctil en Guía de Playas y Calas (Propuesta Lendo):**

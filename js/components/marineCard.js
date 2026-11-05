@@ -1198,7 +1198,10 @@ export function renderMarineCard(data, concejo, selectedBeachName = null) {
   const tideSvg = renderTideSvgGraph(now, true, tideStatus.currentHours, targetLon);
 
   // Título limpio sin paréntesis para evitar redundancia y recarga visual
-  const concejoTitle = concejo.name.replace(/\s*\(.*?\)/, '');
+  const cleanConcejoName = (concejo.name || '').split(' (')[0].trim();
+  const cleanInteriorName = interiorRef ? (interiorRef.name || '').split(' (')[0].trim() : '';
+  const beachLocationTitle = isCoasting ? cleanConcejoName : `${cleanConcejoName} (en ${cleanInteriorName})`;
+  const concejoTitle = cleanConcejoName;
 
   return `
     <div class="marine-module-wrapper">
@@ -1426,7 +1429,7 @@ export function renderMarineCard(data, concejo, selectedBeachName = null) {
       <div class="marine-ports-section" style="margin-top: 20px;">
         <div class="beach-section-header" style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
           <h4 class="ports-title" style="margin: 0; font-size: 1.05rem; line-height: 1.35;">
-            🏖️ Guía de Playas y Calas de ${isCoasting ? concejo.name : `${concejo.name} (en ${interiorRef.name})`}
+            🏖️ Guía de Playas y Calas de ${beachLocationTitle}
           </h4>
         </div>
 

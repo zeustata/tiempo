@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-45-beaches-bottom-sheet-selector';
+const CACHE_NAME = 'meteoasturlode-v3024-46-clean-beaches-guide-title';
 const STATIC_ASSETS = [
   './',
   './index.html',
