@@ -10,6 +10,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
 
+## [3.0.24.37] - 2026-11-05
+### Added
+- **Selector Ergonómico de Arenales de Surf (Estilo Rutas & Ciclismo) (Petición Lendo):**
+  - **Selector Táctil Protagonista (`surfCard.js`, `app.js`):** Sustituida la ristra vertical infinita de playas por un botón selector elegante con indicador `▼`.
+  - **Bottom Sheet Modal:** Al tocar el selector, se abre un modal deslizante táctil con todas las rompientes y arenales del concejo o comarca.
+  - **Ficha Técnica Protagonista:** Al seleccionar una playa, el modal se cierra y se muestra de forma inmediata (0ms) su ficha técnica completa (viento en vivo por orientación, picos bautizados, fondo, swell óptimo, marea y advertencias de seguridad).
+  - **Ergonomía Móvil (Ley 11):** Supresión total de más de 800px de scroll vertical residual en la vista de Surf.
+
 ## [3.0.24.36] - 2026-11-05
 ### Changed
 - **Depuración de Iconografía Redundante en Surf & Rompientes (Reporte Lendo):**

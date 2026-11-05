@@ -3,7 +3,7 @@ import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from 
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=3.0.23.63';
 import { renderCurrentWeather } from './components/currentCard.js?v=3.0.24.23';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.24.27';
-import { renderSurfCard } from './components/surfCard.js?v=3.0.24.36';
+import { renderSurfCard } from './components/surfCard.js?v=3.0.24.37';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.24.17';
 import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.24.18';
 import { renderMountainCard } from './components/mountainCard.js?v=3.0.24.27';
@@ -60,6 +60,7 @@ class MeteoAsturiasApp {
     this.selectedHikingRouteId = null;
     this.selectedTourismPlanId = null;
     this.selectedCyclingRouteId = null;
+    this.selectedSurfBeachName = null;
     this.selectedCyclingHour = 9;
     this.selectedCyclingSpeed = 24;
     this.autoRefreshTimer = null;
@@ -2442,6 +2443,7 @@ class MeteoAsturiasApp {
         '.daily-cards-container, .daily-card-rich, .forecast-scroll-hint, ' +
         '.surf-carousel-wrap, .surf-cards-carousel, .surf-carousel-slide, .surf-nav-toolbar, .surf-nav-pill, ' +
         '.surf-timeline-grid, .surf-slot-card, .surf-timeline-scroll-hint, .surf-daily-cards-grid, .surf-daily-card, .surf-dayparts-list, .surf-daily-scroll-hint, ' +
+        '.surf-spot-selector-wrap, .surf-spot-trigger, .surf-spots-modal-backdrop, .surf-spots-modal-sheet, .surf-spot-item-card, .surf-beach-spot-card, ' +
         '.module-chips-nav, .module-chips-scroll, .module-chip, ' +
         '.favorites-pills, .view-tabs, ' +
         '.beach-controls-toolbar, .beach-filter-dropdown-wrapper, ' +
@@ -2710,6 +2712,7 @@ class MeteoAsturiasApp {
     this.selectedHikingRouteId = null; // Auto-resetea para cargar directamente la óptima de la nueva localidad
     this.selectedTourismPlanId = null; // Auto-resetea para cargar directamente la óptima de la nueva localidad
     this.selectedCyclingRouteId = null; // Auto-resetea para cargar directamente la óptima de la nueva localidad
+    this.selectedSurfBeachName = null; // Auto-resetea para cargar el arenal por defecto de la nueva localidad
     this.prefs.lastConcejo = concejoId;
     // Recalcular localidad activa para el nuevo concejo (evita arrastrar localidades ajenas como Piedras Blancas a Oviedo)
     this.activeLocalidad = this.userCoords ? resolveSubLocalidad(this.currentConcejo.id, this.userCoords.lat, this.userCoords.lon) : null;
@@ -3182,8 +3185,9 @@ class MeteoAsturiasApp {
       try {
         const surfContainer = document.getElementById('panel-surf');
         if (surfContainer) {
-          surfContainer.innerHTML = renderSurfCard(data, concejo);
+          surfContainer.innerHTML = renderSurfCard(data, concejo, this.selectedSurfBeachName);
           this.initSurfCardsCarousel();
+          this.initSurfSpotsSelectorEvents();
           this.bindCarouselDots('surf-timeline-carousel', 'surf-timeline-dots', '.surf-slot-card');
           this.bindCarouselDots('surf-daily-carousel', 'surf-daily-dots', '.surf-daily-card');
         }
@@ -3816,6 +3820,85 @@ class MeteoAsturiasApp {
         });
         scrollToSlide(closestIdx);
       }
+    });
+  }
+
+  /**
+   * Controlador para el Selector Ergonómico de Arenales / Rompientes de Surf (Leyes 11, 14 y 18)
+   * Despliega el Bottom Sheet táctil y actualiza en 0ms la tarjeta protagonista elegida
+   */
+  initSurfSpotsSelectorEvents() {
+    const btnOpen = document.getElementById('btn-open-surf-spot-picker');
+    const modal = document.getElementById('surf-spots-modal');
+    const btnClose = document.getElementById('btn-close-surf-spots-modal');
+
+    if (btnOpen && modal) {
+      btnOpen.addEventListener('click', () => {
+        this.triggerHaptic();
+        modal.style.display = 'flex';
+        modal.setAttribute('aria-hidden', 'false');
+      });
+    }
+
+    if (btnClose && modal) {
+      btnClose.addEventListener('click', () => {
+        this.triggerHaptic();
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+      });
+    }
+
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.style.display = 'none';
+          modal.setAttribute('aria-hidden', 'true');
+        }
+      });
+    }
+
+    // Selección táctil de rompiente/playa en el modal
+    document.querySelectorAll('.surf-spot-item-card').forEach(item => {
+      item.addEventListener('click', (e) => {
+        const beachName = e.currentTarget.dataset.beachName;
+        const beachSub = e.currentTarget.dataset.beachSub;
+        if (!beachName) return;
+
+        this.triggerHaptic();
+        this.selectedSurfBeachName = beachName;
+
+        // Actualizar el texto del selector de forma inmediata
+        const nameEl = document.getElementById('surf-trigger-beach-name');
+        const subEl = document.getElementById('surf-trigger-beach-sub');
+        if (nameEl) nameEl.textContent = beachName;
+        if (subEl && beachSub) subEl.textContent = beachSub;
+
+        // Alternar visualmente la tarjeta de la rompiente elegida
+        document.querySelectorAll('.surf-beach-spot-card').forEach(card => {
+          if (card.dataset.beachName === beachName) {
+            card.style.display = 'block';
+            card.classList.add('active');
+          } else {
+            card.style.display = 'none';
+            card.classList.remove('active');
+          }
+        });
+
+        // Actualizar clase selected en los ítems del modal
+        document.querySelectorAll('.surf-spot-item-card').forEach(i => {
+          if (i.dataset.beachName === beachName) {
+            i.classList.add('selected');
+          } else {
+            i.classList.remove('selected');
+          }
+        });
+
+        // Cerrar modal
+        if (modal) {
+          modal.style.display = 'none';
+          modal.setAttribute('aria-hidden', 'true');
+        }
+      });
     });
   }
 }

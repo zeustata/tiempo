@@ -2,6 +2,26 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏄‍♂️ Selector Ergonómico de Arenales de Surf estilo Rutas/Ciclismo (v3.0.24.37) — 2026-11-05
+- **Arquitectura de Rompiente Protagonista Activa con Bottom Sheet Modal (Petición de Lendo):**
+  1. *Diagnóstico y Petición de Lendo:*
+     - Lendo solicitó eliminar el scroll vertical infinito en la sección "Rompientes, Picos y Fondos" después del botón de Guía de Surf.
+     - En lugar de listar todas las playas en una ristra vertical de acordeones, aplicar la misma técnica ergonómica empleada en Rutas y Ciclismo: un botón selector que despliega las playas para elegir una, y que muestre abajo únicamente la ficha de la playa seleccionada.
+  2. *Implementación Técnica (Leyes 11, 14 y 18):*
+     - En `js/components/surfCard.js`:
+       - Introducido el botón disparador selector táctil `surf-spot-trigger` mostrando el arenal activo (`🏖️ [Nombre] · [Orientación] · [Tag]`) con flecha `▼` y contador de arenales en la zona.
+       - En lugar de la cuadrícula de acordeones, se renderiza la tarjeta protagonista `#surf-active-beach-container` con la ficha técnica completa y abierta de la playa elegida (viento en tiempo real por orientación, picos bautizados, viento terral favorable, swell óptimo, fondo marino, dirección de ola, marea idónea, nivel técnico y precauciones).
+       - Creado el Bottom Sheet modal táctil `#surf-spots-modal` (`surf-spots-modal-backdrop` y `surf-spots-modal-sheet`) con el listado completo de arenales, indicando viento, fondo y nivel técnico de cada uno.
+     - En `js/app.js`:
+       - Añadido el controlador táctil `initSurfSpotsSelectorEvents()` para abrir/cerrar el modal y alternar en 0ms la tarjeta protagonista visible sin salto de scroll ni parpadeo visual.
+       - Añadido soporte interactivo en `isInteractiveZone` para proteger el scroll del modal frente al swipe horizontal.
+       - Gestión de estado: `this.selectedSurfBeachName` reseteado automáticamente al cambiar de concejo.
+     - En `css/components.css`:
+       - Diseñados los estilos específicos para `.surf-spot-trigger`, `.surf-beach-spot-card`, `.surf-spots-modal-backdrop`, `.surf-spots-modal-sheet` y `.surf-spot-item-card` con texturas liquid glass y animación fluida.
+  3. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-37-surf-spots-bottomsheet`.
+     - Query strings actualizadas a `v=3.0.24.37` en `index.html`, `components.css` y en la importación de `surfCard.js` dentro de `js/app.js`.
+
 ## 🏄‍♂️ Depuración de Iconografía Redundante en Surf (v3.0.24.36) — 2026-11-05
 - **Eliminación de Repetición del Icono de Surf (Reporte Crítico de Lendo con Captura):**
   1. *Diagnóstico de Lendo:*

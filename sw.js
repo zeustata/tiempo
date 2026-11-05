@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-36-surf-clean-icons';
+const CACHE_NAME = 'meteoasturlode-v3024-37-surf-spots-bottomsheet';
 const STATIC_ASSETS = [
   './',
   './index.html',
