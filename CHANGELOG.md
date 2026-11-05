@@ -10,6 +10,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
 
+## [3.0.24.42] - 2026-11-05
+### Changed
+- **Rediseño Héroe y Potencia Visual en Tarjeta de Calificación de Surf (Propuesta Lendo):**
+  - **Bloque Héroe con Nota Display (Doctrina Regla 14):** La tarjeta de Calificación (`Slide 0`) adopta la misma arquitectura de cristal que la tarjeta de Fuerza, presentando la nota de 0 a 10 en tamaño gigante display (`1.85rem`), pastilla luminosa de veredicto y fila de estrellas brillantes con resplandor (`text-shadow`).
+  - **Bloques Simétricos de Información:** Reorganizada la textura marina (`🪞 Wind State / Glassy`) y el swell de fondo en dos bloques modulares al 100% de ancho con flecha vectorial SVG de dirección, eliminando textos grises apelotonados y dotando a la tarjeta de protagonismo total.
+
 ## [3.0.24.41] - 2026-11-05
 ### Changed
 - **Eliminación de Título Redundante en Ficha de Rompientes de Surf (Propuesta Lendo):**

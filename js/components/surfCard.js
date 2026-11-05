@@ -742,39 +742,76 @@ export function renderSurfCard(data, concejo, selectedBeachName = null) {
           <!-- SLIDE 0: Calificación & Estrellas -->
           <div class="surf-carousel-slide" data-slide-index="0">
             <div class="marine-widget surf-turismo-visual-widget">
-              <div class="t-label-row">
-                <span class="widget-label">Calificación & Estrellas (${isCoasting ? concejoTitle : cleanInteriorName})</span>
-                <button class="btn-explain-sensor" data-explain="surf_stars" title="¿Cómo funciona el rating de estrellas doradas y blancas? Pulsa para aprender" aria-label="Explicación del rating de estrellas de surf">💡</button>
-              </div>
-
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-top: 6px;">
-                <div class="surf-flag-badge ${surfStarRating.badgeClass}" style="background: ${surfStarRating.color}22; color: ${surfStarRating.color}; border: 1px solid ${surfStarRating.color}88; font-size: 0.92rem; padding: 5px 12px; border-radius: 8px; font-weight: 800;">
-                  ${surfStarRating.starIcons}
+              <!-- Bloque Protagonista Superior (100% Ancho): Calificación y Estrellas -->
+              <div style="background: rgba(15, 23, 42, 0.58); border: 1px solid ${surfStarRating.color}44; border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; box-sizing: border-box;">
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                  <span style="font-size: 0.72rem; font-weight: 700; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.04em;">
+                    ⭐ Calificación de Surf (${isCoasting ? concejoTitle : cleanInteriorName})
+                  </span>
+                  <button class="btn-explain-sensor" data-explain="surf_stars" title="¿Cómo funciona el rating de estrellas doradas y blancas? Pulsa para aprender" aria-label="Explicación del rating de estrellas de surf">💡</button>
                 </div>
-                <div style="font-size: 0.88rem; font-weight: 700; color: ${surfQuality.color};">
-                  ${surfQuality.status}
+
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-top: 4px;">
+                  <div style="display: flex; align-items: baseline; gap: 4px;">
+                    <span style="font-size: 1.85rem; font-weight: 800; color: ${surfStarRating.color}; line-height: 1.1;">
+                      ${surfStarRating.stars}
+                    </span>
+                    <span style="font-size: 0.85rem; font-weight: 600; color: #94a3b8;">/ 10</span>
+                  </div>
+                  <span class="surf-flag-badge ${surfStarRating.badgeClass}" style="background: ${surfQuality.color}22; color: ${surfQuality.color}; border: 1px solid ${surfQuality.color}77; font-size: 0.78rem; padding: 4px 10px; border-radius: 999px; font-weight: 700; display: inline-flex; align-items: center; gap: 5px;">
+                    ${surfQuality.status}
+                  </span>
+                </div>
+
+                <!-- Fila de Estrellas con Brillo y Tipo -->
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255, 255, 255, 0.08);">
+                  <span style="font-size: 1.05rem; letter-spacing: 2px; text-shadow: 0 0 10px ${surfStarRating.color}77;">
+                    ${surfStarRating.type === 'none' ? '🚫 0★' : (surfStarRating.type === 'gold' ? '⭐'.repeat(Math.min(5, surfStarRating.stars)) : '⚪'.repeat(Math.min(5, surfStarRating.stars)))}
+                  </span>
+                  <span style="font-size: 0.74rem; font-weight: 700; color: ${surfStarRating.color};">
+                    ${surfStarRating.type === 'gold' ? 'Estrellas Doradas (Terral)' : (surfStarRating.type === 'white' ? 'Estrellas Blancas (Glassy)' : 'Sin Estrellas (Mar Pasado / Chop)')}
+                  </span>
                 </div>
               </div>
 
-              <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 10px; padding: 7px 10px; background: rgba(15, 23, 42, 0.55); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.07);">
-                <span style="font-size: 0.8rem; font-weight: 700; color: ${waterTexture.color};">${waterTexture.icon} ${waterTexture.badge}</span>
-                <span style="color: rgba(255,255,255,0.25);">•</span>
-                <span style="font-size: 0.8rem; font-weight: 700; color: #38bdf8;">💨 ${hasDistinctGust ? `${windSpeed}–${rawGusts}` : windSpeed} km/h (${(surfWind.name || 'Costero').split(' ')[0]})</span>
-              </div>
-
-              <!-- Swell 1 (Fondo) y Swell 2 (Secundario) incorporados en la tarjeta de Calificación -->
-              <div style="margin-top: 8px; padding: 8px 10px; background: rgba(15, 23, 42, 0.40); border-radius: 8px; border: 1px solid rgba(56, 189, 248, 0.18); display: flex; flex-direction: column; gap: 4px; font-size: 0.78rem;">
-                <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px;">
-                  <span>🌊 Swell 1 (Fondo): ${getSurfSwellArrowSvg(waveDirDeg, '#38bdf8', 12)} <strong>${swellHeight} m · ${wavePeriod} s (${waveDir.name})</strong></span>
-                  <span style="color: #94a3b8;">💨 Chop: <strong>${windWaveH} m</strong></span>
+              <!-- Bloque 2 y 3 Apilados Verticalmente (100% Ancho): Textura Marina & Anatomía Swell -->
+              <div style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
+                <!-- Fila 1: Textura del Agua & Viento -->
+                <div style="width: 100%; background: rgba(15, 23, 42, 0.58); border: 1px solid rgba(56, 189, 248, 0.28); border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; box-sizing: border-box;">
+                  <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; width: 100%;">
+                    <span style="font-size: 0.72rem; font-weight: 700; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.04em;">🪞 Textura del Agua & Viento</span>
+                    <span style="font-size: 0.76rem; font-weight: 700; color: ${waterTexture.color};">${waterTexture.icon} ${waterTexture.badge}</span>
+                  </div>
+                  <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; width: 100%;">
+                    <div style="font-size: 0.88rem; font-weight: 700; color: #38bdf8;">
+                      💨 ${hasDistinctGust ? `${windSpeed}–${rawGusts}` : windSpeed} km/h (${(surfWind.name || 'Costero').split(' ')[0]})
+                    </div>
+                    <div style="font-size: 0.76rem; color: #94a3b8;">
+                      ${surfWind.desc || 'Viento en costa'}
+                    </div>
+                  </div>
                 </div>
-                ${hasSecondary && secSwellDir ? `
-                <div style="color: #7dd3fc; border-top: 1px dashed rgba(255, 255, 255, 0.1); padding-top: 4px; margin-top: 2px;">
-                  🌊 Swell 2 (Secundario): ${getSurfSwellArrowSvg(secSwellDeg, '#7dd3fc', 12)} <strong>${secSwellH} m · ${secSwellPeriod} s (${secSwellDir.name})</strong> • <strong>${waveEnergy.primaryKj} + ${waveEnergy.secondaryKj} kJ</strong>
-                </div>` : ''}
+
+                <!-- Fila 2: Swell de Fondo y Chop -->
+                <div style="width: 100%; background: rgba(15, 23, 42, 0.58); border: 1px solid rgba(56, 189, 248, 0.28); border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; box-sizing: border-box;">
+                  <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; width: 100%;">
+                    <span style="font-size: 0.72rem; font-weight: 700; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.04em;">🌊 Oleaje de Fondo (Swell 1)</span>
+                    <span style="font-size: 0.76rem; color: #94a3b8;">Chop: <strong>${windWaveH} m</strong></span>
+                  </div>
+                  <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; width: 100%;">
+                    <div style="font-size: 0.88rem; font-weight: 700; color: #f8fafc; display: inline-flex; align-items: center; gap: 5px;">
+                      ${getSurfSwellArrowSvg(waveDirDeg, '#38bdf8', 13)} ${swellHeight} m · ${wavePeriod} s (${waveDir.name})
+                    </div>
+                    ${hasSecondary && secSwellDir ? `
+                    <div style="font-size: 0.74rem; color: #7dd3fc;">
+                      + Swell 2: <strong>${secSwellH}m (${secSwellDir.short})</strong>
+                    </div>` : ''}
+                  </div>
+                </div>
               </div>
 
-              <div class="widget-detail" style="margin-top: 8px; line-height: 1.35; color: #cbd5e1;">
+              <!-- Píldora de Diagnóstico Final -->
+              <div style="margin-top: 8px; padding: 7px 10px; background: rgba(15, 23, 42, 0.40); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.06); font-size: 0.78rem; line-height: 1.35; color: #cbd5e1;">
                 ${surfQuality.desc}
               </div>
             </div>

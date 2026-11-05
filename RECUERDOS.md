@@ -2,6 +2,21 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏄‍♂️ Rediseño Héroe de la Tarjeta de Calificación y Estrellas (v3.0.24.42) — 2026-11-05
+- **Potencia Visual y Jerarquía Canónica en Calificación de Surf (Propuesta Lendo):**
+  1. *Diagnóstico de Lendo:*
+     - Lendo expresó que la primera tarjeta del carrusel de surf (*Calificación y Estrellas*) resultaba sosa y poco llamativa en comparación con el impacto visual y fuerza de la segunda tarjeta (*Fuerza y Dinámica en kJ*).
+  2. *Causa Identificada:*
+     - La tarjeta carecía de un número héroe destacado; la nota matemática (0 a 10) estaba camuflada en un texto pequeño de 0.92rem, las estrellas no tenían brillo visual y la textura marina/viento se presentaban en filas grises de bajo contraste.
+  3. *Implementación Técnica (Leyes 11 y 14):*
+     - En `js/components/surfCard.js`:
+       - **Bloque Héroe Superior:** Implementado bloque con marco de cristal con borde teñido en el color del estado (`${surfStarRating.color}44`). Muestra la nota matemática en tamaño display `1.85rem` con `/ 10` al lado, pastilla luminosa de veredicto (ej. `✨ Condiciones Épicas`, `🌊 Buen Baño`) y fila de estrellas brillantes con resplandor (`text-shadow`) y etiqueta explicativa (`Estrellas Doradas Terral`, `Estrellas Blancas Glassy`).
+       - **Bloques Gemelos Modulares:** Reorganizados en dos cajas apiladas al 100% de ancho: Bloque 1 (*🪞 Textura del Agua & Viento*) y Bloque 2 (*🌊 Oleaje de Fondo Swell 1 y Chop* con flecha SVG orientada).
+       - **Pie de Tarjeta:** Píldora de diagnóstico con el consejo experto para el surfista.
+  4. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-42-surf-hero-card-vibrant`.
+     - Query strings actualizadas a `v=3.0.24.42` en `index.html`, `components.css` y `surfCard.js` en `app.js`.
+
 ## 🏄‍♂️ Eliminación de Título Redundante en Ficha de Rompientes (v3.0.24.41) — 2026-11-05
 - **Optimización de Espacio y Supresión de Título Duplicado (Propuesta Lendo):**
   1. *Diagnóstico de Lendo:*
