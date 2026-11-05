@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-38-surf-modal-portal-viewport';
+const CACHE_NAME = 'meteoasturlode-v3024-39-surf-explain-cards-responsive';
 const STATIC_ASSETS = [
   './',
   './index.html',

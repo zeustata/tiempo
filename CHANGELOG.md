@@ -10,6 +10,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
 
+## [3.0.24.39] - 2026-11-05
+### Fixed
+- **Rediseño Ergonómico de la Guía de Rating de Surf (Reporte Lendo con 3 Capturas):**
+  - **Erradicación de Tablas Rígidas:** Sustituidas las tablas `<table>` comprimidas de `surf_stars` por tarjetas y pastillas apiladas al 100% de ancho útil (`weatherExplanations.js`).
+  - **Diseño Móvil Puro (Ley 11):** Baremos físicos (Altura, Período, Energía) organizados en tarjetas modulares y clasificación de estrellas (Doradas, Blancas, 0★) con bordes codificados por color, eliminando todo scroll horizontal y garantizando legibilidad total.
+
 ## [3.0.24.38] - 2026-11-05
 ### Fixed
 - **Fijación de Viewport y Portal Root para Modal de Surf (Reporte Lendo):**

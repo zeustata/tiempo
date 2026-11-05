@@ -2,6 +2,23 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏄‍♂️ Rediseño Ergonómico de la Guía de Rating de Surf en Móvil (v3.0.24.39) — 2026-11-05
+- **Erradicación de Tablas Comprimidas e Ilegibles en Ficha Didáctica de Estrellas (Reporte Crítico de Lendo con 3 Capturas):**
+  1. *Diagnóstico de Lendo:*
+     - Al pulsar la bombilla explicativa de la tarjeta de Calificación de Surf (`surf_stars`), el contenido era prácticamente ilegible en el smartphone: tablas comprimidas a 50 px de ancho, palabras partidas a la mitad, desborde horizontal forzado y doble barra de scroll (vertical y horizontal).
+  2. *Causa Raíz Identificada:*
+     - Era el único punto de la aplicación donde se habían maquetado tablas HTML rígidas (`<table>`, `<tr>`, `<td>`, `rowspan`). Al abrirse en una pantalla de 360 px dentro del modal con sus márgenes internos, el espacio disponible era inferior a 250 px, provocando el colapso del diseño.
+  3. *Implementación Técnica (Leyes 11 y 14):*
+     - En `js/utils/weatherExplanations.js`:
+       - Eliminadas al 100% las tablas `<table>`.
+       - **Bloque 1 (Baremos físicos 1 al 10):** Transformado en 3 tarjetas independientes (`.surf-rating-factor-card`) para *Altura de Ola*, *Período Swell* y *Energía kJ*, con cabeceras de factor y filas de rango con sus pastillas de puntuación alineadas al ancho completo.
+       - **Bloque 2 (Doradas vs Blancas vs 0★):** Transformado en 3 tarjetas apiladas con código de color en el borde izquierdo (`.star-gold`, `.star-white`, `.star-zero`), detallando condición meteorológica y resultado físico en el agua con total holgura de lectura.
+     - En `css/components.css`:
+       - Añadidos estilos específicos para `.surf-rating-explain-group`, `.surf-rating-factor-card`, `.surf-rating-star-card` y calibración de padding móvil a 95% de ancho en `.modal-explain-card` y 12px de acolchado interior.
+  4. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-39-surf-explain-cards-responsive`.
+     - Query strings actualizadas a `v=3.0.24.39` en `index.html`, `components.css` y en la importación de `weatherExplanations.js` dentro de `js/app.js`.
+
 ## 🏄‍♂️ Fijación de Viewport para Modal de Surf (Portal Body & 100dvh) (v3.0.24.38) — 2026-11-05
 - **Erradicación del Scroll Forzado en Selección de Playas de Surf (Reporte Crítico de Lendo con Capturas):**
   1. *Diagnóstico de Lendo:*

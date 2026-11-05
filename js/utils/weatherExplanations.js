@@ -517,102 +517,137 @@ export const WEATHER_EXPLANATIONS = {
         icon: '📊',
         heading: '1. ¿Cómo se calcula la nota (1 al 10)? • Baremos Físicos',
         text: `
-          <p>La nota numérica mide la calidad oceanográfica del mar sumando hasta <strong>10 puntos</strong> a través de tres pilares fundamentales:</p>
-          <div class="explain-table-container">
-            <table class="explain-table">
-              <thead>
-                <tr>
-                  <th>Factor</th>
-                  <th>Rango / Medición</th>
-                  <th style="text-align:center;">Puntos</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td rowspan="4"><strong>🌊 Altura de Ola</strong><br><span style="font-size:0.75rem; color:#94a3b8;">(hasta 4 pts)</span></td>
-                  <td><strong>1,0 m a 1,6 m</strong> (zona dulce ideal)</td>
-                  <td style="text-align:center;"><span class="explain-badge-pts">+4 pts</span></td>
-                </tr>
-                <tr>
-                  <td>1,6 m a 2,0 m (ola potente / seria)</td>
-                  <td style="text-align:center;"><span class="explain-badge-pts">+3 pts</span></td>
-                </tr>
-                <tr>
-                  <td>0,8 m a 1,0 m (ola justa para tablones)</td>
-                  <td style="text-align:center;"><span class="explain-badge-pts">+2 pts</span></td>
-                </tr>
-                <tr>
-                  <td>&lt; 0,8 m (ola pequeña)</td>
-                  <td style="text-align:center;"><span class="explain-badge-pts">+1 pt</span></td>
-                </tr>
-                <tr>
-                  <td rowspan="4"><strong>⏱️ Período Swell</strong><br><span style="font-size:0.75rem; color:#94a3b8;">(hasta 4 pts)</span></td>
-                  <td><strong>&ge; 14 s</strong> (swell atlántico perfecto)</td>
-                  <td style="text-align:center;"><span class="explain-badge-pts">+4 pts</span></td>
-                </tr>
-                <tr>
-                  <td>12 s a 13 s (muy buen período)</td>
-                  <td style="text-align:center;"><span class="explain-badge-pts">+3 pts</span></td>
-                </tr>
-                <tr>
-                  <td>10 s a 11 s (medio cantábrico habitual)</td>
-                  <td style="text-align:center;"><span class="explain-badge-pts">+2 pts</span></td>
-                </tr>
-                <tr>
-                  <td>&lt; 10 s (mar de viento / series juntas)</td>
-                  <td style="text-align:center;"><span class="explain-badge-pts">+1 pt</span></td>
-                </tr>
-                <tr>
-                  <td rowspan="3"><strong>⚡ Energía kJ</strong><br><span style="font-size:0.75rem; color:#94a3b8;">(hasta 2 pts)</span></td>
-                  <td><strong>160 a 350 kJ</strong> (energía dulce y noble)</td>
-                  <td style="text-align:center;"><span class="explain-badge-pts">+2 pts</span></td>
-                </tr>
-                <tr>
-                  <td>351 a 500 kJ (exigente / potente)</td>
-                  <td style="text-align:center;"><span class="explain-badge-pts">+1 pt</span></td>
-                </tr>
-                <tr>
-                  <td>&lt; 160 kJ o &gt; 500 kJ (escasa o excesiva)</td>
-                  <td style="text-align:center;"><span class="explain-badge-pts">0 pts</span></td>
-                </tr>
-              </tbody>
-            </table>
+          <p style="margin-bottom: 10px;">La nota numérica mide la calidad oceanográfica del mar sumando hasta <strong>10 puntos</strong> a través de tres pilares fundamentales:</p>
+
+          <div class="surf-rating-explain-group">
+            <!-- Factor 1: Altura de Ola -->
+            <div class="surf-rating-factor-card">
+              <div class="surf-rating-factor-head">
+                <span class="surf-rating-factor-title">🌊 Altura de Ola</span>
+                <span class="surf-rating-factor-max">hasta 4 pts</span>
+              </div>
+              <div class="surf-rating-scale-list">
+                <div class="surf-rating-scale-row">
+                  <span class="surf-rating-range"><strong>1,0 m a 1,6 m</strong> (zona dulce ideal)</span>
+                  <span class="explain-badge-pts">+4 pts</span>
+                </div>
+                <div class="surf-rating-scale-row">
+                  <span class="surf-rating-range">1,6 m a 2,0 m (ola potente / seria)</span>
+                  <span class="explain-badge-pts">+3 pts</span>
+                </div>
+                <div class="surf-rating-scale-row">
+                  <span class="surf-rating-range">0,8 m a 1,0 m (ola justa para tablón)</span>
+                  <span class="explain-badge-pts">+2 pts</span>
+                </div>
+                <div class="surf-rating-scale-row">
+                  <span class="surf-rating-range">&lt; 0,8 m (ola pequeña)</span>
+                  <span class="explain-badge-pts">+1 pt</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Factor 2: Período Swell -->
+            <div class="surf-rating-factor-card">
+              <div class="surf-rating-factor-head">
+                <span class="surf-rating-factor-title">⏱️ Período del Swell</span>
+                <span class="surf-rating-factor-max">hasta 4 pts</span>
+              </div>
+              <div class="surf-rating-scale-list">
+                <div class="surf-rating-scale-row">
+                  <span class="surf-rating-range"><strong>&ge; 14 s</strong> (swell atlántico perfecto)</span>
+                  <span class="explain-badge-pts">+4 pts</span>
+                </div>
+                <div class="surf-rating-scale-row">
+                  <span class="surf-rating-range">12 s a 13 s (muy buen período)</span>
+                  <span class="explain-badge-pts">+3 pts</span>
+                </div>
+                <div class="surf-rating-scale-row">
+                  <span class="surf-rating-range">10 s a 11 s (medio cantábrico habitual)</span>
+                  <span class="explain-badge-pts">+2 pts</span>
+                </div>
+                <div class="surf-rating-scale-row">
+                  <span class="surf-rating-range">&lt; 10 s (mar de viento / series juntas)</span>
+                  <span class="explain-badge-pts">+1 pt</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Factor 3: Energía kJ -->
+            <div class="surf-rating-factor-card">
+              <div class="surf-rating-factor-head">
+                <span class="surf-rating-factor-title">⚡ Energía del Oleaje</span>
+                <span class="surf-rating-factor-max">hasta 2 pts</span>
+              </div>
+              <div class="surf-rating-scale-list">
+                <div class="surf-rating-scale-row">
+                  <span class="surf-rating-range"><strong>160 a 350 kJ</strong> (energía noble y dulce)</span>
+                  <span class="explain-badge-pts">+2 pts</span>
+                </div>
+                <div class="surf-rating-scale-row">
+                  <span class="surf-rating-range">351 a 500 kJ (exigente / potente)</span>
+                  <span class="explain-badge-pts">+1 pt</span>
+                </div>
+                <div class="surf-rating-scale-row">
+                  <span class="surf-rating-range">&lt; 160 kJ o &gt; 500 kJ (escasa o desborde excesivo)</span>
+                  <span class="explain-badge-pts" style="background: rgba(148, 163, 184, 0.15); color: #94a3b8; border-color: rgba(148, 163, 184, 0.3);">0 pts</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <p style="margin-top:6px; font-size:0.80rem; color:#94a3b8;"><em>La suma directa de los tres factores produce la nota final sobre 10.</em></p>
+          <p style="margin-top: 8px; font-size: 0.80rem; color: #94a3b8;"><em>La suma directa de los tres factores produce la calificación global de 0 a 10.</em></p>
         `
       },
       {
         icon: '🌟',
         heading: '2. ¿Qué determina el Color de la Estrella? (Doradas vs Blancas)',
         text: `
-          <p>El color refleja la interacción del viento con la pared de la ola:</p>
-          <div class="explain-table-container">
-            <table class="explain-table">
-              <thead>
-                <tr>
-                  <th style="text-align:center;">Tipo</th>
-                  <th>Condición de Viento y Mar</th>
-                  <th>Resultado en el Agua</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="text-align:center;"><span class="explain-badge-pts explain-badge-gold">⭐ Doradas</span></td>
-                  <td><strong>Viento Terral puro (Offshore)</strong> del Sur soplando contra la ola (o calma glassy con olas &ge; 1,0 m y período &ge; 11s).</td>
-                  <td>Pared peinada y lisa, retrasa la rotura y abre tubos limpios de revista.</td>
-                </tr>
-                <tr>
-                  <td style="text-align:center;"><span class="explain-badge-pts explain-badge-white">⚪ Blancas</span></td>
-                  <td><strong>Calma total (Glassy)</strong> o brisas laterales suaves con olas surfeables pero sin terral.</td>
-                  <td>Baño noble y divertido: olas ordenadas que rompen por inercia pero sin efecto tubo.</td>
-                </tr>
-                <tr>
-                  <td style="text-align:center;"><span class="explain-badge-pts explain-badge-zero">🚫 0★</span></td>
-                  <td><strong>Viento de mar (Onshore)</strong> o <strong>Mar Pasado</strong> (&ge; 1,7 m en arenales abiertos).</td>
-                  <td>Chop que arruga y aplasta la ola o barras cerronas masivas con corrientes peligrosas.</td>
-                </tr>
-              </tbody>
-            </table>
+          <p style="margin-bottom: 10px;">El color refleja la interacción del viento con la pared de la ola:</p>
+
+          <div class="surf-rating-explain-group">
+            <!-- Doradas -->
+            <div class="surf-rating-star-card star-gold">
+              <div class="surf-rating-star-badge-row">
+                <span class="explain-badge-pts explain-badge-gold">⭐ Estrellas Doradas</span>
+                <span style="font-size: 0.74rem; font-weight: 700; color: #facc15;">Offshore Puro</span>
+              </div>
+              <div class="surf-rating-star-desc">
+                <strong style="color: #e2e8f0; display: block; margin-bottom: 2px;">Condición meteorológica:</strong>
+                Viento Terral puro del Sur soplando contra la ola (o calma glassy con olas &ge; 1,0 m y período &ge; 11 s).
+              </div>
+              <div class="surf-rating-star-effect" style="margin-top: 6px; padding: 6px 8px; background: rgba(250, 204, 21, 0.08); border-radius: 6px; font-size: 0.78rem; color: #fef08a;">
+                🌊 <strong>Resultado:</strong> Pared peinada y lisa, retrasa la rotura y abre tubos limpios de postal.
+              </div>
+            </div>
+
+            <!-- Blancas -->
+            <div class="surf-rating-star-card star-white">
+              <div class="surf-rating-star-badge-row">
+                <span class="explain-badge-pts explain-badge-white">⚪ Estrellas Blancas</span>
+                <span style="font-size: 0.74rem; font-weight: 700; color: #cbd5e1;">Glassy / Brisas</span>
+              </div>
+              <div class="surf-rating-star-desc">
+                <strong style="color: #e2e8f0; display: block; margin-bottom: 2px;">Condición meteorológica:</strong>
+                Calma total (Glassy) o brisas laterales suaves con olas surfeables pero sin terral.
+              </div>
+              <div class="surf-rating-star-effect" style="margin-top: 6px; padding: 6px 8px; background: rgba(255, 255, 255, 0.05); border-radius: 6px; font-size: 0.78rem; color: #e2e8f0;">
+                🌊 <strong>Resultado:</strong> Baño noble y divertido: olas ordenadas que rompen por inercia pero sin efecto tubo.
+              </div>
+            </div>
+
+            <!-- 0 estrellas -->
+            <div class="surf-rating-star-card star-zero">
+              <div class="surf-rating-star-badge-row">
+                <span class="explain-badge-pts explain-badge-zero">🚫 0★ Sin Estrellas</span>
+                <span style="font-size: 0.74rem; font-weight: 700; color: #f87171;">Onshore / Pasado</span>
+              </div>
+              <div class="surf-rating-star-desc">
+                <strong style="color: #e2e8f0; display: block; margin-bottom: 2px;">Condición meteorológica:</strong>
+                Viento de mar directo (Onshore) o Mar Pasado (&ge; 1,7 m en arenales abiertos).
+              </div>
+              <div class="surf-rating-star-effect" style="margin-top: 6px; padding: 6px 8px; background: rgba(239, 68, 68, 0.08); border-radius: 6px; font-size: 0.78rem; color: #fca5a5;">
+                ⚠️ <strong>Resultado:</strong> Chop que arruga y aplasta la ola o barras cerronas masivas con corrientes peligrosas.
+              </div>
+            </div>
           </div>
         `
       },
