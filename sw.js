@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-35-surf-no-aura-clean-borders';
+const CACHE_NAME = 'meteoasturlode-v3024-36-surf-clean-icons';
 const STATIC_ASSETS = [
   './',
   './index.html',

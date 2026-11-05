@@ -10,6 +10,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
 
+## [3.0.24.36] - 2026-11-05
+### Changed
+- **Depuración de Iconografía Redundante en Surf & Rompientes (Reporte Lendo):**
+  - **Botonera con Iconos Únicos (`surfCard.js`):** El botón de calificación se actualiza a `[ ⭐ Calificación ]`, logrando coherencia temática con `[ ⚡ Fuerza ]` y `[ ⏱️ Previsión ]`.
+  - **Limpieza de Título y Diagnóstico:** Eliminado el surfista del título de la tarjeta y sustituido por `🌊` en el diagnóstico de aptitud del oleaje, evitando la repetición abusiva de 5 surfistas simultáneos en la misma vista móvil.
+
 ## [3.0.24.35] - 2026-11-05
 ### Fixed
 - **Erradicación Total de Aura y Bordes Puros en Surf (Reporte Lendo):**

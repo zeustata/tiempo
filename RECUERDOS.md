@@ -2,6 +2,21 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏄‍♂️ Depuración de Iconografía Redundante en Surf (v3.0.24.36) — 2026-11-05
+- **Eliminación de Repetición del Icono de Surf (Reporte Crítico de Lendo con Captura):**
+  1. *Diagnóstico de Lendo:*
+     - En el primer pantallazo de la pestaña de Surf, el icono del surfista (`🏄‍♂️`) aparecía repetido hasta 5 veces consecutivas en menos de 15 cm de pantalla (pestaña del menú, cabecera de sección, botón de calificación, título de la tarjeta y estado de aptitud de la ola).
+  2. *Implementación Técnica (Leyes 11 y 14):*
+     - En `js/components/surfCard.js`:
+       - **Botonera Tripartita:** El primer botón pasa a ser **`[ ⭐ Calificación ]`**, haciendo una tríada perfecta con `[ ⚡ Fuerza ]` y `[ ⏱️ Previsión ]` (cada botón con su propio icono representativo y único).
+       - **Título de Tarjeta 1:** Eliminado el icono redundante, quedando limpio: **`Calificación & Estrellas (Castrillón)`**.
+       - **Diagnóstico del Oleaje:** Sustituido el surfista por la ola marina pura **`🌊`** (`🌊 Olas Suaves / Swell Corto`, `🌊 Baño Entretenido / Olas Medias`, `🌊 Buenas Condiciones / Olas Limpias`).
+     - El icono `🏄‍♂️` queda preservado con protagonismo exclusivo y elegante una sola vez presidiendo la cabecera del módulo (`🏄‍♂️ Surf & Rompientes`).
+  3. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-36-surf-clean-icons`.
+     - Query strings actualizadas a `v=3.0.24.36` en `index.html`, `components.css` y en la importación de `surfCard.js` dentro de `js/app.js`.
+
+
 ## 🏄‍♂️ Erradicación Total de Aura y Bordes Puros en Surf (v3.0.24.35) — 2026-11-05
 - **Supresión Total de Box-Shadow en Carrusel de Surf (Reporte de Lendo):**
   1. *Diagnóstico de Lendo:*

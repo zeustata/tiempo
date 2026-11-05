@@ -3,7 +3,7 @@ import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from 
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=3.0.23.63';
 import { renderCurrentWeather } from './components/currentCard.js?v=3.0.24.23';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.24.27';
-import { renderSurfCard } from './components/surfCard.js?v=3.0.24.35';
+import { renderSurfCard } from './components/surfCard.js?v=3.0.24.36';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.24.17';
 import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.24.18';
 import { renderMountainCard } from './components/mountainCard.js?v=3.0.24.27';

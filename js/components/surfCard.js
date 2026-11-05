@@ -168,7 +168,7 @@ function evaluateSurfQuality(waveHeight, wavePeriod, windCondition, waveEnergy =
   // 6. Buenas Condiciones / Olas Limpias (Offshore o Glassy con buen período)
   if (h >= 0.8 && h <= 1.6 && p >= 10 && isOffshoreOrGlassy && energyKj < 350) {
     return {
-      status: '🏄‍♂️ Buenas Condiciones / Olas Limpias',
+      status: '🌊 Buenas Condiciones / Olas Limpias',
       badge: 'Buenas Olas',
       color: '#06b6d4',
       bg: '#06b6d422',
@@ -180,7 +180,7 @@ function evaluateSurfQuality(waveHeight, wavePeriod, windCondition, waveEnergy =
   // 7. Baño Entretenido / Condiciones Medias (Período medio o glassy suave)
   if (h >= 0.7 && p >= 8) {
     return {
-      status: '🏄‍♂️ Baño Entretenido / Olas Medias',
+      status: '🌊 Baño Entretenido / Olas Medias',
       badge: 'Entretenido',
       color: '#38bdf8',
       bg: '#38bdf822',
@@ -191,7 +191,7 @@ function evaluateSurfQuality(waveHeight, wavePeriod, windCondition, waveEnergy =
 
   // 8. Olas Suaves / Swell Corto
   return {
-    status: '🏄‍♂️ Olas Suaves / Swell Corto',
+    status: '🌊 Olas Suaves / Swell Corto',
     badge: 'Suave / Iniciación',
     color: '#94a3b8',
     bg: '#94a3b822',
@@ -722,7 +722,7 @@ export function renderSurfCard(data, concejo) {
         <!-- BARRA ERGONÓMICA DE NAVEGACIÓN TRIPARTITA (SUPERIOR EN FILA ÚNICA) -->
         <div class="surf-nav-toolbar" id="surf-nav-toolbar">
           <button class="surf-nav-pill active" data-surf-target="0" type="button" aria-label="Ver Calificación y Estrellas">
-            <span class="surf-nav-icon">🏄‍♂️</span>
+            <span class="surf-nav-icon">⭐</span>
             <span class="surf-nav-label">Calificación</span>
           </button>
           <button class="surf-nav-pill" data-surf-target="1" type="button" aria-label="Ver Fuerza del Oleaje">
@@ -740,7 +740,7 @@ export function renderSurfCard(data, concejo) {
           <div class="surf-carousel-slide" data-slide-index="0">
             <div class="marine-widget surf-turismo-visual-widget">
               <div class="t-label-row">
-                <span class="widget-label">🏄‍♂️ Calificación & Estrellas (${isCoasting ? concejoTitle : cleanInteriorName})</span>
+                <span class="widget-label">Calificación & Estrellas (${isCoasting ? concejoTitle : cleanInteriorName})</span>
                 <button class="btn-explain-sensor" data-explain="surf_stars" title="¿Cómo funciona el rating de estrellas doradas y blancas? Pulsa para aprender" aria-label="Explicación del rating de estrellas de surf">💡</button>
               </div>
 
