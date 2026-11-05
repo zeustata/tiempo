@@ -2,6 +2,21 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🔤 Erradicación Definitiva de Elipsis con Tipografía Natural (v3.0.24.49) — 2026-11-05
+- **Supresión de Mayúsculas Forzadas y Clausura de Puntos Suspensivos (Opción 1 Lendo):**
+  1. *Diagnóstico de Lendo:*
+     - Aunque el JavaScript ya se había actualizado en el móvil (desaparecieron los emojis repetidos y los textos se ampliaron), las etiquetas continuaban mostrando puntos suspensivos (`VIENTO T...`, `SWELL ÓP...`, `FONDO M...`, `DIRECCIÓ...`, `MAREA ÓP...`, `NIVEL TÉC...`).
+  2. *Causa Raíz:*
+     - El CSS imponía `text-transform: uppercase; letter-spacing: 0.3px;` sobre `.beach-chip-label`, lo que hinchaba el ancho físico de los caracteres en mayúsculas en un 38% e inducía al navegador a activar el corte con elipsis por escasos 6 píxeles de exceso sobre el contenedor de 117 px.
+  3. *Implementación Técnica (Leyes 11 y 14):*
+     - En `css/components.css`:
+       - Establecido `text-transform: none; letter-spacing: 0;` en `.beach-chip-header .beach-chip-label`.
+       - Establecido `overflow: visible; text-overflow: clip;` para erradicar para siempre los puntos suspensivos.
+       - En tipografía natural los títulos ocupan ~75 px (frente a los 117 px disponibles), quedando holgados con más de 40 px de margen en pantallas móviles.
+  4. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-49-natural-case-beach-specs-labels`.
+     - Query strings actualizadas a `v=3.0.24.49` en `index.html` (para `components.css`, `app.js` y el registro de `sw.js`) y en `app.js`.
+
 ## 🔄 Blindaje de Registro Service Worker y Actualización OTA para Android (v3.0.24.48) — 2026-11-05
 - **Sincronización del Registro de Service Worker para Google Play y Móviles (Doctrina Reglas 4 y 7):**
   1. *Diagnóstico de Lendo:*

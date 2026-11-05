@@ -10,6 +10,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
 
+## [3.0.24.49] - 2026-11-05
+### Changed
+- **Erradicación Definitiva de Puntos Suspensivos mediante Tipografía Natural (Opción 1 Aprobada por Lendo):**
+  - **Supresión de Mayúsculas Forzadas:** Sustituido `text-transform: uppercase` por tipografía natural (`text-transform: none; letter-spacing: 0;`), reduciendo el ancho físico del texto en más de un 38%.
+  - **Títulos Completos en Pantallas Estrechas:** Los rótulos pasan a mostrarse completos (`Viento Terral`, `Swell Óptimo`, `Fondo Marino`, `Dirección Ola`, `Marea Óptima`, `Nivel Técnico`) con más de 40 px de margen lateral disponible en smartphones.
+  - **Clausura de Elipsis (`text-overflow: clip`):** Eliminado el disparador de puntos suspensivos en cabeceras de pastillas de playa y surf.
+
 ## [3.0.24.48] - 2026-11-05
 ### Changed
 - **Blindaje de Registro Service Worker y Forzado OTA para Android & Google Play (Doctrina Reglas 4 y 7):**
