@@ -719,6 +719,22 @@ export function renderSurfCard(data, concejo) {
 
       <!-- 1. CARRUSEL TRIPARTITO DE BLOQUES TÉCNICOS DE SURF (CALIFICACIÓN, FUERZA & PREVISIÓN) -->
       <div class="surf-carousel-wrap" id="surf-carousel-wrap">
+        <!-- BARRA ERGONÓMICA DE NAVEGACIÓN TRIPARTITA (SUPERIOR EN FILA ÚNICA) -->
+        <div class="surf-nav-toolbar" id="surf-nav-toolbar">
+          <button class="surf-nav-pill active" data-surf-target="0" type="button" aria-label="Ver Calificación y Estrellas">
+            <span class="surf-nav-icon">🏄‍♂️</span>
+            <span class="surf-nav-label">Calificación</span>
+          </button>
+          <button class="surf-nav-pill" data-surf-target="1" type="button" aria-label="Ver Fuerza del Oleaje">
+            <span class="surf-nav-icon">⚡</span>
+            <span class="surf-nav-label">Fuerza</span>
+          </button>
+          <button class="surf-nav-pill" data-surf-target="2" type="button" aria-label="Ver Previsión a 3 horas y 7 días">
+            <span class="surf-nav-icon">⏱️</span>
+            <span class="surf-nav-label">Previsión</span>
+          </button>
+        </div>
+
         <div class="surf-cards-carousel" id="surf-cards-carousel">
           <!-- SLIDE 0: Calificación & Estrellas -->
           <div class="surf-carousel-slide" data-slide-index="0">
@@ -976,22 +992,6 @@ export function renderSurfCard(data, concejo) {
         </div>
       </div>
           </div>
-        </div>
-
-        <!-- BARRA ERGONÓMICA DE NAVEGACIÓN TRIPARTITA (Leyes 11, 14 y 18) -->
-        <div class="surf-nav-toolbar" id="surf-nav-toolbar">
-          <button class="surf-nav-pill active" data-surf-target="0" type="button" aria-label="Ver Calificación y Estrellas">
-            <span class="surf-nav-icon">🏄‍♂️</span>
-            <span class="surf-nav-label">Calificación</span>
-          </button>
-          <button class="surf-nav-pill" data-surf-target="1" type="button" aria-label="Ver Fuerza y Dinámica del Oleaje">
-            <span class="surf-nav-icon">⚡</span>
-            <span class="surf-nav-label">Fuerza & Olas</span>
-          </button>
-          <button class="surf-nav-pill" data-surf-target="2" type="button" aria-label="Ver Previsión a 3 horas y 7 días">
-            <span class="surf-nav-icon">⏱️</span>
-            <span class="surf-nav-label">Previsión</span>
-          </button>
         </div>
       </div>
 

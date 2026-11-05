@@ -10,6 +10,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
 
+## [3.0.24.32] - 2026-11-05
+### Changed
+- **Botonera Superior en Fila Única y Supresión de Hueco Muerto en Surf (Reporte Lendo):**
+  - **Reubicación Superior (`surfCard.js`):** La botonera tripartita se traslada a la parte superior de las tarjetas, justo bajo el encabezado, eliminando cualquier desfase visual o hueco fantasma.
+  - **Fila Única Inquebrantable (`components.css`):** Reestructurada a rejilla de 3 columnas iguales (`grid-template-columns: repeat(3, 1fr)`) y renombrado el botón a `⚡ Fuerza`. Se garantiza que los tres botones convivan en una sola fila sin partirse en ningún móvil.
+  - **Calibración Dinámica de Altura (`app.js`):** El carrusel ajusta su altura automáticamente al tamaño exacto de la tarjeta activa en cada deslizamiento, atrayendo la sección de Rompientes y Picos sin espacios vacíos.
+
 ## [3.0.24.31] - 2026-11-05
 ### Added
 - **Carrusel Horizontal Tripartito en Surf & Rompientes (Iniciativa de Lendo):**

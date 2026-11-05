@@ -2,6 +2,28 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏄‍♂️ Botonera Superior en Fila Única y Supresión de Hueco en Surf (v3.0.24.32) — 2026-11-05
+- **Optimización Ergonómica y Eliminación de Espacio Muerto (Reporte de Lendo con Captura):**
+  1. *Diagnóstico de Lendo:*
+     - En pantalla móvil, los 3 botones colocados debajo del carrusel se partían en 2 filas (`[Calificación] [Fuerza & Olas]` arriba y `[Previsión]` descolgado abajo).
+     - La diferencia de altura entre la tarjeta 1 (~270px) y la tarjeta 3 (~460px) generaba un hueco negro/azul de ~180px entre el final de la tarjeta de Calificación y los botones inferiores.
+     - Lendo ordenó: botones en una sola fila, renombrar el segundo botón a `⚡ Fuerza` a secas y erradicar el hueco muerto.
+  2. *Implementación Técnica (Leyes 11, 14 y 18):*
+     - En `js/components/surfCard.js`:
+       - Reubicada la botonera `.surf-nav-toolbar` **ARRIBA** del carrusel, anclada justo bajo el título de la sección y sobre las tarjetas.
+       - Botón 2 renombrado de `⚡ Fuerza & Olas` a **`⚡ Fuerza`**.
+       - Eliminada la botonera redundante inferior.
+     - En `css/components.css`:
+       - `.surf-nav-toolbar`: reestructurada con `display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;`, garantizando una fila horizontal única inquebrantable en cualquier resolución móvil (320px–420px).
+       - `.surf-nav-pill`: diseño compacto con `padding: 7px 4px; border-radius: 10px; font-size: 0.77rem; white-space: nowrap;`.
+       - `.surf-cards-carousel`: añadida animación de altura fluida `transition: height 0.22s cubic-bezier(0.4, 0, 0.2, 1);`.
+     - En `js/app.js`:
+       - Incorporado auto-ajuste dinámico de altura `syncCarouselHeight(idx)` en `initSurfCardsCarousel()` y en el switch de 3h/7d: el carrusel calibra su altura al milímetro según la tarjeta activa, permitiendo que la sección de Rompientes y Picos suba pegada sin huecos muertos en ninguna diapositiva.
+  3. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-32-surf-top-toolbar-single-row`.
+     - Query strings actualizadas a `v=3.0.24.32` en `index.html`, `components.css` y en la importación de `surfCard.js` dentro de `js/app.js`.
+
+
 ## 🏄‍♂️ Carrusel Horizontal Tripartito en Surf & Rompientes (v3.0.24.31) — 2026-11-05
 - **Reducción Drástica de Scroll Vertical y Ergonomía Universal (Iniciativa de Lendo):**
   1. *Diagnóstico y Propuesta de Lendo:*

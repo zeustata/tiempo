@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-31-surf-tripartite-carousel';
+const CACHE_NAME = 'meteoasturlode-v3024-32-surf-top-toolbar-single-row';
 const STATIC_ASSETS = [
   './',
   './index.html',
