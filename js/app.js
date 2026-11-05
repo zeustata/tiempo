@@ -1430,8 +1430,6 @@ class MeteoAsturiasApp {
           }
           return;
         }
-          return;
-        }
         if (theme) {
           selectTheme(theme);
         }
