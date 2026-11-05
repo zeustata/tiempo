@@ -3,11 +3,11 @@ import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from 
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=3.0.23.63';
 import { renderCurrentWeather } from './components/currentCard.js?v=3.0.24.23';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.24.27';
-import { renderSurfCard } from './components/surfCard.js?v=3.0.24.42';
-import { renderRoutesCard } from './components/routesCard.js?v=3.0.24.17';
+import { renderSurfCard } from './components/surfCard.js?v=3.0.24.43';
+import { renderRoutesCard } from './components/routesCard.js?v=3.0.24.43';
 import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.24.18';
 import { renderMountainCard } from './components/mountainCard.js?v=3.0.24.27';
-import { renderTourismCard } from './components/tourismCard.js?v=3.0.24.17';
+import { renderTourismCard } from './components/tourismCard.js?v=3.0.24.43';
 import { renderForecast, renderHourlyForecastBlock } from './components/forecastView.js?v=3.0.24.26';
 import { renderWeatherChart } from './components/chartsView.js?v=3.0.23.58';
 import { renderAstronomyView } from './components/astronomyCard.js?v=2.2.1';

@@ -245,14 +245,9 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null) {
 
       <!-- 3. SELECTOR TÁCTIL ERGONÓMICO DE SENDA (DISPARADOR DEL BOTTOM SHEET) -->
       <div style="margin-bottom: 12px; display: flex; flex-direction: column; gap: 5px;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <label style="font-size: 0.82rem; font-weight: 700; color: var(--text-main);">
-            📍 Senda de montaña activa:
-          </label>
-          <span style="font-size: 0.72rem; color: var(--primary); font-weight: 700;">
-            ${allRoutes.length} sendas oficiales
-          </span>
-        </div>
+        <label style="font-size: 0.82rem; font-weight: 700; color: var(--text-main);">
+          Sendas:
+        </label>
         
         <button type="button" id="btn-open-routes-picker" class="routes-route-trigger" aria-label="Cambiar senda de senderismo">
           <div style="display: flex; align-items: center; gap: 6px; overflow: hidden; min-width: 0;">

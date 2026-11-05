@@ -10,6 +10,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
 
+## [3.0.24.43] - 2026-11-05
+### Changed
+- **Simplificación y Depuración Minimalista en Cabeceras de Selectores Desplegables (Propuesta Lendo):**
+  - **Erradicación de Ruido Visual:** Suprimidos los textos recargados y los contadores numéricos en azul brillante situados encima de los selectores táctiles.
+  - **Surf (`surfCard.js`):** La cabecera se simplifica a `Arenal y Rompientes:`, omitiendo `5 playas en la zona`.
+  - **Planes de Ocio (`tourismCard.js`):** La cabecera se simplifica a `Plan de ocio:`, omitiendo `36 planes en Asturias`.
+  - **Rutas & Senderismo (`routesCard.js`):** La cabecera se simplifica a `Sendas:`, omitiendo `44 sendas oficiales`.
+  - **Coherencia y Elegancia Móvil (Leyes 11 y 14):** Los tres módulos clave unifican su estilo con un rótulo sobrio, cediendo todo el protagonismo al botón interactivo de selección.
+
 ## [3.0.24.42] - 2026-11-05
 ### Changed
 - **Rediseño Héroe y Potencia Visual en Tarjeta de Calificación de Surf (Propuesta Lendo):**

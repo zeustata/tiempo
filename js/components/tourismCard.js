@@ -194,14 +194,9 @@ export function renderTourismCard(weatherData, concejo, selectedPlanId = null) {
 
       <!-- 3. SELECTOR TÁCTIL ERGONÓMICO DE PLAN (DISPARADOR DEL BOTTOM SHEET) -->
       <div style="margin-bottom: 12px; display: flex; flex-direction: column; gap: 5px;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <label style="font-size: 0.82rem; font-weight: 700; color: var(--text-main);">
-            📍 Plan de ocio seleccionado:
-          </label>
-          <span style="font-size: 0.72rem; color: var(--primary); font-weight: 700;">
-            ${plans.length} planes en Asturias
-          </span>
-        </div>
+        <label style="font-size: 0.82rem; font-weight: 700; color: var(--text-main);">
+          Plan de ocio:
+        </label>
         
         <button type="button" id="btn-open-tourism-picker" class="tourism-plan-trigger" aria-label="Cambiar plan de ocio">
           <div style="display: flex; align-items: center; gap: 6px; overflow: hidden; min-width: 0;">

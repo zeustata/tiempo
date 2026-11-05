@@ -2,6 +2,21 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🎯 Depuración Minimalista en Cabeceras de Desplegables (v3.0.24.43) — 2026-11-05
+- **Supresión de Textos Sobrecargados y Contadores Azules en Selectores (Propuesta Lendo con 3 Capturas):**
+  1. *Diagnóstico de Lendo:*
+     - Lendo detectó que en los tres menús con selectores desplegables (*Surf*, *Ocio* y *Rutas*), el texto situado justo encima de los botones estaba innecesariamente sobrecargado con frases redundantes y contadores en azul (*"36 planes en Asturias"*, *"44 sendas oficiales"*, *"5 playas en la zona"*), restando limpieza y distrayendo la atención del desplegable interactivo.
+  2. *Implementación Técnica (Leyes 11 y 14):*
+     - En `js/components/surfCard.js`:
+       - Cabecera reducida a `<label>Arenal y Rompientes:</label>`, suprimiendo el contenedor flex y el contador de playas en azul.
+     - En `js/components/tourismCard.js`:
+       - Cabecera reducida a `<label>Plan de ocio:</label>`, suprimiendo el contador de planes en azul.
+     - En `js/components/routesCard.js`:
+       - Cabecera reducida a `<label>Sendas:</label>`, suprimiendo el contador de sendas en azul.
+  3. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-43-clean-selectors-labels`.
+     - Query strings actualizadas a `v=3.0.24.43` en `index.html`, `components.css` y las importaciones de `surfCard.js`, `routesCard.js` y `tourismCard.js` en `app.js`.
+
 ## 🏄‍♂️ Rediseño Héroe de la Tarjeta de Calificación y Estrellas (v3.0.24.42) — 2026-11-05
 - **Potencia Visual y Jerarquía Canónica en Calificación de Surf (Propuesta Lendo):**
   1. *Diagnóstico de Lendo:*

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-42-surf-hero-card-vibrant';
+const CACHE_NAME = 'meteoasturlode-v3024-43-clean-selectors-labels';
 const STATIC_ASSETS = [
   './',
   './index.html',

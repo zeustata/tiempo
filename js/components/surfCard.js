@@ -1050,14 +1050,9 @@ export function renderSurfCard(data, concejo, selectedBeachName = null) {
         ${activePlayas.length > 0 ? `
           <!-- SELECTOR ERGONÓMICO TÁCTIL DE ARENAL / ROMPIENTE (ESTILO RUTAS Y CICLISMO) -->
           <div class="surf-spot-selector-wrap" style="margin-bottom: 12px; display: flex; flex-direction: column; gap: 6px;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <label style="font-size: 0.8rem; font-weight: 700; color: #94a3b8;">
-                🏖️ Arenal o Rompiente Activa:
-              </label>
-              <span style="font-size: 0.72rem; color: #38bdf8; font-weight: 700;">
-                ${activePlayas.length} ${activePlayas.length === 1 ? 'playa' : 'playas'} en la zona
-              </span>
-            </div>
+            <label style="font-size: 0.8rem; font-weight: 700; color: #94a3b8;">
+              Arenal y Rompientes:
+            </label>
 
             <button type="button" id="btn-open-surf-spot-picker" class="surf-spot-trigger" aria-label="Cambiar arenal o rompiente de surf">
               <div style="display: flex; align-items: center; gap: 8px; overflow: hidden; min-width: 0;">
