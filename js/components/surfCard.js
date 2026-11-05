@@ -1119,54 +1119,54 @@ export function renderSurfCard(data, concejo, selectedBeachName = null) {
 
                     ${p.bestWind ? `
                       <div class="beach-spec-chip" style="background: rgba(16, 185, 129, 0.08); border-left: 3px solid #10b981;">
-                        <span class="beach-chip-icon">🧭</span>
-                        <div class="beach-chip-info">
-                          <span class="beach-chip-label">Viento Terral Favorable</span>
-                          <span class="beach-chip-value" style="color: #34d399; font-weight: 700;">${p.bestWind}</span>
+                        <div class="beach-chip-header">
+                          <span class="beach-chip-icon">🧭</span>
+                          <span class="beach-chip-label">Viento Terral</span>
                         </div>
+                        <span class="beach-chip-value" style="color: #34d399; font-weight: 700;">${p.bestWind}</span>
                       </div>
                     ` : ''}
 
                     ${p.bestSwell ? `
                       <div class="beach-spec-chip" style="background: rgba(56, 189, 248, 0.08); border-left: 3px solid #38bdf8;">
-                        <span class="beach-chip-icon">🌊</span>
-                        <div class="beach-chip-info">
+                        <div class="beach-chip-header">
+                          <span class="beach-chip-icon">🌊</span>
                           <span class="beach-chip-label">Swell Óptimo</span>
-                          <span class="beach-chip-value" style="color: #38bdf8; font-weight: 700;">${p.bestSwell}</span>
                         </div>
+                        <span class="beach-chip-value" style="color: #38bdf8; font-weight: 700;">${p.bestSwell}</span>
                       </div>
                     ` : ''}
 
                     <div class="beach-spec-chip">
-                      <span class="beach-chip-icon">🪨</span>
-                      <div class="beach-chip-info">
+                      <div class="beach-chip-header">
+                        <span class="beach-chip-icon">🪨</span>
                         <span class="beach-chip-label">Fondo Marino</span>
-                        <span class="beach-chip-value">${p.bottom || '🏖️ Arena (Beach Break)'}</span>
                       </div>
+                      <span class="beach-chip-value">${(p.bottom || 'Arena (Beach Break)').replace(/^[\p{Emoji}\u200d\uFE0F\s]+/u, '')}</span>
                     </div>
 
                     <div class="beach-spec-chip">
-                      <span class="beach-chip-icon">🔄</span>
-                      <div class="beach-chip-info">
+                      <div class="beach-chip-header">
+                        <span class="beach-chip-icon">🔄</span>
                         <span class="beach-chip-label">Dirección Ola</span>
-                        <span class="beach-chip-value">${p.waveType || '↔️ Picos A-Frame'}</span>
                       </div>
+                      <span class="beach-chip-value">${(p.waveType || 'Picos A-Frame').replace(/^[\p{Emoji}\u200d\uFE0F\s]+/u, '')}</span>
                     </div>
 
                     <div class="beach-spec-chip">
-                      <span class="beach-chip-icon">⏳</span>
-                      <div class="beach-chip-info">
+                      <div class="beach-chip-header">
+                        <span class="beach-chip-icon">⏳</span>
                         <span class="beach-chip-label">Marea Óptima</span>
-                        <span class="beach-chip-value">${p.bestTide || 'Media Marea'}</span>
                       </div>
+                      <span class="beach-chip-value">${p.bestTide || 'Media Marea'}</span>
                     </div>
 
                     <div class="beach-spec-chip">
-                      <span class="beach-chip-icon">🎯</span>
-                      <div class="beach-chip-info">
+                      <div class="beach-chip-header">
+                        <span class="beach-chip-icon">🎯</span>
                         <span class="beach-chip-label">Nivel Técnico</span>
-                        <span class="beach-chip-value level-badge">${p.surfLevel || 'Todos'}</span>
                       </div>
+                      <span class="beach-chip-value level-badge">${p.surfLevel || 'Todos'}</span>
                     </div>
 
                     ${p.hazards ? `

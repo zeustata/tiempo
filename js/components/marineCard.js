@@ -1492,19 +1492,19 @@ export function renderMarineCard(data, concejo, selectedBeachName = null) {
 
                   <div class="beach-specs-chips">
                     <div class="beach-spec-chip">
-                      <span class="beach-chip-icon">${bottomIcon}</span>
-                      <div class="beach-chip-info">
-                        <span class="beach-chip-label">Fondo / Entorno</span>
-                        <span class="beach-chip-value">${bottomText}</span>
+                      <div class="beach-chip-header">
+                        <span class="beach-chip-icon">${bottomIcon}</span>
+                        <span class="beach-chip-label">Fondo Marino</span>
                       </div>
+                      <span class="beach-chip-value">${bottomText}</span>
                     </div>
 
                     <div class="beach-spec-chip">
-                      <span class="beach-chip-icon">⏳</span>
-                      <div class="beach-chip-info">
+                      <div class="beach-chip-header">
+                        <span class="beach-chip-icon">⏳</span>
                         <span class="beach-chip-label">Marea Óptima</span>
-                        <span class="beach-chip-value">${p.bestTide || 'Media Marea / Bajamar'}</span>
                       </div>
+                      <span class="beach-chip-value">${p.bestTide || 'Media Marea / Bajamar'}</span>
                     </div>
 
                     <div class="beach-spec-chip beach-chip-full ${recClass}">

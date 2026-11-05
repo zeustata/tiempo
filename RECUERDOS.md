@@ -2,6 +2,23 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏄‍♂️ Reingeniería Ergonómica Vertical de Ficha Técnica de Playas y Surf (v3.0.24.47) — 2026-11-05
+- **Erradicación de Títulos Cortados con Elipsis y Texto Estrangulado (Reporte Lendo con Captura):**
+  1. *Diagnóstico de Lendo:*
+     - Lendo aportó captura del módulo Surf en móvil donde las 6 pastillas técnicas a 2 columnas sufrían truncamiento total con elipsis en sus etiquetas (`VIENTO T...`, `SWELL ÓP...`, `FONDO M...`, `DIRECCIÓ...`, `MAREA ÓP...`, `NIVEL TÉC...`), y los valores se apelotonaban en 4 o 5 líneas apretadas debido al espacio robado por el icono lateral.
+  2. *Implementación Técnica (Leyes 11 y 14):*
+     - En `css/components.css`:
+       - Reestructurado `.beach-spec-chip` a `flex-direction: column; align-items: stretch;`, manteniendo `.beach-chip-full` en fila horizontal.
+       - Creada la clase `.beach-chip-header` para agrupar icono y etiqueta en la fila superior con `display: flex; align-items: center; gap: 6px;`, otorgando el 100% del ancho a la etiqueta y eliminando cualquier necesidad de elipsis.
+       - La clase `.beach-chip-value` pasa a ocupar todo el ancho útil de la caja, reduciendo los saltos de línea de 5 a 1–2 líneas limpias.
+     - En `js/components/surfCard.js` y `js/components/marineCard.js`:
+       - Adoptada la nueva estructura `.beach-chip-header`.
+       - Limpiados emojis duplicados dentro de los valores de texto (`🏖️`, `↔️`).
+       - Etiquetas optimizadas a concisión técnica (`Viento Terral`, `Swell Óptimo`, `Fondo Marino`, `Dirección Ola`, `Marea Óptima`, `Nivel Técnico`).
+  3. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-47-vertical-beach-specs-chips`.
+     - Query strings actualizadas a `v=3.0.24.47` en `index.html`, `components.css` y las importaciones de `surfCard.js` y `marineCard.js` en `app.js`.
+
 ## 🏖️ Depuración Minimalista en Cabecera de Guía de Playas (v3.0.24.46) — 2026-11-05
 - **Limpieza de Paréntesis y Parroquias en Cabecera de Playas (Reporte Lendo con Captura):**
   1. *Diagnóstico de Lendo:*

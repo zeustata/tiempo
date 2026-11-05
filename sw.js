@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-46-clean-beaches-guide-title';
+const CACHE_NAME = 'meteoasturlode-v3024-47-vertical-beach-specs-chips';
 const STATIC_ASSETS = [
   './',
   './index.html',

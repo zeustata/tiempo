@@ -10,6 +10,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
 
+## [3.0.24.47] - 2026-11-05
+### Changed
+- **Reingeniería Ergonómica Vertical de Micro-Píldoras Técnicas en Ficha de Playas y Surf (Reporte Lendo con Captura):**
+  - **Erradicación de Títulos Cortados con Elipsis:** Suprimido el truncamiento con puntos suspensivos (`VIENTO T...`, `SWELL ÓP...`, `FONDO M...`, `DIRECCIÓ...`, `MAREA ÓP...`, `NIVEL TÉC...`) en pantallas móviles al forzar 2 columnas estrechas.
+  - **Arquitectura Verticalizada (`.beach-chip-header`):** El icono y el nombre de la especificación se ubican en la fila superior aprovechando todo el ancho de la tarjeta, y el valor técnico se traslada a la fila inferior sin competir con el icono.
+  - **Eliminación de Texto Estrangulado:** Los valores técnicos pasan de partirse en 4–5 líneas apretadas a 1–2 líneas limpias y legibles.
+  - **Depuración de Emojis Duplicados:** Suprimidos los iconos redundantes insertados dentro del texto de los valores (como `🏖️` en fondo o `↔️` en dirección) al contar ya con icono identificativo en cabecera.
+  - **Unificación Armónica (Doctrina Regla 14):** Aplicado tanto en la ficha técnica de Surf (`surfCard.js`) como en la Guía de Playas del módulo marítimo (`marineCard.js`).
+
 ## [3.0.24.46] - 2026-11-05
 ### Changed
 - **Depuración Minimalista en Cabecera de Guía de Playas (Reporte Lendo con Captura):**
