@@ -2,6 +2,26 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏖️ Selector Ergonómico Bottom Sheet en Guía de Playas y Calas (v3.0.24.45) — 2026-11-05
+- **Unificación Arquitectónica de Guía de Playas con el Patrón Ergonómico Universal (Propuesta Lendo):**
+  1. *Diagnóstico de Lendo:*
+     - Lendo solicitó en el menú Playas (módulo Marítimo) eliminar los múltiples desplegables verticales tipo acordeón (`<details>`) y sustituirlos por un único selector ergonómico para elegir la playa, mostrando debajo los datos de la playa activa, exactamente como en *Surf*, *Rutas*, *Ciclismo* y *Ocio*.
+  2. *Implementación Técnica (Leyes 11, 14 y 18):*
+     - En `js/components/marineCard.js`:
+       - Suprimida la lista de `<details class="beach-accordion-card">`.
+       - Incorporado el selector táctil con etiqueta `Playas y calas:` y botón disparador `.beach-trigger-btn` que exhibe el nombre de la playa elegida, orientación y entorno con pastilla `Elegir ▼`.
+       - Renderizada una tarjeta protagonista única `.marine-beach-spot-card` para la playa activa, mostrando descripción completa, chips de tipo de fondo y marea óptima, recomendación de baño y chip de alerta roja si cuenta con advertencias/peligros registrados (`p.hazards`).
+       - Extraído el modal deslizable `.surf-spots-modal-backdrop` a nivel de raíz del módulo (`#marine-beaches-modal`) con catálogo de playas (`.marine-beach-item-card`), tag (`Playa`, `Cala`, etc.) y detalle de fondo.
+     - En `css/components.css`:
+       - Reutilizadas las clases visuales de Surf `.surf-spot-trigger, .beach-trigger-btn`, `.surf-beach-spot-card, .marine-beach-spot-card`, `.beach-spot-card-header` y `.marine-beach-item-card` asegurando armonía visual integral (Doctrina 14).
+     - En `js/app.js`:
+       - Definida la propiedad `this.selectedMarineBeachName = null` con auto-reset al cambiar de concejo (`selectConcejo`).
+       - Agregadas las clases de playas al guardián `isInteractiveZone` para proteger de swipe lateral accidental (Doctrina 18).
+       - Creado el método `initMarineBeachesSelectorEvents()` que teletransporta `#marine-beaches-modal` a `document.body` (evitando bugs de solapamiento por `backdrop-filter` del contenedor), gestiona apertura/cierre y sincroniza en caliente el disparador y la tarjeta protagonista activa.
+  3. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-45-beaches-bottom-sheet-selector`.
+     - Query strings actualizadas a `v=3.0.24.45` en `index.html`, `components.css` y la importación de `marineCard.js` en `app.js`.
+
 ## 🚴‍♂️ Depuración Minimalista en Selector de Ciclismo (v3.0.24.44) — 2026-11-05
 - **Erradicación de Ruido y Colisión de 4 Líneas en Selector Ciclista (Reporte Lendo con Captura):**
   1. *Diagnóstico de Lendo:*

@@ -10,6 +10,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
 
+## [3.0.24.45] - 2026-11-05
+### Changed
+- **Modernización y Selector Ergonómico Táctil en Guía de Playas y Calas (Propuesta Lendo):**
+  - **Erradicación de Acordeones Múltiples:** Suprimida la lista interminable de elementos desplegables verticales (`<details>`) en la sección de playas del módulo marítimo, que acumulaba entre 15 y 30 tarjetas colapsables en concejos costeros.
+  - **Selector Táctil Bottom Sheet Unificado (Doctrina Regla 14):** Integrado el mismo patrón de diseño exitoso de *Surf*, *Rutas*, *Ciclismo* y *Ocio*:
+    - Rótulo sobrio: `Playas y calas:`.
+    - Botón disparador ergonómico: muestra la playa activa, orientación y entorno con indicador `Elegir ▼`.
+    - Modal deslizable inferior (*Bottom Sheet*): catálogo completo de playas y calas del concejo con chips identificativos (`Playa`, `Cala`, `Playa Urbana`), orientación cardinal y fondo.
+    - Tarjeta protagonista única: muestra en detalle la descripción del arenal activo, tipo de fondo, marea óptima, recomendación de baño y advertencias/peligros en caso de existir.
+  - **Auto-Reset al Cambiar de Concejo:** Al cambiar de municipio, la selección se restablece automáticamente a la playa principal o por defecto del nuevo sector costero.
+  - **Inmunidad al Swipe (Regla 18):** Incorporados los selectores y tarjetas de playas al guardián `isInteractiveZone` de `app.js`.
+
 ## [3.0.24.44] - 2026-11-05
 ### Changed
 - **Depuración Minimalista en Selector de Ciclismo (Reporte Lendo con Captura):**

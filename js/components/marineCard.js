@@ -1138,7 +1138,7 @@ export function getBeachCategories(playas) {
  * Renderiza el módulo marítimo con Mareógrafo interactivo en tiempo real, 
  * Cuadro semanal de mareas y Catálogo de Playas y Calas de Asturias (Turismo y Baño)
  */
-export function renderMarineCard(data, concejo) {
+export function renderMarineCard(data, concejo, selectedBeachName = null) {
   const marine = data.marine?.current;
   const current = data.weather.current;
 
@@ -1146,6 +1146,7 @@ export function renderMarineCard(data, concejo) {
   const coastalData = isCoasting ? PLAYAS_POR_CONCEJO[concejo.id] : null;
   const interiorRef = !isCoasting ? getNearestCoastalReference(concejo) : null;
   const activePlayas = isCoasting ? coastalData.playas : PLAYAS_POR_CONCEJO[interiorRef.refId].playas;
+  const selectedBeach = (selectedBeachName && activePlayas.find(p => p.name === selectedBeachName)) || activePlayas[0] || null;
   const activeCoastName = isCoasting ? coastalData.name : `${interiorRef.name} (más cercana a ${concejo.name} • ${interiorRef.dist})`;
 
   const waveHeight = (marine && typeof marine.wave_height === 'number') ? marine.wave_height.toFixed(1) : (isCoasting ? '1.4' : '1.3');
@@ -1200,7 +1201,8 @@ export function renderMarineCard(data, concejo) {
   const concejoTitle = concejo.name.replace(/\s*\(.*?\)/, '');
 
   return `
-    <div class="marine-card">
+    <div class="marine-module-wrapper">
+      <div class="marine-card">
       <div class="section-title-wrap marine-master-header" style="margin-bottom: 8px;">
         <div class="marine-header-text">
           <h3 class="section-heading" style="margin-bottom: 0;">🏖️ Playas & Mareógrafo • ${concejoTitle}</h3>
@@ -1420,76 +1422,115 @@ export function renderMarineCard(data, concejo) {
         })()}
       </div>
 
-      <!-- 4. CATÁLOGO TURÍSTICO DE PLAYAS Y CALAS DEL CONCEJO -->
-      <div class="marine-ports-section">
-        <div class="beach-section-header" style="margin-bottom: 12px;">
-          <h4 class="ports-title" style="margin: 0;">
+      <!-- 4. CATÁLOGO TURÍSTICO DE PLAYAS Y CALAS DEL CONCEJO (SELECTOR ERGONÓMICO TÁCTIL) -->
+      <div class="marine-ports-section" style="margin-top: 20px;">
+        <div class="beach-section-header" style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+          <h4 class="ports-title" style="margin: 0; font-size: 1.05rem; line-height: 1.35;">
             🏖️ Guía de Playas y Calas de ${isCoasting ? concejo.name : `${concejo.name} (en ${interiorRef.name})`}
           </h4>
         </div>
 
-        <div class="beaches-grid">
-          ${activePlayas.map(p => {
-            const rawBottom = p.bottom || '🏖️ Arena fina dorada';
-            const emojiMatch = rawBottom.match(/^([\p{Emoji}\u200d\uFE0F]+)\s*(.*)$/u);
-            const bottomIcon = emojiMatch ? emojiMatch[1] : '🏖️';
-            const bottomText = emojiMatch && emojiMatch[2] ? emojiMatch[2] : rawBottom.replace(/^[\p{Emoji}\u200d\uFE0F\s]+/u, '') || rawBottom;
+        ${activePlayas.length > 0 ? `
+          <!-- SELECTOR ERGONÓMICO TÁCTIL -->
+          <div class="beach-selector-wrap" style="margin-bottom: 12px; display: flex; flex-direction: column; gap: 6px;">
+            <label style="font-size: 0.8rem; font-weight: 700; color: #94a3b8;">
+              Playas y calas:
+            </label>
 
-            const isFamily = p.surfLevel ? (p.surfLevel.includes('Baño') || p.surfLevel.includes('Familiar') || p.surfLevel.includes('Todos')) : true;
-            const recIcon = isFamily ? '👨‍👩‍👧‍👦' : '🌊';
-            const recClass = isFamily ? 'chip-family' : 'chip-warning';
-            const recVal = isFamily ? 'Ideal para baño, descanso y paseos' : 'Precaución con el oleaje en días de mar viva';
-
-            return `
-            <details class="beach-accordion-card" name="beach-accordion">
-              <summary class="beach-accordion-header">
-                <div class="beach-accordion-title-wrap">
-                  <span class="beach-accordion-icon">🏖️</span>
-                  <div class="beach-accordion-name-col">
-                    <span class="beach-card-name">${p.name}</span>
-                    <div class="beach-accordion-subrow">
-                      <span class="beach-card-tag">${p.tag || 'Playa'}</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="beach-accordion-meta">
-                  <span class="beach-accordion-chevron">▾</span>
-                </div>
-              </summary>
-              
-              <div class="beach-accordion-body">
-                <div class="beach-card-desc">${p.type}</div>
-
-                <div class="beach-specs-chips">
-                  <div class="beach-spec-chip">
-                    <span class="beach-chip-icon">${bottomIcon}</span>
-                    <div class="beach-chip-info">
-                      <span class="beach-chip-label">Fondo / Entorno</span>
-                      <span class="beach-chip-value">${bottomText}</span>
-                    </div>
-                  </div>
-
-                  <div class="beach-spec-chip">
-                    <span class="beach-chip-icon">⏳</span>
-                    <div class="beach-chip-info">
-                      <span class="beach-chip-label">Marea Óptima</span>
-                      <span class="beach-chip-value">${p.bestTide || 'Media Marea / Bajamar'}</span>
-                    </div>
-                  </div>
-
-                  <div class="beach-spec-chip beach-chip-full ${recClass}">
-                    <span class="beach-chip-icon">${recIcon}</span>
-                    <div class="beach-chip-info">
-                      <span class="beach-chip-label">Recomendación</span>
-                      <span class="beach-chip-value">${recVal}</span>
-                    </div>
-                  </div>
+            <button type="button" id="btn-open-beach-picker" class="beach-trigger-btn" aria-label="Cambiar playa o cala">
+              <div style="display: flex; align-items: center; gap: 8px; overflow: hidden; min-width: 0;">
+                <span style="font-size: 1.15rem; flex-shrink: 0;">🏖️</span>
+                <div style="display: flex; flex-direction: column; min-width: 0; text-align: left;">
+                  <span id="beach-trigger-name" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.88rem; font-weight: 800; color: #ffffff;">
+                    ${selectedBeach.name}
+                  </span>
+                  <span id="beach-trigger-sub" style="font-size: 0.72rem; color: #94a3b8; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                    ${selectedBeach.tag || 'Playa'} · ${selectedBeach.facing ? `Mira al ${selectedBeach.facing}` : 'Costera'}
+                  </span>
                 </div>
               </div>
-            </details>
-          `;
-          }).join('')}
-        </div>
+              <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
+                <span style="font-size: 0.75rem; color: #38bdf8; font-weight: 800;">Elegir</span>
+                <span style="font-size: 0.8rem; color: #38bdf8;">▼</span>
+              </div>
+            </button>
+          </div>
+
+          <!-- TARJETA PROTAGONISTA DE LA PLAYA ACTIVA -->
+          <div id="marine-active-beach-container" class="marine-active-beach-container">
+            ${activePlayas.map(p => {
+              const rawBottom = p.bottom || '🏖️ Arena fina dorada';
+              const emojiMatch = rawBottom.match(/^([\p{Emoji}\u200d\uFE0F]+)\s*(.*)$/u);
+              const bottomIcon = emojiMatch ? emojiMatch[1] : '🏖️';
+              const bottomText = emojiMatch && emojiMatch[2] ? emojiMatch[2] : rawBottom.replace(/^[\p{Emoji}\u200d\uFE0F\s]+/u, '') || rawBottom;
+
+              const isFamily = p.surfLevel ? (p.surfLevel.includes('Baño') || p.surfLevel.includes('Familiar') || p.surfLevel.includes('Todos')) : true;
+              const recIcon = isFamily ? '👨‍👩‍👧‍👦' : '🌊';
+              const recClass = isFamily ? 'chip-family' : 'chip-warning';
+              const recVal = isFamily ? 'Ideal para baño, descanso y paseos' : 'Precaución con el oleaje en días de mar viva';
+              const isVisible = p.name === selectedBeach.name;
+
+              return `
+                <div class="marine-beach-spot-card ${isVisible ? 'active' : ''}" data-beach-name="${p.name}" style="${isVisible ? '' : 'display: none;'}">
+                  ${(p.type || p.tag) ? `
+                    <div class="beach-spot-card-header">
+                      <div style="flex: 1; min-width: 0;">
+                        <p style="margin: 0; font-size: 0.82rem; color: #cbd5e1; line-height: 1.45;">
+                          ${p.type || (p.facing ? `Arenal orientado al ${p.facing}` : 'Rompiente costera')}
+                        </p>
+                      </div>
+                      ${p.tag ? `
+                        <span class="beach-card-tag" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); font-size: 0.72rem; font-weight: 800; padding: 3px 8px; border-radius: 6px; flex-shrink: 0; white-space: nowrap;">
+                          ${p.tag}
+                        </span>
+                      ` : ''}
+                    </div>
+                  ` : ''}
+
+                  <div class="beach-specs-chips">
+                    <div class="beach-spec-chip">
+                      <span class="beach-chip-icon">${bottomIcon}</span>
+                      <div class="beach-chip-info">
+                        <span class="beach-chip-label">Fondo / Entorno</span>
+                        <span class="beach-chip-value">${bottomText}</span>
+                      </div>
+                    </div>
+
+                    <div class="beach-spec-chip">
+                      <span class="beach-chip-icon">⏳</span>
+                      <div class="beach-chip-info">
+                        <span class="beach-chip-label">Marea Óptima</span>
+                        <span class="beach-chip-value">${p.bestTide || 'Media Marea / Bajamar'}</span>
+                      </div>
+                    </div>
+
+                    <div class="beach-spec-chip beach-chip-full ${recClass}">
+                      <span class="beach-chip-icon">${recIcon}</span>
+                      <div class="beach-chip-info">
+                        <span class="beach-chip-label">Recomendación</span>
+                        <span class="beach-chip-value">${recVal}</span>
+                      </div>
+                    </div>
+
+                    ${p.hazards ? `
+                      <div class="beach-spec-chip beach-chip-full" style="background: rgba(239, 68, 68, 0.08); border-left: 3px solid #ef4444;">
+                        <span class="beach-chip-icon">⚠️</span>
+                        <div class="beach-chip-info">
+                          <span class="beach-chip-label">Peligros / Precaución</span>
+                          <span class="beach-chip-value" style="color: #fca5a5;">${p.hazards}</span>
+                        </div>
+                      </div>
+                    ` : ''}
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        ` : `
+          <div style="padding: 16px; text-align: center; background: rgba(15, 23, 42, 0.5); border-radius: 12px; border: 1px solid rgba(255,255,255,0.06); color: #94a3b8; font-size: 0.82rem;">
+            No hay arenales registrados específicamente en este sector costero.
+          </div>
+        `}
       </div>
 
       <!-- AVISO LEGAL Y EXENCIÓN DE RESPONSABILIDAD -->
@@ -1498,6 +1539,50 @@ export function renderMarineCard(data, concejo) {
         El estado del mar y la bandera mostrados son estimaciones matemáticas teóricas basadas en modelos oceanográficos numéricos. <strong>En ningún caso sustituyen la señalización física ni las indicaciones del Servicio de Salvamento y Socorrismo a pie de playa</strong>. Respeta siempre las banderas oficiales en cada arenal y báñate bajo tu propia responsabilidad.
       </div>
     </div>
+
+    <!-- BOTTOM SHEET / MODAL ERGONÓMICO DE SELECCIÓN DE PLAYA / CALA (FUERA DE MARINE-CARD) -->
+    ${activePlayas.length > 0 ? `
+      <div id="marine-beaches-modal" class="surf-spots-modal-backdrop" aria-hidden="true" style="display: none;">
+        <div class="surf-spots-modal-sheet">
+          <div style="padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <h3 style="margin: 0; font-size: 1.05rem; font-weight: 800; color: #ffffff;">Selecciona playa o cala</h3>
+              <span style="font-size: 0.75rem; color: #94a3b8;">Toca una playa para ver su ficha técnica</span>
+            </div>
+            <button type="button" id="btn-close-marine-beaches-modal" style="background: rgba(255,255,255,0.08); border: none; color: #ffffff; font-size: 1.1rem; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;" aria-label="Cerrar selector">
+              ✕
+            </button>
+          </div>
+
+          <div style="padding: 12px 14px; overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch; max-height: 60vh;">
+            ${activePlayas.map(p => {
+              const isSelected = p.name === selectedBeach.name;
+              return `
+                <div class="marine-beach-item-card ${isSelected ? 'selected' : ''}" data-beach-name="${p.name}" data-beach-sub="${p.tag || 'Playa'} · ${p.facing ? `Mira al ${p.facing}` : 'Costera'}">
+                  <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px;">
+                    <strong style="font-size: 0.88rem; color: #ffffff;">🏖️ ${p.name}</strong>
+                    <span style="font-size: 0.7rem; font-weight: 800; padding: 2px 7px; border-radius: 6px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); white-space: nowrap;">
+                      ${p.tag || 'Playa'}
+                    </span>
+                  </div>
+                  <div style="display: flex; gap: 8px; align-items: center; font-size: 0.72rem; color: #94a3b8; margin-top: 4px; flex-wrap: wrap;">
+                    <span>🧭 ${p.facing ? `Mira al ${p.facing}` : 'Costera'}</span>
+                    <span>•</span>
+                    <span>🌊 ${p.bottom || 'Arena dorada'}</span>
+                  </div>
+                  ${p.type ? `
+                    <div style="font-size: 0.72rem; color: #cbd5e1; margin-top: 3px; font-style: italic; line-height: 1.35;">
+                      ${p.type}
+                    </div>
+                  ` : ''}
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      </div>
+    ` : ''}
+  </div>
   `;
 }
 

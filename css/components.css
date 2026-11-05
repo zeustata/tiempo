@@ -13809,8 +13809,9 @@
   }
 }
 
-/* --- SELECTOR ERGONÓMICO DE ARENALES Y PICOS DE SURF (ESTILO RUTAS Y CICLISMO v3.0.24.37) --- */
-.surf-spot-trigger {
+/* --- SELECTOR ERGONÓMICO DE ARENALES Y PICOS DE SURF & PLAYAS (ESTILO RUTAS Y CICLISMO) --- */
+.surf-spot-trigger,
+.beach-trigger-btn {
   width: 100%;
   padding: 10px 12px;
   border-radius: 12px;
@@ -13829,11 +13830,13 @@
   transition: border-color 0.2s ease, background 0.2s ease;
 }
 
-.surf-spot-trigger:active {
+.surf-spot-trigger:active,
+.beach-trigger-btn:active {
   background: rgba(56, 189, 248, 0.15);
 }
 
-.surf-beach-spot-card {
+.surf-beach-spot-card,
+.marine-beach-spot-card {
   background: rgba(15, 23, 42, 0.72);
   border: 1px solid rgba(56, 189, 248, 0.3);
   border-radius: 14px;
@@ -13848,7 +13851,8 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-.surf-spot-card-header {
+.surf-spot-card-header,
+.beach-spot-card-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -13898,7 +13902,8 @@
   to { transform: translateY(0); }
 }
 
-.surf-spot-item-card {
+.surf-spot-item-card,
+.marine-beach-item-card {
   padding: 10px 12px;
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.06);
@@ -13912,7 +13917,9 @@
 }
 
 .surf-spot-item-card:active,
-.surf-spot-item-card.selected {
+.surf-spot-item-card.selected,
+.marine-beach-item-card:active,
+.marine-beach-item-card.selected {
   background: rgba(56, 189, 248, 0.15);
   border-color: rgba(56, 189, 248, 0.5);
 }

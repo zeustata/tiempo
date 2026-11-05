@@ -2,7 +2,7 @@ import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo, resolveSubLocali
 import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.23.58';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=3.0.23.63';
 import { renderCurrentWeather } from './components/currentCard.js?v=3.0.24.23';
-import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.24.27';
+import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.24.45';
 import { renderSurfCard } from './components/surfCard.js?v=3.0.24.43';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.24.43';
 import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.24.44';
@@ -61,6 +61,7 @@ class MeteoAsturiasApp {
     this.selectedTourismPlanId = null;
     this.selectedCyclingRouteId = null;
     this.selectedSurfBeachName = null;
+    this.selectedMarineBeachName = null;
     this.selectedCyclingHour = 9;
     this.selectedCyclingSpeed = 24;
     this.autoRefreshTimer = null;
@@ -2444,6 +2445,7 @@ class MeteoAsturiasApp {
         '.surf-carousel-wrap, .surf-cards-carousel, .surf-carousel-slide, .surf-nav-toolbar, .surf-nav-pill, ' +
         '.surf-timeline-grid, .surf-slot-card, .surf-timeline-scroll-hint, .surf-daily-cards-grid, .surf-daily-card, .surf-dayparts-list, .surf-daily-scroll-hint, ' +
         '.surf-spot-selector-wrap, .surf-spot-trigger, .surf-spots-modal-backdrop, .surf-spots-modal-sheet, .surf-spot-item-card, .surf-beach-spot-card, ' +
+        '.beach-selector-wrap, .beach-trigger-btn, .marine-beach-spot-card, .marine-beach-item-card, ' +
         '.module-chips-nav, .module-chips-scroll, .module-chip, ' +
         '.favorites-pills, .view-tabs, ' +
         '.beach-controls-toolbar, .beach-filter-dropdown-wrapper, ' +
@@ -2712,7 +2714,8 @@ class MeteoAsturiasApp {
     this.selectedHikingRouteId = null; // Auto-resetea para cargar directamente la óptima de la nueva localidad
     this.selectedTourismPlanId = null; // Auto-resetea para cargar directamente la óptima de la nueva localidad
     this.selectedCyclingRouteId = null; // Auto-resetea para cargar directamente la óptima de la nueva localidad
-    this.selectedSurfBeachName = null; // Auto-resetea para cargar el arenal por defecto de la nueva localidad
+    this.selectedSurfBeachName = null;
+    this.selectedMarineBeachName = null; // Auto-resetea para cargar el arenal por defecto de la nueva localidad
     this.prefs.lastConcejo = concejoId;
     // Recalcular localidad activa para el nuevo concejo (evita arrastrar localidades ajenas como Piedras Blancas a Oviedo)
     this.activeLocalidad = this.userCoords ? resolveSubLocalidad(this.currentConcejo.id, this.userCoords.lat, this.userCoords.lon) : null;
@@ -3172,8 +3175,9 @@ class MeteoAsturiasApp {
       try {
         const marineContainer = document.getElementById('panel-marine');
         if (marineContainer) {
-          marineContainer.innerHTML = renderMarineCard(data, concejo);
+          marineContainer.innerHTML = renderMarineCard(data, concejo, this.selectedMarineBeachName);
           scrollTideChartToNow();
+          this.initMarineBeachesSelectorEvents();
           this.bindCarouselDots('weekly-tides-carousel', 'weekly-tides-dots', '.tide-day-card');
           this.bindCarouselDots('tide-today-carousel', 'tide-today-dots', '.tide-mini-pill');
         }
@@ -3896,6 +3900,90 @@ class MeteoAsturiasApp {
 
         // Actualizar clase selected en los ítems del modal
         document.querySelectorAll('.surf-spot-item-card').forEach(i => {
+          if (i.dataset.beachName === beachName) {
+            i.classList.add('selected');
+          } else {
+            i.classList.remove('selected');
+          }
+        });
+
+        // Cerrar modal
+        if (modal) {
+          modal.style.display = 'none';
+          modal.setAttribute('aria-hidden', 'true');
+        }
+      });
+    });
+  }
+
+  initMarineBeachesSelectorEvents() {
+    // Si ya existía un modal previo huérfano en document.body (de un concejo anterior), lo eliminamos
+    const orphanModals = document.querySelectorAll('body > #marine-beaches-modal');
+    orphanModals.forEach(m => m.remove());
+
+    const btnOpen = document.getElementById('btn-open-beach-picker');
+    const modal = document.getElementById('marine-beaches-modal');
+    const btnClose = document.getElementById('btn-close-marine-beaches-modal');
+
+    // Mover el modal a document.body para garantizar que position: fixed sea 100% relativo al viewport
+    if (modal && modal.parentElement !== document.body) {
+      document.body.appendChild(modal);
+    }
+
+    if (btnOpen && modal) {
+      btnOpen.addEventListener('click', () => {
+        this.triggerHaptic();
+        modal.style.display = 'flex';
+        modal.setAttribute('aria-hidden', 'false');
+      });
+    }
+
+    if (btnClose && modal) {
+      btnClose.addEventListener('click', () => {
+        this.triggerHaptic();
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+      });
+    }
+
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.style.display = 'none';
+          modal.setAttribute('aria-hidden', 'true');
+        }
+      });
+    }
+
+    // Selección táctil de playa en el modal
+    document.querySelectorAll('.marine-beach-item-card').forEach(item => {
+      item.addEventListener('click', (e) => {
+        const beachName = e.currentTarget.dataset.beachName;
+        const beachSub = e.currentTarget.dataset.beachSub;
+        if (!beachName) return;
+
+        this.triggerHaptic();
+        this.selectedMarineBeachName = beachName;
+
+        // Actualizar el texto del selector de forma inmediata
+        const nameEl = document.getElementById('beach-trigger-name');
+        const subEl = document.getElementById('beach-trigger-sub');
+        if (nameEl) nameEl.textContent = beachName;
+        if (subEl && beachSub) subEl.textContent = beachSub;
+
+        // Alternar visualmente la tarjeta de la playa elegida
+        document.querySelectorAll('.marine-beach-spot-card').forEach(card => {
+          if (card.dataset.beachName === beachName) {
+            card.style.display = 'block';
+            card.classList.add('active');
+          } else {
+            card.style.display = 'none';
+            card.classList.remove('active');
+          }
+        });
+
+        // Actualizar clase selected en los ítems del modal
+        document.querySelectorAll('.marine-beach-item-card').forEach(i => {
           if (i.dataset.beachName === beachName) {
             i.classList.add('selected');
           } else {
