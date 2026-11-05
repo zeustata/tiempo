@@ -1,11 +1,10 @@
-const CACHE_NAME = 'meteoasturlode-v3024-49-natural-case-beach-specs-labels';
+const CACHE_NAME = 'meteoasturlode-v3024-50-clean-seasonal-themes';
 const STATIC_ASSETS = [
   './',
   './index.html',
   './privacy.html',
   './manifest.json',
   './js/utils/weatherHalloweenIcons.js',
-  './js/utils/weatherAmaguestuIcons.js',
   './js/utils/festivosData.js',
   './icons/bandera-asturias.svg',
   './icons/icon.svg',

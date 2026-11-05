@@ -2,6 +2,18 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🎄 Retirada de Colección Amagüestu y Enfoque en Especial Navidad (v3.0.24.50) — 2026-11-06
+- **Depuración Arquitectónica y Concentración de Esfuerzos (Decisión Lendo):**
+  1. *Diagnóstico de Lendo:*
+     - Lendo valoró que los iconos del Amagüestu no terminaban de convencer a nivel de legibilidad y que, tratándose de un evento muy breve y disperso en el calendario, resultaba mucho más inteligente retirar la colección y centrar todos los recursos de diseño en el gran especial de *Navidad & L'Anguleru*, que durará más de un mes y cuenta con una iconografía navideña mucho más rica y universal.
+  2. *Implementación Técnica (Leyes 11 y 14):*
+     - Suprimida la tarjeta bloqueada de Amagüestu en `index.html`.
+     - Limpiadas las referencias, escuchadores, flags de depuración y selectores en `js/app.js`, `js/utils/weatherIcons.js` y `sw.js`.
+     - Eliminado el archivo `js/utils/weatherAmaguestuIcons.js`, aligerando el peso total de la aplicación.
+  3. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-50-clean-seasonal-themes`.
+     - Sincronizadas las cadenas de versión a `v=3.0.24.50` en `index.html` y `app.js`.
+
 ## 🔤 Erradicación Definitiva de Elipsis con Tipografía Natural (v3.0.24.49) — 2026-11-05
 - **Supresión de Mayúsculas Forzadas y Clausura de Puntos Suspensivos (Opción 1 Lendo):**
   1. *Diagnóstico de Lendo:*

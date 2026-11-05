@@ -4456,27 +4456,6 @@
               <span class="lock-notice-text">🎃 Activación automática en Samhain</span>
             </div>
           </div>
-
-          <!-- Tarjeta 9: Especial Amagüestu de Seronda (Eventual / Bloqueado) -->
-          <div class="icon-theme-card theme-card-locked" id="theme-card-amaguestu" data-theme="amaguestu">
-            <div class="theme-card-header">
-              <span class="theme-card-icon">🌰</span>
-              <div class="theme-card-info">
-                <h4>Especial Amagüestu</h4>
-                <span class="theme-card-tag theme-tag-locked">9 Nov – 12 Nov</span>
-              </div>
-            </div>
-            <p class="theme-card-desc">Colección temática otoñal para la fiesta del Amagüestu y San Martín con sol radiante y castañes asaes calentines, tamboril humeante de chapa, sidra dulce de duernu y hojas doradas de carbayu.</p>
-            <div class="theme-card-preview-pixelated" id="wrap-amaguestu-preview">
-              <div class="theme-card-preview" id="preview-amaguestu-icons"></div>
-              <div class="theme-secret-overlay">
-                <span class="badge-top-secret">🕵️‍♂️ Top Secret</span>
-              </div>
-            </div>
-            <div class="theme-card-lock-footer">
-              <span class="lock-notice-text">🌰 Activación automática en San Martín</span>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -4630,7 +4609,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.0.24.49').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.0.24.50').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4660,7 +4639,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.24.49"></script>
+  <script type="module" src="js/app.js?v=3.0.24.50"></script>
 
 
 

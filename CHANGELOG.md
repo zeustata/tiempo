@@ -10,6 +10,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
 
+## [3.0.24.50] - 2026-11-06
+### Removed
+- **Depuración y Retirada del Tema Estacional Amagüestu (Decisión Lendo):**
+  - **Simplificación del Catálogo:** Suprimida la colección experimental del Amagüestu para aligerar la aplicación y mantener el foco en las colecciones temáticas de máxima calidad y duración.
+  - **Limpieza de Código:** Eliminadas las dependencias y la tarjeta bloqueada del selector de temas en `index.html`, `app.js`, `weatherIcons.js` y `sw.js`.
+  - **Enfoque Estratégico en Navidad:** Concentración de esfuerzos de diseño en la futura colección oficial de *Navidad & L'Anguleru*.
+
 ## [3.0.24.49] - 2026-11-05
 ### Changed
 - **Erradicación Definitiva de Puntos Suspensivos mediante Tipografía Natural (Opción 1 Aprobada por Lendo):**

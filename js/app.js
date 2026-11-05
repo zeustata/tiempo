@@ -1,18 +1,18 @@
 import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo, resolveSubLocalidad } from './config/concejos.js?v=3.0.23.62';
 import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.23.58';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=3.0.23.63';
-import { renderCurrentWeather } from './components/currentCard.js?v=3.0.24.23';
+import { renderCurrentWeather } from './components/currentCard.js?v=3.0.24.50';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.24.49';
 import { renderSurfCard } from './components/surfCard.js?v=3.0.24.49';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.24.43';
 import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.24.44';
 import { renderMountainCard } from './components/mountainCard.js?v=3.0.24.27';
 import { renderTourismCard } from './components/tourismCard.js?v=3.0.24.43';
-import { renderForecast, renderHourlyForecastBlock } from './components/forecastView.js?v=3.0.24.26';
+import { renderForecast, renderHourlyForecastBlock } from './components/forecastView.js?v=3.0.24.50';
 import { renderWeatherChart } from './components/chartsView.js?v=3.0.23.58';
 import { renderAstronomyView } from './components/astronomyCard.js?v=2.2.1';
 import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=2.2.1';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=3.0.23.68';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=3.0.24.50';
 import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=2.0.0';
 import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=2.0.0';
 import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=2.0.0';
@@ -20,7 +20,6 @@ import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=2.0.0';
 import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=2.0.0';
 import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=2.0.0';
 import { getHalloweenWeatherSvg } from './utils/weatherHalloweenIcons.js?v=3.0.23.58';
-import { getAmaguestuWeatherSvg } from './utils/weatherAmaguestuIcons.js?v=3.0.23.65';
 import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=3.0.24.40';
 import { getTourismPlanExplanation } from './utils/tourismData.js?v=2.2.74';
 import { getRouteExplanation } from './utils/routesData.js?v=3.0.12';
@@ -67,7 +66,6 @@ class MeteoAsturiasApp {
     this.autoRefreshTimer = null;
     this.deferredInstallPrompt = null;
     this.previewHalloweenMode = false;
-    this.previewAmaguestuMode = false;
     this.userCoords = this.prefs.lastCoords || null;
     this.activeLocalidad = this.prefs.lastLocalidad || null;
     
@@ -1187,7 +1185,6 @@ class MeteoAsturiasApp {
           neon: '✨ Minimalista Neón',
           sketch: '✏️ Dibujo a Mano',
           halloween: '🎃 Especial Halloween',
-          amaguestu: '🌰 Especial Amagüestu'
         };
         badgeTheme.textContent = themeNames[theme] || '📱 Emojis Clásicos';
       }
@@ -1285,7 +1282,6 @@ class MeteoAsturiasApp {
     const previewSketch = document.getElementById('preview-sketch-icons');
     const previewHalloween = document.getElementById('preview-halloween-icons');
     const btnToggleHalloween = document.getElementById('btn-toggle-halloween-test');
-    const previewAmaguestu = document.getElementById('preview-amaguestu-icons');
 
     if (!modal) return;
 
@@ -1367,17 +1363,6 @@ class MeteoAsturiasApp {
       `;
     }
 
-    if (previewAmaguestu) {
-      previewAmaguestu.innerHTML = `
-        <span class="preview-svg" title="Sol y cucurucho de castañes">${getAmaguestuWeatherSvg('sun', 28)}</span>
-        <span class="preview-svg" title="Castañina en nubes y claros">${getAmaguestuWeatherSvg('partly-cloudy-day', 28)}</span>
-        <span class="preview-svg" title="Tamboril sobre brasas">${getAmaguestuWeatherSvg('cloudy', 28)}</span>
-        <span class="preview-svg" title="Lluvia y sidra dulce">${getAmaguestuWeatherSvg('rain', 28)}</span>
-        <span class="preview-svg" title="Castaña con bufandina en nieve">${getAmaguestuWeatherSvg('snow', 28)}</span>
-        <span class="preview-svg" title="Tormenta con chispas de brasa">${getAmaguestuWeatherSvg('storm', 28)}</span>
-      `;
-    }
-
     const updateActiveThemeCards = () => {
       const currentTheme = this.getEffectiveIconTheme();
       modal.querySelectorAll('.icon-theme-card').forEach(card => {
@@ -1402,15 +1387,6 @@ class MeteoAsturiasApp {
           btnToggleHalloween.classList.remove('active-preview');
         }
       }
-      const cardAmaguestu = document.getElementById('theme-card-amaguestu');
-      if (cardAmaguestu) {
-        const now = new Date();
-        const isAmaguestuDate = (now.getMonth() === 10 && now.getDate() >= 9 && now.getDate() <= 12);
-        const urlParams = new URLSearchParams(window.location.search);
-        const isTestUrl = urlParams.get('test') === 'amaguestu';
-        const isUnpixelated = isAmaguestuDate || isTestUrl || this.previewAmaguestuMode;
-        cardAmaguestu.classList.toggle('unpixelated', isUnpixelated);
-      }
 
       if (this.updateNavHeaderThemeBadge) this.updateNavHeaderThemeBadge();
     };
@@ -1429,12 +1405,6 @@ class MeteoAsturiasApp {
           localStorage.setItem('meteoastur_halloween_optout_' + now.getFullYear(), 'true');
         } else if (themeId === 'halloween') {
           localStorage.removeItem('meteoastur_halloween_optout_' + now.getFullYear());
-        }
-        const isAmaguestuDate = (now.getMonth() === 10 && now.getDate() >= 9 && now.getDate() <= 12);
-        if (isAmaguestuDate && themeId !== 'amaguestu') {
-          localStorage.setItem('meteoastur_amaguestu_optout_' + now.getFullYear(), 'true');
-        } else if (themeId === 'amaguestu') {
-          localStorage.removeItem('meteoastur_amaguestu_optout_' + now.getFullYear());
         }
       } catch (e) {}
       this.prefs.iconTheme = themeId;
@@ -1460,17 +1430,6 @@ class MeteoAsturiasApp {
           }
           return;
         }
-        if (theme === 'amaguestu') {
-          const now = new Date();
-          const isAmaguestuDate = (now.getMonth() === 10 && now.getDate() >= 9 && now.getDate() <= 12);
-          const urlParams = new URLSearchParams(window.location.search);
-          const isTestUrl = urlParams.get('test') === 'amaguestu';
-          if (isAmaguestuDate || isTestUrl || this.previewAmaguestuMode) {
-            selectTheme('amaguestu');
-          } else {
-            this.triggerHaptic();
-            this.showToast('🕵️‍♂️ Colección clasificada bajo secreto de sumario. ¡Se revelará y activará el 9 de Noviembre por San Martín!');
-          }
           return;
         }
         if (theme) {
@@ -1523,7 +1482,6 @@ class MeteoAsturiasApp {
   getEffectiveIconTheme() {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('test') === 'halloween' || this.previewHalloweenMode) return 'halloween';
-    if (urlParams.get('test') === 'amaguestu' || this.previewAmaguestuMode) return 'amaguestu';
     const now = new Date();
     // Samhain / Noche de Difuntos: 31 de Octubre (mes 9) y 1 de Noviembre (mes 10)
     const isHalloween = (now.getMonth() === 9 && now.getDate() === 31) || (now.getMonth() === 10 && now.getDate() === 1);
@@ -1531,14 +1489,6 @@ class MeteoAsturiasApp {
       const isOptOut = localStorage.getItem('meteoastur_halloween_optout_' + now.getFullYear()) === 'true';
       if (!isOptOut) {
         return 'halloween';
-      }
-    }
-    // Amagüestu de Seronda: 9 al 12 de Noviembre (mes 10)
-    const isAmaguestu = (now.getMonth() === 10 && now.getDate() >= 9 && now.getDate() <= 12);
-    if (isAmaguestu) {
-      const isOptOut = localStorage.getItem('meteoastur_amaguestu_optout_' + now.getFullYear()) === 'true';
-      if (!isOptOut) {
-        return 'amaguestu';
       }
     }
     return this.prefs.iconTheme || 'astur';
