@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3025-2-flag-pill-clean';
+const CACHE_NAME = 'meteoasturlode-v3025-3-marfondo-precache';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -56,6 +56,7 @@ const STATIC_ASSETS = [
   './js/utils/storage.js',
   './js/utils/umbrellaAdvisor.js',
   './js/utils/borrinaDetector.js',
+  './js/utils/marFondoDetector.js',
   './js/utils/thunderstormDetector.js',
   './js/utils/roadWindDetector.js',
   './js/utils/shareCardGenerator.js',

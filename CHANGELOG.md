@@ -10,6 +10,11 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
 
+## [3.0.25.3] - 2026-11-06
+### Fixed
+- **Precaché Completo en `STATIC_ASSETS` del Service Worker (`sw.js`):**
+  - Añadido `./js/utils/marFondoDetector.js` a la lista inicial de precarga `STATIC_ASSETS` (64/64 archivos activos) para garantizar disponibilidad 100% offline desde la primera instalación.
+
 ## [3.0.25.2] - 2026-11-06
 ### Fixed
 - **Blindaje Anti-Desborde en Pastilla de Bandera Teórica del Mareógrafo (`marineCard.js` + `surfCard.js` - Ley 11):**

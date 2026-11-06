@@ -2,6 +2,10 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🧳 Precaché Completo 64/64 en Service Worker (`v3.0.25.3`) — 2026-11-06
+- **Escáner Integral de Salud de la App («hsz un ultimo rasteo de como la la app» / «subelo»):**
+  - Tras auditar los 54 archivos `.js` (`SYNTAX_OK` en todos), se añadió `'./js/utils/marFondoDetector.js'` a `STATIC_ASSETS` en `sw.js` (`meteoasturlode-v3025-3-marfondo-precache`) para completar el 100% de los módulos en la precarga offline inicial.
+
 ## 🛡️ Ajuste Anti-Desborde en Cápsula de Bandera Teórica de Playas (`v3.0.25.2` - Ley 11) — 2026-11-06
 - **Diagnóstico con Captura Móvil de Lendo («la bandera en el menu de playas ahora no entra en el boton» / «opcion a» / «subelo»):**
   - Al concatenar `· Playa de Salinas` dentro de `.sea-state-pill` con `white-space: nowrap`, el texto superaba el ancho de la cápsula en móviles estrechos y sobresalía por el borde derecho.
