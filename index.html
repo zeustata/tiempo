@@ -32,8 +32,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=3.0.24.54">
-  <link rel="stylesheet" href="css/components.css?v=3.0.24.54">
+  <link rel="stylesheet" href="css/main.css?v=3.0.24.55">
+  <link rel="stylesheet" href="css/components.css?v=3.0.24.55">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -335,6 +335,10 @@
             <li><span class="tag tag-fix">Sensores &amp; Meteorología Física (Feedback Lendo - Humedad y Serena)</span> <strong>Calibración Científica del Punto de Rocío &amp; Supresión de Falsas Alarmas</strong>:
               <br>• <strong>Diferenciación Serena vs. Niebla:</strong> En noches despejadas con alta humedad relativa (&gt;88%), el sistema ya no alerta erróneamente de «Riesgo alto de orpín o niebla». Reconoce la física de la <em>serena asturiana</em> (enfriamiento nocturno por irradiación con cielo estrellado) y muestra con total veracidad: <code>💧 Margen Rocío: Δ T°C (Saturación • Serena intensa en coches y suelo)</code>.
               <br>• <strong>Estilo Visual Serena &amp; Desactivación de Balizas Innecesarias:</strong> Sustituido el color rojo de alarma por un azul nocturno relajado (<code>.hum-risk-serena</code>), eliminando la baliza naranja parpadeante en la pastilla superior de Humedad durante noches despejadas normales.
+            </li>
+            <li><span class="tag tag-ui">Surf &amp; Rompientes (Feedback Lendo)</span> <strong>Efecto y Relieve de Alta Gama en Botones de Navegación de Surf</strong>:
+              <br>• <strong>Cápsula Oceánica Ergonómica:</strong> Integrada bandeja estilizada con efecto sutil de marea cantábrica (<em>shimmer</em>) para los botones <em>⭐ Calificación</em>, <em>⚡ Fuerza</em> y <em>⏱️ Previsión</em>.
+              <br>• <strong>Botón Activo Vibrante con Resplandor:</strong> Elevación táctil, borde cian eléctrico con resplandor neón (#38bdf8), texto nítido en blanco brillante y mayor contraste en botones inactivos, invitando a explorar las tres tarjetas.
             </li>
             <li><span class="tag tag-ui">Playas &amp; Surf</span> <strong>Optimización de Fichas de Rompientes y Viento Terral</strong>:
               <br>• Corrección de desbordes tipográficos y unificación ergonómica en chips de rompientes (<em>Viento Terral</em>, <em>Swell</em>, <em>Fondo</em>).
@@ -4677,7 +4681,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.0.24.54').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.0.24.55').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4707,7 +4711,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.24.54"></script>
+  <script type="module" src="js/app.js?v=3.0.24.55"></script>
 
 
 

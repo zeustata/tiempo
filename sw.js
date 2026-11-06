@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-54-reyes-magos-top-secret';
+const CACHE_NAME = 'meteoasturlode-v3024-55-surf-nav-buttons-enhancement';
 const STATIC_ASSETS = [
   './',
   './index.html',

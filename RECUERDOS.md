@@ -2,6 +2,20 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏄‍♂️ Rediseño y Efecto Oceánico en Botones de Navegación de Surf (v3.0.24.55) — 2026-11-06
+- **Realce Visual y Llamada de Atención Ergonómica en Barra Tripartita de Surf (Feedback Lendo):**
+  1. *Diagnóstico de Lendo:*
+     - Lendo detectó que en el módulo de Surf y Rompientes, justo debajo del título, los 3 botones de navegación (`⭐ Calificación`, `⚡ Fuerza` y `⏱️ Previsión`) se veían planos, apagados y carecían de un efecto visual que llamase la atención e invitase al usuario a interactuar con las 3 tarjetas del carrusel.
+  2. *Implementación Técnica (Doctrina de Armonía Visual Ley 14 y Ergonomía Móvil Ley 11):*
+     - En `css/components.css`:
+       - **Bandeja / Rail Oceánico (`.surf-nav-toolbar`):** Contenedor tipo cápsula con fondo en degradado oscuro (`linear-gradient(180deg, rgba(15, 23, 42, 0.75) 0%, rgba(2, 6, 23, 0.85) 100%)`), borde fino cian cantábrico `rgba(56, 189, 248, 0.22)`, esquinas redondeadas a 14px y sombreado interior para crear profundidad.
+       - **Efecto Ola / Shimmer Marea (`surfToolbarShimmer`):** Destello sutil periódico de luz que recorre suavemente la barra cada 6 segundos, dinamizando la cabecera sin resultar invasivo.
+       - **Pastillas de Navegación (`.surf-nav-pill`):** Fondo elevado con relieve Liquid Glass, borde suave `rgba(255, 255, 255, 0.09)`, texto claro `#cbd5e1` (en lugar del apagado `#94a3b8`) y feedback táctil de pulsación (`transform: scale(0.97)`).
+       - **Botón Activo Vibrante (`.surf-nav-pill.active`):** Fondo con degradado oceánico cantábrico (`rgba(2, 132, 199, 0.42)` a `rgba(56, 189, 248, 0.28)`), borde cian eléctrico `#38bdf8`, resplandor exterior `box-shadow: 0 0 16px rgba(56, 189, 248, 0.40)`, texto blanco nítido y micro-escalado del icono (`scale(1.12)`).
+  3. *Cache-Busting & Despliegue Dual:*
+     - Service Worker actualizado a `meteoasturlode-v3024-55-surf-nav-buttons-enhancement`.
+     - Actualizadas las cadenas de versión a `v=3.0.24.55` en `index.html`, `components.css`, `sw.js` y `app.js`.
+
 ## 👑 Colección Especial Reyes Magos «Top Secret» (5 y 6 Ene) con Protagonismo Estelar del Trío Real (v3.0.24.54) — 2026-11-06
 - **Creación de la Colección de Cabalgata y Noche de Reyes (Dirección de Arte y Feedback de Lendo):**
   1. *Diagnóstico y Criterio de Lendo:*
