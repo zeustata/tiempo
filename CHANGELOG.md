@@ -10,6 +10,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
 
+## [3.0.25.4] - 2026-11-07
+### Fixed
+- **Blindaje Anti-Desaparición de Botones e Iconos en Scroll Móvil (`gyroGlass.js` + `components.css`):**
+  - **Estabilización de Teselas GPU (`--glass-blur` fijo):** En `js/utils/gyroGlass.js`, el radio de desenfoque `backdrop-filter: blur(var(--glass-blur))` se establece una única vez al arrancar (`22px` / `12px` en modo economía) en lugar de mutar en cada fotograma a 60 FPS, evitando que el motor Blink/Skia de Android invalide y descarte teselas de memoria gráfica (VRAM) en tarjetas largas como `.marine-card`.
+  - **Jerarquía de Capas `z-index` sin `mix-blend-mode: overlay` sobre Contenido:** En `css/components.css`, el reflejo `::after` de las tarjetas principales pasa a `z-index: 0` sin `mix-blend-mode: overlay`, mientras todos los hijos directos (`> *`) operan en `z-index: 1`, impidiendo que el compositor recorte u oculte botones e iconos internos.
+  - **Promoción a Capa GPU Propia (`translateZ(0)`) en Selectores y Rótulos:** Sustituido `filter: drop-shadow` por `text-shadow` en `.picker-section-label`, migrado el shimmer `::before` de `left` a `transform: translate3d(...)` y aplicado `transform: translateZ(0)` en los 5 botones selectores desplegables.
+
 ## [3.0.25.3] - 2026-11-06
 ### Fixed
 - **Precaché Completo en `STATIC_ASSETS` del Service Worker (`sw.js`):**

@@ -2,6 +2,16 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🛡️ Blindaje de Teselas GPU en Android contra Desaparición de Botones e Iconos (`v3.0.25.4`) — 2026-11-07
+- **Diagnóstico Forense con Captura de Lendo («a veces desaparecen los botones, iconos, etc. Solo quiero que mires porque pasa» / «hazlo en local antes y acuerdate de ser conciente de tener que revertir» / «subelo»):**
+  1. *Causa Raíz Identificada:*
+     - En la captura de Castrillón aportada por Lendo, el rótulo amarillo `🏖️ PLAYAS Y CALAS:` y el botón `#btn-open-beach-picker` desaparecían al hacer scroll, quedando únicamente visible el triangulito azul `▼` (`.picker-action-arrow`).
+     - Esto ocurría porque `gyroGlass.js` mutaba `--glass-blur` con decimales 60 veces por segundo sobre tarjetas de más de 2.200 px de alto con `backdrop-filter: blur(var(--glass-blur))` y un pseudo-elemento `::after` con `z-index: 1; mix-blend-mode: overlay;` por encima del contenido (`z-index: auto`), provocando *tile eviction* (descarte de teselas de VRAM) en el compositor Blink/Skia de Android salvo en elementos con capa GPU `transform` propia (como la flecha `▼`).
+  2. *Intervención Quirúrgica (Punto de retorno previo: `09d8f53` — `v3.0.25.3`):*
+     - En `js/utils/gyroGlass.js`: `--glass-blur` se fija una única vez al arrancar (`22px` / `12px`) y se incorpora umbral de convergencia (`>= 0.25%`) para no invalidar `:root` innecesariamente.
+     - En `css/components.css`: el halo `::after` de las tarjetas pasa a `z-index: 0` sin `mix-blend-mode: overlay` y los hijos directos (`> *`) a `position: relative; z-index: 1;`. En `.picker-section-label` se cambia `filter: drop-shadow` por `text-shadow` + `translateZ(0)`, y en los 5 botones selectores se aplica `transform: translateZ(0)` y animación `::before` mediante `transform: translate3d(...)`.
+     - Service Worker actualizado a `meteoasturlode-v3025-4-gpu-tiles-shield`.
+
 ## 🧳 Precaché Completo 64/64 en Service Worker (`v3.0.25.3`) — 2026-11-06
 - **Escáner Integral de Salud de la App («hsz un ultimo rasteo de como la la app» / «subelo»):**
   - Tras auditar los 54 archivos `.js` (`SYNTAX_OK` en todos), se añadió `'./js/utils/marFondoDetector.js'` a `STATIC_ASSETS` en `sw.js` (`meteoasturlode-v3025-3-marfondo-precache`) para completar el 100% de los módulos en la precarga offline inicial.

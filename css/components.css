@@ -97,14 +97,33 @@
   border-radius: inherit;
   background: radial-gradient(
     circle 500px at var(--glass-x, 50%) var(--glass-y, 30%),
-    rgba(255, 255, 255, calc(0.20 + var(--glass-mist, 0) * 0.18)) 0%,
-    rgba(255, 255, 255, 0.05) 45%,
+    rgba(255, 255, 255, calc(0.08 + var(--glass-mist, 0) * 0.06)) 0%,
+    rgba(255, 255, 255, 0.02) 45%,
     transparent 75%
   );
-  mix-blend-mode: overlay;
   pointer-events: none;
-  z-index: 1;
+  z-index: 0;
   transition: opacity 0.3s ease;
+}
+
+/* Asegurar que todos los hijos directos de las tarjetas principales estén por encima del halo ::after (z-index: 0) */
+.hero-weather-card > *,
+.forecast-block > *,
+.sensor-card > *,
+.chart-card > *,
+.marine-card > *,
+.mountain-card > *,
+.astronomy-card > *,
+.astronomy-hero-card > *,
+.routes-card > *,
+.routes-card-solid > *,
+.cycling-card > *,
+.tourism-card-solid > *,
+.radar-wrapper > *,
+.surf-card > *,
+.laundry-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .hero-weather-card::before {
@@ -14044,7 +14063,8 @@
   align-items: center !important;
   gap: 5px !important;
   margin-bottom: 2px !important;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4));
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
+  transform: translateZ(0);
 }
 
 .surf-spot-trigger,
@@ -14070,12 +14090,15 @@
   position: relative;
   overflow: hidden;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
-/* Efecto Marea / Shimmer sutil periódico en el botón selector */
+/* Efecto Marea / Shimmer sutil periódico en el botón selector (100% GPU via transform, sin animar left) */
 .surf-spot-trigger::before,
 .beach-trigger-btn::before,
 .routes-route-trigger::before,
@@ -14084,20 +14107,20 @@
   content: '';
   position: absolute;
   top: 0;
-  left: -100%;
+  left: 0;
   width: 60%;
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.14), transparent);
-  transform: skewX(-20deg);
+  transform: translate3d(-180%, 0, 0) skewX(-20deg);
   pointer-events: none;
   animation: pickerTriggerShimmer 5s infinite ease-in-out;
 }
 
 @keyframes pickerTriggerShimmer {
-  0% { left: -100%; opacity: 0; }
+  0% { transform: translate3d(-180%, 0, 0) skewX(-20deg); opacity: 0; }
   15% { opacity: 1; }
-  35% { left: 160%; opacity: 0; }
-  100% { left: 160%; opacity: 0; }
+  35% { transform: translate3d(280%, 0, 0) skewX(-20deg); opacity: 0; }
+  100% { transform: translate3d(280%, 0, 0) skewX(-20deg); opacity: 0; }
 }
 
 .surf-spot-trigger:hover,

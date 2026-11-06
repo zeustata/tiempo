@@ -138,6 +138,14 @@ export function initGyroGlass() {
 
   setupPermissionsAndListeners();
 
+  // Fijar --glass-blur una única vez al arrancar para evitar que Android/Skia destruya
+  // y re-rasterice las teselas (tiles) de las tarjetas largas con backdrop-filter en cada frame
+  const rootEl = document.documentElement;
+  rootEl.style.setProperty('--glass-blur', isLowPerf ? '12px' : '22px');
+
+  let lastAppliedX = -999;
+  let lastAppliedY = -999;
+
   // 3. Bucle de Renderizado con Interpolación Suave y Respiración Viva
   const lerp = (start, end, factor) => start + (end - start) * factor;
 
@@ -175,27 +183,27 @@ export function initGyroGlass() {
     currentTiltX = lerp(currentTiltX, targetTiltX, lerpFactor);
     currentTiltY = lerp(currentTiltY, targetTiltY, lerpFactor);
 
-    const root = document.documentElement;
-    root.style.setProperty('--glass-x', `${currentX.toFixed(1)}%`);
-    root.style.setProperty('--glass-y', `${currentY.toFixed(1)}%`);
-    root.style.setProperty('--glass-tilt-x', `${currentTiltX.toFixed(2)}deg`);
-    root.style.setProperty('--glass-tilt-y', `${currentTiltY.toFixed(2)}deg`);
-    root.style.setProperty('--glass-tilt-x-num', currentTiltX.toFixed(2));
-    root.style.setProperty('--glass-tilt-y-num', currentTiltY.toFixed(2));
+    // Solo tocar :root si la posición ha cambiado de forma apreciable (>= 0.25%),
+    // evitando invalidar estilos globales cuando los valores ya convergieron
+    if (Math.abs(currentX - lastAppliedX) >= 0.25 || Math.abs(currentY - lastAppliedY) >= 0.25) {
+      lastAppliedX = currentX;
+      lastAppliedY = currentY;
 
-    const angle = 115 + currentTiltY * 2.5;
-    root.style.setProperty('--glass-angle', `${angle.toFixed(1)}deg`);
+      rootEl.style.setProperty('--glass-x', `${currentX.toFixed(1)}%`);
+      rootEl.style.setProperty('--glass-y', `${currentY.toFixed(1)}%`);
+      rootEl.style.setProperty('--glass-tilt-x', `${currentTiltX.toFixed(2)}deg`);
+      rootEl.style.setProperty('--glass-tilt-y', `${currentTiltY.toFixed(2)}deg`);
+      rootEl.style.setProperty('--glass-tilt-x-num', currentTiltX.toFixed(2));
+      rootEl.style.setProperty('--glass-tilt-y-num', currentTiltY.toFixed(2));
 
-    // Dispersión esmerilada reactiva al giro (0 a 1)
-    const distFromCenter = Math.hypot((currentX - 50) / 45, (currentY - 32) / 40);
-    const mistFactor = Math.min(1, Math.max(0, distFromCenter));
-    root.style.setProperty('--glass-mist', mistFactor.toFixed(2));
+      const angle = 115 + currentTiltY * 2.5;
+      rootEl.style.setProperty('--glass-angle', `${angle.toFixed(1)}deg`);
 
-    // Desenfoque óptico reactivo:
-    // - Modo economía: blur fijo 14px (sin variación dinámica para evitar repaints continuos)
-    // - Modo normal:   blur dinámico de 18px a 36px
-    const dynamicBlur = isLowPerf ? 14 : 18 + mistFactor * 18;
-    root.style.setProperty('--glass-blur', `${dynamicBlur.toFixed(1)}px`);
+      // Dispersión esmerilada reactiva al giro (0 a 1)
+      const distFromCenter = Math.hypot((currentX - 50) / 45, (currentY - 32) / 40);
+      const mistFactor = Math.min(1, Math.max(0, distFromCenter));
+      rootEl.style.setProperty('--glass-mist', mistFactor.toFixed(2));
+    }
 
     requestAnimationFrame(updateFrame);
   };
