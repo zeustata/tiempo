@@ -272,8 +272,9 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
 
       <!-- SELECTOR TÁCTIL ERGONÓMICO DE RUTA (DISPARADOR DEL MODAL COMPACTO) -->
       <div style="margin-bottom: 12px; display: flex; flex-direction: column; gap: 5px;">
-        <label style="font-size: 0.82rem; font-weight: 700; color: var(--text-main);">
-          Rutas ciclistas:
+        <label class="picker-section-label" style="font-size: 0.76rem; font-weight: 800; color: #facc15; text-transform: uppercase; letter-spacing: 0.04em; display: flex; align-items: center; gap: 5px;">
+          <span>🚴</span>
+          <span>Rutas ciclistas y puertos:</span>
         </label>
         
         <button type="button" id="btn-open-cycling-picker" class="cycling-route-trigger" aria-label="Cambiar trazado ciclista">
@@ -287,10 +288,10 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
             <span style="font-size: 0.68rem; font-weight: 800; padding: 2px 6px; border-radius: 6px; background: ${sim?.badgeColor || '#22c55e'}; color: #000; white-space: nowrap;">
               ${sim?.badgeLabel || 'Buena 👍'}
             </span>
-            <span style="font-size: 0.75rem; color: var(--accent, #facc15); font-weight: 800;">
-              ${activeRoute.distanceKm} km
-            </span>
-            <span style="font-size: 0.8rem; color: var(--primary);">▾</span>
+            <div class="picker-action-badge">
+              <span class="picker-action-text">${activeRoute.distanceKm} km · Elegir</span>
+              <span class="picker-action-arrow">▼</span>
+            </div>
           </div>
         </button>
       </div>

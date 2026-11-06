@@ -2,6 +2,19 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌐 Homologación Universal de Selectores Desplegables en Oro Cálido y Cápsula «Elegir ▼» (v3.0.24.58) — 2026-11-06
+- **Extensión de la Doctrina de Armonía Visual (Ley 14) a Todos los Módulos de Catálogo (Instrucción de Lendo):**
+  1. *Criterio de Lendo:*
+     - Lendo ordenó homologar en todos los menús de la aplicación el diseño de selector desplegable aprobado en Playas y Surf, erradicando etiquetas neutras desapercibidas y unificando la experiencia táctil.
+  2. *Implementación Técnica (Doctrina de Armonía Visual Ley 14 y Ergonomía Móvil Ley 11):*
+     - En `js/components/routesCard.js`, `js/components/cyclingCard.js` y `js/components/tourismCard.js`:
+       - **Etiquetas Rótulo en Oro Arenal (`.picker-section-label`):** Unificadas con icono temático, tipografía en mayúsculas en oro `#facc15` (`🥾 SENDAS Y RUTAS:`, `🚴 RUTAS CICLISTAS Y PUERTOS:` y `🎭 PLANES Y OCIO:`).
+       - **Cápsula de Acción «Elegir ▼» (`.picker-action-badge`):** Incorporada a la derecha de los botones disparadores preservando sus métricas originales (`X km · Elegir ▼`), con fondo azul cantábrico traslúcido, borde cian `#38bdf8` y micro-oscilación vertical en la flecha `▼` cada 3,5 segundos.
+       - **Botones con Efecto Marea Shimmer:** Homologados con relieve Liquid Glass (`.routes-route-trigger`, `.cycling-route-trigger`, `.tourism-plan-trigger`), destello de onda periódico cada 5s y micro-hundimiento táctil (`scale: 0.98`).
+  3. *Cache-Busting & Despliegue Dual:*
+     - Service Worker actualizado a `meteoasturlode-v3024-58-universal-picker-triggers-gold`.
+     - Actualizadas las cadenas de versión a `v=3.0.24.58` en `index.html`, `routesCard.js`, `cyclingCard.js`, `tourismCard.js`, `sw.js` y `app.js`.
+
 ## 🏖️ Realce de Selectores Desplegables en Oro Cálido y Micro-Animación «Elegir ▼» (v3.0.24.57) — 2026-11-06
 - **Erradicación de Botones Desapercibidos en Catálogos de Playas y Surf (Feedback Lendo con Captura en Vivo):**
   1. *Diagnóstico de Lendo:*

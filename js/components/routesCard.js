@@ -245,8 +245,9 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null) {
 
       <!-- 3. SELECTOR TÁCTIL ERGONÓMICO DE SENDA (DISPARADOR DEL BOTTOM SHEET) -->
       <div style="margin-bottom: 12px; display: flex; flex-direction: column; gap: 5px;">
-        <label style="font-size: 0.82rem; font-weight: 700; color: var(--text-main);">
-          Sendas:
+        <label class="picker-section-label" style="font-size: 0.76rem; font-weight: 800; color: #facc15; text-transform: uppercase; letter-spacing: 0.04em; display: flex; align-items: center; gap: 5px;">
+          <span>🥾</span>
+          <span>Sendas y rutas:</span>
         </label>
         
         <button type="button" id="btn-open-routes-picker" class="routes-route-trigger" aria-label="Cambiar senda de senderismo">
@@ -256,11 +257,9 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null) {
               ${activeRoute.name}
             </span>
           </div>
-          <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
-            <span style="font-size: 0.75rem; color: var(--accent, #facc15); font-weight: 800;">
-              ${activeRoute.dist}
-            </span>
-            <span style="font-size: 0.8rem; color: var(--primary);">▾</span>
+          <div class="picker-action-badge">
+            <span class="picker-action-text">${activeRoute.dist} · Elegir</span>
+            <span class="picker-action-arrow">▼</span>
           </div>
         </button>
       </div>
