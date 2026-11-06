@@ -6,7 +6,7 @@
  * selector táctil ergonómico sin diálogos gigantes de Android y blindaje de seguridad ciclista.
  */
 
-import { getCyclingRoutesForConcejo, getCyclingRouteById, CYCLING_ROUTES } from '../utils/cyclingData.js?v=3.0.24.9';
+import { getCyclingRoutesForConcejo, getCyclingRouteById, CYCLING_ROUTES } from '../utils/cyclingData.js?v=3.0.24.62';
 import { simulateRouteConditions, rankRoutesForDeparture } from '../utils/cyclingAdvisor.js?v=3.0.24.60';
 
 /**
@@ -204,15 +204,17 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
         justify-content: center;
       }
       .cycling-modal-sheet {
-        background: #0b132b;
-        border: 1px solid rgba(56, 189, 248, 0.3);
+        background: rgba(15, 23, 42, 0.88);
+        backdrop-filter: blur(24px) saturate(190%);
+        -webkit-backdrop-filter: blur(24px) saturate(190%);
+        border: 1px solid rgba(56, 189, 248, 0.35);
         border-radius: 20px 20px 0 0;
         width: 100%;
         max-width: 600px;
         max-height: 80vh;
         display: flex;
         flex-direction: column;
-        box-shadow: 0 -10px 30px rgba(0,0,0,0.6);
+        box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.35), 0 -10px 36px rgba(0,0,0,0.65);
         animation: slideUpCycling 0.25s ease-out;
       }
       @keyframes slideUpCycling {
@@ -489,6 +491,12 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
             `).join('')}
           </div>
         </div>
+
+        <!-- Botón interactivo para ver Ficha Oficial, Consejos de Puerto y Salida GPS -->
+        <button type="button" class="btn-explain-cycling" data-explain-cycling="${activeRoute.id}" style="width: 100%; margin-top: 12px; padding: 10px; border-radius: 10px; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.35); color: var(--primary); font-size: 0.8rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;">
+          <span>🗺️</span>
+          <span>Ver Ficha Oficial, Consejos de Puerto y Salida GPS ➔</span>
+        </button>
 
       </div>
 

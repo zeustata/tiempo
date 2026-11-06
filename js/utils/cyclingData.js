@@ -684,3 +684,71 @@ export function getCyclingRoutesForConcejo(concejoId) {
 export function getCyclingRouteById(routeId) {
   return CYCLING_ROUTES.find(r => r.id === routeId) || CYCLING_ROUTES[0];
 }
+
+/**
+ * Obtiene la ficha técnica oficial, consejos de desarrollo y punto de salida GPS de una ruta ciclista
+ */
+export function getCyclingRouteExplanation(routeId) {
+  const route = getCyclingRouteById(routeId);
+  if (!route) return null;
+
+  const firstTramo = route.tramos?.[0] || {};
+  const startPlace = (firstTramo.name ? firstTramo.name.split('➔')[0].trim() : route.name);
+  const startCoord = firstTramo.coord || { lat: 43.558, lon: -5.975 };
+  const mapsSearchUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(startPlace + ', Asturias')}`;
+  const mapsDirUrl = `https://www.google.com/maps/dir/?api=1&destination=${startCoord.lat},${startCoord.lon}`;
+  const wikilocUrl = `https://es.wikiloc.com/rutas-ciclismo?q=${encodeURIComponent(route.name)}`;
+
+  const tramosHtml = (route.tramos || []).map((t, i) => 
+    `• <strong>Tramo ${i + 1} (${t.km} km):</strong> ${t.name} — Pendiente media: <strong>${t.avgGradePct > 0 ? '+' : ''}${t.avgGradePct}%</strong> (Cota: ${t.endAlt} m).`
+  ).join('<br>');
+
+  const gearAdvice = route.elevationGainM >= 1000
+    ? 'Alta montaña asturiana: imprescindible desarrollo compacto (50/34 o equivalente) con piñonera 11-30 o 11-34 para afrontar rampas sostenidas sin clavar cadencia. Obligatorio chaleco cortavientos o manguitos para el descenso desde cota alta.'
+    : route.elevationGainM >= 600
+      ? 'Media montaña y terreno rompepiernas: recomendable plato compacto (50/34 o 52/36) con corona 28-32. Lleva cortavientos ligero para las bajadas sombrías y bidón con sales.'
+      : 'Terreno rodador y costero: desarrollo estándar o compacto para repechos cortos a buen ritmo. Atención a las brisas marinas laterales si montas llantas de perfil medio/alto (>45 mm).';
+
+  return {
+    icon: '🚴',
+    title: route.name,
+    subtitle: `${route.subtitle} • ${route.difficulty}`,
+    badge: `Circular • ${route.distanceKm} km • +${route.elevationGainM} m • Cota ${route.maxAltitudeM} m`,
+    sections: [
+      {
+        icon: '🗺️',
+        heading: 'Perfil del Trazado y Concepción Circular',
+        text: `${route.description}<br><br><strong>Ficha Física:</strong> ${route.distanceKm} km totales • Desnivel positivo: +${route.elevationGainM} m • Altitud máxima: ${route.maxAltitudeM} m • Tipología: ${route.profileType} (100% circular con salida y regreso a casa).`
+      },
+      {
+        icon: '⛰️',
+        heading: 'Desglose de Sectores y Puertos de Paso',
+        text: tramosHtml
+      },
+      {
+        icon: '⚙️',
+        heading: 'Desarrollo Recomendado y Seguridad Vial',
+        text: `${gearAdvice}<br><br><strong>Seguridad DGT:</strong> Usa siempre luz trasera diurna de alta visibilidad (obligatoria en túneles y zonas de bosque o borrina) y casco homologado.`
+      },
+      {
+        icon: '🚩',
+        heading: 'Punto de Salida y Tracks GPS',
+        text: `Salida de referencia: <strong>${startPlace}</strong>. Puedes abrir la navegación GPS hacia el inicio o consultar tracks de la comunidad ciclista:`,
+        actionButtons: [
+          {
+            label: '🚗 Punto de Salida (Google Maps)',
+            url: mapsSearchUrl
+          },
+          {
+            label: '📍 Primer Sector GPS',
+            url: mapsDirUrl
+          },
+          {
+            label: '🧭 Tracks en Wikiloc ↗',
+            url: wikilocUrl
+          }
+        ]
+      }
+    ]
+  };
+}

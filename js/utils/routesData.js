@@ -1038,7 +1038,7 @@ export function getRoutesForConcejo(concejo, userCoords = null) {
 /**
  * Motor de Evaluación Meteorológica de Confort en Senderismo
  */
-export function calculateHikingIndex(data, concejo) {
+export function calculateHikingIndex(data, concejo, selectedDay = 'today') {
   if (!data || !data.weather || !data.weather.current) {
     return {
       score: 7,
@@ -1059,45 +1059,67 @@ export function calculateHikingIndex(data, concejo) {
   }
 
   const { current, hourly, daily } = data.weather;
-  const temp = current.temperature_2m || 15;
-  const wind = current.wind_speed_10m || 10;
-  const windGust = current.wind_gusts_10m || wind * 1.3;
-  const code = current.weather_code || 0;
-  const precipNow = current.precipitation || 0;
-  const humidity = current.relative_humidity_2m || 70;
-
-  // Buscar el índice de la hora local en curso (sincronizado con Semáforu del Paragües)
   const now = new Date();
-  const currentHourStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}T${String(now.getHours()).padStart(2, '0')}:00`;
+  const isTomorrow = (selectedDay === 'tomorrow');
 
   let startIndex = 0;
   if (hourly && hourly.time) {
-    for (let i = 0; i < hourly.time.length; i++) {
-      if (hourly.time[i] >= currentHourStr) {
-        startIndex = i;
-        break;
+    if (isTomorrow) {
+      const tom = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+      const tomMorningStr = `${tom.getFullYear()}-${String(tom.getMonth() + 1).padStart(2, '0')}-${String(tom.getDate()).padStart(2, '0')}T09:00`;
+      const foundIdx = hourly.time.findIndex(t => t >= tomMorningStr);
+      startIndex = foundIdx !== -1 ? foundIdx : Math.min(33, hourly.time.length - 1);
+    } else {
+      const currentHourStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}T${String(now.getHours()).padStart(2, '0')}:00`;
+      for (let i = 0; i < hourly.time.length; i++) {
+        if (hourly.time[i] >= currentHourStr) {
+          startIndex = i;
+          break;
+        }
       }
     }
   }
 
+  const midIdx = isTomorrow ? Math.min(startIndex + 3, (hourly?.time?.length || 1) - 1) : startIndex;
+
+  const temp = isTomorrow
+    ? (hourly?.temperature_2m?.[midIdx] ?? daily?.temperature_2m_max?.[1] ?? 15)
+    : (current.temperature_2m || 15);
+  const wind = isTomorrow
+    ? (hourly?.wind_speed_10m?.[midIdx] ?? daily?.wind_speed_10m_max?.[1] ?? 10)
+    : (current.wind_speed_10m || 10);
+  const windGust = isTomorrow
+    ? (hourly?.wind_gusts_10m?.[midIdx] ?? daily?.wind_gusts_10m_max?.[1] ?? (wind * 1.3))
+    : (current.wind_gusts_10m || wind * 1.3);
+  const code = isTomorrow
+    ? (hourly?.weather_code?.[midIdx] ?? daily?.weather_code?.[1] ?? 0)
+    : (current.weather_code || 0);
+  const precipNow = isTomorrow ? 0 : (current.precipitation || 0);
+  const humidity = isTomorrow
+    ? (hourly?.relative_humidity_2m?.[midIdx] ?? 70)
+    : (current.relative_humidity_2m || 70);
+
   // 1. Análisis de lluvia reciente y firme del terreno (Llamuergues / Barro)
   let rainFallenToday = 0;
   if (hourly && hourly.precipitation && startIndex > 0) {
-    for (let i = 0; i < startIndex; i++) {
+    const lookbackStart = isTomorrow ? Math.max(0, startIndex - 24) : 0;
+    for (let i = lookbackStart; i < startIndex; i++) {
       rainFallenToday += parseFloat(hourly.precipitation[i]) || 0;
     }
+    if (isTomorrow) rainFallenToday = rainFallenToday * 0.7; // Drenaje nocturno natural del terreno
   } else if (daily && daily.precipitation_sum) {
-    rainFallenToday = parseFloat(daily.precipitation_sum[0]) || 0;
+    rainFallenToday = parseFloat(daily.precipitation_sum[isTomorrow ? 1 : 0]) || 0;
   }
 
-  // 2. Ventana de Nowcasting en las próximas 6 horas reales desde la hora actual
+  // 2. Ventana de Nowcasting en las próximas 6-8 horas desde el inicio de ruta
   let rainInNext6h = 0;
   let maxNextPop = 0;
   let hasStormInWindow = false;
   let firstRainHourStr = null;
 
   if (hourly && hourly.precipitation) {
-    const windowLimit = Math.min(hourly.precipitation.length, startIndex + 6);
+    const windowHours = isTomorrow ? 8 : 6;
+    const windowLimit = Math.min(hourly.precipitation.length, startIndex + windowHours);
     for (let i = startIndex; i < windowLimit; i++) {
       const p = parseFloat(hourly.precipitation[i]) || 0;
       const pop = hourly.precipitation_probability ? (parseFloat(hourly.precipitation_probability[i]) || 0) : 0;
@@ -1115,7 +1137,7 @@ export function calculateHikingIndex(data, concejo) {
     }
   }
 
-  // Ponderación del estado del firme: agua caída + lluvia inminente en las próximas 2 horas
+  // Ponderación del estado del firme: agua caída + lluvia inminente en las primeras 2 horas
   let rainImmediate2h = 0;
   if (hourly && hourly.precipitation) {
     const shortLimit = Math.min(hourly.precipitation.length, startIndex + 2);
@@ -1159,10 +1181,12 @@ export function calculateHikingIndex(data, concejo) {
 
   // 4. Puntuación y Veredicto Global
   let status = 'optimal';
-  let label = 'Jornada Ideal de Marcha';
+  let label = isTomorrow ? 'Mañana Ideal de Marcha' : 'Jornada Ideal de Marcha';
   let badgeClass = 'hike-optimal';
   let icon = '🟢';
-  let summary = 'Cielos tranquilos, sin riesgo de lluvia inmediata y firme en buen estado.';
+  let summary = isTomorrow
+    ? 'Previsión favorable para mañana: cielos tranquilos, sin lluvia significativa y firme en buen estado.'
+    : 'Cielos tranquilos, sin riesgo de lluvia inmediata y firme en buen estado.';
 
   if (precipNow >= 2.0 || hasStormInWindow || windGust >= 65 || rainInNext6h >= 5.0) {
     status = 'danger';
@@ -1173,14 +1197,14 @@ export function calculateHikingIndex(data, concejo) {
       ? '🚨 Riesgo de tormenta eléctrica en montaña. Evitar crestas y zonas expuestas.'
       : (precipNow >= 2.0 
           ? '🌧️ Bastinazu o lluvia copiosa activa. Rutas de montaña desaconsejadas.' 
-          : `🌧️ Frente de lluvia intensa previsto (${rainInNext6h.toFixed(1)} mm) o viento severo en las próximas horas. No recomendable salir a cumbres.`);
+          : `🌧️ Frente de lluvia intensa previsto (${rainInNext6h.toFixed(1)} mm) o viento severo. No recomendable salir a cumbres.`);
   } else if (precipNow >= 0.2 || rainInNext6h >= 1.2 || maxNextPop >= 50 || mudScore >= 3 || windGust >= 45) {
     status = 'warning';
     label = 'Precaución en Terreno';
     badgeClass = 'hike-warning';
     icon = '🟡';
     summary = firstRainHourStr 
-      ? `Lluvia o llovizna prevista hacia las ${firstRainHourStr} h (${rainInNext6h.toFixed(1)} mm en 6h). Recomendable ruta baja por bosque o pista acondicionada.`
+      ? `Lluvia o llovizna prevista hacia las ${firstRainHourStr} h (${rainInNext6h.toFixed(1)} mm). Recomendable ruta baja por bosque o pista acondicionada.`
       : 'Sendas húmedas y probabilidad de orballu o viento molesto. Recomendable ruta baja por bosque o pista acondicionada.';
   } else if (humidity >= 92 && temp <= 16 && (code === 45 || code === 48)) {
     status = 'mist';
@@ -1198,12 +1222,12 @@ export function calculateHikingIndex(data, concejo) {
     summary,
     mudIndex: { level: mudLevel, desc: mudDesc, color: mudColor, score: mudScore, pct: mudPct, rain24h: effectiveMudRain.toFixed(1) },
     tempNow: Math.round(temp),
-    feelsLike: Math.round(current.apparent_temperature || temp),
+    feelsLike: Math.round(isTomorrow ? temp : (current.apparent_temperature || temp)),
     windChillHigh,
     windSpeed: Math.round(wind),
     windGust: Math.round(windGust),
     humidity,
-    uv: daily?.uv_index_max?.[0] || 4
+    uv: daily?.uv_index_max?.[isTomorrow ? 1 : 0] || 4
   };
 }
 

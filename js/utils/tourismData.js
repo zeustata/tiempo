@@ -1293,19 +1293,40 @@ export function getComarcaForConcejo(concejoId) {
  * Motor de Selección Inteligente: clasifica y prioriza planes según el tiempo meteorológico
  * y calcula la distancia física en km desde el concejo activo.
  */
-export function getRecommendedPlans(weatherData, concejo) {
+export function getRecommendedPlans(weatherData, concejo, selectedDay = 'today') {
   const userLat = concejo?.lat || 43.5558;
   const userLon = concejo?.lon || -5.9744;
 
+  const isTomorrow = (selectedDay === 'tomorrow');
   const current = weatherData?.weather?.current || {};
-  const temp = current.temperature_2m ?? 15;
-  const rain = current.precipitation ?? 0;
-  const weatherCode = current.weather_code ?? 0;
-  const humidity = current.relative_humidity_2m ?? 75;
+  const hourly = weatherData?.weather?.hourly || {};
+  const daily = weatherData?.weather?.daily || {};
+
+  let midIdx = 36;
+  if (isTomorrow && hourly?.time) {
+    const now = new Date();
+    const tom = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+    const tomMiddayStr = `${tom.getFullYear()}-${String(tom.getMonth() + 1).padStart(2, '0')}-${String(tom.getDate()).padStart(2, '0')}T12:00`;
+    const found = hourly.time.findIndex(t => t >= tomMiddayStr);
+    if (found !== -1) midIdx = found;
+  }
+
+  const temp = isTomorrow
+    ? (hourly?.temperature_2m?.[midIdx] ?? daily?.temperature_2m_max?.[1] ?? 15)
+    : (current.temperature_2m ?? 15);
+  const rain = isTomorrow
+    ? ((daily?.precipitation_sum?.[1] ?? 0) >= 2.0 ? (daily.precipitation_sum[1] / 5) : (hourly?.precipitation?.[midIdx] ?? 0))
+    : (current.precipitation ?? 0);
+  const weatherCode = isTomorrow
+    ? (hourly?.weather_code?.[midIdx] ?? daily?.weather_code?.[1] ?? 0)
+    : (current.weather_code ?? 0);
+  const humidity = isTomorrow
+    ? (hourly?.relative_humidity_2m?.[midIdx] ?? 75)
+    : (current.relative_humidity_2m ?? 75);
 
   // Detección de la categoría meteorológica dominante
   let category = 'sun';
-  let verdict = 'Cielos despejados y soleados';
+  let verdict = isTomorrow ? 'Previsión de cielos despejados y soleados para mañana' : 'Cielos despejados y soleados';
   let icon = '☀️';
 
   // 1. Nieve o Frío extremo de montaña

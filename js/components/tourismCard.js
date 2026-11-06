@@ -6,12 +6,17 @@
  * Estética Liquid Glass Pura (Ley 14), Ergonomía Móvil (Ley 11) y Blindaje Legal (Leyes 15 y 16).
  */
 
-import { getRecommendedPlans, getTourismPlanExplanation } from '../utils/tourismData.js?v=3.0.24.12';
+import { getRecommendedPlans, getTourismPlanExplanation } from '../utils/tourismData.js?v=3.0.24.62';
 
-export function renderTourismCard(weatherData, concejo, selectedPlanId = null) {
+export function renderTourismCard(weatherData, concejo, selectedPlanId = null, selectedDay = null) {
   if (!concejo) return '';
 
-  const { weatherVerdict, weatherCategory, weatherIcon, comarca, plans } = getRecommendedPlans(weatherData, concejo);
+  const currentHour = new Date().getHours();
+  const activeDay = selectedDay || (currentHour >= 19 ? 'tomorrow' : 'today');
+  const dayLabelLower = activeDay === 'tomorrow' ? 'mañana' : 'hoy';
+  const dayLabelCap = activeDay === 'tomorrow' ? 'Mañana' : 'Hoy';
+
+  const { weatherVerdict, weatherCategory, weatherIcon, comarca, plans } = getRecommendedPlans(weatherData, concejo, activeDay);
   const cleanConcejoName = (concejo.name || '').replace(/\s*\(.*?\)/, '').trim();
 
   // Plan sugerido automáticamente según el tiempo de hoy y proximidad
@@ -111,20 +116,39 @@ export function renderTourismCard(weatherData, concejo, selectedPlanId = null) {
         justify-content: center;
       }
       .tourism-modal-sheet {
-        background: #0b132b;
-        border: 1px solid rgba(56, 189, 248, 0.3);
+        background: rgba(15, 23, 42, 0.88);
+        backdrop-filter: blur(24px) saturate(190%);
+        -webkit-backdrop-filter: blur(24px) saturate(190%);
+        border: 1px solid rgba(56, 189, 248, 0.35);
         border-radius: 20px 20px 0 0;
         width: 100%;
         max-width: 600px;
         max-height: 80vh;
         display: flex;
         flex-direction: column;
-        box-shadow: 0 -10px 30px rgba(0,0,0,0.6);
+        box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.35), 0 -10px 36px rgba(0,0,0,0.65);
         animation: slideUpTourism 0.25s ease-out;
       }
       @keyframes slideUpTourism {
         from { transform: translateY(100%); }
         to { transform: translateY(0); }
+      }
+      .tourism-day-pill {
+        padding: 5px 12px;
+        border-radius: 16px;
+        font-size: 0.76rem;
+        font-weight: 800;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text-dim, #94a3b8);
+      }
+      .tourism-day-pill.active {
+        background: linear-gradient(135deg, rgba(56, 189, 248, 0.3) 0%, rgba(14, 165, 233, 0.45) 100%);
+        border-color: var(--primary, #38bdf8);
+        color: #ffffff;
+        box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
       }
       .tourism-item-card {
         padding: 10px 12px;
@@ -153,7 +177,7 @@ export function renderTourismCard(weatherData, concejo, selectedPlanId = null) {
             <span style="font-size: 1.5rem;">🎭</span>
             <div>
               <h2 style="font-size: 1.15rem; font-weight: 800; margin: 0; color: var(--text-main); line-height: 1.2;">
-                Planes &amp; Ocio: ¿Qué facer güei?
+                Planes &amp; Ocio: ${activeDay === 'tomorrow' ? '¿Qué facer mañana?' : '¿Qué facer güei?'}
               </h2>
               <span style="font-size: 0.78rem; color: var(--text-dim); display: block; margin-top: 2px;">
                 Recomendaciones según el cielo • Salidas desde <strong>${cleanConcejoName}</strong>
@@ -165,30 +189,45 @@ export function renderTourismCard(weatherData, concejo, selectedPlanId = null) {
           </div>
         </div>
 
-        <!-- Veredicto del Cielo Actual -->
-        <div style="background: rgba(15, 23, 42, 0.40); border-radius: 12px; padding: 10px; border: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px;">
-          <div style="font-size: 1.8rem; line-height: 1; flex-shrink: 0;">${weatherIcon}</div>
-          <div style="flex: 1; min-width: 0;">
-            <div style="font-size: 0.7rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px;">Veredicto del Cielo Actual</div>
-            <div style="font-size: 0.86rem; font-weight: 800; color: var(--text-main); margin-top: 1px; line-height: 1.3;">${weatherVerdict}</div>
-            <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 2px;">${comarca.hero}</div>
+        <!-- Veredicto del Cielo -->
+        <div style="background: rgba(15, 23, 42, 0.40); border-radius: 12px; padding: 10px; border: 1px solid rgba(255,255,255,0.08);">
+          <!-- Conmutador Temporal Hoy / Mañana -->
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.06);">
+            <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-main);">📅 Día del plan:</span>
+            <div style="display: flex; gap: 6px;">
+              <button type="button" class="tourism-day-pill btn-tourism-day ${activeDay === 'today' ? 'active' : ''}" data-day="today">
+                ☀️ Hoy
+              </button>
+              <button type="button" class="tourism-day-pill btn-tourism-day ${activeDay === 'tomorrow' ? 'active' : ''}" data-day="tomorrow">
+                📅 Mañana
+              </button>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="font-size: 1.8rem; line-height: 1; flex-shrink: 0;">${weatherIcon}</div>
+            <div style="flex: 1; min-width: 0;">
+              <div style="font-size: 0.7rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px;">Veredicto del Cielo (${dayLabelCap})</div>
+              <div style="font-size: 0.86rem; font-weight: 800; color: var(--text-main); margin-top: 1px; line-height: 1.3;">${weatherVerdict}</div>
+              <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 2px;">${comarca.hero}</div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- 2. CONSEJERO INTELIGENTE: PLAN RECOMENDADO DE HOY -->
+      <!-- 2. CONSEJERO INTELIGENTE: PLAN RECOMENDADO -->
       <div class="tourism-advisor-card">
         <div style="display: flex; align-items: flex-start; gap: 8px;">
           <span style="font-size: 1.3rem; line-height: 1;">💡</span>
           <div style="flex: 1; min-width: 0;">
             <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap; margin-bottom: 4px;">
-              <strong style="font-size: 0.88rem; color: var(--text-main);">Consejero de Ocio y Planes</strong>
+              <strong style="font-size: 0.88rem; color: var(--text-main);">Consejero de Ocio y Planes (${dayLabelCap})</strong>
               <span style="font-size: 0.72rem; font-weight: 800; padding: 2px 7px; border-radius: 10px; background: #22c55e; color: #000;">
-                Óptimo hoy ✨
+                Óptimo ${dayLabelLower} ✨
               </span>
             </div>
             <p style="margin: 0; font-size: 0.8rem; color: var(--text-dim); line-height: 1.4; word-break: break-word;">
-              Plan sugerido para hoy: <strong style="color: var(--primary);">${recommendedPlan.title}</strong> (${recommendedPlan.town}). ${recommendedPlan.tip}
+              Plan sugerido para ${dayLabelLower}: <strong style="color: var(--primary);">${recommendedPlan.title}</strong> (${recommendedPlan.town}). ${recommendedPlan.tip}
             </p>
           </div>
         </div>
@@ -224,7 +263,7 @@ export function renderTourismCard(weatherData, concejo, selectedPlanId = null) {
               ${activePlan.title}
             </h3>
             <div style="display: flex; gap: 4px; align-items: center; flex-wrap: wrap;">
-              ${isRecommendedNow ? `<span style="font-size: 0.7rem; font-weight: 800; padding: 2px 7px; border-radius: 8px; background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3); white-space: nowrap;">✨ Ideal hoy</span>` : ''}
+              ${isRecommendedNow ? `<span style="font-size: 0.7rem; font-weight: 800; padding: 2px 7px; border-radius: 8px; background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3); white-space: nowrap;">✨ Ideal ${dayLabelLower}</span>` : ''}
               <span style="font-size: 0.7rem; font-weight: 800; padding: 2px 7px; border-radius: 8px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); white-space: nowrap;">
                 ${activePlan.tag}
               </span>
@@ -260,11 +299,11 @@ export function renderTourismCard(weatherData, concejo, selectedPlanId = null) {
           </div>
         </div>
 
-        <!-- Consejo Meteorológico: Por qué hoy -->
+        <!-- Consejo Meteorológico: Por qué hoy/mañana -->
         <div style="background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 10px; padding: 8px 10px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
           <span style="font-size: 1.1rem;">💡</span>
           <div style="font-size: 0.76rem; color: var(--text-dim); line-height: 1.35;">
-            <strong style="color: var(--primary);">Por qué hoy:</strong> ${activePlan.tip}
+            <strong style="color: var(--primary);">Por qué ${dayLabelLower}:</strong> ${activePlan.tip}
           </div>
         </div>
 
@@ -314,7 +353,7 @@ export function renderTourismCard(weatherData, concejo, selectedPlanId = null) {
                     <span>~${p.driveTimeMin} min en coche</span>
                     <span>•</span>
                     <span style="color: ${p.weatherType === weatherCategory ? '#22c55e' : 'var(--text-dim)'}; font-weight: 700;">
-                      ${p.weatherType === weatherCategory ? '✨ Recomendado hoy' : p.tag}
+                      ${p.weatherType === weatherCategory ? `✨ Recomendado ${dayLabelLower}` : p.tag}
                     </span>
                   </div>
                 </div>

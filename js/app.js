@@ -4,10 +4,10 @@ import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedW
 import { renderCurrentWeather } from './components/currentCard.js?v=3.0.24.53';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.24.57';
 import { renderSurfCard } from './components/surfCard.js?v=3.0.24.57';
-import { renderRoutesCard } from './components/routesCard.js?v=3.0.24.61';
-import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.24.61';
+import { renderRoutesCard } from './components/routesCard.js?v=3.0.24.62';
+import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.24.62';
 import { renderMountainCard } from './components/mountainCard.js?v=3.0.24.27';
-import { renderTourismCard } from './components/tourismCard.js?v=3.0.24.61';
+import { renderTourismCard } from './components/tourismCard.js?v=3.0.24.62';
 import { renderForecast, renderHourlyForecastBlock } from './components/forecastView.js?v=3.0.24.50';
 import { renderWeatherChart } from './components/chartsView.js?v=3.0.23.58';
 import { renderAstronomyView } from './components/astronomyCard.js?v=2.2.1';
@@ -23,8 +23,9 @@ import { getHalloweenWeatherSvg } from './utils/weatherHalloweenIcons.js?v=3.0.2
 import { getPapaNoelWeatherSvg } from './utils/weatherPapaNoelIcons.js?v=3.0.24.52';
 import { getReyesWeatherSvg } from './utils/weatherReyesIcons.js?v=3.0.24.54';
 import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=3.0.24.40';
-import { getTourismPlanExplanation } from './utils/tourismData.js?v=2.2.74';
-import { getRouteExplanation } from './utils/routesData.js?v=3.0.12';
+import { getTourismPlanExplanation } from './utils/tourismData.js?v=3.0.24.62';
+import { getRouteExplanation } from './utils/routesData.js?v=3.0.24.62';
+import { getCyclingRouteExplanation } from './utils/cyclingData.js?v=3.0.24.62';
 import { checkConcejoFolixa } from './utils/festivosData.js?v=2.0.0';
 import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=2.0.0';
 import { WEBCAMS_ASTURIAS } from './utils/webcamsData.js?v=2.0.0';
@@ -59,7 +60,9 @@ class MeteoAsturiasApp {
     this.compareWeatherDataB = null;
     this.activeTab = 'live';
     this.selectedHikingRouteId = null;
+    this.selectedRoutesDay = null;
     this.selectedTourismPlanId = null;
+    this.selectedTourismDay = null;
     this.selectedCyclingRouteId = null;
     this.selectedSurfBeachName = null;
     this.selectedMarineBeachName = null;
@@ -336,6 +339,7 @@ class MeteoAsturiasApp {
     if (!modal) return;
     this.closeAllModals(false);
     modal.style.display = 'flex';
+    modal.setAttribute('aria-hidden', 'false');
     try {
       history.pushState({ modalOpen: true, modalId: modal.id }, '');
     } catch (e) {}
@@ -344,6 +348,7 @@ class MeteoAsturiasApp {
   closeModal(modal) {
     if (!modal || modal.style.display === 'none') return;
     modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
     if (modal.id === 'changelog-modal') {
       try {
         localStorage.setItem('meteoastur_changelog_seen', CURRENT_APP_VERSION);
@@ -362,11 +367,12 @@ class MeteoAsturiasApp {
   }
 
   closeAllModals(cleanHistory = true) {
-    const modals = document.querySelectorAll('.modal-overlay');
+    const modals = document.querySelectorAll('.modal-overlay, #marine-beaches-modal, #surf-spots-modal, #hiking-routes-modal, #cycling-routes-modal, #tourism-plans-modal');
     let anyOpen = false;
     modals.forEach(m => {
       if (m.style.display === 'flex') {
         m.style.display = 'none';
+        m.setAttribute('aria-hidden', 'true');
         anyOpen = true;
       }
     });
@@ -399,13 +405,14 @@ class MeteoAsturiasApp {
       setTimeout(() => ripple.remove(), 600);
     });
 
-    // Soporte para botón o gesto "Atrás" de Android / Navegador
+    // Soporte para botón o gesto "Atrás" de Android / Navegador (incluyendo los 5 Bottom Sheets)
     window.addEventListener('popstate', (e) => {
       if (e.state?.modalOpen) return;
-      const modals = document.querySelectorAll('.modal-overlay');
+      const modals = document.querySelectorAll('.modal-overlay, #marine-beaches-modal, #surf-spots-modal, #hiking-routes-modal, #cycling-routes-modal, #tourism-plans-modal');
       modals.forEach(m => {
         if (m.style.display === 'flex') {
           m.style.display = 'none';
+          m.setAttribute('aria-hidden', 'true');
           if (m.id === 'changelog-modal') {
             try {
               localStorage.setItem('meteoastur_changelog_seen', CURRENT_APP_VERSION);
@@ -1737,6 +1744,50 @@ class MeteoAsturiasApp {
         }
       }
 
+      // 1b-2. Fichas Técnicas y Consejos de Ciclismo en Ruta
+      const cyclingBtn = e.target.closest('.btn-explain-cycling, [data-explain-cycling]');
+      if (cyclingBtn) {
+        this.triggerHaptic();
+        const routeId = cyclingBtn.dataset.explainCycling;
+        const cyclingTopic = getCyclingRouteExplanation(routeId);
+        if (cyclingTopic) {
+          if (titleEl) titleEl.innerHTML = `${cyclingTopic.icon} ${cyclingTopic.title}`;
+          if (subtitleEl) subtitleEl.textContent = cyclingTopic.subtitle;
+          if (contentEl) {
+            contentEl.innerHTML = `
+              <div class="explain-content-wrapper">
+                <div class="explain-top-badge-row">
+                  <span class="explain-icon-large">${cyclingTopic.icon}</span>
+                  <div class="explain-badge-tag">${cyclingTopic.badge}</div>
+                </div>
+                <div class="explain-sections-list">
+                  ${cyclingTopic.sections.map(sec => `
+                    <div class="explain-card-block">
+                      <h4 class="explain-block-title">${sec.icon} ${sec.heading}</h4>
+                      <div class="explain-block-text">${sec.text}</div>
+                      ${sec.actionButtons && sec.actionButtons.length > 0 ? `
+                        <div class="explain-actions-row">
+                          ${sec.actionButtons.map(act => `
+                            <a href="${act.url}" target="_blank" rel="noopener noreferrer" class="btn-explain-action">
+                              ${act.label}
+                            </a>
+                          `).join('')}
+                        </div>
+                      ` : ''}
+                    </div>
+                  `).join('')}
+                </div>
+                <div class="explain-footer-note">
+                  🚴 <em>MeteoAstur Lode • Catálogo Oficial de Rutas Ciclistas Circulares y Seguridad Vial</em>
+                </div>
+              </div>
+            `;
+          }
+          this.openModal(modal);
+          return;
+        }
+      }
+
       // 1c. Fichas Didácticas de Folixas y Fiestas Locales Asturianas
       const folixaBtn = e.target.closest('.btn-explain-folixa, [data-explain-folixa]');
       if (folixaBtn) {
@@ -2308,7 +2359,7 @@ class MeteoAsturiasApp {
     if (targetTab === 'tourism' && this.weatherData && this.currentConcejo) {
       const tourismContainer = document.getElementById('panel-tourism');
       if (tourismContainer && !tourismContainer.innerHTML.trim()) {
-        tourismContainer.innerHTML = renderTourismCard(this.weatherData, this.currentConcejo, this.selectedTourismPlanId);
+        tourismContainer.innerHTML = renderTourismCard(this.weatherData, this.currentConcejo, this.selectedTourismPlanId, this.selectedTourismDay);
         this.initTourismCardEvents();
       }
     }
@@ -2469,6 +2520,7 @@ class MeteoAsturiasApp {
         if (webcamsModal) webcamsModal.style.display = 'none';
         const phenomenaModal = document.getElementById('phenomena-modal');
         if (phenomenaModal) phenomenaModal.style.display = 'none';
+        this.closeAllModals(true);
       }
     });
   }
@@ -2501,6 +2553,7 @@ class MeteoAsturiasApp {
         '.surf-timeline-grid, .surf-slot-card, .surf-timeline-scroll-hint, .surf-daily-cards-grid, .surf-daily-card, .surf-dayparts-list, .surf-daily-scroll-hint, ' +
         '.surf-spot-selector-wrap, .surf-spot-trigger, .surf-spots-modal-backdrop, .surf-spots-modal-sheet, .surf-spot-item-card, .surf-beach-spot-card, ' +
         '.beach-selector-wrap, .beach-trigger-btn, .marine-beach-spot-card, .marine-beach-item-card, ' +
+        '.routes-modal-backdrop, .routes-modal-sheet, .routes-item-card, .cycling-modal-backdrop, .cycling-modal-sheet, .cycling-route-item, .tourism-modal-backdrop, .tourism-modal-sheet, .tourism-item-card, ' +
         '.module-chips-nav, .module-chips-scroll, .module-chip, ' +
         '.favorites-pills, .view-tabs, ' +
         '.beach-controls-toolbar, .beach-filter-dropdown-wrapper, ' +
@@ -2967,30 +3020,37 @@ class MeteoAsturiasApp {
 
 
   initCyclingCardEvents() {
+    // Eliminar posibles modales huérfanos previos en document.body
+    document.querySelectorAll('body > #cycling-routes-modal').forEach(m => m.remove());
+
     // 1. Abrir modal ergonómico compacto (adiós al diálogo nativo gigante de Android)
     const btnOpen = document.getElementById('btn-open-cycling-picker');
     const modal = document.getElementById('cycling-routes-modal');
     const btnClose = document.getElementById('btn-close-cycling-modal');
 
+    // Mover el modal a document.body para que position: fixed sea 100% relativo al viewport (inmune a backdrop-filter padre)
+    if (modal && modal.parentElement !== document.body) {
+      document.body.appendChild(modal);
+    }
+
     if (btnOpen && modal) {
       btnOpen.addEventListener('click', () => {
-        modal.style.display = 'flex';
-        modal.setAttribute('aria-hidden', 'false');
+        this.triggerHaptic();
+        this.openModal(modal);
       });
     }
 
     if (btnClose && modal) {
       btnClose.addEventListener('click', () => {
-        modal.style.display = 'none';
-        modal.setAttribute('aria-hidden', 'true');
+        this.triggerHaptic();
+        this.closeModal(modal);
       });
     }
 
     if (modal) {
       modal.addEventListener('click', (e) => {
         if (e.target === modal) {
-          modal.style.display = 'none';
-          modal.setAttribute('aria-hidden', 'true');
+          this.closeModal(modal);
         }
       });
     }
@@ -3000,10 +3060,10 @@ class MeteoAsturiasApp {
       item.addEventListener('click', (e) => {
         const routeId = e.currentTarget.dataset.routeId;
         if (routeId) {
+          this.triggerHaptic();
           this.selectedCyclingRouteId = routeId;
           if (modal) {
-            modal.style.display = 'none';
-            modal.setAttribute('aria-hidden', 'true');
+            this.closeModal(modal);
           }
           this.refreshCyclingPanel();
         }
@@ -3015,6 +3075,7 @@ class MeteoAsturiasApp {
       btn.addEventListener('click', (e) => {
         const day = e.currentTarget.dataset.day;
         if (day && day !== this.selectedCyclingDay) {
+          this.triggerHaptic();
           this.selectedCyclingDay = day;
           this.selectedCyclingHour = null; // Auto-selecciona la hora más conveniente para ese día
           this.selectedCyclingRouteId = null; // Auto-resetea para cargar directamente la óptima
@@ -3028,6 +3089,7 @@ class MeteoAsturiasApp {
       btn.addEventListener('click', (e) => {
         const hour = parseInt(e.currentTarget.dataset.hour, 10);
         if (!isNaN(hour)) {
+          this.triggerHaptic();
           this.selectedCyclingHour = hour;
           this.selectedCyclingRouteId = null; // Auto-resetea para cargar directamente la óptima debajo
           this.refreshCyclingPanel();
@@ -3040,6 +3102,7 @@ class MeteoAsturiasApp {
       btn.addEventListener('click', (e) => {
         const speed = parseInt(e.currentTarget.dataset.speed, 10);
         if (!isNaN(speed)) {
+          this.triggerHaptic();
           this.selectedCyclingSpeed = speed;
           this.selectedCyclingRouteId = null; // Auto-resetea para cargar directamente la óptima debajo
           this.refreshCyclingPanel();
@@ -3049,43 +3112,62 @@ class MeteoAsturiasApp {
   }
 
   initRoutesCardEvents() {
+    // Eliminar posibles modales huérfanos previos en document.body
+    document.querySelectorAll('body > #hiking-routes-modal').forEach(m => m.remove());
+
     // 1. Abrir modal ergonómico de selección de sendas (Bottom Sheet)
     const btnOpen = document.getElementById('btn-open-routes-picker');
     const modal = document.getElementById('hiking-routes-modal');
     const btnClose = document.getElementById('btn-close-hiking-modal');
 
+    // Mover el modal a document.body para que position: fixed sea 100% relativo al viewport (inmune a backdrop-filter padre)
+    if (modal && modal.parentElement !== document.body) {
+      document.body.appendChild(modal);
+    }
+
     if (btnOpen && modal) {
       btnOpen.addEventListener('click', () => {
-        modal.style.display = 'flex';
-        modal.setAttribute('aria-hidden', 'false');
+        this.triggerHaptic();
+        this.openModal(modal);
       });
     }
 
     if (btnClose && modal) {
       btnClose.addEventListener('click', () => {
-        modal.style.display = 'none';
-        modal.setAttribute('aria-hidden', 'true');
+        this.triggerHaptic();
+        this.closeModal(modal);
       });
     }
 
     if (modal) {
       modal.addEventListener('click', (e) => {
         if (e.target === modal) {
-          modal.style.display = 'none';
-          modal.setAttribute('aria-hidden', 'true');
+          this.closeModal(modal);
         }
       });
     }
+
+    // 1b. Conmutador de día (Hoy / Mañana) en Rutas & Senderismo
+    document.querySelectorAll('.btn-routes-day').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const day = e.currentTarget.dataset.day;
+        if (day && day !== this.selectedRoutesDay) {
+          this.triggerHaptic();
+          this.selectedRoutesDay = day;
+          this.refreshRoutesPanel();
+        }
+      });
+    });
 
     // 2. Selección de senda en el modal
     document.querySelectorAll('.routes-item-card').forEach(item => {
       item.addEventListener('click', (e) => {
         const routeId = e.currentTarget.dataset.routeId;
         if (routeId) {
+          this.triggerHaptic();
           this.selectedHikingRouteId = routeId;
           if (modal) {
-            modal.style.display = 'none';
-            modal.setAttribute('aria-hidden', 'true');
+            this.closeModal(modal);
           }
           this.refreshRoutesPanel();
         }
@@ -3094,43 +3176,63 @@ class MeteoAsturiasApp {
   }
 
   initTourismCardEvents() {
+    // Eliminar posibles modales huérfanos previos en document.body
+    document.querySelectorAll('body > #tourism-plans-modal').forEach(m => m.remove());
+
     // 1. Abrir modal ergonómico de planes (Bottom Sheet)
     const btnOpen = document.getElementById('btn-open-tourism-picker');
     const modal = document.getElementById('tourism-plans-modal');
     const btnClose = document.getElementById('btn-close-tourism-modal');
 
+    // Mover el modal a document.body para que position: fixed sea 100% relativo al viewport (inmune a backdrop-filter padre)
+    if (modal && modal.parentElement !== document.body) {
+      document.body.appendChild(modal);
+    }
+
     if (btnOpen && modal) {
       btnOpen.addEventListener('click', () => {
-        modal.style.display = 'flex';
-        modal.setAttribute('aria-hidden', 'false');
+        this.triggerHaptic();
+        this.openModal(modal);
       });
     }
 
     if (btnClose && modal) {
       btnClose.addEventListener('click', () => {
-        modal.style.display = 'none';
-        modal.setAttribute('aria-hidden', 'true');
+        this.triggerHaptic();
+        this.closeModal(modal);
       });
     }
 
     if (modal) {
       modal.addEventListener('click', (e) => {
         if (e.target === modal) {
-          modal.style.display = 'none';
-          modal.setAttribute('aria-hidden', 'true');
+          this.closeModal(modal);
         }
       });
     }
+
+    // 1b. Conmutador de día (Hoy / Mañana) en Planes & Ocio
+    document.querySelectorAll('.btn-tourism-day').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const day = e.currentTarget.dataset.day;
+        if (day && day !== this.selectedTourismDay) {
+          this.triggerHaptic();
+          this.selectedTourismDay = day;
+          this.selectedTourismPlanId = null; // Auto-carga el plan recomendado para ese día
+          this.refreshTourismPanel();
+        }
+      });
+    });
 
     // 2. Selección de plan en el modal
     document.querySelectorAll('.tourism-item-card').forEach(item => {
       item.addEventListener('click', (e) => {
         const planId = e.currentTarget.dataset.planId;
         if (planId) {
+          this.triggerHaptic();
           this.selectedTourismPlanId = planId;
           if (modal) {
-            modal.style.display = 'none';
-            modal.setAttribute('aria-hidden', 'true');
+            this.closeModal(modal);
           }
           this.refreshTourismPanel();
         }
@@ -3145,7 +3247,8 @@ class MeteoAsturiasApp {
         container.innerHTML = renderTourismCard(
           this.weatherData,
           this.currentConcejo,
-          this.selectedTourismPlanId
+          this.selectedTourismPlanId,
+          this.selectedTourismDay
         );
         this.initTourismCardEvents();
       }
@@ -3161,7 +3264,8 @@ class MeteoAsturiasApp {
         container.innerHTML = renderRoutesCard(
           this.weatherData,
           this.currentConcejo,
-          this.selectedHikingRouteId
+          this.selectedHikingRouteId,
+          this.selectedRoutesDay
         );
         this.initRoutesCardEvents();
       }
@@ -3268,11 +3372,11 @@ class MeteoAsturiasApp {
         console.error('[MeteoAstur] Error renderizando Surf & Rompientes:', e);
       }
 
-      // 2c. Módulo Rutas & Senderismo (v3.0.24.11)
+      // 2c. Módulo Rutas & Senderismo (v3.0.24.62)
       try {
         const routesContainer = document.getElementById('panel-routes');
         if (routesContainer) {
-          routesContainer.innerHTML = renderRoutesCard(data, concejo, this.selectedHikingRouteId);
+          routesContainer.innerHTML = renderRoutesCard(data, concejo, this.selectedHikingRouteId, this.selectedRoutesDay);
           this.initRoutesCardEvents();
         }
       } catch (e) {
@@ -3313,7 +3417,7 @@ class MeteoAsturiasApp {
       try {
         const tourismContainer = document.getElementById('panel-tourism');
         if (tourismContainer) {
-          tourismContainer.innerHTML = renderTourismCard(data, concejo, this.selectedTourismPlanId);
+          tourismContainer.innerHTML = renderTourismCard(data, concejo, this.selectedTourismPlanId, this.selectedTourismDay);
           this.initTourismCardEvents();
         }
       } catch (e) {
@@ -3918,24 +4022,21 @@ class MeteoAsturiasApp {
     if (btnOpen && modal) {
       btnOpen.addEventListener('click', () => {
         this.triggerHaptic();
-        modal.style.display = 'flex';
-        modal.setAttribute('aria-hidden', 'false');
+        this.openModal(modal);
       });
     }
 
     if (btnClose && modal) {
       btnClose.addEventListener('click', () => {
         this.triggerHaptic();
-        modal.style.display = 'none';
-        modal.setAttribute('aria-hidden', 'true');
+        this.closeModal(modal);
       });
     }
 
     if (modal) {
       modal.addEventListener('click', (e) => {
         if (e.target === modal) {
-          modal.style.display = 'none';
-          modal.setAttribute('aria-hidden', 'true');
+          this.closeModal(modal);
         }
       });
     }
@@ -3978,8 +4079,7 @@ class MeteoAsturiasApp {
 
         // Cerrar modal
         if (modal) {
-          modal.style.display = 'none';
-          modal.setAttribute('aria-hidden', 'true');
+          this.closeModal(modal);
         }
       });
     });
@@ -4002,24 +4102,21 @@ class MeteoAsturiasApp {
     if (btnOpen && modal) {
       btnOpen.addEventListener('click', () => {
         this.triggerHaptic();
-        modal.style.display = 'flex';
-        modal.setAttribute('aria-hidden', 'false');
+        this.openModal(modal);
       });
     }
 
     if (btnClose && modal) {
       btnClose.addEventListener('click', () => {
         this.triggerHaptic();
-        modal.style.display = 'none';
-        modal.setAttribute('aria-hidden', 'true');
+        this.closeModal(modal);
       });
     }
 
     if (modal) {
       modal.addEventListener('click', (e) => {
         if (e.target === modal) {
-          modal.style.display = 'none';
-          modal.setAttribute('aria-hidden', 'true');
+          this.closeModal(modal);
         }
       });
     }
@@ -4062,8 +4159,7 @@ class MeteoAsturiasApp {
 
         // Cerrar modal
         if (modal) {
-          modal.style.display = 'none';
-          modal.setAttribute('aria-hidden', 'true');
+          this.closeModal(modal);
         }
       });
     });

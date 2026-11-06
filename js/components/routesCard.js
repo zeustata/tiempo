@@ -6,12 +6,17 @@
  * Armonía Visual Liquid Glass (Ley 14) y Blindaje de Responsabilidad y Seguridad (Ley 16).
  */
 
-import { calculateHikingIndex, getRoutesForConcejo, RUTAS_ASTURIAS_CATALOGO, getRouteExplanation } from '../utils/routesData.js?v=3.0.24.11';
+import { calculateHikingIndex, getRoutesForConcejo, RUTAS_ASTURIAS_CATALOGO, getRouteExplanation } from '../utils/routesData.js?v=3.0.24.62';
 
-export function renderRoutesCard(data, concejo, selectedRouteId = null) {
+export function renderRoutesCard(data, concejo, selectedRouteId = null, selectedDay = null) {
   if (!concejo) return '';
 
-  const hike = calculateHikingIndex(data, concejo);
+  const currentHour = new Date().getHours();
+  const activeDay = selectedDay || (currentHour >= 19 ? 'tomorrow' : 'today');
+  const dayLabelLower = activeDay === 'tomorrow' ? 'mañana' : 'hoy';
+  const dayLabelCap = activeDay === 'tomorrow' ? 'Mañana' : 'Hoy';
+
+  const hike = calculateHikingIndex(data, concejo, activeDay);
   const allRoutes = getRoutesForConcejo(concejo);
 
   // Título limpio sin paréntesis
@@ -126,20 +131,39 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null) {
         justify-content: center;
       }
       .routes-modal-sheet {
-        background: #0b132b;
-        border: 1px solid rgba(56, 189, 248, 0.3);
+        background: rgba(15, 23, 42, 0.88);
+        backdrop-filter: blur(24px) saturate(190%);
+        -webkit-backdrop-filter: blur(24px) saturate(190%);
+        border: 1px solid rgba(56, 189, 248, 0.35);
         border-radius: 20px 20px 0 0;
         width: 100%;
         max-width: 600px;
         max-height: 80vh;
         display: flex;
         flex-direction: column;
-        box-shadow: 0 -10px 30px rgba(0,0,0,0.6);
+        box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.35), 0 -10px 36px rgba(0,0,0,0.65);
         animation: slideUpRoutes 0.25s ease-out;
       }
       @keyframes slideUpRoutes {
         from { transform: translateY(100%); }
         to { transform: translateY(0); }
+      }
+      .routes-day-pill {
+        padding: 5px 12px;
+        border-radius: 16px;
+        font-size: 0.76rem;
+        font-weight: 800;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text-dim, #94a3b8);
+      }
+      .routes-day-pill.active {
+        background: linear-gradient(135deg, rgba(56, 189, 248, 0.3) 0%, rgba(14, 165, 233, 0.45) 100%);
+        border-color: var(--primary, #38bdf8);
+        color: #ffffff;
+        box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
       }
       .routes-item-card {
         padding: 10px 12px;
@@ -182,10 +206,23 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null) {
 
         <!-- Panel de Diagnóstico Ejecutivo del Firme y Montaña -->
         <div style="background: rgba(15, 23, 42, 0.40); border-radius: 12px; padding: 10px; border: 1px solid rgba(255,255,255,0.08);">
+          <!-- Conmutador Temporal Hoy / Mañana -->
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.06);">
+            <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-main);">📅 Jornada de marcha:</span>
+            <div style="display: flex; gap: 6px;">
+              <button type="button" class="routes-day-pill btn-routes-day ${activeDay === 'today' ? 'active' : ''}" data-day="today">
+                ☀️ Hoy
+              </button>
+              <button type="button" class="routes-day-pill btn-routes-day ${activeDay === 'tomorrow' ? 'active' : ''}" data-day="tomorrow">
+                📅 Mañana
+              </button>
+            </div>
+          </div>
+
           <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
             <span style="font-size: 1.2rem;">${hike.icon}</span>
             <span style="font-size: 0.8rem; color: var(--text-main); font-weight: 700; line-height: 1.35;">
-              <strong>En ${concejoTitle}:</strong> ${hike.summary}
+              <strong>En ${concejoTitle} (${dayLabelCap}):</strong> ${hike.summary}
             </span>
           </div>
 
@@ -227,19 +264,19 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null) {
         </div>
       </div>
 
-      <!-- 2. CONSEJERO INTELIGENTE: SENDA RECOMENDADA DE HOY -->
+      <!-- 2. CONSEJERO INTELIGENTE: SENDA RECOMENDADA -->
       <div class="routes-advisor-card">
         <div style="display: flex; align-items: flex-start; gap: 8px;">
           <span style="font-size: 1.3rem; line-height: 1;">💡</span>
           <div style="flex: 1; min-width: 0;">
             <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap; margin-bottom: 4px;">
-              <strong style="font-size: 0.88rem; color: var(--text-main);">Consejero de Senderismo</strong>
+              <strong style="font-size: 0.88rem; color: var(--text-main);">Consejero de Senderismo (${dayLabelCap})</strong>
               <span style="font-size: 0.72rem; font-weight: 800; padding: 2px 7px; border-radius: 10px; background: #22c55e; color: #000;">
                 Recomendada 🌟
               </span>
             </div>
             <p style="margin: 0; font-size: 0.8rem; color: var(--text-dim); line-height: 1.4; word-break: break-word;">
-              Senda óptima de hoy en ${concejoTitle}: <strong style="color: var(--primary);">${recommendedRoute.name}</strong> (${recommendedRoute.diff}, ${recommendedRoute.dist}). Ideal por estado de firme y cercanía.
+              Senda óptima para ${dayLabelLower} en ${concejoTitle}: <strong style="color: var(--primary);">${recommendedRoute.name}</strong> (${recommendedRoute.diff}, ${recommendedRoute.dist}). Ideal por estado de firme y cercanía.
             </p>
           </div>
         </div>

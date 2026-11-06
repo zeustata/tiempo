@@ -2,6 +2,20 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🚀 Auditoría Integral Gemini 4 Argon: Blindaje «Atrás» Android, Portal `document.body`, Inteligencia `[Hoy/Mañana]` y Ficha GPS en Ciclismo (v3.0.24.62) — 2026-11-06
+- **Implementación de las 4 Mejoras Prioritarias Aprobadas por Lendo:**
+  1. *Botón «Atrás» de Android (`popstate`) + Portal en `document.body` + Liquid Glass en los 5 Bottom Sheets:*
+     - En `js/app.js`: integrados `#marine-beaches-modal`, `#surf-spots-modal`, `#hiking-routes-modal`, `#cycling-routes-modal` y `#tourism-plans-modal` dentro de `openModal()`, `closeModal()`, `closeAllModals()` y el listener `popstate`. Ahora al hacer el gesto «Atrás» en Android con cualquier selector inferior abierto, se cierra limpiamente la hoja en lugar de salir de la app.
+     - En `initCyclingCardEvents()`, `initRoutesCardEvents()` y `initTourismCardEvents()`: los modales se montan directamente en `document.body` (eliminando posibles huérfanos previos) para que el `backdrop-filter` de las tarjetas padre nunca recorte el `position: fixed`.
+     - En `css/components.css`, `routesCard.js`, `cyclingCard.js` y `tourismCard.js`: las 5 hojas desplegables (`.surf-spots-modal-sheet`, `.routes-modal-sheet`, `.cycling-modal-sheet`, `.tourism-modal-sheet`) sustituyen el bloque opaco `#0b132b` por cristal traslúcido Apple Liquid Glass (`rgba(15, 23, 42, 0.88)` + `blur(24px) saturate(190%)`).
+  2. *Inteligencia Temporal `[ ☀️ Hoy ] / [ 📅 Mañana ]` en Rutas & Senderismo y Planes & Ocio:*
+     - En `js/components/routesCard.js` y `js/utils/routesData.js`: añadido conmutador táctil `[ ☀️ Hoy ] / [ 📅 Mañana ]` (con salto automático a *Mañana* a partir de las 19:00 h), recalculando barro (con drenaje nocturno), sensación en cumbre, índice UV y senda recomendada para la jornada elegida.
+     - En `js/components/tourismCard.js` y `js/utils/tourismData.js`: añadido conmutador táctil `[ ☀️ Hoy ] / [ 📅 Mañana ]` (*«¿Qué facer güei? / ¿Qué facer mañana?»*), evaluando la previsión del mediodía siguiente para recomendar el plan óptimo.
+  3. *Ficha Oficial Ciclista, Consejos de Puerto y Salida GPS en Ciclismo:*
+     - En `js/utils/cyclingData.js`, `js/components/cyclingCard.js` y `js/app.js`: creada `getCyclingRouteExplanation(routeId)` e incorporado el botón interactivo `.btn-explain-cycling` (*«🗺️ Ver Ficha Oficial, Consejos de Puerto y Salida GPS ➔»*) al pie de cada ruta ciclista con el perfil circular, desglose de tramos/puertos, desarrollo recomendado (platos y piñonera según desnivel) y enlaces directos a Google Maps GPS y Wikiloc.
+  4. *Cache-Busting & Despliegue Dual:*
+     - Service Worker actualizado a `meteoasturlode-v3024-62-argon-audit-improvements` y query strings sincronizados a `v=3.0.24.62`.
+
 ## 🌟 Homologación Universal Apple Liquid Glass en Rutas, Ciclismo y Planes (v3.0.24.61) — 2026-11-06
 - **Erradicación de Tarjetas Oscuras de Pizarra y Armonización con la Cabecera (Observación Crítica de Lendo):**
   1. *Diagnóstico y Criterio de Lendo:*
