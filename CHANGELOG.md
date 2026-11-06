@@ -10,6 +10,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
 
+## [3.0.24.61] - 2026-11-06
+### Changed
+- **Homologación Universal Apple Liquid Glass en Rutas, Ciclismo y Planes (Feedback Lendo - Doctrina Ley 14):**
+  - **Erradicación de Bloques Oscuros de Pizarra:** Suprimidos los fondos negros opacos (`rgba(15, 23, 42, 0.94)`) en las tarjetas principales de Rutas & Senderismo (`.routes-card-solid`), Ciclismo en Ruta (`.cycling-card`) y Planes & Ocio (`.tourism-card-solid`).
+  - **Armonización con Cabecera MeteoAsturLode:** Integración completa en el motor oficial de cristal líquido (`var(--bg-surface)` con `backdrop-filter: blur(24px) saturate(190%)`), bisel superior de luz blanca y reflejo radial `::after`, eliminando el corte brusco entre la cabecera y el contenido.
+  - **Suavizado de Paneles Interiores:** Las cajas de métricas rápidas, tramos y diagnósticos adoptan velos translúcidos sutiles con micro-bordes suaves (`rgba(255,255,255,0.06)` a `rgba(255,255,255,0.08)`), aportando máxima luminosidad, profundidad y coherencia estética en los 10 menús de la aplicación.
+
 ## [3.0.24.60] - 2026-11-06
 ### Changed
 - **Erradicación Total de Botones Pasados y Filtrado Estricto Futuro en Ciclismo (Feedback Lendo):**

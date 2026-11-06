@@ -59,24 +59,26 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null) {
         overflow-x: hidden;
       }
       .routes-card-solid {
-        background: linear-gradient(135deg, rgba(15, 23, 42, 0.94) 0%, rgba(11, 19, 43, 0.96) 100%);
-        border: 1px solid rgba(56, 189, 248, 0.22);
-        border-radius: 16px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(20px) saturate(180%);
-        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        background: var(--bg-surface);
+        border: 1px solid var(--border-glass);
+        border-radius: var(--radius-lg);
+        box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.45), var(--shadow-card), 0 16px 40px 0 rgba(0, 0, 0, 0.40);
+        backdrop-filter: blur(var(--glass-blur, 24px)) saturate(190%);
+        -webkit-backdrop-filter: blur(var(--glass-blur, 24px)) saturate(190%);
         margin-bottom: 12px;
-        padding: 14px 12px;
+        padding: 16px 14px;
         box-sizing: border-box;
       }
       .routes-advisor-card {
-        background: linear-gradient(135deg, rgba(8, 14, 28, 0.96) 0%, rgba(15, 23, 42, 0.94) 100%);
+        background: rgba(30, 41, 59, 0.45);
         border: 1px solid rgba(56, 189, 248, 0.35);
         border-radius: 14px;
         padding: 12px;
         margin-bottom: 12px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(56, 189, 248, 0.2);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.2);
         box-sizing: border-box;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
       }
       .routes-route-trigger {
         width: 100%;
@@ -179,7 +181,7 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null) {
         </div>
 
         <!-- Panel de Diagnóstico Ejecutivo del Firme y Montaña -->
-        <div style="background: rgba(0,0,0,0.25); border-radius: 12px; padding: 10px; border: 1px solid rgba(255,255,255,0.06);">
+        <div style="background: rgba(15, 23, 42, 0.40); border-radius: 12px; padding: 10px; border: 1px solid rgba(255,255,255,0.08);">
           <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
             <span style="font-size: 1.2rem;">${hike.icon}</span>
             <span style="font-size: 0.8rem; color: var(--text-main); font-weight: 700; line-height: 1.35;">
@@ -189,7 +191,7 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null) {
 
           <div class="routes-metrics-grid" style="margin-bottom: 0;">
             <!-- Firme y Barro -->
-            <div style="background: rgba(0,0,0,0.3); padding: 7px 4px; border-radius: 8px; text-align: center;">
+            <div style="background: rgba(0,0,0,0.20); border: 1px solid rgba(255,255,255,0.06); padding: 7px 4px; border-radius: 8px; text-align: center;">
               <span style="display: block; font-size: 0.68rem; color: var(--text-dim);">🪵 Firme / Barro</span>
               <strong style="font-size: 0.82rem; color: ${hike.mudIndex.color};">
                 ${hike.mudIndex.score <= 1 ? 'Firme Seco' : (hike.mudIndex.score === 2 ? 'Barro Leve' : (hike.mudIndex.score === 3 ? 'Barro Moderado' : 'Barrizal'))}
@@ -198,14 +200,14 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null) {
             </div>
 
             <!-- Clima en Cotas Altas -->
-            <div style="background: rgba(0,0,0,0.3); padding: 7px 4px; border-radius: 8px; text-align: center;">
+            <div style="background: rgba(0,0,0,0.20); border: 1px solid rgba(255,255,255,0.06); padding: 7px 4px; border-radius: 8px; text-align: center;">
               <span style="display: block; font-size: 0.68rem; color: var(--text-dim);">⛰️ Sensación Cumbre</span>
               <strong style="font-size: 0.88rem; color: var(--text-main);">${hike.windChillHigh}°C</strong>
               <span style="display: block; font-size: 0.65rem; color: var(--text-dim); margin-top: 1px;">Rachas: ${hike.windGust} km/h</span>
             </div>
 
             <!-- Calzado Sugerido -->
-            <div style="background: rgba(0,0,0,0.3); padding: 7px 4px; border-radius: 8px; text-align: center;">
+            <div style="background: rgba(0,0,0,0.20); border: 1px solid rgba(255,255,255,0.06); padding: 7px 4px; border-radius: 8px; text-align: center;">
               <span style="display: block; font-size: 0.68rem; color: var(--text-dim);">👟 Calzado Sugerido</span>
               <strong style="font-size: 0.82rem; color: #38bdf8;">
                 ${hike.status === 'optimal' ? 'Trekking ligero' : 'Bota de taco'}
@@ -214,7 +216,7 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null) {
             </div>
 
             <!-- Protección Solar / Ropa -->
-            <div style="background: rgba(0,0,0,0.3); padding: 7px 4px; border-radius: 8px; text-align: center;">
+            <div style="background: rgba(0,0,0,0.20); border: 1px solid rgba(255,255,255,0.06); padding: 7px 4px; border-radius: 8px; text-align: center;">
               <span style="display: block; font-size: 0.68rem; color: var(--text-dim);">🎒 Ropa &amp; UV</span>
               <strong style="font-size: 0.82rem; color: var(--accent, #facc15);">
                 ${hike.tempNow < 12 ? 'Cortavientos' : 'Camiseta téc.'}
@@ -291,19 +293,19 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null) {
 
         <!-- Pastillas métricas rápidas (2x2 en móvil, 4 en desktop) -->
         <div class="routes-metrics-grid">
-          <div style="background: rgba(0,0,0,0.25); padding: 7px 4px; border-radius: 8px; text-align: center;">
+          <div style="background: rgba(0,0,0,0.20); border: 1px solid rgba(255,255,255,0.06); padding: 7px 4px; border-radius: 8px; text-align: center;">
             <span style="display: block; font-size: 0.68rem; color: var(--text-dim);">Distancia</span>
             <strong style="font-size: 0.92rem; color: var(--text-main);">${activeRoute.dist}</strong>
           </div>
-          <div style="background: rgba(0,0,0,0.25); padding: 7px 4px; border-radius: 8px; text-align: center;">
+          <div style="background: rgba(0,0,0,0.20); border: 1px solid rgba(255,255,255,0.06); padding: 7px 4px; border-radius: 8px; text-align: center;">
             <span style="display: block; font-size: 0.68rem; color: var(--text-dim);">Desnivel</span>
             <strong style="font-size: 0.92rem; color: var(--accent, #facc15);">${activeRoute.elev}</strong>
           </div>
-          <div style="background: rgba(0,0,0,0.25); padding: 7px 4px; border-radius: 8px; text-align: center;">
+          <div style="background: rgba(0,0,0,0.20); border: 1px solid rgba(255,255,255,0.06); padding: 7px 4px; border-radius: 8px; text-align: center;">
             <span style="display: block; font-size: 0.68rem; color: var(--text-dim);">Tiempo Estimado</span>
             <strong style="font-size: 0.92rem; color: var(--primary);">${activeRoute.time}</strong>
           </div>
-          <div style="background: rgba(0,0,0,0.25); padding: 7px 4px; border-radius: 8px; text-align: center;">
+          <div style="background: rgba(0,0,0,0.20); border: 1px solid rgba(255,255,255,0.06); padding: 7px 4px; border-radius: 8px; text-align: center;">
             <span style="display: block; font-size: 0.68rem; color: var(--text-dim);">Calzado Óptimo</span>
             <strong style="font-size: 0.78rem; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block;">
               ${calzadoRecomendado.replace(/^[^\s]+\s*/, '')}
@@ -312,7 +314,7 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null) {
         </div>
 
         <!-- Tipo de Terreno y Firme -->
-        <div style="background: rgba(0,0,0,0.25); border-radius: 10px; padding: 8px 10px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+        <div style="background: rgba(15, 23, 42, 0.40); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 8px 10px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
           <span style="font-size: 1.1rem;">🪵</span>
           <div style="font-size: 0.74rem; color: var(--text-dim); line-height: 1.3;">
             <strong style="color: var(--text-main);">Firme &amp; Superficie:</strong> ${activeRoute.surface}

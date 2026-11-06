@@ -44,24 +44,26 @@ export function renderTourismCard(weatherData, concejo, selectedPlanId = null) {
         overflow-x: hidden;
       }
       .tourism-card-solid {
-        background: linear-gradient(135deg, rgba(15, 23, 42, 0.94) 0%, rgba(11, 19, 43, 0.96) 100%);
-        border: 1px solid rgba(56, 189, 248, 0.22);
-        border-radius: 16px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(20px) saturate(180%);
-        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        background: var(--bg-surface);
+        border: 1px solid var(--border-glass);
+        border-radius: var(--radius-lg);
+        box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.45), var(--shadow-card), 0 16px 40px 0 rgba(0, 0, 0, 0.40);
+        backdrop-filter: blur(var(--glass-blur, 24px)) saturate(190%);
+        -webkit-backdrop-filter: blur(var(--glass-blur, 24px)) saturate(190%);
         margin-bottom: 12px;
-        padding: 14px 12px;
+        padding: 16px 14px;
         box-sizing: border-box;
       }
       .tourism-advisor-card {
-        background: linear-gradient(135deg, rgba(8, 14, 28, 0.96) 0%, rgba(15, 23, 42, 0.94) 100%);
+        background: rgba(30, 41, 59, 0.45);
         border: 1px solid rgba(56, 189, 248, 0.35);
         border-radius: 14px;
         padding: 12px;
         margin-bottom: 12px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(56, 189, 248, 0.2);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.2);
         box-sizing: border-box;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
       }
       .tourism-plan-trigger {
         width: 100%;
@@ -164,7 +166,7 @@ export function renderTourismCard(weatherData, concejo, selectedPlanId = null) {
         </div>
 
         <!-- Veredicto del Cielo Actual -->
-        <div style="background: rgba(0,0,0,0.25); border-radius: 12px; padding: 10px; border: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; gap: 10px;">
+        <div style="background: rgba(15, 23, 42, 0.40); border-radius: 12px; padding: 10px; border: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px;">
           <div style="font-size: 1.8rem; line-height: 1; flex-shrink: 0;">${weatherIcon}</div>
           <div style="flex: 1; min-width: 0;">
             <div style="font-size: 0.7rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px;">Veredicto del Cielo Actual</div>
@@ -238,19 +240,19 @@ export function renderTourismCard(weatherData, concejo, selectedPlanId = null) {
 
         <!-- Pastillas métricas rápidas (2x2 en móvil, 4 en desktop) -->
         <div class="tourism-metrics-grid">
-          <div style="background: rgba(0,0,0,0.25); padding: 7px 4px; border-radius: 8px; text-align: center;">
+          <div style="background: rgba(0,0,0,0.20); border: 1px solid rgba(255,255,255,0.06); padding: 7px 4px; border-radius: 8px; text-align: center;">
             <span style="display: block; font-size: 0.68rem; color: var(--text-dim);">Municipio</span>
             <strong style="font-size: 0.82rem; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block;">${activePlan.town}</strong>
           </div>
-          <div style="background: rgba(0,0,0,0.25); padding: 7px 4px; border-radius: 8px; text-align: center;">
+          <div style="background: rgba(0,0,0,0.20); border: 1px solid rgba(255,255,255,0.06); padding: 7px 4px; border-radius: 8px; text-align: center;">
             <span style="display: block; font-size: 0.68rem; color: var(--text-dim);">Distancia</span>
             <strong style="font-size: 0.92rem; color: var(--accent, #facc15);">${activePlan.distFromUserKm} km</strong>
           </div>
-          <div style="background: rgba(0,0,0,0.25); padding: 7px 4px; border-radius: 8px; text-align: center;">
+          <div style="background: rgba(0,0,0,0.20); border: 1px solid rgba(255,255,255,0.06); padding: 7px 4px; border-radius: 8px; text-align: center;">
             <span style="display: block; font-size: 0.68rem; color: var(--text-dim);">Tiempo en Coche</span>
             <strong style="font-size: 0.92rem; color: var(--primary);">~${activePlan.driveTimeMin} min</strong>
           </div>
-          <div style="background: rgba(0,0,0,0.25); padding: 7px 4px; border-radius: 8px; text-align: center;">
+          <div style="background: rgba(0,0,0,0.20); border: 1px solid rgba(255,255,255,0.06); padding: 7px 4px; border-radius: 8px; text-align: center;">
             <span style="display: block; font-size: 0.68rem; color: var(--text-dim);">Cielo Óptimo</span>
             <strong style="font-size: 0.78rem; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block;">
               ${weatherLabel}

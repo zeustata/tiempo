@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-60-cycling-clean-future-hours';
+const CACHE_NAME = 'meteoasturlode-v3024-61-unified-liquid-glass-cards';
 const STATIC_ASSETS = [
   './',
   './index.html',

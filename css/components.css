@@ -8,6 +8,9 @@
 .astronomy-card,
 .astronomy-hero-card,
 .routes-card,
+.routes-card-solid,
+.cycling-card,
+.tourism-card-solid,
 .radar-wrapper,
 .surf-card,
 .laundry-card {
@@ -35,6 +38,9 @@
 .low-perf .astronomy-card,
 .low-perf .astronomy-hero-card,
 .low-perf .routes-card,
+.low-perf .routes-card-solid,
+.low-perf .cycling-card,
+.low-perf .tourism-card-solid,
 .low-perf .radar-wrapper,
 .low-perf .surf-card,
 .low-perf .laundry-card {
@@ -55,6 +61,9 @@
 .low-perf .astronomy-card::after,
 .low-perf .astronomy-hero-card::after,
 .low-perf .routes-card::after,
+.low-perf .routes-card-solid::after,
+.low-perf .cycling-card::after,
+.low-perf .tourism-card-solid::after,
 .low-perf .radar-wrapper::after,
 .low-perf .surf-card::after,
 .low-perf .laundry-card::after {
@@ -76,6 +85,9 @@
 .astronomy-card::after,
 .astronomy-hero-card::after,
 .routes-card::after,
+.routes-card-solid::after,
+.cycling-card::after,
+.tourism-card-solid::after,
 .radar-wrapper::after,
 .surf-card::after,
 .laundry-card::after {

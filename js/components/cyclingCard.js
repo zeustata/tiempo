@@ -85,24 +85,26 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
         overflow-x: hidden;
       }
       .cycling-card {
-        background: linear-gradient(135deg, rgba(15, 23, 42, 0.94) 0%, rgba(11, 19, 43, 0.96) 100%);
-        border: 1px solid rgba(56, 189, 248, 0.22);
-        border-radius: 16px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(20px) saturate(180%);
-        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        background: var(--bg-surface);
+        border: 1px solid var(--border-glass);
+        border-radius: var(--radius-lg);
+        box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.45), var(--shadow-card), 0 16px 40px 0 rgba(0, 0, 0, 0.40);
+        backdrop-filter: blur(var(--glass-blur, 24px)) saturate(190%);
+        -webkit-backdrop-filter: blur(var(--glass-blur, 24px)) saturate(190%);
         margin-bottom: 12px;
-        padding: 14px 12px;
+        padding: 16px 14px;
         box-sizing: border-box;
       }
       .cycling-advisor-card {
-        background: linear-gradient(135deg, rgba(8, 14, 28, 0.96) 0%, rgba(15, 23, 42, 0.94) 100%);
+        background: rgba(30, 41, 59, 0.45);
         border: 1px solid rgba(56, 189, 248, 0.35);
         border-radius: 14px;
         padding: 12px;
         margin-bottom: 12px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(56, 189, 248, 0.2);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.2);
         box-sizing: border-box;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
       }
       .cycling-disclaimer-card {
         background: rgba(11, 19, 43, 0.85);
@@ -257,7 +259,7 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
         </div>
 
         <!-- SELECTOR DE DÍA, HORA DE SALIDA Y RITMO (BLINDADO MÓVIL) -->
-        <div style="background: rgba(0,0,0,0.22); border-radius: 12px; padding: 10px; margin-top: 8px;">
+        <div style="background: rgba(15, 23, 42, 0.40); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 10px; margin-top: 8px;">
           <div style="display: flex; flex-direction: column; gap: 10px;">
             
             <!-- Selector de Día (Hoy / Mañana) -->
@@ -285,8 +287,8 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
               </div>
               <div style="display: flex; gap: 4px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; -webkit-overflow-scrolling: touch;">
                 ${displayHours.length > 0 ? displayHours.map(h => {
-                  const isSelected = (h === activeHour);
-                  return `
+    const isSelected = (h === activeHour);
+    return `
                     <button type="button" 
                       class="btn-hour-pill ${isSelected ? 'active' : ''}" 
                       data-hour="${h}" 
@@ -294,7 +296,7 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
                       ${h}:00
                     </button>
                   `;
-                }).join('') : `
+  }).join('') : `
                   <div style="font-size: 0.78rem; color: var(--text-dim); padding: 4px 2px;">
                     🌙 Ya no quedan salidas con luz hoy. Toca arriba en <strong>Mañana</strong>.
                   </div>
@@ -334,9 +336,9 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
             </div>
             <p style="margin: 0; font-size: 0.8rem; color: var(--text-dim); line-height: 1.4; word-break: break-word;">
               ${activeRoute.id === bestRoute.id
-                ? `Ruta más favorable cargada: <strong style="color: var(--primary);">${bestRoute.name}</strong>. ${bestSim?.advisorMessage || ''}`
-                : `Viendo selección manual: <strong style="color: #facc15;">${activeRoute.name}</strong>. ${sim?.advisorMessage || ''} <span style="display:block; margin-top:3px; font-size:0.74rem; color:#94a3b8;">(💡 La más favorable en tu zona es <em style="color:var(--primary); font-weight:700;">${bestRoute.name}</em> con ${bestSim?.badgeLabel}).</span>`
-              }
+      ? `Ruta más favorable cargada: <strong style="color: var(--primary);">${bestRoute.name}</strong>. ${bestSim?.advisorMessage || ''}`
+      : `Viendo selección manual: <strong style="color: #facc15;">${activeRoute.name}</strong>. ${sim?.advisorMessage || ''} <span style="display:block; margin-top:3px; font-size:0.74rem; color:#94a3b8;">(💡 La más favorable en tu zona es <em style="color:var(--primary); font-weight:700;">${bestRoute.name}</em> con ${bestSim?.badgeLabel}).</span>`
+    }
             </p>
           </div>
         </div>
@@ -397,26 +399,26 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
 
         <!-- Pastillas métricas rápidas (2x2 en móvil, 4 en desktop) -->
         <div class="cycling-metrics-grid">
-          <div style="background: rgba(0,0,0,0.25); padding: 7px 4px; border-radius: 8px; text-align: center;">
+          <div style="background: rgba(0,0,0,0.20); border: 1px solid rgba(255,255,255,0.06); padding: 7px 4px; border-radius: 8px; text-align: center;">
             <span style="display: block; font-size: 0.68rem; color: var(--text-dim);">Distancia</span>
             <strong style="font-size: 0.92rem; color: var(--text-main);">${activeRoute.distanceKm} km</strong>
           </div>
-          <div style="background: rgba(0,0,0,0.25); padding: 7px 4px; border-radius: 8px; text-align: center;">
+          <div style="background: rgba(0,0,0,0.20); border: 1px solid rgba(255,255,255,0.06); padding: 7px 4px; border-radius: 8px; text-align: center;">
             <span style="display: block; font-size: 0.68rem; color: var(--text-dim);">Desnivel</span>
             <strong style="font-size: 0.92rem; color: var(--accent, #facc15);">+${activeRoute.elevationGainM} m</strong>
           </div>
-          <div style="background: rgba(0,0,0,0.25); padding: 7px 4px; border-radius: 8px; text-align: center;">
+          <div style="background: rgba(0,0,0,0.20); border: 1px solid rgba(255,255,255,0.06); padding: 7px 4px; border-radius: 8px; text-align: center;">
             <span style="display: block; font-size: 0.68rem; color: var(--text-dim);">Cota Máx</span>
             <strong style="font-size: 0.92rem; color: var(--primary);">${activeRoute.maxAltitudeM} m</strong>
           </div>
-          <div style="background: rgba(0,0,0,0.25); padding: 7px 4px; border-radius: 8px; text-align: center;">
+          <div style="background: rgba(0,0,0,0.20); border: 1px solid rgba(255,255,255,0.06); padding: 7px 4px; border-radius: 8px; text-align: center;">
             <span style="display: block; font-size: 0.68rem; color: var(--text-dim);">Tiempo Est.</span>
             <strong style="font-size: 0.92rem; color: var(--text-main);">${sim.totalDurationFormatted}</strong>
           </div>
         </div>
 
         <!-- BARRA DE REPARTO DE VIENTO RELATIVO -->
-        <div style="background: rgba(0,0,0,0.2); border-radius: 10px; padding: 10px; margin-bottom: 12px;">
+        <div style="background: rgba(15, 23, 42, 0.40); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 10px; margin-bottom: 12px;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
             <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-main);">💨 Viento en Ruta:</span>
             <span style="font-size: 0.72rem; color: var(--text-dim);">Racha máx: <strong>${sim.maxGustKmh} km/h</strong></span>
@@ -445,7 +447,7 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
 
           <div style="display: flex; flex-direction: column; gap: 8px;">
             ${sim.tramos.map((t, idx) => `
-              <div style="background: rgba(0,0,0,0.22); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 8px 10px; display: flex; flex-direction: column; gap: 5px; box-sizing: border-box;">
+              <div style="background: rgba(0,0,0,0.20); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 8px 10px; display: flex; flex-direction: column; gap: 5px; box-sizing: border-box;">
                 
                 <!-- Fila superior: Nombre de tramo y hora estimada -->
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 6px;">
@@ -518,8 +520,8 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
                   📍 Rutas por ${concejo.name} y Comarca (${localRoutes.length})
                 </span>
                 ${localRoutes.map(r => {
-                  const rSim = simulateRouteConditions(r, activeHour, selectedSpeed, hourly, activeDay);
-                  return `
+      const rSim = simulateRouteConditions(r, activeHour, selectedSpeed, hourly, activeDay);
+      return `
                   <div class="cycling-route-item ${r.id === activeRoute.id ? 'selected' : ''}" data-route-id="${r.id}">
                     <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px;">
                       <strong style="font-size: 0.84rem; color: var(--text-main);">${r.name}</strong>
@@ -538,7 +540,8 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
                       ${rSim?.headwindPct >= 50 ? `<span style="color: var(--danger, #ef4444); font-weight: 700;">🔴 ${rSim.headwindPct}% de cara</span>` : (rSim?.tailwindPct >= 40 ? `<span style="color: var(--success, #22c55e); font-weight: 700;">🟢 ${rSim.tailwindPct}% a favor</span>` : `<span>🟡 ${rSim?.crosswindPct || 0}% cruzado</span>`)}
                     </div>
                   </div>
-                `; }).join('')}
+                `;
+    }).join('')}
               </div>
             ` : ''}
 
@@ -548,8 +551,8 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
                   🌟 Grandes Clásicas de Asturias (${otherRoutes.length})
                 </span>
                 ${otherRoutes.map(r => {
-                  const rSim = simulateRouteConditions(r, activeHour, selectedSpeed, hourly, activeDay);
-                  return `
+      const rSim = simulateRouteConditions(r, activeHour, selectedSpeed, hourly, activeDay);
+      return `
                   <div class="cycling-route-item ${r.id === activeRoute.id ? 'selected' : ''}" data-route-id="${r.id}">
                     <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px;">
                       <strong style="font-size: 0.84rem; color: var(--text-main);">${r.name}</strong>
@@ -568,7 +571,8 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
                       ${rSim?.headwindPct >= 50 ? `<span style="color: var(--danger, #ef4444); font-weight: 700;">🔴 ${rSim.headwindPct}% de cara</span>` : (rSim?.tailwindPct >= 40 ? `<span style="color: var(--success, #22c55e); font-weight: 700;">🟢 ${rSim.tailwindPct}% a favor</span>` : `<span>🟡 ${rSim?.crosswindPct || 0}% cruzado</span>`)}
                     </div>
                   </div>
-                `; }).join('')}
+                `;
+    }).join('')}
               </div>
             ` : ''}
 

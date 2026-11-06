@@ -2,6 +2,27 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌟 Homologación Universal Apple Liquid Glass en Rutas, Ciclismo y Planes (v3.0.24.61) — 2026-11-06
+- **Erradicación de Tarjetas Oscuras de Pizarra y Armonización con la Cabecera (Observación Crítica de Lendo):**
+  1. *Diagnóstico y Criterio de Lendo:*
+     - Lendo detectó una disonancia visual clara: al navegar por la app, mientras la cabecera `MeteoAsturLode` y los paneles de En Vivo, Playas o Montaña lucen un cristal líquido translúcido y luminoso, los módulos de Rutas, Ciclismo y Planes caían en un bloque negro opaco al 95% que chocaba drásticamente con el resto de la interfaz.
+  2. *Implementación Técnica (Doctrina de Armonía Visual Ley 14 y Apple Liquid Glass Engine):*
+     - En `css/components.css`:
+       - Incorporados `.routes-card-solid`, `.cycling-card` y `.tourism-card-solid` a las directivas unificadas del motor Apple Liquid Glass, activando el fondo `var(--bg-surface)`, desenfoque `backdrop-filter: blur(24px) saturate(190%)`, bisel superior blanco `inset 0 1px 1px 0 rgba(255, 255, 255, 0.45)` y reflejo radial de cristal `::after`.
+     - En `js/components/routesCard.js`:
+       - Sustituido el gradiente oscuro `rgba(15, 23, 42, 0.94)` por `var(--bg-surface)`.
+       - La tarjeta del consejero (`.routes-advisor-card`) adopta un fondo translúcido `rgba(30, 41, 59, 0.45)` con desenfoque de 16px.
+       - Cajas de métricas, calzado y diagnóstico suavizadas a `rgba(0,0,0,0.20)` con micro-borde `rgba(255,255,255,0.06)`.
+     - En `js/components/cyclingCard.js`:
+       - `.cycling-card` y `.cycling-advisor-card` homologadas a `var(--bg-surface)` y cristal líquido.
+       - Cajas del selector horario, métricas y tramos suavizadas con velo translúcido y bordes luminosos.
+     - En `js/components/tourismCard.js`:
+       - `.tourism-card-solid` y `.tourism-advisor-card` unificadas al motor de cristal.
+       - Paneles de métricas de comarca y veredicto adaptados a `rgba(15, 23, 42, 0.40)`.
+  3. *Cache-Busting & Despliegue Dual:*
+     - Service Worker actualizado a `meteoasturlode-v3024-61-unified-liquid-glass-cards`.
+     - Versionado sincronizado a `v=3.0.24.61` en `index.html`, `components.css`, `routesCard.js`, `cyclingCard.js`, `tourismCard.js`, `sw.js` y `app.js`.
+
 ## 🚴 Limpieza Absoluta de Botones Pasados y Salida Real Estricta en Ciclismo (v3.0.24.60) — 2026-11-06
 - **Eliminación Total de Ruido Visual («Lo que pasó, pasó») en Selector Horario (Instrucción de Lendo):**
   1. *Criterio de Lendo:*
