@@ -1436,8 +1436,9 @@ export function renderMarineCard(data, concejo, selectedBeachName = null) {
         ${activePlayas.length > 0 ? `
           <!-- SELECTOR ERGONÓMICO TÁCTIL -->
           <div class="beach-selector-wrap" style="margin-bottom: 12px; display: flex; flex-direction: column; gap: 6px;">
-            <label style="font-size: 0.8rem; font-weight: 700; color: #94a3b8;">
-              Playas y calas:
+            <label class="picker-section-label" style="font-size: 0.76rem; font-weight: 800; color: #facc15; text-transform: uppercase; letter-spacing: 0.04em; display: flex; align-items: center; gap: 5px;">
+              <span>🏖️</span>
+              <span>Playas y calas:</span>
             </label>
 
             <button type="button" id="btn-open-beach-picker" class="beach-trigger-btn" aria-label="Cambiar playa o cala">
@@ -1452,9 +1453,9 @@ export function renderMarineCard(data, concejo, selectedBeachName = null) {
                   </span>
                 </div>
               </div>
-              <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
-                <span style="font-size: 0.75rem; color: #38bdf8; font-weight: 800;">Elegir</span>
-                <span style="font-size: 0.8rem; color: #38bdf8;">▼</span>
+              <div class="picker-action-badge">
+                <span class="picker-action-text">Elegir</span>
+                <span class="picker-action-arrow">▼</span>
               </div>
             </button>
           </div>

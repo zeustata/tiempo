@@ -14021,30 +14021,144 @@
   }
 }
 
-/* --- SELECTOR ERGONÓMICO DE ARENALES Y PICOS DE SURF & PLAYAS (ESTILO RUTAS Y CICLISMO) --- */
+/* --- SELECTORES DESPLEGABLES ERGONÓMICOS CON VIDA Y SHIMMER DE MAREA (PLAYAS, SURF, RUTAS, CICLISMO) --- */
+.picker-section-label {
+  font-size: 0.76rem !important;
+  font-weight: 800 !important;
+  color: #facc15 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  margin-bottom: 2px !important;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4));
+}
+
 .surf-spot-trigger,
-.beach-trigger-btn {
+.beach-trigger-btn,
+.routes-route-trigger,
+.cycling-route-trigger,
+.tourism-plan-trigger {
   width: 100%;
-  padding: 10px 12px;
-  border-radius: 12px;
-  background: rgba(15, 23, 42, 0.85);
-  border: 1px solid rgba(56, 189, 248, 0.35);
+  padding: 11px 13px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(30, 41, 59, 0.65) 0%, rgba(15, 23, 42, 0.85) 100%);
+  border: 1.5px solid rgba(56, 189, 248, 0.35);
   color: #ffffff;
-  font-size: 0.84rem;
+  font-size: 0.85rem;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 10px;
   cursor: pointer;
   text-align: left;
   box-sizing: border-box;
-  transition: border-color 0.2s ease, background 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+/* Efecto Marea / Shimmer sutil periódico en el botón selector */
+.surf-spot-trigger::before,
+.beach-trigger-btn::before,
+.routes-route-trigger::before,
+.cycling-route-trigger::before,
+.tourism-plan-trigger::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.14), transparent);
+  transform: skewX(-20deg);
+  pointer-events: none;
+  animation: pickerTriggerShimmer 5s infinite ease-in-out;
+}
+
+@keyframes pickerTriggerShimmer {
+  0% { left: -100%; opacity: 0; }
+  15% { opacity: 1; }
+  35% { left: 160%; opacity: 0; }
+  100% { left: 160%; opacity: 0; }
+}
+
+.surf-spot-trigger:hover,
+.beach-trigger-btn:hover,
+.routes-route-trigger:hover,
+.cycling-route-trigger:hover,
+.tourism-plan-trigger:hover {
+  background: linear-gradient(180deg, rgba(51, 65, 85, 0.75) 0%, rgba(30, 41, 59, 0.90) 100%);
+  border-color: #38bdf8;
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
 }
 
 .surf-spot-trigger:active,
-.beach-trigger-btn:active {
+.beach-trigger-btn:active,
+.routes-route-trigger:active,
+.cycling-route-trigger:active,
+.tourism-plan-trigger:active {
+  transform: scale(0.98);
+  background: rgba(56, 189, 248, 0.20);
+}
+
+/* Pastilla de Acción «Elegir ▼» Destacada con Micro-Animación */
+.picker-action-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+  padding: 5px 10px;
+  border-radius: 20px;
   background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.40);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.15);
+  transition: all 0.2s ease;
+}
+
+.surf-spot-trigger:hover .picker-action-badge,
+.beach-trigger-btn:hover .picker-action-badge,
+.routes-route-trigger:hover .picker-action-badge,
+.cycling-route-trigger:hover .picker-action-badge,
+.tourism-plan-trigger:hover .picker-action-badge {
+  background: rgba(56, 189, 248, 0.30);
+  border-color: #38bdf8;
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.45);
+}
+
+.picker-action-text {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+}
+
+.picker-action-arrow {
+  font-size: 0.75rem;
+  color: #38bdf8;
+  display: inline-block;
+  animation: pickerArrowBounce 3.5s infinite ease-in-out;
+}
+
+@keyframes pickerArrowBounce {
+  0%, 80%, 100% {
+    transform: translateY(0);
+  }
+  86% {
+    transform: translateY(2.5px);
+  }
+  92% {
+    transform: translateY(-1px);
+  }
+  96% {
+    transform: translateY(1.5px);
+  }
 }
 
 .surf-beach-spot-card,

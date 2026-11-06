@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-56-surf-buttons-living-glow';
+const CACHE_NAME = 'meteoasturlode-v3024-57-picker-triggers-gold-shimmer';
 const STATIC_ASSETS = [
   './',
   './index.html',

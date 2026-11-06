@@ -2,6 +2,21 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏖️ Realce de Selectores Desplegables en Oro Cálido y Micro-Animación «Elegir ▼» (v3.0.24.57) — 2026-11-06
+- **Erradicación de Botones Desapercibidos en Catálogos de Playas y Surf (Feedback Lendo con Captura en Vivo):**
+  1. *Diagnóstico de Lendo:*
+     - Lendo aportó captura de pantalla de la Guía de Playas y Calas mostrando que la etiqueta superior (`Playas y calas:`) en color gris apagado (`#94a3b8`) resultaba excesivamente tibia e inadvertida, sugiriendo un tono amarillo más llamativo.
+     - Asimismo, el botón selector inferior pasaba completamente desapercibido, pareciendo un título estático de la playa en vez de un disparador interactivo para abrir el Bottom Sheet y explorar todas las playas del concejo.
+  2. *Implementación Técnica (Doctrina de Armonía Visual Ley 14 y Ergonomía Móvil Ley 11):*
+     - En `js/components/marineCard.js` y `js/components/surfCard.js`:
+       - **Etiqueta Rótulo en Oro Arenal (`.picker-section-label`):** Sustituido el gris `#94a3b8` por oro cálido y luminoso `#facc15` con tipografía en mayúsculas (`letter-spacing: 0.04em; font-weight: 800`), precedida por icono temático (`🏖️ PLAYAS Y CALAS:` y `🏄‍♂️ ARENAL O ROMPIENTE:`).
+       - **Cápsula de Acción «Elegir ▼» (`.picker-action-badge`):** Transformado el texto plano en una pastilla con fondo azul cantábrico translúcido (`rgba(56, 189, 248, 0.15)`), borde cian brillante `#38bdf8`, texto en blanco puro y la flecha `▼` dotada de una micro-oscilación suave vertical periódica (`pickerArrowBounce` cada 3,5 segundos) que invita intuitivamente a desplegar el menú.
+     - En `css/components.css`:
+       - **Efecto Marea / Shimmer (`pickerTriggerShimmer`):** Reflejo de luz que recorre periódicamente el botón selector (`.beach-trigger-btn`, `.surf-spot-trigger`, `.routes-route-trigger`, `.cycling-route-trigger`, `.tourism-plan-trigger`), con esquinas a 14px, degradado Liquid Glass y feedback táctil de hundimiento (`scale: 0.98`).
+  3. *Cache-Busting & Despliegue Dual:*
+     - Service Worker actualizado a `meteoasturlode-v3024-57-picker-triggers-gold-shimmer`.
+     - Actualizadas las cadenas de versión a `v=3.0.24.57` en `index.html`, `components.css`, `marineCard.js`, `surfCard.js`, `sw.js` y `app.js`.
+
 ## 🏄‍♂️ Vida Propia y Respiración Neón en la Barra Tripartita de Surf (v3.0.24.56) — 2026-11-06
 - **Evolución Dinámica de Botones de Navegación de Surf (Feedback Lendo):**
   1. *Diagnóstico y Criterio de Lendo:*
