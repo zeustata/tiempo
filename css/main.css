@@ -2362,20 +2362,33 @@ body:-webkit-full-screen .app-container {
   font-size: 0.70rem;
   white-space: nowrap;
 }
-#theme-card-amaguestu.theme-card-locked {
-  background: linear-gradient(135deg, rgba(217, 119, 6, 0.12) 0%, rgba(120, 53, 15, 0.18) 100%), rgba(30, 41, 59, 0.6);
-  border: 1.5px solid rgba(217, 119, 6, 0.45);
+#theme-card-papanoel,
+#theme-card-navidad,
+#theme-card-papanoel.theme-card-locked {
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.12) 0%, rgba(22, 163, 74, 0.10) 50%, rgba(30, 41, 59, 0.6) 100%);
+  border: 1.5px solid rgba(239, 68, 68, 0.45);
 }
 
-#theme-card-amaguestu.theme-card-locked:hover {
-  background: linear-gradient(135deg, rgba(217, 119, 6, 0.20) 0%, rgba(120, 53, 15, 0.26) 100%), rgba(51, 65, 85, 0.75);
-  border-color: #d97706;
-  box-shadow: 0 8px 24px -4px rgba(217, 119, 6, 0.35);
+#theme-card-papanoel:hover,
+#theme-card-navidad:hover,
+#theme-card-papanoel.theme-card-locked:hover {
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.20) 0%, rgba(22, 163, 74, 0.16) 50%, rgba(51, 65, 85, 0.75) 100%);
+  border-color: #ef4444;
+  box-shadow: 0 8px 24px -4px rgba(239, 68, 68, 0.35);
 }
 
-#theme-card-amaguestu .theme-card-tag.theme-tag-locked {
-  color: #fbbf24;
-  background: rgba(217, 119, 6, 0.2);
+#theme-card-papanoel .theme-card-tag,
+#theme-card-navidad .theme-card-tag,
+#theme-card-papanoel .theme-card-tag.theme-tag-locked {
+  color: #fca5a5;
+  background: rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+#theme-card-papanoel.active,
+#theme-card-navidad.active {
+  border-color: #ef4444;
+  box-shadow: 0 0 20px -4px rgba(239, 68, 68, 0.45);
 }
 
 

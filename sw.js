@@ -1,10 +1,11 @@
-const CACHE_NAME = 'meteoasturlode-v3024-50-clean-seasonal-themes';
+const CACHE_NAME = 'meteoasturlode-v3024-52-papanoel-topsecret';
 const STATIC_ASSETS = [
   './',
   './index.html',
   './privacy.html',
   './manifest.json',
   './js/utils/weatherHalloweenIcons.js',
+  './js/utils/weatherPapaNoelIcons.js',
   './js/utils/festivosData.js',
   './icons/bandera-asturias.svg',
   './icons/icon.svg',

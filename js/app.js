@@ -20,6 +20,7 @@ import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=2.0.0';
 import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=2.0.0';
 import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=2.0.0';
 import { getHalloweenWeatherSvg } from './utils/weatherHalloweenIcons.js?v=3.0.23.58';
+import { getPapaNoelWeatherSvg } from './utils/weatherPapaNoelIcons.js?v=3.0.24.52';
 import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=3.0.24.40';
 import { getTourismPlanExplanation } from './utils/tourismData.js?v=2.2.74';
 import { getRouteExplanation } from './utils/routesData.js?v=3.0.12';
@@ -45,7 +46,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.23';
+export const CURRENT_APP_VERSION = '3.0.24';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -1185,6 +1186,7 @@ class MeteoAsturiasApp {
           neon: '✨ Minimalista Neón',
           sketch: '✏️ Dibujo a Mano',
           halloween: '🎃 Especial Halloween',
+          papanoel: '🎅 Especial Papá Noel',
         };
         badgeTheme.textContent = themeNames[theme] || '📱 Emojis Clásicos';
       }
@@ -1281,6 +1283,7 @@ class MeteoAsturiasApp {
     const previewNeon = document.getElementById('preview-neon-icons');
     const previewSketch = document.getElementById('preview-sketch-icons');
     const previewHalloween = document.getElementById('preview-halloween-icons');
+    const previewPapaNoel = document.getElementById('preview-papanoel-icons');
     const btnToggleHalloween = document.getElementById('btn-toggle-halloween-test');
 
     if (!modal) return;
@@ -1363,6 +1366,17 @@ class MeteoAsturiasApp {
       `;
     }
 
+    if (previewPapaNoel) {
+      previewPapaNoel.innerHTML = `
+        <span class="preview-svg" title="Sol Papá Noel">${getPapaNoelWeatherSvg('sun', 28)}</span>
+        <span class="preview-svg" title="Luna Papá Noel">${getPapaNoelWeatherSvg('clear-night', 28)}</span>
+        <span class="preview-svg" title="Nube Papá Noel">${getPapaNoelWeatherSvg('cloud', 28)}</span>
+        <span class="preview-svg" title="Lluvia Santa">${getPapaNoelWeatherSvg('rain', 28)}</span>
+        <span class="preview-svg" title="Nevada Santa">${getPapaNoelWeatherSvg('snow', 28)}</span>
+        <span class="preview-svg" title="Tormenta Santa">${getPapaNoelWeatherSvg('storm', 28)}</span>
+      `;
+    }
+
     const updateActiveThemeCards = () => {
       const currentTheme = this.getEffectiveIconTheme();
       modal.querySelectorAll('.icon-theme-card').forEach(card => {
@@ -1377,6 +1391,15 @@ class MeteoAsturiasApp {
         const isTestUrl = urlParams.get('test') === 'halloween';
         const isUnpixelated = isHalloweenDate || isTestUrl || this.previewHalloweenMode;
         cardHalloween.classList.toggle('unpixelated', isUnpixelated);
+      }
+      const cardPapaNoel = document.getElementById('theme-card-papanoel');
+      if (cardPapaNoel) {
+        const now = new Date();
+        const isPapaNoelDate = (now.getMonth() === 11 && (now.getDate() === 24 || now.getDate() === 25));
+        const urlParams = new URLSearchParams(window.location.search);
+        const isTestUrl = urlParams.get('test') === 'papanoel' || urlParams.get('test') === 'navidad';
+        const isUnpixelated = isPapaNoelDate || isTestUrl || this.previewPapaNoelMode;
+        cardPapaNoel.classList.toggle('unpixelated', isUnpixelated);
       }
       if (btnToggleHalloween) {
         if (this.previewHalloweenMode) {
@@ -1406,6 +1429,12 @@ class MeteoAsturiasApp {
         } else if (themeId === 'halloween') {
           localStorage.removeItem('meteoastur_halloween_optout_' + now.getFullYear());
         }
+        const isPapaNoelDate = (now.getMonth() === 11 && (now.getDate() === 24 || now.getDate() === 25));
+        if (isPapaNoelDate && themeId !== 'papanoel') {
+          localStorage.setItem('meteoastur_papanoel_optout_' + now.getFullYear(), 'true');
+        } else if (themeId === 'papanoel') {
+          localStorage.removeItem('meteoastur_papanoel_optout_' + now.getFullYear());
+        }
       } catch (e) {}
       this.prefs.iconTheme = themeId;
       savePreferences(this.prefs);
@@ -1427,6 +1456,19 @@ class MeteoAsturiasApp {
           } else {
             this.triggerHaptic();
             this.showToast('🕵️‍♂️ Colección clasificada bajo secreto de sumario. ¡Se revelará y activará el 31 de Octubre!');
+          }
+          return;
+        }
+        if (theme === 'papanoel') {
+          const now = new Date();
+          const isPapaNoelDate = (now.getMonth() === 11 && (now.getDate() === 24 || now.getDate() === 25));
+          const urlParams = new URLSearchParams(window.location.search);
+          const isTestUrl = urlParams.get('test') === 'papanoel' || urlParams.get('test') === 'navidad';
+          if (isPapaNoelDate || isTestUrl || this.previewPapaNoelMode) {
+            selectTheme('papanoel');
+          } else {
+            this.triggerHaptic();
+            this.showToast('🕵️‍♂️ Colección clasificada bajo secreto de sumario. ¡Se revelará y activará en Nochebuena (24 de Diciembre)!');
           }
           return;
         }
@@ -1479,6 +1521,7 @@ class MeteoAsturiasApp {
 
   getEffectiveIconTheme() {
     const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('test') === 'papanoel' || urlParams.get('test') === 'navidad') return 'papanoel';
     if (urlParams.get('test') === 'halloween' || this.previewHalloweenMode) return 'halloween';
     const now = new Date();
     // Samhain / Noche de Difuntos: 31 de Octubre (mes 9) y 1 de Noviembre (mes 10)
@@ -1487,6 +1530,14 @@ class MeteoAsturiasApp {
       const isOptOut = localStorage.getItem('meteoastur_halloween_optout_' + now.getFullYear()) === 'true';
       if (!isOptOut) {
         return 'halloween';
+      }
+    }
+    // Especial Papá Noel (24 y 25 de Diciembre: Nochebuena y Navidad)
+    const isPapaNoel = (now.getMonth() === 11 && (now.getDate() === 24 || now.getDate() === 25));
+    if (isPapaNoel) {
+      const isOptOut = localStorage.getItem('meteoastur_papanoel_optout_' + now.getFullYear()) === 'true';
+      if (!isOptOut && (!this.prefs.iconTheme || this.prefs.iconTheme === 'papanoel' || localStorage.getItem('meteoastur_explicit_theme') !== 'true')) {
+        return 'papanoel';
       }
     }
     return this.prefs.iconTheme || 'astur';

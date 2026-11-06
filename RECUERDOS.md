@@ -2,6 +2,23 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🎅 Colección Especial Papá Noel «Top Secret» (24 y 25 Dic) & Directriz de Respeto al Usuario (v3.0.24.52) — 2026-11-06
+- **Creación de la Colección de Nochebuena & Navidad (Decisión y Dirección de Arte Lendo):**
+  1. *Diagnóstico y Crítica de Lendo:*
+     - Lendo rechazó un primer borrador con accesorios aislados y figuras humanas por resultar "soso" y poco cohesionado con el lenguaje visual de MeteoAstur.
+     - Marcó la directriz magistral: aplicar la *fórmula de Halloween*, donde **el propio astro o elemento meteorológico es el personaje** (el Sol es Papá Noel con barba y gorro rojo; la Luna es Papá Noel durmiendo con su gorrito; y la Nube es Papá Noel con gorro y barba de nieve de la que llueve o nieva).
+     - Estableció el principio de diseño de **respeto a la elección del usuario**: no sobrecargar ni forzar un cambio de iconos durante semanas enteras en diciembre cuando cada usuario ya tiene su estilo preferido, limitándolo a un evento relámpago puntual y mágico de 48 horas (24 y 25 de diciembre).
+     - Ordenó incorporar el efecto de **censura digital difuminada y badge Top Secret**, manteniendo la intriga en el catálogo de temas hasta su apertura oficial en Nochebuena.
+  2. *Implementación Técnica (Reglas 1, 3, 4, 11 y 14):*
+     - Creado `js/utils/weatherPapaNoelIcons.js` con el catálogo completo de 20 estados WMO en vectores SVG limpios, de alto contraste y legibilidad perfecta a 24px-32px.
+     - Integrado en `js/utils/weatherIcons.js`, `index.html` (tarjeta `#theme-card-papanoel` con clase `.theme-card-locked` y `.theme-card-preview-pixelated`), `css/main.css` y `js/app.js`.
+     - Soporte para despixelado y activación inmediata mediante parámetro `?test=papanoel` y activación automática el 24 y 25 de diciembre con opción de opt-out.
+  3. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-52-papanoel-topsecret`.
+     - Registro de SW y query strings enlazadas a `v=3.0.24.52` en `index.html`, `main.css`, `components.css` y `app.js`.
+     - Actualizado modal de Changelog a `v3.0.24`.
+
+
 ## 🎄 Retirada de Colección Amagüestu y Enfoque en Especial Navidad (v3.0.24.50) — 2026-11-06
 - **Depuración Arquitectónica y Concentración de Esfuerzos (Decisión Lendo):**
   1. *Diagnóstico de Lendo:*
