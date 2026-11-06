@@ -10,6 +10,11 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
 
+## [3.0.25.2] - 2026-11-06
+### Fixed
+- **Blindaje Anti-Desborde en Pastilla de Bandera Teórica del Mareógrafo (`marineCard.js` + `surfCard.js` - Ley 11):**
+  - Restaurado el formato conciso `🟢/🟡/🔴 Bandera ... (Teórica)` en la cápsula superior de Playas & Mareas y `⭐ Calificación de Surf (Concejo)` en Surf & Rompientes para que encajen con holgura perfecta en pantallas móviles sin desbordar por la derecha, manteniendo intacto el recálculo físico según el abrigo y orientación del arenal seleccionado.
+
 ## [3.0.25.1] - 2026-11-06
 ### Fixed
 - **Cero Fugas de Memoria en Listeners de Carruseles (`js/app.js`):**

@@ -2,6 +2,12 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🛡️ Ajuste Anti-Desborde en Cápsula de Bandera Teórica de Playas (`v3.0.25.2` - Ley 11) — 2026-11-06
+- **Diagnóstico con Captura Móvil de Lendo («la bandera en el menu de playas ahora no entra en el boton» / «opcion a» / «subelo»):**
+  - Al concatenar `· Playa de Salinas` dentro de `.sea-state-pill` con `white-space: nowrap`, el texto superaba el ancho de la cápsula en móviles estrechos y sobresalía por el borde derecho.
+  - Se aplicó la **Opción A**: texto limpio y directo `🟢/🟡/🔴 Bandera ... (Teórica)` en `js/components/marineCard.js` y `⭐ Calificación de Surf (Concejo)` en `js/components/surfCard.js`, conservando el recálculo dinámico de abrigo y orientación cuando el usuario cambia de playa abajo.
+  - Service Worker actualizado a `meteoasturlode-v3025-2-flag-pill-clean`.
+
 ## 🛠️ Tapado de 4 Baches Técnicos y de Datos (`v3.0.25.1`): Memoria Limpia en `window`, Recálculo por Playa en Surf/Playas con GPS y Offline `ignoreSearch` — 2026-11-06
 - **Implementación de los 4 Ajustes Aprobados por Lendo («dime q mas baches tenemos» / «pisale» / «subelo»):**
   1. *Eliminación de Fugas de Memoria en `window` (`js/app.js`):*

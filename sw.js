@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3025-1-argon-baches-fixed';
+const CACHE_NAME = 'meteoasturlode-v3025-2-flag-pill-clean';
 const STATIC_ASSETS = [
   './',
   './index.html',

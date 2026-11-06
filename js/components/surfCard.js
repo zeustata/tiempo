@@ -768,7 +768,7 @@ export function renderSurfCard(data, concejo, selectedBeachName = null) {
               <div style="background: rgba(15, 23, 42, 0.58); border: 1px solid ${surfStarRating.color}44; border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; box-sizing: border-box;">
                 <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
                   <span style="font-size: 0.72rem; font-weight: 700; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.04em;">
-                    ⭐ Calificación en ${selectedBeach ? selectedBeach.name : (isCoasting ? concejoTitle : cleanInteriorName)}
+                    ⭐ Calificación de Surf (${isCoasting ? concejoTitle : cleanInteriorName})
                   </span>
                   <button class="btn-explain-sensor" data-explain="surf_stars" title="¿Cómo funciona el rating de estrellas doradas y blancas? Pulsa para aprender" aria-label="Explicación del rating de estrellas de surf">💡</button>
                 </div>

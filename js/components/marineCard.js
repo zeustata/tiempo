@@ -1166,14 +1166,13 @@ export function renderMarineCard(data, concejo, selectedBeachName = null) {
   const douglasName = douglas.name;
   const beachDouglas = getDouglasScale(effectiveBeachH);
   const beachDouglasDeg = beachDouglas.degree;
-  const beachLabelSuffix = selectedBeach ? ` · ${selectedBeach.name}` : '';
 
   let flagColor = '#10b981';
-  let flagBadge = `🟢 Bandera Verde Teórica${beachLabelSuffix}`;
+  let flagBadge = '🟢 Bandera Verde (Teórica)';
   let bathStatus = 'Condiciones meteorológicas teóricas favorables. Precaución habitual en el agua.';
 
   if (beachDouglasDeg <= 2) {
-    flagBadge = `🟢 Bandera Verde Teórica${beachLabelSuffix}`;
+    flagBadge = '🟢 Bandera Verde (Teórica)';
     flagColor = '#10b981';
     bathStatus = isNoWaveCove
       ? 'Ensenada o piscina natural abrigada del oleaje exterior. Aguas calmas.'
@@ -1181,13 +1180,13 @@ export function renderMarineCard(data, concejo, selectedBeachName = null) {
           ? 'Condiciones meteorológicas teóricas óptimas. Mar en calma o rizado.'
           : 'Mar favorable en previsión con oleaje suave. Prestar atención a corrientes locales.');
   } else if (beachDouglasDeg <= 4) {
-    flagBadge = `🟡 Bandera Amarilla Teórica${beachLabelSuffix}`;
+    flagBadge = '🟡 Bandera Amarilla (Teórica)';
     flagColor = '#f59e0b';
     bathStatus = beachDouglasDeg === 3
       ? 'Precaución en el baño. Oleaje marcado y probables corrientes de resaca.'
       : 'Fuerte oleaje con corrientes activas. Baño exigente, solo nadadores experimentados.';
   } else {
-    flagBadge = `🔴 Bandera Roja Teórica${beachLabelSuffix}`;
+    flagBadge = '🔴 Bandera Roja (Teórica)';
     flagColor = '#ef4444';
     bathStatus = '🚨 Temporal costero / Mar gruesa activa. Baño desaconsejado o prohibido en arenales expuestos.';
   }
