@@ -32,8 +32,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=3.0.24.52">
-  <link rel="stylesheet" href="css/components.css?v=3.0.24.52">
+  <link rel="stylesheet" href="css/main.css?v=3.0.24.53">
+  <link rel="stylesheet" href="css/components.css?v=3.0.24.53">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -326,6 +326,10 @@
               <br>• <strong>Metamorfosis Emotiva de Astros (Fórmula Halloween):</strong> Los propios astros se transforman en Papá Noel. El <strong>Sol</strong> es la cara dorada y sonriente de Santa con su gorro de terciopelo y barba blanca; la <strong>Luna</strong> es Papá Noel durmiendo plácidamente con gorro navideño bajo las estrellas; y la <strong>Nube</strong> cobra vida con gorro rojo y barba de nieve de la que emanan lluvia, copos de nieve o tormenta.
               <br>• <strong>Censura de Intriga Digital Top Secret:</strong> En el selector de estilos (<code>#icon-themes-modal</code>), la colección se presenta difuminada con cuadrícula de censura y la insignia <code>🕵️‍♂️ Top Secret</code> hasta su llegada oficial el 24 de diciembre.
               <br>• <strong>Criterio de Respeto al Usuario (Eventos Relámpago):</strong> Para no sobrecargar ni forzar cambios prolongados de interfaz, la colección se activa de forma exclusiva y puntual en Nochebuena y Navidad.
+            </li>
+            <li><span class="tag tag-fix">Sensores &amp; Meteorología Física (Feedback Lendo - Humedad y Serena)</span> <strong>Calibración Científica del Punto de Rocío &amp; Supresión de Falsas Alarmas</strong>:
+              <br>• <strong>Diferenciación Serena vs. Niebla:</strong> En noches despejadas con alta humedad relativa (&gt;88%), el sistema ya no alerta erróneamente de «Riesgo alto de orpín o niebla». Reconoce la física de la <em>serena asturiana</em> (enfriamiento nocturno por irradiación con cielo estrellado) y muestra con total veracidad: <code>💧 Margen Rocío: Δ T°C (Saturación • Serena intensa en coches y suelo)</code>.
+              <br>• <strong>Estilo Visual Serena &amp; Desactivación de Balizas Innecesarias:</strong> Sustituido el color rojo de alarma por un azul nocturno relajado (<code>.hum-risk-serena</code>), eliminando la baliza naranja parpadeante en la pastilla superior de Humedad durante noches despejadas normales.
             </li>
             <li><span class="tag tag-ui">Playas &amp; Surf</span> <strong>Optimización de Fichas de Rompientes y Viento Terral</strong>:
               <br>• Corrección de desbordes tipográficos y unificación ergonómica en chips de rompientes (<em>Viento Terral</em>, <em>Swell</em>, <em>Fondo</em>).
@@ -4647,7 +4651,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.0.24.52').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.0.24.53').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4677,7 +4681,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.24.52"></script>
+  <script type="module" src="js/app.js?v=3.0.24.53"></script>
 
 
 

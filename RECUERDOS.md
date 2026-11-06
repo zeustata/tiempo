@@ -2,6 +2,24 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 💧 Calibración Higrométrica de Serena Nocturna & Supresión de Falsas Alarmas (v3.0.24.53) — 2026-11-06
+- **Física de Humedad Relativa y Serena Asturiana vs. Falsa Niebla (Feedback Lendo con Captura en Vivo):**
+  1. *Diagnóstico de Lendo:*
+     - Lendo detectó que en noches despejadas y tranquilas (cielo estrellado, sin niebla ni lluvia), la app mostraba la pastilla de Humedad en alerta naranja parpadeante (`💧 Humedad 🟠`) y el sensor emitía una alarma en rojo: `🌫️ Margen Rocío: Δ 0.6°C (Saturación • Riesgo alto de orpín o niebla)`.
+     - Además, el emoji `🌫️` en Android se dibujaba como un recuadro blanco plano y roto.
+  2. *Causa Física y Raíz:*
+     - En noches despejadas de otoño e invierno en Asturias, la irradiación nocturna enfría bruscamente la superficie (a ~6°C). El aire superficial se satura y la humedad relativa alcanza el 88%-96% (los mismos ~7 g/m³ de vapor diurnos ocupan el 96% de la capacidad del aire frío).
+     - La condensación resultante es la **serena asturiana** (coches, cristales y campas mojados con cielo limpio), NO niebla u orpín. Alertar con balizas de peligro era un falso positivo.
+  3. *Implementación Técnica (Reglas 11, 14, 15 y 16):*
+     - En `js/components/currentCard.js`:
+       - Condicionado `fogRisk`: si el cielo está despejado (`weather_code <= 2` o `clear-night`), se muestra: `💧 Margen Rocío: Δ T°C (Saturación • Serena intensa en coches y suelo)` (o `Formación de xelada / escarcha` si T <= 1°C).
+       - Creada la clase CSS `.hum-risk-serena` en azul nocturno suave (`#7dd3fc`) y `.hum-risk-frost` (`#bfdbfe`), eliminando el color rojo de peligro en noches despejadas.
+       - En `humPillAlert`, desactivada la baliza de alerta ámbar en noches despejadas normales de serena; solo salta si hay niebla densa real con visibilidad menor a 500 m o bochorno estival severo.
+       - Sustituido el emoji problemático de niebla por la gota nítida `💧`.
+  4. *Cache-Busting & Despliegue:*
+     - Service Worker actualizado a `meteoasturlode-v3024-53-serena-dewpoint-calibration`.
+     - Sincronizadas las cadenas de versión a `v=3.0.24.53` en `index.html`, `currentCard.js`, `components.css`, `sw.js` y `app.js`.
+
 ## 🎅 Colección Especial Papá Noel «Top Secret» (24 y 25 Dic) & Directriz de Respeto al Usuario (v3.0.24.52) — 2026-11-06
 - **Creación de la Colección de Nochebuena & Navidad (Decisión y Dirección de Arte Lendo):**
   1. *Diagnóstico y Crítica de Lendo:*

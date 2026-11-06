@@ -604,14 +604,32 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   const alpha = ((a * T) / (b + T)) + Math.log(RH / 100);
   const dewPoint = ((b * alpha) / (a - alpha)).toFixed(1);
 
-  // Margen de condensación / niebla (Delta T)
+  // Margen de condensación / rocío (Delta T) calibrado con veracidad asturiana
   const deltaDewVal = Math.max(0, T - parseFloat(dewPoint));
   const deltaDew = deltaDewVal.toFixed(1);
+  const isClearSky = (current.weather_code <= 2) || (weatherInfo?.svgKey === 'clear-night' || weatherInfo?.svgKey === 'clear-day');
+  const isRealFogVisibility = currentVis != null && currentVis < 1500;
+  const isFogWeatherCode = current.weather_code === 45 || current.weather_code === 48;
+
   let fogRisk = { label: 'Sin riesgo de condensación', class: 'hum-risk-safe', icon: '✨' };
   if (deltaDewVal <= 1.5) {
-    fogRisk = { label: 'Saturación • Riesgo alto de orpín o niebla', class: 'hum-risk-danger', icon: '🌫️' };
+    if (isFogWeatherCode || isRealFogVisibility) {
+      fogRisk = { label: 'Saturación • Niebla o bruma densa', class: 'hum-risk-danger', icon: '🌫️' };
+    } else if (isClearSky) {
+      if (T <= 1.0) {
+        fogRisk = { label: 'Saturación • Formación de xelada / escarcha', class: 'hum-risk-frost', icon: '❄️' };
+      } else {
+        fogRisk = { label: 'Saturación • Serena intensa en coches y suelo', class: 'hum-risk-serena', icon: '💧' };
+      }
+    } else {
+      fogRisk = { label: 'Saturación • Ambiente muy húmedo', class: 'hum-risk-warning', icon: '💧' };
+    }
   } else if (deltaDewVal <= 3.5) {
-    fogRisk = { label: 'Alta humedad • Formación de serena', class: 'hum-risk-warning', icon: '💧' };
+    if (isClearSky) {
+      fogRisk = { label: 'Alta humedad • Formación de serena', class: 'hum-risk-serena', icon: '💧' };
+    } else {
+      fogRisk = { label: 'Alta humedad • Condensación suave', class: 'hum-risk-warning', icon: '💧' };
+    }
   }
 
   // Aporte higrométrico / sensación térmica (bochorno)
@@ -1002,7 +1020,8 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
   const baroPillAlert = isSeverePressureDrop ? 'has-alert-danger' : (isWarningPressureDrop ? 'has-alert-warning' : '');
   const rainPillAlert = (currentRainIntensity >= 30 || rainTodayTotal >= 80) ? 'has-alert-danger' : ((currentRainIntensity >= 15 || rainTodayTotal >= 40) ? 'has-alert-warning' : '');
   const isBeaconSim = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('test') === 'balizas_sensores';
-  const humPillAlert = (isBeaconSim || (RH >= 94 && deltaDewVal <= 1.5)) ? 'has-alert-warning' : '';
+  const isRealHumidityHazard = !isClearSky && (RH >= 95 && deltaDewVal <= 1.0 && (isFogWeatherCode || isRealFogVisibility));
+  const humPillAlert = (isBeaconSim || isRealHumidityHazard) ? 'has-alert-warning' : '';
   const uvPillAlert = (isBeaconSim || (uvVal != null && uvVal >= 11)) ? 'has-alert-danger' : ((uvVal != null && uvVal >= 8) ? 'has-alert-warning' : '');
   const hasHighPollen = (aqi?.grass_pollen != null && aqi.grass_pollen >= 50) || (aqi?.birch_pollen != null && aqi.birch_pollen >= 75) || (aqi?.alder_pollen != null && aqi.alder_pollen >= 75);
   const aqiPillAlert = (aqi?.european_aqi != null && aqi.european_aqi > 80) ? 'has-alert-danger' : (((aqi?.european_aqi != null && aqi.european_aqi > 60) || hasHighPollen) ? 'has-alert-warning' : '');

@@ -1996,6 +1996,18 @@
   gap: 6px;
 }
 
+.hum-risk-serena {
+  background: rgba(56, 189, 248, 0.12) !important;
+  border-color: rgba(56, 189, 248, 0.35) !important;
+  color: #7dd3fc !important;
+}
+
+.hum-risk-frost {
+  background: rgba(147, 197, 253, 0.14) !important;
+  border-color: rgba(147, 197, 253, 0.40) !important;
+  color: #bfdbfe !important;
+}
+
 .hum-risk-danger {
   background: rgba(239, 68, 68, 0.12) !important;
   border-color: rgba(239, 68, 68, 0.35) !important;

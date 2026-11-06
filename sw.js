@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-52-papanoel-topsecret';
+const CACHE_NAME = 'meteoasturlode-v3024-53-serena-dewpoint-calibration';
 const STATIC_ASSETS = [
   './',
   './index.html',
