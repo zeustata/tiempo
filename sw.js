@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3025-4-gpu-tiles-shield';
+const CACHE_NAME = 'meteoasturlode-v3025-5-clean-no-card-shadows';
 const STATIC_ASSETS = [
   './',
   './index.html',

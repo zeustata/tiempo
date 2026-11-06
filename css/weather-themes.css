@@ -59,11 +59,12 @@ body[data-weather-theme="cloudy"] {
 
 /* 5b. Nublado de Noche / Cielo Velado (Zafiro Profundo & Halo Lunar) */
 body[data-weather-theme="cloudy-night"] {
-  background-color: #030712;
+  background-color: #0b1426;
   background-image:
-    radial-gradient(circle 580px at 25% 220px, rgba(56, 189, 248, 0.32) 0%, transparent 70%),
-    radial-gradient(circle 520px at 80% 480px, rgba(99, 102, 241, 0.28) 0%, transparent 70%),
-    radial-gradient(ellipse at 50% -10%, #1e293b 0%, #0f172a 45%, #060b14 80%, #020617 100%);
+    radial-gradient(circle 620px at 25% 18%, rgba(56, 189, 248, 0.22) 0%, transparent 72%),
+    radial-gradient(circle 580px at 80% 52%, rgba(99, 102, 241, 0.18) 0%, transparent 72%),
+    radial-gradient(circle 600px at 35% 84%, rgba(56, 189, 248, 0.16) 0%, transparent 72%),
+    linear-gradient(180deg, #16243d 0%, #0f1b31 50%, #0b1426 100%);
   background-attachment: fixed;
   --border-glow: rgba(56, 189, 248, 0.60);
   --border-glass: rgba(255, 255, 255, 0.25);

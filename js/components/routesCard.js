@@ -67,7 +67,7 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
         background: var(--bg-surface);
         border: 1px solid var(--border-glass);
         border-radius: var(--radius-lg);
-        box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.45), var(--shadow-card), 0 16px 40px 0 rgba(0, 0, 0, 0.40);
+        box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.45);
         backdrop-filter: blur(var(--glass-blur, 24px)) saturate(190%);
         -webkit-backdrop-filter: blur(var(--glass-blur, 24px)) saturate(190%);
         margin-bottom: 12px;
@@ -80,7 +80,7 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
         border-radius: 14px;
         padding: 12px;
         margin-bottom: 12px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+        box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2);
         box-sizing: border-box;
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);

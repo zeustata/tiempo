@@ -17,7 +17,7 @@
   background: var(--bg-surface);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
-  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.45), var(--shadow-card), 0 16px 40px 0 rgba(0, 0, 0, 0.40);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.45);
   position: relative;
   overflow: hidden;
   backdrop-filter: blur(var(--glass-blur, 24px)) saturate(190%);
@@ -3431,7 +3431,7 @@
 
 .daily-card-rich:hover {
   border-color: rgba(56, 189, 248, 0.45);
-  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.6), 0 0 20px rgba(56, 189, 248, 0.25);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
   transform: translateY(-2px);
 }
 
@@ -9473,7 +9473,7 @@
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: var(--radius-lg, 20px);
   padding: 18px 20px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
@@ -14202,7 +14202,7 @@
   border: 1px solid rgba(56, 189, 248, 0.3);
   border-radius: 14px;
   padding: 14px 16px;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
   box-sizing: border-box;
   animation: surfSpotFade 0.2s ease-out;
 }

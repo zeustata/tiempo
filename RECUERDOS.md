@@ -2,6 +2,16 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 💎 Supresión Universal de Sombras Negras Exteriores en Tarjetas y Fondo Nocturno Continuo (`v3.0.25.5`) — 2026-11-07
+- **Diagnóstico con 4 Capturas de Lendo («te acuerdas lo que paso ayer? vuelven las sombras» / «fijate. a veces esta entre tarjetas y a veces no» / «si en local» / «subelo pero no lo pongas en changelog»):**
+  1. *Causa Raíz Identificada:*
+     - Las tarjetas principales aún heredaban `--shadow-card` (`0 8px 25px 0 rgba(0, 0, 0, 0.30)`) más `0 16px 40px 0 rgba(0, 0, 0, 0.40)` en `css/components.css` y en los estilos inline de `routesCard.js`, `cyclingCard.js` y `tourismCard.js`. Cuando una tarjeta era un bloque independiente (`.hero-weather-card`, `.routes-card-solid`, `.forecast-block`), proyectaba 56 px de sombra negra sobre el hueco entre tarjetas; cuando iba dentro de un carrusel con `overflow-x: auto`, el contenedor guillotinaba la sombra a ras del borde.
+     - Adicionalmente, el tema `cloudy-night` en `css/weather-themes.css` tenía dos focos azules en píxeles fijos (`220px` y `480px`) que caían a negro `#020617` al bajar por la página.
+  2. *Solución Aplicada (sin añadir al Changelog público por indicación de Lendo):*
+     - En `css/main.css`, `css/components.css`, `js/components/routesCard.js`, `js/components/cyclingCard.js` y `js/components/tourismCard.js`: eliminadas las sombras negras exteriores (`0 8px 25px...` y `0 16px 40px...`), preservando únicamente el bisel interior de cristal (`inset 0 1px 1px 0 rgba(255, 255, 255, 0.45)` / `0.22`).
+     - En `css/weather-themes.css`: `cloudy-night` pasa a un degradado zafiro nocturno continuo en porcentajes (`18%`, `52%`, `84%`).
+     - Sincronizado `sw.js?v=3.0.25.5` en `index.html` y `CACHE_NAME = 'meteoasturlode-v3025-5-clean-no-card-shadows'` en `sw.js`.
+
 ## 🛡️ Blindaje de Teselas GPU en Android contra Desaparición de Botones e Iconos (`v3.0.25.4`) — 2026-11-07
 - **Diagnóstico Forense con Captura de Lendo («a veces desaparecen los botones, iconos, etc. Solo quiero que mires porque pasa» / «hazlo en local antes y acuerdate de ser conciente de tener que revertir» / «subelo»):**
   1. *Causa Raíz Identificada:*
