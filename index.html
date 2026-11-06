@@ -32,8 +32,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Estilos de la Aplicación con Cache Busting -->
-  <link rel="stylesheet" href="css/main.css?v=3.0.24.53">
-  <link rel="stylesheet" href="css/components.css?v=3.0.24.53">
+  <link rel="stylesheet" href="css/main.css?v=3.0.24.54">
+  <link rel="stylesheet" href="css/components.css?v=3.0.24.54">
   <link rel="stylesheet" href="css/weather-themes.css?v=2.2.35">
 </head>
 <body>
@@ -326,6 +326,11 @@
               <br>• <strong>Metamorfosis Emotiva de Astros (Fórmula Halloween):</strong> Los propios astros se transforman en Papá Noel. El <strong>Sol</strong> es la cara dorada y sonriente de Santa con su gorro de terciopelo y barba blanca; la <strong>Luna</strong> es Papá Noel durmiendo plácidamente con gorro navideño bajo las estrellas; y la <strong>Nube</strong> cobra vida con gorro rojo y barba de nieve de la que emanan lluvia, copos de nieve o tormenta.
               <br>• <strong>Censura de Intriga Digital Top Secret:</strong> En el selector de estilos (<code>#icon-themes-modal</code>), la colección se presenta difuminada con cuadrícula de censura y la insignia <code>🕵️‍♂️ Top Secret</code> hasta su llegada oficial el 24 de diciembre.
               <br>• <strong>Criterio de Respeto al Usuario (Eventos Relámpago):</strong> Para no sobrecargar ni forzar cambios prolongados de interfaz, la colección se activa de forma exclusiva y puntual en Nochebuena y Navidad.
+            </li>
+            <li><span class="tag tag-feature">Colección Temática Especial (Feedback Lendo - Reyes Magos)</span> <strong>Especial Reyes Magos con Candado «Top Secret» de Calendario (5 y 6 Ene)</strong>:
+              <br>• <strong>Metamorfosis Emotiva de Astros (Fórmula Halloween):</strong> El <strong>Sol</strong> es el Rey Melchor coronado de oro y rubíes con noble barba; la <strong>Luna</strong> es la mística Noche de Reyes con los tres sabios a lomos de camellos siguiendo la resplandeciente Estrella de Oriente; y la <strong>Nube Real</strong> luce manto púrpura con armiño custodiando los cofres de oro, incienso y mirra, con lluvia de caramelos de Cabalgata.
+              <br>• <strong>Censura de Intriga Digital Top Secret:</strong> En el selector de estilos (<code>#icon-themes-modal</code>), se muestra con cuadrícula de censura y la insignia <code>🕵️‍♂️ Top Secret</code> hasta su llegada oficial el 5 de enero.
+              <br>• <strong>Activación Efímera Automática:</strong> Evento de 48 horas (Víspera/Cabalgata y Día de Reyes) para deleitar a los usuarios sin imponer alteraciones visuales duraderas.
             </li>
             <li><span class="tag tag-fix">Sensores &amp; Meteorología Física (Feedback Lendo - Humedad y Serena)</span> <strong>Calibración Científica del Punto de Rocío &amp; Supresión de Falsas Alarmas</strong>:
               <br>• <strong>Diferenciación Serena vs. Niebla:</strong> En noches despejadas con alta humedad relativa (&gt;88%), el sistema ya no alerta erróneamente de «Riesgo alto de orpín o niebla». Reconoce la física de la <em>serena asturiana</em> (enfriamiento nocturno por irradiación con cielo estrellado) y muestra con total veracidad: <code>💧 Margen Rocío: Δ T°C (Saturación • Serena intensa en coches y suelo)</code>.
@@ -4498,6 +4503,27 @@
               <span class="lock-notice-text">🎅 Activación automática en Nochebuena</span>
             </div>
           </div>
+
+          <!-- Tarjeta 10: Especial Reyes Magos (Top Secret) -->
+          <div class="icon-theme-card theme-card-locked" id="theme-card-reyes" data-theme="reyes">
+            <div class="theme-card-header">
+              <span class="theme-card-icon">👑</span>
+              <div class="theme-card-info">
+                <h4>Especial Reyes Magos</h4>
+                <span class="theme-card-tag theme-tag-locked">5 – 6 Ene</span>
+              </div>
+            </div>
+            <p class="theme-card-desc">Colección temática exclusiva para la Cabalgata y la Noche de Reyes donde el Sol es el Rey Melchor coronado, la Luna es la Noche de Reyes guiada por la Estrella de Oriente y las Nubes visten armiño real y cofres de oro, incienso y mirra. Se activará automáticamente el 5 y 6 de enero.</p>
+            <div class="theme-card-preview-pixelated" id="wrap-reyes-preview">
+              <div class="theme-card-preview" id="preview-reyes-icons"></div>
+              <div class="theme-secret-overlay">
+                <span class="badge-top-secret">🕵️‍♂️ Top Secret</span>
+              </div>
+            </div>
+            <div class="theme-card-lock-footer">
+              <span class="lock-notice-text">👑 Activación automática en Noche de Reyes</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -4651,7 +4677,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.0.24.53').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.0.24.54').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4681,7 +4707,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.24.53"></script>
+  <script type="module" src="js/app.js?v=3.0.24.54"></script>
 
 
 

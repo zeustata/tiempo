@@ -2,6 +2,30 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 👑 Colección Especial Reyes Magos «Top Secret» (5 y 6 Ene) con Protagonismo Estelar del Trío Real (v3.0.24.54) — 2026-11-06
+- **Creación de la Colección de Cabalgata y Noche de Reyes (Dirección de Arte y Feedback de Lendo):**
+  1. *Diagnóstico y Criterio de Lendo:*
+     - Lendo ordenó que se notara con máxima fuerza e impacto el protagonismo conjunto de **los Tres Reyes Magos**, superando un primer enfoque donde Melchor acaparaba el sol y Gaspar y Baltasar quedaban relegados a siluetas lejanas.
+     - Homologado al principio constitucional de respeto al usuario de eventos relámpago: la colección permanece bajo secreto de sumario (`🕵️‍♂️ Top Secret`) con censura pixelada y se activa automáticamente durante 48 horas (5 y 6 de enero: Cabalgata y Día de Reyes), sin alterar prolongadamente las preferencias habituales de los usuarios.
+  2. *Arquitectura e Iconografía del Trío Real (`js/utils/weatherReyesIcons.js`):*
+     - **Sol y Despejado Diurno (`clear-day` / `sun`):** En primer plano se sitúan **los Tres Reyes Magos juntos**:
+       - **Melchor (centro):** Anciano sabio con barba y bigote blancos señoriales, manto carmesí con cuello de armiño y gran Corona Real de Oro de 5 puntas con rubíes.
+       - **Gaspar (izquierda):** Barba y cabellos castaños, manto verde esmeralda y corona dorada con esmeralda.
+       - **Baltasar (derecha):** Noble tez oscura africana, cabellos oscuros, manto azul zafiro y turbante regio oriental púrpura y oro con pluma celeste y perla.
+       - Todo coronado por la resplandeciente **Estrella de Oriente de 8 puntas** brillando en la cúspide solar.
+     - **Luna de Noche de Reyes (`clear-night` / `moon`):** La luna creciente dorada cobija a los Tres Reyes Magos juntos en primer plano contemplando la Estrella que los guía.
+     - **Nubes y Claros (`partly-cloudy-day`):** Los Tres Reyes asomando por encima de la nube con sus tres coronas relucientes y en la base los Tres Cofres Sagrados (Oro, Incienso y Mirra).
+     - **Cubierto (`cloudy`):** La Nube Real coronada por las tres insignias reales (Corona de Melchor, Corona de Gaspar y Turbante de Baltasar) custodiando los tres cofres.
+     - **Precipitaciones Festivas:** Lluvia y orbayu acompañados de caramelos multicolores de Cabalgata, y nevadas con coronas reales.
+  3. *Blindaje de Intriga Digital Top Secret en el Catálogo:*
+     - En `#icon-themes-modal`: Tarjeta 10 (`#theme-card-reyes`) con paleta regia oro y púrpura nocturno (`#facc15` / `#7e22ce`), trama de censura pixelada y badge `🕵️‍♂️ Top Secret`.
+     - Mecanismo inteligente de desbloqueo: activo automáticamente el 5 y 6 de enero (o mediante parámetro `?test=reyes`).
+     - Al pulsar fuera de fecha, dispara vibración háptica y toast clasificado: `🕵️‍♂️ Colección clasificada bajo secreto de sumario. ¡Se revelará y activará en la Noche de Reyes (5 y 6 de Enero)!`.
+  4. *Cache-Busting & Despliegue Dual:*
+     - Service Worker actualizado a `meteoasturlode-v3024-54-reyes-magos-top-secret`.
+     - Incorporado `./js/utils/weatherReyesIcons.js` al precaching de `STATIC_ASSETS` en `sw.js`.
+     - Actualizadas las cadenas de versión a `v=3.0.24.54` en `index.html`, `main.css`, `components.css`, `sw.js` y `app.js`.
+
 ## 💧 Calibración Higrométrica de Serena Nocturna & Supresión de Falsas Alarmas (v3.0.24.53) — 2026-11-06
 - **Física de Humedad Relativa y Serena Asturiana vs. Falsa Niebla (Feedback Lendo con Captura en Vivo):**
   1. *Diagnóstico de Lendo:*

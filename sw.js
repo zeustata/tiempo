@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-53-serena-dewpoint-calibration';
+const CACHE_NAME = 'meteoasturlode-v3024-54-reyes-magos-top-secret';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -6,6 +6,7 @@ const STATIC_ASSETS = [
   './manifest.json',
   './js/utils/weatherHalloweenIcons.js',
   './js/utils/weatherPapaNoelIcons.js',
+  './js/utils/weatherReyesIcons.js',
   './js/utils/festivosData.js',
   './icons/bandera-asturias.svg',
   './icons/icon.svg',

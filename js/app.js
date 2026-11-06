@@ -21,6 +21,7 @@ import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=2.0.0';
 import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=2.0.0';
 import { getHalloweenWeatherSvg } from './utils/weatherHalloweenIcons.js?v=3.0.23.58';
 import { getPapaNoelWeatherSvg } from './utils/weatherPapaNoelIcons.js?v=3.0.24.52';
+import { getReyesWeatherSvg } from './utils/weatherReyesIcons.js?v=3.0.24.54';
 import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=3.0.24.40';
 import { getTourismPlanExplanation } from './utils/tourismData.js?v=2.2.74';
 import { getRouteExplanation } from './utils/routesData.js?v=3.0.12';
@@ -1187,6 +1188,7 @@ class MeteoAsturiasApp {
           sketch: '✏️ Dibujo a Mano',
           halloween: '🎃 Especial Halloween',
           papanoel: '🎅 Especial Papá Noel',
+          reyes: '👑 Especial Reyes Magos',
         };
         badgeTheme.textContent = themeNames[theme] || '📱 Emojis Clásicos';
       }
@@ -1284,6 +1286,7 @@ class MeteoAsturiasApp {
     const previewSketch = document.getElementById('preview-sketch-icons');
     const previewHalloween = document.getElementById('preview-halloween-icons');
     const previewPapaNoel = document.getElementById('preview-papanoel-icons');
+    const previewReyes = document.getElementById('preview-reyes-icons');
     const btnToggleHalloween = document.getElementById('btn-toggle-halloween-test');
 
     if (!modal) return;
@@ -1377,6 +1380,17 @@ class MeteoAsturiasApp {
       `;
     }
 
+    if (previewReyes) {
+      previewReyes.innerHTML = `
+        <span class="preview-svg" title="Los Tres Reyes Magos">${getReyesWeatherSvg('sun', 28)}</span>
+        <span class="preview-svg" title="Noche de Reyes">${getReyesWeatherSvg('clear-night', 28)}</span>
+        <span class="preview-svg" title="Nube Real y Tres Cofres">${getReyesWeatherSvg('cloud', 28)}</span>
+        <span class="preview-svg" title="Lluvia Cabalgata">${getReyesWeatherSvg('rain', 28)}</span>
+        <span class="preview-svg" title="Nevada Real">${getReyesWeatherSvg('snow', 28)}</span>
+        <span class="preview-svg" title="Tormenta Reyes">${getReyesWeatherSvg('storm', 28)}</span>
+      `;
+    }
+
     const updateActiveThemeCards = () => {
       const currentTheme = this.getEffectiveIconTheme();
       modal.querySelectorAll('.icon-theme-card').forEach(card => {
@@ -1400,6 +1414,16 @@ class MeteoAsturiasApp {
         const isTestUrl = urlParams.get('test') === 'papanoel' || urlParams.get('test') === 'navidad';
         const isUnpixelated = isPapaNoelDate || isTestUrl || this.previewPapaNoelMode;
         cardPapaNoel.classList.toggle('unpixelated', isUnpixelated);
+      }
+
+      const cardReyes = document.getElementById('theme-card-reyes');
+      if (cardReyes) {
+        const now = new Date();
+        const isReyesDate = (now.getMonth() === 0 && (now.getDate() === 5 || now.getDate() === 6));
+        const urlParams = new URLSearchParams(window.location.search);
+        const isTestUrl = urlParams.get('test') === 'reyes';
+        const isUnpixelated = isReyesDate || isTestUrl || this.previewReyesMode;
+        cardReyes.classList.toggle('unpixelated', isUnpixelated);
       }
       if (btnToggleHalloween) {
         if (this.previewHalloweenMode) {
@@ -1435,6 +1459,13 @@ class MeteoAsturiasApp {
         } else if (themeId === 'papanoel') {
           localStorage.removeItem('meteoastur_papanoel_optout_' + now.getFullYear());
         }
+
+        const isReyesDate = (now.getMonth() === 0 && (now.getDate() === 5 || now.getDate() === 6));
+        if (isReyesDate && themeId !== 'reyes') {
+          localStorage.setItem('meteoastur_reyes_optout_' + now.getFullYear(), 'true');
+        } else if (themeId === 'reyes') {
+          localStorage.removeItem('meteoastur_reyes_optout_' + now.getFullYear());
+        }
       } catch (e) {}
       this.prefs.iconTheme = themeId;
       savePreferences(this.prefs);
@@ -1469,6 +1500,20 @@ class MeteoAsturiasApp {
           } else {
             this.triggerHaptic();
             this.showToast('🕵️‍♂️ Colección clasificada bajo secreto de sumario. ¡Se revelará y activará en Nochebuena (24 de Diciembre)!');
+          }
+          return;
+        }
+
+        if (theme === 'reyes') {
+          const now = new Date();
+          const isReyesDate = (now.getMonth() === 0 && (now.getDate() === 5 || now.getDate() === 6));
+          const urlParams = new URLSearchParams(window.location.search);
+          const isTestUrl = urlParams.get('test') === 'reyes';
+          if (isReyesDate || isTestUrl || this.previewReyesMode) {
+            selectTheme('reyes');
+          } else {
+            this.triggerHaptic();
+            this.showToast('🕵️‍♂️ Colección clasificada bajo secreto de sumario. ¡Se revelará y activará en la Noche de Reyes (5 y 6 de Enero)!');
           }
           return;
         }
@@ -1522,6 +1567,7 @@ class MeteoAsturiasApp {
   getEffectiveIconTheme() {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('test') === 'papanoel' || urlParams.get('test') === 'navidad') return 'papanoel';
+    if (urlParams.get('test') === 'reyes' || this.previewReyesMode) return 'reyes';
     if (urlParams.get('test') === 'halloween' || this.previewHalloweenMode) return 'halloween';
     const now = new Date();
     // Samhain / Noche de Difuntos: 31 de Octubre (mes 9) y 1 de Noviembre (mes 10)
@@ -1538,6 +1584,15 @@ class MeteoAsturiasApp {
       const isOptOut = localStorage.getItem('meteoastur_papanoel_optout_' + now.getFullYear()) === 'true';
       if (!isOptOut && (!this.prefs.iconTheme || this.prefs.iconTheme === 'papanoel' || localStorage.getItem('meteoastur_explicit_theme') !== 'true')) {
         return 'papanoel';
+      }
+    }
+
+    // Especial Reyes Magos (5 y 6 de Enero: Víspera/Cabalgata y Día de Reyes)
+    const isReyes = (now.getMonth() === 0 && (now.getDate() === 5 || now.getDate() === 6));
+    if (isReyes) {
+      const isOptOut = localStorage.getItem('meteoastur_reyes_optout_' + now.getFullYear()) === 'true';
+      if (!isOptOut && (!this.prefs.iconTheme || this.prefs.iconTheme === 'reyes' || localStorage.getItem('meteoastur_explicit_theme') !== 'true')) {
+        return 'reyes';
       }
     }
     return this.prefs.iconTheme || 'astur';

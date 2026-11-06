@@ -2391,6 +2391,31 @@ body:-webkit-full-screen .app-container {
   box-shadow: 0 0 20px -4px rgba(239, 68, 68, 0.45);
 }
 
+#theme-card-reyes,
+#theme-card-reyes.theme-card-locked {
+  background: linear-gradient(135deg, rgba(202, 138, 4, 0.15) 0%, rgba(126, 34, 206, 0.15) 50%, rgba(30, 41, 59, 0.6) 100%);
+  border: 1.5px solid rgba(234, 179, 8, 0.45);
+}
+
+#theme-card-reyes:hover,
+#theme-card-reyes.theme-card-locked:hover {
+  background: linear-gradient(135deg, rgba(202, 138, 4, 0.22) 0%, rgba(126, 34, 206, 0.22) 50%, rgba(51, 65, 85, 0.75) 100%);
+  border-color: #facc15;
+  box-shadow: 0 8px 24px -4px rgba(234, 179, 8, 0.35);
+}
+
+#theme-card-reyes .theme-card-tag,
+#theme-card-reyes .theme-card-tag.theme-tag-locked {
+  color: #fef08a;
+  background: rgba(202, 138, 4, 0.25);
+  border: 1px solid rgba(234, 179, 8, 0.4);
+}
+
+#theme-card-reyes.active {
+  border-color: #facc15;
+  box-shadow: 0 0 20px -4px rgba(250, 204, 21, 0.45);
+}
+
 
 /* --- EFECTO MISTERIO PIXELADO (CENSURA DIGITAL TOP SECRET) --- */
 .theme-card-preview-pixelated {
