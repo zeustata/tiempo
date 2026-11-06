@@ -70,7 +70,7 @@ export function evaluateRelativeWind(cyclistBearingDeg, windDirectionDeg, windSp
  * Simula el paso del ciclista tramo a tramo según su velocidad media y la hora de salida.
  * Extrae las condiciones meteorológicas horarias correspondientes en tiempo real.
  */
-export function simulateRouteConditions(route, startHour = 9, avgSpeedKmh = 24, hourlyData = null) {
+export function simulateRouteConditions(route, startHour = 9, avgSpeedKmh = 24, hourlyData = null, selectedDay = 'today') {
   if (!route || !route.tramos || route.tramos.length === 0) return null;
 
   let elapsedMinutes = 0;
@@ -90,11 +90,17 @@ export function simulateRouteConditions(route, startHour = 9, avgSpeedKmh = 24, 
   const weatherCodes = hourlyData?.weather_code || [];
 
   // Inteligencia de proyección horaria:
-  // Si la hora de salida ya pasó hoy por la tarde (ej. son las 16h y se elige las 9h),
-  // la simulación se proyecta automáticamente para la mañana siguiente (+24h en array Open-Meteo).
+  // Si se selecciona 'tomorrow' (o son más de las 19h y no se especifica), se proyecta a +24h en array Open-Meteo.
   const now = new Date();
   const currentHour = now.getHours();
-  const dayOffsetHours = (startHour < currentHour && currentHour >= 14) ? 24 : 0;
+  let dayOffsetHours = 0;
+  if (selectedDay === 'tomorrow') {
+    dayOffsetHours = 24;
+  } else if (selectedDay === 'today') {
+    dayOffsetHours = 0;
+  } else {
+    dayOffsetHours = (startHour < currentHour && currentHour >= 19) ? 24 : 0;
+  }
 
   route.tramos.forEach((tramo, index) => {
     // Cálculo del tiempo en este tramo: ajusta la velocidad según la pendiente y el ritmo medio
@@ -180,15 +186,16 @@ export function simulateRouteConditions(route, startHour = 9, avgSpeedKmh = 24, 
   }
 
   // Generación de consejo inteligente personalizado
+  const dayText = dayOffsetHours > 0 ? 'mañana' : 'hoy';
   let advisorMessage = '';
   if (headwindPct > 50) {
     advisorMessage = `Ruta con viento en contra predominante (${headwindPct}% del trayecto a ${avgSpeedKmh} km/h). Alto gasto de vatios.`;
   } else if (tailwindPct > 45) {
-    advisorMessage = `Excelente elección a ${avgSpeedKmh} km/h: disfrutarás de viento a favor durante el ${tailwindPct}% de la ruta.`;
+    advisorMessage = `Excelente elección para ${dayText} a ${avgSpeedKmh} km/h: disfrutarás de viento a favor durante el ${tailwindPct}% de la ruta.`;
   } else if (crosswindPct > 50) {
     advisorMessage = `Predomina el viento lateral (${crosswindPct}%). Precaución en bajadas rápidas si montas ruedas de perfil.`;
   } else {
-    advisorMessage = `Condiciones equilibradas rodando a ${avgSpeedKmh} km/h con salida a las ${startHour}:00 h. Ritmo cómodo.`;
+    advisorMessage = `Condiciones equilibradas rodando ${dayText} a ${avgSpeedKmh} km/h con salida a las ${startHour}:00 h. Ritmo cómodo.`;
   }
 
   const formatTotalTime = (mins) => {
@@ -200,6 +207,7 @@ export function simulateRouteConditions(route, startHour = 9, avgSpeedKmh = 24, 
   return {
     routeId: route.id,
     startHour,
+    selectedDay: dayOffsetHours > 0 ? 'tomorrow' : 'today',
     isProjectedTomorrow: dayOffsetHours > 0,
     totalDurationFormatted: formatTotalTime(elapsedMinutes),
     totalDurationMinutes: elapsedMinutes,
@@ -219,11 +227,11 @@ export function simulateRouteConditions(route, startHour = 9, avgSpeedKmh = 24, 
 /**
  * Compara y ordena un conjunto de rutas para recomendar cuál es la mejor a una hora y velocidad concretas.
  */
-export function rankRoutesForDeparture(routes, startHour = 9, avgSpeedKmh = 24, hourlyData = null) {
+export function rankRoutesForDeparture(routes, startHour = 9, avgSpeedKmh = 24, hourlyData = null, selectedDay = 'today') {
   if (!routes || routes.length === 0) return [];
 
   const ranked = routes.map(route => {
-    const simulation = simulateRouteConditions(route, startHour, avgSpeedKmh, hourlyData);
+    const simulation = simulateRouteConditions(route, startHour, avgSpeedKmh, hourlyData, selectedDay);
     return {
       route,
       simulation

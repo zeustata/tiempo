@@ -7,21 +7,49 @@
  */
 
 import { getCyclingRoutesForConcejo, getCyclingRouteById, CYCLING_ROUTES } from '../utils/cyclingData.js?v=3.0.24.9';
-import { simulateRouteConditions, rankRoutesForDeparture } from '../utils/cyclingAdvisor.js?v=3.0.24.9';
+import { simulateRouteConditions, rankRoutesForDeparture } from '../utils/cyclingAdvisor.js?v=3.0.24.59';
 
 /**
  * Renderiza la vista principal del módulo de Ciclismo & Viento
  */
-export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, selectedHour = 9, selectedSpeed = 24) {
+export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, selectedHour = null, selectedSpeed = 24, selectedDay = null) {
   if (!concejo) return '';
 
   const hourly = weatherData?.weather?.hourly || null;
   const localRoutes = getCyclingRoutesForConcejo(concejo.id);
   const otherRoutes = CYCLING_ROUTES.filter(r => !localRoutes.some(lr => lr.id === r.id));
 
-  // Clasificación para el consejero inteligente (evalúa las de la localidad activa)
+  // Horas rápidas de salida (mañanas y tardes ampliadas a petición de Lendo)
+  const quickHours = [8, 9, 10, 11, 12, 13, 16, 17, 18, 19];
+  const now = new Date();
+  const currentHour = now.getHours();
+
+  // 1. Determinar día: Si son las 19:00 o más, saltar automáticamente a 'tomorrow'
+  let activeDay = selectedDay;
+  if (!activeDay) {
+    activeDay = (currentHour >= 19) ? 'tomorrow' : 'today';
+  }
+
+  // 2. Determinar hora útil inteligente:
+  let activeHour = selectedHour;
+  if (activeHour == null) {
+    if (activeDay === 'today') {
+      const upcoming = quickHours.filter(h => h >= currentHour);
+      activeHour = upcoming.length > 0 ? upcoming[0] : 9;
+    } else {
+      activeHour = 9; // Salida habitual matinal para mañana
+    }
+  } else if (activeDay === 'today' && activeHour < currentHour) {
+    // Si la hora guardada ya expiró hoy, reubicar en la próxima útil disponible
+    const upcoming = quickHours.filter(h => h >= currentHour);
+    if (upcoming.length > 0) {
+      activeHour = upcoming[0];
+    }
+  }
+
+  // Clasificación para el consejero inteligente (evalúa las de la localidad activa para el día y hora resueltos)
   const candidateRoutes = localRoutes.length > 0 ? localRoutes : CYCLING_ROUTES;
-  const ranked = rankRoutesForDeparture(candidateRoutes, selectedHour, selectedSpeed, hourly);
+  const ranked = rankRoutesForDeparture(candidateRoutes, activeHour, selectedSpeed, hourly, activeDay);
   const bestRoute = ranked[0]?.route || candidateRoutes[0] || CYCLING_ROUTES[0];
   const bestSim = ranked[0]?.simulation || null;
 
@@ -35,10 +63,8 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
   }
 
   // Simulación para la ruta activa que se pinta debajo
-  const sim = simulateRouteConditions(activeRoute, selectedHour, selectedSpeed, hourly);
+  const sim = simulateRouteConditions(activeRoute, activeHour, selectedSpeed, hourly, activeDay);
 
-  // Horas rápidas de salida (mañanas y tardes ampliadas a petición de Lendo)
-  const quickHours = [8, 9, 10, 11, 12, 13, 16, 17, 18, 19];
   const speeds = [
     { value: 16, label: '16 km/h', sub: 'Paseo' },
     { value: 20, label: '20 km/h', sub: 'Tranquilo' },
@@ -110,6 +136,23 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
         transition: all 0.2s ease;
         box-sizing: border-box;
       }
+      .cycling-day-pill {
+        padding: 5px 12px;
+        border-radius: 16px;
+        font-size: 0.76rem;
+        font-weight: 800;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text-dim, #94a3b8);
+      }
+      .cycling-day-pill.active {
+        background: linear-gradient(135deg, rgba(56, 189, 248, 0.3) 0%, rgba(14, 165, 233, 0.45) 100%);
+        border-color: var(--primary, #38bdf8);
+        color: #ffffff;
+        box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
+      }
       .btn-hour-pill {
         flex: 1;
         min-width: 44px;
@@ -121,6 +164,14 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
         transition: all 0.2s ease;
         text-align: center;
         box-sizing: border-box;
+      }
+      .btn-hour-pill.past-hour {
+        opacity: 0.32 !important;
+        text-decoration: line-through;
+        cursor: not-allowed !important;
+        border-style: dashed !important;
+        background: rgba(255, 255, 255, 0.02) !important;
+        color: rgba(255, 255, 255, 0.35) !important;
       }
       /* Selector ergonómico de rutas táctil (Adiós al diálogo gigante de Android) */
       .cycling-route-trigger {
@@ -211,22 +262,47 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
           </span>
         </div>
 
-        <!-- SELECTOR DE HORA DE SALIDA Y RITMO (BLINDADO MÓVIL) -->
+        <!-- SELECTOR DE DÍA, HORA DE SALIDA Y RITMO (BLINDADO MÓVIL) -->
         <div style="background: rgba(0,0,0,0.22); border-radius: 12px; padding: 10px; margin-top: 8px;">
           <div style="display: flex; flex-direction: column; gap: 10px;">
             
+            <!-- Selector de Día (Hoy / Mañana) -->
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.06);">
+              <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 5px;">
+                <span>📅</span> Planificar salida:
+              </span>
+              <div style="display: flex; gap: 6px;">
+                <button type="button" class="cycling-day-pill btn-cycling-day ${activeDay === 'today' ? 'active' : ''}" data-day="today">
+                  Hoy
+                </button>
+                <button type="button" class="cycling-day-pill btn-cycling-day ${activeDay === 'tomorrow' ? 'active' : ''}" data-day="tomorrow">
+                  Mañana
+                </button>
+              </div>
+            </div>
+
             <!-- Hora de salida -->
             <div>
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                 <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-main);">⏰ Hora de salida:</span>
-                <span style="font-size: 0.8rem; font-weight: 800; color: var(--primary);">${String(selectedHour).padStart(2, '0')}:00 h</span>
+                <span style="font-size: 0.8rem; font-weight: 800; color: var(--primary);">
+                  ${activeDay === 'tomorrow' ? 'Mañana ' : ''}${String(activeHour).padStart(2, '0')}:00 h
+                </span>
               </div>
               <div style="display: flex; gap: 4px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; -webkit-overflow-scrolling: touch;">
-                ${quickHours.map(h => `
-                  <button type="button" class="btn-hour-pill ${h === selectedHour ? 'active' : ''}" data-hour="${h}" style="border: 1px solid ${h === selectedHour ? 'var(--primary)' : 'rgba(255,255,255,0.1)'}; background: ${h === selectedHour ? 'var(--primary)' : 'rgba(255,255,255,0.05)'}; color: ${h === selectedHour ? '#000' : 'var(--text-main)'};">
-                    ${h}:00
-                  </button>
-                `).join('')}
+                ${quickHours.map(h => {
+                  const isPast = (activeDay === 'today' && h < currentHour);
+                  const isSelected = (h === activeHour);
+                  return `
+                    <button type="button" 
+                      class="btn-hour-pill ${isSelected ? 'active' : ''} ${isPast ? 'past-hour' : ''}" 
+                      data-hour="${h}" 
+                      ${isPast ? 'disabled title="Esta hora ya pasó hoy"' : ''}
+                      style="border: 1px solid ${isSelected ? 'var(--primary)' : (isPast ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.1)')}; background: ${isSelected ? 'var(--primary)' : (isPast ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.05)')}; color: ${isSelected ? '#000' : (isPast ? 'rgba(255,255,255,0.3)' : 'var(--text-main)')};">
+                      ${h}:00
+                    </button>
+                  `;
+                }).join('')}
               </div>
             </div>
 
@@ -255,7 +331,7 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
           <span style="font-size: 1.3rem; line-height: 1;">💡</span>
           <div style="flex: 1; min-width: 0;">
             <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap; margin-bottom: 4px;">
-              <strong style="font-size: 0.88rem; color: var(--text-main);">Consejero de Viento (${selectedHour}:00 h)</strong>
+              <strong style="font-size: 0.88rem; color: var(--text-main);">Consejero de Viento (${activeDay === 'tomorrow' ? 'Mañana' : 'Hoy'}, ${String(activeHour).padStart(2, '0')}:00 h)</strong>
               <span style="font-size: 0.72rem; font-weight: 800; padding: 2px 7px; border-radius: 10px; background: ${activeRoute.id === bestRoute.id ? (bestSim?.badgeColor || '#22c55e') : (sim?.badgeColor || '#facc15')}; color: #000;">
                 ${activeRoute.id === bestRoute.id ? (bestSim?.badgeLabel || 'Óptima 🚀') : (sim?.badgeLabel || 'Exigente ⚠️')}
               </span>
@@ -263,7 +339,7 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
             <p style="margin: 0; font-size: 0.8rem; color: var(--text-dim); line-height: 1.4; word-break: break-word;">
               ${activeRoute.id === bestRoute.id
                 ? `Ruta más favorable cargada: <strong style="color: var(--primary);">${bestRoute.name}</strong>. ${bestSim?.advisorMessage || ''}`
-                : `Viendo selección manual: <strong style="color: #facc15;">${activeRoute.name}</strong>. ${sim?.advisorMessage || ''} <span style="display:block; margin-top:3px; font-size:0.74rem; color:#94a3b8;">(💡 La más favorable hoy en tu zona es <em style="color:var(--primary); font-weight:700;">${bestRoute.name}</em> con ${bestSim?.badgeLabel}).</span>`
+                : `Viendo selección manual: <strong style="color: #facc15;">${activeRoute.name}</strong>. ${sim?.advisorMessage || ''} <span style="display:block; margin-top:3px; font-size:0.74rem; color:#94a3b8;">(💡 La más favorable en tu zona es <em style="color:var(--primary); font-weight:700;">${bestRoute.name}</em> con ${bestSim?.badgeLabel}).</span>`
               }
             </p>
           </div>
@@ -368,7 +444,7 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
         <!-- DESGLOSE DE TRAMOS PASO A PASO -->
         <div>
           <h4 style="margin: 0 0 8px 0; font-size: 0.88rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 6px;">
-            <span>⏱️</span> Tramos &amp; Horas (${String(selectedHour).padStart(2, '0')}:00 h)
+            <span>⏱️</span> Tramos &amp; Horas (${activeDay === 'tomorrow' ? 'Mañana ' : ''}${String(activeHour).padStart(2, '0')}:00 h)
           </h4>
 
           <div style="display: flex; flex-direction: column; gap: 8px;">
@@ -446,7 +522,7 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
                   📍 Rutas por ${concejo.name} y Comarca (${localRoutes.length})
                 </span>
                 ${localRoutes.map(r => {
-                  const rSim = simulateRouteConditions(r, selectedHour, selectedSpeed, hourly);
+                  const rSim = simulateRouteConditions(r, activeHour, selectedSpeed, hourly, activeDay);
                   return `
                   <div class="cycling-route-item ${r.id === activeRoute.id ? 'selected' : ''}" data-route-id="${r.id}">
                     <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px;">
@@ -476,7 +552,7 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
                   🌟 Grandes Clásicas de Asturias (${otherRoutes.length})
                 </span>
                 ${otherRoutes.map(r => {
-                  const rSim = simulateRouteConditions(r, selectedHour, selectedSpeed, hourly);
+                  const rSim = simulateRouteConditions(r, activeHour, selectedSpeed, hourly, activeDay);
                   return `
                   <div class="cycling-route-item ${r.id === activeRoute.id ? 'selected' : ''}" data-route-id="${r.id}">
                     <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px;">

@@ -10,6 +10,17 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
 
+## [3.0.24.59] - 2026-11-06
+### Added
+- **Inteligencia Temporal y Selector de Día `[ Hoy ]` / `[ Mañana ]` en Ciclismo & Viento Dinámico (Propuesta Lendo):**
+  - **Eliminación de Horas Pasadas en Ruta Óptima:** Erradicado el fallo por el cual a las 11:00 h el sistema seguía sugiriendo rutas a las 9:00 h o recomendando horas pretéritas ya vencidas.
+  - **Auto-detección Horaria en Vivo:** Al abrir el módulo o cambiar de concejo de día (hasta las 18:59 h), la app selecciona automáticamente la siguiente hora útil de salida (ej. a las 11:15 h se sitúa en las 12:00 h).
+  - **Salto Automático Nocturno:** A partir de las 19:00 h, al no haber luz para ciclismo de ruta, la app salta automáticamente a **Mañana** y arranca en las 09:00 h.
+  - **Conmutador Ergonómico de Día `[ Hoy ]` / `[ Mañana ]`:**
+    - En **Hoy**: Las horas pasadas (`h < currentHour`) aparecen atenuadas, tachadas y desactivadas (`disabled`), impidiendo que el motor vectorial las recomiende.
+    - En **Mañana**: Se habilitan todas las horas (de 8:00 a 19:00 h) y el simulador proyecta las condiciones meteorológicas horarias a +24h en Open-Meteo.
+  - **Sincronización Contextual:** La tarjeta de consejo y el desglose de tramos indican explícitamente si la previsión y salida corresponden a *Hoy* o *Mañana*.
+
 ## [3.0.24.50] - 2026-11-06
 ### Removed
 - **Depuración y Retirada del Tema Estacional Amagüestu (Decisión Lendo):**

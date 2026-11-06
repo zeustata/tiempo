@@ -2,6 +2,25 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🚴 Inteligencia Temporal y Selector de Día [Hoy] / [Mañana] en Ciclismo & Viento (v3.0.24.59) — 2026-11-06
+- **Erradicación de Horas Pasadas en Sugerencias de Salida Óptima (Observación Crítica de Lendo):**
+  1. *Diagnóstico y Criterio de Lendo:*
+     - Lendo detectó que en el módulo de Ciclismo & Viento, abriendo la app a las 11:00 h, el sistema seguía sugiriendo que la hora óptima para rodar eran las 9:00 h (que ya había pasado). Carecía de sentido lógico y utilidad real para un ciclista sobre el terreno.
+  2. *Implementación Técnica (Ergonomía Móvil Ley 11 y Rigor Temporal):*
+     - En `js/utils/cyclingAdvisor.js`:
+       - Añadido soporte de parámetro `selectedDay` ('today' | 'tomorrow') a las funciones `simulateRouteConditions` y `rankRoutesForDeparture`.
+       - Si `selectedDay === 'tomorrow'`, se aplica automáticamente un desfase horario `dayOffsetHours = 24`, proyectando las condiciones meteorológicas y vectoriales de Open-Meteo de forma transparente a la jornada siguiente.
+       - Mensajes de consejero adaptados con contexto dinámico (*«rodando hoy»* vs *«rodando mañana»*).
+     - En `js/components/cyclingCard.js`:
+       - **Auto-detección horaria:** La app ya no arranca anclada en las 9:00 h fija. Durante el día selecciona automáticamente la siguiente hora útil de hoy (ej. a las 11:15 h salta a las 12:00 h). A partir de las 19:00 h salta de forma autónoma a *Mañana* a las 09:00 h.
+       - **Selector de Día `[ Hoy ]` y `[ Mañana ]` (`.cycling-day-pill`):** Añadido conmutador táctil ergonómico. En *Hoy*, las horas anteriores a la hora actual (`h < currentHour`) se estilizan con opacidad reducida (32%), tachado y estado desactivado (`disabled`), impidiendo su selección o recomendación errónea. En *Mañana*, todas las horas se habilitan al 100%.
+       - Sincronizados títulos de consejos y tramos horarios para reflejar claramente el día consultado.
+     - En `js/app.js`:
+       - Sincronizados los listeners para `.btn-cycling-day`, filtrado de horas `.btn-hour-pill:not(.past-hour)` y refresco dinámico conservando el estado del día.
+  3. *Cache-Busting & Despliegue Dual:*
+     - Service Worker actualizado a `meteoasturlode-v3024-59-cycling-smart-hours-day-toggle`.
+     - Versionado sincronizado a `v=3.0.24.59` en `index.html`, `cyclingCard.js`, `cyclingAdvisor.js`, `sw.js` y `app.js`.
+
 ## 🌐 Homologación Universal de Selectores Desplegables en Oro Cálido y Cápsula «Elegir ▼» (v3.0.24.58) — 2026-11-06
 - **Extensión de la Doctrina de Armonía Visual (Ley 14) a Todos los Módulos de Catálogo (Instrucción de Lendo):**
   1. *Criterio de Lendo:*

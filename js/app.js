@@ -5,7 +5,7 @@ import { renderCurrentWeather } from './components/currentCard.js?v=3.0.24.53';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.24.57';
 import { renderSurfCard } from './components/surfCard.js?v=3.0.24.57';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.24.58';
-import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.24.58';
+import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.24.59';
 import { renderMountainCard } from './components/mountainCard.js?v=3.0.24.27';
 import { renderTourismCard } from './components/tourismCard.js?v=3.0.24.58';
 import { renderForecast, renderHourlyForecastBlock } from './components/forecastView.js?v=3.0.24.50';
@@ -63,7 +63,8 @@ class MeteoAsturiasApp {
     this.selectedCyclingRouteId = null;
     this.selectedSurfBeachName = null;
     this.selectedMarineBeachName = null;
-    this.selectedCyclingHour = 9;
+    this.selectedCyclingHour = null;
+    this.selectedCyclingDay = null;
     this.selectedCyclingSpeed = 24;
     this.autoRefreshTimer = null;
     this.deferredInstallPrompt = null;
@@ -3009,8 +3010,21 @@ class MeteoAsturiasApp {
       });
     });
 
+    // 2b. Conmutador de día (Hoy / Mañana)
+    document.querySelectorAll('.btn-cycling-day').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const day = e.currentTarget.dataset.day;
+        if (day && day !== this.selectedCyclingDay) {
+          this.selectedCyclingDay = day;
+          this.selectedCyclingHour = null; // Auto-selecciona la hora más conveniente para ese día
+          this.selectedCyclingRouteId = null; // Auto-resetea para cargar directamente la óptima
+          this.refreshCyclingPanel();
+        }
+      });
+    });
+
     // 3. Cambio de hora: auto-carga la ruta ÓPTIMA para esa hora (Instrucción de Lendo)
-    document.querySelectorAll('.btn-hour-pill').forEach(btn => {
+    document.querySelectorAll('.btn-hour-pill:not(.past-hour)').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const hour = parseInt(e.currentTarget.dataset.hour, 10);
         if (!isNaN(hour)) {
@@ -3165,7 +3179,8 @@ class MeteoAsturiasApp {
           this.currentConcejo,
           this.selectedCyclingRouteId,
           this.selectedCyclingHour,
-          this.selectedCyclingSpeed
+          this.selectedCyclingSpeed,
+          this.selectedCyclingDay
         );
         this.initCyclingCardEvents();
       }
@@ -3268,7 +3283,7 @@ class MeteoAsturiasApp {
       try {
         const cyclingContainer = document.getElementById('panel-cycling');
         if (cyclingContainer) {
-          cyclingContainer.innerHTML = renderCyclingCard(data, concejo, this.selectedCyclingRouteId, this.selectedCyclingHour, this.selectedCyclingSpeed);
+          cyclingContainer.innerHTML = renderCyclingCard(data, concejo, this.selectedCyclingRouteId, this.selectedCyclingHour, this.selectedCyclingSpeed, this.selectedCyclingDay);
           this.initCyclingCardEvents();
         }
       } catch (e) {

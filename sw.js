@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-58-universal-picker-triggers-gold';
+const CACHE_NAME = 'meteoasturlode-v3024-59-cycling-smart-hours-day-toggle';
 const STATIC_ASSETS = [
   './',
   './index.html',
