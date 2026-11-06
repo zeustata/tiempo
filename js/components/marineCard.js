@@ -1156,28 +1156,38 @@ export function renderMarineCard(data, concejo, selectedBeachName = null) {
   const windDirObj = getWindDirection(windDeg);
 
   const h = parseFloat(waveHeight);
+  const isNoWaveCove = selectedBeach && selectedBeach.waveType && selectedBeach.waveType.includes('🚫');
+  const isSemiShelteredBeach = selectedBeach && !isNoWaveCove && typeof selectedBeach.facingDeg === 'number' && (selectedBeach.facingDeg >= 30 && selectedBeach.facingDeg <= 140);
+  const beachWaveFactor = isNoWaveCove ? 0.25 : (isSemiShelteredBeach ? 0.72 : 1.0);
+  const effectiveBeachH = +(h * beachWaveFactor).toFixed(1);
+
   const douglas = getDouglasScale(h);
   const douglasDegree = douglas.degree;
   const douglasName = douglas.name;
+  const beachDouglas = getDouglasScale(effectiveBeachH);
+  const beachDouglasDeg = beachDouglas.degree;
+  const beachLabelSuffix = selectedBeach ? ` · ${selectedBeach.name}` : '';
 
   let flagColor = '#10b981';
-  let flagBadge = '🟢 Bandera Verde (Teórica)';
+  let flagBadge = `🟢 Bandera Verde Teórica${beachLabelSuffix}`;
   let bathStatus = 'Condiciones meteorológicas teóricas favorables. Precaución habitual en el agua.';
 
-  if (douglasDegree <= 2) {
-    flagBadge = '🟢 Bandera Verde (Teórica)';
+  if (beachDouglasDeg <= 2) {
+    flagBadge = `🟢 Bandera Verde Teórica${beachLabelSuffix}`;
     flagColor = '#10b981';
-    bathStatus = douglasDegree <= 1
-      ? 'Condiciones meteorológicas teóricas óptimas. Mar en calma o rizado.'
-      : 'Mar favorable en previsión con oleaje suave. Prestar atención a corrientes locales.';
-  } else if (douglasDegree <= 4) {
-    flagBadge = '🟡 Bandera Amarilla (Teórica)';
+    bathStatus = isNoWaveCove
+      ? 'Ensenada o piscina natural abrigada del oleaje exterior. Aguas calmas.'
+      : (beachDouglasDeg <= 1
+          ? 'Condiciones meteorológicas teóricas óptimas. Mar en calma o rizado.'
+          : 'Mar favorable en previsión con oleaje suave. Prestar atención a corrientes locales.');
+  } else if (beachDouglasDeg <= 4) {
+    flagBadge = `🟡 Bandera Amarilla Teórica${beachLabelSuffix}`;
     flagColor = '#f59e0b';
-    bathStatus = douglasDegree === 3
+    bathStatus = beachDouglasDeg === 3
       ? 'Precaución en el baño. Oleaje marcado y probables corrientes de resaca.'
       : 'Fuerte oleaje con corrientes activas. Baño exigente, solo nadadores experimentados.';
   } else {
-    flagBadge = '🔴 Bandera Roja (Teórica)';
+    flagBadge = `🔴 Bandera Roja Teórica${beachLabelSuffix}`;
     flagColor = '#ef4444';
     bathStatus = '🚨 Temporal costero / Mar gruesa activa. Baño desaconsejado o prohibido en arenales expuestos.';
   }
@@ -1525,6 +1535,14 @@ export function renderMarineCard(data, concejo, selectedBeachName = null) {
                         </div>
                       </div>
                     ` : ''}
+                  </div>
+
+                  <!-- Botón directo GPS hacia la playa o cala -->
+                  <div style="margin-top: 10px; display: flex;">
+                    <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ' ' + (isCoasting ? cleanConcejoName : cleanInteriorName) + ' Asturias')}" target="_blank" rel="noopener noreferrer" style="width: 100%; padding: 9px 12px; border-radius: 10px; background: rgba(16, 185, 129, 0.14); border: 1px solid rgba(16, 185, 129, 0.42); color: #34d399; font-size: 0.78rem; font-weight: 800; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; box-sizing: border-box;">
+                      <span>📍</span>
+                      <span>Cómo llegar a ${p.name} (GPS)</span>
+                    </a>
                   </div>
                 </div>
               `;

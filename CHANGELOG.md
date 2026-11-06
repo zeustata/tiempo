@@ -10,6 +10,19 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
 
+## [3.0.25.1] - 2026-11-06
+### Fixed
+- **Cero Fugas de Memoria en Listeners de Carruseles (`js/app.js`):**
+  - En `initSensorsCarousel`, `initSurfCardsCarousel` y `bindCarouselDots`, los listeners globales `mousemove` y `mouseup` ya no se acumulan en `window` en cada cambio de concejo; se registran únicamente al iniciar el arrastre (`mousedown`) y se eliminan con `window.removeEventListener` al soltar (`mouseup`).
+- **Recálculo Inteligente por Arenal y Botón GPS en `🏄‍♂️ Surf & Rompientes` (`surfCard.js` + `app.js`):**
+  - Al cambiar de playa en `#surf-spots-modal`, se ejecuta `refreshSurfPanel()` y la tarjeta superior de Calificación (0-10★), Viento y Energía recalcula sus valores usando el `facingDeg` y el abrigo real del arenal elegido (`⭐ Calificación en [Playa]`).
+  - Añadido botón `📍 Cómo llegar a [Playa] (GPS)` hacia Google Maps en cada ficha de rompiente.
+- **Bandera Teórica Adaptada al Abrigo y Botón GPS en `🏖️ Playas & Mareas` (`marineCard.js` + `app.js`):**
+  - La bandera teórica del Mareógrafo pondera el abrigo del arenal seleccionado (distinguiendo ensenadas sin olas como Luanco, Bañugues, El Murallón o Gulpiyuri frente a playas abiertas) y muestra `🟢/🟡/🔴 Bandera ... Teórica · [Playa]`.
+  - Añadido botón `📍 Cómo llegar a [Playa] (GPS)` en cada ficha de playa o cala.
+- **Respaldo Offline `ignoreSearch` en Service Worker (`sw.js` + `index.html`):**
+  - En modo sin cobertura, `caches.match(e.request, { ignoreSearch: true })` garantiza que los módulos precacheados respondan aunque se soliciten con `?v=...`. Sincronizado `manifest.json?v=3.0.25.1`.
+
 ## [3.0.25] - 2026-11-06
 ### Added
 - **Índice de Observación Nocturna en Vivo (`22:00 - 04:00 h`) en Astronomía & Cosmos:**

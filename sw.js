@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3025-0-argon-suite';
+const CACHE_NAME = 'meteoasturlode-v3025-1-argon-baches-fixed';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -125,8 +125,10 @@ self.addEventListener('fetch', (e) => {
         return networkResponse;
       })
       .catch(() => {
-        // Solo si no hay internet / offline, acudimos a la caché guardada
-        return caches.match(e.request);
+        // Solo si no hay internet / offline, acudimos a la caché guardada (con respaldo ignoreSearch para query strings ?v=...)
+        return caches.match(e.request).then((cachedResp) => {
+          return cachedResp || caches.match(e.request, { ignoreSearch: true });
+        });
       })
   );
 });

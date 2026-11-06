@@ -2,6 +2,19 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🛠️ Tapado de 4 Baches Técnicos y de Datos (`v3.0.25.1`): Memoria Limpia en `window`, Recálculo por Playa en Surf/Playas con GPS y Offline `ignoreSearch` — 2026-11-06
+- **Implementación de los 4 Ajustes Aprobados por Lendo («dime q mas baches tenemos» / «pisale» / «subelo»):**
+  1. *Eliminación de Fugas de Memoria en `window` (`js/app.js`):*
+     - En `initSensorsCarousel`, `initSurfCardsCarousel` y `bindCarouselDots`: sustituidos los `window.addEventListener('mousemove' / 'mouseup')` permanentes por listeners dinámicos vinculados exclusivamente durante `mousedown` y limpiados con `window.removeEventListener` en `mouseup`.
+  2. *Recálculo Dinámico de Estrellas/Viento por Arenal y Botón GPS en `🏄‍♂️ Surf & Rompientes` (`js/components/surfCard.js` y `js/app.js`):*
+     - Conectada la orientación real (`facingDeg`) y el factor de abrigo de la playa seleccionada (`selectedBeach`) al cálculo de viento, energía y estrellas (0-10★) de la tarjeta principal superior, y creado `refreshSurfPanel()` al elegir playa en `#surf-spots-modal`.
+     - Incorporado el botón `📍 Cómo llegar a ${p.name} (GPS)` hacia Google Maps en cada ficha de rompiente.
+  3. *Bandera Teórica Sensible al Abrigo y Botón GPS en `🏖️ Playas & Mareas` (`js/components/marineCard.js` y `js/app.js`):*
+     - Ponderado el abrigo de ensenadas calmas (`🚫 Sin olas` o semi-abrigadas) en la bandera teórica del Mareógrafo (`🟢/🟡/🔴 Bandera ... Teórica · ${selectedBeach.name}`), recalculando mediante `refreshMarinePanel()` al cambiar de playa en `#marine-beaches-modal`.
+     - Incorporado el botón `📍 Cómo llegar a ${p.name} (GPS)` en cada ficha del catálogo de Playas y Calas.
+  4. *Blindaje Offline con `ignoreSearch: true` (`sw.js` e `index.html`):*
+     - Añadido `caches.match(e.request, { ignoreSearch: true })` en el `.catch()` de `sw.js` (`meteoasturlode-v3025-1-argon-baches-fixed`) y sincronizado `manifest.json?v=3.0.25.1`.
+
 ## 💎 Auditoría Gemini 4 Argon (Fase 2): Paginador 7 Puntos en Esquí, Filtro de Puertos por Sector, Índice Estelar Nocturno y Salto Oficial a `v3.0.25 💎` — 2026-11-06
 - **Implementación de las 4 Mejoras de Fase 2 Aprobadas por Lendo («pisale princesa y ya te digo vomo queda» / «subelo»):**
   1. *Paginador Interactivo de 7 Puntos en Carruseles de Esquí (Doctrina Constitucional Ley 18):*

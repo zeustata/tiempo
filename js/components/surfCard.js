@@ -1,4 +1,4 @@
-import { getWindDirection } from '../utils/weatherIcons.js?v=1.1.53';
+import { getWindDirection } from '../utils/weatherIcons.js?v=3.0.25.1';
 import { getRealtimeTideStatus } from '../utils/tides.js?v=1.0.81-tides-calib';
 import { 
   PLAYAS_POR_CONCEJO, 
@@ -7,7 +7,7 @@ import {
   getBeachSpecificWindCondition,
   getSeaWaterTemperature,
   getDouglasScale
-} from './marineCard.js?v=2.2.6';
+} from './marineCard.js?v=3.0.25.1';
 
 /**
  * Recomienda el grosor de neopreno según la temperatura del agua
@@ -674,26 +674,48 @@ export function renderSurfCard(data, concejo, selectedBeachName = null) {
   const windDeg = current.wind_direction_10m !== undefined ? current.wind_direction_10m : 180;
   const windDirObj = getWindDirection(windDeg);
   
-  // Análisis dinámico Offshore / Onshore
-  const surfWind = getSurfWindCondition(windDeg, windSpeed);
+  // Análisis dinámico Offshore / Onshore adaptado a la orientación real del arenal seleccionado
+  const baseSurfWind = getSurfWindCondition(windDeg, windSpeed);
+  const specificBeachWind = selectedBeach
+    ? getBeachSpecificWindCondition(selectedBeach.facingDeg || 355, windDeg, windSpeed)
+    : null;
+  const surfWind = specificBeachWind
+    ? {
+        ...baseSurfWind,
+        type: specificBeachWind.type,
+        name: specificBeachWind.badge.replace(/^[\p{Emoji}\u200d\uFE0F\s]+/u, ''),
+        badge: specificBeachWind.badge,
+        color: specificBeachWind.color,
+        desc: specificBeachWind.shortDesc,
+        statusClass: specificBeachWind.statusClass
+      }
+    : baseSurfWind;
 
-  // Energía de la Ola (kJ) combinada basada en Multi-Swell
-  const waveEnergy = calculateWaveEnergy(swellHeight || waveHeight, wavePeriod, secSwellH, secSwellPeriod);
+  // Ajuste físico de oleaje según abrigo del arenal elegido (ensenada sin olas vs. semi-abrigada vs. mar abierto)
+  const isNoWaveCove = selectedBeach && selectedBeach.waveType && selectedBeach.waveType.includes('🚫');
+  const isSemiSheltered = selectedBeach && !isNoWaveCove && typeof selectedBeach.facingDeg === 'number' && (selectedBeach.facingDeg >= 30 && selectedBeach.facingDeg <= 140);
+  const shelterFactor = isNoWaveCove ? 0.22 : (isSemiSheltered ? 0.72 : 1.0);
+  const effectiveWaveH = (parseFloat(waveHeight) * shelterFactor).toFixed(1);
+  const effectiveSwellH = (parseFloat(swellHeight || waveHeight) * shelterFactor).toFixed(1);
+
+  // Energía de la Ola (kJ) combinada basada en Multi-Swell en el arenal seleccionado
+  const waveEnergy = calculateWaveEnergy(effectiveSwellH, wavePeriod, (parseFloat(secSwellH) * shelterFactor).toFixed(1), secSwellPeriod);
 
   // Escala Douglas
-  const douglas = getDouglasScale(parseFloat(waveHeight));
+  const douglas = getDouglasScale(parseFloat(effectiveWaveH));
   const douglasDegree = douglas.degree;
   const douglasName = douglas.name;
 
-  // Calidad global del swell
-  const surfQuality = evaluateSurfQuality(waveHeight, wavePeriod, surfWind, waveEnergy);
-  const isBeachBreakOverload = (parseFloat(waveHeight) >= 1.7) || 
-                               (parseFloat(swellHeight) >= 1.7) || 
-                               (waveEnergy.kj >= 350 && (parseFloat(waveHeight) >= 1.5 || parseFloat(swellHeight) >= 1.5)) ||
-                               (wavePeriod >= 13 && (parseFloat(waveHeight) >= 1.5 || parseFloat(swellHeight) >= 1.5));
+  // Calidad global del swell en el arenal seleccionado
+  const surfQuality = evaluateSurfQuality(effectiveWaveH, wavePeriod, surfWind, waveEnergy);
+  const isBeachBreakOverload = !isNoWaveCove && (
+                               (parseFloat(effectiveWaveH) >= 1.7) || 
+                               (parseFloat(effectiveSwellH) >= 1.7) || 
+                               (waveEnergy.kj >= 350 && (parseFloat(effectiveWaveH) >= 1.5 || parseFloat(effectiveSwellH) >= 1.5)) ||
+                               (wavePeriod >= 13 && (parseFloat(effectiveWaveH) >= 1.5 || parseFloat(effectiveSwellH) >= 1.5)));
 
   // Calificación Oficial por Estrellas (0 a 10) y Textura del Agua (Estándar Surf-Forecast)
-  const surfStarRating = getSurfStarRating(swellHeight || waveHeight, wavePeriod, surfWind, waveEnergy, isBeachBreakOverload);
+  const surfStarRating = getSurfStarRating(effectiveSwellH, wavePeriod, surfWind, waveEnergy, isBeachBreakOverload);
   const waterTexture = getWaterTexture(windSpeed, surfWind);
 
   // Temperatura del mar y traje unificada
@@ -746,7 +768,7 @@ export function renderSurfCard(data, concejo, selectedBeachName = null) {
               <div style="background: rgba(15, 23, 42, 0.58); border: 1px solid ${surfStarRating.color}44; border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; box-sizing: border-box;">
                 <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
                   <span style="font-size: 0.72rem; font-weight: 700; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.04em;">
-                    ⭐ Calificación de Surf (${isCoasting ? concejoTitle : cleanInteriorName})
+                    ⭐ Calificación en ${selectedBeach ? selectedBeach.name : (isCoasting ? concejoTitle : cleanInteriorName)}
                   </span>
                   <button class="btn-explain-sensor" data-explain="surf_stars" title="¿Cómo funciona el rating de estrellas doradas y blancas? Pulsa para aprender" aria-label="Explicación del rating de estrellas de surf">💡</button>
                 </div>
@@ -1179,6 +1201,14 @@ export function renderSurfCard(data, concejo, selectedBeachName = null) {
                         </div>
                       </div>
                     ` : ''}
+                  </div>
+
+                  <!-- Botón directo GPS hacia el arenal/rompiente -->
+                  <div style="margin-top: 10px; display: flex;">
+                    <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ' ' + (isCoasting ? cleanConcejoName : cleanInteriorName) + ' Asturias')}" target="_blank" rel="noopener noreferrer" style="width: 100%; padding: 9px 12px; border-radius: 10px; background: rgba(16, 185, 129, 0.14); border: 1px solid rgba(16, 185, 129, 0.42); color: #34d399; font-size: 0.78rem; font-weight: 800; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; box-sizing: border-box;">
+                      <span>📍</span>
+                      <span>Cómo llegar a ${p.name} (GPS)</span>
+                    </a>
                   </div>
                 </div>
               `;
