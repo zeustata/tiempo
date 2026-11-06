@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-55-surf-nav-buttons-enhancement';
+const CACHE_NAME = 'meteoasturlode-v3024-56-surf-buttons-living-glow';
 const STATIC_ASSETS = [
   './',
   './index.html',

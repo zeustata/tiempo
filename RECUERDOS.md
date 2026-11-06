@@ -2,6 +2,23 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏄‍♂️ Vida Propia y Respiración Neón en la Barra Tripartita de Surf (v3.0.24.56) — 2026-11-06
+- **Evolución Dinámica de Botones de Navegación de Surf (Feedback Lendo):**
+  1. *Diagnóstico y Criterio de Lendo:*
+     - Lendo valoró que los botones necesitaban auténtica «vida propia» y mayor distinción interactiva que un simple marco estático.
+  2. *Implementación Técnica (Doctrina de Armonía Visual Ley 14 y Ergonomía Móvil Ley 11):*
+     - En `js/components/surfCard.js`:
+       - Añadidas clases identificativas a los botones: `.surf-pill-stars` (Calificación), `.surf-pill-energy` (Fuerza) y `.surf-pill-forecast` (Previsión).
+     - En `css/components.css`:
+       - **Respiración Neón Selectiva (*Pulse Glow*):** El botón activo respira rítmicamente cada 3,2 segundos con su aura de color temático:
+         - `⭐ Calificación`: Fondo y aura en **oro estelar** (`#facc15` / `rgba(250, 204, 21, 0.45)`) con micro-animación periódica de centelleo (*twinkle*) en la estrella.
+         - `⚡ Fuerza`: Fondo y aura en **ámbar energético** (`#fbbf24` / `rgba(245, 158, 11, 0.45)`) con pulso de descarga eléctrica en el rayo.
+         - `⏱️ Previsión`: Fondo y aura en **azul cian marítimo** (`#38bdf8` / `rgba(56, 189, 248, 0.45)`) con oscilación rítmica en el cronómetro.
+       - **Reposo Elegante de Inactivos:** Los botones no seleccionados permanecen en cristal líquido oscuro sin distraer, revelando su color respectivo en hover/toque táctil.
+  3. *Cache-Busting & Despliegue Dual:*
+     - Service Worker actualizado a `meteoasturlode-v3024-56-surf-buttons-living-glow`.
+     - Versionado sincronizado a `v=3.0.24.56` en `index.html`, `components.css`, `surfCard.js`, `sw.js` y `app.js`.
+
 ## 🚀 Hito Histórico: Aprobación Oficial y Publicación en Google Play Store (v3.0.24 - Build 9) — 2026-11-06
 - **Superación de la Revisión de Google y Publicación en Tienda Oficial (Hito de Lendo):**
   1. *Aprobación de Google Play Console:*

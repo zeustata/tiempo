@@ -724,15 +724,15 @@ export function renderSurfCard(data, concejo, selectedBeachName = null) {
       <div class="surf-carousel-wrap" id="surf-carousel-wrap">
         <!-- BARRA ERGONÓMICA DE NAVEGACIÓN TRIPARTITA (SUPERIOR EN FILA ÚNICA) -->
         <div class="surf-nav-toolbar" id="surf-nav-toolbar">
-          <button class="surf-nav-pill active" data-surf-target="0" type="button" aria-label="Ver Calificación y Estrellas">
+          <button class="surf-nav-pill surf-pill-stars active" data-surf-target="0" type="button" aria-label="Ver Calificación y Estrellas">
             <span class="surf-nav-icon">⭐</span>
             <span class="surf-nav-label">Calificación</span>
           </button>
-          <button class="surf-nav-pill" data-surf-target="1" type="button" aria-label="Ver Fuerza del Oleaje">
+          <button class="surf-nav-pill surf-pill-energy" data-surf-target="1" type="button" aria-label="Ver Fuerza del Oleaje">
             <span class="surf-nav-icon">⚡</span>
             <span class="surf-nav-label">Fuerza</span>
           </button>
-          <button class="surf-nav-pill" data-surf-target="2" type="button" aria-label="Ver Previsión a 3 horas y 7 días">
+          <button class="surf-nav-pill surf-pill-forecast" data-surf-target="2" type="button" aria-label="Ver Previsión a 3 horas y 7 días">
             <span class="surf-nav-icon">⏱️</span>
             <span class="surf-nav-label">Previsión</span>
           </button>
