@@ -2,6 +2,17 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 💎 Auditoría Gemini 4 Argon (Fase 2): Paginador 7 Puntos en Esquí, Filtro de Puertos por Sector, Índice Estelar Nocturno y Salto Oficial a `v3.0.25 💎` — 2026-11-06
+- **Implementación de las 4 Mejoras de Fase 2 Aprobadas por Lendo («pisale princesa y ya te digo vomo queda» / «subelo»):**
+  1. *Paginador Interactivo de 7 Puntos en Carruseles de Esquí (Doctrina Constitucional Ley 18):*
+     - En `js/components/mountainCard.js` y `js/app.js`: asignados IDs únicos (`ski-7days-carousel-${r.id}` y `ski-7days-dots-${r.id}`) a los carruseles de 7 días de Valgrande-Pajares, Fuentes de Invierno, San Isidro y Leitariegos, conectándolos mediante `this.bindCarouselDots(...)` y eliminando el cartel pasivo `"(desliza para ver la semana)"`.
+  2. *Filtro Rápido de Puertos de Montaña por Sector (`#mountain-passes-view`):*
+     - En `js/components/mountainCard.js` y `js/app.js`: añadida la barra horizontal `.passes-sector-filter-bar` con 5 píldoras interactivas (`🌟 Todos (16)`, `🛣️ Meseta (2)`, `📍 Centro (4)`, `🏔️ Oriente (3)`, `🌲 Occidente (7)`), protegida en `isInteractiveZone`, permitiendo filtrar al instante cualquiera de los 4 bloques comarcales (`data-sector-group`).
+  3. *Índice de Observación Nocturna en Vivo (`22:00 - 04:00 h`) en Astronomía & Cosmos:*
+     - En `js/components/astronomyCard.js`: creada `getTonightStargazingIndex(weatherData, moon, concejo)` e integrada dentro de `.astronomy-hero-card`, cruzando nubosidad nocturna, precipitación e iluminación lunar para mostrar el veredicto (`🟢 Noche Estelar Óptima`, `🟢 Despejado • Luz Lunar`, `🟡 Claros Nocturnos` o `🔴 Cielo Cubierto`), el porcentaje medio de nubes y la mejor hora para observar las estrellas esta noche.
+  4. *Salto Oficial a `v3.0.25 💎`, Auto-Prompt de Novedades (Ley 13) y Anti-Caché (Ley 4):*
+     - Actualizada `CURRENT_APP_VERSION = '3.0.25'` en `js/app.js`, insignia `#app-version-badge` (`v3.0.25 💎`), `#nav-update-badge` (`v3.0.25 · Limpiar caché`), bloque `<div class="changelog-release current">` en `#changelog-modal` (`index.html`) y `CACHE_NAME = 'meteoasturlode-v3025-0-argon-suite'` en `sw.js`.
+
 ## 🚀 Auditoría Integral Gemini 4 Argon: Blindaje «Atrás» Android, Portal `document.body`, Inteligencia `[Hoy/Mañana]` y Ficha GPS en Ciclismo (v3.0.24.62) — 2026-11-06
 - **Implementación de las 4 Mejoras Prioritarias Aprobadas por Lendo:**
   1. *Botón «Atrás» de Android (`popstate`) + Portal en `document.body` + Liquid Glass en los 5 Bottom Sheets:*

@@ -6,11 +6,11 @@ import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.
 import { renderSurfCard } from './components/surfCard.js?v=3.0.24.57';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.24.62';
 import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.24.62';
-import { renderMountainCard } from './components/mountainCard.js?v=3.0.24.27';
+import { renderMountainCard } from './components/mountainCard.js?v=3.0.25.0';
 import { renderTourismCard } from './components/tourismCard.js?v=3.0.24.62';
 import { renderForecast, renderHourlyForecastBlock } from './components/forecastView.js?v=3.0.24.50';
 import { renderWeatherChart } from './components/chartsView.js?v=3.0.23.58';
-import { renderAstronomyView } from './components/astronomyCard.js?v=2.2.1';
+import { renderAstronomyView } from './components/astronomyCard.js?v=3.0.25.0';
 import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=2.2.1';
 import { getWeatherInfo } from './utils/weatherIcons.js?v=3.0.24.50';
 import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=2.0.0';
@@ -48,7 +48,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.24';
+export const CURRENT_APP_VERSION = '3.0.25';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -2013,6 +2013,31 @@ class MeteoAsturiasApp {
         }
       });
     });
+
+    // Delegación global para filtro rápido de Puertos de Montaña por sector (v3.0.25)
+    document.addEventListener('click', (e) => {
+      const passPill = e.target.closest('.pass-sector-filter-pill');
+      if (!passPill) return;
+
+      this.triggerHaptic();
+      const sector = passPill.dataset.passSector || 'all';
+      document.querySelectorAll('.pass-sector-filter-pill').forEach(b => {
+        const isAct = b === passPill;
+        b.classList.toggle('active', isAct);
+        b.style.background = isAct ? 'rgba(56, 189, 248, 0.22)' : 'rgba(15, 23, 42, 0.72)';
+        b.style.borderColor = isAct ? 'rgba(56, 189, 248, 0.65)' : 'rgba(148, 163, 184, 0.25)';
+        b.style.color = isAct ? '#38bdf8' : '#cbd5e1';
+        b.style.boxShadow = isAct ? '0 0 12px rgba(56, 189, 248, 0.25)' : 'none';
+      });
+
+      document.querySelectorAll('#mountain-passes-view [data-sector-group]').forEach(block => {
+        if (sector === 'all' || block.dataset.sectorGroup === sector) {
+          block.style.display = 'block';
+        } else {
+          block.style.display = 'none';
+        }
+      });
+    });
   }
 
   setupPhenomenaModal() {
@@ -2545,7 +2570,7 @@ class MeteoAsturiasApp {
         '.hourly-scroll-container, .live-hourly-block, .hourly-card, .hourly-day-divider, ' +
         '.chart-scroll-viewport, #chart-canvas-wrapper, #meteo-chart-canvas, ' +
         '.chart-smart-digest, .digest-chip, ' +
-        '.ski-7days-carousel, .ski-day-card, ' +
+        '.ski-7days-carousel, .ski-day-card, .passes-sector-filter-bar, .pass-sector-filter-pill, ' +
         '.tide-scroll-viewport, .tide-svg-chart, ' +
         '.weekly-tides-grid, .weekly-tides-card, .tide-day-card, .tide-today-minimal-grid, .tide-mini-pill, ' +
         '.daily-cards-container, .daily-card-rich, .forecast-scroll-hint, ' +
@@ -3399,6 +3424,9 @@ class MeteoAsturiasApp {
         const mountainContainer = document.getElementById('panel-mountain');
         if (mountainContainer) {
           mountainContainer.innerHTML = renderMountainCard(data, concejo, effectiveTheme);
+          ['pajares', 'fuentes', 'san_isidro', 'leitariegos'].forEach(rId => {
+            this.bindCarouselDots(`ski-7days-carousel-${rId}`, `ski-7days-dots-${rId}`, '.ski-day-card');
+          });
           if (this.activeTab === 'mountain') {
             const wakeCarousels = () => {
               document.querySelectorAll('.ski-7days-carousel').forEach(c => {

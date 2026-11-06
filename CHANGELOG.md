@@ -10,6 +10,25 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
 
+## [3.0.25] - 2026-11-06
+### Added
+- **Índice de Observación Nocturna en Vivo (`22:00 - 04:00 h`) en Astronomía & Cosmos:**
+  - Nueva función `getTonightStargazingIndex(weatherData, moon, concejo)` en `js/components/astronomyCard.js` integrada dentro de la tarjeta Hero Lunar.
+  - Cruza la nubosidad nocturna horaria (`22:00 a 04:00 h`), precipitación e iluminación lunar para emitir el veredicto en tiempo real (`🟢 Noche Estelar Óptima`, `🟢 Despejado • Luz Lunar`, `🟡 Claros Nocturnos` o `🔴 Cielo Cubierto`), el porcentaje medio de nubes y la mejor hora exacta para observar el firmamento esta noche.
+- **Filtro Rápido de Puertos de Montaña por Sector en Cordillera & Nieve:**
+  - Barra de píldoras táctiles (`.passes-sector-filter-bar` / `.pass-sector-filter-pill`) con aislamiento de gestos (`isInteractiveZone`) para filtrar en un toque los 16 puertos asturianos por sector (`🌟 Todos (16)`, `🛣️ Meseta (2)`, `📍 Centro (4)`, `🏔️ Oriente (3)`, `🌲 Occidente (7)`).
+- **Paginador Interactivo de 7 Puntos en Estaciones de Esquí (Ley 18):**
+  - Incorporado el paginador táctil `.sensors-dots-indicator` (`ski-7days-dots-${r.id}`) bajo los carruseles de 7 días de Valgrande-Pajares, Fuentes de Invierno, San Isidro y Leitariegos, suprimiendo el rótulo pasivo `"(desliza para ver la semana)"`.
+- **Salto Oficial a `v3.0.25 💎` y Auto-Prompt del Historial de Novedades (Ley 13):**
+  - Sincronizada `CURRENT_APP_VERSION = '3.0.25'` en `js/app.js`, insignia `#app-version-badge` en pie de página, `#nav-update-badge` en menú y nuevo bloque destacado en `#changelog-modal`.
+
+## [3.0.24.62] - 2026-11-06
+### Added
+- **Auditoría Gemini 4 Argon (Fase 1):**
+  - Protección del botón «Atrás» de Android (`popstate`), teletransporte a `document.body` y acabado Apple Liquid Glass en los 5 Bottom Sheets (`Playas`, `Surf`, `Rutas`, `Ciclismo` y `Planes`).
+  - Selector temporal `[ ☀️ Hoy ] / [ 📅 Mañana ]` en Rutas & Senderismo y Planes & Ocio.
+  - Ficha Oficial Ciclista, consejos de puerto, desarrollo recomendado y arranque GPS directo en Google Maps en Ciclismo & Viento.
+
 ## [3.0.24.61] - 2026-11-06
 ### Changed
 - **Homologación Universal Apple Liquid Glass en Rutas, Ciclismo y Planes (Feedback Lendo - Doctrina Ley 14):**

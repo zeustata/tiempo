@@ -956,11 +956,11 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
                     <span class="ski-forecast-badge">📅 Previsión a 7 Días • Esquí & Montaña</span>
                     <span class="ski-fashion-pill">🎿 Cefe Edition</span>
                   </div>
-                  <span class="ski-forecast-sub">Evolución de nieve fresca, viento y riesgo de ventisca de tarde (desliza para ver la semana)</span>
+                  <span class="ski-forecast-sub">Evolución de nieve fresca, viento y riesgo de ventisca de tarde</span>
                 </div>
 
                 <!-- Carrusel horizontal fashion con scroll nativo táctil -->
-                <div class="ski-7days-carousel">
+                <div class="ski-7days-carousel" id="ski-7days-carousel-${r.id}">
                   ${r.forecast7Days.map(f => `
                     <div class="ski-day-card ${f.isGaleRisk ? 'gale-warning' : ''} ${f.dayparts && f.dayparts.isShiftRisk ? 'shift-warning' : ''}">
                       <div class="ski-day-header">
@@ -1006,6 +1006,13 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
                   `).join('')}
                 </div>
 
+                <!-- Paginador Interactivo de Puntos (Doctrina Constitucional 18) -->
+                <div class="sensors-dots-indicator carousel-dots-indicator" id="ski-7days-dots-${r.id}" style="margin: 6px 0 8px 0;">
+                  ${r.forecast7Days.map((f, dIdx) => `
+                    <button class="sensor-dot ${dIdx === 0 ? 'active' : ''}" data-sensor-target="${dIdx}" type="button" aria-label="Ver ${f.label}"></button>
+                  `).join('')}
+                </div>
+
                 <!-- Resumen de Nieve de la Semana -->
                 <div class="ski-total-strip">
                   <div class="ski-total-group">
@@ -1031,12 +1038,65 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
 
       <!-- VISTA B: 🚗 RED INTEGRAL DE PUERTOS Y ACCESOS A LA MESETA -->
       <div id="mountain-passes-view" class="mountain-tab-content" style="display: none;">
+        <style>
+          .passes-sector-filter-bar {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding: 2px 0 10px 0;
+            margin-bottom: 6px;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+          }
+          .passes-sector-filter-bar::-webkit-scrollbar {
+            display: none;
+          }
+          .pass-sector-filter-pill {
+            flex: 0 0 auto;
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 0.76rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            background: rgba(15, 23, 42, 0.55);
+            color: var(--text-dim, #94a3b8);
+            white-space: nowrap;
+          }
+          .pass-sector-filter-pill.active {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.3) 0%, rgba(14, 165, 233, 0.45) 100%);
+            border-color: var(--primary, #38bdf8);
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
+          }
+        </style>
+
         <!-- ARTERIAS PRINCIPALES DE CONEXIÓN CON LA MESETA -->
         <div class="passes-disclaimer-banner">
           <span>⚠️ <strong>Aviso Preventivo:</strong> Estado del firme estimado por modelo físico. No sustituye la señalización de la DGT ni la orden de la Guardia Civil de Tráfico. Consulta las webcams antes de viajar.</span>
         </div>
 
-        <div class="passes-group-block">
+        <!-- FILTRO RÁPIDO DE PUERTOS POR SECTOR GEOGRÁFICO -->
+        <div class="passes-sector-filter-bar" role="tablist" aria-label="Filtrar puertos de montaña por sector">
+          <button type="button" class="pass-sector-filter-pill active" data-pass-sector="all">
+            🌟 Todos (${passesWithStatus.length})
+          </button>
+          <button type="button" class="pass-sector-filter-pill" data-pass-sector="arterias">
+            🛣️ Meseta (${arteryPasses.length})
+          </button>
+          <button type="button" class="pass-sector-filter-pill" data-pass-sector="centro">
+            📍 Centro (${centroPasses.length})
+          </button>
+          <button type="button" class="pass-sector-filter-pill" data-pass-sector="oriente">
+            🏔️ Oriente (${orientePasses.length})
+          </button>
+          <button type="button" class="pass-sector-filter-pill" data-pass-sector="occidente">
+            🌲 Occidente (${occidentePasses.length})
+          </button>
+        </div>
+
+        <div class="passes-group-block" data-sector-group="arterias">
           <div class="passes-group-title">
             <span>🛣️ Arterias Principales hacia la Meseta (Asturias - León)</span>
             <span class="passes-group-sub">Vías neurálgicas de alta capacidad y comunicación nacional</span>
@@ -1067,7 +1127,7 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
         </div>
 
         <!-- SECTOR CENTRO Y VALLES MINEROS -->
-        <div class="passes-sector-block">
+        <div class="passes-sector-block" data-sector-group="centro">
           <div class="passes-sector-header">
             <span class="passes-sector-title">📍 Sector Centro y Valles Mineros (Caudal, Aller, Quirós, Riosa)</span>
             <span class="passes-sector-count">${centroPasses.length} pasos</span>
@@ -1096,7 +1156,7 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
         </div>
 
         <!-- SECTOR ORIENTE Y PICOS DE EUROPA -->
-        <div class="passes-sector-block">
+        <div class="passes-sector-block" data-sector-group="oriente">
           <div class="passes-sector-header">
             <span class="passes-sector-title">🏔️ Sector Oriente y Picos de Europa (Caso, Ponga, Cangas de Onís)</span>
             <span class="passes-sector-count">${orientePasses.length} pasos</span>
@@ -1119,7 +1179,7 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
         </div>
 
         <!-- SECTOR OCCIDENTE -->
-        <div class="passes-sector-block">
+        <div class="passes-sector-block" data-sector-group="occidente">
           <div class="passes-sector-header">
             <span class="passes-sector-title">🌲 Sector Occidente (Somiedo, Narcea, Allande, Ibias)</span>
             <span class="passes-sector-count">${occidentePasses.length} pasos</span>

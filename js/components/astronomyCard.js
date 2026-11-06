@@ -377,6 +377,105 @@ export function getGoldenAndBlueHours(weatherData, concejo) {
 }
 
 /**
+ * Calcula la calidad real del cielo nocturno ESTA NOCHE (22:00 a 04:00 h) cruzando
+ * la nubosidad horaria prevista en el concejo con la iluminación lunar.
+ */
+export function getTonightStargazingIndex(weatherData, moon, concejo) {
+  const cleanConcejo = (concejo?.name || 'Asturias').replace(/\s*\(.*?\)/, '').trim();
+  const hourly = weatherData?.weather?.hourly || null;
+
+  let avgCloudPct = 25;
+  let minCloudPct = 20;
+  let bestHourStr = '00:00';
+  let rainTonight = 0;
+
+  if (hourly && hourly.time && hourly.cloud_cover) {
+    const now = new Date();
+    const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    const tom = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+    const tomStr = `${tom.getFullYear()}-${String(tom.getMonth() + 1).padStart(2, '0')}-${String(tom.getDate()).padStart(2, '0')}`;
+
+    const targetPrefixes = [
+      `${todayStr}T22`, `${todayStr}T23`,
+      `${tomStr}T00`, `${tomStr}T01`, `${tomStr}T02`, `${tomStr}T03`, `${tomStr}T04`
+    ];
+
+    let sumCloud = 0;
+    let count = 0;
+    minCloudPct = 100;
+
+    for (let i = 0; i < hourly.time.length; i++) {
+      const t = hourly.time[i];
+      if (targetPrefixes.some(pref => t.startsWith(pref))) {
+        const c = hourly.cloud_cover[i] ?? 50;
+        const p = hourly.precipitation ? (hourly.precipitation[i] || 0) : 0;
+        sumCloud += c;
+        rainTonight += p;
+        count++;
+        if (c < minCloudPct) {
+          minCloudPct = c;
+          bestHourStr = t.split('T')[1]?.substring(0, 5) || '00:00';
+        }
+      }
+    }
+
+    if (count > 0) {
+      avgCloudPct = Math.round(sumCloud / count);
+    } else {
+      minCloudPct = 25;
+    }
+  }
+
+  const moonIllum = moon?.illumination ?? 50;
+
+  if (rainTonight >= 0.3 || avgCloudPct >= 75) {
+    return {
+      icon: '☁️',
+      badge: '🔴 Cielo Cubierto',
+      color: '#ef4444',
+      verdict: `Manto nuboso en ${cleanConcejo} (${avgCloudPct}% nubes)`,
+      desc: `Noche tapada entre las 22:00 y las 04:00 h${rainTonight >= 0.3 ? ' con riesgo de lluvia u orbayu' : ''}. Condiciones desfavorables para ver estrellas hoy.`,
+      avgCloudPct,
+      bestWindow: `Mín. nubes: ${minCloudPct}% (${bestHourStr} h)`
+    };
+  }
+
+  if (avgCloudPct >= 35) {
+    return {
+      icon: '⛅',
+      badge: '🟡 Claros Nocturnos',
+      color: '#f59e0b',
+      verdict: `Nubes y claros en ${cleanConcejo} (${avgCloudPct}% nubes)`,
+      desc: `Visibilidad intermitente esta noche. La mejor ventana de cielo más limpio se espera hacia las ${bestHourStr} h (${minCloudPct}% de nubosidad).`,
+      avgCloudPct,
+      bestWindow: `Mejor hora: ${bestHourStr} h (${minCloudPct}% nubes)`
+    };
+  }
+
+  if (moonIllum >= 65) {
+    return {
+      icon: '🌕',
+      badge: '🟢 Despejado • Luz Lunar',
+      color: '#38bdf8',
+      verdict: `Cielo raso con Luna brillante (${avgCloudPct}% nubes)`,
+      desc: `Cielo despejado en ${cleanConcejo}. Noche ideal para observar la superficie lunar (${moonIllum}%), planetas y estrellas principales; el brillo lunar atenúa la Vía Láctea.`,
+      avgCloudPct,
+      bestWindow: `Óptimo: ${bestHourStr} h (${minCloudPct}% nubes)`
+    };
+  }
+
+  return {
+    icon: '🌌',
+    badge: '🟢 Noche Estelar Óptima',
+    color: '#10b981',
+    verdict: `Cielo oscuro y despejado en ${cleanConcejo} (${avgCloudPct}% nubes)`,
+    desc: `Condiciones sobresalientes esta noche: cielo limpio y baja contaminación lumínica lunar (${moonIllum}%). Excelente para observar la Vía Láctea y estrellas fugaces.`,
+    avgCloudPct,
+    bestWindow: `Óptimo: ${bestHourStr} h (${minCloudPct}% nubes)`
+  };
+}
+
+/**
  * Renderiza el módulo completo de Astronomía
  */
 export function renderAstronomyView(containerId, currentFilter = 'all', weatherData = null, concejo = null) {
@@ -391,6 +490,7 @@ export function renderAstronomyView(containerId, currentFilter = 'all', weatherD
 
   const moon = getMoonPhaseDetails();
   const sunData = getGoldenAndBlueHours(targetWeatherData, targetConcejo);
+  const stargazing = getTonightStargazingIndex(targetWeatherData, moon, targetConcejo);
   const now = new Date();
 
   // Filtrar exclusivamente los eventos activos o futuros (excluir fenómenos culminados en el pasado)
@@ -440,6 +540,29 @@ export function renderAstronomyView(containerId, currentFilter = 'all', weatherD
           <div class="moon-metric-pill">
             <span class="metric-label">🌕 Próxima Luna Llena</span>
             <span class="metric-val">${moon.daysToFullMoon === 0 ? '¡Hoy!' : 'En ' + moon.daysToFullMoon + ' días'}</span>
+          </div>
+        </div>
+
+        <!-- SEMÁFORO EN VIVO: CALIDAD DEL CIELO ESTA NOCHE (22:00 - 04:00 H) -->
+        <div style="margin-top: 12px; background: rgba(15, 23, 42, 0.55); border: 1px solid ${stargazing.color}55; border-left: 4px solid ${stargazing.color}; border-radius: 12px; padding: 10px 12px; box-sizing: border-box;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap; margin-bottom: 4px;">
+            <span style="font-size: 0.75rem; font-weight: 800; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.04em;">
+              ${stargazing.icon} Observación Esta Noche (22:00 - 04:00 h)
+            </span>
+            <span style="font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 999px; background: ${stargazing.color}22; color: ${stargazing.color}; border: 1px solid ${stargazing.color}66;">
+              ${stargazing.badge}
+            </span>
+          </div>
+          <div style="font-size: 0.86rem; font-weight: 800; color: #ffffff; margin-bottom: 3px;">
+            ${stargazing.verdict}
+          </div>
+          <p style="margin: 0; font-size: 0.78rem; color: #94a3b8; line-height: 1.38;">
+            ${stargazing.desc}
+          </p>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 0.72rem; color: #38bdf8; font-weight: 700;">
+            <span>☁️ Nubosidad media: ${stargazing.avgCloudPct}%</span>
+            <span>•</span>
+            <span>⏱️ ${stargazing.bestWindow}</span>
           </div>
         </div>
       </div>
