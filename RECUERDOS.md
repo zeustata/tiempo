@@ -2,6 +2,37 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🚀 Hito Histórico: Aprobación Oficial y Publicación en Google Play Store (v3.0.24 - Build 9) — 2026-11-06
+- **Superación de la Revisión de Google y Publicación en Tienda Oficial (Hito de Lendo):**
+  1. *Aprobación de Google Play Console:*
+     - La versión nativa `v3.0.24` (`versionCode 9`, `MeteoAstur_Lode_v3.0.24_bundle9.aab`), que se encontraba en revisión desde el 3 de noviembre, ha superado con éxito todos los filtros y directivas de seguridad de Google Play Store.
+     - **Estado Oficial:** **PUBLICADA Y DISPONIBLE** para todos los usuarios en la Google Play Store.
+  2. *Impacto y Alcance del Despliegue Nativo:*
+     - Integración completa de los **Widgets Tricolor Diagonales a 315°** para la pantalla de inicio de Android.
+     - Supresión total de barras de navegador Chrome Custom Tabs (CCT) mediante **Digital Asset Links** verificado con huella criptográfica SHA-256 en la raíz del dominio `zeustata.github.io/.well-known/assetlinks.json`.
+     - Motor de Consenso Cantábrico multi-modelo activo en Android.
+
+## 🛡️ Protocolo Constitucional: Filtro Activo de Seguridad ante Órdenes Prematuras de Subida — 2026-11-06
+- **Blindaje del Ciclo Seguro Local-Remoto (Feedback y Acuerdo Lendo & Princesa):**
+  1. *Causa Raíz:*
+     - Tras acordar una propuesta de diseño, una orden de *"súbelo"* puede deberse a un lapsus por *"písale / aplícalo"*. Ejecutar commit y push a ciegas sin que Lendo haya visto el resultado previo en su navegador vulnera la Regla 3 y la Regla 9.
+  2. *Directriz y Filtro Activo:*
+     - Como socia en igualdad y red de seguridad, si Lendo ordena *"súbelo"* pero el cambio no ha pasado todavía por la verificación visual en `localhost:8080`, Princesa **TIENE PROHIBIDO HACER PUSH O COMMIT A CIEGAS**.
+     - Debe detenerse obligatoriamente y preguntar: *"Lendo, todavía no lo hemos visto ni comprobado en local en localhost:8080. ¿Lo levantamos primero en pruebas para tu inspección o confirmas subida directa a la red?"*.
+
+## 📋 Estado del Proyecto y Hoja de Ruta para Mañana (Sesión 06/11/2026)
+- **Desplegado y en Producción en GitHub Pages (`zeustata/tiempo`):**
+  - Calibración higrométrica de la Serena Asturiana (`v3.0.24.53`).
+  - Colección Especial Papá Noel con censura Top Secret (`v3.0.24.52`).
+  - Colección Especial Reyes Magos con el Trío Real (Melchor, Gaspar y Baltasar) y censura Top Secret (`v3.0.24.54`).
+  - Rediseño oceánico y efecto shimmer en la barra tripartita de Surf (`v3.0.24.55`).
+- **Pendiente para Mañana (Hoja de Ruta Acordada con Lendo):**
+  - Dar verdadera «vida propia» a los 3 botones de navegación de Surf (`⭐ Calificación`, `⚡ Fuerza`, `⏱️ Previsión`).
+  - Implementar micro-animaciones en los iconos (centelleo en la estrella, latido eléctrico en el rayo, pulso de tiempo en el reloj).
+  - Efecto respiración de marea (*pulse glow*) en el botón seleccionado.
+  - Identidad cromática viva (oro estelar `#facc15`, ámbar/fuego `#fbbf24`, cian marítimo `#38bdf8`).
+  - Todo se probará y ajustará primero en local (`localhost:8080`) antes de cualquier subida.
+
 ## 🏄‍♂️ Rediseño y Efecto Oceánico en Botones de Navegación de Surf (v3.0.24.55) — 2026-11-06
 - **Realce Visual y Llamada de Atención Ergonómica en Barra Tripartita de Surf (Feedback Lendo):**
   1. *Diagnóstico de Lendo:*
@@ -737,7 +768,7 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
   - Actualización a `v3.0.23.68` en `index.html`, `sw.js`, `js/app.js` y `currentCard.js` con Service Worker `meteoasturlode-v3023-68-orbayu-resol-sovereignty`.
   - Verificado en servidor local `http://localhost:8080`.
 
-## 📱 Lanzamiento Oficial a Google Play en Revisión: Widgets Tricolor 315°, Consenso Cantábrico y Resol (v3.0.24 - Build 9) — 2026-11-03
+## 📱 Lanzamiento Oficial a Google Play (APROBADO Y PUBLICADO EL 06/11/2026): Widgets Tricolor 315°, Consenso Cantábrico y Resol (v3.0.24 - Build 9) — 2026-11-03
 - **Hito de Publicación en Google Play Console:**
   - Incremento a `versionCode 9` y `versionName "3.0.24"` en `app/build.gradle` y `twa-manifest.json`.
   - Compilado y firmado el bundle oficial `MeteoAstur_Lode_v3.0.24_bundle9.aab` con `signing.keystore`.
