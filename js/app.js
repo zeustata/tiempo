@@ -5,7 +5,7 @@ import { renderCurrentWeather } from './components/currentCard.js?v=3.0.24.53';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.24.57';
 import { renderSurfCard } from './components/surfCard.js?v=3.0.24.57';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.24.58';
-import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.24.59';
+import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.24.60';
 import { renderMountainCard } from './components/mountainCard.js?v=3.0.24.27';
 import { renderTourismCard } from './components/tourismCard.js?v=3.0.24.58';
 import { renderForecast, renderHourlyForecastBlock } from './components/forecastView.js?v=3.0.24.50';
@@ -3024,7 +3024,7 @@ class MeteoAsturiasApp {
     });
 
     // 3. Cambio de hora: auto-carga la ruta ÓPTIMA para esa hora (Instrucción de Lendo)
-    document.querySelectorAll('.btn-hour-pill:not(.past-hour)').forEach(btn => {
+    document.querySelectorAll('.btn-hour-pill').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const hour = parseInt(e.currentTarget.dataset.hour, 10);
         if (!isNaN(hour)) {

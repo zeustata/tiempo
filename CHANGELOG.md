@@ -10,6 +10,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
 
+## [3.0.24.60] - 2026-11-06
+### Changed
+- **Erradicación Total de Botones Pasados y Filtrado Estricto Futuro en Ciclismo (Feedback Lendo):**
+  - **Supresión Definitiva de Horas Pretéricas:** Eliminadas por completo las pastillas de horas pasadas de la vista de «Hoy» (adiós a botones tachados o fantasma).
+  - **Filtro Estricto de Salida Real (`h > currentHour`):** Las horas transcurridas o en curso (ej. las 11:00 h siendo las 11:38 h) ya no se renderizan; la primera pastilla que se visualiza es directamente la siguiente hora útil (ej. 12:00 h).
+  - **Vista Limpia y Despejada:** Reducción drástica del ruido visual en teléfonos móviles, mostrando únicamente las opciones viables sobre el terreno.
+  - **Preservación Íntegra de «Mañana»:** Al conmutar a la jornada siguiente, la tira continúa mostrando todas las salidas desde las 8:00 h para planificar entrenamientos completos.
+
 ## [3.0.24.59] - 2026-11-06
 ### Added
 - **Inteligencia Temporal y Selector de Día `[ Hoy ]` / `[ Mañana ]` en Ciclismo & Viento Dinámico (Propuesta Lendo):**

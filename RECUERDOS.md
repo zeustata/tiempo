@@ -2,6 +2,22 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🚴 Limpieza Absoluta de Botones Pasados y Salida Real Estricta en Ciclismo (v3.0.24.60) — 2026-11-06
+- **Eliminación Total de Ruido Visual («Lo que pasó, pasó») en Selector Horario (Instrucción de Lendo):**
+  1. *Criterio de Lendo:*
+     - Lendo señaló que mostrar botones tachados de horas pasadas (8h, 9h, 10h) seguía sobrecargando la vista innecesariamente. Asimismo, a las 11:38 h, ofrecer las 11:00 h carecía de sentido porque es una salida físicamente imposible.
+  2. *Implementación Técnica (Ergonomía Móvil Ley 11 y Rigor de Datos):*
+     - En `js/components/cyclingCard.js`:
+       - **Filtrado Estricto de Horas Futuras (`todayUpcomingHours = allQuickHours.filter(h => h > currentHour)`):** Suprimidas por completo las horas anteriores o en curso en la vista de *Hoy*. No se renderizan en el DOM, no ocupan espacio y eliminan cualquier tachón.
+       - A las 11:38 h, la primera pastilla mostrada es directamente las **12:00 h**, seguida de las horas restantes del día.
+       - **Preservación de Mañana:** Al pulsar *Mañana*, se despliega la tira completa (8h a 19h) para planificación íntegra.
+       - Eliminadas las reglas CSS residuales de `.past-hour`.
+     - En `js/app.js`:
+       - Limpiado el selector de eventos para `.btn-hour-pill` al no existir ya botones desactivados en el DOM.
+  3. *Cache-Busting & Despliegue Dual:*
+     - Service Worker actualizado a `meteoasturlode-v3024-60-cycling-clean-future-hours`.
+     - Versionado sincronizado a `v=3.0.24.60` en `index.html`, `cyclingCard.js`, `sw.js` y `app.js`.
+
 ## 🚴 Inteligencia Temporal y Selector de Día [Hoy] / [Mañana] en Ciclismo & Viento (v3.0.24.59) — 2026-11-06
 - **Erradicación de Horas Pasadas en Sugerencias de Salida Óptima (Observación Crítica de Lendo):**
   1. *Diagnóstico y Criterio de Lendo:*

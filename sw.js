@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3024-59-cycling-smart-hours-day-toggle';
+const CACHE_NAME = 'meteoasturlode-v3024-60-cycling-clean-future-hours';
 const STATIC_ASSETS = [
   './',
   './index.html',

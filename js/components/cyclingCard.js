@@ -7,7 +7,7 @@
  */
 
 import { getCyclingRoutesForConcejo, getCyclingRouteById, CYCLING_ROUTES } from '../utils/cyclingData.js?v=3.0.24.9';
-import { simulateRouteConditions, rankRoutesForDeparture } from '../utils/cyclingAdvisor.js?v=3.0.24.59';
+import { simulateRouteConditions, rankRoutesForDeparture } from '../utils/cyclingAdvisor.js?v=3.0.24.60';
 
 /**
  * Renderiza la vista principal del módulo de Ciclismo & Viento
@@ -19,31 +19,33 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
   const localRoutes = getCyclingRoutesForConcejo(concejo.id);
   const otherRoutes = CYCLING_ROUTES.filter(r => !localRoutes.some(lr => lr.id === r.id));
 
-  // Horas rápidas de salida (mañanas y tardes ampliadas a petición de Lendo)
-  const quickHours = [8, 9, 10, 11, 12, 13, 16, 17, 18, 19];
+  // Horas de salida (mañanas y tardes ampliadas a petición de Lendo)
+  const allQuickHours = [8, 9, 10, 11, 12, 13, 16, 17, 18, 19];
   const now = new Date();
   const currentHour = now.getHours();
 
-  // 1. Determinar día: Si son las 19:00 o más, saltar automáticamente a 'tomorrow'
+  // Filtrado estricto para "Hoy": solo horas estrictamente futuras (h > currentHour)
+  // A las 11:38 h, las 11 ya pasaron -> la primera hora útil es a partir de las 12:00 h
+  const todayUpcomingHours = allQuickHours.filter(h => h > currentHour);
+
+  // 1. Determinar día: Si ya no quedan horas diurnas hoy, saltar automáticamente a 'tomorrow'
   let activeDay = selectedDay;
   if (!activeDay) {
-    activeDay = (currentHour >= 19) ? 'tomorrow' : 'today';
+    activeDay = (todayUpcomingHours.length === 0 || currentHour >= 19) ? 'tomorrow' : 'today';
+  } else if (activeDay === 'today' && todayUpcomingHours.length === 0) {
+    activeDay = 'tomorrow';
   }
 
-  // 2. Determinar hora útil inteligente:
+  // Tira de horas activa según el día:
+  const displayHours = (activeDay === 'today') ? todayUpcomingHours : allQuickHours;
+
+  // 2. Determinar hora útil inteligente (sin fantasmas del pasado):
   let activeHour = selectedHour;
-  if (activeHour == null) {
+  if (activeHour == null || !displayHours.includes(activeHour)) {
     if (activeDay === 'today') {
-      const upcoming = quickHours.filter(h => h >= currentHour);
-      activeHour = upcoming.length > 0 ? upcoming[0] : 9;
+      activeHour = displayHours.length > 0 ? displayHours[0] : 12;
     } else {
       activeHour = 9; // Salida habitual matinal para mañana
-    }
-  } else if (activeDay === 'today' && activeHour < currentHour) {
-    // Si la hora guardada ya expiró hoy, reubicar en la próxima útil disponible
-    const upcoming = quickHours.filter(h => h >= currentHour);
-    if (upcoming.length > 0) {
-      activeHour = upcoming[0];
     }
   }
 
@@ -165,14 +167,6 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
         text-align: center;
         box-sizing: border-box;
       }
-      .btn-hour-pill.past-hour {
-        opacity: 0.32 !important;
-        text-decoration: line-through;
-        cursor: not-allowed !important;
-        border-style: dashed !important;
-        background: rgba(255, 255, 255, 0.02) !important;
-        color: rgba(255, 255, 255, 0.35) !important;
-      }
       /* Selector ergonómico de rutas táctil (Adiós al diálogo gigante de Android) */
       .cycling-route-trigger {
         width: 100%;
@@ -290,19 +284,21 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
                 </span>
               </div>
               <div style="display: flex; gap: 4px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; -webkit-overflow-scrolling: touch;">
-                ${quickHours.map(h => {
-                  const isPast = (activeDay === 'today' && h < currentHour);
+                ${displayHours.length > 0 ? displayHours.map(h => {
                   const isSelected = (h === activeHour);
                   return `
                     <button type="button" 
-                      class="btn-hour-pill ${isSelected ? 'active' : ''} ${isPast ? 'past-hour' : ''}" 
+                      class="btn-hour-pill ${isSelected ? 'active' : ''}" 
                       data-hour="${h}" 
-                      ${isPast ? 'disabled title="Esta hora ya pasó hoy"' : ''}
-                      style="border: 1px solid ${isSelected ? 'var(--primary)' : (isPast ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.1)')}; background: ${isSelected ? 'var(--primary)' : (isPast ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.05)')}; color: ${isSelected ? '#000' : (isPast ? 'rgba(255,255,255,0.3)' : 'var(--text-main)')};">
+                      style="border: 1px solid ${isSelected ? 'var(--primary)' : 'rgba(255,255,255,0.1)'}; background: ${isSelected ? 'var(--primary)' : 'rgba(255,255,255,0.05)'}; color: ${isSelected ? '#000' : 'var(--text-main)'};">
                       ${h}:00
                     </button>
                   `;
-                }).join('')}
+                }).join('') : `
+                  <div style="font-size: 0.78rem; color: var(--text-dim); padding: 4px 2px;">
+                    🌙 Ya no quedan salidas con luz hoy. Toca arriba en <strong>Mañana</strong>.
+                  </div>
+                `}
               </div>
             </div>
 
