@@ -91,19 +91,7 @@
 .radar-wrapper::after,
 .surf-card::after,
 .laundry-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(
-    circle 500px at var(--glass-x, 50%) var(--glass-y, 30%),
-    rgba(255, 255, 255, calc(0.08 + var(--glass-mist, 0) * 0.06)) 0%,
-    rgba(255, 255, 255, 0.02) 45%,
-    transparent 75%
-  );
-  pointer-events: none;
-  z-index: 0;
-  transition: opacity 0.3s ease;
+  display: none;
 }
 
 /* Asegurar que todos los hijos directos de las tarjetas principales estén por encima del halo ::after (z-index: 0) */
@@ -1536,22 +1524,22 @@
 
 @keyframes cardBeaconPulseDanger {
   0%, 100% {
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35), inset 0 1px 1px 0 rgba(239, 68, 68, 0.2), 0 0 8px rgba(239, 68, 68, 0.2);
+    box-shadow: inset 0 1px 1px 0 rgba(239, 68, 68, 0.25);
     border-color: rgba(239, 68, 68, 0.4);
   }
   50% {
-    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.45), inset 0 1px 1px 0 rgba(239, 68, 68, 0.4), 0 0 20px rgba(239, 68, 68, 0.55);
+    box-shadow: inset 0 1px 1px 0 rgba(239, 68, 68, 0.45);
     border-color: rgba(239, 68, 68, 0.85);
   }
 }
 
 @keyframes cardBeaconPulseWarning {
   0%, 100% {
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35), inset 0 1px 1px 0 rgba(245, 158, 11, 0.2), 0 0 8px rgba(245, 158, 11, 0.2);
+    box-shadow: inset 0 1px 1px 0 rgba(245, 158, 11, 0.25);
     border-color: rgba(245, 158, 11, 0.4);
   }
   50% {
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45), inset 0 1px 1px 0 rgba(245, 158, 11, 0.35), 0 0 18px rgba(245, 158, 11, 0.50);
+    box-shadow: inset 0 1px 1px 0 rgba(245, 158, 11, 0.45);
     border-color: rgba(245, 158, 11, 0.80);
   }
 }
@@ -1563,7 +1551,7 @@
 .sensor-card:hover {
   transform: translateY(-2px);
   border-color: var(--border-glow);
-  box-shadow: var(--shadow-card), 0 8px 24px rgba(56, 189, 248, 0.15);
+  box-shadow: var(--shadow-card);
 }
 
 .sensor-header {
@@ -2830,13 +2818,13 @@
 .tide-day-card:hover {
   border-color: rgba(56, 189, 248, 0.4);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.22);
 }
 
 .tide-day-card.is-today {
   border-color: var(--primary);
-  background: linear-gradient(145deg, rgba(2, 132, 199, 0.18), rgba(15, 23, 42, 0.45));
-  box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+  background: var(--bg-surface-elevated);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
 }
 
 .tide-day-header {
@@ -3216,7 +3204,7 @@
 .hourly-card:hover {
   transform: translateY(-4px);
   border-color: var(--primary);
-  box-shadow: 0 8px 20px -5px rgba(56, 189, 248, 0.25);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.16);
 }
 
 /* Contraste Sutil Día / Noche (Opción C) */
@@ -3228,19 +3216,19 @@
 
 .hourly-card.is-day:hover {
   border-color: rgba(56, 189, 248, 0.5);
-  box-shadow: 0 8px 20px -5px rgba(56, 189, 248, 0.25);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.16);
 }
 
 /* Noche suavizada (menos oscura, ~60% traslúcida) */
 .hourly-card.is-night {
   background: linear-gradient(180deg, rgba(16, 26, 44, 0.55) 0%, rgba(10, 16, 28, 0.68) 100%);
   border-color: rgba(56, 189, 248, 0.14);
-  box-shadow: 0 4px 14px -3px rgba(0, 0, 0, 0.22), inset 0 1px 1px 0 rgba(56, 189, 248, 0.06);
+  box-shadow: inset 0 1px 1px 0 rgba(56, 189, 248, 0.08);
 }
 
 .hourly-card.is-night:hover {
   border-color: rgba(56, 189, 248, 0.45);
-  box-shadow: 0 8px 20px -5px rgba(56, 189, 248, 0.25);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.16);
 }
 
 .hourly-card.is-night .h-time {
@@ -3254,7 +3242,7 @@
 
 .hourly-card.is-night.is-twilight.twilight-dusk {
   border-color: rgba(245, 158, 11, 0.28);
-  box-shadow: 0 4px 14px -3px rgba(0, 0, 0, 0.20), inset 0 1px 1px 0 rgba(245, 158, 11, 0.14);
+  box-shadow: inset 0 1px 1px 0 rgba(245, 158, 11, 0.16);
 }
 
 .hourly-card.is-night.is-twilight.twilight-dusk .h-time {
@@ -3263,7 +3251,7 @@
 
 .hourly-card.is-night.is-twilight.twilight-dawn {
   border-color: rgba(56, 189, 248, 0.28);
-  box-shadow: 0 4px 14px -3px rgba(0, 0, 0, 0.20), inset 0 1px 1px 0 rgba(56, 189, 248, 0.14);
+  box-shadow: inset 0 1px 1px 0 rgba(56, 189, 248, 0.16);
 }
 
 .hourly-card.is-night.is-twilight.twilight-dawn .h-time {
@@ -3480,8 +3468,8 @@
 
 .daily-card-rich.is-today {
   border-color: rgba(56, 189, 248, 0.6);
-  background: linear-gradient(145deg, rgba(2, 132, 199, 0.28) 0%, rgba(15, 23, 42, 0.68) 100%);
-  box-shadow: 0 0 25px rgba(56, 189, 248, 0.25);
+  background: var(--bg-surface-elevated);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
 }
 
 .daily-card-rich.is-today::before {

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3025-5-clean-no-card-shadows';
+const CACHE_NAME = 'meteoasturlode-v3025-6-zero-light-shadows';
 const STATIC_ASSETS = [
   './',
   './index.html',

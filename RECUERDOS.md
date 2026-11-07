@@ -2,6 +2,15 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 💎 Limpieza Final de Sombras Claras en Anemómetro y Tarjeta Hoy de 10 Días (`v3.0.25.6`) — 2026-11-07
+- **Diagnóstico de Precisión («solo quedan una sombra clara en el anemometro del menu en vivo, en pronostico 10 dias solo la tarjeta de hoy. lo demas ya reparado princesa» / «pisale porfa pero mira si puedes sin efectos secundarios» / «subelo»):**
+  1. *En el Anemómetro (`.sensor-card:hover` y `.sensor-card::after` en `css/components.css`):*
+     - Eliminada la sombra clara exterior `0 8px 24px rgba(56, 189, 248, 0.15)` en `.sensor-card:hover` (que quedaba activa al tocar la tarjeta en móvil) y en las animaciones `cardBeaconPulseDanger` / `cardBeaconPulseWarning`, manteniendo únicamente el bisel `inset`.
+     - Desactivado el halo radial blanco `::after` (`display: none`, igual que en `.low-perf`), que al operar sin `mix-blend-mode: overlay` proyectaba una neblina blanquecina sobre la esquina superior izquierda del Anemómetro.
+  2. *En Pronóstico a 10 Días — Tarjeta de Hoy (`.daily-card-rich.is-today` en `css/components.css`):*
+     - Sustituida la sombra clara exterior `0 0 25px rgba(56, 189, 248, 0.25)` por `inset 0 1px 1px 0 rgba(255, 255, 255, 0.25)` y unificado su fondo a `var(--bg-surface-elevated)` como los otros 9 días (conservando su borde cian, pastilla `HOY` y barra superior tricolor). Aplicado también a `.tide-day-card.is-today` y `.hourly-card`.
+     - Service Worker actualizado a `meteoasturlode-v3025-6-zero-light-shadows`.
+
 ## 💎 Supresión Universal de Sombras Negras Exteriores en Tarjetas y Fondo Nocturno Continuo (`v3.0.25.5`) — 2026-11-07
 - **Diagnóstico con 4 Capturas de Lendo («te acuerdas lo que paso ayer? vuelven las sombras» / «fijate. a veces esta entre tarjetas y a veces no» / «si en local» / «subelo pero no lo pongas en changelog»):**
   1. *Causa Raíz Identificada:*
