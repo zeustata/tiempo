@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3025-15-chips-breathing-glow';
+const CACHE_NAME = 'meteoasturlode-v3025-16-real-palpito';
 const STATIC_ASSETS = [
   './',
   './index.html',

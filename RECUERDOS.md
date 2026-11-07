@@ -2,6 +2,17 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🎛️ Pálpito de Alto Contraste en Menús Activos y Corrección de Sintaxis CSS (`v3.0.25.16`) — 2026-11-07
+- **Diagnóstico y Despliegue («el palpito de los botones de los menus a penas se nota... me salen errores en problems... parece que vuekve un halo alrededos. mira subelo para que lo vea en el movil y te comento. lo demas va bien»):**
+  1. *Corrección Forense en Problems (`css/components.css`):*
+     - Localizada y eliminada una regla huérfana duplicada en la declaración de `.module-chip.active` que rompía la compilación del linter y provocaba que el navegador ignorara las animaciones.
+  2. *Pálpito Vivo de 2.2s (`@keyframes chipActivePalpito`):*
+     - Ciclo dinámico con amplio rango lumínico (`brightness(0.95)` y sombra `6px` a `brightness(1.32)` y resplandor perimetral `28px #38bdf8` al 50%).
+     - Desplegado a producción para calibración visual directa en pantalla OLED de smartphone por Lendo.
+  3. *Control de Versión y Cache-Busting (Leyes 3 y 4):*
+     - Service Worker actualizado a `meteoasturlode-v3025-16-real-palpito`.
+     - Query strings sincronizados en `index.html` (`components.css?v=3.0.25.16`, `app.js?v=3.0.25.16`, `sw.js?v=3.0.25.16`).
+
 ## 🎛️ Botonera de Módulos Satinada y Respiración Lumínica Activa (`v3.0.25.15`) — 2026-11-07
 - **Diagnóstico y Mejora de Menús («los botones de cambiar de menu los veo un poco, poco llamativo. mira a ver que opinas. al final son los que cambian los menus... vamos a probar en local... y que respire un poco el menu en cuestion como lo ves?... pisale... subelo»):**
   1. *Elevación de Calidad Visual en Pastillas Inactivas (`.module-chip` en `css/components.css`):*
