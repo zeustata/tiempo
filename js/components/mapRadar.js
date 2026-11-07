@@ -8,6 +8,45 @@ let currentFrameIndex = 0;
 let animationTimer = null;
 let activeConcejoMarker = null;
 let isPlaying = false;
+let savedConcejoCallback = null;
+let lastFocusedConcejo = null;
+let leafletFallbackPromise = null;
+
+/**
+ * Respaldo silencioso de CDN: solo actúa si unpkg.com falló o fue bloqueado en la red móvil (typeof L === 'undefined').
+ * Para el 99% de usuarios donde L ya cargó en index.html, retorna true en 0 ms sin hacer nada.
+ */
+async function ensureLeafletLoaded() {
+  if (typeof L !== 'undefined') return true;
+  if (leafletFallbackPromise) return leafletFallbackPromise;
+
+  leafletFallbackPromise = new Promise((resolve) => {
+    // Asegurar hoja de estilos CSS de respaldo
+    if (!document.getElementById('leaflet-css-fallback')) {
+      const link = document.createElement('link');
+      link.id = 'leaflet-css-fallback';
+      link.rel = 'stylesheet';
+      link.href = 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css';
+      document.head.appendChild(link);
+    }
+
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js';
+    script.onload = () => resolve(typeof L !== 'undefined');
+    script.onerror = () => {
+      const script2 = document.createElement('script');
+      script2.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js';
+      script2.onload = () => resolve(typeof L !== 'undefined');
+      script2.onerror = () => resolve(false);
+      document.head.appendChild(script2);
+    };
+    document.head.appendChild(script);
+  });
+
+  const ok = await leafletFallbackPromise;
+  if (!ok) leafletFallbackPromise = null;
+  return ok;
+}
 
 // Coordenadas óptimas para encuadrar Asturias completa y el Mar Cantábrico
 const ASTURIAS_OVERVIEW_CENTER = [43.48, -5.85];
@@ -16,8 +55,11 @@ const ASTURIAS_DEFAULT_ZOOM = window.innerWidth < 650 ? 7 : 7.5;
 /**
  * Inicializa el mapa interactivo del radar en Asturias con Leaflet y RainViewer
  */
-export async function initAsturiasMap(mapContainerId, onConcejoSelect) {
-  if (typeof L === 'undefined') return;
+export async function initAsturiasMap(mapContainerId = 'map-container', onConcejoSelect = null) {
+  if (onConcejoSelect) savedConcejoCallback = onConcejoSelect;
+
+  const hasLeaflet = await ensureLeafletLoaded();
+  if (!hasLeaflet || typeof L === 'undefined') return;
 
   const container = document.getElementById(mapContainerId);
   if (!container) return;
@@ -65,6 +107,10 @@ export async function initAsturiasMap(mapContainerId, onConcejoSelect) {
 
     // Añadir leyenda de radar en la esquina inferior
     addRadarLegend(asturiasMap);
+
+    if (lastFocusedConcejo) {
+      focusConcejoOnMap(lastFocusedConcejo.lat, lastFocusedConcejo.lon, lastFocusedConcejo.name);
+    }
   }
 
   // Cargar capas de Radar RainViewer
@@ -107,17 +153,26 @@ function addRadarLegend(map) {
  * Corrige el tamaño de Leaflet cuando el contenedor se hace visible
  */
 export function resizeMap() {
-  if (asturiasMap) {
-    setTimeout(() => {
-      if (asturiasMap) asturiasMap.invalidateSize();
-    }, 50);
-    setTimeout(() => {
-      if (asturiasMap) asturiasMap.invalidateSize();
-    }, 250);
-    setTimeout(() => {
-      if (asturiasMap) asturiasMap.invalidateSize();
-    }, 600);
+  if (!asturiasMap) {
+    initAsturiasMap('map-container', savedConcejoCallback).then(() => {
+      if (asturiasMap && lastFocusedConcejo) {
+        focusConcejoOnMap(lastFocusedConcejo.lat, lastFocusedConcejo.lon, lastFocusedConcejo.name);
+      }
+    });
+    return;
   }
+  if (radarFrames.length === 0) {
+    loadRadarLayers();
+  }
+  setTimeout(() => {
+    if (asturiasMap) asturiasMap.invalidateSize();
+  }, 50);
+  setTimeout(() => {
+    if (asturiasMap) asturiasMap.invalidateSize();
+  }, 250);
+  setTimeout(() => {
+    if (asturiasMap) asturiasMap.invalidateSize();
+  }, 600);
 }
 
 let radarHost = 'https://tilecache.rainviewer.com';
@@ -264,13 +319,18 @@ export function playRadarAnimation() {
 }
 
 export function resetMapCenter() {
-  if (asturiasMap) {
-    asturiasMap.setView(ASTURIAS_OVERVIEW_CENTER, ASTURIAS_DEFAULT_ZOOM, { animate: true });
+  if (!asturiasMap) {
     resizeMap();
+    return;
   }
+  asturiasMap.setView(ASTURIAS_OVERVIEW_CENTER, ASTURIAS_DEFAULT_ZOOM, { animate: true });
+  resizeMap();
 }
 
 export function focusConcejoOnMap(lat, lon, concejoName) {
+  if (lat && lon && concejoName) {
+    lastFocusedConcejo = { lat, lon, name: concejoName };
+  }
   if (asturiasMap) {
     const targetZoom = Math.min(asturiasMap.getZoom() || ASTURIAS_DEFAULT_ZOOM, 7.5);
     asturiasMap.setView([lat, lon], targetZoom, { animate: true });

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3025-11-header-tricolor-border';
+const CACHE_NAME = 'meteoasturlode-v3025-12-radar-4g-resilience';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -107,11 +107,13 @@ self.addEventListener('fetch', (e) => {
 
   const isLocalAsset = e.request.url.includes(self.location.origin);
 
+  // No interceptar recursos ni APIs externas (Leaflet CDN, RainViewer, Esri, Open-Meteo):
+  // evita que un fallo puntual en red 4G devuelva undefined en respondWith()
+  if (!isLocalAsset) return;
+
   // Blindaje anti-congelamiento Android: Para archivos de la app (HTML, JS, CSS),
   // obligamos al navegador a consultar a la red (no-cache) saltándose el max-age=600 de disco
-  const fetchPromise = isLocalAsset
-    ? fetch(e.request, { cache: 'no-cache' })
-    : fetch(e.request);
+  const fetchPromise = fetch(e.request, { cache: 'no-cache' });
 
   e.respondWith(
     fetchPromise

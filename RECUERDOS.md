@@ -2,6 +2,21 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📡 Resiliencia 4G y Fallback CDN en Radar RainViewer / «Fix Solari» (`v3.0.25.12`) — 2026-11-07
+- **Diagnóstico con Captura Real de Usuario («a un amigo mio que descargo la app, el radar no le descarga. solo le pasa a él. a los demas familiares no... tiene un Realme XT. te mando captura... pero tiene que ser algo que no se note en los demas. no podemos salvar a uno y fastidiar a 10... pisale en local... parece que va bien. mi amigo fue el primer compañero que tube de policia. lo apodamos Solari porque cuando era joven tenia el pelo como el ex jugador del madrid... si. subelo»):**
+  1. *Causa Raíz Identificada:*
+     - En terminales Android con conexiones móviles 4G lentas o con micro-cortes (como el Realme XT del compañero «Solari»), la carga del script externo de Leaflet desde `unpkg.com` en `index.html` podía fallar silenciosamente por timeout.
+     - Si Leaflet no estaba disponible (`typeof L === 'undefined'`) al arrancar la app, `initAsturiasMap()` abortaba en silencio. Al pulsar posteriormente la pestaña `📡 Radar`, la función `resizeMap()` asumía que el mapa ya existía y no reintentaba la inicialización, dejando el recuadro del mapa en gris/azul oscuro vacío.
+     - Además, el Service Worker interceptaba peticiones externas de mapas y satélite que, ante baches de cobertura 4G, generaban promesas colgadas.
+  2. *Solución Técnica Aplicada sin Afectar a Ningún Otro Usuario:*
+     - **Carga de Respaldo Silenciosa en Cascada (`js/components/mapRadar.js`):** Implementada la función `ensureLeafletLoaded()`. Si `L` ya existe (caso del 99% de usuarios con buena red), retorna de inmediato en 0 ms. Solo si falta, inyecta dinámicamente Leaflet desde `cdn.jsdelivr.net` con reintento secundario en `cdnjs.cloudflare.com`.
+     - **Auto-Recuperación en `resizeMap()` y `resetMapCenter()`:** Si se abre la pestaña de Radar y el mapa aún no se había inicializado por lentitud de red, se dispara `initAsturiasMap()` automáticamente. Si el mapa existe pero los frames de radar no habían terminado de descargar (`radarFrames.length === 0`), relanza `loadRadarLayers()`.
+     - **Preservación del Concejo Enfocado:** Guardada la referencia `lastFocusedConcejo` para que, si el mapa se levanta con retardo tras el arranque, reubique de inmediato el marcador y vista en el concejo seleccionado.
+     - **Bypass Limpio en Service Worker (`sw.js`):** Añadido `if (!isLocalAsset) return;` para que las teselas cartográficas de Esri, los frames de RainViewer y las CDNs de Leaflet corran directamente contra la red del navegador sin pasar por la caché interceptada del SW, eliminando cuelgues en conexiones móviles.
+  3. *Control de Versión y Cache-Busting (Leyes 3 y 4):*
+     - Service Worker actualizado a `meteoasturlode-v3025-12-radar-4g-resilience`.
+     - Referencias actualizadas en `index.html` y `js/app.js` (`mapRadar.js?v=3.0.25.12`).
+
 ## 👑 Contorno Perimetral Tricolor Corporativo en la Tarjeta Maestra `MeteoAsturLode` (`v3.0.25.11`) — 2026-11-07
 - **Objetivo («la tarjeta principal de MeteoAsturLode, no destaca con respecto a las demas y es la tarjeta que siempre esta visible. estaba pansando poner el contorno que cambia de color al igual que el Logotipo de la app... me gusta la que te gusta a ti. no combiene hacer un arbol de navidad... subelo»):**
   - En `css/main.css` (`.app-header` y `.app-header::before`): implementado contorno perimetral redondeado (`border-radius: inherit`, `padding: 1.8px`) mediante máscara de exclusión W3C y WebKit (`-webkit-mask-composite: xor; mask-composite: exclude;`) con el degradado tricolor oficial del logotipo y del widget de Android (`linear-gradient(135deg, #ffffff 0%, #e0f2fe 20%, #38bdf8 48%, #0284c7 66%, #facc15 86%, #f59e0b 100%)`: Blanco *Meteo* → Azul Cian *Astur* → Dorado *Lode*).
