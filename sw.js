@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3025-6-zero-light-shadows';
+const CACHE_NAME = 'meteoasturlode-v3025-7-land-rain-sovereignty';
 const STATIC_ASSETS = [
   './',
   './index.html',

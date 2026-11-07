@@ -2,6 +2,19 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## ⚖️ Consenso Equilibrado `AROME 1.3 km` + `ECMWF 9 km` (`ecmwf_ifs`): Fin de Puertas Giratorias en Lluvia y Temperatura (`v3.0.25.7`) — 2026-11-07
+- **Diagnóstico Forense («no llueve y pones q llueve» / «pero son unos ajustes para no acabar en puertas giratorias del tiempo?» / «y el falso seco?» / «princesa busca un termino medio» / «subelo»):**
+  1. *Causa Raíz de la Falsa Lluvia Nocturna:*
+     - En `js/services/weatherApi.js`, la consulta de consenso utilizaba `models=ecmwf_ifs025` (malla gruesa de **25 km** cuyo nodo costero en Castrillón caía en el mar y devolvía `0.1 - 0.4 mm` de llovizna marina mientras en tierra tanto `AROME 1.3 km` como `ecmwf_ifs` de **9 km** daban `0.0 mm` y código `3` Nublado).
+  2. *Solución Estructural (Término Medio sin Puertas Giratorias para los 78 Concejos):*
+     - **Migración a `ecmwf_ifs` (9 km HRES en tierra):** Sustituido `ecmwf_ifs025` (25 km) por `ecmwf_ifs` (9 km con corrección DEM 90 m idéntica a `best_match` en toda Asturias).
+     - **Lluvia (Regla del Umbral `0.4 mm` y Media):**
+       - Si `AROME (1.3 km)` marca seco (`< 0.1 mm`) y `ECMWF (9 km)` solo ve micro-trazas (`0.1 - 0.3 mm`), se mantiene **Seco / Nublado (`0.0 mm`)** (cero falsos orbayus).
+       - **Escudo contra el Falso Seco (`>= 0.4 mm`):** Si `AROME` marca `0.0 mm` pero `ECMWF (9 km en tierra)` detecta un frente real (`>= 0.4 mm`) bajo cielo cubierto (`>= 80%`) y sin sol directo, se rescata la lluvia ponderada al `60%` (`ePrecip * 0.6`). Si ambos modelos ven lluvia (`>= 0.1 mm`), se aplica la media `50/50`.
+     - **Temperatura (Amortiguación Nocturna en Calma 50/50):**
+       - Para corregir los baches fríos nocturnos artificiales de `AROME` en la costa (ej. `6.5 °C` en Castrillón frente a `10.2 °C` en Avilés a 3 km) sin afectar jamás a nieblas diurnas en valles interiores (Oviedo/Mieres) ni a frentes fríos con viento, solo se amortigua al `50/50` con `ECMWF (9 km)` cuando es estrictamente de noche (`is_day === 0`), viento en calma (`< 12 km/h`), cielo cubierto (`>= 80%`) y divergencia `>= 1.5 °C`.
+     - Service Worker actualizado a `meteoasturlode-v3025-7-land-rain-sovereignty`.
+
 ## 💎 Limpieza Final de Sombras Claras en Anemómetro y Tarjeta Hoy de 10 Días (`v3.0.25.6`) — 2026-11-07
 - **Diagnóstico de Precisión («solo quedan una sombra clara en el anemometro del menu en vivo, en pronostico 10 dias solo la tarjeta de hoy. lo demas ya reparado princesa» / «pisale porfa pero mira si puedes sin efectos secundarios» / «subelo»):**
   1. *En el Anemómetro (`.sensor-card:hover` y `.sensor-card::after` en `css/components.css`):*

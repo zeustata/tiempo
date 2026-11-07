@@ -16,7 +16,7 @@ export const WEATHER_MODELS = [
   },
   {
     id: 'ecmwf_ifs025',
-    apiModel: 'ecmwf_ifs025',
+    apiModel: 'ecmwf_ifs',
     name: 'ECMWF IFS (Europa)',
     agency: 'Centro Europeo de Predicción a Plazo Medio',
     flag: '🇪🇺',
@@ -138,7 +138,7 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
     // y resolver la asimetría de lluvia (PoP alto con 0.0 mm por corte determinista de AROME)
     const isAutoModel = !modelParam || modelParam === 'best_match';
     const consensusPromise = isAutoModel
-      ? fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=weather_code,cloud_cover,direct_normal_irradiance,shortwave_radiation,precipitation,relative_humidity_2m&hourly=weather_code,cloud_cover,direct_normal_irradiance,shortwave_radiation,precipitation,rain,precipitation_probability,relative_humidity_2m&models=ecmwf_ifs025&timezone=Europe%2FMadrid&forecast_days=2`)
+      ? fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,weather_code,cloud_cover,direct_normal_irradiance,shortwave_radiation,precipitation,relative_humidity_2m&hourly=temperature_2m,apparent_temperature,weather_code,cloud_cover,direct_normal_irradiance,shortwave_radiation,precipitation,rain,precipitation_probability,relative_humidity_2m&models=ecmwf_ifs&timezone=Europe%2FMadrid&forecast_days=2`)
         .then(r => r.ok ? r.json() : null)
         .catch(() => null)
       : Promise.resolve(null);
@@ -229,6 +229,12 @@ function applyCantabricoConsensus(weather, consensus) {
       consensus.current.relative_humidity_2m != null ? parseFloat(consensus.current.relative_humidity_2m) : 0
     );
     weather.current.relative_humidity_2m = hum;
+    if (consensus.current.temperature_2m != null && weather.current.temperature_2m != null && weather.current.is_day === 0 && (weather.current.wind_speed_10m || 0) < 12 && ecmwfCloud >= 80 && (consensus.current.temperature_2m - weather.current.temperature_2m) >= 1.5) {
+      weather.current.temperature_2m = Math.round(((weather.current.temperature_2m + consensus.current.temperature_2m) / 2) * 10) / 10;
+      if (consensus.current.apparent_temperature != null && weather.current.apparent_temperature != null) {
+        weather.current.apparent_temperature = Math.round(((weather.current.apparent_temperature + consensus.current.apparent_temperature) / 2) * 10) / 10;
+      }
+    }
 
     const nowHour = new Date().getHours();
     const curEPop = (consensus.hourly && consensus.hourly.precipitation_probability && consensus.hourly.precipitation_probability[nowHour] != null) ? consensus.hourly.precipitation_probability[nowHour] : 0;
@@ -253,7 +259,7 @@ function applyCantabricoConsensus(weather, consensus) {
     if (isFalseClear) {
       weather.current.cloud_cover = ecmwfCloud;
       if (consensus.current.weather_code != null) {
-        weather.current.weather_code = consensus.current.weather_code;
+        weather.current.weather_code = consensus.current.weather_code < 50 ? consensus.current.weather_code : (ecmwfCloud >= 80 ? 3 : 2);
       }
       if (consensus.current.direct_normal_irradiance != null) {
         weather.current.direct_normal_irradiance = consensus.current.direct_normal_irradiance;
@@ -312,7 +318,17 @@ function applyCantabricoConsensus(weather, consensus) {
       (hum >= 75 || ecmwfCloud >= 65) &&
       eDirectIrr < 100;
 
-    if (isCurrentRainRescue) {
+    if (rawPrecip >= 0.1 && ePrecip >= 0.1 && !hasTrueSunlight) {
+      const meanP = Math.round(((rawPrecip + ePrecip) / 2) * 10) / 10;
+      weather.current.precipitation = meanP;
+      if (weather.current.rain != null) weather.current.rain = meanP;
+    } else if (rawPrecip < 0.1 && ePrecip >= 0.4 && ecmwfCloud >= 80 && eDirectIrr < 100) {
+      const rescuedP = Math.round((ePrecip * 0.6) * 10) / 10;
+      weather.current.precipitation = rescuedP;
+      if (weather.current.rain != null) weather.current.rain = rescuedP;
+      weather.current.weather_code = (eCode >= 50) ? eCode : 51;
+      if (ecmwfCloud > rawCloud) weather.current.cloud_cover = ecmwfCloud;
+    } else if (false && isCurrentRainRescue) {
       weather.current.precipitation = ePrecip;
       if (weather.current.rain != null) weather.current.rain = ePrecip;
       weather.current.weather_code = (eCode >= 50) ? eCode : 51;
@@ -324,7 +340,7 @@ function applyCantabricoConsensus(weather, consensus) {
     // pero la atmósfera costera está en saturación condensada (humedad >= 90%) o AROME detecta llovizna activa (51-57)
     // con humedad cantábrica (hum >= 70%), cielo cubierto (>= 75%) y sin haz solar abrasador.
     const isAromeConfirmedDrizzle = (rawCode >= 50 && rawCode <= 57) && (Math.max(rawCloud, ecmwfCloud) >= 75) && hum >= 70 && !hasTrueSunlight;
-    const isOrbayuCondition = ((hum >= 90 && (curEPop >= 25 || (curECode >= 50 && curECode <= 57) || (curAromeCode >= 50 && curAromeCode <= 57) || curEPrecip >= 0.1 || curAromePrecip >= 0.1)) || isAromeConfirmedDrizzle) && Math.max(rawCloud, ecmwfCloud) >= 80 && eDirectIrr < 180;
+    const isOrbayuCondition = false;
 
     if (isOrbayuCondition) {
       weather.current.weather_code = (rawCode >= 50 && rawCode <= 57) ? rawCode : 51; // Orbayu / Llovizna activa
@@ -343,7 +359,7 @@ function applyCantabricoConsensus(weather, consensus) {
       eCode <= 3 &&
       (hum < 86 || hasTrueSunlight)) || isSolarDrizzleGhost;
 
-    if (isPhantomAromeDrizzle) {
+    if (isSolarDrizzleGhost) {
       weather.current.precipitation = 0;
       if (weather.current.rain != null) weather.current.rain = 0;
       weather.current.weather_code = eCode <= 3 ? eCode : 1;
@@ -353,7 +369,7 @@ function applyCantabricoConsensus(weather, consensus) {
     }
 
     // C) SOBERANÍA FÍSICA Y ARMONIZACIÓN DE FALSOS NUBLADOS / RESIDUOS DE LLUVIA:
-    const isDryCurrent = !isOrbayuCondition && (rawPrecip < 0.1 || (hasTrueSunlight && rawPrecip < 0.5)) && ePrecip < 0.1 && curEPrecip < 0.1 && curAromePrecip < 0.1;
+    const isDryCurrent = weather.current.precipitation < 0.1 || isSolarDrizzleGhost;
     if (isDryCurrent && weather.current.weather_code >= 50) {
       if (rawPrecip < 0.5) {
         weather.current.precipitation = 0;
@@ -402,7 +418,7 @@ function applyCantabricoConsensus(weather, consensus) {
       if (isFalseClearH) {
         if (weather.hourly.cloud_cover) weather.hourly.cloud_cover[i] = ecmwfC;
         if (weather.hourly.weather_code && consensus.hourly.weather_code) {
-          weather.hourly.weather_code[i] = consensus.hourly.weather_code[i];
+          if (weather.hourly.weather_code[i] < 50) weather.hourly.weather_code[i] = consensus.hourly.weather_code[i] < 50 ? consensus.hourly.weather_code[i] : (ecmwfC >= 80 ? 3 : 2);
         }
         if (weather.hourly.direct_normal_irradiance && consensus.hourly.direct_normal_irradiance) {
           weather.hourly.direct_normal_irradiance[i] = consensus.hourly.direct_normal_irradiance[i];
@@ -448,7 +464,7 @@ function applyCantabricoConsensus(weather, consensus) {
       }
 
       // B) Enriquecimiento Probabilístico y de Saturación Horaria (Ensamble Mundial de 51 miembros de ECMWF):
-      if (weather.hourly.precipitation_probability && ePop > pop) {
+      if (false && weather.hourly.precipitation_probability && ePop > pop) {
         weather.hourly.precipitation_probability[i] = ePop;
       }
       if (weather.hourly.relative_humidity_2m && consensus.hourly.relative_humidity_2m) {
@@ -473,7 +489,24 @@ function applyCantabricoConsensus(weather, consensus) {
         (rawC >= 60 || ecmwfC >= 60) &&
         eDirectIrrH < 100;
 
-      if (isDrizzleRescue || isFrontalRainRescue) {
+      if (weather.hourly.temperature_2m && consensus.hourly.temperature_2m && consensus.hourly.temperature_2m[i] != null && weather.hourly.temperature_2m[i] != null && (weather.hourly.is_day ? weather.hourly.is_day[i] === 0 : true) && (weather.hourly.wind_speed_10m ? (weather.hourly.wind_speed_10m[i] || 0) < 12 : true) && ecmwfC >= 80 && (consensus.hourly.temperature_2m[i] - weather.hourly.temperature_2m[i]) >= 1.5) {
+        weather.hourly.temperature_2m[i] = Math.round(((weather.hourly.temperature_2m[i] + consensus.hourly.temperature_2m[i]) / 2) * 10) / 10;
+        if (weather.hourly.apparent_temperature && consensus.hourly.apparent_temperature && consensus.hourly.apparent_temperature[i] != null) {
+          weather.hourly.apparent_temperature[i] = Math.round(((weather.hourly.apparent_temperature[i] + consensus.hourly.apparent_temperature[i]) / 2) * 10) / 10;
+        }
+      }
+      if (precip >= 0.1 && ePrecipH >= 0.1 && eDirectIrrH < 100) {
+        const meanH = Math.round(((precip + ePrecipH) / 2) * 10) / 10;
+        if (weather.hourly.precipitation) weather.hourly.precipitation[i] = meanH;
+        if (weather.hourly.rain) weather.hourly.rain[i] = meanH;
+      } else if (precip < 0.1 && ePrecipH >= 0.4 && ecmwfC >= 80 && eDirectIrrH < 100) {
+        const rescuedH = Math.round((ePrecipH * 0.6) * 10) / 10;
+        if (weather.hourly.precipitation) weather.hourly.precipitation[i] = rescuedH;
+        if (weather.hourly.rain) weather.hourly.rain[i] = rescuedH;
+        if (weather.hourly.weather_code && eCodeH) weather.hourly.weather_code[i] = eCodeH >= 50 ? eCodeH : 51;
+        if (weather.hourly.precipitation_probability) weather.hourly.precipitation_probability[i] = Math.max(pop, ePop, 50);
+        if (weather.hourly.cloud_cover) weather.hourly.cloud_cover[i] = Math.max(rawC, ecmwfC, 80);
+      } else if (false && (isDrizzleRescue || isFrontalRainRescue)) {
         if (weather.hourly.precipitation) weather.hourly.precipitation[i] = Math.max(precip, ePrecipH);
         if (weather.hourly.rain) weather.hourly.rain[i] = Math.max(precip, ePrecipH);
         if (weather.hourly.weather_code && eCodeH) {
@@ -496,7 +529,7 @@ function applyCantabricoConsensus(weather, consensus) {
         eCodeH !== null && eCodeH <= 3 &&
         (humH < 86 || eDirectIrrH >= 100) && ePop < 45) || isSolarHourlyGhost;
 
-      if (isPhantomHourlyDrizzle) {
+      if (isSolarHourlyGhost) {
         if (weather.hourly.precipitation) weather.hourly.precipitation[i] = 0;
         if (weather.hourly.rain) weather.hourly.rain[i] = 0;
         if (weather.hourly.weather_code) weather.hourly.weather_code[i] = (eCodeH !== null && eCodeH <= 3) ? eCodeH : 1;
@@ -504,7 +537,7 @@ function applyCantabricoConsensus(weather, consensus) {
       }
 
       // C) Armonización Horaria de Lluvia Residual:
-      const isDryHourly = precip < 0.1 && ePrecipH < 0.1;
+      const isDryHourly = (weather.hourly.precipitation ? weather.hourly.precipitation[i] : precip) < 0.1 || isSolarHourlyGhost;
       if (isDryHourly && weather.hourly.weather_code && weather.hourly.weather_code[i] >= 50) {
         if (weather.hourly.precipitation && precip < 0.5) weather.hourly.precipitation[i] = 0;
         if (weather.hourly.rain && precip < 0.5) weather.hourly.rain[i] = 0;
@@ -662,6 +695,16 @@ function harmonizeWeatherPrecipitation(weather) {
         }
       }
       daily.precipitation_sum[d] = Math.round(dayPrecipSum * 10) / 10;
+      if (d <= 1 && Array.isArray(hourly.temperature_2m) && Array.isArray(daily.temperature_2m_min) && Array.isArray(daily.temperature_2m_max)) {
+        const dayTemps = [];
+        for (let i = 0; i < hourly.time.length; i++) {
+          if (hourly.time[i].startsWith(dayDateStr) && hourly.temperature_2m[i] != null) dayTemps.push(hourly.temperature_2m[i]);
+        }
+        if (dayTemps.length > 0) {
+          daily.temperature_2m_min[d] = Math.min(...dayTemps);
+          daily.temperature_2m_max[d] = Math.max(...dayTemps);
+        }
+      }
     }
   }
 }
