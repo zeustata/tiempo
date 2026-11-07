@@ -2,6 +2,16 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🎛️ Suavizado de Luminosidad y Atenuación de Halo en Pálpito de Menús (`v3.0.25.17`) — 2026-11-07
+- **Ajuste Fino de Lendo («la pulsacionsi le quitas un poco de luminosodad seria perfecto... paso 1 en local... subelo»):**
+  1. *Calibración de Luz y Halo (`@keyframes chipActivePalpito` en `css/components.css`):*
+     - Rebajada la luminosidad del pico de pulso de `brightness(1.32)` a `brightness(1.14)`, eliminando el destello blanquecino sobre pantallas OLED.
+     - Reducida la sombra exterior difusa de 28 px a 16 px (`box-shadow: ... 0 0 16px rgba(56, 189, 248, 0.50)`), evitando que el halo se desparrame fuera del marco de la pastilla activa.
+     - Ajustado el punto base al 100% de luz natural (`brightness(1.0)`).
+  2. *Control de Versión y Cache-Busting (Leyes 3 y 4):*
+     - Service Worker actualizado a `meteoasturlode-v3025-17-soft-palpito`.
+     - Query strings sincronizados en `index.html` (`components.css?v=3.0.25.17`, `app.js?v=3.0.25.17`, `sw.js?v=3.0.25.17`).
+
 ## 🎛️ Pálpito de Alto Contraste en Menús Activos y Corrección de Sintaxis CSS (`v3.0.25.16`) — 2026-11-07
 - **Diagnóstico y Despliegue («el palpito de los botones de los menus a penas se nota... me salen errores en problems... parece que vuekve un halo alrededos. mira subelo para que lo vea en el movil y te comento. lo demas va bien»):**
   1. *Corrección Forense en Problems (`css/components.css`):*
