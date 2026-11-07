@@ -2,17 +2,18 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
-## 🌊 Compactación Ergonómica de Scroll en Playas & Mareas (`v3.0.25.8`) — 2026-11-07
-- **Objetivo («queria crear menos scroll en playas y mareas» / «como es la opcion 1?» / «subelo per ten en cuenta que puedo decirte que reviertas ésto último»):**
-  1. *Cuadrícula `2x2` en el Mareógrafo Móvil (`css/components.css` y `js/components/marineCard.js`):*
-     - `.mareografo-metrics-row` pasa de `repeat(auto-fit, minmax(180px, 1fr))` (que forzaba 4 filas verticales de 1 columna en móviles de 320px-380px) a `grid-template-columns: repeat(2, minmax(0, 1fr))` en móvil y `repeat(4, minmax(0, 1fr))` en escritorio (`>= 768px`).
-     - Etiquetas abreviadas a `Nivel Actual` y `Próxima Marea` para encaje limpio en una línea dentro de cada celda al 50%.
-  2. *Unificación de Cabecera de Playas (`js/components/marineCard.js`):*
-     - Eliminado el bloque redundante `.beach-section-header` (*"Guía de Playas y Calas de..."*) e integrado el nombre del concejo directamente en `.picker-section-label` (`🏖️ Playas y calas de ${beachLocationTitle}:`), manteniendo `Temperatura del Agua` y `Estado de la Mar` al 100% de ancho sin comprimir textos.
-  3. *Aviso Legal Plegable en 1 Línea (`js/components/marineCard.js`):*
-     - Convertido `.marine-disclaimer-box` en `<details><summary>⚠️ Aviso de Seguridad en Playas & Baño ▾</summary>...</details>`, ahorrando ~100 px adicionales mientras conserva íntegro el texto legal (Ley 16).
-  4. *Punto de Retorno Seguro (Ley 2):*
-     - Commit anterior limpio: `dea864e` (`v3.0.25.7`). Service Worker actualizado a `meteoasturlode-v3025-8-marine-compact`.
+## 🌊 Compactación Ergonómica de Scroll en Playas & Mareas y Blindaje 2x2 sin Desborde (`v3.0.25.9`) — 2026-11-07
+- **Objetivo y Pulido sobre Captura Real («queria crear menos scroll en playas y mareas» / «mira como queda» / «yo creo que el llenante o vaciante de texto sobra. lo que esta entre parentisis..el boton pombilla del coeficiente de de la marea podria quitarse tasmbieny integrarlo en la marea. por ejemplo eahora q pone en amarillo Marea media, poder darle y que te informe del cooficiente. como lo ves» / «pisale»):**
+  1. *Cuadrícula `2x2` en el Mareógrafo Móvil Libre de Desbordes (`js/utils/tides.js`, `css/components.css` y `js/components/marineCard.js`):*
+     - `.mareografo-metrics-row` pasa a `grid-template-columns: repeat(2, minmax(0, 1fr))` en móvil y `repeat(4, minmax(0, 1fr))` en escritorio (`>= 768px`).
+     - Eliminados los paréntesis redundantes `(Llenante)` y `(Vaciante)` en `directionName` (`⬆️ Subiendo` / `⬇️ Bajando`) y `(Mareona)` en `tideBadge` (`🔴 Marea Viva` / `🟡 Marea Media` / `🟢 Marea Muerta`) para que las pastillas encajen con total holgura dentro del 50% de ancho móvil (Ley 11).
+     - Eliminado el botón flotante `💡` de la esquina superior derecha de `Coeficiente Hoy` e integrado directamente dentro de la pastilla interactiva clicable `<button class="t-badge-small ..." data-explain="tides">🟡 Marea Media 💡</button>`.
+     - Abreviado el contador de `Próxima Marea` a `⏳ Xh Ym` con `white-space: nowrap` para que permanezca siempre en una sola línea.
+  2. *Unificación de Cabecera de Playas y Aviso Legal Plegable (`js/components/marineCard.js`):*
+     - Eliminado `.beach-section-header` redundante e integrado el nombre del concejo en `.picker-section-label` (`🏖️ Playas y calas de ${beachLocationTitle}:`).
+     - Convertido `.marine-disclaimer-box` en `<details><summary>⚠️ Aviso de Seguridad en Playas & Baño ▾</summary>...</details>`.
+  3. *Punto de Retorno Seguro (Ley 2):*
+     - Commit anterior previo a la compactación de Playas: `dea864e` (`v3.0.25.7`). Service Worker actualizado a `meteoasturlode-v3025-9-mareografo-2x2-clean`.
 
 ## ⚖️ Consenso Equilibrado `AROME 1.3 km` + `ECMWF 9 km` (`ecmwf_ifs`): Fin de Puertas Giratorias en Lluvia y Temperatura (`v3.0.25.7`) — 2026-11-07
 - **Diagnóstico Forense («no llueve y pones q llueve» / «pero son unos ajustes para no acabar en puertas giratorias del tiempo?» / «y el falso seco?» / «princesa busca un termino medio» / «subelo»):**

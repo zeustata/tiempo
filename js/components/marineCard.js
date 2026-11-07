@@ -5,7 +5,7 @@ import {
   getRealtimeTideStatus, 
   getWeeklyTides, 
   renderTideSvgGraph 
-} from '../utils/tides.js?v=1.0.81-tides-calib';
+} from '../utils/tides.js?v=3.0.25.9';
 
 /**
  * Base de datos exhaustiva y profesional de playas, picos de surf y fondos marinos de Asturias
@@ -1257,12 +1257,12 @@ export function renderMarineCard(data, concejo, selectedBeachName = null) {
           </div>
 
           <div class="tide-metric-pill">
-            <div class="t-label-row">
-              <span class="t-label">Coeficiente Hoy</span>
-              <button class="btn-explain-sensor" data-explain="tides" title="¿Qué es el Coeficiente de Marea? Pulsa para aprender" aria-label="Explicación del coeficiente de marea">💡</button>
-            </div>
+            <span class="t-label">Coeficiente Hoy</span>
             <span class="t-value">${tideStatus.moonInfo.coefficient}</span>
-            <span class="t-badge-small ${tideStatus.moonInfo.tideClass}">${tideStatus.moonInfo.tideBadge}</span>
+            <button type="button" class="t-badge-small ${tideStatus.moonInfo.tideClass}" data-explain="tides" title="¿Qué es el Coeficiente de Marea? Pulsa para aprender" aria-label="Explicación del coeficiente de marea" style="cursor: pointer; display: inline-flex; align-items: center; gap: 4px; font-family: inherit;">
+              <span>${tideStatus.moonInfo.tideBadge}</span>
+              <span style="font-size: 0.72rem; line-height: 1;">💡</span>
+            </button>
           </div>
         </div>
 

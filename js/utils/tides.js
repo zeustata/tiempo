@@ -108,7 +108,7 @@ export function getMoonAndTideInfo(date = new Date(), explicitCoef = null) {
   if (coefficient >= 85) {
     tideType = 'Viva (Mareona)';
     tideClass = 'tide-spring';
-    tideBadge = '🔴 Marea Viva (Mareona)';
+    tideBadge = '🔴 Marea Viva';
     tideDesc = 'Gran recorrido intermareal. Bajamares muy bajas y amplios arenales descubiertos.';
   } else if (coefficient < 60) {
     tideType = 'Muerta';
@@ -391,15 +391,15 @@ export function getRealtimeTideStatus(now = new Date(), lon = -5.6615) {
   const countdownHours = Math.floor(minsUntilNext / 60);
   const countdownMins = minsUntilNext % 60;
   const countdownStr = countdownHours > 0 
-    ? `${countdownHours}h ${countdownMins}min`
-    : `${countdownMins} min`;
+    ? `${countdownHours}h ${countdownMins}m`
+    : `${countdownMins}m`;
 
   return {
     currentHours,
     currentWaterHeight,
     fillPercent,
     isRising,
-    directionName: isRising ? 'Subiendo (Llenante)' : 'Bajando (Vaciante)',
+    directionName: isRising ? 'Subiendo' : 'Bajando',
     directionIcon: isRising ? '⬆️' : '⬇️',
     directionColor: isRising ? '#38bdf8' : '#f59e0b',
     nextEvent,

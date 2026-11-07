@@ -2423,13 +2423,15 @@
   display: inline-flex;
   align-items: center;
   align-self: flex-start;
-  gap: 6px;
-  padding: 4px 10px;
-  border-radius: 10px;
-  font-size: 0.78rem;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: 9px;
+  font-size: 0.74rem;
   font-weight: 700;
   letter-spacing: 0.2px;
   margin-bottom: 2px;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .mareografo-metrics-row {
@@ -2515,20 +2517,25 @@
 }
 
 .t-countdown {
-  font-size: 1.18rem;
+  font-size: 1.12rem;
   font-weight: 800;
   color: #38bdf8;
   font-family: 'JetBrains Mono', monospace;
+  white-space: nowrap;
 }
 
 .t-badge-small {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   align-self: flex-start;
-  font-size: 0.72rem;
+  font-size: 0.70rem;
   font-weight: 700;
-  padding: 3px 8px;
+  padding: 3px 7px;
   border-radius: 6px;
   margin-top: 2px;
+  max-width: 100%;
+  box-sizing: border-box;
+  white-space: nowrap;
 }
 
 .tide-spring {
