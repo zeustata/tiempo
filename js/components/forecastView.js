@@ -471,6 +471,17 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
     const nightLabel = (nightWeather.label || '').split('/')[0].trim();
     const morningLabel = (morningWeather.label || '').split('/')[0].trim();
     const afternoonLabel = (afternoonWeather.label || '').split('/')[0].trim();
+
+    // Estado temporal dinámico de cada tramo (solo activo para Hoy)
+    const currentHour = now.getHours();
+    const isNightPast = isToday && currentHour >= 8;
+    const isNightCurrent = isToday && currentHour < 8;
+
+    const isMorningPast = isToday && currentHour >= 15;
+    const isMorningCurrent = isToday && (currentHour >= 8 && currentHour < 15);
+
+    const isAfternoonPast = false; // La jornada concluye a medianoche
+    const isAfternoonCurrent = isToday && currentHour >= 15;
     
     const windSpeedRaw = daily.wind_speed_10m_max ? daily.wind_speed_10m_max[d] : 0;
     const windGustRaw = daily.wind_gusts_10m_max ? daily.wind_gusts_10m_max[d] : 0;
@@ -511,9 +522,13 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
         <!-- TRES BOTONES INDEPENDIENTES PARA NOCHE, MAÑANA Y TARDE -->
         <div class="d-dayparts-container">
           <!-- Botón Noche -->
-          <div class="d-daypart-btn night" title="Previsión Noche (00:00 - 08:00): ${nightWeather.label}${nightWeather.precipSum >= 0.1 ? ` • ${nightWeather.precipSum.toFixed(1)} mm` : ''}">
+          <div class="d-daypart-btn night ${isNightPast ? 'is-past' : ''} ${isNightCurrent ? 'is-current' : ''}" title="Previsión Noche (00:00 - 08:00): ${nightWeather.label}${nightWeather.precipSum >= 0.1 ? ` • ${nightWeather.precipSum.toFixed(1)} mm` : ''}">
             <div class="d-dp-header">
-              <span class="d-dp-tag">🌙 NOCHE <span class="d-dp-hours">(00h - 08h)</span></span>
+              <span class="d-dp-tag">
+                🌙 NOCHE <span class="d-dp-hours">(00h - 08h)</span>
+                ${isNightPast ? '<span class="d-dp-badge-status past">Pasado</span>' : ''}
+                ${isNightCurrent ? '<span class="d-dp-badge-status current">● En curso</span>' : ''}
+              </span>
               <span class="d-dp-precip ${nightWeather.precipSum >= 0.1 ? (nightWeather.svgKey === 'hail' ? 'has-hail' : (nightWeather.svgKey === 'sleet' ? 'has-sleet' : (nightWeather.isSnow || nightWeather.svgKey.includes('snow') ? (nightWeather.precipSum >= 2.5 ? 'heavy-snow' : 'has-snow') : (nightWeather.precipSum >= 2.5 ? 'heavy-rain' : 'has-rain')))) : ''}">
                 ${nightWeather.precipSum >= 0.1 ? nightWeather.precipSum.toFixed(1) + ' mm' : '0 mm'}
               </span>
@@ -525,9 +540,13 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
           </div>
 
           <!-- Botón Mañana -->
-          <div class="d-daypart-btn morning" title="Previsión Mañana (08:00 - 15:00): ${morningWeather.label}${morningWeather.precipSum >= 0.1 ? ` • ${morningWeather.precipSum.toFixed(1)} mm` : ''}">
+          <div class="d-daypart-btn morning ${isMorningPast ? 'is-past' : ''} ${isMorningCurrent ? 'is-current' : ''}" title="Previsión Mañana (08:00 - 15:00): ${morningWeather.label}${morningWeather.precipSum >= 0.1 ? ` • ${morningWeather.precipSum.toFixed(1)} mm` : ''}">
             <div class="d-dp-header">
-              <span class="d-dp-tag">🌅 MAÑANA <span class="d-dp-hours">(08h - 15h)</span></span>
+              <span class="d-dp-tag">
+                🌅 MAÑANA <span class="d-dp-hours">(08h - 15h)</span>
+                ${isMorningPast ? '<span class="d-dp-badge-status past">Pasado</span>' : ''}
+                ${isMorningCurrent ? '<span class="d-dp-badge-status current">● En curso</span>' : ''}
+              </span>
               <span class="d-dp-precip ${morningWeather.precipSum >= 0.1 ? (morningWeather.svgKey === 'hail' ? 'has-hail' : (morningWeather.svgKey === 'sleet' ? 'has-sleet' : (morningWeather.isSnow || morningWeather.svgKey.includes('snow') ? (morningWeather.precipSum >= 2.5 ? 'heavy-snow' : 'has-snow') : (morningWeather.precipSum >= 2.5 ? 'heavy-rain' : 'has-rain')))) : ''}">
                 ${morningWeather.precipSum >= 0.1 ? morningWeather.precipSum.toFixed(1) + ' mm' : '0 mm'}
               </span>
@@ -539,9 +558,13 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
           </div>
 
           <!-- Botón Tarde -->
-          <div class="d-daypart-btn afternoon" title="Previsión Tarde (15:00 - 00:00): ${afternoonWeather.label}${afternoonWeather.precipSum >= 0.1 ? ` • ${afternoonWeather.precipSum.toFixed(1)} mm` : ''}">
+          <div class="d-daypart-btn afternoon ${isAfternoonPast ? 'is-past' : ''} ${isAfternoonCurrent ? 'is-current' : ''}" title="Previsión Tarde (15:00 - 00:00): ${afternoonWeather.label}${afternoonWeather.precipSum >= 0.1 ? ` • ${afternoonWeather.precipSum.toFixed(1)} mm` : ''}">
             <div class="d-dp-header">
-              <span class="d-dp-tag">🌇 TARDE <span class="d-dp-hours">(15h - 00h)</span></span>
+              <span class="d-dp-tag">
+                🌇 TARDE <span class="d-dp-hours">(15h - 00h)</span>
+                ${isAfternoonPast ? '<span class="d-dp-badge-status past">Pasado</span>' : ''}
+                ${isAfternoonCurrent ? '<span class="d-dp-badge-status current">● En curso</span>' : ''}
+              </span>
               <span class="d-dp-precip ${afternoonWeather.precipSum >= 0.1 ? (afternoonWeather.svgKey === 'hail' ? 'has-hail' : (afternoonWeather.svgKey === 'sleet' ? 'has-sleet' : (afternoonWeather.isSnow || afternoonWeather.svgKey.includes('snow') ? (afternoonWeather.precipSum >= 2.5 ? 'heavy-snow' : 'has-snow') : (afternoonWeather.precipSum >= 2.5 ? 'heavy-rain' : 'has-rain')))) : ''}">
                 ${afternoonWeather.precipSum >= 0.1 ? afternoonWeather.precipSum.toFixed(1) + ' mm' : '0 mm'}
               </span>

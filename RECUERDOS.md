@@ -2,6 +2,21 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## ⏱️ Tramos Vivos e Inteligentes en Tarjeta de Hoy (Pronóstico a 10 Días) (`v3.0.25.14`) — 2026-11-07
+- **Objetivo y Acuerdo («dale a la opcion 1... y darle una ligera respiracion a la tarjeta activa?... vale. lo dejamos asi. subelo»):**
+  1. *Lógica Temporal Dinámica (`js/components/forecastView.js`):*
+     - Para la tarjeta del día en curso (`isToday`), se calcula la hora local del dispositivo (`now.getHours()`) para determinar el estado de cada uno de los tres tramos horarios:
+       - **Noche (00h - 08h):** Pasado si `>= 8h`, en curso si `< 8h`.
+       - **Mañana (08h - 15h):** Pasado si `>= 15h`, en curso si `>= 8h && < 15h`.
+       - **Tarde (15h - 24h):** En curso si `>= 15h`, futuro hasta las 15h.
+  2. *Diseño y Ergonomía Visual (`css/components.css`):*
+     - **Tramos Pasados (`.d-daypart-btn.is-past`):** Atenuados con opacidad al 48%, filtro de escala de grises al 20% y pastilla discreta `PASADO`. Al interactuar con ellos (hover/touch), recuperan brillo para consulta sin esfuerzo.
+     - **Tramo En Curso (`.d-daypart-btn.is-current`):** Resaltado al 100% con halo luminoso coordinado con su paleta de color (índigo en noche, ámbar en mañana, cian en tarde) y pastilla destacada `● EN CURSO`.
+     - Preservada la visualización estándar y limpia en los 9 días futuros restantes.
+  3. *Control de Versión y Cache-Busting (Leyes 3 y 4):*
+     - Service Worker actualizado a `meteoasturlode-v3025-14-forecast-live-dayparts`.
+     - Query strings actualizados en `index.html` (`components.css?v=3.0.25.14`, `app.js?v=3.0.25.14`, `sw.js?v=3.0.25.14`) y en `js/app.js` (`forecastView.js?v=3.0.25.14`).
+
 ## 📅 Supresión de Redundancia «Hoy HOY» / «Mañana MAÑANA» en Pronóstico a 10 Días (`v3.0.25.13`) — 2026-11-07
 - **Diagnóstico de Lendo («vamos a mirar detalles pasito a pasito... pronostico de 10 dias. dme ideas. de mano hoy y mañana se repite... el Hoy y el Mayana salen dos veces en la tarjeta. una en blanco y otra en color metida en una pildora... preparala... subelo»):**
   1. *Causa de la Redundancia:*
