@@ -9,6 +9,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.25.18] - 2026-11-07
+### Added
+- **Buscador Bivalente de Concejos y Pueblos de Asturias (`app.js` + `concejos.js`):**
+  - **Catálogo de Parroquias y Pueblos Estratégicos:** Enriquecido `SUB_LOCALIDADES` con los núcleos clave de Caso (*Soto de Caso, Caleao, Tarna, Coballes, Orlé, Bueres, El Campu*), Sobrescobio (*Soto de Agues, Rioseco, Villamorey, Campiellos*), Cangas de Onís (*Soto de Cangas, Covadonga, Lagos de Covadonga*), Somiedo, Cabrales, Cudillero, Ribera de Arriba, Llanes, etc.
+  - **Indexación Inteligente en Búsqueda:** A partir de 2 caracteres, el buscador rápido sugiere pueblos identificados con pin `📍`, altitud real y concejo matriz.
+  - **Enrutamiento y Altitud Topográfica:** Al tocar un pueblo (ej. Soto de Caso), la app enfoca el concejo con las coordenadas y altitud exacta del pueblo (620 m frente a 575 m de la capital), actualizando la cabecera a `Concejo • Pueblo`.
+
+
 
 ## [3.0.25.4] - 2026-11-07
 ### Fixed

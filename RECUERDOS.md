@@ -2,6 +2,22 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📍 Buscador Inteligente Bivalente de Concejos y Pueblos de Asturias (`v3.0.25.18 - Pruebas en Local`) — 2026-11-07
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `895e482` (`v3.0.25.17`).
+- **Diagnóstico y Necesidad de Lendo & Solari («me dice solari que tenemos un problema... el concejo es caso y el pueblo que busco es soto... quiero una opinion sincera... tu lo que quieres es añadir en el buscador sin interferir en lo demas no?... pues pisale aver»):**
+  1. *Causa de la Carencia:*
+     - El buscador rápido (`quick-search-input`) operaba exclusivamente filtrando los 78 concejos oficiales. Si un usuario buscaba una parroquia emblemática o pueblo de montaña (como *Soto de Caso*, *Caleao*, *Tarna*, *Soto de Agues*, *Arenas de Cabrales* o *Covadonga*), la búsqueda devolvía *"No se encontraron concejos"*.
+     - El sistema previo de `SUB_LOCALIDADES` solo se activaba automáticamente por GPS en vivo y estaba limitado a 10 municipios urbanos.
+  2. *Solución Bivalente sin Afectación Estructural (Blindaje Total):*
+     - **Enriquecimiento del Catálogo `SUB_LOCALIDADES` (`js/config/concejos.js`):** Incorporadas las parroquias y pueblos clave de Caso (*El Campu, Soto de Caso, Caleao, Tarna, Coballes, Orlé, Bueres*), Sobrescobio (*Rioseco, Soto de Agues, Villamorey, Campiellos*), Somiedo (*Pola, Valle de Lago, Saliencia, Villar de Vildas*), Cabrales (*Carreña, Arenas, Poncebos, Bulnes, Sotres, Tielve*), Cudillero (*Cudillero, Soto de Luiña, Oviñana, San Martín*), Ribera de Arriba (*Soto de Ribera, Bueño*), Cangas de Onís (*Cangas, Covadonga, Soto de Cangas, Lagos*) y Llanes (*Llanes, Celorio, Barro, Niembru, Posada, Nueva*).
+     - **Indexación Dual en Buscador (`setupQuickSearch` en `js/app.js`):** A partir de 2 caracteres, el motor evalúa simultáneamente concejos y pueblos. Si coincide con pueblos, los agrupa en una sección destacada con pin `📍`, nombre del pueblo, altitud y concejo de pertenencia.
+     - **Enrutamiento Directo (`switchConcejo(concejoId, targetVillage)`):** Al pulsar sobre un pueblo (ej. *Soto de Caso*), la app navega a Caso, fija `this.activeLocalidad` con sus coordenadas y altitud exacta (620 m), enfoca el mapa satelital/radar en ese punto y consulta el modelo meteorológico para esa coordenada precisa.
+     - **Reflejo en Cabecera:** La barra de búsqueda superior muestra `Concejo • Pueblo` (ej. `Caso / Casu • Soto de Caso`), y la tarjeta actual proyecta el badge de la localidad y su altitud real.
+  3. *Control de Versión y Cache-Busting (Leyes 3 y 4):*
+     - Service Worker: `meteoasturlode-v3025-18-pueblos-asturias`.
+     - Query strings sincronizados en `index.html` (`app.js?v=3.0.25.18`, `sw.js?v=3.0.25.18`) y en `js/app.js` (`concejos.js?v=3.0.25.18`).
+
+
 ## 🎛️ Suavizado de Luminosidad y Atenuación de Halo en Pálpito de Menús (`v3.0.25.17`) — 2026-11-07
 - **Ajuste Fino de Lendo («la pulsacionsi le quitas un poco de luminosodad seria perfecto... paso 1 en local... subelo»):**
   1. *Calibración de Luz y Halo (`@keyframes chipActivePalpito` en `css/components.css`):*

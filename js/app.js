@@ -1,4 +1,4 @@
-import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo, resolveSubLocalidad } from './config/concejos.js?v=3.0.23.62';
+import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo, resolveSubLocalidad, SUB_LOCALIDADES } from './config/concejos.js?v=3.0.25.18';
 import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.25.7';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=3.0.23.63';
 import { renderCurrentWeather } from './components/currentCard.js?v=3.0.24.53';
@@ -230,7 +230,11 @@ class MeteoAsturiasApp {
   updateSearchTriggerDisplay() {
     const el = document.getElementById('search-bar-current-name');
     if (el && this.currentConcejo) {
-      el.innerHTML = `<strong>${this.currentConcejo.name}</strong>`;
+      if (this.activeLocalidad) {
+        el.innerHTML = `<strong>${this.currentConcejo.name.split('(')[0].trim()} • <span style="color: var(--primary);">${this.activeLocalidad.name}</span></strong>`;
+      } else {
+        el.innerHTML = `<strong>${this.currentConcejo.name}</strong>`;
+      }
     }
   }
 
@@ -1008,35 +1012,101 @@ class MeteoAsturiasApp {
         normalize(c.id).includes(query)
       );
 
-      if (matched.length === 0) {
-        resultsContainer.innerHTML = `<div class="search-empty">No se encontraron concejos para "<strong>${filterText}</strong>"</div>`;
+      // Búsqueda inteligente en pueblos y parroquias estratégicas (v3.0.25.18)
+      const matchedVillages = [];
+      if (query.length >= 2) {
+        Object.entries(SUB_LOCALIDADES).forEach(([cId, list]) => {
+          const parentConcejo = getConcejoById(cId);
+          if (!parentConcejo) return;
+          list.forEach(village => {
+            const vNameNorm = normalize(village.name);
+            if (vNameNorm.includes(query)) {
+              matchedVillages.push({
+                village,
+                concejo: parentConcejo
+              });
+            }
+          });
+        });
+      }
+
+      if (matched.length === 0 && matchedVillages.length === 0) {
+        resultsContainer.innerHTML = `<div class="search-empty">No se encontraron concejos ni pueblos para "<strong>${filterText}</strong>"</div>`;
         return;
       }
 
-      resultsContainer.innerHTML = matched.map(c => {
-        const isCurrent = c.id === this.currentConcejo.id;
-        const isFav = isFavorite(c.id);
-        return `
-          <div class="search-item ${isCurrent ? 'selected' : ''}" data-id="${c.id}">
-            <div class="search-item-left">
-              <span class="search-badge">${c.badge}</span>
-              <div class="search-info">
-                <span class="search-name">${c.name}</span>
-                <span class="search-region">${c.altitude} m • ${c.region}</span>
-              </div>
-            </div>
-            <div class="search-item-right">
-              ${isFav ? '<span class="search-fav-star">⭐</span>' : ''}
-              <span class="search-arrow">➔</span>
-            </div>
+      let html = '';
+
+      if (matchedVillages.length > 0) {
+        html += `
+          <div class="search-section-header" style="padding: 6px 14px 4px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--primary); letter-spacing: 0.05em;">
+            Pueblos y Parroquias (${matchedVillages.length})
           </div>
         `;
-      }).join('');
+        html += matchedVillages.map(({ village, concejo }) => {
+          const isCurrent = concejo.id === this.currentConcejo.id && this.activeLocalidad?.name === village.name;
+          const jsonVillage = JSON.stringify(village).replace(/'/g, '&#39;');
+          return `
+            <div class="search-item search-item-village ${isCurrent ? 'selected' : ''}" data-concejo-id="${concejo.id}" data-village='${jsonVillage}'>
+              <div class="search-item-left">
+                <span class="search-badge">📍</span>
+                <div class="search-info">
+                  <span class="search-name">${village.name}</span>
+                  <span class="search-region">${village.altitude} m • Concejo de ${concejo.name.split('(')[0].trim()}</span>
+                </div>
+              </div>
+              <div class="search-item-right">
+                <span class="search-arrow">➔</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      if (matched.length > 0) {
+        if (matchedVillages.length > 0) {
+          html += `
+            <div class="search-section-header" style="padding: 10px 14px 4px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--text-dim); letter-spacing: 0.05em;">
+              Concejos de Asturias (${matched.length})
+            </div>
+          `;
+        }
+        html += matched.map(c => {
+          const isCurrent = c.id === this.currentConcejo.id && !this.activeLocalidad;
+          const isFav = isFavorite(c.id);
+          return `
+            <div class="search-item ${isCurrent ? 'selected' : ''}" data-id="${c.id}">
+              <div class="search-item-left">
+                <span class="search-badge">${c.badge}</span>
+                <div class="search-info">
+                  <span class="search-name">${c.name}</span>
+                  <span class="search-region">${c.altitude} m • ${c.region}</span>
+                </div>
+              </div>
+              <div class="search-item-right">
+                ${isFav ? '<span class="search-fav-star">⭐</span>' : ''}
+                <span class="search-arrow">➔</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      resultsContainer.innerHTML = html;
 
       resultsContainer.querySelectorAll('.search-item').forEach(item => {
         item.addEventListener('click', () => {
           this.triggerHaptic();
-          this.switchConcejo(item.dataset.id);
+          const concejoId = item.dataset.concejoId || item.dataset.id;
+          let targetVillage = null;
+          if (item.dataset.village) {
+            try {
+              targetVillage = JSON.parse(item.dataset.village);
+            } catch (e) {
+              console.warn('[Search] Error parseando datos de pueblo:', e);
+            }
+          }
+          this.switchConcejo(concejoId, targetVillage);
           this.closeModal(searchModal);
         });
       });
@@ -2841,7 +2911,7 @@ class MeteoAsturiasApp {
     `;
   }
 
-  async switchConcejo(concejoId) {
+  async switchConcejo(concejoId, targetLocalidad = null) {
     stopWeatherSpeech();
     this.currentConcejo = getConcejoById(concejoId) || this.currentConcejo;
     this.selectedHikingRouteId = null; // Auto-resetea para cargar directamente la óptima de la nueva localidad
@@ -2850,8 +2920,14 @@ class MeteoAsturiasApp {
     this.selectedSurfBeachName = null;
     this.selectedMarineBeachName = null; // Auto-resetea para cargar el arenal por defecto de la nueva localidad
     this.prefs.lastConcejo = concejoId;
-    // Recalcular localidad activa para el nuevo concejo (evita arrastrar localidades ajenas como Piedras Blancas a Oviedo)
-    this.activeLocalidad = this.userCoords ? resolveSubLocalidad(this.currentConcejo.id, this.userCoords.lat, this.userCoords.lon) : null;
+    
+    // Si viene una localidad específica (ej. desde el buscador de pueblos), la fijamos;
+    // de lo contrario, comprobamos si el GPS físico del usuario está cerca de alguna sublocalidad de ese concejo
+    if (targetLocalidad) {
+      this.activeLocalidad = targetLocalidad;
+    } else {
+      this.activeLocalidad = this.userCoords ? resolveSubLocalidad(this.currentConcejo.id, this.userCoords.lat, this.userCoords.lon) : null;
+    }
     this.prefs.lastLocalidad = this.activeLocalidad;
     savePreferences(this.prefs);
 
@@ -2869,7 +2945,10 @@ class MeteoAsturiasApp {
       this.renderSkeletonLoading();
     }
 
-    focusConcejoOnMap(this.currentConcejo.lat, this.currentConcejo.lon, this.currentConcejo.name);
+    const mapLat = this.activeLocalidad?.lat ?? this.currentConcejo.lat;
+    const mapLon = this.activeLocalidad?.lon ?? this.currentConcejo.lon;
+    const mapName = this.activeLocalidad ? `${this.currentConcejo.name} (${this.activeLocalidad.name})` : this.currentConcejo.name;
+    focusConcejoOnMap(mapLat, mapLon, mapName);
     await this.loadWeather(concejoId);
 
     // Si el concejo A cambió, refrescar comparador
@@ -3002,7 +3081,9 @@ class MeteoAsturiasApp {
 
     try {
       const isCoast = concejo.type === 'coast' || concejo.region.includes('Costa');
-      const result = await fetchWeatherData(concejo.lat, concejo.lon, isCoast, this.currentModel.apiModel || '');
+      const fetchLat = this.activeLocalidad?.lat ?? concejo.lat;
+      const fetchLon = this.activeLocalidad?.lon ?? concejo.lon;
+      const result = await fetchWeatherData(fetchLat, fetchLon, isCoast, this.currentModel.apiModel || '');
 
       if (result && result.success) {
         // Comparar firma antes de re-renderizar: si los datos son idénticos a los pintados,

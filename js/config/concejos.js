@@ -1026,6 +1026,45 @@ export function calculateDistanceKm(lat1, lon1, lat2, lon2) {
  * Permite resolver la localidad exacta según las coordenadas del GPS del usuario (Ley Específica de Geolocalización).
  */
 export const SUB_LOCALIDADES = {
+  caso: [
+    { name: 'El Campu', lat: 43.1811, lon: -5.3375, altitude: 575 },
+    { name: 'Soto de Caso', lat: 43.1650, lon: -5.3780, altitude: 620 },
+    { name: 'Caleao', lat: 43.1510, lon: -5.3940, altitude: 700 },
+    { name: 'Tarna', lat: 43.1090, lon: -5.2280, altitude: 1000 },
+    { name: 'Coballes', lat: 43.2020, lon: -5.3850, altitude: 550 },
+    { name: 'Orlé', lat: 43.2060, lon: -5.3450, altitude: 660 },
+    { name: 'Bueres', lat: 43.2120, lon: -5.3620, altitude: 610 }
+  ],
+  sobrescobio: [
+    { name: 'Rioseco', lat: 43.2180, lon: -5.4670, altitude: 400 },
+    { name: 'Soto de Agues', lat: 43.2050, lon: -5.4740, altitude: 430 },
+    { name: 'Villamorey', lat: 43.2100, lon: -5.4520, altitude: 450 },
+    { name: 'Campiellos', lat: 43.2210, lon: -5.4500, altitude: 500 }
+  ],
+  somiedo: [
+    { name: 'Pola de Somiedo', lat: 43.0910, lon: -6.2570, altitude: 700 },
+    { name: 'Valle de Lago', lat: 43.0780, lon: -6.2100, altitude: 1250 },
+    { name: 'Saliencia', lat: 43.0640, lon: -6.1450, altitude: 1100 },
+    { name: 'Villar de Vildas', lat: 43.1190, lon: -6.3150, altitude: 860 }
+  ],
+  cabrales: [
+    { name: 'Carreña de Cabrales', lat: 43.3180, lon: -4.8460, altitude: 200 },
+    { name: 'Arenas de Cabrales', lat: 43.3030, lon: -4.8160, altitude: 140 },
+    { name: 'Poncebos', lat: 43.2570, lon: -4.8320, altitude: 220 },
+    { name: 'Bulnes', lat: 43.2380, lon: -4.8210, altitude: 650 },
+    { name: 'Sotres', lat: 43.2330, lon: -4.7500, altitude: 1050 },
+    { name: 'Tielve', lat: 43.2500, lon: -4.7870, altitude: 690 }
+  ],
+  cudillero: [
+    { name: 'Cudillero', lat: 43.5630, lon: -6.1450, altitude: 20 },
+    { name: 'Soto de Luiña', lat: 43.5610, lon: -6.2260, altitude: 80 },
+    { name: 'Oviñana', lat: 43.5780, lon: -6.2410, altitude: 90 },
+    { name: 'San Martín de Luiña', lat: 43.5410, lon: -6.2080, altitude: 120 }
+  ],
+  riberadearriba: [
+    { name: 'Soto de Ribera', lat: 43.3160, lon: -5.8650, altitude: 140 },
+    { name: 'Bueño / Gueñu', lat: 43.3270, lon: -5.8750, altitude: 150 }
+  ],
   castrillon: [
     { name: 'Piedras Blancas', lat: 43.5558, lon: -5.9744, altitude: 25 },
     { name: 'Salinas', lat: 43.5760, lon: -5.9620, altitude: 5 },
@@ -1078,10 +1117,15 @@ export const SUB_LOCALIDADES = {
   ],
   cangasdeonis: [
     { name: 'Cangas de Onís', lat: 43.3511, lon: -5.1278, altitude: 87 },
-    { name: 'Covadonga', lat: 43.3130, lon: -5.0560, altitude: 260 }
+    { name: 'Covadonga', lat: 43.3130, lon: -5.0560, altitude: 260 },
+    { name: 'Soto de Cangas', lat: 43.3420, lon: -5.0860, altitude: 110 },
+    { name: 'Lagos de Covadonga', lat: 43.2720, lon: -4.9860, altitude: 1134 }
   ],
   llanes: [
     { name: 'Llanes', lat: 43.4197, lon: -4.7547, altitude: 15 },
+    { name: 'Celorio', lat: 43.4320, lon: -4.8110, altitude: 20 },
+    { name: 'Barro', lat: 43.4360, lon: -4.8230, altitude: 22 },
+    { name: 'Niembru', lat: 43.4390, lon: -4.8450, altitude: 18 },
     { name: 'Posada de Llanes', lat: 43.4110, lon: -4.8320, altitude: 30 },
     { name: 'Nueva de Llanes', lat: 43.4420, lon: -4.9450, altitude: 25 }
   ]

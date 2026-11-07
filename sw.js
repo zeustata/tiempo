@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3025-17-soft-palpito';
+const CACHE_NAME = 'meteoasturlode-v3025-18-pueblos-asturias';
 const STATIC_ASSETS = [
   './',
   './index.html',
