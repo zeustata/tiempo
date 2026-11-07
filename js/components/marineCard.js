@@ -1252,16 +1252,15 @@ export function renderMarineCard(data, concejo, selectedBeachName = null) {
 
           <div class="tide-metric-pill highlight-countdown">
             <span class="t-label">Próxima Marea</span>
-            <span class="t-countdown">⏳ ${tideStatus.countdownStr}</span>
+            <span class="t-countdown"><span style="font-size: 0.92rem; font-family: sans-serif; line-height: 1;">⏳</span><span>${tideStatus.countdownStr}</span></span>
             <span class="t-subvalue">Para <strong>${tideStatus.nextEvent.name}</strong> (${tideStatus.nextEvent.timeStr} • ${tideStatus.nextEvent.height}m)</span>
           </div>
 
           <div class="tide-metric-pill">
             <span class="t-label">Coeficiente Hoy</span>
             <span class="t-value">${tideStatus.moonInfo.coefficient}</span>
-            <button type="button" class="t-badge-small ${tideStatus.moonInfo.tideClass}" data-explain="tides" title="¿Qué es el Coeficiente de Marea? Pulsa para aprender" aria-label="Explicación del coeficiente de marea" style="cursor: pointer; display: inline-flex; align-items: center; gap: 4px; font-family: inherit;">
-              <span>${tideStatus.moonInfo.tideBadge}</span>
-              <span style="font-size: 0.72rem; line-height: 1;">💡</span>
+            <button type="button" class="t-badge-small ${tideStatus.moonInfo.tideClass}" data-explain="tides" title="¿Qué es el Coeficiente de Marea? Pulsa para aprender" aria-label="Explicación del coeficiente de marea" style="cursor: pointer; font-family: inherit;">
+              ${tideStatus.moonInfo.tideBadge}
             </button>
           </div>
         </div>

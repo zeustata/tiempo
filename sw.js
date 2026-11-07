@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3025-9-mareografo-2x2-clean';
+const CACHE_NAME = 'meteoasturlode-v3025-10-mareografo-2x2-perfect';
 const STATIC_ASSETS = [
   './',
   './index.html',

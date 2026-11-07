@@ -2,18 +2,18 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
-## 🌊 Compactación Ergonómica de Scroll en Playas & Mareas y Blindaje 2x2 sin Desborde (`v3.0.25.9`) — 2026-11-07
-- **Objetivo y Pulido sobre Captura Real («queria crear menos scroll en playas y mareas» / «mira como queda» / «yo creo que el llenante o vaciante de texto sobra. lo que esta entre parentisis..el boton pombilla del coeficiente de de la marea podria quitarse tasmbieny integrarlo en la marea. por ejemplo eahora q pone en amarillo Marea media, poder darle y que te informe del cooficiente. como lo ves» / «pisale»):**
-  1. *Cuadrícula `2x2` en el Mareógrafo Móvil Libre de Desbordes (`js/utils/tides.js`, `css/components.css` y `js/components/marineCard.js`):*
+## 🌊 Compactación Ergonómica de Scroll en Playas & Mareas y Blindaje 2x2 sin Desborde (`v3.0.25.10`) — 2026-11-07
+- **Objetivo y Pulido sobre Captura Real («queria crear menos scroll en playas y mareas» / «mira como queda» / «yo creo que el llenante o vaciante de texto sobra...» / «esta mejor pero aun tiene fallos. fijate en la captura» / «pisale»):**
+  1. *Cuadrícula `2x2` en el Mareógrafo Móvil Libre de Desbordes (`js/utils/tides.js`, `css/components.css`, `css/main.css` y `js/components/marineCard.js`):*
      - `.mareografo-metrics-row` pasa a `grid-template-columns: repeat(2, minmax(0, 1fr))` en móvil y `repeat(4, minmax(0, 1fr))` en escritorio (`>= 768px`).
-     - Eliminados los paréntesis redundantes `(Llenante)` y `(Vaciante)` en `directionName` (`⬆️ Subiendo` / `⬇️ Bajando`) y `(Mareona)` en `tideBadge` (`🔴 Marea Viva` / `🟡 Marea Media` / `🟢 Marea Muerta`) para que las pastillas encajen con total holgura dentro del 50% de ancho móvil (Ley 11).
-     - Eliminado el botón flotante `💡` de la esquina superior derecha de `Coeficiente Hoy` e integrado directamente dentro de la pastilla interactiva clicable `<button class="t-badge-small ..." data-explain="tides">🟡 Marea Media 💡</button>`.
-     - Abreviado el contador de `Próxima Marea` a `⏳ Xh Ym` con `white-space: nowrap` para que permanezca siempre en una sola línea.
+     - Eliminados los paréntesis redundantes `(Llenante)` y `(Vaciante)` en `directionName` (`⬆️ Subiendo` / `⬇️ Bajando`) y `(Mareona)` en `tideBadge` (`🔴 Marea Viva` / `🟡 Marea Media` / `🟢 Marea Muerta`) para encaje limpio dentro del 50% de ancho móvil (Ley 11).
+     - Eliminado por completo el icono `💡` en `Coeficiente Hoy` y convertida la pastilla limpia `<button class="t-badge-small ..." data-explain="tides">🟡 Marea Media</button>` en el disparador directo de la explicación del coeficiente.
+     - Ajustado `.t-countdown` a `display: inline-flex; align-items: center; gap: 5px; font-size: 1.02rem;` con el reloj `⏳` en `sans-serif` para eliminar el hueco excesivo de la fuente `monospace` y evitar que el minuto toque el borde derecho; rebajado el padding lateral móvil de `.marine-card` (`14px 12px`) y `.mareografo-card` (`12px 10px`) ganando +28 px de ancho útil.
   2. *Unificación de Cabecera de Playas y Aviso Legal Plegable (`js/components/marineCard.js`):*
      - Eliminado `.beach-section-header` redundante e integrado el nombre del concejo en `.picker-section-label` (`🏖️ Playas y calas de ${beachLocationTitle}:`).
      - Convertido `.marine-disclaimer-box` en `<details><summary>⚠️ Aviso de Seguridad en Playas & Baño ▾</summary>...</details>`.
   3. *Punto de Retorno Seguro (Ley 2):*
-     - Commit anterior previo a la compactación de Playas: `dea864e` (`v3.0.25.7`). Service Worker actualizado a `meteoasturlode-v3025-9-mareografo-2x2-clean`.
+     - Commit anterior previo a la compactación de Playas: `dea864e` (`v3.0.25.7`). Service Worker actualizado a `meteoasturlode-v3025-10-mareografo-2x2-perfect`.
 
 ## ⚖️ Consenso Equilibrado `AROME 1.3 km` + `ECMWF 9 km` (`ecmwf_ifs`): Fin de Puertas Giratorias en Lluvia y Temperatura (`v3.0.25.7`) — 2026-11-07
 - **Diagnóstico Forense («no llueve y pones q llueve» / «pero son unos ajustes para no acabar en puertas giratorias del tiempo?» / «y el falso seco?» / «princesa busca un termino medio» / «subelo»):**
