@@ -2434,19 +2434,26 @@
 
 .mareografo-metrics-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
+}
+
+@media (min-width: 768px) {
+  .mareografo-metrics-row {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
 .tide-metric-pill {
   background: var(--bg-surface-elevated);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
-  padding: 10px 14px;
+  padding: 9px 11px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
+  min-width: 0;
 }
 
 .t-label-row {
@@ -2454,19 +2461,19 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  gap: 8px;
+  gap: 6px;
 }
 
 .t-label {
-  font-size: 0.76rem;
+  font-size: 0.68rem;
   font-weight: 700;
   text-transform: uppercase;
   color: #cbd5e1;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
 }
 
 .t-value {
-  font-size: 1.6rem;
+  font-size: 1.38rem;
   font-weight: 800;
   color: var(--text-main);
   line-height: 1.1;
@@ -2474,15 +2481,16 @@
 }
 
 .t-unit {
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   color: var(--text-muted);
   font-weight: 600;
 }
 
 .t-subvalue {
-  font-size: 0.82rem;
+  font-size: 0.74rem;
   color: #cbd5e1;
   font-weight: 500;
+  line-height: 1.25;
 }
 
 .tide-progress-wrap {
@@ -2507,7 +2515,7 @@
 }
 
 .t-countdown {
-  font-size: 1.35rem;
+  font-size: 1.18rem;
   font-weight: 800;
   color: #38bdf8;
   font-family: 'JetBrains Mono', monospace;

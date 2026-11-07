@@ -1238,7 +1238,7 @@ export function renderMarineCard(data, concejo, selectedBeachName = null) {
             <div class="mareografo-live-badge" style="background: ${tideStatus.directionColor}20; color: ${tideStatus.directionColor}; border: 1px solid ${tideStatus.directionColor}60;">
               ${tideStatus.directionIcon} <strong>${tideStatus.directionName}</strong>
             </div>
-            <span class="t-label">Nivel de Agua Actual</span>
+            <span class="t-label">Nivel Actual</span>
             <span class="t-value" style="color: ${tideStatus.directionColor};">${tideStatus.currentWaterHeight} <span class="t-unit">m</span></span>
           </div>
 
@@ -1251,7 +1251,7 @@ export function renderMarineCard(data, concejo, selectedBeachName = null) {
           </div>
 
           <div class="tide-metric-pill highlight-countdown">
-            <span class="t-label">Próximo Evento de Marea</span>
+            <span class="t-label">Próxima Marea</span>
             <span class="t-countdown">⏳ ${tideStatus.countdownStr}</span>
             <span class="t-subvalue">Para <strong>${tideStatus.nextEvent.name}</strong> (${tideStatus.nextEvent.timeStr} • ${tideStatus.nextEvent.height}m)</span>
           </div>
@@ -1435,19 +1435,13 @@ export function renderMarineCard(data, concejo, selectedBeachName = null) {
       </div>
 
       <!-- 4. CATÁLOGO TURÍSTICO DE PLAYAS Y CALAS DEL CONCEJO (SELECTOR ERGONÓMICO TÁCTIL) -->
-      <div class="marine-ports-section" style="margin-top: 20px;">
-        <div class="beach-section-header" style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
-          <h4 class="ports-title" style="margin: 0; font-size: 1.05rem; line-height: 1.35;">
-            🏖️ Guía de Playas y Calas de ${beachLocationTitle}
-          </h4>
-        </div>
-
+      <div class="marine-ports-section" style="margin-top: 16px;">
         ${activePlayas.length > 0 ? `
           <!-- SELECTOR ERGONÓMICO TÁCTIL -->
           <div class="beach-selector-wrap" style="margin-bottom: 12px; display: flex; flex-direction: column; gap: 6px;">
-            <label class="picker-section-label" style="font-size: 0.76rem; font-weight: 800; color: #facc15; text-transform: uppercase; letter-spacing: 0.04em; display: flex; align-items: center; gap: 5px;">
+            <label class="picker-section-label" style="font-size: 0.78rem; font-weight: 800; color: #facc15; text-transform: uppercase; letter-spacing: 0.04em; display: flex; align-items: center; gap: 5px;">
               <span>🏖️</span>
-              <span>Playas y calas:</span>
+              <span>Playas y calas de ${beachLocationTitle}:</span>
             </label>
 
             <button type="button" id="btn-open-beach-picker" class="beach-trigger-btn" aria-label="Cambiar playa o cala">
@@ -1555,10 +1549,15 @@ export function renderMarineCard(data, concejo, selectedBeachName = null) {
       </div>
 
       <!-- AVISO LEGAL Y EXENCIÓN DE RESPONSABILIDAD -->
-      <div class="marine-disclaimer-box" style="margin-top: 20px; padding: 12px 16px; background: rgba(15, 23, 42, 0.45); border-radius: 12px; border-left: 3px solid #38bdf8; font-size: 0.76rem; color: #94a3b8; line-height: 1.5;">
-        <strong style="color: #e2e8f0; display: block; margin-bottom: 4px;">⚠️ Aviso de Seguridad en Playas &amp; Baño:</strong>
-        El estado del mar y la bandera mostrados son estimaciones matemáticas teóricas basadas en modelos oceanográficos numéricos. <strong>En ningún caso sustituyen la señalización física ni las indicaciones del Servicio de Salvamento y Socorrismo a pie de playa</strong>. Respeta siempre las banderas oficiales en cada arenal y báñate bajo tu propia responsabilidad.
-      </div>
+      <details class="marine-disclaimer-box" style="margin-top: 14px; padding: 9px 12px; background: rgba(15, 23, 42, 0.45); border-radius: 10px; border-left: 3px solid #38bdf8; font-size: 0.74rem; color: #94a3b8; line-height: 1.45;">
+        <summary style="color: #cbd5e1; font-weight: 700; cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between;">
+          <span>⚠️ Aviso de Seguridad en Playas &amp; Baño</span>
+          <span style="font-size: 0.7rem; color: #38bdf8;">▾</span>
+        </summary>
+        <div style="margin-top: 6px;">
+          El estado del mar y la bandera mostrados son estimaciones matemáticas teóricas basadas en modelos oceanográficos numéricos. <strong>En ningún caso sustituyen la señalización física ni las indicaciones del Servicio de Salvamento y Socorrismo a pie de playa</strong>. Respeta siempre las banderas oficiales en cada arenal y báñate bajo tu propia responsabilidad.
+        </div>
+      </details>
     </div>
 
     <!-- BOTTOM SHEET / MODAL ERGONÓMICO DE SELECCIÓN DE PLAYA / CALA (FUERA DE MARINE-CARD) -->
