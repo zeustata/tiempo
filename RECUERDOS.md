@@ -2,6 +2,12 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 👑 Contorno Perimetral Tricolor Corporativo en la Tarjeta Maestra `MeteoAsturLode` (`v3.0.25.11`) — 2026-11-07
+- **Objetivo («la tarjeta principal de MeteoAsturLode, no destaca con respecto a las demas y es la tarjeta que siempre esta visible. estaba pansando poner el contorno que cambia de color al igual que el Logotipo de la app... me gusta la que te gusta a ti. no combiene hacer un arbol de navidad... subelo»):**
+  - En `css/main.css` (`.app-header` y `.app-header::before`): implementado contorno perimetral redondeado (`border-radius: inherit`, `padding: 1.8px`) mediante máscara de exclusión W3C y WebKit (`-webkit-mask-composite: xor; mask-composite: exclude;`) con el degradado tricolor oficial del logotipo y del widget de Android (`linear-gradient(135deg, #ffffff 0%, #e0f2fe 20%, #38bdf8 48%, #0284c7 66%, #facc15 86%, #f59e0b 100%)`: Blanco *Meteo* → Azul Cian *Astur* → Dorado *Lode*).
+  - Acabado estático de alta precisión (0% consumo de GPU en scroll, sin animaciones estridentes) y compatibilidad estándar `mask` + `-webkit-mask` sin advertencias de linter.
+  - Service Worker actualizado a `meteoasturlode-v3025-11-header-tricolor-border`.
+
 ## 🌊 Compactación Ergonómica de Scroll en Playas & Mareas y Blindaje 2x2 sin Desborde (`v3.0.25.10`) — 2026-11-07
 - **Objetivo y Pulido sobre Captura Real («queria crear menos scroll en playas y mareas» / «mira como queda» / «yo creo que el llenante o vaciante de texto sobra...» / «esta mejor pero aun tiene fallos. fijate en la captura» / «pisale»):**
   1. *Cuadrícula `2x2` en el Mareógrafo Móvil Libre de Desbordes (`js/utils/tides.js`, `css/components.css`, `css/main.css` y `js/components/marineCard.js`):*
