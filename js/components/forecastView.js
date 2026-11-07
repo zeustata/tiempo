@@ -450,8 +450,9 @@ export function renderForecast(data, units = 'metric', iconTheme = 'astur') {
     const isToday = d === 0;
     const isTomorrow = d === 1;
     
-    // Título y fecha
-    const dayTitle = isToday ? 'Hoy' : isTomorrow ? 'Mañana' : dayDate.toLocaleDateString('es-ES', { weekday: 'long' });
+    // Título y fecha (Día de la semana con mayúscula inicial + píldora HOY/MAÑANA)
+    const rawDayName = dayDate.toLocaleDateString('es-ES', { weekday: 'long' });
+    const dayTitle = rawDayName.charAt(0).toUpperCase() + rawDayName.slice(1);
     const dayFormatted = dayDate.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
     
     const maxT = Math.round(daily.temperature_2m_max[d]);

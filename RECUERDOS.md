@@ -2,6 +2,19 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📅 Supresión de Redundancia «Hoy HOY» / «Mañana MAÑANA» en Pronóstico a 10 Días (`v3.0.25.13`) — 2026-11-07
+- **Diagnóstico de Lendo («vamos a mirar detalles pasito a pasito... pronostico de 10 dias. dme ideas. de mano hoy y mañana se repite... el Hoy y el Mayana salen dos veces en la tarjeta. una en blanco y otra en color metida en una pildora... preparala... subelo»):**
+  1. *Causa de la Redundancia:*
+     - En `js/components/forecastView.js`, la variable `dayTitle` evaluaba `isToday ? 'Hoy' : isTomorrow ? 'Mañana' : ...`.
+     - Simultáneamente, en el HTML de la cabecera de la tarjeta se inyectaba `<span class="today-pill">HOY</span>` y `<span class="tomorrow-pill">MAÑANA</span>`.
+     - Esto provocaba que en pantalla se leyera el texto duplicado `Hoy [ HOY ]` y `Mañana [ MAÑANA ]`.
+  2. *Solución Aplicada:*
+     - Modificado `dayTitle` para que siempre extraiga el nombre real del día de la semana con la primera letra en mayúscula (`rawDayName.charAt(0).toUpperCase() + rawDayName.slice(1)`), dejando las pastillas de color como identificador visual exclusivo.
+     - Resultado en pantalla: `Sábado [ HOY ]`, `Domingo [ MAÑANA ]`, seguido de `Lunes`, `Martes`, etc., aportando la referencia del día de la semana que antes faltaba.
+  3. *Control de Versión y Cache-Busting (Leyes 3 y 4):*
+     - Service Worker actualizado a `meteoasturlode-v3025-13-forecast-day-names`.
+     - Actualizado query string en `js/app.js` (`forecastView.js?v=3.0.25.13`) y en `index.html` (`app.js?v=3.0.25.13` y `sw.js?v=3.0.25.13`).
+
 ## 📡 Resiliencia 4G y Fallback CDN en Radar RainViewer / «Fix Solari» (`v3.0.25.12`) — 2026-11-07
 - **Diagnóstico con Captura Real de Usuario («a un amigo mio que descargo la app, el radar no le descarga. solo le pasa a él. a los demas familiares no... tiene un Realme XT. te mando captura... pero tiene que ser algo que no se note en los demas. no podemos salvar a uno y fastidiar a 10... pisale en local... parece que va bien. mi amigo fue el primer compañero que tube de policia. lo apodamos Solari porque cuando era joven tenia el pelo como el ex jugador del madrid... si. subelo»):**
   1. *Causa Raíz Identificada:*
