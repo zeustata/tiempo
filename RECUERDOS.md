@@ -2,6 +2,20 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🎛️ Botonera de Módulos Satinada y Respiración Lumínica Activa (`v3.0.25.15`) — 2026-11-07
+- **Diagnóstico y Mejora de Menús («los botones de cambiar de menu los veo un poco, poco llamativo. mira a ver que opinas. al final son los que cambian los menus... vamos a probar en local... y que respire un poco el menu en cuestion como lo ves?... pisale... subelo»):**
+  1. *Elevación de Calidad Visual en Pastillas Inactivas (`.module-chip` en `css/components.css`):*
+     - Sustituido el gris pizarra apagado `#94a3b8` por un blanco/plata nítido `#e2e8f0` de alta legibilidad en exteriores y bajo el sol.
+     - Fondo enriquecido con degradado de cristal satinado `linear-gradient(135deg, rgba(30, 41, 59, 0.82) 0%, rgba(15, 23, 42, 0.90) 100%)`, bisel fino superior `rgba(255, 255, 255, 0.15)` y sombra con relieve táctil `inset 0 1px 1px 0 rgba(255, 255, 255, 0.16), 0 3px 10px rgba(0, 0, 0, 0.28)`.
+     - Iconos con relieve `drop-shadow(0 1px 2px rgba(0, 0, 0, 0.45))`.
+  2. *Respiración Lumínica en el Botón Activo (`.module-chip.active` y `@keyframes chipActiveBreathe`):*
+     - Animación periódica suave de **3,5 segundos** en ciclo de reposo (`ease-in-out infinite`).
+     - **Inmunidad al Desplazamiento de Layout (Juicio Crítico):** La animación oscila **estrictamente sobre `box-shadow` y `border-color` cian** (`0 0 12px` a `0 0 22px rgba(56, 189, 248, 0.60)`), sin alterar el `transform: scale` ni las dimensiones del botón, impidiendo cualquier vibración o empuje sobre los botones vecinos en la barra horizontal.
+     - Protección para modos de ahorro de energía y accesibilidad (`prefers-reduced-motion`).
+  3. *Control de Versión y Cache-Busting (Leyes 3 y 4):*
+     - Service Worker actualizado a `meteoasturlode-v3025-15-chips-breathing-glow`.
+     - Query strings actualizados en `index.html` (`components.css?v=3.0.25.15`, `app.js?v=3.0.25.15`, `sw.js?v=3.0.25.15`).
+
 ## ⏱️ Tramos Vivos e Inteligentes en Tarjeta de Hoy (Pronóstico a 10 Días) (`v3.0.25.14`) — 2026-11-07
 - **Objetivo y Acuerdo («dale a la opcion 1... y darle una ligera respiracion a la tarjeta activa?... vale. lo dejamos asi. subelo»):**
   1. *Lógica Temporal Dinámica (`js/components/forecastView.js`):*

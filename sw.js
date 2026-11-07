@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3025-14-forecast-live-dayparts';
+const CACHE_NAME = 'meteoasturlode-v3025-15-chips-breathing-glow';
 const STATIC_ASSETS = [
   './',
   './index.html',
