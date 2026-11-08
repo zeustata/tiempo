@@ -2,7 +2,20 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
-## 🎨 Armonía Visual y Resplandor Perimetral en Carrusel Hero (`v3.0.25.22 - Pruebas en Local`) — 2026-11-08
+## 💎 Reborde Superior Tricolor Corporativo y Calibre 2px en Tarjeta Principal En Vivo (`v3.0.25.23 - Pruebas en Local`) — 2026-11-08
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `147feb9` (`v3.0.25.22`).
+- **Diagnóstico y Solución Paso a Paso de Lendo («vamos paso a paso. primero arreglar el menu en vivo... los colores cambiantes sean como la de la tarjeta maestra y del mismo ancho...»):**
+  1. *Alineación de Calibre y Gama Cromática (Leyes 11 y 14):*
+     - Sustituida la franja pesada de 4 px (`height: 4px;`) en `.hero-weather-card::before` por un perfil estilizado y quirúrgico de **2 px** (`height: 2px;`), igualando el calibre visual fino de la tarjeta maestra `MeteoAsturLode`.
+     - Reemplazado el degradado anterior por el degradado tricolor oficial asturiano corporativo:
+       `linear-gradient(90deg, #ffffff 0%, #e0f2fe 18%, #38bdf8 46%, #0284c7 64%, #facc15 84%, #f59e0b 100%)` (Blanco puro, Azul Cian, Azul Océano y Oro Asturiano).
+     - Incorporado halo luminoso suave `box-shadow: 0 1px 8px rgba(56, 189, 248, 0.35)` integrado perfectamente en la curvatura superior de la tarjeta de cristal.
+  2. *Control de Versión y Cache-Busting (Leyes 3 y 4):*
+     - Service Worker: `meteoasturlode-v3025-23-hero-top-rim-gradient`.
+     - Query strings sincronizados en `index.html` (`components.css?v=3.0.25.23`, `app.js?v=3.0.25.23`, `sw.js?v=3.0.25.23`).
+  3. *Servidor Local de Pruebas (Leyes 3 y 9):* Activo en `http://localhost:8080`.
+
+## 🎨 Armonía Visual y Resplandor Perimetral en Carrusel Hero (`v3.0.25.22`) — 2026-11-08
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `2776281` (`v3.0.25.21`).
 - **Diagnóstico y Solución de Lendo («Me gustaria que la Curva termica tenga los bordes de un color azulado para que llame un poco mas la atencion que ese borde que tiene ahora. al hacer scroll nos sale el clima... en vez de tener el color rojo solo a la izquierda de la tarjeta poner todo el borde del color que ponga el boton... pisale princesa»):**
   1. *Causa de la Asimetría Visual (Ley 14):*

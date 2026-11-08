@@ -114,15 +114,26 @@
   z-index: 1;
 }
 
+/* Reborde superior tricolor corporativo MeteoAsturLode (Mismo calibre y gama que la Tarjeta Maestra) */
 .hero-weather-card::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 4px;
-  background: linear-gradient(to right, #38bdf8, #06b6d4, #f59e0b);
-  z-index: 1;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #e0f2fe 18%,
+    #38bdf8 46%,
+    #0284c7 64%,
+    #facc15 84%,
+    #f59e0b 100%
+  );
+  box-shadow: 0 1px 8px rgba(56, 189, 248, 0.35);
+  pointer-events: none;
+  z-index: 2;
 }
 
 .hero-top-row {

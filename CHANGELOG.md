@@ -9,6 +9,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.25.23] - 2026-11-08
+### Fixed
+- **Reborde Superior Tricolor Corporativo y Calibre 2px en Tarjeta En Vivo (`components.css` - Ley 14):**
+  - **Calibre Refinado:** Reducido el grosor de la franja superior de 4 px a **2 px** en `.hero-weather-card::before`, igualando con precisión el calibre visual de 1,8 px de la tarjeta maestra `MeteoAsturLode`.
+  - **Degradado Oficial Asturiano:** Aplicada la paleta corporativa idéntica a la cabecera (*Blanco puro ➔ Azul Cielo ➔ Azul Océano ➔ Oro Asturiano*), con halo luminoso suave integrado en la curvatura de la tarjeta de cristal.
+
 ## [3.0.25.22] - 2026-11-08
 ### Added
 - **Armonía Visual y Resplandor Perimetral en Carrusel Hero (`components.css` + `climatologyData.js` - Ley 14):**
