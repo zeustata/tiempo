@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3025-30-cosmos-moon-pills-symmetry';
+const CACHE_NAME = 'meteoasturlode-v3025-31-mountain-snow-pills';
 const STATIC_ASSETS = [
   './',
   './index.html',

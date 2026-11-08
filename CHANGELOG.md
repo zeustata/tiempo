@@ -9,6 +9,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.25.31] - 2026-11-09
+### Fixed
+- **Simetría en Nieve Acumulada y Supresión de Botón Externo Redundante (`mountainCard.js` + `components.css` - Leyes 11 y 14):**
+  - **Cuadrícula Simétrica de Nieve Acumulada:** Sustituido el bloque desorganizado previo por dos pastillas gemelas (`.ski-snow-summary-grid`) con diseño vertical limpio: `⏱️ Próx. 3 Días` y `❄️ Total 7 Días` con cifras en tipografía tabular grande de 1.05rem en azul cian. Cero desbordes ni saltos de línea raros en pantallas móviles.
+  - **Eliminación de Botón Externo Redundante:** Suprimido el botón `🎿 Parte Oficial Diario y Webcams ↗`, eliminando enlaces externos inestables o propensos a errores y unificando el acceso a cámaras en el visor nativo de la app.
+
 ## [3.0.25.30] - 2026-11-08
 ### Fixed
 - **Simetría Total y Blindaje Anti-Desborde en Pastillas Lunares (`astronomyCard.js` + `components.css` - Leyes 11 y 14):**

@@ -13700,6 +13700,56 @@
   font-weight: 800;
 }
 
+.ski-snow-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 10px;
+}
+
+.ski-summary-pill {
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  border-radius: 10px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-width: 0;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.ski-pill-label {
+  font-size: 0.73rem;
+  font-weight: 700;
+  color: #94a3b8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.2px;
+}
+
+.ski-pill-val {
+  font-family: inherit;
+  font-variant-numeric: tabular-nums;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #38bdf8;
+  white-space: nowrap;
+}
+
+.ski-pill-unit {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #7dd3fc;
+  margin-left: 2px;
+}
+
 .ski-total-strip {
   display: flex;
   align-items: center;

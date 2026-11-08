@@ -1013,23 +1013,17 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
                   `).join('')}
                 </div>
 
-                <!-- Resumen de Nieve de la Semana -->
-                <div class="ski-total-strip">
-                  <div class="ski-total-group">
-                    <span class="ski-total-label">❄️ Nieve Fresca Semana (7 Días):</span>
-                    <span class="ski-total-val">${totalSnow7Days} cm</span>
+                <!-- Resumen Simétrico de Nieve Acumulada (3 y 7 Días) -->
+                <div class="ski-snow-summary-grid">
+                  <div class="ski-summary-pill">
+                    <span class="ski-pill-label">⏱️ Próx. 3 Días</span>
+                    <span class="ski-pill-val">${totalSnow3Days} <span class="ski-pill-unit">cm</span></span>
                   </div>
-                  <div class="ski-total-hint">
-                    <span>(3 Días: <strong>${totalSnow3Days} cm</strong>)</span>
+                  <div class="ski-summary-pill">
+                    <span class="ski-pill-label">❄️ Total 7 Días</span>
+                    <span class="ski-pill-val">${totalSnow7Days} <span class="ski-pill-unit">cm</span></span>
                   </div>
                 </div>
-              </div>
-
-              <!-- Enlace Oficial a Webcams y Partes de Nieve -->
-              <div class="resort-web-link-row">
-                <a href="${r.parteOficialUrl || r.web}" target="_blank" rel="noopener noreferrer" class="btn-resort-link">
-                  🎿 Parte Oficial Diario y Webcams de ${r.shortName} ↗
-                </a>
               </div>
             </div>
           `).join('')}

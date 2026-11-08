@@ -2,6 +2,23 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🎿 Simetría en Nieve Acumulada y Supresión de Botón Externo Redundante (`v3.0.25.31 - Pruebas en Local`) — 2026-11-09
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `907bc2d` (`v3.0.25.30`).
+- **Diagnóstico y Solución de Lendo («el boton Parte oficial diario y webcams a parte de dar problemas creo que es un sin sentido... y ese boton que dices de acumulacion tambien esta un poco desordenado... pisale»):**
+  1. *Supresión del Botón Externo Redundante (Leyes 11 y 15):*
+     - Eliminado el botón `<div class="resort-web-link-row">` (`🎿 Parte Oficial Diario y Webcams de ${r.shortName} ↗`).
+     - Se evitan enlaces externos rotos, caídas de certificados ajenos o expulsión del usuario fuera de la PWA.
+     - Las webcams de estaciones y puertos siguen disponibles de forma 100% nativa en el visor principal de la app y en el botón interno de la cabecera del módulo.
+  2. *Reestructuración Simétrica en Nieve Acumulada (Leyes 11 y 14):*
+     - Reemplazado el antiguo bloque `ski-total-strip` (cuyos textos largos rompían líneas descolocando unidades `cm` y relegando los 3 días a un renglón huérfano) por una **cuadrícula de dos pastillas simétricas** (`.ski-snow-summary-grid`):
+       - **Pastilla 1:** `⏱️ Próx. 3 Días` / `${totalSnow3Days} cm` (en tipografía tabular grande de 1.05rem, azul cian).
+       - **Pastilla 2:** `❄️ Total 7 Días` / `${totalSnow7Days} cm` (en tipografía tabular grande de 1.05rem, azul cian).
+     - Acabado en cristal con borde suave, alineación vertical armónica y cero rotura de texto en cualquier móvil.
+  3. *Control de Versión y Cache-Busting (Leyes 3 y 4):*
+     - Service Worker: `meteoasturlode-v3025-31-mountain-snow-pills`.
+     - Query strings sincronizados en `index.html` (`components.css?v=3.0.25.31`) y en `js/app.js` (`mountainCard.js?v=3.0.25.31`).
+  4. *Servidor Local de Pruebas (Leyes 3 y 9):* Activo en `http://localhost:8080`.
+
 ## 🌙 Simetría Total y Blindaje Anti-Desborde en Pastillas Lunares (`v3.0.25.30 - Pruebas en Local`) — 2026-11-08
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `7071ce3` (`v3.0.25.29`).
 - **Diagnóstico y Solución de Lendo («la primera tarjeta aun se resiste... pisale a la 1»):**
