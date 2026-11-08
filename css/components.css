@@ -394,9 +394,9 @@
 /* --- MINI-GRÁFICO TÉRMICO CONTINUO 24H (INMUNIDAD ANTI-DESBORDE Y PULSO VIVO) --- */
 .mini-thermal-widget {
   margin: 10px 0 0 0;
-  background: rgba(15, 23, 42, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.09) 0%, rgba(15, 23, 42, 0.65) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.40);
+  border-radius: 14px;
   padding: 8px 12px 6px 12px;
   display: flex;
   flex-direction: column;
@@ -404,6 +404,13 @@
   box-sizing: border-box;
   width: 100%;
   max-width: 440px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.28), 0 0 12px rgba(56, 189, 248, 0.12);
+  transition: all 0.3s ease;
+}
+
+.mini-thermal-widget:hover {
+  border-color: rgba(56, 189, 248, 0.65);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.38), 0 0 16px rgba(56, 189, 248, 0.22);
 }
 
 .mini-thermal-header {
@@ -1081,16 +1088,44 @@
   margin-top: 2px;
 }
 
-.climatology-strip.clima-warm {
-  border-left: 3px solid #ef4444;
+.climatology-strip.clima-warm,
+.climatology-strip.clima-very-warm {
+  border: 1px solid rgba(239, 68, 68, 0.48) !important;
+  border-left: 1px solid rgba(239, 68, 68, 0.48) !important;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.12) 0%, rgba(15, 23, 42, 0.70) 100%) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.28), 0 0 12px rgba(239, 68, 68, 0.14);
 }
 
-.climatology-strip.clima-cool {
-  border-left: 3px solid #38bdf8;
+.climatology-strip.clima-warm:hover,
+.climatology-strip.clima-very-warm:hover {
+  border-color: rgba(239, 68, 68, 0.70) !important;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.38), 0 0 16px rgba(239, 68, 68, 0.22);
+}
+
+.climatology-strip.clima-cool,
+.climatology-strip.clima-very-cool {
+  border: 1px solid rgba(56, 189, 248, 0.48) !important;
+  border-left: 1px solid rgba(56, 189, 248, 0.48) !important;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.10) 0%, rgba(15, 23, 42, 0.70) 100%) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.28), 0 0 12px rgba(56, 189, 248, 0.14);
+}
+
+.climatology-strip.clima-cool:hover,
+.climatology-strip.clima-very-cool:hover {
+  border-color: rgba(56, 189, 248, 0.70) !important;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.38), 0 0 16px rgba(56, 189, 248, 0.22);
 }
 
 .climatology-strip.clima-normal {
-  border-left: 3px solid #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.42) !important;
+  border-left: 1px solid rgba(16, 185, 129, 0.42) !important;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.10) 0%, rgba(15, 23, 42, 0.70) 100%) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.28), 0 0 12px rgba(16, 185, 129, 0.12);
+}
+
+.climatology-strip.clima-normal:hover {
+  border-color: rgba(16, 185, 129, 0.65) !important;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.38), 0 0 16px rgba(16, 185, 129, 0.20);
 }
 
 @media (max-width: 380px) {

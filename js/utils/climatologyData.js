@@ -304,13 +304,13 @@ export function getClimatologyContext(concejo, current, daily) {
 
   if (diffMax >= 2.0) {
     status = 'warm';
-    badgeClass = diffMax >= 4.5 ? 'clima-very-warm' : 'clima-warm';
+    badgeClass = diffMax >= 4.5 ? 'clima-very-warm clima-warm' : 'clima-warm';
     icon = diffMax >= 4.5 ? '🔥' : '☀️';
     label = `+${diffMax}°C sobre lo habitual`;
     shortText = `+${diffMax}°C más cálido de lo normal`;
   } else if (diffMax <= -2.0) {
     status = 'cool';
-    badgeClass = diffMax <= -4.5 ? 'clima-very-cool' : 'clima-cool';
+    badgeClass = diffMax <= -4.5 ? 'clima-very-cool clima-cool' : 'clima-cool';
     icon = diffMax <= -4.5 ? '❄️' : '🧥';
     label = `${diffMax}°C bajo lo habitual`;
     shortText = `${diffMax}°C más fresco de lo normal`;

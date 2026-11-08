@@ -11,7 +11,7 @@ import { detectThunderstormEffect, renderThunderstormBanner } from '../utils/thu
 import { detectRoadWindStatus, renderRoadWindBanner, renderRoadWindSensorPill } from '../utils/roadWindDetector.js?v=3.0.23.43';
 import { getSeismicStatus, renderSeismicBanner } from '../utils/seismicDetector.js?v=3.0.3';
 import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=2.2.12';
-import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=3.0.25.21';
+import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=3.0.25.22';
 import { calculateUmbrellaStatus, renderUmbrellaCard } from '../utils/umbrellaAdvisor.js?v=1.1.60';
 import { checkConcejoFolixa } from '../utils/festivosData.js?v=1.1.85';
 

@@ -9,6 +9,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.25.22] - 2026-11-08
+### Added
+- **Armonía Visual y Resplandor Perimetral en Carrusel Hero (`components.css` + `climatologyData.js` - Ley 14):**
+  - **Curva Térmica Hoy (Slide 1):** Sustituido el borde neutro apagado por un contorno luminoso azul cian atmosférico (`rgba(56, 189, 248, 0.40)`), unificado el radio a `14px` e incorporado fondo degradado azul noche con halo de profundidad.
+  - **Clima y Normales del Mes (Slide 2):** Eliminada la franja aislada a la izquierda y extendido el color temático a todo el perímetro de la tarjeta (rojo coral si es más cálido de lo normal, azul hielo si es más fresco y verde esmeralda si coincide con la media histórica), acompañado de fondo cristalino a juego.
+  - **Unificación Tríada Hero:** Las 3 tarjetas (Curva Térmica, Clima y Semáforu del Paragües) comparten idéntico radio de curvatura (`14px`), proporciones simétricas y contornos perimetrales dinámicos de máxima calidad.
+
 ## [3.0.25.21] - 2026-11-08
 ### Fixed
 - **Blindaje Móvil, Cabecera Fija y Scroll Táctil en Modal de Clima (`components.css` + `climatologyData.js` + `index.html` - Ley 11):**

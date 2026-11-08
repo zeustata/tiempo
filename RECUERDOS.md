@@ -2,7 +2,25 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
-## 📱 Blindaje Móvil de Cabecera Fija, «X» Visible y Scroll Suave en Modal de Clima (`v3.0.25.21 - Pruebas en Local`) — 2026-11-08
+## 🎨 Armonía Visual y Resplandor Perimetral en Carrusel Hero (`v3.0.25.22 - Pruebas en Local`) — 2026-11-08
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `2776281` (`v3.0.25.21`).
+- **Diagnóstico y Solución de Lendo («Me gustaria que la Curva termica tenga los bordes de un color azulado para que llame un poco mas la atencion que ese borde que tiene ahora. al hacer scroll nos sale el clima... en vez de tener el color rojo solo a la izquierda de la tarjeta poner todo el borde del color que ponga el boton... pisale princesa»):**
+  1. *Causa de la Asimetría Visual (Ley 14):*
+     - La Curva Térmica (Slide 1) tenía un borde gris neutro apagado (`rgba(255, 255, 255, 0.1)`) con radio inferior (8 px), desluciendo su protagonismo.
+     - La tarjeta de Clima (Slide 2) solo pintaba una línea vertical a la izquierda (`border-left: 3px solid`), dejando los otros tres lados apagados, mientras el Semáforo del Paraguas (Slide 3) sí disfrutaba de borde perimetral y fondo tintado completo.
+  2. *Solución de Armonía Integral (Leyes 14 y 18):*
+     - **Slide 1 (Curva Térmica Hoy):** Borde perimetral azul cian atmosférico (`rgba(56, 189, 248, 0.40)`), esquinas redondeadas a `14px` unificadas, fondo degradado azul noche y halo luminoso.
+     - **Slide 2 (Clima y Normales del Mes):** Borde perimetral 100% dinámico con degradado a juego:
+       - *Cálido (`clima-warm` / `clima-very-warm`):* Borde coral/rojo (`rgba(239, 68, 68, 0.48)`) y resplandor cálido (+3.5°C sobre lo habitual).
+       - *Frío (`clima-cool` / `clima-very-cool`):* Borde azul hielo (`rgba(56, 189, 248, 0.48)`) y resplandor frío.
+       - *Normal (`clima-normal`):* Borde verde esmeralda (`rgba(16, 185, 129, 0.42)`) y resplandor suave.
+     - **Slide 3 (Semáforu del Paragües):** Borde semafórico completo verde, ámbar o rojo, completando la tríada armónica de tarjetas.
+  3. *Control de Versión y Cache-Busting (Leyes 3 y 4):*
+     - Service Worker: `meteoasturlode-v3025-22-hero-carousel-borders-glow`.
+     - Query strings sincronizados en `index.html` (`components.css?v=3.0.25.22`, `app.js?v=3.0.25.22`, `sw.js?v=3.0.25.22`) y en módulos JS (`climatologyData.js?v=3.0.25.22`, `currentCard.js?v=3.0.25.22`).
+  4. *Servidor Local de Pruebas (Leyes 3 y 9):* Activo en `http://localhost:8080`.
+
+## 📱 Blindaje Móvil de Cabecera Fija, «X» Visible y Scroll Suave en Modal de Clima (`v3.0.25.21`) — 2026-11-08
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `14e1162` (`v3.0.25.20`).
 - **Diagnóstico y Corrección de Lendo («en la tablet y en pc al darle a ver todo perfecto pero en elmovil no sale ni la X, esta todo muy desordenado y tiene un scroll gigante que no mueve nada... pisale»):**
   1. *Causa del Desborde y Bloqueo en Móvil:*

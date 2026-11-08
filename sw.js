@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3025-21-clima-modal-mobile-fix';
+const CACHE_NAME = 'meteoasturlode-v3025-22-hero-carousel-borders-glow';
 const STATIC_ASSETS = [
   './',
   './index.html',

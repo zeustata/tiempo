@@ -1,7 +1,7 @@
 import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo, resolveSubLocalidad, SUB_LOCALIDADES } from './config/concejos.js?v=3.0.25.18';
 import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.25.7';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=3.0.23.63';
-import { renderCurrentWeather } from './components/currentCard.js?v=3.0.25.21';
+import { renderCurrentWeather } from './components/currentCard.js?v=3.0.25.22';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.25.10';
 import { renderSurfCard } from './components/surfCard.js?v=3.0.25.2';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.25.5';
@@ -34,7 +34,7 @@ import { triggerSeismicRefresh, getSeismicStatus } from './utils/seismicDetector
 import { evaluateWeatherAlerts } from './utils/weatherAlerts.js?v=3.0.5';
 import { openShareModal } from './utils/shareCardGenerator.js?v=3.0.23.59';
 import { toggleWeatherSpeech, stopWeatherSpeech } from './utils/weatherSpeaker.js?v=2.0.0';
-import { getClimatologyContext, renderClimatologyModalBody } from './utils/climatologyData.js?v=3.0.25.21';
+import { getClimatologyContext, renderClimatologyModalBody } from './utils/climatologyData.js?v=3.0.25.22';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, previsión horaria y curvas interactivas', key: '1' },
