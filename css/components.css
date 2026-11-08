@@ -9823,6 +9823,175 @@
   white-space: nowrap;
 }
 
+/* ==========================================================================
+   CARRUSEL NOCHE / DÍA EN HERO DE ASTRONOMÍA & COSMOS (Ley 18)
+   ========================================================================== */
+.cosmos-widgets-carousel-wrap {
+  width: 100%;
+  margin-top: 14px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .cosmos-widgets-carousel-wrap {
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.cosmos-widgets-carousel {
+  display: flex;
+  align-items: stretch;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pan-y !important;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 3px 1px;
+}
+
+.cosmos-widgets-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.cosmos-widget-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: flex;
+}
+
+.cosmos-subcard {
+  width: 100%;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 14px 14px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.15);
+  transition: border-color 0.25s ease;
+}
+
+.cosmos-night-card {
+  border-color: rgba(56, 189, 248, 0.25);
+  background: linear-gradient(180deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.65) 100%);
+}
+
+.cosmos-sun-card {
+  border-color: rgba(251, 191, 36, 0.25);
+  background: linear-gradient(180deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.65) 100%);
+}
+
+.cosmos-subcard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.cosmos-subcard-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cosmos-subcard-title .subcard-icon {
+  font-size: 1.4rem;
+  background: rgba(56, 189, 248, 0.12);
+  padding: 6px;
+  border-radius: 12px;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  line-height: 1;
+}
+
+.cosmos-sun-card .cosmos-subcard-title .subcard-icon {
+  background: rgba(251, 191, 36, 0.12);
+  border-color: rgba(251, 191, 36, 0.25);
+}
+
+.cosmos-subcard-title strong {
+  font-size: 0.98rem;
+  color: #f8fafc;
+  font-weight: 800;
+  display: block;
+}
+
+.cosmos-subcard-title .subcard-subtitle {
+  font-size: 0.74rem;
+  color: #cbd5e1;
+  display: block;
+  margin-top: 1px;
+}
+
+.cosmos-subcard .astronomy-moon-details-grid {
+  margin-top: 10px;
+  padding-top: 10px;
+  gap: 8px;
+}
+
+.astronomy-moon-badge.compact {
+  padding: 5px 10px;
+  border-radius: 12px;
+  gap: 8px;
+}
+
+.astronomy-moon-badge.compact .moon-icon-giant {
+  font-size: 1.6rem;
+}
+
+.astronomy-moon-badge.compact .moon-badge-meta strong {
+  font-size: 0.85rem;
+}
+
+.astronomy-moon-badge.compact .moon-badge-meta span {
+  font-size: 0.72rem;
+}
+
+.cosmos-widgets-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.cosmos-widgets-dots .sensor-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cosmos-widgets-dots .sensor-dot.active {
+  width: 22px;
+  background: var(--primary, #38bdf8);
+  border-color: rgba(56, 189, 248, 0.6);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+}
+
 /* --- ASTRONOMÍA: LUZ NATURAL, HORA DORADA & HORA AZUL (VARIANTE 1) --- */
 .sun-magic-card {
   background: rgba(15, 23, 42, 0.45);

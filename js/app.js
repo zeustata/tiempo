@@ -10,7 +10,7 @@ import { renderMountainCard } from './components/mountainCard.js?v=3.0.25.0';
 import { renderTourismCard } from './components/tourismCard.js?v=3.0.25.5';
 import { renderForecast, renderHourlyForecastBlock } from './components/forecastView.js?v=3.0.25.14';
 import { renderWeatherChart } from './components/chartsView.js?v=3.0.23.58';
-import { renderAstronomyView } from './components/astronomyCard.js?v=3.0.25.0';
+import { renderAstronomyView } from './components/astronomyCard.js?v=3.0.25.25';
 import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=3.0.25.12';
 import { getWeatherInfo } from './utils/weatherIcons.js?v=3.0.24.50';
 import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=2.0.0';
@@ -2680,6 +2680,7 @@ class MeteoAsturiasApp {
       if (!target) return false;
       return target.closest(
         '.hero-widgets-carousel-wrap, .hero-widgets-carousel, .hero-widget-slide, .hero-widgets-dots, .clima-accordion-card, .clima-compact-summary, .mini-thermal-widget, ' +
+        '.cosmos-widgets-carousel-wrap, .cosmos-widgets-carousel, .cosmos-widget-slide, .cosmos-widgets-dots, .cosmos-subcard, ' +
         '.sensors-carousel-section, .sensors-nav-toolbar, .sensor-nav-pill, .sensors-carousel, .sensor-card, .sensors-dots-indicator, .carousel-dots-indicator, .sensor-dot, ' +
         '.hourly-scroll-container, .live-hourly-block, .hourly-card, .hourly-day-divider, ' +
         '.chart-scroll-viewport, #chart-canvas-wrapper, #meteo-chart-canvas, ' +

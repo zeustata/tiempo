@@ -9,6 +9,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.25.25] - 2026-11-08
+### Added
+- **Reestructuración de Astronomía & Cosmos: Carrusel Deslizante Noche / Día en Hero Card (`astronomyCard.js` + `components.css` + `app.js` - Leyes 11, 14 y 18):**
+  - **Hero Card Integrador:** La tarjeta principal `Astronomía & Cosmos (2026 - 2027)` se mantiene como cabecera destacada del módulo con su reborde tricolor de 2 px, alojando en su interior un carrusel horizontal deslizante monotarjeta (`#cosmos-widgets-carousel`).
+  - **Slide 1 (🌙 Cielo Nocturno & Luna):** Fase lunar (`moon.icon`, fase, % iluminación), métricas (`Edad Lunar` y días para `Próxima Luna Llena`) y el semáforo en vivo de observación nocturna (22:00 a 04:00 h).
+  - **Slide 2 (📸 Luz Natural & Hora Mágica):** Ventanas fotográficas del concejo (Orto/Ocaso, Hora Dorada y Azul matutina y vespertina), botón didáctico `💡` y semáforo de visibilidad fotográfica.
+  - **Supresión de Salto Vertical:** Eliminada la tarjeta independiente `.sun-magic-card`, subiendo los `Próximos Acontecimientos` (calendario astronómico) de inmediato bajo la cabecera.
+  - **Paginador Interactivo y Aislamiento Táctil (Ley 18):** Paginador de 2 puntos `#cosmos-widgets-dots` con navegación suave, píldora luminosa activa, desplazamiento vertical continuo (`touch-action: pan-x pan-y !important;`) y swipe protegido en `isInteractiveZone`.
+
 ## [3.0.25.24] - 2026-11-08
 ### Added
 - **Extensión Universal del Reborde Tricolor Corporativo y Limpieza Jerárquica en 10 Días (`components.css` - Ley 14):**

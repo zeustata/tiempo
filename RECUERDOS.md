@@ -2,6 +2,24 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌌 Reestructuración de Astronomía & Cosmos: Carrusel Deslizante Noche / Día en Hero Card (`v3.0.25.25 - Pruebas en Local`) — 2026-11-08
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `f1ffbd7` (`v3.0.25.24`).
+- **Diagnóstico y Petición de Lendo («ahora al menu cosmos. quiero que la tarjeta de cabereca Astonomia y Cosmos con el texto de los acontecimientos (2026-2027) sea la principal y luego una subtarjeta con lo que queda de la luna y la observacion y con scrol horizontal para metes en subtarjeta la tarjeta de Luz Natural y hora magica... pisale a ver q tal»):**
+  1. *Jerarquía y Compactación Superior (Leyes 11, 14 y 18):*
+     - La tarjeta contenedora principal `Astronomía & Cosmos (2026-2027)` (`.astronomy-hero-card`) se mantiene como la cabecera destacada del menú, con su reborde tricolor de 2 px y su título emblemático.
+     - En su interior se integra un carrusel horizontal deslizante monotarjeta al 100% (`#cosmos-widgets-carousel`) con dos subtarjetas hermanas:
+       - **Slide 1 (Cielo Nocturno & Luna):** Fase lunar (`moon.icon`, nombre de fase, porcentaje de iluminación), métricas (`Edad Lunar`, `Próxima Luna Llena`) y el semáforo en vivo de calidad de observación nocturna (22:00 - 04:00 h).
+       - **Slide 2 (Luz Natural & Hora Mágica):** Ventanas fotográficas en el concejo seleccionado (Orto/Ocaso, Hora Dorada y Hora Azul en Amanecer y Atardecer), botón didáctico explicativo `💡` y semáforo de visibilidad fotográfica.
+     - Suprimida la tarjeta aislada inferior `.sun-magic-card`, eliminando un salto vertical de más de 400 px y permitiendo que la sección `Próximos Acontecimientos` (calendario y semáforo de efemérides celestes) suba directamente sin scroll innecesario.
+  2. *Doctrina de Aislamiento Táctil y Paginador Interactivo (Ley 18):*
+     - Paginador de 2 puntos (`#cosmos-widgets-dots`) interactivo, con salto suave al pulsar y expansión en píldora luminosa cian en la diapositiva activa.
+     - Aislamiento en `isInteractiveZone` en `js/app.js` (`.cosmos-widgets-carousel-wrap, .cosmos-widgets-carousel, .cosmos-widget-slide, .cosmos-widgets-dots, .cosmos-subcard`).
+     - Desplazamiento vertical intacto con `touch-action: pan-x pan-y !important;` y encuadre magnético `scroll-snap-type: x mandatory`.
+  3. *Control de Versión y Cache-Busting (Leyes 3 y 4):*
+     - Service Worker: `meteoasturlode-v3025-25-cosmos-carousel`.
+     - Query strings sincronizados en `index.html` (`components.css?v=3.0.25.25`, `app.js?v=3.0.25.25`, `sw.js?v=3.0.25.25`) y en `js/app.js` (`astronomyCard.js?v=3.0.25.25`).
+  4. *Servidor Local de Pruebas (Leyes 3 y 9):* Activo en `http://localhost:8080`.
+
 ## 🏛️ Extensión Universal del Reborde Tricolor a Todas las Secciones y Limpieza de Sub-tarjeta 10 Días (`v3.0.25.24 - Pruebas en Local`) — 2026-11-08
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `aa02f60` (`v3.0.25.23`).
 - **Diagnóstico y Solución de Lendo («vamos a por el ponto 2... quisiera que todas las tarjetas de arriba de los menus tengan tambien ese reborde en la parte superior... en una sub tarjeta que ya tiene un borde azulado para saber que es ahora en vez de tenerlo en la tarjeta principal Pronostico a 10 dias»):**

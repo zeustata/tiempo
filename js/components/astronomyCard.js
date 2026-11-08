@@ -513,7 +513,7 @@ export function renderAstronomyView(containerId, currentFilter = 'all', weatherD
   const html = `
     <div class="astronomy-view-container">
       
-      <!-- HERO CARD LUNAR Y CIELO NOCTURNO -->
+      <!-- HERO CARD PRINCIPAL: ASTRONOMÍA & COSMOS (CON CARRUSEL DESLIZANTE NOCHE / DÍA) -->
       <div class="astronomy-hero-card">
         <div class="astronomy-hero-top">
           <div class="astronomy-hero-title">
@@ -523,119 +523,149 @@ export function renderAstronomyView(containerId, currentFilter = 'all', weatherD
               <span class="astronomy-subtitle">Acontecimientos celestes y semáforo de visibilidad en Asturias (2026 - 2027)</span>
             </div>
           </div>
-          <div class="astronomy-moon-badge">
-            <span class="moon-icon-giant">${moon.icon}</span>
-            <div class="moon-badge-meta">
-              <strong>${moon.phaseName}</strong>
-              <span>${moon.illumination}% Iluminación</span>
-            </div>
-          </div>
         </div>
 
-        <div class="astronomy-moon-details-grid">
-          <div class="moon-metric-pill">
-            <span class="metric-label">🌓 Edad Lunar</span>
-            <span class="metric-val">${moon.moonAge} días</span>
-          </div>
-          <div class="moon-metric-pill">
-            <span class="metric-label">🌕 Próxima Luna Llena</span>
-            <span class="metric-val">${moon.daysToFullMoon === 0 ? '¡Hoy!' : 'En ' + moon.daysToFullMoon + ' días'}</span>
-          </div>
-        </div>
-
-        <!-- SEMÁFORO EN VIVO: CALIDAD DEL CIELO ESTA NOCHE (22:00 - 04:00 H) -->
-        <div style="margin-top: 12px; background: rgba(15, 23, 42, 0.55); border: 1px solid ${stargazing.color}55; border-left: 4px solid ${stargazing.color}; border-radius: 12px; padding: 10px 12px; box-sizing: border-box;">
-          <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap; margin-bottom: 4px;">
-            <span style="font-size: 0.75rem; font-weight: 800; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.04em;">
-              ${stargazing.icon} Observación Esta Noche (22:00 - 04:00 h)
-            </span>
-            <span style="font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 999px; background: ${stargazing.color}22; color: ${stargazing.color}; border: 1px solid ${stargazing.color}66;">
-              ${stargazing.badge}
-            </span>
-          </div>
-          <div style="font-size: 0.86rem; font-weight: 800; color: #ffffff; margin-bottom: 3px;">
-            ${stargazing.verdict}
-          </div>
-          <p style="margin: 0; font-size: 0.78rem; color: #94a3b8; line-height: 1.38;">
-            ${stargazing.desc}
-          </p>
-          <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 0.72rem; color: #38bdf8; font-weight: 700;">
-            <span>☁️ Nubosidad media: ${stargazing.avgCloudPct}%</span>
-            <span>•</span>
-            <span>⏱️ ${stargazing.bestWindow}</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 2. MOMENTOS MÁGICOS DE LUZ: HORA DORADA & HORA AZUL (VARIANTE 1) -->
-      <div class="sun-magic-card">
-        <div class="sun-magic-header">
-          <div class="sun-magic-title-wrap">
-            <span class="sun-magic-icon">📸</span>
-            <div>
-              <h4 class="sun-magic-title">Luz Natural & Hora Mágica</h4>
-              <span class="sun-magic-subtitle">Ventanas fotográficas hoy en ${sunData.concejoName}</span>
-            </div>
-          </div>
-          <button class="btn-explain-sensor" data-explain="golden_hour" title="¿Qué son la Hora Dorada y la Hora Azul? Pulsa para aprender" aria-label="Explicación de la hora dorada y azul">💡</button>
-        </div>
-
-        <div class="sun-magic-sections">
-          <!-- Bloque Amanecer -->
-          <div class="sun-magic-group">
-            <div class="sun-magic-group-title">
-              <span>🌅 Amanecer • Orto a las ${sunData.sunriseStr}</span>
-            </div>
-            <div class="sun-magic-grid">
-              <div class="sun-pill sun-pill-blue">
-                <div class="sun-pill-header">
-                  <span class="sun-pill-name">Hora Azul</span>
-                  <span class="sun-pill-dot">🔵</span>
+        <!-- CARRUSEL DESLIZABLE COMPACTO: NOCHE & LUNA vs DÍA & HORA MÁGICA (LEY 18) -->
+        <div class="cosmos-widgets-carousel-wrap">
+          <div class="cosmos-widgets-carousel" id="cosmos-widgets-carousel">
+            
+            <!-- Slide 1: Cielo Nocturno & Luna -->
+            <div class="cosmos-widget-slide">
+              <div class="cosmos-subcard cosmos-night-card">
+                <div class="cosmos-subcard-header">
+                  <div class="cosmos-subcard-title">
+                    <span class="subcard-icon">🌙</span>
+                    <div>
+                      <strong>Cielo Nocturno & Luna</strong>
+                      <span class="subcard-subtitle">Fase actual y visibilidad de estrellas</span>
+                    </div>
+                  </div>
+                  <div class="astronomy-moon-badge compact">
+                    <span class="moon-icon-giant">${moon.icon}</span>
+                    <div class="moon-badge-meta">
+                      <strong>${moon.phaseName}</strong>
+                      <span>${moon.illumination}% Ilum.</span>
+                    </div>
+                  </div>
                 </div>
-                <span class="sun-pill-time">${sunData.morning.blue}</span>
-                <span class="sun-pill-desc">Crepúsculo frío y faros encendidos</span>
-              </div>
-              <div class="sun-pill sun-pill-golden">
-                <div class="sun-pill-header">
-                  <span class="sun-pill-name">Hora Dorada</span>
-                  <span class="sun-pill-dot">🟡</span>
+
+                <div class="astronomy-moon-details-grid">
+                  <div class="moon-metric-pill">
+                    <span class="metric-label">🌓 Edad Lunar</span>
+                    <span class="metric-val">${moon.moonAge} días</span>
+                  </div>
+                  <div class="moon-metric-pill">
+                    <span class="metric-label">🌕 Próxima Llena</span>
+                    <span class="metric-val">${moon.daysToFullMoon === 0 ? '¡Hoy!' : 'En ' + moon.daysToFullMoon + 'd'}</span>
+                  </div>
                 </div>
-                <span class="sun-pill-time">${sunData.morning.golden}</span>
-                <span class="sun-pill-desc">Primeros rayos y luz rasante suave</span>
+
+                <!-- SEMÁFORO EN VIVO: CALIDAD DEL CIELO ESTA NOCHE (22:00 - 04:00 H) -->
+                <div style="margin-top: 10px; background: rgba(15, 23, 42, 0.55); border: 1px solid ${stargazing.color}55; border-left: 4px solid ${stargazing.color}; border-radius: 12px; padding: 9px 11px; box-sizing: border-box;">
+                  <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap; margin-bottom: 4px;">
+                    <span style="font-size: 0.74rem; font-weight: 800; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.04em;">
+                      ${stargazing.icon} Observación Esta Noche (22:00 - 04:00 h)
+                    </span>
+                    <span style="font-size: 0.70rem; font-weight: 800; padding: 2px 7px; border-radius: 999px; background: ${stargazing.color}22; color: ${stargazing.color}; border: 1px solid ${stargazing.color}66;">
+                      ${stargazing.badge}
+                    </span>
+                  </div>
+                  <div style="font-size: 0.84rem; font-weight: 800; color: #ffffff; margin-bottom: 2px;">
+                    ${stargazing.verdict}
+                  </div>
+                  <p style="margin: 0; font-size: 0.76rem; color: #94a3b8; line-height: 1.35;">
+                    ${stargazing.desc}
+                  </p>
+                  <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 5px; padding-top: 5px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 0.70rem; color: #38bdf8; font-weight: 700;">
+                    <span>☁️ Nubosidad: ${stargazing.avgCloudPct}%</span>
+                    <span>•</span>
+                    <span>⏱️ ${stargazing.bestWindow}</span>
+                  </div>
+                </div>
               </div>
             </div>
+
+            <!-- Slide 2: Luz Natural & Hora Mágica -->
+            <div class="cosmos-widget-slide">
+              <div class="cosmos-subcard cosmos-sun-card">
+                <div class="cosmos-subcard-header">
+                  <div class="cosmos-subcard-title">
+                    <span class="subcard-icon">📸</span>
+                    <div>
+                      <strong>Luz Natural & Hora Mágica</strong>
+                      <span class="subcard-subtitle">Ventanas fotográficas hoy en ${sunData.concejoName}</span>
+                    </div>
+                  </div>
+                  <button class="btn-explain-sensor" data-explain="golden_hour" title="¿Qué son la Hora Dorada y la Hora Azul? Pulsa para aprender" aria-label="Explicación de la hora dorada y azul">💡</button>
+                </div>
+
+                <div class="sun-magic-sections">
+                  <!-- Bloque Amanecer -->
+                  <div class="sun-magic-group">
+                    <div class="sun-magic-group-title">
+                      <span>🌅 Amanecer • Orto a las ${sunData.sunriseStr}</span>
+                    </div>
+                    <div class="sun-magic-grid">
+                      <div class="sun-pill sun-pill-blue">
+                        <div class="sun-pill-header">
+                          <span class="sun-pill-name">Hora Azul</span>
+                          <span class="sun-pill-dot">🔵</span>
+                        </div>
+                        <span class="sun-pill-time">${sunData.morning.blue}</span>
+                        <span class="sun-pill-desc">Crepúsculo frío</span>
+                      </div>
+                      <div class="sun-pill sun-pill-golden">
+                        <div class="sun-pill-header">
+                          <span class="sun-pill-name">Hora Dorada</span>
+                          <span class="sun-pill-dot">🟡</span>
+                        </div>
+                        <span class="sun-pill-time">${sunData.morning.golden}</span>
+                        <span class="sun-pill-desc">Luz rasante suave</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Bloque Atardecer -->
+                  <div class="sun-magic-group">
+                    <div class="sun-magic-group-title">
+                      <span>🌇 Atardecer • Ocaso a las ${sunData.sunsetStr}</span>
+                    </div>
+                    <div class="sun-magic-grid">
+                      <div class="sun-pill sun-pill-golden">
+                        <div class="sun-pill-header">
+                          <span class="sun-pill-name">Hora Dorada</span>
+                          <span class="sun-pill-dot">🟡</span>
+                        </div>
+                        <span class="sun-pill-time">${sunData.evening.golden}</span>
+                        <span class="sun-pill-desc">Sombras largas</span>
+                      </div>
+                      <div class="sun-pill sun-pill-blue">
+                        <div class="sun-pill-header">
+                          <span class="sun-pill-name">Hora Azul</span>
+                          <span class="sun-pill-dot">🔵</span>
+                        </div>
+                        <span class="sun-pill-time">${sunData.evening.blue}</span>
+                        <span class="sun-pill-desc">Azul cobalto</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Semáforo de Calidad Fotográfica -->
+                <div class="sun-magic-visibility-footer" style="margin-top: 8px;">
+                  <span class="sun-magic-status-badge ${sunData.photoQuality.badgeClass}">${sunData.photoQuality.badge}</span>
+                  <span class="sun-magic-status-text">${sunData.photoQuality.desc}</span>
+                </div>
+              </div>
+            </div>
+
           </div>
 
-          <!-- Bloque Atardecer -->
-          <div class="sun-magic-group">
-            <div class="sun-magic-group-title">
-              <span>🌇 Atardecer • Ocaso a las ${sunData.sunsetStr}</span>
-            </div>
-            <div class="sun-magic-grid">
-              <div class="sun-pill sun-pill-golden">
-                <div class="sun-pill-header">
-                  <span class="sun-pill-name">Hora Dorada</span>
-                  <span class="sun-pill-dot">🟡</span>
-                </div>
-                <span class="sun-pill-time">${sunData.evening.golden}</span>
-                <span class="sun-pill-desc">Tonos ocres, dorados y sombras largas</span>
-              </div>
-              <div class="sun-pill sun-pill-blue">
-                <div class="sun-pill-header">
-                  <span class="sun-pill-name">Hora Azul</span>
-                  <span class="sun-pill-dot">🔵</span>
-                </div>
-                <span class="sun-pill-time">${sunData.evening.blue}</span>
-                <span class="sun-pill-desc">Azul cobalto y luces en el horizonte</span>
-              </div>
-            </div>
+          <!-- Paginador Interactivo de 2 Puntos (Ley 18) -->
+          <div class="cosmos-widgets-dots" id="cosmos-widgets-dots">
+            <span class="sensor-dot active" data-sensor-target="0" title="Ver Luna y Cielo Nocturno"></span>
+            <span class="sensor-dot" data-sensor-target="1" title="Ver Luz Natural y Hora Mágica"></span>
           </div>
-        </div>
-
-        <!-- Semáforo de Calidad Fotográfica -->
-        <div class="sun-magic-visibility-footer">
-          <span class="sun-magic-status-badge ${sunData.photoQuality.badgeClass}">${sunData.photoQuality.badge}</span>
-          <span class="sun-magic-status-text">${sunData.photoQuality.desc}</span>
         </div>
       </div>
 
@@ -755,6 +785,9 @@ export function renderAstronomyView(containerId, currentFilter = 'all', weatherD
 
   container.innerHTML = html;
 
+  // Inicializar carrusel y dots de astronomía (Ley 18)
+  initCosmosCarousel();
+
   // Event Listeners para los filtros del semáforo
   container.querySelectorAll('.astro-chip').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -762,4 +795,60 @@ export function renderAstronomyView(containerId, currentFilter = 'all', weatherD
       renderAstronomyView(containerId, filter, cachedWeatherData, cachedConcejo);
     });
   });
+}
+
+/**
+ * Inicializador del Carrusel Deslizante de Astronomía (Ley 18)
+ * Sincroniza el paginador de puntos y el desplazamiento horizontal fluido
+ */
+export function initCosmosCarousel() {
+  const carousel = document.getElementById('cosmos-widgets-carousel');
+  const dotsContainer = document.getElementById('cosmos-widgets-dots');
+  if (!carousel || !dotsContainer || carousel.dataset.dotsBound === '1') return;
+  carousel.dataset.dotsBound = '1';
+
+  const dots = dotsContainer.querySelectorAll('.sensor-dot');
+  const slides = carousel.querySelectorAll('.cosmos-widget-slide');
+  if (!slides.length || !dots.length) return;
+
+  const updateActiveDot = (idx) => {
+    dots.forEach((d, i) => {
+      d.classList.toggle('active', i === idx);
+    });
+  };
+
+  const findClosestSlideIndex = () => {
+    const scrollLeft = carousel.scrollLeft;
+    let closestIdx = 0;
+    let minDiff = Infinity;
+    slides.forEach((slide, i) => {
+      const slidePos = slide.offsetLeft - carousel.offsetLeft;
+      const diff = Math.abs(scrollLeft - slidePos);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestIdx = i;
+      }
+    });
+    return closestIdx;
+  };
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetIdx = parseInt(dot.getAttribute('data-sensor-target') || '0', 10);
+      if (slides[targetIdx]) {
+        const targetLeft = slides[targetIdx].offsetLeft - carousel.offsetLeft;
+        carousel.scrollTo({ left: targetLeft, behavior: 'smooth' });
+        updateActiveDot(targetIdx);
+      }
+    });
+  });
+
+  let scrollTimeout;
+  carousel.addEventListener('scroll', () => {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      updateActiveDot(findClosestSlideIndex());
+    }, 45);
+  }, { passive: true });
 }
