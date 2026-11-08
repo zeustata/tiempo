@@ -441,35 +441,40 @@ export function renderClimatologyModalBody(clima) {
   return `
     <div class="clima-modal-content-wrap">
       <!-- 1. COMPARATIVA RÁPIDA (HOY VS HABITUAL) -->
-      <div class="clima-compare-row" style="margin-bottom: 14px;">
+      <div class="clima-modal-compare-grid">
         <div class="clima-compare-box normal-box">
-          <span class="clima-cmp-label">Habitual en ${clima.periodLabel}</span>
-          <span class="clima-cmp-val"><strong>${clima.normalMax}°C</strong> <small class="cmp-note">media 30 años (1991-2020)</small></span>
+          <span class="clima-cmp-label">Habitual ${clima.periodLabel}</span>
+          <span class="clima-cmp-val"><strong>${clima.normalMax}°C</strong></span>
+          <span class="clima-cmp-note">media 30 años (1991-2020)</span>
         </div>
         <div class="clima-compare-sep">➔</div>
         <div class="clima-compare-box today-box ${clima.badgeClass}">
           <span class="clima-cmp-label">Máxima Prevista Hoy</span>
-          <span class="clima-cmp-val"><strong>${clima.todayMax}°C</strong> <small class="cmp-note">${clima.diffMax >= 0 ? `+${clima.diffMax}` : `${clima.diffMax}`}°C vs normal</small></span>
+          <span class="clima-cmp-val"><strong>${clima.todayMax}°C</strong></span>
+          <span class="clima-cmp-note ${clima.badgeClass}">${clima.diffMax >= 0 ? `+${clima.diffMax}` : `${clima.diffMax}`}°C vs normal</span>
         </div>
       </div>
 
       <!-- 2. DÓNDE SE MIDIÓ Y RÉCORDS DEL MES -->
       ${rec ? `
-        <div class="clima-min-station-card" style="margin-bottom: 14px;">
+        <div class="clima-min-station-card">
           <div class="clima-min-station-row">
             <span class="min-st-pin">📍</span>
             <span class="min-st-text">Estación Oficial AEMET: <strong>${rec.stationOfficialName || rec.station}</strong> <small>(${rec.stationAltitude || '25 m'})</small></span>
           </div>
-          <div class="climatology-records-pills" style="margin-top: 8px;">
-            <span class="record-mini-pill record-max" title="${rec.maxContext || `Récord de calor`}">
-              🔥 Máx Histórica: <strong>${rec.maxT}°C</strong> <small>(${rec.maxYear})</small>
-            </span>
-            <span class="record-mini-pill record-min" title="${rec.minContext || `Récord de frío`}">
-              ❄️ Mín Histórica: <strong>${rec.minT}°C</strong> <small>(${rec.minYear})</small>
-            </span>
-            <span class="record-mini-pill record-rain" title="${rec.rainContext || `Mayor lluvia en 24h`}">
-              🌧️ Mayor Lluvia 24h: <strong>${rec.maxRain} mm</strong> <small>(${rec.rainYear})</small>
-            </span>
+          <div class="climatology-records-list">
+            <div class="record-row record-max" title="${rec.maxContext || `Récord de calor`}">
+              <span class="record-row-lbl">🔥 Máx Histórica</span>
+              <span class="record-row-val"><strong>${rec.maxT}°C</strong> <small class="record-row-year">(${rec.maxYear})</small></span>
+            </div>
+            <div class="record-row record-min" title="${rec.minContext || `Récord de frío`}">
+              <span class="record-row-lbl">❄️ Mín Histórica</span>
+              <span class="record-row-val"><strong>${rec.minT}°C</strong> <small class="record-row-year">(${rec.minYear})</small></span>
+            </div>
+            <div class="record-row record-rain" title="${rec.rainContext || `Mayor lluvia en 24h`}">
+              <span class="record-row-lbl">🌧️ Mayor Lluvia 24h</span>
+              <span class="record-row-val"><strong>${rec.maxRain} mm</strong> <small class="record-row-year">(${rec.rainYear})</small></span>
+            </div>
           </div>
         </div>
       ` : ''}
@@ -478,13 +483,13 @@ export function renderClimatologyModalBody(clima) {
       ${mem ? `
         <div class="clima-min-memory-card">
           <div class="min-mem-head">
-            <div style="display: flex; align-items: center; gap: 8px;">
+            <div class="min-mem-title-group">
               <span class="min-mem-icon">${mem.icon}</span>
-              <span class="min-mem-title" style="font-weight: 700; color: #f8fafc;">Memoria Asturiana · ${mem.dateLabel}${mem.year ? ` (${mem.year})` : ''}</span>
+              <span class="min-mem-title">Memoria Asturiana · ${mem.dateLabel}${mem.year ? ` (${mem.year})` : ''}</span>
             </div>
             <span class="clima-memory-tag ${mem.tagClass}">${mem.tag}</span>
           </div>
-          <p class="min-mem-text" style="font-size: 0.86rem; line-height: 1.5; color: #cbd5e1; margin-top: 6px;"><strong>${mem.title}:</strong> ${mem.summary}</p>
+          <p class="min-mem-text"><strong>${mem.title}:</strong> ${mem.summary}</p>
         </div>
       ` : ''}
     </div>

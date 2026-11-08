@@ -2,7 +2,27 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
-## 🏛️ Modal Emergente de Clima y Récords AEMET en Sustitución de Acordeón (`v3.0.25.20 - Pruebas en Local`) — 2026-11-08
+## 📱 Blindaje Móvil de Cabecera Fija, «X» Visible y Scroll Suave en Modal de Clima (`v3.0.25.21 - Pruebas en Local`) — 2026-11-08
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `14e1162` (`v3.0.25.20`).
+- **Diagnóstico y Corrección de Lendo («en la tablet y en pc al darle a ver todo perfecto pero en elmovil no sale ni la X, esta todo muy desordenado y tiene un scroll gigante que no mueve nada... pisale»):**
+  1. *Causa del Desborde y Bloqueo en Móvil:*
+     - Al no contar con `max-height` definido ni estructura flexbox por columnas, la tarjeta modal crecía más allá de la altura de la pantalla del smartphone (> 700 px).
+     - Al centrarse en vertical por flexbox en `.modal-overlay`, la cabecera (título y botón de cierre `[ ✕ ]`) quedaba desplazada hacia arriba en coordenadas negativas fuera del marco visible del teléfono.
+     - La tarjeta carecía de `overflow-y: auto`, provocando que el deslizamiento táctil con el pulgar estuviera bloqueado e intentara arrastrar la página de fondo.
+  2. *Solución Arquitectónica y Ergonomía Móvil (Ley Constitucional 11):*
+     - **Cabecera y «X» Inmóviles (`modal-header`):** `flex-shrink: 0`, borde inferior y botón `[ ✕ ]` visible permanentemente en lo más alto de la pantalla.
+     - **Tarjeta Modal Proporcional (`modal-climatology`):** `max-height: 88vh; display: flex; flex-direction: column; overflow: hidden; padding: 0 !important;`.
+     - **Cuerpo con Scroll Táctil Dedicado (`climatology-modal-body`):** `flex: 1 1 auto; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch;`.
+     - **Reorganización Armónica de Contenidos:**
+       - *Comparativa 30 años:* Cajas proporcionadas en grid (`Habitual` vs `Prevista Hoy`) sin textos desbordados.
+       - *Récords Oficiales AEMET:* Formato ejecutivo de filas horizontales con datos a la derecha (`🔥 Máx Histórica: 26.2°C (2015)`).
+       - *Memoria Asturiana:* Ajuste de la pastilla temática y tamaño tipográfico proporcional a pantallas estrechas.
+  3. *Control de Versión y Cache-Busting (Leyes 3 y 4):*
+     - Service Worker: `meteoasturlode-v3025-21-clima-modal-mobile-fix`.
+     - Query strings sincronizados en `index.html` (`components.css?v=3.0.25.21`, `app.js?v=3.0.25.21`, `sw.js?v=3.0.25.21`) y en módulos JS (`climatologyData.js?v=3.0.25.21`, `currentCard.js?v=3.0.25.21`).
+  4. *Servidor Local de Pruebas (Leyes 3 y 9):* Activo en `http://localhost:8080`.
+
+## 🏛️ Modal Emergente de Clima y Récords AEMET en Sustitución de Acordeón (`v3.0.25.20`) — 2026-11-08
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `e14ba58` (`v3.0.25.19`).
 - **Diagnóstico y Solución de Lendo («en esas mismas tarjetas. en la tarjeta clima. no seria mejor que el boton 'Ver' en vez de ser como es, que se expande para abajo, dejando las demas tarjetas mas abajo y con mas scroll que hacer, simplemente salga toda la informacion en una ventana emerjente para quien lo quiera ver y con la X de cerrar?... pisale»):**
   1. *Causa de la Molestia en Acordeón:*

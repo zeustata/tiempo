@@ -9,6 +9,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.25.21] - 2026-11-08
+### Fixed
+- **Blindaje Móvil, Cabecera Fija y Scroll Táctil en Modal de Clima (`components.css` + `climatologyData.js` + `index.html` - Ley 11):**
+  - **Anclaje Fijo de Cabecera y «X»:** Fijada la cabecera `.modal-header` con `flex-shrink: 0` y la tarjeta `.modal-climatology` con `max-height: 88vh; display: flex; flex-direction: column;`, impidiendo que el botón de cierre `[ ✕ ]` y el título salgan expulsados por arriba de la pantalla en dispositivos móviles.
+  - **Scroll Táctil Exclusivo y Fluido:** Habilitado `overflow-y: auto; -webkit-overflow-scrolling: touch;` en `.climatology-modal-body`, eliminando el bloqueo de desplazamiento y el arrastre indeseado de la página de fondo.
+  - **Diseño Ergonómico Proporcional:** Reestructurada la comparativa 30 años en grid equilibrado (`Habitual` vs `Prevista Hoy`), récords AEMET en filas ejecutivas con valores alineados a la derecha y desahogo de etiquetas en la Memoria Asturiana.
+
 ## [3.0.25.20] - 2026-11-08
 ### Added
 - **Ventana Emergente (Modal Dialog) de Clima y Récords AEMET (`climatologyData.js` + `index.html` + `app.js`):**
