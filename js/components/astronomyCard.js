@@ -593,7 +593,7 @@ export function renderAstronomyView(containerId, currentFilter = 'all', weatherD
                     <span class="subcard-icon">📸</span>
                     <div>
                       <strong>Luz Natural & Hora Mágica</strong>
-                      <span class="subcard-subtitle">Ventanas fotográficas hoy en ${sunData.concejoName}</span>
+                      <span class="subcard-subtitle">Ventanas fotográficas hoy en ${sunData.concejoName ? sunData.concejoName.split('(')[0].trim() : 'Asturias'}</span>
                     </div>
                   </div>
                   <button class="btn-explain-sensor" data-explain="golden_hour" title="¿Qué son la Hora Dorada y la Hora Azul? Pulsa para aprender" aria-label="Explicación de la hora dorada y azul">💡</button>
@@ -603,7 +603,7 @@ export function renderAstronomyView(containerId, currentFilter = 'all', weatherD
                   <!-- Bloque Amanecer -->
                   <div class="sun-magic-group">
                     <div class="sun-magic-group-title">
-                      <span>🌅 Amanecer • Orto a las ${sunData.sunriseStr}</span>
+                      <span>🌅 Amanecer • Orto ${sunData.sunriseStr}</span>
                     </div>
                     <div class="sun-magic-grid">
                       <div class="sun-pill sun-pill-blue">
@@ -612,7 +612,6 @@ export function renderAstronomyView(containerId, currentFilter = 'all', weatherD
                           <span class="sun-pill-dot">🔵</span>
                         </div>
                         <span class="sun-pill-time">${sunData.morning.blue}</span>
-                        <span class="sun-pill-desc">Crepúsculo frío</span>
                       </div>
                       <div class="sun-pill sun-pill-golden">
                         <div class="sun-pill-header">
@@ -620,7 +619,6 @@ export function renderAstronomyView(containerId, currentFilter = 'all', weatherD
                           <span class="sun-pill-dot">🟡</span>
                         </div>
                         <span class="sun-pill-time">${sunData.morning.golden}</span>
-                        <span class="sun-pill-desc">Luz rasante suave</span>
                       </div>
                     </div>
                   </div>
@@ -628,7 +626,7 @@ export function renderAstronomyView(containerId, currentFilter = 'all', weatherD
                   <!-- Bloque Atardecer -->
                   <div class="sun-magic-group">
                     <div class="sun-magic-group-title">
-                      <span>🌇 Atardecer • Ocaso a las ${sunData.sunsetStr}</span>
+                      <span>🌇 Atardecer • Ocaso ${sunData.sunsetStr}</span>
                     </div>
                     <div class="sun-magic-grid">
                       <div class="sun-pill sun-pill-golden">
@@ -637,7 +635,6 @@ export function renderAstronomyView(containerId, currentFilter = 'all', weatherD
                           <span class="sun-pill-dot">🟡</span>
                         </div>
                         <span class="sun-pill-time">${sunData.evening.golden}</span>
-                        <span class="sun-pill-desc">Sombras largas</span>
                       </div>
                       <div class="sun-pill sun-pill-blue">
                         <div class="sun-pill-header">
@@ -645,16 +642,15 @@ export function renderAstronomyView(containerId, currentFilter = 'all', weatherD
                           <span class="sun-pill-dot">🔵</span>
                         </div>
                         <span class="sun-pill-time">${sunData.evening.blue}</span>
-                        <span class="sun-pill-desc">Azul cobalto</span>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 <!-- Semáforo de Calidad Fotográfica -->
-                <div class="sun-magic-visibility-footer" style="margin-top: 8px;">
+                <div class="sun-magic-visibility-footer" style="margin-top: 6px; padding: 7px 10px;">
                   <span class="sun-magic-status-badge ${sunData.photoQuality.badgeClass}">${sunData.photoQuality.badge}</span>
-                  <span class="sun-magic-status-text">${sunData.photoQuality.desc}</span>
+                  <span class="sun-magic-status-text" style="font-size: 0.74rem;">${sunData.photoQuality.desc}</span>
                 </div>
               </div>
             </div>

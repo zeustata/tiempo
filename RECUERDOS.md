@@ -2,7 +2,20 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
-## 🌌 Reestructuración de Astronomía & Cosmos: Carrusel Deslizante Noche / Día en Hero Card (`v3.0.25.25 - Pruebas en Local`) — 2026-11-08
+## 📱 Blindaje Móvil y Armonía Ergonómica en Subtarjeta de Luz Natural (`v3.0.25.26 - Pruebas en Local`) — 2026-11-08
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `760c445` (`v3.0.25.25`).
+- **Diagnóstico y Solución de Lendo («al deslizar mira como queda en el movil... pisale»):**
+  1. *Corrección de los 3 Desafíos Visuales en Móvil (Leyes 11 y 14):*
+     - **Cero Desbordamientos Horarios:** Sustituida la fuente monospace ancha por tipografía del sistema con cifras tabulares (`font-variant-numeric: tabular-nums; font-size: 0.82rem; font-weight: 800; letter-spacing: -0.3px;`) y eliminado el texto secundario redundante que se truncaba (`Luz rasante su...`). Las horas (`07:33 - 07:58`, etc.) ahora respiran con más de un 25% de margen libre dentro de cada pastilla.
+     - **Cabecera Blindada y Bombilla Alineada:** Aplicado `flex-wrap: nowrap`, `min-width: 0` y `flex-shrink: 0` a `.btn-explain-sensor`, anclando la bombilla `💡` arriba a la derecha e impidiendo que caiga a una línea huérfana. Acortado el subtítulo suprimiendo paréntesis superfluos.
+     - **Equilibrio de Altura:** La subtarjeta de Luz Natural se compacta en ~80 px, quedando con una altura simétrica y armónica respecto a la subtarjeta de la Luna (Slide 1).
+     - **Padding Móvil Adaptativo:** En pantallas `<= 480px`, el padding de `.astronomy-hero-card` se ajusta a `14px 10px`, liberando 20 px de ancho útil adicional en smartphones.
+  2. *Control de Versión y Cache-Busting (Leyes 3 y 4):*
+     - Service Worker: `meteoasturlode-v3025-26-cosmos-mobile-harmony`.
+     - Query strings sincronizados en `index.html` (`components.css?v=3.0.25.26`, `app.js?v=3.0.25.26`, `sw.js?v=3.0.25.26`) y en `js/app.js` (`astronomyCard.js?v=3.0.25.26`).
+  3. *Servidor Local de Pruebas (Leyes 3 y 9):* Activo en `http://localhost:8080`.
+
+## 🌌 Reestructuración de Astronomía & Cosmos: Carrusel Deslizante Noche / Día en Hero Card (`v3.0.25.25`) — 2026-11-08
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `f1ffbd7` (`v3.0.25.24`).
 - **Diagnóstico y Petición de Lendo («ahora al menu cosmos. quiero que la tarjeta de cabereca Astonomia y Cosmos con el texto de los acontecimientos (2026-2027) sea la principal y luego una subtarjeta con lo que queda de la luna y la observacion y con scrol horizontal para metes en subtarjeta la tarjeta de Luz Natural y hora magica... pisale a ver q tal»):**
   1. *Jerarquía y Compactación Superior (Leyes 11, 14 y 18):*

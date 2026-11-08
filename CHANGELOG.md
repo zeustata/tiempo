@@ -9,6 +9,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.25.26] - 2026-11-08
+### Fixed
+- **Blindaje Móvil y Armonía Ergonómica en Subtarjeta de Luz Natural (`astronomyCard.js` + `components.css` - Leyes 11 y 14):**
+  - **Cero Desbordamientos Horarios:** Reemplazada la fuente monospace por tipografía de sistema con cifras tabulares compactas (`0.82rem`, negrita 800) y suprimidos textos secundarios propensos a truncarse (`Luz rasante su...`). Las horas (`07:33 - 07:58`, etc.) cuentan ahora con más de un 25% de margen libre dentro de cada pastilla.
+  - **Cabecera Blindada y Botón `💡` Fijo:** Establecido `flex-wrap: nowrap` y `flex-shrink: 0`, manteniendo el botón explicativo anclado arriba a la derecha sin caerse a una línea huérfana. Acortado el subtítulo suprimiendo paréntesis extensos.
+  - **Simetría Vertical Noche / Día:** Reducida la altura de la diapositiva en ~80 px, logrando equilibrio visual y proporciones simétricas respecto a la diapositiva de la Luna.
+  - **Padding Adaptativo en Smartphones:** Ajustado el padding de `.astronomy-hero-card` a `14px 10px` en pantallas `<= 480px`, liberando 20 px de ancho útil en dispositivos móviles.
+
 ## [3.0.25.25] - 2026-11-08
 ### Added
 - **Reestructuración de Astronomía & Cosmos: Carrusel Deslizante Noche / Día en Hero Card (`astronomyCard.js` + `components.css` + `app.js` - Leyes 11, 14 y 18):**
