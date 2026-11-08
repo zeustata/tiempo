@@ -13781,6 +13781,14 @@
   box-sizing: border-box;
 }
 
+@media (min-width: 768px) {
+  .hero-widgets-carousel-wrap {
+    max-width: 580px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 .hero-widgets-carousel {
   display: flex;
   align-items: flex-start;

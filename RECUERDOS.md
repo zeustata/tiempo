@@ -2,6 +2,21 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📐 Proporción Áurea y Centrado de Carrusel Hero en Pantallas de Escritorio (`v3.0.25.19 - Pruebas en Local`) — 2026-11-08
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `4adcee6` (`v3.0.25.18`).
+- **Diagnóstico y Ajuste de Lendo («el tamaño de la curva termica, que se componen de tres tarjetas deslizables queda perfecto en el movil pero mira como se ve en el ordenador. las tres tarjetas se ven muy alargadas. no se podria limitar la longitud pero que queden centrados en la app?... pisale»):**
+  1. *Causa de la Deformación en Escritorio:*
+     - En pantallas de escritorio / monitores panorámicos (> 1.200 px), el contenedor `.hero-widgets-carousel-wrap` abarcaba el 100% del ancho de la tarjeta principal.
+     - Esto forzaba a las 3 diapositivas (`.hero-widget-slide` con la Curva Térmica 24h, el Clima Mensual y el Semáforo del Paraguas) a estirarse excesivamente a lo ancho, achatando el SVG de la curva térmica hasta parecer una línea plana sin relieve.
+  2. *Solución Proporcional Centrada:*
+     - Incorporada directiva `@media (min-width: 768px)` en `css/components.css`: `.hero-widgets-carousel-wrap` adopta `max-width: 580px` y `margin-left: auto; margin-right: auto;`.
+     - Preservada la visualización táctil al 100% del ancho útil en dispositivos móviles (smartphones < 768px), cumpliendo la Ley 18.
+     - El paginador interactivo de puntos `.hero-widgets-dots` queda armoniosamente centrado justo bajo el carrusel en todas las resoluciones.
+  3. *Control de Versión y Cache-Busting (Leyes 3 y 4):*
+     - Service Worker: `meteoasturlode-v3025-19-hero-carousel-desktop-ratio`.
+     - Query strings sincronizados en `index.html` (`components.css?v=3.0.25.19`, `sw.js?v=3.0.25.19`).
+
+
 ## 📍 Buscador Inteligente Bivalente de Concejos y Pueblos de Asturias (`v3.0.25.18 - Pruebas en Local`) — 2026-11-07
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `895e482` (`v3.0.25.17`).
 - **Diagnóstico y Necesidad de Lendo & Solari («me dice solari que tenemos un problema... el concejo es caso y el pueblo que busco es soto... quiero una opinion sincera... tu lo que quieres es añadir en el buscador sin interferir en lo demas no?... pues pisale aver»):**

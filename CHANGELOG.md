@@ -9,6 +9,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.25.19] - 2026-11-08
+### Fixed
+- **Proporción Áurea y Centrado de Carrusel Hero en Pantallas de Escritorio (`components.css`):**
+  - Limitado el contenedor `.hero-widgets-carousel-wrap` a `max-width: 580px` con `margin: auto` en `@media (min-width: 768px)`, impidiendo que la Curva Térmica 24h, el Clima Mensual y el Semáforo del Paraguas se despatarren en monitores panorámicos de PC.
+  - Preservada la visualización y swipe al 100% en smartphones móviles (< 768px) conforme a la Ley 18.
+
 ## [3.0.25.18] - 2026-11-07
 ### Added
 - **Buscador Bivalente de Concejos y Pueblos de Asturias (`app.js` + `concejos.js`):**
