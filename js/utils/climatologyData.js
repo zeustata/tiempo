@@ -385,32 +385,29 @@ export function getClimatologyContext(concejo, current, daily) {
 
 /**
  * Renderiza la tarjeta de Climatología y Memoria de Asturias en la Hero Card
- * Estructura minimizada con desglose desplegable (Opción 1 - Feedback Lendo v2.2.82)
+ * Estructura fija y compacta con apertura de ventana emergente (Feedback Lendo v3.0.25.20)
  */
 export function renderClimatologyStrip(clima) {
   if (!clima) return '';
 
   const rec = clima.records;
-  const mem = clima.memory;
 
   return `
-    <details class="climatology-strip clima-history-card clima-accordion-card ${clima.badgeClass}">
-      <!-- RESUMEN COMPACTO EN REPOSO (CANALIZACIÓN EN 2 FILAS ANTI-COLISIÓN - LEY 11) -->
-      <summary class="clima-compact-summary">
-        <!-- Fila 1: Cabecera con Título a la izquierda y Botón Desglose a la derecha (ESPACIO 100% BLINDADO) -->
+    <div class="climatology-strip clima-history-card ${clima.badgeClass}">
+      <!-- RESUMEN COMPACTO FIJO (ABRE MODAL EMERGENTE - FEEDBACK LENDO v3.0.25.20) -->
+      <div class="clima-compact-summary btn-open-clima-trigger" title="Toca para ver el desglose detallado y la memoria histórica">
+        <!-- Fila 1: Cabecera con Título a la izquierda y Botón Desglose a la derecha -->
         <div class="clima-sum-header-row">
           <div class="clima-sum-brand">
             <span class="clima-sum-icon">🏛️</span>
             <span class="clima-sum-title">Clima · ${clima.monthName.charAt(0).toUpperCase() + clima.monthName.slice(1)}</span>
           </div>
-          <span class="clima-toggle-pill" title="Toca para abrir o cerrar el desglose y la memoria histórica">
-            <span class="toggle-text-open">Ver</span>
-            <span class="toggle-text-close">Cerrar</span>
-            <span class="toggle-chevron">▾</span>
-          </span>
+          <button class="clima-toggle-pill btn-open-clima-modal" type="button" title="Ver desglose y memoria histórica" aria-label="Ver clima y récords">
+            <span class="toggle-text-open">Ver ℹ️</span>
+          </button>
         </div>
 
-        <!-- Fila 2: Distintivo de Balance Térmico e Indicadores Rápidos con 100% de Ancho Libre -->
+        <!-- Fila 2: Distintivo de Balance Térmico e Indicadores Rápidos -->
         <div class="clima-sum-sub-row">
           <span class="climatology-badge ${clima.badgeClass} clima-badge-compact" title="${clima.label}">
             <span class="climatology-icon">${clima.icon}</span>
@@ -426,56 +423,70 @@ export function renderClimatologyStrip(clima) {
             ` : ''}
           </div>
         </div>
-      </summary>
+      </div>
+    </div>
+  `;
+}
 
-      <!-- CUERPO DESPLEGABLE ULTRA-MINIMIZADO (FEEDBACK LENDO v2.2.84) -->
-      <div class="clima-expanded-body">
-        <!-- 1. COMPARATIVA RÁPIDA (HOY VS HABITUAL) -->
-        <div class="clima-compare-row">
-          <div class="clima-compare-box normal-box">
-            <span class="clima-cmp-label">Habitual en ${clima.periodLabel}</span>
-            <span class="clima-cmp-val"><strong>${clima.normalMax}°C</strong> <small class="cmp-note">media 30 años</small></span>
+/**
+ * Genera el cuerpo de la ventana modal emergente con la comparativa 30 años,
+ * los récords históricos de la estación AEMET y la memoria del clima asturiano.
+ */
+export function renderClimatologyModalBody(clima) {
+  if (!clima) return '';
+
+  const rec = clima.records;
+  const mem = clima.memory;
+
+  return `
+    <div class="clima-modal-content-wrap">
+      <!-- 1. COMPARATIVA RÁPIDA (HOY VS HABITUAL) -->
+      <div class="clima-compare-row" style="margin-bottom: 14px;">
+        <div class="clima-compare-box normal-box">
+          <span class="clima-cmp-label">Habitual en ${clima.periodLabel}</span>
+          <span class="clima-cmp-val"><strong>${clima.normalMax}°C</strong> <small class="cmp-note">media 30 años (1991-2020)</small></span>
+        </div>
+        <div class="clima-compare-sep">➔</div>
+        <div class="clima-compare-box today-box ${clima.badgeClass}">
+          <span class="clima-cmp-label">Máxima Prevista Hoy</span>
+          <span class="clima-cmp-val"><strong>${clima.todayMax}°C</strong> <small class="cmp-note">${clima.diffMax >= 0 ? `+${clima.diffMax}` : `${clima.diffMax}`}°C vs normal</small></span>
+        </div>
+      </div>
+
+      <!-- 2. DÓNDE SE MIDIÓ Y RÉCORDS DEL MES -->
+      ${rec ? `
+        <div class="clima-min-station-card" style="margin-bottom: 14px;">
+          <div class="clima-min-station-row">
+            <span class="min-st-pin">📍</span>
+            <span class="min-st-text">Estación Oficial AEMET: <strong>${rec.stationOfficialName || rec.station}</strong> <small>(${rec.stationAltitude || '25 m'})</small></span>
           </div>
-          <div class="clima-compare-sep">➔</div>
-          <div class="clima-compare-box today-box ${clima.badgeClass}">
-            <span class="clima-cmp-label">Máxima Prevista Hoy</span>
-            <span class="clima-cmp-val"><strong>${clima.todayMax}°C</strong> <small class="cmp-note">${clima.diffMax >= 0 ? `+${clima.diffMax}` : `${clima.diffMax}`}°C</small></span>
+          <div class="climatology-records-pills" style="margin-top: 8px;">
+            <span class="record-mini-pill record-max" title="${rec.maxContext || `Récord de calor`}">
+              🔥 Máx Histórica: <strong>${rec.maxT}°C</strong> <small>(${rec.maxYear})</small>
+            </span>
+            <span class="record-mini-pill record-min" title="${rec.minContext || `Récord de frío`}">
+              ❄️ Mín Histórica: <strong>${rec.minT}°C</strong> <small>(${rec.minYear})</small>
+            </span>
+            <span class="record-mini-pill record-rain" title="${rec.rainContext || `Mayor lluvia en 24h`}">
+              🌧️ Mayor Lluvia 24h: <strong>${rec.maxRain} mm</strong> <small>(${rec.rainYear})</small>
+            </span>
           </div>
         </div>
+      ` : ''}
 
-        <!-- 2. DÓNDE SE MIDIÓ Y RÉCORDS DEL MES (COMPACTO) -->
-        ${rec ? `
-          <div class="clima-min-station-card">
-            <div class="clima-min-station-row">
-              <span class="min-st-pin">📍</span>
-              <span class="min-st-text">Medido en: <strong>${rec.stationOfficialName || rec.station}</strong> <small>(${rec.stationAltitude || '25 m'})</small></span>
-            </div>
-            <div class="climatology-records-pills">
-              <span class="record-mini-pill record-max" title="${rec.maxContext || `Récord de calor`}">
-                🔥 Máx: <strong>${rec.maxT}°C</strong> <small>(${rec.maxYear})</small>
-              </span>
-              <span class="record-mini-pill record-min" title="${rec.minContext || `Récord de frío`}">
-                ❄️ Mín: <strong>${rec.minT}°C</strong> <small>(${rec.minYear})</small>
-              </span>
-              <span class="record-mini-pill record-rain" title="${rec.rainContext || `Mayor lluvia en 24h`}">
-                🌧️ 24h: <strong>${rec.maxRain} mm</strong> <small>(${rec.rainYear})</small>
-              </span>
-            </div>
-          </div>
-        ` : ''}
-
-        <!-- 3. MEMORIA DEL CLIMA ASTURIANO (1 FRASE COMPACTA) -->
-        ${mem ? `
-          <div class="clima-min-memory-card">
-            <div class="min-mem-head">
+      <!-- 3. MEMORIA DEL CLIMA ASTURIANO -->
+      ${mem ? `
+        <div class="clima-min-memory-card">
+          <div class="min-mem-head">
+            <div style="display: flex; align-items: center; gap: 8px;">
               <span class="min-mem-icon">${mem.icon}</span>
-              <span class="min-mem-title">Memoria Asturiana · ${mem.dateLabel}${mem.year ? ` (${mem.year})` : ''}</span>
-              <span class="clima-memory-tag ${mem.tagClass}">${mem.tag}</span>
+              <span class="min-mem-title" style="font-weight: 700; color: #f8fafc;">Memoria Asturiana · ${mem.dateLabel}${mem.year ? ` (${mem.year})` : ''}</span>
             </div>
-            <p class="min-mem-text"><strong>${mem.title}:</strong> ${mem.summary}</p>
+            <span class="clima-memory-tag ${mem.tagClass}">${mem.tag}</span>
           </div>
-        ` : ''}
-      </div>
-    </details>
+          <p class="min-mem-text" style="font-size: 0.86rem; line-height: 1.5; color: #cbd5e1; margin-top: 6px;"><strong>${mem.title}:</strong> ${mem.summary}</p>
+        </div>
+      ` : ''}
+    </div>
   `;
 }

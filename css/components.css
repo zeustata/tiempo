@@ -564,7 +564,7 @@
   line-height: 1.2;
 }
 
-/* Pastilla de Control Desplegable */
+/* Pastilla de Control para Abrir Modal (Feedback Lendo v3.0.25.20) */
 .clima-toggle-pill {
   display: inline-flex;
   align-items: center;
@@ -576,43 +576,20 @@
   color: #fbbf24;
   font-size: 0.72rem;
   font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
   flex-shrink: 0;
   box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
   transition: all 0.2s ease;
 }
 
+.clima-toggle-pill:hover,
 .clima-compact-summary:hover .clima-toggle-pill {
   background: rgba(245, 158, 11, 0.28);
   border-color: rgba(245, 158, 11, 0.65);
   color: #fef08a;
   box-shadow: 0 2px 12px rgba(245, 158, 11, 0.25);
-}
-
-.clima-accordion-card:not([open]) .toggle-text-close {
-  display: none;
-}
-
-.clima-accordion-card[open] .toggle-text-open {
-  display: none;
-}
-
-.clima-accordion-card[open] .toggle-text-close {
-  display: inline;
-}
-
-.toggle-chevron {
-  font-size: 0.76rem;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.clima-accordion-card[open] .toggle-chevron {
-  transform: rotate(180deg);
-}
-
-.clima-accordion-card[open] .clima-toggle-pill {
-  background: rgba(148, 163, 184, 0.16);
-  border-color: rgba(148, 163, 184, 0.3);
-  color: #e2e8f0;
+  transform: translateY(-1px);
 }
 
 /* Fila 2: Sub-fila de Datos y Balance (Ancho 100% Libre sin colisiones) */

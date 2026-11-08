@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3025-19-hero-carousel-desktop-ratio';
+const CACHE_NAME = 'meteoasturlode-v3025-20-clima-modal-dialog';
 const STATIC_ASSETS = [
   './',
   './index.html',

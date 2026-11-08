@@ -9,6 +9,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.25.20] - 2026-11-08
+### Added
+- **Ventana Emergente (Modal Dialog) de Clima y Récords AEMET (`climatologyData.js` + `index.html` + `app.js`):**
+  - Sustituido el despliegue en acordeón `<details>` dentro de la tarjeta de Clima por un botón fijo `Ver ℹ️` que abre el nuevo diálogo modal `#clima-modal`.
+  - **Cero Layout Shift (Sin Saltos de Pantalla):** La tarjeta del carrusel superior mantiene una altura uniforme, fija y compacta, impidiendo que el pronóstico por horas e inferior sea empujado bruscamente hacia abajo.
+  - Presentación completa y nítida en el modal de la comparativa climatológica a 30 años, registros históricos oficiales de la estación AEMET (temperaturas extremas y récord de precipitación diaria) y efeméride de la memoria del clima asturiano.
+  - Soporte ergonómico con botón de cierre `[ ✕ ]`, pulsación sobre backdrop oscuro y retroceso natural con botón atrás en Android.
+
 ## [3.0.25.19] - 2026-11-08
 ### Fixed
 - **Proporción Áurea y Centrado de Carrusel Hero en Pantallas de Escritorio (`components.css`):**

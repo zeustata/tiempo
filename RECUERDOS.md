@@ -2,6 +2,24 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏛️ Modal Emergente de Clima y Récords AEMET en Sustitución de Acordeón (`v3.0.25.20 - Pruebas en Local`) — 2026-11-08
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `e14ba58` (`v3.0.25.19`).
+- **Diagnóstico y Solución de Lendo («en esas mismas tarjetas. en la tarjeta clima. no seria mejor que el boton 'Ver' en vez de ser como es, que se expande para abajo, dejando las demas tarjetas mas abajo y con mas scroll que hacer, simplemente salga toda la informacion en una ventana emerjente para quien lo quiera ver y con la X de cerrar?... pisale»):**
+  1. *Causa de la Molestia en Acordeón:*
+     - La tarjeta de Clima (`.climatology-strip`) utilizaba un elemento `<details>` que al abrirse pasaba de 65 px a casi 300 px de altura.
+     - Este crecimiento vertical empujaba bruscamente hacia abajo todo el pronóstico de la página (Layout Shift molesto), obligaba al usuario a hacer scroll extra para reubicarse y desbalanceaba la altura del carrusel respecto a la Curva Térmica y el Semáforo.
+  2. *Solución mediante Ventana Emergente (Modal):*
+     - La tarjeta del carrusel permanece **siempre fija, elegante y compacta** (sin saltos verticales ni acordeones que empujen el contenido).
+     - Al pulsar el botón `Ver ℹ️` (o tocar la tarjeta), se abre el nuevo modal emergente `#clima-modal` con botón **[ ✕ ]** de cierre, cierre al tocar el fondo oscuro y soporte para el botón atrás de Android.
+     - El modal expone con máxima holgura y nitidez:
+       - Comparativa 30 años (Habitual en este mes vs Máxima prevista hoy).
+       - Estación oficial de referencia AEMET con sus récords históricos de frío, calor y lluvia en 24h.
+       - Efeméride de la Memoria del Clima Asturiano.
+  3. *Control de Versión y Cache-Busting (Leyes 3 y 4):*
+     - Service Worker: `meteoasturlode-v3025-20-clima-modal-dialog`.
+     - Query strings sincronizados en `index.html` (`components.css?v=3.0.25.20`, `app.js?v=3.0.25.20`, `sw.js?v=3.0.25.20`) y en `js/app.js` (`climatologyData.js?v=3.0.25.20`, `currentCard.js?v=3.0.25.20`).
+
+
 ## 📐 Proporción Áurea y Centrado de Carrusel Hero en Pantallas de Escritorio (`v3.0.25.19 - Pruebas en Local`) — 2026-11-08
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `4adcee6` (`v3.0.25.18`).
 - **Diagnóstico y Ajuste de Lendo («el tamaño de la curva termica, que se componen de tres tarjetas deslizables queda perfecto en el movil pero mira como se ve en el ordenador. las tres tarjetas se ven muy alargadas. no se podria limitar la longitud pero que queden centrados en la app?... pisale»):**

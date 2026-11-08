@@ -1,7 +1,7 @@
 import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo, resolveSubLocalidad, SUB_LOCALIDADES } from './config/concejos.js?v=3.0.25.18';
 import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.25.7';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=3.0.23.63';
-import { renderCurrentWeather } from './components/currentCard.js?v=3.0.24.53';
+import { renderCurrentWeather } from './components/currentCard.js?v=3.0.25.20';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.25.10';
 import { renderSurfCard } from './components/surfCard.js?v=3.0.25.2';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.25.5';
@@ -34,6 +34,7 @@ import { triggerSeismicRefresh, getSeismicStatus } from './utils/seismicDetector
 import { evaluateWeatherAlerts } from './utils/weatherAlerts.js?v=3.0.5';
 import { openShareModal } from './utils/shareCardGenerator.js?v=3.0.23.59';
 import { toggleWeatherSpeech, stopWeatherSpeech } from './utils/weatherSpeaker.js?v=2.0.0';
+import { getClimatologyContext, renderClimatologyModalBody } from './utils/climatologyData.js?v=3.0.25.20';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, previsión horaria y curvas interactivas', key: '1' },
@@ -370,6 +371,23 @@ class MeteoAsturiasApp {
     }
   }
 
+  openClimaModal() {
+    const modal = document.getElementById('clima-modal');
+    const body = document.getElementById('clima-modal-body');
+    const subtitle = document.getElementById('clima-modal-subtitle');
+    if (!modal || !body || !this.weatherData) return;
+
+    this.triggerHaptic();
+    const clima = getClimatologyContext(this.currentConcejo, this.weatherData.weather.current, this.weatherData.weather.daily);
+    if (!clima) return;
+
+    if (subtitle) {
+      subtitle.textContent = `${this.currentConcejo.name} • Normales Oficiales AEMET (1991-2020)`;
+    }
+    body.innerHTML = renderClimatologyModalBody(clima);
+    this.openModal(modal);
+  }
+
   closeAllModals(cleanHistory = true) {
     const modals = document.querySelectorAll('.modal-overlay, #marine-beaches-modal, #surf-spots-modal, #hiking-routes-modal, #cycling-routes-modal, #tourism-plans-modal');
     let anyOpen = false;
@@ -543,6 +561,32 @@ class MeteoAsturiasApp {
         if (this.currentConcejo && this.weatherData) {
           toggleWeatherSpeech(this.currentConcejo, this.weatherData);
         }
+      }
+    });
+
+    // Modal de Clima y Memoria Histórica Asturiana (Feedback Lendo v3.0.25.20)
+    const climaModal = document.getElementById('clima-modal');
+    const closeClimaModalBtn = document.getElementById('btn-close-clima-modal');
+
+    if (closeClimaModalBtn && climaModal) {
+      closeClimaModalBtn.addEventListener('click', () => {
+        this.closeModal(climaModal);
+      });
+    }
+
+    if (climaModal) {
+      climaModal.addEventListener('click', (e) => {
+        if (e.target === climaModal) {
+          this.closeModal(climaModal);
+        }
+      });
+    }
+
+    document.addEventListener('click', (e) => {
+      const climaTrigger = e.target.closest('.btn-open-clima-modal, .btn-open-clima-trigger');
+      if (climaTrigger) {
+        e.preventDefault();
+        this.openClimaModal();
       }
     });
 
@@ -4294,11 +4338,6 @@ MeteoAsturiasApp.prototype.bindCarouselDots = function(carouselId, dotsId, cardS
   const scrollToCard = (index) => {
     const idx = parseInt(index, 10);
     if (cards[idx]) {
-      // Si salimos de la tarjeta de Clima desplegada en hero-widgets-carousel, autocerrar el acordeón para evitar vacío
-      if (carouselId === 'hero-widgets-carousel' && idx !== 1) {
-        const openClima = carousel.querySelector('.clima-accordion-card[open]');
-        if (openClima) openClima.open = false;
-      }
       const targetLeft = cards[idx].offsetLeft - carousel.offsetLeft;
       carousel.scrollTo({ left: targetLeft, behavior: 'smooth' });
       updateActiveDot(idx);
@@ -4320,11 +4359,6 @@ MeteoAsturiasApp.prototype.bindCarouselDots = function(carouselId, dotsId, cardS
     scrollTimeout = requestAnimationFrame(() => {
       const activeIdx = findClosestCardIndex();
       updateActiveDot(activeIdx);
-      // Autocierre de acordeón si el usuario desliza con el dedo fuera de la tarjeta de Clima (Slide 1)
-      if (carouselId === 'hero-widgets-carousel' && activeIdx !== 1 && lastReportedIdx === 1) {
-        const openClima = carousel.querySelector('.clima-accordion-card[open]');
-        if (openClima) openClima.open = false;
-      }
       lastReportedIdx = activeIdx;
     });
   }, { passive: true });
