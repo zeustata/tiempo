@@ -2,7 +2,28 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
-## 🌌 Unificación de Acordeones en Acontecimientos Celestes (`v3.0.25.27 - Pruebas en Local`) — 2026-11-08
+## 🔭 Explorador Astronómico 2026 - 2030: Selector Anual y Filtro Asturias Anti-Scroll Infinito (`v3.0.25.28 - Pruebas en Local`) — 2026-11-08
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `fbdd799` (`v3.0.25.27`).
+- **Diagnóstico y Solución de Lendo («me gustaria hasta el 2030 pero cambiando un poco el menu de proximos acontecimientos para que a parte se pueda elegir el año y si es visible o no desde asturias. quiero enfocarlo a eliminar el scroll infinito. dame ideas princesa... pisale»):**
+  1. *Ampliación de Efemérides hasta 2030 (Leyes 14 y 15):*
+     - Incorporado catálogo de fenómenos celestes rigurosos (NASA/IGN) de **2026 a 2030**:
+       - **2026:** Conjunción Júpiter-Venus, Leónidas, Gemínidas y Solsticio de Invierno.
+       - **2027:** Gran Eclipse Solar del 2 de Agosto (parcial ~85% en Asturias), Perseidas y Superluna.
+       - **2028:** Eclipse Solar Anular del 26 de Enero (en atardecer sobre el Cantábrico) y Eclipse Total de Luna en plena Nochevieja.
+       - **2029:** El hito histórico del milenio: paso cercano del asteroide 99942 Apophis (a 31.000 km visible a simple vista), Eclipse Total de Luna en San Juan y Superluna de Diciembre.
+       - **2030:** Eclipse Solar del 1 de Junio (parcial >65% en Asturias), Eclipse Penumbral y lluvia Gemínidas.
+  2. *Doctrina de Erradicación del Scroll Infinito (Leyes 11 y 18):*
+     - **Barra de Años Segmentada:** Selector horizontal de 5 píldoras (`2026`, `2027`, `2028`, `2029`, `2030`) con iluminación cian activa y salto instantáneo sin recarga.
+     - **Conmutador Inteligente de Visibilidad:** Selector `🟢 Solo en Asturias` (activo por defecto) vs `🌐 Todos los Eventos`, con conteos en vivo por año.
+     - **Tarjeta Titular del Año (`.astro-year-highlight-card`):** Ficha dorada resumen con el gran hito astronómico del año seleccionado.
+     - **Lista Limpia y Acotada:** Cada año muestra entre 4 y 6 tarjetas concisas y plegadas, eliminando por completo las listas kilométricas de más de 40 elementos.
+     - **Aislamiento Gestual:** Protegidas las clases en `isInteractiveZone` en `js/app.js`.
+  3. *Control de Versión y Cache-Busting (Leyes 3 y 4):*
+     - Service Worker: `meteoasturlode-v3025-28-cosmos-2030-explorer`.
+     - Query strings sincronizados en `index.html` (`components.css?v=3.0.25.28`, `app.js?v=3.0.25.28`, `sw.js?v=3.0.25.28`) y en `js/app.js` (`astronomyCard.js?v=3.0.25.28`).
+  4. *Servidor Local de Pruebas (Leyes 3 y 9):* Activo en `http://localhost:8080`.
+
+## 🌌 Unificación de Acordeones en Acontecimientos Celestes (`v3.0.25.27`) — 2026-11-08
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `940bd8f` (`v3.0.25.26`).
 - **Diagnóstico y Solución de Lendo («veo que la primera pestaña de acontecimientos esta desglozada. dejala como las demas... pisale»):**
   1. *Unificación de Estado Inicial Plegado (Ley 14):*

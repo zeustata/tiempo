@@ -9,6 +9,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.25.28] - 2026-11-08
+### Added
+- **Explorador Astronómico 2026 - 2030 y Supresión de Scroll Infinito (`astronomyCard.js` + `components.css` + `app.js` - Leyes 11, 14 y 18):**
+  - **Catálogo Oficial Ampliado hasta 2030:** Integradas las efemérides astronómicas oficiales de 2026 a 2030 (la «Trilogía Ibérica» de eclipses solares de 2026, 2027 y 2028, Luna de Sangre en Nochevieja 2028, paso histórico del asteroide Apophis en 2029 visible a simple vista y eclipse solar de 2030).
+  - **Barra de Años Segmentada:** Selector horizontal de cristal con 5 píldoras (`2026`, `2027`, `2028`, `2029`, `2030`), iluminación cian activa y cambio de año inmediato sin recarga.
+  - **Conmutador Inteligente de Visibilidad:** Filtro selectivo `🟢 Solo en Asturias` (activo por defecto) vs `🌐 Todos los Eventos`, con contadores en vivo por año.
+  - **Ficha Resumen Anual:** Tarjeta destacada dorada (`.astro-year-highlight-card`) con el gran hito celestial del año seleccionado.
+  - **Erradicación del Scroll Infinito:** Cada año presenta una lista acotada de únicamente 4 a 6 tarjetas plegadas, visualizables en un solo pantallazo móvil.
+
 ## [3.0.25.27] - 2026-11-08
 ### Fixed
 - **Unificación de Acordeones en Acontecimientos Celestes (`astronomyCard.js` - Ley 14):**

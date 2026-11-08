@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3025-27-cosmos-events-collapsed';
+const CACHE_NAME = 'meteoasturlode-v3025-28-cosmos-2030-explorer';
 const STATIC_ASSETS = [
   './',
   './index.html',
