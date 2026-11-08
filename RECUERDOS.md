@@ -2,6 +2,22 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌙 Simetría Total y Blindaje Anti-Desborde en Pastillas Lunares (`v3.0.25.30 - Pruebas en Local`) — 2026-11-08
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `7071ce3` (`v3.0.25.29`).
+- **Diagnóstico y Solución de Lendo («la primera tarjeta aun se resiste... pisale a la 1»):**
+  1. *Simetría Gemela en Cuadrícula Lunar (Slide 1 - Leyes 11 y 14):*
+     - La pastilla derecha de la subtarjeta nocturna se rediseña como gemela simétrica de la pastilla izquierda utilizando la clase `.moon-pill-main`.
+     - **Pastilla izquierda:** Icono `[ ${moon.icon} ]` + Meta: `[ ${moon.phaseName} ]` / `[ ${moon.illumination}% Ilum. ]`.
+     - **Pastilla derecha:** Icono `[ 🌕 ]` + Meta: `[ Luna Llena ]` / `[ En ${moon.daysToFullMoon} días ]` (o `¡Hoy!`).
+     - Eliminada la sobrecarga de texto de la versión anterior (`🌕 Próxima Llena` y `En 16d (28.0d)`), erradicando por completo el truncado de texto en pantallas móviles estrechas.
+  2. *Refuerzo de Estilos CSS Anti-Desborde (Ley 11):*
+     - `.cosmos-subcard .astronomy-moon-details-grid` configurado con `grid-template-columns: repeat(2, minmax(0, 1fr))`, `width: 100%`, `box-sizing: border-box`.
+     - Ambas pastillas `.moon-pill-main` blindadas con `min-width: 0`, `padding: 8px 10px`, icono a `1.45rem` (`flex-shrink: 0`), y contenedor de metadatos con `overflow: hidden`, `white-space: nowrap`, `text-overflow: ellipsis`.
+  3. *Control de Versión y Cache-Busting (Leyes 3 y 4):*
+     - Service Worker: `meteoasturlode-v3025-30-cosmos-moon-pills-symmetry`.
+     - Query strings sincronizados en `index.html` (`components.css?v=3.0.25.30`) y en `js/app.js` (`astronomyCard.js?v=3.0.25.30`).
+  4. *Servidor Local de Pruebas (Leyes 3 y 9):* Activo en `http://localhost:8080`.
+
 ## 📱 Armonización y Blindaje Móvil de Noche y Filtro de Visibilidad (`v3.0.25.29 - Pruebas en Local`) — 2026-11-08
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `047b9c9` (`v3.0.25.28`).
 - **Diagnóstico y Solución de Lendo («desde tablet o pc perfecto pero fijate deesde el movil. la imagen 1 junto a Luna menguante y la imagen 2 solo en asturias y todos los eventos. esta desaliniado y no cabe... pisale»):**

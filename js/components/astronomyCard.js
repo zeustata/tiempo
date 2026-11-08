@@ -850,9 +850,12 @@ export function renderAstronomyView(containerId, yearOrFilter = null, visOrWeath
                       <span class="metric-val">${moon.illumination}% Ilum.</span>
                     </div>
                   </div>
-                  <div class="moon-metric-pill">
-                    <span class="metric-label">🌕 Próxima Llena</span>
-                    <span class="metric-val">${moon.daysToFullMoon === 0 ? '¡Hoy!' : 'En ' + moon.daysToFullMoon + 'd'} (${moon.moonAge}d)</span>
+                  <div class="moon-metric-pill moon-pill-main">
+                    <span class="moon-icon-pill">🌕</span>
+                    <div class="moon-metric-meta">
+                      <span class="metric-label">Luna Llena</span>
+                      <span class="metric-val">${moon.daysToFullMoon === 0 ? '¡Hoy!' : 'En ' + moon.daysToFullMoon + ' días'}</span>
+                    </div>
                   </div>
                 </div>
 

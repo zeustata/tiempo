@@ -9957,6 +9957,10 @@
 }
 
 .cosmos-subcard .astronomy-moon-details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: 100%;
+  box-sizing: border-box;
   margin-top: 10px;
   padding-top: 10px;
   gap: 8px;
@@ -9964,15 +9968,18 @@
 
 .cosmos-subcard .moon-pill-main {
   flex-direction: row;
-  gap: 10px;
+  gap: 8px;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   padding: 8px 10px;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .cosmos-subcard .moon-icon-pill {
-  font-size: 1.5rem;
+  font-size: 1.45rem;
   line-height: 1;
+  flex-shrink: 0;
 }
 
 .cosmos-subcard .moon-metric-meta {
@@ -9980,6 +9987,26 @@
   flex-direction: column;
   gap: 2px;
   text-align: left;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.cosmos-subcard .moon-metric-meta .metric-label {
+  font-size: 0.72rem;
+  color: #cbd5e1;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cosmos-subcard .moon-metric-meta .metric-val {
+  font-size: 0.86rem;
+  color: #f8fafc;
+  font-weight: 800;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .cosmos-subcard .sun-magic-sections {

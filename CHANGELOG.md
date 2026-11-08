@@ -9,6 +9,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.25.30] - 2026-11-08
+### Fixed
+- **Simetría Total y Blindaje Anti-Desborde en Pastillas Lunares (`astronomyCard.js` + `components.css` - Leyes 11 y 14):**
+  - **Estructura Gemela `.moon-pill-main`:** Transformada la pastilla derecha en gemela simétrica de la pastilla izquierda, compartiendo la misma disposición horizontal con icono a la izquierda (`🌕`) y datos a la derecha (`Luna Llena` / `En X días`).
+  - **Eliminación del Truncado en Móvil:** Suprimido el conglomerado de texto anterior (`🌕 Próxima Llena` y `En 16d (28.0d)`), asegurando que ninguna pastilla se corte en pantallas móviles compactas.
+  - **Blindaje de Pista CSS:** Aplicado `grid-template-columns: repeat(2, minmax(0, 1fr))` y `min-width: 0` con `text-overflow: ellipsis`, garantizando contención estricta al 50% por columna.
+
 ## [3.0.25.29] - 2026-11-08
 ### Fixed
 - **Armonización y Blindaje Móvil de Noche y Filtro de Visibilidad (`astronomyCard.js` + `components.css` - Leyes 11 y 14):**
