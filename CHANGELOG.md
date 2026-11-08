@@ -9,6 +9,11 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.25.27] - 2026-11-08
+### Fixed
+- **Unificación de Acordeones en Acontecimientos Celestes (`astronomyCard.js` - Ley 14):**
+  - **Estado Inicial Plegado Homogéneo:** Suprimido el atributo `open` del primer evento astronómico de la lista. Ahora todas las tarjetas de la sección *Próximos Acontecimientos* nacen cerradas de manera uniforme, permitiendo al usuario desplegar a voluntad cualquiera de ellas sin descompensar la vista inicial.
+
 ## [3.0.25.26] - 2026-11-08
 ### Fixed
 - **Blindaje Móvil y Armonía Ergonómica en Subtarjeta de Luz Natural (`astronomyCard.js` + `components.css` - Leyes 11 y 14):**

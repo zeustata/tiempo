@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3025-26-cosmos-mobile-harmony';
+const CACHE_NAME = 'meteoasturlode-v3025-27-cosmos-events-collapsed';
 const STATIC_ASSETS = [
   './',
   './index.html',

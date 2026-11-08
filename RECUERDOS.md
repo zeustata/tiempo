@@ -2,7 +2,18 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
-## 📱 Blindaje Móvil y Armonía Ergonómica en Subtarjeta de Luz Natural (`v3.0.25.26 - Pruebas en Local`) — 2026-11-08
+## 🌌 Unificación de Acordeones en Acontecimientos Celestes (`v3.0.25.27 - Pruebas en Local`) — 2026-11-08
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `940bd8f` (`v3.0.25.26`).
+- **Diagnóstico y Solución de Lendo («veo que la primera pestaña de acontecimientos esta desglozada. dejala como las demas... pisale»):**
+  1. *Unificación de Estado Inicial Plegado (Ley 14):*
+     - Suprimido el atributo `open` (`idx === 0 ? 'open' : ''`) de la primera tarjeta de evento en `astronomyCard.js`.
+     - Ahora todas las tarjetas de la sección `Próximos Acontecimientos` nacen plegadas por defecto, ofreciendo una vista compacta y ordenada donde el usuario puede abrir cualquiera de ellas a demanda.
+  2. *Control de Versión y Cache-Busting (Leyes 3 y 4):*
+     - Service Worker: `meteoasturlode-v3025-27-cosmos-events-collapsed`.
+     - Query strings sincronizados en `index.html` (`components.css?v=3.0.25.27`, `app.js?v=3.0.25.27`, `sw.js?v=3.0.25.27`) y en `js/app.js` (`astronomyCard.js?v=3.0.25.27`).
+  3. *Servidor Local de Pruebas (Leyes 3 y 9):* Activo en `http://localhost:8080`.
+
+## 📱 Blindaje Móvil y Armonía Ergonómica en Subtarjeta de Luz Natural (`v3.0.25.26`) — 2026-11-08
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `760c445` (`v3.0.25.25`).
 - **Diagnóstico y Solución de Lendo («al deslizar mira como queda en el movil... pisale»):**
   1. *Corrección de los 3 Desafíos Visuales en Móvil (Leyes 11 y 14):*

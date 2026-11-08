@@ -727,11 +727,8 @@ export function renderAstronomyView(containerId, currentFilter = 'all', weatherD
             semaforoIcon = '🔴';
           }
 
-          // Opción A: Primer evento abierto por defecto para inmediatez, resto plegados
-          const isOpen = idx === 0 ? 'open' : '';
-
           return `
-            <details class="astro-event-card astro-accordion-card ${evt.visibility}" name="astro-accordion" ${isOpen}>
+            <details class="astro-event-card astro-accordion-card ${evt.visibility}" name="astro-accordion">
               <summary class="astro-accordion-header">
                 <div class="astro-accordion-summary-content">
                   <div class="astro-event-header">
