@@ -9,6 +9,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.25.24] - 2026-11-08
+### Added
+- **Extensión Universal del Reborde Tricolor Corporativo y Limpieza Jerárquica en 10 Días (`components.css` - Ley 14):**
+  - **Corrección Jerárquica en «10 Días»:** Suprimida la franja superior de la sub-tarjeta `.daily-card-rich.is-today::before` (preservando su marco azul y badge `HOY`), e incorporado el reborde superior tricolor de 2 px a la tarjeta contenedora principal `📅 Pronóstico a 10 Días` (`.forecast-block::before`).
+  - **Identidad de Marca Unificada en Todos los Menús:** Extendido el bisel superior tricolor de 2 px (*Blanco ➔ Azul Cielo ➔ Azul Océano ➔ Oro Asturiano*) a las tarjetas de cabecera de todas las secciones de la app (*En Vivo, 10 Días, Radar, Playas & Mareógrafo, Surf, Rutas, Ciclismo, Cordillera & Nieve, Cosmos y Ocio*).
+
 ## [3.0.25.23] - 2026-11-08
 ### Fixed
 - **Reborde Superior Tricolor Corporativo y Calibre 2px en Tarjeta En Vivo (`components.css` - Ley 14):**

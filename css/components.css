@@ -114,8 +114,16 @@
   z-index: 1;
 }
 
-/* Reborde superior tricolor corporativo MeteoAsturLode (Mismo calibre y gama que la Tarjeta Maestra) */
-.hero-weather-card::before {
+/* Reborde superior tricolor corporativo MeteoAsturLode (Mismo calibre 2px y gama que la Tarjeta Maestra en todas las tarjetas de cabecera - Ley 14) */
+.hero-weather-card::before,
+.forecast-block::before,
+.radar-wrapper::before,
+.marine-card::before,
+.routes-card-solid::before,
+.cycling-card::before,
+.mountain-card::before,
+.astronomy-hero-card::before,
+.tourism-card-solid::before {
   content: '';
   position: absolute;
   top: 0;
@@ -3763,16 +3771,6 @@
   border-color: rgba(56, 189, 248, 0.6);
   background: var(--bg-surface-elevated);
   box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
-}
-
-.daily-card-rich.is-today::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: linear-gradient(to right, #38bdf8, #06b6d4, #f59e0b);
 }
 
 /* Header de la tarjeta */
@@ -9708,7 +9706,16 @@
   margin-bottom: 24px;
 }
 
-.astronomy-hero-card::before {
+.astronomy-hero-top {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.astronomy-hero-top::before {
   content: '';
   position: absolute;
   top: -50%;
@@ -9717,14 +9724,6 @@
   height: 250px;
   background: radial-gradient(circle, rgba(56, 189, 248, 0.12), transparent 70%);
   pointer-events: none;
-}
-
-.astronomy-hero-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
 }
 
 .astronomy-hero-title {

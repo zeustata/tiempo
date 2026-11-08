@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3025-23-hero-top-rim-gradient';
+const CACHE_NAME = 'meteoasturlode-v3025-24-menus-top-rim-gradient';
 const STATIC_ASSETS = [
   './',
   './index.html',

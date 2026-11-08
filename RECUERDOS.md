@@ -2,7 +2,29 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
-## 💎 Reborde Superior Tricolor Corporativo y Calibre 2px en Tarjeta Principal En Vivo (`v3.0.25.23 - Pruebas en Local`) — 2026-11-08
+## 🏛️ Extensión Universal del Reborde Tricolor a Todas las Secciones y Limpieza de Sub-tarjeta 10 Días (`v3.0.25.24 - Pruebas en Local`) — 2026-11-08
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `aa02f60` (`v3.0.25.23`).
+- **Diagnóstico y Solución de Lendo («vamos a por el ponto 2... quisiera que todas las tarjetas de arriba de los menus tengan tambien ese reborde en la parte superior... en una sub tarjeta que ya tiene un borde azulado para saber que es ahora en vez de tenerlo en la tarjeta principal Pronostico a 10 dias»):**
+  1. *Corrección Jerárquica en «10 Días» (Ley 14):*
+     - Suprimida la franja superior redundante de `.daily-card-rich.is-today::before`, devolviendo a la sub-tarjeta diaria su diseño limpio con borde azul celeste perimetral y badge `HOY`.
+     - Aplicado el reborde superior tricolor corporativo (2 px) a la tarjeta contenedora principal `📅 Pronóstico a 10 Días` (`.forecast-block::before`).
+  2. *Extensión Universal a las Tarjetas de Cabecera de Todos los Menús:*
+     - Dotadas de bisel superior tricolor de 2 px con degradado asturiano (*Blanco ➔ Azul Cielo ➔ Azul Océano ➔ Oro*) y halo luminoso:
+       - **En Vivo:** `.hero-weather-card::before`
+       - **10 Días:** `.forecast-block::before`
+       - **Radar:** `.radar-wrapper::before`
+       - **Playas & Mareógrafo / Surf:** `.marine-card::before`
+       - **Rutas & Senderismo:** `.routes-card-solid::before`
+       - **Ciclismo & Viento:** `.cycling-card::before`
+       - **Cordillera & Nieve:** `.mountain-card::before`
+       - **Astronomía & Cosmos:** `.astronomy-hero-card::before`
+       - **Planes & Ocio:** `.tourism-card-solid::before`
+  3. *Control de Versión y Cache-Busting (Leyes 3 y 4):*
+     - Service Worker: `meteoasturlode-v3025-24-menus-top-rim-gradient`.
+     - Query strings sincronizados en `index.html` (`components.css?v=3.0.25.24`, `app.js?v=3.0.25.24`, `sw.js?v=3.0.25.24`).
+  4. *Servidor Local de Pruebas (Leyes 3 y 9):* Activo en `http://localhost:8080`.
+
+## 💎 Reborde Superior Tricolor Corporativo y Calibre 2px en Tarjeta Principal En Vivo (`v3.0.25.23`) — 2026-11-08
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `147feb9` (`v3.0.25.22`).
 - **Diagnóstico y Solución Paso a Paso de Lendo («vamos paso a paso. primero arreglar el menu en vivo... los colores cambiantes sean como la de la tarjeta maestra y del mismo ancho...»):**
   1. *Alineación de Calibre y Gama Cromática (Leyes 11 y 14):*
