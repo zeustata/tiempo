@@ -2,7 +2,21 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
-## 🔭 Explorador Astronómico 2026 - 2030: Selector Anual y Filtro Asturias Anti-Scroll Infinito (`v3.0.25.28 - Pruebas en Local`) — 2026-11-08
+## 📱 Armonización y Blindaje Móvil de Noche y Filtro de Visibilidad (`v3.0.25.29 - Pruebas en Local`) — 2026-11-08
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `047b9c9` (`v3.0.25.28`).
+- **Diagnóstico y Solución de Lendo («desde tablet o pc perfecto pero fijate deesde el movil. la imagen 1 junto a Luna menguante y la imagen 2 solo en asturias y todos los eventos. esta desaliniado y no cabe... pisale»):**
+  1. *Blindaje de Cabecera en Noche (Slide 1 - Leyes 11 y 14):*
+     - El título `🌙 Cielo Nocturno & Luna` se independiza al 100% del ancho superior de la subtarjeta, eliminando la colisión con la pastilla lunar y evitando para siempre el truncado a `C..` y `F..`.
+     - Los datos lunares se presentan en una cuadrícula simétrica de 2 columnas (`.moon-metric-pill`): a la izquierda la fase lunar con icono (`${moon.icon} ${moon.phaseName}` y `% Ilum.`), y a la derecha la fecha de la próxima luna llena con la edad lunar.
+  2. *Blindaje Simétrico en Filtro de Visibilidad (Leyes 11 y 14):*
+     - Sustituidas las cadenas excesivamente largas por etiquetas directas y contundentes: `🟢 En Asturias (X)` y `🌐 Global (Y)`.
+     - En CSS, dotados de `flex: 1`, `justify-content: center` y contenedor acotado a `max-width: 320px`, repartiendo exactamente el 50% del espacio para cada botón. Cero desbordes en cualquier smartphone.
+  3. *Control de Versión y Cache-Busting (Leyes 3 y 4):*
+     - Service Worker: `meteoasturlode-v3025-29-cosmos-moon-visibility-harmony`.
+     - Query strings sincronizados en `index.html` (`components.css?v=3.0.25.29`, `app.js?v=3.0.25.29`, `sw.js?v=3.0.25.29`) y en `js/app.js` (`astronomyCard.js?v=3.0.25.29`).
+  4. *Servidor Local de Pruebas (Leyes 3 y 9):* Activo en `http://localhost:8080`.
+
+## 🔭 Explorador Astronómico 2026 - 2030: Selector Anual y Filtro Asturias Anti-Scroll Infinito (`v3.0.25.28`) — 2026-11-08
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `fbdd799` (`v3.0.25.27`).
 - **Diagnóstico y Solución de Lendo («me gustaria hasta el 2030 pero cambiando un poco el menu de proximos acontecimientos para que a parte se pueda elegir el año y si es visible o no desde asturias. quiero enfocarlo a eliminar el scroll infinito. dame ideas princesa... pisale»):**
   1. *Ampliación de Efemérides hasta 2030 (Leyes 14 y 15):*

@@ -9947,9 +9947,6 @@
   color: #f8fafc;
   font-weight: 800;
   display: block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .cosmos-subcard-title .subcard-subtitle {
@@ -9957,15 +9954,32 @@
   color: #cbd5e1;
   display: block;
   margin-top: 1px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .cosmos-subcard .astronomy-moon-details-grid {
   margin-top: 10px;
   padding-top: 10px;
   gap: 8px;
+}
+
+.cosmos-subcard .moon-pill-main {
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 10px;
+}
+
+.cosmos-subcard .moon-icon-pill {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.cosmos-subcard .moon-metric-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
 }
 
 .cosmos-subcard .sun-magic-sections {
@@ -10388,6 +10402,7 @@
   width: 100%;
   margin-bottom: 12px;
   box-sizing: border-box;
+  padding: 0 4px;
 }
 
 .astro-visibility-toggle {
@@ -10399,12 +10414,18 @@
   border-radius: 999px;
   padding: 3px;
   gap: 4px;
-  max-width: 100%;
+  width: 100%;
+  max-width: 320px;
   box-sizing: border-box;
 }
 
 .astro-vis-btn {
-  padding: 6px 14px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6px 8px;
   font-size: 0.78rem;
   font-weight: 700;
   color: #94a3b8;
@@ -10414,6 +10435,7 @@
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
+  box-sizing: border-box;
 }
 
 .astro-vis-btn:hover {

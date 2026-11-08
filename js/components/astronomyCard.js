@@ -837,26 +837,22 @@ export function renderAstronomyView(containerId, yearOrFilter = null, visOrWeath
                     <span class="subcard-icon">🌙</span>
                     <div>
                       <strong>Cielo Nocturno & Luna</strong>
-                      <span class="subcard-subtitle">Fase actual y visibilidad de estrellas</span>
-                    </div>
-                  </div>
-                  <div class="astronomy-moon-badge compact">
-                    <span class="moon-icon-giant">${moon.icon}</span>
-                    <div class="moon-badge-meta">
-                      <strong>${moon.phaseName}</strong>
-                      <span>${moon.illumination}% Ilum.</span>
+                      <span class="subcard-subtitle">Fase lunar y calidad de cielo hoy</span>
                     </div>
                   </div>
                 </div>
 
                 <div class="astronomy-moon-details-grid">
-                  <div class="moon-metric-pill">
-                    <span class="metric-label">🌓 Edad Lunar</span>
-                    <span class="metric-val">${moon.moonAge} días</span>
+                  <div class="moon-metric-pill moon-pill-main">
+                    <span class="moon-icon-pill">${moon.icon}</span>
+                    <div class="moon-metric-meta">
+                      <span class="metric-label">${moon.phaseName}</span>
+                      <span class="metric-val">${moon.illumination}% Ilum.</span>
+                    </div>
                   </div>
                   <div class="moon-metric-pill">
                     <span class="metric-label">🌕 Próxima Llena</span>
-                    <span class="metric-val">${moon.daysToFullMoon === 0 ? '¡Hoy!' : 'En ' + moon.daysToFullMoon + 'd'}</span>
+                    <span class="metric-val">${moon.daysToFullMoon === 0 ? '¡Hoy!' : 'En ' + moon.daysToFullMoon + 'd'} (${moon.moonAge}d)</span>
                   </div>
                 </div>
 
@@ -991,10 +987,10 @@ export function renderAstronomyView(containerId, yearOrFilter = null, visOrWeath
       <div class="astro-visibility-toolbar">
         <div class="astro-visibility-toggle">
           <button class="astro-vis-btn ${currentVisibilityFilter === 'asturias' ? 'active' : ''}" data-vis="asturias">
-            🟢 Solo en Asturias (${countYearAsturias})
+            🟢 En Asturias (${countYearAsturias})
           </button>
           <button class="astro-vis-btn ${currentVisibilityFilter === 'all' ? 'active' : ''}" data-vis="all">
-            🌐 Todos los Eventos (${countYearAll})
+            🌐 Global (${countYearAll})
           </button>
         </div>
       </div>

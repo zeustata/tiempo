@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3025-28-cosmos-2030-explorer';
+const CACHE_NAME = 'meteoasturlode-v3025-29-cosmos-moon-visibility-harmony';
 const STATIC_ASSETS = [
   './',
   './index.html',

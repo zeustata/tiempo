@@ -9,6 +9,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.25.29] - 2026-11-08
+### Fixed
+- **Armonización y Blindaje Móvil de Noche y Filtro de Visibilidad (`astronomyCard.js` + `components.css` - Leyes 11 y 14):**
+  - **Cabecera de Noche a Ancho Completo (100%):** Independizado el título `🌙 Cielo Nocturno & Luna` en su propia fila superior sin competir con la pastilla lunar, suprimiendo cualquier riesgo de truncamiento de texto en pantallas móviles estrechas.
+  - **Cuadrícula Lunar Simétrica:** Desplazada la fase lunar con icono (`${moon.icon} ${moon.phaseName}` y `% Ilum.`) y la previsión de luna llena a una cuadrícula simétrica de 2 columnas de igual altura.
+  - **Filtro de Visibilidad Proporcional al 50%:** Reducidas las etiquetas a términos concisos (`🟢 En Asturias` y `🌐 Global`) con `flex: 1` y contenedor acotado a 320 px, garantizando total holgura y simetría sin desbordes laterales.
+
 ## [3.0.25.28] - 2026-11-08
 ### Added
 - **Explorador Astronómico 2026 - 2030 y Supresión de Scroll Infinito (`astronomyCard.js` + `components.css` + `app.js` - Leyes 11, 14 y 18):**
