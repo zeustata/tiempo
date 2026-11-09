@@ -2,6 +2,22 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## ⏱️ Soberanía del Pronóstico Puro 72h y Desacoplo Temporal (`v3.0.28 - Despliegue Oficial`) — 2026-11-09
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `63ba37f` (`v3.0.27`).
+- **Diagnóstico y Solución de Lendo («en el pronostico de las 72 horas ponga la tarjeta de la hora que ya estamos... para eso tenemos ya la tarjeta de arriba del tiempo en vivo... en asturias en esa hora puede caer un chaparron, despejar y salir el sol... si aparece Ahora y pone lluvia pero despejo confunde... pisale... subelo»):**
+  1. *Causa y Justificación Ergonómica y Meteorológica:*
+     - La tarjeta hero superior de *En Vivo* gobierna el tiempo en tiempo real e instantáneo.
+     - Los modelos numéricos horarios proyectan acumulaciones de 60 minutos (bloques enteros de hora). En Asturias el cielo puede cambiar en 10 minutos (chubasco rápido y resol).
+     - Mostrar una tarjeta con la hora actual (`12:00`) o llamarla `Ahora` generaba choques directos cuando el sensor en vivo marcaba sol y la acumulación de la hora indicaba lluvia. Además, ver `12:00` cuando ya son las `12:15` daba la sensación de ver un reloj atrasado.
+  2. *Solución Técnica Aplicada:*
+     - En `js/components/forecastView.js` (`renderHourlyForecastBlock`): se define `startIndex = currentHourIndex + 1`.
+     - La tira de pronóstico arranca estrictamente en la próxima hora en punto (`13:00`, `14:00`...), dedicándose con pureza al futuro.
+     - Se eliminaron las complejidades de sobreescritura de la hora en curso en la tira horaria.
+  3. *Control de Versión y Cache-Busting (Leyes 3, 4 y 13):*
+     - Elevada versión a `v3.0.28 ⏱️` en `CURRENT_APP_VERSION` (`js/app.js`), `#app-version-badge`, `#nav-update-badge`, modal `#changelog-modal` y Service Worker `meteoasturlode-v3028-pure-forecast-timeline` en `sw.js`.
+     - Query strings sincronizados en `index.html` (`app.js?v=3.0.28`, `sw.js?v=3.0.28`) y en `js/app.js` (`forecastView.js?v=3.0.28`).
+  4. *Despliegue Remoto (Ley 3):* Sincronizado en `zeustata/tiempo` (rama `main`). Servidor local cerrado tras la verificación.
+
 ## 🌧️ Rescate Soberano de Orbayu Cantábrico y Coherencia en Pronóstico Horario (`v3.0.27 - Despliegue Oficial`) — 2026-11-09
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `1e8e68c` (`v3.0.26`).
 - **Diagnóstico y Solución de Lendo («pues aqui esta lloviendo y pone que esta nublado... recuerda este ajuste por si algun dia tenemos un falso orbayo para ajustarlo. subelo»):**

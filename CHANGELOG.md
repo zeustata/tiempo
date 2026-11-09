@@ -9,6 +9,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.28] - 2026-11-09
+### Changed
+- **⏱️ Soberanía del Pronóstico Puro y Desacoplo Temporal (`forecastView.js` - Leyes 0, 1, 3 y 11):**
+  - **Arranque en la Siguiente Hora (`currentHour + 1`):** La tira de pronóstico de 72 horas arranca ahora estrictamente en la próxima hora en punto (ej. 13:00 cuando son las 12:xx).
+  - **Erradicación de Fricciones y Horas Caducadas:** La tarjeta principal de *En Vivo* gobierna con exclusividad el presente (sensores, radar y lecturas instantáneas), evitando que los 60 minutos acumulados del modelo entren en contradicción con los cambios rápidos del tiempo asturiano.
+
 ## [3.0.27] - 2026-11-09
 ### Fixed
 - **🌧️ Rescate Inteligente de Orbayu Cantábrico y Sincronización AROME + ECMWF (`weatherApi.js` + `weatherIcons.js` - Leyes 0, 1, 3 y 27):**
