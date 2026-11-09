@@ -9,6 +9,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.32] - 2026-11-09
+### Added
+- **⛅ Doctrina del Litoral Cantábrico, Ley del Nordeste y Diferenciación de Sol y Nubes (`weatherIcons.js` + `currentCard.js` + `forecastView.js` + `app.js` - Leyes 0, 1, 3 y 27):**
+  - **La Ley del Nordeste en la Costa:** En la rasa litoral asturiana (Castrillón, Gijón, Avilés, Salinas, Peñas...), queda erradicado el falso cielo azul "estilo Sevilla" (`Despejado / Soleyeru ☀️` sin nubes). Un cielo completamente limpio sin ninguna nube solo se valida en la costa si concurre viento de Nordeste (NE, 20° a 75°) o Sur (Foehn, 160° a 220°) con nubosidad real `<= 10%`. En cualquier otra situación soleada en la costa, se muestra siempre con nube acompañante: `Mayormente soleado / Despejáu` (🌤️) o `Sol y nubes / Claros` (⛅).
+  - **Frontera Física entre Resol y Sol y Nubes:** Calibración física de umbrales solares. Cuando la radiación directa supera el umbral de haz limpio (`irr >= 220 W/m²` en otoño/invierno), el sol no está velado por un estrato lechoso, sino que entra limpio por claros entre nubes: se clasifica fielmente como `Sol y nubes / Claros` (⛅ `partly-cloudy-day`), reservando `Resol / Sol tamizáu` (🌥️) únicamente para radiaciones difusas y moderadas (130-219 W/m²) bajo velo nuboso continuo.
+
 ## [3.0.31] - 2026-11-09
 ### Added
 - **🔭 Ventana Rodante de 5 Años y Catálogo Extendido 2026-2035 en Astronomía (`astronomyCard.js` - Leyes 0, 1, 3, 11 y 18):**

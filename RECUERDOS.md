@@ -2,6 +2,27 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## ⛅ Doctrina del Litoral Cantábrico, Ley del Nordeste y Diferenciación de Sol y Nubes (`v3.0.32 - Despliegue Oficial`) — 2026-11-09
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `676cc61` (`v3.0.31`).
+- **Diagnóstico y Sabiduría Cantábrica de Lendo («espera mira a ver ahora que ahora hay sol y nubes. hay mas que resol. hay sol y nubes. lo que quiero decirte es que para que pongas un completamente despejado tienes que estar segura. aqui para que tengamos un cielo azul sin ninguna nube es dificil y cuando coincide suele ser con viento noreste. si hubieses puesto alguna nube con el sol estarias mejor encaminada»):**
+  1. *Causa Física del Desfase:*
+     - En otoño e invierno, con el sol bajo (ángulo cenital pronunciado a las 14:30 en latitud 43.5° N), un haz solar directo de 220-300 W/m² representa ya entre el 50% y 65% de la radiación astronómica máxima posible.
+     - Los umbrales antiguos exigían `sw >= 320 W/m²` o `irr >= 380 W/m²` para salir de Resol o Nublado, provocando que con 286 W/m² de sol visible y cúmulos, el sistema se quedara atascado en Resol o Nublado continuo, o cayera en la trampa de pintar sol 100% despejado de postal si la nubosidad bajaba.
+  2. *La Ley del Nordeste y Blindaje del Litoral:*
+     - En el litoral asturiano (`isCoast`), la humedad constante del Cantábrico impide cielos azules 100% limpios sin nubes en días ordinarios.
+     - Solo se autoriza la condición de `Despejado / Soleyeru ☀️` (sol completamente solo sin nubes) si concurre viento de componente Nordeste (NE: 20° a 75°) o Sur (Foehn: 160° a 220°) con cobertura nubosa inferior al 10%.
+     - En cualquier otro claro costero, el sol se presenta siempre con su nube compañera: `Mayormente soleado / Despejáu` (🌤️) o `Sol y nubes / Claros` (⛅).
+  3. *Diferenciación Real entre Resol y Sol y Nubes:*
+     - `Resol / Sol tamizáu` (🌥️ `resol`): Se reserva estrictamente para radiaciones solares difusas/tamizadas (130 a 219 W/m² en otoño) bajo sábana continua de nubes.
+     - `Sol y nubes / Claros` (⛅ `partly-cloudy-day`): Cuando el haz solar directo alcanza o supera los 220 W/m² (como los 286 W/m² medidos en Castrillón), el sol entra limpio por claros entre nubes y se clasifica como Sol y Nubes.
+  4. *Propagación Integral (Ley 14) y Corrección de Inicialización:*
+     - Integrado en `getWeatherInfo` (`weatherIcons.js`), en la tarjeta principal (`currentCard.js`), en el fondo dinámico (`app.js`) y en las tarjetas del pronóstico horario y tramos del día (`forecastView.js`).
+     - Corregido el orden de inicialización de `windDeg` en `renderHourlyForecastBlock`, restableciendo el renderizado fluido e integral de todos los módulos.
+  5. *Control de Versión y Cache-Busting (Leyes 3, 4 y 13):*
+     - Elevada versión a `v3.0.32 ⛅` en `CURRENT_APP_VERSION` (`js/app.js`), `#app-version-badge`, `#nav-update-badge`, modal `#changelog-modal` y Service Worker `meteoasturlode-v3032-cantabrico-litoral-sun-cloud` en `sw.js`.
+     - Preservada la versión de auto-prompt `CURRENT_CHANGELOG_PROMPT_VERSION = '3.0.28'` para no molestar a los usuarios.
+  6. *Despliegue Remoto (Ley 3):* Sincronizado en `zeustata/tiempo` (rama `main`). Servidor local detenido tras el visto bueno de Lendo.
+
 ## 🔭 Ventana Rodante de 5 Años y Reserva de Efemérides 2026-2035 (`v3.0.31 - Despliegue Oficial`) — 2026-11-09
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `6e76a06` (`v3.0.30`).
 - **Diagnóstico y Petición de Lendo («ahora hablamos de los Acontecimientos celestes en el menu Astronomia y Cosmos. tenemos un rango de eventos entre el 2026 y el 2030. cuando acabe el 2026 que pasa con la intergaz de los acontecimientos? ... me gusta mas la opcion b. es mas autonoma pero tienes razon que tenemos que cargar de antemano mas base de datos. podemos cargar mas años para tener en la recamara? ... si. asi tenemos 5 años de margen princesa»):**

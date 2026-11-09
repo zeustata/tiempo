@@ -8,11 +8,11 @@ import { renderRoutesCard } from './components/routesCard.js?v=3.0.25.5';
 import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.25.5';
 import { renderMountainCard } from './components/mountainCard.js?v=3.0.29';
 import { renderTourismCard } from './components/tourismCard.js?v=3.0.25.5';
-import { renderForecast, renderHourlyForecastBlock } from './components/forecastView.js?v=3.0.28';
+import { renderForecast, renderHourlyForecastBlock } from './components/forecastView.js?v=3.0.32';
 import { renderWeatherChart } from './components/chartsView.js?v=3.0.23.58';
 import { renderAstronomyView } from './components/astronomyCard.js?v=3.0.31';
 import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=3.0.25.12';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=3.0.30';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=3.0.32';
 import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=2.0.0';
 import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=2.0.0';
 import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=2.0.0';
@@ -49,7 +49,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.31';
+export const CURRENT_APP_VERSION = '3.0.32';
 // Control inteligente de Auto-Prompt del Changelog (Doctrina de No-Fatiga al Usuario - Feedback Lendo):
 // Solo se incrementa ante cambios visuales grandes, módulos nuevos o novedades perceptibles.
 // En ajustes finos, calibraciones matemáticas y parches internos se mantiene para no fatigar al usuario con modales.
@@ -3627,7 +3627,9 @@ class MeteoAsturiasApp {
     const currentSw = cur?.shortwave_radiation != null ? cur.shortwave_radiation : null;
     const currentCloud = cur?.cloud_cover != null ? cur.cloud_cover : (hourly?.cloud_cover && hourly.cloud_cover[currentHour] != null ? hourly.cloud_cover[currentHour] : null);
     const curVis = cur?.visibility != null ? cur.visibility : (hourly?.visibility && hourly.visibility[currentHour] != null ? hourly.visibility[currentHour] : null);
-    const info = getWeatherInfo(weatherCode, isDay, cur?.precipitation, currentPop, directIrr, currentUv, currentSw, currentCloud, cur?.relative_humidity_2m, curVis);
+    const concejo = this.currentConcejo;
+    const isCoast = concejo ? (concejo.type === 'coast' || (concejo.region && concejo.region.includes('Costa'))) : false;
+    const info = getWeatherInfo(weatherCode, isDay, cur?.precipitation, currentPop, directIrr, currentUv, currentSw, currentCloud, cur?.relative_humidity_2m, curVis, isCoast, cur?.wind_direction_10m);
     const bgType = info ? info.bg : 'cloudy';
     let themeKey = bgType;
 

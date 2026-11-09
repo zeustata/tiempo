@@ -14,7 +14,7 @@ import { getReyesWeatherSvg } from './weatherReyesIcons.js?v=3.0.24.54';
 export const WMO_CODES = {
   0: { label: 'Despejado / Soleyeru', icon: '☀️', svgKey: 'clear-day', lucide: 'sun', bg: 'clear-day', isRain: false, isSnow: false },
   1: { label: 'Mayormente soleado / Despejáu', icon: '🌤️', svgKey: 'mostly-clear-day', lucide: 'sun-medium', bg: 'clear-day', isRain: false, isSnow: false },
-  2: { label: 'Parcialmente nublado / Claros', icon: '⛅', svgKey: 'partly-cloudy-day', lucide: 'cloud-sun', bg: 'partly-cloudy', isRain: false, isSnow: false },
+  2: { label: 'Sol y nubes / Claros', icon: '⛅', svgKey: 'partly-cloudy-day', lucide: 'cloud-sun', bg: 'partly-cloudy', isRain: false, isSnow: false },
   3: { label: 'Nublado / Cubiertu', icon: '☁️', svgKey: 'cloudy', lucide: 'cloud', bg: 'cloudy', isRain: false, isSnow: false },
   45: { label: 'Niebla / Borrina', icon: '🌫️', svgKey: 'fog', lucide: 'cloud-fog', bg: 'fog', isRain: false, isSnow: false },
   48: { label: 'Niebla con escarcha', icon: '🌫️', svgKey: 'fog', lucide: 'cloud-fog', bg: 'fog', isRain: false, isSnow: false },
@@ -59,38 +59,42 @@ export function getSeasonalSolarThresholds(date = new Date()) {
     return {
       uvStrict: 1.8,
       uvModerate: 1.4,
-      swGlobalHigh: 300,
-      directMinResol: 320
+      swGlobalHigh: 220,
+      directMinResol: 110,
+      directMinSun: 180
     };
   }
   // Otoño medio / Primavera temprana (Nov, Mar): Sol medio-bajo. UV máx teórico despejado: ~3.0 - 4.0
   if (month === 10 || month === 2) {
     return {
-      uvStrict: 2.5,
-      uvModerate: 2.0,
-      swGlobalHigh: 400,
-      directMinResol: 380
+      uvStrict: 2.2,
+      uvModerate: 1.6,
+      swGlobalHigh: 260,
+      directMinResol: 130,
+      directMinSun: 220
     };
   }
   // Primavera / Principios de otoño (Abr, Sep, Oct): UV máx teórico despejado: ~4.5 - 6.0
   if (month === 3 || month === 8 || month === 9) {
     return {
       uvStrict: 3.0,
-      uvModerate: 2.4,
-      swGlobalHigh: 460,
-      directMinResol: 450
+      uvModerate: 2.2,
+      swGlobalHigh: 340,
+      directMinResol: 170,
+      directMinSun: 280
     };
   }
   // Verano pleno (May, Jun, Jul, Ago): Sol alto (hasta 70°). UV máx teórico despejado: 7.5 - 9.0
   return {
     uvStrict: 4.2,
-    uvModerate: 3.6,
-    swGlobalHigh: 540,
-    directMinResol: 500
+    uvModerate: 3.2,
+    swGlobalHigh: 420,
+    directMinResol: 200,
+    directMinSun: 340
   };
 }
 
-export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null, directIrradiance = null, uvIndex = null, shortwaveRadiation = null, cloudCover = null, humidity = null, visibility = null) {
+export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null, directIrradiance = null, uvIndex = null, shortwaveRadiation = null, cloudCover = null, humidity = null, visibility = null, isCoast = false, windDirection = null) {
   let base = WMO_CODES[code] || { label: 'Variable', icon: '⛅', svgKey: 'cloudy', lucide: 'cloud', bg: 'cloudy', isRain: false, isSnow: false };
 
   const isNight = isDay === 0 || isDay === false;
@@ -410,28 +414,21 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     let hasRealSolarLight = false;
     let isResol = false;
 
-    if (cc !== null && cc >= 93) {
-      // Cielo cerrado / tapado según modelo (93% a 100% de nubes):
-      // Distingue entre:
-      // a) Nublado cerrado real o inercia de la hora previa (ayer 14:37 h: irr=218 W/m², sw=292 W/m² -> Nublado / Cubiertu).
-      // b) Resol potente real en vivo bajo velo nuboso (hoy 13:20 h: irr=266-362 W/m², sw=338-410 W/m² -> Resol / Sol tamizáu).
-      // A finales de otoño/invierno, con el sol bajo (máx astronómico ~500 W/m²), un resol real activo
-      // perfora con irr >= 250 W/m² y sw >= 320 W/m² (o irr >= 300 W/m² directo).
-      const hasPotentResolLateYear = (irr >= 250 && sw >= 320) || irr >= 300;
-      if (hasDirectBeam || hasPotentResolLateYear) {
+    const hasPotentResol = irr >= thresholds.directMinResol || (irr >= 100 && sw >= thresholds.swGlobalHigh);
+    const isDirectSunBreaks = irr >= thresholds.directMinSun || (irr >= 180 && sw >= thresholds.swGlobalHigh);
+
+    if (cc !== null && cc >= 75) {
+      // Cobertura nubosa alta (75% a 100% de nubes):
+      // Si el haz solar directo logra filtrarse con fuerza, se distingue entre:
+      // a) Sol y nubes / Claros (⛅): El sol perfora limpio por huecos abiertos (isDirectSunBreaks)
+      // b) Resol / Sol tamizado (🌥️): El sol calienta difuso a través del manto lechoso (hasPotentResol)
+      // c) Nublado / Cubierto (☁️): El manto bloquea el sol
+      if (hasPotentResol) {
         hasRealSolarLight = true;
         isResol = true;
       } else {
         hasRealSolarLight = false;
         isResol = false;
-      }
-    } else if (cc !== null && cc >= 75) {
-      // Cobertura nubosa alta (75% a 92% de nubes, p. ej. 85-90% gris con 10-25% de claridad):
-      // Si el haz solar directo logra filtrarse (irr >= 180 W/m² o radiación global >= 280 W/m² con irr >= 120 W/m²),
-      // se clasifica fielmente como Resol / Sol tamizáu (🌥️).
-      if (hasDirectBeam || irr >= 180 || (sw >= 280 && irr >= 120)) {
-        hasRealSolarLight = true;
-        isResol = true;
       }
     } else {
       // Cobertura < 75% o sin dato de nubosidad: desempate por radiación para claros
@@ -458,22 +455,48 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
         isResol: false
       };
     } else if (!isRainActive && (p < 0.1 || isSolarPhantomDrizzle) && hasRealSolarLight && isResol) {
-      base = {
-        label: 'Resol / Sol tamizáu',
-        icon: '🌥️',
-        svgKey: 'resol',
-        lucide: 'cloud-sun',
-        bg: 'partly-cloudy',
-        isRain: false,
-        isSnow: false,
-        isSolarCalibrated: true,
-        isResol: true
-      };
+      // Diferenciación física canónica (Feedback Lendo - Ley 27 & Banco de Ventana):
+      // Si la radiación solar directa alcanza nivel de haz limpio (isDirectSunBreaks), el sol no está velado;
+      // hay claros en el cielo y el sol brilla acompañado de nubes: "Sol y nubes / Claros" (⛅)
+      if (isDirectSunBreaks) {
+        base = {
+          label: 'Sol y nubes / Claros',
+          icon: '⛅',
+          svgKey: 'partly-cloudy-day',
+          lucide: 'cloud-sun',
+          bg: 'partly-cloudy',
+          isRain: false,
+          isSnow: false,
+          isSolarCalibrated: true,
+          isResol: false
+        };
+      } else {
+        base = {
+          label: 'Resol / Sol tamizáu',
+          icon: '🌥️',
+          svgKey: 'resol',
+          lucide: 'cloud-sun',
+          bg: 'partly-cloudy',
+          isRain: false,
+          isSnow: false,
+          isSolarCalibrated: true,
+          isResol: true
+        };
+      }
     } else if (!isRainActive && (p < 0.1 || isSolarPhantomDrizzle) && hasRealSolarLight && (base.svgKey === 'cloudy' || code === 3 || base.svgKey === 'fog' || (cc !== null && code <= 2))) {
-      const isClearSky = cc !== null && cc <= 15 && (irr >= 150 || code === 0);
+      // REGLA DEL LITORAL ASTURIANO & LEY DEL NORDESTE (Feedback Lendo - Ley 27 & Banco de Ventana):
+      // En la rasa litoral asturiana (isCoast), un cielo azul 100% limpio sin ninguna nube (como Sevilla) es excepcional y
+      // requiere viento seco del Nordeste (NE: 20° a 75°) o Sur (Foehn: 160° a 220°) con nubosidad casi nula (cc <= 10%).
+      // Si no se da esa certeza total en la costa, el cielo soleado se representa siempre con "alguna nube con el sol"
+      // (🌤️ Mayormente soleado o ⛅ Sol y nubes), erradicando los falsos "despejados de postal sevillana" sin nubes.
+      const isCoastZone = isCoast === true || isCoast === 'coast';
+      const isNordesteOrSur = windDirection !== null && ((windDirection >= 20 && windDirection <= 75) || (windDirection >= 160 && windDirection <= 220));
+      const canBeCompletelyClear = !isCoastZone || (isNordesteOrSur && cc !== null && cc <= 10);
+
+      const isClearSky = canBeCompletelyClear && cc !== null && cc <= 15 && (irr >= 150 || code === 0);
       const isMostlyClearSky = !isClearSky && cc !== null && cc <= 40;
       base = {
-        label: isClearSky ? 'Despejado / Soleyeru' : (isMostlyClearSky ? 'Mayormente soleado / Despejáu' : 'Parcialmente nublado / Claros'),
+        label: isClearSky ? 'Despejado / Soleyeru' : (isMostlyClearSky ? 'Mayormente soleado / Despejáu' : 'Sol y nubes / Claros'),
         icon: isClearSky ? '☀️' : (isMostlyClearSky ? '🌤️' : '⛅'),
         svgKey: isClearSky ? 'clear-day' : (isMostlyClearSky ? 'mostly-clear-day' : 'partly-cloudy-day'),
         lucide: isClearSky ? 'sun' : 'cloud-sun',
@@ -523,6 +546,21 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
           isResol: false
         };
       }
+    }
+  }
+
+  // Blindaje de Costa: En litoral sin viento de Nordeste o Sur, un código base 0 se suaviza para llevar "alguna nube con el sol"
+  if (!isNight && (isCoast === true || isCoast === 'coast') && base.svgKey === 'clear-day') {
+    const isNordesteOrSur = windDirection !== null && ((windDirection >= 20 && windDirection <= 75) || (windDirection >= 160 && windDirection <= 220));
+    const ccVal = cloudCover != null ? parseFloat(cloudCover) : 0;
+    if (!isNordesteOrSur || ccVal > 10) {
+      base = {
+        ...base,
+        label: 'Mayormente soleado / Despejáu',
+        icon: '🌤️',
+        svgKey: 'mostly-clear-day',
+        lucide: 'sun-medium'
+      };
     }
   }
 

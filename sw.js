@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3031-astronomy-rolling-window';
+const CACHE_NAME = 'meteoasturlode-v3032-cantabrico-litoral-sun-cloud';
 const STATIC_ASSETS = [
   './',
   './index.html',

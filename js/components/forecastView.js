@@ -1,4 +1,4 @@
-import { getWeatherInfo, renderWeatherIconHtml, getWindDirection } from '../utils/weatherIcons.js?v=3.0.24.50';
+import { getWeatherInfo, renderWeatherIconHtml, getWindDirection } from '../utils/weatherIcons.js?v=3.0.32';
 
 /**
  * Normaliza y formatea una marca de tiempo solar (ISO de Open-Meteo) a la hora civil oficial de Asturias/España,
@@ -289,11 +289,12 @@ export function renderHourlyForecastBlock(data, units = 'metric', iconTheme = 'a
     const cloudCoverHour = (hourly.cloud_cover && hourly.cloud_cover[i] != null) ? hourly.cloud_cover[i] : null;
     const humHour = (hourly.relative_humidity_2m && hourly.relative_humidity_2m[i] != null) ? hourly.relative_humidity_2m[i] : null;
     const visHour = (hourly.visibility && hourly.visibility[i] != null) ? hourly.visibility[i] : null;
-    const weather = getWeatherInfo(code, isDay, precipMm, pop, hourlyDirectIrr, hourlyUv, hourlySw, cloudCoverHour, humHour, visHour);
-    const temp = Math.round(hourly.temperature_2m[i]);
-    const windSpeed = units === 'knots' ? (hourly.wind_speed_10m[i] * 0.539957).toFixed(0) : Math.round(hourly.wind_speed_10m[i]);
     const windDeg = (hourly.wind_direction_10m && hourly.wind_direction_10m[i] != null) ? hourly.wind_direction_10m[i] : 0;
     const windDir = getWindDirection(windDeg);
+    const isCoast = (data && data.concejo) ? (data.concejo.type === 'coast' || (data.concejo.region && data.concejo.region.includes('Costa'))) : false;
+    const weather = getWeatherInfo(code, isDay, precipMm, pop, hourlyDirectIrr, hourlyUv, hourlySw, cloudCoverHour, humHour, visHour, isCoast, windDeg);
+    const temp = Math.round(hourly.temperature_2m[i]);
+    const windSpeed = units === 'knots' ? (hourly.wind_speed_10m[i] * 0.539957).toFixed(0) : Math.round(hourly.wind_speed_10m[i]);
 
     hourlyCards += `
       <div class="hourly-card ${dayNightClass}">
