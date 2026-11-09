@@ -12,6 +12,26 @@ let savedConcejoCallback = null;
 let lastFocusedConcejo = null;
 let leafletFallbackPromise = null;
 
+// Parámetros configurables del radar (Persistencia en localStorage)
+let radarPalette = '2'; // 2: TITAN, 5: NEXRAD, 4: Meteored, 1: Universal Blue
+try {
+  radarPalette = localStorage.getItem('meteoastur_radar_palette') || '2';
+} catch (_) {}
+
+let radarOpacity = '0.80';
+try {
+  radarOpacity = localStorage.getItem('meteoastur_radar_opacity') || '0.80';
+} catch (_) {}
+
+let radarSpeed = 900;
+try {
+  radarSpeed = parseInt(localStorage.getItem('meteoastur_radar_speed') || '900', 10);
+} catch (_) {}
+
+let userGpsMarker = null;
+let userAccuracyCircle = null;
+let settingsInitialized = false;
+
 /**
  * Respaldo silencioso de CDN: solo actúa si unpkg.com falló o fue bloqueado en la red móvil (typeof L === 'undefined').
  * Para el 99% de usuarios donde L ya cargó en index.html, retorna true en 0 ms sin hacer nada.
@@ -112,6 +132,9 @@ export async function initAsturiasMap(mapContainerId = 'map-container', onConcej
       focusConcejoOnMap(lastFocusedConcejo.lat, lastFocusedConcejo.lon, lastFocusedConcejo.name);
     }
   }
+
+  // Inicializar controles avanzados de configuración y pantalla completa (Leyes 11 y 14)
+  initRadarSettingsControls();
 
   // Cargar capas de Radar RainViewer
   await loadRadarLayers();
@@ -265,14 +288,14 @@ function showRadarFrame(index, host = radarHost) {
   if (!radarFrames[index] || !asturiasMap) return;
 
   const frame = radarFrames[index];
-  const url = `${host}${frame.path}/256/{z}/{x}/{y}/2/1_1.png`;
+  const url = `${host}${frame.path}/256/{z}/{x}/{y}/${radarPalette}/1_1.png`;
 
   if (radarTileLayer) {
     asturiasMap.removeLayer(radarTileLayer);
   }
 
   radarTileLayer = L.tileLayer(url, {
-    opacity: 0.80,
+    opacity: parseFloat(radarOpacity),
     zIndex: 10,
     tileSize: 256,
     minZoom: 4,
@@ -313,7 +336,7 @@ export function playRadarAnimation() {
   animationTimer = setInterval(() => {
     currentFrameIndex = (currentFrameIndex + 1) % radarFrames.length;
     showRadarFrame(currentFrameIndex, radarHost);
-  }, 900);
+  }, radarSpeed);
 
   return true; // reproduciendo
 }
@@ -371,5 +394,219 @@ export function focusConcejoOnMap(lat, lon, concejoName) {
 
     resizeMap();
   }
+}
+
+/**
+ * Localiza la posición en tiempo real del usuario con GPS y centra el radar con marcador luminoso (Ley 0 y 11)
+ */
+export function locateUserGps() {
+  if (!navigator.geolocation) {
+    alert('La geolocalización no está soportada en este dispositivo.');
+    return;
+  }
+
+  const gpsBtn = document.getElementById('btn-radar-gps');
+  if (gpsBtn) {
+    gpsBtn.innerHTML = '⏳ Buscando...';
+    gpsBtn.disabled = true;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      if (gpsBtn) {
+        gpsBtn.innerHTML = '📍 Mi Posición';
+        gpsBtn.disabled = false;
+        gpsBtn.classList.add('active');
+        setTimeout(() => gpsBtn.classList.remove('active'), 2500);
+      }
+
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      const accuracy = position.coords.accuracy;
+
+      if (asturiasMap) {
+        asturiasMap.setView([lat, lon], 9, { animate: true });
+
+        if (userGpsMarker) {
+          asturiasMap.removeLayer(userGpsMarker);
+          userGpsMarker = null;
+        }
+        if (userAccuracyCircle) {
+          asturiasMap.removeLayer(userAccuracyCircle);
+          userAccuracyCircle = null;
+        }
+
+        const userGpsIcon = L.divIcon({
+          className: 'radar-gps-marker',
+          html: `
+            <div class="radar-pulse-ring user-location"></div>
+            <div class="radar-pulse-dot user-location" title="Mi Posición"></div>
+          `,
+          iconSize: [28, 28],
+          iconAnchor: [14, 14],
+          popupAnchor: [0, -14]
+        });
+
+        userGpsMarker = L.marker([lat, lon], { icon: userGpsIcon })
+          .addTo(asturiasMap)
+          .bindTooltip('📍 Tu Ubicación Actual', {
+            permanent: false,
+            direction: 'top',
+            offset: [0, -12],
+            className: 'radar-concejo-tooltip'
+          });
+
+        if (accuracy && accuracy < 6000) {
+          userAccuracyCircle = L.circle([lat, lon], {
+            radius: Math.min(accuracy, 2500),
+            color: '#00ecff',
+            weight: 1.5,
+            fillColor: '#00ecff',
+            fillOpacity: 0.12
+          }).addTo(asturiasMap);
+        }
+      }
+      resizeMap();
+    },
+    (err) => {
+      if (gpsBtn) {
+        gpsBtn.innerHTML = '📍 Mi Posición';
+        gpsBtn.disabled = false;
+      }
+      console.warn('GPS location error:', err);
+      if (gpsBtn) {
+        gpsBtn.innerHTML = '⚠️ Sin permiso GPS';
+        setTimeout(() => { gpsBtn.innerHTML = '📍 Mi Posición'; }, 3000);
+      }
+    },
+    { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 }
+  );
+}
+
+/**
+ * Conmuta el modo Pantalla Completa en el contenedor del radar (Leyes 11 y 14)
+ */
+export function toggleRadarFullscreen() {
+  const radarWrapper = document.querySelector('.radar-wrapper') || document.getElementById('panel-radar');
+  if (!radarWrapper) return;
+
+  const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
+  if (!isFs) {
+    if (radarWrapper.requestFullscreen) {
+      radarWrapper.requestFullscreen().catch(err => console.warn('Fullscreen err:', err));
+    } else if (radarWrapper.webkitRequestFullscreen) {
+      radarWrapper.webkitRequestFullscreen();
+    }
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen().catch(err => console.warn('Exit fullscreen err:', err));
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    }
+  }
+}
+
+/**
+ * Escucha eventos de cambio de pantalla completa para sincronizar controles y redimensionar el mapa
+ */
+function initFullscreenListeners() {
+  const onFsChange = () => {
+    const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
+    const fsBtn = document.getElementById('btn-radar-fullscreen');
+    if (fsBtn) {
+      fsBtn.innerHTML = isFs ? '✕ Salir' : '⛶ Pantalla Completa';
+      fsBtn.classList.toggle('active', isFs);
+    }
+    resizeMap();
+    setTimeout(() => resizeMap(), 150);
+  };
+  document.removeEventListener('fullscreenchange', onFsChange);
+  document.removeEventListener('webkitfullscreenchange', onFsChange);
+  document.addEventListener('fullscreenchange', onFsChange);
+  document.addEventListener('webkitfullscreenchange', onFsChange);
+}
+
+/**
+ * Inicializa el panel desplegable de Ajustes del Radar y sincroniza con localStorage
+ */
+function initRadarSettingsControls() {
+  if (settingsInitialized) return;
+  settingsInitialized = true;
+
+  const toggleBtn = document.getElementById('btn-radar-settings-toggle');
+  const panel = document.getElementById('radar-settings-panel');
+
+  if (toggleBtn && panel) {
+    toggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isVisible = panel.style.display !== 'none';
+      panel.style.display = isVisible ? 'none' : 'block';
+      toggleBtn.classList.toggle('active', !isVisible);
+      toggleBtn.setAttribute('aria-expanded', !isVisible);
+    });
+  }
+
+  // Sincronizar estado visual de las pastillas con localStorage
+  const pills = document.querySelectorAll('.radar-setting-pill');
+  pills.forEach(pill => {
+    const setting = pill.dataset.setting;
+    const val = pill.dataset.val;
+
+    if (setting === 'palette') {
+      pill.classList.toggle('active', val === radarPalette);
+    } else if (setting === 'opacity') {
+      pill.classList.toggle('active', parseFloat(val).toFixed(2) === parseFloat(radarOpacity).toFixed(2));
+    } else if (setting === 'speed') {
+      pill.classList.toggle('active', parseInt(val, 10) === radarSpeed);
+    }
+
+    pill.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const currSetting = pill.dataset.setting;
+      const currVal = pill.dataset.val;
+
+      // Actualizar estado activo en el grupo
+      document.querySelectorAll(`.radar-setting-pill[data-setting="${currSetting}"]`).forEach(p => {
+        p.classList.toggle('active', p === pill);
+      });
+
+      if (currSetting === 'palette') {
+        radarPalette = currVal;
+        try { localStorage.setItem('meteoastur_radar_palette', radarPalette); } catch (_) {}
+        showRadarFrame(currentFrameIndex, radarHost);
+      } else if (currSetting === 'opacity') {
+        radarOpacity = currVal;
+        try { localStorage.setItem('meteoastur_radar_opacity', radarOpacity); } catch (_) {}
+        if (radarTileLayer) {
+          radarTileLayer.setOpacity(parseFloat(radarOpacity));
+        }
+      } else if (currSetting === 'speed') {
+        radarSpeed = parseInt(currVal, 10);
+        try { localStorage.setItem('meteoastur_radar_speed', String(radarSpeed)); } catch (_) {}
+        if (isPlaying) {
+          if (animationTimer) clearInterval(animationTimer);
+          animationTimer = setInterval(() => {
+            currentFrameIndex = (currentFrameIndex + 1) % radarFrames.length;
+            showRadarFrame(currentFrameIndex, radarHost);
+          }, radarSpeed);
+        }
+      }
+    });
+  });
+
+  // Vincular botones de GPS y Pantalla Completa si no están enlazados
+  const gpsBtn = document.getElementById('btn-radar-gps');
+  if (gpsBtn && !gpsBtn._bound) {
+    gpsBtn._bound = true;
+    gpsBtn.addEventListener('click', () => locateUserGps());
+  }
+
+  const fsBtn = document.getElementById('btn-radar-fullscreen');
+  if (fsBtn && !fsBtn._bound) {
+    fsBtn._bound = true;
+    fsBtn.addEventListener('click', () => toggleRadarFullscreen());
+  }
+
+  initFullscreenListeners();
 }
 

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3033-clean-astronomy-header';
+const CACHE_NAME = 'meteoasturlode-v3034-tactical-radar-controls';
 const STATIC_ASSETS = [
   './',
   './index.html',

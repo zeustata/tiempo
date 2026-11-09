@@ -269,7 +269,9 @@ function applyCantabricoConsensus(weather, consensus) {
     // Se activa si ECMWF detecta frente en avance o cielo cerrado (ecmwfCloud >= 60%),
     // mientras AROME se ha quedado dormido con un claro ficticio (rawCloud < 50% con divergencia >= 20%),
     // y ECMWF confirma ausencia de haz solar abrasador (eDirectIrr < 250 o ecmwfCloud >= 70).
-    const isFalseClear = (rawCloud <= 15 && ecmwfCloud >= 16 && (ecmwfCloud - rawCloud >= 15)) || (rawCloud < 50 && ecmwfCloud >= 40 && (ecmwfCloud - rawCloud >= 20));
+    const isFalseClear = (rawCloud <= 15 && ecmwfCloud >= 16 && (ecmwfCloud - rawCloud >= 15)) ||
+      (rawCloud <= 70 && ecmwfCloud >= 75 && (ecmwfCloud - rawCloud >= 15) && eDirectIrr < 150) ||
+      (rawCloud < 50 && ecmwfCloud >= 40 && (ecmwfCloud - rawCloud >= 20));
 
     if (isFalseClear) {
       weather.current.cloud_cover = ecmwfCloud;

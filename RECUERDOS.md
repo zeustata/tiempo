@@ -2,6 +2,39 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📡 Radar Meteorológico Táctico y Panel de Control Profesional (`v3.0.34 - Despliegue Oficial`) — 2026-11-09
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `588514a` (`v3.0.33`).
+- **Petición y Decisión Estratégica con Lendo («lo demas todo bien princesa. lo unico el radar en directo. como podemos ampliar las opciones? [...] pisale» y «subelo pero de paso mira lo que nos vino de lluvia y esta lloviendo.. tu ya no ponias lluvia»):**
+  1. *Diagnóstico Crítico del Radar:*
+     - El radar basado en Leaflet y RainViewer funcionaba de forma sólida pero era un visor estático en cuanto a configuración (paleta fija, opacidad fija al 80%, velocidad única de 0.9s, sin localización GPS del usuario ni pantalla completa).
+  2. *Solución y Paquete Táctico Implementado:*
+     - **📍 Geolocalización Satelital / GPS (`locateUserGps`):**
+       - Localiza en vivo las coordenadas del dispositivo con `navigator.geolocation`.
+       - Centra suavemente el mapa en el usuario con zoom 9 e inyecta un marcador con pulso electromagnético cian (`#00ecff`) y círculo de precisión geodésica.
+       - Aporta respuesta inmediata a la duda práctica asturiana: *«¿Me va a llover encima en los próximos 15-30 minutos?»*.
+     - **⛶ Modo Pantalla Completa (`toggleRadarFullscreen`):**
+       - Permite expandir el contenedor del radar a 100vw x 100vh tanto en móviles como en escritorio.
+       - Al entrar o salir, recalcula y ajusta el renderizado de teselas mediante `resizeMap()` e `invalidateSize()`.
+     - **⚙️ Panel de Ajustes del Radar (`initRadarSettingsControls`):**
+       - Botón `[ ⚙️ Ajustes ]` en la cabecera que despliega una tarjeta de cristal con tres grupos de control táctico:
+         - **Paleta Doppler:** TITAN (2), NEXRAD HD Pro (5), Meteored (4) y Universal Blue (1).
+         - **Opacidad del Eco:** 60% (suave para ver orografía y vías), 80% (óptima equilibrada) y 100% (sólida para máxima fuerza visual).
+         - **Velocidad de Reproducción:** Lenta (1.5s), Normal (0.9s) y Rápida (0.4s).
+       - Persistencia automática de elecciones en `localStorage`.
+     - **Ergonomía Móvil Cuadrícula 2x2 (Ley 11):**
+       - Botonera inferior distribuida en 2 filas de 2 botones al 50%: `🎯 Centrar`, `📍 Mi Posición`, `▶️ Reproducir` y `⛶ Pantalla Completa`.
+  3. *Corrección Crítica de Arranque (Colisión de Identificadores en `setupEventListeners`):*
+     - *Fallo detectado:* La app se quedaba congelada en la pantalla de bienvenida con el logotipo *MeteoAsturLode*.
+     - *Causa raíz:* En `js/app.js`, dentro de `setupEventListeners()`, se declararon por duplicado `const gpsBtn` y `const fullscreenBtn` (que ya existían arriba para los botones de la barra de cabecera `#btn-gps` y `#btn-fullscreen`), generando un `SyntaxError: Identifier has already been declared` en tiempo de parseo que impedía ejecutar `new MeteoAsturiasApp()`.
+     - *Solución:* Renombrados a `radarGpsBtn` y `radarFullscreenBtn`. Verificado mediante telemetría CDP con 0 excepciones en consola y arranque fluido.
+  4. *Calibración de Consenso ante Desfases Frontales (Feedback de Lendo - «mira lo que nos vino de lluvia y esta lloviendo.. tu ya no ponias lluvia»):*
+     - *Diagnóstico físico:* A las 15:45-15:52 entró un chubasco frontal por el Cantábrico sobre Castrillón/Piedras Blancas. Open-Meteo (modelo numérico base AROME 1.3 km) se quedó rezagado marcando 0.0 mm y simulando un claro ficticio de 555 W/m² de sol mientras el radar ya pintaba reflectividad amarilla/roja y el Centro Europeo (ECMWF) constataba 99% de nubes (`cloud_cover: 99`) y luz solar deprimida (60 W/m²).
+     - *Ajuste en `weatherApi.js`:* Modificado `isFalseClear` para que ante discrepancias severas (`ecmwfCloud >= 75` con sol deprimido `< 150 W/m²` y AROME `<= 70`), se anule la radiación solar ficticia de AROME y se pase a `Nublado / Cubiertu ☁️`.
+  5. *Control de Versión y Despliegue Remoto (Leyes 3, 4 y 13):*
+     - Elevada versión a `v3.0.34 📡` en `CURRENT_APP_VERSION` (`js/app.js`), `#app-version-badge`, `#nav-update-badge`, modal `#changelog-modal` y Service Worker `meteoasturlode-v3034-tactical-radar-controls` en `sw.js`.
+     - Mantenida la clave de auto-prompt `CURRENT_CHANGELOG_PROMPT_VERSION = '3.0.28'`.
+     - Verificado en servidor local con Edge DevTools Protocol (CDP), aprobado por Lendo y desplegado a GitHub `zeustata/tiempo`.
+
 ## 🔭 Limpieza Visual y Supresión de Rangos en Astronomía (`v3.0.33 - Despliegue Oficial`) — 2026-11-09
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `972296d` (`v3.0.32`).
 - **Petición Directa de Lendo («seguimos con acontecimientos celestes. si te fijas pones entre parentisis 2026-2030. quitalo»):**

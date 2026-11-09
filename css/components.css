@@ -4384,6 +4384,119 @@
   margin-bottom: 14px;
 }
 
+/* Botón y Panel Plegable de Ajustes del Radar (Leyes 11 y 14) */
+.btn-radar-settings-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 5px 12px;
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid var(--border-glass, rgba(255, 255, 255, 0.16));
+  border-radius: var(--radius-sm, 10px);
+  color: var(--text-main, #f8fafc);
+  font-size: 0.80rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-radar-settings-toggle:hover {
+  background: rgba(56, 189, 248, 0.18);
+  border-color: var(--primary, #38bdf8);
+  color: var(--primary, #38bdf8);
+}
+
+.btn-radar-settings-toggle.active {
+  background: rgba(56, 189, 248, 0.25);
+  border-color: var(--primary, #38bdf8);
+  color: var(--primary, #38bdf8);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+}
+
+.radar-settings-panel {
+  background: rgba(15, 23, 42, 0.88);
+  border: 1px solid var(--border-glass, rgba(255, 255, 255, 0.15));
+  border-radius: var(--radius-md, 12px);
+  padding: 12px;
+  margin-bottom: 12px;
+  backdrop-filter: blur(12px);
+  animation: radarFadeIn 0.2s ease-out;
+}
+
+@keyframes radarFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.radar-settings-section {
+  margin-bottom: 10px;
+}
+
+.radar-settings-section:last-child {
+  margin-bottom: 0;
+}
+
+.radar-settings-title {
+  display: block;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--text-muted, #94a3b8);
+  margin-bottom: 6px;
+}
+
+.radar-settings-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.radar-setting-pill {
+  flex: 1 1 calc(50% - 6px);
+  min-width: 110px;
+  padding: 6px 8px;
+  background: rgba(30, 41, 59, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: var(--text-muted, #94a3b8);
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.radar-setting-pill:hover {
+  background: rgba(56, 189, 248, 0.15);
+  color: var(--text-main, #f8fafc);
+}
+
+.radar-setting-pill.active {
+  background: rgba(56, 189, 248, 0.25);
+  border-color: var(--primary, #38bdf8);
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+}
+
+.radar-settings-grid-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+@media (max-width: 520px) {
+  .radar-settings-grid-row {
+    grid-template-columns: 1fr;
+  }
+}
+
 #map-container {
   height: 580px;
   min-height: 480px;
@@ -4538,6 +4651,39 @@
     transform: scale(2.2);
     opacity: 0;
   }
+}
+
+/* Pulso GPS para Ubicación de Usuario (Color Cian Eléctrico) */
+.radar-pulse-ring.user-location {
+  border-color: #00ecff;
+  background: rgba(0, 236, 255, 0.22);
+}
+
+.radar-pulse-dot.user-location {
+  background: #00ecff;
+  border-color: #ffffff;
+  box-shadow: 0 0 12px #00ecff, 0 2px 6px rgba(0, 0, 0, 0.7);
+}
+
+/* Modo Pantalla Completa del Radar (Leyes 11 y 14) */
+.radar-wrapper:fullscreen,
+.radar-wrapper:-webkit-full-screen {
+  background: #070d17 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  padding: 14px !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  z-index: 99999 !important;
+}
+
+.radar-wrapper:fullscreen #map-container,
+.radar-wrapper:-webkit-full-screen #map-container {
+  flex: 1 1 auto !important;
+  height: 100% !important;
+  min-height: 55vh !important;
+  max-height: none !important;
 }
 
 /* Tooltip Leaflet elegante para el concejo activo en el radar */

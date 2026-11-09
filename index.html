@@ -184,7 +184,45 @@
               <h3 class="section-heading" style="margin-bottom: 2px;">📡 Radar en Directo</h3>
               <span class="section-subtitle">Tiempo real vía satélite</span>
             </div>
+            <button id="btn-radar-settings-toggle" class="btn-radar-settings-toggle" aria-expanded="false" title="Personalizar paleta Doppler, opacidad y velocidad del radar">
+              <span>⚙️</span>
+              <span>Ajustes</span>
+            </button>
           </div>
+
+          <!-- Panel Plegable de Ajustes del Radar (Leyes 11 y 14) -->
+          <div id="radar-settings-panel" class="radar-settings-panel" style="display: none;">
+            <div class="radar-settings-section">
+              <span class="radar-settings-title">🎨 Paleta de Color Doppler</span>
+              <div class="radar-settings-options" role="radiogroup" aria-label="Paleta del Radar">
+                <button type="button" class="radar-setting-pill active" data-setting="palette" data-val="2">TITAN (Estándar)</button>
+                <button type="button" class="radar-setting-pill" data-setting="palette" data-val="5">NEXRAD HD (Pro)</button>
+                <button type="button" class="radar-setting-pill" data-setting="palette" data-val="4">Meteored</button>
+                <button type="button" class="radar-setting-pill" data-setting="palette" data-val="1">Universal Blue</button>
+              </div>
+            </div>
+
+            <div class="radar-settings-grid-row">
+              <div class="radar-settings-section">
+                <span class="radar-settings-title">👁️ Opacidad del Eco</span>
+                <div class="radar-settings-options" role="radiogroup" aria-label="Opacidad del Radar">
+                  <button type="button" class="radar-setting-pill" data-setting="opacity" data-val="0.60">60% (Suave)</button>
+                  <button type="button" class="radar-setting-pill active" data-setting="opacity" data-val="0.80">80% (Óptima)</button>
+                  <button type="button" class="radar-setting-pill" data-setting="opacity" data-val="1.00">100% (Sólida)</button>
+                </div>
+              </div>
+
+              <div class="radar-settings-section">
+                <span class="radar-settings-title">⏱️ Velocidad Animación</span>
+                <div class="radar-settings-options" role="radiogroup" aria-label="Velocidad del Radar">
+                  <button type="button" class="radar-setting-pill" data-setting="speed" data-val="1500">Lenta (1.5s)</button>
+                  <button type="button" class="radar-setting-pill active" data-setting="speed" data-val="900">Normal (0.9s)</button>
+                  <button type="button" class="radar-setting-pill" data-setting="speed" data-val="400">Rápida (0.4s)</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- Barra de Control Temporal del Radar (Línea de tiempo interactiva) -->
           <div class="radar-timeline-toolbar">
             <div class="radar-timeline-buttons">
@@ -203,10 +241,12 @@
             </div>
           </div>
           <div id="map-container"></div>
-          <!-- Botones de Acción Primaria del Radar: Centrar y Reproducir en la misma línea bajo el mapa -->
+          <!-- Botones de Acción Primaria del Radar: Centrar, GPS, Reproducir y Pantalla Completa (Cuadrícula 2x2 ergonómica en móvil - Ley 11) -->
           <div class="radar-actions-bar">
             <button id="btn-radar-center" class="btn-radar-action" title="Centrar mapa en Asturias">🎯 Centrar</button>
+            <button id="btn-radar-gps" class="btn-radar-action" title="Localizar mi posición exacta vía GPS">📍 Mi Posición</button>
             <button id="btn-radar-play" class="btn-radar-action" title="Iniciar o pausar animación del radar">▶️ Reproducir</button>
+            <button id="btn-radar-fullscreen" class="btn-radar-action" title="Ver radar a pantalla completa">⛶ Pantalla Completa</button>
           </div>
         </div>
       </div>
@@ -240,7 +280,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.33 🔭</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.34 📡</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -318,8 +358,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v3.0.33 🔭</span>
+            <span class="release-version">v3.0.34 📡</span>
             <span class="release-date">09 Nov 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-feature">Radar Meteorológico Táctico</span> <strong>Control Profesional, GPS en Vivo y Pantalla Completa</strong>:
+              <br>• <strong>📍 Mi Posición GPS:</strong> Nuevo botón táctico que localiza tus coordenadas en tiempo real y sitúa un pulso luminoso de precisión para saber al instante si la precipitación te va a alcanzar.
+              <br>• <strong>⛶ Pantalla Completa:</strong> Visor inmersivo para expandir el mapa del Cantábrico a pantalla completa eliminando distracciones.
+              <br>• <strong>⚙️ Panel de Ajustes del Radar:</strong> Menú desplegable con selector de paleta Doppler (TITAN, NEXRAD HD profesional, Meteored, Universal Blue), control de opacidad (60%, 80%, 100%) y velocidad de reproducción (Lenta, Normal, Rápida) con memoria permanente.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v3.0.33 🔭</span>
+            <span class="release-date">09 Nov 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-feature">Astronomía & Cosmos</span> <strong>Limpieza Visual y Supresión de Rangos Redundantes</strong>:
@@ -4461,7 +4515,7 @@
             <div class="nav-tool-details">
               <span class="nav-tool-name">Buscar Actualización</span>
               <div class="nav-tool-badge-row">
-                <span class="nav-tool-badge badge-warning" id="nav-update-badge">v3.0.33 · Limpiar caché</span>
+                <span class="nav-tool-badge badge-warning" id="nav-update-badge">v3.0.34 · Limpiar caché</span>
               </div>
               <span class="nav-tool-desc">Descargar inmediatamente la última versión de la red y purgar memoria</span>
             </div>
@@ -4804,7 +4858,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.0.33').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.0.34').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4834,7 +4888,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.33"></script>
+  <script type="module" src="js/app.js?v=3.0.34"></script>
 
 
 

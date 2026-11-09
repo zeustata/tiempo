@@ -9,6 +9,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.34] - 2026-11-09
+### Added
+- **📡 Radar Meteorológico Táctico y Panel de Control Profesional (`mapRadar.js` + `index.html` + `components.css` + `app.js` - Leyes 0, 1, 3, 11 y 14):**
+  - **📍 Mi Posición GPS en Directo:** Incorporado botón táctico que localiza con máxima precisión las coordenadas del usuario vía satélite/GPS, ubicándolo con un pulso electromagnético cian (`#00ecff`) y un círculo sutil de precisión para comprobar instantáneamente si las nubes de lluvia le van a caer encima.
+  - **⛶ Pantalla Completa Inmersiva:** Nuevo botón que expande el mapa de Leaflet ocupando el 100% de la pantalla del dispositivo, ideal para el seguimiento de frentes oceánicos y borrascas sobre el Mar Cantábrico sin elementos molestos.
+  - **⚙️ Panel Plegable de Ajustes del Radar:** Menú desplegable con diseño de cristal que permite personalizar:
+    - *Paleta de Color Doppler:* Selector entre **TITAN** (estándar), **NEXRAD HD Pro** (alta definición de la NOAA), **Meteored** y **Universal Blue**.
+    - *Opacidad del Eco:* Selección rápida entre **60% (Suave)**, **80% (Óptima)** y **100% (Sólida)** para ver el relieve o las carreteras debajo de las manchas de precipitación.
+    - *Velocidad de Reproducción:* Control de cadencia entre **Lenta (1.5s)**, **Normal (0.9s)** y **Rápida (0.4s)**.
+  - **Persistencia en LocalStorage:** Las preferencias de visualización se recuerdan entre sesiones (`meteoastur_radar_palette`, `meteoastur_radar_opacity`, `meteoastur_radar_speed`).
+  - **Cuadrícula Táctica 2x2 en Móvil (Ley 11):** Botones `🎯 Centrar`, `📍 Mi Posición`, `▶️ Reproducir` y `⛶ Pantalla Completa` distribuidos de forma armónica al 50% garantizando cero desbordes.
+- **⛅ Blindaje de Consenso Cantábrico ante Desfases Frontales (`weatherApi.js` - Leyes 0, 1, 3 y 27):**
+  - **Erradicación de Claros Ficticios en Frente Activo:** Calibrado el filtro `isFalseClear` para que, cuando el Centro Europeo (ECMWF) constata cielo cerrado (>= 75%) y radiación solar deprimida (< 150 W/m²), los huecos de falso sol simulados por AROME (1.3 km) sean neutralizados de inmediato y sustituidos por `Nublado / Cubiertu ☁️`, evitando que la app muestre sol cuando el cielo está totalmente encapotado y amenazando lluvia.
+
 ## [3.0.33] - 2026-11-09
 ### Changed
 - **🔭 Limpieza Visual en Astronomía & Cosmos (`astronomyCard.js` - Leyes 0, 1, 3, 11 y 14):**
