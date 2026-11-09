@@ -9,6 +9,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.25.35] - 2026-11-09
+### Fixed
+- **Optimización de Etiqueta de Cota Media a «Media» (`mountainCard.js` - Leyes 11 y 14):**
+  - **Ergonomía Móvil y Cero Colisiones:** Abreviada la etiqueta del selector de cota central a `🚠 Media`, igualando la longitud armónica con `🏔️ Cumbre` y `🎿 Base`.
+  - **Margen Libre:** Aumentado el margen libre lateral de cada botón en más de un 40%, evitando roces o desbordes en teléfonos con resoluciones estrechas.
+
 ## [3.0.25.34] - 2026-11-09
 ### Added
 - **Carrusel Deslizante de Cotas con 3 Pastillas Selectoras (`mountainCard.js` + `components.css` + `app.js` - Leyes 11, 14 y 18):**

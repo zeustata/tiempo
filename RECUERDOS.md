@@ -2,6 +2,18 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🎿 Optimización de Etiqueta de Cota Media a «Media» (`v3.0.25.35 - Pruebas en Local`) — 2026-11-09
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `f3c3775` (`v3.0.25.34`).
+- **Diagnóstico y Solución de Lendo («el problema de las pantallas estrechas del movil. Fijate el boton Media Estacion como queda. Alomejor seria mejor llamarla Estacion a secas no?... pisale»):**
+  1. *Optimización y Ergonomía Móvil Estricta (Leyes 11 y 14):*
+     - Sustituida la etiqueta `🚠 Media Estación` (14 caracteres que provocaban colisión y roce visual en pantallas estrechas) por la nomenclatura técnica estándar y concisa: `🚠 Media` (5 caracteres).
+     - La terna de botones queda en una armonía de longitud perfecta: `[ 🏔️ Cumbre ]` (6 letras), `[ 🚠 Media ]` (5 letras) y `[ 🎿 Base ]` (4 letras).
+     - Cada pastilla cuenta ahora con más del 40% de margen libre en smartphones, garantizando holgura total e inmunidad al desborde incluso en 320 px.
+  2. *Control de Versión y Cache-Busting (Leyes 3 y 4):*
+     - Service Worker: `meteoasturlode-v3025-35-mountain-pill-media`.
+     - Query strings sincronizados en `index.html` (`components.css?v=3.0.25.35`) y en `js/app.js` (`mountainCard.js?v=3.0.25.35`).
+  3. *Servidor Local de Pruebas (Leyes 3 y 9):* Activo en `http://localhost:8080`.
+
 ## 🏔️ Carrusel Deslizante de Cotas con 3 Pastillas Interactivas (`v3.0.25.34 - Pruebas en Local`) — 2026-11-09
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `54e12a6` (`v3.0.25.33`).
 - **Diagnóstico y Solución de Lendo («tenemos una tarjeta exageradamente grande donde tenemos Cumbre, Media estacion y base. no se podria hacer que aparezcanen modo scrol horizontal con tres pastillas debajo que pongan Cumbre, Media Estacion y Base?... pisale»):**

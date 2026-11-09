@@ -959,9 +959,9 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
                     <span>🏔️</span>
                     <span>Cumbre</span>
                   </button>
-                  <button class="ski-cota-tab-pill" data-resort="${r.id}" data-cota-idx="1" type="button" aria-label="Ver Cota Media Estación">
+                  <button class="ski-cota-tab-pill" data-resort="${r.id}" data-cota-idx="1" type="button" aria-label="Ver Cota Media">
                     <span>🚠</span>
-                    <span>Media Estación</span>
+                    <span>Media</span>
                   </button>
                   <button class="ski-cota-tab-pill" data-resort="${r.id}" data-cota-idx="2" type="button" aria-label="Ver Cota Base">
                     <span>🎿</span>

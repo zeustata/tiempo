@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3025-34-mountain-cotas-carousel';
+const CACHE_NAME = 'meteoasturlode-v3025-35-mountain-pill-media';
 const STATIC_ASSETS = [
   './',
   './index.html',
