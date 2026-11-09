@@ -9,6 +9,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.25.38] - 2026-11-09
+### Fixed
+- **Supresión de Cabecera Burocrática en Selector de Esquí y Puertos (`mountainCard.js` - Leyes 11 y 14):**
+  - **Eliminación de Textos Redundantes:** Retirada la cabecera `.mountain-operational-header` con la etiqueta `Servicios en Ruta` y la frase burocrática `Selecciona el módulo de previsión que deseas consultar:`.
+  - **Acceso Directo y Compacto:** El lanzador segmentado entra directamente con las opciones `[ ⛷️ Esquí ]` y `[ 🚗 Puertos ]`, ahorrando más de 35 px de altura en smartphones.
+
 ## [3.0.25.37] - 2026-11-09
 ### Fixed
 - **Supresión de Cápsula Redundante de Altitud en Cabecera (`mountainCard.js` - Leyes 11 y 14):**

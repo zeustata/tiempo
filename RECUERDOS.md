@@ -2,6 +2,18 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏔️ Supresión de Cabecera Burocrática en Selector de Esquí y Puertos (`v3.0.25.38 - Pruebas en Local`) — 2026-11-09
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `56ca059` (`v3.0.25.37`).
+- **Diagnóstico y Solución de Lendo («la pildora azul que pone servicios en ruta y el subtitulo seleccionasr modulo me parece muy tecnico y soso... opcion 1 princesa. pisale»):**
+  1. *Depuración Visual y Entrada Directa a la Acción (Leyes 11 y 14):*
+     - Suprimida la cabecera `.mountain-operational-header` con la etiqueta `🎿🚗 Servicios en Ruta` y el texto burocrático redundante `Selecciona el módulo de previsión que deseas consultar:`.
+     - El módulo entra de forma directa e intuitiva con el conmutador segmentado `[ ⛷️ Esquí ]` y `[ 🚗 Puertos ]`, ahorrando más de 35 px de altura vertical.
+     - La sección queda como un lanzador limpio, moderno y táctil que enlaza inmediatamente con el botón nativo de webcams de puertos y pistas.
+  2. *Control de Versión y Cache-Busting (Leyes 3 y 4):*
+     - Service Worker: `meteoasturlode-v3025-38-mountain-clean-switcher`.
+     - Query strings sincronizados en `index.html` (`components.css?v=3.0.25.38`) y en `js/app.js` (`mountainCard.js?v=3.0.25.38`).
+  3. *Servidor Local de Pruebas (Leyes 3 y 9):* Activo en `http://localhost:8080`.
+
 ## 🏔️ Supresión de Cápsula Redundante de Altitud en Cabecera (`v3.0.25.37 - Pruebas en Local`) — 2026-11-09
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `5d42e42` (`v3.0.25.36`).
 - **Diagnóstico y Solución de Lendo («debajo me pone la altitud de donde estoy en azul. esa capsula sobra no? ya me lo pone el menu de en vivo... si princesa. pisale»):**

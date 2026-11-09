@@ -826,15 +826,8 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
         </div>
       </div>
 
-      <!-- 2. SERVICIOS EN RUTA Y VIALIDAD INVERNAL (DIFERENCIADO DE SENSORES DE COTA/ALUDES) -->
+      <!-- 2. CONMUTADOR DE MONTAÑA: ESQUÍ / PUERTOS (Ley 11) -->
       <div class="mountain-operational-section">
-        <div class="mountain-operational-header">
-          <div class="m-op-title-row">
-            <span class="m-op-badge">🎿🚗 Servicios en Ruta</span>
-            <span class="m-op-sub">Selecciona el módulo de previsión que deseas consultar:</span>
-          </div>
-        </div>
-
         <!-- INTERRUPTOR DESLIZANTE SEGMENTADO TÁCTIL (ETIQUETAS CORTAS DE 1 PALABRA) -->
         <div class="mountain-toggle-container">
           <div class="mountain-sliding-segmented-switch" id="mountain-segmented-switch" data-active="ski">
