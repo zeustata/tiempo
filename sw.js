@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3032-cantabrico-litoral-sun-cloud';
+const CACHE_NAME = 'meteoasturlode-v3033-clean-astronomy-header';
 const STATIC_ASSETS = [
   './',
   './index.html',

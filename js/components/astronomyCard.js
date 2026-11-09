@@ -1227,7 +1227,7 @@ export function renderAstronomyView(containerId, yearOrFilter = null, visOrWeath
             <span class="astronomy-hero-icon">🔭</span>
             <div>
               <h3>Astronomía & Cosmos</h3>
-              <span class="astronomy-subtitle">Acontecimientos celestes y semáforo de visibilidad en Asturias (${startRollingYear} - ${endRollingYear})</span>
+              <span class="astronomy-subtitle">Acontecimientos celestes y semáforo de visibilidad en Asturias</span>
             </div>
           </div>
         </div>
@@ -1371,18 +1371,18 @@ export function renderAstronomyView(containerId, yearOrFilter = null, visOrWeath
         </div>
       </div>
 
-      <!-- CABECERA DE SECCIÓN: ACONTECIMIENTOS CELESTES (${startRollingYear} - ${endRollingYear}) -->
+      <!-- CABECERA DE SECCIÓN: ACONTECIMIENTOS CELESTES -->
       <div class="astronomy-section-header">
         <div class="astronomy-section-title-wrap">
           <span class="astronomy-section-icon">🌌</span>
           <div>
-            <h4 class="astronomy-section-title">Acontecimientos Celestes (${startRollingYear} - ${endRollingYear})</h4>
+            <h4 class="astronomy-section-title">Acontecimientos Celestes</h4>
             <span class="astronomy-section-subtitle">Exploración anual y visibilidad en Asturias</span>
           </div>
         </div>
       </div>
 
-      <!-- SELECTOR DE AÑO SEGMENTADO (${startRollingYear} - ${endRollingYear}) -->
+      <!-- SELECTOR DE AÑO SEGMENTADO -->
       <div class="astro-year-selector-wrap">
         <div class="astro-year-pills" role="tablist" aria-label="Seleccionar año astronómico">
           ${rollingYears.map(yr => `
@@ -1488,7 +1488,7 @@ export function renderAstronomyView(containerId, yearOrFilter = null, visOrWeath
 
       <!-- PIE INFORMATIVO DE ASTRONOMÍA -->
       <div class="astronomy-footer-info">
-        <span>✨ Información y efemérides astronómicas oficiales para el cielo de Asturias (${startRollingYear} - ${endRollingYear}) • MeteoAstur Lode</span>
+        <span>✨ Información y efemérides astronómicas oficiales para el cielo de Asturias • MeteoAstur Lode</span>
       </div>
 
     </div>
@@ -1499,7 +1499,7 @@ export function renderAstronomyView(containerId, yearOrFilter = null, visOrWeath
   // Inicializar carrusel y dots de astronomía (Ley 18)
   initCosmosCarousel();
 
-  // Event Listeners para la barra de años (${startRollingYear} - ${endRollingYear})
+  // Event Listeners para la barra de años
   container.querySelectorAll('.astro-year-pill').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const year = e.currentTarget.dataset.year;

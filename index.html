@@ -240,7 +240,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.32 ⛅</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.33 🔭</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -318,12 +318,12 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v3.0.32 ⛅</span>
+            <span class="release-version">v3.0.33 🔭</span>
             <span class="release-date">09 Nov 2026 (Actual)</span>
           </div>
           <ul class="changelog-list">
-            <li><span class="tag tag-feature">Calibración de Escampada</span> <strong>Detección Inmediata del Fin de Lluvia y Cielo Aclarando</strong>:
-              <br>• <strong>Filtro Anti-Falso Orbayu:</strong> Cuando cesa la lluvia física (0.0 mm en tiempo real) y la radiación solar empieza a iluminar el manto de nubes (radiación difusa &ge; 120 W/m² o global &ge; 200 W/m²), la app transiciona al instante a <code>Nublado / Cubiertu</code> seco (0.0 mm, nube ☁️ sin lluvia), erradicando inercias ficticias del modelo.
+            <li><span class="tag tag-feature">Astronomía & Cosmos</span> <strong>Limpieza Visual y Supresión de Rangos Redundantes</strong>:
+              <br>• <strong>Interfaz Intemporal y Despejada:</strong> Eliminada la coletilla entre paréntesis <code>(2026 - 2030)</code> de la cabecera y pie de efemérides. Las pastillas de navegación anual ya destacan cada año de la ventana rodante de forma individual, limpia y elegante.
             </li>
           </ul>
         </div>
@@ -4461,7 +4461,7 @@
             <div class="nav-tool-details">
               <span class="nav-tool-name">Buscar Actualización</span>
               <div class="nav-tool-badge-row">
-                <span class="nav-tool-badge badge-warning" id="nav-update-badge">v3.0.32 · Limpiar caché</span>
+                <span class="nav-tool-badge badge-warning" id="nav-update-badge">v3.0.33 · Limpiar caché</span>
               </div>
               <span class="nav-tool-desc">Descargar inmediatamente la última versión de la red y purgar memoria</span>
             </div>
@@ -4804,7 +4804,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.0.32').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.0.33').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4834,7 +4834,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.32"></script>
+  <script type="module" src="js/app.js?v=3.0.33"></script>
 
 
 

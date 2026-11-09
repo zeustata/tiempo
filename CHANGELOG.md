@@ -9,6 +9,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.33] - 2026-11-09
+### Changed
+- **🔭 Limpieza Visual en Astronomía & Cosmos (`astronomyCard.js` - Leyes 0, 1, 3, 11 y 14):**
+  - **Supresión de Rangos Redundantes:** Eliminada la coletilla entre paréntesis `(2026 - 2030)` del subtítulo principal, de la cabecera de sección de Acontecimientos Celestes y del pie de página.
+  - **Interfaz Intemporal y Elegante:** La botonera de años rodantes ya muestra de forma interactiva y limpia cada año individual (`2026`, `2027`, etc.), logrando una vista despejada y visualmente equilibrada.
+
 ## [3.0.32] - 2026-11-09
 ### Added
 - **⛅ Doctrina del Litoral Cantábrico, Ley del Nordeste y Diferenciación de Sol y Nubes (`weatherIcons.js` + `currentCard.js` + `forecastView.js` + `app.js` - Leyes 0, 1, 3 y 27):**

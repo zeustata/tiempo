@@ -2,6 +2,23 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🔭 Limpieza Visual y Supresión de Rangos en Astronomía (`v3.0.33 - Despliegue Oficial`) — 2026-11-09
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `972296d` (`v3.0.32`).
+- **Petición Directa de Lendo («seguimos con acontecimientos celestes. si te fijas pones entre parentisis 2026-2030. quitalo»):**
+  1. *Diagnóstico Visual:*
+     - En el módulo de Astronomía & Cosmos, los textos de la cabecera, de la sección de acontecimientos y del pie de página mantenían la coletilla `(${startRollingYear} - ${endRollingYear})`.
+     - Teniendo ya la barra de pastillas segmentadas mostrando individualmente cada año de la ventana rodante (`2026`, `2027`, `2028`, `2029`, `2030`), el texto entre paréntesis resultaba redundante y sobrecargaba la cabecera.
+  2. *Solución Aplicada:*
+     - En `js/components/astronomyCard.js`:
+       - Subtítulo hero: `Acontecimientos celestes y semáforo de visibilidad en Asturias` (limpio y directo).
+       - Título de sección: `Acontecimientos Celestes` (sin paréntesis).
+       - Pie de página: `Información y efemérides astronómicas oficiales para el cielo de Asturias • MeteoAstur Lode`.
+  3. *Control de Versión y Cache-Busting (Leyes 3, 4 y 13):*
+     - Elevada versión a `v3.0.33 🔭` en `CURRENT_APP_VERSION` (`js/app.js`), `#app-version-badge`, `#nav-update-badge`, modal `#changelog-modal` y Service Worker `meteoasturlode-v3033-clean-astronomy-header` en `sw.js`.
+     - Preservada la versión de auto-prompt `CURRENT_CHANGELOG_PROMPT_VERSION = '3.0.28'` para no molestar al usuario con modales emergentes.
+  4. *Verificación Local y Despliegue:*
+     - Verificado en servidor local `http://localhost:8080`, aprobado por Lendo y desplegado a GitHub `zeustata/tiempo`.
+
 ## ⛅ Doctrina del Litoral Cantábrico, Ley del Nordeste y Diferenciación de Sol y Nubes (`v3.0.32 - Despliegue Oficial`) — 2026-11-09
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `676cc61` (`v3.0.31`).
 - **Diagnóstico y Sabiduría Cantábrica de Lendo («espera mira a ver ahora que ahora hay sol y nubes. hay mas que resol. hay sol y nubes. lo que quiero decirte es que para que pongas un completamente despejado tienes que estar segura. aqui para que tengamos un cielo azul sin ninguna nube es dificil y cuando coincide suele ser con viento noreste. si hubieses puesto alguna nube con el sol estarias mejor encaminada»):**
