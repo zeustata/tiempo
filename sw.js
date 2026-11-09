@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3030-clearing-sky-consensus';
+const CACHE_NAME = 'meteoasturlode-v3031-astronomy-rolling-window';
 const STATIC_ASSETS = [
   './',
   './index.html',

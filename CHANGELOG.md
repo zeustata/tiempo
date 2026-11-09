@@ -9,6 +9,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.31] - 2026-11-09
+### Added
+- **🔭 Ventana Rodante de 5 Años y Catálogo Extendido 2026-2035 en Astronomía (`astronomyCard.js` - Leyes 0, 1, 3, 11 y 18):**
+  - **Ventana Rodante Auto-Avanzable:** Implementada la función `getRollingAstronomyYears(5)` que calcula dinámicamente el año en curso y los 4 años subsiguientes (en 2026: 2026-2030; en 2027: 2027-2031; etc.), garantizando que la interfaz nunca quede vacía ni requiera intervención manual al cambiar de año.
+  - **Base de Datos Extendida en la Recámara (2031 - 2035):** Añadidas 22 nuevas efemérides astronómicas oficiales completas (Tránsito de Mercurio de 2032, la Superluna más cercana de la década en 2033, el Eclipse Total de Luna en otoño de 2034, la Gran Oposición de Júpiter de 2035, Cuadrántidas, Perseidas y Gemínidas) con sus fichas didácticas de visibilidad en Asturias y recomendaciones de observación.
+  - **Textos y Badges Dinámicos:** La cabecera, el selector de botones pastilla, el título de sección y el pie informativo se adaptan en tiempo real al rango rodante activo (`startRollingYear - endRollingYear`).
+  - **Doctrina Anti-Fatiga al Usuario:** Mantenida la clave de auto-prompt `CURRENT_CHANGELOG_PROMPT_VERSION = '3.0.28'` para no fatigar al usuario con modales emergentes intrusivos en el arranque.
+
 ## [3.0.30] - 2026-11-09
 ### Fixed
 - **⛅ Detección Inmediata del Fin de Lluvia y Cielo Aclarando (`weatherApi.js` + `weatherIcons.js` - Leyes 0, 1, 3 y 27):**

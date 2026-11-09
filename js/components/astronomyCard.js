@@ -3,7 +3,7 @@
  * Desarrollado por Manuel A. L. Barril y Princesa
  */
 
-// Catálogo oficial de eventos astronómicos destacados (2026 - 2030)
+// Catálogo oficial de eventos astronómicos destacados (2026 - 2035) con Ventana Rodante de 5 Años
 export const ASTRONOMICAL_EVENTS = [
   // --- 2026 ---
   {
@@ -445,10 +445,356 @@ export const ASTRONOMICAL_EVENTS = [
     asturiasTip: 'Cielos limpios de montaña lejos de los focos urbanos de la costa central.',
     equipment: '👁️ A simple vista',
     icon: '✨'
+  },
+
+  // --- 2031 ---
+  {
+    id: 'cuadrantidas-2031',
+    title: 'Lluvia de Meteoros Cuadrántidas 2031',
+    type: 'meteor_shower',
+    typeLabel: '🌠 Lluvia de Meteoros',
+    dateStart: '2031-01-03T22:00:00',
+    datePeak: '2031-01-04T03:00:00',
+    dateEnd: '2031-01-04T07:00:00',
+    displayDate: '3 - 4 de Enero de 2031',
+    visibility: 'asturias',
+    visibilityLabel: 'Visible en Asturias',
+    visibilityDesc: 'Arranque del año con una de las lluvias más intensas, con picos de más de 100 meteoros por hora.',
+    asturiasTip: 'Abrigo extremo y observación hacia el noreste por encima de los valles con niebla invernal.',
+    equipment: '👁️ A simple vista',
+    icon: '☄️'
+  },
+  {
+    id: 'superluna-primavera-2031',
+    title: 'Superluna Rosa de Primavera 2031',
+    type: 'supermoon',
+    typeLabel: '🌕 Superluna Llena',
+    dateStart: '2031-05-06T20:30:00',
+    datePeak: '2031-05-07T02:15:00',
+    dateEnd: '2031-05-07T07:00:00',
+    displayDate: '6 - 7 de Mayo de 2031',
+    visibility: 'asturias',
+    visibilityLabel: 'Visible en Asturias',
+    visibilityDesc: 'Plenilunio en coincidencia con el perigeo orbital; la Luna se apreciará un 12% mayor sobre el mar Cantábrico.',
+    asturiasTip: 'Salida espectacular sobre el horizonte este al atardecer costero.',
+    equipment: '👁️ A simple vista / 📷 Fotografía',
+    icon: '🌕'
+  },
+  {
+    id: 'perseidas-2031',
+    title: 'Lluvia de Meteoros Perseidas 2031',
+    type: 'meteor_shower',
+    typeLabel: '🌠 Lluvia de Meteoros',
+    dateStart: '2031-08-12T22:00:00',
+    datePeak: '2031-08-13T02:30:00',
+    dateEnd: '2031-08-13T06:00:00',
+    displayDate: '12 - 13 de Agosto de 2031',
+    visibility: 'asturias',
+    visibilityLabel: 'Visible en Asturias',
+    visibilityDesc: 'Las tradicionales Lágrimas de San Lorenzo cruzando la atmósfera a más de 59 km/s en plena canícula veraniega.',
+    asturiasTip: 'Miradores costeros de Cabo Peñas, Cabo Vidio o puertos de montaña como Pajares y Somiedo.',
+    equipment: '👁️ A simple vista',
+    icon: '☄️'
+  },
+  {
+    id: 'oposicion-saturno-2031',
+    title: 'Gran Oposición de Saturno 2031',
+    type: 'conjunction',
+    typeLabel: '🪐 Oposición Planetaria',
+    dateStart: '2031-09-20T21:00:00',
+    datePeak: '2031-09-21T01:30:00',
+    dateEnd: '2031-09-21T06:00:00',
+    displayDate: '21 de Septiembre de 2031',
+    visibility: 'asturias',
+    visibilityLabel: 'Visible en Asturias',
+    visibilityDesc: 'El planeta de los anillos se sitúa en su distancia mínima anual a la Tierra, con su disco 100% iluminado por el Sol.',
+    asturiasTip: 'Visible como una joya dorada en el cielo sur; los anillos son perfectamente distinguibles con telescopio pequeño.',
+    equipment: '🔭 Telescopio / 👁️ A simple vista',
+    icon: '🪐'
+  },
+  {
+    id: 'geminidas-2031',
+    title: 'Lluvia de Meteoros Gemínidas 2031',
+    type: 'meteor_shower',
+    typeLabel: '🌠 Lluvia de Meteoros',
+    dateStart: '2031-12-13T21:00:00',
+    datePeak: '2031-12-14T02:00:00',
+    dateEnd: '2031-12-14T06:30:00',
+    displayDate: '13 - 14 de Diciembre de 2031',
+    visibility: 'asturias',
+    visibilityLabel: 'Visible en Asturias',
+    visibilityDesc: 'La reina de las lluvias de estrellas invernales, generada por el asteroide Faetón.',
+    asturiasTip: 'Buscar cielos despejados de la Cordillera Cantábrica por encima de las nieblas de los valles.',
+    equipment: '👁️ A simple vista',
+    icon: '✨'
+  },
+
+  // --- 2032 ---
+  {
+    id: 'perseidas-2032',
+    title: 'Lluvia de Meteoros Perseidas 2032',
+    type: 'meteor_shower',
+    typeLabel: '🌠 Lluvia de Meteoros',
+    dateStart: '2032-08-12T22:00:00',
+    datePeak: '2032-08-13T02:30:00',
+    dateEnd: '2032-08-13T06:00:00',
+    displayDate: '12 - 13 de Agosto de 2032',
+    visibility: 'asturias',
+    visibilityLabel: 'Visible en Asturias',
+    visibilityDesc: 'Cientos de meteoros veloces cruzando la noche agosteña asturiana con excelente tasa horaria cenital.',
+    asturiasTip: 'Mirar hacia el noreste pasada la medianoche en zonas libres de contaminación lumínica.',
+    equipment: '👁️ A simple vista',
+    icon: '☄️'
+  },
+  {
+    id: 'transito-mercurio-2032',
+    title: 'Tránsito de Mercurio por el Sol 2032',
+    type: 'eclipse',
+    typeLabel: '☀️ Tránsito Planetario',
+    dateStart: '2032-11-13T07:40:00',
+    datePeak: '2032-11-13T09:30:00',
+    dateEnd: '2032-11-13T11:45:00',
+    displayDate: '13 de Noviembre de 2032',
+    visibility: 'asturias',
+    visibilityLabel: 'Visible en Asturias',
+    visibilityDesc: 'El planeta Mercurio cruza directamente por delante del disco solar como un pequeño punto negro perfecto en movimiento.',
+    asturiasTip: 'Imprescindible filtro solar homologado en telescopio. ¡Nunca mirar directamente al Sol sin protección!',
+    equipment: '🔭 Telescopio con filtro solar',
+    icon: '☀️'
+  },
+  {
+    id: 'leonidas-tormenta-2032',
+    title: 'Gran Retorno de las Leónidas 2032',
+    type: 'meteor_shower',
+    typeLabel: '🌠 Tormenta de Meteoros',
+    dateStart: '2032-11-17T22:00:00',
+    datePeak: '2032-11-18T03:30:00',
+    dateEnd: '2032-11-18T06:30:00',
+    displayDate: '17 - 18 de Noviembre de 2032',
+    visibility: 'asturias',
+    visibilityLabel: 'Visible en Asturias',
+    visibilityDesc: 'Ciclo orbital de 33 años del cometa Tempel-Tuttle; probabilidad excepcional de bólidos brillantes y alta cadencia.',
+    asturiasTip: 'Noche clave para observar el cielo oriental desde cualquier punto de la geografía asturiana.',
+    equipment: '👁️ A simple vista',
+    icon: '☄️'
+  },
+  {
+    id: 'geminidas-2032',
+    title: 'Lluvia de Meteoros Gemínidas 2032',
+    type: 'meteor_shower',
+    typeLabel: '🌠 Lluvia de Meteoros',
+    dateStart: '2032-12-13T21:00:00',
+    datePeak: '2032-12-14T02:00:00',
+    dateEnd: '2032-12-14T06:30:00',
+    displayDate: '13 - 14 de Diciembre de 2032',
+    visibility: 'asturias',
+    visibilityLabel: 'Visible en Asturias',
+    visibilityDesc: 'El espectáculo celeste más regular y consistente del invierno peninsular.',
+    asturiasTip: 'Abrigo térmico obligatorio y observación tumbado hacia el cenit.',
+    equipment: '👁️ A simple vista',
+    icon: '✨'
+  },
+
+  // --- 2033 ---
+  {
+    id: 'cuadrantidas-2033',
+    title: 'Lluvia de Meteoros Cuadrántidas 2033',
+    type: 'meteor_shower',
+    typeLabel: '🌠 Lluvia de Meteoros',
+    dateStart: '2033-01-03T22:00:00',
+    datePeak: '2033-01-04T03:00:00',
+    dateEnd: '2033-01-04T07:00:00',
+    displayDate: '3 - 4 de Enero de 2033',
+    visibility: 'asturias',
+    visibilityLabel: 'Visible en Asturias',
+    visibilityDesc: 'Trazas brillantes y bólidos azulados en una de las lluvias más intensas pero breves del año.',
+    asturiasTip: 'Ventana óptima de observación de solo unas 4 horas antes del amanecer.',
+    equipment: '👁️ A simple vista',
+    icon: '☄️'
+  },
+  {
+    id: 'superluna-gigante-2033',
+    title: 'Superluna Gigante de 2033',
+    type: 'supermoon',
+    typeLabel: '🌕 Superluna Histórica',
+    dateStart: '2033-04-14T19:30:00',
+    datePeak: '2033-04-15T00:30:00',
+    dateEnd: '2033-04-15T06:30:00',
+    displayDate: '14 - 15 de Abril de 2033',
+    visibility: 'asturias',
+    visibilityLabel: 'Visible en Asturias',
+    visibilityDesc: 'Perigeo lunar extremo a menos de 356.500 km de la Tierra; la Luna más grande y luminosa de todo el decenio.',
+    asturiasTip: 'Iluminación nocturna espectacular sobre las playas y calas asturianas.',
+    equipment: '👁️ A simple vista / 📷 Fotografía',
+    icon: '🌕'
+  },
+  {
+    id: 'perseidas-2033',
+    title: 'Lluvia de Meteoros Perseidas 2033',
+    type: 'meteor_shower',
+    typeLabel: '🌠 Lluvia de Meteoros',
+    dateStart: '2033-08-12T22:00:00',
+    datePeak: '2033-08-13T02:00:00',
+    dateEnd: '2033-08-13T06:00:00',
+    displayDate: '12 - 13 de Agosto de 2033',
+    visibility: 'asturias',
+    visibilityLabel: 'Visible en Asturias',
+    visibilityDesc: 'Lágrimas de San Lorenzo de verano bajo condiciones propicias para astronomía nocturna.',
+    asturiasTip: 'Buscar zonas oscuras de la costa occidental (Tapia, Luarca) o valles del interior.',
+    equipment: '👁️ A simple vista',
+    icon: '☄️'
+  },
+  {
+    id: 'geminidas-2033',
+    title: 'Lluvia de Meteoros Gemínidas 2033',
+    type: 'meteor_shower',
+    typeLabel: '🌠 Lluvia de Meteoros',
+    dateStart: '2033-12-13T21:00:00',
+    datePeak: '2033-12-14T02:30:00',
+    dateEnd: '2033-12-14T06:30:00',
+    displayDate: '13 - 14 de Diciembre de 2033',
+    visibility: 'asturias',
+    visibilityLabel: 'Visible en Asturias',
+    visibilityDesc: 'Cierre anual con meteoros de trayectoria pausada y estelas persistentes.',
+    asturiasTip: 'Picos de Europa y Cordillera Cantábrica ofrecen las mejores condiciones de transparencia.',
+    equipment: '👁️ A simple vista',
+    icon: '✨'
+  },
+
+  // --- 2034 ---
+  {
+    id: 'conjuncion-jupiter-marte-2034',
+    title: 'Gran Conjunción Júpiter y Marte 2034',
+    type: 'conjunction',
+    typeLabel: '🪐 Conjunción Planetaria',
+    dateStart: '2034-02-27T19:00:00',
+    datePeak: '2034-02-28T21:30:00',
+    dateEnd: '2034-03-01T01:00:00',
+    displayDate: '28 de Febrero de 2034',
+    visibility: 'asturias',
+    visibilityLabel: 'Visible en Asturias',
+    visibilityDesc: 'El brillo blanco de Júpiter y el tono rojizo de Marte aparecerán en íntimo abrazo angular en el cielo vespertino.',
+    asturiasTip: 'Observar hacia el oeste en las primeras horas tras la puesta de sol.',
+    equipment: '👁️ A simple vista / 🔭 Telescopio',
+    icon: '🪐'
+  },
+  {
+    id: 'perseidas-2034',
+    title: 'Lluvia de Meteoros Perseidas 2034',
+    type: 'meteor_shower',
+    typeLabel: '🌠 Lluvia de Meteoros',
+    dateStart: '2034-08-12T22:00:00',
+    datePeak: '2034-08-13T02:30:00',
+    dateEnd: '2034-08-13T06:00:00',
+    displayDate: '12 - 13 de Agosto de 2034',
+    visibility: 'asturias',
+    visibilityLabel: 'Visible en Asturias',
+    visibilityDesc: 'Las reinas del verano asturiano con picos de más de 80 meteoros visibles a simple vista.',
+    asturiasTip: 'Buscar zonas de oscuridad certificada en la comarca de los Oscos o Fuentes del Narcea.',
+    equipment: '👁️ A simple vista',
+    icon: '☄️'
+  },
+  {
+    id: 'eclipse-lunar-septiembre-2034',
+    title: 'Eclipse Total de Luna (Luna de Sangre) 2034',
+    type: 'eclipse',
+    typeLabel: '🌕 Eclipse Total de Luna',
+    dateStart: '2034-09-28T19:40:00',
+    datePeak: '2034-09-28T21:15:00',
+    dateEnd: '2034-09-28T23:00:00',
+    displayDate: '28 de Septiembre de 2034',
+    visibility: 'asturias',
+    visibilityLabel: 'Visible en Asturias',
+    visibilityDesc: 'La sombra de la Tierra cubrirá íntegramente el disco lunar, tiñéndolo de un tono cobre y rojizo intenso.',
+    asturiasTip: 'Visible en plenitud en el cielo nocturno asturiano en horario ideal para toda la familia.',
+    equipment: '👁️ A simple vista / 📷 Fotografía',
+    icon: '🌕'
+  },
+  {
+    id: 'geminidas-2034',
+    title: 'Lluvia de Meteoros Gemínidas 2034',
+    type: 'meteor_shower',
+    typeLabel: '🌠 Lluvia de Meteoros',
+    dateStart: '2034-12-13T21:00:00',
+    datePeak: '2034-12-14T02:00:00',
+    dateEnd: '2034-12-14T06:30:00',
+    displayDate: '13 - 14 de Diciembre de 2034',
+    visibility: 'asturias',
+    visibilityLabel: 'Visible en Asturias',
+    visibilityDesc: 'Meteoros multicolor intensos de velocidad moderada.',
+    asturiasTip: 'Constelación de Géminis alta en el cielo hacia la medianoche.',
+    equipment: '👁️ A simple vista',
+    icon: '✨'
+  },
+
+  // --- 2035 ---
+  {
+    id: 'cuadrantidas-2035',
+    title: 'Lluvia de Meteoros Cuadrántidas 2035',
+    type: 'meteor_shower',
+    typeLabel: '🌠 Lluvia de Meteoros',
+    dateStart: '2035-01-03T22:00:00',
+    datePeak: '2035-01-04T03:00:00',
+    dateEnd: '2035-01-04T07:00:00',
+    displayDate: '3 - 4 de Enero de 2035',
+    visibility: 'asturias',
+    visibilityLabel: 'Visible en Asturias',
+    visibilityDesc: 'La primera lluvia intensa de 2035 con bólidos brillantes en el cielo invernal.',
+    asturiasTip: 'Buscar zonas despejadas de la Cordillera sin nubes bajas.',
+    equipment: '👁️ A simple vista',
+    icon: '☄️'
+  },
+  {
+    id: 'perseidas-2035',
+    title: 'Lluvia de Meteoros Perseidas 2035',
+    type: 'meteor_shower',
+    typeLabel: '🌠 Lluvia de Meteoros',
+    dateStart: '2035-08-12T22:00:00',
+    datePeak: '2035-08-13T02:30:00',
+    dateEnd: '2035-08-13T06:00:00',
+    displayDate: '12 - 13 de Agosto de 2035',
+    visibility: 'asturias',
+    visibilityLabel: 'Visible en Asturias',
+    visibilityDesc: 'Lágrimas de San Lorenzo de máxima actividad estival.',
+    asturiasTip: 'Observación en grupo y tumbado hacia el noreste.',
+    equipment: '👁️ A simple vista',
+    icon: '☄️'
+  },
+  {
+    id: 'oposicion-jupiter-2035',
+    title: 'Gran Oposición de Júpiter 2035',
+    type: 'conjunction',
+    typeLabel: '🪐 Oposición Planetaria',
+    dateStart: '2035-11-17T19:00:00',
+    datePeak: '2035-11-18T00:30:00',
+    dateEnd: '2035-11-18T06:00:00',
+    displayDate: '18 de Noviembre de 2035',
+    visibility: 'asturias',
+    visibilityLabel: 'Visible en Asturias',
+    visibilityDesc: 'Júpiter en su mayor brillo del decenio; sus cuatro lunas galileanas (Ío, Europa, Ganímedes y Calisto) se apreciarán con prismáticos sencillos.',
+    asturiasTip: 'Un lucero brillante inconfundible dominando toda la noche asturiana.',
+    equipment: '👁️ A simple vista / 🔭 Prismáticos o Telescopio',
+    icon: '🪐'
+  },
+  {
+    id: 'geminidas-2035',
+    title: 'Lluvia de Meteoros Gemínidas 2035',
+    type: 'meteor_shower',
+    typeLabel: '🌠 Lluvia de Meteoros',
+    dateStart: '2035-12-13T21:00:00',
+    datePeak: '2035-12-14T02:00:00',
+    dateEnd: '2035-12-14T06:30:00',
+    displayDate: '13 - 14 de Diciembre de 2035',
+    visibility: 'asturias',
+    visibilityLabel: 'Visible en Asturias',
+    visibilityDesc: 'Cierre del decenio astronómico con la lluvia más consistente del firmamento.',
+    asturiasTip: 'Mirar al cenit en noches despejadas de invierno.',
+    equipment: '👁️ A simple vista',
+    icon: '✨'
   }
 ];
 
-// Resumen titular y didáctico de cada año (2026 - 2030)
+// Resumen titular y didáctico de cada año (2026 - 2035)
 export const YEAR_HIGHLIGHTS = {
   '2026': {
     badge: '🌟 Gran Cierre de 2026',
@@ -474,6 +820,31 @@ export const YEAR_HIGHLIGHTS = {
     badge: '🌌 Cierre de la Década: Sol & Cosmos',
     title: 'Eclipse Solar Europeo y Superlunas de Otoño',
     summary: 'Gran eclipse solar de inicio de verano con amplia visibilidad parcial (>65%) en Asturias y calendario prolífico de efemérides.'
+  },
+  '2031': {
+    badge: '🪐 Oposición de Gigantes & Perseidas',
+    title: 'Saturno en Máximo Esplendor y Noches Oscuras',
+    summary: 'Saturno muestra sus anillos orientados favorablemente en su punto más cercano a la Tierra, con unas Perseidas veraniegas de excelente visibilidad.'
+  },
+  '2032': {
+    badge: '☀️ El Tránsito de Mercurio',
+    title: 'El Planeta Cruzando el Sol y Leónidas Extraordinarias',
+    summary: 'Hito astronómico mayor del decenio con el Tránsito de Mercurio del 13 de noviembre cruzando el disco solar y el retorno del ciclo de las Leónidas.'
+  },
+  '2033': {
+    badge: '🌕 La Superluna de la Década',
+    title: 'Máximo Acercamiento Lunar y Noches de San Lorenzo',
+    summary: 'La Luna alcanzará su perigeo más cercano del decenio, luciendo un 14% más grande y un 30% más brillante en el firmamento cantábrico.'
+  },
+  '2034': {
+    badge: '🔴 Luna Roja de Otoño',
+    title: 'Eclipse Total de Luna y Baile de Planetas',
+    summary: 'La noche otoñal del 28 de septiembre se teñirá de cobre con un eclipse total de Luna visible a la perfección desde Asturias.'
+  },
+  '2035': {
+    badge: '✨ Hitos del 2035: Júpiter & Perseidas',
+    title: 'Cierre del Ciclo Decenal y Júpiter Deslumbrante',
+    summary: 'Júpiter alcanza su máximo brillo con sus lunas galileanas observables con prismáticos, y las Perseidas de agosto culminan sin interferencia lunar.'
   }
 };
 
@@ -751,8 +1122,26 @@ export function getTonightStargazingIndex(weatherData, moon, concejo) {
 }
 
 // Estado del filtro anual y visibilidad de astronomía
-let currentSelectedYear = '2026';
+let currentSelectedYear = null;
 let currentVisibilityFilter = 'asturias';
+
+/**
+ * Obtiene la ventana rodante de 5 años para efemérides astronómicas
+ * Ej: en 2026 -> ['2026', '2027', '2028', '2029', '2030']
+ *     en 2027 -> ['2027', '2028', '2029', '2030', '2031']
+ */
+export function getRollingAstronomyYears(count = 5) {
+  // Conmutador de simulacro controlado (Ley 12): ?sim_year=2027
+  let currentYear = new Date().getFullYear();
+  if (typeof window !== 'undefined' && window.location && window.location.search) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const simYear = parseInt(urlParams.get('sim_year'), 10);
+    if (!isNaN(simYear) && simYear >= 2026 && simYear <= 2035) {
+      currentYear = simYear;
+    }
+  }
+  return Array.from({ length: count }, (_, i) => (currentYear + i).toString());
+}
 
 /**
  * Renderiza el módulo completo de Astronomía
@@ -761,9 +1150,20 @@ export function renderAstronomyView(containerId, yearOrFilter = null, visOrWeath
   const container = document.getElementById(containerId);
   if (!container) return;
 
+  const rollingYears = getRollingAstronomyYears(5);
+  const startRollingYear = rollingYears[0];
+  const endRollingYear = rollingYears[rollingYears.length - 1];
+
+  // Si no hay año seleccionado o quedó desfasado respecto a la ventana rodante, arrancar en el año en curso
+  if (!currentSelectedYear || !rollingYears.includes(currentSelectedYear)) {
+    currentSelectedYear = startRollingYear;
+  }
+
   // Manejo flexible de parámetros (compatibilidad hacia atrás con llamadas de app.js)
   if (typeof yearOrFilter === 'string') {
-    if (['2026', '2027', '2028', '2029', '2030'].includes(yearOrFilter)) {
+    if (['asturias', 'all'].includes(yearOrFilter)) {
+      currentVisibilityFilter = yearOrFilter;
+    } else if (rollingYears.includes(yearOrFilter) || YEAR_HIGHLIGHTS[yearOrFilter]) {
       currentSelectedYear = yearOrFilter;
     }
   }
@@ -784,7 +1184,14 @@ export function renderAstronomyView(containerId, yearOrFilter = null, visOrWeath
   const moon = getMoonPhaseDetails();
   const sunData = getGoldenAndBlueHours(targetWeatherData, targetConcejo);
   const stargazing = getTonightStargazingIndex(targetWeatherData, moon, targetConcejo);
-  const now = new Date();
+  let now = new Date();
+  if (typeof window !== 'undefined' && window.location && window.location.search) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const simYear = parseInt(urlParams.get('sim_year'), 10);
+    if (!isNaN(simYear) && simYear >= 2026 && simYear <= 2035) {
+      now = new Date(simYear, 0, 1, 0, 0, 0);
+    }
+  }
 
   // 1. Filtrar exclusivamente los eventos activos o futuros (excluir fenómenos culminados en el pasado)
   const activeEvents = ASTRONOMICAL_EVENTS.filter(evt => {
@@ -808,7 +1215,7 @@ export function renderAstronomyView(containerId, yearOrFilter = null, visOrWeath
     return evt.visibility === 'asturias' || evt.visibility === 'spain';
   });
 
-  const yearHighlight = YEAR_HIGHLIGHTS[currentSelectedYear] || YEAR_HIGHLIGHTS['2026'];
+  const yearHighlight = YEAR_HIGHLIGHTS[currentSelectedYear] || YEAR_HIGHLIGHTS[startRollingYear] || YEAR_HIGHLIGHTS['2026'];
 
   const html = `
     <div class="astronomy-view-container">
@@ -820,7 +1227,7 @@ export function renderAstronomyView(containerId, yearOrFilter = null, visOrWeath
             <span class="astronomy-hero-icon">🔭</span>
             <div>
               <h3>Astronomía & Cosmos</h3>
-              <span class="astronomy-subtitle">Acontecimientos celestes y semáforo de visibilidad en Asturias (2026 - 2030)</span>
+              <span class="astronomy-subtitle">Acontecimientos celestes y semáforo de visibilidad en Asturias (${startRollingYear} - ${endRollingYear})</span>
             </div>
           </div>
         </div>
@@ -964,21 +1371,21 @@ export function renderAstronomyView(containerId, yearOrFilter = null, visOrWeath
         </div>
       </div>
 
-      <!-- CABECERA DE SECCIÓN: ACONTECIMIENTOS CELESTES (2026 - 2030) -->
+      <!-- CABECERA DE SECCIÓN: ACONTECIMIENTOS CELESTES (${startRollingYear} - ${endRollingYear}) -->
       <div class="astronomy-section-header">
         <div class="astronomy-section-title-wrap">
           <span class="astronomy-section-icon">🌌</span>
           <div>
-            <h4 class="astronomy-section-title">Acontecimientos Celestes (2026 - 2030)</h4>
+            <h4 class="astronomy-section-title">Acontecimientos Celestes (${startRollingYear} - ${endRollingYear})</h4>
             <span class="astronomy-section-subtitle">Exploración anual y visibilidad en Asturias</span>
           </div>
         </div>
       </div>
 
-      <!-- SELECTOR DE AÑO SEGMENTADO (2026 - 2030) -->
+      <!-- SELECTOR DE AÑO SEGMENTADO (${startRollingYear} - ${endRollingYear}) -->
       <div class="astro-year-selector-wrap">
         <div class="astro-year-pills" role="tablist" aria-label="Seleccionar año astronómico">
-          ${['2026', '2027', '2028', '2029', '2030'].map(yr => `
+          ${rollingYears.map(yr => `
             <button class="astro-year-pill ${currentSelectedYear === yr ? 'active' : ''}" data-year="${yr}" role="tab" aria-selected="${currentSelectedYear === yr}">
               ${yr}
             </button>
@@ -1081,7 +1488,7 @@ export function renderAstronomyView(containerId, yearOrFilter = null, visOrWeath
 
       <!-- PIE INFORMATIVO DE ASTRONOMÍA -->
       <div class="astronomy-footer-info">
-        <span>✨ Información y efemérides astronómicas oficiales para el cielo de Asturias (2026 - 2030) • MeteoAstur Lode</span>
+        <span>✨ Información y efemérides astronómicas oficiales para el cielo de Asturias (${startRollingYear} - ${endRollingYear}) • MeteoAstur Lode</span>
       </div>
 
     </div>
@@ -1092,7 +1499,7 @@ export function renderAstronomyView(containerId, yearOrFilter = null, visOrWeath
   // Inicializar carrusel y dots de astronomía (Ley 18)
   initCosmosCarousel();
 
-  // Event Listeners para la barra de años (2026 - 2030)
+  // Event Listeners para la barra de años (${startRollingYear} - ${endRollingYear})
   container.querySelectorAll('.astro-year-pill').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const year = e.currentTarget.dataset.year;

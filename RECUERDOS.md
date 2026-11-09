@@ -2,6 +2,29 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🔭 Ventana Rodante de 5 Años y Reserva de Efemérides 2026-2035 (`v3.0.31 - Despliegue Oficial`) — 2026-11-09
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `6e76a06` (`v3.0.30`).
+- **Diagnóstico y Petición de Lendo («ahora hablamos de los Acontecimientos celestes en el menu Astronomia y Cosmos. tenemos un rango de eventos entre el 2026 y el 2030. cuando acabe el 2026 que pasa con la intergaz de los acontecimientos? ... me gusta mas la opcion b. es mas autonoma pero tienes razon que tenemos que cargar de antemano mas base de datos. podemos cargar mas años para tener en la recamara? ... si. asi tenemos 5 años de margen princesa»):**
+  1. *Diagnóstico de Obsolescencia:*
+     - La interfaz original tenía fijado a fuego el selector `['2026', '2027', '2028', '2029', '2030']` y `currentSelectedYear = '2026'`.
+     - Al concluir 2026, el filtro temporal `endDate >= now` dejaba a 2026 sin eventos activos (`filteredEvents.length === 0`), requiriendo que el usuario pulsara manualmente otro año o viendo un estado vacío.
+  2. *Solución Técnica: Ventana Rodante de 5 Años (Opción B):*
+     - Creada la función `getRollingAstronomyYears(5)`: calcula `Array.from({ length: 5 }, (_, i) => (currentYear + i).toString())`.
+     - El selector de años, la cabecera del módulo, el título de la sección y el pie informativo se generan dinámicamente con `${startRollingYear} - ${endRollingYear}`.
+     - `currentSelectedYear` se inicializa automáticamente al año en curso si es nulo o si quedó obsoleto respecto a la ventana rodante actual.
+  3. *Carga en la Recámara (2031 - 2035):*
+     - Se integraron 22 nuevas efemérides astronómicas completas en `ASTRONOMICAL_EVENTS` y sus 5 tarjetas de resumen anual en `YEAR_HIGHLIGHTS` cubriendo 2031, 2032, 2033, 2034 y 2035 (Tránsito de Mercurio de 2032, Superluna de la década en 2033, Eclipse Total de Luna en otoño de 2034, Gran Oposición de Júpiter de 2035, Cuadrántidas, Perseidas, Leónidas y Gemínidas).
+     - La app queda blindada y 100% autónoma con 5 años de margen sin requerir mantenimiento hasta 2031/2032.
+  4. *Doctrina de No-Fatiga al Usuario (Ley 13):*
+     - Se preserva `CURRENT_CHANGELOG_PROMPT_VERSION = '3.0.28'` desacoplada de `CURRENT_APP_VERSION = '3.0.31'`, de modo que la actualización no arroja ventanas emergentes intrusivas en el arranque.
+  5. *Control de Versión y Cache-Busting (Leyes 3, 4 y 13):*
+     - Elevada versión a `v3.0.31 🔭` en `CURRENT_APP_VERSION` (`js/app.js`), `#app-version-badge`, `#nav-update-badge`, modal `#changelog-modal` y Service Worker `meteoasturlode-v3031-astronomy-rolling-window` en `sw.js`.
+     - Query strings sincronizados en `index.html` (`app.js?v=3.0.31`, `sw.js?v=3.0.31`) y en `js/app.js` (`astronomyCard.js?v=3.0.31`).
+  6. *Despliegue Remoto y Limpieza Local (Leyes 3 y 9):*
+     - Verificación en local superada con éxito mediante los conmutadores de simulacro (`?sim_year=2027` y `?sim_year=2031`).
+     - Servidor local en puerto 8080 detenido limpiamente tras el visto bueno explícito de Lendo.
+     - Cambios sincronizados y desplegados en `zeustata/tiempo` (rama `main`).
+
 ## ⛅ Detección Inmediata del Fin de Lluvia y Doctrina de No-Fatiga al Usuario (`v3.0.30 - Despliegue Oficial`) — 2026-11-09
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `95410ac` (`v3.0.29`).
 - **Diagnóstico y Solución de Lendo («subelo pero ten en cuenta una cosa. hemos subido muchos cambios y cada vez que actualizamos, salta el changelog... para los ajustes finos que son cosas que no se perciben en la app fisicamente seria mejor que no salte el changelog»):**
