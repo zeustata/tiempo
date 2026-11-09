@@ -122,6 +122,9 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     const swVal = shortwaveRadiation != null ? parseFloat(shortwaveRadiation) : 0;
     // Detección de sol activo real (exige radiación solar directa efectiva y cielo no cerrado)
     const hasActiveSun = !isNight && ((irr >= 120 && (cc === null || cc < 80)) || ((code === 1 || code === 2) && (cc === null || cc < 75)));
+    // Detección de cielo aclarando / nublado luminoso (Banco de Ventana Lendo):
+    // La luz difusa/directa atraviesa el estrato nuboso (irr >= 120 W/m² o swVal >= 200 W/m²), indicando cese de lluvia.
+    const isBrightOvercast = !isNight && (irr >= 120 || swVal >= 200);
 
     // Lluvia física real medible en pluviómetro:
     // 1. Para códigos WMO de tiempo seco (0: despejado, 1: mayormente soleado, 2: claros, 3: nublado, 45/48: niebla),
@@ -210,8 +213,8 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
     // REGLA 1.1: Rescate Cantábrico de Alta Probabilidad con Cielo Encapotado (Banco de Ventana Lendo):
     // Resuelve el desfase de pluviómetro donde la probabilidad es contundente (>= 60%),
     // el cielo está cubierto (cc >= 80% o código 3), la atmósfera está saturada (h >= 78%),
-    // y no hay sol directo activo. En estas condiciones no es tiempo seco, es llovizna/orballu activo.
-    const isHighProbCantabrianRain = !isPhysicallyRaining && !isExplicitRainCode && (code <= 3) && p < 0.1 && hasPop && prob >= 60 && h !== null && h >= 78 && (cc === null || cc >= 80) && !hasActiveSun;
+    // y no hay sol directo activo ni cielo aclarando. En estas condiciones no es tiempo seco, es llovizna/orballu activo.
+    const isHighProbCantabrianRain = !isPhysicallyRaining && !isExplicitRainCode && (code <= 3) && p < 0.1 && hasPop && prob >= 60 && h !== null && h >= 78 && (cc === null || cc >= 80) && !hasActiveSun && !isBrightOvercast;
 
     if (isHighProbCantabrianRain) {
       isExplicitRainCode = true;

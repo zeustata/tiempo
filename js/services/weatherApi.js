@@ -356,8 +356,14 @@ function applyCantabricoConsensus(weather, consensus) {
     // Resuelve el caso donde el bloque instantáneo de la API marca 0.0 mm por latencia de 15 minutos o microgotas,
     // pero la atmósfera costera está en saturación condensada (humedad >= 90%) o AROME detecta llovizna activa (51-57)
     // con humedad cantábrica (hum >= 70%), cielo cubierto (>= 75%) y sin haz solar abrasador.
-    const isAromeConfirmedDrizzle = (rawCode >= 50 && rawCode <= 57) && (Math.max(rawCloud, ecmwfCloud) >= 75) && hum >= 70 && !hasTrueSunlight;
-    const isOrbayuCondition = isAromeConfirmedDrizzle || (curEPop >= 60 && hum >= 80 && Math.max(rawCloud, ecmwfCloud) >= 80 && !hasTrueSunlight);
+    // FILTRO ANTI-FALSO ORBAYU (Banco de Ventana Lendo):
+    // Si ambos modelos instantáneos marcan 0.0 mm y la radiación solar difusa o directa empieza a iluminar
+    // el cielo con fuerza (eDirectIrr >= 120 W/m² o eSw >= 200 W/m² o rawDirectIrr >= 120 W/m²),
+    // el frente ya ha pasado, la lluvia ha cesado y el cielo está aclarando (seco).
+    const isClearingSky = (rawPrecip < 0.1 && ePrecip < 0.1) && (eDirectIrr >= 120 || eSw >= 200 || rawDirectIrr >= 120);
+
+    const isAromeConfirmedDrizzle = !isClearingSky && (rawCode >= 50 && rawCode <= 57) && (Math.max(rawCloud, ecmwfCloud) >= 75) && hum >= 70 && !hasTrueSunlight;
+    const isOrbayuCondition = !isClearingSky && (isAromeConfirmedDrizzle || (curEPop >= 60 && hum >= 80 && Math.max(rawCloud, ecmwfCloud) >= 80 && !hasTrueSunlight && eDirectIrr < 100));
 
     if (isOrbayuCondition) {
       weather.current.weather_code = (rawCode >= 50 && rawCode <= 57) ? rawCode : 51; // Orbayu / Llovizna activa
@@ -386,9 +392,9 @@ function applyCantabricoConsensus(weather, consensus) {
     }
 
     // C) SOBERANÍA FÍSICA Y ARMONIZACIÓN DE FALSOS NUBLADOS / RESIDUOS DE LLUVIA:
-    const isDryCurrent = weather.current.precipitation < 0.1 || isSolarDrizzleGhost;
-    if (isDryCurrent && weather.current.weather_code >= 50 && curEPop < 50 && hum < 80) {
-      if (rawPrecip < 0.5) {
+    const isDryCurrent = weather.current.precipitation < 0.1 || isSolarDrizzleGhost || isClearingSky;
+    if (isDryCurrent && (weather.current.weather_code >= 50 || isClearingSky)) {
+      if (rawPrecip < 0.5 || isClearingSky) {
         weather.current.precipitation = 0;
         if (weather.current.rain != null) weather.current.rain = 0;
       }

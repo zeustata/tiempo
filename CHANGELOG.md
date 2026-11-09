@@ -9,6 +9,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.30] - 2026-11-09
+### Fixed
+- **⛅ Detección Inmediata del Fin de Lluvia y Cielo Aclarando (`weatherApi.js` + `weatherIcons.js` - Leyes 0, 1, 3 y 27):**
+  - **Filtro Anti-Falso Orbayu en Escampada:** Erradicada la inercia del modelo donde se seguía mostrando lluvia/orbayu a pesar de que el pluviómetro marcaba 0.0 mm.
+  - **Soberanía de Luz Difusa:** Al superar los 120 W/m² de radiación directa o 200 W/m² de onda corta con pluviómetros en 0.0 mm, el sistema reconoce el cese del frente y transiciona de inmediato a `Nublado / Cubiertu` seco (0.0 mm, icono ☁️ sin lluvia).
+
 ## [3.0.29] - 2026-11-09
 ### Added
 - **🎿 Unificación del Motor en la Nube y Certidumbre Horaria en Pistas (`mountainCard.js` + `.github/workflows/fetch_aemet.yml` - Leyes 0, 1, 3 y 15):**

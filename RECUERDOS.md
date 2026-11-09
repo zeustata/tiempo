@@ -2,6 +2,25 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## ⛅ Detección Inmediata del Fin de Lluvia y Doctrina de No-Fatiga al Usuario (`v3.0.30 - Despliegue Oficial`) — 2026-11-09
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `95410ac` (`v3.0.29`).
+- **Diagnóstico y Solución de Lendo («subelo pero ten en cuenta una cosa. hemos subido muchos cambios y cada vez que actualizamos, salta el changelog... para los ajustes finos que son cosas que no se perciben en la app fisicamente seria mejor que no salte el changelog»):**
+  1. *Causa Raíz de la Fatiga de Modales:*
+     - Cada subida oficial con incremento de `CURRENT_APP_VERSION` disparaba forzosamente el modal de novedades (`checkChangelogAutoPrompt()`) en cada recarga para todos los usuarios.
+     - En jornadas con múltiples micro-ajustes internos de calibración meteorológica, el salto repetitivo del modal resulta molesto e interrumpe la experiencia de uso.
+  2. *Doctrina de No-Fatiga y Desacoplo de Auto-Prompt:*
+     - Se crea `CURRENT_CHANGELOG_PROMPT_VERSION = '3.0.28'` desacoplada de `CURRENT_APP_VERSION = '3.0.30'`.
+     - **Regla:** El modal de novedades solo salta automáticamente en pantalla ante versiones con novedades visuales, módulos nuevos o cambios perceptibles para el usuario.
+     - En ajustes finos, calibraciones matemáticas y parches internos, `CURRENT_APP_VERSION` y el Service Worker se actualizan para garantizar el refresco de código y anti-caché (Ley 4), pero `CURRENT_CHANGELOG_PROMPT_VERSION` se mantiene estática, impidiendo que el modal salte en la cara del usuario.
+     - Si el usuario desea consultar el registro completo, sigue estando disponible al pulsar el badge del pie o en el menú de herramientas.
+  3. *Calibración de Escampada y Fin de Lluvia:*
+     - `js/services/weatherApi.js`: Incorporada la condición `isClearingSky = (rawPrecip < 0.1 && ePrecip < 0.1) && (eDirectIrr >= 120 || eSw >= 200 || rawDirectIrr >= 120)`. Si ambos modelos marcan seco y la luz solar difusa/directa está iluminando el manto nuboso, `isOrbayuCondition` y el rescate de lluvia se anulan inmediatamente, fijando `precipitation = 0` y `weather_code = 3` (Nublado seco).
+     - `js/utils/weatherIcons.js`: Incorporado `isBrightOvercast = !isNight && (irr >= 120 || swVal >= 200)`. Se inhabilita `isHighProbCantabrianRain` cuando el cielo está aclarando, devolviendo estado seco limpio `Nublado / Cubiertu` (icono `☁️` sin lluvia).
+  4. *Control de Versión y Cache-Busting (Leyes 3, 4 y 13):*
+     - Elevada versión a `v3.0.30 ⛅` en `CURRENT_APP_VERSION` (`js/app.js`), `#app-version-badge`, `#nav-update-badge`, modal `#changelog-modal` y Service Worker `meteoasturlode-v3030-clearing-sky-consensus` en `sw.js`.
+     - Query strings sincronizados en `index.html` (`app.js?v=3.0.30`, `sw.js?v=3.0.30`) y en `js/app.js` (`weatherApi.js?v=3.0.30`, `weatherIcons.js?v=3.0.30`).
+  5. *Despliegue Remoto (Ley 3):* Sincronizado en `zeustata/tiempo` (rama `main`). Servidor local cerrado tras la verificación.
+
 ## 🎿 Unificación del Motor en la Nube y Certidumbre Horaria en Pistas (`v3.0.29 - Despliegue Oficial`) — 2026-11-09
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `bf13077` (`v3.0.28`).
 - **Diagnóstico y Solución de Lendo («pero eso no tiene que hacerlo automaticamente? Lo digo porque el que quiera ir a esquiar le gustaria saber de cuando es el ultimo boletin y de que hora aunque tenga un retardo... confio en ti. pisale... subelo»):**
