@@ -2,7 +2,7 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
-## ❄️ Implementación del Bot Automatizado de Nieve y Pistas (`v3.0.25.40 - Despliegue Oficial`) — 2026-11-09
+## ❄️ Implementación del Bot de Nieve y Salto Oficial a Versión Invernal (`v3.0.26 - Despliegue Oficial`) — 2026-11-09
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `f10822b` (`v3.0.25.38`).
 - **Diagnóstico y Solución de Lendo («antes explicame si es seguro para nuestra app... entonces pisale»):**
   1. *Arquitectura 100% Segura y Aislada (Leyes 1, 3, 12 y 15):*

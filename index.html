@@ -240,7 +240,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.25 💎</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.26 🎿</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -318,8 +318,32 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
+            <span class="release-version">v3.0.26 🎿</span>
+            <span class="release-date">09 Nov 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-feature">Nieve Oficial &amp; Pistas</span> <strong>Parte Oficial Diario Automatizado en las 4 Estaciones de la Cordillera</strong>:
+              <br>• <strong>Conexión en la Nube 24/7:</strong> Integración de un bot inteligente que recopila y consolida los kilómetros esquiables, pistas abiertas por colores (verdes, azules, rojas y negras), remontes operativos, espesor y calidad de nieve de <em>Valgrande-Pajares</em>, <em>Fuentes de Invierno</em>, <em>San Isidro</em> y <em>Leitariegos</em>.
+              <br>• <strong>Arquitectura Segura y Fallback Silencioso:</strong> Datos actualizados en segundo plano con soporte de pretemporada y simulacro de prueba con <code>?test=esqui</code>.
+            </li>
+            <li><span class="tag tag-ui">Carrusel Monotarjeta de Cotas</span> <strong>Visor Deslizable de Cotas Cumbre, Media y Base al 100%</strong>:
+              <br>• <strong>Selector Interactivo de 3 Pastillas:</strong> Sustitución de las tiras apiladas por un carrusel táctil suave (<code>[ 🏔️ Cumbre ]</code>, <code>[ 🚠 Media ]</code>, <code>[ 🎿 Base ]</code>) que ahorra más de 125 px de altura en pantallas móviles.
+              <br>• <strong>Aislamiento Gestual:</strong> Deslizamiento horizontal protegido que no interfiere con el scroll vertical de la app ni cambia de pestaña por error.
+            </li>
+            <li><span class="tag tag-ui">Ergonomía en Puertos y Esquí</span> <strong>Conmutador Directo y Supresión de Cabeceras Burocráticas</strong>:
+              <br>• <strong>Acceso Instantáneo:</strong> El selector entre <em>[ ⛷️ Esquí ]</em> y <em>[ 🚗 Puertos ]</em> entra de forma limpia y directa sin textos innecesarios ni cápsulas redundantes de altitud.
+              <br>• <strong>Pastillas Simétricas de Nieve:</strong> Visualización gemela y elegante para la nieve acumulada de los próximos 3 y 7 días.
+            </li>
+            <li><span class="tag tag-ui">Cosmos &amp; Noche Fashion</span> <strong>Rejilla Equilibrada de 2 Cápsulas en Visor Nocturno</strong>:
+              <br>• <strong>Armonía Visual en la Luna:</strong> Diseño simétrico y estilizado para la previsión de la noche y observación de estrellas.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
             <span class="release-version">v3.0.25 💎</span>
-            <span class="release-date">06 Nov 2026 (Actual)</span>
+            <span class="release-date">06 Nov 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-ui">Acabado Integral Liquid Glass (Doctrina 14)</span> <strong>Armonía Estética Apple Liquid Glass en Rutas, Ciclismo, Planes y 5 Bottom Sheets</strong>:
@@ -4383,7 +4407,7 @@
             <div class="nav-tool-details">
               <span class="nav-tool-name">Buscar Actualización</span>
               <div class="nav-tool-badge-row">
-                <span class="nav-tool-badge badge-warning" id="nav-update-badge">v3.0.25 · Limpiar caché</span>
+                <span class="nav-tool-badge badge-warning" id="nav-update-badge">v3.0.26 · Limpiar caché</span>
               </div>
               <span class="nav-tool-desc">Descargar inmediatamente la última versión de la red y purgar memoria</span>
             </div>
@@ -4726,7 +4750,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.0.25.29').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.0.26').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4756,7 +4780,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.25.40"></script>
+  <script type="module" src="js/app.js?v=3.0.26"></script>
 
 
 

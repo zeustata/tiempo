@@ -9,13 +9,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
-## [3.0.25.40] - 2026-11-09
+## [3.0.26] - 2026-11-09
 ### Added
-- **Automatización de Partes Oficiales de Nieve y Pistas (`scripts/fetch_snow_report.js` + `.github/workflows/fetch_snow_report.yml` + `weatherApi.js` + `mountainCard.js` - Leyes 1, 3, 12 y 15):**
-  - **Bot Automatizado de Nieve:** Creación de tarea programada en Node.js que recopila los datos de las 4 estaciones de la Cordillera Cantábrica (Valgrande-Pajares, Fuentes de Invierno, San Isidro y Leitariegos), extrayendo kilómetros esquiables, pistas y remontes abiertos, espesores de nieve y calidad.
-  - **Despliegue Aislado en GitHub Actions:** Flujo en segundo plano con ejecución en 5 franjas clave en temporada de nieve (07:30, 09:30, 11:30, 14:30 y 16:30 UTC) y latido semanal de seguridad fuera de temporada, con soporte `workflow_dispatch` para activación manual en cualquier momento.
-  - **Convivencia Blindada en Rama `data`:** Sincronización cruzada entre `fetch_aemet.yml` y `fetch_snow_report.yml`, preservando ambos ficheros (`avisos-asturias.json` y `partes-nieve.json`) sin sobrescrituras destructivas.
-  - **Integración Transparente en App:** Consumo asíncrono en `weatherApi.js` con fallback local silencioso y vinculación reactiva en `mountainCard.js`, mostrando estado de temporada o pretemporada y conservando el simulacro interactivo `?test=esqui` (Ley 12).
+- **🎿 Automatización Oficial de Partes de Nieve y Pistas (`scripts/fetch_snow_report.js` + `.github/workflows/fetch_snow_report.yml` + `weatherApi.js` + `mountainCard.js` - Leyes 1, 3, 12 y 15):**
+  - **Bot Inteligente en Servidores Seguros:** Extracción automatizada y periódica del estado de pistas, kilómetros esquiables, remontes operativos, espesor y calidad de nieve de las 4 estaciones (*Valgrande-Pajares*, *Fuentes de Invierno*, *San Isidro* y *Leitariegos*).
+  - **Ejecución Desacoplada en GitHub Actions:** Programación 5 veces al día durante temporada invernal y latido semanal de verificación fuera de temporada, con botón manual permanente (`workflow_dispatch`).
+  - **Convivencia Blindada en Rama `data`:** Preservación cruzada de `avisos-asturias.json` y `partes-nieve.json` sin sobrescrituras ni riesgos en la rama principal.
+- **🏔️ Carrusel Táctil Monotarjeta de Cotas (`Cumbre`, `Media` y `Base`):**
+  - **Ahorro Vertical Superior a 125 px:** Reemplazo de las 3 tiras apiladas por un carrusel suave al 100% de pantalla móvil con barra interactiva de 3 pastillas cian.
+- **🚗 Conmutador Directo Esquí & Puertos y Ergonomía Móvil:**
+  - Supresión de cabeceras burocráticas y etiquetas redundantes, permitiendo alternar al instante entre partes de nieve y vialidad de puertos.
+- **🌙 Simetría Fashion en Visor Nocturno y Acumulado de Nieve:**
+  - Cápsulas gemelas translúcidas en el visor astronómico de Cosmos y rejilla 2x1 para la previsión de nieve a 3 y 7 días.
 
 ## [3.0.25.38] - 2026-11-09
 ### Fixed

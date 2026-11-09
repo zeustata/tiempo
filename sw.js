@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3025-40-snow-report-bot';
+const CACHE_NAME = 'meteoasturlode-v3026-snow-report-official';
 const STATIC_ASSETS = [
   './',
   './index.html',
