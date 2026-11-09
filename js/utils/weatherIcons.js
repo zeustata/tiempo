@@ -207,9 +207,24 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
       }
     }
 
-    // REGLA 1: Si el código base es de tiempo seco (sol, claros, nublado) y no cae lluvia física (p < 0.1 mm),
-    // la probabilidad estadística jamás transforma el cielo en lluvia. Se respeta el estado del cielo.
-    if (!isPhysicallyRaining && !isExplicitRainCode) {
+    // REGLA 1.1: Rescate Cantábrico de Alta Probabilidad con Cielo Encapotado (Banco de Ventana Lendo):
+    // Resuelve el desfase de pluviómetro donde la probabilidad es contundente (>= 60%),
+    // el cielo está cubierto (cc >= 80% o código 3), la atmósfera está saturada (h >= 78%),
+    // y no hay sol directo activo. En estas condiciones no es tiempo seco, es llovizna/orballu activo.
+    const isHighProbCantabrianRain = !isPhysicallyRaining && !isExplicitRainCode && (code <= 3) && p < 0.1 && hasPop && prob >= 60 && h !== null && h >= 78 && (cc === null || cc >= 80) && !hasActiveSun;
+
+    if (isHighProbCantabrianRain) {
+      isExplicitRainCode = true;
+      base = {
+        label: isNight ? 'Orbayu / Llovizna nocturna' : (prob >= 75 ? 'Lluvia / Orbayu activo' : 'Orbayu / Llovizna probable'),
+        icon: isNight ? '🌧️' : '🌦️',
+        svgKey: 'drizzle',
+        lucide: 'cloud-drizzle',
+        bg: 'drizzle',
+        isRain: true,
+        isSnow: false
+      };
+    } else if (!isPhysicallyRaining && !isExplicitRainCode) {
       // El estado base (despejado, parcialmente nublado, cubierto, etc.) se preserva intacto
     }
     // REGLA 2: Si el modelo traía un código de lluvia pero la probabilidad es ínfima (< 20%) y no cae lluvia física (p < 0.1):

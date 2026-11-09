@@ -9,6 +9,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.27] - 2026-11-09
+### Fixed
+- **🌧️ Rescate Inteligente de Orbayu Cantábrico y Sincronización AROME + ECMWF (`weatherApi.js` + `weatherIcons.js` - Leyes 0, 1, 3 y 27):**
+  - **Detección Soberana de Lluvia y Orbayu:** Eliminado el desfase por retraso de pluviómetro instantáneo (`0.0 mm`) cuando el modelo europeo (ECMWF) certifica precipitación activa, saturación de humedad en superficie (humedad &ge; 75%) o alta probabilidad de lluvia sin haz solar abrasador.
+  - **Inmunidad ante Falsos Nublados Secos:** Se impide que situaciones con lluvia activa o probabilidad &ge; 50% con alta humedad sean degradadas erróneamente a código WMO 3 (nublado seco) con icono de nube gris.
+- **📅 Coherencia Hidrometeórica en Pronóstico Horario 72h (`forecastView.js`):**
+  - **Erradicación de Contradicciones Visuales:** Solucionado el fallo donde la hora en curso mostraba un 75% de probabilidad de lluvia junto a `0.0 mm` y un icono de nube seca.
+  - **Preservación de Previsiones del Modelo:** Si la hora en curso tiene lluvia prevista en el modelo horario pero la lectura instantánea marca `0.0 mm` por retraso del sensor, se mantiene la predicción volumétrica o se etiqueta como `&lt; 0.1 mm` con icono activo (🌧️ o 🌦️).
+
 ## [3.0.26] - 2026-11-09
 ### Added
 - **🎿 Automatización Oficial de Partes de Nieve y Pistas (`scripts/fetch_snow_report.js` + `.github/workflows/fetch_snow_report.yml` + `weatherApi.js` + `mountainCard.js` - Leyes 1, 3, 12 y 15):**

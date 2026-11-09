@@ -240,7 +240,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.26 🎿</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.27 🌧️</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -318,8 +318,24 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v3.0.26 🎿</span>
+            <span class="release-version">v3.0.27 🌧️</span>
             <span class="release-date">09 Nov 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-feature">Consenso Cantábrico</span> <strong>Rescate Inteligente de Orbayu y Lluvia Real en Tiempo Actual</strong>:
+              <br>• <strong>Sincronización ECMWF + AROME:</strong> Eliminado el retraso por pluviómetro seco cuando el modelo europeo certifica precipitación activa, saturación atmosférica (humedad &ge; 75%) o alta probabilidad sin radiación solar. La app ya no muestra un falso "Nublado" cuando está lloviendo en la calle.
+              <br>• <strong>Detección de Llovizna y Microgotas:</strong> Si la atmósfera costera presenta alta humedad (&ge; 80%) y cielo encapotado con probabilidad de lluvia elevada, el sistema rescata de forma soberana el estado de llovizna/lluvia activa.
+            </li>
+            <li><span class="tag tag-ui">Pronóstico Horario 72h</span> <strong>Coherencia Total entre Probabilidad, Iconos y Milímetros</strong>:
+              <br>• <strong>Fin de Contradicciones Visuales:</strong> Erradicado el desfase donde una probabilidad alta (ej. 75%) se mostraba junto a una nube seca y <code>0.0 mm</code>. Ahora la hora en curso respeta la predicción del modelo y muestra <code>&lt; 0.1 mm</code> o el volumen previsto con icono de lluvia activa (🌧️ o 🌦️).
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v3.0.26 🎿</span>
+            <span class="release-date">09 Nov 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-feature">Nieve Oficial &amp; Pistas</span> <strong>Parte Oficial Diario Automatizado en las 4 Estaciones de la Cordillera</strong>:
@@ -4407,7 +4423,7 @@
             <div class="nav-tool-details">
               <span class="nav-tool-name">Buscar Actualización</span>
               <div class="nav-tool-badge-row">
-                <span class="nav-tool-badge badge-warning" id="nav-update-badge">v3.0.26 · Limpiar caché</span>
+                <span class="nav-tool-badge badge-warning" id="nav-update-badge">v3.0.27 · Limpiar caché</span>
               </div>
               <span class="nav-tool-desc">Descargar inmediatamente la última versión de la red y purgar memoria</span>
             </div>
@@ -4750,7 +4766,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.0.26').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.0.27').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4780,7 +4796,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.26"></script>
+  <script type="module" src="js/app.js?v=3.0.27"></script>
 
 
 

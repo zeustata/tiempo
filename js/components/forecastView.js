@@ -277,8 +277,13 @@ export function renderHourlyForecastBlock(data, units = 'metric', iconTheme = 'a
 
     const pop = hourly.precipitation_probability ? (hourly.precipitation_probability[i] || 0) : 0;
     const isCurrentHourSlot = (i === startIndex);
-    const precipMm = (isCurrentHourSlot && cur?.precipitation != null) ? cur.precipitation : (hourly.precipitation ? (hourly.precipitation[i] || 0) : 0);
-    const code = (isCurrentHourSlot && cur?.weather_code != null) ? cur.weather_code : hourly.weather_code[i];
+    const hourlyPrecip = hourly.precipitation ? (hourly.precipitation[i] || 0) : 0;
+    const precipMm = (isCurrentHourSlot && cur?.precipitation != null && cur.precipitation > 0)
+      ? cur.precipitation
+      : hourlyPrecip;
+    const code = (isCurrentHourSlot && cur?.weather_code != null && (cur.weather_code >= 50 || hourlyPrecip < 0.1 || pop < 40))
+      ? cur.weather_code
+      : hourly.weather_code[i];
     // Calibración Solar e Hidrometeórica Inteligente Continua:
     // Para la hora en curso y la siguiente inmediata se sincroniza la lectura en vivo instantánea de la estación;
     // para el resto de horas se utilizan los arrays previstos por el modelo horario.
@@ -309,8 +314,8 @@ export function renderHourlyForecastBlock(data, units = 'metric', iconTheme = 'a
           <span class="pop-drop">💧</span>
           <span>${pop}%</span>
         </div>
-        <div class="h-precip ${precipMm >= 2.0 ? 'precip-heavy' : (precipMm >= 0.1 ? 'precip-active' : '')}" title="Volumen de lluvia previsto: ${precipMm.toFixed(1)} mm">
-          <span>${precipMm >= 0.1 ? `${precipMm.toFixed(1)} mm` : '0.0 mm'}</span>
+        <div class="h-precip ${precipMm >= 2.0 ? 'precip-heavy' : ((precipMm >= 0.1 || weather.isRain) ? 'precip-active' : '')}" title="Volumen de lluvia previsto: ${precipMm >= 0.1 ? `${precipMm.toFixed(1)} mm` : (weather.isRain ? '< 0.1 mm' : '0.0 mm')}">
+          <span>${precipMm >= 0.1 ? `${precipMm.toFixed(1)} mm` : (weather.isRain ? '< 0.1 mm' : '0.0 mm')}</span>
         </div>
         <span class="h-wind" title="Viento del ${windDir.name} (${Math.round(windDeg)}°), sopla hacia el ${windDir.toName} a ${windSpeed} ${unitLabel}">
           <svg class="h-wind-arrow" style="transform: rotate(${Math.round(windDeg + 180)}deg);" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">

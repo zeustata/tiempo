@@ -1,5 +1,5 @@
 import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo, resolveSubLocalidad, SUB_LOCALIDADES } from './config/concejos.js?v=3.0.25.18';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.26';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.27';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=3.0.23.63';
 import { renderCurrentWeather } from './components/currentCard.js?v=3.0.25.22';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.25.10';
@@ -8,11 +8,11 @@ import { renderRoutesCard } from './components/routesCard.js?v=3.0.25.5';
 import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.25.5';
 import { renderMountainCard } from './components/mountainCard.js?v=3.0.26';
 import { renderTourismCard } from './components/tourismCard.js?v=3.0.25.5';
-import { renderForecast, renderHourlyForecastBlock } from './components/forecastView.js?v=3.0.25.14';
+import { renderForecast, renderHourlyForecastBlock } from './components/forecastView.js?v=3.0.27';
 import { renderWeatherChart } from './components/chartsView.js?v=3.0.23.58';
 import { renderAstronomyView } from './components/astronomyCard.js?v=3.0.25.30';
 import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter } from './components/mapRadar.js?v=3.0.25.12';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=3.0.24.50';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=3.0.27';
 import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=2.0.0';
 import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=2.0.0';
 import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=2.0.0';
@@ -49,7 +49,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.26';
+export const CURRENT_APP_VERSION = '3.0.27';
 
 class MeteoAsturiasApp {
   constructor() {

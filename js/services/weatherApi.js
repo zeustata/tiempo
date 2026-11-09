@@ -328,8 +328,8 @@ function applyCantabricoConsensus(weather, consensus) {
     // bajo condiciones cantábricas húmedas (hum >= 75% o ecmwfCloud >= 65%),
     // mientras AROME sigue marcando seco (< 0.1 mm) o subestimando severamente (< 0.3 mm con ECMWF >= 0.4 mm):
     // SE ADOPTA INMEDIATAMENTE LA LLUVIA Y NUBOSIDAD REAL DEL CENTRO EUROPEO.
-    const isCurrentRainRescue = (ePrecip >= 0.1 || (eCode >= 50 && eCode <= 67) || (eCode >= 80 && eCode <= 82)) &&
-      (rawPrecip < 0.1 || (ePrecip >= 0.4 && rawPrecip < 0.3)) &&
+    const isCurrentRainRescue = (ePrecip >= 0.1 || curEPrecip >= 0.1 || (eCode >= 50 && eCode <= 67) || (eCode >= 80 && eCode <= 82) || (curECode >= 50 && curECode <= 82) || curEPop >= 50) &&
+      (rawPrecip < 0.1 || (Math.max(ePrecip, curEPrecip) >= 0.4 && rawPrecip < 0.3)) &&
       (hum >= 75 || ecmwfCloud >= 65) &&
       eDirectIrr < 100;
 
@@ -343,10 +343,12 @@ function applyCantabricoConsensus(weather, consensus) {
       if (weather.current.rain != null) weather.current.rain = rescuedP;
       weather.current.weather_code = (eCode >= 50) ? eCode : 51;
       if (ecmwfCloud > rawCloud) weather.current.cloud_cover = ecmwfCloud;
-    } else if (false && isCurrentRainRescue) {
-      weather.current.precipitation = ePrecip;
-      if (weather.current.rain != null) weather.current.rain = ePrecip;
-      weather.current.weather_code = (eCode >= 50) ? eCode : 51;
+    } else if (isCurrentRainRescue) {
+      const rescuedP = Math.max(ePrecip, curEPrecip, curAromePrecip, 0.2);
+      weather.current.precipitation = rescuedP;
+      if (weather.current.rain != null) weather.current.rain = rescuedP;
+      const targetCode = (eCode >= 50 && eCode <= 82) ? eCode : ((curECode >= 50 && curECode <= 82) ? curECode : 51);
+      weather.current.weather_code = targetCode;
       if (ecmwfCloud > rawCloud) weather.current.cloud_cover = ecmwfCloud;
     }
 
@@ -355,7 +357,7 @@ function applyCantabricoConsensus(weather, consensus) {
     // pero la atmósfera costera está en saturación condensada (humedad >= 90%) o AROME detecta llovizna activa (51-57)
     // con humedad cantábrica (hum >= 70%), cielo cubierto (>= 75%) y sin haz solar abrasador.
     const isAromeConfirmedDrizzle = (rawCode >= 50 && rawCode <= 57) && (Math.max(rawCloud, ecmwfCloud) >= 75) && hum >= 70 && !hasTrueSunlight;
-    const isOrbayuCondition = false;
+    const isOrbayuCondition = isAromeConfirmedDrizzle || (curEPop >= 60 && hum >= 80 && Math.max(rawCloud, ecmwfCloud) >= 80 && !hasTrueSunlight);
 
     if (isOrbayuCondition) {
       weather.current.weather_code = (rawCode >= 50 && rawCode <= 57) ? rawCode : 51; // Orbayu / Llovizna activa
@@ -385,7 +387,7 @@ function applyCantabricoConsensus(weather, consensus) {
 
     // C) SOBERANÍA FÍSICA Y ARMONIZACIÓN DE FALSOS NUBLADOS / RESIDUOS DE LLUVIA:
     const isDryCurrent = weather.current.precipitation < 0.1 || isSolarDrizzleGhost;
-    if (isDryCurrent && weather.current.weather_code >= 50) {
+    if (isDryCurrent && weather.current.weather_code >= 50 && curEPop < 50 && hum < 80) {
       if (rawPrecip < 0.5) {
         weather.current.precipitation = 0;
         if (weather.current.rain != null) weather.current.rain = 0;

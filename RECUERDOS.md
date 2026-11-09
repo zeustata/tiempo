@@ -2,6 +2,29 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌧️ Rescate Soberano de Orbayu Cantábrico y Coherencia en Pronóstico Horario (`v3.0.27 - Despliegue Oficial`) — 2026-11-09
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `1e8e68c` (`v3.0.26`).
+- **Diagnóstico y Solución de Lendo («pues aqui esta lloviendo y pone que esta nublado... recuerda este ajuste por si algun dia tenemos un falso orbayo para ajustarlo. subelo»):**
+  1. *Causa Raíz de la Contradicción Detectada en Vivo (Castrillón / Piedras Blancas):*
+     - El bloque instantáneo de la API Open-Meteo (`current.precipitation`) marcaba `0.0 mm` debido a la latencia habitual del pluviómetro (15-30 min) y a que el orballu fino produce microgotas de baja acumulación instantánea.
+     - AROME asignaba código WMO 3 (`Nublado`).
+     - Al mismo tiempo, el Centro Europeo (ECMWF) constataba `code 80` (chubasco/lluvia), `1.8 mm` acumulados y `74%` de probabilidad de precipitación (`pop`), con saturación de humedad en superficie (`92%`).
+     - En `applyCantabricoConsensus` (`js/services/weatherApi.js`), el rescate `isCurrentRainRescue` estaba desactivado con `false &&`, y el bloque de soberanía física degradaba forzosamente a código 3 (`Nublado`) cualquier código de lluvia si `precipitation < 0.1 mm`.
+     - En `js/components/forecastView.js`, la hora actual sobreescribía de forma ciega la predicción horaria con `cur.precipitation` (`0.0 mm`) y `cur.weather_code` (`3`), mientras mantenía la probabilidad del modelo (`75%`), provocando la contradicción visual: 💧 75%, 0.0 mm y nube seca (☁️).
+  2. *Solución Técnica Integral Aplicada:*
+     - `js/services/weatherApi.js`: Activado `isCurrentRainRescue` considerando precipitación de ECMWF actual o prevista para la hora (`curEPrecip >= 0.1` o `curEPop >= 50%`), rescatando el código WMO de lluvia (51 o código europeo) y el volumen real cuando hay humedad cantábrica (&ge; 75%) y ausencia de sol. Se protegió la degradación a código 3 impidiendo que se ejecute si `curEPop >= 50%` o `hum >= 80%`.
+     - `js/utils/weatherIcons.js`: Incorporada la regla cantábrica de alta probabilidad (`isHighProbCantabrianRain`): si el código es nublado (&le; 3) pero la probabilidad es &ge; 60%, la humedad &ge; 78%, el cielo está encapotado (&ge; 80%) y no hay sol, se clasifica como lluvia/orbayu activo (`isRain: true`, `svgKey: 'drizzle'`, `icon: '🌦️'`).
+     - `js/components/forecastView.js`: Para la hora en curso (`isCurrentHourSlot`), ya no se destruye la predicción del modelo con `0.0 mm` si la probabilidad es relevante. Si `weather.isRain` está activo y el volumen numérico es `< 0.1 mm`, se muestra de forma elegante `<span>< 0.1 mm</span>` con clase de lluvia activa (`precip-active`) en lugar del contradictorio `0.0 mm`.
+  3. *Palancas de Calibración Rápida ante un Falso Orbayu Futuro (Memoria Preventiva Solicitada por Lendo):*
+     - Si en épocas de bochorno veraniego o niebla costera sin precipitación la app mostrara lluvia/orballu cuando en la calle no cae ni una gota ("falso orbayu"):
+       - **Palanca 1 (`weatherIcons.js`):** Subir el umbral de `isHighProbCantabrianRain` de `pop >= 60` a `pop >= 75`, o elevar el umbral de humedad de `78%` a `88%`.
+       - **Palanca 2 (`weatherApi.js`):** En `isCurrentRainRescue` y `isOrbayuCondition`, exigir `curEPrecip >= 0.2` en lugar de `curEPop >= 50`, o incorporar filtro de viento/visibilidad.
+       - **Palanca 3 (Inmunidad Solar):** Ya está protegida por `!hasTrueSunlight` (`eDirectIrr < 100` y `rawDirectIrr < 100`), evitando falsos orbayus si el sol perfora la capa nubosa.
+  4. *Control de Versión y Cache-Busting (Leyes 3, 4 y 13):*
+     - Elevada versión a `v3.0.27 🌧️` en `CURRENT_APP_VERSION` (`js/app.js`), `#app-version-badge`, `#nav-update-badge`, modal `#changelog-modal` y Service Worker `meteoasturlode-v3027-rain-consensus` en `sw.js`.
+     - Query strings sincronizados en `index.html` (`app.js?v=3.0.27`, `sw.js?v=3.0.27`) y en `js/app.js` (`weatherApi.js?v=3.0.27`, `forecastView.js?v=3.0.27`, `weatherIcons.js?v=3.0.27`).
+  5. *Despliegue Remoto (Ley 3):* Sincronizado en `zeustata/tiempo` (rama `main`). Servidor local cerrado tras la verificación.
+
 ## ❄️ Implementación del Bot de Nieve y Salto Oficial a Versión Invernal (`v3.0.26 - Despliegue Oficial`) — 2026-11-09
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `f10822b` (`v3.0.25.38`).
 - **Diagnóstico y Solución de Lendo («antes explicame si es seguro para nuestra app... entonces pisale»):**
