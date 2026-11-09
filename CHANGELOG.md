@@ -9,6 +9,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.25.37] - 2026-11-09
+### Fixed
+- **Supresión de Cápsula Redundante de Altitud en Cabecera (`mountainCard.js` - Leyes 11 y 14):**
+  - **Depuración de Cabecera:** Eliminada la cápsula `.altitude-pill` (`Altitud concejo: X m`), retirando información redundante ya visible en *En Vivo*.
+  - **Ahorro Vertical:** Se ahorran cerca de 50 px de altura en pantallas móviles, dando entrada inmediata a los sensores de cota de nieve y aludes.
+
 ## [3.0.25.36] - 2026-11-09
 ### Fixed
 - **Supresión de Cápsula Incongruente de Remontes (`mountainCard.js` - Leyes 11 y 16):**

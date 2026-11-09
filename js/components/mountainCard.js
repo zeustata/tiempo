@@ -790,12 +790,7 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
   return `
     <div class="mountain-card">
       <div class="section-title-wrap" style="margin-bottom: 8px;">
-        <div>
-          <h3 class="section-heading" style="margin-bottom: 0;">🏔️ Cordillera & Nieve</h3>
-        </div>
-        <div class="altitude-pill">
-          Altitud ${concejo.name}: <strong>${concejo.altitude} m</strong>
-        </div>
+        <h3 class="section-heading" style="margin-bottom: 0;">🏔️ Cordillera & Nieve</h3>
       </div>
 
       <!-- 1. BARRA UNIFICADA DE SENSORES DE ALTA MONTAÑA (2 PISOS ANTI-COLISIÓN) -->

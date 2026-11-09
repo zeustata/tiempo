@@ -2,6 +2,18 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏔️ Supresión de Cápsula Redundante de Altitud en Cabecera (`v3.0.25.37 - Pruebas en Local`) — 2026-11-09
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `5d42e42` (`v3.0.25.36`).
+- **Diagnóstico y Solución de Lendo («debajo me pone la altitud de donde estoy en azul. esa capsula sobra no? ya me lo pone el menu de en vivo... si princesa. pisale»):**
+  1. *Depuración y Ganancia de Espacio Vertical (Leyes 11 y 14):*
+     - Suprimida la cápsula `.altitude-pill` (`Altitud ${concejo.name}: ${concejo.altitude} m`), un elemento obsoleto que generaba ruido y ocupaba hasta dos renglones en móvil.
+     - La altitud del concejo ya se visualiza con protagonismo en la tarjeta principal de *En Vivo*, y la comparación frente a la cota de 0°C ya se calcula de forma nativa en la pastilla inferior (`Por encima` / `En tu cota`).
+     - La sección arranca ahora con máxima contundencia y limpieza: `🏔️ Cordillera & Nieve`, dando paso directo a los sensores de Cota de Nieve y Aludes y ahorrando cerca de 50 px verticales.
+  2. *Control de Versión y Cache-Busting (Leyes 3 y 4):*
+     - Service Worker: `meteoasturlode-v3025-37-mountain-remove-altitude-pill`.
+     - Query strings sincronizados en `index.html` (`components.css?v=3.0.25.37`) y en `js/app.js` (`mountainCard.js?v=3.0.25.37`).
+  3. *Servidor Local de Pruebas (Leyes 3 y 9):* Activo en `http://localhost:8080`.
+
 ## ❄️ Hoja de Ruta Técnica: Automatización de Partes Diarios de Nieve y Pistas (Temporada Invierno) — 2026-11-09
 - **Contexto y Acuerdos de Lendo y Princesa («ponlo todo en la memoria para cuando llegue el dia»):**
   1. *Arquitectura Serverless y Legalidad Estricta (Leyes 11, 14 y 15):*
