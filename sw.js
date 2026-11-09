@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3025-35-mountain-pill-media';
+const CACHE_NAME = 'meteoasturlode-v3025-36-mountain-remove-lift-pill';
 const STATIC_ASSETS = [
   './',
   './index.html',

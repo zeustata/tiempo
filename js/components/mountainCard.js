@@ -894,10 +894,6 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
                     <span class="ski-sky-icon">${r.currentSky.weatherInfo ? renderWeatherIconHtml(r.currentSky.weatherInfo, 22, iconTheme) : r.currentSky.icon}</span>
                     <span class="ski-sky-label">${r.currentSky.label}</span>
                   </div>
-                  <!-- Semáforo de Remontes por Viento en Cumbre -->
-                  <div class="lift-status-pill" style="background: ${r.liftSafety.bg}; color: ${r.liftSafety.color}; border: 1px solid ${r.liftSafety.color}66;">
-                    ${r.liftSafety.icon} ${r.liftSafety.status}
-                  </div>
                 </div>
               </div>
 

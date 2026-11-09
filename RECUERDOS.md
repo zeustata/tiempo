@@ -2,6 +2,19 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🎿 Supresión de Cápsula Incongruente de Remontes (`v3.0.25.36 - Pruebas en Local`) — 2026-11-09
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `c2902fc` (`v3.0.25.35`).
+- **Diagnóstico y Solución de Lendo («encima de la tarjeta pone remontes operativos en una capsula verde. para que sirve?... opcion a sin duda»):**
+  1. *Eliminación de Cápsula Redundante e Incongruente (Leyes 11 y 16):*
+     - Suprimida la cápsula `.lift-status-pill` (`🟢 Remontes Operativos`).
+     - Al estar la estación fuera de temporada o cerrada, esa cápsula generaba una contradicción flagrante con el parte oficial que marcaba 0 km y estación cerrada.
+     - El viento en cumbres y cotas se visualiza con máxima precisión directamente en la tarjeta de cada cota con flecha vectorial y velocidad en km/h, eliminando texto superfluo.
+     - La cabecera de la estación queda limpia y centrada en su cielo actual (`☁️ Nublado de noche`, etc.).
+  2. *Control de Versión y Cache-Busting (Leyes 3 y 4):*
+     - Service Worker: `meteoasturlode-v3025-36-mountain-remove-lift-pill`.
+     - Query strings sincronizados en `index.html` (`components.css?v=3.0.25.36`) y en `js/app.js` (`mountainCard.js?v=3.0.25.36`).
+  3. *Servidor Local de Pruebas (Leyes 3 y 9):* Activo en `http://localhost:8080`.
+
 ## 🎿 Optimización de Etiqueta de Cota Media a «Media» (`v3.0.25.35 - Pruebas en Local`) — 2026-11-09
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `f3c3775` (`v3.0.25.34`).
 - **Diagnóstico y Solución de Lendo («el problema de las pantallas estrechas del movil. Fijate el boton Media Estacion como queda. Alomejor seria mejor llamarla Estacion a secas no?... pisale»):**

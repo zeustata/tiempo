@@ -9,6 +9,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.25.36] - 2026-11-09
+### Fixed
+- **Supresión de Cápsula Incongruente de Remontes (`mountainCard.js` - Leyes 11 y 16):**
+  - **Eliminación de Contradicciones:** Suprimida la cápsula `.lift-status-pill` (`🟢 Remontes Operativos`), que afirmaba erróneamente operatividad de remontes en estaciones cerradas o fuera de temporada.
+  - **Cabecera Despejada:** La cabecera de la estación queda limpia y enfocada exclusivamente en el tiempo actual (`ski-sky-badge`).
+
 ## [3.0.25.35] - 2026-11-09
 ### Fixed
 - **Optimización de Etiqueta de Cota Media a «Media» (`mountainCard.js` - Leyes 11 y 14):**
