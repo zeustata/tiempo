@@ -2,6 +2,24 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## ❄️ Hoja de Ruta Técnica: Automatización de Partes Diarios de Nieve y Pistas (Temporada Invierno) — 2026-11-09
+- **Contexto y Acuerdos de Lendo y Princesa («ponlo todo en la memoria para cuando llegue el dia»):**
+  1. *Arquitectura Serverless y Legalidad Estricta (Leyes 11, 14 y 15):*
+     - Para la apertura oficial de temporada (finales de noviembre / diciembre), la alimentación de la tarjeta `Parte de Nieve & Pistas` (`renderSkiResortSnowReport`) se realizará mediante un flujo de **GitHub Actions** (`.github/workflows/actualizar-nieve.yml`).
+     - El flujo recopilará los partes públicos oficiales de las 4 estaciones (*Valgrande-Pajares*, *Fuentes de Invierno*, *San Isidro* y *Leitariegos*) y consolidará un archivo estático en el repositorio: `data/nieve-hoy.json`.
+     - La app cliente consumirá el JSON en 0 ms mediante `fetch`, erradicando por completo problemas de CORS, caídas de certificados ajenos o bloqueos de red en móviles.
+  2. *Cuádruple Blindaje ante Caídas y Sobrecargas de Servidores:*
+     - **Reintentos Exponenciales Inmediatos:** El script incorpora reintentos ante errores `503` o timeouts (espera de 15s, 45s y 2min) para superar atascos puntuales en hora punta matinal.
+     - **Cron Multi-Disparo Escalonado:** Pasadas automáticas programadas en la ventana crítica de publicación: **08:15 h**, **08:45 h**, **09:15 h** y actualización de tarde a las **13:00 h**.
+     - **Doctrina «Cero Pantalla en Blanco» (Stale-While-Revalidate):** Si un temporal extremo corta la conexión de una estación, el archivo nunca se borra ni se vacía; conserva el último parte conocido con su marca horaria visible (`🕒 Último parte oficial: Hoy 08:15 h`).
+     - **Red de Respaldo Cruzada:** Fallback secundario al boletín consolidado de ATUDEM / AEMET si la web individual de la estación no responde.
+  3. *Aislamiento y Autonomía Meteorológica:*
+     - El parte de nieve afecta **única y exclusivamente a los datos de explotación de pistas** (km esquiables, pistas desglosadas por color, remontes y espesores en pista).
+     - La meteorología física (temperaturas y rachas de viento en Cumbre, Media y Base, previsión de ventisca a 7 días, nieve acumulada y webcams) se mantiene 100% independiente con el motor numérico en vivo de Open-Meteo.
+  4. *Ergonomía Móvil y Micro-LED de Estado (Ley 11):*
+     - En la cuadrícula 2x2 superior de estaciones (`Pajares`, `Fuentes`, `San Isidro`, `Leitariegos`), el estado de apertura se señalizará mediante un micro-punto LED luminoso de 7 píxeles (`[ 🟢 Pajares ]`, `[ 🔴 San Isidro ]`).
+     - Prohibido introducir textos largos que comprometan el ancho útil en pantallas móviles estrechas (320 px a 380 px).
+
 ## 🎿 Supresión de Cápsula Incongruente de Remontes (`v3.0.25.36 - Pruebas en Local`) — 2026-11-09
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `c2902fc` (`v3.0.25.35`).
 - **Diagnóstico y Solución de Lendo («encima de la tarjeta pone remontes operativos en una capsula verde. para que sirve?... opcion a sin duda»):**
