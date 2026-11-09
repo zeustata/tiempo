@@ -1,12 +1,12 @@
 import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo, resolveSubLocalidad, SUB_LOCALIDADES } from './config/concejos.js?v=3.0.25.18';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.25.7';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.25.40';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=3.0.23.63';
 import { renderCurrentWeather } from './components/currentCard.js?v=3.0.25.22';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.25.10';
 import { renderSurfCard } from './components/surfCard.js?v=3.0.25.2';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.25.5';
 import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.25.5';
-import { renderMountainCard } from './components/mountainCard.js?v=3.0.25.38';
+import { renderMountainCard } from './components/mountainCard.js?v=3.0.25.40';
 import { renderTourismCard } from './components/tourismCard.js?v=3.0.25.5';
 import { renderForecast, renderHourlyForecastBlock } from './components/forecastView.js?v=3.0.25.14';
 import { renderWeatherChart } from './components/chartsView.js?v=3.0.23.58';

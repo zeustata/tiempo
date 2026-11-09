@@ -2,7 +2,24 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
-## 🏔️ Supresión de Cabecera Burocrática en Selector de Esquí y Puertos (`v3.0.25.38 - Pruebas en Local`) — 2026-11-09
+## ❄️ Implementación del Bot Automatizado de Nieve y Pistas (`v3.0.25.40 - Despliegue Oficial`) — 2026-11-09
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `f10822b` (`v3.0.25.38`).
+- **Diagnóstico y Solución de Lendo («antes explicame si es seguro para nuestra app... entonces pisale»):**
+  1. *Arquitectura 100% Segura y Aislada (Leyes 1, 3, 12 y 15):*
+     - Creado el script de extracción Node.js `scripts/fetch_snow_report.js` que recopila la información oficial consolidada de las 4 estaciones de la Cordillera Cantábrica (*Valgrande-Pajares*, *Fuentes de Invierno*, *San Isidro* y *Leitariegos*) desde el agregador homologado Infonieve con SSL verificado.
+     - Extrae métricas exactas: estado de apertura (`Abierta` / `Cerrada`), fecha oficial del parte, kilómetros esquiables y totales, pistas abiertas por color (verdes, azules, rojas, negras), remontes operativos y totales, espesor mínimo/máximo y tipo de nieve.
+     - Genera y actualiza el archivo JSON local `data/partes-nieve.json` con fallback automático ante errores de red.
+  2. *Flujo Desacoplado en GitHub Actions (`.github/workflows/fetch_snow_report.yml`):*
+     - Programación automatizada mediante cron con 5 actualizaciones diarias en temporada invernal (07:30, 09:30, 11:30, 14:30 y 16:30 UTC de noviembre a abril) y latido semanal de verificación los domingos fuera de temporada (mayo a octubre).
+     - Incorpora `workflow_dispatch` para permitir la activación manual con 1 clic en cualquier época del año.
+     - Sincronización cruzada en la rama `data`: ambos flujos (`fetch_aemet.yml` y `fetch_snow_report.yml`) protegen y preservan mutuamente sus archivos (`avisos-asturias.json` y `partes-nieve.json`) impidiendo sobrescrituras.
+  3. *Integración Fluida y Fallback Cero Errores en la App:*
+     - `js/services/weatherApi.js`: Incorpora `snowReportPromise` con lectura asíncrona hacia GitHub Raw / rama `data` y rescate local en `data/partes-nieve.json`.
+     - `js/components/mountainCard.js`: La función `renderSkiResortSnowReport(resort, snowReport)` consume los datos reales consolidados, respetando la soberanía del simulacro interactivo `?test=esqui` (Ley 12) para pruebas controladas.
+  4. *Control de Versión y Cache-Busting (Leyes 3 y 4):*
+     - Service Worker: `meteoasturlode-v3025-39-snow-report-bot`.
+     - Query strings sincronizados en `index.html` (`app.js?v=3.0.25.39`) y en `js/app.js` (`mountainCard.js?v=3.0.25.39` y `weatherApi.js?v=3.0.25.39`).
+  5. *Servidor Local de Pruebas (Leyes 3 y 9):* Activo en `http://localhost:8080`.
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `56ca059` (`v3.0.25.37`).
 - **Diagnóstico y Solución de Lendo («la pildora azul que pone servicios en ruta y el subtitulo seleccionasr modulo me parece muy tecnico y soso... opcion 1 princesa. pisale»):**
   1. *Depuración Visual y Entrada Directa a la Acción (Leyes 11 y 14):*

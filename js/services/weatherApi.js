@@ -158,7 +158,21 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
         return fetch('data/avisos-asturias.json').then(r => r.ok ? r.json() : null).catch(() => null);
       });
 
-    const [weather, aqi, marine, consensus, aemetAlerts] = await Promise.all([weatherPromise, aqiPromise, marinePromise, consensusPromise, aemetAlertsPromise]);
+    // 6. Parte Oficial de Nieve (desde JSON estático actualizado por GitHub Actions)
+    const snowUrl = isLocalhost
+      ? 'data/partes-nieve.json'
+      : `https://raw.githubusercontent.com/zeustata/tiempo/data/data/partes-nieve.json?_t=${Math.floor(Date.now() / 300000)}`;
+
+    const snowReportPromise = fetch(snowUrl, { cache: 'no-cache' })
+      .then(r => {
+        if (!r.ok) throw new Error('Snow report fetch failed');
+        return r.json();
+      })
+      .catch(() => {
+        return fetch('data/partes-nieve.json').then(r => r.ok ? r.json() : null).catch(() => null);
+      });
+
+    const [weather, aqi, marine, consensus, aemetAlerts, snowReport] = await Promise.all([weatherPromise, aqiPromise, marinePromise, consensusPromise, aemetAlertsPromise, snowReportPromise]);
 
     if (weather) {
       if (consensus) {
@@ -175,6 +189,7 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
       aqi,
       marine,
       aemetAlerts,
+      snowReport,
       timestamp: new Date()
     };
   } catch (error) {

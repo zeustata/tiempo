@@ -261,36 +261,73 @@ export function evaluateSnowQuality(tempC, windSpeedKmH, isSnowing, freezingLeve
  * Genera el Bloque Visual Ergonómico de Parte de Nieve y Estado de Pistas
  * Cumple la Ley 11 (Anti-desborde) y la Ley 12 (Simulacro ?test=esqui o ?test=pistas)
  */
-export function renderSkiResortSnowReport(resort) {
+export function renderSkiResortSnowReport(resort, snowReport = null) {
   // Comprobación de simulacro controlado (Ley 12)
   const urlParams = new URLSearchParams(window.location.search);
   const isTestEsqui = urlParams.get('test') === 'esqui' || urlParams.get('test') === 'pistas' || urlParams.get('test') === 'nieve_abierta';
 
-  // Si estamos en simulacro de prueba, mostramos la estación abierta con datos realistas de temporada
-  const isAbierta = isTestEsqui;
+  // Datos reales consolidados por el bot automatizado
+  const live = (snowReport && snowReport.stations && snowReport.stations[resort.id]) || null;
+
+  // Estado abierto/cerrado (el simulacro de prueba tiene soberanía si está activo)
+  const isAbierta = isTestEsqui || (live && live.abierta);
   
   // Cálculo de valores según estado
-  const kmEsquiables = isAbierta ? (resort.kmTotalNum * 0.72).toFixed(1) : '0.0';
-  const kmTotales = resort.kmTotalNum.toFixed(1);
-  const porcentaje = isAbierta ? Math.round((parseFloat(kmEsquiables) / resort.kmTotalNum) * 100) : 0;
+  const kmEsquiables = isTestEsqui 
+    ? (resort.kmTotalNum * 0.72).toFixed(1) 
+    : (live ? live.kmEsquiables.toFixed(1) : '0.0');
+    
+  const kmTotales = live && live.kmTotales > 0 
+    ? live.kmTotales.toFixed(1) 
+    : resort.kmTotalNum.toFixed(1);
+    
+  const porcentaje = isAbierta 
+    ? Math.min(100, Math.round((parseFloat(kmEsquiables) / (parseFloat(kmTotales) || 1)) * 100)) 
+    : 0;
   
-  const pistasAbiertas = isAbierta ? Math.round(resort.pistasCount * 0.70) : 0;
-  const remontesAbiertos = isAbierta ? Math.max(1, Math.round(resort.remontesCount * 0.75)) : 0;
-  const espesorMin = isAbierta ? 25 : 0;
-  const espesorMax = isAbierta ? 75 : 0;
+  const pistasAbiertas = isTestEsqui 
+    ? Math.round(resort.pistasCount * 0.70) 
+    : (live ? live.pistasAbiertas : 0);
+    
+  const pistasTotales = live && live.pistasTotales > 0 
+    ? live.pistasTotales 
+    : resort.pistasCount;
+    
+  const remontesAbiertos = isTestEsqui 
+    ? Math.max(1, Math.round(resort.remontesCount * 0.75)) 
+    : (live ? live.remontesAbiertos : 0);
+    
+  const remontesTotales = live && live.remontesTotales > 0 
+    ? live.remontesTotales 
+    : resort.remontesCount;
+    
+  const espesorMin = isTestEsqui ? 25 : (live ? live.espesorMin : 0);
+  const espesorMax = isTestEsqui ? 75 : (live ? live.espesorMax : 0);
+
+  const fechaActualizacion = live && live.fechaActualizacion ? live.fechaActualizacion : '';
+  const calidadNieve = live && live.calidadNieve && live.calidadNieve !== 'Sin especificar' ? live.calidadNieve : null;
 
   const d = resort.pistasDesglose || { verdes: 0, azules: 0, rojas: 0, negras: 0 };
-  const verdesAbiertas = isAbierta ? Math.max(1, Math.round(d.verdes * 0.8)) : 0;
-  const azulesAbiertas = isAbierta ? Math.max(1, Math.round(d.azules * 0.75)) : 0;
-  const rojasAbiertas = isAbierta ? Math.round(d.rojas * 0.6) : 0;
-  const negrasAbiertas = isAbierta ? Math.round(d.negras * 0.5) : 0;
+  const lp = (live && live.pistasDesglose) || null;
+
+  const verdesAbiertas = isTestEsqui ? Math.max(1, Math.round(d.verdes * 0.8)) : (lp ? lp.verdes : 0);
+  const verdesTotales = (lp && lp.verdesTotales > 0) ? lp.verdesTotales : d.verdes;
+
+  const azulesAbiertas = isTestEsqui ? Math.max(1, Math.round(d.azules * 0.75)) : (lp ? lp.azules : 0);
+  const azulesTotales = (lp && lp.azulesTotales > 0) ? lp.azulesTotales : d.azules;
+
+  const rojasAbiertas = isTestEsqui ? Math.max(1, Math.round(d.rojas * 0.6)) : (lp ? lp.rojas : 0);
+  const rojasTotales = (lp && lp.rojasTotales > 0) ? lp.rojasTotales : d.rojas;
+
+  const negrasAbiertas = isTestEsqui ? Math.max(1, Math.round(d.negras * 0.5)) : (lp ? lp.negras : 0);
+  const negrasTotales = (lp && lp.negrasTotales > 0) ? lp.negrasTotales : d.negras;
 
   return `
     <div class="resort-snow-report-block">
       <div class="resort-report-top">
         <div class="resort-report-heading">
           <span class="report-badge-title">🎿 Parte de Nieve & Pistas</span>
-          <span class="report-update-tag">${isAbierta ? '🟢 Temporada Invernal' : '🍂 Fuera de Temporada / Pretemporada'}</span>
+          <span class="report-update-tag">${isAbierta ? '🟢 Temporada Invernal' : '🍂 Fuera de Temporada / Pretemporada'}${fechaActualizacion ? ' • ' + fechaActualizacion : ''}</span>
         </div>
         <div class="resort-open-badge ${isAbierta ? 'badge-open' : 'badge-closed'}">
           ${isAbierta ? '⛷️ Estación Abierta' : '🔴 Cerrada'}
@@ -322,18 +359,24 @@ export function renderSkiResortSnowReport(resort) {
           <div class="quick-stat-pill">
             <span class="qs-icon">🎿</span>
             <span class="qs-label">Pistas:</span>
-            <span class="qs-val"><strong>${pistasAbiertas}</strong>/${resort.pistasCount}</span>
+            <span class="qs-val"><strong>${pistasAbiertas}</strong>/${pistasTotales}</span>
           </div>
           <div class="quick-stat-pill">
             <span class="qs-icon">🚠</span>
             <span class="qs-label">Remontes:</span>
-            <span class="qs-val"><strong>${remontesAbiertos}</strong>/${resort.remontesCount}</span>
+            <span class="qs-val"><strong>${remontesAbiertos}</strong>/${remontesTotales}</span>
           </div>
           <div class="quick-stat-pill">
             <span class="qs-icon">📏</span>
             <span class="qs-label">Espesor:</span>
             <span class="qs-val"><strong>${espesorMin}-${espesorMax}</strong> cm</span>
           </div>
+          ${calidadNieve && isAbierta ? `
+          <div class="quick-stat-pill">
+            <span class="qs-icon">❄️</span>
+            <span class="qs-label">Nieve:</span>
+            <span class="qs-val"><strong>${calidadNieve}</strong></span>
+          </div>` : ''}
         </div>
       </div>
 
@@ -344,22 +387,22 @@ export function renderSkiResortSnowReport(resort) {
           <div class="slope-pill slope-green" title="Pistas Verdes (Muy fáciles / Iniciación)">
             <span class="slope-dot">🟢</span>
             <span class="slope-name">Verdes</span>
-            <span class="slope-count"><strong>${verdesAbiertas}</strong>/${d.verdes}</span>
+            <span class="slope-count"><strong>${verdesAbiertas}</strong>/${verdesTotales}</span>
           </div>
           <div class="slope-pill slope-blue" title="Pistas Azules (Fáciles)">
             <span class="slope-dot">🔵</span>
             <span class="slope-name">Azules</span>
-            <span class="slope-count"><strong>${azulesAbiertas}</strong>/${d.azules}</span>
+            <span class="slope-count"><strong>${azulesAbiertas}</strong>/${azulesTotales}</span>
           </div>
           <div class="slope-pill slope-red" title="Pistas Rojas (Difíciles)">
             <span class="slope-dot">🔴</span>
             <span class="slope-name">Rojas</span>
-            <span class="slope-count"><strong>${rojasAbiertas}</strong>/${d.rojas}</span>
+            <span class="slope-count"><strong>${rojasAbiertas}</strong>/${rojasTotales}</span>
           </div>
           <div class="slope-pill slope-black" title="Pistas Negras (Muy difíciles / Expertos)">
             <span class="slope-dot">⚫</span>
             <span class="slope-name">Negras</span>
-            <span class="slope-count"><strong>${negrasAbiertas}</strong>/${d.negras}</span>
+            <span class="slope-count"><strong>${negrasAbiertas}</strong>/${negrasTotales}</span>
           </div>
         </div>
       </div>
@@ -955,7 +998,7 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
               </div>
 
               <!-- 4. BLOQUE DINÁMICO DE PARTE DE NIEVE Y ESTADO DE PISTAS (KM ESQUIABLES) -->
-              ${renderSkiResortSnowReport(r)}
+              ${renderSkiResortSnowReport(r, data && data.snowReport)}
 
               <!-- PREVISIÓN METEOROLÓGICA Y VIENTO A 7 DÍAS EN LA ESTACIÓN -->
               <div class="ski-resort-forecast-section">

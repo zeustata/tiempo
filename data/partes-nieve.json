@@ -1,0 +1,110 @@
+{
+  "updatedAt": "2026-11-09T01:45:52.076Z",
+  "source": "Infonieve / Estaciones Oficiales Cordillera Cantábrica",
+  "stations": {
+    "pajares": {
+      "id": "pajares",
+      "nombre": "Valgrande-Pajares",
+      "estado": "Cerrada",
+      "abierta": false,
+      "fechaActualizacion": "Actualizado el Domingo 8 de Noviembre",
+      "kmEsquiables": 0,
+      "kmTotales": 22.58,
+      "pistasAbiertas": 0,
+      "pistasTotales": 38,
+      "remontesAbiertos": 0,
+      "remontesTotales": 7,
+      "espesorMin": 0,
+      "espesorMax": 0,
+      "calidadNieve": "Sin especificar",
+      "pistasDesglose": {
+        "verdes": 0,
+        "verdesTotales": 8,
+        "azules": 0,
+        "azulesTotales": 12,
+        "rojas": 0,
+        "rojasTotales": 15,
+        "negras": 0,
+        "negrasTotales": 3
+      }
+    },
+    "fuentes": {
+      "id": "fuentes",
+      "nombre": "Fuentes de Invierno",
+      "estado": "Cerrada",
+      "abierta": false,
+      "fechaActualizacion": "Actualizado el Domingo 8 de Noviembre",
+      "kmEsquiables": 0,
+      "kmTotales": 8.76,
+      "pistasAbiertas": 0,
+      "pistasTotales": 15,
+      "remontesAbiertos": 0,
+      "remontesTotales": 5,
+      "espesorMin": 0,
+      "espesorMax": 0,
+      "calidadNieve": "Sin especificar",
+      "pistasDesglose": {
+        "verdes": 0,
+        "verdesTotales": 3,
+        "azules": 0,
+        "azulesTotales": 3,
+        "rojas": 0,
+        "rojasTotales": 6,
+        "negras": 0,
+        "negrasTotales": 3
+      }
+    },
+    "san_isidro": {
+      "id": "san_isidro",
+      "nombre": "San Isidro",
+      "estado": "Cerrada",
+      "abierta": false,
+      "fechaActualizacion": "Actualizado el Domingo 8 de Noviembre",
+      "kmEsquiables": 0,
+      "kmTotales": 31.1,
+      "pistasAbiertas": 0,
+      "pistasTotales": 32,
+      "remontesAbiertos": 0,
+      "remontesTotales": 15,
+      "espesorMin": 0,
+      "espesorMax": 0,
+      "calidadNieve": "Sin especificar",
+      "pistasDesglose": {
+        "verdes": 0,
+        "verdesTotales": 6,
+        "azules": 0,
+        "azulesTotales": 8,
+        "rojas": 0,
+        "rojasTotales": 13,
+        "negras": 0,
+        "negrasTotales": 4
+      }
+    },
+    "leitariegos": {
+      "id": "leitariegos",
+      "nombre": "Leitariegos",
+      "estado": "Cerrada",
+      "abierta": false,
+      "fechaActualizacion": "Actualizado el Domingo 8 de Noviembre",
+      "kmEsquiables": 0,
+      "kmTotales": 8.02,
+      "pistasAbiertas": 0,
+      "pistasTotales": 15,
+      "remontesAbiertos": 0,
+      "remontesTotales": 7,
+      "espesorMin": 0,
+      "espesorMax": 0,
+      "calidadNieve": "Sin especificar",
+      "pistasDesglose": {
+        "verdes": 0,
+        "verdesTotales": 4,
+        "azules": 0,
+        "azulesTotales": 7,
+        "rojas": 0,
+        "rojasTotales": 4,
+        "negras": 0,
+        "negrasTotales": 0
+      }
+    }
+  }
+}
