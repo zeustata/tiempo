@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3028-pure-forecast-timeline';
+const CACHE_NAME = 'meteoasturlode-v3029-unified-snow-engine';
 const STATIC_ASSETS = [
   './',
   './index.html',

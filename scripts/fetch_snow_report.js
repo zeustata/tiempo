@@ -73,6 +73,26 @@ async function processSnowReport() {
   console.log('❄️ Iniciando extracción de partes de nieve oficiales...');
   const now = new Date();
 
+  // Guardia Inteligente Anti-Saturación:
+  // Si no se fuerza la ejecución (--force), se comprueba si el parte ya fue verificado
+  // en los últimos 50 minutos para no sobrecargar los servidores de las estaciones.
+  const isForce = process.argv.includes('--force');
+  if (!isForce && fs.existsSync(OUTPUT_FILE)) {
+    try {
+      const existing = JSON.parse(fs.readFileSync(OUTPUT_FILE, 'utf8'));
+      if (existing && existing.updatedAt) {
+        const diffMs = now.getTime() - new Date(existing.updatedAt).getTime();
+        const diffMinutes = diffMs / (1000 * 60);
+        if (diffMinutes < 50) {
+          console.log(`⏳ Parte de nieve verificado hace solo ${Math.round(diffMinutes)} min (umbral 50 min). Saltando scrape.`);
+          return;
+        }
+      }
+    } catch (e) {
+      console.warn('⚠️ No se pudo leer el archivo existente, continuando con la extracción.');
+    }
+  }
+
   // Plantilla base segura en caso de caída total de red
   const finalReport = {
     updatedAt: now.toISOString(),

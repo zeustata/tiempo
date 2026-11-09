@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-09T01:45:52.076Z",
+  "updatedAt": "2026-11-09T11:56:45.234Z",
   "source": "Infonieve / Estaciones Oficiales Cordillera Cantábrica",
   "stations": {
     "pajares": {
@@ -7,7 +7,7 @@
       "nombre": "Valgrande-Pajares",
       "estado": "Cerrada",
       "abierta": false,
-      "fechaActualizacion": "Actualizado el Domingo 8 de Noviembre",
+      "fechaActualizacion": "Actualizado el Lunes 9 de Noviembre",
       "kmEsquiables": 0,
       "kmTotales": 22.58,
       "pistasAbiertas": 0,
@@ -33,7 +33,7 @@
       "nombre": "Fuentes de Invierno",
       "estado": "Cerrada",
       "abierta": false,
-      "fechaActualizacion": "Actualizado el Domingo 8 de Noviembre",
+      "fechaActualizacion": "Actualizado el Lunes 9 de Noviembre",
       "kmEsquiables": 0,
       "kmTotales": 8.76,
       "pistasAbiertas": 0,
@@ -59,7 +59,7 @@
       "nombre": "San Isidro",
       "estado": "Cerrada",
       "abierta": false,
-      "fechaActualizacion": "Actualizado el Domingo 8 de Noviembre",
+      "fechaActualizacion": "Actualizado el Lunes 9 de Noviembre",
       "kmEsquiables": 0,
       "kmTotales": 31.1,
       "pistasAbiertas": 0,
@@ -85,7 +85,7 @@
       "nombre": "Leitariegos",
       "estado": "Cerrada",
       "abierta": false,
-      "fechaActualizacion": "Actualizado el Domingo 8 de Noviembre",
+      "fechaActualizacion": "Actualizado el Lunes 9 de Noviembre",
       "kmEsquiables": 0,
       "kmTotales": 8.02,
       "pistasAbiertas": 0,

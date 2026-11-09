@@ -240,7 +240,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.28 ⏱️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.29 🎿</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -318,8 +318,21 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v3.0.28 ⏱️</span>
+            <span class="release-version">v3.0.29 🎿</span>
             <span class="release-date">09 Nov 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-feature">Motor Unificado en la Nube</span> <strong>Sincronización Total de Partes de Nieve y Avisos Oficiales</strong>:
+              <br>• <strong>Arquitectura sin Colisiones:</strong> Unificación del backend en un único motor automático que actualiza tanto los avisos de AEMET cada 15 minutos como los partes de nieve oficiales cada hora, eliminando cualquier riesgo de colisión entre robots.
+              <br>• <strong>Hora Exacta de Verificación:</strong> La tarjeta de pistas muestra ahora la hora precisa de la última comprobación (ej. <code>Actualizado el Lunes 9 de Noviembre (12:56 h)</code>), aportando máxima certidumbre al esquiador.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v3.0.28 ⏱️</span>
+            <span class="release-date">09 Nov 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-feature">Pronóstico Puro 72h</span> <strong>Arranque Estricto en la Próxima Hora (`currentHour + 1`)</strong>:
@@ -4436,7 +4449,7 @@
             <div class="nav-tool-details">
               <span class="nav-tool-name">Buscar Actualización</span>
               <div class="nav-tool-badge-row">
-                <span class="nav-tool-badge badge-warning" id="nav-update-badge">v3.0.28 · Limpiar caché</span>
+                <span class="nav-tool-badge badge-warning" id="nav-update-badge">v3.0.29 · Limpiar caché</span>
               </div>
               <span class="nav-tool-desc">Descargar inmediatamente la última versión de la red y purgar memoria</span>
             </div>
@@ -4779,7 +4792,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.0.28').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.0.29').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4809,7 +4822,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.28"></script>
+  <script type="module" src="js/app.js?v=3.0.29"></script>
 
 
 

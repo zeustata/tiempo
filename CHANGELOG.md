@@ -9,6 +9,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.29] - 2026-11-09
+### Added
+- **🎿 Unificación del Motor en la Nube y Certidumbre Horaria en Pistas (`mountainCard.js` + `.github/workflows/fetch_aemet.yml` - Leyes 0, 1, 3 y 15):**
+  - **Motor Maestro Unificado:** Sincronización conjunta de avisos AEMET (cada 15 min) y partes oficiales de nieve (con guardia inteligente de 50 min) en un único flujo de GitHub Actions, erradicando cualquier riesgo de colisión o conflicto en la rama `data`.
+  - **Hora Exacta de Verificación en la Tarjeta:** La insignia de la estación de esquí incluye ahora la hora precisa de la última comprobación (ej. `Actualizado el Lunes 9 de Noviembre (12:56 h)`), aportando máxima tranquilidad y certidumbre al esquiador.
+
 ## [3.0.28] - 2026-11-09
 ### Changed
 - **⏱️ Soberanía del Pronóstico Puro y Desacoplo Temporal (`forecastView.js` - Leyes 0, 1, 3 y 11):**

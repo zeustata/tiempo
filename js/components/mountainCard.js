@@ -305,6 +305,14 @@ export function renderSkiResortSnowReport(resort, snowReport = null) {
   const espesorMax = isTestEsqui ? 75 : (live ? live.espesorMax : 0);
 
   const fechaActualizacion = live && live.fechaActualizacion ? live.fechaActualizacion : '';
+  const updatedAtRaw = (snowReport && snowReport.updatedAt) ? snowReport.updatedAt : null;
+  let horaVerificada = '';
+  if (updatedAtRaw) {
+    const updDate = new Date(updatedAtRaw);
+    if (!isNaN(updDate.getTime())) {
+      horaVerificada = updDate.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) + ' h';
+    }
+  }
   const calidadNieve = live && live.calidadNieve && live.calidadNieve !== 'Sin especificar' ? live.calidadNieve : null;
 
   const d = resort.pistasDesglose || { verdes: 0, azules: 0, rojas: 0, negras: 0 };
@@ -327,7 +335,7 @@ export function renderSkiResortSnowReport(resort, snowReport = null) {
       <div class="resort-report-top">
         <div class="resort-report-heading">
           <span class="report-badge-title">🎿 Parte de Nieve & Pistas</span>
-          <span class="report-update-tag">${isAbierta ? '🟢 Temporada Invernal' : '🍂 Fuera de Temporada / Pretemporada'}${fechaActualizacion ? ' • ' + fechaActualizacion : ''}</span>
+          <span class="report-update-tag">${isAbierta ? '🟢 Temporada Invernal' : '🍂 Fuera de Temporada / Pretemporada'}${fechaActualizacion ? ' • ' + fechaActualizacion : ''}${horaVerificada ? ' (' + horaVerificada + ')' : ''}</span>
         </div>
         <div class="resort-open-badge ${isAbierta ? 'badge-open' : 'badge-closed'}">
           ${isAbierta ? '⛷️ Estación Abierta' : '🔴 Cerrada'}

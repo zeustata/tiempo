@@ -2,6 +2,21 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🎿 Unificación del Motor en la Nube y Certidumbre Horaria en Pistas (`v3.0.29 - Despliegue Oficial`) — 2026-11-09
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `bf13077` (`v3.0.28`).
+- **Diagnóstico y Solución de Lendo («pero eso no tiene que hacerlo automaticamente? Lo digo porque el que quiera ir a esquiar le gustaria saber de cuando es el ultimo boletin y de que hora aunque tenga un retardo... confio en ti. pisale... subelo»):**
+  1. *Causa y Necesidad:*
+     - Tener dos flujos de GitHub Actions separados (`fetch_aemet.yml` y `fetch_snow_report.yml`) escribiendo a la misma rama `data` creaba riesgos de colisión y dependía de la cola de activación de nuevos cron en GitHub.
+     - En la tarjeta de pistas, se mostraba la fecha textual del boletín de la estación (`Actualizado el Lunes 9 de Noviembre`), pero no la hora precisa de cuándo nuestro sistema había verificado los datos con Infonieve.
+  2. *Solución Técnica Aplicada:*
+     - **Motor Maestro Unificado (`.github/workflows/fetch_aemet.yml`):** Se integró la extracción de partes de nieve (`scripts/fetch_snow_report.js`) en el flujo de 15 minutos de AEMET con una guardia anti-saturación de 50 minutos. Ambas fuentes se descargan y se suben en un único commit atómico a la rama `data`. Se eliminó el flujo redundante `fetch_snow_report.yml`.
+     - **Guardia Anti-Saturación (`scripts/fetch_snow_report.js`):** Comprueba `updatedAt`. Si han pasado menos de 50 minutos desde el último chequeo, salta la petición HTTP respetando la Ley 15 (cero raspado abusivo).
+     - **Hora de Verificación en Tarjeta (`js/components/mountainCard.js`):** La función `renderSkiResortSnowReport` extrae `snowReport.updatedAt` y formatea la hora en local (`12:56 h`), presentándola visible en la pastilla superior: `Actualizado el Lunes 9 de Noviembre (12:56 h)`.
+  3. *Control de Versión y Cache-Busting (Leyes 3, 4 y 13):*
+     - Elevada versión oficial a `v3.0.29 🎿` en `CURRENT_APP_VERSION` (`js/app.js`), `#app-version-badge`, `#nav-update-badge`, modal `#changelog-modal` y Service Worker `meteoasturlode-v3029-unified-snow-engine` en `sw.js`.
+     - Query strings sincronizados en `index.html` (`app.js?v=3.0.29`, `sw.js?v=3.0.29`) y en `js/app.js` (`mountainCard.js?v=3.0.29`).
+  4. *Despliegue Remoto Dual (Ley 3):* Sincronizado en `zeustata/tiempo` (rama `main` y rama `data`). Servidor local cerrado tras la verificación.
+
 ## ⏱️ Soberanía del Pronóstico Puro 72h y Desacoplo Temporal (`v3.0.28 - Despliegue Oficial`) — 2026-11-09
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `63ba37f` (`v3.0.27`).
 - **Diagnóstico y Solución de Lendo («en el pronostico de las 72 horas ponga la tarjeta de la hora que ya estamos... para eso tenemos ya la tarjeta de arriba del tiempo en vivo... en asturias en esa hora puede caer un chaparron, despejar y salir el sol... si aparece Ahora y pone lluvia pero despejo confunde... pisale... subelo»):**

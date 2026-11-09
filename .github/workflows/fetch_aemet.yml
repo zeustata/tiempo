@@ -1,13 +1,15 @@
-name: Fetch AEMET Alerts
+name: Fetch Official Data (AEMET & Nieve)
 
 on:
   schedule:
-    # Ejecutar cada 15 minutos
+    # Latido maestro cada 15 minutos:
+    # - Avisos AEMET se verifican cada 15 minutos
+    # - Partes de nieve se verifican de forma inteligente con guardia de 50 minutos
     - cron: '*/15 * * * *'
   workflow_dispatch:
 
 jobs:
-  update-alerts:
+  update-data:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -22,17 +24,18 @@ jobs:
         with:
           node-version: '20'
           
-      - name: Fetch Alerts
+      - name: Fetch AEMET Alerts
         run: node scripts/fetch_alerts.js
+
+      - name: Fetch Snow Report
+        run: node scripts/fetch_snow_report.js
         
       - name: Commit and Push to data branch
         run: |
           git config --global user.name "MeteoAstur-Bot"
           git config --global user.email "bot@meteoastur.local"
           git checkout -B data
-          # Preservar partes de nieve vigentes de origin/data si existen
-          git checkout origin/data -- data/partes-nieve.json || true
-          git add data/avisos-asturias.json
+          git add data/avisos-asturias.json || true
           git add data/partes-nieve.json || true
-          git commit -m "Actualizados avisos AEMET - $(date)" || echo "No hay cambios en los avisos"
+          git commit -m "Actualizados datos oficiales (AEMET + Nieve) - $(date)" || echo "No hay cambios en los datos oficiales"
           git push -f origin data
