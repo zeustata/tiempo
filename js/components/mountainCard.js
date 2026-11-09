@@ -949,14 +949,12 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
               <!-- 4. BLOQUE DINÁMICO DE PARTE DE NIEVE Y ESTADO DE PISTAS (KM ESQUIABLES) -->
               ${renderSkiResortSnowReport(r)}
 
-              <!-- PREVISIÓN METEOROLÓGICA Y VIENTO A 7 DÍAS EN LA ESTACIÓN (FEEDBACK TESTER CEFE) -->
+              <!-- PREVISIÓN METEOROLÓGICA Y VIENTO A 7 DÍAS EN LA ESTACIÓN -->
               <div class="ski-resort-forecast-section">
                 <div class="ski-forecast-title-row">
                   <div class="ski-forecast-badge-line">
                     <span class="ski-forecast-badge">📅 Previsión a 7 Días • Esquí & Montaña</span>
-                    <span class="ski-fashion-pill">🎿 Cefe Edition</span>
                   </div>
-                  <span class="ski-forecast-sub">Evolución de nieve fresca, viento y riesgo de ventisca de tarde</span>
                 </div>
 
                 <!-- Carrusel horizontal fashion con scroll nativo táctil -->
@@ -1003,13 +1001,6 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
                         <span class="ski-snow-val ${parseFloat(f.snow) > 0 ? 'snow-active' : ''}">${f.snow} cm</span>
                       </div>
                     </div>
-                  `).join('')}
-                </div>
-
-                <!-- Paginador Interactivo de Puntos (Doctrina Constitucional 18) -->
-                <div class="sensors-dots-indicator carousel-dots-indicator" id="ski-7days-dots-${r.id}" style="margin: 6px 0 8px 0;">
-                  ${r.forecast7Days.map((f, dIdx) => `
-                    <button class="sensor-dot ${dIdx === 0 ? 'active' : ''}" data-sensor-target="${dIdx}" type="button" aria-label="Ver ${f.label}"></button>
                   `).join('')}
                 </div>
 

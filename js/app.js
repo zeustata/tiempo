@@ -6,7 +6,7 @@ import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.
 import { renderSurfCard } from './components/surfCard.js?v=3.0.25.2';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.25.5';
 import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.25.5';
-import { renderMountainCard } from './components/mountainCard.js?v=3.0.25.31';
+import { renderMountainCard } from './components/mountainCard.js?v=3.0.25.33';
 import { renderTourismCard } from './components/tourismCard.js?v=3.0.25.5';
 import { renderForecast, renderHourlyForecastBlock } from './components/forecastView.js?v=3.0.25.14';
 import { renderWeatherChart } from './components/chartsView.js?v=3.0.23.58';
@@ -3551,9 +3551,6 @@ class MeteoAsturiasApp {
         const mountainContainer = document.getElementById('panel-mountain');
         if (mountainContainer) {
           mountainContainer.innerHTML = renderMountainCard(data, concejo, effectiveTheme);
-          ['pajares', 'fuentes', 'san_isidro', 'leitariegos'].forEach(rId => {
-            this.bindCarouselDots(`ski-7days-carousel-${rId}`, `ski-7days-dots-${rId}`, '.ski-day-card');
-          });
           if (this.activeTab === 'mountain') {
             const wakeCarousels = () => {
               document.querySelectorAll('.ski-7days-carousel').forEach(c => {

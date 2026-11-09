@@ -9,6 +9,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.25.33] - 2026-11-09
+### Fixed
+- **Compactación y Supresión de Paginador de Puntos en Esquí (`mountainCard.js` + `app.js` - Leyes 11 y 14):**
+  - **Cabecera Directa y Compacta:** Eliminada la pastilla `🎿 Cefe Edition` y el subtítulo redundante, iniciando la sección directamente en `📅 Previsión a 7 Días • Esquí & Montaña` y ahorrando ~40 px de altura.
+  - **Supresión de Puntos Innecesarios:** Retirados los 7 puntos de paginación que generaban ruido y confusión en un carrusel multitarjeta (2 días visibles simultáneamente). Las tarjetas diarias conectan ahora limpiamente con las pastillas simétricas de nieve acumulada.
+
 ## [3.0.25.31] - 2026-11-09
 ### Fixed
 - **Simetría en Nieve Acumulada y Supresión de Botón Externo Redundante (`mountainCard.js` + `components.css` - Leyes 11 y 14):**

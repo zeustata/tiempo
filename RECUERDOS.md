@@ -2,6 +2,30 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🎿 Supresión de Paginador de Puntos en Carrusel Multitarjeta de Esquí (`v3.0.25.33 - Pruebas en Local`) — 2026-11-09
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `41256bd` (`v3.0.25.31`).
+- **Diagnóstico y Solución de Lendo («los puntos debajo de las tarjetas de la prevision tampoco me llaman la atencion... pisale»):**
+  1. *Eliminación de Puntos Innecesarios en Carruseles Multitarjeta (Leyes 11 y 14):*
+     - Suprimido el indicador de 7 puntos (`ski-7days-dots`) en `mountainCard.js` y retirada la vinculación en `js/app.js`.
+     - En una tira que muestra 2 días simultáneamente en pantalla móvil, los puntos individuales resultaban confusos y creaban una franja vacía innecesaria.
+     - El carrusel de 7 días enlaza ahora de forma directa y compacta con las pastillas simétricas de nieve acumulada (`⏱️ Próx. 3 Días` y `❄️ Total 7 Días`), manteniendo el desplazamiento táctil horizontal suave con barra nativa oculta.
+  2. *Control de Versión y Cache-Busting (Leyes 3 y 4):*
+     - Service Worker: `meteoasturlode-v3025-33-mountain-clean-carousel`.
+     - Query strings sincronizados en `index.html` (`components.css?v=3.0.25.33`, `app.js?v=3.0.25.33`) y en `js/app.js` (`mountainCard.js?v=3.0.25.33`).
+  3. *Servidor Local de Pruebas (Leyes 3 y 9):* Activo en `http://localhost:8080`.
+
+## 🏔️ Compactación de Cabecera en Previsión de Esquí (`v3.0.25.32 - Pruebas en Local`) — 2026-11-09
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `41256bd` (`v3.0.25.31`).
+- **Diagnóstico y Solución de Lendo («en la previsionde a 7 dias, quitale el subtitulo "Evolucion de nieve fresca,v iento...." y lo de Cefe Edition para hacerlo mas compacto... pisale»):**
+  1. *Depuración y Compactación Vertical (Leyes 11 y 14):*
+     - Suprimida la pastilla de tester `🎿 Cefe Edition` y el subtítulo redundante `Evolución de nieve fresca, viento y riesgo de ventisca de tarde`.
+     - La cabecera se sintetiza limpiamente en: `📅 Previsión a 7 Días • Esquí & Montaña`.
+     - Se ahorran ~40 px de altura vertical en móviles y se da paso inmediato al carrusel diario de nieve.
+  2. *Control de Versión y Cache-Busting (Leyes 3 y 4):*
+     - Service Worker: `meteoasturlode-v3025-32-mountain-compact-header`.
+     - Query strings sincronizados en `index.html` (`components.css?v=3.0.25.32`) y en `js/app.js` (`mountainCard.js?v=3.0.25.32`).
+  3. *Servidor Local de Pruebas (Leyes 3 y 9):* Activo en `http://localhost:8080`.
+
 ## 🎿 Simetría en Nieve Acumulada y Supresión de Botón Externo Redundante (`v3.0.25.31 - Pruebas en Local`) — 2026-11-09
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `907bc2d` (`v3.0.25.30`).
 - **Diagnóstico y Solución de Lendo («el boton Parte oficial diario y webcams a parte de dar problemas creo que es un sin sentido... y ese boton que dices de acumulacion tambien esta un poco desordenado... pisale»):**
