@@ -292,6 +292,13 @@
     - **Prohibición del Efecto Manta Corta:** Queda terminantemente prohibido modificar un umbral de nubosidad, radiación solar, humedad o precipitación en `js/utils/weatherIcons.js`, `js/services/weatherApi.js` o en los detectores silenciosos para corregir el cielo del día en curso si dicho ajuste altera o rompe cualquiera de los escenarios reales ya verificados por Lendo en días anteriores.
     - **Test de No-Regresión Previo Obligatorio:** Antes de proponer o aplicar cualquier refinamiento sobre la clasificación del cielo, Princesa debe consultar la *Tabla Maestra Oficial de Umbrales Meteorológicos y el Banco Inmutable de Casos Reales Observados en Ventana* en `RECUERDOS.md`, verificando matemáticamente que el nuevo ajuste mantiene intacto el resultado de todos los casos históricos registrados y suma el nuevo caso como avance neto acumulativo.
 
+28. **Doctrina del Litoral Cantábrico, Ley del Nordeste y Diferenciación Canónica de Sol y Nubes (Feedback Lendo):**
+    - **Cero Cielos Azules de Postal en la Costa sin Viento Seco:** En la rasa litoral asturiana (concejos costeros `isCoast`), queda terminantemente prohibido mostrar un cielo completamente despejado sin ninguna nube (`☀️ Despejado / Soleyeru` / WMO 0) a menos que concurra viento seco de componente Nordeste (NE: 20° a 75°) o Sur (Foehn: 160° a 220°) con cobertura nubosa inferior al 10%. En cualquier otra circunstancia soleada en el litoral, el astro debe acompañarse imperativamente de su nube compañera (`🌤️ Mayormente soleado / Despejáu` o `⛅ Sol y nubes / Claros`).
+    - **Frontera Física entre Resol y Sol y Nubes:** Se establece una distinción tajante entre resol y sol y nubes:
+      1. *Resol / Sol tamizáu (🌥️):* El sol calienta velado y difuso a través de una sábana homogénea de nubes (radiación solar directa moderada entre 130 y 219 W/m² en otoño/invierno), sin claros azules en el firmamento.
+      2. *Sol y nubes / Claros (⛅):* En cuanto el haz solar directo alcanza o supera el umbral estacional de rotura limpia (≥ 220 W/m² en otoño/invierno), el sol penetra nítido a través de huecos entre cúmulos. Se clasifica de inmediato como *Sol y nubes / Claros* con icono `⛅` (sol y nubes), erradicando el etiquetado de resol cuando la luz solar es franca y directa.
+    - **Protocolo de Reajuste Empírico:** Si en el futuro se constata algún desvío o anomalía en condiciones singulares, se procederá al reajuste calibrado de los umbrales estacionales sin alterar la doctrina protectora del litoral.
+
 
 
 
