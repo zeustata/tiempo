@@ -6,7 +6,7 @@ import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.
 import { renderSurfCard } from './components/surfCard.js?v=3.0.25.2';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.25.5';
 import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.25.5';
-import { renderMountainCard } from './components/mountainCard.js?v=3.0.25.33';
+import { renderMountainCard } from './components/mountainCard.js?v=3.0.25.34';
 import { renderTourismCard } from './components/tourismCard.js?v=3.0.25.5';
 import { renderForecast, renderHourlyForecastBlock } from './components/forecastView.js?v=3.0.25.14';
 import { renderWeatherChart } from './components/chartsView.js?v=3.0.23.58';
@@ -2122,6 +2122,8 @@ class MeteoAsturiasApp {
           card.classList.add('active');
           const c = card.querySelector('.ski-7days-carousel');
           if (c) void c.offsetWidth;
+          const cotaC = card.querySelector('.ski-cotas-carousel');
+          if (cotaC) void cotaC.offsetWidth;
         } else {
           card.classList.remove('active');
         }
@@ -2686,6 +2688,7 @@ class MeteoAsturiasApp {
         '.hourly-scroll-container, .live-hourly-block, .hourly-card, .hourly-day-divider, ' +
         '.chart-scroll-viewport, #chart-canvas-wrapper, #meteo-chart-canvas, ' +
         '.chart-smart-digest, .digest-chip, ' +
+        '.ski-cotas-carousel-wrapper, .ski-cotas-carousel, .ski-cota-slide, .ski-cotas-pills-bar, .ski-cota-tab-pill, ' +
         '.ski-7days-carousel, .ski-day-card, .passes-sector-filter-bar, .pass-sector-filter-pill, ' +
         '.tide-scroll-viewport, .tide-svg-chart, ' +
         '.weekly-tides-grid, .weekly-tides-card, .tide-day-card, .tide-today-minimal-grid, .tide-mini-pill, ' +
@@ -3551,9 +3554,10 @@ class MeteoAsturiasApp {
         const mountainContainer = document.getElementById('panel-mountain');
         if (mountainContainer) {
           mountainContainer.innerHTML = renderMountainCard(data, concejo, effectiveTheme);
+          this.initSkiCotasCarousels();
           if (this.activeTab === 'mountain') {
             const wakeCarousels = () => {
-              document.querySelectorAll('.ski-7days-carousel').forEach(c => {
+              document.querySelectorAll('.ski-7days-carousel, .ski-cotas-carousel').forEach(c => {
                 void c.offsetWidth;
               });
             };
@@ -4157,6 +4161,66 @@ class MeteoAsturiasApp {
       carousel.style.scrollSnapType = 'none';
       window.addEventListener('mousemove', onMouseMove);
       window.addEventListener('mouseup', onMouseUp);
+    });
+  }
+
+  /**
+   * Controlador ergonómico para el Carrusel Tripartito de Cotas de Esquí (Leyes 11, 14 y 18)
+   * Sincroniza las 3 cotas (Cumbre, Media Estación y Base) con sus 3 pastillas selectoras
+   */
+  initSkiCotasCarousels() {
+    ['pajares', 'fuentes', 'san_isidro', 'leitariegos'].forEach(rId => {
+      const carousel = document.getElementById(`ski-cotas-carousel-${rId}`);
+      const toolbar = document.getElementById(`ski-cotas-pills-${rId}`);
+      if (!carousel || !toolbar || carousel.dataset.cotasBound === '1') return;
+      carousel.dataset.cotasBound = '1';
+
+      const pills = toolbar.querySelectorAll('.ski-cota-tab-pill');
+      const slides = carousel.querySelectorAll('.ski-cota-slide');
+      if (!slides.length || !pills.length) return;
+
+      const updateActivePill = (idx) => {
+        pills.forEach((p, i) => {
+          p.classList.toggle('active', i === idx);
+        });
+      };
+
+      const scrollToCota = (index) => {
+        const idx = parseInt(index, 10);
+        if (slides[idx]) {
+          const targetLeft = slides[idx].offsetLeft - carousel.offsetLeft;
+          carousel.scrollTo({ left: targetLeft, behavior: 'smooth' });
+          updateActivePill(idx);
+        }
+      };
+
+      pills.forEach(pill => {
+        pill.addEventListener('click', (e) => {
+          e.preventDefault();
+          this.triggerHaptic();
+          const target = pill.getAttribute('data-cota-idx');
+          scrollToCota(target);
+        });
+      });
+
+      let scrollTimeout = null;
+      carousel.addEventListener('scroll', () => {
+        if (scrollTimeout) cancelAnimationFrame(scrollTimeout);
+        scrollTimeout = requestAnimationFrame(() => {
+          const scrollLeft = carousel.scrollLeft;
+          let closestIdx = 0;
+          let minDiff = Infinity;
+          slides.forEach((slide, idx) => {
+            const slidePos = slide.offsetLeft - carousel.offsetLeft;
+            const diff = Math.abs(scrollLeft - slidePos);
+            if (diff < minDiff) {
+              minDiff = diff;
+              closestIdx = idx;
+            }
+          });
+          updateActivePill(closestIdx);
+        });
+      }, { passive: true });
     });
   }
 

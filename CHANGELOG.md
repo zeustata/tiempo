@@ -9,6 +9,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.25.34] - 2026-11-09
+### Added
+- **Carrusel Deslizante de Cotas con 3 Pastillas Selectoras (`mountainCard.js` + `components.css` + `app.js` - Leyes 11, 14 y 18):**
+  - **Carrusel Monotarjeta al 100%:** Transformadas las 3 tiras verticales apiladas de Cumbre, Media Estación y Base (~240 px) en un carrusel táctil suave (`.ski-cotas-carousel`) con encuadre de una cota por vista al 100% de ancho útil móvil.
+  - **Barra de 3 Pastillas Interactivas:** Añadida la barra `.ski-cotas-pills-bar` con botones `[ 🏔️ Cumbre ]`, `[ 🚠 Media Estación ]` y `[ 🎿 Base ]`, con sincronización bidireccional (salto inmediato al pulsar y resaltado cian automático al deslizar).
+  - **Aislamiento Gestual y Ahorro Vertical:** Contenedor blindado en `isInteractiveZone` con `touch-action: pan-x pan-y;`. Ahorro de más de 125 px verticales en smartphones, mejorando radicalmente el acceso a la previsión semanal de esquí.
+
 ## [3.0.25.33] - 2026-11-09
 ### Fixed
 - **Compactación y Supresión de Paginador de Puntos en Esquí (`mountainCard.js` + `app.js` - Leyes 11 y 14):**

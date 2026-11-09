@@ -2,6 +2,26 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏔️ Carrusel Deslizante de Cotas con 3 Pastillas Interactivas (`v3.0.25.34 - Pruebas en Local`) — 2026-11-09
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `54e12a6` (`v3.0.25.33`).
+- **Diagnóstico y Solución de Lendo («tenemos una tarjeta exageradamente grande donde tenemos Cumbre, Media estacion y base. no se podria hacer que aparezcanen modo scrol horizontal con tres pastillas debajo que pongan Cumbre, Media Estacion y Base?... pisale»):**
+  1. *Transformación a Carrusel Monotarjeta al 100% (Leyes 11, 14 y 18):*
+     - Reemplazadas las 3 tiras apiladas en vertical (~240 px de altura) por un carrusel táctil suave (`.ski-cotas-carousel`) con encuadre monotarjeta estricto al 100% por cota.
+     - **Diapositiva 1:** `🏔️ Cumbre (${r.top.alt}m)` • ${r.top.name} con temperatura, sensación térmica, viento y calidad de nieve.
+     - **Diapositiva 2:** `🚠 Media Estación (${r.mid.alt}m)` • Zona Central con métricas de cota media.
+     - **Diapositiva 3:** `🎿 Base / Parking (${r.base.alt}m)` • Taquillas y accesos.
+  2. *Barra de 3 Pastillas Selectoras Interactivas (Leyes 11 y 18):*
+     - Incorporada la barra inferior `.ski-cotas-pills-bar` con 3 botones: `[ 🏔️ Cumbre ]`, `[ 🚠 Media Estación ]` y `[ 🎿 Base ]`.
+     - **Sincronización Bidireccional:**
+       - Tocar una pastilla desplaza suavemente el carrusel a su cota correspondiente (`scrollTo`).
+       - Deslizar el carrusel con el pulgar actualiza en tiempo real la pastilla activa con iluminación cian.
+     - **Aislamiento Gestual:** Contenedor protegido en `isInteractiveZone` para que el swipe de cotas nunca active el cambio de pestañas general. Preservación del scroll vertical mediante `touch-action: pan-x pan-y;`.
+     - **Ahorro Vertical:** Se ahorran más de 125 px de altura, situando la previsión semanal de esquí y nieve acumulada inmediatamente al alcance de la vista sin scroll forzado.
+  3. *Control de Versión y Cache-Busting (Leyes 3 y 4):*
+     - Service Worker: `meteoasturlode-v3025-34-mountain-cotas-carousel`.
+     - Query strings sincronizados en `index.html` (`components.css?v=3.0.25.34`, `app.js?v=3.0.25.34`) y en `js/app.js` (`mountainCard.js?v=3.0.25.34`).
+  4. *Servidor Local de Pruebas (Leyes 3 y 9):* Activo en `http://localhost:8080`.
+
 ## 🎿 Supresión de Paginador de Puntos en Carrusel Multitarjeta de Esquí (`v3.0.25.33 - Pruebas en Local`) — 2026-11-09
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `41256bd` (`v3.0.25.31`).
 - **Diagnóstico y Solución de Lendo («los puntos debajo de las tarjetas de la prevision tampoco me llaman la atencion... pisale»):**

@@ -901,48 +901,72 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
                 </div>
               </div>
 
-              <!-- LAS 3 COTAS ALTITUDINALES (ESTILO SNOW-FORECAST EN TIRAS DE 2 LÍNEAS) -->
-              <div class="ski-levels-list">
-                <!-- 1. CUMBRE -->
-                <div class="ski-level-strip top-strip">
-                  <div class="ski-strip-header">
-                    <span class="cota-badge top-badge">🏔️ CUMBRE (${r.top.alt}m)</span>
-                    <span class="cota-peak-name">${r.top.name}</span>
+              <!-- LAS 3 COTAS ALTITUDINALES EN CARRUSEL DESLIZANTE CON 3 PASTILLAS (Ley 18) -->
+              <div class="ski-cotas-carousel-wrapper">
+                <div class="ski-cotas-carousel" id="ski-cotas-carousel-${r.id}">
+                  <!-- 1. CUMBRE -->
+                  <div class="ski-cota-slide">
+                    <div class="ski-level-strip top-strip">
+                      <div class="ski-strip-header">
+                        <span class="cota-badge top-badge">🏔️ CUMBRE (${r.top.alt}m)</span>
+                        <span class="cota-peak-name">${r.top.name}</span>
+                      </div>
+                      <div class="ski-strip-metrics">
+                        <span class="cota-temp-val">${r.top.temp}°C</span>
+                        <span class="cota-chill-pill" title="Sensación térmica con viento">🥶 Siente ${r.top.windChill}°C</span>
+                        <span class="cota-wind-val">${getMountainWindArrowSvg(windDeg, '#38bdf8', 12)} ${r.top.windSpd} km/h</span>
+                        <span class="cota-quality-pill" style="color: ${r.top.quality.color};">${r.top.quality.icon} ${r.top.quality.label}</span>
+                      </div>
+                    </div>
                   </div>
-                  <div class="ski-strip-metrics">
-                    <span class="cota-temp-val">${r.top.temp}°C</span>
-                    <span class="cota-chill-pill" title="Sensación térmica con viento">🥶 Siente ${r.top.windChill}°C</span>
-                    <span class="cota-wind-val">${getMountainWindArrowSvg(windDeg, '#38bdf8', 12)} ${r.top.windSpd} km/h</span>
-                    <span class="cota-quality-pill" style="color: ${r.top.quality.color};">${r.top.quality.icon} ${r.top.quality.label}</span>
+
+                  <!-- 2. MEDIA ESTACIÓN -->
+                  <div class="ski-cota-slide">
+                    <div class="ski-level-strip mid-strip">
+                      <div class="ski-strip-header">
+                        <span class="cota-badge mid-badge">🚠 MEDIA ESTACIÓN (${r.mid.alt}m)</span>
+                        <span class="cota-peak-name">Zona Central</span>
+                      </div>
+                      <div class="ski-strip-metrics">
+                        <span class="cota-temp-val">${r.mid.temp}°C</span>
+                        <span class="cota-chill-pill" title="Sensación térmica con viento">🥶 Siente ${r.mid.windChill}°C</span>
+                        <span class="cota-wind-val">${getMountainWindArrowSvg(windDeg, '#38bdf8', 12)} ${r.mid.windSpd} km/h</span>
+                        <span class="cota-quality-pill" style="color: ${r.mid.quality.color};">${r.mid.quality.icon} ${r.mid.quality.label}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 3. BASE -->
+                  <div class="ski-cota-slide">
+                    <div class="ski-level-strip bot-strip">
+                      <div class="ski-strip-header">
+                        <span class="cota-badge bot-badge">🎿 BASE / PARKING (${r.base.alt}m)</span>
+                        <span class="cota-peak-name">Taquillas</span>
+                      </div>
+                      <div class="ski-strip-metrics">
+                        <span class="cota-temp-val">${r.base.temp}°C</span>
+                        <span class="cota-chill-pill" title="Sensación térmica">🥶 Siente ${r.base.windChill}°C</span>
+                        <span class="cota-wind-val">${getMountainWindArrowSvg(windDeg, '#38bdf8', 12)} ${r.base.windSpd} km/h</span>
+                        <span class="cota-quality-pill" style="color: #38bdf8;">${r.base.precipType}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                <!-- 2. MEDIA ESTACIÓN -->
-                <div class="ski-level-strip mid-strip">
-                  <div class="ski-strip-header">
-                    <span class="cota-badge mid-badge">🚠 MEDIA ESTACIÓN (${r.mid.alt}m)</span>
-                    <span class="cota-peak-name">Zona Central</span>
-                  </div>
-                  <div class="ski-strip-metrics">
-                    <span class="cota-temp-val">${r.mid.temp}°C</span>
-                    <span class="cota-chill-pill" title="Sensación térmica con viento">🥶 Siente ${r.mid.windChill}°C</span>
-                    <span class="cota-wind-val">${getMountainWindArrowSvg(windDeg, '#38bdf8', 12)} ${r.mid.windSpd} km/h</span>
-                    <span class="cota-quality-pill" style="color: ${r.mid.quality.color};">${r.mid.quality.icon} ${r.mid.quality.label}</span>
-                  </div>
-                </div>
-
-                <!-- 3. BASE -->
-                <div class="ski-level-strip bot-strip">
-                  <div class="ski-strip-header">
-                    <span class="cota-badge bot-badge">🎿 BASE / PARKING (${r.base.alt}m)</span>
-                    <span class="cota-peak-name">Taquillas</span>
-                  </div>
-                  <div class="ski-strip-metrics">
-                    <span class="cota-temp-val">${r.base.temp}°C</span>
-                    <span class="cota-chill-pill" title="Sensación térmica">🥶 Siente ${r.base.windChill}°C</span>
-                    <span class="cota-wind-val">${getMountainWindArrowSvg(windDeg, '#38bdf8', 12)} ${r.base.windSpd} km/h</span>
-                    <span class="cota-quality-pill" style="color: #38bdf8;">${r.base.precipType}</span>
-                  </div>
+                <!-- 3 PASTILLAS SELECTORAS INTERACTIVAS (Cumbre, Media Estación, Base) -->
+                <div class="ski-cotas-pills-bar" id="ski-cotas-pills-${r.id}">
+                  <button class="ski-cota-tab-pill active" data-resort="${r.id}" data-cota-idx="0" type="button" aria-label="Ver Cota Cumbre">
+                    <span>🏔️</span>
+                    <span>Cumbre</span>
+                  </button>
+                  <button class="ski-cota-tab-pill" data-resort="${r.id}" data-cota-idx="1" type="button" aria-label="Ver Cota Media Estación">
+                    <span>🚠</span>
+                    <span>Media Estación</span>
+                  </button>
+                  <button class="ski-cota-tab-pill" data-resort="${r.id}" data-cota-idx="2" type="button" aria-label="Ver Cota Base">
+                    <span>🎿</span>
+                    <span>Base</span>
+                  </button>
                 </div>
               </div>
 
