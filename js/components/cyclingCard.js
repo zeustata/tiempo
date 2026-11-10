@@ -6,8 +6,8 @@
  * selector táctil ergonómico sin diálogos gigantes de Android y blindaje de seguridad ciclista.
  */
 
-import { getCyclingRoutesForConcejo, getCyclingRouteById, CYCLING_ROUTES } from '../utils/cyclingData.js?v=3.0.24.62';
-import { simulateRouteConditions, rankRoutesForDeparture } from '../utils/cyclingAdvisor.js?v=3.0.24.60';
+import { getCyclingRoutesForConcejo, getCyclingRouteById, CYCLING_ROUTES } from '../utils/cyclingData.js?v=3.0.38';
+import { simulateRouteConditions, rankRoutesForDeparture } from '../utils/cyclingAdvisor.js?v=3.0.38';
 
 /**
  * Renderiza la vista principal del módulo de Ciclismo & Viento
@@ -422,7 +422,7 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
         <!-- BARRA DE REPARTO DE VIENTO RELATIVO -->
         <div style="background: rgba(15, 23, 42, 0.40); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 10px; margin-bottom: 12px;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-main);">💨 Viento en Ruta:</span>
+            <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-main);">💨 Viento Global en Ruta:</span>
             <span style="font-size: 0.72rem; color: var(--text-dim);">Racha máx: <strong>${sim.maxGustKmh} km/h</strong></span>
           </div>
 
@@ -441,6 +441,70 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
           </div>
         </div>
 
+        ${(sim.idaBalance && sim.vueltaBalance) ? `
+          <!-- BALANCE TÁCTICO: CONDICIONES DE IDA VS VUELTA -->
+          <div style="background: rgba(15, 23, 42, 0.45); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 10px; margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-size: 0.82rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 5px;">
+                <span>🧭</span> Balance Táctico: Ida vs Vuelta
+              </span>
+              <span style="font-size: 0.70rem; color: var(--text-dim);">Giro en km ${sim.idaBalance.km}</span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+              <!-- TARJETA IDA -->
+              <div style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px; padding: 8px; border-left: 3px solid ${sim.idaBalance.windColor}; box-sizing: border-box;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                  <span style="font-size: 0.74rem; font-weight: 800; color: var(--text-main);">🚴 IDA</span>
+                  <span style="font-size: 0.68rem; color: var(--text-dim);">${sim.idaBalance.startHour} - ${sim.idaBalance.endHour}</span>
+                </div>
+                <div style="font-size: 0.70rem; color: var(--text-dim); margin-bottom: 5px; line-height: 1.3;">
+                  ${sim.idaBalance.km} km • +${sim.idaBalance.elevGain} m • 🌡️ ${sim.idaBalance.avgTemp}°C
+                </div>
+                <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 6px;">
+                  <strong style="font-size: 0.74rem; color: ${sim.idaBalance.windColor};">${sim.idaBalance.windLabel}</strong>
+                </div>
+                <!-- Barra mini de viento ida -->
+                <div style="height: 5px; border-radius: 3px; overflow: hidden; display: flex; width: 100%; background: rgba(255,255,255,0.05); margin-bottom: 4px;">
+                  <div style="width: ${sim.idaBalance.tailwindPct}%; background: var(--success, #22c55e);"></div>
+                  <div style="width: ${sim.idaBalance.crosswindPct}%; background: var(--warning, #facc15);"></div>
+                  <div style="width: ${sim.idaBalance.headwindPct}%; background: var(--danger, #ef4444);"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.65rem; color: var(--text-dim);">
+                  <span>🟢 ${sim.idaBalance.tailwindPct}%</span>
+                  <span>🔴 ${sim.idaBalance.headwindPct}%</span>
+                  <span>💨 ${sim.idaBalance.avgWindKmh}k/h</span>
+                </div>
+              </div>
+
+              <!-- TARJETA VUELTA -->
+              <div style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px; padding: 8px; border-left: 3px solid ${sim.vueltaBalance.windColor}; box-sizing: border-box;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                  <span style="font-size: 0.74rem; font-weight: 800; color: var(--text-main);">🔄 VUELTA</span>
+                  <span style="font-size: 0.68rem; color: var(--text-dim);">${sim.vueltaBalance.startHour} - ${sim.vueltaBalance.endHour}</span>
+                </div>
+                <div style="font-size: 0.70rem; color: var(--text-dim); margin-bottom: 5px; line-height: 1.3;">
+                  ${sim.vueltaBalance.km} km • +${sim.vueltaBalance.elevGain} m • 🌡️ ${sim.vueltaBalance.avgTemp}°C
+                </div>
+                <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 6px;">
+                  <strong style="font-size: 0.74rem; color: ${sim.vueltaBalance.windColor};">${sim.vueltaBalance.windLabel}</strong>
+                </div>
+                <!-- Barra mini de viento vuelta -->
+                <div style="height: 5px; border-radius: 3px; overflow: hidden; display: flex; width: 100%; background: rgba(255,255,255,0.05); margin-bottom: 4px;">
+                  <div style="width: ${sim.vueltaBalance.tailwindPct}%; background: var(--success, #22c55e);"></div>
+                  <div style="width: ${sim.vueltaBalance.crosswindPct}%; background: var(--warning, #facc15);"></div>
+                  <div style="width: ${sim.vueltaBalance.headwindPct}%; background: var(--danger, #ef4444);"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.65rem; color: var(--text-dim);">
+                  <span>🟢 ${sim.vueltaBalance.tailwindPct}%</span>
+                  <span>🔴 ${sim.vueltaBalance.headwindPct}%</span>
+                  <span>💨 ${sim.vueltaBalance.avgWindKmh}k/h</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        ` : ''}
+
         <!-- DESGLOSE DE TRAMOS PASO A PASO -->
         <div>
           <h4 style="margin: 0 0 8px 0; font-size: 0.88rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 6px;">
@@ -448,14 +512,34 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
           </h4>
 
           <div style="display: flex; flex-direction: column; gap: 8px;">
-            ${sim.tramos.map((t, idx) => `
+            ${sim.tramos.map((t, idx) => {
+              const isFirstVuelta = t.phase === 'vuelta' && (idx === 0 || sim.tramos[idx - 1]?.phase === 'ida');
+              const isFirstIda = idx === 0 && t.phase === 'ida' && sim.vueltaBalance;
+              return `
+              ${isFirstIda ? `
+                <div style="display: flex; align-items: center; gap: 6px; margin: 4px 0 2px 0;">
+                  <span style="font-size: 0.72rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px;">🚴 TRAMOS DE IDA</span>
+                  <div style="flex: 1; height: 1px; background: rgba(56, 189, 248, 0.25);"></div>
+                </div>
+              ` : ''}
+              ${isFirstVuelta ? `
+                <div style="display: flex; align-items: center; gap: 6px; margin: 8px 0 2px 0;">
+                  <span style="font-size: 0.72rem; font-weight: 800; color: var(--accent, #facc15); text-transform: uppercase; letter-spacing: 0.5px;">🔄 TRAMOS DE VUELTA (REGRESO)</span>
+                  <div style="flex: 1; height: 1px; background: rgba(250, 204, 21, 0.25);"></div>
+                </div>
+              ` : ''}
               <div style="background: rgba(0,0,0,0.20); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 8px 10px; display: flex; flex-direction: column; gap: 5px; box-sizing: border-box;">
                 
                 <!-- Fila superior: Nombre de tramo y hora estimada -->
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 6px;">
-                  <strong style="font-size: 0.82rem; color: var(--text-main); line-height: 1.3; flex: 1;">
-                    ${idx + 1}. ${t.name}
-                  </strong>
+                  <div style="display: flex; align-items: center; gap: 6px; flex: 1;">
+                    <span style="font-size: 0.65rem; font-weight: 800; padding: 1px 5px; border-radius: 4px; ${t.phase === 'ida' ? 'background: rgba(56, 189, 248, 0.15); color: var(--primary);' : 'background: rgba(250, 204, 21, 0.15); color: var(--accent, #facc15);'}">
+                      ${t.phase === 'ida' ? 'IDA' : 'VUELTA'}
+                    </span>
+                    <strong style="font-size: 0.82rem; color: var(--text-main); line-height: 1.3;">
+                      ${idx + 1}. ${t.name}
+                    </strong>
+                  </div>
                   <span style="font-size: 0.74rem; font-weight: 800; color: var(--primary); background: rgba(56, 189, 248, 0.12); padding: 2px 6px; border-radius: 5px; white-space: nowrap;">
                     ${t.estimatedStartHour} - ${t.estimatedEndHour}
                   </span>
@@ -488,7 +572,8 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
                 ` : ''}
 
               </div>
-            `).join('')}
+            `;
+            }).join('')}
           </div>
         </div>
 

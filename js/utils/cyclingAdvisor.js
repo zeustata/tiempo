@@ -80,6 +80,10 @@ export function simulateRouteConditions(route, startHour = 9, avgSpeedKmh = 24, 
   let totalCrosswindKm = 0;
   let maxGustKmh = 0;
 
+  // Variables de desglose táctico Ida vs Vuelta
+  let idaKm = 0, idaElev = 0, idaTailwindKm = 0, idaHeadwindKm = 0, idaCrosswindKm = 0, idaStartMin = -1, idaEndMin = 0, idaTemps = [], idaWinds = [];
+  let vueltaKm = 0, vueltaElev = 0, vueltaTailwindKm = 0, vueltaHeadwindKm = 0, vueltaCrosswindKm = 0, vueltaStartMin = -1, vueltaEndMin = 0, vueltaTemps = [], vueltaWinds = [];
+
   // Si no hay datos horarios reales de Open-Meteo, usamos un perfil de referencia neutro
   const times = hourlyData?.time || [];
   const windSpeeds = hourlyData?.wind_speed_10m || [];
@@ -139,6 +143,32 @@ export function simulateRouteConditions(route, startHour = 9, avgSpeedKmh = 24, 
 
     if (windEval.windGustsKmh > maxGustKmh) maxGustKmh = windEval.windGustsKmh;
 
+    // Clasificación de fase: Ida vs Vuelta
+    const totalTramos = route.tramos.length;
+    const isIda = tramo.phase ? (tramo.phase === 'ida') : (index < Math.ceil(totalTramos / 2));
+
+    if (isIda) {
+      idaKm += tramo.km;
+      idaElev += (tramo.elevGain || 0);
+      if (idaStartMin === -1) idaStartMin = startMinuteOfTramo;
+      idaEndMin = endMinuteOfTramo;
+      idaTemps.push(tramoTemp);
+      idaWinds.push(wSpeed);
+      if (windEval.type === 'tailwind') idaTailwindKm += tramo.km;
+      else if (windEval.type === 'headwind') idaHeadwindKm += tramo.km;
+      else idaCrosswindKm += tramo.km;
+    } else {
+      vueltaKm += tramo.km;
+      vueltaElev += (tramo.elevGain || 0);
+      if (vueltaStartMin === -1) vueltaStartMin = startMinuteOfTramo;
+      vueltaEndMin = endMinuteOfTramo;
+      vueltaTemps.push(tramoTemp);
+      vueltaWinds.push(wSpeed);
+      if (windEval.type === 'tailwind') vueltaTailwindKm += tramo.km;
+      else if (windEval.type === 'headwind') vueltaHeadwindKm += tramo.km;
+      else vueltaCrosswindKm += tramo.km;
+    }
+
     const formatHourMin = (totalMin) => {
       const h = Math.floor(totalMin / 60) % 24;
       const m = Math.floor(totalMin % 60);
@@ -147,6 +177,7 @@ export function simulateRouteConditions(route, startHour = 9, avgSpeedKmh = 24, 
 
     simulatedTramos.push({
       ...tramo,
+      phase: isIda ? 'ida' : 'vuelta',
       tramoSpeedKmh: Math.round(tramoSpeed),
       estimatedStartHour: formatHourMin(startHour * 60 + startMinuteOfTramo),
       estimatedEndHour: formatHourMin(startHour * 60 + endMinuteOfTramo),
@@ -204,6 +235,54 @@ export function simulateRouteConditions(route, startHour = 9, avgSpeedKmh = 24, 
     return h > 0 ? `${h}h ${m}min` : `${m} min`;
   };
 
+  const formatHourMinTime = (totalMin) => {
+    const h = Math.floor(totalMin / 60) % 24;
+    const m = Math.floor(totalMin % 60);
+    return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+  };
+
+  // Métricas específicas de IDA
+  const idaTailwindPct = idaKm > 0 ? Math.round((idaTailwindKm / idaKm) * 100) : 0;
+  const idaHeadwindPct = idaKm > 0 ? Math.round((idaHeadwindKm / idaKm) * 100) : 0;
+  const idaCrosswindPct = idaKm > 0 ? Math.round((idaCrosswindKm / idaKm) * 100) : 0;
+  const idaAvgTemp = idaTemps.length > 0 ? Math.round(idaTemps.reduce((a, b) => a + b, 0) / idaTemps.length) : 15;
+  const idaAvgWind = idaWinds.length > 0 ? Math.round(idaWinds.reduce((a, b) => a + b, 0) / idaWinds.length) : 12;
+
+  // Métricas específicas de VUELTA
+  const vueltaTailwindPct = vueltaKm > 0 ? Math.round((vueltaTailwindKm / vueltaKm) * 100) : 0;
+  const vueltaHeadwindPct = vueltaKm > 0 ? Math.round((vueltaHeadwindKm / vueltaKm) * 100) : 0;
+  const vueltaCrosswindPct = vueltaKm > 0 ? Math.round((vueltaCrosswindKm / vueltaKm) * 100) : 0;
+  const vueltaAvgTemp = vueltaTemps.length > 0 ? Math.round(vueltaTemps.reduce((a, b) => a + b, 0) / vueltaTemps.length) : 16;
+  const vueltaAvgWind = vueltaWinds.length > 0 ? Math.round(vueltaWinds.reduce((a, b) => a + b, 0) / vueltaWinds.length) : 14;
+
+  const idaBalance = {
+    km: idaKm,
+    elevGain: idaElev,
+    startHour: formatHourMinTime(startHour * 60 + Math.max(0, idaStartMin)),
+    endHour: formatHourMinTime(startHour * 60 + idaEndMin),
+    tailwindPct: idaTailwindPct,
+    headwindPct: idaHeadwindPct,
+    crosswindPct: idaCrosswindPct,
+    avgTemp: idaAvgTemp,
+    avgWindKmh: idaAvgWind,
+    windLabel: idaTailwindPct >= 50 ? '🟢 Viento a favor' : (idaHeadwindPct >= 50 ? '🔴 Viento de cara' : (idaTailwindPct > idaHeadwindPct ? '🟢 Favorable' : (idaHeadwindPct > idaTailwindPct ? '🔴 Freno frontal' : '🟡 Cruzado'))),
+    windColor: idaTailwindPct >= 50 ? '#22c55e' : (idaHeadwindPct >= 50 ? '#ef4444' : (idaTailwindPct > idaHeadwindPct ? '#22c55e' : (idaHeadwindPct > idaTailwindPct ? '#ef4444' : '#facc15')))
+  };
+
+  const vueltaBalance = {
+    km: vueltaKm,
+    elevGain: vueltaElev,
+    startHour: formatHourMinTime(startHour * 60 + Math.max(0, vueltaStartMin)),
+    endHour: formatHourMinTime(startHour * 60 + vueltaEndMin),
+    tailwindPct: vueltaTailwindPct,
+    headwindPct: vueltaHeadwindPct,
+    crosswindPct: vueltaCrosswindPct,
+    avgTemp: vueltaAvgTemp,
+    avgWindKmh: vueltaAvgWind,
+    windLabel: vueltaTailwindPct >= 50 ? '🟢 Viento a favor' : (vueltaHeadwindPct >= 50 ? '🔴 Viento de cara' : (vueltaTailwindPct > vueltaHeadwindPct ? '🟢 Favorable' : (vueltaHeadwindPct > vueltaTailwindPct ? '🔴 Freno frontal' : '🟡 Cruzado'))),
+    windColor: vueltaTailwindPct >= 50 ? '#22c55e' : (vueltaHeadwindPct >= 50 ? '#ef4444' : (vueltaTailwindPct > vueltaHeadwindPct ? '#22c55e' : (vueltaHeadwindPct > vueltaTailwindPct ? '#ef4444' : '#facc15')))
+  };
+
   return {
     routeId: route.id,
     startHour,
@@ -220,6 +299,8 @@ export function simulateRouteConditions(route, startHour = 9, avgSpeedKmh = 24, 
     headwindPct,
     crosswindPct,
     maxGustKmh,
+    idaBalance,
+    vueltaBalance,
     tramos: simulatedTramos
   };
 }

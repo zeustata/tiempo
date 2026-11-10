@@ -115,6 +115,26 @@ export const CYCLING_ROUTES = [
   // 2. COMARCA DE GIJÓN & VALLES CENTRALES (RUTAS CIRCULARES A CASA)
   // ─────────────────────────────────────────────────────────────────────────────
   {
+    id: 'gijon-villaviciosa-clasica',
+    name: 'Clásica de La Sidra: Gijón ➔ Villaviciosa (Ida y Vuelta)',
+    subtitle: 'El circuito por excelencia de las grupetas gijonesas',
+    startConcejo: 'gijon',
+    concejos: ['gijon', 'villaviciosa'],
+    distanceKm: 52,
+    elevationGainM: 680,
+    maxAltitudeM: 265,
+    difficulty: 'Media',
+    profileType: 'Costa & Colinas',
+    isCircular: true,
+    description: 'La salida ciclista de fin de semana más popular de Gijón. Ida rápida por el Alto del Infanzón y el Alto del Gobernador hasta la ría de Villaviciosa, y regreso exigente encarando el repecho de Peón y el Curbiellu de vuelta a Somió y Gijón.',
+    tramos: [
+      { name: 'Gijón ➔ Somió ➔ Alto del Infanzón', km: 9, bearingDeg: 105, elevGain: 160, avgGradePct: 2.8, endAlt: 165, phase: 'ida', coord: { lat: 43.535, lon: -5.610 } },
+      { name: 'Infanzón ➔ Alto del Gobernador ➔ Ría de Villaviciosa', km: 17, bearingDeg: 115, elevGain: 150, avgGradePct: -1.5, endAlt: 15, phase: 'ida', coord: { lat: 43.485, lon: -5.435 } },
+      { name: 'Villaviciosa ➔ Valle de Peón ➔ Alto de La Cruz', km: 15, bearingDeg: 260, elevGain: 240, avgGradePct: 3.6, endAlt: 265, phase: 'vuelta', coord: { lat: 43.480, lon: -5.545 } },
+      { name: 'Alto de La Cruz ➔ Alto del Curbiellu ➔ Regreso a Gijón', km: 11, bearingDeg: 295, elevGain: 130, avgGradePct: -2.8, endAlt: 15, phase: 'vuelta', coord: { lat: 43.525, lon: -5.630 } }
+    ]
+  },
+  {
     id: 'gijon-madera-siero',
     name: 'Clásica de La Madera & Alto del Infanzón',
     subtitle: 'La ruta reina circular del pelotón gijonés',

@@ -283,7 +283,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.37 🌧️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.38 🚴</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -361,8 +361,22 @@
       <div class="changelog-scroll modal-body">
         <div class="changelog-release current">
           <div class="release-header">
-            <span class="release-version">v3.0.37 🌧️</span>
+            <span class="release-version">v3.0.38 🚴</span>
             <span class="release-date">10 Nov 2026 (Actual)</span>
+          </div>
+          <ul class="changelog-list">
+            <li><span class="tag tag-feature">Ciclismo &amp; Viento</span> <strong>Balance Táctico de Ida vs Vuelta y Clásica de Villaviciosa</strong>:
+              <br>• <strong>Balance Táctico: Condiciones de Ida vs Vuelta:</strong> Nuevo panel comparativo que desglosa de forma independiente la ida (hacia el punto de giro) y la vuelta (regreso a casa) con horario estimado, distancia, desnivel positivo, temperatura media y reparto del viento (a favor, en contra o cruzado). Permite al ciclista saber si el viento de cola a la ida se convertirá en un castigo de cara al volver con las piernas cansadas.
+              <br>• <strong>Nueva Ruta Clásica: Gijón ➔ Villaviciosa (52 km):</strong> Añadida la icónica ruta circular costero-sidrera por el Infanzón, Alto del Gobernador, ría de Villaviciosa, valle de Peón y Alto del Curbiellu.
+              <br>• <strong>Desglose Visual de Tramos:</strong> Los tramos horarios ahora se agrupan de forma clara con separadores dedicados para <code>[ 🚴 Tramos de Ida ]</code> y <code>[ 🔄 Tramos de Vuelta ]</code>.
+            </li>
+          </ul>
+        </div>
+
+        <div class="changelog-release">
+          <div class="release-header">
+            <span class="release-version">v3.0.37 🌧️</span>
+            <span class="release-date">10 Nov 2026</span>
           </div>
           <ul class="changelog-list">
             <li><span class="tag tag-feature">Radar &amp; Lluvia</span> <strong>Termómetro de Lluvia y Ranking Regional por Concejos</strong>:
@@ -4909,7 +4923,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.0.35').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.0.38').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4939,7 +4953,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.37.2"></script>
+  <script type="module" src="js/app.js?v=3.0.38"></script>
 
 
 

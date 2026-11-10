@@ -9,6 +9,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38] - 2026-11-10
+### Added
+- **🚴 Balance Táctico de Ida vs Vuelta y Clásica de Villaviciosa en Ciclismo (`cyclingAdvisor.js` + `cyclingCard.js` + `cyclingData.js` - Leyes 0, 1, 3, 4, 11 y 14):**
+  - **Nueva Ruta Oficial: Gijón ➔ Villaviciosa (52 km):** Incorporada la "Clásica de La Sidra: Gijón ➔ Villaviciosa (Ida y Vuelta)", una de las rutas ciclistas de carretera más transitadas de la costa asturiana (+680 m D+), con paso por el Infanzón, Alto del Gobernador, ría de Villaviciosa, valle de Peón y Alto del Curbiellu.
+  - **Balance Táctico: Condiciones de Ida vs Vuelta:** Nuevo componente comparativo en 2 columnas que desglosa de manera independiente el tramo de ida (hasta el punto de giro) y el de vuelta (regreso a casa). Muestra horario estimado de paso, kilometraje, desnivel positivo acumulado, temperatura media y reparto del viento (a favor, en contra o cruzado con porcentajes y micro-barras dinámicas), permitiendo al ciclista anticipar si el viento de cola a la salida se convertirá en un castigo de cara al volver fatigado.
+  - **Desglose Estructurado de Tramos:** Los tramos horarios ahora se agrupan con divisores limpios para `[ 🚴 Tramos de Ida ]` y `[ 🔄 Tramos de Vuelta (Regreso) ]`, y cada tramo cuenta con una pastilla distintiva de fase (`IDA` en azul, `VUELTA` en dorado).
+
 ## [3.0.37.2] - 2026-11-10
 ### Fixed
 - **🔄 Forzado de Anti-Caché en Módulos de Radar (`app.js` + `sw.js` - Ley 4):**

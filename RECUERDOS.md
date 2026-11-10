@@ -2,6 +2,34 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🚴 Balance Táctico de Ida vs Vuelta y Clásica de Villaviciosa en Ciclismo (`v3.0.38`) — 2026-11-10
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.37.2` (`6e51fc2`).
+- **Petición e Instrucción Expresa de Lendo (Feedback WhatsApp del Jefe/Mando Kike):**
+  - *Contexto:* El mando Kike trasladó dos necesidades clave para los ciclistas en rutas de carretera:
+    1. Faltaba una de las rutas de fondo más transitadas de la costa asturiana: la clásica Gijón ➔ Villaviciosa (Ida y Vuelta).
+    2. En rutas circulares, la app mostraba un balance global y una lista plana de tramos, pero no permitía al ciclista saber con qué viento y condiciones se encontraría específicamente a la **IDA** (con fuerzas) frente a la **VUELTA** (de regreso a casa con fatiga).
+- **Desarrollo y Calibración Técnica:**
+  1. *Nueva Ruta en Catálogo (`cyclingData.js`):*
+     - Incorporada `gijon-villaviciosa-clasica`: "Clásica de La Sidra: Gijón ➔ Villaviciosa (Ida y Vuelta)" (52 km, circular, +680 m D+).
+     - Desglose en 4 tramos específicos con marcaje de fase (`phase: 'ida'` y `phase: 'vuelta'`):
+       - Tramo 1 (Ida): Gijón ➔ Alto del Infanzón (8 km, +160 m D+).
+       - Tramo 2 (Ida): Infanzón ➔ Alto del Gobernador ➔ Villaviciosa (18 km, +150 m D+).
+       - Tramo 3 (Vuelta): Villaviciosa ➔ Valle de Peón ➔ Inicio subida Curbiellu (16 km, +120 m D+).
+       - Tramo 4 (Vuelta): Subida Alto del Curbiellu ➔ Bajada a Gijón (10 km, +250 m D+).
+  2. *Motor de Simulación Bifásico (`cyclingAdvisor.js`):*
+     - Actualizado `simulateRouteConditions` para calcular acumulados independientes para `ida` y `vuelta` (km, desnivel acumulado, horas estimadas de paso, temperaturas medias y velocidades del viento).
+     - Generación de objetos `idaBalance` y `vueltaBalance` con porcentajes de viento a favor, en contra y cruzado, y evaluación cualitativa (`windLabel`, `windColor`).
+  3. *Interfaz Visual de Balance Táctico y Agrupación de Tramos (`cyclingCard.js`):*
+     - Añadida tarjeta comparativa de 2 columnas `[ 🚴 IDA ]` y `[ 🔄 VUELTA ]` bajo la barra global de viento, con micro-barras de viento relativo, horas de paso y temperatura media.
+     - Separación visual de los tramos paso a paso con divisores claros: `[ 🚴 TRAMOS DE IDA ]` y `[ 🔄 TRAMOS DE VUELTA (REGRESO) ]`, indicando en cada tramo una pastilla distintiva de fase (`IDA` en azul, `VUELTA` en amarillo).
+  4. *Blindaje de Caché y Versión:*
+     - Versión incrementada a `v3.0.38`.
+     - Caché de Service Worker: `meteoasturlode-v3038-cycling-tactical-v1`.
+     - Importaciones actualizadas con `?v=3.0.38`.
+  5. *Ámbito Estrictamente Local (Leyes 1, 3 y 9):*
+     - Ejecutado y validado en local. Servidor levantado en `http://localhost:8080`.
+     - Prohibición absoluta de commit o push a GitHub hasta la inspección y orden explícita de Lendo.
+
 ## 🔄 Forzado de Anti-Caché en Módulos de Radar (`v3.0.37.2`) — 2026-11-10
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.37.1` (`e9359ed`).
 - **Diagnóstico y Corrección de Caché de Módulos ES:**
@@ -3619,28 +3647,7 @@ ICONO | ESTADO EN METEOASTUR LODE              | NUBES (cc)  | RAD. DIRECTA (irr
   2. *Intervención Técnica Integral:*
      - **Homologación Arquitectónica al Patrón Inmune de 24 Horas (`.hourly-card`):**
        - En `css/components.css`, `.ski-day-card` se fija con **`min-width: 105px; flex: 0 0 auto; box-sizing: border-box;`**. Se erradica por completo `min-width: 0;`, haciendo físicamente imposible que la tarjeta colapse o encoja por debajo de 105px bajo ninguna circunstancia.
-       - En `.ski-7days-carousel`, se añade `width: 100%; box-sizing: border-box; touch-action: pan-x pan-y; align-items: stretch;` y se suprimen media queries y scrollbars conflictivas, garantizando un flujo limpio y armónico idéntico al de la tira horaria.
-     - **Despertador Síncrono Post-Animación y Cambio de Estación en `js/app.js`:**
-       - En `switchTab`, se ejecuta una invalidación de layout (`void c.offsetWidth;`) tanto a los 50 ms como a los 400 ms (justo tras limpiarse las clases de animación del panel `slide-from-right` / `slide-from-left`), asegurando que el compositor despierte y pinte el 100% de los elementos sin esperar a ningún toque.
-       - En el selector de estaciones (`.resort-select-pill`), al activar la nueva ficha se fuerza `void c.offsetWidth;` en su carrusel.
-       - En `updateViews()`, se refuerza la invalidación con doble disparo a 50 ms y 400 ms.
-     - **Actualización Estricta del Service Worker:**
-       - En `index.html`, la llamada de registro del Service Worker se actualizó de la versión congelada `sw.js?v=2.2.38` a **`sw.js?v=2.2.60`**, asegurando que los tablets Android no reutilicen cachés pasadas.
-  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
-     - Versión oficial elevada a **`v2.2.60 🎿`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.60'` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
-     - Service Worker actualizado a `meteoasturlode-v2260-tablet-ski-min-width-blindado` en `sw.js`.
-     - Query strings sincronizadas a `?v=2.2.60` en `index.html` (`main.css`, `components.css`, `app.js`).
-
-## 🎿 Actualización v2.2.59: Fin de la Hibernación de Capa y Pintado Instantáneo en Tablets — 2026-10-17
-- **Erradicación del Falso Carrusel en Pantallas Anchas (Feedback Lendo - «al abrir o actualizar no sale nada de la prevision de los 7 dias. eso si, dandole con el dedo una o dos veces, aparece todo» y «pisale»):**
-  1. *Diagnóstico Científico y Físico Definitivo:*
-     - Las 7 tarjetas del pronóstico de esquí miden en total ~850 px de ancho.
-     - En teléfonos móviles (ancho de viewport ~380 px), las tarjetas no caben, por lo que el carrusel horizontal (`overflow-x: auto`) tiene un desbordamiento real (`scrollWidth > clientWidth`). Chromium reconoce el scroll activo y renderiza inmediatamente.
-     - En Windows (escritorio), la GPU de PC no implementa optimizaciones de hibernación de capas táctiles.
-     - En la **tablet en horizontal** (pantalla de más de 1.000 px de ancho): los 7 días **caben enteros de golpe** (`scrollWidth <= clientWidth`). Al tener la propiedad `overflow-x: auto` sin existir desplazamiento real, el motor Blink de Android clasificaba el contenedor como un área de scroll táctil inactiva (*kNotScrolling*), posponiendo el dibujado de sus elementos hijos hasta que un evento físico de interacción (`touchstart`) forzaba el commit del compositor.
-  2. *Intervención Técnica en CSS y JS:*
-     - **Modo Adaptativo en `css/components.css` y `css/main.css`:** En pantallas anchas (`@media (min-width: 860px)`), se desactiva el falso scroll (`overflow-x: visible; justify-content: space-between; touch-action: auto;`) y se distribuyen las 7 tarjetas de forma proporcional (`flex: 1 1 0; max-width: 155px;`). Al no existir capa de scroll inactiva, la tablet dibuja la previsión completa en el primer milisegundo síncronamente junto con el resto del panel.
-     - **Preservación en Smartphones:** En móviles (< 860px), se mantiene intacto el carrusel táctil suave (`overflow-x: auto`) con tarjeta fija de 115px para deslizar con el
+       - En `.ski-
      - Lendo detectó que en la app la racha actual sí marcaba `16 km/h` y la racha máxima `31 km/h`, y que otras plataformas como Maldonado (*eltiempo.es*) publicaban `15 km/h` como cifra de cabecera.
      - *Causa raíz:* La API y el modelo registraban los datos con exactitud milimétrica (`current.wind_speed_10m = 6.8` como media sostenida a 10 metros, y `current.wind_gusts_10m = 16.0` como racha instantánea). Sin embargo, la jerarquía visual otorgaba todo el tamaño tipográfico (`2.2rem`) a la media matemática continua, relegando la racha (que es lo que el ser humano y el entorno sienten físicamente) a un texto secundario pequeño.
   2. *Intervención Técnica en `currentCard.js` y `components.css`:*
