@@ -16,10 +16,14 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
      - Si detecta eco de tormenta (morado/rojo > 45-55 dBZ) o chubascos severos con inestabilidad convectiva (`CAPE >= 40 J/kg`), la observación física del radar anula el código teórico del modelo y eleva el tiempo actual a `Tormenta / Tormenta llétrica ⛈️` (código WMO 95) con lluvia torrencial.
      - Si detecta eco naranja/amarillo, eleva a chubascos fuertes o lluvia moderada.
      - Añadida insignia visual `📡 RADAR` en la tarjeta de condiciones actuales cuando el tiempo está gobernado por el sensor del radar en vivo.
-  3. *Doctrina de Escampada Inmediata (Feedback de Lendo de la víspera):*
+  3. *Calibración Fina de Píxel Central y Degradación a Lluvia Débil / Orbayu (Feedback Lendo «ya estamos en azul y apenas llueve»):*
+     - *Corrección de Radio:* Sustituido el escaneo amplio de 7 km por prioridad estricta del píxel central (+/- 1.2 km sobre el tejado del usuario). Jamás se infla a lluvia fuerte por un píxel distante si sobre el usuario ya está en azul o seco.
+     - *Mapeo Explícito del Color Azul:* El eco azul (10-25 dBZ) degrada inmediatamente cualquier condición severa anterior a `Lluvia débil / Orbayu 🌧️` (código WMO 61, 0.6 mm, 1 gota).
+     - *Retorno Limpio:* Al despejarse el radar (transparente), el radar se desactiva y el control retorna al 100% al modelo base (cielo seco / nublado).
+  4. *Doctrina de Escampada Inmediata (Feedback de Lendo de la víspera):*
      - Introducida la regla `isEscampadaActive`: cuando AROME registra fin de precipitación (`rawPrecip < 0.1` y código seco `<= 3`) y ECMWF solo mantiene valores residuales o inercia horaria (`ePrecip < 0.3`), se anula el rescate de lluvia, se resetea la precipitación a 0.0 mm y el cielo transiciona de inmediato a `Nublado / Cubiertu ☁️` (código 3 sin gotas).
-  4. *Control de Versión y Cache-Busting (Leyes 3, 4 y 13):*
-     - Elevada versión a `v3.0.35 ⛈️` en `CURRENT_APP_VERSION` (`js/app.js`), `#app-version-badge`, `#nav-update-badge`, modal `#changelog-modal` y Service Worker `meteoasturlode-v3035-tactical-radar-nowcast` en `sw.js`.
+  5. *Control de Versión y Cache-Busting (Leyes 3, 4 y 13):*
+     - Elevada versión a `v3.0.35 ⛈️` en `CURRENT_APP_VERSION` (`js/app.js`), `#app-version-badge`, `#nav-update-badge`, modal `#changelog-modal` y Service Worker `meteoasturlode-v3035-radar-fine-tuned` en `sw.js`.
      - Mantenida la clave de auto-prompt `CURRENT_CHANGELOG_PROMPT_VERSION = '3.0.28'`.
 
 ## 📡 Radar Meteorológico Táctico y Panel de Control Profesional (`v3.0.34 - Despliegue Oficial`) — 2026-11-09

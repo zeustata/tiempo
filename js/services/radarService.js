@@ -89,21 +89,47 @@ export async function fetchLiveRadarEcho(lat, lon) {
     const ctx = canvas.getContext('2d', { willReadFrequently: true });
     ctx.drawImage(img, 0, 0);
 
-    // Muestreo del píxel central y caja 5x5 adyacente para capturar el pico convectivo
-    let peakEcho = { level: 'dry', precipEst: 0, isRain: false, isStorm: false };
-    for (let dy = -6; dy <= 6; dy += 2) {
-      for (let dx = -6; dx <= 6; dx += 2) {
+    // 1. Muestreo de máxima prioridad: Centro exacto (radio estrecho +/- 2 píxeles, ~1.2 km sobre el usuario)
+    const centerP = ctx.getImageData(128, 128, 1, 1).data;
+    const centerEcho = classifyRadarColor(centerP[0], centerP[1], centerP[2], centerP[3]);
+
+    let localEcho = { ...centerEcho, r: centerP[0], g: centerP[1], b: centerP[2], a: centerP[3], dx: 0, dy: 0 };
+    for (let dy = -2; dy <= 2; dy += 2) {
+      for (let dx = -2; dx <= 2; dx += 2) {
+        if (dx === 0 && dy === 0) continue;
         const p = ctx.getImageData(128 + dx, 128 + dy, 1, 1).data;
         const c = classifyRadarColor(p[0], p[1], p[2], p[3]);
-        if (c.precipEst > peakEcho.precipEst) {
-          peakEcho = { ...c, r: p[0], g: p[1], b: p[2], a: p[3], dx, dy };
+        if (c.precipEst > localEcho.precipEst) {
+          localEcho = { ...c, r: p[0], g: p[1], b: p[2], a: p[3], dx, dy };
         }
       }
     }
 
+    // 2. Muestreo periférico secundario (+/- 4 píxeles, ~3 km):
+    // SOLO interviene para alertar si se aproxima una tormenta severa (morado/rojo) a menos de 3 km.
+    // Jamás arrastra lluvia moderada o fuerte si en tu posición exacta ya ha escampado o está en azul/seco.
+    let approachingStorm = null;
+    for (let dy = -4; dy <= 4; dy += 2) {
+      for (let dx = -4; dx <= 4; dx += 2) {
+        if (Math.abs(dx) <= 2 && Math.abs(dy) <= 2) continue;
+        const p = ctx.getImageData(128 + dx, 128 + dy, 1, 1).data;
+        const c = classifyRadarColor(p[0], p[1], p[2], p[3]);
+        if (c.isStorm) {
+          approachingStorm = { ...c, r: p[0], g: p[1], b: p[2], a: p[3], dx, dy };
+          break;
+        }
+      }
+      if (approachingStorm) break;
+    }
+
+    // Soberanía local: manda lo que cae sobre tu cabeza, salvo tormenta severa inmediata a menos de 3 km
+    const effectiveEcho = (localEcho.isRain)
+      ? localEcho
+      : (approachingStorm ? approachingStorm : localEcho);
+
     return {
-      hasEcho: peakEcho.isRain,
-      echo: peakEcho,
+      hasEcho: effectiveEcho.isRain,
+      echo: effectiveEcho,
       timestamp: latest.time
     };
   } catch (err) {
