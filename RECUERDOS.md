@@ -2,6 +2,19 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 💫 Feedback Visual de Recarga Táctil y Giro de Icono (`MeteoAstur_v3.0.35_TEST8.apk` / `bundle10`) — 2026-11-10
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `f849ff3`.
+- **Petición y Perfeccionamiento Ergonómico de Lendo («el boton de recarga entiendo que no se puede hacer que las flechas giren para dar la sensacion que actualiza no? [...] a ver yo decia que guire el icono durante un segundo pero si no se puede pues lo que decias de conmutar y poner actualizar como decias»):**
+  1. *Ingeniería en Android RemoteViews:*
+     - Aunque Android capa las animaciones continuas en widgets de escritorio por protección estricta de batería (prohibición de `ObjectAnimator` a 60 fps en el lanzador), se diseñó un sistema de conmutación reactivo de 0 ms con `partiallyUpdateAppWidget`.
+  2. *Doble Respuesta Visual Inmediata:*
+     - **Giro Dorado:** Diseñado el recurso vectorial `ic_widget_sync_active.xml` rotado a 90° con pivote central (12, 12) y color oro viejo (`#FACC15`, tono del logotipo MeteoAstur Lode).
+     - **Conmutación de Texto:** En el instante del toque táctil, la fecha conmuta inmediatamente a `🔄 Actualizando...` mediante `showUpdatingFeedback(context)`.
+     - **Restablecimiento Automático:** Al completarse la descarga de datos (~400-500 ms), `bindWidgetViews` restablece el icono a su estado normal celeste (`#BAE6FD` a 0°) y la fecha oficial con los datos frescos.
+  3. *Compilación y Entrega Dual:*
+     - Generada `MeteoAstur_v3.0.35_TEST8.apk` (7,35 MB) y enviada directamente a `@lendo_IA_Bot` vía Telegram.
+     - Actualizado y firmado el paquete oficial de producción: `C:\Users\NUC\Downloads\MeteoAstur_Lode_v3.0.35_bundle10.aab` (6,30 MB).
+
 ## 🔄 Sincronización Total App-Widget y Recarga Global (`MeteoAstur_v3.0.35_TEST7.apk` / `bundle10`) — 2026-11-10
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `47172c4`.
 - **Diagnóstico Crítico y Propuesta Estratégica de Lendo («dime que a efectos no cambiaste nada [...] la coordinacion entre los widget y la app no funciona. esta nublado y pone un sol radiante. le doy a recargas y sigue igual. entro en la app y al salir sigue igual el widget [...] pero va a chocar con los demas ajustes. ahora mismo pone sol y nubes la app [...] cuando entro en la app que sea como darle al boton de recargar para que se sincronicen [...] pisale, crea la apk y mandamelo por nuestro grupo telegram»):**
