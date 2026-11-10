@@ -2,6 +2,22 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🔄 Sincronización Total App-Widget y Recarga Global (`MeteoAstur_v3.0.35_TEST7.apk` / `bundle10`) — 2026-11-10
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `47172c4`.
+- **Diagnóstico Crítico y Propuesta Estratégica de Lendo («dime que a efectos no cambiaste nada [...] la coordinacion entre los widget y la app no funciona. esta nublado y pone un sol radiante. le doy a recargas y sigue igual. entro en la app y al salir sigue igual el widget [...] pero va a chocar con los demas ajustes. ahora mismo pone sol y nubes la app [...] cuando entro en la app que sea como darle al boton de recargar para que se sincronicen [...] pisale, crea la apk y mandamelo por nuestro grupo telegram»):**
+  1. *Causa Raíz del Desajuste:*
+     - En `MeteoWeatherEngine.java` y `LauncherActivity.java`, el botón de recarga (🔄) y el evento de cierre estaban fijados rígidamente a `MeteoWidgetProvider.class` (widget 4x2 antiguo).
+     - Al tener Lendo el widget 4x4 o 4x3 en su pantalla, pulsar la recarga o entrar/salir de la app solo enviaba la orden al 4x2, dejando el widget 4x4 congelado con datos viejos de primera hora de la mañana (de ahí el "Despejado ☀️" que no cambiaba).
+     - Prudencia acordada con Lendo: Cero modificaciones a los algoritmos meteorológicos consolidados de la web app para no perturbar el Resol, Orbayu o Escampada.
+  2. *Solución y Arquitectura de Recarga Global Unificada:*
+     - Creada en `MeteoWeatherEngine.java` la definición unificada `ALL_WIDGETS` que agrupa a los 6 proveedores (4x2, 4x3, 4x4 en versiones Oscura y Cristalina).
+     - Creado `MeteoWeatherEngine.refreshAllActiveWidgets(context)`: un único fetch HTTP actualiza simultáneamente todos los widgets activos presentes en el escritorio del usuario.
+     - En `LauncherActivity.java`: integrado el refresco tanto al entrar (`onResume()`) como al salir (`onStop()`), asegurando que al volver al escritorio el widget siempre esté recién actualizado al milisegundo.
+     - En `MeteoWeatherEngine.applyAsturiasWeatherRules`: si el manto nuboso es severo (`cloudCover >= 80%` en seco), el widget adopta fielmente `Nublado ☁️` sin mostrar jamás sol ficticio.
+  3. *Compilación y Entrega:*
+     - Compilada `MeteoAstur_v3.0.35_TEST7.apk` y enviada directamente a `@lendo_IA_Bot` vía Telegram.
+     - Regenerado y firmado el bundle oficial `C:\Users\NUC\Downloads\MeteoAstur_Lode_v3.0.35_bundle10.aab` (6,30 MB) con la nueva clave de subida oficial.
+
 ## 📦 Generación del Bundle Oficial de Producción Google Play (`MeteoAstur_Lode_v3.0.35_bundle10.aab`) — 2026-11-10
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `888f867`.
 - **Ejecución y Empaquetado Nativo AAB (Feedback y Petición Expresa de Lendo - «todo bien. genera el aab»):**
