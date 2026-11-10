@@ -9,6 +9,11 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.37.2] - 2026-11-10
+### Fixed
+- **🔄 Forzado de Anti-Caché en Módulos de Radar (`app.js` + `sw.js` - Ley 4):**
+  - Actualizadas las cadenas de importación de `radarRankingCard.js` y `radarRainService.js` en `app.js` a `?v=3.0.37.2`, junto con el Service Worker `v30372-radar-bust-v1`, forzando a los navegadores móviles y a la PWA a descartar el módulo previo en memoria y aplicar de inmediato el diseño en 2 niveles sin colisiones.
+
 ## [3.0.37.1] - 2026-11-10
 ### Fixed
 - **📱 Blindaje Anti-Colisión y Ergonomía Móvil en Ranking de Lluvia (`radarRankingCard.js` + `radarRainService.js` - Ley 11):**

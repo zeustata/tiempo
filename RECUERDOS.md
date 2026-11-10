@@ -2,6 +2,12 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🔄 Forzado de Anti-Caché en Módulos de Radar (`v3.0.37.2`) — 2026-11-10
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.37.1` (`e9359ed`).
+- **Diagnóstico y Corrección de Caché de Módulos ES:**
+  - Al inspeccionar las capturas de Lendo donde las pastillas seguían redibujando el diseño montado, se detectó que los `import` en `app.js` conservaban la query string `?v=3.0.37`. El motor de módulos del navegador reutilizaba en memoria el script viejo sin descargar el parche de dos niveles.
+  - Se incrementaron a `?v=3.0.37.2` las cadenas de importación de `radarRankingCard.js` y `radarRainService.js`, junto con `js/app.js?v=3.0.37.2` y el Service Worker `v30372-radar-bust-v1`.
+
 ## 📱 Blindaje Anti-Colisión y Ergonomía Móvil en Ranking de Lluvia (`v3.0.37.1`) — 2026-11-10
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.37` (`028e2d4`).
 - **Diagnóstico y Captura de Lendo («te mande en el buzon nuestro una captura. se sobreponen los caracteres [...] subelo»):**
@@ -3634,17 +3640,7 @@ ICONO | ESTADO EN METEOASTUR LODE              | NUBES (cc)  | RAD. DIRECTA (irr
      - En la **tablet en horizontal** (pantalla de más de 1.000 px de ancho): los 7 días **caben enteros de golpe** (`scrollWidth <= clientWidth`). Al tener la propiedad `overflow-x: auto` sin existir desplazamiento real, el motor Blink de Android clasificaba el contenedor como un área de scroll táctil inactiva (*kNotScrolling*), posponiendo el dibujado de sus elementos hijos hasta que un evento físico de interacción (`touchstart`) forzaba el commit del compositor.
   2. *Intervención Técnica en CSS y JS:*
      - **Modo Adaptativo en `css/components.css` y `css/main.css`:** En pantallas anchas (`@media (min-width: 860px)`), se desactiva el falso scroll (`overflow-x: visible; justify-content: space-between; touch-action: auto;`) y se distribuyen las 7 tarjetas de forma proporcional (`flex: 1 1 0; max-width: 155px;`). Al no existir capa de scroll inactiva, la tablet dibuja la previsión completa en el primer milisegundo síncronamente junto con el resto del panel.
-     - **Preservación en Smartphones:** En móviles (< 860px), se mantiene intacto el carrusel táctil suave (`overflow-x: auto`) con tarjeta fija de 115px para deslizar con el pulgar.
-     - **Refuerzo en `js/app.js`:** Añadido un refresco síncrono mediante `requestAnimationFrame` en `switchTab('mountain')` y `updateViews()` para invalidar cualquier estado durmiente del compositor.
-  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
-     - Versión oficial elevada a **`v2.2.59 🎿`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.59'` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
-     - Service Worker actualizado a `meteoasturlode-v2259-tablet-ski-instant-render` en `sw.js`.
-     - Query strings sincronizadas a `?v=2.2.59` en `index.html` (`main.css`, `components.css`, `app.js`).
-
-## 🎿 Actualización v2.2.58: Restauración de Visibilidad Total y Renderizado 2D Nativo en Tablets — 2026-10-17
-- **Erradicación del Layer Culling y Retorno de Textos y Métricas en Nieve (Feedback Lendo - «ahora desde la tablet peor. salen los iconos pero no la informacion de los 7 dias en el menu de cortillera. en windows y movil, bien pero en la tablet ya ves» y «dale»):**
-  1. *Diagnóstico Científico del Efecto Secundario de la v2.2.56:*
-     - Al forzar aceleración por hardware con `transform: translateZ(0)` e `isolation: isolate` en los iconos (`.ski-day-icon`, `.daypart-icon` y `.astur-svg-icon`), la GPU de Chromium en Android promovió los gráficos vectoriales a su propia textura independiente, p
+     - **Preservación en Smartphones:** En móviles (< 860px), se mantiene intacto el carrusel táctil suave (`overflow-x: auto`) con tarjeta fija de 115px para deslizar con el
      - Lendo detectó que en la app la racha actual sí marcaba `16 km/h` y la racha máxima `31 km/h`, y que otras plataformas como Maldonado (*eltiempo.es*) publicaban `15 km/h` como cifra de cabecera.
      - *Causa raíz:* La API y el modelo registraban los datos con exactitud milimétrica (`current.wind_speed_10m = 6.8` como media sostenida a 10 metros, y `current.wind_gusts_10m = 16.0` como racha instantánea). Sin embargo, la jerarquía visual otorgaba todo el tamaño tipográfico (`2.2rem`) a la media matemática continua, relegando la racha (que es lo que el ser humano y el entorno sienten físicamente) a un texto secundario pequeño.
   2. *Intervención Técnica en `currentCard.js` y `components.css`:*

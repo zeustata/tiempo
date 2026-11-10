@@ -35,8 +35,8 @@ import { evaluateWeatherAlerts } from './utils/weatherAlerts.js?v=3.0.5';
 import { openShareModal } from './utils/shareCardGenerator.js?v=3.0.23.59';
 import { toggleWeatherSpeech, stopWeatherSpeech } from './utils/weatherSpeaker.js?v=2.0.0';
 import { getClimatologyContext, renderClimatologyModalBody } from './utils/climatologyData.js?v=3.0.25.22';
-import { fetchConcejosRainBatch } from './utils/radarRainService.js?v=3.0.37';
-import { renderRadarRankingCard, renderRadarRankingModalHtml } from './components/radarRankingCard.js?v=3.0.37';
+import { fetchConcejosRainBatch } from './utils/radarRainService.js?v=3.0.37.2';
+import { renderRadarRankingCard, renderRadarRankingModalHtml } from './components/radarRankingCard.js?v=3.0.37.2';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, previsión horaria y curvas interactivas', key: '1' },
