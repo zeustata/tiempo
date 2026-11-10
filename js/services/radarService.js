@@ -23,29 +23,34 @@ export async function fetchRainViewerRadar() {
  * Retorna nivel de intensidad, código WMO, estimación de precipitación y si es tormenta
  */
 export function classifyRadarColor(r, g, b, a) {
-  if (a < 50) return { level: 'dry', label: 'Sin precipitación', isRain: false, isStorm: false, precipEst: 0 };
+  if (a < 80) return { level: 'dry', label: 'Sin precipitación', isRain: false, isStorm: false, precipEst: 0 };
 
   // Magenta / Morado intenso (Tormenta convectiva severa / Granizo / Lluvia torrencial > 50 dBZ)
-  if (r >= 200 && b >= 170) {
-    return { level: 'extreme_storm', label: 'Tormenta torrencial / Eléctrica', isRain: true, isStorm: true, wmoCode: 95, precipEst: 25.0 };
+  if (r >= 190 && b >= 160 && g <= 180) {
+    return { level: 'extreme_storm', label: 'Tormenta torrencial / Eléctrica', isRain: true, isStorm: true, wmoCode: 95, precipEst: 20.0 };
   }
   // Rojo intenso / Carmesí (Tormenta / Lluvia torrencial 45-55 dBZ)
-  if (r >= 130 && g <= 70 && b <= 70) {
+  if (r >= 130 && g <= 60 && b <= 60) {
     return { level: 'storm', label: 'Tormenta / Lluvia torrencial', isRain: true, isStorm: true, wmoCode: 95, precipEst: 15.0 };
   }
   // Naranja (Chubascos fuertes / Lluvia convectiva 35-45 dBZ)
-  if (r >= 210 && g >= 90 && g <= 200 && b <= 60) {
-    return { level: 'heavy_rain', label: 'Chubascos fuertes', isRain: true, isStorm: false, wmoCode: 81, precipEst: 8.0 };
+  if (r >= 210 && g >= 90 && g <= 190 && b <= 60) {
+    return { level: 'heavy_rain', label: 'Chubascos fuertes', isRain: true, isStorm: false, wmoCode: 81, precipEst: 6.0 };
   }
   // Amarillo (Lluvia moderada 25-35 dBZ)
   if (r >= 200 && g >= 190 && b <= 70) {
-    return { level: 'moderate_rain', label: 'Lluvia moderada', isRain: true, isStorm: false, wmoCode: 63, precipEst: 4.0 };
+    return { level: 'moderate_rain', label: 'Lluvia moderada', isRain: true, isStorm: false, wmoCode: 63, precipEst: 2.5 };
   }
-  // Azul / Cian / Verde (Lluvia débil / Orbayu 10-25 dBZ)
-  if (b >= 70 || g >= 90) {
-    return { level: 'light_rain', label: 'Lluvia / Orbayu', isRain: true, isStorm: false, wmoCode: 61, precipEst: 1.2 };
+  // Verde (Lluvia débil 15-25 dBZ)
+  if (g >= 140 && r <= 120 && b <= 120) {
+    return { level: 'light_rain', label: 'Lluvia débil', isRain: true, isStorm: false, wmoCode: 61, precipEst: 0.4 };
   }
-  return { level: 'rain', label: 'Precipitación activa', isRain: true, isStorm: false, wmoCode: 61, precipEst: 1.5 };
+  // Azul / Cian puro (Lluvia débil / Orbayu 10-20 dBZ)
+  if ((b >= 160 && r <= 100) || (r <= 70 && g >= 150 && b >= 200)) {
+    return { level: 'light_rain', label: 'Lluvia débil / Orbayu', isRain: true, isStorm: false, wmoCode: 61, precipEst: 0.2 };
+  }
+  // Si no encaja estrictamente en ningún color de precipitación del radar Doppler: ES SECO
+  return { level: 'dry', label: 'Sin precipitación', isRain: false, isStorm: false, precipEst: 0 };
 }
 
 /**
@@ -89,47 +94,37 @@ export async function fetchLiveRadarEcho(lat, lon) {
     const ctx = canvas.getContext('2d', { willReadFrequently: true });
     ctx.drawImage(img, 0, 0);
 
-    // 1. Muestreo de máxima prioridad: Centro exacto (radio estrecho +/- 2 píxeles, ~1.2 km sobre el usuario)
+    // Soberanía estricta del Píxel Central (la coordenada exacta del usuario):
     const centerP = ctx.getImageData(128, 128, 1, 1).data;
     const centerEcho = classifyRadarColor(centerP[0], centerP[1], centerP[2], centerP[3]);
 
-    let localEcho = { ...centerEcho, r: centerP[0], g: centerP[1], b: centerP[2], a: centerP[3], dx: 0, dy: 0 };
-    for (let dy = -2; dy <= 2; dy += 2) {
-      for (let dx = -2; dx <= 2; dx += 2) {
+    // Si sobre la cabeza del usuario no hay lluvia activa (está en seco o fuera del eco):
+    // El radar NO fuerza lluvia. Retorna hasEcho: false y deja que el cielo quede en su estado real.
+    if (!centerEcho.isRain) {
+      return {
+        hasEcho: false,
+        echo: centerEcho,
+        timestamp: latest.time
+      };
+    }
+
+    // Si sobre el usuario SÍ hay lluvia activa:
+    // Muestreo muy estrecho (+/- 1 píxel, ~500 metros) únicamente para afinar intensidad local
+    let localEcho = { ...centerEcho, dx: 0, dy: 0 };
+    for (let dy = -1; dy <= 1; dy++) {
+      for (let dx = -1; dx <= 1; dx++) {
         if (dx === 0 && dy === 0) continue;
         const p = ctx.getImageData(128 + dx, 128 + dy, 1, 1).data;
         const c = classifyRadarColor(p[0], p[1], p[2], p[3]);
-        if (c.precipEst > localEcho.precipEst) {
-          localEcho = { ...c, r: p[0], g: p[1], b: p[2], a: p[3], dx, dy };
+        if (c.isRain && c.precipEst > localEcho.precipEst) {
+          localEcho = { ...c, dx, dy };
         }
       }
     }
-
-    // 2. Muestreo periférico secundario (+/- 4 píxeles, ~3 km):
-    // SOLO interviene para alertar si se aproxima una tormenta severa (morado/rojo) a menos de 3 km.
-    // Jamás arrastra lluvia moderada o fuerte si en tu posición exacta ya ha escampado o está en azul/seco.
-    let approachingStorm = null;
-    for (let dy = -4; dy <= 4; dy += 2) {
-      for (let dx = -4; dx <= 4; dx += 2) {
-        if (Math.abs(dx) <= 2 && Math.abs(dy) <= 2) continue;
-        const p = ctx.getImageData(128 + dx, 128 + dy, 1, 1).data;
-        const c = classifyRadarColor(p[0], p[1], p[2], p[3]);
-        if (c.isStorm) {
-          approachingStorm = { ...c, r: p[0], g: p[1], b: p[2], a: p[3], dx, dy };
-          break;
-        }
-      }
-      if (approachingStorm) break;
-    }
-
-    // Soberanía local: manda lo que cae sobre tu cabeza, salvo tormenta severa inmediata a menos de 3 km
-    const effectiveEcho = (localEcho.isRain)
-      ? localEcho
-      : (approachingStorm ? approachingStorm : localEcho);
 
     return {
-      hasEcho: effectiveEcho.isRain,
-      echo: effectiveEcho,
+      hasEcho: localEcho.isRain,
+      echo: localEcho,
       timestamp: latest.time
     };
   } catch (err) {

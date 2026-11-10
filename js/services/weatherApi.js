@@ -464,23 +464,30 @@ function applyCantabricoConsensus(weather, consensus, radarEcho = null) {
         weather.current.radar_rescue_label = echo.label;
       } else if (echo.level === 'moderate_rain' && (weather.current.weather_code <= 3 || weather.current.precipitation < 1.0)) {
         weather.current.weather_code = echo.wmoCode || 63;
-        weather.current.precipitation = Math.max(weather.current.precipitation || 0, echo.precipEst || 4.0);
+        weather.current.precipitation = Math.max(weather.current.precipitation || 0, echo.precipEst || 2.5);
         if (weather.current.rain != null) weather.current.rain = weather.current.precipitation;
         weather.current.cloud_cover = Math.max(weather.current.cloud_cover || 0, 85);
         weather.current.is_radar_rescued = true;
         weather.current.radar_rescue_level = echo.level;
         weather.current.radar_rescue_label = echo.label;
       } else if (echo.level === 'light_rain') {
-        // COLOR AZUL: Lluvia débil / Orbayu activo
-        // Degrada inmediatamente tormentas o chubascos viejos a lluvia débil real (0.6 mm, 1 gota):
-        weather.current.weather_code = 61; // Lluvia débil
-        weather.current.precipitation = Math.min(weather.current.precipitation || 0.6, 1.2);
-        if (weather.current.precipitation < 0.3) weather.current.precipitation = 0.6;
-        if (weather.current.rain != null) weather.current.rain = weather.current.precipitation;
-        weather.current.cloud_cover = Math.max(weather.current.cloud_cover || 0, 80);
-        weather.current.is_radar_rescued = true;
-        weather.current.radar_rescue_level = echo.level;
-        weather.current.radar_rescue_label = 'Lluvia débil / Orbayu';
+        // COLOR AZUL DÉBIL (< 20 dBZ):
+        // Si los modelos ya constatan escampada seca (rawPrecip < 0.1 mm y ePrecip < 0.2 mm),
+        // el azul residual es cola de nube o virga: NO se fuerza lluvia, se respeta el Nublado seco (0.0 mm).
+        if (rawPrecip < 0.1 && ePrecip < 0.2) {
+          weather.current.precipitation = 0;
+          if (weather.current.rain != null) weather.current.rain = 0;
+          weather.current.weather_code = 3; // Nublado / Cubiertu seco
+          weather.current.is_radar_rescued = false;
+        } else {
+          weather.current.weather_code = 61; // Lluvia débil
+          weather.current.precipitation = 0.2; // 0.2 mm estricto (1 gota) para que jamás salte a Lluvia moderada
+          if (weather.current.rain != null) weather.current.rain = 0.2;
+          weather.current.cloud_cover = Math.max(weather.current.cloud_cover || 0, 80);
+          weather.current.is_radar_rescued = true;
+          weather.current.radar_rescue_level = echo.level;
+          weather.current.radar_rescue_label = 'Lluvia débil / Orbayu';
+        }
       }
     }
   }
@@ -670,21 +677,28 @@ function applyStandalonePhysicalSovereignty(weather, radarEcho = null) {
       weather.current.radar_rescue_label = echo.label;
     } else if (echo.level === 'moderate_rain' && (weather.current.weather_code <= 3 || weather.current.precipitation < 1.0)) {
       weather.current.weather_code = echo.wmoCode || 63;
-      weather.current.precipitation = Math.max(weather.current.precipitation || 0, echo.precipEst || 4.0);
+      weather.current.precipitation = Math.max(weather.current.precipitation || 0, echo.precipEst || 2.5);
       if (weather.current.rain != null) weather.current.rain = weather.current.precipitation;
       weather.current.cloud_cover = Math.max(weather.current.cloud_cover || 0, 85);
       weather.current.is_radar_rescued = true;
       weather.current.radar_rescue_level = echo.level;
       weather.current.radar_rescue_label = echo.label;
     } else if (echo.level === 'light_rain') {
-      weather.current.weather_code = 61; // Lluvia débil
-      weather.current.precipitation = Math.min(weather.current.precipitation || 0.6, 1.2);
-      if (weather.current.precipitation < 0.3) weather.current.precipitation = 0.6;
-      if (weather.current.rain != null) weather.current.rain = weather.current.precipitation;
-      weather.current.cloud_cover = Math.max(weather.current.cloud_cover || 0, 80);
-      weather.current.is_radar_rescued = true;
-      weather.current.radar_rescue_level = echo.level;
-      weather.current.radar_rescue_label = 'Lluvia débil / Orbayu';
+      const rawP = weather.current.precipitation != null ? parseFloat(weather.current.precipitation) : 0;
+      if (rawP < 0.1) {
+        weather.current.precipitation = 0;
+        if (weather.current.rain != null) weather.current.rain = 0;
+        weather.current.weather_code = 3;
+        weather.current.is_radar_rescued = false;
+      } else {
+        weather.current.weather_code = 61; // Lluvia débil
+        weather.current.precipitation = 0.2; // 0.2 mm estricto (1 gota)
+        if (weather.current.rain != null) weather.current.rain = 0.2;
+        weather.current.cloud_cover = Math.max(weather.current.cloud_cover || 0, 80);
+        weather.current.is_radar_rescued = true;
+        weather.current.radar_rescue_level = echo.level;
+        weather.current.radar_rescue_label = 'Lluvia débil / Orbayu';
+      }
     }
   }
 
