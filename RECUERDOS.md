@@ -2,6 +2,20 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🛡️ Bóveda de Respaldo Criptográfico Externo (`G:\Anigravity`) y Cumplimiento Ley 22 — 2026-11-10
+- **Petición e Instrucción Expresa de Lendo («en la unidad G hay una carpeta que se llama antigravity puedes poner ahi? [...] si y que lo pongas en tus recuerdos y haz copia no un corta y pega»):**
+  1. *Estructura Creada y Custodiada en Unidad Externa (`G:\Anigravity`):*
+     - Creada la carpeta `G:\Anigravity\Boveda_Seguridad_Keystore\` conteniendo copias exactas y verificadas de:
+       - `meteoastur-release-key.jks` (llave maestra de firma, 2.822 bytes, alias `meteoastur-upload-key`).
+       - `upload_certificate.pem` (certificado público registrado en Google Play Console).
+       - `LEEME_INSTRUCCIONES_CLAVES.txt` (documento técnico con alias, contraseñas, huellas SHA-1/SHA-256 y directrices de seguridad).
+     - Creada la carpeta `G:\Anigravity\Entregables_Google_Play\` conteniendo copias de:
+       - `MeteoAstur_Lode_v3.0.35_bundle10.aab` (6.304.030 bytes, paquete oficial para Google Play).
+       - `MeteoAstur_v3.0.35_TEST9.apk` (7.708.773 bytes, paquete APK funcional).
+  2. *Integridad y Blindaje:*
+     - Operación ejecutada mediante duplicado estricto (`Copy-Item`), preservando intactos los archivos originales del proyecto en `C:\Users\NUC\Downloads\IA\MeteoAstur_Android_Widget\keystore\` y `C:\Users\NUC\Downloads\`.
+     - Garantizado que cualquier limpieza futura o vaciado de la carpeta `Descargas` en `C:` no comprometa jamás la capacidad de actualización ni la firma de la app en Google Play Store.
+
 ## 📜 Reforma Constitucional: Ley 22 de Custodia Criptográfica y Registro de Clave de Subida Google Play — 2026-11-10
 - **Verificación de Identidad por PIN Maestro (Ley 8):** Validado mediante huella SHA-256 el PIN maestro de seguridad de 4 cifras aportado por Lendo en conversación.
 - **Contexto Técnico y Diagnóstico Honesto:**
