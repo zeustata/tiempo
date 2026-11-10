@@ -2,6 +2,19 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📜 Reforma Constitucional: Ley 22 de Custodia Criptográfica y Registro de Clave de Subida Google Play — 2026-11-10
+- **Verificación de Identidad por PIN Maestro (Ley 8):** Validado mediante huella SHA-256 el PIN maestro de seguridad de 4 cifras aportado por Lendo en conversación.
+- **Contexto Técnico y Diagnóstico Honesto:**
+  - Tras la limpieza lógica de carpetas temporales de descargas donde se encontraba la clave provisional antigua de PWABuilder (`signing.keystore`), se produjo un intento de subida con la nueva clave oficial generada en Android Studio (`meteoastur-release-key.jks`, alias `meteoastur-upload-key`).
+  - Google Play Console activó el protocolo de seguridad de discrepancia de clave de subida.
+  - Lendo tramitó a través de *Protegida con Play* -> *Firma de aplicaciones* -> *Clave de subida* -> *Solicitar cambio* la vinculación del certificado oficial `upload_certificate.pem` (huella SHA1: `42:FE:77:7F:17:72:61:44:00:75:D6:6C:49:4F:58:DE:A3:C2:FE:3D`).
+  - Google Play confirmó por correo oficial la recepción y el periodo de seguridad: la nueva clave de subida entrará en vigor de forma automática el **12 de noviembre a las 14:28 (hora peninsular)**, momento a partir del cual se subirá directamente `MeteoAstur_Lode_v3.0.35_bundle10.aab`.
+- **Incorporación Universal de la Ley 22:**
+  - Redactada e inyectada la **Ley 22: Doctrina de Custodia Criptográfica, Blindaje de Activos Críticos y Prohibición de Generación Unilateral de Keystores**.
+  - Prohíbe terminantemente generar claves de producción de forma unilateral o silenciosa sin advertir a Lendo del periodo de seguridad de 48 horas de Play App Signing.
+  - Obliga a que ningún archivo de firma o credencial viva suelto en `Descargas`, debiendo alojarse dentro de la bóveda protegida del proyecto (`/keystore`) y respaldarse externamente.
+  - Sincronizada y desplegada la Constitución actualizada en todos los repositorios del ecosistema (`Tiempo`, `ConstitucionIA`, `Portal_Policia_Gijon`, `Porras`, `Biweger`).
+
 ## 🌦️ Paridad 1:1 App-Widget: Corrección de Escampada y Nube Seca sin Gotas (`MeteoAstur_v3.0.35_TEST9.apk` / `bundle10`) — 2026-11-10
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo.
 - **Diagnóstico y Petición de Lendo («le doy a actualizar y me pone el icono que ves en la captura de los widget. pero si entras ves que es una nube como te mande tambien sin lluvia. salgo y el icono del widget sigue siendo una nube con una gota [...] mira el buzon nuestro que te mande las dos capturas [...] no puede simplemente copiar el icono y los datos que pone la app al actualizar o entras en la app? [...] vale pisale»):**
