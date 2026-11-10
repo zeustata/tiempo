@@ -93,6 +93,10 @@ export function getRainBadge(rainMm, pop) {
  */
 export function formatConcejoShortName(name) {
   if (!name) return '';
-  return name.split('(')[0].trim();
+  let clean = name.split('(')[0].trim();
+  if (clean.includes('/')) {
+    clean = clean.split('/')[0].trim();
+  }
+  return clean;
 }
 

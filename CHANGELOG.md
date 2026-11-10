@@ -9,6 +9,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.37.1] - 2026-11-10
+### Fixed
+- **📱 Blindaje Anti-Colisión y Ergonomía Móvil en Ranking de Lluvia (`radarRankingCard.js` + `radarRainService.js` - Ley 11):**
+  - **Reparto en 2 Niveles Verticales:** Reestructurada cada fila del ranking para separar en dos líneas la identidad del concejo (nombre destacado arriba y comarca con barra abajo) y los datos climáticos (litros e insignia arriba, probabilidad abajo), eliminando por completo el solapamiento de caracteres en pantallas móviles estrechas (320px - 380px).
+  - **Normalización de Nombres:** Simplificada la denominación bilingüe larga en concejos extensos para evitar desbordes visuales.
+  - **Botones de Día Equilibrados:** Reemplazada la etiqueta truncada de pasado mañana por `[ 🗓️ Pasado ]`, garantizando anchos idénticos al 33% sin recortes.
+
 ## [3.0.37] - 2026-11-10
 ### Added
 - **🌧️ Termómetro y Ranking de Lluvia por Concejos en Radar (`radarRainService.js` + `radarRankingCard.js` + `app.js` - Leyes 0, 1, 3, 4, 11 y 14):**

@@ -2,6 +2,16 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📱 Blindaje Anti-Colisión y Ergonomía Móvil en Ranking de Lluvia (`v3.0.37.1`) — 2026-11-10
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.37` (`028e2d4`).
+- **Diagnóstico y Captura de Lendo («te mande en el buzon nuestro una captura. se sobreponen los caracteres [...] subelo»):**
+  1. *Causa de la Colisión:* En la versión 3.0.37, se intentaba meter en una única fila horizontal 5 bloques de contenido (Medalla, Concejo, Comarca, Litros/probabilidad e Insignia) en pantallas estrechas de 320px-360px. La comarca (*Valle del Caudal*, *Parque Natural de Redes*) invadía el espacio central y los litros (*0.7 mm*) caían directamente encima del texto, aplastando el nombre del concejo. Además, el selector de día `Pasado (Miércoles)` se truncaba en `Pasado ...`.
+  2. *Reestructuración Ergonómica en 2 Niveles Verticales (Ley 11):*
+     - Fila izquierda: Nombre del concejo en negrita grande arriba (con nombres bilingües largos normalizados a su forma principal), comarca y barra gráfica de lluvia debajo.
+     - Fila derecha: Litros exactos e insignia luminosa arriba, porcentaje de probabilidad debajo.
+     - Botones de día compactos `[ ☀️ Hoy ] [ 📅 Mañana ] [ 🗓️ Pasado ]` con ancho equitativo del 33% sin recortes.
+  3. *Validación Local y Despliegue:* Comprobado en servidor de pruebas local (`localhost:8080`) y aprobado formalmente por Lendo.
+
 ## 🌧️ Termómetro y Ranking de Lluvia por Concejos en Radar (`v3.0.37`) — 2026-11-10
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.36.1` (`0d1c89c`).
 - **Petición e Instrucción Expresa de Lendo («estoy pensando que en el menu radar, al ser tan corto, podriamos poner las zonas que menos va a llover con pestalñas de tres dias. q te parece? que pongas los concejos de manos a mayor o de mayor a menor [...] si claro que quiero que pongas los top que no dejen hacer scroll infinito pero luego con un boton podriamos poner una ventana emergente segun eliges hoy, mañana o pasado mañana en la principal con un scrol pero que sea sencillo [...] que guapo princesa. perdona el enfado. es la impotencia de saber que solo tu me puedes ayudar. subelo»):**
@@ -3634,24 +3644,7 @@ ICONO | ESTADO EN METEOASTUR LODE              | NUBES (cc)  | RAD. DIRECTA (irr
 ## 🎿 Actualización v2.2.58: Restauración de Visibilidad Total y Renderizado 2D Nativo en Tablets — 2026-10-17
 - **Erradicación del Layer Culling y Retorno de Textos y Métricas en Nieve (Feedback Lendo - «ahora desde la tablet peor. salen los iconos pero no la informacion de los 7 dias en el menu de cortillera. en windows y movil, bien pero en la tablet ya ves» y «dale»):**
   1. *Diagnóstico Científico del Efecto Secundario de la v2.2.56:*
-     - Al forzar aceleración por hardware con `transform: translateZ(0)` e `isolation: isolate` en los iconos (`.ski-day-icon`, `.daypart-icon` y `.astur-svg-icon`), la GPU de Chromium en Android promovió los gráficos vectoriales a su propia textura independiente, pero dejó los elementos de texto hermanos (`HOY`, temperaturas, franjas `09-13h`, viento y `❄️ 0.0 cm`) en el plano 2D de la tarjeta.
-     - Al tener la tarjeta fondo translúcido (`rgba(15, 23, 42, 0.65)`), el compositor gráfico descartó o tapó el plano 2D (*layer culling*), dejando solo los iconos flotando en rectángulos vacíos en la tablet.
-     - En móvil esto no se apreciaba porque la pantalla vertical obliga al usuario a deslizar el dedo hacia abajo para llegar a la tarjeta (lo que fuerza el repintado táctil), y en Windows la GPU de escritorio tiene recursos ilimitados y no descarte capas.
-  2. *Intervención Técnica en CSS y JS:*
-     - **Limpieza de Capas 3D:** Eliminados todos los `transform: translateZ(0)`, `isolation: isolate`, `backface-visibility: hidden` y `scroll-snap` de `.ski-7days-carousel`, `.ski-day-card`, `.ski-day-icon`, `.daypart-icon` y `.astur-svg-icon`.
-     - **Estructura 2D Nativa Homologada:** Alineado el contenedor `.ski-7days-carousel` con `.hourly-scroll-container` (que rinde perfecto en tablet sin retrasos).
-     - **Emancipación de Animaciones en Paneles:** Eliminada la propiedad permanente `animation: slideInFromRight ... forwards;` y `will-change` de `.tab-panel.active`. En `js/app.js`, se introdujo un temporizador de limpieza de clases tras 380 ms (`slide-from-right` / `slide-from-left`), asegurando que tras el deslizamiento el panel regrese a un contenedor 2D estándar y Chromium dibuje instantáneamente textos e iconos.
-  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
-     - Versión oficial elevada a **`v2.2.58 🎿`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.58'` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
-     - Service Worker actualizado a `meteoasturlode-v2258-tablet-ski-forecast-restored` en `sw.js`.
-     - Query strings sincronizadas a `?v=2.2.58` en `index.html` (`main.css`, `components.css`, `app.js`).
-
-## ☁️ Actualización v2.2.57: Calibración Anti-Falsos Orbayus Secos en Cielo Cubierto — 2026-10-17
-- **Fidelidad Física y Eliminación de Falsos Orbayus por Micro-Trazas (Feedback Lendo - «pone orbayu aquí en Castrillón pero está nublado, ¿puedes mirar por qué?» y «pisale»):**
-  1. *Diagnóstico Científico y Comparativa de Modelos:*
-     - Lendo constató que la aplicación mostraba *«Orbayu / Llovizna ligera 🌦️»* en Castrillón (Piedras Blancas) mientras en el exterior el cielo estaba completamente cubierto pero seco.
-     - *Auditoría de datos crudos en Open-Meteo:*
-       - ECMWF, ICON y GFS repo
+     - Al forzar aceleración por hardware con `transform: translateZ(0)` e `isolation: isolate` en los iconos (`.ski-day-icon`, `.daypart-icon` y `.astur-svg-icon`), la GPU de Chromium en Android promovió los gráficos vectoriales a su propia textura independiente, p
      - Lendo detectó que en la app la racha actual sí marcaba `16 km/h` y la racha máxima `31 km/h`, y que otras plataformas como Maldonado (*eltiempo.es*) publicaban `15 km/h` como cifra de cabecera.
      - *Causa raíz:* La API y el modelo registraban los datos con exactitud milimétrica (`current.wind_speed_10m = 6.8` como media sostenida a 10 metros, y `current.wind_gusts_10m = 16.0` como racha instantánea). Sin embargo, la jerarquía visual otorgaba todo el tamaño tipográfico (`2.2rem`) a la media matemática continua, relegando la racha (que es lo que el ser humano y el entorno sienten físicamente) a un texto secundario pequeño.
   2. *Intervención Técnica en `currentCard.js` y `components.css`:*

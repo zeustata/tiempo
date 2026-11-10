@@ -6,21 +6,13 @@
 
 import { formatConcejoShortName } from '../utils/radarRainService.js';
 
-const WEEKDAYS_ES = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-
 /**
  * Obtiene la etiqueta del día según el índice (0 = Hoy, 1 = Mañana, 2 = Pasado)
  */
-function getDayInfo(dayIndex, sampleDateStr) {
+function getDayInfo(dayIndex) {
   if (dayIndex === 0) return { label: 'Hoy', fullLabel: 'Hoy', icon: '☀️' };
   if (dayIndex === 1) return { label: 'Mañana', fullLabel: 'Mañana', icon: '📅' };
-  
-  if (sampleDateStr) {
-    const d = new Date(sampleDateStr + 'T12:00:00');
-    const dayName = WEEKDAYS_ES[d.getDay()] || 'Pasado';
-    return { label: `Pasado (${dayName})`, fullLabel: `Pasado mañana (${dayName})`, icon: '🗓️' };
-  }
-  return { label: 'Pasado mañana', fullLabel: 'Pasado mañana', icon: '🗓️' };
+  return { label: 'Pasado', fullLabel: 'Pasado mañana', icon: '🗓️' };
 }
 
 /**
@@ -39,10 +31,8 @@ export function getSortedConcejos(rainMap, dayIndex = 0, order = 'dry') {
 
   list.sort((a, b) => {
     if (order === 'dry') {
-      // De menor a mayor lluvia; desempate por menor probabilidad
       return (a.day.rainMm - b.day.rainMm) || (a.day.pop - b.day.pop) || a.concejo.name.localeCompare(b.concejo.name);
     } else {
-      // De mayor a menor lluvia; desempate por mayor probabilidad
       return (b.day.rainMm - a.day.rainMm) || (b.day.pop - a.day.pop) || a.concejo.name.localeCompare(b.concejo.name);
     }
   });
@@ -55,10 +45,9 @@ export function getSortedConcejos(rainMap, dayIndex = 0, order = 'dry') {
  */
 export function renderRadarRankingCard(rainMap, selectedDayIndex = 0, selectedOrder = 'dry', activeConcejoId = null) {
   const sortedList = getSortedConcejos(rainMap, selectedDayIndex, selectedOrder);
-  const sampleDateStr = sortedList[0]?.day?.date;
-  const day0Info = getDayInfo(0, sampleDateStr);
-  const day1Info = getDayInfo(1, sampleDateStr);
-  const day2Info = getDayInfo(2, sampleDateStr);
+  const day0Info = getDayInfo(0);
+  const day1Info = getDayInfo(1);
+  const day2Info = getDayInfo(2);
 
   const top5 = sortedList.slice(0, 5);
   const maxRainInTop = Math.max(...top5.map(item => item.day.rainMm), 1.0);
@@ -73,49 +62,47 @@ export function renderRadarRankingCard(rainMap, selectedDayIndex = 0, selectedOr
       -webkit-backdrop-filter: blur(var(--glass-blur, 24px)) saturate(190%);
       margin-top: 14px;
       margin-bottom: 14px;
-      padding: 16px 14px;
+      padding: 14px 12px;
       box-sizing: border-box;
       max-width: 100%;
+      overflow: hidden;
     ">
-      <!-- Cabecera -->
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 8px;">
-        <div style="min-width: 0;">
-          <h3 style="margin: 0; font-size: 0.98rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 6px;">
-            <span>🌧️</span> <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Previsión de Lluvia por Concejos</span>
-          </h3>
-          <span style="font-size: 0.72rem; color: var(--text-dim); display: block; margin-top: 1px;">
-            Comparativa regional en directo en toda Asturias
-          </span>
-        </div>
-        <span style="font-size: 0.72rem; font-weight: 800; padding: 3px 8px; border-radius: 999px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); white-space: nowrap;">
-          82 Concejos
+      <!-- Cabecera limpia (Ley 11: sin sobrecarga que aplaste el título) -->
+      <div style="margin-bottom: 12px;">
+        <h3 style="margin: 0; font-size: 0.96rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 6px;">
+          <span>🌧️</span> <span>Previsión de Lluvia por Concejos</span>
+        </h3>
+        <span style="font-size: 0.72rem; color: var(--text-dim); display: block; margin-top: 2px;">
+          Ranking comparativo de los 82 concejos de Asturias
         </span>
       </div>
 
-      <!-- Selector de 3 Días (Leyes 11 y 18) -->
+      <!-- Selector de 3 Días (Leyes 11 y 18: etiquetas breves para no truncar) -->
       <div style="display: flex; gap: 6px; margin-bottom: 8px; box-sizing: border-box;">
         <button type="button" class="btn-radar-rain-day ${selectedDayIndex === 0 ? 'active' : ''}" data-day="0" style="
-          flex: 1; min-height: 38px; border-radius: 10px; font-size: 0.76rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
+          flex: 1; min-height: 38px; border-radius: 10px; font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
           background: ${selectedDayIndex === 0 ? 'var(--primary)' : 'rgba(255,255,255,0.06)'};
           color: ${selectedDayIndex === 0 ? '#fff' : 'var(--text-main)'};
           border: 1px solid ${selectedDayIndex === 0 ? 'transparent' : 'rgba(255,255,255,0.1)'};
+          display: flex; align-items: center; justify-content: center; gap: 4px;
         ">
           ${day0Info.icon} ${day0Info.label}
         </button>
         <button type="button" class="btn-radar-rain-day ${selectedDayIndex === 1 ? 'active' : ''}" data-day="1" style="
-          flex: 1; min-height: 38px; border-radius: 10px; font-size: 0.76rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
+          flex: 1; min-height: 38px; border-radius: 10px; font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
           background: ${selectedDayIndex === 1 ? 'var(--primary)' : 'rgba(255,255,255,0.06)'};
           color: ${selectedDayIndex === 1 ? '#fff' : 'var(--text-main)'};
           border: 1px solid ${selectedDayIndex === 1 ? 'transparent' : 'rgba(255,255,255,0.1)'};
+          display: flex; align-items: center; justify-content: center; gap: 4px;
         ">
           ${day1Info.icon} ${day1Info.label}
         </button>
         <button type="button" class="btn-radar-rain-day ${selectedDayIndex === 2 ? 'active' : ''}" data-day="2" style="
-          flex: 1.1; min-height: 38px; border-radius: 10px; font-size: 0.74rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
+          flex: 1; min-height: 38px; border-radius: 10px; font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
           background: ${selectedDayIndex === 2 ? 'var(--primary)' : 'rgba(255,255,255,0.06)'};
           color: ${selectedDayIndex === 2 ? '#fff' : 'var(--text-main)'};
           border: 1px solid ${selectedDayIndex === 2 ? 'transparent' : 'rgba(255,255,255,0.1)'};
-          white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 4px;
+          display: flex; align-items: center; justify-content: center; gap: 4px;
         ">
           ${day2Info.icon} ${day2Info.label}
         </button>
@@ -143,7 +130,7 @@ export function renderRadarRankingCard(rainMap, selectedDayIndex = 0, selectedOr
         </button>
       </div>
 
-      <!-- Podio Top 5 Compacto -->
+      <!-- Podio Top 5 con Blindaje Anti-Desborde en 2 Niveles (Ley 11) -->
       <div class="radar-rain-top-list" style="display: flex; flex-direction: column; gap: 7px; margin-bottom: 12px;">
         ${top5.map((item, idx) => {
           const rankBadge = idx === 0 ? '🥇' : (idx === 1 ? '🥈' : (idx === 2 ? '🥉' : `#${idx + 1}`));
@@ -164,36 +151,39 @@ export function renderRadarRankingCard(rainMap, selectedDayIndex = 0, selectedOr
               cursor: pointer;
               transition: transform 0.15s, background 0.15s;
               box-sizing: border-box;
+              min-width: 0;
             ">
-              <div style="display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1;">
-                <span style="font-size: 0.85rem; font-weight: 800; min-width: 22px; text-align: center;">${rankBadge}</span>
-                <div style="min-width: 0; flex: 1;">
-                  <div style="display: flex; align-items: center; gap: 6px;">
-                    <strong style="font-size: 0.84rem; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                      ${shortName}
-                    </strong>
-                    <span style="font-size: 0.68rem; color: var(--text-dim); white-space: nowrap;">
-                      ${item.concejo.region || ''}
-                    </span>
-                  </div>
+              <!-- Columna Izquierda (Identidad): Nombre arriba y Comarca+Barra abajo -->
+              <div style="min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 3px;">
+                <div style="display: flex; align-items: center; gap: 6px; min-width: 0;">
+                  <span style="font-size: 0.95rem; line-height: 1; flex-shrink: 0; min-width: 20px; text-align: center;">${rankBadge}</span>
+                  <strong style="font-size: 0.86rem; font-weight: 800; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;">
+                    ${shortName}
+                  </strong>
+                </div>
+                <div style="display: flex; align-items: center; gap: 6px; min-width: 0; padding-left: 2px;">
+                  <span style="font-size: 0.68rem; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px;">
+                    ${item.concejo.region || ''}
+                  </span>
                   <!-- Barra de intensidad de lluvia -->
-                  <div style="margin-top: 4px; height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden;">
+                  <div style="flex: 1; max-width: 60px; height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden;">
                     <div style="width: ${percentWidth}%; height: 100%; background: ${item.day.badge.color}; border-radius: 2px;"></div>
                   </div>
                 </div>
               </div>
 
-              <div style="display: flex; align-items: center; gap: 6px; text-align: right; flex-shrink: 0;">
-                <div style="line-height: 1.15;">
-                  <span style="font-size: 0.84rem; font-weight: 800; color: ${item.day.badge.color}; display: block;">
+              <!-- Columna Derecha (Datos): Litros+Insignia arriba y Probabilidad abajo -->
+              <div style="display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 2px; flex-shrink: 0;">
+                <div style="display: flex; align-items: center; gap: 5px;">
+                  <strong style="font-size: 0.88rem; font-weight: 800; color: ${item.day.badge.color}; white-space: nowrap;">
                     ${item.day.rainMm} mm
-                  </span>
-                  <span style="font-size: 0.66rem; color: var(--text-dim);">
-                    ${item.day.pop}% prob.
+                  </strong>
+                  <span style="font-size: 0.66rem; font-weight: 700; padding: 2px 6px; border-radius: 6px; background: ${item.day.badge.bg}; color: ${item.day.badge.color}; border: 1px solid ${item.day.badge.color}40; white-space: nowrap;">
+                    ${item.day.badge.label}
                   </span>
                 </div>
-                <span style="font-size: 0.68rem; font-weight: 700; padding: 3px 6px; border-radius: 6px; background: ${item.day.badge.bg}; color: ${item.day.badge.color}; border: 1px solid ${item.day.badge.color}40; white-space: nowrap;">
-                  ${item.day.badge.label}
+                <span style="font-size: 0.66rem; color: var(--text-dim); font-weight: 600;">
+                  ${item.day.pop}% prob.
                 </span>
               </div>
             </div>
@@ -230,8 +220,7 @@ export function renderRadarRankingCard(rainMap, selectedDayIndex = 0, selectedOr
  */
 export function renderRadarRankingModalHtml(rainMap, selectedDayIndex = 0, selectedOrder = 'dry', activeConcejoId = null) {
   const sortedList = getSortedConcejos(rainMap, selectedDayIndex, selectedOrder);
-  const sampleDateStr = sortedList[0]?.day?.date;
-  const dayInfo = getDayInfo(selectedDayIndex, sampleDateStr);
+  const dayInfo = getDayInfo(selectedDayIndex);
   const orderTitle = selectedOrder === 'dry' ? 'Menor probabilidad de lluvia' : 'Mayor probabilidad de lluvia';
 
   return `
@@ -289,7 +278,7 @@ export function renderRadarRankingModalHtml(rainMap, selectedDayIndex = 0, selec
           ">
         </div>
 
-        <!-- Lista scrollable con los 82 concejos -->
+        <!-- Lista scrollable con los 82 concejos en 2 niveles anti-desborde -->
         <div id="radar-rain-modal-list" style="
           padding: 6px 16px 20px 16px;
           overflow-y: auto;
@@ -317,32 +306,35 @@ export function renderRadarRankingModalHtml(rainMap, selectedDayIndex = 0, selec
                 cursor: pointer;
                 transition: background 0.15s;
                 box-sizing: border-box;
+                min-width: 0;
               ">
-                <div style="display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1;">
-                  <span style="font-size: 0.78rem; font-weight: 800; min-width: 24px; color: var(--text-dim); text-align: center;">
-                    #${idx + 1}
-                  </span>
-                  <div style="min-width: 0; flex: 1;">
-                    <strong style="font-size: 0.82rem; color: var(--text-main); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                <!-- Columna Izquierda -->
+                <div style="min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 2px;">
+                  <div style="display: flex; align-items: center; gap: 6px; min-width: 0;">
+                    <span style="font-size: 0.76rem; font-weight: 800; min-width: 24px; color: var(--text-dim); text-align: center;">
+                      #${idx + 1}
+                    </span>
+                    <strong style="font-size: 0.84rem; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;">
                       ${shortName}
                     </strong>
-                    <span style="font-size: 0.68rem; color: var(--text-dim);">
-                      ${item.concejo.region || ''}
-                    </span>
                   </div>
+                  <span style="font-size: 0.68rem; color: var(--text-dim); padding-left: 30px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                    ${item.concejo.region || ''}
+                  </span>
                 </div>
 
-                <div style="display: flex; align-items: center; gap: 6px; text-align: right; flex-shrink: 0;">
-                  <div style="line-height: 1.15;">
-                    <span style="font-size: 0.82rem; font-weight: 800; color: ${item.day.badge.color}; display: block;">
+                <!-- Columna Derecha -->
+                <div style="display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 2px; flex-shrink: 0;">
+                  <div style="display: flex; align-items: center; gap: 5px;">
+                    <strong style="font-size: 0.84rem; font-weight: 800; color: ${item.day.badge.color}; white-space: nowrap;">
                       ${item.day.rainMm} mm
-                    </span>
-                    <span style="font-size: 0.66rem; color: var(--text-dim);">
-                      ${item.day.pop}% prob.
+                    </strong>
+                    <span style="font-size: 0.66rem; font-weight: 700; padding: 2px 6px; border-radius: 6px; background: ${item.day.badge.bg}; color: ${item.day.badge.color}; border: 1px solid ${item.day.badge.color}40; white-space: nowrap;">
+                      ${item.day.badge.label}
                     </span>
                   </div>
-                  <span style="font-size: 0.66rem; font-weight: 700; padding: 3px 6px; border-radius: 6px; background: ${item.day.badge.bg}; color: ${item.day.badge.color}; border: 1px solid ${item.day.badge.color}40; white-space: nowrap;">
-                    ${item.day.badge.label}
+                  <span style="font-size: 0.66rem; color: var(--text-dim); font-weight: 600;">
+                    ${item.day.pop}% prob.
                   </span>
                 </div>
               </div>
@@ -353,4 +345,3 @@ export function renderRadarRankingModalHtml(rainMap, selectedDayIndex = 0, selec
     </div>
   `;
 }
-
