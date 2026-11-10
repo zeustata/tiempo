@@ -1053,7 +1053,10 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
           </div>
         </div>
         <div class="temp-info-block">
-          <div class="condition-name" title="${weatherInfo.isSolarCalibrated ? (weatherInfo.isResol ? '☀️ Calibración Solar Inteligente: Resol / Sol tamizado activo atravesando las nubes con radiación solar directa en superficie' : '☀️ Calibración Solar Inteligente: Sensores físicos en tierra confirman sol y claros') : ''}">${formatConditionTitle(weatherInfo.label)}</div>
+          <div class="condition-name" title="${current.is_radar_rescued ? ('📡 Radar en Vivo: ' + (current.radar_rescue_label || 'Precipitación detectada en tiempo real por reflectividad Doppler')) : (weatherInfo.isSolarCalibrated ? (weatherInfo.isResol ? '☀️ Calibración Solar Inteligente: Resol / Sol tamizado activo atravesando las nubes con radiación solar directa en superficie' : '☀️ Calibración Solar Inteligente: Sensores físicos en tierra confirman sol y claros') : '')}">
+            ${formatConditionTitle(weatherInfo.label)}
+            ${current.is_radar_rescued ? '<span style="display: inline-flex; align-items: center; gap: 3px; font-size: 0.64rem; font-weight: 700; color: #00ecff; background: rgba(0, 236, 255, 0.15); border: 1px solid rgba(0, 236, 255, 0.35); padding: 1px 6px; border-radius: 999px; margin-left: 5px; vertical-align: middle; letter-spacing: 0.03em;">📡 RADAR</span>' : ''}
+          </div>
           <div class="temp-feels">Sensación térmica: <strong>${Math.round(current.apparent_temperature)}°C</strong></div>
           <div class="hero-actions-toolbar">
             <button class="btn-hero-camera btn-open-share-card" id="btn-hero-share" title="Generar estampa visual de este concejo para WhatsApp o Instagram" aria-label="Compartir estampa">📸</button>

@@ -9,6 +9,18 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.35] - 2026-11-10
+### Added
+- **⛈️ Radar Táctico Soberano en Vivo & Nowcasting Convectivo (`radarService.js` + `weatherApi.js` + `currentCard.js` - Leyes 0, 1, 3, 11 y 27):**
+  - **Soberanía del Radar Físico frente a Modelos Ciegos:** Solucionado el punto ciego de los modelos numéricos de predicción (AROME a 1.3 km y ECMWF a 9 km) que no detectan a tiempo las células de tormenta o núcleos convectivos generados súbitamente en la madrugada.
+  - **Muestreo Instantáneo de Reflectividad Doppler:** El sistema analiza en paralelo la tesela en tiempo real de RainViewer en las coordenadas exactas de la estación/GPS en apenas 400 ms. Si detecta eco de tormenta (morado/rojo > 45-55 dBZ) o chubascos severos con inestabilidad (CAPE >= 40 J/kg), anula el código estático de los modelos y eleva de inmediato la tarjeta principal a `Tormenta / Tormenta llétrica ⛈️` (código WMO 95) con lluvia torrencial.
+  - **Insignia Visual Táctica `📡 RADAR`:** Incorporada pastilla aerodinámica en cian neón junto a la condición meteorológica cuando el estado ha sido rescatado por la reflectividad en vivo del radar, aportando certidumbre total al usuario.
+
+### Fixed
+- **☁️ Detección Inmediata de Escampada y Fin de Chubasco (`weatherApi.js` - Leyes 0, 1, 3 y 27):**
+  - **Doctrina de Escampada Asturiana:** Resuelto el desfase donde el Centro Europeo (ECMWF, bloque horario de 17:00 a 18:00) mantenía inercia de lluvia moderada (código 53 con 3 gotas) cuando el chubasco físico ya había cesado en la calle.
+  - **Soberanía de Malla Hiperlocal AROME (1.3 km):** Cuando AROME constata que la precipitación se ha detenido (0.0 mm en intervalo actual) y el código base es cubierto seco (<= 3), se anula cualquier rescate horario residual de ECMWF y la app transiciona de inmediato a `Nublado / Cubiertu ☁️` (0.0 mm, seco y sin gotas), garantizando que la pantalla refleje la escampada al instante.
+
 ## [3.0.34] - 2026-11-09
 ### Added
 - **📡 Radar Meteorológico Táctico y Panel de Control Profesional (`mapRadar.js` + `index.html` + `components.css` + `app.js` - Leyes 0, 1, 3, 11 y 14):**

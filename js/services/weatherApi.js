@@ -1,3 +1,5 @@
+import { fetchLiveRadarEcho } from './radarService.js?v=3.0.35';
+
 /**
  * Catálogo Oficial de Modelos Meteorológicos de Alta Resolución
  */
@@ -116,7 +118,7 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
   try {
     // 1. Meteorología Completa de Alta Resolución (con soporte para modelo específico)
     const modelQuery = modelParam ? `&models=${encodeURIComponent(modelParam)}` : '';
-    const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,weather_code,cloud_cover,pressure_msl,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m,direct_normal_irradiance,uv_index,shortwave_radiation&hourly=temperature_2m,relative_humidity_2m,dew_point_2m,apparent_temperature,precipitation_probability,precipitation,rain,snowfall,snow_depth,weather_code,pressure_msl,surface_pressure,cloud_cover,visibility,wind_speed_10m,wind_direction_10m,wind_gusts_10m,uv_index,is_day,freezing_level_height,direct_normal_irradiance,shortwave_radiation&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,uv_index_max,precipitation_sum,rain_sum,showers_sum,snowfall_sum,precipitation_hours,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max,wind_direction_10m_dominant&timezone=Europe%2FMadrid&forecast_days=10${modelQuery}`;
+    const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,weather_code,cloud_cover,pressure_msl,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m,direct_normal_irradiance,uv_index,shortwave_radiation&hourly=temperature_2m,relative_humidity_2m,dew_point_2m,apparent_temperature,precipitation_probability,precipitation,rain,snowfall,snow_depth,weather_code,pressure_msl,surface_pressure,cloud_cover,visibility,wind_speed_10m,wind_direction_10m,wind_gusts_10m,uv_index,is_day,freezing_level_height,direct_normal_irradiance,shortwave_radiation,cape&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,uv_index_max,precipitation_sum,rain_sum,showers_sum,snowfall_sum,precipitation_hours,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max,wind_direction_10m_dominant&timezone=Europe%2FMadrid&forecast_days=10${modelQuery}`;
 
     const weatherPromise = fetch(weatherUrl).then(r => {
       if (!r.ok) throw new Error('Error al consultar datos meteorológicos');
@@ -172,13 +174,24 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
         return fetch('data/partes-nieve.json').then(r => r.ok ? r.json() : null).catch(() => null);
       });
 
-    const [weather, aqi, marine, consensus, aemetAlerts, snowReport] = await Promise.all([weatherPromise, aqiPromise, marinePromise, consensusPromise, aemetAlertsPromise, snowReportPromise]);
+    // 7. Radar Táctico en Vivo (Nowcasting Real de RainViewer - Doctrina Tormenta Lendo)
+    const radarEchoPromise = fetchLiveRadarEcho(lat, lon).catch(() => null);
+
+    const [weather, aqi, marine, consensus, aemetAlerts, snowReport, radarEcho] = await Promise.all([
+      weatherPromise,
+      aqiPromise,
+      marinePromise,
+      consensusPromise,
+      aemetAlertsPromise,
+      snowReportPromise,
+      radarEchoPromise
+    ]);
 
     if (weather) {
       if (consensus) {
-        applyCantabricoConsensus(weather, consensus);
+        applyCantabricoConsensus(weather, consensus, radarEcho);
       } else {
-        applyStandalonePhysicalSovereignty(weather);
+        applyStandalonePhysicalSovereignty(weather, radarEcho);
       }
       harmonizeWeatherPrecipitation(weather);
     }
@@ -220,7 +233,7 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
  *    - Si se trata de lluvia frontal mayor (>= 0.5 mm), basta certeza del ensamble (PoP >= 60%) y nubes >= 60%.
  *    - En días secos de panza de burro (humedad < 85% o PoP < 40%), se mantiene el blindaje anti-fantasmas.
  */
-function applyCantabricoConsensus(weather, consensus) {
+function applyCantabricoConsensus(weather, consensus, radarEcho = null) {
   if (!weather || !consensus) return;
 
   // 1. Verificación del tiempo actual en vivo
@@ -257,6 +270,7 @@ function applyCantabricoConsensus(weather, consensus) {
     const curECode = (consensus.hourly && consensus.hourly.weather_code && consensus.hourly.weather_code[nowHour] != null) ? consensus.hourly.weather_code[nowHour] : null;
     const curAromeCode = (weather.hourly && weather.hourly.weather_code && weather.hourly.weather_code[nowHour] != null) ? weather.hourly.weather_code[nowHour] : null;
     const curAromePrecip = (weather.hourly && weather.hourly.precipitation && weather.hourly.precipitation[nowHour] != null) ? weather.hourly.precipitation[nowHour] : 0;
+    const curCape = (weather.hourly && weather.hourly.cape && weather.hourly.cape[nowHour] != null) ? weather.hourly.cape[nowHour] : 0;
 
     // VERIFICACIÓN SOLAR OBJETIVA (BLINDAJE CONTRA EL SOL FICTICIO SIMULADO POR AROME):
     // Cuando AROME simula un falso claro o desfase frontal, calcula matemáticamente radiación directa muy alta (400+ W/m²).
@@ -326,12 +340,14 @@ function applyCantabricoConsensus(weather, consensus) {
     }
 
     // B) Rescate Soberano de Lluvia / Orbayu Real de ECMWF en tiempo actual:
-    // Si ECMWF confirma precipitación activa (ePrecip >= 0.1 mm o código WMO >= 50) sin sol en ECMWF (eDirectIrr < 100),
-    // bajo condiciones cantábricas húmedas (hum >= 75% o ecmwfCloud >= 65%),
-    // mientras AROME sigue marcando seco (< 0.1 mm) o subestimando severamente (< 0.3 mm con ECMWF >= 0.4 mm):
-    // SE ADOPTA INMEDIATAMENTE LA LLUVIA Y NUBOSIDAD REAL DEL CENTRO EUROPEO.
-    const isCurrentRainRescue = (ePrecip >= 0.1 || curEPrecip >= 0.1 || (eCode >= 50 && eCode <= 67) || (eCode >= 80 && eCode <= 82) || (curECode >= 50 && curECode <= 82) || curEPop >= 50) &&
-      (rawPrecip < 0.1 || (Math.max(ePrecip, curEPrecip) >= 0.4 && rawPrecip < 0.3)) &&
+    // RESGUARDO DE ESCAMPADA INMEDIATA (Feedback de Lendo - Ley 27):
+    // Si AROME (malla hiperlocal 1.3 km) ya ha registrado el fin del chubasco (rawPrecip < 0.1 mm y rawCode <= 3),
+    // y ECMWF solo mantiene precipitación residual o desfase horario (ePrecip < 0.3 mm),
+    // se respeta la escampada física: no se rescata lluvia falsa ni acumulados horarios futuros (curEPrecip)
+    // y el cielo queda en Nublado / Cubiertu seco (código 3, 0.0 mm).
+    const isEscampadaActive = rawPrecip < 0.1 && rawCode <= 3 && ePrecip < 0.3;
+
+    const isCurrentRainRescue = !isEscampadaActive && ((ePrecip >= 0.3) || (ePrecip >= 0.1 && (rawCode >= 50 || eCode >= 50))) &&
       (hum >= 75 || ecmwfCloud >= 65) &&
       eDirectIrr < 100;
 
@@ -346,12 +362,16 @@ function applyCantabricoConsensus(weather, consensus) {
       weather.current.weather_code = (eCode >= 50) ? eCode : 51;
       if (ecmwfCloud > rawCloud) weather.current.cloud_cover = ecmwfCloud;
     } else if (isCurrentRainRescue) {
-      const rescuedP = Math.max(ePrecip, curEPrecip, curAromePrecip, 0.2);
+      const rescuedP = Math.max(ePrecip, curAromePrecip, 0.2);
       weather.current.precipitation = rescuedP;
       if (weather.current.rain != null) weather.current.rain = rescuedP;
       const targetCode = (eCode >= 50 && eCode <= 82) ? eCode : ((curECode >= 50 && curECode <= 82) ? curECode : 51);
       weather.current.weather_code = targetCode;
       if (ecmwfCloud > rawCloud) weather.current.cloud_cover = ecmwfCloud;
+    } else if (isEscampadaActive && (weather.current.weather_code >= 50 || rawCode <= 3)) {
+      weather.current.precipitation = 0;
+      if (weather.current.rain != null) weather.current.rain = 0;
+      weather.current.weather_code = Math.max(rawCloud, ecmwfCloud) >= 75 ? 3 : 2;
     }
 
     // B1.1) Rescate Soberano de Orbayu Cantábrico en tiempo actual (Saturación, AROME y Ensamble):
@@ -417,6 +437,39 @@ function applyCantabricoConsensus(weather, consensus) {
       }
       if (consensus.current.shortwave_radiation != null && (!weather.current.shortwave_radiation || weather.current.shortwave_radiation < consensus.current.shortwave_radiation)) {
         weather.current.shortwave_radiation = consensus.current.shortwave_radiation;
+      }
+    }
+
+    // D) SOBERANÍA ABSOLUTA DEL RADAR TÁCTICO EN VIVO (Nowcasting Real - Doctrina Tormenta Lendo):
+    // Si la reflectividad del radar de RainViewer detecta precipitación activa en las coordenadas,
+    // el radar físico desempata por encima de cualquier modelo numérico ciego (AROME / ECMWF):
+    if (radarEcho && radarEcho.hasEcho && radarEcho.echo && radarEcho.echo.isRain) {
+      const echo = radarEcho.echo;
+      const isConvectiveStorm = echo.isStorm || (echo.level === 'heavy_rain' && curCape >= 40);
+      if (isConvectiveStorm) {
+        weather.current.weather_code = 95;
+        weather.current.precipitation = Math.max(weather.current.precipitation || 0, echo.precipEst || 15.0);
+        if (weather.current.rain != null) weather.current.rain = weather.current.precipitation;
+        weather.current.cloud_cover = Math.max(weather.current.cloud_cover || 0, 95);
+        weather.current.is_radar_rescued = true;
+        weather.current.radar_rescue_level = 'storm';
+        weather.current.radar_rescue_label = 'Tormenta / Lluvia torrencial';
+      } else if (echo.level === 'heavy_rain' && (weather.current.weather_code <= 3 || weather.current.precipitation < 2.0)) {
+        weather.current.weather_code = echo.wmoCode || 81;
+        weather.current.precipitation = Math.max(weather.current.precipitation || 0, echo.precipEst || 8.0);
+        if (weather.current.rain != null) weather.current.rain = weather.current.precipitation;
+        weather.current.cloud_cover = Math.max(weather.current.cloud_cover || 0, 90);
+        weather.current.is_radar_rescued = true;
+        weather.current.radar_rescue_level = echo.level;
+        weather.current.radar_rescue_label = echo.label;
+      } else if (echo.level === 'moderate_rain' && (weather.current.weather_code <= 3 || weather.current.precipitation < 1.0)) {
+        weather.current.weather_code = echo.wmoCode || 63;
+        weather.current.precipitation = Math.max(weather.current.precipitation || 0, echo.precipEst || 4.0);
+        if (weather.current.rain != null) weather.current.rain = weather.current.precipitation;
+        weather.current.cloud_cover = Math.max(weather.current.cloud_cover || 0, 85);
+        weather.current.is_radar_rescued = true;
+        weather.current.radar_rescue_level = echo.level;
+        weather.current.radar_rescue_label = echo.label;
       }
     }
   }
@@ -579,8 +632,33 @@ function applyCantabricoConsensus(weather, consensus) {
  * el sistema nunca muestre cielo 100% cubierto / nublado si los sensores físicos de radiación y UV
  * demuestran insolación directa en superficie en ausencia de precipitación.
  */
-function applyStandalonePhysicalSovereignty(weather) {
+function applyStandalonePhysicalSovereignty(weather, radarEcho = null) {
   if (!weather) return;
+
+  // Radar Táctico Soberano en Modo Standalone
+  if (radarEcho && radarEcho.hasEcho && radarEcho.echo && radarEcho.echo.isRain && weather.current) {
+    const echo = radarEcho.echo;
+    const nowHour = new Date().getHours();
+    const curCape = (weather.hourly && weather.hourly.cape && weather.hourly.cape[nowHour] != null) ? weather.hourly.cape[nowHour] : 0;
+    const isConvectiveStorm = echo.isStorm || (echo.level === 'heavy_rain' && curCape >= 40);
+    if (isConvectiveStorm) {
+      weather.current.weather_code = 95;
+      weather.current.precipitation = Math.max(weather.current.precipitation || 0, echo.precipEst || 15.0);
+      if (weather.current.rain != null) weather.current.rain = weather.current.precipitation;
+      weather.current.cloud_cover = Math.max(weather.current.cloud_cover || 0, 95);
+      weather.current.is_radar_rescued = true;
+      weather.current.radar_rescue_level = 'storm';
+      weather.current.radar_rescue_label = 'Tormenta / Lluvia torrencial';
+    } else if (echo.level === 'heavy_rain' && (weather.current.weather_code <= 3 || weather.current.precipitation < 2.0)) {
+      weather.current.weather_code = echo.wmoCode || 81;
+      weather.current.precipitation = Math.max(weather.current.precipitation || 0, echo.precipEst || 8.0);
+      if (weather.current.rain != null) weather.current.rain = weather.current.precipitation;
+      weather.current.cloud_cover = Math.max(weather.current.cloud_cover || 0, 90);
+      weather.current.is_radar_rescued = true;
+      weather.current.radar_rescue_level = echo.level;
+      weather.current.radar_rescue_label = echo.label;
+    }
+  }
 
   // 0. Sincronización de Nowcasting con la hora en curso:
   // Si el bloque instantáneo 'current' viene rezagado (p < 0.1 y código <= 3) pero el modelo predice

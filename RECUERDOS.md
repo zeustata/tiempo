@@ -2,6 +2,26 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## ⛈️ Radar Táctico Soberano en Vivo & Detección de Tormenta Real (`v3.0.35 - Despliegue Oficial`) — 2026-11-10
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `eb6ab41` (`v3.0.34`).
+- **Petición y Diagnóstico Crítico de Lendo («mira socia la imagen 1 la que esta cayendo ahora mismo con tormenta aqui en castrillon. Mira la imagen 2 lo que pone eltiempo de la app de maldonado ahora mismo (Tormenta). mira lo que pone nuestra app en la imagen 3 (Nublado). Mis ojos te dicen que vaya tormente [...] pisale»):**
+  1. *Diagnóstico Científico del Punto Ciego:*
+     - A las 04:55 h del 10 de Noviembre, una célula de tormenta severa descargaba sobre Castrillón y la costa central asturiana.
+     - En el visor de radar de nuestra app (Imagen 1), el pulso GPS del usuario situaba a Castrillón exactamente bajo un núcleo morado y rojo de máxima reflectividad (> 50 dBZ).
+     - La app de Maldonado / ElTiempo.es (Imagen 2) mostraba «Tormentas eléctricas» mediante detección de rayos/radar (pese a tener 0 mm en su acumulador numérico).
+     - Sin embargo, la tarjeta principal de MeteoAstur Lode (Imagen 3) marcaba «Nublado de noche» (código 3).
+     - *Causa raíz:* Los modelos numéricos de predicción (AROME 1.3 km y ECMWF 9 km) se ejecutan cada 3-6 horas y no previeron la génesis súbita nocturna de la célula sobre el mar, entregando datos teóricos de 0.0 mm y cielo cubierto.
+  2. *Doctrina del Radar Soberano en Vivo (`radarService.js` + `weatherApi.js` + `currentCard.js`):*
+     - Creada la función `fetchLiveRadarEcho(lat, lon)` en `radarService.js`, que descarga en paralelo la tesela Doppler 256x256 de RainViewer centrada en la ubicación exacta y analiza en un canvas fuera de pantalla la reflectividad del píxel central y su entorno (5x5 km) en apenas 400 ms.
+     - Si detecta eco de tormenta (morado/rojo > 45-55 dBZ) o chubascos severos con inestabilidad convectiva (`CAPE >= 40 J/kg`), la observación física del radar anula el código teórico del modelo y eleva el tiempo actual a `Tormenta / Tormenta llétrica ⛈️` (código WMO 95) con lluvia torrencial.
+     - Si detecta eco naranja/amarillo, eleva a chubascos fuertes o lluvia moderada.
+     - Añadida insignia visual `📡 RADAR` en la tarjeta de condiciones actuales cuando el tiempo está gobernado por el sensor del radar en vivo.
+  3. *Doctrina de Escampada Inmediata (Feedback de Lendo de la víspera):*
+     - Introducida la regla `isEscampadaActive`: cuando AROME registra fin de precipitación (`rawPrecip < 0.1` y código seco `<= 3`) y ECMWF solo mantiene valores residuales o inercia horaria (`ePrecip < 0.3`), se anula el rescate de lluvia, se resetea la precipitación a 0.0 mm y el cielo transiciona de inmediato a `Nublado / Cubiertu ☁️` (código 3 sin gotas).
+  4. *Control de Versión y Cache-Busting (Leyes 3, 4 y 13):*
+     - Elevada versión a `v3.0.35 ⛈️` en `CURRENT_APP_VERSION` (`js/app.js`), `#app-version-badge`, `#nav-update-badge`, modal `#changelog-modal` y Service Worker `meteoasturlode-v3035-tactical-radar-nowcast` en `sw.js`.
+     - Mantenida la clave de auto-prompt `CURRENT_CHANGELOG_PROMPT_VERSION = '3.0.28'`.
+
 ## 📡 Radar Meteorológico Táctico y Panel de Control Profesional (`v3.0.34 - Despliegue Oficial`) — 2026-11-09
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `588514a` (`v3.0.33`).
 - **Petición y Decisión Estratégica con Lendo («lo demas todo bien princesa. lo unico el radar en directo. como podemos ampliar las opciones? [...] pisale» y «subelo pero de paso mira lo que nos vino de lluvia y esta lloviendo.. tu ya no ponias lluvia»):**

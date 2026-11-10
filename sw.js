@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3034-tactical-radar-controls';
+const CACHE_NAME = 'meteoasturlode-v3035-tactical-radar-nowcast';
 const STATIC_ASSETS = [
   './',
   './index.html',
