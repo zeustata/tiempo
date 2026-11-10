@@ -2,6 +2,22 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🛡️ Blindaje Anti-Falso Sol con Nubosidad Extrema & Widget 4x4 Total (`v3.0.35.1 - Parche Calibración y Widgets`) — 2026-11-10
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `805ee90` (`v3.0.35`).
+- **Petición y Diagnóstico Crítico de Lendo («mira ahora ya funciona el reloj. pero me doy cuenta que pone nublado y en la app sol y nubes. no cambia pero tambien te digo que ahora mismo no hace ni resol. esta nublado. [...] arregla todo el widget y de paso arregla el falso sol [...] subelo. supongo que la aab va independiente y hay que subirlo a google no?»):**
+  1. *Diagnóstico del Falso Sol en Rasa Cantábrica:*
+     - A las 11:45 h del 10 de Noviembre, con cielo cubierto real en Castrillón (código WMO 3 y nubosidad del 94% medida por satélite), la app web mostraba `Sol y nubes / Claros ⛅`, mientras que el widget nativo mostraba fielmente `Nublado ☁️`.
+     - *Causa raíz:* En `weatherIcons.js`, Open-Meteo entregaba una radiación directa teórica en alta atmósfera de 545 W/m² (modelo astronómico libre de nubes altas). La regla `isDirectSunBreaks` (`irr >= 220`) forzaba erróneamente 'Sol y nubes' ignorando que con 94% de nubosidad es imposible que haya claros visibles en superficie.
+  2. *Solución y Blindaje Físico (`weatherIcons.js` - Leyes 0, 1, 3, 4 y 27):*
+     - Incorporada la regla de corte por cobertura nubosa extrema: si `cc >= 85%` (o código 3 con `cc >= 80%`), el manto se clasifica como impenetrable (`isSolidOvercast = true`), anulando cualquier rescate de claros o resol ficticio y manteniendo con rigor `Nublado / Cubiertu ☁️`.
+  3. *Familia Completa de 6 Widgets Nativos Android (4x2, 4x3 y 4x4 en versiones Oscura y Cristalina):*
+     - Reconstruido y compilado en Java nativo (`MeteoWeatherEngine.java`) con acceso a alarmas de fábrica (prioridad Honor MagicOS `com.hihonor.deskclock` / `com.huawei.deskclock`, Samsung, Xiaomi, etc.).
+     - Widget 4x4 Estación Meteorológica Total: arquitectura canónica anti-solapamiento con `RelativeLayout` y anclajes relativos (`toStartOf` / `toEndOf`), visualizando barómetro, viento y rachas, lluvia y probabilidad, UV y orto/ocaso, 5 horas y 5 días.
+     - Variantes transparentes con interior 100% cristalino, borde tricolor oficial (blanco -> cian -> dorado) y sombras de contraste en texto.
+  4. *Anti-Caché y Despliegue Dual (Leyes 3, 4 y 13):*
+     - Actualizado Service Worker `meteoasturlode-v3035-anti-falsosol-v1` en `sw.js`, `index.html` y `app.js` (`?v=3.0.35.1`).
+     - Auto-prompt en modo silencioso (Ley 13) para no fatigar a los usuarios por un parche de calibración interna.
+
 ## ⛈️ Radar Táctico Soberano en Vivo & Detección de Tormenta Real (`v3.0.35 - Despliegue Oficial`) — 2026-11-10
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `eb6ab41` (`v3.0.34`).
 - **Petición y Diagnóstico Crítico de Lendo («mira socia la imagen 1 la que esta cayendo ahora mismo con tormenta aqui en castrillon. Mira la imagen 2 lo que pone eltiempo de la app de maldonado ahora mismo (Tormenta). mira lo que pone nuestra app en la imagen 3 (Nublado). Mis ojos te dicen que vaya tormente [...] pisale»):**

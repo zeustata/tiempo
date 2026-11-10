@@ -9,6 +9,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.35.1] - 2026-11-10
+### Fixed
+- **🛡️ Blindaje Anti-Falso Sol con Nubosidad Extrema (`weatherIcons.js` - Leyes 0, 1, 3, 4 y 27):**
+  - **Filtro de Nubosidad Cerrada en Rasa Cantábrica (Banco de Ventana Lendo):** Solucionada la discrepancia donde la radiación directa teórica en alta atmósfera (> 220 W/m²) forzaba erróneamente `Sol y nubes / Claros ⛅` a pesar de que el cielo real estaba 100% cubierto en superficie.
+  - **Regla Estricta de Corte:** Cuando la cobertura nubosa alcanza o supera el 85% (o código WMO 3 con nubosidad >= 80%), el manto nuboso se considera impenetrable: queda terminantemente bloqueado calificar como 'claros' o 'sol y nubes', preservando fielmente `Nublado / Cubiertu ☁️` en perfecta sintonía con la observación visual y con el motor de los widgets nativos.
+
 ## [3.0.35] - 2026-11-10
 ### Added
 - **⛈️ Radar Táctico Soberano en Vivo & Nowcasting Convectivo (`radarService.js` + `weatherApi.js` + `currentCard.js` - Leyes 0, 1, 3, 11 y 27):**

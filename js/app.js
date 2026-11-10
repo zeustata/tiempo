@@ -12,7 +12,7 @@ import { renderForecast, renderHourlyForecastBlock } from './components/forecast
 import { renderWeatherChart } from './components/chartsView.js?v=3.0.23.58';
 import { renderAstronomyView } from './components/astronomyCard.js?v=3.0.33';
 import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter, locateUserGps, toggleRadarFullscreen } from './components/mapRadar.js?v=3.0.34';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=3.0.32';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=3.0.35.1';
 import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=2.0.0';
 import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=2.0.0';
 import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=2.0.0';

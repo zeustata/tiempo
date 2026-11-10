@@ -419,11 +419,10 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
 
     if (cc !== null && cc >= 75) {
       // Cobertura nubosa alta (75% a 100% de nubes):
-      // Si el haz solar directo logra filtrarse con fuerza, se distingue entre:
-      // a) Sol y nubes / Claros (⛅): El sol perfora limpio por huecos abiertos (isDirectSunBreaks)
-      // b) Resol / Sol tamizado (🌥️): El sol calienta difuso a través del manto lechoso (hasPotentResol)
-      // c) Nublado / Cubierto (☁️): El manto bloquea el sol
-      if (hasPotentResol) {
+      // Si la nubosidad es extrema o cielo cubierto (cc >= 85% o código WMO 3 con cc >= 80%),
+      // el manto nuboso es impenetrable en la rasa cantábrica: NO hay claros ni falso 'Sol y nubes' (Banco de Ventana Lendo).
+      const isSolidOvercast = cc >= 85 || (code === 3 && cc >= 80);
+      if (!isSolidOvercast && hasPotentResol) {
         hasRealSolarLight = true;
         isResol = true;
       } else {
