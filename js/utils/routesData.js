@@ -1010,6 +1010,318 @@ export const RUTAS_ASTURIAS_CATALOGO = [
     desc: 'Itinerario umbrío del Camino de Santiago Primitivo bordeando el río Nonaya entre puentes centenarios y castaños monumentales hasta la cascada y poza cristalina.',
     surface: 'Pista forestal compacta y camino empedrado tradicional',
     caution: 'Firme suave y cómodo; ideal para días calurosos o paseos en familia'
+  },
+
+  // ==========================================
+  // JOYAS DEL SUROCCIDENTE, OSCOS Y CORDILLERA (AMPLIACIÓN OFICIAL)
+  // ==========================================
+  {
+    id: 'seimeira_santauelaliaoscos',
+    name: 'Senda de la Seimeira y Cascada del Murias (Los Oscos)',
+    concejoId: 'santaeulaliadeoscos',
+    concejoName: 'Santa Eulalia de Oscos',
+    lat: 43.2592,
+    lon: -7.0203,
+    startPoint: 'Pueblo de Pumares (Santa Eulalia de Oscos)',
+    type: 'fluvial',
+    typeIcon: '🌊',
+    dist: '7.6 km (ida/vuelta)',
+    distKm: 7.6,
+    elev: '+160 m',
+    elevM: 160,
+    diff: 'Fácil',
+    diffCat: 'facil',
+    diffRank: 1,
+    time: '2h 15min',
+    desc: 'Valle encantado del río Agüeira entre castañares y bosques autóctonos de ribera que culmina en la espectacular cascada de La Seimeira, con un salto vertical de agua de 30 metros de caída libre.',
+    surface: 'Sendero tradicional de tierra y pasarelas de madera',
+    caution: 'Húmedo junto a las pozas del río; ideal y resguardado del viento en cualquier época'
+  },
+  {
+    id: 'agua_taramundi',
+    name: 'Ruta del Agua de Taramundi y Mazonovo',
+    concejoId: 'taramundi',
+    concejoName: 'Taramundi',
+    lat: 43.3606,
+    lon: -7.1089,
+    startPoint: 'Taramundi (Plaza del Pousadoiro)',
+    type: 'fluvial',
+    typeIcon: '🌊',
+    dist: '14.0 km (circular)',
+    distKm: 14.0,
+    elev: '+380 m',
+    elevM: 380,
+    diff: 'Media',
+    diffCat: 'media',
+    diffRank: 2,
+    time: '4h 00min',
+    desc: 'Cuna del turismo rural español: molinos de agua, el mayor museo de molinos de España (Mazonovo), ferrerías tradicionales, cascada del Salgueiro y los telares de Esquíos.',
+    surface: 'Caminos de herradura, pistas forestales y sendas de ribera',
+    caution: 'Ruta de media distancia con subidas tendidas; calzado de montaña con buen agarre'
+  },
+  {
+    id: 'cioyo_castropol',
+    name: 'Ruta de la Cascada de Cioyo (Ría del Eo)',
+    concejoId: 'castropol',
+    concejoName: 'Castropol',
+    lat: 43.4912,
+    lon: -6.9815,
+    startPoint: 'Pueblo de Vilarín (Castropol)',
+    type: 'bosque',
+    typeIcon: '🌲',
+    dist: '4.5 km (ida/vuelta)',
+    distKm: 4.5,
+    elev: '+140 m',
+    elevM: 140,
+    diff: 'Fácil',
+    diffCat: 'facil',
+    diffRank: 1,
+    time: '1h 30min',
+    desc: 'Sendero umbrío a través de un cañón boscoso de robles, abedules y laureles que desciende hasta el salto escondido del río Cioyo en el corazón de la Reserva de la Biosfera del Eo.',
+    surface: 'Sendero de bosque con cuerdas de apoyo y escalones de madera',
+    caution: 'Firme húmedo con raíces resbaladizas en el tramo de bajada hacia la cascada'
+  },
+  {
+    id: 'pornacal_somiedo',
+    name: 'Brañas de La Pornacal y Los Cuetos (Villar de Vildas)',
+    concejoId: 'somiedo',
+    concejoName: 'Somiedo',
+    lat: 43.1167,
+    lon: -6.2917,
+    startPoint: 'Villar de Vildas (Pueblo Ejemplar de Asturias)',
+    type: 'montaña',
+    typeIcon: '🏔️',
+    dist: '11.5 km (ida/vuelta)',
+    distKm: 11.5,
+    elev: '+420 m',
+    elevM: 420,
+    diff: 'Media',
+    diffCat: 'media',
+    diffRank: 2,
+    time: '3h 30min',
+    desc: 'El mayor conjunto de brañas con cabañas de teito de escoba de toda Europa. Remonta el valle del río Pigüeña entre hayedos y pastizales bajo la mirada del oso pardo cantábrico.',
+    surface: 'Pista de montaña de hormigón/grava y camino afirmado',
+    caution: 'Excelente firme en todo el recorrido; abrigarse por ser valle de montaña con viento de fondo'
+  },
+  {
+    id: 'hermo_cangasnarcea',
+    name: 'Hayedo de Hermo y Fuentes del Narcea',
+    concejoId: 'cangasdelnarcea',
+    concejoName: 'Cangas del Narcea',
+    lat: 42.9912,
+    lon: -6.5612,
+    startPoint: 'Pueblo de Monasterio de Hermo (Cangas del Narcea)',
+    type: 'bosque',
+    typeIcon: '🌲',
+    dist: '10.2 km',
+    distKm: 10.2,
+    elev: '+390 m',
+    elevM: 390,
+    diff: 'Media',
+    diffCat: 'media',
+    diffRank: 2,
+    time: '3h 15min',
+    desc: 'Una de las mayores masas forestales de haya de la Cordillera Cantábrica (más de 1.500 hectáreas). Remonta el valle del recién nacido río Narcea entre acebos, líquenes y cascadas alpinas.',
+    surface: 'Pistas forestales y senderos de monte',
+    caution: 'Zona de alta montaña protegida; nieblas frecuentes en cotas altas sobre 1.400 m'
+  },
+  {
+    id: 'oro_ibias',
+    name: 'Ruta del Oro y Lagunas de Salgueiras (Ibias)',
+    concejoId: 'ibias',
+    concejoName: 'Ibias',
+    lat: 43.0415,
+    lon: -6.8711,
+    startPoint: 'San Antolín de Ibias / Cecos',
+    type: 'montaña',
+    typeIcon: '🏔️',
+    dist: '12.8 km',
+    distKm: 12.8,
+    elev: '+460 m',
+    elevM: 460,
+    diff: 'Media',
+    diffCat: 'media',
+    diffRank: 2,
+    time: '3h 45min',
+    desc: 'Paisajes vírgenes del suroccidente asturiano con canales romanos excavados en roca para la extracción de oro (ruina montium) y lagunas en la comarca con más horas de sol de Asturias.',
+    surface: 'Caminos de montaña, pistas y sendas tradicionales',
+    caution: 'Clima de interior muy contrastado: soleado y cálido de día, fresco al atardecer'
+  },
+  {
+    id: 'biescona_sueve',
+    name: 'Hayedo de La Biescona (Sierra del Sueve)',
+    concejoId: 'colunga',
+    concejoName: 'Colunga',
+    lat: 43.4568,
+    lon: -5.2012,
+    startPoint: 'Mirador del Fitu / Casa Julia',
+    type: 'bosque',
+    typeIcon: '🌲',
+    dist: '5.5 km (ida/vuelta)',
+    distKm: 5.5,
+    elev: '+280 m',
+    elevM: 280,
+    diff: 'Fácil-Media',
+    diffCat: 'facil',
+    diffRank: 1,
+    time: '2h 00min',
+    desc: 'El hayedo a menor altitud de toda la Península Ibérica y de Europa (apenas 200 m sobre el nivel del mar). Un bosque umbrío y jurásico envuelto en brumas marinas, musgos y tejos milenarios.',
+    surface: 'Sendero de montaña con piedras, tierra y hojas húmedas',
+    caution: 'Humedad permanente y piso resbaladizo entre las hayas; bastones de marcha recomendables'
+  },
+  {
+    id: 'picu_pienzu_parres',
+    name: 'Ascensión al Picu Pienzu (Mirador del Fitu - Cumbre 1.161 m)',
+    concejoId: 'parres',
+    concejoName: 'Parres',
+    lat: 43.4389,
+    lon: -5.1956,
+    startPoint: 'Aparcamiento del Mirador del Fitu',
+    type: 'montaña',
+    typeIcon: '🏔️',
+    dist: '10.0 km (ida/vuelta)',
+    distKm: 10.0,
+    elev: '+580 m',
+    elevM: 580,
+    diff: 'Media',
+    diffCat: 'media',
+    diffRank: 2,
+    time: '3h 30min',
+    desc: 'El mejor balcón panorámico de Asturias: cumbre solitaria sobre el mar Cantábrico que ofrece una perspectiva 360° inigualable de toda la costa oriental y los murallones de los Picos de Europa.',
+    surface: 'Caminos de pastos de montaña y canchales pedregosos calizos',
+    caution: 'Exposición total al viento; cumbre despejada con frío de altitud; no subir con borrina'
+  },
+  {
+    id: 'foces_raigosu_laviana',
+    name: 'Monumento Natural de las Foces del Raigosu',
+    concejoId: 'laviana',
+    concejoName: 'Laviana',
+    lat: 43.2189,
+    lon: -5.5112,
+    startPoint: 'Pueblo de El Condado (Laviana)',
+    type: 'desfiladero',
+    typeIcon: '⛰️',
+    dist: '8.5 km',
+    distKm: 8.5,
+    elev: '+310 m',
+    elevM: 310,
+    diff: 'Media',
+    diffCat: 'media',
+    diffRank: 2,
+    time: '2h 45min',
+    desc: 'Profundo desfiladero calizo labrado por el río Raigosu en el valle del Nalón, con farallones verticales de más de 300 metros, túneles naturales y encinares cantábricos en abrigo térmico.',
+    surface: 'Pista de tierra afirmada y sendero de piedra',
+    caution: 'Zona de cañón fresco; firme transitable y bien definido'
+  },
+  {
+    id: 'torres_aller',
+    name: 'Pico Torres desde el Puerto de San Isidro (Cumbre 2.104 m)',
+    concejoId: 'aller',
+    concejoName: 'Aller',
+    lat: 43.0612,
+    lon: -5.3912,
+    startPoint: 'Puerto de San Isidro / La Raya (Aller)',
+    type: 'montaña',
+    typeIcon: '🏔️',
+    dist: '7.2 km (ida/vuelta)',
+    distKm: 7.2,
+    elev: '+590 m',
+    elevM: 590,
+    diff: 'Alta',
+    diffCat: 'dificil',
+    diffRank: 3,
+    time: '3h 15min',
+    desc: 'Pirámide caliza altiva que preside la Cordillera Cantábrica central. Ascensión montañera por la Majada de Torres y collado hasta la arista cimera con vistas espectaculares a Redes y Ubiñas.',
+    surface: 'Canchales pedregosos de alta montaña y senda caliza empinada',
+    caution: 'Alta montaña: requiere experiencia, buen calzado de taco y abstenerse con viento o niebla'
+  },
+  {
+    id: 'cascadas_guanga_oviedo',
+    name: 'Ruta de las Cascadas de Guanga (San Andrés de Trubia)',
+    concejoId: 'oviedo',
+    concejoName: 'Oviedo',
+    lat: 43.3289,
+    lon: -5.9812,
+    startPoint: 'San Andrés de Trubia (Oviedo)',
+    type: 'fluvial',
+    typeIcon: '🌊',
+    dist: '4.5 km (circular)',
+    distKm: 4.5,
+    elev: '+220 m',
+    elevM: 220,
+    diff: 'Fácil-Media',
+    diffCat: 'facil',
+    diffRank: 1,
+    time: '1h 45min',
+    desc: 'Joya fluvial escondida en los valles del Trubia: serie de cascadas y pozas en hilera descendiendo entre bosques densos de castaños y robles autóctonos.',
+    surface: 'Sendero de tierra de bosque con raíces y piedras',
+    caution: 'Tramos empinados con barro húmedo en bajadas; bastones recomendables tras lluvias'
+  },
+  {
+    id: 'beyo_ponga',
+    name: 'Desfiladero de Los Beyos y Puente Vidosa',
+    concejoId: 'ponga',
+    concejoName: 'Ponga',
+    lat: 43.1989,
+    lon: -5.1012,
+    startPoint: 'Puente Vidosa / Desfiladero del Sella',
+    type: 'desfiladero',
+    typeIcon: '⛰️',
+    dist: '6.0 km',
+    distKm: 6.0,
+    elev: '+290 m',
+    elevM: 290,
+    diff: 'Media',
+    diffCat: 'media',
+    diffRank: 2,
+    time: '2h 15min',
+    desc: 'Imponente cañón fluvial encajonado entre murallas de roca de más de mil metros de altura sobre el río Sella, con la cascada de Aguasaliu de 40 metros de caída.',
+    surface: 'Sendero empedrado tradicional y tramos calizos',
+    caution: 'Imprescindible no salir del trazado señalizado; húmedo y sonoro por el rumor del agua'
+  },
+  {
+    id: 'pena_mea_laviana',
+    name: 'Ruta de Peña Mea y el Ojo de Buey (Pelúgano)',
+    concejoId: 'laviana',
+    concejoName: 'Laviana',
+    lat: 43.1712,
+    lon: -5.5412,
+    startPoint: 'Pueblo de Pelúgano (Laviana)',
+    type: 'montaña',
+    typeIcon: '🏔️',
+    dist: '8.5 km (ida/vuelta)',
+    distKm: 8.5,
+    elev: '+620 m',
+    elevM: 620,
+    diff: 'Media-Alta',
+    diffCat: 'media',
+    diffRank: 2,
+    time: '3h 45min',
+    desc: 'Una de las montañas más legendarias de Asturias: ascensión hacia el Ojo de Buey, un descomunal arco natural de roca caliza de 20 metros de diámetro con vistas panorámicas únicas.',
+    surface: 'Caminos de pradería empinada y senderos calizos pedregosos',
+    caution: 'Desnivel pronunciado; terreno kárstico resbaladizo con humedad; calzado firme de montaña'
+  },
+  {
+    id: 'teverga_entrago',
+    name: 'Senda del Oso - Ramal Teverga y Cueva Huerta',
+    concejoId: 'teverga',
+    concejoName: 'Teverga',
+    lat: 43.1612,
+    lon: -6.0912,
+    startPoint: 'Entrago / San Martín de Teverga',
+    type: 'valle',
+    typeIcon: '🪵',
+    dist: '9.0 km',
+    distKm: 9.0,
+    elev: '+120 m',
+    elevM: 120,
+    diff: 'Fácil',
+    diffCat: 'facil',
+    diffRank: 1,
+    time: '2h 30min',
+    desc: 'Tramo alto y más salvaje del antiguo ferrocarril minero: desfiladeros fluviales de Peña Sobia, túneles iluminados en la roca y aproximación al Monumento Natural de Cueva Huerta.',
+    surface: 'Pista asfaltada y afirmada completamente llana y segura',
+    caution: 'Ruta 100% transitable para todas las edades, niños y carritos; inmune al barro'
   }
 ];
 
@@ -1279,4 +1591,114 @@ export function getRouteExplanation(routeId) {
       }
     ]
   };
+}
+
+
+/**
+ * Caché en memoria para el pronóstico meteorológico en lote de las 58 rutas
+ */
+let _routesWeatherCache = {
+  timestamp: 0,
+  data: null
+};
+
+/**
+ * Obtiene el pronóstico meteorológico oficial en una única llamada HTTP por lotes a Open-Meteo
+ * para todas las rutas de Asturias (58 puntos), optimizado para responder en ~150 ms sin saturar la red.
+ */
+export async function fetchRoutesBatchWeather(forceRefresh = false) {
+  const now = Date.now();
+  if (!forceRefresh && _routesWeatherCache.data && (now - _routesWeatherCache.timestamp < 15 * 60 * 1000)) {
+    return _routesWeatherCache.data;
+  }
+
+  try {
+    const lats = RUTAS_ASTURIAS_CATALOGO.map(r => r.lat.toFixed(2)).join(',');
+    const lons = RUTAS_ASTURIAS_CATALOGO.map(r => r.lon.toFixed(2)).join(',');
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lats}&longitude=${lons}&daily=precipitation_sum,precipitation_probability_max,weather_code&timezone=auto&forecast_days=2`;
+
+    const resp = await fetch(url);
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const results = await resp.json();
+
+    const items = Array.isArray(results) ? results : [results];
+    const weatherMap = {};
+
+    RUTAS_ASTURIAS_CATALOGO.forEach((r, idx) => {
+      const forecast = items[idx] || items[0];
+      if (forecast && forecast.daily) {
+        weatherMap[r.id] = {
+          today: {
+            rainMm: parseFloat(forecast.daily.precipitation_sum?.[0]) || 0,
+            pop: parseInt(forecast.daily.precipitation_probability_max?.[0], 10) || 0,
+            code: parseInt(forecast.daily.weather_code?.[0], 10) || 0
+          },
+          tomorrow: {
+            rainMm: parseFloat(forecast.daily.precipitation_sum?.[1]) || 0,
+            pop: parseInt(forecast.daily.precipitation_probability_max?.[1], 10) || 0,
+            code: parseInt(forecast.daily.weather_code?.[1], 10) || 0
+          }
+        };
+      }
+    });
+
+    _routesWeatherCache = {
+      timestamp: now,
+      data: weatherMap
+    };
+    return weatherMap;
+  } catch (err) {
+    console.warn('[MeteoAstur] No se pudo obtener el clima por lotes de rutas:', err);
+    return null;
+  }
+}
+
+/**
+ * Genera el distintivo meteorológico (Badge) y puntuación de escampada para una ruta
+ */
+export function getRouteWeatherBadge(routeWeather) {
+  if (!routeWeather) return null;
+  const { rainMm, pop, code } = routeWeather;
+
+  if (rainMm <= 0.0 && pop <= 25) {
+    return {
+      label: `0.0 mm (${pop}%) • Seco ☀️`,
+      cssClass: 'badge-dry-pure',
+      color: '#10b981',
+      bg: 'rgba(16, 185, 129, 0.20)',
+      border: 'rgba(16, 185, 129, 0.45)',
+      isDry: true,
+      score: 100 - (pop * 0.5)
+    };
+  } else if (rainMm <= 0.8 && pop <= 50) {
+    return {
+      label: `${rainMm.toFixed(1)} mm (${pop}%) • Casi Seco ⛅`,
+      cssClass: 'badge-dry-almost',
+      color: '#38bdf8',
+      bg: 'rgba(56, 189, 248, 0.20)',
+      border: 'rgba(56, 189, 248, 0.45)',
+      isDry: true,
+      score: 75 - (rainMm * 10) - (pop * 0.2)
+    };
+  } else if (rainMm < 3.0) {
+    return {
+      label: `${rainMm.toFixed(1)} mm (${pop}%) • Orbayu 🌦️`,
+      cssClass: 'badge-dry-light',
+      color: '#facc15',
+      bg: 'rgba(250, 204, 21, 0.20)',
+      border: 'rgba(250, 204, 21, 0.45)',
+      isDry: false,
+      score: 45 - (rainMm * 8)
+    };
+  } else {
+    return {
+      label: `${rainMm.toFixed(1)} mm (${pop}%) • Lluvia 🌧️`,
+      cssClass: 'badge-rainy',
+      color: '#f87171',
+      bg: 'rgba(248, 113, 113, 0.20)',
+      border: 'rgba(248, 113, 113, 0.45)',
+      isDry: false,
+      score: Math.max(0, 25 - (rainMm * 3))
+    };
+  }
 }

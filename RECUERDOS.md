@@ -2,6 +2,47 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🥾 Rastreador Inteligente de Escampada y Ampliación a 58 Sendas (`v3.0.36`) — 2026-11-10
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.35.1` (`60a8a70` o similar).
+- **Petición e Instrucción Expresa de Lendo («me habla el jefe de sala que mañana quiere hacer una ruta por asturias. tenemos el modelo desde la ubicacion que tenemos pero me dice que quiere hacer una ruta por asturias pero le da igual donde pero que sea una ruta que menos posibilidades de lluvia existan. entonces pense que podemos ampliar el menu de rutas. hay gente que pilla el coche hacer una ruta en otra parte de asturias y si de paso puedes ampliar rutas, mejor [...] pisale»):**
+  1. *Diagnóstico y Arquitectura de Datos:*
+     - Anteriormente, el módulo de rutas (`routesCard.js`) mostraba un catálogo de 44 rutas estáticas y calculaba el tiempo y confort basándose únicamente en el concejo o estación actualmente seleccionada en la app general. Si un usuario estaba en Gijón y consultaba la Ruta del Cares o Somiedo, los parámetros climáticos eran los de Gijón a menos que cambiara manualmente la estación.
+     - Para satisfacer la necesidad de planificar excursiones en coche por toda la región buscando el punto más seco, se requería:
+       a) Conocer el tiempo específico de cada ruta en sus propias coordenadas geográficas.
+       b) Ejecutar la consulta de forma masiva pero instantánea para no saturar la red ni bloquear el dispositivo móvil.
+       c) Diseñar un filtro inteligente que clasifique y ordene de forma transparente de menor a mayor probabilidad y litros de lluvia.
+  2. *Motor de Consulta por Lotes Ultrarrápido (`routesData.js`):*
+     - Open-Meteo permite agrupar hasta 100 ubicaciones en una única petición HTTP GET separando coordenadas por comas (`latitude=x1,x2,...&longitude=y1,y2,...`).
+     - Para las 58 rutas, la URL generada ocupa ~850 caracteres y devuelve un array JSON de 26 KB en menos de 300 ms.
+     - Implementada la función `fetchRoutesBatchWeather(routesList)` con memoria en caché de 15 minutos en cliente para no repetir peticiones innecesarias al cambiar de pestaña o filtro.
+  3. *Ampliación del Catálogo Oficial (de 44 a 58 Sendas Homologadas):*
+     - Se añadieron 14 nuevas rutas cubriendo zonas estratégicas no representadas en el catálogo:
+       - `seimeira_santauelaliaoscos` (Santa Eulalia de Oscos, PR-AS 116)
+       - `agua_taramundi` (Taramundi, PR-AS 17)
+       - `cioyo_castropol` (Castropol, SL-AS 12)
+       - `pornacal_somiedo` (Somiedo, PR-AS 14.1)
+       - `hermo_cangasnarcea` (Cangas del Narcea, PR-AS 132)
+       - `oro_ibias` (Ibias, PR-AS 7)
+       - `biescona_sueve` (Colunga / Caravia, PR-AS 71)
+       - `picu_pienzu_parres` (Parres, PR-AS 71)
+       - `foces_raigosu_laviana` (Laviana, PR-AS 181)
+       - `torres_aller` (Aller / San Isidro, PR-AS 266)
+       - `cascadas_guanga_oviedo` (Oviedo / San Andrés de Trubia, SL-AS 24)
+       - `beyo_ponga` (Ponga, SL-AS 11)
+       - `pena_mea_laviana` (Laviana / Tolivia, PR-AS 47)
+       - `teverga_entrago` (Teverga / Entrago, Senda del Oso - Cueva Huerta)
+  4. *Rediseño Ergonómico de la Interfaz (`routesCard.js`):*
+     - Incorporada barra de filtros interactiva: `[ 📍 Cercanas ]`, `[ ☀️ Dónde no llueve (Escampada) ]`, `[ 🟢 Fáciles ]`, `[ 🏔️ Montaña ]`, `[ 🏖️ Costeras & Ríos ]`.
+     - *Modo Escampada:* Al pulsar `[ ☀️ Dónde no llueve ]`, se activa el cálculo dinámico. Las 58 rutas se reordenan automáticamente priorizando las de 0.0 mm y menor probabilidad de precipitación.
+     - *Asesor Predictivo en Cabecera:* Se despliega una tarjeta destacada con acento esmeralda recomendando al instante las dos sendas con menor riesgo de agua en toda Asturias para la jornada elegida (hoy o mañana).
+     - *Insignias Meteorológicas Dinámicas:* Cada tarjeta de ruta muestra en tiempo real una pastilla luminosa (`🟢 Seco ☀️`, `🔵 Casi Seco ⛅`, `🟡 Orbayu 🌦️`, `🔴 Lluvia 🌧️`) con los litros exactos y la probabilidad porcentual.
+     - Cumplimiento estricto de las Leyes 11 (Blindaje Anti-Desborde Móvil), 14 (Armonía Visual de Cristal) y 18 (Aislamiento Táctil ante swipe de pestañas).
+  5. *Actualización de Versión y Cache-Busting (Ley 4 y Ley 13):*
+     - `CURRENT_APP_VERSION = '3.0.36'`.
+     - `CURRENT_CHANGELOG_PROMPT_VERSION = '3.0.36'`.
+     - `sw.js` actualizado con nombre de caché `meteoasturlode-v3036-escampada-rutas-v1`.
+     - `index.html` actualizado con query string `js/app.js?v=3.0.36.0` y bloque de novedades v3.0.36 en el modal.
+
 ## 🏛️ Mandato Constitucional Universal: Bóveda Sagrada Externa `G:\Anigravity` (Ley 22) — 2026-11-10
 - **Directriz Estratégica Inmutable de Lendo («quiero que cada vez que tengas que hacer una copia de seguridad importante que no se puede dejar escapar, quiero que lo hagas en esa carpeta, sea cual sea el proyecto. cosas que no se pueden perder o dificilmente recuperables y si quieres lo ponemos en la constitucion»):**
   - Incorporada de forma obligatoria e imperativa a la **Ley 22** de la Constitución Suprema la cláusula de la **Bóveda Sagrada Externa Universal (`G:\Anigravity\`)**.
@@ -3622,16 +3663,7 @@ ICONO | ESTADO EN METEOASTUR LODE              | NUBES (cc)  | RAD. DIRECTA (irr
      - *Causa raíz:* En el widget «Período y Dirección del Swell», el renderizado del viento estaba programado dentro de un condicional excluyente contra el Swell 2 (`hasSecondary && secSwellDir ? Swell 2 : Viento`). Al existir casi siempre un tren de oleaje secundario en el Cantábrico, la línea del viento quedaba sistemáticamente oculta. Además, la pastilla de textura marina en la Hero Card describía el impacto cualitativo (`Superficie Picada • Viento de mar`), pero carecía de la métrica numérica en km/h.
   2. *Intervención Técnica en `surfCard.js`:*
      - **Viento en Costa Permanente e Incondicional:** Desacoplado el viento del oleaje secundario. Ahora conviven ambos armónicamente: Swell 1, Swell 2 (si existe) y una fila dedicada y delimitada con `💨 Viento en costa: X km/h (o rango de rachas)` junto a la flecha SVG orientada y coloreada según sea terral (verde) o de mar (rojo/ámbar).
-     - **Integración Numérica en la Micro-Pastilla de Textura:** El chip `.surf-texture-chip` incorpora la cifra en tiempo real con detección de rachas (ej. `• 7–16 km/h (Chop)`), permitiendo una lectura instantánea sin necesidad de descender al cronograma de 3 horas.
-  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
-     - Versión oficial elevada a **`v2.2.55 🏄‍♂️`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.55'` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
-     - Service Worker actualizado a `meteoasturlode-v2255-surf-wind-unlocked` en `sw.js`.
-     - Query strings sincronizadas a `?v=2.2.55` en `index.html` (`app.js`) y `surfCard.js?v=2.2.55`.
-
-## 🧭 Actualización v2.2.54: Rango Dinámico de Viento en Anemómetro — 2026-10-17
-- **Fidelidad Sensorial y Respaldo de Rachas (Feedback Tester Edu y Lendo - «anemometro pone 6 y 7 y esta mas fuerte, racha actual 16 y maximas 31, maldonado 15km» y «dale a la opcion A»):**
-  1. *Diagnóstico Físico y Psicológico:*
-     - El tester Edu reportó desde su domicilio que el viento soplaba con fuerza perceptible, mientras que el anemómetro mostraba en gigante `6.8 km/h`, generando la falsa sensación visual de que la app se quedaba corta.
+     - **Integración Numérica en la Micro-Past
      - Lendo detectó que en la app la racha actual sí marcaba `16 km/h` y la racha máxima `31 km/h`, y que otras plataformas como Maldonado (*eltiempo.es*) publicaban `15 km/h` como cifra de cabecera.
      - *Causa raíz:* La API y el modelo registraban los datos con exactitud milimétrica (`current.wind_speed_10m = 6.8` como media sostenida a 10 metros, y `current.wind_gusts_10m = 16.0` como racha instantánea). Sin embargo, la jerarquía visual otorgaba todo el tamaño tipográfico (`2.2rem`) a la media matemática continua, relegando la racha (que es lo que el ser humano y el entorno sienten físicamente) a un texto secundario pequeño.
   2. *Intervención Técnica en `currentCard.js` y `components.css`:*

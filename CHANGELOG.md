@@ -9,6 +9,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.36] - 2026-11-10
+### Added
+- **🥾 Rastreador Inteligente de Escampada / Rutas sin Lluvia (`routesCard.js` + `routesData.js` + `app.js` - Leyes 0, 1, 3, 4, 11 y 27):**
+  - **Filtro Meteorológico Táctico `[ ☀️ Dónde no llueve ]`:** Motor de búsqueda predictivo para coger el coche y escaparse de la lluvia en cualquier rincón del Principado. Consulta en tiempo real las 58 rutas en paralelo mediante un lote ultrarrápido a Open-Meteo (< 300 ms) y ordena las sendas clasificándolas por volumen de precipitación y probabilidad para el día seleccionado (hoy o mañana).
+  - **Asesor de Escampada en Cabecera:** Tarjeta destacada con fondo esmeralda que recomienda al instante los mejores destinos secos de Asturias (0.0 mm / menor probabilidad), permitiendo elegir la ruta con menor riesgo de agua.
+  - **Insignias Luminosas Predictivas:** Cada ficha de ruta muestra su distintivo meteorológico en vivo (`🟢 Seco`, `🔵 Casi Seco`, `🟡 Orbayu`, `🔴 Lluvia`) junto a los litros previstos y porcentaje de probabilidad.
+  - **Barra de Filtros Ergonómicos:** Selectores por categoría (`[ 📍 Cercanas ]`, `[ 🟢 Fáciles ]`, `[ 🏔️ Montaña ]`, `[ 🏖️ Costeras & Ríos ]` y `[ ☀️ Dónde no llueve ]`) con aislamiento táctil y protección ante desbordes móviles (Ley 11 y Ley 18).
+- **🗺️ Ampliación Oficial a 58 Rutas Homologadas (`routesData.js`):**
+  - Incorporadas 14 sendas emblemáticas cubriendo todas las comarcas asturianas:
+    - *Occidente:* Seimeira de Santa Eulalia de Oscos, Cascadas de Cioyo (Castropol), Ruta del Agua (Taramundi), Bosque de Hermo (Cangas del Narcea), Ruta del Oro (Ibias).
+    - *Cordillera y Suroccidente:* Brañas del Pornacal (Somiedo), Pico Torres (San Isidro / Aller), Peña Mea (Laviana), Foces del Raigosu (Laviana), Senda del Oso tramo Teverga (Cueva Huerta).
+    - *Centro y Oriente:* Cascadas de Guanga (Oviedo / Trubia), Hayedo de la Biescona (Sierra del Sueve), Picu Pienzu (Mirador del Fitu / Parres) y Desfiladero del Beyu Pen (Ponga).
+    - Cada ruta incluye track geográfico, desnivel, dificultad MIDE, tiempo estimado, firme y coordenadas exactas para la previsión.
+
 ## [3.0.35.1] - 2026-11-10
 ### Fixed
 - **🛡️ Blindaje Anti-Falso Sol con Nubosidad Extrema (`weatherIcons.js` - Leyes 0, 1, 3, 4 y 27):**

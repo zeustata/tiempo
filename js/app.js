@@ -4,7 +4,7 @@ import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedW
 import { renderCurrentWeather } from './components/currentCard.js?v=3.0.25.22';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.25.10';
 import { renderSurfCard } from './components/surfCard.js?v=3.0.25.2';
-import { renderRoutesCard } from './components/routesCard.js?v=3.0.25.5';
+import { renderRoutesCard } from './components/routesCard.js?v=3.0.36';
 import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.25.5';
 import { renderMountainCard } from './components/mountainCard.js?v=3.0.29';
 import { renderTourismCard } from './components/tourismCard.js?v=3.0.25.5';
@@ -24,7 +24,7 @@ import { getPapaNoelWeatherSvg } from './utils/weatherPapaNoelIcons.js?v=3.0.24.
 import { getReyesWeatherSvg } from './utils/weatherReyesIcons.js?v=3.0.24.54';
 import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=3.0.24.40';
 import { getTourismPlanExplanation } from './utils/tourismData.js?v=3.0.24.62';
-import { getRouteExplanation } from './utils/routesData.js?v=3.0.24.62';
+import { getRouteExplanation, fetchRoutesBatchWeather } from './utils/routesData.js?v=3.0.36';
 import { getCyclingRouteExplanation } from './utils/cyclingData.js?v=3.0.24.62';
 import { checkConcejoFolixa } from './utils/festivosData.js?v=2.0.0';
 import { WEATHER_PHENOMENA, PHENOMENA_CATEGORIES } from './utils/weatherPhenomena.js?v=2.0.0';
@@ -49,11 +49,11 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.35';
+export const CURRENT_APP_VERSION = '3.0.36';
 // Control inteligente de Auto-Prompt del Changelog (Doctrina de No-Fatiga al Usuario - Feedback Lendo):
 // Solo se incrementa ante cambios visuales grandes, módulos nuevos o novedades perceptibles.
 // En ajustes finos, calibraciones matemáticas y parches internos se mantiene para no fatigar al usuario con modales.
-export const CURRENT_CHANGELOG_PROMPT_VERSION = '3.0.28';
+export const CURRENT_CHANGELOG_PROMPT_VERSION = '3.0.36';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -66,6 +66,9 @@ class MeteoAsturiasApp {
     this.activeTab = 'live';
     this.selectedHikingRouteId = null;
     this.selectedRoutesDay = null;
+    this.selectedRoutesFilter = 'all';
+    this.routesWeatherCache = null;
+    this.isLoadingRoutesWeather = false;
     this.selectedTourismPlanId = null;
     this.selectedTourismDay = null;
     this.selectedCyclingRouteId = null;
@@ -3336,6 +3339,22 @@ class MeteoAsturiasApp {
       });
     });
 
+    // 1c. Barra de Filtros Inteligentes (Detector de Escampada / Dónde no llueve)
+    document.querySelectorAll('.btn-routes-filter').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        const filter = e.currentTarget.dataset.filter;
+        if (filter && filter !== this.selectedRoutesFilter) {
+          this.triggerHaptic();
+          this.selectedRoutesFilter = filter;
+          if (filter === 'dry' && !this.routesWeatherCache) {
+            await this.loadRoutesEscampadaWeather();
+          } else {
+            this.refreshRoutesPanel();
+          }
+        }
+      });
+    });
+
     // 2. Selección de senda en el modal
     document.querySelectorAll('.routes-item-card').forEach(item => {
       item.addEventListener('click', (e) => {
@@ -3442,12 +3461,30 @@ class MeteoAsturiasApp {
           this.weatherData,
           this.currentConcejo,
           this.selectedHikingRouteId,
-          this.selectedRoutesDay
+          this.selectedRoutesDay,
+          this.selectedRoutesFilter || 'all',
+          this.routesWeatherCache
         );
         this.initRoutesCardEvents();
       }
     } catch (e) {
       console.error('[MeteoAstur] Error actualizando panel de rutas:', e);
+    }
+  }
+
+  async loadRoutesEscampadaWeather() {
+    if (this.isLoadingRoutesWeather) return;
+    this.isLoadingRoutesWeather = true;
+    try {
+      const weatherMap = await fetchRoutesBatchWeather();
+      if (weatherMap) {
+        this.routesWeatherCache = weatherMap;
+      }
+    } catch (err) {
+      console.warn('[MeteoAstur] Error cargando clima en lote de rutas:', err);
+    } finally {
+      this.isLoadingRoutesWeather = false;
+      this.refreshRoutesPanel();
     }
   }
 

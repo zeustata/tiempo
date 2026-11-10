@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v3035-anti-falsosol-v1';
+const CACHE_NAME = 'meteoasturlode-v3036-escampada-rutas-v1';
 const STATIC_ASSETS = [
   './',
   './index.html',
