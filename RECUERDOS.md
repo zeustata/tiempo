@@ -2,6 +2,23 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📦 Generación del Bundle Oficial de Producción Google Play (`MeteoAstur_Lode_v3.0.35_bundle10.aab`) — 2026-11-10
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `888f867`.
+- **Ejecución y Empaquetado Nativo AAB (Feedback y Petición Expresa de Lendo - «todo bien. genera el aab»):**
+  1. *Compilación Oficial de Release (`bundleRelease`):*
+     - Compilado en `C:\Users\NUC\Downloads\IA\MeteoAstur_Android_Widget` con Android SDK 36, Target SDK 36, Min SDK 24, `versionCode 10` y `versionName "3.0.35"`.
+     - Generado el paquete oficial: `C:\Users\NUC\Downloads\MeteoAstur_Lode_v3.0.35_bundle10.aab` (6,30 MB).
+  2. *Generación y Blindaje de Clave de Subida Oficial (`meteoastur-release-key.jks`):*
+     - Generado almacén de claves definitivo dentro del proyecto: `C:\Users\NUC\Downloads\IA\MeteoAstur_Android_Widget\keystore\meteoastur-release-key.jks` (alias `meteoastur-upload-key`, validez 10.000 días).
+     - Huella SHA-256 de la clave de subida: `6D:5A:40:18:A2:F9:9C:15:3B:F7:BC:AF:D3:78:E9:1A:EE:B5:4E:D2:0B:F1:6F:65:6B:FD:EA:1E:AC:6E:9C:8E`.
+     - Exportado certificado público: `C:\Users\NUC\Downloads\upload_certificate.pem` listo para Google Play Console si solicita restablecimiento de clave de subida.
+  3. *Actualización de Digital Asset Links (Ley 7):*
+     - Incorporada la nueva huella SHA-256 en `.well-known/assetlinks.json` en `Tiempo` y en la raíz `zeustata.github.io`, preservando las firmas de Play App Signing (`34:23:04:1C:...`) y garantizando experiencia 100% a pantalla completa sin barras CCT.
+  4. *Contenido del Paquete Nativo:*
+     - Familia completa de 6 widgets nativos calibrados (4x2, 4x3 y 4x4 en versiones Oscura y Cristalina con borde tricolor a 315° y sombra de alto contraste).
+     - Acceso instantáneo a alarmas/despertador de fábrica al pulsar en el reloj (prioridad Honor MagicOS `com.hihonor.deskclock`).
+     - Widget 4x4 con separación física garantizada (`RelativeLayout` anti-solapamiento de hora y temperatura) y cero decimales en XML para compatibilidad total con launchers OEM.
+
 ## 🛡️ Blindaje Anti-Falso Sol con Nubosidad Extrema & Widget 4x4 Total (`v3.0.35.1 - Parche Calibración y Widgets`) — 2026-11-10
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `805ee90` (`v3.0.35`).
 - **Petición y Diagnóstico Crítico de Lendo («mira ahora ya funciona el reloj. pero me doy cuenta que pone nublado y en la app sol y nubes. no cambia pero tambien te digo que ahora mismo no hace ni resol. esta nublado. [...] arregla todo el widget y de paso arregla el falso sol [...] subelo. supongo que la aab va independiente y hay que subirlo a google no?»):**
