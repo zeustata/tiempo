@@ -9,6 +9,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.37] - 2026-11-10
+### Added
+- **🌧️ Termómetro y Ranking de Lluvia por Concejos en Radar (`radarRainService.js` + `radarRankingCard.js` + `app.js` - Leyes 0, 1, 3, 4, 11 y 14):**
+  - **Aprovechamiento Táctico del Menú Radar:** Integrado un nuevo panel comparativo debajo del mapa satélite que responde a la pregunta de dónde va a llover más o menos en los próximos días en todo el Principado de Asturias.
+  - **Previsión a 3 Días en Lote:** Selector `[ ☀️ Hoy ]`, `[ 📅 Mañana ]` y `[ 🗓️ Pasado mañana ]` con nombres reales de día de la semana. Las 82 coordenadas de concejos y estaciones se consultan agrupadas en una única petición de 450 ms con 15 minutos de caché.
+  - **Conmutador de Sentido:** Clasificación instantánea entre `[ ☀️ Dónde lloverá menos ]` (de menor a mayor precipitación) y `[ 🌧️ Dónde lloverá más ]` (de mayor a menor).
+  - **Podio Top 5 Compacto:** 5 tarjetas visuales con medallas (`🥇`, `🥈`, `🥉`), litros de lluvia exactos, probabilidad porcentual, insignias lumínicas (`Seco`, `Casi Seco`, `Orbayu`, `Lluvia`, `Temporal`) y barra dinámica de intensidad, impidiendo scrolls infinitos.
+  - **Ventana Emergente (Modal) con Buscador:** Botón `[ 📋 Ver ranking completo de concejos (82) ➔ ]` que abre una ventana modal protegida contra desbordes en móvil, con buscador predictivo en tiempo real y selector táctil que enfoca automáticamente el concejo seleccionado.
+
 ## [3.0.36.1] - 2026-11-10
 ### Fixed
 - **⚡ Reactividad Inmediata en Filtros de Rutas (`app.js` + `routesCard.js`):**

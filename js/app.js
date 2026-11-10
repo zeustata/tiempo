@@ -35,6 +35,8 @@ import { evaluateWeatherAlerts } from './utils/weatherAlerts.js?v=3.0.5';
 import { openShareModal } from './utils/shareCardGenerator.js?v=3.0.23.59';
 import { toggleWeatherSpeech, stopWeatherSpeech } from './utils/weatherSpeaker.js?v=2.0.0';
 import { getClimatologyContext, renderClimatologyModalBody } from './utils/climatologyData.js?v=3.0.25.22';
+import { fetchConcejosRainBatch } from './utils/radarRainService.js?v=3.0.37';
+import { renderRadarRankingCard, renderRadarRankingModalHtml } from './components/radarRankingCard.js?v=3.0.37';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, previsión horaria y curvas interactivas', key: '1' },
@@ -49,11 +51,11 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.36';
+export const CURRENT_APP_VERSION = '3.0.37';
 // Control inteligente de Auto-Prompt del Changelog (Doctrina de No-Fatiga al Usuario - Feedback Lendo):
 // Solo se incrementa ante cambios visuales grandes, módulos nuevos o novedades perceptibles.
 // En ajustes finos, calibraciones matemáticas y parches internos se mantiene para no fatigar al usuario con modales.
-export const CURRENT_CHANGELOG_PROMPT_VERSION = '3.0.36';
+export const CURRENT_CHANGELOG_PROMPT_VERSION = '3.0.37';
 
 class MeteoAsturiasApp {
   constructor() {
@@ -82,6 +84,10 @@ class MeteoAsturiasApp {
     this.previewHalloweenMode = false;
     this.userCoords = this.prefs.lastCoords || null;
     this.activeLocalidad = this.prefs.lastLocalidad || null;
+    this.radarRainMap = null;
+    this.selectedRadarRainDay = 0;
+    this.selectedRadarRainOrder = 'dry';
+    this.isLoadingRadarRain = false;
     
     this.init();
   }
@@ -2504,6 +2510,7 @@ class MeteoAsturiasApp {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       setTimeout(() => resizeMap(), 50);
       setTimeout(() => resizeMap(), 280);
+      this.ensureRadarRainData();
     }
 
     if (targetTab === 'live') {
@@ -3488,6 +3495,150 @@ class MeteoAsturiasApp {
     }
   }
 
+  async ensureRadarRainData() {
+    if (!this.radarRainMap && !this.isLoadingRadarRain) {
+      this.isLoadingRadarRain = true;
+      try {
+        const data = await fetchConcejosRainBatch();
+        if (data) this.radarRainMap = data;
+      } catch (e) {
+        console.warn('[MeteoAstur] Error cargando lluvia de concejos:', e);
+      } finally {
+        this.isLoadingRadarRain = false;
+      }
+    }
+    this.refreshRadarRainRanking();
+  }
+
+  refreshRadarRainRanking() {
+    try {
+      const container = document.getElementById('radar-rain-ranking-container');
+      if (!container) return;
+
+      if (!this.radarRainMap) {
+        container.innerHTML = `
+          <div style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 16px; text-align: center; margin-top: 14px; color: var(--text-dim); font-size: 0.8rem;">
+            <span>⏳ Analizando previsión de lluvia en los 82 concejos de Asturias...</span>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = renderRadarRankingCard(
+        this.radarRainMap,
+        this.selectedRadarRainDay,
+        this.selectedRadarRainOrder,
+        this.currentConcejo ? this.currentConcejo.id : null
+      );
+
+      this.initRadarRainRankingEvents();
+    } catch (e) {
+      console.error('[MeteoAstur] Error actualizando ranking de lluvia:', e);
+    }
+  }
+
+  initRadarRainRankingEvents() {
+    // 1. Conmutador de Día (Hoy / Mañana / Pasado)
+    document.querySelectorAll('.btn-radar-rain-day').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const day = parseInt(e.currentTarget.dataset.day, 10);
+        if (!isNaN(day) && day !== this.selectedRadarRainDay) {
+          this.triggerHaptic();
+          this.selectedRadarRainDay = day;
+          this.refreshRadarRainRanking();
+        }
+      });
+    });
+
+    // 2. Conmutador de Orden ('dry' vs 'wet')
+    document.querySelectorAll('.btn-radar-rain-order').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const order = e.currentTarget.dataset.order;
+        if (order && order !== this.selectedRadarRainOrder) {
+          this.triggerHaptic();
+          this.selectedRadarRainOrder = order;
+          this.refreshRadarRainRanking();
+        }
+      });
+    });
+
+    // 3. Clic en concejo del Top 5 -> Cambia la estación y va a pestaña 'live'
+    document.querySelectorAll('.radar-rain-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        const concejoId = e.currentTarget.dataset.concejoId;
+        if (concejoId) {
+          this.triggerHaptic();
+          this.switchConcejo(concejoId);
+          this.switchTab('live');
+        }
+      });
+    });
+
+    // 4. Modal completo de los 82 concejos
+    const btnOpenModal = document.getElementById('btn-open-radar-rain-modal');
+    if (btnOpenModal) {
+      btnOpenModal.addEventListener('click', () => {
+        this.triggerHaptic();
+        this.openRadarRainModal();
+      });
+    }
+  }
+
+  openRadarRainModal() {
+    document.querySelectorAll('body > #radar-concejos-modal').forEach(m => m.remove());
+
+    const modalHtml = renderRadarRankingModalHtml(
+      this.radarRainMap,
+      this.selectedRadarRainDay,
+      this.selectedRadarRainOrder,
+      this.currentConcejo ? this.currentConcejo.id : null
+    );
+
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = modalHtml.trim();
+    const modalEl = tempDiv.firstElementChild;
+    if (!modalEl) return;
+
+    document.body.appendChild(modalEl);
+    modalEl.style.display = 'flex';
+
+    const btnClose = modalEl.querySelector('#btn-close-radar-rain-modal');
+    if (btnClose) {
+      btnClose.addEventListener('click', () => {
+        this.triggerHaptic();
+        modalEl.remove();
+      });
+    }
+    modalEl.addEventListener('click', (e) => {
+      if (e.target === modalEl) {
+        modalEl.remove();
+      }
+    });
+
+    const searchInput = modalEl.querySelector('#radar-rain-search-input');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        modalEl.querySelectorAll('.radar-rain-modal-item').forEach(row => {
+          const name = row.dataset.name || '';
+          row.style.display = (!query || name.includes(query)) ? 'flex' : 'none';
+        });
+      });
+    }
+
+    modalEl.querySelectorAll('.radar-rain-modal-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        const concejoId = e.currentTarget.dataset.concejoId;
+        if (concejoId) {
+          this.triggerHaptic();
+          modalEl.remove();
+          this.switchConcejo(concejoId);
+          this.switchTab('live');
+        }
+      });
+    });
+  }
+
   refreshCyclingPanel() {
     try {
       const container = document.getElementById('panel-cycling');
@@ -3570,6 +3721,15 @@ class MeteoAsturiasApp {
         }
       } catch (e) {
         console.error('[MeteoAstur] Error renderizando Playas & Mareas:', e);
+      }
+
+      // 2bb. Módulo Radar - Termómetro de Lluvia por Concejos
+      try {
+        if (this.radarRainMap) {
+          this.refreshRadarRainRanking();
+        }
+      } catch (e) {
+        console.error('[MeteoAstur] Error actualizando Ranking de Lluvia:', e);
       }
 
       // 2b. Módulo Surf & Rompientes
