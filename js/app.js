@@ -4,7 +4,7 @@ import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedW
 import { renderCurrentWeather } from './components/currentCard.js?v=3.0.25.22';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.25.10';
 import { renderSurfCard } from './components/surfCard.js?v=3.0.25.2';
-import { renderRoutesCard } from './components/routesCard.js?v=3.0.36';
+import { renderRoutesCard } from './components/routesCard.js?v=3.0.36.1';
 import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.25.5';
 import { renderMountainCard } from './components/mountainCard.js?v=3.0.29';
 import { renderTourismCard } from './components/tourismCard.js?v=3.0.25.5';
@@ -3343,7 +3343,7 @@ class MeteoAsturiasApp {
     document.querySelectorAll('.btn-routes-filter').forEach(btn => {
       btn.addEventListener('click', async (e) => {
         const filter = e.currentTarget.dataset.filter;
-        if (filter && filter !== this.selectedRoutesFilter) {
+        if (filter) {
           this.triggerHaptic();
           this.selectedRoutesFilter = filter;
           if (filter === 'dry' && !this.routesWeatherCache) {
@@ -3586,11 +3586,18 @@ class MeteoAsturiasApp {
         console.error('[MeteoAstur] Error renderizando Surf & Rompientes:', e);
       }
 
-      // 2c. Módulo Rutas & Senderismo (v3.0.24.62)
+      // 2c. Módulo Rutas & Senderismo (v3.0.36)
       try {
         const routesContainer = document.getElementById('panel-routes');
         if (routesContainer) {
-          routesContainer.innerHTML = renderRoutesCard(data, concejo, this.selectedHikingRouteId, this.selectedRoutesDay);
+          routesContainer.innerHTML = renderRoutesCard(
+            data,
+            concejo,
+            this.selectedHikingRouteId,
+            this.selectedRoutesDay,
+            this.selectedRoutesFilter || 'all',
+            this.routesWeatherCache
+          );
           this.initRoutesCardEvents();
         }
       } catch (e) {

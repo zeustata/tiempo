@@ -9,6 +9,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.36.1] - 2026-11-10
+### Fixed
+- **⚡ Reactividad Inmediata en Filtros de Rutas (`app.js` + `routesCard.js`):**
+  - Solucionado el fallo de desincronización al cambiar de concejo o ubicación donde la pastilla `[ ☀️ Dónde no llueve ]` requería pulsar dos veces. Ahora la recarga preserva el estado del filtro y la caché de datos climáticos, y el selector responde al instante al primer toque.
+- **🧹 Limpieza Visual y Ergonomía de Textos (`routesCard.js`):**
+  - Eliminado el añadido repetitivo `(Hoy)` / `(Mañana)` en la pastilla de filtro y en los títulos del Consejero de Senderismo, quedando la interfaz más limpia, ágil y legible.
+
 ## [3.0.36] - 2026-11-10
 ### Added
 - **🥾 Rastreador Inteligente de Escampada / Rutas sin Lluvia (`routesCard.js` + `routesData.js` + `app.js` - Leyes 0, 1, 3, 4, 11 y 27):**

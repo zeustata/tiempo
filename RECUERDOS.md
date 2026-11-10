@@ -2,6 +2,12 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏛️ Blindaje Constitucional: Significado Estricto e Inviolable de «Písale» (Leyes 1 y 3) — 2026-11-10
+- **Mandato y Exigencia de Lendo («joder pisale es solo en local. no entiendo lo de hoy princesa. no paras de meter la pata y adelantarte cuando no te digo nada [...] ponlo en la constitucion aunque creo que ya estaba»):**
+  - **Diagnóstico y Corrección de Conducta:** Tras una precipitación de Princesa al encadenar la programación con un `git push` sin haber entregado previamente el enlace local a Lendo, se refuerzan de forma explícita e indiscutible las Leyes 1 y 3 de la Constitución Suprema en todos los repositorios del ecosistema (`Tiempo`, `ConstitucionIA`, `Portal_Policia_Gijon`, `Porras`, `Biweger`).
+  - **Significado Inviolable:** Las órdenes de visto bueno o arranque (*«písale», «adelante», «hazlo», «dale»*) autorizan **ÚNICA Y EXCLUSIVAMENTE a crear o editar código en LOCAL**.
+  - **Prohibición de Push Automático:** Queda terminantemente prohibido interpretar «písale» como orden de despliegue. Al terminar la modificación local y verificarla internamente, la labor se detiene en seco, se levanta el servidor local (`localhost:8080`), se facilita el enlace a Lendo y se espera su orden formal e independiente de despliegue a GitHub (*«súbelo a GitHub», «despliega», «haz push»*).
+
 ## 🥾 Rastreador Inteligente de Escampada y Ampliación a 58 Sendas (`v3.0.36`) — 2026-11-10
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.35.1` (`60a8a70` o similar).
 - **Petición e Instrucción Expresa de Lendo («me habla el jefe de sala que mañana quiere hacer una ruta por asturias. tenemos el modelo desde la ubicacion que tenemos pero me dice que quiere hacer una ruta por asturias pero le da igual donde pero que sea una ruta que menos posibilidades de lluvia existan. entonces pense que podemos ampliar el menu de rutas. hay gente que pilla el coche hacer una ruta en otra parte de asturias y si de paso puedes ampliar rutas, mejor [...] pisale»):**
@@ -3629,41 +3635,7 @@ ICONO | ESTADO EN METEOASTUR LODE              | NUBES (cc)  | RAD. DIRECTA (irr
   1. *Diagnóstico Científico y Comparativa de Modelos:*
      - Lendo constató que la aplicación mostraba *«Orbayu / Llovizna ligera 🌦️»* en Castrillón (Piedras Blancas) mientras en el exterior el cielo estaba completamente cubierto pero seco.
      - *Auditoría de datos crudos en Open-Meteo:*
-       - ECMWF, ICON y GFS reportaban código 3 (Nublado / Cubiertu) con **0.0 mm**.
-       - AROME (1.3 km), fuente de alta resolución para el consenso de costa, reportaba código 3 con **0.1 mm** de precipitación (la menor cifra no nula posible).
-       - La humedad relativa en Castrillón era del **79%**, muy lejos del umbral de condensación y saturación (90–95%) necesario para el orbayu asturiano en superficie. Con 79%, cualquier micro-gota se evapora en los 1.000 m de caída libre (fenómeno de *virga*).
-  2. *Causa Raíz en el Algoritmo Clasificador:*
-     - En `weatherIcons.js`, la regla consideraba cualquier precipitación `>= 0.1 mm` como lluvia física activa en superficie. Al ser `< 0.5 mm`, el clasificador anulaba el código base 3 y lo reconducía forzosamente a *Caso G: Orbayu*.
-  3. *Intervención Técnica en `js/utils/weatherIcons.js`:*
-     - Se introdujo la variable de discriminación física `isDryTraceVirga`: bajo códigos WMO de tiempo seco (0: despejado, 1: soleado, 2: claros, 3: nublado, 45/48: niebla), una micro-traza de `0.1 mm` solo se valida como lluvia si la humedad relativa alcanza la saturación (`h >= 90%`).
-     - Con humedades inferiores al 90%, se descarta la traza como virga y se preserva intacto el código del cielo: **Nublado / Cubiertu ☁️**.
-  4. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
-     - Versión oficial elevada a **`v2.2.57 ☁️`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.57'` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
-     - Service Worker actualizado a `meteoasturlode-v2257-anti-false-orbayu-overcast` en `sw.js`.
-     - Query strings sincronizadas a `?v=2.2.57` en `index.html` (`app.js`).
-
-## 🎿 Actualización v2.2.56: Blindaje de Renderizado Inmediato de Iconos SVG en Tablets — 2026-10-17
-- **Resolución Científica del «Expediente X del Tablet» (Feedback Lendo - «solo me pasa en el tablet, no están los iconos y tengo que tocar la pantalla para que salgan» y «pisale»):**
-  1. *Diagnóstico Científico y Causa Raíz:*
-     - Lendo reportó que en su tablet, al abrir la previsión a 7 días de *Cordillera & Nieve*, los iconos SVG del tiempo en las cabeceras de los días y en los tramos horarios no se dibujaban en pantalla hasta que tocaba el cristal con el dedo.
-     - *Explicación del fenómeno físico y gráfico:* En pantallas panorámicas de tablet (modo apaisado), los 7 días de previsión caben simultáneamente en el viewport sin requerir scroll vertical. En móvil, el usuario debe deslizar el dedo hacia abajo para llegar a ellos (lo que fuerza el evento táctil y repinta los iconos de forma inadvertida). En desktop, el ratón envía eventos `mousemove` continuos que mantienen la GPU despierta.
-     - En tablets Android (Chromium), los gráficos vectoriales SVG con sombras (`filter: drop-shadow`) ubicados dentro de un contenedor con scroll horizontal (`overflow-x: auto`) que a su vez cuelga de un panel animado por hardware (`slideInFromRight` con aceleración GPU) sufren un retraso de rasterizado (*deferred tile rasterization*): Chromium pospone el dibujado de los vectores para ahorrar batería hasta que se produce una interacción táctil explícita (`touchstart`).
-  2. *Intervención Técnica en CSS y JS:*
-     - **Aislamiento de Capa Gráfica Independiente en CSS:** Aplicado `isolation: isolate; transform: translateZ(0); -webkit-backface-visibility: hidden; backface-visibility: hidden;` en `.ski-7days-carousel`, `.ski-day-card`, `.ski-day-icon`, `.daypart-icon` y `.astur-svg-icon`. Con esto, Chromium no subordina el rasterizado de los iconos al ciclo de animación del panel padre y los procesa de inmediato en su propia capa.
-     - **Micro-Despertador en `switchTab('mountain')`:** En `js/app.js`, se introdujo un refresco no destructivo de 60 ms al activar la pestaña de Cordillera para invalidar el estado durmiente de la GPU del tablet y garantizar el pintado instantáneo sin esperar a la interacción táctil.
-  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
-     - Versión oficial elevada a **`v2.2.56 🎿`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.56'` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
-     - Service Worker actualizado a `meteoasturlode-v2256-tablet-ski-icons-raster` en `sw.js`.
-     - Query strings sincronizadas a `?v=2.2.56` en `index.html` (`main.css`, `components.css`, `app.js`).
-
-## 🏄‍♂️ Actualización v2.2.55: Desbloqueo y Visibilidad Total del Viento en Rompientes — 2026-10-17
-- **Emancipación del Viento en Costa y Cifra Directa en Rompientes (Feedback Lendo - «pero no lo veo en rompientes» y «pisale a ver que tal»):**
-  1. *Diagnóstico Funcional y Descubrimiento:*
-     - Lendo accedió al módulo de *Surf & Rompientes* (`surfCard.js`) buscando verificar el viento en la costa de Salinas, pero constató que no aparecía en los sensores principales.
-     - *Causa raíz:* En el widget «Período y Dirección del Swell», el renderizado del viento estaba programado dentro de un condicional excluyente contra el Swell 2 (`hasSecondary && secSwellDir ? Swell 2 : Viento`). Al existir casi siempre un tren de oleaje secundario en el Cantábrico, la línea del viento quedaba sistemáticamente oculta. Además, la pastilla de textura marina en la Hero Card describía el impacto cualitativo (`Superficie Picada • Viento de mar`), pero carecía de la métrica numérica en km/h.
-  2. *Intervención Técnica en `surfCard.js`:*
-     - **Viento en Costa Permanente e Incondicional:** Desacoplado el viento del oleaje secundario. Ahora conviven ambos armónicamente: Swell 1, Swell 2 (si existe) y una fila dedicada y delimitada con `💨 Viento en costa: X km/h (o rango de rachas)` junto a la flecha SVG orientada y coloreada según sea terral (verde) o de mar (rojo/ámbar).
-     - **Integración Numérica en la Micro-Past
+       - ECMWF, ICON y GFS repo
      - Lendo detectó que en la app la racha actual sí marcaba `16 km/h` y la racha máxima `31 km/h`, y que otras plataformas como Maldonado (*eltiempo.es*) publicaban `15 km/h` como cifra de cabecera.
      - *Causa raíz:* La API y el modelo registraban los datos con exactitud milimétrica (`current.wind_speed_10m = 6.8` como media sostenida a 10 metros, y `current.wind_gusts_10m = 16.0` como racha instantánea). Sin embargo, la jerarquía visual otorgaba todo el tamaño tipográfico (`2.2rem`) a la media matemática continua, relegando la racha (que es lo que el ser humano y el entorno sienten físicamente) a un texto secundario pequeño.
   2. *Intervención Técnica en `currentCard.js` y `components.css`:*

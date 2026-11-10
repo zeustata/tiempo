@@ -82,14 +82,14 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
     : `A ${activeRoute.distFromUserKm} km de ${concejoTitle}`;
 
   // Consejero adaptado al filtro de Escampada
-  let advisorTitle = `Consejero de Senderismo (${dayLabelCap})`;
+  let advisorTitle = 'Consejero de Senderismo';
   let advisorBadge = 'Recomendada 🌟';
   let advisorText = `Senda óptima para ${dayLabelLower} en ${concejoTitle}: <strong style="color: var(--primary);">${recommendedRoute.name}</strong> (${recommendedRoute.diff}, ${recommendedRoute.dist}). Ideal por estado de firme y cercanía.`;
 
   if (activeFilter === 'dry') {
     const topDry = displayedRoutes[0];
     const secondDry = displayedRoutes[1];
-    advisorTitle = `☀️ Rastreador de Escampada (${dayLabelCap})`;
+    advisorTitle = '☀️ Rastreador de Escampada';
     advisorBadge = 'Garantía Seca 🛡️';
     if (topDry && topDry.weatherBadge && topDry.weatherBadge.isDry) {
       advisorText = `¡Para no mojarte ${dayLabelLower} en Asturias! La ruta con menor riesgo de lluvia es <strong style="color: #38bdf8;">${topDry.name}</strong> en <strong>${topDry.concejoName}</strong> (${topDry.weatherBadge.label}). ${secondDry && secondDry.weatherBadge ? `Alternativa seca: <strong>${secondDry.name}</strong> (${secondDry.concejoName}, ${secondDry.weatherBadge.label}).` : ''}`;
@@ -294,7 +294,7 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
               📍 Cercanas
             </button>
             <button type="button" class="routes-filter-pill btn-routes-filter ${activeFilter === 'dry' ? 'active' : ''}" data-filter="dry" style="${activeFilter === 'dry' ? 'border-color: #38bdf8; background: rgba(56, 189, 248, 0.25);' : ''}">
-              ☀️ Dónde no llueve (${dayLabelCap})
+              ☀️ Dónde no llueve
             </button>
             <button type="button" class="routes-filter-pill btn-routes-filter ${activeFilter === 'facil' ? 'active' : ''}" data-filter="facil">
               🟢 Fáciles
@@ -310,7 +310,7 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
           <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
             <span style="font-size: 1.2rem;">${hike.icon}</span>
             <span style="font-size: 0.8rem; color: var(--text-main); font-weight: 700; line-height: 1.35;">
-              <strong>En ${concejoTitle} (${dayLabelCap}):</strong> ${hike.summary}
+              <strong>En ${concejoTitle}:</strong> ${hike.summary}
             </span>
           </div>
 
@@ -496,7 +496,7 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
             
             ${activeFilter === 'dry' ? `
               <div style="margin-bottom: 10px; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 10px; padding: 8px 10px; font-size: 0.74rem; color: var(--text-main);">
-                <strong>☀️ Rastreador de Escampada (${dayLabelCap}):</strong> Rutas ordenadas automáticamente de menor a mayor probabilidad de lluvia y litros previstos.
+                <strong>☀️ Rastreador de Escampada:</strong> Rutas ordenadas automáticamente de menor a mayor probabilidad de lluvia y litros previstos.
               </div>
             ` : ''}
 
