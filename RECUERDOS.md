@@ -2,6 +2,13 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏛️ Mandato Constitucional Universal: Bóveda Sagrada Externa `G:\Anigravity` (Ley 22) — 2026-11-10
+- **Directriz Estratégica Inmutable de Lendo («quiero que cada vez que tengas que hacer una copia de seguridad importante que no se puede dejar escapar, quiero que lo hagas en esa carpeta, sea cual sea el proyecto. cosas que no se pueden perder o dificilmente recuperables y si quieres lo ponemos en la constitucion»):**
+  - Incorporada de forma obligatoria e imperativa a la **Ley 22** de la Constitución Suprema la cláusula de la **Bóveda Sagrada Externa Universal (`G:\Anigravity\`)**.
+  - Obliga formalmente a replicar una copia íntegra y verificada de cualquier archivo crítico, llaves criptográficas (`.keystore`, `.jks`), certificados (`.pem`), bases de datos no versionadas o entregables difíciles de recuperar de cualquier proyecto del ecosistema (`Tiempo`, `Portal_Policia_Gijon`, `Porras`, `Biweger`, etc.) en `G:\Anigravity\[Nombre_Proyecto]\`.
+  - Queda prohibido dar por cerrado cualquier despliegue o cambio crítico sin haber realizado este respaldo físico externo.
+  - Sincronizada y desplegada la reforma en todos los repositorios de GitHub (`Tiempo`, `ConstitucionIA`, `Portal_Policia_Gijon`, `Porras`, `Biweger`).
+
 ## 🛡️ Bóveda de Respaldo Criptográfico Externo (`G:\Anigravity`) y Cumplimiento Ley 22 — 2026-11-10
 - **Petición e Instrucción Expresa de Lendo («en la unidad G hay una carpeta que se llama antigravity puedes poner ahi? [...] si y que lo pongas en tus recuerdos y haz copia no un corta y pega»):**
   1. *Estructura Creada y Custodiada en Unidad Externa (`G:\Anigravity`):*
