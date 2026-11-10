@@ -9,6 +9,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.1] - 2026-11-10
+### Fixed
+- **💧 Calibración Proporcional de Iconos en Lluvia Débil y Rescate por Radar (`weatherIcons.js` - Leyes 0 y 13):**
+  - **Eliminación de Falsa Lluvia Moderada (3 Gotas):** Corregida la condición en `weatherIcons.js` que catalogaba cualquier lluvia débil de 0.2 mm - 0.4 mm (código WMO 61 o eco tenue de radar) como `Lluvia moderada` (`svgKey: 'rain'`), pintando una nube con 3 gotas desproporcionada cuando en la calle apenas caían cuatro gotas o chispeaba.
+  - **Asignación Fiel de Orbayu / Lluvia Débil (1 Sola Gotita):** Toda precipitación leve (< 0.5 mm) se encauza ahora fielmente a `svgKey: 'drizzle'` con la nube cómic de 1 sola gotita bebé tierna y etiqueta `Lluvia débil / Orbayu`, reservando las 3 gotas exclusivamente para lluvia moderada real (>= 0.5 mm o códigos 63 / 81).
+  - **Auto-Prompt Silencioso (Ley 13):** Se incrementa la versión técnica de código a 3.0.38.1 y la caché del Service Worker para refrescar los módulos del cliente, manteniendo inalterada la clave de control del auto-prompt para no fatigar al usuario con ventanas emergentes.
+
 ## [3.0.38] - 2026-11-10
 ### Added
 - **🚴 Balance Táctico de Ida vs Vuelta y Clásica de Villaviciosa en Ciclismo (`cyclingAdvisor.js` + `cyclingCard.js` + `cyclingData.js` - Leyes 0, 1, 3, 4, 11 y 14):**

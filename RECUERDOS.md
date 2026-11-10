@@ -2,6 +2,20 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 💧 Calibración de Iconos en Lluvia Débil y Rescate por Radar (`v3.0.38.1`) — 2026-11-10
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38` (`bf76977`).
+- **Petición e Instrucción Expresa de Lendo («no puedo. ahora veo q estas con el radar. llueve muy poco ypones una nube con 3 gotas. hay q afinar [...] subelo y siendo un ajuste asi no requiere nada no? para q hagas todo a la vez»):**
+  1. *Diagnóstico Matemático:*
+     - En `weatherApi.js`, cuando el radar en tiempo real detecta reflectividad débil (`light_rain`), asigna `weather_code = 61` y `precipitation = 0.2 mm` con la intención declarada de ser 1 gota.
+     - Sin embargo, en `weatherIcons.js` existía la regla: `else if (p >= 0.5 || code === 63 || code === 81 || (code === 61 && p >= 0.2))`.
+     - Al evaluarse `code === 61 && p >= 0.2`, el sistema reclasificaba 0.2 mm como `Lluvia moderada` y asignaba `svgKey: 'rain'`, dibujando una nube con 3 gotas regulares. En la calle caían cuatro gotas dispersas o chispeaba muy poco y la app mostraba un chaparrón de 3 gotas.
+  2. *Corrección y Ajuste Fino:*
+     - Suprimida la cláusula `(code === 61 && p >= 0.2)` de la lluvia moderada.
+     - El umbral de las 3 gotas (`svgKey: 'rain'`) queda restringido estrictamente a `p >= 0.5 mm` o códigos WMO de lluvia moderada declarada (63 y 81).
+     - Toda precipitación física menor de 0.5 mm (0.1 mm a 0.4 mm, o código 61 leve) transiciona limpiamente a `svgKey: 'drizzle'` (Orbayu / Lluvia débil), mostrando la nube tierna con 1 sola gotita bebé en el centro.
+  3. *Doctrina de Auto-Prompt Silencioso (Ley 13):*
+     - Elevada versión a `3.0.38.1` y caché a `meteoasturlode-v30381-rain-drizzle-v1` para refrescar los módulos del navegador, manteniendo `CURRENT_CHANGELOG_PROMPT_VERSION = '3.0.38'` para evitar ventanas emergentes intrusivas al usuario en micro-ajustes.
+
 ## 🚴 Balance Táctico de Ida vs Vuelta y Clásica de Villaviciosa en Ciclismo (`v3.0.38`) — 2026-11-10
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.37.2` (`6e51fc2`).
 - **Petición e Instrucción Expresa de Lendo (Feedback WhatsApp del Jefe/Mando Kike):**

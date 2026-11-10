@@ -23,7 +23,7 @@ export const WMO_CODES = {
   55: { label: 'Orbayu trupu (Llovizna densa)', icon: '🌧️', svgKey: 'drizzle', lucide: 'cloud-drizzle', bg: 'drizzle', isRain: true, isSnow: false },
   56: { label: 'Llovizna helada ligera', icon: '🌧️', svgKey: 'drizzle', lucide: 'cloud-drizzle', bg: 'drizzle', isRain: true, isSnow: false },
   57: { label: 'Llovizna helada densa', icon: '🌧️', svgKey: 'drizzle', lucide: 'cloud-drizzle', bg: 'drizzle', isRain: true, isSnow: false },
-  61: { label: 'Lluvia débil', icon: '🌧️', svgKey: 'rain', lucide: 'cloud-rain', bg: 'rain', isRain: true, isSnow: false },
+  61: { label: 'Lluvia débil', icon: '🌧️', svgKey: 'drizzle', lucide: 'cloud-drizzle', bg: 'drizzle', isRain: true, isSnow: false },
   63: { label: 'Lluvia moderada', icon: '🌧️', svgKey: 'rain', lucide: 'cloud-rain', bg: 'rain', isRain: true, isSnow: false },
   65: { label: 'Lluvia fuerte / Bastinazu', icon: '🌧️', svgKey: 'heavy-rain', lucide: 'cloud-rain-wind', bg: 'heavy-rain', isRain: true, isSnow: false },
   66: { label: 'Lluvia helada ligera', icon: '🌧️', svgKey: 'rain', lucide: 'cloud-rain', bg: 'rain', isRain: true, isSnow: false },
@@ -338,8 +338,8 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
           isSnow: false
         };
       }
-      // 🌧️ Caso F: Lluvia moderada (p >= 0.5 mm o códigos 63 / 81 o código 61 con lluvia física >= 0.2 mm)
-      else if (p >= 0.5 || code === 63 || code === 81 || (code === 61 && p >= 0.2)) {
+      // 🌧️ Caso F: Lluvia moderada (p >= 0.5 mm o códigos 63 / 81)
+      else if (p >= 0.5 || code === 63 || code === 81) {
         // Si es de día y hay sol activo o claros mientras cae el chaparrón, es chubasco con sol
         if (code === 80 || (!isNight && (hasActiveSun || (cc !== null && cc <= 70) || code === 1 || code === 2) && p < 2.5)) {
           base = {
@@ -375,11 +375,13 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
           isSnow: false
         };
       }
-      // 💧 Caso G: Orbayu / Llovizna ligera (p >= 0.1 mm o códigos 51/53/55/56/57 con saturación h >= 94%)
+      // 💧 Caso G: Orbayu / Lluvia débil / Llovizna ligera (p < 0.5 mm)
       else {
         const isSaturatedFineDrizzle = !isPhysicallyRaining && h !== null && h >= 94;
         let drizzleLabel = isNight ? 'Orbayu nocturno ligero' : 'Orbayu / Llovizna ligera';
-        if (isSaturatedFineDrizzle) {
+        if (code === 61 || (p >= 0.1 && p < 0.5)) {
+          drizzleLabel = isNight ? 'Lluvia débil nocturna' : 'Lluvia débil / Orbayu';
+        } else if (isSaturatedFineDrizzle) {
           drizzleLabel = isNight ? 'Orbayu meón nocturno (Llovizna fina)' : 'Orbayu meón (Llovizna fina)';
         }
         base = {

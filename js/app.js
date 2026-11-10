@@ -12,7 +12,7 @@ import { renderForecast, renderHourlyForecastBlock } from './components/forecast
 import { renderWeatherChart } from './components/chartsView.js?v=3.0.23.58';
 import { renderAstronomyView } from './components/astronomyCard.js?v=3.0.33';
 import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter, locateUserGps, toggleRadarFullscreen } from './components/mapRadar.js?v=3.0.34';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=3.0.35.1';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=3.0.38.1';
 import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=2.0.0';
 import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=2.0.0';
 import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=2.0.0';
@@ -51,7 +51,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.38';
+export const CURRENT_APP_VERSION = '3.0.38.1';
 // Control inteligente de Auto-Prompt del Changelog (Doctrina de No-Fatiga al Usuario - Feedback Lendo):
 // Solo se incrementa ante cambios visuales grandes, módulos nuevos o novedades perceptibles.
 // En ajustes finos, calibraciones matemáticas y parches internos se mantiene para no fatigar al usuario con modales.
