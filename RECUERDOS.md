@@ -2,6 +2,19 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌦️ Paridad 1:1 App-Widget: Corrección de Escampada y Nube Seca sin Gotas (`MeteoAstur_v3.0.35_TEST9.apk` / `bundle10`) — 2026-11-10
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo.
+- **Diagnóstico y Petición de Lendo («le doy a actualizar y me pone el icono que ves en la captura de los widget. pero si entras ves que es una nube como te mande tambien sin lluvia. salgo y el icono del widget sigue siendo una nube con una gota [...] mira el buzon nuestro que te mande las dos capturas [...] no puede simplemente copiar el icono y los datos que pone la app al actualizar o entras en la app? [...] vale pisale»):**
+  1. *Causa Técnica del Icono con Gota Fantasma:*
+     - En `MeteoWeatherEngine.java`, el radar en vivo (`checkLiveRadarEcho`) devolvía nivel 1 (trazas o virga en altura) y forzaba ciegamente `weatherCode = 61`, `condition = "Orbayu / Lluvia débil 🌦️"` y `ic_weather_drizzle` (nube con gota), a pesar de que la precipitación en superficie (`data.rainMm`) era estrictamente `0.0 mm`.
+     - Mientras tanto, la app web (`weatherApi.js`) aplicaba la Regla de Soberanía de Escampada: si llueve 0.0 mm, el eco débil de radar no representa lluvia en el suelo, mostrando `Nublado • Cubiertu ☁️` (nube limpia sin gotas).
+  2. *Corrección y Paridad Exacta en Java:*
+     - Modificado `MeteoWeatherEngine.java`: el radar nivel 1 solo activa orbayu/llovizna si la lluvia en superficie es real (`data.rainMm >= 0.1`). Si no llueve (`< 0.1 mm`), delega limpiamente en `applyAsturiasWeatherRules(...)`.
+     - Calibrada `applyAsturiasWeatherRules(...)`: con cobertura nubosa alta (`cloudCover >= 70%` o `code == 3`) y lluvia < 0.1 mm, asigna estrictamente `Nublado ☁️` con `ic_weather_cloudy` (la nube limpia idéntica a la app web).
+  3. *Compilación y Despliegue:*
+     - Generada `MeteoAstur_v3.0.35_TEST9.apk` (7,35 MB) y enviada a `@lendo_IA_Bot` vía Telegram.
+     - Compilado y firmado el paquete oficial de producción: `C:\Users\NUC\Downloads\MeteoAstur_Lode_v3.0.35_bundle10.aab` (6,30 MB).
+
 ## 💫 Feedback Visual de Recarga Táctil y Giro de Icono (`MeteoAstur_v3.0.35_TEST8.apk` / `bundle10`) — 2026-11-10
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit `f849ff3`.
 - **Petición y Perfeccionamiento Ergonómico de Lendo («el boton de recarga entiendo que no se puede hacer que las flechas giren para dar la sensacion que actualiza no? [...] a ver yo decia que guire el icono durante un segundo pero si no se puede pues lo que decias de conmutar y poner actualizar como decias»):**
