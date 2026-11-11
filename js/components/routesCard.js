@@ -153,7 +153,7 @@ function renderRouteDaylightGraph(hourly, activeDay = 'today', activeRw = null, 
     : maxGust;
 
   return `
-    <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid rgba(56, 189, 248, 0.28); border-radius: 12px; margin-bottom: 12px; box-sizing: border-box; overflow: hidden;">
+    <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid rgba(250, 204, 21, 0.35); border-radius: 12px; margin-bottom: 12px; box-sizing: border-box; overflow: hidden; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);">
       
       <!-- Cabecera Plegable / Acordeón Táctil (Feedback Lendo - Ley 11) -->
       <button type="button" id="btn-toggle-daylight-graph" class="btn-toggle-daylight-graph" style="
@@ -178,9 +178,19 @@ function renderRouteDaylightGraph(hourly, activeDay = 'today', activeRw = null, 
           </span>
         </div>
 
-        <div style="display: flex; align-items: center; gap: 5px; flex-shrink: 0;">
-          <span class="daylight-toggle-text" style="font-size: 0.76rem; font-weight: 700; color: var(--primary);">Ver Gráfica</span>
-          <span class="daylight-toggle-arrow" style="font-size: 0.80rem; color: var(--primary); transition: transform 0.2s ease;">▾</span>
+        <div style="
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          flex-shrink: 0;
+          padding: 4px 11px;
+          border-radius: 14px;
+          background: rgba(250, 204, 21, 0.15);
+          border: 1px solid rgba(250, 204, 21, 0.50);
+          box-shadow: 0 0 10px rgba(250, 204, 21, 0.20);
+        ">
+          <span class="daylight-toggle-text" style="font-size: 0.76rem; font-weight: 800; color: #facc15; white-space: nowrap;">Ver Gráfica</span>
+          <span class="daylight-toggle-arrow" style="font-size: 0.80rem; color: #facc15; transition: transform 0.2s ease;">▾</span>
         </div>
       </button>
 

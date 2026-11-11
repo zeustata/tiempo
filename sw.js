@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303814-optimal-conditions-v1';
+const CACHE_NAME = 'meteoasturlode-v303815-yellow-pill-graph-v1';
 const STATIC_ASSETS = [
   './',
   './index.html',

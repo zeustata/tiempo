@@ -2,6 +2,21 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 💛 Pastilla Táctil en Amarillo Oro para Desplegar la Gráfica de Ruta (`v3.0.38.15`) — 2026-11-11
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.14` (`b5b146d`).
+- **Petición e Instrucción Expresa de Lendo («quiero que llame la atencion la tarjeta que despliega para ver el grafico. de alguna manera tiene que verse mejor lo de ver grafica. podemos cambiar el azul que tiene por un amarillo? [...] y entrara bien para que se vea en un movil? te mande una captura para que veas como esta ahora en mi movil y lo miras [...] pisale»):**
+  1. *Diagnóstico Visual en Móvil:*
+     - En la captura aportada por Lendo, el botón `Ver Gráfica ▾` se presentaba en texto plano de color azul cian, perdiéndose entre la paleta oscura de la interfaz y sin parecer un botón interactivo.
+     - Asimismo, se constató una holgura libre de más de 100px entre las métricas de lluvia/viento y el botón derecho, confirmando la viabilidad matemática de una pastilla estética.
+  2. *Implementación Estética Ergonómica (Leyes 0, 11 y 14):*
+     - Sustituido el texto plano por una cápsula/pastilla acolchada en amarillo oro asturiano (`#facc15`) con fondo glassmorphism translúcido, borde definido y micro-sombra dorada (`box-shadow`).
+     - Borde exterior del contenedor con sutil destello dorado (`rgba(250, 204, 21, 0.35)`).
+     - Al alternar, el texto pasa fluidamente a `Ocultar ▴`.
+  3. *Ciclo Constitucional Estrictamente Local y Notificación Telegram (Leyes 1, 3, 9 y 23):*
+     - Cambios aplicados exclusivamente en archivos locales.
+     - Servidor de pruebas levantado en `http://localhost:8080`.
+     - Notificación sonora enviada a Telegram para verificación previa de Lendo.
+
 ## 🌟 Evolución Integral a «Mejores Condiciones» y Diagnóstico Adaptativo de Destino (`v3.0.38.14`) — 2026-11-11
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.13` (`8ffcc05`).
 - **Petición e Instrucción Expresa de Lendo («ahora hay que poner bisturi del fino. te mande en el buzon nuestro una captura. Primero, si ves la tarjeta, tengo puesto "Donde No llueve" debajo en las otras tarjetas cambia la ubicacion pero en la propia tarjeta sigue poniendo los dados de castrillon. Segundo, el Boton "Donde no llueve" es un poco corta. Imaginate que me pones una ruta donde no llueve como favorita pero hay rachas de viento de 100km por hora? deberiamos de renombrarla teniendo todos los factores no solo la lluvia y eso cambiaria un poco todo la siguiente tarjeta que pone Rastreador de Escampada Garantia seca. dime como lo ves? [...] vale pisale en local»):**
@@ -3672,22 +3687,7 @@ ICONO | ESTADO EN METEOASTUR LODE              | NUBES (cc)  | RAD. DIRECTA (irr
      - **Futuro Clásico (`weatherFuturoIcons.js`):** Sol esférico 2.5D con rayos y reflejo especular, nube de carrocería satinada y gotas de cristal líquido.
      - **Liquid Glass 3D (`weatherGlassIcons.js`):** Sol de cristal oro translúcido con refracción, nube aero glass con borde luminoso y gotas vítreas.
      - **Pixel Art Retro (`weatherPixelIcons.js`):** Sol y nube en cuadrícula arcade de 8 bits con gotas de píxeles azules.
-     - **Minimalista Neón (`weatherNeonIcons.js`):** Líneas finas con filtro resplandeciente (`filter: drop-shadow`) combinando sol dorado neón y nube cian con gotas.
-     - **Dibujo a Mano (`weatherSketchIcons.js`):** Sol y nube acuarelados a mano alzada con trazos de grafito y gotas en aguada azul.
-     - **Especial Halloween (`weatherHalloweenIcons.js`):** Calabaza Jack-o'-lantern solar asomando entre nubes púrpuras de Samhain con gotas de poción verde y morada.
-  3. *Calibración Meteorológica WMO & Lógica Física (`weatherIcons.js`):*
-     - Reconfigurado el código WMO 80 como *Chubascos con sol / Llueve y fai sol* con `svgKey: 'showers'`.
-     - En `getWeatherInfo`: activación inteligente diurna cuando confluyen lluvia física (< 2.5 mm) y claros/radiación solar directa confirmada por satélite o sensores en superficie.
-  4. *Cache-Busting y Despliegue Oficial (Leyes 1, 3, 4, 10, 11 y 13):*
-     - Service Worker actualizado a `meteoasturlode-v2268-icono-chubascos-sol` en `sw.js`.
-     - Versión oficial elevada a **`v2.2.68 🌦️`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.68'` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
-     - Query strings sincronizadas a `?v=2.2.68` en `index.html`.
-
-## 📱 Actualización v2.2.67: Erradicación de Badge Superpuesto y Blindaje Flexible de 6 Iconos en Móvil — 2026-10-18
-- **Solución Definitiva de Ergonomía Móvil en el Catálogo de Iconos (Feedback Lendo - «siguen los iconos sin caber y el icono de bloqueado tapa la palabra halloween. ese icono no hace falta. ya se ve que no se puede usar namas que en halloween» y «pisale»):**
-  1. *Diagnóstico Visual Directo con Capturas del Dispositivo Móvil:*
-     - Lendo aportó capturas de pantalla reales demostrando dos anomalías concretas en su teléfono:
-       a) El badge `🔒 B
+     - **Minimalista Neón (`weatherNeonIcons.js`):** Líneas finas con filtro resplandeciente (`filter: drop-shadow`) combinando sol
      - Lendo detectó que en la app la racha actual sí marcaba `16 km/h` y la racha máxima `31 km/h`, y que otras plataformas como Maldonado (*eltiempo.es*) publicaban `15 km/h` como cifra de cabecera.
      - *Causa raíz:* La API y el modelo registraban los datos con exactitud milimétrica (`current.wind_speed_10m = 6.8` como media sostenida a 10 metros, y `current.wind_gusts_10m = 16.0` como racha instantánea). Sin embargo, la jerarquía visual otorgaba todo el tamaño tipográfico (`2.2rem`) a la media matemática continua, relegando la racha (que es lo que el ser humano y el entorno sienten físicamente) a un texto secundario pequeño.
   2. *Intervención Técnica en `currentCard.js` y `components.css`:*

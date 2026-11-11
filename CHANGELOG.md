@@ -9,6 +9,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.15] - 2026-11-11
+### Improved
+- **💛 Pastilla Táctil en Amarillo Oro para Desplegar la Gráfica de Ruta (`routesCard.js` - Leyes 0, 11 y 14):**
+  - **Llamada a la Acción Inconfundible:** Sustituido el texto plano azul que pasaba desapercibido por un botón tipo pastilla interactivo en **amarillo oro asturiano (`#facc15`)** con fondo translúcido y borde dorado con destello (`box-shadow`).
+  - **Holgura Ergonómica Garantizada:** Con `white-space: nowrap` y `flex-shrink: 0`, se integra de forma limpia con más de 100px de margen respecto a las métricas de lluvia y viento en teléfonos móviles.
+  - **Realce del Contenedor:** Borde exterior con sutil acento dorado para invitar al usuario a interactuar con el perfil climático.
+
 ## [3.0.38.14] - 2026-11-11
 ### Added & Improved
 - **🌟 Evolución Integral del Filtro a «Mejores Condiciones» (Lluvia + Viento + Firme) (`routesData.js` + `routesCard.js` - Leyes 0, 11 y 16):**
@@ -4757,11 +4764,7 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 ## [1.0.42] - 2026-08-30
 
 ### 🌊 Corrección Astronómica: Mareógrafo Continuo, Días de 3 Mareas & Invalidation Total
-- **Cálculo Continuo Armónico ($M_2 \approx 12.42\text{ h}$)**: Reestructuración del algoritmo de mareas en `js/utils/tides.js` para calcular la onda sobre el tiempo astronómico absoluto, eliminando las anomalías de solape por módulo `% 24`.
-- **Soporte Astronómico de Días con 3 Mareas**: Reconocimiento natural de las jornadas en las que el ciclo cruza la medianoche (como el Sábado 5 de septiembre), sin forzar artificialmente 4 eventos ni generar solapes de doble bajamar.
-- **Onda 72h 100% Suave y Continua**: El trazado gráfico SVG del Mareógrafo genera una curva armónica pura sin saltos de fase ni quiebros en los pasos de medianoche (00:00).
-- **Adaptabilidad en Tarjetas de Marea**: `marineCard.js` gestiona con total fluidez tanto jornadas de 4 mareas como de 3 mareas.
-- **Cache-Busting Total & Service Worker `v142-official`**: Actualizació
+- **Cálculo Continuo Armónico ($M_2 \approx 12.42\text{ h}$)**: Reestructuración del algoritmo de mareas en 
 - **Alineación Perfecta al 50%**: Configuración de `grid-template-columns: 1fr 1fr` tanto para la fila de navegación (Modelo y Menú) como para la fila de acciones (Guardar y Mi Ubicación), garantizando un diseño estructurado, equilibrado y de fácil pulsación con el pulgar.
 - **Service Worker `v132-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
 
