@@ -557,11 +557,15 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
         to { transform: translateY(0); }
       }
       .routes-day-pill {
-        padding: 5px 12px;
+        padding: 4px 10px;
         border-radius: 16px;
-        font-size: 0.76rem;
+        font-size: 0.73rem;
         font-weight: 800;
         cursor: pointer;
+        white-space: nowrap;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
         transition: all 0.2s ease;
         border: 1px solid rgba(255, 255, 255, 0.14);
         background: rgba(255, 255, 255, 0.05);
@@ -574,15 +578,18 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
         box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
       }
       .routes-filter-pill {
-        padding: 5px 11px;
-        border-radius: 14px;
-        font-size: 0.74rem;
+        padding: 5px 8px;
+        border-radius: 12px;
+        font-size: 0.71rem;
         font-weight: 700;
         cursor: pointer;
         border: 1px solid rgba(255, 255, 255, 0.12);
         background: rgba(255, 255, 255, 0.05);
         color: var(--text-dim, #94a3b8);
         white-space: nowrap;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
         transition: all 0.2s ease;
       }
       .routes-filter-pill.active {
@@ -634,7 +641,7 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
         <div style="background: rgba(15, 23, 42, 0.40); border-radius: 12px; padding: 10px; border: 1px solid rgba(255,255,255,0.08);">
           <!-- Conmutador Temporal Hoy / Mañana -->
           <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.06);">
-            <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-main);">📅 Jornada de marcha:</span>
+            <span style="font-size: 0.76rem; font-weight: 700; color: var(--text-main); white-space: nowrap;">📅 Jornada:</span>
             <div style="display: flex; gap: 6px;">
               <button type="button" class="routes-day-pill btn-routes-day ${activeDay === 'today' ? 'active' : ''}" data-day="today">
                 ☀️ Hoy
@@ -645,13 +652,13 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
             </div>
           </div>
 
-          <!-- Barra de Filtros Inteligentes (Todas visibles en 2 filas compactas sin carrusel - Ley 11) -->
-          <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px;">
+          <!-- Barra de Filtros Inteligentes en 2 filas equilibradas y compactas (Ley 11) -->
+          <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px;">
             <button type="button" class="routes-filter-pill btn-routes-filter ${activeFilter === 'all' ? 'active' : ''}" data-filter="all">
               📍 Cercanas
             </button>
             <button type="button" class="routes-filter-pill btn-routes-filter ${activeFilter === 'dry' ? 'active' : ''}" data-filter="dry">
-              🌟 Mejores Condiciones
+              🌟 Mejor Clima
             </button>
             <button type="button" class="routes-filter-pill btn-routes-filter ${activeFilter === 'facil' ? 'active' : ''}" data-filter="facil">
               🟢 Fáciles
@@ -660,7 +667,7 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
               🏔️ Montaña
             </button>
             <button type="button" class="routes-filter-pill btn-routes-filter ${activeFilter === 'costera' ? 'active' : ''}" data-filter="costera">
-              🏖️ Costeras &amp; Ríos
+              🏖️ Costa &amp; Ríos
             </button>
           </div>
 

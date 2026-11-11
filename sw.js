@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303818-routes-wrap-v1';
+const CACHE_NAME = 'meteoasturlode-v303819-routes-2rows-v1';
 const STATIC_ASSETS = [
   './',
   './index.html',

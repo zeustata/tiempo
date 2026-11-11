@@ -9,6 +9,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.19] - 2026-11-11
+### Improved
+- **📐 Compactación Exacta en 2 Filas para Filtros de Rutas en Móvil (`routesCard.js` - Leyes 0 y 11):**
+  - **Síntesis de Etiquetas:** Ajustadas a `🌟 Mejor Clima` y `🏖️ Costa & Ríos` junto con pastillas estilizadas (`font-size: 0.71rem; padding: 5px 8px; gap: 5px`), eliminando las 4 líneas desiguales y compactándolo todo en 2 filas limpias en pantalla móvil.
+  - **Botones de Jornada Sin Saltos (`☀️ Hoy` / `📅 Mañana`):** Añadido `white-space: nowrap`, `display: inline-flex` y cabecera compacta (`📅 Jornada:`) para evitar que los iconos partan el botón en dos líneas.
+
 ## [3.0.38.18] - 2026-11-11
 ### Improved
 - **🧭 Filtros de Rutas 100% Visibles en 2 Filas Compactas (`routesCard.js` - Leyes 0 y 11):**
@@ -4744,17 +4750,7 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Ajuste Longitudinal Geodésico ($4\text{ min/grado}$)**: Integración de la coordenada de longitud de cada concejo en el cálculo armónico de mareas (`tides.js` y `marineCard.js`), adaptando las horas de pleamar y bajamar a la costa exacta donde se encuentre el usuario:
   - *Llanes / Ribadedeva / Oriente*: La marea se adelanta de 4 a 6 minutos respecto a Gijón.
   - *Gijón / Cabo Peñas / Centro*: Referencia base calibrada con AEMET / San Lorenzo.
-  - *Luarca / Tapia de Casariego / Castropol*: La marea se retrasa de 5 a 8 minutos respecto a Gijón.
-- **Mareógrafo Dinámico Georreferenciado**: El trazado armónico SVG de 72 horas y el cuadro semanal adaptan sus fases al concejo activo.
-- **Service Worker `v146-official` & Cache-Busting**: Actualización global de dependencias internas a `?v=1.0.46`.
-
----
-
-## [1.0.45] - 2026-08-30
-
-### 🚀 Cache-Busting Integral en Cascada & Propagación Instantánea
-- **Actualización Total de Imports Internos**: Sincronización en cascada de todas las referencias de `tides.js` y `weatherIcons.js` dentro de `marineCard.js`, `currentCard.js`, `forecastView.js`, `chartsView.js` y `app.js` a `?v=1.0.45`.
-- **Elimi
+  - *Luarca / Tapia de Casariego / Castropol*: La marea se retrasa de 
 - **Alineación Perfecta al 50%**: Configuración de `grid-template-columns: 1fr 1fr` tanto para la fila de navegación (Modelo y Menú) como para la fila de acciones (Guardar y Mi Ubicación), garantizando un diseño estructurado, equilibrado y de fácil pulsación con el pulgar.
 - **Service Worker `v132-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
 

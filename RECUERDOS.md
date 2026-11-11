@@ -2,6 +2,18 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📐 Compactación Exacta en 2 Filas para Filtros de Rutas (`v3.0.38.19`) — 2026-11-11
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.18` (`83a6933`).
+- **Diagnóstico sobre Captura Móvil (`captura_20261111_172020.jpg`) e Instrucción de Lendo («pisale»):**
+  1. *Evaluación Crítica (Ley 0):*
+     - En pantalla móvil real, los textos largos (`🌟 Mejores Condiciones`, `🏖️ Costeras & Ríos`) forzaban al contenedor `flex-wrap` a ocupar 4 filas desiguales, estirando verticalmente la tarjeta y partiendo además los botones `☀️ Hoy` / `📅 Mañana` en dos líneas.
+  2. *Ajuste Milimétrico (Ley 11):*
+     - Renombradas las etiquetas largas a **`🌟 Mejor Clima`** y **`🏖️ Costa & Ríos`** y optimizado el tamaño de pastilla (`padding: 5px 8px; font-size: 0.71rem; gap: 5px`) para que los 5 filtros encajen limpiamente en **2 filas compactas**.
+     - Añadido `white-space: nowrap` y `display: inline-flex` en `.routes-day-pill` con etiqueta `📅 Jornada:` para alinear `☀️ Hoy` y `📅 Mañana` en una sola fila estilizada.
+  3. *Ciclo Constitucional Local (Leyes 3, 4 y 9):*
+     - Actualizada la versión a `v3.0.38.19` y Service Worker `meteoasturlode-v303819-routes-2rows-v1`.
+     - Servidor de pruebas activo en `http://localhost:8080`.
+
 ## 🧭 Filtros de Rutas 100% Visibles sin Carrusel Oculto (`v3.0.38.18`) — 2026-11-11
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.17` (`f7db86a`).
 - **Petición e Instrucción Expresa de Lendo («cuando le doy al carusel, por ejemplo montaña. automaticamente vuelve para atras y no se en que pestaña estoy [...] dale a la opcion b»):**
