@@ -2,6 +2,20 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🥾 Depuración de Margen y Alineación Impecable de la Gráfica (`v3.0.38.13`) — 2026-11-11
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.12` (`f4c76d1`).
+- **Petición e Instrucción Expresa de Lendo («mira en la grafica pusiste en los km por hora en la primera cuadricula como un pequeño icono del viento no? yo creo que sobra, ademas no queda en linea. por mi lo puedes quitar [...] no habia visto el de la hora. sobran los dos [...] si»):**
+  1. *Diagnóstico de Ruido y Desalineación Visual (Feedback de Lendo):*
+     - Los iconos de margen `🕒` y `💨` colocados en `x=14` quedaban fuera de la cuadrícula horaria que inicia en `padLeft`, viéndose descolocados y creando una asimetría visual innecesaria.
+     - Como cada pastilla ya lleva escrita la unidad `km/h` y la leyenda superior indica `💨 Viento (km/h)`, los iconos del margen izquierdo eran 100% redundantes.
+  2. *Refactorización Estética (Leyes 0, 11 y 14):*
+     - Retirados ambos iconos sueltos del margen.
+     - Equilibrados simétricamente los paddings laterales (`padLeft = 28`, `padRight = 28`) para un centrado geométrico perfecto.
+  3. *Ciclo Constitucional Estrictamente Local y Notificación Telegram (Leyes 1, 3, 9 y 23):*
+     - Cambios aplicados exclusivamente en archivos locales.
+     - Servidor de pruebas levantado en `http://localhost:8080`.
+     - Notificación sonora enviada a Telegram para verificación previa de Lendo.
+
 ## 💨 Fila Dedicada y Pastillas Identificativas de Viento en Gráfica de Senderismo (`v3.0.38.12`) — 2026-11-11
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.10` (`183af36`).
 - **Petición e Instrucción Expresa de Lendo («no entiendo bien donde esta el viento en la grafica [...] pues seria buena idea. pisale»):**
@@ -3675,15 +3689,7 @@ ICONO | ESTADO EN METEOASTUR LODE              | NUBES (cc)  | RAD. DIRECTA (irr
 ## 📱 Actualización v2.2.66: Optimización Estricta de Ergonomía Móvil y Blindaje Anti-Desborde en Halloween — 2026-10-18
 - **Blindaje de Ergonomía Móvil y Corrección de Desbordes (Feedback Lendo - «me acabo de dar cuenta que desde windows y tablet perfecto pero desde el movil sobresalen lo iconos y caracteres. Lo ves princesa?» y «pisale»):**
   1. *Diagnóstico Riguroso en Pantallas Móviles Estrechas (360 px):*
-     - En dispositivos móviles, la cabecera `.theme-card-header` sufría una colisión flex: el contenedor intermedio `.theme-card-info` carecía de `min-width: 0;`, empujando la pastilla `🔒 Bloqueado` hacia el borde exterior donde se recortaba la última letra (mostrando `"🔒 Bloquead"`).
-     - La previsualización de Halloween contenía 10 iconos SVG apretados que sobrecargaban la caja en relación a las demás tarjetas del catálogo (que emplean 6 iconos), mientras que la pastilla de censura `🕵️‍♂️ Top Secret • Revelación en Samhain` ocupaba dos líneas opacando los colores del mosaico.
-  2. *Refactorización CSS Anti-Desborde (Doctrina Constitucional Ley 11):*
-     - En `css/main.css`:
-       - `.theme-card-info` configurado con `min-width: 0;` garantizando contracción limpia en layouts flex reducidos.
-       - `.theme-lock-badge` blindado con `display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; font-size: 0.72rem; flex-shrink: 0; white-space: nowrap;`, impidiendo cualquier recorte o salto de línea.
-       - Previsualización `.theme-card-preview-pixelated .theme-card-preview` adaptada con `display: flex; justify-content: space-around; width: 100%; box-sizing: border-box;`.
-       - Insignia `.badge-top-secret` optimizada a `padding: 4px 10px; font-size: 0.72rem; white-space: nowrap; background: rgba(15, 23, 42, 0.78);`, permitiendo que el brillo de los 6 iconos pixelados resplandezca perfectamente sin abarrotar la caja.
-       - Pie `.theme-card-lock-footer`
+     - En dispositivos móviles, la cabecera `.theme-card-hea
      - Lendo detectó que en la app la racha actual sí marcaba `16 km/h` y la racha máxima `31 km/h`, y que otras plataformas como Maldonado (*eltiempo.es*) publicaban `15 km/h` como cifra de cabecera.
      - *Causa raíz:* La API y el modelo registraban los datos con exactitud milimétrica (`current.wind_speed_10m = 6.8` como media sostenida a 10 metros, y `current.wind_gusts_10m = 16.0` como racha instantánea). Sin embargo, la jerarquía visual otorgaba todo el tamaño tipográfico (`2.2rem`) a la media matemática continua, relegando la racha (que es lo que el ser humano y el entorno sienten físicamente) a un texto secundario pequeño.
   2. *Intervención Técnica en `currentCard.js` y `components.css`:*

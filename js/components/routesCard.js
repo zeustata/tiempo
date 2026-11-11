@@ -58,8 +58,8 @@ function renderRouteDaylightGraph(hourly, activeDay = 'today') {
   // Dimensiones SVG HD
   const width = 650;
   const height = 196;
-  const padLeft = 32;
-  const padRight = 24;
+  const padLeft = 28;
+  const padRight = 28;
   const padTop = 26;
   const tempBottom = 75; // Altura donde termina la curva térmica
   const barTop = 85; // Altura donde arrancan las barras de lluvia
@@ -207,10 +207,6 @@ function renderRouteDaylightGraph(hourly, activeDay = 'today') {
             <!-- Área y Curva Térmica -->
             <path d="${dArea}" fill="url(#routeAreaGrad)" />
             <path d="${dCurve}" fill="none" stroke="url(#routeTempGrad)" stroke-width="2.5" vector-effect="non-scaling-stroke" stroke-linecap="round" />
-
-            <!-- Rótulos de fila en margen izquierdo -->
-            <text x="14" y="145" fill="#64748b" font-size="10" text-anchor="middle">🕒</text>
-            <text x="14" y="174" fill="#64748b" font-size="11" text-anchor="middle">💨</text>
 
             <!-- Barras de Lluvia y Textos -->
             ${barsAndLabels}

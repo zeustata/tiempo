@@ -9,6 +9,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.13] - 2026-11-11
+### Improved
+- **🥾 Depuración de Margen y Alineación Impecable de la Gráfica (`routesCard.js` - Leyes 0, 11 y 14):**
+  - **Supresión de Iconos Descolocados:** Eliminados los micro-iconos `🕒` y `💨` del margen izquierdo interior del SVG que quedaban fuera de cuadrícula y rompían la armonía visual.
+  - **Simetría y Centrado Perfecto:** Equilibrados los márgenes laterales (`padLeft = 28`, `padRight = 28`) para una alineación nítida y simétrica de las 13 columnas horarias. La identificación del viento queda confiada a la leyenda superior y a las pastillas con `km/h`.
+
 ## [3.0.38.12] - 2026-11-11
 ### Improved
 - **💨 Fila Dedicada y Pastillas Identificativas de Viento en Gráfica de Senderismo (`routesCard.js` - Leyes 0, 11 y 14):**
@@ -4770,16 +4776,7 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 ## [1.0.38] - 2026-08-28
 
 ### ✨ Limpieza y Minimalismo: Botones Simétricos de Modelo y Menú
-- **Eliminación de Textos Largos Superpuestos**: Rediseño limpio de la fila de navegación a dos botones simétricos al 50% con `[🌟 Modelo ➔]` y `[📊 Menú ➔]`, garantizando cero desbordamientos o textos montados en cualquier pantalla móvil.
-- **Service Worker `v138-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
-
----
-
-## [1.0.37] - 2026-08-28
-
-### 🌟 Reducción del 50%: Botones Dobles Inteligentes & Tarjeta Ultra Compacta
-- **Botones Divididos (`Split Buttons`)**: Fusión de *Buscar Concejo* con botón directo *📍 GPS* a la izquierda (50%), y *Guardar en Favoritos* con el acceso a la lista *⭐ Favs* a la derecha (50%) en una sola fila interactiva.
-- **Distribución de Modelo y Menú**: Alineación horizontal de *🌟 Modelo* y *📊 Menú*
+- **Eliminación de Textos Largos Superpuestos**: Rediseño limpio de la fila de navegación a dos botones simétricos al 50% con `[🌟 Modelo ➔]` y `[📊 Menú ➔]`, garantizando cer
 - **Alineación Perfecta al 50%**: Configuración de `grid-template-columns: 1fr 1fr` tanto para la fila de navegación (Modelo y Menú) como para la fila de acciones (Guardar y Mi Ubicación), garantizando un diseño estructurado, equilibrado y de fácil pulsación con el pulgar.
 - **Service Worker `v132-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
 
