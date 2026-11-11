@@ -9,6 +9,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.18] - 2026-11-11
+### Improved
+- **🧭 Filtros de Rutas 100% Visibles en 2 Filas Compactas (`routesCard.js` - Leyes 0 y 11):**
+  - **Adiós al Carrusel Oculto y Saltos de Scroll:** Sustituido el carrusel horizontal con desbordamiento por un bloque ergonómico con `flex-wrap: wrap` que mantiene siempre a la vista las 5 pestañas (`📍 Cercanas`, `🌟 Mejores Condiciones`, `🟢 Fáciles`, `🏔️ Montaña`, `🏖️ Costeras & Ríos`).
+  - **Orientación Visual Instantánea:** Eliminado el efecto de retorno hacia atrás tras pulsar una categoría; el usuario ve de un vistazo todas las opciones y cuál está activa.
+
 ## [3.0.38.17] - 2026-11-11
 ### Fixed & Improved
 - **🧭 Desacople Inteligente de los Filtros de Rutas Regionales (`routesCard.js` + `app.js` - Leyes 0, 11 y 16):**
@@ -4748,15 +4754,7 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ### 🚀 Cache-Busting Integral en Cascada & Propagación Instantánea
 - **Actualización Total de Imports Internos**: Sincronización en cascada de todas las referencias de `tides.js` y `weatherIcons.js` dentro de `marineCard.js`, `currentCard.js`, `forecastView.js`, `chartsView.js` y `app.js` a `?v=1.0.45`.
-- **Eliminación Definitiva de Caché Residual**: Garantiza que ningún navegador o PWA mantenga archivos anteriores en memoria y descargue al 100% la calibración oficial de AEMET (Playa de San Lorenzo: Bajamar 00:20, Pleamar 06:28, Bajamar 12:36, Pleamar 18:44).
-- **Service Worker `v145-official`**: Nuevo nombre de caché atómica para activación inmediata.
-
----
-
-## [1.0.44] - 2026-08-30
-
-### 🌊 Sincronización Total AEMET: Horario Local Oficial (CEST / UTC+2)
-- **Calibración con la Predicción de AEMET / IHM (Playa de San Lorenzo - Gijón)**: Sincronización con el huso oficial español de verano (CEST / UTC+2), ajustando pleamar
+- **Elimi
 - **Alineación Perfecta al 50%**: Configuración de `grid-template-columns: 1fr 1fr` tanto para la fila de navegación (Modelo y Menú) como para la fila de acciones (Guardar y Mi Ubicación), garantizando un diseño estructurado, equilibrado y de fácil pulsación con el pulgar.
 - **Service Worker `v132-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
 

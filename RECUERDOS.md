@@ -2,6 +2,18 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🧭 Filtros de Rutas 100% Visibles sin Carrusel Oculto (`v3.0.38.18`) — 2026-11-11
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.17` (`f7db86a`).
+- **Petición e Instrucción Expresa de Lendo («cuando le doy al carusel, por ejemplo montaña. automaticamente vuelve para atras y no se en que pestaña estoy [...] dale a la opcion b»):**
+  1. *Diagnóstico de Interfaz:*
+     - Al reconstruir el bloque DOM del panel de rutas en cada clic (`container.innerHTML = renderRoutesCard(...)`), la barra horizontal perdía su desplazamiento (`scrollLeft`) y saltaba de golpe al principio (`📍 Cercanas`), ocultando la pestaña pulsada (`🏔️ Montaña` o `🏖️ Costeras & Ríos`).
+  2. *Solución Ergonómica Aprobada (Opción B - Ley 11):*
+     - Reemplazado el contenedor horizontal deslizante por una rejilla flexible de 2 filas (`display: flex; flex-wrap: wrap; gap: 6px;`), mostrando simultáneamente las 5 categorías con estado activo resaltado uniforme.
+     - Eliminado el desplazamiento horizontal accidental y cualquier pérdida de foco sobre la pestaña activa.
+  3. *Anti-Caché y Pruebas en Local (Leyes 3, 4 y 9):*
+     - Actualizada la versión a `v3.0.38.18` y caché del Service Worker `meteoasturlode-v303818-routes-wrap-v1`.
+     - Verificación en local a través de `http://localhost:8080`.
+
 ## 🧭 Desacople Inteligente de los Filtros de Rutas Regionales (`v3.0.38.17`) — 2026-11-11
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.16` (`e7c6b2c`).
 - **Petición e Instrucción Expresa de Lendo («una cosa. mira a ver en la ruta t senderismo, la primera tarjeta del menu rutas. si pongo cercanas o mejores condiciones cambia la tarjeta pero en el menu giratoria en faciles, montaña o costeras me pone lo mismo que cercanas. No tiene sentido. Esas no tienen porque buscar lo mas cercano [...] vale pisale»):**

@@ -645,12 +645,12 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
             </div>
           </div>
 
-          <!-- Barra de Filtros Inteligentes (Detector de Mejores Condiciones: Lluvia + Viento) -->
-          <div style="display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 8px; scrollbar-width: none; -webkit-overflow-scrolling: touch;">
+          <!-- Barra de Filtros Inteligentes (Todas visibles en 2 filas compactas sin carrusel - Ley 11) -->
+          <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px;">
             <button type="button" class="routes-filter-pill btn-routes-filter ${activeFilter === 'all' ? 'active' : ''}" data-filter="all">
               📍 Cercanas
             </button>
-            <button type="button" class="routes-filter-pill btn-routes-filter ${activeFilter === 'dry' ? 'active' : ''}" data-filter="dry" style="${activeFilter === 'dry' ? 'border-color: #38bdf8; background: rgba(56, 189, 248, 0.25);' : ''}">
+            <button type="button" class="routes-filter-pill btn-routes-filter ${activeFilter === 'dry' ? 'active' : ''}" data-filter="dry">
               🌟 Mejores Condiciones
             </button>
             <button type="button" class="routes-filter-pill btn-routes-filter ${activeFilter === 'facil' ? 'active' : ''}" data-filter="facil">
