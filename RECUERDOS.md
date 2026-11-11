@@ -2,6 +2,30 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📈 Auto-Reinicio de Curva Térmica Hoy en Carrusel Hero (`v3.0.38.6`) — 2026-11-11
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.5` (`localhost`).
+- **Petición e Instrucción Expresa de Lendo («va bien pero te olvidaste la targeta pequeña de curva termica. si la cambio no vuelve a ella [...] pisale»):**
+  1. *Diagnóstico de Estado Residual en Carrusel Hero:*
+     - En la cabecera de la tarjeta principal, el carrusel `#hero-widgets-carousel` alberga la Curva Térmica Hoy (Slide 1), el Clima y Memoria (Slide 2) y el Semáforu del Paragües (Slide 3).
+     - Si el usuario navegaba a los slides 2 o 3, la posición persistía al cambiar de pestaña o concejo.
+  2. *Implementación de Reseteo a Curva Térmica (Leyes 0, 11 y 18):*
+     - En `switchTab('live')` y `renderAllComponents`, se fuerza `heroWidgets.scrollLeft = 0` y se resalta el primer punto de paginación (`#hero-widgets-dots .sensor-dot`).
+     - Al entrar a *En Vivo*, la Curva Térmica 24h vuelve a figurar siempre en primer plano, sincronizada con el resto de componentes reseteados.
+
+## ⏱️ Restauración Limpia y Auto-Reseteo de 72 Horas y Sensores en Vivo (`v3.0.38.5`) — 2026-11-11
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.4` (`6be91c0`).
+- **Petición e Instrucción Expresa de Lendo («perfecto princesa ahora otra cosa que me fije tambien a las 72 horas del menu de en vivo que al volver no se reinicia y tienes que darle atras [...] si. quiero que cada vez que vuelva a la tarjeta este todo como cuando abrimos la app, ordenado [...] pisale»):**
+  1. *Diagnóstico de Estado Residual en Pronóstico Horario y Modos:*
+     - Al avanzar en el carrusel de 72 horas hacia el futuro (+24h, +48h), la propiedad `scrollLeft` del carrusel persistía en memoria. Al salir a otra pestaña o concejo y regresar a *En Vivo*, el usuario se encontraba con horas de mañana o pasado, forzando a arrastrar con el dedo marcha atrás hasta hoy.
+     - Igualmente, si se activaba el modo de curvas gráficas, la app quedaba fijada en la gráfica en lugar de las tarjetas.
+  2. *Implementación de Restauración Limpia al Inicio (Leyes 0 y 11):*
+     - En `app.js` (`switchTab('live')` y `renderAllComponents`), se resetea automáticamente el carrusel de 72 horas a la hora actual (`hourlyScroll.scrollLeft = 0`).
+     - Se restablece el modo canónico en **Tarjetas** (`cards`), garantizando que cada entrada a *En Vivo* ofrezca la vista ordenada y limpia de arranque.
+     - Se resetea el carrusel de sensores al primer sensor (viento).
+  3. *Ciclo Constitucional Estrictamente Local y Notificación Telegram (Leyes 1, 3, 9 y 23):*
+     - Implementado en local, verificado con `node --check` y servidor levantado en `http://localhost:8080`.
+     - Notificación sonora enviada a Telegram para verificación previa de Lendo antes de cualquier despliegue.
+
 ## 🔝 Doctrina de Reseteo Cenital al Cambiar de Pestaña (`v3.0.38.4`) — 2026-11-11
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.3` (`02ccb52`).
 - **Petición e Instrucción Expresa de Lendo («una cosa que me llama la atencion, cuando elijo en el menu de radar algun concejo me manda para el menu en vivo con los datos de ese concejo. eso esta bien pero me manda al pie de la app abajo del todo no arriba del todo donde esta la tarjeta MeteoAsturLode [...] y no seria mejor que cada vez que cambie de tarjeta siempre este arriba del todo sea cual sea? [...] pisale»):**
@@ -3636,23 +3660,7 @@ ICONO | ESTADO EN METEOASTUR LODE              | NUBES (cc)  | RAD. DIRECTA (irr
      - Creada e integrada la función universal `formatCivilSunTime(isoStr, apiOffsetSeconds, targetTimezone = 'Europe/Madrid')`:
        - Toma la cadena ISO generada por Open-Meteo y reconstruye el instante UTC universal puro restando el desfase estático de la API (`pseudoUtcMs - apiOffsetSeconds * 1000`).
        - Formatea el timestamp UTC recuperado mediante la API nativa `Intl.DateTimeFormat('es-ES', { timeZone: 'Europe/Madrid', hour: '2-digit', minute: '2-digit', hour12: false })`.
-       - Delega el cálculo en la Base de Datos Mundial de Husos Horarios IANA integrada en el navegador, asegurando que para el domingo 25 de octubre el amanecer marque exactamente **07:49** y el ocaso **18:23**.
-     - *Universalidad y Perpetuidad:* Funciona de forma automática tanto para el paso a invierno en octubre (-1h) como para el paso a verano en marzo (+1h), en 2026, 2027, 2028 y cualquier año futuro sin necesidad de intervención manual.
-  3. *Verificación de Cuadrícula y Continuidad Visual:*
-     - Verificado el comportamiento del carrusel de 72 horas y de las tarjetas diarias: Open-Meteo entrega 24 franjas exactas para el domingo 25 (`00:00` a `23:00`), sin duplicados de horas, sin doble tarjeta de día y con cortes limpios de medianoche (`00:00`) en los separadores de fecha.
-     - Verificado el motor armónico de mareas (`tides.js`): calcula sobre época UTC pura (`EPOCH_UTC_MS`) y se adapta de forma nativa a la hora civil.
-  4. *Cache-Busting y Despliegue Oficial (Leyes 1, 3, 4, 10 y 13):*
-     - Service Worker actualizado a `meteoasturlode-v2263-horario-invierno-astronomico` en `sw.js`.
-     - Versión oficial elevada a **`v2.2.63 ⏰`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.63'` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
-     - Query strings sincronizadas a `?v=2.2.63` en `index.html` (`main.css`, `components.css`, `sw.js`, `app.js`) y en `app.js` (`forecastView.js?v=2.2.63`).
-
-## ☀️ Actualización v2.2.62: Inmunidad Solar Frente a Falso Orbayu y Primacía del Sol Real — 2026-10-17
-- **Blindaje e Inmunidad Solar Frente a Micro-Trazas Numéricas (Feedback Lendo - «despues de todo lo quie arreglamos tengo una duda», «si me digiste que esta todo parcheado y de repente llueve y me da nublado o sol, que hago?», «no me paso pero estaria bien tenerlo en lA LEY» y «pisale. loq no quiero q testers me mandan mensajes tipo que aqui hace sol y tu app y la app pone orbayo»):**
-  1. *Diagnóstico Científico y Erradicación del Fallo:*
-     - Lendo planteó el escenario crítico que deben afrontar las aplicaciones meteorológicas con beta testers: que un usuario mire al cielo, vea sol radiante o sol tamizáu (resol), y la aplicación indique *«Orbayu / Llovizna ligera 🌦️»*.
-     - *Causa raíz técnica descubierta en la auditoría del código:*
-       - Cuando el modelo numérico de alta resolución (AROME) computa micro-precipitaciones residuales (ej. `0.1 mm` o `0.2 mm`) o códigos WMO 51–57 bajo cielos con insolación directa activa (`direct_normal_irradiance >= 90 W/m²`, `uv_index >= 1.0` o `shortwave_radiation >= 200 W/m²`), la condición del clasificador solar en `weatherIcons.js` exigía estrictamente `p < 0.1 mm`. Al tener `0.1 mm` o `0.2 mm`, la calibración solar quedaba completamente bloqueada y el flujo caía en el *Caso G: Orbayu / Llovizna ligera*.
-       - Además, en `weatherApi.js`, el detector de falso cubierto (`isFalseOvercast`) requería `rawPrecip < 0.1`, impidiendo que la insolación direc
+       - Delega el cálculo en la Base de Datos Mundial de Husos Horarios IANA integrada en el navegador, asegurando que para el domingo 25 de oc
      - Lendo detectó que en la app la racha actual sí marcaba `16 km/h` y la racha máxima `31 km/h`, y que otras plataformas como Maldonado (*eltiempo.es*) publicaban `15 km/h` como cifra de cabecera.
      - *Causa raíz:* La API y el modelo registraban los datos con exactitud milimétrica (`current.wind_speed_10m = 6.8` como media sostenida a 10 metros, y `current.wind_gusts_10m = 16.0` como racha instantánea). Sin embargo, la jerarquía visual otorgaba todo el tamaño tipográfico (`2.2rem`) a la media matemática continua, relegando la racha (que es lo que el ser humano y el entorno sienten físicamente) a un texto secundario pequeño.
   2. *Intervención Técnica en `currentCard.js` y `components.css`:*

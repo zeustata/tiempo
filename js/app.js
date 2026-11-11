@@ -51,7 +51,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.38.4';
+export const CURRENT_APP_VERSION = '3.0.38.6';
 // Control inteligente de Auto-Prompt del Changelog (Doctrina de No-Fatiga al Usuario - Feedback Lendo):
 // Solo se incrementa ante cambios visuales grandes, módulos nuevos o novedades perceptibles.
 // En ajustes finos, calibraciones matemáticas y parches internos se mantiene para no fatigar al usuario con modales.
@@ -2512,8 +2512,17 @@ class MeteoAsturiasApp {
 
     if (targetTab === 'live') {
       try {
-        if (localStorage.getItem('meteoastur_hourly_view') === 'chart' && this.weatherData?.weather?.hourly) {
-          setTimeout(() => renderWeatherChart('meteo-chart-canvas', this.weatherData.weather.hourly, 48, this.getEffectiveIconTheme()), 40);
+        // Restaurar modo Tarjetas por defecto y resetear carruseles a su inicio (Feedback Lendo v3.0.38.6)
+        this.switchHourlyViewMode('cards');
+        const hourlyScroll = document.getElementById('hourly-cards-view');
+        if (hourlyScroll) hourlyScroll.scrollLeft = 0;
+        const sensorsCarousel = document.getElementById('sensors-carousel');
+        if (sensorsCarousel) sensorsCarousel.scrollLeft = 0;
+        const heroWidgets = document.getElementById('hero-widgets-carousel');
+        if (heroWidgets) {
+          heroWidgets.scrollLeft = 0;
+          const heroDots = document.querySelectorAll('#hero-widgets-dots .sensor-dot');
+          heroDots.forEach((d, i) => d.classList.toggle('active', i === 0));
         }
       } catch (e) {}
     }
@@ -3673,13 +3682,12 @@ class MeteoAsturiasApp {
       // Verificación de Alertas Rojas de Emergencia (v2.2.34)
       this.checkEmergencyRedAlerts(this.weatherData, this.currentConcejo);
 
-      // Si el usuario tenía guardada la vista de Gráfica, renderizar la suite gráfica inmediatamente
+      // Resetear carruseles de Vivo al inicio (Feedback Lendo v3.0.38.6)
       try {
-        if (localStorage.getItem('meteoastur_hourly_view') === 'chart' && this.weatherData?.weather?.hourly) {
-          setTimeout(() => {
-            renderWeatherChart('meteo-chart-canvas', this.weatherData.weather.hourly, 48, effectiveTheme);
-          }, 40);
-        }
+        const hourlyScroll = document.getElementById('hourly-cards-view');
+        if (hourlyScroll) hourlyScroll.scrollLeft = 0;
+        const heroWidgets = document.getElementById('hero-widgets-carousel');
+        if (heroWidgets) heroWidgets.scrollLeft = 0;
       } catch (e) {}
     } catch (e) {
       console.error('[MeteoAstur] Error renderizando Vivo:', e);

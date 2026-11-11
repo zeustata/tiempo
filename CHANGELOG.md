@@ -9,6 +9,19 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.6] - 2026-11-11
+### Fixed
+- **📈 Auto-Reinicio de Curva Térmica Hoy en Carrusel Hero (`app.js` - Leyes 0, 11 y 18):**
+  - **Prioridad Cenital para la Curva Térmica:** Al volver a la pestaña *En Vivo* o conmutar de concejo, el carrusel de herramientas de la cabecera (`#hero-widgets-carousel`) se reinicia al primer slide (`scrollLeft = 0`), volviendo a mostrar de inmediato la **Curva Térmica Hoy** con su primer punto de paginación activo.
+  - Corrige la persistencia que dejaba fijado el *Clima y Memoria* o el *Semáforu del Paragües* tras haberlos deslizado.
+
+## [3.0.38.5] - 2026-11-11
+### Fixed
+- **⏱️ Restauración Limpia y Auto-Reseteo de 72 Horas y Sensores en Vivo (`app.js` - Leyes 0 y 11):**
+  - **Reinicio Automático del Carrusel de 72h:** Al volver a la pestaña *En Vivo* o al cambiar de concejo, el carrusel de pronóstico horario vuelve de forma instantánea a su hora inicial (`scrollLeft = 0`), eliminando la molestia de tener que arrastrar hacia atrás cuando se habían explorado horas futuras (+24h/+48h).
+  - **Modo Tarjetas por Defecto:** Se restaura la vista estándar de tarjetas horarias en lugar de quedar permanentemente anclado en curvas gráficas, garantizando una vista ordenada y homogénea cada vez que se entra a la aplicación.
+  - **Reseteo del Carrusel de Sensores:** El carrusel de sensores meteorológicos (viento, presión, etc.) también se resetea a la primera tarjeta al entrar.
+
 ## [3.0.38.4] - 2026-11-11
 ### Fixed
 - **🔝 Doctrina de Reseteo Cenital al Cambiar de Pestaña (`app.js` - Leyes 0 y 11):**
