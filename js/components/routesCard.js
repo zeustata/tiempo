@@ -169,11 +169,11 @@ function renderRouteDaylightGraph(hourly, activeDay = 'today', activeRw = null, 
         text-align: left;
         box-sizing: border-box;
       " aria-expanded="false" title="Desplegar u ocultar gráfica horaria">
-        <div style="display: flex; align-items: center; gap: 8px; min-width: 0;">
-          <span style="font-size: 0.82rem; color: ${displayRain > 0 ? '#38bdf8' : '#94a3b8'}; font-weight: 800; white-space: nowrap;">
+        <div style="display: flex; align-items: center; gap: 6px; min-width: 0;">
+          <span style="font-size: 0.80rem; color: ${displayRain > 0 ? '#38bdf8' : '#94a3b8'}; font-weight: 800; white-space: nowrap;">
             🌧️ ${displayRain} mm
           </span>
-          <span style="font-size: 0.78rem; color: ${displayGust >= 35 ? '#f59e0b' : '#94a3b8'}; font-weight: 700; white-space: nowrap;">
+          <span style="font-size: 0.76rem; color: ${displayGust >= 35 ? '#f59e0b' : '#94a3b8'}; font-weight: 700; white-space: nowrap;">
             💨 ${displayGust} km/h
           </span>
         </div>
@@ -181,16 +181,16 @@ function renderRouteDaylightGraph(hourly, activeDay = 'today', activeRw = null, 
         <div style="
           display: flex;
           align-items: center;
-          gap: 5px;
+          gap: 4px;
           flex-shrink: 0;
-          padding: 4px 11px;
-          border-radius: 14px;
+          padding: 3px 8px;
+          border-radius: 12px;
           background: rgba(250, 204, 21, 0.15);
           border: 1px solid rgba(250, 204, 21, 0.50);
-          box-shadow: 0 0 10px rgba(250, 204, 21, 0.20);
+          box-shadow: 0 0 8px rgba(250, 204, 21, 0.20);
         ">
-          <span class="daylight-toggle-text" style="font-size: 0.76rem; font-weight: 800; color: #facc15; white-space: nowrap;">Ver Gráfica</span>
-          <span class="daylight-toggle-arrow" style="font-size: 0.80rem; color: #facc15; transition: transform 0.2s ease;">▾</span>
+          <span class="daylight-toggle-text" style="font-size: 0.74rem; font-weight: 800; color: #facc15; white-space: nowrap;">Gráfica</span>
+          <span class="daylight-toggle-arrow" style="font-size: 0.78rem; color: #facc15; transition: transform 0.2s ease;">▾</span>
         </div>
       </button>
 

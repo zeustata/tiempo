@@ -9,6 +9,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.16] - 2026-11-11
+### Fixed & Improved
+- **📐 Compactación y Holgura Estricta de la Pastilla Amarilla (`routesCard.js` + `app.js` - Leyes 0 y 11):**
+  - **Sintetización del Texto:** Cambiada la etiqueta a **`Gráfica ▾`** (y `Ocultar ▴`), ahorrando 28px de ancho.
+  - **Margen Cómodo Anti-Colisión:** Reducido el padding de la pastilla (`3px 8px`) y la separación entre métricas a `6px`, ganando más de 45px de holgura limpia frente a la velocidad del viento en pantallas móviles estrechas. Cero solapamiento.
+
 ## [3.0.38.15] - 2026-11-11
 ### Improved
 - **💛 Pastilla Táctil en Amarillo Oro para Desplegar la Gráfica de Ruta (`routesCard.js` - Leyes 0, 11 y 14):**
@@ -4755,16 +4761,7 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ### 🌊 Calibración Oficial IHM: Mareas del Cantábrico & Concordancia Total
 - **Calibración con el Instituto Hidrográfico de la Marina (IHM / El Musel)**: Ajuste milimétrico del desfase lunar solar local ($0.8344\text{ h/día}$) sobre la época base para Gijón y la costa asturiana, sincronizando las pleamares y bajamares con las tablas astronómicas oficiales.
-- **Precisión Horaria**: Sincronización a $\pm 1\text{ min}$ respecto a los datos oficiales de Puertos del Estado.
-- **Continuidad Total 72h & Días de 3 Mareas**: El mareógrafo interactivo y el cuadro semanal mantienen su trazado armónico sinusoidal continuo sin quiebros ni solapes.
-- **Service Worker `v143-official` & Cache-Busting**: Actualización global de dependencias internas a `?v=1.0.43`.
-
----
-
-## [1.0.42] - 2026-08-30
-
-### 🌊 Corrección Astronómica: Mareógrafo Continuo, Días de 3 Mareas & Invalidation Total
-- **Cálculo Continuo Armónico ($M_2 \approx 12.42\text{ h}$)**: Reestructuración del algoritmo de mareas en 
+- **Precisión Horaria**: Sincronización a $\pm 1\text{ min}$ respecto a los datos oficiales de Puertos del Est
 - **Alineación Perfecta al 50%**: Configuración de `grid-template-columns: 1fr 1fr` tanto para la fila de navegación (Modelo y Menú) como para la fila de acciones (Guardar y Mi Ubicación), garantizando un diseño estructurado, equilibrado y de fácil pulsación con el pulgar.
 - **Service Worker `v132-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
 

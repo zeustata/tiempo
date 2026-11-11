@@ -2,6 +2,20 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📐 Compactación y Holgura Estricta de la Pastilla Amarilla (`v3.0.38.16`) — 2026-11-11
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.15` (`a25398e`).
+- **Petición e Instrucción Expresa de Lendo («lo que te decia. desde el movil que es estrecho se superpone un poquitin. lo que puedes hacer es quiter "Ver Grafica" y dejar solo "Grafica". que te parece? de mande al buzon nuestro la captura [...] pisale»):**
+  1. *Diagnóstico de Colisión en Pantallas Móviles Compactas (Captura de Lendo `16:05`):*
+     - Con el texto `Ver Gráfica ▾` y padding amplio, el borde izquierdo de la pastilla dorada colisionaba ligeramente con la unidad `km/h` del viento en terminales estrechos.
+  2. *Refactorización Ergonómica de Precisión (Ley 11):*
+     - Se sintetiza el texto a **`Gráfica ▾`** (y `Ocultar ▴`), ahorrando 28px de anchura horizontal.
+     - Se ajusta el acolchado de la pastilla (`3px 8px`) y la separación entre métricas a `6px`.
+     - Se ganan más de 45px de espacio libre entre el viento y la pastilla, garantizando una separación limpia y elegante.
+  3. *Ciclo Constitucional Estrictamente Local y Notificación Telegram (Leyes 1, 3, 9 y 23):*
+     - Cambios aplicados exclusivamente en archivos locales.
+     - Servidor de pruebas levantado en `http://localhost:8080`.
+     - Notificación sonora enviada a Telegram para verificación previa de Lendo.
+
 ## 💛 Pastilla Táctil en Amarillo Oro para Desplegar la Gráfica de Ruta (`v3.0.38.15`) — 2026-11-11
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.14` (`b5b146d`).
 - **Petición e Instrucción Expresa de Lendo («quiero que llame la atencion la tarjeta que despliega para ver el grafico. de alguna manera tiene que verse mejor lo de ver grafica. podemos cambiar el azul que tiene por un amarillo? [...] y entrara bien para que se vea en un movil? te mande una captura para que veas como esta ahora en mi movil y lo miras [...] pisale»):**
@@ -3678,16 +3692,7 @@ ICONO | ESTADO EN METEOASTUR LODE              | NUBES (cc)  | RAD. DIRECTA (irr
      - Versión oficial elevada a **`v2.2.69 ⏱️`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.69'` en `app.js`, `forecastView.js?v=2.2.69` y query strings en `index.html`.
 
 ## 🌦️ Actualización v2.2.68: Nuevo Icono Universal de Chubascos con Sol («Llueve y fai sol») — 2026-10-18
-- **Creación Vectorial Completa del Icono Comodín `showers` (Feedback Lendo - «creo que en los iconos no existe el icono de chubascos (por ejemplo cuando en una hora determinada dan un chaparron y luego sale el sol. El tipico icono que sale una gota una nube y un sol. lo tenemos», «pisale anda que todos lal app lo incorporan y es como un comodin. si en una hora concreta dan posibilidad de nubes, sol y chubascos es imprescindible. crealo para todos los temas que tenemos incluido halloween»):**
-  1. *Diagnóstico de la Suite de Iconos:*
-     - Lendo detectó una carencia histórica en la aplicación: el icono comodín universal de "chubascos con sol" (sol detrás de nube con gotas de lluvia) no existía a nivel vectorial en ninguno de los temas.
-     - En el código WMO 80 (*Chubascos de orbayu*), el sistema utilizaba el emoji `🌦️` pero vectorialmente estaba enlazado a `drizzle` (una nube sola sin sol), perdiendo la representación del sol asomando.
-  2. *Diseño Vectorial en los 7 Temas Gráficos del Ecosistema:*
-     - **Emojis Emotivos (`weatherAsturIcons.js`):** Sol dorado brillante arriba a la izquierda con cara sonriente, nube esponjosa celeste y 2 gotas cristalinas iluminadas cayendo alegremente.
-     - **Futuro Clásico (`weatherFuturoIcons.js`):** Sol esférico 2.5D con rayos y reflejo especular, nube de carrocería satinada y gotas de cristal líquido.
-     - **Liquid Glass 3D (`weatherGlassIcons.js`):** Sol de cristal oro translúcido con refracción, nube aero glass con borde luminoso y gotas vítreas.
-     - **Pixel Art Retro (`weatherPixelIcons.js`):** Sol y nube en cuadrícula arcade de 8 bits con gotas de píxeles azules.
-     - **Minimalista Neón (`weatherNeonIcons.js`):** Líneas finas con filtro resplandeciente (`filter: drop-shadow`) combinando sol
+- **Creación Vectorial Completa del Icono Comodín `showers` (Feedback Lendo - «creo que en los iconos no existe el icono de chubascos (por ejemplo cuando en una hora determinada dan un chaparron y luego sale el sol. El tipico icono que sale una gota una nube y un sol. lo tenemos», «pisale anda que todos lal app lo incorporan y es como un comodin. si en una hora concreta dan posib
      - Lendo detectó que en la app la racha actual sí marcaba `16 km/h` y la racha máxima `31 km/h`, y que otras plataformas como Maldonado (*eltiempo.es*) publicaban `15 km/h` como cifra de cabecera.
      - *Causa raíz:* La API y el modelo registraban los datos con exactitud milimétrica (`current.wind_speed_10m = 6.8` como media sostenida a 10 metros, y `current.wind_gusts_10m = 16.0` como racha instantánea). Sin embargo, la jerarquía visual otorgaba todo el tamaño tipográfico (`2.2rem`) a la media matemática continua, relegando la racha (que es lo que el ser humano y el entorno sienten físicamente) a un texto secundario pequeño.
   2. *Intervención Técnica en `currentCard.js` y `components.css`:*
