@@ -9,6 +9,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.9] - 2026-11-11
+### Fixed
+- **🛡️ Blindaje Táctil Anti-Salto de Menú en Ventana de Ruta (`app.js` + `routesCard.js` - Leyes 0, 11 y 18):**
+  - **Aislamiento de Swipe Navigation:** Registrada la clase `.route-daylight-graph-wrap` dentro de las zonas interactivas protegidas (`isInteractiveZone`).
+  - **Contención de Borde (`overscroll-behavior-x: contain`):** Al deslizar con el dedo horizontalmente para explorar las 13 horas de la ruta (08:00h a 20:00h) y llegar al tope de las 20:00h, el gesto frena limpiamente dentro de la tarjeta y jamás salta al siguiente menú (Ciclismo).
+
 ## [3.0.38.8] - 2026-11-11
 ### Added
 - **🥾 Perfil Climático Horario Diurno (08:00h - 20:00h) en Ficha de Ruta (`routesCard.js` - Leyes 0, 11 y 14):**

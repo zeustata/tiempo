@@ -160,9 +160,9 @@ function renderRouteDaylightGraph(hourly, activeDay = 'today') {
         <span style="display: inline-flex; align-items: center; gap: 3px;">💨 Viento (km/h)</span>
       </div>
 
-      <!-- SVG HD de la Gráfica Diurna -->
-      <div style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;">
-        <svg viewBox="0 0 ${width} ${height}" style="width: 100%; min-width: 320px; height: auto; display: block;" preserveAspectRatio="xMidYMid meet">
+      <!-- SVG HD de la Gráfica Diurna con Aislamiento Táctil Anti-Desborde (Ley 18) -->
+      <div class="route-daylight-graph-wrap" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; touch-action: pan-x pan-y;">
+        <svg viewBox="0 0 ${width} ${height}" style="width: 100%; min-width: 480px; height: auto; display: block;" preserveAspectRatio="xMidYMid meet">
           <defs>
             <linearGradient id="routeTempGrad" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stop-color="#38bdf8" />

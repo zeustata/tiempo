@@ -4,7 +4,7 @@ import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedW
 import { renderCurrentWeather } from './components/currentCard.js?v=3.0.25.22';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.25.10';
 import { renderSurfCard } from './components/surfCard.js?v=3.0.25.2';
-import { renderRoutesCard } from './components/routesCard.js?v=3.0.38.8';
+import { renderRoutesCard } from './components/routesCard.js?v=3.0.38.9';
 import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.38';
 import { renderMountainCard } from './components/mountainCard.js?v=3.0.29';
 import { renderTourismCard } from './components/tourismCard.js?v=3.0.25.5';
@@ -51,7 +51,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.38.8';
+export const CURRENT_APP_VERSION = '3.0.38.9';
 // Control inteligente de Auto-Prompt del Changelog (Doctrina de No-Fatiga al Usuario - Feedback Lendo):
 // Solo se incrementa ante cambios visuales grandes, módulos nuevos o novedades perceptibles.
 // En ajustes finos, calibraciones matemáticas y parches internos se mantiene para no fatigar al usuario con modales.
@@ -2766,7 +2766,7 @@ class MeteoAsturiasApp {
         '.surf-timeline-grid, .surf-slot-card, .surf-timeline-scroll-hint, .surf-daily-cards-grid, .surf-daily-card, .surf-dayparts-list, .surf-daily-scroll-hint, ' +
         '.surf-spot-selector-wrap, .surf-spot-trigger, .surf-spots-modal-backdrop, .surf-spots-modal-sheet, .surf-spot-item-card, .surf-beach-spot-card, ' +
         '.beach-selector-wrap, .beach-trigger-btn, .marine-beach-spot-card, .marine-beach-item-card, ' +
-        '.routes-modal-backdrop, .routes-modal-sheet, .routes-item-card, .cycling-modal-backdrop, .cycling-modal-sheet, .cycling-route-item, .tourism-modal-backdrop, .tourism-modal-sheet, .tourism-item-card, ' +
+        '.routes-modal-backdrop, .routes-modal-sheet, .routes-item-card, .route-daylight-graph-wrap, .cycling-modal-backdrop, .cycling-modal-sheet, .cycling-route-item, .tourism-modal-backdrop, .tourism-modal-sheet, .tourism-item-card, ' +
         '.module-chips-nav, .module-chips-scroll, .module-chip, ' +
         '.favorites-pills, .view-tabs, ' +
         '.beach-controls-toolbar, .beach-filter-dropdown-wrapper, ' +

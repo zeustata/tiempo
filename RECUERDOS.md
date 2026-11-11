@@ -2,6 +2,18 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🛡️ Blindaje Táctil Anti-Salto de Menú en Ventana de Ruta (`v3.0.38.9`) — 2026-11-11
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.8` (`ec366a6`).
+- **Petición e Instrucción Expresa de Lendo («hay un problema. esta bien pero al ser un movil tengo que deslizar y al deslizar y llegar a tope me desliza al siguiente menu [...] pero te das cuenta que estoy en la tarjeta que acabas de crear no? Ventana de ruta de 8 a 20. cuando llego al tope de deslizamiento horario me pasa a la siguiente menu [...] pisale pero de momento solo en local como siempre que nos conocemos ;)»):**
+  1. *Diagnóstico de Fuga Táctil al Borde:*
+     - Al deslizar el dedo horizontalmente para ver las horas de la tarde (hasta las 20:00h) en la tarjeta *Ventana Diurna de Ruta*, al llegar al límite del scroll, el evento se propagaba al detector global de gestos (`setupSwipeNavigation`), provocando que la app saltara automáticamente al siguiente módulo (Ciclismo).
+  2. *Implementación de Doble Blindaje Táctil (Leyes 0, 11 y 18):*
+     - Se dota al contenedor de la clase `.route-daylight-graph-wrap` con `overscroll-behavior-x: contain` y `touch-action: pan-x pan-y`.
+     - Se incorpora `.route-daylight-graph-wrap` al listado de zonas protegidas `isInteractiveZone` en `app.js`.
+     - Ahora, al llegar a las 20:00h, el desplazamiento frena en seco de forma natural dentro de la tarjeta y la pantalla no cambia de menú bajo ningún concepto.
+  3. *Ciclo Constitucional Estrictamente Local (Leyes 1, 3 y 9):*
+     - Modificación aplicada única y exclusivamente en archivos locales, sin commits ni push a la red. Servidor de pruebas activo en `http://localhost:8080`.
+
 ## 🥾 Perfil Climático Horario Diurno (08:00h - 20:00h) en Ficha de Ruta (`v3.0.38.8`) — 2026-11-11
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.7` (`c4056e0`).
 - **Petición e Instrucción Expresa de Lendo («quiero echarle mano el menu de rutas. primeramente la tarjeta donde te describe la ruta que. habria que poner un grafico entre 8 de la mañana a 20 de la tarde con una grafica por ejemplo con un pluviometro en esa ruta, temperatura y aire [...] pisale»):**
@@ -3657,20 +3669,7 @@ ICONO | ESTADO EN METEOASTUR LODE              | NUBES (cc)  | RAD. DIRECTA (irr
      - Lendo propuso crear una colección temática conmemorativa de Halloween / Samhain que se active automáticamente por defecto los días señalados del evento (31 de octubre y 1 de noviembre), pero que esté visible en el catálogo de temas con candado indicando que no es elegible como tema cotidiano fuera de fechas.
      - Lendo remarcó explícitamente la exigencia de incluir todos los iconos climáticos asturianos específicos creados en el proyecto (niebla densa mojada `wet-fog`, resol asturiano místico `resol`, orbayu `drizzle`, bastinazu `heavy-rain`, pedriscu `hail` y nevadona `heavy-snow`).
   2. *Creación del Módulo Vectorial Completo (`js/utils/weatherHalloweenIcons.js`):*
-     - Diseñado un catálogo SVG vectorial nativo sin dependencias externas con gradientes temáticos oscuros, púrpuras, naranjas de fuego y verdes espectrales:
-       - **Jack-o'-Lantern Solar (`sun` / `clear-day`):** Calabaza sonriente tallada con ojos brillantes dorados y halo de rayos solares.
-       - **Luna con Bruja Volando (`clear-night` / `moon`):** Luna llena misteriosa con la silueta de una bruja montando su escoba al vuelo nocturno.
-       - **Ánimas y Claros (`partly-cloudy-day` / `mostly-clear-day`):** Nubes translúcidas acompañadas de un fantasmita flotante.
-       - **Resol Místico Velado (`resol`):** Calabaza solar tamizada tras una fina telaraña dorada y rayos velados.
-       - **Niebla Densa Mojada Espectral (`wet-fog`):** Cuatro estratos de borrina ondulante verde fluorescente (`#10b981`), salpicada de microgotas de rocío flotante y ánimas sutiles.
-       - **Nublado con Murciélago (`cloud` / `cloudy`):** Cúmulo nuboso con murciélago en pleno vuelo y ojos vigilantes.
-       - **Orbayu con Poción Mágica (`drizzle`):** Caldero humeante de bruja con poción morada y gotas finas.
-       - **Lluvia con Araña (`rain`):** Nube plomiza con araña descolgándose en su hilo de seda.
-       - **Bastinazu y Temporal (`heavy-rain`):** Fuertes bandas de agua azotadas por ráfagas de viento y murciélago al viento.
-       - **Tormenta con Castillo Encantado (`storm`):** Mansión gótica con ventanales iluminados y relámpago magenta sobre cielo tormentoso.
-       - **Pedriscu de Cripta (`hail`):** Nubes descargando trozos de hielo cristalino espectral.
-       - **Nevadona con Sombrero de Bruja (`snow` / `heavy-snow`):** Cúmulo de nieve invernal coronado con sombrero puntiagudo de bruja.
-  3. *Arquitectura de Bloqueo, Calendario y Modo de Prueba en Vivo (`index.html`
+     - Diseñado un catálogo SVG vectorial nativo sin dependencias externas con gradientes temáticos oscuros, púrpur
      - Lendo detectó que en la app la racha actual sí marcaba `16 km/h` y la racha máxima `31 km/h`, y que otras plataformas como Maldonado (*eltiempo.es*) publicaban `15 km/h` como cifra de cabecera.
      - *Causa raíz:* La API y el modelo registraban los datos con exactitud milimétrica (`current.wind_speed_10m = 6.8` como media sostenida a 10 metros, y `current.wind_gusts_10m = 16.0` como racha instantánea). Sin embargo, la jerarquía visual otorgaba todo el tamaño tipográfico (`2.2rem`) a la media matemática continua, relegando la racha (que es lo que el ser humano y el entorno sienten físicamente) a un texto secundario pequeño.
   2. *Intervención Técnica en `currentCard.js` y `components.css`:*
