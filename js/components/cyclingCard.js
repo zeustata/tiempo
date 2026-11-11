@@ -6,7 +6,7 @@
  * selector táctil ergonómico sin diálogos gigantes de Android y blindaje de seguridad ciclista.
  */
 
-import { getCyclingRoutesForConcejo, getCyclingRouteById, CYCLING_ROUTES } from '../utils/cyclingData.js?v=3.0.38';
+import { getCyclingRoutesForConcejo, getCyclingRouteById, CYCLING_ROUTES } from '../utils/cyclingData.js?v=3.0.38.22';
 import { simulateRouteConditions, rankRoutesForDeparture } from '../utils/cyclingAdvisor.js?v=3.0.38';
 
 /**

@@ -9,6 +9,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.22] - 2026-11-11
+### Ciclismo en Asturias: Corrección de IDs de Concejos y Ampliación a 50 Clásicas Circulares
+- **Corrección integral de mapeo territorial (`js/utils/cyclingData.js`)**: Corregidos 7 identificadores con guiones bajos incompatibles con `concejos.js` (`cangas_de_onis` -> `cangasdeonis`, `soto_del_barco` -> `sotodelbarco`, `muros_de_nalon` -> `murosdenalon`, `corvera_de_asturias` -> `corvera`, `ribera_de_arriba` -> `riberadearriba`, `san_martin_del_rey_aurelio` -> `sanmartindelreyaurelio`, `santo_adriano` -> `santoadriano`), restaurando las coincidencias directas por concejo en toda Asturias.
+- **Ampliación del catálogo de 32 a 50 Grandes Clásicas Circulares**: Añadidas 18 nuevas rutas ciclistas 100% circulares (`isCircular: true`) distribuidas por toda la geografía asturiana (Somiedo/Farrapona, Gamoniteiru, Alto de la Cubilla, Cabrales/Sotres, Colunga/Fito, Cudillero/Cabo Vidio, Proaza/Xanas, Piloña/Sueve, Caso/Redes/Tarna, Ponga/Llomena/Beyos, Tineo/Piedratecha, Allande/El Palo, Tapia/Peñarronda, Boal/Arbón, Ribadedeva/La Franca, Salas/La Espina, Avilés/Cabo Peñas y Parres/Arriondas).
+- **Anti-caché**: Actualizada la versión de caché (`meteoasturlode-v303822-50-cycling-v1`) e importaciones de módulos a `v=3.0.38.22`.
+
 ## [3.0.38.21] - 2026-11-11
 ### Added & Improved
 - **🥾 Ampliación del Catálogo a 80 Sendas Oficiales de Asturias (`routesData.js` + `routesCard.js` - Leyes 0, 15 y 16):**
@@ -4729,19 +4735,7 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 ## [1.0.49] - 2026-08-31
 
 ### 📅 Pronósticos a 10 Días: Doble Previsión Mañana / Tarde (Opción B)
-- **Doble Cápsula Visual por Día**: Desglose horario inteligente en cada una de las tarjetas diarias a 10 días, dividiendo la jornada en:
-  - 🌅 **Mañana (08:00 – 14:00)**: Icono representativo del tiempo matutino con su etiqueta descriptiva y barra lateral ámbar/dorada (`#f59e0b`).
-  - 🌇 **Tarde (14:00 – 21:00)**: Icono representativo del tiempo vespertino con su etiqueta descriptiva y barra lateral azul cielo (`#38bdf8`).
-- **Algoritmo de Detección de Tramo Horario (`getDaypartWeather`)**: Computa el estado del cielo dominante, probabilidad de lluvia y precipitación acumulada en cada tramo específico a partir de las 240 horas descargadas de los modelos meteorológicos (ECMWF / ICON).
-- **Diseño Adaptativo Móvil**: Cápsulas compactas y legibles con microinteracciones `hover`, sombra suave y tipografía nítida en pantallas pequeñas y de escritorio.
-- **Service Worker `v149-official` & Cache-Busting**: Actualización a `?v=1.0.49` para asegurar refresco inmediato sin caché obsoleta.
-
----
-
-## [1.0.48] - 2026-08-30
-
-### 🏔️ Rediseño Glaciar Alpino: Montaña, Altitudes & Estaciones de Esquí
-- **Armonización Visual Glaciar (`#38bdf8`)**: Sustitución del tono morado/ultravioleta por una refinada paleta de Azul Hielo / Glaciar de alto contraste en tod
+- **Doble Cápsula
 - **Alineación Perfecta al 50%**: Configuración de `grid-template-columns: 1fr 1fr` tanto para la fila de navegación (Modelo y Menú) como para la fila de acciones (Guardar y Mi Ubicación), garantizando un diseño estructurado, equilibrado y de fácil pulsación con el pulgar.
 - **Service Worker `v132-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
 

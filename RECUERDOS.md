@@ -2,6 +2,12 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🚴 Ciclismo: Corrección de IDs de Concejos y Ampliación a 50 Clásicas Circulares (`v3.0.38.22`) — 2026-11-11
+- **Estado de retorno previo (Ley 2):** Commit `6567b80` (`v3.0.38.21` — Ampliación del catálogo de senderismo a 80 sendas oficiales).
+- **Diagnóstico resuelto:** El catálogo de `CYCLING_ROUTES` en `js/utils/cyclingData.js` contaba con 32 rutas (21 concejos de salida) pero contenía 7 IDs con guiones bajos incompatibles con el diccionario oficial de `js/utils/concejos.js` (`cangas_de_onis`, `soto_del_barco`, `muros_de_nalon`, `corvera_de_asturias`, `ribera_de_arriba`, `san_martin_del_rey_aurelio`, `santo_adriano`), provocando fallos silenciosos en `getCyclingRoutesForConcejo()`.
+- **Solución e incremento de catálogo:** Normalizados todos los IDs a la nomenclatura oficial de `concejos.js` y ampliado `CYCLING_ROUTES` de 32 a **50 grandes clásicas ciclistas**, manteniendo estrictamente la Regla de Oro de Lendo (`isCircular: true` en todas ellas) y ampliando cobertura por el oriente, occidente y puertos míticos del centro/sur.
+- **Anti-caché (Ley 4):** Actualizado `CURRENT_APP_VERSION` a `3.0.38.22`, imports en `index.html`, `js/app.js` y `js/components/cyclingCard.js`, y `CACHE_NAME = 'meteoasturlode-v303822-50-cycling-v1'` en `sw.js`.
+
 ## 🥾 Ampliación del Catálogo a 80 Sendas Oficiales de Asturias (`v3.0.38.21`) — 2026-11-11
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.20` (`3e92dc5`).
 - **Petición e Instrucción Expresa de Lendo («y podriamos añadir mas rutas que las 58 q hay o no hay mas en la base de datos? [...] vale pero ya estaran en el motor del motor de rutas? faciles, montaña, cercanas, etc? [...] pisale»):**
