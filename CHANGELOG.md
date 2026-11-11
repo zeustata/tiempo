@@ -9,6 +9,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.4] - 2026-11-11
+### Fixed
+- **🔝 Doctrina de Reseteo Cenital al Cambiar de Pestaña (`app.js` - Leyes 0 y 11):**
+  - **Arranque Limpio en Cabecera (`top: 0`):** Al conmutar de cualquier pestaña a otra (ej. de Radar al ranking de lluvia ➔ En Vivo), la vista se resetea de forma instantánea a la parte superior (`window.scrollTo({ left: 0, top: 0, behavior: 'instant' })`).
+  - **Eliminación del Scroll Residual en el Pie:** Corrige el efecto por el cual, tras bajar en el radar o en rutas, al seleccionar un concejo o pulsar otra pestaña la pantalla aterrizaba en medio o abajo del todo, obligando al usuario a deslizar manualmente hacia arriba para ver la tarjeta principal y datos en vivo.
+
 ## [3.0.38.3] - 2026-11-11
 ### Fixed
 - **📍 Diferenciación Visual Inmediata de Marcadores en Radar (`mapRadar.js` + `components.css` - Leyes 0, 11 y 14):**

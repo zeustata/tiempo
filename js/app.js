@@ -51,7 +51,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.38.3';
+export const CURRENT_APP_VERSION = '3.0.38.4';
 // Control inteligente de Auto-Prompt del Changelog (Doctrina de No-Fatiga al Usuario - Feedback Lendo):
 // Solo se incrementa ante cambios visuales grandes, módulos nuevos o novedades perceptibles.
 // En ajustes finos, calibraciones matemáticas y parches internos se mantiene para no fatigar al usuario con modales.
@@ -2501,13 +2501,10 @@ class MeteoAsturiasApp {
     this.activeTab = targetTab;
     window.location.hash = targetTab;
 
-    // Reset de seguridad horizontal para blindar el viewport
-    if (window.scrollX !== 0) {
-      window.scrollTo({ left: 0, top: window.scrollY, behavior: 'instant' });
-    }
+    // Reseteo cenital universal (Doctrina de Ergonomía Móvil): Cada pestaña arranca limpia arriba del todo (top: 0, left: 0)
+    window.scrollTo({ left: 0, top: 0, behavior: 'instant' });
 
     if (targetTab === 'radar') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
       setTimeout(() => resizeMap(), 50);
       setTimeout(() => resizeMap(), 280);
       this.ensureRadarRainData();

@@ -2,6 +2,19 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🔝 Doctrina de Reseteo Cenital al Cambiar de Pestaña (`v3.0.38.4`) — 2026-11-11
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.3` (`02ccb52`).
+- **Petición e Instrucción Expresa de Lendo («una cosa que me llama la atencion, cuando elijo en el menu de radar algun concejo me manda para el menu en vivo con los datos de ese concejo. eso esta bien pero me manda al pie de la app abajo del todo no arriba del todo donde esta la tarjeta MeteoAsturLode [...] y no seria mejor que cada vez que cambie de tarjeta siempre este arriba del todo sea cual sea? [...] pisale»):**
+  1. *Diagnóstico de Scroll Residual en SPA:*
+     - Al tratarse de una aplicación de página única (SPA), la coordenada de desplazamiento vertical (`window.scrollY`) es compartida entre todas las pestañas de navegación.
+     - Cuando el usuario bajaba en el radar a explorar el ranking de lluvia (o en rutas, o en mareas) y hacía clic en un concejo o cambiaba de pestaña, la aplicación activaba el nuevo panel pero mantenía el scroll a 800px-1200px abajo, aterrizando directamente en el pie de la vista y obligando a hacer scroll manual hacia arriba para ver el tiempo en vivo.
+  2. *Implementación de Reseteo Cenital Global (Leyes 0 y 11):*
+     - En `app.js` (`switchTab`), se establece el reseteo automático de vista cenital instantáneo: `window.scrollTo({ left: 0, top: 0, behavior: 'instant' })`.
+     - De este modo, cualquier cambio de pestaña o navegación entre módulos arranca de forma limpia e impecable arriba del todo (`top: 0`), garantizando que la tarjeta MeteoAsturLode y la información principal se visualicen inmediatamente.
+  3. *Ciclo Constitucional Estrictamente Local y Notificación Telegram (Leyes 1, 3, 9 y 23):*
+     - Implementado en local, verificado con sintaxis `node --check` y servidor de pruebas levantado en `http://localhost:8080`.
+     - Notificación sonora enviada a Telegram para verificación previa de Lendo antes de cualquier despliegue a la red.
+
 ## 📍 Diferenciación Visual Inmediata de Marcadores en Radar (`v3.0.38.3`) — 2026-11-11
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.2` (`0bc78d2`).
 - **Petición e Instrucción Expresa de Lendo («siguiente asunto. si te fijas el punto de ubicacion del concejo y mi posicion se parecen demasiado. te mande una captura. deberian tener un color distinto y que se intuya sin tocar que boton pertenece a mi ubicacion y que boton es el del concejo. me refiero a los dos puntitos azules en medio del radar [...] pisale»):**
@@ -3639,19 +3652,7 @@ ICONO | ESTADO EN METEOASTUR LODE              | NUBES (cc)  | RAD. DIRECTA (irr
      - Lendo planteó el escenario crítico que deben afrontar las aplicaciones meteorológicas con beta testers: que un usuario mire al cielo, vea sol radiante o sol tamizáu (resol), y la aplicación indique *«Orbayu / Llovizna ligera 🌦️»*.
      - *Causa raíz técnica descubierta en la auditoría del código:*
        - Cuando el modelo numérico de alta resolución (AROME) computa micro-precipitaciones residuales (ej. `0.1 mm` o `0.2 mm`) o códigos WMO 51–57 bajo cielos con insolación directa activa (`direct_normal_irradiance >= 90 W/m²`, `uv_index >= 1.0` o `shortwave_radiation >= 200 W/m²`), la condición del clasificador solar en `weatherIcons.js` exigía estrictamente `p < 0.1 mm`. Al tener `0.1 mm` o `0.2 mm`, la calibración solar quedaba completamente bloqueada y el flujo caía en el *Caso G: Orbayu / Llovizna ligera*.
-       - Además, en `weatherApi.js`, el detector de falso cubierto (`isFalseOvercast`) requería `rawPrecip < 0.1`, impidiendo que la insolación directa corrigiera el código 51 a soleado.
-  2. *Intervención Técnica Integral:*
-     - **Inmunidad Solar en `js/utils/weatherIcons.js`:**
-       - Incorporada la directiva `isSolarPhantomDrizzle = hasActiveSun && (isDrizzleCode || p < 0.5) && !base.isSnow && code !== 95;`.
-       - Si hay sol directo activo o UV moderado en horas diurnas, cualquier micro-traza (&lt; 0.5 mm) se anula categóricamente como lluvia activa (`isPhysicallyRaining = false; isExplicitRainCode = false;`).
-       - En el bloque de Calibración Solar Inteligente, se permite expresamente sobreescribir micro-trazas (&lt; 0.5 mm) cuando hay luz solar real (`hasRealSolarLight`), garantizando que la tarjeta resuelva siempre en **☀️ Despejado / Soleyeru**, **🌥️ Resol / Sol tamizáu** o **⛅ Parcialmente nublado / Claros**, y jamás en llovizna.
-     - **Purga en Consenso y Modo Standalone (`js/services/weatherApi.js`):**
-       - Tanto en el motor de consenso (tiempo actual y horizonte 48h) como en modo standalone, la presencia de radiación solar activa (`hasActiveSunlight` / `hasHourlySun`) con ECMWF seco purga cualquier micro-traza (&lt; 0.5 mm) a `0.0 mm` y convierte el código meteorológico a tiempo seco.
-     - **Blindaje en Asesores (`umbrellaAdvisor.js` y `laundryAdvisor.js`):**
-       - Sincronización de inmunidad solar en el Semáforu del Paragües y en el Asesor de Tendido, impidiendo que una micro-traza numérica encienda avisos de *«🟡 Orbayando Agora»* o *«🔴 Ni se te ocurra, que te va orpinar»* si brilla el sol.
-  3. *Constitución del Proyecto - Incorporación de las Leyes 21 y 22 (AGENTS.md):*
-     - **Ley 21 (Doctrina de Inmunidad Solar Frente a Falso Orbayu y Primacía del Sol Real sobre Micro-Trazas):** Prohibición tajante de clasificar la atmósfera como húmeda o lluviosa en presencia de radiación solar directa activa.
-     - **Ley 22 (Doctrina de Diagnóstico ante Discrepancias Meteorológicas Modelo-Realidad y Soberanía de Teledetección):** Reconocimiento formal de 
+       - Además, en `weatherApi.js`, el detector de falso cubierto (`isFalseOvercast`) requería `rawPrecip < 0.1`, impidiendo que la insolación direc
      - Lendo detectó que en la app la racha actual sí marcaba `16 km/h` y la racha máxima `31 km/h`, y que otras plataformas como Maldonado (*eltiempo.es*) publicaban `15 km/h` como cifra de cabecera.
      - *Causa raíz:* La API y el modelo registraban los datos con exactitud milimétrica (`current.wind_speed_10m = 6.8` como media sostenida a 10 metros, y `current.wind_gusts_10m = 16.0` como racha instantánea). Sin embargo, la jerarquía visual otorgaba todo el tamaño tipográfico (`2.2rem`) a la media matemática continua, relegando la racha (que es lo que el ser humano y el entorno sienten físicamente) a un texto secundario pequeño.
   2. *Intervención Técnica en `currentCard.js` y `components.css`:*

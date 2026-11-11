@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v30383-radar-pins-v1';
+const CACHE_NAME = 'meteoasturlode-v30384-zenith-scroll-v1';
 const STATIC_ASSETS = [
   './',
   './index.html',
