@@ -2,6 +2,24 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📱 Blindaje contra Truncado de Nombres y Rigor de 78 Concejos en Radar (`v3.0.38.2`) — 2026-11-11
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.1` (`fc2ff73`).
+- **Petición e Instrucción Expresa de Lendo («si miras bien el top 5 de los concejos que mas llueve y que menos llueve desde el movil no se leen. estan cortados con los puntitos y hasta que no le das no sabes que concejo es o solo lo intuyes. otra cosa, pones 82 concejos cuando asturias tiene 78, porque? [...] pisale»):**
+  1. *Diagnóstico Visual en Captura Móvil (`captura_20261111_085333.jpg`):*
+     - En la primera fila de cada tarjeta del ranking Top 5, los litros (`0.6 mm`) y la insignia (`Orbayu 🌦️`) compartían espacio a la derecha, consumiendo ~140px.
+     - En pantallas estrechas de 320px-360px, al concejo le quedaban solo ~100px.
+     - `Peñamellera Alta` y `Peñamellera Baja` se recortaban ambas a `Peñam...`, siendo imposible distinguirlas sin pulsar.
+  2. *Reestructuración Ergonómica en 2 Líneas (Ley 11):*
+     - **Fila 1:** Puesto/Medalla + Nombre completo del concejo a la izquierda (`flex: 1`, más de 220px útiles) y únicamente los litros (`0.6 mm`) a la derecha (`flex-shrink: 0`).
+     - **Fila 2:** Comarca y barra de intensidad relativa a la izquierda (con sangría para alinear bajo el texto); insignia climática y porcentaje de probabilidad a la derecha.
+     - Aplicado idéntico patrón a la lista del modal (`radar-rain-modal-item`).
+  3. *Aclaración y Rigor de los 78 Concejos Oficiales de Asturias:*
+     - Los 78 municipios oficiales del Principado están presentes (1 a 78). Los registros 79 a 82 corresponden a 4 enclaves meteorológicos de alta montaña y esquí (Sotres, Lagos de Covadonga, Valgrande-Pajares y Fuentes de Invierno).
+     - Se actualizan todos los textos de la interfaz para indicar con precisión: `Ranking de los 78 concejos (+ 4 enclaves de montaña)`.
+  4. *Ciclo Constitucional Estrictamente Local (Leyes 1, 3 y 9):*
+     - Modificación aplicada en local. Servidor levantado en `http://localhost:8080`.
+     - Prohibición absoluta de push a la red hasta validación de Lendo.
+
 ## 💧 Calibración de Iconos en Lluvia Débil y Rescate por Radar (`v3.0.38.1`) — 2026-11-10
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38` (`bf76977`).
 - **Petición e Instrucción Expresa de Lendo («no puedo. ahora veo q estas con el radar. llueve muy poco ypones una nube con 3 gotas. hay q afinar [...] subelo y siendo un ajuste asi no requiere nada no? para q hagas todo a la vez»):**
@@ -3635,33 +3653,7 @@ ICONO | ESTADO EN METEOASTUR LODE              | NUBES (cc)  | RAD. DIRECTA (irr
      - *Causa raíz del fallo previo:*
        - En la versión 2.2.57, se había implementado un filtro virga quirúrgico que solo operaba cuando el código era seco (código 3) con exactamente 0.1 mm, o si el código era 51 con estrictamente 0.0 mm. Al enviar AROME 0.3 mm con código 51, superaba el umbral de 0.1 mm y se clasificaba automáticamente como lluvia física en superficie.
        - Además, en `weatherApi.js`, el algoritmo de consenso cantábrico solo funcionaba en un sentido (rescatar lluvia cuando AROME marcaba seco y ECMWF detectaba orbayu), pero no tenía filtro inverso cuando AROME alucinaba lloviznas solitarias contra el consenso de los modelos globales.
-  2. *Intervención Técnica Integral:*
-     - **Consenso Bidireccional en `js/services/weatherApi.js`:**
-       - En tiempo actual: si AROME marca micro-precipitación (< 1.5 mm) o código 51-57, pero ECMWF constata `0.0 mm` seco (código 3) y la humedad no está saturada (< 86%), se anula la precipitación solitaria de AROME y se asigna fielmente `0.0 mm` y cielo cubierto seco (`código 3 = Nublado / Cubiertu ☁️`).
-       - En el pronóstico horario: si AROME proyecta llovizna (< 1.5 mm) con ECMWF en 0.0 mm seco y probabilidad ensamble baja (< 35%), se neutraliza la lluvia fantasma en la tira horaria (como los 0.9 mm a las 16h).
-     - **Blindaje Físico de Virga en `js/utils/weatherIcons.js`:**
-       - Se establece que las micro-lloviznas (< 1.0 mm) con códigos 51-57 exigen una humedad mínima en superficie &ge; 85%. Si la humedad es < 85%, se clasifica como virga evaporada en caída libre y se muestra honestamente como **Nublado / Cubiertu ☁️** sin gotas ni iconos de lluvia.
-     - **Convivencia Armónica Total con Ajustes Previos:**
-       - El detector de *Orbayu de Niebla / Meona* (que exige saturación extrema &ge; 94%) permanece 100% operativo cuando hay niebla líquida real.
-       - El *Rescate de Orbayu Real* de frentes atlánticos (ECMWF &ge; 0.1 mm y humedad &ge; 86%) sigue rescatando la lluvia cuando el modelo europeo la detecta.
-       - La *Soberanía Solar Física* y las lluvias frontales mayores (&ge; 0.6 mm) coexisten sin ninguna interferencia.
-  3. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
-     - Versión oficial elevada a **`v2.2.61 ☁️`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.61'` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
-     - Service Worker actualizado a `meteoasturlode-v2261-bidirectional-consensus-dry-overcast` en `sw.js`.
-     - Query strings sincronizadas a `?v=2.2.61` en `index.html` (`main.css`, `components.css`, `app.js`).
-
-## 🎿 Actualización v2.2.60: Homologación Definitiva y Ancho Blindado en Tablets — 2026-10-17
-- **Erradicación del Colapso a Cero Píxeles y Despertador Síncrono Post-Animación (Feedback Lendo - «no se que brijeria hay pero persiste el tema. si no le doy con el dedo, no sale la prevision en cordillera pero solo en el tablet» y «pisale pero no se yo. ya desconfio»):**
-  1. *Diagnóstico Científico y Físico Definitivo del Fenómeno:*
-     - Lendo constató que en su tablet en horizontal, al abrir la app o refrescar, el área de los 7 días de previsión en Cordillera aparecía como un hueco azul completamente vacío; pero bastaba con darle con el dedo una o dos veces para que emergiera de golpe toda la información al 100%.
-     - Al analizar el ciclo de vida del renderizado:
-       - En `v2.2.59`, se había intentado un `@media (min-width: 860px)`, pero en tablets con DPR 2.25/2.4 el ancho CSS real suele ser de 800px o 853px, con lo que la media query no aplicaba.
-       - Además, `.ski-day-card` tenía `min-width: 0; flex: 0 0 115px;`. En flexbox dentro de un contenedor con `overflow-x: auto`, si el panel está oculto o animándose con `transform: translateX(...)` (`slide-from-right` / `slide-from-left` de 350 ms), Blink en Android colapsaba el ancho intrínseco de los hijos a 0 píxeles.
-       - Al terminar la animación a los 350 ms, el compositor no realizaba un re-layout síncrono. Cuando Lendo tocaba la pantalla (`touchstart`), el navegador ejecutaba el hit-testing (`CompositorHitTestInfo`) para ver qué tocaba el dedo, descubría el contenedor y repintaba instantáneamente las tarjetas.
-  2. *Intervención Técnica Integral:*
-     - **Homologación Arquitectónica al Patrón Inmune de 24 Horas (`.hourly-card`):**
-       - En `css/components.css`, `.ski-day-card` se fija con **`min-width: 105px; flex: 0 0 auto; box-sizing: border-box;`**. Se erradica por completo `min-width: 0;`, haciendo físicamente imposible que la tarjeta colapse o encoja por debajo de 105px bajo ninguna circunstancia.
-       - En `.ski-
+  2. 
      - Lendo detectó que en la app la racha actual sí marcaba `16 km/h` y la racha máxima `31 km/h`, y que otras plataformas como Maldonado (*eltiempo.es*) publicaban `15 km/h` como cifra de cabecera.
      - *Causa raíz:* La API y el modelo registraban los datos con exactitud milimétrica (`current.wind_speed_10m = 6.8` como media sostenida a 10 metros, y `current.wind_gusts_10m = 16.0` como racha instantánea). Sin embargo, la jerarquía visual otorgaba todo el tamaño tipográfico (`2.2rem`) a la media matemática continua, relegando la racha (que es lo que el ser humano y el entorno sienten físicamente) a un texto secundario pequeño.
   2. *Intervención Técnica en `currentCard.js` y `components.css`:*

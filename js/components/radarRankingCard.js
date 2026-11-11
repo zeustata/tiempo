@@ -4,7 +4,7 @@
  * Doctrina de Blindaje Anti-Desborde y Ergonomía Móvil Estricta (Leyes 11 y 14).
  */
 
-import { formatConcejoShortName } from '../utils/radarRainService.js';
+import { formatConcejoShortName } from '../utils/radarRainService.js?v=3.0.38.2';
 
 /**
  * Obtiene la etiqueta del día según el índice (0 = Hoy, 1 = Mañana, 2 = Pasado)
@@ -73,7 +73,7 @@ export function renderRadarRankingCard(rainMap, selectedDayIndex = 0, selectedOr
           <span>🌧️</span> <span>Previsión de Lluvia por Concejos</span>
         </h3>
         <span style="font-size: 0.72rem; color: var(--text-dim); display: block; margin-top: 2px;">
-          Ranking comparativo de los 82 concejos de Asturias
+          Ranking comparativo de los 78 concejos (+ 4 enclaves de montaña)
         </span>
       </div>
 
@@ -145,46 +145,46 @@ export function renderRadarRankingCard(rainMap, selectedDayIndex = 0, selectedOr
               border-radius: 10px;
               padding: 9px 10px;
               display: flex;
-              align-items: center;
-              justify-content: space-between;
-              gap: 8px;
+              flex-direction: column;
+              gap: 4px;
               cursor: pointer;
               transition: transform 0.15s, background 0.15s;
               box-sizing: border-box;
               min-width: 0;
             ">
-              <!-- Columna Izquierda (Identidad): Nombre arriba y Comarca+Barra abajo -->
-              <div style="min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 3px;">
-                <div style="display: flex; align-items: center; gap: 6px; min-width: 0;">
+              <!-- Fila 1: Medalla + Nombre del Concejo (con todo el ancho disponible) a la izquierda, y Litros a la derecha -->
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; min-width: 0;">
+                <div style="display: flex; align-items: center; gap: 6px; min-width: 0; flex: 1;">
                   <span style="font-size: 0.95rem; line-height: 1; flex-shrink: 0; min-width: 20px; text-align: center;">${rankBadge}</span>
-                  <strong style="font-size: 0.86rem; font-weight: 800; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;">
+                  <strong style="font-size: 0.88rem; font-weight: 800; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;">
                     ${shortName}
                   </strong>
                 </div>
-                <div style="display: flex; align-items: center; gap: 6px; min-width: 0; padding-left: 2px;">
-                  <span style="font-size: 0.68rem; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px;">
+                <strong style="font-size: 0.90rem; font-weight: 800; color: ${item.day.badge.color}; white-space: nowrap; flex-shrink: 0;">
+                  ${item.day.rainMm} mm
+                </strong>
+              </div>
+
+              <!-- Fila 2: Comarca + Barra a la izquierda, Insignia y Probabilidad a la derecha -->
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; min-width: 0; padding-left: 26px;">
+                <div style="display: flex; align-items: center; gap: 6px; min-width: 0; flex: 1;">
+                  <span style="font-size: 0.68rem; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 110px;">
                     ${item.concejo.region || ''}
                   </span>
                   <!-- Barra de intensidad de lluvia -->
-                  <div style="flex: 1; max-width: 60px; height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden;">
+                  <div style="flex: 1; max-width: 50px; height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden;">
                     <div style="width: ${percentWidth}%; height: 100%; background: ${item.day.badge.color}; border-radius: 2px;"></div>
                   </div>
                 </div>
-              </div>
 
-              <!-- Columna Derecha (Datos): Litros+Insignia arriba y Probabilidad abajo -->
-              <div style="display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 2px; flex-shrink: 0;">
-                <div style="display: flex; align-items: center; gap: 5px;">
-                  <strong style="font-size: 0.88rem; font-weight: 800; color: ${item.day.badge.color}; white-space: nowrap;">
-                    ${item.day.rainMm} mm
-                  </strong>
-                  <span style="font-size: 0.66rem; font-weight: 700; padding: 2px 6px; border-radius: 6px; background: ${item.day.badge.bg}; color: ${item.day.badge.color}; border: 1px solid ${item.day.badge.color}40; white-space: nowrap;">
+                <div style="display: flex; align-items: center; gap: 5px; flex-shrink: 0;">
+                  <span style="font-size: 0.66rem; font-weight: 700; padding: 1px 6px; border-radius: 6px; background: ${item.day.badge.bg}; color: ${item.day.badge.color}; border: 1px solid ${item.day.badge.color}40; white-space: nowrap;">
                     ${item.day.badge.label}
                   </span>
+                  <span style="font-size: 0.66rem; color: var(--text-dim); font-weight: 600; white-space: nowrap;">
+                    ${item.day.pop}% prob.
+                  </span>
                 </div>
-                <span style="font-size: 0.66rem; color: var(--text-dim); font-weight: 600;">
-                  ${item.day.pop}% prob.
-                </span>
               </div>
             </div>
           `;
@@ -209,7 +209,7 @@ export function renderRadarRankingCard(rainMap, selectedDayIndex = 0, selectedOr
         transition: background 0.2s;
         box-sizing: border-box;
       ">
-        <span>📋</span> <span>Ver ranking completo de concejos (82)</span> <span style="color: #38bdf8;">➔</span>
+        <span>📋</span> <span>Ver ranking completo (78 concejos + 4 cumbres)</span> <span style="color: #38bdf8;">➔</span>
       </button>
     </div>
   `;
@@ -300,42 +300,41 @@ export function renderRadarRankingModalHtml(rainMap, selectedDayIndex = 0, selec
                 border-radius: 9px;
                 padding: 9px 10px;
                 display: flex;
-                align-items: center;
-                justify-content: space-between;
-                gap: 8px;
+                flex-direction: column;
+                gap: 4px;
                 cursor: pointer;
                 transition: background 0.15s;
                 box-sizing: border-box;
                 min-width: 0;
               ">
-                <!-- Columna Izquierda -->
-                <div style="min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 2px;">
-                  <div style="display: flex; align-items: center; gap: 6px; min-width: 0;">
+                <!-- Fila 1: Puesto + Nombre ancho completo a la izquierda, Litros a la derecha -->
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; min-width: 0;">
+                  <div style="display: flex; align-items: center; gap: 6px; min-width: 0; flex: 1;">
                     <span style="font-size: 0.76rem; font-weight: 800; min-width: 24px; color: var(--text-dim); text-align: center;">
                       #${idx + 1}
                     </span>
-                    <strong style="font-size: 0.84rem; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;">
+                    <strong style="font-size: 0.86rem; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;">
                       ${shortName}
                     </strong>
                   </div>
-                  <span style="font-size: 0.68rem; color: var(--text-dim); padding-left: 30px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                    ${item.concejo.region || ''}
-                  </span>
+                  <strong style="font-size: 0.88rem; font-weight: 800; color: ${item.day.badge.color}; white-space: nowrap; flex-shrink: 0;">
+                    ${item.day.rainMm} mm
+                  </strong>
                 </div>
 
-                <!-- Columna Derecha -->
-                <div style="display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 2px; flex-shrink: 0;">
-                  <div style="display: flex; align-items: center; gap: 5px;">
-                    <strong style="font-size: 0.84rem; font-weight: 800; color: ${item.day.badge.color}; white-space: nowrap;">
-                      ${item.day.rainMm} mm
-                    </strong>
-                    <span style="font-size: 0.66rem; font-weight: 700; padding: 2px 6px; border-radius: 6px; background: ${item.day.badge.bg}; color: ${item.day.badge.color}; border: 1px solid ${item.day.badge.color}40; white-space: nowrap;">
+                <!-- Fila 2: Comarca a la izquierda, Insignia y Probabilidad a la derecha -->
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; min-width: 0; padding-left: 30px;">
+                  <span style="font-size: 0.68rem; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1;">
+                    ${item.concejo.region || ''}
+                  </span>
+                  <div style="display: flex; align-items: center; gap: 5px; flex-shrink: 0;">
+                    <span style="font-size: 0.66rem; font-weight: 700; padding: 1px 6px; border-radius: 6px; background: ${item.day.badge.bg}; color: ${item.day.badge.color}; border: 1px solid ${item.day.badge.color}40; white-space: nowrap;">
                       ${item.day.badge.label}
                     </span>
+                    <span style="font-size: 0.66rem; color: var(--text-dim); font-weight: 600; white-space: nowrap;">
+                      ${item.day.pop}% prob.
+                    </span>
                   </div>
-                  <span style="font-size: 0.66rem; color: var(--text-dim); font-weight: 600;">
-                    ${item.day.pop}% prob.
-                  </span>
                 </div>
               </div>
             `;

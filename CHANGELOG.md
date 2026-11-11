@@ -9,6 +9,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.2] - 2026-11-11
+### Fixed
+- **📱 Blindaje Total contra Truncado de Nombres en Ranking de Lluvia (`radarRankingCard.js` - Ley 11):**
+  - **Espacio Máximo en Línea 1:** Reubicada la pastilla de insignia climática (`Orbayu 🌦️`) a la segunda línea, dejando en la primera fila exclusivamente el puesto/medalla, el nombre completo del concejo y los milímetros (`0.6 mm`).
+  - **Eliminación de Recortes con Puntos Suspensivos:** El nombre del concejo pasa de 100px a más de 220px de ancho útil en pantallas móviles, garantizando que nombres compuestos como `Peñamellera Alta`, `Peñamellera Baja` y `Picos de Europa` se lean íntegros y sin cortes.
+  - **Rigor Territorial en Títulos Institucionales:** Corregidas las referencias que hablaban de "82 concejos" para reflejar con rigor que Asturias cuenta con **78 concejos oficiales (+ 4 enclaves de alta montaña / esquí)**: Sotres, Lagos de Covadonga, Valgrande-Pajares y Fuentes de Invierno.
+
 ## [3.0.38.1] - 2026-11-10
 ### Fixed
 - **💧 Calibración Proporcional de Iconos en Lluvia Débil y Rescate por Radar (`weatherIcons.js` - Leyes 0 y 13):**

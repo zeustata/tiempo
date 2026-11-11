@@ -97,6 +97,8 @@ export function formatConcejoShortName(name) {
   if (clean.includes('/')) {
     clean = clean.split('/')[0].trim();
   }
+  if (clean === 'Corvera de Asturias') clean = 'Corvera';
+  if (clean === 'San Martín del Rey Aurelio') clean = 'San Martín del R.A.';
   return clean;
 }
 
