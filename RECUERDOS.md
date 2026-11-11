@@ -2,6 +2,22 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🧭 Desacople Inteligente de los Filtros de Rutas Regionales (`v3.0.38.17`) — 2026-11-11
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.16` (`e7c6b2c`).
+- **Petición e Instrucción Expresa de Lendo («una cosa. mira a ver en la ruta t senderismo, la primera tarjeta del menu rutas. si pongo cercanas o mejores condiciones cambia la tarjeta pero en el menu giratoria en faciles, montaña o costeras me pone lo mismo que cercanas. No tiene sentido. Esas no tienen porque buscar lo mas cercano [...] vale pisale»):**
+  1. *Diagnóstico Riguroso de Causa Raíz (Ley 0):*
+     - En `routesCard.js`, las categorías `facil`, `montana` y `costera` ejecutaban exactamente el mismo ordenamiento forzado por cercanía (`displayedRoutes.sort((a, b) => a.distFromUserKm - b.distFromUserKm)`) y priorizaban `localRoutes[0]`, haciendo que al estar en Castrillón o Gijón se eligiese siempre la misma ruta de proximidad.
+     - En `routesData.js`, las rutas de montaña usaban `type: 'montaña'` (con `ñ`), mientras que el filtro buscaba `'montana'` (sin `ñ`), omitiendo cumbres oficiales.
+     - Si el usuario tenía seleccionada una ruta previa manual, al cambiar de categoría no se reseteaba `selectedHikingRouteId`, congelando la ficha activa.
+  2. *Refactorización Integral e Inteligente (Opción A Aprobada):*
+     - **Búsqueda Regional Desacoplada de la Cercanía:** `facil`, `montana` y `costera` clasifican en toda Asturias evaluando en primer término el clima en vivo de las 58 rutas (ausencia de lluvia y viento seguro) y secundariamente el mérito técnico de la categoría (accesibilidad en fáciles, cota y desnivel en montaña, longitud en costeras/ríos).
+     - **Reseteo Automático de Senda Protagonista:** Al pulsar cualquier filtro de categoría, se deselecciona la senda manual previa para actualizar de inmediato tanto la cabecera como la ficha protagonista a la senda óptima de esa categoría en Asturias.
+     - **Corrección de Caracteres y Asesor Contextual:** Soporte para `'montaña'` con y sin `ñ`, y actualización de los textos del Consejero Inteligente para cada categoría.
+  3. *Ciclo Constitucional Estrictamente Local (Leyes 1, 3, 4, 9 y 23):*
+     - Cambios aplicados exclusivamente en archivos locales (`routesCard.js`, `app.js`, `index.html`, `sw.js`).
+     - Cadena anti-caché actualizada a `v3.0.38.17` y Service Worker `meteoasturlode-v303817-routes-filter-v1`.
+     - Servidor de pruebas local levantado en puerto 8080.
+
 ## 📐 Compactación y Holgura Estricta de la Pastilla Amarilla (`v3.0.38.16`) — 2026-11-11
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.15` (`a25398e`).
 - **Petición e Instrucción Expresa de Lendo («lo que te decia. desde el movil que es estrecho se superpone un poquitin. lo que puedes hacer es quiter "Ver Grafica" y dejar solo "Grafica". que te parece? de mande al buzon nuestro la captura [...] pisale»):**
@@ -3676,23 +3692,7 @@ ICONO | ESTADO EN METEOASTUR LODE              | NUBES (cc)  | RAD. DIRECTA (irr
 ## ⏱️ Actualización v2.2.69: Indicación Explícita de Franjas Horarias en Pronóstico a 10 Días y Ergonomía Móvil — 2026-10-18
 - **Claridad Temporal Inmediata en Botones de Franja (Feedback Lendo - «estaria bien poner entre parentisis el tiempo que abarca para que sepan que mañana incluye la noche y la tarde abarca toda la tarde hasta que cambie de dia», «me vale la opcion a pero te repito que pone 2.4mm ya. miralo a ver», «pisale»):**
   1. *Diagnóstico Funcional y Lingüístico:*
-     - Lendo detectó que la etiqueta `🌅 MAÑANA` en los botones de franja diaria podía inducir a error por la doble acepción del término en español: «mañana» como día venidero (*tomorrow*) frente a «mañana» como tramo horario matinal (*morning*).
-     - Al consultar la app por la noche, en la primera tarjeta (HOY) se leía `🌅 MAÑANA: 3.6 mm` y `🌇 TARDE: 0.0 mm`, generando la impresión óptica de estar viendo la previsión de mañana lunes, cuando en realidad mostraba la lluvia acontecida durante la mañana de hoy domingo.
-     - Asimismo, para el día de mañana lunes (19 oct), los botones marcan 2.4 mm (matinal) y 0.0 mm (vespertino), en perfecta concordancia con los 2.4 mm obtenidos por Lendo al sumar hora a hora el bloque de 72 horas (03:00 h: 1.8 mm, 04:00 h: 0.1 mm, 05:00 h: 0.2 mm, 07:00 h: 0.3 mm).
-     - La adición explícita de los rangos de horas resuelve cualquier duda de usuario respecto a qué horas abarca cada botón (la madrugada/noche nocturna en la mañana y la tarde/noche completa hasta las 24:00 h).
-  2. *Implementación Técnica en `forecastView.js` y `components.css` (Doctrina Ley 11):*
-     - En `js/components/forecastView.js`:
-       - Botón superior: `<span class="d-dp-tag">🌅 MAÑANA <span class="d-dp-hours">(00h - 14h)</span></span>`
-       - Botón inferior: `<span class="d-dp-tag">🌇 TARDE <span class="d-dp-hours">(14h - 24h)</span></span>`
-     - En `css/components.css`:
-       - Definida la clase `.d-dp-hours` con `font-size: 0.64rem; font-weight: 600; opacity: 0.82; letter-spacing: -0.2px; text-transform: none;`.
-       - Ajuste para pantallas móviles estrechas en `@media (max-width: 480px)` con `font-size: 0.60rem;`, garantizando encuadre perfecto junto a la pastilla de milímetros (`.d-dp-precip`) sin partir líneas ni desbordar.
-  3. *Cache-Busting y Despliegue Oficial (Leyes 1, 3, 4, 10, 11 y 13):*
-     - Service Worker actualizado a `meteoasturlode-v2269-franjas-horarias` en `sw.js`.
-     - Versión oficial elevada a **`v2.2.69 ⏱️`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.69'` en `app.js`, `forecastView.js?v=2.2.69` y query strings en `index.html`.
-
-## 🌦️ Actualización v2.2.68: Nuevo Icono Universal de Chubascos con Sol («Llueve y fai sol») — 2026-10-18
-- **Creación Vectorial Completa del Icono Comodín `showers` (Feedback Lendo - «creo que en los iconos no existe el icono de chubascos (por ejemplo cuando en una hora determinada dan un chaparron y luego sale el sol. El tipico icono que sale una gota una nube y un sol. lo tenemos», «pisale anda que todos lal app lo incorporan y es como un comodin. si en una hora concreta dan posib
+     - Lendo detectó que la etiqueta `🌅 MAÑANA` en los botones de franja diaria podía inducir a error por la doble acepción del término en español: «mañana» como día venidero (*tomorrow*) frente a 
      - Lendo detectó que en la app la racha actual sí marcaba `16 km/h` y la racha máxima `31 km/h`, y que otras plataformas como Maldonado (*eltiempo.es*) publicaban `15 km/h` como cifra de cabecera.
      - *Causa raíz:* La API y el modelo registraban los datos con exactitud milimétrica (`current.wind_speed_10m = 6.8` como media sostenida a 10 metros, y `current.wind_gusts_10m = 16.0` como racha instantánea). Sin embargo, la jerarquía visual otorgaba todo el tamaño tipográfico (`2.2rem`) a la media matemática continua, relegando la racha (que es lo que el ser humano y el entorno sienten físicamente) a un texto secundario pequeño.
   2. *Intervención Técnica en `currentCard.js` y `components.css`:*

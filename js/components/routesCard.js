@@ -264,42 +264,64 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
   // Título limpio sin paréntesis
   const concejoTitle = concejo.name.replace(/\s*\(.*?\)/, '').trim();
 
-  // Filtrado y ordenación inteligente
+  // Filtrado y ordenación inteligente por categoría y clima (Opción A)
   let displayedRoutes = [...allRoutes];
 
+  const getScore = (r) => (r.weatherBadge ? r.weatherBadge.score : 0);
+
   if (activeFilter === 'dry') {
-    // Modo Detector de Escampada: Ordenar de menor a mayor lluvia
+    // Modo Detector de Escampada / Mejores Condiciones: Ordenar de mejor a peor clima
     displayedRoutes.sort((a, b) => {
-      const scoreA = a.weatherBadge ? a.weatherBadge.score : 0;
-      const scoreB = b.weatherBadge ? b.weatherBadge.score : 0;
-      if (scoreB !== scoreA) return scoreB - scoreA;
+      const scoreDiff = getScore(b) - getScore(a);
+      if (scoreDiff !== 0) return scoreDiff;
       return a.distFromUserKm - b.distFromUserKm;
     });
   } else if (activeFilter === 'facil') {
+    // Fáciles en toda Asturias: Primero por clima favorable, luego por menor desnivel y dificultad
     displayedRoutes = displayedRoutes.filter(r => r.diffCat === 'facil');
-    displayedRoutes.sort((a, b) => a.distFromUserKm - b.distFromUserKm);
+    displayedRoutes.sort((a, b) => {
+      const scoreDiff = getScore(b) - getScore(a);
+      if (scoreDiff !== 0) return scoreDiff;
+      const elevDiff = (a.elevM || 0) - (b.elevM || 0);
+      if (elevDiff !== 0) return elevDiff;
+      return a.distFromUserKm - b.distFromUserKm;
+    });
   } else if (activeFilter === 'montana') {
-    displayedRoutes = displayedRoutes.filter(r => r.type === 'montana' || r.type === 'desfiladero' || (r.elevM && r.elevM >= 300));
-    displayedRoutes.sort((a, b) => a.distFromUserKm - b.distFromUserKm);
+    // Montaña en toda Asturias: rutas de montaña/desfiladero/cumbre
+    displayedRoutes = displayedRoutes.filter(r => 
+      r.type === 'montana' || r.type === 'montaña' || r.type === 'desfiladero' || (r.elevM && r.elevM >= 280)
+    );
+    // Ordenar primero por seguridad climática (menos lluvia y sin vendaval) y luego por cota/desnivel
+    displayedRoutes.sort((a, b) => {
+      const scoreDiff = getScore(b) - getScore(a);
+      if (scoreDiff !== 0) return scoreDiff;
+      return (b.elevM || 0) - (a.elevM || 0);
+    });
   } else if (activeFilter === 'costera') {
+    // Costeras y Fluviales en toda Asturias: Primero por clima favorable, luego por longitud
     displayedRoutes = displayedRoutes.filter(r => r.type === 'costera' || r.type === 'fluvial');
-    displayedRoutes.sort((a, b) => a.distFromUserKm - b.distFromUserKm);
+    displayedRoutes.sort((a, b) => {
+      const scoreDiff = getScore(b) - getScore(a);
+      if (scoreDiff !== 0) return scoreDiff;
+      return (b.distKm || 0) - (a.distKm || 0);
+    });
   } else {
-    // Por cercanía
+    // Por cercanía pura (📍 Cercanas)
     displayedRoutes.sort((a, b) => a.distFromUserKm - b.distFromUserKm);
   }
 
-  // Agrupación en locales y resto
+  // Agrupación en locales y resto (solo para la vista por cercanía)
   const localRoutes = displayedRoutes.filter(r => r.isLocal || r.distFromUserKm <= 15);
   const otherRoutes = displayedRoutes.filter(r => !localRoutes.some(lr => lr.id === r.id));
 
-  // Senda recomendada por el sistema
-  let recommendedRoute = localRoutes[0] || displayedRoutes[0] || allRoutes[0];
-  if (activeFilter === 'dry' && displayedRoutes[0]) {
-    recommendedRoute = displayedRoutes[0];
-  } else if (hike.mudIndex && hike.mudIndex.score >= 3) {
-    const safeRoute = localRoutes.find(r => r.diffCat === 'facil' || r.type === 'fluvial' || r.type === 'costera');
-    if (safeRoute) recommendedRoute = safeRoute;
+  // Senda recomendada por el sistema según el filtro activo
+  let recommendedRoute = displayedRoutes[0] || allRoutes[0];
+  if (activeFilter === 'all') {
+    recommendedRoute = localRoutes[0] || displayedRoutes[0] || allRoutes[0];
+    if (hike.mudIndex && hike.mudIndex.score >= 3) {
+      const safeRoute = localRoutes.find(r => r.diffCat === 'facil' || r.type === 'fluvial' || r.type === 'costera');
+      if (safeRoute) recommendedRoute = safeRoute;
+    }
   }
 
   // Senda activa a mostrar en la tarjeta protagonista
@@ -401,7 +423,7 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
     ? 'En este concejo' 
     : `A ${activeRoute.distFromUserKm} km de ${concejoTitle}`;
 
-  // Consejero adaptado al filtro de Mejores Condiciones (Lluvia + Viento)
+  // Consejero adaptado al filtro activo
   let advisorTitle = 'Consejero de Senderismo';
   let advisorBadge = 'Recomendada 🌟';
   let advisorText = `Senda óptima para ${dayLabelLower} en ${concejoTitle}: <strong style="color: var(--primary);">${recommendedRoute.name}</strong> (${recommendedRoute.diff}, ${recommendedRoute.dist}). Ideal por estado de firme y cercanía.`;
@@ -421,6 +443,18 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
     } else {
       advisorText = `Analizando el pronóstico en tiempo real (lluvia y viento) para las 58 rutas de Asturias. Mostrando las sendas optimizadas.`;
     }
+  } else if (activeFilter === 'facil') {
+    advisorTitle = '🟢 Rutas Fáciles & Familiares';
+    advisorBadge = 'Baja Dificultad 🚶';
+    advisorText = `Sendas llanas y accesibles en toda Asturias. La opción recomendada para ${dayLabelLower} es <strong style="color: #38bdf8;">${recommendedRoute.name}</strong> en <strong>${recommendedRoute.concejoName}</strong> (${recommendedRoute.dist}, ${recommendedRoute.diff}${recommendedRoute.weatherBadge ? ` • ${recommendedRoute.weatherBadge.label}` : ''}).`;
+  } else if (activeFilter === 'montana') {
+    advisorTitle = '🏔️ Rutas de Montaña & Cumbres';
+    advisorBadge = 'Alta Montaña ⛰️';
+    advisorText = `Grandes cumbres y desfiladeros de Asturias. Opción recomendada para ${dayLabelLower}: <strong style="color: #facc15;">${recommendedRoute.name}</strong> en <strong>${recommendedRoute.concejoName}</strong> (${recommendedRoute.elev}, ${recommendedRoute.diff}${recommendedRoute.weatherBadge ? ` • ${recommendedRoute.weatherBadge.label}` : ''}).`;
+  } else if (activeFilter === 'costera') {
+    advisorTitle = '🏖️ Rutas Costeras & Fluviales';
+    advisorBadge = 'Litoral & Ríos 🌊';
+    advisorText = `Paisajes marinos, acantilados y bosques de ribera. Opción recomendada para ${dayLabelLower}: <strong style="color: #38bdf8;">${recommendedRoute.name}</strong> en <strong>${recommendedRoute.concejoName}</strong> (${recommendedRoute.dist}${recommendedRoute.weatherBadge ? ` • ${recommendedRoute.weatherBadge.label}` : ''}).`;
   }
 
   // Consejero de calzado y firme adaptado a la senda activa
@@ -807,10 +841,10 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
           <div style="padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center;">
             <div>
               <h3 style="margin: 0; font-size: 1.05rem; font-weight: 800; color: var(--text-main);">
-                ${activeFilter === 'dry' ? '🌟 Rutas con Mejores Condiciones' : 'Selecciona senda de senderismo'}
+                ${activeFilter === 'dry' ? '🌟 Rutas con Mejores Condiciones' : (activeFilter === 'facil' ? '🟢 Rutas Fáciles en Asturias' : (activeFilter === 'montana' ? '🏔️ Rutas de Montaña en Asturias' : (activeFilter === 'costera' ? '🏖️ Rutas Costeras & Ríos' : 'Selecciona senda de senderismo')))}
               </h3>
               <span style="font-size: 0.75rem; color: var(--text-dim);">
-                ${activeFilter === 'dry' ? `Mostrando opciones más favorables (lluvia y viento) para ${dayLabelLower} en toda Asturias` : 'Toca una senda para cargar su ficha técnica'}
+                ${activeFilter !== 'all' ? `Ordenadas por mejores condiciones climáticas (${dayLabelLower}) en toda Asturias` : 'Toca una senda para cargar su ficha técnica'}
               </span>
             </div>
             <button type="button" id="btn-close-hiking-modal" style="background: rgba(255,255,255,0.08); border: none; color: var(--text-main); font-size: 1.1rem; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;">
@@ -820,13 +854,13 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
 
           <div style="padding: 12px 14px; overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch;">
             
-            ${activeFilter === 'dry' ? `
+            ${activeFilter !== 'all' ? `
               <div style="margin-bottom: 10px; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 10px; padding: 8px 10px; font-size: 0.74rem; color: var(--text-main);">
-                <strong>🌟 Buscador de Mejores Condiciones:</strong> Rutas ordenadas combinando ausencia de lluvia, viento seguro y firme favorable en toda Asturias.
+                <strong>${activeFilter === 'dry' ? '🌟 Buscador de Mejores Condiciones:' : '🧭 Filtro Regional Inteligente:'}</strong> Rutas clasificadas por mejor tiempo (lluvia y viento) y mérito de la categoría en toda Asturias.
               </div>
             ` : ''}
 
-            ${localRoutes.length > 0 && activeFilter !== 'dry' ? `
+            ${localRoutes.length > 0 && activeFilter === 'all' ? `
               <div style="margin-bottom: 14px;">
                 <span style="font-size: 0.76rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 6px;">
                   📍 Sendas en ${concejoTitle} y Cercanías (${localRoutes.length})
@@ -854,12 +888,12 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
               </div>
             ` : ''}
 
-            ${(activeFilter === 'dry' ? displayedRoutes : otherRoutes).length > 0 ? `
+            ${(activeFilter !== 'all' ? displayedRoutes : otherRoutes).length > 0 ? `
               <div>
                 <span style="font-size: 0.76rem; font-weight: 800; color: var(--accent, #facc15); text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 6px;">
-                  ${activeFilter === 'dry' ? `🏆 Rutas Clasificadas por Escampada (${displayedRoutes.length})` : `🌟 Grandes Rutas de Asturias (${otherRoutes.length})`}
+                  ${activeFilter === 'dry' ? `🏆 Rutas Clasificadas por Clima (${displayedRoutes.length})` : (activeFilter !== 'all' ? `🏆 Selección Asturias por Clima (${displayedRoutes.length})` : `🌟 Grandes Rutas de Asturias (${otherRoutes.length})`)}
                 </span>
-                ${(activeFilter === 'dry' ? displayedRoutes : otherRoutes).map(r => `
+                ${(activeFilter !== 'all' ? displayedRoutes : otherRoutes).map(r => `
                   <div class="routes-item-card ${r.id === activeRoute.id ? 'selected' : ''}" data-route-id="${r.id}">
                     <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px;">
                       <strong style="font-size: 0.84rem; color: var(--text-main);">${r.typeIcon || '🥾'} ${r.name}</strong>

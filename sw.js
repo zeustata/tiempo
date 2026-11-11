@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303816-compact-pill-v1';
+const CACHE_NAME = 'meteoasturlode-v303817-routes-filter-v1';
 const STATIC_ASSETS = [
   './',
   './index.html',

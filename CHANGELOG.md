@@ -9,6 +9,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.17] - 2026-11-11
+### Fixed & Improved
+- **🧭 Desacople Inteligente de los Filtros de Rutas Regionales (`routesCard.js` + `app.js` - Leyes 0, 11 y 16):**
+  - **Eliminación del Anclaje por Cercanía:** Los filtros **`🟢 Fáciles`**, **`🏔️ Montaña`** y **`🏖️ Costeras & Ríos`** ya no ordenan por cercanía forzada al usuario (rol que pertenece exclusivamente a `📍 Cercanas`).
+  - **Buscador Regional por Clima y Mérito:** Ahora buscan en toda Asturias clasificando primero por condiciones meteorológicas óptimas (ausencia de lluvia y viento seguro) y secundariamente por mérito técnico (menor dificultad/desnivel en fáciles, cota en montaña y longitud en costeras).
+  - **Corrección Tipográfica:** Subsanada la búsqueda de `'montaña'` (con `ñ` y sin `ñ`) para no omitir rutas alpinas oficiales del catálogo.
+  - **Auto-Reajuste de la Senda Protagonista:** Al pulsar un filtro de categoría, se deselecciona cualquier ruta previa manual para que la tarjeta superior y la ficha protagonista carguen de inmediato la mejor opción de esa categoría en Asturias.
+
 ## [3.0.38.16] - 2026-11-11
 ### Fixed & Improved
 - **📐 Compactación y Holgura Estricta de la Pastilla Amarilla (`routesCard.js` + `app.js` - Leyes 0 y 11):**
@@ -4748,20 +4756,7 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 ## [1.0.44] - 2026-08-30
 
 ### 🌊 Sincronización Total AEMET: Horario Local Oficial (CEST / UTC+2)
-- **Calibración con la Predicción de AEMET / IHM (Playa de San Lorenzo - Gijón)**: Sincronización con el huso oficial español de verano (CEST / UTC+2), ajustando pleamares y bajamares a los horarios oficiales locales.
-- **Concordancia Exacta**:
-  - *Domingo 30*: Bajamar 00:20 (AEMET 00:19), Pleamar 06:28 (AEMET 06:28), Bajamar 12:36 (AEMET 12:30), Pleamar 18:44 (AEMET 18:43).
-  - *Lunes 31*: Bajamar 00:54 (AEMET 00:51), Pleamar 07:01 (AEMET 07:00), Bajamar 13:09 (AEMET 13:04), Pleamar 19:17 (AEMET 19:18).
-  - *Martes 01*: Bajamar 01:27 (AEMET 01:25), Pleamar 07:35 (AEMET 07:35), Bajamar 13:43 (AEMET 13:41), Pleamar 19:51 (AEMET 19:56).
-- **Service Worker `v144-official` & Cache-Busting**: Actualización global de dependencias a `?v=1.0.44`.
-
----
-
-## [1.0.43] - 2026-08-30
-
-### 🌊 Calibración Oficial IHM: Mareas del Cantábrico & Concordancia Total
-- **Calibración con el Instituto Hidrográfico de la Marina (IHM / El Musel)**: Ajuste milimétrico del desfase lunar solar local ($0.8344\text{ h/día}$) sobre la época base para Gijón y la costa asturiana, sincronizando las pleamares y bajamares con las tablas astronómicas oficiales.
-- **Precisión Horaria**: Sincronización a $\pm 1\text{ min}$ respecto a los datos oficiales de Puertos del Est
+- **Calibración con la Predicción de AEMET / IHM (Playa de San Lorenzo - Gijón)**: Sincronización con el huso oficial español de verano (CEST / UTC+2), ajustando pleamar
 - **Alineación Perfecta al 50%**: Configuración de `grid-template-columns: 1fr 1fr` tanto para la fila de navegación (Modelo y Menú) como para la fila de acciones (Guardar y Mi Ubicación), garantizando un diseño estructurado, equilibrado y de fácil pulsación con el pulgar.
 - **Service Worker `v132-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
 
