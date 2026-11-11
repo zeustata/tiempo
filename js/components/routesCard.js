@@ -57,13 +57,13 @@ function renderRouteDaylightGraph(hourly, activeDay = 'today') {
 
   // Dimensiones SVG HD
   const width = 650;
-  const height = 140;
-  const padLeft = 25;
-  const padRight = 25;
-  const padTop = 22;
-  const tempBottom = 66; // Altura donde termina la curva térmica
-  const barTop = 72; // Altura donde arrancan las barras de lluvia
-  const barBottom = 112; // Altura base de las barras
+  const height = 196;
+  const padLeft = 32;
+  const padRight = 24;
+  const padTop = 26;
+  const tempBottom = 75; // Altura donde termina la curva térmica
+  const barTop = 85; // Altura donde arrancan las barras de lluvia
+  const barBottom = 125; // Altura base de las barras
   const graphW = width - padLeft - padRight;
   const stepX = graphW / (daylightHours.length - 1);
 
@@ -106,8 +106,8 @@ function renderRouteDaylightGraph(hourly, activeDay = 'today') {
   // Generar barras de lluvia y textos de viento
   const barsAndLabels = daylightHours.map((d, idx) => {
     const x = padLeft + idx * stepX;
-    const barWidth = Math.max(10, stepX * 0.55);
-    const barHeight = d.precip > 0 ? Math.max(3, (d.precip / maxPrecip) * (barBottom - barTop)) : 0;
+    const barWidth = Math.max(12, stepX * 0.55);
+    const barHeight = d.precip > 0 ? Math.max(4, (d.precip / maxPrecip) * (barBottom - barTop)) : 0;
     const barY = barBottom - barHeight;
 
     const barColor = d.precip >= 1.5 ? '#f59e0b' : (d.precip >= 0.3 ? '#38bdf8' : '#60a5fa');
@@ -116,25 +116,30 @@ function renderRouteDaylightGraph(hourly, activeDay = 'today') {
       <!-- Barra de lluvia -->
       ${d.precip > 0 ? `
         <rect x="${(x - barWidth / 2).toFixed(1)}" y="${barY.toFixed(1)}" width="${barWidth.toFixed(1)}" height="${barHeight.toFixed(1)}" rx="3" fill="${barColor}" opacity="0.85" />
-        <text x="${x.toFixed(1)}" y="${(barY - 3).toFixed(1)}" fill="${barColor}" font-size="9" font-family="'JetBrains Mono', monospace" font-weight="800" text-anchor="middle">${d.precip.toFixed(1)}</text>
+        <text x="${x.toFixed(1)}" y="${(barY - 4).toFixed(1)}" fill="${barColor}" font-size="10.5" font-family="'JetBrains Mono', monospace" font-weight="800" text-anchor="middle">${d.precip.toFixed(1)}</text>
       ` : (d.pop >= 25 ? `
-        <text x="${x.toFixed(1)}" y="${(barBottom - 2).toFixed(1)}" fill="#94a3b8" font-size="8" font-family="system-ui, sans-serif" font-weight="600" text-anchor="middle">${d.pop}%</text>
+        <text x="${x.toFixed(1)}" y="${(barBottom - 3).toFixed(1)}" fill="#94a3b8" font-size="9.5" font-family="system-ui, sans-serif" font-weight="700" text-anchor="middle">${d.pop}%</text>
       ` : `
-        <circle cx="${x.toFixed(1)}" cy="${barBottom - 4}" r="1.5" fill="rgba(255,255,255,0.15)" />
+        <circle cx="${x.toFixed(1)}" cy="${barBottom - 4}" r="1.5" fill="rgba(255,255,255,0.18)" />
       `)}
 
       <!-- Hora en el eje horizontal -->
-      <text x="${x.toFixed(1)}" y="${height - 10}" fill="#94a3b8" font-size="9.5" font-family="system-ui, sans-serif" font-weight="700" text-anchor="middle">${d.hourLabel}</text>
+      <text x="${x.toFixed(1)}" y="145" fill="#e2e8f0" font-size="11.5" font-family="system-ui, sans-serif" font-weight="800" text-anchor="middle">${d.hourLabel}</text>
 
-      <!-- Viento / Rachas en km/h -->
-      <text x="${x.toFixed(1)}" y="${height}" fill="${d.windGust >= 35 ? '#f59e0b' : '#64748b'}" font-size="8.5" font-family="'JetBrains Mono', monospace" font-weight="700" text-anchor="middle">${d.windSpeed}</text>
+      <!-- Pastilla identificativa de Viento (km/h) con alerta de rachas -->
+      <rect x="${(x - 21).toFixed(1)}" y="156" width="42" height="28" rx="6" 
+            fill="${d.windGust >= 35 ? 'rgba(245, 158, 11, 0.16)' : 'rgba(15, 23, 42, 0.75)'}" 
+            stroke="${d.windGust >= 35 ? 'rgba(245, 158, 11, 0.55)' : 'rgba(56, 189, 248, 0.25)'}" 
+            stroke-width="1" />
+      <text x="${x.toFixed(1)}" y="170" fill="${d.windGust >= 35 ? '#f59e0b' : '#38bdf8'}" font-size="11" font-family="'JetBrains Mono', monospace" font-weight="900" text-anchor="middle">${d.windSpeed}</text>
+      <text x="${x.toFixed(1)}" y="180" fill="${d.windGust >= 35 ? '#fbbf24' : '#94a3b8'}" font-size="7.5" font-family="system-ui, sans-serif" font-weight="700" text-anchor="middle">km/h</text>
     `;
   }).join('');
 
   // Puntos y temperaturas sobre la curva
   const tempLabels = tempPoints.map(p => `
-    <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="3" fill="#ffffff" stroke="#0ea5e9" stroke-width="1.5" />
-    <text x="${p.x.toFixed(1)}" y="${(p.y - 6).toFixed(1)}" fill="#f1f5f9" font-size="10" font-family="'JetBrains Mono', monospace" font-weight="800" text-anchor="middle">${p.temp}°</text>
+    <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="3.5" fill="#ffffff" stroke="#0ea5e9" stroke-width="2" />
+    <text x="${p.x.toFixed(1)}" y="${(p.y - 7).toFixed(1)}" fill="#f1f5f9" font-size="12" font-family="'JetBrains Mono', monospace" font-weight="900" text-anchor="middle">${p.temp}°</text>
   `).join('');
 
   const totalDaylightRain = precips.reduce((a, b) => a + b, 0).toFixed(1);
@@ -152,42 +157,38 @@ function renderRouteDaylightGraph(hourly, activeDay = 'today') {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 6px;
+        gap: 8px;
         cursor: pointer;
         text-align: left;
         box-sizing: border-box;
-      " aria-expanded="false" title="Desplegar u ocultar gráfica horaria de 08:00 a 20:00">
-        <div style="display: flex; align-items: center; gap: 6px; min-width: 0; flex: 1;">
-          <span style="font-size: 0.95rem; line-height: 1;">⏱️</span>
-          <strong style="font-size: 0.80rem; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-            08:00h - 20:00h:
-          </strong>
-          <span style="font-size: 0.72rem; color: ${totalDaylightRain > 0 ? '#38bdf8' : '#94a3b8'}; font-weight: 700; white-space: nowrap;">
+      " aria-expanded="false" title="Desplegar u ocultar gráfica horaria">
+        <div style="display: flex; align-items: center; gap: 8px; min-width: 0;">
+          <span style="font-size: 0.82rem; color: ${totalDaylightRain > 0 ? '#38bdf8' : '#94a3b8'}; font-weight: 800; white-space: nowrap;">
             🌧️ ${totalDaylightRain} mm
           </span>
-          <span style="font-size: 0.70rem; color: ${maxGust >= 35 ? '#f59e0b' : '#94a3b8'}; font-weight: 600; white-space: nowrap;">
+          <span style="font-size: 0.78rem; color: ${maxGust >= 35 ? '#f59e0b' : '#94a3b8'}; font-weight: 700; white-space: nowrap;">
             💨 ${maxGust} km/h
           </span>
         </div>
 
-        <div style="display: flex; align-items: center; gap: 4px; flex-shrink: 0;">
-          <span class="daylight-toggle-text" style="font-size: 0.70rem; font-weight: 700; color: var(--primary);">Ver Gráfica</span>
-          <span class="daylight-toggle-arrow" style="font-size: 0.75rem; color: var(--primary); transition: transform 0.2s ease;">▾</span>
+        <div style="display: flex; align-items: center; gap: 5px; flex-shrink: 0;">
+          <span class="daylight-toggle-text" style="font-size: 0.76rem; font-weight: 700; color: var(--primary);">Ver Gráfica</span>
+          <span class="daylight-toggle-arrow" style="font-size: 0.80rem; color: var(--primary); transition: transform 0.2s ease;">▾</span>
         </div>
       </button>
 
       <!-- Cuerpo Desplegable (Plegado por defecto para ergonomía móvil - Ley 11) -->
       <div id="route-daylight-graph-body" style="display: none; padding: 0 12px 10px 12px; border-top: 1px solid rgba(255,255,255,0.06);">
         <!-- Leyenda rápida -->
-        <div style="display: flex; gap: 10px; font-size: 0.65rem; color: var(--text-dim); margin: 6px 0 4px 0; justify-content: flex-end;">
-          <span style="display: inline-flex; align-items: center; gap: 3px;"><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#38bdf8;"></span> Temp (°C)</span>
-          <span style="display: inline-flex; align-items: center; gap: 3px;"><span style="display:inline-block; width:8px; height:8px; border-radius:2px; background:#60a5fa;"></span> Lluvia (mm)</span>
-          <span style="display: inline-flex; align-items: center; gap: 3px;">💨 Viento (km/h)</span>
+        <div style="display: flex; gap: 12px; font-size: 0.70rem; color: var(--text-dim); margin: 6px 0 6px 0; justify-content: flex-end; flex-wrap: wrap;">
+          <span style="display: inline-flex; align-items: center; gap: 4px;"><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#38bdf8;"></span> Temp (°C)</span>
+          <span style="display: inline-flex; align-items: center; gap: 4px;"><span style="display:inline-block; width:8px; height:8px; border-radius:2px; background:#60a5fa;"></span> Lluvia (mm)</span>
+          <span style="display: inline-flex; align-items: center; gap: 4px;"><span style="display:inline-block; width:12px; height:8px; border-radius:3px; background:rgba(56,189,248,0.25); border:1px solid rgba(56,189,248,0.5);"></span> 💨 Viento (km/h)</span>
         </div>
 
         <!-- SVG HD de la Gráfica Diurna con Aislamiento Táctil Anti-Desborde (Ley 18) -->
         <div class="route-daylight-graph-wrap" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; touch-action: pan-x pan-y;">
-          <svg viewBox="0 0 ${width} ${height}" style="width: 100%; min-width: 480px; height: auto; display: block;" preserveAspectRatio="xMidYMid meet">
+          <svg viewBox="0 0 ${width} ${height}" style="width: 100%; min-width: 520px; height: auto; display: block;" preserveAspectRatio="xMidYMid meet">
             <defs>
               <linearGradient id="routeTempGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stop-color="#38bdf8" />
@@ -206,6 +207,10 @@ function renderRouteDaylightGraph(hourly, activeDay = 'today') {
             <!-- Área y Curva Térmica -->
             <path d="${dArea}" fill="url(#routeAreaGrad)" />
             <path d="${dCurve}" fill="none" stroke="url(#routeTempGrad)" stroke-width="2.5" vector-effect="non-scaling-stroke" stroke-linecap="round" />
+
+            <!-- Rótulos de fila en margen izquierdo -->
+            <text x="14" y="145" fill="#64748b" font-size="10" text-anchor="middle">🕒</text>
+            <text x="14" y="174" fill="#64748b" font-size="11" text-anchor="middle">💨</text>
 
             <!-- Barras de Lluvia y Textos -->
             ${barsAndLabels}

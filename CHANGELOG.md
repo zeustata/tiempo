@@ -9,6 +9,21 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.12] - 2026-11-11
+### Improved
+- **💨 Fila Dedicada y Pastillas Identificativas de Viento en Gráfica de Senderismo (`routesCard.js` - Leyes 0, 11 y 14):**
+  - **Fin a la Ambigüedad Numérica:** Sustituido el número huérfano bajo la hora por una pastilla gráfica individual para cada una de las 13 horas de la ruta (08:00h a 20:00h).
+  - **Identidad Visual Inequívoca:** Cada tarjeta horaria muestra el valor en grande (`11px` font-weight 900) con la unidad explícita `km/h` (`7.5px`) sobre un contenedor estilizado con fondo glassmorphism.
+  - **Rótulo Fijo de Fila:** Icono `💨` rotulado en el margen izquierdo de la franja para asociar visualmente toda la fila con el viento.
+  - **Alerta Cromática de Rachas en Montaña:** Si la racha horaria prevista alcanza o supera los 35 km/h, la pastilla conmuta automáticamente a tono ámbar (`#f59e0b`) de precaución senderista.
+
+## [3.0.38.11] - 2026-11-11
+### Improved
+- **🥾 Depuración Ergonómica y Escalado HD de la Gráfica de Senderismo (`routesCard.js` - Leyes 0 y 11):**
+  - **Supresión de Horas Redundantes en Cabecera:** Eliminados el icono del reloj `⏱️` y la etiqueta `08:00h - 20:00h:` de la barra del acordeón por ser innecesarios (las horas ya se detallan en el eje horizontal inferior).
+  - **Fin al Texto Truncado en Móvil:** La barra muestra ahora únicamente y con total holgura `🌧️ X.X mm` y `💨 Y km/h` a la izquierda, y `[ Ver Gráfica ▾ ]` / `[ Ocultar ▴ ]` a la derecha, sin colisiones ni puntos suspensivos (`...`).
+  - **Mayor Altura y Legibilidad Visual en Móvil:** Aumentada la altura del SVG (175px) y la tipografía de temperaturas (`12px bold`), lluvia (`10.5px`), horas (`11px`) y viento (`10px`), permitiendo una lectura rápida y clara en pantallas móviles sin forzar la vista.
+
 ## [3.0.38.10] - 2026-11-11
 ### Added
 - **🔽 Formato Plegable / Desplegable (Acordeón) en Ventana Diurna de Ruta (`routesCard.js` + `app.js` - Leyes 0 y 11):**
@@ -4764,47 +4779,7 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ### 🌟 Reducción del 50%: Botones Dobles Inteligentes & Tarjeta Ultra Compacta
 - **Botones Divididos (`Split Buttons`)**: Fusión de *Buscar Concejo* con botón directo *📍 GPS* a la izquierda (50%), y *Guardar en Favoritos* con el acceso a la lista *⭐ Favs* a la derecha (50%) en una sola fila interactiva.
-- **Distribución de Modelo y Menú**: Alineación horizontal de *🌟 Modelo* y *📊 Menú* en la segunda fila, reduciendo la altura vertical de la tarjeta principal a la mitad.
-- **Service Worker `v137-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
-
----
-
-## [1.0.36] - 2026-08-28
-
-### 🚀 Reordenación Ergonómica: Buscar y Favoritos sobre Modelo
-- **Acceso Inmediato a Concejos**: Se traslada la fila de búsqueda (`🔍 Buscar ➔`) y `⭐ Favoritos` a la posición inmediatamente superior al selector de Modelo meteorológico, permitiendo interactuar con los concejos de forma más rápida y natural.
-- **Service Worker `v136-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
-
----
-
-## [1.0.35] - 2026-08-28
-
-### 📱 Optimización de Cabecera: Alineación de Reloj, Estado y Subtítulo
-- **Alineación Horizontal de Badges**: Inclusión de `brand-badges-row` con `flex-wrap: nowrap` para que el reloj (`🕒`) y el estado (`🟢 En línea`) se muestren siempre en paralelo en una sola fila nítida debajo del título principal `MeteoAstur Lode`.
-- **Subtítulo Compacto**: Simplificación del texto descriptivo a *Estación Meteorológica Asturias* para optimizar el espacio vertical.
-- **Service Worker `v135-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
-
----
-
-## [1.0.34] - 2026-08-28
-
-### 🌟 Tarjeta Maestra: Unificación Visual del Bloque Superior
-- **Unificación sin Alterar el Diseño**: Todo el bloque superior (cabecera con título, reloj y estado, botones de Guardar y Ubicación, selector de Modelo, selector de Menú, y fila de Búsqueda y Favoritos) se integra dentro de una única tarjeta contenedora, manteniendo exactamente la misma estética, orden y dimensiones individuales de cada elemento.
-- **Service Worker `v134-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
-
----
-
-## [1.0.33] - 2026-08-28
-
-### 🛡️ Rollback: Restauración del Diseño Clásico de Cabecera y Navegación
-- **Vuelta al Diseño Original**: Reversión limpia y segura del experimento de tarjeta universal a petición de Lendo. Se restaura la cabecera clásica con sus botones superiores y la barra separada de navegación (Modelo, Menú y Búsqueda).
-- **Service Worker `v133-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
-
----
-
-## [1.0.32] - 2026-08-28
-
-### 📐 Cuadrícula Simétrica: Distribución de 2 Botones por Línea
+- **Distribución de Modelo y Menú**: Alineación horizontal de *🌟 Modelo* y *📊 Menú*
 - **Alineación Perfecta al 50%**: Configuración de `grid-template-columns: 1fr 1fr` tanto para la fila de navegación (Modelo y Menú) como para la fila de acciones (Guardar y Mi Ubicación), garantizando un diseño estructurado, equilibrado y de fácil pulsación con el pulgar.
 - **Service Worker `v132-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
 

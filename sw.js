@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303810-accordion-graph-v1';
+const CACHE_NAME = 'meteoasturlode-v303812-wind-badge-graph-v1';
 const STATIC_ASSETS = [
   './',
   './index.html',

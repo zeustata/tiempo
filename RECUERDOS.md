@@ -2,6 +2,38 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 💨 Fila Dedicada y Pastillas Identificativas de Viento en Gráfica de Senderismo (`v3.0.38.12`) — 2026-11-11
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.10` (`183af36`).
+- **Petición e Instrucción Expresa de Lendo («no entiendo bien donde esta el viento en la grafica [...] pues seria buena idea. pisale»):**
+  1. *Diagnóstico de Ambigüedad Numérica (Feedback Directo de Lendo):*
+     - Bajo la fila horaria existía únicamente un número suelto sin unidad ni contexto, lo que generaba confusión al usuario al no saber si correspondía a viento, sensación, minutos o cota.
+  2. *Implementación Visual Inequívoca (Leyes 0, 11 y 14):*
+     - Se dota a cada una de las 13 horas (08:00h - 20:00h) de una pastilla gráfica individual (`rect` de 42x28px con fondo translúcido y borde cyan/ámbar).
+     - Se rotula el valor numérico en tipografía monoespaciada destacada (`11px` font-weight 900) acompañado de la unidad visible `km/h` (`7.5px`).
+     - Se sitúa un icono guía `💨` en el margen izquierdo de la franja.
+     - En caso de rachas significativas (>= 35 km/h), la tarjeta y sus textos conmutan a tono ámbar de precaución para senderistas.
+  3. *Ciclo Constitucional Estrictamente Local y Notificación Telegram (Leyes 1, 3, 9 y 23):*
+     - Cambios aplicados exclusivamente en archivos locales.
+     - Servidor de pruebas levantado en `http://localhost:8080`.
+     - Notificación sonora enviada al buzón Telegram de Lendo para su inspección antes de cualquier subida a la red.
+
+## 🥾 Depuración Ergonómica y Escalado HD de la Gráfica de Senderismo (`v3.0.38.11`) — 2026-11-11
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.10` (`183af36`).
+- **Petición e Instrucción Expresa de Lendo («yo creo que el icono del reloj con las horas de 8-20 sobra. ya abajo te pone las horas y te mande al buzon desplegado y sin desplegar. como ves en un movil ni se ve. hablo de lo que acabamos de cambiar [...] pisale en local»):**
+  1. *Diagnóstico Visual en Móvil (Feedback Directo de Lendo con Capturas):*
+     - En pantallas de smartphone de 360px a 400px, la cabecera del acordeón contenía `⏱️ 08:00h - 20:00h:`, lo cual obligaba al texto a truncarse en puntos suspensivos (`08...` o `0...`), dejando poco espacio para los datos clave de lluvia y viento.
+     - Dado que la gráfica abierta ya incluye las 13 horas (de 08h a 20h) rotuladas en grande en el eje horizontal inferior, la mención en la barra superior resultaba completamente redundante.
+     - En el SVG, la altura de 140px y las tipografías de 8-10px quedaban excesivamente comprimidas y de lectura dificultosa en el teléfono.
+  2. *Refactorización y Escalado HD:*
+     - **Cabecera Limpia y Despejada:** Retirados el reloj `⏱️` y la franja `08:00h - 20:00h:`. Ahora la barra muestra de forma nítida y espaciosa `🌧️ X.X mm` y `💨 Y km/h` a la izquierda, y `[ Ver Gráfica ▾ ]` / `[ Ocultar ▴ ]` a la derecha. Cero truncamiento de texto.
+     - **Escalado del SVG (175px de altura):** Mayor amplitud para la curva térmica y las barras de lluvia.
+     - **Aumento Tipográfico:** Temperaturas en `12px` font-weight 900, lluvia en `10.5px`, horas en `11px` y viento en `10px`.
+     - Ancho mínimo ampliado a `520px` para un deslizamiento horizontal suave y perfectamente legible en móvil.
+  3. *Ciclo Constitucional Estrictamente Local y Notificación Telegram (Leyes 1, 3, 9 y 23):*
+     - Código modificado exclusivamente en local.
+     - Verificado en servidor `http://localhost:8080`.
+     - Notificación sonora enviada al buzón Telegram de Lendo para su inspección antes de cualquier subida a la red.
+
 ## 🔽 Formato Plegable / Desplegable (Acordeón) en Ventana Diurna de Ruta (`v3.0.38.10`) — 2026-11-11
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.9` (`74703c7`).
 - **Petición e Instrucción Expresa de Lendo («hay que contraer esa tarjeta de las rutas. esta guapa pero es muy larga y dejar que se pueda volver a descontraer (no me sale la palabra) ;) [...] pisale en local como siempre princesa»):**
@@ -3651,38 +3683,7 @@ ICONO | ESTADO EN METEOASTUR LODE              | NUBES (cc)  | RAD. DIRECTA (irr
        - `.theme-lock-badge` blindado con `display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; font-size: 0.72rem; flex-shrink: 0; white-space: nowrap;`, impidiendo cualquier recorte o salto de línea.
        - Previsualización `.theme-card-preview-pixelated .theme-card-preview` adaptada con `display: flex; justify-content: space-around; width: 100%; box-sizing: border-box;`.
        - Insignia `.badge-top-secret` optimizada a `padding: 4px 10px; font-size: 0.72rem; white-space: nowrap; background: rgba(15, 23, 42, 0.78);`, permitiendo que el brillo de los 6 iconos pixelados resplandezca perfectamente sin abarrotar la caja.
-       - Pie `.theme-card-lock-footer` unificado en `justify-content: center; text-align: center;` con el texto `🎃 Activación automática en Samhain`.
-  3. *Uniformidad Visual con el Resto del Catálogo (Doctrina Constitucional Ley 14):*
-     - En `js/app.js`: reducida la muestra de Halloween a los **6 iconos representativos** (`sun`, `partly-cloudy-day`, `resol`, `wet-fog`, `rain`, `storm`), logrando idéntica proporción métrica que las tarjetas de Emojis Clásicos y Emotivos.
-  4. *Cache-Busting y Despliegue Oficial (Leyes 1, 3, 4, 10, 11 y 13):*
-     - Service Worker actualizado a `meteoasturlode-v2266-ergonomia-movil-halloween` en `sw.js`.
-     - Versión oficial elevada a **`v2.2.66 📱`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.66'` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
-     - Query strings sincronizadas a `?v=2.2.66` en `index.html`.
-
-## 🕵️‍♂️ Actualización v2.2.65: Iconografía de Halloween Pixelada con Censura de Intriga ("Top Secret") — 2026-10-18
-- **Efecto Mosaico Pixelado y Blindaje de Expectación (Feedback Lendo - «ahora quiero que en el boton iconos para eleguir el tema, el de halloeen estén los iconos como pixelados para que se vea que existen pero no se sepan como son hasta el evento» y «pisale»):**
-  1. *Conceptualización del Factor Sorpresa y Secreto de Sumario:*
-     - Lendo concibió que, para preservar la emoción del evento especial de Halloween / Samhain, los iconos de la tarjeta de catálogo deben aparecer bajo un mosaico pixelado y censurado ("como pixelados para que se vea que existen pero no se sepan como son hasta el evento"), impidiendo que se descubran las formas artísticas antes del 31 de octubre.
-  2. *Desarrollo del Mosaico Digital de Censura (`main.css`):*
-     - Creada la clase `.theme-card-preview-pixelated` que envuelve la previsualización `#preview-halloween-icons`.
-     - Implementado filtro óptico de censura digital: `filter: blur(5px) contrast(1.4) saturate(1.3); image-rendering: pixelated;`.
-     - Superpuesta una trama geométrica de cuadrícula de 5x5 px mediante pseudoelemento `::before` con relieve, recreando el efecto exacto de censura televisiva y de videojuegos.
-     - Diseñada la pastilla flotante central `.badge-top-secret` con texto `🕵️‍♂️ Top Secret • Revelación en Samhain` en acabado liquid glass con borde naranja de neón.
-  3. *Mecanismo de Despixelado Automático y Modo Simulacro (`app.js`, `index.html`):*
-     - Al entrar en la ventana temporal del 31 de octubre o 1 de noviembre, la clase `.unpixelated` desactiva de forma automática la censura y la cuadrícula, mostrando los iconos en vector nítido.
-     - Integrado el conmutador de simulacro de desarrollador vía URL (`?test=halloween`) en cumplimiento estricto de la Ley Constitucional 12, permitiendo probar en cualquier momento la app en modo Halloween despixelado.
-  4. *Cache-Busting y Despliegue Oficial (Leyes 1, 3, 4, 10 y 13):*
-     - Service Worker actualizado a `meteoasturlode-v2265-halloween-misterio-pixelado` en `sw.js`.
-     - Versión oficial elevada a **`v2.2.65 🕵️‍♂️`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.65'` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
-     - Query strings sincronizadas a `?v=2.2.65` en `index.html` (`main.css`, `components.css`, `sw.js`, `app.js`).
-
-## 🎃 Actualización v2.2.64: Colección Temática Especial Halloween / Samhain con Bloqueo de Calendario y Modo de Prueba en Vivo — 2026-10-18
-- **Suite de Iconos Especial Halloween / Samhain y Gestión de Eventos Estacionales (Feedback Lendo - «podriamos crear iconos tematicos pero que solo se pongan por defecto el dia del evento? Por ejemplo el dia de Halloween unos iconos (que aun estam por crearse)», «pero quiero verlos antes a ver que tal estan. Puedes ponerlos en el catalogo de Iconos para que se vean pero con una especie de candado o en negrita para que se deduzca que no son elejibles ya que son para una determinada fecha?», «acuerdate que tenemos mas iconos que creamos como la niebla densa mojada por ejemplo» y «pisale»):**
-  1. *Conceptualización Artística y Adaptación al Clima y Mitología Asturiana:*
-     - Lendo propuso crear una colección temática conmemorativa de Halloween / Samhain que se active automáticamente por defecto los días señalados del evento (31 de octubre y 1 de noviembre), pero que esté visible en el catálogo de temas con candado indicando que no es elegible como tema cotidiano fuera de fechas.
-     - Lendo remarcó explícitamente la exigencia de incluir todos los iconos climáticos asturianos específicos creados en el proyecto (niebla densa mojada `wet-fog`, resol asturiano místico `resol`, orbayu `drizzle`, bastinazu `heavy-rain`, pedriscu `hail` y nevadona `heavy-snow`).
-  2. *Creación del Módulo Vectorial Completo (`js/utils/weatherHalloweenIcons.js`):*
-     - Diseñado un catálogo SVG vectorial nativo sin dependencias externas con gradientes temáticos oscuros, púrpur
+       - Pie `.theme-card-lock-footer`
      - Lendo detectó que en la app la racha actual sí marcaba `16 km/h` y la racha máxima `31 km/h`, y que otras plataformas como Maldonado (*eltiempo.es*) publicaban `15 km/h` como cifra de cabecera.
      - *Causa raíz:* La API y el modelo registraban los datos con exactitud milimétrica (`current.wind_speed_10m = 6.8` como media sostenida a 10 metros, y `current.wind_gusts_10m = 16.0` como racha instantánea). Sin embargo, la jerarquía visual otorgaba todo el tamaño tipográfico (`2.2rem`) a la media matemática continua, relegando la racha (que es lo que el ser humano y el entorno sienten físicamente) a un texto secundario pequeño.
   2. *Intervención Técnica en `currentCard.js` y `components.css`:*
