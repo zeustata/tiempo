@@ -9,6 +9,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.23] - 2026-11-11
+### Ciclismo: Lluvia, Asfalto Mojado y Seguridad Térmica integrados en el Motor (`cyclingAdvisor.js`)
+- **Evaluación real de lluvia en ruta (`js/utils/cyclingAdvisor.js`)**: El simulador por tramos ahora cruza `precipitation` (mm/h), `snowfall`, `precipitation_probability` y `weather_code` además del viento. La lluvia continua o fuerte penaliza el `score`, bloquea la calificación `Óptima 🚀` y activa veredictos coherentes (`Lluvia en Ruta 🌧️`, `Asfalto Húmedo 🌦️`, `Tormenta ⛈️` o `Nieve / Hielo ❄️`), además de avisos de frío húmedo en descenso (≤ 4 °C con agua).
+- **Cabecera y tarjetas más claras (`js/components/cyclingCard.js`)**: Sustituida la etiqueta técnica `Vectorial Dinámico` por **`Viento + Lluvia`**, añadido bloque de estado de asfalto/lluvia global, porcentaje de lluvia en **Ida vs Vuelta**, estado pluvial tramo a tramo y chip de lluvia en el selector modal.
+- **Anti-caché**: Actualizada la versión a `v3.0.38.23` (`meteoasturlode-v303823-cycling-rain-v1`).
+
 ## [3.0.38.22] - 2026-11-11
 ### Ciclismo en Asturias: Corrección de IDs de Concejos y Ampliación a 50 Clásicas Circulares
 - **Corrección integral de mapeo territorial (`js/utils/cyclingData.js`)**: Corregidos 7 identificadores con guiones bajos incompatibles con `concejos.js` (`cangas_de_onis` -> `cangasdeonis`, `soto_del_barco` -> `sotodelbarco`, `muros_de_nalon` -> `murosdenalon`, `corvera_de_asturias` -> `corvera`, `ribera_de_arriba` -> `riberadearriba`, `san_martin_del_rey_aurelio` -> `sanmartindelreyaurelio`, `santo_adriano` -> `santoadriano`), restaurando las coincidencias directas por concejo en toda Asturias.
@@ -4717,25 +4723,7 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 ### 📅 Pronósticos a 10 Días: Supresión de Barra Redundante & Máxima Compactación
 - **Eliminación de la Barra de Rango Térmico (`.d-temp-bar-wrap`)**: Retirada de la barra repetitiva de "Rango del día" y sus cálculos asociados (`globalMin`/`globalMax`), eliminando duplicidades y reduciendo sensiblemente la altura de las 10 tarjetas diarias.
 - **Enfoque Térmico Nítido**: Información térmica centralizada en los 3 bloques principales (Máxima, Mínima y Oscilación Δ) con padding compacto (`10px 14px`).
-- **Service Worker `v151-official` & Cache-Busting Total**: Sincronización a `?v=1.0.51` en todos los archivos del proyecto.
-
----
-
-## [1.0.50] - 2026-08-31
-
-### 📅 Pronósticos a 10 Días: Doble Previsión Mañana / Tarde (Opción A - Badge Unificado)
-- **Elegante Badge Unificado Horizontal en Tarjetas Diarias**: Sustitución del diseño de cápsulas independientes por un bloque integrado y armónico con divisor tenue que muestra:
-  - 🌅 **Mañana**: Etiqueta dorada (`#fbbf24`), icono del tiempo activo y descripción clara del cielo matutino.
-  - 🌇 **Tarde**: Etiqueta azul cielo (`#38bdf8`), icono del tiempo activo y previsión vespertina.
-- **Alineación Simétrica & Compacta**: Estilizado con cristal translúcido oscuro (`rgba(15, 23, 42, 0.68)`), elevación suave y adaptación táctil para teléfonos y ordenadores.
-- **Service Worker `v150-official` & Cache-Busting Total**: Sincronización a `?v=1.0.50` en todos los scripts, estilos y manifest.
-
----
-
-## [1.0.49] - 2026-08-31
-
-### 📅 Pronósticos a 10 Días: Doble Previsión Mañana / Tarde (Opción B)
-- **Doble Cápsula
+- **Service Worker `v151-official` & Cache-Busting Total**: Sin
 - **Alineación Perfecta al 50%**: Configuración de `grid-template-columns: 1fr 1fr` tanto para la fila de navegación (Modelo y Menú) como para la fila de acciones (Guardar y Mi Ubicación), garantizando un diseño estructurado, equilibrado y de fácil pulsación con el pulgar.
 - **Service Worker `v132-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
 

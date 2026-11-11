@@ -1,9 +1,78 @@
 /**
- * METEOASTUR LODE - Motor Físico y Consejero de Viento Dinámico para Ciclismo
+ * METEOASTUR LODE - Motor Físico y Consejero Climático Dinámico para Ciclismo
  * Desarrollado por Manuel A. L. Barril (Lendo) y Princesa.
  * Cálculo vectorial del viento relativo (en cola, de cara, cruzado),
- * simulación de avance temporal del ciclista y recomendación de rutas según la hora y la velocidad.
+ * impacto de lluvia, orbayu, tormenta, nieve/frío húmedo en descensos,
+ * simulación de avance temporal del ciclista y recomendación de rutas.
  */
+
+const WMO_THUNDER_CODES = new Set([95, 96, 99]);
+const WMO_SNOW_ICE_CODES = new Set([56, 57, 66, 67, 71, 73, 75, 77, 85, 86]);
+const WMO_HEAVY_RAIN_CODES = new Set([63, 65, 81, 82]);
+const WMO_MODERATE_RAIN_CODES = new Set([61, 80]);
+const WMO_DRIZZLE_CODES = new Set([51, 53, 55]);
+
+/**
+ * Clasifica la precipitación y estado del firme para un tramo horario concreto.
+ */
+function evaluateTramoWeather(pop = 0, precipMm = 0, snowCm = 0, code = 1, tramoTemp = 15) {
+  const hasThunder = WMO_THUNDER_CODES.has(code);
+  const hasSnowOrIce = WMO_SNOW_ICE_CODES.has(code) || snowCm > 0.05;
+  const isHeavyRain = !hasSnowOrIce && (precipMm >= 2.0 || (WMO_HEAVY_RAIN_CODES.has(code) && precipMm >= 0.8));
+  const isModerateRain = !hasSnowOrIce && !isHeavyRain && (
+    precipMm >= 0.4 ||
+    (WMO_MODERATE_RAIN_CODES.has(code) && pop >= 45) ||
+    (WMO_HEAVY_RAIN_CODES.has(code) && pop >= 40) ||
+    (pop >= 70 && precipMm >= 0.2)
+  );
+  const isLightRain = !hasSnowOrIce && !isHeavyRain && !isModerateRain && (
+    precipMm >= 0.1 ||
+    (WMO_DRIZZLE_CODES.has(code) && pop >= 35) ||
+    (WMO_MODERATE_RAIN_CODES.has(code) && pop >= 35) ||
+    pop >= 55
+  );
+  const isWet = hasThunder || hasSnowOrIce || isHeavyRain || isModerateRain || isLightRain;
+  const isColdWetRisk = isWet && tramoTemp <= 4;
+
+  let rainLabel = '☀️ Seco';
+  let rainColor = 'var(--success, #22c55e)';
+
+  if (hasThunder) {
+    rainLabel = '⛈️ Tormenta';
+    rainColor = 'var(--danger, #ef4444)';
+  } else if (hasSnowOrIce) {
+    rainLabel = '❄️ Nieve / Hielo';
+    rainColor = 'var(--danger, #ef4444)';
+  } else if (isHeavyRain) {
+    rainLabel = `🌧️ Lluvia fuerte (${precipMm.toFixed(1)} mm/h)`;
+    rainColor = 'var(--danger, #ef4444)';
+  } else if (isModerateRain) {
+    rainLabel = precipMm > 0
+      ? `🌧️ Lluvia (${precipMm.toFixed(1)} mm/h)`
+      : `🌧️ Lluvia (${pop}%)`;
+    rainColor = '#f59e0b';
+  } else if (isLightRain) {
+    rainLabel = precipMm >= 0.1
+      ? `🌦️ Orbayu (${precipMm.toFixed(1)} mm/h)`
+      : `🌦️ Orbayu / Húmedo (${pop}%)`;
+    rainColor = 'var(--primary, #38bdf8)';
+  } else if (pop >= 25) {
+    rainLabel = `☁️ Riesgo leve (${pop}%)`;
+    rainColor = 'var(--text-dim, #94a3b8)';
+  }
+
+  return {
+    hasThunder,
+    hasSnowOrIce,
+    isHeavyRain,
+    isModerateRain,
+    isLightRain,
+    isWet,
+    isColdWetRisk,
+    rainLabel,
+    rainColor
+  };
+}
 
 /**
  * Calcula la diferencia angular mínima entre dos rumbos en grados (0 a 180°).
@@ -78,11 +147,20 @@ export function simulateRouteConditions(route, startHour = 9, avgSpeedKmh = 24, 
   let totalTailwindKm = 0;
   let totalHeadwindKm = 0;
   let totalCrosswindKm = 0;
+  let totalWetKm = 0;
+  let totalHeavyRainKm = 0;
   let maxGustKmh = 0;
+  let maxPop = 0;
+  let maxPrecipMm = 0;
+  let totalEstRainMm = 0;
+  let hasThunder = false;
+  let hasSnowOrIce = false;
+  let hasColdWetRisk = false;
+  let minTramoTemp = 99;
 
   // Variables de desglose táctico Ida vs Vuelta
-  let idaKm = 0, idaElev = 0, idaTailwindKm = 0, idaHeadwindKm = 0, idaCrosswindKm = 0, idaStartMin = -1, idaEndMin = 0, idaTemps = [], idaWinds = [];
-  let vueltaKm = 0, vueltaElev = 0, vueltaTailwindKm = 0, vueltaHeadwindKm = 0, vueltaCrosswindKm = 0, vueltaStartMin = -1, vueltaEndMin = 0, vueltaTemps = [], vueltaWinds = [];
+  let idaKm = 0, idaElev = 0, idaTailwindKm = 0, idaHeadwindKm = 0, idaCrosswindKm = 0, idaStartMin = -1, idaEndMin = 0, idaTemps = [], idaWinds = [], idaMaxPop = 0, idaMaxMm = 0;
+  let vueltaKm = 0, vueltaElev = 0, vueltaTailwindKm = 0, vueltaHeadwindKm = 0, vueltaCrosswindKm = 0, vueltaStartMin = -1, vueltaEndMin = 0, vueltaTemps = [], vueltaWinds = [], vueltaMaxPop = 0, vueltaMaxMm = 0;
 
   // Si no hay datos horarios reales de Open-Meteo, usamos un perfil de referencia neutro
   const times = hourlyData?.time || [];
@@ -91,6 +169,8 @@ export function simulateRouteConditions(route, startHour = 9, avgSpeedKmh = 24, 
   const windGusts = hourlyData?.wind_gusts_10m || [];
   const temps = hourlyData?.temperature_2m || [];
   const pops = hourlyData?.precipitation_probability || [];
+  const precips = hourlyData?.precipitation || hourlyData?.rain || [];
+  const snowfalls = hourlyData?.snowfall || [];
   const weatherCodes = hourlyData?.weather_code || [];
 
   // Inteligencia de proyección horaria:
@@ -127,21 +207,34 @@ export function simulateRouteConditions(route, startHour = 9, avgSpeedKmh = 24, 
     const wDir = windDirs[currentHourIndex] != null ? windDirs[currentHourIndex] : 45;
     const wGust = windGusts[currentHourIndex] != null ? windGusts[currentHourIndex] : wSpeed * 1.4;
     const temp = temps[currentHourIndex] != null ? temps[currentHourIndex] : 15;
-    const pop = pops[currentHourIndex] != null ? pops[currentHourIndex] : 10;
+    const pop = pops[currentHourIndex] != null ? Math.round(pops[currentHourIndex]) : 0;
+    const precipMm = precips[currentHourIndex] != null ? Math.round(precips[currentHourIndex] * 10) / 10 : 0;
+    const snowCm = snowfalls[currentHourIndex] != null ? snowfalls[currentHourIndex] : 0;
     const code = weatherCodes[currentHourIndex] != null ? weatherCodes[currentHourIndex] : 1;
 
     // Ajuste térmico por altitud (gradiente adiabático: ~0.65 °C por cada 100 m)
     const baseAlt = 50;
     const altDiffM = Math.max(0, (tramo.endAlt || 100) - baseAlt);
     const tramoTemp = Math.round((temp - (altDiffM * 0.0065)) * 10) / 10;
+    if (tramoTemp < minTramoTemp) minTramoTemp = tramoTemp;
 
     const windEval = evaluateRelativeWind(tramo.bearingDeg, wDir, wSpeed, wGust);
+    const weatherEval = evaluateTramoWeather(pop, precipMm, snowCm, code, tramoTemp);
 
     if (windEval.type === 'tailwind') totalTailwindKm += tramo.km;
     else if (windEval.type === 'headwind') totalHeadwindKm += tramo.km;
     else totalCrosswindKm += tramo.km;
 
+    if (weatherEval.isWet) totalWetKm += tramo.km;
+    if (weatherEval.isHeavyRain) totalHeavyRainKm += tramo.km;
+    if (weatherEval.hasThunder) hasThunder = true;
+    if (weatherEval.hasSnowOrIce) hasSnowOrIce = true;
+    if (weatherEval.isColdWetRisk) hasColdWetRisk = true;
+
     if (windEval.windGustsKmh > maxGustKmh) maxGustKmh = windEval.windGustsKmh;
+    if (pop > maxPop) maxPop = pop;
+    if (precipMm > maxPrecipMm) maxPrecipMm = precipMm;
+    totalEstRainMm += precipMm * (tramoMinutes / 60);
 
     // Clasificación de fase: Ida vs Vuelta
     const totalTramos = route.tramos.length;
@@ -154,6 +247,8 @@ export function simulateRouteConditions(route, startHour = 9, avgSpeedKmh = 24, 
       idaEndMin = endMinuteOfTramo;
       idaTemps.push(tramoTemp);
       idaWinds.push(wSpeed);
+      if (pop > idaMaxPop) idaMaxPop = pop;
+      if (precipMm > idaMaxMm) idaMaxMm = precipMm;
       if (windEval.type === 'tailwind') idaTailwindKm += tramo.km;
       else if (windEval.type === 'headwind') idaHeadwindKm += tramo.km;
       else idaCrosswindKm += tramo.km;
@@ -164,6 +259,8 @@ export function simulateRouteConditions(route, startHour = 9, avgSpeedKmh = 24, 
       vueltaEndMin = endMinuteOfTramo;
       vueltaTemps.push(tramoTemp);
       vueltaWinds.push(wSpeed);
+      if (pop > vueltaMaxPop) vueltaMaxPop = pop;
+      if (precipMm > vueltaMaxMm) vueltaMaxMm = precipMm;
       if (windEval.type === 'tailwind') vueltaTailwindKm += tramo.km;
       else if (windEval.type === 'headwind') vueltaHeadwindKm += tramo.km;
       else vueltaCrosswindKm += tramo.km;
@@ -183,7 +280,10 @@ export function simulateRouteConditions(route, startHour = 9, avgSpeedKmh = 24, 
       estimatedEndHour: formatHourMin(startHour * 60 + endMinuteOfTramo),
       temp: tramoTemp,
       pop,
+      precipMm,
+      snowCm,
       weatherCode: code,
+      weather: weatherEval,
       wind: windEval
     });
   });
@@ -192,41 +292,90 @@ export function simulateRouteConditions(route, startHour = 9, avgSpeedKmh = 24, 
   const tailwindPct = Math.round((totalTailwindKm / totalDistanceKm) * 100);
   const headwindPct = Math.round((totalHeadwindKm / totalDistanceKm) * 100);
   const crosswindPct = Math.round((totalCrosswindKm / totalDistanceKm) * 100);
+  const wetPct = Math.round((totalWetKm / totalDistanceKm) * 100);
+  const totalRainRoundedMm = Math.round(totalEstRainMm * 10) / 10;
 
-  // Puntuación de confort ciclista (0 a 100):
+  // Puntuación de confort y seguridad ciclista (0 a 100):
+  // Combina viento relativo + impacto real de lluvia/asfalto mojado/tormenta/frío en descenso
   let score = 75 + (tailwindPct * 0.25) - (headwindPct * 0.35);
   if (maxGustKmh >= 40) score -= 20;
   else if (maxGustKmh >= 30) score -= 10;
-  score = Math.max(10, Math.min(100, Math.round(score)));
 
-  // Calificación cualitativa
+  const isContinuousOrHeavyRain = totalHeavyRainKm > 0 || wetPct >= 60 || maxPrecipMm >= 1.5;
+  const isModerateWetRoute = !isContinuousOrHeavyRain && (wetPct >= 25 || maxPrecipMm >= 0.4 || maxPop >= 60);
+  const isDrizzleRisk = !isContinuousOrHeavyRain && !isModerateWetRoute && (wetPct > 0 || maxPrecipMm >= 0.1 || maxPop >= 40);
+
+  if (hasThunder || hasSnowOrIce) {
+    score = Math.min(score - 45, 25);
+  } else if (isContinuousOrHeavyRain) {
+    score -= Math.round(25 + (wetPct * 0.35));
+    score = Math.min(score, 44);
+  } else if (isModerateWetRoute) {
+    score -= Math.round(14 + (wetPct * 0.25));
+    score = Math.min(score, 59);
+  } else if (isDrizzleRisk) {
+    score -= 10;
+    score = Math.min(score, 76);
+  }
+
+  if (hasColdWetRisk) {
+    score -= 12;
+  }
+
+  score = Math.max(5, Math.min(100, Math.round(score)));
+
+  // Calificación cualitativa (priorizando seguridad y lluvia antes que viento)
   let badgeLabel = 'Favorable';
   let badgeColor = 'var(--success, #22c55e)';
-  if (score >= 80) {
+  if (hasThunder) {
+    badgeLabel = 'Tormenta ⛈️';
+    badgeColor = 'var(--danger, #ef4444)';
+  } else if (hasSnowOrIce) {
+    badgeLabel = 'Nieve / Hielo ❄️';
+    badgeColor = 'var(--danger, #ef4444)';
+  } else if (isContinuousOrHeavyRain) {
+    badgeLabel = 'Lluvia en Ruta 🌧️';
+    badgeColor = 'var(--danger, #ef4444)';
+  } else if (score >= 80) {
     badgeLabel = 'Óptima 🚀';
     badgeColor = 'var(--success, #22c55e)';
   } else if (score >= 60) {
     badgeLabel = 'Buena 👍';
     badgeColor = 'var(--primary, #38bdf8)';
   } else if (score >= 45) {
-    badgeLabel = 'Exigente ⚠️';
+    badgeLabel = (isModerateWetRoute || wetPct >= 25) ? 'Asfalto Húmedo 🌦️' : 'Exigente ⚠️';
     badgeColor = 'var(--warning, #facc15)';
   } else {
     badgeLabel = 'Desfavorable 🛑';
     badgeColor = 'var(--danger, #ef4444)';
   }
 
-  // Generación de consejo inteligente personalizado
+  // Generación de consejo inteligente personalizado (lluvia + viento + temperatura)
   const dayText = dayOffsetHours > 0 ? 'mañana' : 'hoy';
   let advisorMessage = '';
-  if (headwindPct > 50) {
-    advisorMessage = `Ruta con viento en contra predominante (${headwindPct}% del trayecto a ${avgSpeedKmh} km/h). Alto gasto de vatios.`;
-  } else if (tailwindPct > 45) {
-    advisorMessage = `Excelente elección para ${dayText} a ${avgSpeedKmh} km/h: disfrutarás de viento a favor durante el ${tailwindPct}% de la ruta.`;
-  } else if (crosswindPct > 50) {
-    advisorMessage = `Predomina el viento lateral (${crosswindPct}%). Precaución en bajadas rápidas si montas ruedas de perfil.`;
+  if (hasThunder) {
+    advisorMessage = `Alerta de tormenta eléctrica durante la ruta ${dayText}. Desaconsejado salir en carretera abierta o puertos.`;
+  } else if (hasSnowOrIce) {
+    advisorMessage = `Riesgo de nieve o hielo en cotas altas (mín. ${minTramoTemp} °C). Evita puertos hasta que suba la temperatura.`;
+  } else if (isContinuousOrHeavyRain) {
+    const rainDetail = maxPrecipMm > 0 ? `hasta ${maxPrecipMm.toFixed(1)} mm/h` : `${maxPop}% prob.`;
+    advisorMessage = `Lluvia prevista en el ${wetPct}% del trazado (${rainDetail}). Aunque el viento ${headwindPct > 45 ? 'moleste de cara' : 'no sea un problema'}, el agua y el asfalto mojado penalizan seguridad y frenada.`;
+  } else if (isModerateWetRoute) {
+    const coldNote = hasColdWetRisk ? ` Ojo al frío húmedo en descenso (${minTramoTemp} °C).` : '';
+    advisorMessage = `Posible lluvia o orbayu en ${wetPct}% de la ruta (${maxPop}% máx). Lleva chubasquero, luces y precaución en curvas húmedas.${coldNote}`;
   } else {
-    advisorMessage = `Condiciones equilibradas rodando ${dayText} a ${avgSpeedKmh} km/h con salida a las ${startHour}:00 h. Ritmo cómodo.`;
+    const drizzlePrefix = isDrizzleRisk ? `Ligero riesgo de orbayu puntual (${maxPop}%). ` : '';
+    if (headwindPct > 50) {
+      advisorMessage = `${drizzlePrefix}Viento en contra predominante (${headwindPct}% del trayecto a ${avgSpeedKmh} km/h). Alto gasto de vatios.`;
+    } else if (tailwindPct > 45) {
+      advisorMessage = isDrizzleRisk
+        ? `${drizzlePrefix}Viento a favor en el ${tailwindPct}% del trazado rodando a ${avgSpeedKmh} km/h.`
+        : `Excelente elección en seco para ${dayText} a ${avgSpeedKmh} km/h: disfrutarás de viento a favor durante el ${tailwindPct}% de la ruta.`;
+    } else if (crosswindPct > 50) {
+      advisorMessage = `${drizzlePrefix}Predomina el viento lateral (${crosswindPct}%). Precaución en bajadas rápidas si montas ruedas de perfil.`;
+    } else {
+      advisorMessage = `${drizzlePrefix}Condiciones equilibradas en seco rodando ${dayText} a ${avgSpeedKmh} km/h con salida a las ${startHour}:00 h.`;
+    }
   }
 
   const formatTotalTime = (mins) => {
@@ -265,6 +414,8 @@ export function simulateRouteConditions(route, startHour = 9, avgSpeedKmh = 24, 
     crosswindPct: idaCrosswindPct,
     avgTemp: idaAvgTemp,
     avgWindKmh: idaAvgWind,
+    maxPop: idaMaxPop,
+    maxPrecipMm: idaMaxMm,
     windLabel: idaTailwindPct >= 50 ? '🟢 Viento a favor' : (idaHeadwindPct >= 50 ? '🔴 Viento de cara' : (idaTailwindPct > idaHeadwindPct ? '🟢 Favorable' : (idaHeadwindPct > idaTailwindPct ? '🔴 Freno frontal' : '🟡 Cruzado'))),
     windColor: idaTailwindPct >= 50 ? '#22c55e' : (idaHeadwindPct >= 50 ? '#ef4444' : (idaTailwindPct > idaHeadwindPct ? '#22c55e' : (idaHeadwindPct > idaTailwindPct ? '#ef4444' : '#facc15')))
   };
@@ -279,6 +430,8 @@ export function simulateRouteConditions(route, startHour = 9, avgSpeedKmh = 24, 
     crosswindPct: vueltaCrosswindPct,
     avgTemp: vueltaAvgTemp,
     avgWindKmh: vueltaAvgWind,
+    maxPop: vueltaMaxPop,
+    maxPrecipMm: vueltaMaxMm,
     windLabel: vueltaTailwindPct >= 50 ? '🟢 Viento a favor' : (vueltaHeadwindPct >= 50 ? '🔴 Viento de cara' : (vueltaTailwindPct > vueltaHeadwindPct ? '🟢 Favorable' : (vueltaHeadwindPct > vueltaTailwindPct ? '🔴 Freno frontal' : '🟡 Cruzado'))),
     windColor: vueltaTailwindPct >= 50 ? '#22c55e' : (vueltaHeadwindPct >= 50 ? '#ef4444' : (vueltaTailwindPct > vueltaHeadwindPct ? '#22c55e' : (vueltaHeadwindPct > vueltaTailwindPct ? '#ef4444' : '#facc15')))
   };
@@ -298,6 +451,14 @@ export function simulateRouteConditions(route, startHour = 9, avgSpeedKmh = 24, 
     tailwindPct,
     headwindPct,
     crosswindPct,
+    wetPct,
+    maxPop,
+    maxPrecipMm,
+    totalEstRainMm: totalRainRoundedMm,
+    hasThunder,
+    hasSnowOrIce,
+    hasColdWetRisk,
+    minTramoTemp,
     maxGustKmh,
     idaBalance,
     vueltaBalance,

@@ -2,6 +2,12 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌧️ Ciclismo: Integración Real de Lluvia, Asfalto Húmedo y Frío en Descenso (`v3.0.38.23`) — 2026-11-11
+- **Estado de retorno previo (Ley 2):** Commit `f4e2a63` (`v3.0.38.22` — Ampliación del catálogo de ciclismo a 50 clásicas circulares).
+- **Fallo corregido (Feedback Lendo):** Hasta `v3.0.38.22`, `simulateRouteConditions()` en `js/utils/cyclingAdvisor.js` extraía `pop` y `weather_code` por tramo pero el cálculo de `score`, `badgeLabel` y `advisorMessage` dependía exclusivamente del viento (`tailwindPct`, `headwindPct`, `maxGustKmh`), llegando a mostrar `Óptima 🚀` bajo lluvia continua sin viento.
+- **Solución técnica:** Creado `evaluateTramoWeather()` leyendo `precipitation`, `rain`, `snowfall`, `precipitation_probability` y códigos WMO por hora/tramo. La lluvia continua/fuerte, tormenta o nieve/hielo hunden la puntuación e impiden falsos positivos; se muestra resumen global de firme/lluvia, alerta térmica húmeda (`<= 4 °C`), `maxPop%` en Ida/Vuelta, estado por tramo y chip `💧` en el selector modal (`renderCyclingPickerItem()`). Sustituida la pastilla de cabecera `Vectorial Dinámico` por `Viento + Lluvia`.
+- **Anti-caché (Ley 4):** Actualizado `CURRENT_APP_VERSION = '3.0.38.23'`, imports en `index.html`, `js/app.js`, `js/components/cyclingCard.js`, y `CACHE_NAME = 'meteoasturlode-v303823-cycling-rain-v1'` en `sw.js`.
+
 ## 🚴 Ciclismo: Corrección de IDs de Concejos y Ampliación a 50 Clásicas Circulares (`v3.0.38.22`) — 2026-11-11
 - **Estado de retorno previo (Ley 2):** Commit `6567b80` (`v3.0.38.21` — Ampliación del catálogo de senderismo a 80 sendas oficiales).
 - **Diagnóstico resuelto:** El catálogo de `CYCLING_ROUTES` en `js/utils/cyclingData.js` contaba con 32 rutas (21 concejos de salida) pero contenía 7 IDs con guiones bajos incompatibles con el diccionario oficial de `js/utils/concejos.js` (`cangas_de_onis`, `soto_del_barco`, `muros_de_nalon`, `corvera_de_asturias`, `ribera_de_arriba`, `san_martin_del_rey_aurelio`, `santo_adriano`), provocando fallos silenciosos en `getCyclingRoutesForConcejo()`.

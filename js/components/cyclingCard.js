@@ -7,7 +7,44 @@
  */
 
 import { getCyclingRoutesForConcejo, getCyclingRouteById, CYCLING_ROUTES } from '../utils/cyclingData.js?v=3.0.38.22';
-import { simulateRouteConditions, rankRoutesForDeparture } from '../utils/cyclingAdvisor.js?v=3.0.38';
+import { simulateRouteConditions, rankRoutesForDeparture } from '../utils/cyclingAdvisor.js?v=3.0.38.23';
+
+/**
+ * Renderiza un elemento de ruta dentro del selector modal de ciclismo.
+ */
+function renderCyclingPickerItem(r, activeRouteId, activeHour, selectedSpeed, hourly, activeDay) {
+  const rSim = simulateRouteConditions(r, activeHour, selectedSpeed, hourly, activeDay);
+  const windText = rSim?.headwindPct >= 50
+    ? `<span style="color: var(--danger, #ef4444); font-weight: 700;">🔴 ${rSim.headwindPct}% de cara</span>`
+    : (rSim?.tailwindPct >= 40
+      ? `<span style="color: var(--success, #22c55e); font-weight: 700;">🟢 ${rSim.tailwindPct}% a favor</span>`
+      : `<span>🟡 ${rSim?.crosswindPct || 0}% cruzado</span>`);
+  const rainChip = (rSim?.wetPct > 0 || rSim?.maxPop >= 40)
+    ? `<span>•</span><span style="color: ${rSim.wetPct >= 60 || rSim.maxPrecipMm >= 1.5 ? 'var(--danger, #ef4444)' : '#38bdf8'}; font-weight: 700;">💧 ${rSim.maxPop}%</span>`
+    : '';
+
+  return `
+    <div class="cycling-route-item ${r.id === activeRouteId ? 'selected' : ''}" data-route-id="${r.id}">
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px;">
+        <strong style="font-size: 0.84rem; color: var(--text-main);">${r.name}</strong>
+        <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
+          <span style="font-size: 0.68rem; font-weight: 800; padding: 2px 6px; border-radius: 6px; background: ${rSim?.badgeColor || '#22c55e'}; color: #000; white-space: nowrap;">
+            ${rSim?.badgeLabel || ''}
+          </span>
+          <span style="font-size: 0.76rem; font-weight: 800; color: var(--accent, #facc15); white-space: nowrap;">${r.distanceKm} km</span>
+        </div>
+      </div>
+      <div style="display: flex; gap: 6px; align-items: center; font-size: 0.72rem; color: var(--text-dim); flex-wrap: wrap; margin-top: 2px;">
+        <span>+${r.elevationGainM} m</span>
+        <span>•</span>
+        <span>${r.difficulty}</span>
+        <span>•</span>
+        ${windText}
+        ${rainChip}
+      </div>
+    </div>
+  `;
+}
 
 /**
  * Renderiza la vista principal del módulo de Ciclismo & Viento
@@ -251,12 +288,12 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
                 Ciclismo en Ruta &amp; Viento
               </h2>
               <span style="font-size: 0.78rem; color: var(--text-dim); display: block; margin-top: 2px;">
-                Viento por tramos • Salidas desde <strong>${concejo.name}</strong>
+                Viento, lluvia y cota por tramos • Salidas desde <strong>${concejo.name}</strong>
               </span>
             </div>
           </div>
           <span class="badge" style="background: rgba(56, 189, 248, 0.15); color: var(--primary); border: 1px solid rgba(56, 189, 248, 0.3); font-weight: 700; padding: 3px 8px; border-radius: 16px; font-size: 0.72rem;">
-            Vectorial Dinámico
+            Viento + Lluvia
           </span>
         </div>
 
@@ -439,6 +476,26 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
             <span style="color: var(--warning, #facc15); font-weight: 700;">🟡 Cruzado ${sim.crosswindPct}%</span>
             <span style="color: var(--danger, #ef4444); font-weight: 700;">🔴 De cara ${sim.headwindPct}%</span>
           </div>
+
+          <!-- Estado de Lluvia y Firme en Ruta -->
+          <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; font-size: 0.73rem;">
+            ${(sim.wetPct > 0 || sim.maxPrecipMm >= 0.1 || sim.maxPop >= 40) ? `
+              <span style="color: ${sim.wetPct >= 60 || sim.maxPrecipMm >= 1.5 || sim.hasThunder || sim.hasSnowOrIce ? 'var(--danger, #ef4444)' : '#38bdf8'}; font-weight: 700;">
+                ${sim.hasThunder ? '⛈️ Tormenta en ruta' : (sim.hasSnowOrIce ? '❄️ Riesgo de nieve/hielo' : (sim.wetPct > 0 ? `🌧️ ${sim.wetPct}% ruta con agua/orbayu` : `🌦️ Riesgo de agua (${sim.maxPop}%)`))}
+              </span>
+              <span style="color: var(--text-dim);">
+                Prob. máx <strong>${sim.maxPop}%</strong>${sim.maxPrecipMm > 0 ? ` • Hasta <strong>${sim.maxPrecipMm.toFixed(1)} mm/h</strong>` : ''}
+              </span>
+            ` : `
+              <span style="color: var(--success, #22c55e); font-weight: 700;">☀️ Asfalto seco previsto</span>
+              <span style="color: var(--text-dim);">Prob. máx lluvia: <strong>${sim.maxPop}%</strong></span>
+            `}
+          </div>
+          ${sim.hasColdWetRisk ? `
+            <div style="margin-top: 6px; font-size: 0.7rem; color: var(--warning, #facc15); background: rgba(250, 204, 21, 0.12); padding: 4px 7px; border-radius: 6px; font-weight: 700; line-height: 1.3;">
+              🧥 Asfalto mojado + frío en cota (mín. ${sim.minTramoTemp} °C): extremo cuidado en bajadas.
+            </div>
+          ` : ''}
         </div>
 
         ${(sim.idaBalance && sim.vueltaBalance) ? `
@@ -459,7 +516,7 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
                   <span style="font-size: 0.68rem; color: var(--text-dim);">${sim.idaBalance.startHour} - ${sim.idaBalance.endHour}</span>
                 </div>
                 <div style="font-size: 0.70rem; color: var(--text-dim); margin-bottom: 5px; line-height: 1.3;">
-                  ${sim.idaBalance.km} km • +${sim.idaBalance.elevGain} m • 🌡️ ${sim.idaBalance.avgTemp}°C
+                  ${sim.idaBalance.km} km • +${sim.idaBalance.elevGain} m • 🌡️ ${sim.idaBalance.avgTemp}°C • 💧 ${sim.idaBalance.maxPop}%
                 </div>
                 <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 6px;">
                   <strong style="font-size: 0.74rem; color: ${sim.idaBalance.windColor};">${sim.idaBalance.windLabel}</strong>
@@ -484,7 +541,7 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
                   <span style="font-size: 0.68rem; color: var(--text-dim);">${sim.vueltaBalance.startHour} - ${sim.vueltaBalance.endHour}</span>
                 </div>
                 <div style="font-size: 0.70rem; color: var(--text-dim); margin-bottom: 5px; line-height: 1.3;">
-                  ${sim.vueltaBalance.km} km • +${sim.vueltaBalance.elevGain} m • 🌡️ ${sim.vueltaBalance.avgTemp}°C
+                  ${sim.vueltaBalance.km} km • +${sim.vueltaBalance.elevGain} m • 🌡️ ${sim.vueltaBalance.avgTemp}°C • 💧 ${sim.vueltaBalance.maxPop}%
                 </div>
                 <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 6px;">
                   <strong style="font-size: 0.74rem; color: ${sim.vueltaBalance.windColor};">${sim.vueltaBalance.windLabel}</strong>
@@ -548,8 +605,8 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
                 <!-- Fila intermedia: Métricas físicas y meteorológicas -->
                 <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 0.74rem; color: var(--text-dim);">
                   <span>📏 ${t.km} km • Pend: <strong>${t.avgGradePct > 0 ? '+' : ''}${t.avgGradePct}%</strong></span>
-                  <span>🏔️ ${t.endAlt} m</span>
-                  <span>🌡️ ${t.temp} °C</span>
+                  <span>🏔️ ${t.endAlt} m • 🌡️ ${t.temp} °C</span>
+                  <span style="color: ${t.weather?.rainColor || 'var(--text-dim)'}; font-weight: ${t.weather?.isWet ? '700' : '500'};">${t.weather?.rainLabel || `💧 ${t.pop}%`}</span>
                 </div>
 
                 <!-- Fila inferior: Viento relativo -->
@@ -612,29 +669,7 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
                 <span style="font-size: 0.76rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 6px;">
                   📍 Rutas por ${concejo.name} y Comarca (${localRoutes.length})
                 </span>
-                ${localRoutes.map(r => {
-      const rSim = simulateRouteConditions(r, activeHour, selectedSpeed, hourly, activeDay);
-      return `
-                  <div class="cycling-route-item ${r.id === activeRoute.id ? 'selected' : ''}" data-route-id="${r.id}">
-                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px;">
-                      <strong style="font-size: 0.84rem; color: var(--text-main);">${r.name}</strong>
-                      <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
-                        <span style="font-size: 0.68rem; font-weight: 800; padding: 2px 6px; border-radius: 6px; background: ${rSim?.badgeColor || '#22c55e'}; color: #000; white-space: nowrap;">
-                          ${rSim?.badgeLabel || ''}
-                        </span>
-                        <span style="font-size: 0.76rem; font-weight: 800; color: var(--accent, #facc15); white-space: nowrap;">${r.distanceKm} km</span>
-                      </div>
-                    </div>
-                    <div style="display: flex; gap: 6px; align-items: center; font-size: 0.72rem; color: var(--text-dim); flex-wrap: wrap; margin-top: 2px;">
-                      <span>+${r.elevationGainM} m</span>
-                      <span>•</span>
-                      <span>${r.difficulty}</span>
-                      <span>•</span>
-                      ${rSim?.headwindPct >= 50 ? `<span style="color: var(--danger, #ef4444); font-weight: 700;">🔴 ${rSim.headwindPct}% de cara</span>` : (rSim?.tailwindPct >= 40 ? `<span style="color: var(--success, #22c55e); font-weight: 700;">🟢 ${rSim.tailwindPct}% a favor</span>` : `<span>🟡 ${rSim?.crosswindPct || 0}% cruzado</span>`)}
-                    </div>
-                  </div>
-                `;
-    }).join('')}
+                ${localRoutes.map(r => renderCyclingPickerItem(r, activeRoute.id, activeHour, selectedSpeed, hourly, activeDay)).join('')}
               </div>
             ` : ''}
 
@@ -643,29 +678,7 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
                 <span style="font-size: 0.76rem; font-weight: 800; color: var(--accent, #facc15); text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 6px;">
                   🌟 Grandes Clásicas de Asturias (${otherRoutes.length})
                 </span>
-                ${otherRoutes.map(r => {
-      const rSim = simulateRouteConditions(r, activeHour, selectedSpeed, hourly, activeDay);
-      return `
-                  <div class="cycling-route-item ${r.id === activeRoute.id ? 'selected' : ''}" data-route-id="${r.id}">
-                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px;">
-                      <strong style="font-size: 0.84rem; color: var(--text-main);">${r.name}</strong>
-                      <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
-                        <span style="font-size: 0.68rem; font-weight: 800; padding: 2px 6px; border-radius: 6px; background: ${rSim?.badgeColor || '#22c55e'}; color: #000; white-space: nowrap;">
-                          ${rSim?.badgeLabel || ''}
-                        </span>
-                        <span style="font-size: 0.76rem; font-weight: 800; color: var(--accent, #facc15); white-space: nowrap;">${r.distanceKm} km</span>
-                      </div>
-                    </div>
-                    <div style="display: flex; gap: 6px; align-items: center; font-size: 0.72rem; color: var(--text-dim); flex-wrap: wrap; margin-top: 2px;">
-                      <span>+${r.elevationGainM} m</span>
-                      <span>•</span>
-                      <span>${r.difficulty}</span>
-                      <span>•</span>
-                      ${rSim?.headwindPct >= 50 ? `<span style="color: var(--danger, #ef4444); font-weight: 700;">🔴 ${rSim.headwindPct}% de cara</span>` : (rSim?.tailwindPct >= 40 ? `<span style="color: var(--success, #22c55e); font-weight: 700;">🟢 ${rSim.tailwindPct}% a favor</span>` : `<span>🟡 ${rSim?.crosswindPct || 0}% cruzado</span>`)}
-                    </div>
-                  </div>
-                `;
-    }).join('')}
+                ${otherRoutes.map(r => renderCyclingPickerItem(r, activeRoute.id, activeHour, selectedSpeed, hourly, activeDay)).join('')}
               </div>
             ` : ''}
 
