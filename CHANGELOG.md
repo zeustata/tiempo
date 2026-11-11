@@ -9,6 +9,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.7] - 2026-11-11
+### Fixed
+- **🌊 Doctrina de Retorno Limpio Universal a Carruseles en Todos los Módulos (`app.js` - Leyes 0, 11 y 18):**
+  - **Inmunidad Total de Datos y Ubicación:** Tu concejo seleccionado, coordenadas GPS, playa elegida y preferencias se preservan estrictamente intactas; solo se reinicia la presentación visual de pantalla.
+  - **Surf (`panel-surf`):** Carrusel tripartito devuelto al Slide 1 (*Calificación & Estado del Mar*) con su botón activo, y carruseles horarios de surf (`#surf-timeline-carousel` y `#surf-daily-carousel`) reseteados al inicio (`scrollLeft = 0`).
+  - **Mar & Playas (`panel-marine`):** Tablas de mareas (`#weekly-tides-carousel` y `#tide-today-carousel`) arrancan limpias en el día de hoy.
+  - **Previsión (`panel-forecast`):** Carrusel de 10 días (`#forecast-10d-carousel`) reiniciado a hoy.
+  - **Astronomía & Cosmos (`panel-astronomy`):** Carrusel del cosmos (`#cosmos-widgets-carousel`) arranca en su slide inicial.
+  - **Montaña (`panel-mountain`):** Carruseles de cotas y 7 días de esquí devueltos al primer elemento.
+
 ## [3.0.38.6] - 2026-11-11
 ### Fixed
 - **📈 Auto-Reinicio de Curva Térmica Hoy en Carrusel Hero (`app.js` - Leyes 0, 11 y 18):**

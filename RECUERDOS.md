@@ -2,6 +2,22 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌊 Doctrina de Retorno Limpio Universal a Carruseles en Todos los Módulos (`v3.0.38.7`) — 2026-11-11
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.6` (`47df8c7`).
+- **Petición e Instrucción Expresa de Lendo («perfecto princesa. por lo que veo el problema que tenia esta tarjeta tambien lo tienen los otros menus. lo viste? [...] y que pasa con lo que hiciste en el menu de en vivo? recuerda que eso no le puede afectar por ejemplo la ubicacion por si estoy mirando una en concreto [...] pisale»):**
+  1. *Blindaje Absoluto de Datos vs Presentación Visual (Leyes 0 y 11):*
+     - Se preservan de manera inmutable el concejo activo, la localidad elegida, las coordenadas GPS, la playa seleccionada en surf/mareas y las rutas de senderismo/ciclismo.
+     - Únicamente se resetea la presentación visual de pantalla (`scrollLeft = 0` y `top: 0`) para ofrecer una navegación ordenada y sin deslices manuales hacia atrás.
+  2. *Cobertura Universal en Todos los Paneles:*
+     - **Surf (`panel-surf`):** Carrusel tripartito devuelto al Slide 1 (*Calificación*) con botón activo sincronizado, y carruseles horarios (`surf-timeline-carousel`, `surf-daily-carousel`) reseteados al día actual.
+     - **Mar & Playas (`panel-marine`):** Tablas de mareas (`weekly-tides-carousel`, `tide-today-carousel`) arrancan limpias en hoy.
+     - **Previsión (`panel-forecast`):** Carrusel de 10 días devuelto a hoy.
+     - **Cosmos (`panel-astronomy`):** Carrusel interactivo (`cosmos-widgets-carousel`) arranca en su slide inicial.
+     - **Montaña (`panel-mountain`):** Cotas y días de esquí devueltos al primer elemento.
+  3. *Ciclo Constitucional Local y Notificación Telegram (Leyes 1, 3, 9 y 23):*
+     - Verificado en local mediante `node --check` y servidor en `http://localhost:8080`.
+     - Notificación sonora enviada a Telegram antes de cualquier despliegue.
+
 ## 📈 Auto-Reinicio de Curva Térmica Hoy en Carrusel Hero (`v3.0.38.6`) — 2026-11-11
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.5` (`localhost`).
 - **Petición e Instrucción Expresa de Lendo («va bien pero te olvidaste la targeta pequeña de curva termica. si la cambio no vuelve a ella [...] pisale»):**
@@ -3652,15 +3668,7 @@ ICONO | ESTADO EN METEOASTUR LODE              | NUBES (cc)  | RAD. DIRECTA (irr
      - Query strings sincronizadas a `?v=2.2.64` en `index.html` (`main.css`, `components.css`, `sw.js`, `app.js`) y en `app.js` (`weatherIcons.js?v=2.2.64`, `weatherHalloweenIcons.js?v=2.2.64`).
 
 ## ⏰ Actualización v2.2.63: Normalización Astronómica Perpetua y Corrección del Cambio de Horario — 2026-10-18
-- **Normalización Astronómica y Corrección del Cambio de Horario (Feedback Lendo - «no puedes implementarlo en la app? es que estoy viendo que en el pronostico del tiempo, el domingo no tienes cambiado el ocaso t el alba no esta cambiado... que va a pasar el donimgo 25 de octubre?», «y para el año que viene, cuando pasemos al horario de herano otra vez lo tendra en cuenta?», «y para las previsiones del tiempo quedan cuadrados? por ejemplo las previsiones de 72 horas?», «y el dia 25 va a estar todo cuadrado no? no habra un doble cuadrado ni nada de eso no?» y «pisale»):**
-  1. *Diagnóstico Científico y Causa Raíz:*
-     - Lendo detectó con agudeza visual que en el pronóstico a 10 días para el domingo 25 de octubre de 2026, el alba (amanecer) y el ocaso (anochecer) mostraban 08:49 y 19:23, en lugar de reflejar el cambio oficial al horario de invierno (CET, UTC+1).
-     - *Causa raíz técnica:* La API de Open-Meteo evalúa el huso al inicio de la petición (18 de octubre, en horario de verano UTC+2) y fija estáticamente `utc_offset_seconds: 7200` para todo el payload. Según la documentación de la API, las marcas ISO generadas ignoran el cambio de hora dentro del rango, sumando +2h fijas incluso tras el salto al horario de invierno.
-  2. *Intervención Técnica en `js/components/forecastView.js`:*
-     - Creada e integrada la función universal `formatCivilSunTime(isoStr, apiOffsetSeconds, targetTimezone = 'Europe/Madrid')`:
-       - Toma la cadena ISO generada por Open-Meteo y reconstruye el instante UTC universal puro restando el desfase estático de la API (`pseudoUtcMs - apiOffsetSeconds * 1000`).
-       - Formatea el timestamp UTC recuperado mediante la API nativa `Intl.DateTimeFormat('es-ES', { timeZone: 'Europe/Madrid', hour: '2-digit', minute: '2-digit', hour12: false })`.
-       - Delega el cálculo en la Base de Datos Mundial de Husos Horarios IANA integrada en el navegador, asegurando que para el domingo 25 de oc
+- **Normalización Astronómica y Corrección del Cambio de Horari
      - Lendo detectó que en la app la racha actual sí marcaba `16 km/h` y la racha máxima `31 km/h`, y que otras plataformas como Maldonado (*eltiempo.es*) publicaban `15 km/h` como cifra de cabecera.
      - *Causa raíz:* La API y el modelo registraban los datos con exactitud milimétrica (`current.wind_speed_10m = 6.8` como media sostenida a 10 metros, y `current.wind_gusts_10m = 16.0` como racha instantánea). Sin embargo, la jerarquía visual otorgaba todo el tamaño tipográfico (`2.2rem`) a la media matemática continua, relegando la racha (que es lo que el ser humano y el entorno sienten físicamente) a un texto secundario pequeño.
   2. *Intervención Técnica en `currentCard.js` y `components.css`:*

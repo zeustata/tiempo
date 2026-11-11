@@ -51,7 +51,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.38.6';
+export const CURRENT_APP_VERSION = '3.0.38.7';
 // Control inteligente de Auto-Prompt del Changelog (Doctrina de No-Fatiga al Usuario - Feedback Lendo):
 // Solo se incrementa ante cambios visuales grandes, módulos nuevos o novedades perceptibles.
 // En ajustes finos, calibraciones matemáticas y parches internos se mantiene para no fatigar al usuario con modales.
@@ -2529,10 +2529,30 @@ class MeteoAsturiasApp {
 
     if (targetTab === 'marine') {
       scrollTideChartToNow();
+      // Auto-reinicio de carruseles de mareas al día actual (Feedback Lendo v3.0.38.7)
+      try {
+        const weeklyTides = document.getElementById('weekly-tides-carousel');
+        if (weeklyTides) weeklyTides.scrollLeft = 0;
+        const tideToday = document.getElementById('tide-today-carousel');
+        if (tideToday) tideToday.scrollLeft = 0;
+      } catch (e) {}
+    }
+
+    if (targetTab === 'forecast') {
+      // Auto-reinicio de carrusel de previsión 10 días a hoy (Feedback Lendo v3.0.38.7)
+      try {
+        const forecastCarousel = document.getElementById('forecast-10d-carousel');
+        if (forecastCarousel) forecastCarousel.scrollLeft = 0;
+      } catch (e) {}
     }
 
     if (targetTab === 'astronomy') {
       renderAstronomyView('panel-astronomy', 'all', this.weatherData, this.currentConcejo);
+      // Auto-reinicio de carrusel interactivo del cosmos al slide inicial (Feedback Lendo v3.0.38.7)
+      try {
+        const cosmosCarousel = document.getElementById('cosmos-widgets-carousel');
+        if (cosmosCarousel) cosmosCarousel.scrollLeft = 0;
+      } catch (e) {}
     }
 
     if (targetTab === 'tourism' && this.weatherData && this.currentConcejo) {
@@ -2545,7 +2565,7 @@ class MeteoAsturiasApp {
 
     if (targetTab === 'mountain') {
       const wakeCarousels = () => {
-        const carousels = document.querySelectorAll('.ski-7days-carousel');
+        const carousels = document.querySelectorAll('.ski-7days-carousel, .ski-cotas-carousel');
         carousels.forEach(c => {
           void c.offsetWidth;
           c.scrollLeft = 0;
@@ -2558,7 +2578,18 @@ class MeteoAsturiasApp {
     if (targetTab === 'surf') {
       const wakeSurfCarousels = () => {
         const sc = document.getElementById('surf-cards-carousel');
-        if (sc) void sc.offsetWidth;
+        if (sc) {
+          void sc.offsetWidth;
+          sc.scrollLeft = 0;
+        }
+        // Auto-reinicio de píldoras activas de Surf al primer slide (Calificación)
+        const surfPills = document.querySelectorAll('#surf-nav-toolbar .surf-nav-pill');
+        surfPills.forEach((p, i) => p.classList.toggle('active', i === 0));
+        // Reset de carruseles horarios de surf
+        const surfTimeline = document.getElementById('surf-timeline-carousel');
+        if (surfTimeline) surfTimeline.scrollLeft = 0;
+        const surfDaily = document.getElementById('surf-daily-carousel');
+        if (surfDaily) surfDaily.scrollLeft = 0;
       };
       setTimeout(wakeSurfCarousels, 50);
       setTimeout(wakeSurfCarousels, 400);

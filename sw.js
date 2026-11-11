@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v30386-thermal-hero-reset-v1';
+const CACHE_NAME = 'meteoasturlode-v30387-universal-panel-reset-v1';
 const STATIC_ASSETS = [
   './',
   './index.html',
