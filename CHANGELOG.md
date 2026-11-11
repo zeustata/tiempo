@@ -9,6 +9,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.21] - 2026-11-11
+### Added & Improved
+- **🥾 Ampliación del Catálogo a 80 Sendas Oficiales de Asturias (`routesData.js` + `routesCard.js` - Leyes 0, 15 y 16):**
+  - **+22 Nuevas Rutas Homologadas:** Añadidas sendas reales verificadas cubriendo 22 concejos que aún no disponían de ruta propia (*Muros de Nalón, Soto del Barco, Pravia, Illas, Candamo, Quirós, Amieva, Onís, Ribadedeva, Caravia, Nava, Piloña, Siero, Mieres, Langreo, San Martín del Rey Aurelio, Tapia de Casariego, Vegadeo, Grandas de Salime, Belmonte de Miranda, Tineo y Peñamellera Alta*), pasando de 36 a **58 concejos con ruta local directa**.
+  - **Integración Automática en Filtros y Radar:** Todas las nuevas rutas entran automáticamente en `Cercanas`, `Mejor Clima`, `Fáciles`, `Montaña`, `Costa & Ríos`, gráfica diurna y ficha GPS oficial.
+  - **Petición Paralela por Bloques:** `fetchRoutesBatchWeather()` divide las llamadas a Open-Meteo en lotes paralelos de 40 coordenadas para mantener la máxima velocidad y estabilidad sin importar el tamaño del catálogo.
+  - **Conteo Dinámico:** Eliminado el número fijo `58` de la interfaz, mostrando ahora `${totalRoutesCount}` de forma automática.
+
 ## [3.0.38.20] - 2026-11-11
 ### Improved
 - **🧭 Selector Único Limpio + Menú Explicativo de Preferencias de Rutas (`routesCard.js` + `app.js` - Leyes 0, 11 y 14):**
@@ -4733,20 +4741,7 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 ## [1.0.48] - 2026-08-30
 
 ### 🏔️ Rediseño Glaciar Alpino: Montaña, Altitudes & Estaciones de Esquí
-- **Armonización Visual Glaciar (`#38bdf8`)**: Sustitución del tono morado/ultravioleta por una refinada paleta de Azul Hielo / Glaciar de alto contraste en toda la sección de Montaña.
-- **Pill de Altitud del Concejo (`.altitude-pill`)**: Estilizado con cristal escarchado translúcido, borde cyan luminoso y sombra suave para una legibilidad óptima.
-- **Estaciones de Esquí (Valgrande-Pajares & Fuentes de Invierno)**: Tipografía y contenedores adaptados al esquema cromático alpino cantábrico.
-- **Service Worker `v148-official` & Cache-Busting**: Actualización global de CSS (`main.css?v=1.0.48`, `components.css?v=1.0.48`) y módulos JS a `?v=1.0.48`.
-
----
-
-## [1.0.47] - 2026-08-30
-
-### 🌧️ Radar Cantábrico: Eliminación de Marcas de Agua & Capa Topográfica HD
-- **Nueva Capa Base Esri World Topo Map**: Sustitución definitiva de CartoDB (que introdujo marca de agua de API Key) por Esri World Topo Map en alta definición, 100% libre, sin marcas de agua ni restricciones de acceso.
-- **Relieve Fino de Asturias y Cantábrico**: Representación nítida de los Picos de Europa, cordales montañosos, ríos y litoral sobre la animación de radar de lluvia de RainViewer.
-- **Selector de Capas Mejorado**: Mantiene acceso rápido a *Topográfico HD*, *Satélite Real HD* y *OpenStreetMap Oficial*.
-- **Service Worker `v147-official` & Cache-
+- **Armonización Visual Glaciar (`#38bdf8`)**: Sustitución del tono morado/ultravioleta por una refinada paleta de Azul Hielo / Glaciar de alto contraste en tod
 - **Alineación Perfecta al 50%**: Configuración de `grid-template-columns: 1fr 1fr` tanto para la fila de navegación (Modelo y Menú) como para la fila de acciones (Guardar y Mi Ubicación), garantizando un diseño estructurado, equilibrado y de fácil pulsación con el pulgar.
 - **Service Worker `v132-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
 

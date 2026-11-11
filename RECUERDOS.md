@@ -2,6 +2,18 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🥾 Ampliación del Catálogo a 80 Sendas Oficiales de Asturias (`v3.0.38.21`) — 2026-11-11
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.20` (`3e92dc5`).
+- **Petición e Instrucción Expresa de Lendo («y podriamos añadir mas rutas que las 58 q hay o no hay mas en la base de datos? [...] vale pero ya estaran en el motor del motor de rutas? faciles, montaña, cercanas, etc? [...] pisale»):**
+  1. *Ampliación Verificada del Catálogo (`routesData.js`, Ley 15):*
+     - Incorporadas **22 nuevas sendas homologadas reales** cubriendo 22 concejos adicionales hasta alcanzar **80 rutas oficiales** repartidas en **58 concejos asturianos** (Muros de Nalón, Soto del Barco, Pravia, Illas, Candamo, Quirós, Amieva, Onís, Ribadedeva, Caravia, Nava, Piloña, Siero, Mieres, Langreo, SMRA, Tapia de Casariego, Vegadeo, Grandas de Salime, Belmonte de Miranda, Tineo y Peñamellera Alta).
+  2. *Escalabilidad Técnica y Precisión (`fetchRoutesBatchWeather` & `routesCard.js`):*
+     - Refactorizada la consulta Open-Meteo por lotes en bloques paralelos de 40 rutas (`Promise.all`), garantizando respuestas sub-segundo sin superar límites de URL.
+     - Reemplazado el literal estático `"58"` por el conteo dinámico `allRoutes.length` en la tarjeta, modal de preferencias y consejero.
+  3. *Verificación Real y Servidor Local (Leyes 3, 4 y 9):*
+     - Verificado en vivo el cruce de las 80 rutas contra `concejos.js` y contra Open-Meteo sin errores ni IDs duplicados.
+     - Actualizada versión a `v3.0.38.21` y caché `meteoasturlode-v303821-80-routes-v1`.
+
 ## 🧭 Selector Único Limpio + Menú Explicativo de Preferencias de Rutas (`v3.0.38.20`) — 2026-11-11
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.19` (`e83cc71`).
 - **Diagnóstico sobre Captura Móvil (`captura_20261111_173446.jpg`) e Instrucción de Lendo («no se princesa. lo veo desordenado las tarjetas en el movil. y si ponemos un escroll de cada uno y explicando un poco las preferencias? [...] dale a la uno. q lista eres pisale en local»):**

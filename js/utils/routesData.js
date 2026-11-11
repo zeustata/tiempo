@@ -1322,6 +1322,493 @@ export const RUTAS_ASTURIAS_CATALOGO = [
     desc: 'Tramo alto y más salvaje del antiguo ferrocarril minero: desfiladeros fluviales de Peña Sobia, túneles iluminados en la roca y aproximación al Monumento Natural de Cueva Huerta.',
     surface: 'Pista asfaltada y afirmada completamente llana y segura',
     caution: 'Ruta 100% transitable para todas las edades, niños y carritos; inmune al barro'
+  },
+  // ==========================================
+  // AMPLIACIÓN REGIONAL A 80 SENDAS OFICIALES (COBERTURA DE CONCEJOS CLAVE)
+  // ==========================================
+  {
+    id: 'miradores_aguilar_muros',
+    name: 'Senda Costera de los Miradores (Muros de Nalón - Aguilar)',
+    concejoId: 'murosdenalon',
+    concejoName: 'Muros de Nalón',
+    lat: 43.5533,
+    lon: -6.1136,
+    startPoint: 'Puerto de San Esteban de Pravia / Playa de Aguilar',
+    type: 'costera',
+    typeIcon: '🏖️',
+    dist: '4.5 km',
+    distKm: 4.5,
+    elev: '+120 m',
+    elevM: 120,
+    diff: 'Fácil',
+    diffCat: 'facil',
+    diffRank: 1,
+    time: '1h 20min',
+    desc: 'Balcón clásico del Cantábrico entre la desembocadura del Nalón y la playa de Aguilar pasando por los miradores del Espíritu Santo y Los Glayos.',
+    surface: 'Pasarelas acondicionadas, escalones y sendero costero compacto',
+    caution: 'Atención a rachas de viento Norte en los miradores elevados sobre el acantilado'
+  },
+  {
+    id: 'castillo_san_martin_sotodelbarco',
+    name: 'Senda Fluvial del Nalón y Castillo de San Martín (L\'Arena)',
+    concejoId: 'sotodelbarco',
+    concejoName: 'Soto del Barco',
+    lat: 43.5419,
+    lon: -6.0711,
+    startPoint: 'San Juan de La Arena / Soto del Barco',
+    type: 'fluvial',
+    typeIcon: '🌊',
+    dist: '6.5 km',
+    distKm: 6.5,
+    elev: '+55 m',
+    elevM: 55,
+    diff: 'Muy Fácil',
+    diffCat: 'facil',
+    diffRank: 1,
+    time: '1h 35min',
+    desc: 'Recorrido sereno paralelo al estuario angulero del río Nalón, uniendo el paseo marítimo de L\'Arena con el entorno histórico del Castillo de San Martín.',
+    surface: 'Paseo asfaltado y senda peatonal llana junto a la ría',
+    caution: 'Apta con lluvia débil y sin desnivel técnico apreciable'
+  },
+  {
+    id: 'monteagudo_pravia',
+    name: 'Mirador de Monteagudo y Senda Fluvial del Narcea',
+    concejoId: 'pravia',
+    concejoName: 'Pravia',
+    lat: 43.4950,
+    lon: -6.1039,
+    startPoint: 'Peñaullán / Parque Sabino Moutas (Pravia)',
+    type: 'fluvial',
+    typeIcon: '🌊',
+    dist: '7.8 km',
+    distKm: 7.8,
+    elev: '+210 m',
+    elevM: 210,
+    diff: 'Fácil',
+    diffCat: 'facil',
+    diffRank: 1,
+    time: '2h 10min',
+    desc: 'Vistas panorámicas de la unión de los ríos Nalón y Narcea desde Monteagudo alternando praderías verdes y caminos tradicionales del Bajo Nalón.',
+    surface: 'Pista rural asfaltada y camino forestal de tierra',
+    caution: 'Zonas con algo de barro tras jornadas de lluvia continua'
+  },
+  {
+    id: 'molinos_bufaran_illas',
+    name: 'Ruta de los Molinos del Río Friera y Sierra de Bufarán',
+    concejoId: 'illas',
+    concejoName: 'Illas',
+    lat: 43.4839,
+    lon: -5.9669,
+    startPoint: 'Callezuela / La Peral (Illas)',
+    type: 'montaña',
+    typeIcon: '🏔️',
+    dist: '8.2 km',
+    distKm: 8.2,
+    elev: '+260 m',
+    elevM: 260,
+    diff: 'Media',
+    diffCat: 'media',
+    diffRank: 2,
+    time: '2h 30min',
+    desc: 'Itinerario boscoso entre molinos harineros del concejo quesero de Illas con subida panorámica hacia el cordal de La Peral y la comarca avilesina.',
+    surface: 'Pista forestal de montaña y sendero ribereño',
+    caution: 'Posible barro y humedad bajo el arbolado en temporada otoñal e invernal'
+  },
+  {
+    id: 'degollada_candamo',
+    name: 'Senda del Monte Degollada y Cueva de Candamo',
+    concejoId: 'candamo',
+    concejoName: 'Candamo',
+    lat: 43.4556,
+    lon: -6.0608,
+    startPoint: 'San Román de Candamo / Grullos',
+    type: 'valle',
+    typeIcon: '🪵',
+    dist: '6.8 km',
+    distKm: 6.8,
+    elev: '+220 m',
+    elevM: 220,
+    diff: 'Fácil',
+    diffCat: 'facil',
+    diffRank: 1,
+    time: '1h 55min',
+    desc: 'Subida cómoda entre pinares y vestigios históricos del frente asturiano hacia las crestas de La Degollada sobre el curso medio del Nalón.',
+    surface: 'Pista forestal compacta y camino tradicional',
+    caution: 'Bien resguardada del viento por el pinar'
+  },
+  {
+    id: 'teixu_bermiego_quiros',
+    name: 'Ruta al Teixu Milenario de Bermiego (Quirós)',
+    concejoId: 'quiros',
+    concejoName: 'Quirós',
+    lat: 43.1972,
+    lon: -5.9781,
+    startPoint: 'Pueblo de Bermiego (Quirós)',
+    type: 'montaña',
+    typeIcon: '🏔️',
+    dist: '6.4 km',
+    distKm: 6.4,
+    elev: '+290 m',
+    elevM: 290,
+    diff: 'Media',
+    diffCat: 'media',
+    diffRank: 2,
+    time: '2h 15min',
+    desc: 'Visita al Monumento Natural del Teixo de Bermiego bajo las paredes verticales de la Sierra del Aramo, con vistas espectaculares al embalse de Valdemurio.',
+    surface: 'Caleyas empedradas, pista ganadera y sendero calizo',
+    caution: 'Carretera estrecha de acceso hasta Bermiego y piedra pulida resbaladiza en lluvia'
+  },
+  {
+    id: 'olla_san_vicente_amieva',
+    name: 'Ruta a la Olla de San Vicente (Cañón del Río Dobra)',
+    concejoId: 'amieva',
+    concejoName: 'Amieva',
+    lat: 43.3117,
+    lon: -5.1258,
+    startPoint: 'Restaurante Puente Dobra / Tornín (Amieva)',
+    type: 'fluvial',
+    typeIcon: '🌊',
+    dist: '10.2 km',
+    distKm: 10.2,
+    elev: '+140 m',
+    elevM: 140,
+    diff: 'Fácil',
+    diffCat: 'facil',
+    diffRank: 1,
+    time: '2h 45min',
+    desc: 'Clásica ruta fluvial junto a las aguas turquesas del río Dobra hasta alcanzar la emblemática poza natural esmeralda de la Olla de San Vicente.',
+    surface: 'Pista de tierra afirmada, puente romano y tramos pedregosos de ribera',
+    caution: 'Vigilar crecidas del río Dobra tras deshielos o lluvias intensas; calzado con buen agarre'
+  },
+  {
+    id: 'demues_gamonedo_onis',
+    name: 'Senda Pastoral de Demués a Gamonedo (Onís)',
+    concejoId: 'onis',
+    concejoName: 'Onís',
+    lat: 43.3075,
+    lon: -4.9708,
+    startPoint: 'Demués / Bobia de Abajo (Onís)',
+    type: 'montaña',
+    typeIcon: '🏔️',
+    dist: '9.0 km',
+    distKm: 9.0,
+    elev: '+380 m',
+    elevM: 380,
+    diff: 'Media',
+    diffCat: 'media',
+    diffRank: 2,
+    time: '3h 00min',
+    desc: 'Camino tradicional quesero entre majadas del concejo de Onís al pie del Cornión con panorámicas constantes del Macizo Occidental de los Picos de Europa.',
+    surface: 'Pista ganadera hormigonada y caminos de pradería',
+    caution: 'Posibilidad de niebla densa entrando desde el valle del Güeña'
+  },
+  {
+    id: 'santiuste_la_franca_ribadedeva',
+    name: 'Senda Costera de Santiuste y Playa de La Franca (PR-AS 263)',
+    concejoId: 'ribadedeva',
+    concejoName: 'Ribadedeva',
+    lat: 43.3944,
+    lon: -4.5736,
+    startPoint: 'Colombres / Pimiango / La Franca',
+    type: 'costera',
+    typeIcon: '🏖️',
+    dist: '10.5 km',
+    distKm: 10.5,
+    elev: '+190 m',
+    elevM: 190,
+    diff: 'Fácil',
+    diffCat: 'facil',
+    diffRank: 1,
+    time: '2h 50min',
+    desc: 'Extremo oriental de la costa asturiana combinando el faro de San Emeterio, acantilados verdes, el bufón de Santiuste y la bahía de La Franca.',
+    surface: 'Sendero litoral de hierba, pista rural y aceras costeras',
+    caution: 'Respetar distancia de seguridad ante bufones con mar de fondo fuerte'
+  },
+  {
+    id: 'arenal_moris_picon_caravia',
+    name: 'Senda del Arenal de Morís y Ría de La Espasa (Caravia)',
+    concejoId: 'caravia',
+    concejoName: 'Caravia',
+    lat: 43.4706,
+    lon: -5.1822,
+    startPoint: 'Playa Arenal de Morís / Caravia Baja',
+    type: 'costera',
+    typeIcon: '🏖️',
+    dist: '7.5 km',
+    distKm: 7.5,
+    elev: '+210 m',
+    elevM: 210,
+    diff: 'Fácil',
+    diffCat: 'facil',
+    diffRank: 1,
+    time: '2h 05min',
+    desc: 'Ruta costera con vistas simultáneas al mar Cantábrico y la muralla verde de la Sierra del Sueve uniendo las playas de Morís y La Espasa.',
+    surface: 'Paseo marítimo, senderos costeros y caminos vecinales',
+    caution: 'Zona expuesta a viento lateral en los miradores marinos'
+  },
+  {
+    id: 'foces_pendon_nava',
+    name: 'Ruta de las Foces del Río Pendón (Fuensanta - Les Praeres)',
+    concejoId: 'nava',
+    concejoName: 'Nava',
+    lat: 43.3328,
+    lon: -5.5122,
+    startPoint: 'Fuensanta / Buyeres (Nava)',
+    type: 'montaña',
+    typeIcon: '🏔️',
+    dist: '11.2 km',
+    distKm: 11.2,
+    elev: '+490 m',
+    elevM: 490,
+    diff: 'Media',
+    diffCat: 'media',
+    diffRank: 2,
+    time: '3h 45min',
+    desc: 'Espectacular garganta boscosa esculpida por el río Pendón bajo la Sierra de Peñamayor, regresando entre majadas tradicionales hacia Nava.',
+    surface: 'Senda entallada en roca caliza y pista de montaña',
+    caution: 'Terreno húmedo y resbaladizo dentro de la foz; bota con taco aconsejada'
+  },
+  {
+    id: 'pesanca_espinareu_pilona',
+    name: 'La Pesanca y Foz de los Moñacos (Río Infierno - Piloña)',
+    concejoId: 'pilona',
+    concejoName: 'Piloña',
+    lat: 43.2856,
+    lon: -5.3247,
+    startPoint: 'Área Recreativa de La Pesanca (Espinaréu)',
+    type: 'montaña',
+    typeIcon: '🏔️',
+    dist: '9.4 km',
+    distKm: 9.4,
+    elev: '+320 m',
+    elevM: 320,
+    diff: 'Media',
+    diffCat: 'media',
+    diffRank: 2,
+    time: '2h 55min',
+    desc: 'Travesía entre hórreos centenarios de Espinaréu, hayedos de ribera y gargantas cristalinas sobre el río Infierno en plena sierra piloñesa.',
+    surface: 'Pista forestal afirmada y tramos de sendero de montaña',
+    caution: 'Sombra intensa en invierno y posibilidad de heladas matinales en el fondo del valle'
+  },
+  {
+    id: 'cebera_barganiza_siero',
+    name: 'Senda Verde de La Cebera y Bosque de La Barganiza (Siero)',
+    concejoId: 'siero',
+    concejoName: 'Siero',
+    lat: 43.4044,
+    lon: -5.8022,
+    startPoint: 'Parque de La Cebera (Lugones) / Siero',
+    type: 'verde',
+    typeIcon: '🛤️',
+    dist: '7.6 km',
+    distKm: 7.6,
+    elev: '+90 m',
+    elevM: 90,
+    diff: 'Muy Fácil',
+    diffCat: 'facil',
+    diffRank: 1,
+    time: '1h 50min',
+    desc: 'Pulmón verde del centro de Asturias ideal para paseo diario, combinando robledales tranquilos, sendas cicloturistas y caminos rurales de Siero.',
+    surface: 'Zahorra compacta, asfalto rural y pistas peatonales',
+    caution: 'Sin dificultad técnica; apta todo el año incluso tras episodios de lluvia'
+  },
+  {
+    id: 'via_verde_turon_mieres',
+    name: 'Senda Verde del Valle de Turón y Pozo Fortuna (Mieres)',
+    concejoId: 'mieres',
+    concejoName: 'Mieres',
+    lat: 43.2144,
+    lon: -5.7364,
+    startPoint: 'Figaredo / Turón (Mieres)',
+    type: 'verde',
+    typeIcon: '🛤️',
+    dist: '12.4 km',
+    distKm: 12.4,
+    elev: '+180 m',
+    elevM: 180,
+    diff: 'Muy Fácil',
+    diffCat: 'facil',
+    diffRank: 1,
+    time: '3h 00min',
+    desc: 'Antiguo trazado minero reconvertido en vía verde entre bosques de ribera, castilletes patrimoniales del carbón y túneles acondicionados.',
+    surface: 'Firme de zahorra compactada y pavimento verde muy estable',
+    caution: 'Pendiente mínima y uniforme; llevar cortavientos ligero en invierno por encajonamiento'
+  },
+  {
+    id: 'samuno_nalon_langreo',
+    name: 'Ruta del Valle de Samuño y Senda Fluvial de Langreo',
+    concejoId: 'langreo',
+    concejoName: 'Langreo',
+    lat: 43.2753,
+    lon: -5.6611,
+    startPoint: 'Ciaño / Ecomuseo de Samuño (Langreo)',
+    type: 'verde',
+    typeIcon: '🛤️',
+    dist: '8.0 km',
+    distKm: 8.0,
+    elev: '+160 m',
+    elevM: 160,
+    diff: 'Fácil',
+    diffCat: 'facil',
+    diffRank: 1,
+    time: '2h 10min',
+    desc: 'Paseo patrimonial y natural siguiendo el arroyo Samuño entre castaños, antiguas instalaciones del Pozo San Luis y puentes sobre el valle.',
+    surface: 'Senda acondicionada de madera, gravilla y pistas vecinales',
+    caution: 'Terreno muy amable salvo humedad superficial en días de orbayu'
+  },
+  {
+    id: 'tres_conceyos_smra',
+    name: 'Cordal del Picu Tres Conceyos (San Martín del Rey Aurelio)',
+    concejoId: 'sanmartindelreyaurelio',
+    concejoName: 'San Martín del Rey Aurelio',
+    lat: 43.2556,
+    lon: -5.5967,
+    startPoint: 'La Vara / Santa Bárbara (SMRA)',
+    type: 'montaña',
+    typeIcon: '🏔️',
+    dist: '10.8 km',
+    distKm: 10.8,
+    elev: '+540 m',
+    elevM: 540,
+    diff: 'Media',
+    diffCat: 'media',
+    diffRank: 2,
+    time: '3h 35min',
+    desc: 'Ascensión clásica del Valle del Nalón hasta la mítica divisoria entre SMRA, Laviana y Bimenes, con vistas hacia Peña Mea y los Picos de Europa.',
+    surface: 'Pista ganadera y sendero de cresta herbosa',
+    caution: 'Cresta muy abierta y ventosa en jornadas de viento Sur o Noroeste'
+  },
+  {
+    id: 'costera_penarronda_tapia',
+    name: 'Senda Costera de Tapia (Penarronda a Playa de Porcía)',
+    concejoId: 'tapiadecasariego',
+    concejoName: 'Tapia de Casariego',
+    lat: 43.5536,
+    lon: -6.9850,
+    startPoint: 'Playa de Penarronda / Puerto de Tapia',
+    type: 'costera',
+    typeIcon: '🏖️',
+    dist: '11.5 km',
+    distKm: 11.5,
+    elev: '+110 m',
+    elevM: 110,
+    diff: 'Fácil',
+    diffCat: 'facil',
+    diffRank: 1,
+    time: '2h 55min',
+    desc: 'Rasa costera del occidente asturiano entre las dunas protegidas de Penarronda, el puerto marinero y faro de Tapia y los acantilados de Serantes.',
+    surface: 'Pista costera, pasarelas de dunas y senderos litorales',
+    caution: 'Muy expuesta a viento marino del Cantábrico; vistas privilegiadas del mar abierto'
+  },
+  {
+    id: 'ria_eo_vegadeo',
+    name: 'Senda de la Ría del Eo y Estuario del Suarón (Vegadeo)',
+    concejoId: 'vegadeo',
+    concejoName: 'Vegadeo',
+    lat: 43.4578,
+    lon: -7.0589,
+    startPoint: 'Parque del Medal / Vegadeo',
+    type: 'fluvial',
+    typeIcon: '🌊',
+    dist: '9.6 km',
+    distKm: 9.6,
+    elev: '+115 m',
+    elevM: 115,
+    diff: 'Fácil',
+    diffCat: 'facil',
+    diffRank: 1,
+    time: '2h 25min',
+    desc: 'Itinerario ornitológico por la Reserva de la Biosfera Oscos-Eo uniendo el puente de Vegadeo, las marismas del Suarón y la ribera de Abres.',
+    surface: 'Paseos fluviales llanos, pasarelas y caminos vecinales',
+    caution: 'Recorrido muy protegido y agradable durante todo el año'
+  },
+  {
+    id: 'salime_chao_samartin_grandas',
+    name: 'Miradores del Embalse de Salime y Castro de Chao Samartín',
+    concejoId: 'grandasdesalime',
+    concejoName: 'Grandas de Salime',
+    lat: 43.2089,
+    lon: -6.8850,
+    startPoint: 'Grandas de Salime / Castro de Chao Samartín',
+    type: 'montaña',
+    typeIcon: '🏔️',
+    dist: '8.8 km',
+    distKm: 8.8,
+    elev: '+290 m',
+    elevM: 290,
+    diff: 'Media',
+    diffCat: 'media',
+    diffRank: 2,
+    time: '2h 40min',
+    desc: 'Combinación de historia castreña y paisajes monumentales sobre el gran embalse del Navia entre bosques de robles y laderas del suroccidente.',
+    surface: 'Sendero de tierra, pistas forestales y tramos del Camino Primitivo',
+    caution: 'Zonas altas despejadas con viento moderado frecuente'
+  },
+  {
+    id: 'piguena_almurfe_belmonte',
+    name: 'Senda Fluvial del Río Pigüeña y Almurfe (Belmonte)',
+    concejoId: 'belmontedemiranda',
+    concejoName: 'Belmonte de Miranda',
+    lat: 43.2650,
+    lon: -6.2244,
+    startPoint: 'Belmonte de Miranda / Puente de San Martín',
+    type: 'fluvial',
+    typeIcon: '🌊',
+    dist: '9.2 km',
+    distKm: 9.2,
+    elev: '+240 m',
+    elevM: 240,
+    diff: 'Fácil',
+    diffCat: 'facil',
+    diffRank: 1,
+    time: '2h 30min',
+    desc: 'Cañón verde del río Pigüeña camino del Parque Natural de Somiedo, entre antiguos pozos salmoneros, puentes medievales y hayedos sombríos.',
+    surface: 'Camino tradicional compactado y senda ribereña',
+    caution: 'Piso húmedo junto al río en mañanas frías de invierno'
+  },
+  {
+    id: 'obona_tineo',
+    name: 'Senda del Monasterio de Obona y Sierra de Tineo (Camino Primitivo)',
+    concejoId: 'tineo',
+    concejoName: 'Tineo',
+    lat: 43.3422,
+    lon: -6.4944,
+    startPoint: 'Tineo / Piedratecha / Obona',
+    type: 'montaña',
+    typeIcon: '🏔️',
+    dist: '10.5 km',
+    distKm: 10.5,
+    elev: '+310 m',
+    elevM: 310,
+    diff: 'Media',
+    diffCat: 'media',
+    diffRank: 2,
+    time: '3h 10min',
+    desc: 'Tramo histórico jacobeo de gran belleza entre carbayeras y bosques autóctonos hasta el histórico Monasterio benedictino de Santa María la Real de Obona.',
+    surface: 'Pista forestal, caleyas antiguas y caminos rurales',
+    caution: 'Barro frecuente en hondonadas tras lluvias; bastones recomendables'
+  },
+  {
+    id: 'alles_oceno_penamellera',
+    name: 'Senda de Alles, Mirador de Llonín y Cares Norte (Peñamellera)',
+    concejoId: 'penamelleraalta',
+    concejoName: 'Peñamellera Alta',
+    lat: 43.3264,
+    lon: -4.7031,
+    startPoint: 'Alles / Mier (Peñamellera Alta)',
+    type: 'montaña',
+    typeIcon: '🏔️',
+    dist: '8.6 km',
+    distKm: 8.6,
+    elev: '+360 m',
+    elevM: 360,
+    diff: 'Media',
+    diffCat: 'media',
+    diffRank: 2,
+    time: '2h 55min',
+    desc: 'Balcón natural de la Sierra del Cuera mirando de frente a la vertiente oriental del Picu Urriellu y los cañones calizos de Peñamellera.',
+    surface: 'Caleyas empedradas de montaña y pistas de pastoreo',
+    caution: 'Caliza húmeda resbaladiza en descensos; vistas espectaculares con cielos claros'
   }
 ];
 
@@ -1603,8 +2090,8 @@ let _routesWeatherCache = {
 };
 
 /**
- * Obtiene el pronóstico meteorológico oficial en una única llamada HTTP por lotes a Open-Meteo
- * para todas las rutas de Asturias (58 puntos), optimizado para responder en ~150 ms sin saturar la red.
+ * Obtiene el pronóstico meteorológico oficial por lotes en paralelo (bloques de 40 rutas) a Open-Meteo
+ * para todo el catálogo de rutas de Asturias, optimizado para responder rápido sin exceder longitud de URL.
  */
 export async function fetchRoutesBatchWeather(forceRefresh = false) {
   const now = Date.now();
@@ -1613,44 +2100,53 @@ export async function fetchRoutesBatchWeather(forceRefresh = false) {
   }
 
   try {
-    const lats = RUTAS_ASTURIAS_CATALOGO.map(r => r.lat.toFixed(2)).join(',');
-    const lons = RUTAS_ASTURIAS_CATALOGO.map(r => r.lon.toFixed(2)).join(',');
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lats}&longitude=${lons}&daily=precipitation_sum,precipitation_probability_max,weather_code,wind_speed_10m_max,wind_gusts_10m_max,temperature_2m_max,temperature_2m_min,uv_index_max&timezone=auto&forecast_days=2`;
+    const chunkSize = 40;
+    const chunks = [];
+    for (let i = 0; i < RUTAS_ASTURIAS_CATALOGO.length; i += chunkSize) {
+      chunks.push(RUTAS_ASTURIAS_CATALOGO.slice(i, i + chunkSize));
+    }
 
-    const resp = await fetch(url);
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-    const results = await resp.json();
-
-    const items = Array.isArray(results) ? results : [results];
     const weatherMap = {};
+    const chunkPromises = chunks.map(async (chunk) => {
+      const lats = chunk.map(r => r.lat.toFixed(2)).join(',');
+      const lons = chunk.map(r => r.lon.toFixed(2)).join(',');
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${lats}&longitude=${lons}&daily=precipitation_sum,precipitation_probability_max,weather_code,wind_speed_10m_max,wind_gusts_10m_max,temperature_2m_max,temperature_2m_min,uv_index_max&timezone=auto&forecast_days=2`;
 
-    RUTAS_ASTURIAS_CATALOGO.forEach((r, idx) => {
-      const forecast = items[idx] || items[0];
-      if (forecast && forecast.daily) {
-        weatherMap[r.id] = {
-          today: {
-            rainMm: parseFloat(forecast.daily.precipitation_sum?.[0]) || 0,
-            pop: parseInt(forecast.daily.precipitation_probability_max?.[0], 10) || 0,
-            code: parseInt(forecast.daily.weather_code?.[0], 10) || 0,
-            windSpeed: Math.round(parseFloat(forecast.daily.wind_speed_10m_max?.[0]) || 0),
-            windGust: Math.round(parseFloat(forecast.daily.wind_gusts_10m_max?.[0]) || 0),
-            tempMax: Math.round(parseFloat(forecast.daily.temperature_2m_max?.[0]) || 15),
-            tempMin: Math.round(parseFloat(forecast.daily.temperature_2m_min?.[0]) || 10),
-            uvMax: parseFloat(forecast.daily.uv_index_max?.[0]) || 2
-          },
-          tomorrow: {
-            rainMm: parseFloat(forecast.daily.precipitation_sum?.[1]) || 0,
-            pop: parseInt(forecast.daily.precipitation_probability_max?.[1], 10) || 0,
-            code: parseInt(forecast.daily.weather_code?.[1], 10) || 0,
-            windSpeed: Math.round(parseFloat(forecast.daily.wind_speed_10m_max?.[1]) || 0),
-            windGust: Math.round(parseFloat(forecast.daily.wind_gusts_10m_max?.[1]) || 0),
-            tempMax: Math.round(parseFloat(forecast.daily.temperature_2m_max?.[1]) || 15),
-            tempMin: Math.round(parseFloat(forecast.daily.temperature_2m_min?.[1]) || 10),
-            uvMax: parseFloat(forecast.daily.uv_index_max?.[1]) || 2
-          }
-        };
-      }
+      const resp = await fetch(url);
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const results = await resp.json();
+      const items = Array.isArray(results) ? results : [results];
+
+      chunk.forEach((r, idx) => {
+        const forecast = items[idx] || items[0];
+        if (forecast && forecast.daily) {
+          weatherMap[r.id] = {
+            today: {
+              rainMm: parseFloat(forecast.daily.precipitation_sum?.[0]) || 0,
+              pop: parseInt(forecast.daily.precipitation_probability_max?.[0], 10) || 0,
+              code: parseInt(forecast.daily.weather_code?.[0], 10) || 0,
+              windSpeed: Math.round(parseFloat(forecast.daily.wind_speed_10m_max?.[0]) || 0),
+              windGust: Math.round(parseFloat(forecast.daily.wind_gusts_10m_max?.[0]) || 0),
+              tempMax: Math.round(parseFloat(forecast.daily.temperature_2m_max?.[0]) || 15),
+              tempMin: Math.round(parseFloat(forecast.daily.temperature_2m_min?.[0]) || 10),
+              uvMax: parseFloat(forecast.daily.uv_index_max?.[0]) || 2
+            },
+            tomorrow: {
+              rainMm: parseFloat(forecast.daily.precipitation_sum?.[1]) || 0,
+              pop: parseInt(forecast.daily.precipitation_probability_max?.[1], 10) || 0,
+              code: parseInt(forecast.daily.weather_code?.[1], 10) || 0,
+              windSpeed: Math.round(parseFloat(forecast.daily.wind_speed_10m_max?.[1]) || 0),
+              windGust: Math.round(parseFloat(forecast.daily.wind_gusts_10m_max?.[1]) || 0),
+              tempMax: Math.round(parseFloat(forecast.daily.temperature_2m_max?.[1]) || 15),
+              tempMin: Math.round(parseFloat(forecast.daily.temperature_2m_min?.[1]) || 10),
+              uvMax: parseFloat(forecast.daily.uv_index_max?.[1]) || 2
+            }
+          };
+        }
+      });
     });
+
+    await Promise.all(chunkPromises);
 
     _routesWeatherCache = {
       timestamp: now,

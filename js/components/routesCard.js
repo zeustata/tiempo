@@ -3,10 +3,10 @@
  * Desarrollado por Manuel A. L. Barril (Lendo) y Princesa.
  * Arquitectura de Senda Protagonista Activa, Selector Ergonómico Bottom Sheet (Adiós Scroll Infinito),
  * Rastreador Inteligente de Escampada (Dónde no llueve en Asturias),
- * Catálogo Oficial Ampliado a 58 Sendas Homologadas (Ley 11, Ley 14 y Ley 16).
+ * Catálogo Oficial Ampliado a 80 Sendas Homologadas (Ley 11, Ley 14 y Ley 16).
  */
 
-import { calculateHikingIndex, getRoutesForConcejo, RUTAS_ASTURIAS_CATALOGO, getRouteExplanation, getRouteWeatherBadge } from '../utils/routesData.js?v=3.0.36';
+import { calculateHikingIndex, getRoutesForConcejo, RUTAS_ASTURIAS_CATALOGO, getRouteExplanation, getRouteWeatherBadge } from '../utils/routesData.js?v=3.0.38.21';
 
 /**
  * Genera el Perfil Climático Horario de la Ruta (08:00h a 20:00h)
@@ -240,7 +240,7 @@ function renderRouteDaylightGraph(hourly, activeDay = 'today', activeRw = null, 
   `;
 }
 
-function getRouteFilterModes(concejoTitle) {
+function getRouteFilterModes(concejoTitle, totalCount) {
   return [
     {
       id: 'all',
@@ -256,7 +256,7 @@ function getRouteFilterModes(concejoTitle) {
       label: 'Mejor Clima',
       badge: 'Toda Asturias',
       shortDesc: 'Rutas con menor lluvia y viento seguro en toda Asturias.',
-      fullDesc: 'Rastrea las 58 sendas de Asturias en tiempo real y sitúa arriba las que tienen cielo más favorable, menos agua y cero vendavales.'
+      fullDesc: `Rastrea las ${totalCount} sendas de Asturias en tiempo real y sitúa arriba las que tienen cielo más favorable, menos agua y cero vendavales.`
     },
     {
       id: 'facil',
@@ -308,7 +308,8 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
 
   // Título limpio sin paréntesis
   const concejoTitle = concejo.name.replace(/\s*\(.*?\)/, '').trim();
-  const filterModes = getRouteFilterModes(concejoTitle);
+  const totalRoutesCount = allRoutes.length;
+  const filterModes = getRouteFilterModes(concejoTitle, totalRoutesCount);
   const activeFilterMeta = filterModes.find(m => m.id === activeFilter) || filterModes[0];
 
   // Filtrado y ordenación inteligente por categoría y clima (Opción A)
@@ -388,7 +389,7 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
 
   // 1. Diagnóstico Adaptativo de la Tarjeta Superior (Leyes 0, 11 y 16)
   let diagTitle = `En ${concejoTitle}`;
-  let diagSubtitle = `58 Sendas oficiales • Salidas desde <strong>${concejoTitle}</strong>`;
+  let diagSubtitle = `${totalRoutesCount} Sendas oficiales • Salidas desde <strong>${concejoTitle}</strong>`;
   let diagStateBadge = `${hike.icon} ${hike.label}`;
   let diagStateStyle = `background: ${hike.status === 'danger' ? '#ef444422' : hike.status === 'warning' || hike.status === 'mist' ? '#f59e0b22' : '#10b98122'}; color: ${hike.status === 'danger' ? '#ef4444' : hike.status === 'warning' || hike.status === 'mist' ? '#f59e0b' : '#10b981'}; border: 1px solid ${hike.status === 'danger' ? '#ef444466' : hike.status === 'warning' || hike.status === 'mist' ? '#f59e0b66' : '#10b98166'};`;
   let diagSummary = hike.summary;
@@ -409,7 +410,7 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
   // Si la ruta activa está en otro concejo (ej. Cabo Peñas en Gozón), adaptamos la tarjeta superior al destino real
   if (isExternalRoute && activeRw) {
     diagTitle = `En ${activeRoute.concejoName} (${activeRoute.name})`;
-    diagSubtitle = `58 Sendas oficiales • Tu base: ${concejoTitle} ➔ Destino: <strong>${activeRoute.concejoName}</strong>`;
+    diagSubtitle = `${totalRoutesCount} Sendas oficiales • Tu base: ${concejoTitle} ➔ Destino: <strong>${activeRoute.concejoName}</strong>`;
 
     const isAlertWind = activeRw.windGust >= 50;
     const isModerateWind = activeRw.windGust >= 38;
@@ -488,7 +489,7 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
     } else if (topDry && topDry.weatherBadge) {
       advisorText = `Jornada con nubosidad o viento variable. La opción más equilibrada es <strong style="color: #38bdf8;">${topDry.name}</strong> (${topDry.concejoName}, ${topDry.weatherBadge.label}).`;
     } else {
-      advisorText = `Analizando el pronóstico en tiempo real (lluvia y viento) para las 58 rutas de Asturias. Mostrando las sendas optimizadas.`;
+      advisorText = `Analizando el pronóstico en tiempo real (lluvia y viento) para las ${totalRoutesCount} rutas de Asturias. Mostrando las sendas optimizadas.`;
     }
   } else if (activeFilter === 'facil') {
     advisorTitle = '🟢 Rutas Fáciles & Familiares';
@@ -964,7 +965,7 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
                 🧭 Preferencias de Rutas
               </h3>
               <span style="font-size: 0.74rem; color: var(--text-dim);">
-                Elige cómo quieres buscar y ordenar las 58 sendas
+                Elige cómo quieres buscar y ordenar las ${totalRoutesCount} sendas
               </span>
             </div>
             <button type="button" id="btn-close-filter-modal" style="background: rgba(255,255,255,0.08); border: none; color: var(--text-main); font-size: 1.1rem; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
