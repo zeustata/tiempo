@@ -240,6 +240,51 @@ function renderRouteDaylightGraph(hourly, activeDay = 'today', activeRw = null, 
   `;
 }
 
+function getRouteFilterModes(concejoTitle) {
+  return [
+    {
+      id: 'all',
+      icon: '📍',
+      label: 'Cercanas',
+      badge: `En ${concejoTitle}`,
+      shortDesc: `Prioriza las sendas más próximas a ${concejoTitle}.`,
+      fullDesc: `Busca rutas empezando por tu concejo (${concejoTitle}) y alrededores, ordenadas por cercanía física y seguridad del firme.`
+    },
+    {
+      id: 'dry',
+      icon: '🌟',
+      label: 'Mejor Clima',
+      badge: 'Toda Asturias',
+      shortDesc: 'Rutas con menor lluvia y viento seguro en toda Asturias.',
+      fullDesc: 'Rastrea las 58 sendas de Asturias en tiempo real y sitúa arriba las que tienen cielo más favorable, menos agua y cero vendavales.'
+    },
+    {
+      id: 'facil',
+      icon: '🟢',
+      label: 'Fáciles',
+      badge: 'Baja Dificultad',
+      shortDesc: 'Sendas accesibles y llanas con mejor tiempo en Asturias.',
+      fullDesc: 'Filtra recorridos suaves, familiares y de escaso desnivel en toda Asturias, priorizando los que disfrutan de mejor meteorología.'
+    },
+    {
+      id: 'montana',
+      icon: '🏔️',
+      label: 'Montaña',
+      badge: 'Alta Montaña',
+      shortDesc: 'Cumbres y desfiladeros con condiciones más seguras.',
+      fullDesc: 'Selecciona cumbres, puertos y desfiladeros asturianos evitando en lo posible avisos de temporal y fuertes rachas de viento.'
+    },
+    {
+      id: 'costera',
+      icon: '🏖️',
+      label: 'Costa & Ríos',
+      badge: 'Litoral y Ribera',
+      shortDesc: 'Acantilados y sendas fluviales con mejor tiempo.',
+      fullDesc: 'Agrupa paseos marítimos, cabos y ribera fluvial en Asturias ordenados según el mejor pronóstico de lluvia y viento.'
+    }
+  ];
+}
+
 export function renderRoutesCard(data, concejo, selectedRouteId = null, selectedDay = null, activeFilter = 'all', routesWeatherMap = null) {
   if (!concejo) return '';
 
@@ -263,6 +308,8 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
 
   // Título limpio sin paréntesis
   const concejoTitle = concejo.name.replace(/\s*\(.*?\)/, '').trim();
+  const filterModes = getRouteFilterModes(concejoTitle);
+  const activeFilterMeta = filterModes.find(m => m.id === activeFilter) || filterModes[0];
 
   // Filtrado y ordenación inteligente por categoría y clima (Opción A)
   let displayedRoutes = [...allRoutes];
@@ -577,27 +624,6 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
         color: #ffffff;
         box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
       }
-      .routes-filter-pill {
-        padding: 5px 8px;
-        border-radius: 12px;
-        font-size: 0.71rem;
-        font-weight: 700;
-        cursor: pointer;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        background: rgba(255, 255, 255, 0.05);
-        color: var(--text-dim, #94a3b8);
-        white-space: nowrap;
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        transition: all 0.2s ease;
-      }
-      .routes-filter-pill.active {
-        background: linear-gradient(135deg, rgba(56, 189, 248, 0.35) 0%, rgba(14, 165, 233, 0.5) 100%);
-        border-color: var(--primary, #38bdf8);
-        color: #ffffff;
-        box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
-      }
       .routes-item-card {
         padding: 10px 12px;
         border-radius: 10px;
@@ -652,23 +678,23 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
             </div>
           </div>
 
-          <!-- Barra de Filtros Inteligentes en 2 filas equilibradas y compactas (Ley 11) -->
-          <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px;">
-            <button type="button" class="routes-filter-pill btn-routes-filter ${activeFilter === 'all' ? 'active' : ''}" data-filter="all">
-              📍 Cercanas
+          <!-- Selector Limpio de Preferencia de Búsqueda + Explicación Activa (Opción 1 - Leyes 11 y 14) -->
+          <div style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.06);">
+            <button type="button" id="btn-open-routes-filter-picker" class="routes-route-trigger" style="padding: 8px 10px; background: rgba(15, 23, 42, 0.72); border-color: rgba(56, 189, 248, 0.40);" aria-label="Cambiar preferencia de rutas">
+              <div style="display: flex; align-items: center; gap: 6px; overflow: hidden; min-width: 0;">
+                <span style="font-size: 0.95rem; flex-shrink: 0;">${activeFilterMeta.icon}</span>
+                <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.82rem; font-weight: 800; color: #ffffff;">
+                  ${activeFilterMeta.label}
+                </span>
+              </div>
+              <div class="picker-action-badge" style="flex-shrink: 0;">
+                <span class="picker-action-text">Preferencias</span>
+                <span class="picker-action-arrow">▼</span>
+              </div>
             </button>
-            <button type="button" class="routes-filter-pill btn-routes-filter ${activeFilter === 'dry' ? 'active' : ''}" data-filter="dry">
-              🌟 Mejor Clima
-            </button>
-            <button type="button" class="routes-filter-pill btn-routes-filter ${activeFilter === 'facil' ? 'active' : ''}" data-filter="facil">
-              🟢 Fáciles
-            </button>
-            <button type="button" class="routes-filter-pill btn-routes-filter ${activeFilter === 'montana' ? 'active' : ''}" data-filter="montana">
-              🏔️ Montaña
-            </button>
-            <button type="button" class="routes-filter-pill btn-routes-filter ${activeFilter === 'costera' ? 'active' : ''}" data-filter="costera">
-              🏖️ Costa &amp; Ríos
-            </button>
+            <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 6px; padding: 0 2px; line-height: 1.35;">
+              ℹ️ ${activeFilterMeta.shortDesc}
+            </div>
           </div>
 
           <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
@@ -923,6 +949,46 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
               </div>
             ` : ''}
 
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 7. BOTTOM SHEET EXPLICATIVO DE PREFERENCIAS DE BÚSQUEDA -->
+      <div id="hiking-filter-modal" class="routes-modal-backdrop" aria-hidden="true">
+        <div class="routes-modal-sheet">
+          
+          <div style="padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+            <div>
+              <h3 style="margin: 0; font-size: 1.02rem; font-weight: 800; color: var(--text-main);">
+                🧭 Preferencias de Rutas
+              </h3>
+              <span style="font-size: 0.74rem; color: var(--text-dim);">
+                Elige cómo quieres buscar y ordenar las 58 sendas
+              </span>
+            </div>
+            <button type="button" id="btn-close-filter-modal" style="background: rgba(255,255,255,0.08); border: none; color: var(--text-main); font-size: 1.1rem; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              ✕
+            </button>
+          </div>
+
+          <div style="padding: 12px 14px; overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch;">
+            ${filterModes.map(mode => `
+              <div class="routes-item-card routes-filter-option ${mode.id === activeFilter ? 'selected' : ''}" data-filter="${mode.id}" style="padding: 11px 12px; margin-bottom: 8px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 4px;">
+                  <strong style="font-size: 0.9rem; color: var(--text-main); display: flex; align-items: center; gap: 6px;">
+                    <span>${mode.icon}</span>
+                    <span>${mode.label}</span>
+                  </strong>
+                  <span style="font-size: 0.68rem; font-weight: 800; padding: 2px 8px; border-radius: 10px; ${mode.id === activeFilter ? 'background: #38bdf8; color: #0f172a;' : 'background: rgba(255,255,255,0.08); color: var(--text-dim);'} white-space: nowrap;">
+                    ${mode.id === activeFilter ? '✓ Activa' : mode.badge}
+                  </span>
+                </div>
+                <p style="margin: 0; font-size: 0.76rem; color: var(--text-dim); line-height: 1.4;">
+                  ${mode.fullDesc}
+                </p>
+              </div>
+            `).join('')}
           </div>
 
         </div>

@@ -4,7 +4,7 @@ import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedW
 import { renderCurrentWeather } from './components/currentCard.js?v=3.0.25.22';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.25.10';
 import { renderSurfCard } from './components/surfCard.js?v=3.0.25.2';
-import { renderRoutesCard } from './components/routesCard.js?v=3.0.38.19';
+import { renderRoutesCard } from './components/routesCard.js?v=3.0.38.20';
 import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.38';
 import { renderMountainCard } from './components/mountainCard.js?v=3.0.29';
 import { renderTourismCard } from './components/tourismCard.js?v=3.0.25.5';
@@ -51,7 +51,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.38.19';
+export const CURRENT_APP_VERSION = '3.0.38.20';
 // Control inteligente de Auto-Prompt del Changelog (Doctrina de No-Fatiga al Usuario - Feedback Lendo):
 // Solo se incrementa ante cambios visuales grandes, módulos nuevos o novedades perceptibles.
 // En ajustes finos, calibraciones matemáticas y parches internos se mantiene para no fatigar al usuario con modales.
@@ -3337,7 +3337,7 @@ class MeteoAsturiasApp {
 
   initRoutesCardEvents() {
     // Eliminar posibles modales huérfanos previos en document.body
-    document.querySelectorAll('body > #hiking-routes-modal').forEach(m => m.remove());
+    document.querySelectorAll('body > #hiking-routes-modal, body > #hiking-filter-modal').forEach(m => m.remove());
 
     // 1. Abrir modal ergonómico de selección de sendas (Bottom Sheet)
     const btnOpen = document.getElementById('btn-open-routes-picker');
@@ -3383,16 +3383,48 @@ class MeteoAsturiasApp {
       });
     });
 
-    // 1c. Barra de Filtros Inteligentes (Detector de Escampada / Dónde no llueve / Categorías Regionales)
-    document.querySelectorAll('.btn-routes-filter').forEach(btn => {
-      btn.addEventListener('click', async (e) => {
+    // 1c. Selector Ergonómico de Preferencias de Rutas (Bottom Sheet Explicativo - Opción 1)
+    const btnOpenFilter = document.getElementById('btn-open-routes-filter-picker');
+    const filterModal = document.getElementById('hiking-filter-modal');
+    const btnCloseFilter = document.getElementById('btn-close-filter-modal');
+
+    if (filterModal && filterModal.parentElement !== document.body) {
+      document.body.appendChild(filterModal);
+    }
+
+    if (btnOpenFilter && filterModal) {
+      btnOpenFilter.addEventListener('click', () => {
+        this.triggerHaptic();
+        this.openModal(filterModal);
+      });
+    }
+
+    if (btnCloseFilter && filterModal) {
+      btnCloseFilter.addEventListener('click', () => {
+        this.triggerHaptic();
+        this.closeModal(filterModal);
+      });
+    }
+
+    if (filterModal) {
+      filterModal.addEventListener('click', (e) => {
+        if (e.target === filterModal) {
+          this.closeModal(filterModal);
+        }
+      });
+    }
+
+    document.querySelectorAll('.routes-filter-option').forEach(opt => {
+      opt.addEventListener('click', async (e) => {
         const filter = e.currentTarget.dataset.filter;
         if (filter) {
           this.triggerHaptic();
+          if (filterModal) {
+            this.closeModal(filterModal);
+          }
           this.selectedRoutesFilter = filter;
-          // Al cambiar de categoría o filtro, deseleccionamos la senda manual para que cargue la óptima de la nueva categoría
+          // Al cambiar de preferencia, deseleccionamos la senda manual para que cargue la óptima de esa categoría
           this.selectedHikingRouteId = null;
-          // Si el filtro es dry, facil, montana o costera y no tenemos el clima en lote, lo precargamos
           if (filter !== 'all' && !this.routesWeatherCache) {
             await this.loadRoutesEscampadaWeather();
           } else {
@@ -3403,7 +3435,7 @@ class MeteoAsturiasApp {
     });
 
     // 2. Selección de senda en el modal
-    document.querySelectorAll('.routes-item-card').forEach(item => {
+    document.querySelectorAll('.routes-item-card[data-route-id]').forEach(item => {
       item.addEventListener('click', (e) => {
         const routeId = e.currentTarget.dataset.routeId;
         if (routeId) {

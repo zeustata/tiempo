@@ -9,6 +9,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.20] - 2026-11-11
+### Improved
+- **🧭 Selector Único Limpio + Menú Explicativo de Preferencias de Rutas (`routesCard.js` + `app.js` - Leyes 0, 11 y 14):**
+  - **Orden Simétrico en Móvil:** Sustituidas las 5 pastillas sueltas (que quedaban partidas en filas irregulares) por un único botón selector táctil (`[ 📍 Cercanas   Preferencias ▼ ]`) en perfecta armonía visual con el selector inferior de sendas.
+  - **Explicación Clara In Situ y en Lista Desplegable:** Bajo la barra se muestra siempre qué hace el modo activo, y al tocarla se despliega un Bottom Sheet vertical ordenado explicando en detalle las 5 preferencias (*Cercanas, Mejor Clima, Fáciles, Montaña, Costa & Ríos*).
+
 ## [3.0.38.19] - 2026-11-11
 ### Improved
 - **📐 Compactación Exacta en 2 Filas para Filtros de Rutas en Móvil (`routesCard.js` - Leyes 0 y 11):**
@@ -4740,17 +4746,7 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Nueva Capa Base Esri World Topo Map**: Sustitución definitiva de CartoDB (que introdujo marca de agua de API Key) por Esri World Topo Map en alta definición, 100% libre, sin marcas de agua ni restricciones de acceso.
 - **Relieve Fino de Asturias y Cantábrico**: Representación nítida de los Picos de Europa, cordales montañosos, ríos y litoral sobre la animación de radar de lluvia de RainViewer.
 - **Selector de Capas Mejorado**: Mantiene acceso rápido a *Topográfico HD*, *Satélite Real HD* y *OpenStreetMap Oficial*.
-- **Service Worker `v147-official` & Cache-Busting**: Actualización global de dependencias a `?v=1.0.47`.
-
----
-
-## [1.0.46] - 2026-08-30
-
-### 🌊 Geolocalización de Mareas por Concejo (Oriente vs Occidente de Asturias)
-- **Ajuste Longitudinal Geodésico ($4\text{ min/grado}$)**: Integración de la coordenada de longitud de cada concejo en el cálculo armónico de mareas (`tides.js` y `marineCard.js`), adaptando las horas de pleamar y bajamar a la costa exacta donde se encuentre el usuario:
-  - *Llanes / Ribadedeva / Oriente*: La marea se adelanta de 4 a 6 minutos respecto a Gijón.
-  - *Gijón / Cabo Peñas / Centro*: Referencia base calibrada con AEMET / San Lorenzo.
-  - *Luarca / Tapia de Casariego / Castropol*: La marea se retrasa de 
+- **Service Worker `v147-official` & Cache-
 - **Alineación Perfecta al 50%**: Configuración de `grid-template-columns: 1fr 1fr` tanto para la fila de navegación (Modelo y Menú) como para la fila de acciones (Guardar y Mi Ubicación), garantizando un diseño estructurado, equilibrado y de fácil pulsación con el pulgar.
 - **Service Worker `v132-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
 

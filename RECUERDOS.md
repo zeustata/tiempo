@@ -2,6 +2,19 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🧭 Selector Único Limpio + Menú Explicativo de Preferencias de Rutas (`v3.0.38.20`) — 2026-11-11
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.19` (`e83cc71`).
+- **Diagnóstico sobre Captura Móvil (`captura_20261111_173446.jpg`) e Instrucción de Lendo («no se princesa. lo veo desordenado las tarjetas en el movil. y si ponemos un escroll de cada uno y explicando un poco las preferencias? [...] dale a la uno. q lista eres pisale en local»):**
+  1. *Evaluación Crítica de Diseño (Ley 0):*
+     - Las 5 pastillas desiguales generaban un apilamiento asimétrico (`2 + 2 + 1`) con una opción huérfana abajo y sin explicación de cada modo.
+  2. *Solución Ergonómica Unificada (Opción 1 - Leyes 11 y 14):*
+     - **Trigger Único Simétrico (`#btn-open-routes-filter-picker`):** Reutiliza la clase `.routes-route-trigger` y `.picker-action-badge` (`Preferencias ▼`), acompañada de un resumen de 1 línea explicando el modo activo (`ℹ️ shortDesc`).
+     - **Lámina Desplegable Vertical Explicativa (`#hiking-filter-modal`):** Al tocarla abre un Bottom Sheet con scroll vertical ordenado mostrando las 5 preferencias (`Cercanas`, `Mejor Clima`, `Fáciles`, `Montaña`, `Costa & Ríos`) con icono, ámbito y explicación completa.
+     - **Cableado y Limpieza DOM (`app.js`):** Mueve el modal a `document.body`, limpia huérfanos en re-render y acota `.routes-item-card[data-route-id]` para no interferir entre modales.
+  3. *Ciclo Constitucional Local (Leyes 3, 4 y 9):*
+     - Actualizada versión a `v3.0.38.20` y caché `meteoasturlode-v303820-routes-picker-v1`.
+     - Servidor local activo en `http://localhost:8080`.
+
 ## 📐 Compactación Exacta en 2 Filas para Filtros de Rutas (`v3.0.38.19`) — 2026-11-11
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.18` (`83a6933`).
 - **Diagnóstico sobre Captura Móvil (`captura_20261111_172020.jpg`) e Instrucción de Lendo («pisale»):**
