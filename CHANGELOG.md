@@ -9,6 +9,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.10] - 2026-11-11
+### Added
+- **🔽 Formato Plegable / Desplegable (Acordeón) en Ventana Diurna de Ruta (`routesCard.js` + `app.js` - Leyes 0 y 11):**
+  - **Estado Inicial Ultra-Compacto:** La tarjeta de la ruta ya no ocupa espacio vertical excesivo en el móvil. Muestra una barrita horizontal limpia en una sola línea con el resumen clave (`08:00h - 20:00h: 🌧️ 0.0 mm 💨 18 km/h`).
+  - **Conmutador Táctil Ergonómico:** Botón `[ Ver Gráfica ▾ ]` que despliega suavemente la curva térmica, barras de pluviómetro y viento hora a hora, pasando a `[ Ocultar ▴ ]` para volver a plegarla a voluntad del usuario.
+
 ## [3.0.38.9] - 2026-11-11
 ### Fixed
 - **🛡️ Blindaje Táctil Anti-Salto de Menú en Ventana de Ruta (`app.js` + `routesCard.js` - Leyes 0, 11 y 18):**

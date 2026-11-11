@@ -4,7 +4,7 @@ import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedW
 import { renderCurrentWeather } from './components/currentCard.js?v=3.0.25.22';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.25.10';
 import { renderSurfCard } from './components/surfCard.js?v=3.0.25.2';
-import { renderRoutesCard } from './components/routesCard.js?v=3.0.38.9';
+import { renderRoutesCard } from './components/routesCard.js?v=3.0.38.10';
 import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.38';
 import { renderMountainCard } from './components/mountainCard.js?v=3.0.29';
 import { renderTourismCard } from './components/tourismCard.js?v=3.0.25.5';
@@ -51,7 +51,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.38.9';
+export const CURRENT_APP_VERSION = '3.0.38.10';
 // Control inteligente de Auto-Prompt del Changelog (Doctrina de No-Fatiga al Usuario - Feedback Lendo):
 // Solo se incrementa ante cambios visuales grandes, módulos nuevos o novedades perceptibles.
 // En ajustes finos, calibraciones matemáticas y parches internos se mantiene para no fatigar al usuario con modales.
@@ -3413,6 +3413,22 @@ class MeteoAsturiasApp {
         }
       });
     });
+
+    // 3. Conmutador Plegable / Desplegable de la Gráfica Diurna (Feedback Lendo - Ley 11)
+    const btnToggleDaylight = document.getElementById('btn-toggle-daylight-graph');
+    const daylightBody = document.getElementById('route-daylight-graph-body');
+    if (btnToggleDaylight && daylightBody) {
+      btnToggleDaylight.addEventListener('click', () => {
+        this.triggerHaptic();
+        const isHidden = daylightBody.style.display === 'none';
+        daylightBody.style.display = isHidden ? 'block' : 'none';
+        btnToggleDaylight.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+        const textSpan = btnToggleDaylight.querySelector('.daylight-toggle-text');
+        const arrowSpan = btnToggleDaylight.querySelector('.daylight-toggle-arrow');
+        if (textSpan) textSpan.textContent = isHidden ? 'Ocultar' : 'Ver Gráfica';
+        if (arrowSpan) arrowSpan.textContent = isHidden ? '▴' : '▾';
+      });
+    }
   }
 
   initTourismCardEvents() {

@@ -141,56 +141,82 @@ function renderRouteDaylightGraph(hourly, activeDay = 'today') {
   const maxGust = Math.max(...daylightHours.map(d => d.windGust));
 
   return `
-    <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid rgba(56, 189, 248, 0.28); border-radius: 12px; padding: 10px 12px; margin-bottom: 12px; box-sizing: border-box;">
-      <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 6px; flex-wrap: wrap;">
-        <div style="display: flex; align-items: center; gap: 6px;">
-          <span style="font-size: 0.95rem;">⏱️</span>
-          <strong style="font-size: 0.82rem; color: var(--text-main);">Ventana Diurna de Ruta (08:00h - 20:00h)</strong>
+    <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid rgba(56, 189, 248, 0.28); border-radius: 12px; margin-bottom: 12px; box-sizing: border-box; overflow: hidden;">
+      
+      <!-- Cabecera Plegable / Acordeón Táctil (Feedback Lendo - Ley 11) -->
+      <button type="button" id="btn-toggle-daylight-graph" class="btn-toggle-daylight-graph" style="
+        width: 100%;
+        background: transparent;
+        border: none;
+        padding: 9px 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 6px;
+        cursor: pointer;
+        text-align: left;
+        box-sizing: border-box;
+      " aria-expanded="false" title="Desplegar u ocultar gráfica horaria de 08:00 a 20:00">
+        <div style="display: flex; align-items: center; gap: 6px; min-width: 0; flex: 1;">
+          <span style="font-size: 0.95rem; line-height: 1;">⏱️</span>
+          <strong style="font-size: 0.80rem; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+            08:00h - 20:00h:
+          </strong>
+          <span style="font-size: 0.72rem; color: ${totalDaylightRain > 0 ? '#38bdf8' : '#94a3b8'}; font-weight: 700; white-space: nowrap;">
+            🌧️ ${totalDaylightRain} mm
+          </span>
+          <span style="font-size: 0.70rem; color: ${maxGust >= 35 ? '#f59e0b' : '#94a3b8'}; font-weight: 600; white-space: nowrap;">
+            💨 ${maxGust} km/h
+          </span>
         </div>
-        <div style="display: flex; align-items: center; gap: 8px; font-size: 0.70rem;">
-          <span style="color: ${totalDaylightRain > 0 ? '#38bdf8' : '#94a3b8'};">🌧️ Lluvia: <strong>${totalDaylightRain} mm</strong></span>
-          <span style="color: ${maxGust >= 35 ? '#f59e0b' : '#94a3b8'};">💨 Racha máx: <strong>${maxGust} km/h</strong></span>
+
+        <div style="display: flex; align-items: center; gap: 4px; flex-shrink: 0;">
+          <span class="daylight-toggle-text" style="font-size: 0.70rem; font-weight: 700; color: var(--primary);">Ver Gráfica</span>
+          <span class="daylight-toggle-arrow" style="font-size: 0.75rem; color: var(--primary); transition: transform 0.2s ease;">▾</span>
         </div>
-      </div>
+      </button>
 
-      <!-- Leyenda rápida -->
-      <div style="display: flex; gap: 10px; font-size: 0.65rem; color: var(--text-dim); margin-bottom: 4px; justify-content: flex-end;">
-        <span style="display: inline-flex; align-items: center; gap: 3px;"><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#38bdf8;"></span> Temp (°C)</span>
-        <span style="display: inline-flex; align-items: center; gap: 3px;"><span style="display:inline-block; width:8px; height:8px; border-radius:2px; background:#60a5fa;"></span> Lluvia (mm)</span>
-        <span style="display: inline-flex; align-items: center; gap: 3px;">💨 Viento (km/h)</span>
-      </div>
+      <!-- Cuerpo Desplegable (Plegado por defecto para ergonomía móvil - Ley 11) -->
+      <div id="route-daylight-graph-body" style="display: none; padding: 0 12px 10px 12px; border-top: 1px solid rgba(255,255,255,0.06);">
+        <!-- Leyenda rápida -->
+        <div style="display: flex; gap: 10px; font-size: 0.65rem; color: var(--text-dim); margin: 6px 0 4px 0; justify-content: flex-end;">
+          <span style="display: inline-flex; align-items: center; gap: 3px;"><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#38bdf8;"></span> Temp (°C)</span>
+          <span style="display: inline-flex; align-items: center; gap: 3px;"><span style="display:inline-block; width:8px; height:8px; border-radius:2px; background:#60a5fa;"></span> Lluvia (mm)</span>
+          <span style="display: inline-flex; align-items: center; gap: 3px;">💨 Viento (km/h)</span>
+        </div>
 
-      <!-- SVG HD de la Gráfica Diurna con Aislamiento Táctil Anti-Desborde (Ley 18) -->
-      <div class="route-daylight-graph-wrap" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; touch-action: pan-x pan-y;">
-        <svg viewBox="0 0 ${width} ${height}" style="width: 100%; min-width: 480px; height: auto; display: block;" preserveAspectRatio="xMidYMid meet">
-          <defs>
-            <linearGradient id="routeTempGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#38bdf8" />
-              <stop offset="50%" stop-color="#facc15" />
-              <stop offset="100%" stop-color="#fb923c" />
-            </linearGradient>
-            <linearGradient id="routeAreaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.25" />
-              <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.0" />
-            </linearGradient>
-          </defs>
+        <!-- SVG HD de la Gráfica Diurna con Aislamiento Táctil Anti-Desborde (Ley 18) -->
+        <div class="route-daylight-graph-wrap" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; touch-action: pan-x pan-y;">
+          <svg viewBox="0 0 ${width} ${height}" style="width: 100%; min-width: 480px; height: auto; display: block;" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <linearGradient id="routeTempGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#38bdf8" />
+                <stop offset="50%" stop-color="#facc15" />
+                <stop offset="100%" stop-color="#fb923c" />
+              </linearGradient>
+              <linearGradient id="routeAreaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.25" />
+                <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.0" />
+              </linearGradient>
+            </defs>
 
-          <!-- Línea divisoria sutil entre térmica y lluvia -->
-          <line x1="${padLeft}" y1="${barBottom}" x2="${width - padRight}" y2="${barBottom}" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="3,3" />
+            <!-- Línea divisoria sutil entre térmica y lluvia -->
+            <line x1="${padLeft}" y1="${barBottom}" x2="${width - padRight}" y2="${barBottom}" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="3,3" />
 
-          <!-- Área y Curva Térmica -->
-          <path d="${dArea}" fill="url(#routeAreaGrad)" />
-          <path d="${dCurve}" fill="none" stroke="url(#routeTempGrad)" stroke-width="2.5" vector-effect="non-scaling-stroke" stroke-linecap="round" />
+            <!-- Área y Curva Térmica -->
+            <path d="${dArea}" fill="url(#routeAreaGrad)" />
+            <path d="${dCurve}" fill="none" stroke="url(#routeTempGrad)" stroke-width="2.5" vector-effect="non-scaling-stroke" stroke-linecap="round" />
 
-          <!-- Barras de Lluvia y Textos -->
-          ${barsAndLabels}
+            <!-- Barras de Lluvia y Textos -->
+            ${barsAndLabels}
 
-          <!-- Puntos y Etiquetas de Temperatura -->
-          ${tempLabels}
+            <!-- Puntos y Etiquetas de Temperatura -->
+            ${tempLabels}
 
-          <!-- Marcador Vivo de Hora Actual -->
-          ${liveMarker}
-        </svg>
+            <!-- Marcador Vivo de Hora Actual -->
+            ${liveMarker}
+          </svg>
+        </div>
       </div>
     </div>
   `;

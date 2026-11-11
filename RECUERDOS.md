@@ -2,6 +2,19 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🔽 Formato Plegable / Desplegable (Acordeón) en Ventana Diurna de Ruta (`v3.0.38.10`) — 2026-11-11
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.9` (`74703c7`).
+- **Petición e Instrucción Expresa de Lendo («hay que contraer esa tarjeta de las rutas. esta guapa pero es muy larga y dejar que se pueda volver a descontraer (no me sale la palabra) ;) [...] pisale en local como siempre princesa»):**
+  1. *Diagnóstico de Ergonomía Móvil (Ley 11):*
+     - Aunque la gráfica HD de la ventana diurna (08:00h - 20:00h) es muy didáctica, en pantallas de teléfono mantenía la ficha de la ruta excesivamente larga.
+  2. *Implementación de Acordeón Plegable:*
+     - La tarjeta se presenta inicialmente en formato ultra-compacto de una sola línea (`08:00h - 20:00h: 🌧️ 0.0 mm 💨 18 km/h`) con el botón táctil `[ Ver Gráfica ▾ ]`.
+     - Al pulsar, el cuerpo de la gráfica se despliega suavemente y el botón conmuta a `[ Ocultar ▴ ]`.
+     - Preserva la memoria de estado y el blindaje táctil anti-swipe.
+  3. *Ciclo Constitucional Estrictamente Local y Notificación Telegram (Leyes 1, 3, 9 y 23):*
+     - Verificado en local mediante `node --check` y pruebas sobre `localhost:8080`.
+     - Aprobado por Lendo tras comprobación en mano y desplegado a producción.
+
 ## 🛡️ Blindaje Táctil Anti-Salto de Menú en Ventana de Ruta (`v3.0.38.9`) — 2026-11-11
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.8` (`ec366a6`).
 - **Petición e Instrucción Expresa de Lendo («hay un problema. esta bien pero al ser un movil tengo que deslizar y al deslizar y llegar a tope me desliza al siguiente menu [...] pero te das cuenta que estoy en la tarjeta que acabas de crear no? Ventana de ruta de 8 a 20. cuando llego al tope de deslizamiento horario me pasa a la siguiente menu [...] pisale pero de momento solo en local como siempre que nos conocemos ;)»):**

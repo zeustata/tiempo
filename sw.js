@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v30389-route-touch-shield-v1';
+const CACHE_NAME = 'meteoasturlode-v303810-accordion-graph-v1';
 const STATIC_ASSETS = [
   './',
   './index.html',
