@@ -12,7 +12,7 @@ import { calculateHikingIndex, getRoutesForConcejo, RUTAS_ASTURIAS_CATALOGO, get
  * Genera el Perfil Climático Horario de la Ruta (08:00h a 20:00h)
  * Integra Pluviómetro (lluvia/probabilidad), Curva Térmica y Viento/Rachas
  */
-function renderRouteDaylightGraph(hourly, activeDay = 'today') {
+function renderRouteDaylightGraph(hourly, activeDay = 'today', activeRw = null, isExternal = false) {
   if (!hourly || !Array.isArray(hourly.time) || !Array.isArray(hourly.temperature_2m)) {
     return '';
   }
@@ -145,6 +145,13 @@ function renderRouteDaylightGraph(hourly, activeDay = 'today') {
   const totalDaylightRain = precips.reduce((a, b) => a + b, 0).toFixed(1);
   const maxGust = Math.max(...daylightHours.map(d => d.windGust));
 
+  const displayRain = (isExternal && activeRw && activeRw.rainMm !== undefined) 
+    ? activeRw.rainMm.toFixed(1) 
+    : totalDaylightRain;
+  const displayGust = (isExternal && activeRw && activeRw.windGust !== undefined) 
+    ? activeRw.windGust 
+    : maxGust;
+
   return `
     <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid rgba(56, 189, 248, 0.28); border-radius: 12px; margin-bottom: 12px; box-sizing: border-box; overflow: hidden;">
       
@@ -163,11 +170,11 @@ function renderRouteDaylightGraph(hourly, activeDay = 'today') {
         box-sizing: border-box;
       " aria-expanded="false" title="Desplegar u ocultar gráfica horaria">
         <div style="display: flex; align-items: center; gap: 8px; min-width: 0;">
-          <span style="font-size: 0.82rem; color: ${totalDaylightRain > 0 ? '#38bdf8' : '#94a3b8'}; font-weight: 800; white-space: nowrap;">
-            🌧️ ${totalDaylightRain} mm
+          <span style="font-size: 0.82rem; color: ${displayRain > 0 ? '#38bdf8' : '#94a3b8'}; font-weight: 800; white-space: nowrap;">
+            🌧️ ${displayRain} mm
           </span>
-          <span style="font-size: 0.78rem; color: ${maxGust >= 35 ? '#f59e0b' : '#94a3b8'}; font-weight: 700; white-space: nowrap;">
-            💨 ${maxGust} km/h
+          <span style="font-size: 0.78rem; color: ${displayGust >= 35 ? '#f59e0b' : '#94a3b8'}; font-weight: 700; white-space: nowrap;">
+            💨 ${displayGust} km/h
           </span>
         </div>
 
@@ -292,11 +299,99 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
     if (found) activeRoute = found;
   }
 
+  // Previsión meteorológica de la ruta activa si está disponible
+  const activeRw = (routesWeatherMap && routesWeatherMap[activeRoute.id])
+    ? (routesWeatherMap[activeRoute.id][activeDay] || routesWeatherMap[activeRoute.id]['tomorrow'])
+    : null;
+
+  // ¿Es una ruta situada fuera del concejo base del usuario?
+  const isExternalRoute = Boolean(activeRoute && activeRoute.concejoName && (activeRoute.concejoName.toLowerCase() !== concejoTitle.toLowerCase()));
+
+  // 1. Diagnóstico Adaptativo de la Tarjeta Superior (Leyes 0, 11 y 16)
+  let diagTitle = `En ${concejoTitle}`;
+  let diagSubtitle = `58 Sendas oficiales • Salidas desde <strong>${concejoTitle}</strong>`;
+  let diagStateBadge = `${hike.icon} ${hike.label}`;
+  let diagStateStyle = `background: ${hike.status === 'danger' ? '#ef444422' : hike.status === 'warning' || hike.status === 'mist' ? '#f59e0b22' : '#10b98122'}; color: ${hike.status === 'danger' ? '#ef4444' : hike.status === 'warning' || hike.status === 'mist' ? '#f59e0b' : '#10b981'}; border: 1px solid ${hike.status === 'danger' ? '#ef444466' : hike.status === 'warning' || hike.status === 'mist' ? '#f59e0b66' : '#10b98166'};`;
+  let diagSummary = hike.summary;
+
+  let diagMudLabel = hike.mudIndex.score <= 1 ? 'Firme Seco' : (hike.mudIndex.score === 2 ? 'Barro Leve' : (hike.mudIndex.score === 3 ? 'Barro Moderado' : 'Barrizal'));
+  let diagMudColor = hike.mudIndex.color;
+  let diagMudScore = `Nivel ${hike.mudIndex.score}/4`;
+
+  let diagTemp = `${hike.windChillHigh}°C`;
+  let diagGust = `Rachas: ${hike.windGust} km/h`;
+
+  let diagShoes = hike.status === 'optimal' ? 'Trekking ligero' : 'Bota de taco';
+  let diagShoesDesc = 'Suela antideslizante';
+
+  let diagClothes = hike.tempNow < 12 ? 'Cortavientos' : 'Camiseta téc.';
+  let diagUV = `Índice UV: ${hike.uv}`;
+
+  // Si la ruta activa está en otro concejo (ej. Cabo Peñas en Gozón), adaptamos la tarjeta superior al destino real
+  if (isExternalRoute && activeRw) {
+    diagTitle = `En ${activeRoute.concejoName} (${activeRoute.name})`;
+    diagSubtitle = `58 Sendas oficiales • Tu base: ${concejoTitle} ➔ Destino: <strong>${activeRoute.concejoName}</strong>`;
+
+    const isAlertWind = activeRw.windGust >= 50;
+    const isModerateWind = activeRw.windGust >= 38;
+
+    if (isAlertWind || activeRw.rainMm >= 6.0) {
+      diagStateBadge = `🔴 Precaución Severa`;
+      diagStateStyle = `background: #ef444422; color: #ef4444; border: 1px solid #ef444466;`;
+    } else if (isModerateWind || activeRw.rainMm >= 1.0) {
+      diagStateBadge = `🟡 Precaución en Terreno`;
+      diagStateStyle = `background: #f59e0b22; color: #f59e0b; border: 1px solid #f59e0b66;`;
+    } else {
+      diagStateBadge = `🟢 Condiciones Favorables`;
+      diagStateStyle = `background: #10b98122; color: #10b981; border: 1px solid #10b98166;`;
+    }
+
+    if (isAlertWind) {
+      diagSummary = `Alerta por rachas de viento fuerte (${activeRw.windGust} km/h). Extremar prudencia en cumbres o acantilados.`;
+    } else if (activeRw.rainMm === 0 && activeRw.windGust < 35) {
+      diagSummary = `Condiciones muy favorables. Sendas secas, sin lluvia y viento seguro (${activeRw.windGust} km/h).`;
+    } else if (activeRw.rainMm > 0) {
+      diagSummary = `Previsión de ${activeRw.rainMm.toFixed(1)} mm (${activeRw.pop}% prob.) y viento de ${activeRw.windGust} km/h. Precaución con el firme húmedo.`;
+    } else {
+      diagSummary = `Tiempo estable con viento moderado (${activeRw.windGust} km/h) y temperatura máxima de ${activeRw.tempMax}°C.`;
+    }
+
+    if (activeRw.rainMm === 0 && activeRw.pop <= 30) {
+      diagMudLabel = 'Firme Seco';
+      diagMudColor = '#10b981';
+      diagMudScore = 'Nivel 1/4';
+    } else if (activeRw.rainMm < 2.0) {
+      diagMudLabel = 'Barro Leve';
+      diagMudColor = '#38bdf8';
+      diagMudScore = 'Nivel 2/4';
+    } else if (activeRw.rainMm < 6.0) {
+      diagMudLabel = 'Barro Moderado';
+      diagMudColor = '#f59e0b';
+      diagMudScore = 'Nivel 3/4';
+    } else {
+      diagMudLabel = 'Barrizal';
+      diagMudColor = '#ef4444';
+      diagMudScore = 'Nivel 4/4';
+    }
+
+    diagTemp = `${activeRw.tempMax}°C`;
+    diagGust = `Rachas: ${activeRw.windGust} km/h`;
+
+    if (activeRoute.diffRank >= 2 || activeRw.rainMm >= 2.0) {
+      diagShoes = 'Bota de taco';
+    } else {
+      diagShoes = 'Trekking ligero';
+    }
+
+    diagClothes = activeRw.tempMax < 13 || activeRw.windGust >= 35 ? 'Cortavientos' : 'Camiseta téc.';
+    diagUV = `Índice UV: ${activeRw.uvMax || 2}`;
+  }
+
   const activeDistLabel = activeRoute.distFromUserKm < 0.5 
     ? 'En este concejo' 
     : `A ${activeRoute.distFromUserKm} km de ${concejoTitle}`;
 
-  // Consejero adaptado al filtro de Escampada
+  // Consejero adaptado al filtro de Mejores Condiciones (Lluvia + Viento)
   let advisorTitle = 'Consejero de Senderismo';
   let advisorBadge = 'Recomendada 🌟';
   let advisorText = `Senda óptima para ${dayLabelLower} en ${concejoTitle}: <strong style="color: var(--primary);">${recommendedRoute.name}</strong> (${recommendedRoute.diff}, ${recommendedRoute.dist}). Ideal por estado de firme y cercanía.`;
@@ -304,14 +399,17 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
   if (activeFilter === 'dry') {
     const topDry = displayedRoutes[0];
     const secondDry = displayedRoutes[1];
-    advisorTitle = '☀️ Rastreador de Escampada';
-    advisorBadge = 'Garantía Seca 🛡️';
-    if (topDry && topDry.weatherBadge && topDry.weatherBadge.isDry) {
-      advisorText = `¡Para no mojarte ${dayLabelLower} en Asturias! La ruta con menor riesgo de lluvia es <strong style="color: #38bdf8;">${topDry.name}</strong> en <strong>${topDry.concejoName}</strong> (${topDry.weatherBadge.label}). ${secondDry && secondDry.weatherBadge ? `Alternativa seca: <strong>${secondDry.name}</strong> (${secondDry.concejoName}, ${secondDry.weatherBadge.label}).` : ''}`;
+    advisorTitle = '🌟 Asesor de Condiciones Óptimas';
+    advisorBadge = 'Clima Favorable 🛡️';
+    if (topDry && topDry.weatherBadge && topDry.weatherBadge.isFavorable) {
+      advisorText = `¡Condiciones óptimas ${dayLabelLower} en Asturias! La senda más favorable es <strong style="color: #38bdf8;">${topDry.name}</strong> en <strong>${topDry.concejoName}</strong> (${topDry.weatherBadge.label}). Sin lluvia y con viento seguro. ${secondDry && secondDry.weatherBadge ? `Alternativa favorable: <strong>${secondDry.name}</strong> (${secondDry.concejoName}, ${secondDry.weatherBadge.label}).` : ''}`;
+    } else if (topDry && topDry.weatherBadge && topDry.weatherBadge.isDangerousWind) {
+      advisorBadge = 'Alerta Viento ⚠️';
+      advisorText = `Jornada ventosa en Asturias. La senda con menor impacto es <strong style="color: #f59e0b;">${topDry.name}</strong> (${topDry.concejoName}, ${topDry.weatherBadge.label}). Evita aristas y acantilados expuestos.`;
     } else if (topDry && topDry.weatherBadge) {
-      advisorText = `Jornada con nubosidad generalizada. Las opciones con menor impacto de lluvia son <strong style="color: #38bdf8;">${topDry.name}</strong> (${topDry.concejoName}, ${topDry.weatherBadge.label}).`;
+      advisorText = `Jornada con nubosidad o viento variable. La opción más equilibrada es <strong style="color: #38bdf8;">${topDry.name}</strong> (${topDry.concejoName}, ${topDry.weatherBadge.label}).`;
     } else {
-      advisorText = `Analizando el pronóstico en tiempo real para las 58 rutas de Asturias. Mostrando las sendas optimizadas contra la lluvia.`;
+      advisorText = `Analizando el pronóstico en tiempo real (lluvia y viento) para las 58 rutas de Asturias. Mostrando las sendas optimizadas.`;
     }
   }
 
@@ -469,7 +567,7 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
 
     <div class="routes-module-wrapper">
       
-      <!-- 1. CABECERA LIMPIA Y ERGONÓMICA -->
+      <!-- 1. CABECERA LIMPIA Y ERGONÓMICA (ADAPTATIVA AL DESTINO REAL) -->
       <div class="routes-card-solid">
         <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 10px;">
           <div style="display: flex; align-items: center; gap: 8px; max-width: 100%;">
@@ -479,12 +577,12 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
                 Rutas &amp; Senderismo
               </h2>
               <span style="font-size: 0.78rem; color: var(--text-dim); display: block; margin-top: 2px;">
-                58 Sendas oficiales • Salidas desde <strong>${concejoTitle}</strong>
+                ${diagSubtitle}
               </span>
             </div>
           </div>
-          <div class="sea-state-pill" style="background: ${hike.status === 'danger' ? '#ef444422' : hike.status === 'warning' || hike.status === 'mist' ? '#f59e0b22' : '#10b98122'}; color: ${hike.status === 'danger' ? '#ef4444' : hike.status === 'warning' || hike.status === 'mist' ? '#f59e0b' : '#10b981'}; border: 1px solid ${hike.status === 'danger' ? '#ef444466' : hike.status === 'warning' || hike.status === 'mist' ? '#f59e0b66' : '#10b98166'};">
-            ${hike.icon} ${hike.label}
+          <div class="sea-state-pill" style="${diagStateStyle}">
+            ${diagStateBadge}
           </div>
         </div>
 
@@ -503,13 +601,13 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
             </div>
           </div>
 
-          <!-- Barra de Filtros Inteligentes (Detector de Escampada) -->
+          <!-- Barra de Filtros Inteligentes (Detector de Mejores Condiciones: Lluvia + Viento) -->
           <div style="display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 8px; scrollbar-width: none; -webkit-overflow-scrolling: touch;">
             <button type="button" class="routes-filter-pill btn-routes-filter ${activeFilter === 'all' ? 'active' : ''}" data-filter="all">
               📍 Cercanas
             </button>
             <button type="button" class="routes-filter-pill btn-routes-filter ${activeFilter === 'dry' ? 'active' : ''}" data-filter="dry" style="${activeFilter === 'dry' ? 'border-color: #38bdf8; background: rgba(56, 189, 248, 0.25);' : ''}">
-              ☀️ Dónde no llueve
+              🌟 Mejores Condiciones
             </button>
             <button type="button" class="routes-filter-pill btn-routes-filter ${activeFilter === 'facil' ? 'active' : ''}" data-filter="facil">
               🟢 Fáciles
@@ -523,9 +621,9 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
           </div>
 
           <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-            <span style="font-size: 1.2rem;">${hike.icon}</span>
+            <span style="font-size: 1.2rem;">${isExternalRoute ? (diagStateBadge.startsWith('🟢') ? '🟢' : (diagStateBadge.startsWith('🔴') ? '🔴' : '🟡')) : hike.icon}</span>
             <span style="font-size: 0.8rem; color: var(--text-main); font-weight: 700; line-height: 1.35;">
-              <strong>En ${concejoTitle}:</strong> ${hike.summary}
+              <strong>${diagTitle}:</strong> ${diagSummary}
             </span>
           </div>
 
@@ -533,44 +631,44 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
             <!-- Firme y Barro -->
             <div style="background: rgba(0,0,0,0.20); border: 1px solid rgba(255,255,255,0.06); padding: 7px 4px; border-radius: 8px; text-align: center;">
               <span style="display: block; font-size: 0.68rem; color: var(--text-dim);">🪵 Firme / Barro</span>
-              <strong style="font-size: 0.82rem; color: ${hike.mudIndex.color};">
-                ${hike.mudIndex.score <= 1 ? 'Firme Seco' : (hike.mudIndex.score === 2 ? 'Barro Leve' : (hike.mudIndex.score === 3 ? 'Barro Moderado' : 'Barrizal'))}
+              <strong style="font-size: 0.82rem; color: ${diagMudColor};">
+                ${diagMudLabel}
               </strong>
-              <span style="display: block; font-size: 0.65rem; color: var(--text-dim); margin-top: 1px;">Nivel ${hike.mudIndex.score}/4</span>
+              <span style="display: block; font-size: 0.65rem; color: var(--text-dim); margin-top: 1px;">${diagMudScore}</span>
             </div>
 
             <!-- Clima en Cotas Altas -->
             <div style="background: rgba(0,0,0,0.20); border: 1px solid rgba(255,255,255,0.06); padding: 7px 4px; border-radius: 8px; text-align: center;">
               <span style="display: block; font-size: 0.68rem; color: var(--text-dim);">⛰️ Sensación Cumbre</span>
-              <strong style="font-size: 0.88rem; color: var(--text-main);">${hike.windChillHigh}°C</strong>
-              <span style="display: block; font-size: 0.65rem; color: var(--text-dim); margin-top: 1px;">Rachas: ${hike.windGust} km/h</span>
+              <strong style="font-size: 0.88rem; color: var(--text-main);">${diagTemp}</strong>
+              <span style="display: block; font-size: 0.65rem; color: var(--text-dim); margin-top: 1px;">${diagGust}</span>
             </div>
 
             <!-- Calzado Sugerido -->
             <div style="background: rgba(0,0,0,0.20); border: 1px solid rgba(255,255,255,0.06); padding: 7px 4px; border-radius: 8px; text-align: center;">
               <span style="display: block; font-size: 0.68rem; color: var(--text-dim);">👟 Calzado Sugerido</span>
               <strong style="font-size: 0.82rem; color: #38bdf8;">
-                ${hike.status === 'optimal' ? 'Trekking ligero' : 'Bota de taco'}
+                ${diagShoes}
               </strong>
-              <span style="display: block; font-size: 0.65rem; color: var(--text-dim); margin-top: 1px;">Suela antideslizante</span>
+              <span style="display: block; font-size: 0.65rem; color: var(--text-dim); margin-top: 1px;">${diagShoesDesc}</span>
             </div>
 
             <!-- Protección Solar / Ropa -->
             <div style="background: rgba(0,0,0,0.20); border: 1px solid rgba(255,255,255,0.06); padding: 7px 4px; border-radius: 8px; text-align: center;">
               <span style="display: block; font-size: 0.68rem; color: var(--text-dim);">🎒 Ropa &amp; UV</span>
               <strong style="font-size: 0.82rem; color: var(--accent, #facc15);">
-                ${hike.tempNow < 12 ? 'Cortavientos' : 'Camiseta téc.'}
+                ${diagClothes}
               </strong>
-              <span style="display: block; font-size: 0.65rem; color: var(--text-dim); margin-top: 1px;">Índice UV: ${hike.uv}</span>
+              <span style="display: block; font-size: 0.65rem; color: var(--text-dim); margin-top: 1px;">${diagUV}</span>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- 2. CONSEJERO INTELIGENTE: SENDA RECOMENDADA O DETECTOR DE ESCAMPADA -->
+      <!-- 2. CONSEJERO INTELIGENTE: SENDA RECOMENDADA O DETECTOR DE CONDICIONES ÓPTIMAS -->
       <div class="routes-advisor-card">
         <div style="display: flex; align-items: flex-start; gap: 8px;">
-          <span style="font-size: 1.3rem; line-height: 1;">${activeFilter === 'dry' ? '☀️' : '💡'}</span>
+          <span style="font-size: 1.3rem; line-height: 1;">${activeFilter === 'dry' ? '🌟' : '💡'}</span>
           <div style="flex: 1; min-width: 0;">
             <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap; margin-bottom: 4px;">
               <strong style="font-size: 0.88rem; color: var(--text-main);">${advisorTitle}</strong>
@@ -676,7 +774,7 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
         ` : ''}
 
         <!-- 📊 PERFIL CLIMÁTICO HORARIO DIURNO (08:00h - 20:00h): PLUVIÓMETRO, TÉRMICA Y VIENTO (Ley 11 y Feedback Lendo) -->
-        ${renderRouteDaylightGraph(data?.weather?.hourly, activeDay)}
+        ${renderRouteDaylightGraph(data?.weather?.hourly, activeDay, activeRw, isExternalRoute)}
 
         <!-- Botón interactivo para ver Ficha Didáctica y Track GPS -->
         <button type="button" class="btn-explain-route" data-explain-route="${activeRoute.id}" style="width: 100%; padding: 10px; border-radius: 10px; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.35); color: var(--primary); font-size: 0.8rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;">
@@ -699,10 +797,10 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
           <div style="padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center;">
             <div>
               <h3 style="margin: 0; font-size: 1.05rem; font-weight: 800; color: var(--text-main);">
-                ${activeFilter === 'dry' ? '☀️ Rutas Ordenadas por Escampada' : 'Selecciona senda de senderismo'}
+                ${activeFilter === 'dry' ? '🌟 Rutas con Mejores Condiciones' : 'Selecciona senda de senderismo'}
               </h3>
               <span style="font-size: 0.75rem; color: var(--text-dim);">
-                ${activeFilter === 'dry' ? `Mostrando opciones más secas para ${dayLabelLower} en toda Asturias` : 'Toca una senda para cargar su ficha técnica'}
+                ${activeFilter === 'dry' ? `Mostrando opciones más favorables (lluvia y viento) para ${dayLabelLower} en toda Asturias` : 'Toca una senda para cargar su ficha técnica'}
               </span>
             </div>
             <button type="button" id="btn-close-hiking-modal" style="background: rgba(255,255,255,0.08); border: none; color: var(--text-main); font-size: 1.1rem; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;">
@@ -714,7 +812,7 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
             
             ${activeFilter === 'dry' ? `
               <div style="margin-bottom: 10px; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 10px; padding: 8px 10px; font-size: 0.74rem; color: var(--text-main);">
-                <strong>☀️ Rastreador de Escampada:</strong> Rutas ordenadas automáticamente de menor a mayor probabilidad de lluvia y litros previstos.
+                <strong>🌟 Buscador de Mejores Condiciones:</strong> Rutas ordenadas combinando ausencia de lluvia, viento seguro y firme favorable en toda Asturias.
               </div>
             ` : ''}
 

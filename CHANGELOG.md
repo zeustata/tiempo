@@ -9,6 +9,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.14] - 2026-11-11
+### Added & Improved
+- **🌟 Evolución Integral del Filtro a «Mejores Condiciones» (Lluvia + Viento + Firme) (`routesData.js` + `routesCard.js` - Leyes 0, 11 y 16):**
+  - **Superación de la Miopía de la Lluvia:** Rebautizado el filtro de «Dónde no llueve» a **«🌟 Mejores Condiciones»**, evaluando conjuntamente ausencia de precipitación, rachas de viento seguras y estabilidad general.
+  - **Integración de Viento en Lote para las 58 Rutas:** Incorporadas las variables oficiales de viento y rachas máximas (`wind_speed_10m_max`, `wind_gusts_10m_max`) a la consulta Open-Meteo.
+  - **Penalización Rigurosa de Vendaval en Montaña:** Rutas con rachas superiores a 45-50 km/h son penalizadas en puntuación, y aquellas con rachas peligrosas (>= 55 km/h) se descartan fulminantemente de las recomendaciones y reciben el badge `⚠️ Viento Fuerte`.
+  - **Tarjeta Superior Adaptativa al Destino Real:** Cuando se elige una ruta fuera del concejo base (o en el modo Mejores Condiciones), el Panel de Diagnóstico Ejecutivo (firme, barro, sensación térmica, calzado y ropa) evalúa automáticamente el **concejo y entorno de la senda activa**, rotulando claramente: `Tu base: [Concejo] ➔ Destino: [Concejo Destino]`, eliminando por completo la incongruencia geográfica previa.
+
 ## [3.0.38.13] - 2026-11-11
 ### Improved
 - **🥾 Depuración de Margen y Alineación Impecable de la Gráfica (`routesCard.js` - Leyes 0, 11 y 14):**
@@ -4753,30 +4761,7 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Soporte Astronómico de Días con 3 Mareas**: Reconocimiento natural de las jornadas en las que el ciclo cruza la medianoche (como el Sábado 5 de septiembre), sin forzar artificialmente 4 eventos ni generar solapes de doble bajamar.
 - **Onda 72h 100% Suave y Continua**: El trazado gráfico SVG del Mareógrafo genera una curva armónica pura sin saltos de fase ni quiebros en los pasos de medianoche (00:00).
 - **Adaptabilidad en Tarjetas de Marea**: `marineCard.js` gestiona con total fluidez tanto jornadas de 4 mareas como de 3 mareas.
-- **Cache-Busting Total & Service Worker `v142-official`**: Actualización unificada de parámetros `?v=1.0.42` en todos los módulos de `app.js` y `index.html` para forzar la recarga instantánea en dispositivos y PWA.
-
----
-
-## [1.0.40] - 2026-08-28
-
-### 🎯 Minimalismo y Centrado: Retirada de Flechas en Modelo y Menú
-- **Centrado Perfecto y Cero Ruido**: Eliminación de las flechitas decorativas `➔` en los selectores de *[🌟 Modelo]* y *[📊 Menú]*, centrando armónicamente el icono y el texto en cada botón.
-- **Service Worker `v140-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
-
----
-
-## [1.0.39] - 2026-08-28
-
-### 📐 Simetría Visual Perfecta: Botones Dobles Gemelos
-- **Homogeneidad de Tamaños**: Rediseño de la primera fila de acciones con estructura gemela: icono de ancho fijo a la izquierda (`🔍` y `⭐`) y botón de acción directa a la derecha (`📍 GPS` y `📑 Favs`), logrando un equilibrio visual total.
-- **Service Worker `v139-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
-
----
-
-## [1.0.38] - 2026-08-28
-
-### ✨ Limpieza y Minimalismo: Botones Simétricos de Modelo y Menú
-- **Eliminación de Textos Largos Superpuestos**: Rediseño limpio de la fila de navegación a dos botones simétricos al 50% con `[🌟 Modelo ➔]` y `[📊 Menú ➔]`, garantizando cer
+- **Cache-Busting Total & Service Worker `v142-official`**: Actualizació
 - **Alineación Perfecta al 50%**: Configuración de `grid-template-columns: 1fr 1fr` tanto para la fila de navegación (Modelo y Menú) como para la fila de acciones (Guardar y Mi Ubicación), garantizando un diseño estructurado, equilibrado y de fácil pulsación con el pulgar.
 - **Service Worker `v132-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
 

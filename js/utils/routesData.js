@@ -1615,7 +1615,7 @@ export async function fetchRoutesBatchWeather(forceRefresh = false) {
   try {
     const lats = RUTAS_ASTURIAS_CATALOGO.map(r => r.lat.toFixed(2)).join(',');
     const lons = RUTAS_ASTURIAS_CATALOGO.map(r => r.lon.toFixed(2)).join(',');
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lats}&longitude=${lons}&daily=precipitation_sum,precipitation_probability_max,weather_code&timezone=auto&forecast_days=2`;
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lats}&longitude=${lons}&daily=precipitation_sum,precipitation_probability_max,weather_code,wind_speed_10m_max,wind_gusts_10m_max,temperature_2m_max,temperature_2m_min,uv_index_max&timezone=auto&forecast_days=2`;
 
     const resp = await fetch(url);
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
@@ -1631,12 +1631,22 @@ export async function fetchRoutesBatchWeather(forceRefresh = false) {
           today: {
             rainMm: parseFloat(forecast.daily.precipitation_sum?.[0]) || 0,
             pop: parseInt(forecast.daily.precipitation_probability_max?.[0], 10) || 0,
-            code: parseInt(forecast.daily.weather_code?.[0], 10) || 0
+            code: parseInt(forecast.daily.weather_code?.[0], 10) || 0,
+            windSpeed: Math.round(parseFloat(forecast.daily.wind_speed_10m_max?.[0]) || 0),
+            windGust: Math.round(parseFloat(forecast.daily.wind_gusts_10m_max?.[0]) || 0),
+            tempMax: Math.round(parseFloat(forecast.daily.temperature_2m_max?.[0]) || 15),
+            tempMin: Math.round(parseFloat(forecast.daily.temperature_2m_min?.[0]) || 10),
+            uvMax: parseFloat(forecast.daily.uv_index_max?.[0]) || 2
           },
           tomorrow: {
             rainMm: parseFloat(forecast.daily.precipitation_sum?.[1]) || 0,
             pop: parseInt(forecast.daily.precipitation_probability_max?.[1], 10) || 0,
-            code: parseInt(forecast.daily.weather_code?.[1], 10) || 0
+            code: parseInt(forecast.daily.weather_code?.[1], 10) || 0,
+            windSpeed: Math.round(parseFloat(forecast.daily.wind_speed_10m_max?.[1]) || 0),
+            windGust: Math.round(parseFloat(forecast.daily.wind_gusts_10m_max?.[1]) || 0),
+            tempMax: Math.round(parseFloat(forecast.daily.temperature_2m_max?.[1]) || 15),
+            tempMin: Math.round(parseFloat(forecast.daily.temperature_2m_min?.[1]) || 10),
+            uvMax: parseFloat(forecast.daily.uv_index_max?.[1]) || 2
           }
         };
       }
@@ -1654,51 +1664,128 @@ export async function fetchRoutesBatchWeather(forceRefresh = false) {
 }
 
 /**
- * Genera el distintivo meteorológico (Badge) y puntuación de escampada para una ruta
+ * Genera el distintivo meteorológico (Badge) y puntuación integral (Lluvia + Viento + Seguridad) para una ruta
  */
 export function getRouteWeatherBadge(routeWeather) {
   if (!routeWeather) return null;
-  const { rainMm, pop, code } = routeWeather;
+  const { 
+    rainMm = 0, 
+    pop = 0, 
+    code = 0, 
+    windSpeed = 0, 
+    windGust = 0, 
+    tempMax = 15, 
+    tempMin = 10, 
+    uvMax = 2 
+  } = routeWeather;
 
+  // 1. Puntuación base según lluvia
+  let baseScore = 50;
   if (rainMm <= 0.0 && pop <= 25) {
+    baseScore = 100 - (pop * 0.4);
+  } else if (rainMm <= 0.8 && pop <= 50) {
+    baseScore = 80 - (rainMm * 10) - (pop * 0.2);
+  } else if (rainMm < 3.0) {
+    baseScore = 50 - (rainMm * 8);
+  } else {
+    baseScore = Math.max(0, 25 - (rainMm * 3));
+  }
+
+  // 2. Penalización por viento en montaña y acantilados (Ley 16 - Seguridad)
+  let windPenalty = 0;
+  const isDangerousWind = (windGust >= 55);
+  const isModerateWind = (windGust >= 38 && windGust < 55);
+
+  if (windGust > 30 && windGust <= 40) {
+    windPenalty = (windGust - 30) * 1.0;
+  } else if (windGust > 40 && windGust < 55) {
+    windPenalty = 10 + (windGust - 40) * 2.0;
+  } else if (windGust >= 55) {
+    windPenalty = 40 + (windGust - 55) * 3.0; // Descarte fulminante de recomendadas
+  }
+
+  const finalScore = Math.max(0, Math.round(baseScore - windPenalty));
+  const isDry = (rainMm <= 0.8 && pop <= 50);
+  const isFavorable = isDry && !isDangerousWind && (windGust < 45);
+
+  // 3. Generación del distintivo
+  if (isDangerousWind) {
     return {
-      label: `0.0 mm (${pop}%) • Seco ☀️`,
+      label: `${rainMm.toFixed(1)} mm • ⚠️ Viento ${windGust} km/h`,
+      cssClass: 'badge-wind-alert',
+      color: '#ef4444',
+      bg: 'rgba(239, 68, 68, 0.20)',
+      border: 'rgba(239, 68, 68, 0.50)',
+      isDry,
+      isFavorable: false,
+      isDangerousWind: true,
+      windGust,
+      score: finalScore
+    };
+  } else if (isModerateWind) {
+    return {
+      label: `${rainMm.toFixed(1)} mm • 💨 Viento ${windGust} km/h`,
+      cssClass: 'badge-wind-warn',
+      color: '#f59e0b',
+      bg: 'rgba(245, 158, 11, 0.20)',
+      border: 'rgba(245, 158, 11, 0.45)',
+      isDry,
+      isFavorable: isDry,
+      isDangerousWind: false,
+      windGust,
+      score: finalScore
+    };
+  } else if (rainMm <= 0.0 && pop <= 25) {
+    return {
+      label: `0.0 mm • 💨 ${windGust} km/h • Seco ☀️`,
       cssClass: 'badge-dry-pure',
       color: '#10b981',
       bg: 'rgba(16, 185, 129, 0.20)',
       border: 'rgba(16, 185, 129, 0.45)',
       isDry: true,
-      score: 100 - (pop * 0.5)
+      isFavorable: true,
+      isDangerousWind: false,
+      windGust,
+      score: finalScore
     };
   } else if (rainMm <= 0.8 && pop <= 50) {
     return {
-      label: `${rainMm.toFixed(1)} mm (${pop}%) • Casi Seco ⛅`,
+      label: `${rainMm.toFixed(1)} mm • 💨 ${windGust} km/h • Casi Seco ⛅`,
       cssClass: 'badge-dry-almost',
       color: '#38bdf8',
       bg: 'rgba(56, 189, 248, 0.20)',
       border: 'rgba(56, 189, 248, 0.45)',
       isDry: true,
-      score: 75 - (rainMm * 10) - (pop * 0.2)
+      isFavorable: true,
+      isDangerousWind: false,
+      windGust,
+      score: finalScore
     };
   } else if (rainMm < 3.0) {
     return {
-      label: `${rainMm.toFixed(1)} mm (${pop}%) • Orbayu 🌦️`,
+      label: `${rainMm.toFixed(1)} mm • 💨 ${windGust} km/h • Orbayu 🌦️`,
       cssClass: 'badge-dry-light',
       color: '#facc15',
       bg: 'rgba(250, 204, 21, 0.20)',
       border: 'rgba(250, 204, 21, 0.45)',
       isDry: false,
-      score: 45 - (rainMm * 8)
+      isFavorable: false,
+      isDangerousWind: false,
+      windGust,
+      score: finalScore
     };
   } else {
     return {
-      label: `${rainMm.toFixed(1)} mm (${pop}%) • Lluvia 🌧️`,
+      label: `${rainMm.toFixed(1)} mm • 💨 ${windGust} km/h • Lluvia 🌧️`,
       cssClass: 'badge-rainy',
       color: '#f87171',
       bg: 'rgba(248, 113, 113, 0.20)',
       border: 'rgba(248, 113, 113, 0.45)',
       isDry: false,
-      score: Math.max(0, 25 - (rainMm * 3))
+      isFavorable: false,
+      isDangerousWind: false,
+      windGust,
+      score: finalScore
     };
   }
 }
