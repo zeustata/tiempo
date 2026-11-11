@@ -9,6 +9,15 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.8] - 2026-11-11
+### Added
+- **🥾 Perfil Climático Horario Diurno (08:00h - 20:00h) en Ficha de Ruta (`routesCard.js` - Leyes 0, 11 y 14):**
+  - **Gráfica Visual Multivariable HD (08:00 a 20:00):** Incorporado en la tarjeta de la ruta activa un perfil gráfico integrado y responsive con las 13 horas clave de la jornada senderista.
+  - **🌧️ Pluviómetro y Probabilidad:** Barras dinámicas coloreadas según volumen de precipitación (azul cian en leve, ámbar en moderada) y porcentaje de probabilidad.
+  - **🌡️ Curva Térmica Continua:** Curva suave bezier con gradiente cromático y temperaturas numéricas hora a hora, más punto vivo en tiempo real con efecto pulso.
+  - **💨 Viento y Rachas:** Velocidad del viento hora a hora bajo el eje temporal con alerta visual en rachas fuertes (>= 35 km/h) y acumulado diurno total.
+  - **Sincronización:** Adaptado automáticamente al selector de día (**Hoy / Mañana**).
+
 ## [3.0.38.7] - 2026-11-11
 ### Fixed
 - **🌊 Doctrina de Retorno Limpio Universal a Carruseles en Todos los Módulos (`app.js` - Leyes 0, 11 y 18):**

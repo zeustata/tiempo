@@ -2,6 +2,22 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🥾 Perfil Climático Horario Diurno (08:00h - 20:00h) en Ficha de Ruta (`v3.0.38.8`) — 2026-11-11
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.7` (`c4056e0`).
+- **Petición e Instrucción Expresa de Lendo («quiero echarle mano el menu de rutas. primeramente la tarjeta donde te describe la ruta que. habria que poner un grafico entre 8 de la mañana a 20 de la tarde con una grafica por ejemplo con un pluviometro en esa ruta, temperatura y aire [...] pisale»):**
+  1. *Diagnóstico Funcional en Rutas y Senderismo:*
+     - La tarjeta de ruta activa describía distancia, desnivel, tiempo y firme, pero carecía de una visualización temporal del tiempo durante la jornada. Un senderista necesita conocer la evolución hora a hora dentro de la franja habitual de actividad (08:00h a 20:00h).
+  2. *Implementación Técnica (Leyes 0, 11 y 14):*
+     - En `routesCard.js`, se crea la función `renderRouteDaylightGraph(hourly, activeDay)`.
+     - Filtra estrictamente las 13 horas comprendidas entre las 08:00 y las 20:00 del día seleccionado (**Hoy** o **Mañana**).
+     - **Curva Térmica Continua:** Curva suave Bézier (spline HD) con área degradada y etiquetas numéricas de temperatura sobre cada hora, más punto vivo en tiempo real con halo pulsante si la hora actual está dentro de esa ventana.
+     - **Pluviómetro Dinámico:** Barras verticales por hora escaladas en milímetros reales de lluvia (`mm`) con diferenciación cromática (azul cian / ámbar) o porcentajes de probabilidad.
+     - **Viento y Rachas:** Velocidad bajo el eje horizontal con detección destacada de rachas máximas.
+     - Total de lluvia diurna acumulada y racha máxima visible en la cabecera del widget.
+  3. *Ciclo Constitucional Estrictamente Local y Notificación Telegram (Leyes 1, 3, 9 y 23):*
+     - Cambios aplicados en local, sintaxis validada con `node --check`, y servidor levantado en `http://localhost:8080`.
+     - Notificación sonora enviada a Telegram para verificación previa de Lendo.
+
 ## 🌊 Doctrina de Retorno Limpio Universal a Carruseles en Todos los Módulos (`v3.0.38.7`) — 2026-11-11
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.6` (`47df8c7`).
 - **Petición e Instrucción Expresa de Lendo («perfecto princesa. por lo que veo el problema que tenia esta tarjeta tambien lo tienen los otros menus. lo viste? [...] y que pasa con lo que hiciste en el menu de en vivo? recuerda que eso no le puede afectar por ejemplo la ubicacion por si estoy mirando una en concreto [...] pisale»):**
@@ -3654,21 +3670,7 @@ ICONO | ESTADO EN METEOASTUR LODE              | NUBES (cc)  | RAD. DIRECTA (irr
        - **Tormenta con Castillo Encantado (`storm`):** Mansión gótica con ventanales iluminados y relámpago magenta sobre cielo tormentoso.
        - **Pedriscu de Cripta (`hail`):** Nubes descargando trozos de hielo cristalino espectral.
        - **Nevadona con Sombrero de Bruja (`snow` / `heavy-snow`):** Cúmulo de nieve invernal coronado con sombrero puntiagudo de bruja.
-  3. *Arquitectura de Bloqueo, Calendario y Modo de Prueba en Vivo (`index.html`, `main.css`, `app.js`):*
-     - En `index.html`: tarjeta `#theme-card-halloween` con clases `.icon-theme-card .theme-card-locked`, etiqueta `🔒 Solo 31 Oct - 1 Nov`, badge `🔒 Bloqueado`, descripción del evento, tira de previsualización `#preview-halloween-icons` y botón de acción `#btn-toggle-halloween-test` («🧪 Probar ahora»).
-     - En `css/main.css`: estilos para `.theme-card-locked` con borde púrpura/naranja resplandeciente (`rgba(168, 85, 247, 0.4)`), badge `.theme-tag-locked` con gradiente ámbar, y botón `.btn-preview-theme`.
-     - En `js/app.js`:
-       - `getEffectiveIconTheme()`: devuelve `'halloween'` si `previewHalloweenMode` está activo o si la fecha del sistema es 31 de octubre o 1 de noviembre (salvo elección manual expresa del usuario).
-       - En `setupIconThemesModal()`: renderizado dinámico de miniaturas SVG de Halloween en el carrusel de la tarjeta.
-       - Botón `btnToggleHalloween`: permite alternar el modo de prueba en vivo en cualquier momento, actualizando instantáneamente todos los paneles de la app y mostrando notificaciones flotantes ergonómicas (`showToast`).
-       - Clic sobre la tarjeta bloqueada: orienta al usuario mediante haptic y notificación indicando la exclusividad de fechas y la opción de usar el botón de prueba.
-  4. *Cache-Busting y Despliegue Oficial (Leyes 1, 3, 4, 10 y 13):*
-     - Service Worker actualizado a `meteoasturlode-v2264-halloween-samhain-preview` en `sw.js`.
-     - Versión oficial elevada a **`v2.2.64 🎃`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.64'` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
-     - Query strings sincronizadas a `?v=2.2.64` en `index.html` (`main.css`, `components.css`, `sw.js`, `app.js`) y en `app.js` (`weatherIcons.js?v=2.2.64`, `weatherHalloweenIcons.js?v=2.2.64`).
-
-## ⏰ Actualización v2.2.63: Normalización Astronómica Perpetua y Corrección del Cambio de Horario — 2026-10-18
-- **Normalización Astronómica y Corrección del Cambio de Horari
+  3. *Arquitectura de Bloqueo, Calendario y Modo de Prueba en Vivo (`index.html`
      - Lendo detectó que en la app la racha actual sí marcaba `16 km/h` y la racha máxima `31 km/h`, y que otras plataformas como Maldonado (*eltiempo.es*) publicaban `15 km/h` como cifra de cabecera.
      - *Causa raíz:* La API y el modelo registraban los datos con exactitud milimétrica (`current.wind_speed_10m = 6.8` como media sostenida a 10 metros, y `current.wind_gusts_10m = 16.0` como racha instantánea). Sin embargo, la jerarquía visual otorgaba todo el tamaño tipográfico (`2.2rem`) a la media matemática continua, relegando la racha (que es lo que el ser humano y el entorno sienten físicamente) a un texto secundario pequeño.
   2. *Intervención Técnica en `currentCard.js` y `components.css`:*

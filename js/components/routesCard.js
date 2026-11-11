@@ -8,6 +8,194 @@
 
 import { calculateHikingIndex, getRoutesForConcejo, RUTAS_ASTURIAS_CATALOGO, getRouteExplanation, getRouteWeatherBadge } from '../utils/routesData.js?v=3.0.36';
 
+/**
+ * Genera el Perfil Climático Horario de la Ruta (08:00h a 20:00h)
+ * Integra Pluviómetro (lluvia/probabilidad), Curva Térmica y Viento/Rachas
+ */
+function renderRouteDaylightGraph(hourly, activeDay = 'today') {
+  if (!hourly || !Array.isArray(hourly.time) || !Array.isArray(hourly.temperature_2m)) {
+    return '';
+  }
+
+  const now = new Date();
+  const targetDate = new Date(now);
+  if (activeDay === 'tomorrow') {
+    targetDate.setDate(now.getDate() + 1);
+  }
+  const datePrefix = `${targetDate.getFullYear()}-${String(targetDate.getMonth() + 1).padStart(2, '0')}-${String(targetDate.getDate()).padStart(2, '0')}`;
+
+  // Extraer las 13 horas de la ventana diurna: 08:00 a 20:00 inclusive
+  const daylightHours = [];
+  for (let i = 0; i < hourly.time.length; i++) {
+    const tStr = hourly.time[i];
+    if (tStr.startsWith(datePrefix)) {
+      const h = parseInt(tStr.substring(11, 13), 10);
+      if (h >= 8 && h <= 20) {
+        daylightHours.push({
+          hour: h,
+          hourLabel: `${String(h).padStart(2, '0')}h`,
+          temp: Math.round(hourly.temperature_2m[i]),
+          precip: parseFloat(hourly.precipitation?.[i] || 0),
+          pop: parseInt(hourly.precipitation_probability?.[i] || 0, 10),
+          windSpeed: Math.round(hourly.wind_speed_10m?.[i] || 0),
+          windGust: Math.round(hourly.wind_gusts_10m?.[i] || hourly.wind_speed_10m?.[i] || 0),
+          windDir: hourly.wind_direction_10m?.[i] || 0
+        });
+      }
+    }
+  }
+
+  if (daylightHours.length < 5) return '';
+
+  const temps = daylightHours.map(d => d.temp);
+  const minTemp = Math.min(...temps);
+  const maxTemp = Math.max(...temps);
+  const tempRange = Math.max(1, maxTemp - minTemp);
+
+  const precips = daylightHours.map(d => d.precip);
+  const maxPrecip = Math.max(1.5, ...precips); // Escala mínima de 1.5mm para que se vea bien
+
+  // Dimensiones SVG HD
+  const width = 650;
+  const height = 140;
+  const padLeft = 25;
+  const padRight = 25;
+  const padTop = 22;
+  const tempBottom = 66; // Altura donde termina la curva térmica
+  const barTop = 72; // Altura donde arrancan las barras de lluvia
+  const barBottom = 112; // Altura base de las barras
+  const graphW = width - padLeft - padRight;
+  const stepX = graphW / (daylightHours.length - 1);
+
+  // Puntos de la curva de temperatura
+  const tempPoints = daylightHours.map((d, idx) => {
+    const x = padLeft + idx * stepX;
+    const y = padTop + (tempBottom - padTop) - ((d.temp - minTemp) / tempRange) * (tempBottom - padTop);
+    return { x, y, ...d };
+  });
+
+  // Curva bezier suave
+  let dCurve = `M ${tempPoints[0].x.toFixed(1)} ${tempPoints[0].y.toFixed(1)}`;
+  for (let i = 0; i < tempPoints.length - 1; i++) {
+    const p0 = tempPoints[i];
+    const p1 = tempPoints[i + 1];
+    const cpx = (p0.x + (p1.x - p0.x) / 2).toFixed(1);
+    dCurve += ` C ${cpx} ${p0.y.toFixed(1)}, ${cpx} ${p1.y.toFixed(1)}, ${p1.x.toFixed(1)} ${p1.y.toFixed(1)}`;
+  }
+  const dArea = `${dCurve} L ${tempPoints[tempPoints.length - 1].x.toFixed(1)} ${tempBottom} L ${tempPoints[0].x.toFixed(1)} ${tempBottom} Z`;
+
+  // Punto vivo si estamos en el día de hoy y entre las 8 y las 20
+  let liveMarker = '';
+  if (activeDay === 'today') {
+    const curHour = now.getHours();
+    const curMin = now.getMinutes();
+    if (curHour >= 8 && curHour <= 20) {
+      const frac = (curHour - 8) + (curMin / 60);
+      const liveX = padLeft + frac * stepX;
+      // Interpolación
+      const baseIdx = Math.min(tempPoints.length - 2, Math.max(0, Math.floor(frac)));
+      const tFrac = Math.max(0, Math.min(1, frac - baseIdx));
+      const liveY = tempPoints[baseIdx].y + (tempPoints[baseIdx + 1].y - tempPoints[baseIdx].y) * tFrac;
+      liveMarker = `
+        <circle cx="${liveX.toFixed(1)}" cy="${liveY.toFixed(1)}" r="10" fill="#38bdf8" opacity="0.35" class="thermal-live-pulse" />
+        <circle cx="${liveX.toFixed(1)}" cy="${liveY.toFixed(1)}" r="5" fill="#ffffff" stroke="#0284c7" stroke-width="2.5" />
+      `;
+    }
+  }
+
+  // Generar barras de lluvia y textos de viento
+  const barsAndLabels = daylightHours.map((d, idx) => {
+    const x = padLeft + idx * stepX;
+    const barWidth = Math.max(10, stepX * 0.55);
+    const barHeight = d.precip > 0 ? Math.max(3, (d.precip / maxPrecip) * (barBottom - barTop)) : 0;
+    const barY = barBottom - barHeight;
+
+    const barColor = d.precip >= 1.5 ? '#f59e0b' : (d.precip >= 0.3 ? '#38bdf8' : '#60a5fa');
+
+    return `
+      <!-- Barra de lluvia -->
+      ${d.precip > 0 ? `
+        <rect x="${(x - barWidth / 2).toFixed(1)}" y="${barY.toFixed(1)}" width="${barWidth.toFixed(1)}" height="${barHeight.toFixed(1)}" rx="3" fill="${barColor}" opacity="0.85" />
+        <text x="${x.toFixed(1)}" y="${(barY - 3).toFixed(1)}" fill="${barColor}" font-size="9" font-family="'JetBrains Mono', monospace" font-weight="800" text-anchor="middle">${d.precip.toFixed(1)}</text>
+      ` : (d.pop >= 25 ? `
+        <text x="${x.toFixed(1)}" y="${(barBottom - 2).toFixed(1)}" fill="#94a3b8" font-size="8" font-family="system-ui, sans-serif" font-weight="600" text-anchor="middle">${d.pop}%</text>
+      ` : `
+        <circle cx="${x.toFixed(1)}" cy="${barBottom - 4}" r="1.5" fill="rgba(255,255,255,0.15)" />
+      `)}
+
+      <!-- Hora en el eje horizontal -->
+      <text x="${x.toFixed(1)}" y="${height - 10}" fill="#94a3b8" font-size="9.5" font-family="system-ui, sans-serif" font-weight="700" text-anchor="middle">${d.hourLabel}</text>
+
+      <!-- Viento / Rachas en km/h -->
+      <text x="${x.toFixed(1)}" y="${height}" fill="${d.windGust >= 35 ? '#f59e0b' : '#64748b'}" font-size="8.5" font-family="'JetBrains Mono', monospace" font-weight="700" text-anchor="middle">${d.windSpeed}</text>
+    `;
+  }).join('');
+
+  // Puntos y temperaturas sobre la curva
+  const tempLabels = tempPoints.map(p => `
+    <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="3" fill="#ffffff" stroke="#0ea5e9" stroke-width="1.5" />
+    <text x="${p.x.toFixed(1)}" y="${(p.y - 6).toFixed(1)}" fill="#f1f5f9" font-size="10" font-family="'JetBrains Mono', monospace" font-weight="800" text-anchor="middle">${p.temp}°</text>
+  `).join('');
+
+  const totalDaylightRain = precips.reduce((a, b) => a + b, 0).toFixed(1);
+  const maxGust = Math.max(...daylightHours.map(d => d.windGust));
+
+  return `
+    <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid rgba(56, 189, 248, 0.28); border-radius: 12px; padding: 10px 12px; margin-bottom: 12px; box-sizing: border-box;">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 6px; flex-wrap: wrap;">
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <span style="font-size: 0.95rem;">⏱️</span>
+          <strong style="font-size: 0.82rem; color: var(--text-main);">Ventana Diurna de Ruta (08:00h - 20:00h)</strong>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px; font-size: 0.70rem;">
+          <span style="color: ${totalDaylightRain > 0 ? '#38bdf8' : '#94a3b8'};">🌧️ Lluvia: <strong>${totalDaylightRain} mm</strong></span>
+          <span style="color: ${maxGust >= 35 ? '#f59e0b' : '#94a3b8'};">💨 Racha máx: <strong>${maxGust} km/h</strong></span>
+        </div>
+      </div>
+
+      <!-- Leyenda rápida -->
+      <div style="display: flex; gap: 10px; font-size: 0.65rem; color: var(--text-dim); margin-bottom: 4px; justify-content: flex-end;">
+        <span style="display: inline-flex; align-items: center; gap: 3px;"><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#38bdf8;"></span> Temp (°C)</span>
+        <span style="display: inline-flex; align-items: center; gap: 3px;"><span style="display:inline-block; width:8px; height:8px; border-radius:2px; background:#60a5fa;"></span> Lluvia (mm)</span>
+        <span style="display: inline-flex; align-items: center; gap: 3px;">💨 Viento (km/h)</span>
+      </div>
+
+      <!-- SVG HD de la Gráfica Diurna -->
+      <div style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;">
+        <svg viewBox="0 0 ${width} ${height}" style="width: 100%; min-width: 320px; height: auto; display: block;" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <linearGradient id="routeTempGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#38bdf8" />
+              <stop offset="50%" stop-color="#facc15" />
+              <stop offset="100%" stop-color="#fb923c" />
+            </linearGradient>
+            <linearGradient id="routeAreaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.25" />
+              <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.0" />
+            </linearGradient>
+          </defs>
+
+          <!-- Línea divisoria sutil entre térmica y lluvia -->
+          <line x1="${padLeft}" y1="${barBottom}" x2="${width - padRight}" y2="${barBottom}" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="3,3" />
+
+          <!-- Área y Curva Térmica -->
+          <path d="${dArea}" fill="url(#routeAreaGrad)" />
+          <path d="${dCurve}" fill="none" stroke="url(#routeTempGrad)" stroke-width="2.5" vector-effect="non-scaling-stroke" stroke-linecap="round" />
+
+          <!-- Barras de Lluvia y Textos -->
+          ${barsAndLabels}
+
+          <!-- Puntos y Etiquetas de Temperatura -->
+          ${tempLabels}
+
+          <!-- Marcador Vivo de Hora Actual -->
+          ${liveMarker}
+        </svg>
+      </div>
+    </div>
+  `;
+}
+
 export function renderRoutesCard(data, concejo, selectedRouteId = null, selectedDay = null, activeFilter = 'all', routesWeatherMap = null) {
   if (!concejo) return '';
 
@@ -459,6 +647,9 @@ export function renderRoutesCard(data, concejo, selectedRouteId = null, selected
             </div>
           </div>
         ` : ''}
+
+        <!-- 📊 PERFIL CLIMÁTICO HORARIO DIURNO (08:00h - 20:00h): PLUVIÓMETRO, TÉRMICA Y VIENTO (Ley 11 y Feedback Lendo) -->
+        ${renderRouteDaylightGraph(data?.weather?.hourly, activeDay)}
 
         <!-- Botón interactivo para ver Ficha Didáctica y Track GPS -->
         <button type="button" class="btn-explain-route" data-explain-route="${activeRoute.id}" style="width: 100%; padding: 10px; border-radius: 10px; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.35); color: var(--primary); font-size: 0.8rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;">
