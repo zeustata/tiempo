@@ -4653,16 +4653,16 @@
   }
 }
 
-/* Pulso GPS para Ubicación de Usuario (Color Cian Eléctrico) */
+/* Pulso GPS para Ubicación de Usuario (Color Rojo Carmesí GPS - Ley 0 y 11) */
 .radar-pulse-ring.user-location {
-  border-color: #00ecff;
-  background: rgba(0, 236, 255, 0.22);
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.22);
 }
 
 .radar-pulse-dot.user-location {
-  background: #00ecff;
+  background: #ef4444;
   border-color: #ffffff;
-  box-shadow: 0 0 12px #00ecff, 0 2px 6px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 14px #ef4444, 0 2px 6px rgba(0, 0, 0, 0.7);
 }
 
 /* Modo Pantalla Completa del Radar (Leyes 11 y 14) */
@@ -4703,6 +4703,17 @@
 
 .leaflet-tooltip.radar-concejo-tooltip::before {
   border-top-color: rgba(15, 23, 42, 0.88);
+}
+
+/* Tooltip Leaflet exclusivo para Ubicación GPS de Usuario (Rojo Carmesí) */
+.leaflet-tooltip.radar-user-tooltip {
+  border: 1px solid rgba(239, 68, 68, 0.6) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5), 0 0 10px rgba(239, 68, 68, 0.3) !important;
+  color: #fef2f2 !important;
+}
+
+.leaflet-tooltip.radar-user-tooltip::before {
+  border-top-color: rgba(15, 23, 42, 0.88) !important;
 }
 
 /* Badge de concejo activo en la cabecera de controles del radar */

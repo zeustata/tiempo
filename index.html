@@ -33,7 +33,7 @@
 
   <!-- Estilos de la Aplicación con Cache Busting -->
   <link rel="stylesheet" href="css/main.css?v=3.0.25.11">
-  <link rel="stylesheet" href="css/components.css?v=3.0.25.38">
+  <link rel="stylesheet" href="css/components.css?v=3.0.38.3">
   <link rel="stylesheet" href="css/weather-themes.css?v=3.0.25.11">
 </head>
 <body>
@@ -243,7 +243,7 @@
           <div id="map-container"></div>
           <!-- Botones de Acción Primaria del Radar: Centrar, GPS, Reproducir y Pantalla Completa (Cuadrícula 2x2 ergonómica en móvil - Ley 11) -->
           <div class="radar-actions-bar">
-            <button id="btn-radar-center" class="btn-radar-action" title="Centrar mapa en Asturias">🎯 Centrar</button>
+            <button id="btn-radar-center" class="btn-radar-action" title="Centrar mapa en el concejo activo">🎯 Concejo</button>
             <button id="btn-radar-gps" class="btn-radar-action" title="Localizar mi posición exacta vía GPS">📍 Mi Posición</button>
             <button id="btn-radar-play" class="btn-radar-action" title="Iniciar o pausar animación del radar">▶️ Reproducir</button>
             <button id="btn-radar-fullscreen" class="btn-radar-action" title="Ver radar a pantalla completa">⛶ Pantalla Completa</button>
@@ -283,7 +283,7 @@
     <footer class="app-footer">
       <div class="footer-credits">
         <strong><span class="brand-title-astur">MeteoAstur</span><span class="brand-title-lode">Lode</span></strong>
-        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.38.2 🌧️</button>
+        <button class="version-badge-footer" id="app-version-badge" title="Ver historial de novedades y cambios">v3.0.38.3 📍</button>
         <div class="footer-owner-info" style="margin-top: 6px; font-size: 0.88rem; color: var(--text-main);">
           Propietario: <strong>Manuel A. L. Barril</strong>
           <div style="font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-top: 2px;">👑 Princesa</div>
@@ -4923,7 +4923,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.0.38.2').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.0.38.3').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4953,7 +4953,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.38.2"></script>
+  <script type="module" src="js/app.js?v=3.0.38.3"></script>
 
 
 

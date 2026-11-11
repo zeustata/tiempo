@@ -9,6 +9,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.3] - 2026-11-11
+### Fixed
+- **📍 Diferenciación Visual Inmediata de Marcadores en Radar (`mapRadar.js` + `components.css` - Leyes 0, 11 y 14):**
+  - **GPS en Rojo Carmesí (`#ef4444`):** El marcador de ubicación del usuario pasa de azul cian a rojo carmesí brillante con anillo de pulso suave en rojo, aura visible sobre satélite y tooltip permanente `📍 Mi Posición (GPS)` con borde carmesí y sombreado coordinado.
+  - **Concejo en Azul Turquesa (`#38bdf8`):** El marcador del concejo activo conserva su azul celeste con tooltip `🎯 [Nombre Concejo]`.
+  - **Correspondencia 1:1 con la Botonera del Radar:** El botón inferior `🎯 Centrar` se renombra a `🎯 Concejo`, logrando una concordancia intuitiva e inmediata con `📍 Mi Posición`: el usuario distingue de un solo vistazo qué punto en el mapa corresponde a su GPS y cuál al concejo seleccionado, sin necesidad de tocar la pantalla.
+
 ## [3.0.38.2] - 2026-11-11
 ### Fixed
 - **📱 Blindaje Total contra Truncado de Nombres en Ranking de Lluvia (`radarRankingCard.js` - Ley 11):**

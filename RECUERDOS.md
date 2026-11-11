@@ -2,6 +2,22 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📍 Diferenciación Visual Inmediata de Marcadores en Radar (`v3.0.38.3`) — 2026-11-11
+- **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.2` (`0bc78d2`).
+- **Petición e Instrucción Expresa de Lendo («siguiente asunto. si te fijas el punto de ubicacion del concejo y mi posicion se parecen demasiado. te mande una captura. deberian tener un color distinto y que se intuya sin tocar que boton pertenece a mi ubicacion y que boton es el del concejo. me refiero a los dos puntitos azules en medio del radar [...] pisale»):**
+  1. *Diagnóstico Visual en Captura Móvil (`captura_092246.jpg`):*
+     - Tanto el marcador del concejo como el de la posición GPS del usuario utilizaban el mismo esquema cromático azul/cian (`#38bdf8` y `#00ecff`) con anillos de pulso concéntricos idénticos.
+     - Al estar ambos puntos muy próximos en el mapa (ej. Piedras Blancas y Salinas en Castrillón), era imposible distinguir de un vistazo cuál correspondía a la ubicación física del usuario y cuál a la capital del concejo.
+     - Además, en la botonera de acciones del radar figuraba `🎯 Centrar` en lugar de una referencia explícita al concejo, dificultando la asociación mental 1:1 con `📍 Mi Posición`.
+  2. *Diferenciación Cromática y Visual (Leyes 0, 11 y 14):*
+     - **GPS de Usuario:** Rediseñado con núcleo en **rojo carmesí brillante** (`#ef4444`), borde blanco contrastado, halo difuso rojo y anillo de pulso concéntrico carmesí suave. Círculo de precisión GPS estilizado con borde rojo y fondo carmesí translúcido. Tooltip permanente: `📍 Mi Posición (GPS)` con borde carmesí y sombra coordinada (`.radar-user-tooltip`).
+     - **Concejo Seleccionado:** Mantiene su identidad en **azul turquesa / celeste** (`#38bdf8`) con anillo de pulso cian y tooltip permanente `🎯 [Nombre Concejo]`.
+     - **Armonización de Botonera:** El botón de acción inferior `🎯 Centrar` pasa a denominarse `🎯 Concejo` con tooltip explicativo `Centrar mapa en el concejo activo`, consolidando la relación directa e intuitiva: botón `🎯 Concejo` ➔ punto azul `🎯`, botón `📍 Mi Posición` ➔ punto rojo `📍`.
+  3. *Ciclo Constitucional Estrictamente Local y Notificación Telegram (Leyes 1, 3, 9 y 23):*
+     - Cambios implementados en local (`mapRadar.js`, `components.css`, `index.html`, `app.js`, `sw.js`).
+     - Verificación técnica y levantamiento de servidor de pruebas local (`http://localhost:8080`).
+     - Notificación instantánea al móvil de Lendo mediante Telegram (`notificar_lendo.py`) para prueba en mano antes de cualquier despliegue.
+
 ## 📱 Blindaje contra Truncado de Nombres y Rigor de 78 Concejos en Radar (`v3.0.38.2`) — 2026-11-11
 - **Punto de Retorno Seguro Garantizado (Ley 2):** Commit previo `v3.0.38.1` (`fc2ff73`).
 - **Petición e Instrucción Expresa de Lendo («si miras bien el top 5 de los concejos que mas llueve y que menos llueve desde el movil no se leen. estan cortados con los puntitos y hasta que no le das no sabes que concejo es o solo lo intuyes. otra cosa, pones 82 concejos cuando asturias tiene 78, porque? [...] pisale»):**
@@ -3635,25 +3651,7 @@ ICONO | ESTADO EN METEOASTUR LODE              | NUBES (cc)  | RAD. DIRECTA (irr
        - Sincronización de inmunidad solar en el Semáforu del Paragües y en el Asesor de Tendido, impidiendo que una micro-traza numérica encienda avisos de *«🟡 Orbayando Agora»* o *«🔴 Ni se te ocurra, que te va orpinar»* si brilla el sol.
   3. *Constitución del Proyecto - Incorporación de las Leyes 21 y 22 (AGENTS.md):*
      - **Ley 21 (Doctrina de Inmunidad Solar Frente a Falso Orbayu y Primacía del Sol Real sobre Micro-Trazas):** Prohibición tajante de clasificar la atmósfera como húmeda o lluviosa en presencia de radiación solar directa activa.
-     - **Ley 22 (Doctrina de Diagnóstico ante Discrepancias Meteorológicas Modelo-Realidad y Soberanía de Teledetección):** Reconocimiento formal de la naturaleza teórica de las mallas matemáticas periódicas y protocolo de auditoría inmediata cruzando datos crudos de API con el Radar de teledetección en tiempo real.
-  4. *Cache-Busting y Sincronización de Versión (Leyes 1, 4, 10, 11, 13 y 14):*
-     - Versión oficial elevada a **`v2.2.62 ☀️`** en pie (`#app-version-badge`), modal `#changelog-modal`, `CURRENT_APP_VERSION = '2.2.62'` en `app.js`, `CHANGELOG.md` y `RECUERDOS.md`.
-     - Service Worker actualizado a `meteoasturlode-v2262-inmunidad-solar-anti-orbayu` en `sw.js`.
-     - Query strings sincronizadas a `?v=2.2.62` en `index.html` (`main.css`, `components.css`, `app.js`).
-
-## ☁️ Actualización v2.2.61: Consenso Bidireccional Anti-Falsa Lluvia y Virga en Cielo Cubierto — 2026-10-17
-- **Filtro Anti-Llovizna Solitaria de AROME y Blindaje de Micro-Precipitaciones (Feedback Lendo - «ahora mira a ver que tiempo te pone. aqui no llueve pero tu pones que si», «pero no entiendo. no se supone que ya esta subsanado con falsas lluvias etc...?», «y pueden convivir todos los demas ajustes que tenemos?» y «pisale»):**
-  1. *Diagnóstico Científico y Meteorológico del Fenómeno:*
-     - Lendo constató que en Castrillón (Piedras Blancas), mirando al exterior, el cielo estaba encapotado pero completamente seco sin precipitación alguna; no obstante, la aplicación indicaba *«Orbayu / Llovizna ligera 🌦️»* con 0.3 mm en el sensor.
-     - *Auditoría de datos en tiempo real (16:15 h):*
-       - Centro Europeo (ECMWF IFS, 9 km): **0.0 mm**, cielo cubierto (código 3), humedad relativa: **72% (seco)**.
-       - Servicio Alemán (DWD ICON, 7 km): **0.0 mm**, cielo cubierto (código 3), humedad relativa: **78% (seco)**.
-       - Servicio de EE. UU. (NOAA GFS, 13 km): **0.0 mm**, cielo cubierto (código 3), humedad relativa: **83% (seco)**.
-       - Météo-France (AROME, 1.3 km): **0.3 mm**, código 51 (llovizna), humedad: 85%.
-     - *Causa raíz del fallo previo:*
-       - En la versión 2.2.57, se había implementado un filtro virga quirúrgico que solo operaba cuando el código era seco (código 3) con exactamente 0.1 mm, o si el código era 51 con estrictamente 0.0 mm. Al enviar AROME 0.3 mm con código 51, superaba el umbral de 0.1 mm y se clasificaba automáticamente como lluvia física en superficie.
-       - Además, en `weatherApi.js`, el algoritmo de consenso cantábrico solo funcionaba en un sentido (rescatar lluvia cuando AROME marcaba seco y ECMWF detectaba orbayu), pero no tenía filtro inverso cuando AROME alucinaba lloviznas solitarias contra el consenso de los modelos globales.
-  2. 
+     - **Ley 22 (Doctrina de Diagnóstico ante Discrepancias Meteorológicas Modelo-Realidad y Soberanía de Teledetección):** Reconocimiento formal de 
      - Lendo detectó que en la app la racha actual sí marcaba `16 km/h` y la racha máxima `31 km/h`, y que otras plataformas como Maldonado (*eltiempo.es*) publicaban `15 km/h` como cifra de cabecera.
      - *Causa raíz:* La API y el modelo registraban los datos con exactitud milimétrica (`current.wind_speed_10m = 6.8` como media sostenida a 10 metros, y `current.wind_gusts_10m = 16.0` como racha instantánea). Sin embargo, la jerarquía visual otorgaba todo el tamaño tipográfico (`2.2rem`) a la media matemática continua, relegando la racha (que es lo que el ser humano y el entorno sienten físicamente) a un texto secundario pequeño.
   2. *Intervención Técnica en `currentCard.js` y `components.css`:*

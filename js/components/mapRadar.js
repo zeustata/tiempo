@@ -379,7 +379,7 @@ export function focusConcejoOnMap(lat, lon, concejoName) {
 
       activeConcejoMarker = L.marker([lat, lon], { icon: gpsPulsePin })
         .addTo(asturiasMap)
-        .bindTooltip(`📍 ${cleanName}`, {
+        .bindTooltip(`🎯 ${cleanName}`, {
           direction: 'top',
           offset: [0, -10],
           className: 'radar-concejo-tooltip'
@@ -449,19 +449,19 @@ export function locateUserGps() {
 
         userGpsMarker = L.marker([lat, lon], { icon: userGpsIcon })
           .addTo(asturiasMap)
-          .bindTooltip('📍 Tu Ubicación Actual', {
+          .bindTooltip('📍 Mi Posición (GPS)', {
             permanent: false,
             direction: 'top',
             offset: [0, -12],
-            className: 'radar-concejo-tooltip'
+            className: 'radar-concejo-tooltip radar-user-tooltip'
           });
 
         if (accuracy && accuracy < 6000) {
           userAccuracyCircle = L.circle([lat, lon], {
             radius: Math.min(accuracy, 2500),
-            color: '#00ecff',
+            color: '#ef4444',
             weight: 1.5,
-            fillColor: '#00ecff',
+            fillColor: '#ef4444',
             fillOpacity: 0.12
           }).addTo(asturiasMap);
         }
