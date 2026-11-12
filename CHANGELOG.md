@@ -9,17 +9,6 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
-## [3.0.38.27] - 2026-11-12
-### Mejoras Inteligentes: Horas Pico de Lluvia, Ventanas Óptimas en Deporte y Accesos Oficiales de Montaña
-- **Detector de Pico de Lluvia en Concejos (`radarRainService.js` + `radarRankingCard.js`)**:
-  - Escaneo horario automático en cada concejo del ranking regional para detectar la hora de mayor intensidad pluvial (`Pico XXh`), mostrado como pastilla compacta junto a los litros en la fila 1 sin saturar la tarjeta en móviles estrechos (Leyes 11 y 14).
-- **Ventana Horaria Óptima en Ciclismo & Senderismo (`cyclingCard.js` + `routesCard.js`)**:
-  - **Ciclismo**: El Consejero de Viento analiza las horas del día y sugiere automáticamente el mejor tramo de salida (`⏱️ Mejor ventana: XX:00 a XX:00 h`).
-  - **Senderismo**: En la cabecera de la gráfica diurna se calcula y destaca el mejor intervalo de 3 horas consecutivas con menor lluvia y viento (`⏱️ XXh-XXh`).
-- **Accesos Oficiales en Puertos de Montaña (`mountainCard.js` - Leyes 15 y 16)**:
-  - Añadidos botones directos al **Mapa DGT en Vivo ↗** y al **112 Asturias ↗** en la sección de Puertos & Carreteras.
-- **Anti-caché**: Actualizada la versión a `v3.0.38.27` con Service Worker `meteoasturlode-v303827-smart-windows-v1`.
-
 ## [3.0.38.26] - 2026-11-12
 ### Estación en Vivo: Selector Tripartito Compacto en Cabecera Hero (`[ 📈 Curva ] [ 🏛️ Clima ] [ ☂️ Paragües ]`)
 - **Descubribilidad Ergonómica (Leyes 11, 14 y 18 - Feedback Lendo)**:

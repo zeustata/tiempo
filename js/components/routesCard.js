@@ -152,32 +152,6 @@ function renderRouteDaylightGraph(hourly, activeDay = 'today', activeRw = null, 
     ? activeRw.windGust 
     : maxGust;
 
-  // Escáner de Mejor Ventana de 3 Horas consecutivas en la jornada (menor lluvia + menor racha)
-  let bestWindowStr = '';
-  if (daylightHours.length >= 3) {
-    const curHour = now.getHours();
-    let bestStartIdx = 0;
-    let minPenalty = Infinity;
-    for (let i = 0; i <= daylightHours.length - 3; i++) {
-      const h0 = daylightHours[i];
-      // Si es hoy, priorizar horas futuras si quedan al menos 3 horas por delante
-      if (activeDay === 'today' && curHour < 17 && h0.hour <= curHour) continue;
-      const slice = daylightHours.slice(i, i + 3);
-      const sumPrecip = slice.reduce((acc, x) => acc + x.precip, 0);
-      const maxPop = Math.max(...slice.map(x => x.pop));
-      const maxG = Math.max(...slice.map(x => x.windGust));
-      // Penalización combinada: 1mm de lluvia pesa mucho más que el viento suave
-      const penalty = (sumPrecip * 100) + (maxPop * 0.6) + (maxG * 0.3);
-      if (penalty < minPenalty) {
-        minPenalty = penalty;
-        bestStartIdx = i;
-      }
-    }
-    const wStart = daylightHours[bestStartIdx].hour;
-    const wEnd = Math.min(21, wStart + 3);
-    bestWindowStr = `${String(wStart).padStart(2, '0')}h-${String(wEnd).padStart(2, '0')}h`;
-  }
-
   return `
     <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid rgba(250, 204, 21, 0.35); border-radius: 12px; margin-bottom: 12px; box-sizing: border-box; overflow: hidden; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);">
       
@@ -196,17 +170,12 @@ function renderRouteDaylightGraph(hourly, activeDay = 'today', activeRw = null, 
         box-sizing: border-box;
       " aria-expanded="false" title="Desplegar u ocultar gráfica horaria">
         <div style="display: flex; align-items: center; gap: 6px; min-width: 0;">
-          <span style="font-size: 0.76rem; color: ${displayRain > 0 ? '#38bdf8' : '#94a3b8'}; font-weight: 800; white-space: nowrap;">
+          <span style="font-size: 0.80rem; color: ${displayRain > 0 ? '#38bdf8' : '#94a3b8'}; font-weight: 800; white-space: nowrap;">
             🌧️ ${displayRain} mm
           </span>
-          <span style="font-size: 0.74rem; color: ${displayGust >= 35 ? '#f59e0b' : '#94a3b8'}; font-weight: 700; white-space: nowrap;">
+          <span style="font-size: 0.76rem; color: ${displayGust >= 35 ? '#f59e0b' : '#94a3b8'}; font-weight: 700; white-space: nowrap;">
             💨 ${displayGust} km/h
           </span>
-          ${bestWindowStr ? `
-            <span style="font-size: 0.71rem; color: #34d399; font-weight: 800; white-space: nowrap; background: rgba(16,185,129,0.12); padding: 1px 5px; border-radius: 5px;" title="Mejor tramo horario para caminar">
-              ⏱️ ${bestWindowStr}
-            </span>
-          ` : ''}
         </div>
 
         <div style="

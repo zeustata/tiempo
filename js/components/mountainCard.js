@@ -1117,50 +1117,8 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
         </style>
 
         <!-- ARTERIAS PRINCIPALES DE CONEXIÓN CON LA MESETA -->
-        <div class="passes-disclaimer-banner" style="display: flex; flex-direction: column; gap: 8px;">
+        <div class="passes-disclaimer-banner">
           <span>⚠️ <strong>Aviso Preventivo:</strong> Estado del firme estimado por modelo físico. No sustituye la señalización de la DGT ni la orden de la Guardia Civil de Tráfico. Consulta las webcams antes de viajar.</span>
-          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <a href="https://infocar.dgt.es/etraffic/" target="_blank" rel="noopener noreferrer" style="
-              flex: 1;
-              min-width: 140px;
-              min-height: 34px;
-              background: rgba(56, 189, 248, 0.16);
-              border: 1px solid rgba(56, 189, 248, 0.45);
-              border-radius: 9px;
-              color: #38bdf8;
-              font-size: 0.74rem;
-              font-weight: 800;
-              text-decoration: none;
-              display: inline-flex;
-              align-items: center;
-              justify-content: center;
-              gap: 5px;
-              padding: 4px 10px;
-              box-sizing: border-box;
-            ">
-              <span>🚦</span> <span>Mapa DGT en Vivo ↗</span>
-            </a>
-            <a href="https://www.112asturias.es/" target="_blank" rel="noopener noreferrer" style="
-              flex: 1;
-              min-width: 140px;
-              min-height: 34px;
-              background: rgba(250, 204, 21, 0.14);
-              border: 1px solid rgba(250, 204, 21, 0.45);
-              border-radius: 9px;
-              color: #facc15;
-              font-size: 0.74rem;
-              font-weight: 800;
-              text-decoration: none;
-              display: inline-flex;
-              align-items: center;
-              justify-content: center;
-              gap: 5px;
-              padding: 4px 10px;
-              box-sizing: border-box;
-            ">
-              <span>🚨</span> <span>112 Asturias ↗</span>
-            </a>
-          </div>
         </div>
 
         <!-- FILTRO RÁPIDO DE PUERTOS POR SECTOR GEOGRÁFICO -->

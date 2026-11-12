@@ -5,9 +5,9 @@ import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedW
 import { renderCurrentWeather } from './components/currentCard.js?v=3.0.38.26';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.25.10';
 import { renderSurfCard } from './components/surfCard.js?v=3.0.25.2';
-import { renderRoutesCard } from './components/routesCard.js?v=3.0.38.27';
-import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.38.27';
-import { renderMountainCard } from './components/mountainCard.js?v=3.0.38.27';
+import { renderRoutesCard } from './components/routesCard.js?v=3.0.38.21';
+import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.38.23';
+import { renderMountainCard } from './components/mountainCard.js?v=3.0.29';
 import { renderTourismCard } from './components/tourismCard.js?v=3.0.25.5';
 import { renderForecast, renderHourlyForecastBlock } from './components/forecastView.js?v=3.0.32';
 import { renderWeatherChart } from './components/chartsView.js?v=3.0.23.58';
@@ -36,8 +36,8 @@ import { evaluateWeatherAlerts } from './utils/weatherAlerts.js?v=3.0.5';
 import { openShareModal } from './utils/shareCardGenerator.js?v=3.0.23.59';
 import { toggleWeatherSpeech, stopWeatherSpeech } from './utils/weatherSpeaker.js?v=2.0.0';
 import { getClimatologyContext, renderClimatologyModalBody } from './utils/climatologyData.js?v=3.0.25.22';
-import { fetchConcejosRainBatch } from './utils/radarRainService.js?v=3.0.38.27';
-import { renderRadarRankingCard, renderRadarRankingModalHtml } from './components/radarRankingCard.js?v=3.0.38.27';
+import { fetchConcejosRainBatch } from './utils/radarRainService.js?v=3.0.38.25';
+import { renderRadarRankingCard, renderRadarRankingModalHtml } from './components/radarRankingCard.js?v=3.0.38.25';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, previsión horaria y curvas interactivas', key: '1' },
@@ -52,7 +52,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.38.27';
+export const CURRENT_APP_VERSION = '3.0.38.26';
 // Control inteligente de Auto-Prompt del Changelog (Doctrina de No-Fatiga al Usuario - Feedback Lendo):
 // Solo se incrementa ante cambios visuales grandes, módulos nuevos o novedades perceptibles.
 // En ajustes finos, calibraciones matemáticas y parches internos se mantiene para no fatigar al usuario con modales.

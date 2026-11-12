@@ -2,16 +2,6 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
-## ⏱️ Mejoras Inteligentes: Hora Pico de Lluvia, Ventanas Óptimas de Salida y Accesos DGT (`v3.0.38.27`) — 2026-11-12
-- **Estado de retorno previo (Ley 2):** Commit `f07577e` (`v3.0.38.26` — Selector tripartito compacto Hero y protocolo de supervivencia).
-- **Petición e instrucción de Lendo («que mejorarias sin hacer nada [...] le puedo pisar en local? [...] pisale [...] subelo»):**
-  1. *Detector de Hora Pico en Radar (`radarRainService.js` + `radarRankingCard.js`):* Añadido a `getDayRangeMetrics()` el cálculo del pico pluvial (`maxHourIdx` con `>= 0.2 mm`) generando `peakHourLabel: 'Pico XXh'`. Para evitar desbordes en móviles estrechos (Ley 11), se ubica en la Fila 1 junto a los milímetros, dejando la Fila 2 con su aire natural para comarca e insignia.
-  2. *Ventanas Horarias Recomendadas en Deporte (`cyclingCard.js` + `routesCard.js`):*
-     - Ciclismo: Escanea todas las salidas con luz del día para la ruta activa y resalta en el Consejero el mejor tramo horario (`⏱️ Mejor ventana: XX:00 a XX:00 h`).
-     - Senderismo: Analiza la gráfica horaria diurna (08h-20h) y destaca el mejor tramo de 3 horas consecutivas (`⏱️ XXh-XXh`) con menor probabilidad de agua y viento.
-  3. *Enlaces Oficiales en Puertos (`mountainCard.js` - Leyes 15 y 16):* Incorporados accesos a información en tiempo real de la DGT (cámaras/incidencias) y al 112 Asturias.
-- **Anti-caché (Ley 4):** Versión `3.0.38.27`, imports en `index.html`, `js/app.js` y componentes, y `CACHE_NAME = 'meteoasturlode-v303827-smart-windows-v1'` en `sw.js`.
-
 ## 📈 Estación en Vivo: Selector Tripartito Compacto Hero (`v3.0.38.26`) — 2026-11-12
 - **Estado de retorno previo (Ley 2):** Commit `91287ba` (`v3.0.38.25` — Selector horario a medida de lluvia por concejos y precisión 78+4).
 - **Diagnóstico y Petición de Lendo («si te fijas la minitarjeta de curva térmica pasa desapercibida. hablo de las otras dos tarjetas escondidas. como podemos llamar la atención? [...] me parece bien tu opción preferida pero que no cargue la app [...] y que entre en un móvil holgadamente [...] súbela preciosa»):**

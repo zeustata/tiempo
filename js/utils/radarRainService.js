@@ -107,40 +107,18 @@ export function getRainBadge(rainMm, pop) {
  */
 export function getDayRangeMetrics(dayObj, startHour = 0, endHour = 24) {
   if (!dayObj) {
-    return { rainMm: 0, pop: 0, badge: getRainBadge(0, 0), peakHourLabel: null };
+    return { rainMm: 0, pop: 0, badge: getRainBadge(0, 0) };
   }
 
   const s = Math.max(0, Math.min(23, Number(startHour) || 0));
   const e = Math.max(s + 1, Math.min(24, Number(endHour) || 24));
 
-  const hasHourly = dayObj.hourly && Array.isArray(dayObj.hourly.precip) && dayObj.hourly.precip.length > 0;
-
-  // Calcular hora pico dentro del tramo [s, e) si existen datos horarios
-  let peakHourLabel = null;
-  if (hasHourly) {
-    let maxHourPrecip = 0;
-    let maxHourIdx = -1;
-    for (let h = s; h < e && h < dayObj.hourly.precip.length; h++) {
-      const val = dayObj.hourly.precip[h];
-      if (typeof val === 'number' && val > maxHourPrecip) {
-        maxHourPrecip = val;
-        maxHourIdx = h;
-      }
-    }
-    if (maxHourIdx !== -1 && maxHourPrecip >= 0.2) {
-      peakHourLabel = `Pico ${String(maxHourIdx).padStart(2, '0')}h`;
-    }
-  }
-
   // Si abarca el día completo (0 a 24) o no tenemos desglose horario, devolver métricas diarias directas
-  if ((s === 0 && e === 24) || !hasHourly) {
-    const baseMm = dayObj.rainMm ?? 0;
-    const basePop = dayObj.pop ?? 0;
+  if ((s === 0 && e === 24) || !dayObj.hourly || !Array.isArray(dayObj.hourly.precip) || dayObj.hourly.precip.length === 0) {
     return {
-      rainMm: baseMm,
-      pop: basePop,
-      badge: dayObj.badge || getRainBadge(baseMm, basePop),
-      peakHourLabel: baseMm >= 0.2 ? peakHourLabel : null
+      rainMm: dayObj.rainMm ?? 0,
+      pop: dayObj.pop ?? 0,
+      badge: dayObj.badge || getRainBadge(dayObj.rainMm ?? 0, dayObj.pop ?? 0)
     };
   }
 
@@ -169,8 +147,7 @@ export function getDayRangeMetrics(dayObj, startHour = 0, endHour = 24) {
   return {
     rainMm: rangeMm,
     pop: rangePop,
-    badge: getRainBadge(rangeMm, rangePop),
-    peakHourLabel: rangeMm >= 0.2 ? peakHourLabel : null
+    badge: getRainBadge(rangeMm, rangePop)
   };
 }
 
