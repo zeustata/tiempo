@@ -9,6 +9,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.24] - 2026-11-12
+### Radar en Directo: Refresco Rápido cada 3 Minutos y Precisión en Punto Exacto
+- **Soberanía del punto exacto (`js/services/radarService.js`)**: Eliminado el arrastre del bloque 3×3 píxeles (~2,7 km) en `fetchLiveRadarEcho()`. Ahora el eco en vivo respeta estrictamente el píxel central (~900 m × 900 m) sobre las coordenadas activas, evitando que una mancha amarilla adyacente dispare *Lluvia fuerte · Bastinazu* cuando encima solo cae orbayu ligero.
+- **Pulso ligero de radar cada 3 minutos y reanudación en 15 s (`js/app.js`)**: Añadido `checkLiveRadarUpdate()` cada 3 minutos (consulta únicamente la tesela del radar sin recargar Open-Meteo salvo que cambie el nivel de lluvia en el punto) y reducido el umbral de refresco al volver a la app de 45 s a 15 s.
+- **Firma de datos reactiva**: Ampliada `_dataSignature()` con `is_radar_rescued` y precipitación para refrescar la tarjeta al instante cuando cesa o cambia el eco del radar.
+- **Anti-caché**: Actualizada la versión a `v3.0.38.24` (`meteoasturlode-v303824-radar-fast-v1`).
+
 ## [3.0.38.23] - 2026-11-11
 ### Ciclismo: Lluvia, Asfalto Mojado y Seguridad Térmica integrados en el Motor (`cyclingAdvisor.js`)
 - **Evaluación real de lluvia en ruta (`js/utils/cyclingAdvisor.js`)**: El simulador por tramos ahora cruza `precipitation` (mm/h), `snowfall`, `precipitation_probability` y `weather_code` además del viento. La lluvia continua o fuerte penaliza el `score`, bloquea la calificación `Óptima 🚀` y activa veredictos coherentes (`Lluvia en Ruta 🌧️`, `Asfalto Húmedo 🌦️`, `Tormenta ⛈️` o `Nieve / Hielo ❄️`), además de avisos de frío húmedo en descenso (≤ 4 °C con agua).
@@ -4711,19 +4718,7 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 ### 📅 Pronósticos a 10 Días: Panel Único Unificado de Métricas Diarias (Opción 1)
 - **Fusión en 1 Solo Bloque Integrado (`.d-unified-panel`)**: Agrupación completa de todas las métricas térmicas y atmosféricas en un único contenedor de cristal con 2 filas armónicas:
   - **Fila 1 (Térmica en Línea)**: `🔺 Máx ${maxT}°` • `🔻 Mín ${minT}°` • `Δ Osc. ${maxT - minT}°`.
-  - **Línea Divisoria Sutil**: Separación tenue de degradado.
-  - **Fila 2 (Métricas Integradas)**: Cuadrícula con Lluvia (`% y mm`), Viento medio y rachas, Radiación UV y horarios de Sol/Ocaso.
-- **Ahorro de Espacio Superior al 40%**: Eliminadas las 7 cajitas/pastillas sueltas anteriores, logrando tarjetas diarias ultra compactas y perfectamente legibles.
-- **Service Worker `v152-official` & Cache-Busting Total**: Sincronización a `?v=1.0.52` en toda la aplicación.
-
----
-
-## [1.0.51] - 2026-08-31
-
-### 📅 Pronósticos a 10 Días: Supresión de Barra Redundante & Máxima Compactación
-- **Eliminación de la Barra de Rango Térmico (`.d-temp-bar-wrap`)**: Retirada de la barra repetitiva de "Rango del día" y sus cálculos asociados (`globalMin`/`globalMax`), eliminando duplicidades y reduciendo sensiblemente la altura de las 10 tarjetas diarias.
-- **Enfoque Térmico Nítido**: Información térmica centralizada en los 3 bloques principales (Máxima, Mínima y Oscilación Δ) con padding compacto (`10px 14px`).
-- **Service Worker `v151-official` & Cache-Busting Total**: Sin
+  - **Línea Divisor
 - **Alineación Perfecta al 50%**: Configuración de `grid-template-columns: 1fr 1fr` tanto para la fila de navegación (Modelo y Menú) como para la fila de acciones (Guardar y Mi Ubicación), garantizando un diseño estructurado, equilibrado y de fácil pulsación con el pulgar.
 - **Service Worker `v132-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
 

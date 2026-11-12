@@ -1,5 +1,6 @@
 import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo, resolveSubLocalidad, SUB_LOCALIDADES } from './config/concejos.js?v=3.0.25.18';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.34';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.38.24';
+import { fetchLiveRadarEcho } from './services/radarService.js?v=3.0.38.24';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=3.0.23.63';
 import { renderCurrentWeather } from './components/currentCard.js?v=3.0.25.22';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.25.10';
@@ -51,7 +52,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.38.23';
+export const CURRENT_APP_VERSION = '3.0.38.24';
 // Control inteligente de Auto-Prompt del Changelog (Doctrina de No-Fatiga al Usuario - Feedback Lendo):
 // Solo se incrementa ante cambios visuales grandes, módulos nuevos o novedades perceptibles.
 // En ajustes finos, calibraciones matemáticas y parches internos se mantiene para no fatigar al usuario con modales.
@@ -174,15 +175,37 @@ class MeteoAsturiasApp {
     }
 
 
-    // Auto-refresco cada 10 minutos en segundo plano
+    // Auto-refresco cada 10 minutos en segundo plano (previsión completa) + pulso ligero de radar cada 3 minutos
     if (this.prefs.autoRefresh) {
       this.autoRefreshTimer = setInterval(() => {
         this.loadWeather(this.currentConcejo.id);
       }, 10 * 60 * 1000);
+
+      this.radarPulseTimer = setInterval(() => {
+        this.checkLiveRadarUpdate();
+      }, 3 * 60 * 1000);
     }
 
     // Auto-refresco instantáneo cada vez que abres o desbloqueas la App
     this.setupAutoRefreshOnResume();
+  }
+
+  async checkLiveRadarUpdate() {
+    if (document.visibilityState !== 'visible' || !this.currentConcejo) return;
+    try {
+      const fetchLat = this.activeLocalidad?.lat ?? this.currentConcejo.lat;
+      const fetchLon = this.activeLocalidad?.lon ?? this.currentConcejo.lon;
+      const radarEcho = await fetchLiveRadarEcho(fetchLat, fetchLon);
+      if (!radarEcho) return;
+      const newLevel = (radarEcho.hasEcho && radarEcho.echo?.isRain) ? radarEcho.echo.level : 'dry';
+      const oldLevel = this.weatherData?.weather?.current?._radar_level || 'dry';
+      if (newLevel !== oldLevel) {
+        console.log(`[MeteoAstur] Cambio de eco radar detectado (${oldLevel} -> ${newLevel}): actualizando...`);
+        this.loadWeather(this.currentConcejo.id);
+      }
+    } catch (e) {
+      // Silencioso en segundo plano
+    }
   }
 
   setupAutoRefreshOnResume() {
@@ -190,7 +213,7 @@ class MeteoAsturiasApp {
 
     const refreshIfStale = () => {
       const now = Date.now();
-      if (now - lastRefreshTime > 45 * 1000) {
+      if (now - lastRefreshTime > 15 * 1000) {
         lastRefreshTime = now;
         console.log('[MeteoAstur] Reanudación detectada: actualizando datos del tiempo y versión...');
         this.loadWeather(this.currentConcejo.id);
@@ -3189,7 +3212,7 @@ class MeteoAsturiasApp {
   _dataSignature(data) {
     if (!data || !data.weather || !data.weather.current) return null;
     const c = data.weather.current;
-    return `${Math.round(c.temperature_2m)}|${c.weather_code}|${Math.round(c.wind_speed_10m || 0)}|${Math.round(c.apparent_temperature || 0)}`;
+    return `${Math.round(c.temperature_2m)}|${c.weather_code}|${Math.round(c.wind_speed_10m || 0)}|${Math.round(c.apparent_temperature || 0)}|${c.is_radar_rescued ? 1 : 0}|${Math.round((c.precipitation || 0) * 10)}`;
   }
 
   async loadWeather(concejoId) {

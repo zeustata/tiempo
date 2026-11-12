@@ -1,4 +1,4 @@
-import { fetchLiveRadarEcho } from './radarService.js?v=3.0.35';
+import { fetchLiveRadarEcho } from './radarService.js?v=3.0.38.24';
 
 /**
  * Catálogo Oficial de Modelos Meteorológicos de Alta Resolución
@@ -194,6 +194,11 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
         applyStandalonePhysicalSovereignty(weather, radarEcho);
       }
       harmonizeWeatherPrecipitation(weather);
+      if (weather.current) {
+        weather.current._radar_level = (radarEcho && radarEcho.hasEcho && radarEcho.echo?.isRain)
+          ? radarEcho.echo.level
+          : 'dry';
+      }
     }
 
     return {

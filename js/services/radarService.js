@@ -108,19 +108,9 @@ export async function fetchLiveRadarEcho(lat, lon) {
       };
     }
 
-    // Si sobre el usuario SÍ hay lluvia activa:
-    // Muestreo muy estrecho (+/- 1 píxel, ~500 metros) únicamente para afinar intensidad local
-    let localEcho = { ...centerEcho, dx: 0, dy: 0 };
-    for (let dy = -1; dy <= 1; dy++) {
-      for (let dx = -1; dx <= 1; dx++) {
-        if (dx === 0 && dy === 0) continue;
-        const p = ctx.getImageData(128 + dx, 128 + dy, 1, 1).data;
-        const c = classifyRadarColor(p[0], p[1], p[2], p[3]);
-        if (c.isRain && c.precipEst > localEcho.precipEst) {
-          localEcho = { ...c, dx, dy };
-        }
-      }
-    }
+    // Punto exacto sobre la coordenada del usuario (píxel central ~900 m x 900 m en zoom 7):
+    // sin arrastre de píxeles vecinos para evitar que un núcleo adyacente infle el estado local.
+    const localEcho = { ...centerEcho, dx: 0, dy: 0 };
 
     return {
       hasEcho: localEcho.isRain,

@@ -2,6 +2,12 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📡 Radar en Directo: Refresco Rápido y Punto Exacto (`v3.0.38.24`) — 2026-11-12
+- **Estado de retorno previo (Ley 2):** Commit `62dd0e1` (`v3.0.38.23` — Integración real de lluvia en Ciclismo).
+- **Diagnóstico resuelto (Feedback Lendo):** Al pasar una mancha amarilla adyacente (~1 km) junto a Piedras Blancas con solo orbayu ligero encima, `fetchLiveRadarEcho()` en `js/services/radarService.js` escalaba la intensidad al máximo de los 3×3 píxeles vecinos (~2,7 km), y el auto-refresco de `app.js` tardaba hasta 10 minutos (o 45 s al reabrir) en limpiar la alerta de `Lluvia fuerte · Bastinazu`.
+- **Solución técnica:** Eliminado el bucle de vecinos en `fetchLiveRadarEcho()` para respetar estrictamente el píxel central `(128, 128)` (~900 m × 900 m en zoom 7). Añadido pulso ligero de radar cada 3 minutos (`checkLiveRadarUpdate()`) que solo dispara `loadWeather()` si cambia `_radar_level`, reducido el umbral de `setupAutoRefreshOnResume()` de 45 s a 15 s, y ampliado `_dataSignature()` con `is_radar_rescued` y `precipitation`.
+- **Anti-caché (Ley 4):** Actualizado `CURRENT_APP_VERSION = '3.0.38.24'`, imports en `index.html`, `js/app.js`, `js/services/weatherApi.js`, `js/components/mapRadar.js`, y `CACHE_NAME = 'meteoasturlode-v303824-radar-fast-v1'` en `sw.js`.
+
 ## 🌧️ Ciclismo: Integración Real de Lluvia, Asfalto Húmedo y Frío en Descenso (`v3.0.38.23`) — 2026-11-11
 - **Estado de retorno previo (Ley 2):** Commit `f4e2a63` (`v3.0.38.22` — Ampliación del catálogo de ciclismo a 50 clásicas circulares).
 - **Fallo corregido (Feedback Lendo):** Hasta `v3.0.38.22`, `simulateRouteConditions()` en `js/utils/cyclingAdvisor.js` extraía `pop` y `weather_code` por tramo pero el cálculo de `score`, `badgeLabel` y `advisorMessage` dependía exclusivamente del viento (`tailwindPct`, `headwindPct`, `maxGustKmh`), llegando a mostrar `Óptima 🚀` bajo lluvia continua sin viento.
