@@ -9,6 +9,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.26] - 2026-11-12
+### Estación en Vivo: Selector Tripartito Compacto en Cabecera Hero (`[ 📈 Curva ] [ 🏛️ Clima ] [ ☂️ Paragües ]`)
+- **Descubribilidad Ergonómica (Leyes 11, 14 y 18 - Feedback Lendo)**:
+  - Sustituidos los 3 puntos discretos inferiores (`.hero-widgets-dots`), que pasaban desapercibidos en móviles, por una barra segmentadora ultraligera superior en cristal fino (`.hero-widgets-pills-bar`) de tan solo 28px de altura.
+  - Etiquetas compactas y sintéticas (`📈 Curva`, `🏛️ Clima`, `☂️ Paragües`) calibradas para garantizar holgura visual plena, sin truncados ni saltos de línea en cualquier resolución (desde 320px).
+  - Sincronización táctil bidireccional total: salto suave instantáneo al pulsar cualquier pastilla y actualización automática de la pastilla activa al deslizar el carrusel con el pulgar.
+- **Anti-caché**: Actualizada la versión a `v3.0.38.26` con caché `meteoasturlode-v303826-hero-pills-v1`.
+
 ## [3.0.38.25] - 2026-11-12
 ### Radar de Lluvia por Concejos: Selector Horario a Medida (Petición Lendo & Mando Kike) y Precisión Territorial 78 + 4
 - **Selector de Rango de Horas a Medida (`js/components/radarRankingCard.js` + `js/app.js`)**:

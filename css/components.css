@@ -14755,7 +14755,7 @@
    ========================================================================== */
 .hero-widgets-carousel-wrap {
   width: 100%;
-  margin-top: 8px;
+  margin-top: 10px;
   position: relative;
   box-sizing: border-box;
 }
@@ -14766,6 +14766,69 @@
     margin-left: auto;
     margin-right: auto;
   }
+}
+
+/* Selector Tripartito Compacto en Pastillas Ergonómicas (Leyes 11 y 14) */
+.hero-widgets-pills-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 7px;
+  padding: 3px;
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 9px;
+}
+
+.hero-widget-pill {
+  flex: 1;
+  min-width: 0;
+  min-height: 28px;
+  padding: 3px 6px;
+  border-radius: 6px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: #94a3b8;
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  white-space: nowrap;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hero-widget-pill .hwp-icon {
+  font-size: 0.78rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.hero-widget-pill .hwp-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hero-widget-pill:hover {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.hero-widget-pill.active {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: rgba(56, 189, 248, 0.45);
+  color: #38bdf8;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
 }
 
 .hero-widgets-carousel {

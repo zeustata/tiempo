@@ -2,6 +2,16 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📈 Estación en Vivo: Selector Tripartito Compacto Hero (`v3.0.38.26`) — 2026-11-12
+- **Estado de retorno previo (Ley 2):** Commit `91287ba` (`v3.0.38.25` — Selector horario a medida de lluvia por concejos y precisión 78+4).
+- **Diagnóstico y Petición de Lendo («si te fijas la minitarjeta de curva térmica pasa desapercibida. hablo de las otras dos tarjetas escondidas. como podemos llamar la atención? [...] me parece bien tu opción preferida pero que no cargue la app [...] y que entre en un móvil holgadamente [...] súbela preciosa»):**
+  1. *Causa de la falta de descubribilidad:* En la cabecera de la estación en vivo, el carrusel de 3 herramientas (*Curva Térmica 24h*, *Clima y Normales del Mes AEMET* y *Semáforu del Paragües*) se controlaba mediante tres puntos inferiores discretos (`.hero-widgets-dots`) que resultaban prácticamente invisibles para el usuario, ocultando dos funciones asturianas clave.
+  2. *Solución Técnica y Ergonómica (Leyes 11, 14 y 18):*
+     - Retirados los puntos ciegos inferiores e incorporada una barra de 3 pastillas de cristal fino arriba (`.hero-widgets-pills-bar`) de 28px de alto.
+     - Etiquetas sintéticas y holgadas (`[ 📈 Curva ]`, `[ 🏛️ Clima ]`, `[ ☂️ Paragües ]`), adaptables a móviles estrechos sin sobrecargar ni alargar la tarjeta.
+     - Sincronización bidireccional en `app.js` (`MeteoAsturiasApp.prototype.bindCarouselDots` ampliado a `.hero-widget-pill` con `aria-selected` y salto suave `scrollTo`).
+- **Anti-caché (Ley 4):** Versión `3.0.38.26`, imports en `index.html` y `js/app.js`, y `CACHE_NAME = 'meteoasturlode-v303826-hero-pills-v1'` en `sw.js`.
+
 ## 🌧️ Radar de Lluvia por Concejos: Selector Horario a Medida (Kike & Lendo) y Precisión Territorial 78 + 4 (`v3.0.38.25`) — 2026-11-12
 - **Estado de retorno previo (Ley 2):** Commit `a294a49` (`v3.0.38.24` — Refresco rápido de radar a 3 minutos y punto exacto).
 - **Petición e instrucción de Lendo:** El mando Kike quiere saber cuándo va a llover por concejo con rango horario a medida (ej. *03:00 a 08:00*, *09:00 a 12:00*, etc.) sin saturar la pestaña de botones fijos predeterminados. Además, Lendo puntualiza expresamente la precisión territorial: *"recuerda que no son 82 concejos son 78 mas 4. miralo"*.

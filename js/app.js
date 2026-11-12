@@ -2,7 +2,7 @@ import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo, resolveSubLocali
 import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.38.24';
 import { fetchLiveRadarEcho } from './services/radarService.js?v=3.0.38.24';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=3.0.23.63';
-import { renderCurrentWeather } from './components/currentCard.js?v=3.0.25.22';
+import { renderCurrentWeather } from './components/currentCard.js?v=3.0.38.26';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.25.10';
 import { renderSurfCard } from './components/surfCard.js?v=3.0.25.2';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.38.21';
@@ -52,7 +52,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.38.25';
+export const CURRENT_APP_VERSION = '3.0.38.26';
 // Control inteligente de Auto-Prompt del Changelog (Doctrina de No-Fatiga al Usuario - Feedback Lendo):
 // Solo se incrementa ante cambios visuales grandes, módulos nuevos o novedades perceptibles.
 // En ajustes finos, calibraciones matemáticas y parches internos se mantiene para no fatigar al usuario con modales.
@@ -2546,8 +2546,11 @@ class MeteoAsturiasApp {
         const heroWidgets = document.getElementById('hero-widgets-carousel');
         if (heroWidgets) {
           heroWidgets.scrollLeft = 0;
-          const heroDots = document.querySelectorAll('#hero-widgets-dots .sensor-dot');
-          heroDots.forEach((d, i) => d.classList.toggle('active', i === 0));
+          const heroPills = document.querySelectorAll('#hero-widgets-pills-bar .hero-widget-pill');
+          heroPills.forEach((p, i) => {
+            p.classList.toggle('active', i === 0);
+            p.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+          });
         }
       } catch (e) {}
     }
@@ -2775,7 +2778,7 @@ class MeteoAsturiasApp {
     const isInteractiveZone = (target) => {
       if (!target) return false;
       return target.closest(
-        '.hero-widgets-carousel-wrap, .hero-widgets-carousel, .hero-widget-slide, .hero-widgets-dots, .clima-accordion-card, .clima-compact-summary, .mini-thermal-widget, ' +
+        '.hero-widgets-carousel-wrap, .hero-widgets-carousel, .hero-widget-slide, .hero-widgets-pills-bar, .hero-widget-pill, .hero-widgets-dots, .clima-accordion-card, .clima-compact-summary, .mini-thermal-widget, ' +
         '.cosmos-widgets-carousel-wrap, .cosmos-widgets-carousel, .cosmos-widget-slide, .cosmos-widgets-dots, .cosmos-subcard, ' +
         '.astro-year-selector-wrap, .astro-year-pills, .astro-year-pill, .astro-visibility-toolbar, .astro-visibility-toggle, .astro-vis-btn, .astro-year-highlight-card, ' +
         '.sensors-carousel-section, .sensors-nav-toolbar, .sensor-nav-pill, .sensors-carousel, .sensor-card, .sensors-dots-indicator, .carousel-dots-indicator, .sensor-dot, ' +
@@ -3829,7 +3832,7 @@ class MeteoAsturiasApp {
       if (liveContainer) {
         liveContainer.innerHTML = renderCurrentWeather(this.weatherData, this.currentConcejo, this.prefs.units, effectiveTheme, this.activeLocalidad);
         this.initSensorsCarousel();
-        this.bindCarouselDots('hero-widgets-carousel', 'hero-widgets-dots', '.hero-widget-slide');
+        this.bindCarouselDots('hero-widgets-carousel', 'hero-widgets-pills-bar', '.hero-widget-slide');
       }
       // Verificación de Alertas Rojas de Emergencia (v2.2.34)
       this.checkEmergencyRedAlerts(this.weatherData, this.currentConcejo);
@@ -4758,13 +4761,17 @@ MeteoAsturiasApp.prototype.bindCarouselDots = function(carouselId, dotsId, cardS
   if (!carousel || !dotsContainer || carousel.dataset.dotsBound === '1') return;
   carousel.dataset.dotsBound = '1';
 
-  const dots = dotsContainer.querySelectorAll('.sensor-dot');
+  let dots = dotsContainer.querySelectorAll('.sensor-dot, .hero-widget-pill');
   const cards = carousel.querySelectorAll(cardSelector);
   if (!cards.length || !dots.length) return;
 
   const updateActiveDot = (idx) => {
     dots.forEach((d, i) => {
-      d.classList.toggle('active', i === idx);
+      const isActive = (i === idx);
+      d.classList.toggle('active', isActive);
+      if (d.hasAttribute('aria-selected')) {
+        d.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      }
     });
   };
 

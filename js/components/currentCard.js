@@ -1067,6 +1067,19 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
 
       <!-- CARRUSEL COMPACTO DE HERRAMIENTAS HERO (CURVA TÉRMICA, CLIMA MENSUAL Y SEMÁFORU PARAGÜES - LEY 18) -->
       <div class="hero-widgets-carousel-wrap">
+        <!-- Selector Tripartito Compacto en Pastillas Ergonómicas (Leyes 11 y 14) -->
+        <div class="hero-widgets-pills-bar" id="hero-widgets-pills-bar" role="tablist" aria-label="Herramientas destacadas de la estación">
+          <button type="button" class="hero-widget-pill active" data-sensor-target="0" role="tab" aria-selected="true" title="Ver Curva Térmica Continua 24h">
+            <span class="hwp-icon">📈</span> <span class="hwp-text">Curva</span>
+          </button>
+          <button type="button" class="hero-widget-pill" data-sensor-target="1" role="tab" aria-selected="false" title="Ver Clima y Normales del Mes (AEMET 1991-2020)">
+            <span class="hwp-icon">🏛️</span> <span class="hwp-text">Clima</span>
+          </button>
+          <button type="button" class="hero-widget-pill" data-sensor-target="2" role="tab" aria-selected="false" title="Ver Semáforu del Paragües (Nowcasting Inmediato 8h)">
+            <span class="hwp-icon">☂️</span> <span class="hwp-text">Paragües</span>
+          </button>
+        </div>
+
         <div class="hero-widgets-carousel" id="hero-widgets-carousel">
           <!-- Slide 1: Curva Térmica Hoy -->
           <div class="hero-widget-slide">
@@ -1082,13 +1095,6 @@ export function renderCurrentWeather(data, concejo, units = 'metric', iconTheme 
           <div class="hero-widget-slide">
             ${umbrellaMarkup || ''}
           </div>
-        </div>
-
-        <!-- Paginador Interactivo de Puntos Discretos (Ley 18) -->
-        <div class="hero-widgets-dots" id="hero-widgets-dots">
-          <span class="sensor-dot active" data-sensor-target="0" title="Ver Curva Térmica 24h"></span>
-          <span class="sensor-dot" data-sensor-target="1" title="Ver Clima y Normales del Mes"></span>
-          <span class="sensor-dot" data-sensor-target="2" title="Ver Semáforu del Paragües"></span>
         </div>
       </div>
 
