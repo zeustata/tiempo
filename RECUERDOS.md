@@ -2,6 +2,16 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📜 Reforma Constitucional: Ley 11 de Verificación Obligatoria en Resolución Móvil 360px — 2026-11-12
+- **Verificación de Identidad por PIN Maestro (Ley 8):** Validado mediante huella criptográfica SHA-256 el PIN secreto de 4 cifras aportado por Lendo en conversación.
+- **Diagnóstico y Lección Operativa de Lendo («primer error. mira el buzón [...] parece que lo veo bien pero creo que tiene que estar en la constitución que hagas pruebas con la resolución de un móvil no?»):**
+  - Tras intentar condensar el mejor tramo horario en la cabecera plegable de la gráfica diurna de rutas (`routesCard.js`), el texto colisionó visualmente sobre el botón `[Gráfica ▾]` al visualizarlo en un smartphone estrecho de 360px.
+  - Aunque la Ley 11 prohibía el desborde en pantallas de 320px a 380px, faltaba la **obligación técnica imperativa de auditar y simular bajo viewport estricto de 360px** antes de dar por buena cualquier modificación.
+- **Texto Oficial Reformado en la Constitución Suprema (Parte I):**
+  - **Ley 11: Doctrina de Blindaje Anti-Desborde, Ergonomía y Verificación Móvil Obligatoria en 360px:**
+    *«Queda terminantemente prohibido dar por bueno un diseño o modificación visual probándolo únicamente en monitores de escritorio o ventanas anchas de PC. Princesa debe auditar y verificar obligatoriamente la vista bajo simulación estricta de ancho móvil (360px de viewport útil, estándar de smartphone) para comprobar que ningún texto, botón, pastilla o métrica colisione, se monte encima de otro elemento o provoque salto de línea indeseado antes de cualquier propuesta de subida.»*
+- **Sincronización Universal:** Inyectada de inmediato en los archivos de memoria de todos los proyectos (`Tiempo`, `ConstitucionIA`, `Portal_Policia_Gijon`, `Porras` y la raíz `IA/AGENTS.md`).
+
 ## 📈 Estación en Vivo: Selector Tripartito Compacto Hero (`v3.0.38.26`) — 2026-11-12
 - **Estado de retorno previo (Ley 2):** Commit `91287ba` (`v3.0.38.25` — Selector horario a medida de lluvia por concejos y precisión 78+4).
 - **Diagnóstico y Petición de Lendo («si te fijas la minitarjeta de curva térmica pasa desapercibida. hablo de las otras dos tarjetas escondidas. como podemos llamar la atención? [...] me parece bien tu opción preferida pero que no cargue la app [...] y que entre en un móvil holgadamente [...] súbela preciosa»):**
