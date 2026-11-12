@@ -4,7 +4,7 @@
  * Doctrina de Blindaje Anti-Desborde y Ergonomía Móvil Estricta (Leyes 11 y 14).
  */
 
-import { formatConcejoShortName, getDayRangeMetrics } from '../utils/radarRainService.js?v=3.0.38.25';
+import { formatConcejoShortName, getDayRangeMetrics } from '../utils/radarRainService.js?v=3.0.38.27';
 
 /**
  * Obtiene la etiqueta del día según el índice (0 = Hoy, 1 = Mañana, 2 = Pasado)

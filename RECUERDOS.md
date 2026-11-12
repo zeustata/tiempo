@@ -2,6 +2,21 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌧️ Radar de Lluvia por Concejos: Sincronización Soberana con Portada y Modelo ECMWF IFS (`v3.0.38.27`) — 2026-11-12
+- **Estado de retorno previo (Ley 2):** Commit `8589b91` (`v3.0.38.26` — Selector tripartito compacto Hero) y `3450d8a` (Reforma constitucional Ley 11).
+- **Diagnóstico y Alerta Operativa de Kike (Audio de Telegram analizado):**
+  - Kike probó el selector horario del radar para mañana viernes entre las 09:00 y las 20:00 h y constató que Gijón figuraba como el concejo más seco de Asturias con 0,0 mm y apenas un 8%-28% de probabilidad.
+  - Al contrastarlo con la portada de la app, el desglose horario de Gijón anunciaba lluvia/orballo continuado a partir de las 12:00 h del mediodía.
+  - Kike advirtió con total acierto: *«Entonces algo falla, no deben tener conexión una con la otra. Porque si en el radar me pone que en Gijón no llueve en todo el día [...] y luego en la portada pone que a partir de las 12 dan lluvia...»*.
+- **Causa Raíz:**
+  - *Divergencia entre dos fuentes de verdad:* La portada opera bajo nuestro algoritmo estrella **«Auto Híbrido de Consenso Cantábrico»** (que cruza AROME con ECMWF y rescata la lluvia frontal del Centro Europeo). En cambio, `radarRainService.js` hacía una consulta en lote directa a Open-Meteo sin parámetro de modelo, cayendo en el `best_match` crudo (AROME sin calibrar), el cual sufría un desfase frontal atlántico severo que retrasaba falsamente las precipitaciones hasta la noche.
+- **Solución Técnica Implementada (Leyes 0, 3, 4, 11 y 13):**
+  1. **Sincronización Soberana del Concejo Activo (`syncActiveConcejoRain` en `js/utils/radarRainService.js`):** Función de acoplamiento que enlaza directamente los 3 días y las 24 horas del concejo seleccionado con el objeto `this.weatherData` de la portada (Single Source of Truth). Se ejecuta automáticamente en `ensureRadarRainData()`, `refreshRadarRainRanking()` y `openRadarRainModal()`, garantizando coherencia del 100% matemática entre portada y ranking para el concejo activo.
+  2. **Adopción del Centro Europeo (`models=ecmwf_ifs`) para el Lote Regional:** Incorporado `&models=ecmwf_ifs` en la URL de `fetchConcejosRainBatch()`. Los 78 concejos (+ 4 enclaves) reciben la previsión de referencia de ECMWF, reflejando fielmente la entrada del frente atlántico mañana a mediodía (4 a 10 mm en costa y valles).
+  3. **Verificación Móvil Estricta en 360px (Ley 11):** Verificado mediante simulación Playwright/Edge en resolución de smartphone de 360px. Gijón en el rango 09:00 a 20:00 h pasa a marcar 0,7 mm (71% prob. Orbayu 🌦️), en perfecta sintonía con la portada. Capturas `captura_radar_360px.jpg` y `captura_modal_360px.jpg` archivadas sin ningún desborde.
+  4. **Anti-Caché y Doctrina de No-Fatiga (Leyes 4 y 13):** `CURRENT_APP_VERSION = '3.0.38.27'`, `CACHE_NAME = 'meteoasturlode-v303827-ecmwf-sync'`, query strings de scripts actualizados. `CURRENT_CHANGELOG_PROMPT_VERSION` preservado en `'3.0.38'` para no disparar modales molestos por calibración técnica interna.
+
+
 ## 📜 Reforma Constitucional: Ley 11 de Verificación Obligatoria en Resolución Móvil 360px — 2026-11-12
 - **Verificación de Identidad por PIN Maestro (Ley 8):** Validado mediante huella criptográfica SHA-256 el PIN secreto de 4 cifras aportado por Lendo en conversación.
 - **Diagnóstico y Lección Operativa de Lendo («primer error. mira el buzón [...] parece que lo veo bien pero creo que tiene que estar en la constitución que hagas pruebas con la resolución de un móvil no?»):**

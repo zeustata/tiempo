@@ -36,8 +36,8 @@ import { evaluateWeatherAlerts } from './utils/weatherAlerts.js?v=3.0.5';
 import { openShareModal } from './utils/shareCardGenerator.js?v=3.0.23.59';
 import { toggleWeatherSpeech, stopWeatherSpeech } from './utils/weatherSpeaker.js?v=2.0.0';
 import { getClimatologyContext, renderClimatologyModalBody } from './utils/climatologyData.js?v=3.0.25.22';
-import { fetchConcejosRainBatch } from './utils/radarRainService.js?v=3.0.38.25';
-import { renderRadarRankingCard, renderRadarRankingModalHtml } from './components/radarRankingCard.js?v=3.0.38.25';
+import { fetchConcejosRainBatch, syncActiveConcejoRain } from './utils/radarRainService.js?v=3.0.38.27';
+import { renderRadarRankingCard, renderRadarRankingModalHtml } from './components/radarRankingCard.js?v=3.0.38.27';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, previsión horaria y curvas interactivas', key: '1' },
@@ -52,7 +52,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.38.26';
+export const CURRENT_APP_VERSION = '3.0.38.27';
 // Control inteligente de Auto-Prompt del Changelog (Doctrina de No-Fatiga al Usuario - Feedback Lendo):
 // Solo se incrementa ante cambios visuales grandes, módulos nuevos o novedades perceptibles.
 // En ajustes finos, calibraciones matemáticas y parches internos se mantiene para no fatigar al usuario con modales.
@@ -3616,7 +3616,12 @@ class MeteoAsturiasApp {
       this.isLoadingRadarRain = true;
       try {
         const data = await fetchConcejosRainBatch();
-        if (data) this.radarRainMap = data;
+        if (data) {
+          this.radarRainMap = data;
+          if (this.currentConcejo && this.weatherData) {
+            syncActiveConcejoRain(this.radarRainMap, this.currentConcejo.id, this.weatherData);
+          }
+        }
       } catch (e) {
         console.warn('[MeteoAstur] Error cargando lluvia de concejos:', e);
       } finally {
@@ -3638,6 +3643,11 @@ class MeteoAsturiasApp {
           </div>
         `;
         return;
+      }
+
+      // Sincronización Soberana del concejo activo con la portada (Leyes 0 y 27)
+      if (this.currentConcejo && this.weatherData && this.radarRainMap) {
+        syncActiveConcejoRain(this.radarRainMap, this.currentConcejo.id, this.weatherData);
       }
 
       container.innerHTML = renderRadarRankingCard(
@@ -3745,6 +3755,11 @@ class MeteoAsturiasApp {
 
   openRadarRainModal() {
     document.querySelectorAll('body > #radar-concejos-modal').forEach(m => m.remove());
+
+    // Sincronización Soberana del concejo activo con la portada (Leyes 0 y 27)
+    if (this.currentConcejo && this.weatherData && this.radarRainMap) {
+      syncActiveConcejoRain(this.radarRainMap, this.currentConcejo.id, this.weatherData);
+    }
 
     const modalHtml = renderRadarRankingModalHtml(
       this.radarRainMap,

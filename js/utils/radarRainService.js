@@ -22,7 +22,7 @@ export async function fetchConcejosRainBatch(force = false) {
   try {
     const lats = CONCEJOS_ASTURIAS.map(c => c.lat.toFixed(4)).join(',');
     const lons = CONCEJOS_ASTURIAS.map(c => c.lon.toFixed(4)).join(',');
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lats}&longitude=${lons}&daily=precipitation_sum,precipitation_probability_max,weather_code&hourly=precipitation,precipitation_probability,weather_code&forecast_days=3&timezone=Europe%2FMadrid`;
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lats}&longitude=${lons}&daily=precipitation_sum,precipitation_probability_max,weather_code&hourly=precipitation,precipitation_probability,weather_code&models=ecmwf_ifs&forecast_days=3&timezone=Europe%2FMadrid`;
 
     const res = await fetch(url);
     if (!res.ok) throw new Error(`HTTP error ${res.status}`);
@@ -164,4 +164,66 @@ export function formatConcejoShortName(name) {
   if (clean === 'San Martín del Rey Aurelio') clean = 'San Martín del R.A.';
   return clean;
 }
+
+/**
+ * Sincroniza el concejo activo con los datos de weatherData de la portada
+ * para garantizar coherencia del 100% (Single Source of Truth / Leyes 0 y 27).
+ */
+export function syncActiveConcejoRain(rainMap, concejoId, weatherData) {
+  if (!rainMap || !concejoId || !weatherData?.weather) return rainMap;
+  const entry = rainMap[concejoId];
+  if (!entry) return rainMap;
+
+  const daily = weatherData.weather.daily;
+  const hourly = weatherData.weather.hourly;
+  if (!daily || !daily.time || !Array.isArray(daily.time)) return rainMap;
+
+  const days = [];
+  for (let d = 0; d < Math.min(3, daily.time.length); d++) {
+    const dateStr = daily.time[d] || '';
+    const rainMm = daily.precipitation_sum ? Math.max(0, daily.precipitation_sum[d] || 0) : 0;
+    const pop = daily.precipitation_probability_max ? Math.max(0, Math.min(100, daily.precipitation_probability_max[d] || 0)) : 0;
+    const code = daily.weather_code ? daily.weather_code[d] : 3;
+
+    let dayHourlyPrecip = [];
+    let dayHourlyPop = [];
+    let dayHourlyCode = [];
+
+    if (hourly?.time && Array.isArray(hourly.time)) {
+      const dayIndices = [];
+      for (let i = 0; i < hourly.time.length; i++) {
+        if (hourly.time[i] && hourly.time[i].startsWith(dateStr)) {
+          dayIndices.push(i);
+        }
+      }
+      if (dayIndices.length >= 24) {
+        dayHourlyPrecip = dayIndices.slice(0, 24).map(i => (hourly.precipitation && hourly.precipitation[i] != null) ? hourly.precipitation[i] : 0);
+        dayHourlyPop = dayIndices.slice(0, 24).map(i => (hourly.precipitation_probability && hourly.precipitation_probability[i] != null) ? hourly.precipitation_probability[i] : 0);
+        dayHourlyCode = dayIndices.slice(0, 24).map(i => (hourly.weather_code && hourly.weather_code[i] != null) ? hourly.weather_code[i] : 3);
+      } else {
+        dayHourlyPrecip = hourly.precipitation ? hourly.precipitation.slice(d * 24, (d + 1) * 24) : [];
+        dayHourlyPop = hourly.precipitation_probability ? hourly.precipitation_probability.slice(d * 24, (d + 1) * 24) : [];
+        dayHourlyCode = hourly.weather_code ? hourly.weather_code.slice(d * 24, (d + 1) * 24) : [];
+      }
+    }
+
+    days.push({
+      dayIndex: d,
+      date: dateStr,
+      rainMm: parseFloat(rainMm.toFixed(1)),
+      pop: Math.round(pop),
+      code: code,
+      badge: getRainBadge(rainMm, pop),
+      hourly: {
+        precip: dayHourlyPrecip,
+        pop: dayHourlyPop,
+        code: dayHourlyCode
+      }
+    });
+  }
+
+  entry.days = days;
+  return rainMap;
+}
+
 
