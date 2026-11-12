@@ -4,7 +4,7 @@
  * Doctrina de Blindaje Anti-Desborde y Ergonomía Móvil Estricta (Leyes 11 y 14).
  */
 
-import { formatConcejoShortName, getDayRangeMetrics } from '../utils/radarRainService.js?v=3.0.38.25';
+import { formatConcejoShortName, getDayRangeMetrics } from '../utils/radarRainService.js?v=3.0.38.27';
 
 /**
  * Obtiene la etiqueta del día según el índice (0 = Hoy, 1 = Mañana, 2 = Pasado)
@@ -259,9 +259,12 @@ export function renderRadarRankingCard(rainMap, selectedDayIndex = 0, selectedOr
                     ${shortName}
                   </strong>
                 </div>
-                <strong style="font-size: 0.90rem; font-weight: 800; color: ${item.day.badge.color}; white-space: nowrap; flex-shrink: 0;">
-                  ${item.day.rainMm} mm
-                </strong>
+                <div style="display: flex; align-items: center; gap: 4px; flex-shrink: 0;">
+                  <strong style="font-size: 0.90rem; font-weight: 800; color: ${item.day.badge.color}; white-space: nowrap;">
+                    ${item.day.rainMm} mm
+                  </strong>
+                  ${item.day.peakHourLabel ? `<span style="font-size: 0.65rem; font-weight: 700; color: #38bdf8; background: rgba(56,189,248,0.12); padding: 1px 5px; border-radius: 5px; white-space: nowrap;">${item.day.peakHourLabel}</span>` : ''}
+                </div>
               </div>
 
               <!-- Fila 2: Comarca + Barra a la izquierda, Insignia y Probabilidad a la derecha -->
@@ -420,9 +423,12 @@ export function renderRadarRankingModalHtml(rainMap, selectedDayIndex = 0, selec
                       ${shortName}
                     </strong>
                   </div>
-                  <strong style="font-size: 0.88rem; font-weight: 800; color: ${item.day.badge.color}; white-space: nowrap; flex-shrink: 0;">
-                    ${item.day.rainMm} mm
-                  </strong>
+                  <div style="display: flex; align-items: center; gap: 4px; flex-shrink: 0;">
+                    <strong style="font-size: 0.88rem; font-weight: 800; color: ${item.day.badge.color}; white-space: nowrap;">
+                      ${item.day.rainMm} mm
+                    </strong>
+                    ${item.day.peakHourLabel ? `<span style="font-size: 0.65rem; font-weight: 700; color: #38bdf8; background: rgba(56,189,248,0.12); padding: 1px 5px; border-radius: 5px; white-space: nowrap;">${item.day.peakHourLabel}</span>` : ''}
+                  </div>
                 </div>
 
                 <!-- Fila 2: Comarca a la izquierda, Insignia y Probabilidad a la derecha -->

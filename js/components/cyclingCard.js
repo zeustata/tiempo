@@ -104,6 +104,23 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
   // Simulación para la ruta activa que se pinta debajo
   const sim = simulateRouteConditions(activeRoute, activeHour, selectedSpeed, hourly, activeDay);
 
+  // Escáner de Mejor Hora de Salida del Día para la ruta activa (Viento + Lluvia)
+  let bestHourForRoute = activeHour;
+  let bestSimForRoute = sim;
+  if (displayHours.length > 1) {
+    let maxScore = sim ? sim.score : -999;
+    displayHours.forEach(h => {
+      const hSim = simulateRouteConditions(activeRoute, h, selectedSpeed, hourly, activeDay);
+      if (hSim && hSim.score > maxScore) {
+        maxScore = hSim.score;
+        bestHourForRoute = h;
+        bestSimForRoute = hSim;
+      }
+    });
+  }
+  const bestEndHour = Math.min(23, bestHourForRoute + Math.max(1, Math.round(parseFloat(bestSimForRoute?.totalDurationHours || 2))));
+  const bestWindowLabel = `${String(bestHourForRoute).padStart(2, '0')}:00 a ${String(bestEndHour).padStart(2, '0')}:00 h`;
+
   const speeds = [
     { value: 16, label: '16 km/h', sub: 'Paseo' },
     { value: 20, label: '20 km/h', sub: 'Tranquilo' },
@@ -379,6 +396,9 @@ export function renderCyclingCard(weatherData, concejo, selectedRouteId = null, 
       : `Viendo selección manual: <strong style="color: #facc15;">${activeRoute.name}</strong>. ${sim?.advisorMessage || ''} <span style="display:block; margin-top:3px; font-size:0.74rem; color:#94a3b8;">(💡 La más favorable en tu zona es <em style="color:var(--primary); font-weight:700;">${bestRoute.name}</em> con ${bestSim?.badgeLabel}).</span>`
     }
             </p>
+            <div style="margin-top: 6px; padding-top: 5px; border-top: 1px dashed rgba(255,255,255,0.08); font-size: 0.74rem; color: #38bdf8; display: flex; align-items: center; gap: 5px; flex-wrap: wrap;">
+              <span>⏱️ <strong>Mejor ventana ${activeDay === 'tomorrow' ? 'mañana' : 'hoy'}:</strong> ${bestWindowLabel} (${bestSimForRoute?.badgeLabel || 'Buena 👍'} · ${bestSimForRoute?.maxPop || 0}% lluvia)</span>
+            </div>
           </div>
         </div>
       </div>

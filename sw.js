@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303826-hero-pills-v1';
+const CACHE_NAME = 'meteoasturlode-v303827-smart-windows-v1';
 const STATIC_ASSETS = [
   './',
   './index.html',
