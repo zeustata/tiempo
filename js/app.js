@@ -36,8 +36,8 @@ import { evaluateWeatherAlerts } from './utils/weatherAlerts.js?v=3.0.5';
 import { openShareModal } from './utils/shareCardGenerator.js?v=3.0.23.59';
 import { toggleWeatherSpeech, stopWeatherSpeech } from './utils/weatherSpeaker.js?v=2.0.0';
 import { getClimatologyContext, renderClimatologyModalBody } from './utils/climatologyData.js?v=3.0.25.22';
-import { fetchConcejosRainBatch } from './utils/radarRainService.js?v=3.0.38.2';
-import { renderRadarRankingCard, renderRadarRankingModalHtml } from './components/radarRankingCard.js?v=3.0.38.2';
+import { fetchConcejosRainBatch } from './utils/radarRainService.js?v=3.0.38.25';
+import { renderRadarRankingCard, renderRadarRankingModalHtml } from './components/radarRankingCard.js?v=3.0.38.25';
 
 const APP_MODULES = [
   { id: 'live', icon: '📊', title: 'Estación en Vivo', desc: 'Sensores en tiempo real, previsión horaria y curvas interactivas', key: '1' },
@@ -52,7 +52,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.38.24';
+export const CURRENT_APP_VERSION = '3.0.38.25';
 // Control inteligente de Auto-Prompt del Changelog (Doctrina de No-Fatiga al Usuario - Feedback Lendo):
 // Solo se incrementa ante cambios visuales grandes, módulos nuevos o novedades perceptibles.
 // En ajustes finos, calibraciones matemáticas y parches internos se mantiene para no fatigar al usuario con modales.
@@ -88,6 +88,8 @@ class MeteoAsturiasApp {
     this.radarRainMap = null;
     this.selectedRadarRainDay = 0;
     this.selectedRadarRainOrder = 'dry';
+    this.selectedRadarRainStartHour = 0;
+    this.selectedRadarRainEndHour = 24;
     this.isLoadingRadarRain = false;
     
     this.init();
@@ -3629,7 +3631,7 @@ class MeteoAsturiasApp {
       if (!this.radarRainMap) {
         container.innerHTML = `
           <div style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 16px; text-align: center; margin-top: 14px; color: var(--text-dim); font-size: 0.8rem;">
-            <span>⏳ Analizando previsión de lluvia en los 82 concejos de Asturias...</span>
+            <span>⏳ Analizando previsión de lluvia en los 78 concejos (+ 4 enclaves de montaña)...</span>
           </div>
         `;
         return;
@@ -3639,7 +3641,9 @@ class MeteoAsturiasApp {
         this.radarRainMap,
         this.selectedRadarRainDay,
         this.selectedRadarRainOrder,
-        this.currentConcejo ? this.currentConcejo.id : null
+        this.currentConcejo ? this.currentConcejo.id : null,
+        this.selectedRadarRainStartHour,
+        this.selectedRadarRainEndHour
       );
 
       this.initRadarRainRankingEvents();
@@ -3673,6 +3677,47 @@ class MeteoAsturiasApp {
       });
     });
 
+    // 2b. Selector de Rango Horario (De HH:00 a HH:00) y Botón Reset 24h
+    const startHourSelect = document.getElementById('radar-rain-start-hour');
+    if (startHourSelect) {
+      startHourSelect.addEventListener('change', (e) => {
+        let val = parseInt(e.target.value, 10);
+        if (isNaN(val)) val = 0;
+        this.triggerHaptic();
+        this.selectedRadarRainStartHour = Math.max(0, Math.min(23, val));
+        // Auto-clamp: si la hora inicial alcanza o supera la final, adelantar la final a start+1
+        if (this.selectedRadarRainStartHour >= this.selectedRadarRainEndHour) {
+          this.selectedRadarRainEndHour = Math.min(24, this.selectedRadarRainStartHour + 1);
+        }
+        this.refreshRadarRainRanking();
+      });
+    }
+
+    const endHourSelect = document.getElementById('radar-rain-end-hour');
+    if (endHourSelect) {
+      endHourSelect.addEventListener('change', (e) => {
+        let val = parseInt(e.target.value, 10);
+        if (isNaN(val)) val = 24;
+        this.triggerHaptic();
+        this.selectedRadarRainEndHour = Math.max(1, Math.min(24, val));
+        // Auto-clamp: si la hora final es menor o igual a la inicial, retrasar la inicial a end-1
+        if (this.selectedRadarRainEndHour <= this.selectedRadarRainStartHour) {
+          this.selectedRadarRainStartHour = Math.max(0, this.selectedRadarRainEndHour - 1);
+        }
+        this.refreshRadarRainRanking();
+      });
+    }
+
+    const btnResetHours = document.getElementById('btn-radar-rain-reset-hours');
+    if (btnResetHours) {
+      btnResetHours.addEventListener('click', () => {
+        this.triggerHaptic();
+        this.selectedRadarRainStartHour = 0;
+        this.selectedRadarRainEndHour = 24;
+        this.refreshRadarRainRanking();
+      });
+    }
+
     // 3. Clic en concejo del Top 5 -> Cambia la estación y va a pestaña 'live'
     document.querySelectorAll('.radar-rain-item').forEach(item => {
       item.addEventListener('click', (e) => {
@@ -3702,7 +3747,9 @@ class MeteoAsturiasApp {
       this.radarRainMap,
       this.selectedRadarRainDay,
       this.selectedRadarRainOrder,
-      this.currentConcejo ? this.currentConcejo.id : null
+      this.currentConcejo ? this.currentConcejo.id : null,
+      this.selectedRadarRainStartHour,
+      this.selectedRadarRainEndHour
     );
 
     const tempDiv = document.createElement('div');

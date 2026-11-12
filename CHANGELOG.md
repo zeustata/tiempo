@@ -9,6 +9,20 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.25] - 2026-11-12
+### Radar de Lluvia por Concejos: Selector Horario a Medida (Petición Lendo & Mando Kike) y Precisión Territorial 78 + 4
+- **Selector de Rango de Horas a Medida (`js/components/radarRankingCard.js` + `js/app.js`)**:
+  - Incorporada una barra compacta única (`⏱️ De [HH:00] a [HH:00]`) justo debajo del conmutador *Dónde lloverá menos / más*, sin saturar de botones el radar (Leyes 11 y 14).
+  - Permite consultar ventanas horarias personalizadas (ej. *03:00 a 08:00*, *09:00 a 12:00*, etc.) con auto-ajuste inteligente de límites para evitar rangos invertidos.
+  - Botón táctil ergonómico `↺ 24h` para restablecer el día completo con un toque.
+  - Sincronización matemática total con los botones de jornada (**Hoy / Mañana / Pasado**): al cambiar de día se recalcula la lluvia horaria acumulada sobre la jornada seleccionada en ese mismo tramo.
+- **Cálculo Horario por Concejo en Lote Único (`js/utils/radarRainService.js`)**:
+  - Ampliada la llamada HTTP GET por lotes de Open-Meteo para solicitar variables horarias (`hourly=precipitation,precipitation_probability,weather_code`) en los 3 días de pronóstico.
+  - Nueva función matemática exportada `getDayRangeMetrics(dayObj, startHour, endHour)` que suma los litros de lluvia y extrae la probabilidad máxima del intervalo horario.
+- **Precisión Territorial de Asturias (78 Concejos + 4 Cumbres)**:
+  - Corregidas las referencias en textos del radar para reflejar con rigor geográfico la realidad del Principado: **78 concejos oficiales + 4 enclaves de montaña** (Angliru, Lagos de Covadonga, Pajares y Sotres), eliminando la mención errónea de "82 concejos".
+- **Anti-caché**: Versión incrementada a `v3.0.38.25` con caché `meteoasturlode-v303825-radar-hours-v1`.
+
 ## [3.0.38.24] - 2026-11-12
 ### Radar en Directo: Refresco Rápido cada 3 Minutos y Precisión en Punto Exacto
 - **Soberanía del punto exacto (`js/services/radarService.js`)**: Eliminado el arrastre del bloque 3×3 píxeles (~2,7 km) en `fetchLiveRadarEcho()`. Ahora el eco en vivo respeta estrictamente el píxel central (~900 m × 900 m) sobre las coordenadas activas, evitando que una mancha amarilla adyacente dispare *Lluvia fuerte · Bastinazu* cuando encima solo cae orbayu ligero.
@@ -4694,31 +4708,7 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 
 ### 🧭 Anemómetro: Flecha Aerodinámica de Dirección & Sentido de Viento
 - **Sustitución de Línea Simple por Veleta Aerodinámica (SVG)**: Rediseño completo de la rosa de los vientos en la *Estación en Vivo*:
-  - **Origen / Cola (arriba)**: Estilizada con aletas estabilizadoras en ámbar/slate que marcan exactamente de qué punto cardinal procede el viento.
-  - **Fuste & Punta Luminosa (abajo)**: Flecha azul cyan brillante (`#38bdf8`) que señala con total nitidez hacia dónde sopla el aire.
-  - **Ejes Guía & Punto Pivotante**: Ejes cardinales sutiles con punto central y N en color principal.
-- **Aclaración Textual de Flujo Meteorológico**: Indicación explícita bajo la velocidad (ej. `Viene del N ➔ sopla al S`) para evitar cualquier ambigüedad de lectura náutica/surf.
-- **Service Worker `v154-official` & Cache-Busting Total**: Sincronización a `?v=1.0.54` en toda la app.
-
----
-
-## [1.0.53] - 2026-08-31
-
-### 📅 Pronósticos a 10 Días: Simetría Térmica Mínima / Máxima & Eliminación de Desbordes
-- **Reordenación Simétrica de Temperaturas**:
-  - 🔻 **Mínima a la izquierda** (`#60a5fa` en azul suave con icono hacia abajo).
-  - 🔺 **Máxima a la derecha** (`#f87171` en rojo suave con icono hacia arriba).
-- **Supresión de Oscilación (Δ OSC)**: Retirada de la etiqueta de oscilación para eliminar el desborde en móviles y dotar a ambas temperaturas de un espacio generoso, centrado y equilibrado.
-- **Service Worker `v153-official` & Cache-Busting Total**: Sincronización a `?v=1.0.53` en toda la app.
-
----
-
-## [1.0.52] - 2026-08-31
-
-### 📅 Pronósticos a 10 Días: Panel Único Unificado de Métricas Diarias (Opción 1)
-- **Fusión en 1 Solo Bloque Integrado (`.d-unified-panel`)**: Agrupación completa de todas las métricas térmicas y atmosféricas en un único contenedor de cristal con 2 filas armónicas:
-  - **Fila 1 (Térmica en Línea)**: `🔺 Máx ${maxT}°` • `🔻 Mín ${minT}°` • `Δ Osc. ${maxT - minT}°`.
-  - **Línea Divisor
+  - **Origen /
 - **Alineación Perfecta al 50%**: Configuración de `grid-template-columns: 1fr 1fr` tanto para la fila de navegación (Modelo y Menú) como para la fila de acciones (Guardar y Mi Ubicación), garantizando un diseño estructurado, equilibrado y de fácil pulsación con el pulgar.
 - **Service Worker `v132-official` & Cache-Busting**: Actualización atómica de caché y recarga en caliente.
 

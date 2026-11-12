@@ -4,7 +4,7 @@
  * Doctrina de Blindaje Anti-Desborde y Ergonomía Móvil Estricta (Leyes 11 y 14).
  */
 
-import { formatConcejoShortName } from '../utils/radarRainService.js?v=3.0.38.2';
+import { formatConcejoShortName, getDayRangeMetrics } from '../utils/radarRainService.js?v=3.0.38.25';
 
 /**
  * Obtiene la etiqueta del día según el índice (0 = Hoy, 1 = Mañana, 2 = Pasado)
@@ -16,13 +16,25 @@ function getDayInfo(dayIndex) {
 }
 
 /**
- * Ordena la lista de concejos según el día seleccionado y el orden elegido ('dry' o 'wet')
+ * Genera la etiqueta descriptiva del rango de horas (ej. '24h', '09:00 - 12:00')
  */
-export function getSortedConcejos(rainMap, dayIndex = 0, order = 'dry') {
+export function formatHourRangeLabel(startHour = 0, endHour = 24) {
+  const s = Math.max(0, Math.min(23, Number(startHour) || 0));
+  const e = Math.max(s + 1, Math.min(24, Number(endHour) || 24));
+  if (s === 0 && e === 24) return 'Todo el día (24h)';
+  const pad = n => String(n).padStart(2, '0') + ':00';
+  return `${pad(s)} a ${pad(e)}`;
+}
+
+/**
+ * Ordena la lista de concejos según el día seleccionado, orden ('dry' o 'wet') y rango horario
+ */
+export function getSortedConcejos(rainMap, dayIndex = 0, order = 'dry', startHour = 0, endHour = 24) {
   if (!rainMap || typeof rainMap !== 'object') return [];
   
   const list = Object.values(rainMap).map(entry => {
-    const dayData = entry.days && entry.days[dayIndex] ? entry.days[dayIndex] : { rainMm: 0, pop: 0, badge: { label: '--', color: '#94a3b8' } };
+    const rawDay = entry.days && entry.days[dayIndex] ? entry.days[dayIndex] : null;
+    const dayData = getDayRangeMetrics(rawDay, startHour, endHour);
     return {
       concejo: entry.concejo,
       day: dayData
@@ -43,14 +55,29 @@ export function getSortedConcejos(rainMap, dayIndex = 0, order = 'dry') {
 /**
  * Renderiza la tarjeta principal compacta (Top 5) en la pestaña Radar
  */
-export function renderRadarRankingCard(rainMap, selectedDayIndex = 0, selectedOrder = 'dry', activeConcejoId = null) {
-  const sortedList = getSortedConcejos(rainMap, selectedDayIndex, selectedOrder);
+export function renderRadarRankingCard(rainMap, selectedDayIndex = 0, selectedOrder = 'dry', activeConcejoId = null, startHour = 0, endHour = 24) {
+  const sHour = Math.max(0, Math.min(23, Number(startHour) || 0));
+  const eHour = Math.max(sHour + 1, Math.min(24, Number(endHour) || 24));
+  const isCustomHours = !(sHour === 0 && eHour === 24);
+
+  const sortedList = getSortedConcejos(rainMap, selectedDayIndex, selectedOrder, sHour, eHour);
   const day0Info = getDayInfo(0);
   const day1Info = getDayInfo(1);
   const day2Info = getDayInfo(2);
 
   const top5 = sortedList.slice(0, 5);
   const maxRainInTop = Math.max(...top5.map(item => item.day.rainMm), 1.0);
+
+  // Opciones de horas para los desplegables (con fondo oscuro explícito para evitar texto blanco sobre fondo blanco en Chromium/Android)
+  const pad = n => String(n).padStart(2, '0') + ':00';
+  let startOptionsHtml = '';
+  for (let h = 0; h <= 23; h++) {
+    startOptionsHtml += `<option value="${h}" ${h === sHour ? 'selected' : ''} style="background: #1e293b; color: #f8fafc; font-weight: 600;">${pad(h)}</option>`;
+  }
+  let endOptionsHtml = '';
+  for (let h = 1; h <= 24; h++) {
+    endOptionsHtml += `<option value="${h}" ${h === eHour ? 'selected' : ''} style="background: #1e293b; color: #f8fafc; font-weight: 600;">${pad(h)}</option>`;
+  }
 
   return `
     <div class="radar-rain-card" style="
@@ -109,7 +136,7 @@ export function renderRadarRankingCard(rainMap, selectedDayIndex = 0, selectedOr
       </div>
 
       <!-- Selector de Ordenación -->
-      <div style="display: flex; gap: 6px; margin-bottom: 12px; box-sizing: border-box;">
+      <div style="display: flex; gap: 6px; margin-bottom: 8px; box-sizing: border-box;">
         <button type="button" class="btn-radar-rain-order ${selectedOrder === 'dry' ? 'active' : ''}" data-order="dry" style="
           flex: 1; min-height: 36px; border-radius: 9px; font-size: 0.74rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
           background: ${selectedOrder === 'dry' ? 'rgba(16, 185, 129, 0.2)' : 'rgba(255,255,255,0.04)'};
@@ -128,6 +155,78 @@ export function renderRadarRankingCard(rainMap, selectedDayIndex = 0, selectedOr
         ">
           <span>🌧️</span> <span>Dónde lloverá más</span>
         </button>
+      </div>
+
+      <!-- Fila Única y Compacta de Rango de Horas (Petición de Kike & Lendo - Leyes 11 y 14) -->
+      <div class="radar-rain-hours-bar" style="
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 12px;
+        padding: 6px 8px;
+        background: rgba(0, 0, 0, 0.22);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 10px;
+        box-sizing: border-box;
+        width: 100%;
+        min-width: 0;
+      ">
+        <span style="font-size: 0.82rem; flex-shrink: 0;" title="Filtrar por horas">⏱️</span>
+        <span style="font-size: 0.70rem; font-weight: 700; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; flex-shrink: 0;">De</span>
+        <select id="radar-rain-start-hour" aria-label="Hora inicial" style="
+          flex: 1;
+          min-width: 0;
+          min-height: 32px;
+          background: #0f172a;
+          border: 1px solid ${isCustomHours ? 'rgba(56, 189, 248, 0.6)' : 'rgba(255, 255, 255, 0.18)'};
+          border-radius: 7px;
+          color: ${isCustomHours ? '#38bdf8' : '#f8fafc'};
+          font-size: 0.76rem;
+          font-weight: 700;
+          padding: 2px 6px;
+          outline: none;
+          cursor: pointer;
+          color-scheme: dark;
+        ">
+          ${startOptionsHtml}
+        </select>
+        <span style="font-size: 0.70rem; font-weight: 700; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; flex-shrink: 0;">a</span>
+        <select id="radar-rain-end-hour" aria-label="Hora final" style="
+          flex: 1;
+          min-width: 0;
+          min-height: 32px;
+          background: #0f172a;
+          border: 1px solid ${isCustomHours ? 'rgba(56, 189, 248, 0.6)' : 'rgba(255, 255, 255, 0.18)'};
+          border-radius: 7px;
+          color: ${isCustomHours ? '#38bdf8' : '#f8fafc'};
+          font-size: 0.76rem;
+          font-weight: 700;
+          padding: 2px 6px;
+          outline: none;
+          cursor: pointer;
+          color-scheme: dark;
+        ">
+          ${endOptionsHtml}
+        </select>
+        ${isCustomHours ? `
+          <button type="button" id="btn-radar-rain-reset-hours" title="Restablecer a 24 horas" style="
+            background: rgba(56, 189, 248, 0.18);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            border-radius: 7px;
+            color: #38bdf8;
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 4px 6px;
+            cursor: pointer;
+            white-space: nowrap;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+          ">
+            ↺ 24h
+          </button>
+        ` : ''}
       </div>
 
       <!-- Podio Top 5 con Blindaje Anti-Desborde en 2 Niveles (Ley 11) -->
@@ -218,10 +317,14 @@ export function renderRadarRankingCard(rainMap, selectedDayIndex = 0, selectedOr
 /**
  * Renderiza el modal emergente con los 82 concejos completos
  */
-export function renderRadarRankingModalHtml(rainMap, selectedDayIndex = 0, selectedOrder = 'dry', activeConcejoId = null) {
-  const sortedList = getSortedConcejos(rainMap, selectedDayIndex, selectedOrder);
+export function renderRadarRankingModalHtml(rainMap, selectedDayIndex = 0, selectedOrder = 'dry', activeConcejoId = null, startHour = 0, endHour = 24) {
+  const sHour = Math.max(0, Math.min(23, Number(startHour) || 0));
+  const eHour = Math.max(sHour + 1, Math.min(24, Number(endHour) || 24));
+
+  const sortedList = getSortedConcejos(rainMap, selectedDayIndex, selectedOrder, sHour, eHour);
   const dayInfo = getDayInfo(selectedDayIndex);
   const orderTitle = selectedOrder === 'dry' ? 'Menor probabilidad de lluvia' : 'Mayor probabilidad de lluvia';
+  const hoursTitle = formatHourRangeLabel(sHour, eHour);
 
   return `
     <div id="radar-concejos-modal" class="modal-backdrop" style="display: none; position: fixed; inset: 0; z-index: 10000; background: rgba(0,0,0,0.72); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); align-items: flex-end; justify-content: center; padding: 0;">
@@ -245,7 +348,7 @@ export function renderRadarRankingModalHtml(rainMap, selectedDayIndex = 0, selec
               <span>🌧️</span> <span>Ranking de Lluvia en Asturias</span>
             </h3>
             <span style="font-size: 0.72rem; color: var(--text-dim); display: block; margin-top: 1px;">
-              ${dayInfo.fullLabel} • ${orderTitle}
+              ${dayInfo.fullLabel} (${hoursTitle}) • ${orderTitle}
             </span>
           </div>
           <button type="button" id="btn-close-radar-rain-modal" aria-label="Cerrar modal" style="

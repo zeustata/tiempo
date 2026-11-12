@@ -2,6 +2,17 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌧️ Radar de Lluvia por Concejos: Selector Horario a Medida (Kike & Lendo) y Precisión Territorial 78 + 4 (`v3.0.38.25`) — 2026-11-12
+- **Estado de retorno previo (Ley 2):** Commit `a294a49` (`v3.0.38.24` — Refresco rápido de radar a 3 minutos y punto exacto).
+- **Petición e instrucción de Lendo:** El mando Kike quiere saber cuándo va a llover por concejo con rango horario a medida (ej. *03:00 a 08:00*, *09:00 a 12:00*, etc.) sin saturar la pestaña de botones fijos predeterminados. Además, Lendo puntualiza expresamente la precisión territorial: *"recuerda que no son 82 concejos son 78 mas 4. miralo"*.
+- **Solución técnica implementada:**
+  1. **Llamada horaria en bloque único (`js/utils/radarRainService.js`)**: Incorporada `hourly=precipitation,precipitation_probability,weather_code` a la llamada batch de Open-Meteo, extrayendo los 3 días de 24 horas cada uno. Creada la función `getDayRangeMetrics(dayObj, startHour, endHour)` que suma milímetros y extrae la probabilidad máxima del intervalo seleccionado.
+  2. **Barra horaria compacta de fila única (`js/components/radarRankingCard.js`)**: Situada bajo los botones *Dónde lloverá menos / Dónde lloverá más*. Cuenta con dos `<select>` (`De [00:00..23:00]` a `[01:00..24:00]`), ajuste visual ambarino/celeste cuando el filtro está activo y botón táctil `↺ 24h` para restablecer el día completo sin recargar.
+  3. **Auto-clamp para rangos inválidos (`js/app.js`)**: Si el usuario sube la hora de inicio por encima de la de fin, se adelanta la de fin automáticamente (`start + 1`); si baja la de fin por debajo de la de inicio, se retrasa la de inicio (`end - 1`).
+  4. **Sincronización total con Hoy / Mañana / Pasado**: El filtro de horas se conserva y recalcula instantáneamente sobre la jornada que el usuario toque, permitiendo ver qué lloverá de 09:00 a 12:00 Hoy, Mañana o Pasado.
+  5. **Precisión geográfica constitucional (78 concejos + 4 enclaves)**: Sustituidas todas las menciones que sumaban incorrectamente "82 concejos" por la realidad geográfica oficial del Principado: **78 concejos (+ 4 enclaves de montaña: Angliru, Lagos de Covadonga, Pajares y Sotres)**.
+- **Anti-caché (Ley 4):** Actualizado `CURRENT_APP_VERSION = '3.0.38.25'`, imports en `index.html`, `js/app.js`, `js/components/radarRankingCard.js`, y `CACHE_NAME = 'meteoasturlode-v303825-radar-hours-v1'` en `sw.js`.
+
 ## 📡 Radar en Directo: Refresco Rápido y Punto Exacto (`v3.0.38.24`) — 2026-11-12
 - **Estado de retorno previo (Ley 2):** Commit `62dd0e1` (`v3.0.38.23` — Integración real de lluvia en Ciclismo).
 - **Diagnóstico resuelto (Feedback Lendo):** Al pasar una mancha amarilla adyacente (~1 km) junto a Piedras Blancas con solo orbayu ligero encima, `fetchLiveRadarEcho()` en `js/services/radarService.js` escalaba la intensidad al máximo de los 3×3 píxeles vecinos (~2,7 km), y el auto-refresco de `app.js` tardaba hasta 10 minutos (o 45 s al reabrir) en limpiar la alerta de `Lluvia fuerte · Bastinazu`.
