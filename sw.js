@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303827-ecmwf-sync';
+const CACHE_NAME = 'meteoasturlode-v303828-orbayu-fix';
 const STATIC_ASSETS = [
   './',
   './index.html',

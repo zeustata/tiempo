@@ -2,6 +2,22 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌦️ Consenso Cantábrico: Erradicación de la Ceguera Solar en Mediodía y Rescate del Orbayu Real (`v3.0.38.28`) — 2026-11-13
+- **Estado de retorno previo (Ley 2):** Commit `e8cf51b` (`v3.0.38.27` — Sincronización de lluvia con portada y ECMWF IFS).
+- **Diagnóstico en Vivo por Banco de Ventana (Lendo en directo):**
+  - Lendo constata en la costa asturiana (Castrillón / Piedras Blancas): *«estas dando un tiempo mucho más seco del que está habiendo esta mañana. orbayó mucho más de lo que decías. ahora mismo está orbayando y ya lleva tiempo y pones nublado»*.
+- **Causa Raíz Descubierta en Auditoría Profunda:**
+  - En `js/services/weatherApi.js` (`applyCantabricoConsensus`), para filtrar supuestas lloviznas fantasma bajo sol abrasador, existía una condición restrictiva `eDirectIrr < 100` y `eDirectIrrH < 100`.
+  - **El fallo geométrico/solar:** A mediodía (entre las 11:00 y las 15:00 h), la API de Open-Meteo asigna a ECMWF una radiación solar directa normal teórica de 280 a 380 W/m² por la posición cenital del sol en noviembre, **incluso con manto cubierto al 99% - 100% y lluvia activa**.
+  - Esa radiación teórica desactivaba falsamente el rescate de orballo (`isOrbayuCondition` y `isCurrentRainRescue`) y activaba `isDryCurrent`, forzando el código a `3 (Nublado seco con 0.0 mm)` y borrando la llovizna real.
+  - Además, si ambos modelos registraban precipitación (`rawPrecip >= 0.1` y `ePrecip >= 0.1`) pero AROME venía con código 3, la función promediaba los milímetros pero omitía actualizar el `weather_code`, dejando la tarjeta en "Nublado".
+- **Solución Técnica Aplicada (Leyes 0, 3, 4, 11 y 13):**
+  1. **Supresión de la Restricción Solar bajo Cielo Cubierto:** Si la nubosidad es >= 75% y no hay sol directo real (`!hasTrueSunlight`), la radiación teórica de mediodía ya no bloquea el orballo ni la lluvia.
+  2. **Actualización Obligatoria de Código WMO:** Si ambos modelos o el Centro Europeo registran precipitación activa (>= 0,1 mm) o probabilidad >= 60%, el `weather_code` adopta imperativamente código de lluvia/orballo (`51`, `61` u `80`), erradicando los falsos "Nublados" con precipitación.
+  3. **Refinamiento de `isEscampadaActive` e `isClearingSky`:** Exigen explícitamente que los códigos sean secos (<= 3) y las probabilidades bajas (< 50%), impidiendo que el orballo de frente atlántico sea clasificado erróneamente como escampada.
+  4. **Anti-Caché:** Actualizado a `CURRENT_APP_VERSION = '3.0.38.28'`, `CACHE_NAME = 'meteoasturlode-v303828-orbayu-fix'`, scripts actualizados en `index.html` y `js/app.js`. `CURRENT_CHANGELOG_PROMPT_VERSION` preservado en `'3.0.38'` (Ley 13).
+
+
 ## 🌧️ Radar de Lluvia por Concejos: Sincronización Soberana con Portada y Modelo ECMWF IFS (`v3.0.38.27`) — 2026-11-12
 - **Estado de retorno previo (Ley 2):** Commit `8589b91` (`v3.0.38.26` — Selector tripartito compacto Hero) y `3450d8a` (Reforma constitucional Ley 11).
 - **Diagnóstico y Alerta Operativa de Kike (Audio de Telegram analizado):**
