@@ -1234,6 +1234,16 @@ export function renderAstronomyView(containerId, yearOrFilter = null, visOrWeath
 
         <!-- CARRUSEL DESLIZABLE COMPACTO: NOCHE & LUNA vs DÍA & HORA MÁGICA (LEY 18) -->
         <div class="cosmos-widgets-carousel-wrap">
+          <!-- Selector Bipartito Compacto en Pastillas Ergonómicas (Leyes 11 y 14) -->
+          <div class="cosmos-widgets-pills-bar" id="cosmos-widgets-pills-bar" role="tablist" aria-label="Herramientas del Cosmos">
+            <button type="button" class="cosmos-widget-pill active" data-cosmos-target="0" role="tab" aria-selected="true" title="Ver Luna y Cielo Nocturno">
+              <span class="cwp-icon">🔭</span> <span class="cwp-text">Cielo Nocturno</span>
+            </button>
+            <button type="button" class="cosmos-widget-pill" data-cosmos-target="1" role="tab" aria-selected="false" title="Ver Luz Natural y Hora Mágica Fotográfica">
+              <span class="cwp-icon">📸</span> <span class="cwp-text">Hora Mágica</span>
+            </button>
+          </div>
+
           <div class="cosmos-widgets-carousel" id="cosmos-widgets-carousel">
             
             <!-- Slide 1: Cielo Nocturno & Luna -->
@@ -1361,12 +1371,6 @@ export function renderAstronomyView(containerId, yearOrFilter = null, visOrWeath
               </div>
             </div>
 
-          </div>
-
-          <!-- Paginador Interactivo de 2 Puntos (Ley 18) -->
-          <div class="cosmos-widgets-dots" id="cosmos-widgets-dots">
-            <span class="sensor-dot active" data-sensor-target="0" title="Ver Luna y Cielo Nocturno"></span>
-            <span class="sensor-dot" data-sensor-target="1" title="Ver Luz Natural y Hora Mágica"></span>
           </div>
         </div>
       </div>
@@ -1517,22 +1521,24 @@ export function renderAstronomyView(containerId, yearOrFilter = null, visOrWeath
 }
 
 /**
- * Inicializador del Carrusel Deslizante de Astronomía (Ley 18)
- * Sincroniza el paginador de puntos y el desplazamiento horizontal fluido
+ * Inicializador del Carrusel Deslizante de Astronomía (Leyes 11, 14 y 18)
+ * Sincroniza el selector bipartito de pastillas ergonómicas y el desplazamiento horizontal fluido
  */
 export function initCosmosCarousel() {
   const carousel = document.getElementById('cosmos-widgets-carousel');
-  const dotsContainer = document.getElementById('cosmos-widgets-dots');
-  if (!carousel || !dotsContainer || carousel.dataset.dotsBound === '1') return;
-  carousel.dataset.dotsBound = '1';
+  const pillsContainer = document.getElementById('cosmos-widgets-pills-bar');
+  if (!carousel || carousel.dataset.pillsBound === '1') return;
+  carousel.dataset.pillsBound = '1';
 
-  const dots = dotsContainer.querySelectorAll('.sensor-dot');
+  const pills = pillsContainer ? pillsContainer.querySelectorAll('.cosmos-widget-pill') : [];
   const slides = carousel.querySelectorAll('.cosmos-widget-slide');
-  if (!slides.length || !dots.length) return;
+  if (!slides.length) return;
 
-  const updateActiveDot = (idx) => {
-    dots.forEach((d, i) => {
-      d.classList.toggle('active', i === idx);
+  const updateActivePill = (idx) => {
+    pills.forEach((p, i) => {
+      const isActive = i === idx;
+      p.classList.toggle('active', isActive);
+      p.setAttribute('aria-selected', isActive ? 'true' : 'false');
     });
   };
 
@@ -1551,14 +1557,14 @@ export function initCosmosCarousel() {
     return closestIdx;
   };
 
-  dots.forEach(dot => {
-    dot.addEventListener('click', (e) => {
+  pills.forEach(pill => {
+    pill.addEventListener('click', (e) => {
       e.preventDefault();
-      const targetIdx = parseInt(dot.getAttribute('data-sensor-target') || '0', 10);
+      const targetIdx = parseInt(pill.getAttribute('data-cosmos-target') || '0', 10);
       if (slides[targetIdx]) {
         const targetLeft = slides[targetIdx].offsetLeft - carousel.offsetLeft;
         carousel.scrollTo({ left: targetLeft, behavior: 'smooth' });
-        updateActiveDot(targetIdx);
+        updateActivePill(targetIdx);
       }
     });
   });
@@ -1567,7 +1573,7 @@ export function initCosmosCarousel() {
   carousel.addEventListener('scroll', () => {
     clearTimeout(scrollTimeout);
     scrollTimeout = setTimeout(() => {
-      updateActiveDot(findClosestSlideIndex());
+      updateActivePill(findClosestSlideIndex());
     }, 45);
   }, { passive: true });
 }

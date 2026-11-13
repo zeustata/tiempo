@@ -2,6 +2,34 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🔭 Astronomía & Cosmos: Selector Bipartito Ergonómico Hero (`v3.0.38.30`) — 2026-11-13
+- **Estado de retorno previo (Ley 2):** Commit `e5ec209` (`v3.0.38.29` — Triángulo de verificación en vivo y consenso seco soberano).
+- **Diagnóstico y Propuesta de Lendo:**
+  - Lendo detecta falta de descubribilidad en el carrusel de Astronomía & Cosmos: *«te acuerdas de las tarjetas que están dentro de la tarjeta de en vivo Curva, Clima y Paraguas? teníamos los puntitos debajo y pasaba desapercibido. Le pasa lo mismo en las tarjetas Cielo nocturno y luz natural. deberíamos de cambiar esos puntos y poner un menú al estilo de lo que hicimos ayer con iconos. uno telescopio y una cámara. qué te parece?»*.
+  - La segunda tarjeta (*Luz Natural & Hora Mágica* con horas doradas y azules fotográficas) quedaba oculta tras dos puntos diminutos (`.cosmos-widgets-dots`) que ningún usuario percibía ni accionaba.
+- **Solución Técnica y Ergonómica Implementada (Leyes 11, 14 y 18):**
+  1. **Supresión de Puntos Huérfanos:** Eliminado el paginador de dos puntos inferiores (`.cosmos-widgets-dots`).
+  2. **Selector Bipartito Superior (`.cosmos-widgets-pills-bar` en `astronomyCard.js` y `css/components.css`):**
+     - Situado en cabecera inmediata sobre el carrusel para máxima descubribilidad visual.
+     - Dos pastillas simétricas al 50% de ancho: `[ 🔭 Cielo Nocturno ]` (fase lunar, iluminación, luna llena y calidad de cielo) y `[ 📸 Hora Mágica ]` (horarios de hora azul/dorada orto/ocaso y semáforo fotográfico).
+  3. **Interacción Táctil Bidireccional Fluida (`initCosmosCarousel`):** Sincronizado para que al pulsar una pastilla la vista ruede con scroll suave, y al arrastrar la tarjeta con el dedo (*swipe*), la pastilla correspondiente se active automáticamente con resplandor cyan.
+  4. **Auditoría Móvil Estricta en 360px (Ley 11):** Verificado con Edge headless en viewport de 360px. Cada pastilla dispone de 150 px de ancho útil, garantizando holgura total, cero saltos de línea y sin solapamientos. Capturas `captura_astronomia_360px.jpg` y `captura_astronomia_horamagica_360px.jpg` archivadas.
+  5. **Anti-Caché y Coherencia (Leyes 4 y 13):** `CURRENT_APP_VERSION = '3.0.38.30'`, `CACHE_NAME = 'meteoasturlode-v303830-cosmos-selector'`, scripts actualizados en `index.html` y `js/app.js`. `CURRENT_CHANGELOG_PROMPT_VERSION` preservado en `'3.0.38'`.
+
+## 📡 Hoja de Ruta: Análisis de Control Remoto y Enlaces Provisionales (Pausado para Futuro) — 2026-11-13
+- **Contexto y Petición de Lendo:**
+  - Exploración para poder ordenar modificaciones de código a Princesa desde el móvil fuera de casa, recibir un enlace provisional de pruebas cifrado accesible por datos 4G/5G (sin depender de la misma Wi-Fi), validarlo visualmente y ordenar el despliegue a GitHub.
+- **Análisis Técnico y Hallazgos:**
+  1. *Antigravity IDE vs VS Code Web Tunnel:* La distribución de Google de Antigravity IDE no incluye empaquetado el binario de túnel web propio (`antigravity-tunnel.exe` no existe en la instalación). La interfaz oficial de Antigravity reside en la aplicación de escritorio local.
+  2. *Enlaces Provisionales para Pruebas (Cloudflare Quick Tunnels):* Es viable técnicamente generar túneles temporales efímeros HTTPS (ej. `trycloudflare.com`) sin abrir puertos en el router para que Lendo inspeccione el `localhost` en su móvil por 4G antes del visto bueno final.
+  3. *Control Bidireccional por Telegram:* Requeriría un agente secundario programado en Python con la API de Gemini que modifique archivos autónomamente en disco, lo cual introduce riesgos de desalineación respecto al entorno guiado y protegido de la IDE oficial.
+- **Acuerdo y Decisión Soberana de Lendo:**
+  - Mantener el flujo de trabajo actual en **local** sobre la IDE de Antigravity en el PC (máxima seguridad, control y verificación visual en 360px).
+  - Mantener Telegram en su función actual de **Buzón Operativo**:
+    - Recepción de capturas y notas de voz enviadas por Lendo desde la calle al PC.
+    - Envío de notificaciones de finalización de tareas largas y entrega de archivos APK compilados para descarga directa en el móvil.
+  - Pausar la interactividad de control remoto para más adelante cuando haya avances nativos o madure la integración.
+
 ## ☁️ Triángulo de Verificación en Vivo: Erradicación del Falso Orbayu por PoP y Consenso Seco Soberano (`v3.0.38.29`) — 2026-11-13
 - **Estado de retorno previo (Ley 2):** Commit `dd33cea` (`v3.0.38.28` — Erradicación de la ceguera solar en mediodía).
 - **Diagnóstico en Vivo por Banco de Ventana (Lendo en directo desde la terraza de Castrillón):**

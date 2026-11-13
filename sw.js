@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303829-triangulo-seco';
+const CACHE_NAME = 'meteoasturlode-v303830-cosmos-selector';
 const STATIC_ASSETS = [
   './',
   './index.html',
