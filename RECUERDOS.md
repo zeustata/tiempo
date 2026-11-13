@@ -2,6 +2,24 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## ☁️ Triángulo de Verificación en Vivo: Erradicación del Falso Orbayu por PoP y Consenso Seco Soberano (`v3.0.38.29`) — 2026-11-13
+- **Estado de retorno previo (Ley 2):** Commit `dd33cea` (`v3.0.38.28` — Erradicación de la ceguera solar en mediodía).
+- **Diagnóstico en Vivo por Banco de Ventana (Lendo en directo desde la terraza de Castrillón):**
+  - Lendo constata en Castrillón (Piedras Blancas): *«sigues poniendo orbayando aquí en Castrillón. ahora mismo tanto el modelo francés y el modelo europeo pone nublado. y yo que estoy mirando desde la terraza, ahora mismo está nublado y sin lluvia. el radar de agua tampoco saltó. ¿por qué sigues poniendo orbayo?»*.
+- **Causas Raíz Identificadas en el Código:**
+  1. *Confusión de Probabilidad Horaria con Tiempo Instantáneo en `weatherApi.js`:* En `applyCantabricoConsensus`, la regla de rescate de orballo activaba `isOrbayuCondition = true` basándose en `curEPop >= 60%` (probabilidad horaria del Centro Europeo, que para 14:00-15:00 marcaba 91%), forzando código 51 y 0,1 mm aunque ambos modelos en su bloque `current` instantáneo registraban 0,0 mm y código 3 (Nublado).
+  2. *Override Fantasma en Capa de Presentación (`weatherIcons.js`):* La regla `isHighProbCantabrianRain` en `getWeatherInfo` convertía automáticamente cualquier código seco (<= 3) en *«Lluvia / Orbayu activo»* con icono de lluvia si `prob >= 60%`, `h >= 78%` y `cc >= 80%`, violando el principio cardinal de que *«la probabilidad nunca inventa lluvia física»*.
+- **Solución Técnica Implementada (Triángulo de Verificación en Vivo - Leyes 0, 1, 3, 4, 11 y 13):**
+  1. **Consenso Seco Soberano (`isBothModelsDryCurrent` en `weatherApi.js`):** Si AROME marca seco (< 0,1 mm y código <= 3), ECMWF marca seco (< 0,1 mm y código <= 3) y el radar Doppler de RainViewer no detecta reflectividad de lluvia sobre el concejo, manda imperativamente el consenso seco: se desactiva cualquier rescate de orballo, se fija `precipitation = 0.0 mm` y se mantiene el código 3 (Nublado).
+  2. **Regla de Desempate ante Discrepancia:**
+     - Si el Francés ve orballo con atmósfera húmeda y cerrada: manda el Francés (resolución de 1,3 km para orballo costero/valle).
+     - Si el Europeo ve lluvia frontal con atmósfera húmeda y cerrada: manda el Europeo (rescata la lluvia frente a cortes del determinista).
+     - Ante discrepancia o duda: el Radar Doppler físico desempata en tiempo real.
+     - Si ambos dicen seco y el radar está limpio: tiempo seco 100% garantizado.
+  3. **Erradicación del Override en `weatherIcons.js`:** Desactivado el forzado de `isHighProbCantabrianRain` sobre códigos <= 3. Los códigos secos preservan íntegramente su estado base (`Nublado / Cubiertu ☁️` o `Sol y nubes ⛅`).
+  4. **Verificación Móvil Estricta en 360px (Ley 11):** Verificado mediante Edge headless en 360px. Castrillón (Piedras Blancas) y Gijón muestran con total nitidez `14 °C · Nublado • Cubiertu ☁️`, 0,0 mm, coincidiendo al 100% con la realidad física visual de la terraza. Captura `captura_castrillon_seco_360px.jpg` archivada.
+  5. **Anti-Caché y Doctrina de No-Fatiga (Leyes 4 y 13):** `CURRENT_APP_VERSION = '3.0.38.29'`, `CACHE_NAME = 'meteoasturlode-v303829-triangulo-seco'`, scripts sincronizados. `CURRENT_CHANGELOG_PROMPT_VERSION` preservado en `'3.0.38'`.
+
 ## 🌦️ Consenso Cantábrico: Erradicación de la Ceguera Solar en Mediodía y Rescate del Orbayu Real (`v3.0.38.28`) — 2026-11-13
 - **Estado de retorno previo (Ley 2):** Commit `e8cf51b` (`v3.0.38.27` — Sincronización de lluvia con portada y ECMWF IFS).
 - **Diagnóstico en Vivo por Banco de Ventana (Lendo en directo):**

@@ -344,13 +344,23 @@ function applyCantabricoConsensus(weather, consensus, radarEcho = null) {
       }
     }
 
+    const hasRadarRain = Boolean(radarEcho && radarEcho.hasEcho && radarEcho.echo && radarEcho.echo.isRain);
+
+    // Consenso Seco en tiempo actual (Banco de Ventana Lendo & Triángulo de Verificación):
+    // Si AROME marca seco (< 0.1 mm y código <= 3), ECMWF marca seco (< 0.1 mm y código <= 3)
+    // y el radar táctico no detecta eco de precipitación, MANDA EL CONSENSO SECO (Nublado / Seco)
+    // y se anula cualquier orballo fantasma derivado de probabilidad estadística horaria.
+    const isBothModelsDryCurrent = (rawPrecip < 0.1 && ePrecip < 0.1) &&
+      (rawCode <= 3 && (eCode === null || eCode <= 3)) &&
+      !hasRadarRain;
+
     // B) Rescate Soberano de Lluvia / Orbayu Real de ECMWF en tiempo actual:
     // RESGUARDO DE ESCAMPADA INMEDIATA (Feedback de Lendo - Ley 27):
     // Solo se respeta la escampada si ninguno de los modelos prevé lluvia activa (códigos < 50),
     // no hay orballo en ECMWF (eCode < 50 y curEPop < 60%) y precipitación residual < 0.2 mm.
-    const isEscampadaActive = rawPrecip < 0.1 && rawCode <= 3 && ePrecip < 0.2 && (eCode === null || eCode <= 3) && curEPop < 60;
+    const isEscampadaActive = isBothModelsDryCurrent || (rawPrecip < 0.1 && rawCode <= 3 && ePrecip < 0.2 && (eCode === null || eCode <= 3) && curEPop < 60);
 
-    const isCurrentRainRescue = !isEscampadaActive && (
+    const isCurrentRainRescue = !isBothModelsDryCurrent && !isEscampadaActive && (
       (ePrecip >= 0.3) ||
       (ePrecip >= 0.1 && (rawCode >= 50 || (eCode && eCode >= 50) || curEPop >= 60))
     ) && (hum >= 70 || ecmwfCloud >= 65) && !hasTrueSunlight;
@@ -393,10 +403,12 @@ function applyCantabricoConsensus(weather, consensus, radarEcho = null) {
       curEPop < 50 &&
       (hasTrueSunlight || (Math.max(rawCloud, ecmwfCloud) < 70 && (rawDirectIrr >= 150 || eDirectIrr >= 250)));
 
-    const isAromeConfirmedDrizzle = !isClearingSky && (rawCode >= 50 && rawCode <= 57) && (Math.max(rawCloud, ecmwfCloud) >= 70) && hum >= 65 && !hasTrueSunlight;
-    const isOrbayuCondition = !isClearingSky && (
+    const isAromeConfirmedDrizzle = !isClearingSky && !isBothModelsDryCurrent && (rawCode >= 50 && rawCode <= 57) && (Math.max(rawCloud, ecmwfCloud) >= 70) && hum >= 65 && !hasTrueSunlight;
+    const isEcmwfConfirmedDrizzle = !isClearingSky && !isBothModelsDryCurrent && ((eCode && eCode >= 50 && eCode <= 57) || ePrecip >= 0.1) && (Math.max(rawCloud, ecmwfCloud) >= 70) && hum >= 70 && !hasTrueSunlight;
+    const isOrbayuCondition = !isClearingSky && !isBothModelsDryCurrent && (
       isAromeConfirmedDrizzle ||
-      ((curEPop >= 60 || (eCode && eCode >= 50)) && hum >= 70 && Math.max(rawCloud, ecmwfCloud) >= 75 && !hasTrueSunlight)
+      isEcmwfConfirmedDrizzle ||
+      (hasRadarRain && Math.max(rawCloud, ecmwfCloud) >= 75)
     );
 
     if (isOrbayuCondition) {
@@ -426,9 +438,9 @@ function applyCantabricoConsensus(weather, consensus, radarEcho = null) {
     }
 
     // C) SOBERANÍA FÍSICA Y ARMONIZACIÓN DE FALSOS NUBLADOS / RESIDUOS DE LLUVIA:
-    const isDryCurrent = ((weather.current.precipitation < 0.1 || !weather.current.precipitation) && !isOrbayuCondition && !isCurrentRainRescue) || isSolarDrizzleGhost || isClearingSky;
-    if (isDryCurrent && (weather.current.weather_code >= 50 || isClearingSky)) {
-      if (rawPrecip < 0.5 || isClearingSky) {
+    const isDryCurrent = ((weather.current.precipitation < 0.1 || !weather.current.precipitation) && !isOrbayuCondition && !isCurrentRainRescue) || isSolarDrizzleGhost || isClearingSky || isBothModelsDryCurrent;
+    if (isDryCurrent && (weather.current.weather_code >= 50 || isClearingSky || isBothModelsDryCurrent)) {
+      if (rawPrecip < 0.5 || isClearingSky || isBothModelsDryCurrent) {
         weather.current.precipitation = 0;
         if (weather.current.rain != null) weather.current.rain = 0;
       }

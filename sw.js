@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303828-orbayu-fix';
+const CACHE_NAME = 'meteoasturlode-v303829-triangulo-seco';
 const STATIC_ASSETS = [
   './',
   './index.html',
