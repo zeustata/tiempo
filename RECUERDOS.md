@@ -2,6 +2,43 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## ⚙️ Mapa Maestro de Engranajes del Motor Meteorológico y de Ubicación (Guía de Referencia para Mejoras Futuras) — 2026-11-14
+Esta sección documenta cómo interactúan entre sí todos los engranajes críticos de **MeteoAstur Lode** para que cualquier ajuste futuro se realice con bisturí sin descalibrar otros módulos:
+
+1. **Engranaje 1: Radar Doppler en Directo (`js/services/radarService.js` y `MeteoWeatherEngine.java`)**
+   - **Cálculo de Tesela Slippy:** `latLonToTilePixel(lat, lon, zoom = 7)` obtiene el píxel exacto (`px, py` en lienzo de 256×256, ~1.2 km de resolución) de la ubicación activa.
+   - **Soberanía del Píxel Único (Cero Barrido 3×3):** Se evalúa **única y exclusivamente el píxel central (`px, py`)** de las coordenadas de la localidad. Prohibido barrer píxeles vecinos para no arrastrar ecos de mar abierto o concejos colindantes.
+   - **Filtro Anti-Máscara Gris/Beige de RainViewer (`classifyRadarColor`):** Exige opacidad `alpha >= 180` y saturación cromática `max(R,G,B) - min(R,G,B) >= 65`. Cualquier píxel neutro/pardo de nubosidad seca devuelve estrictamente `dry` (`isRain: false, precipEst: 0`).
+   - **Mando en Lluvia Real (`hasRadarRain`):** Si el píxel supera el filtro cromático y de opacidad, desempata por encima de los modelos numéricos y activa el distintivo `📡 RADAR`.
+
+2. **Engranaje 2: Desempate en Vivo, Falso Orbayu vs. Orbayu Real (`js/services/weatherApi.js`)**
+   - **Corte contra el Falso Orbayu (`isRadarAndEcmwfDryVeto` / `is15MinAndRadarDry` / `hasEcmwfSolarDry`):**
+     - Si el **Radar Doppler está seco** (`!hasRadarRain`) **Y** se cumple cualquiera de estas tres condiciones:
+       a) El modelo europeo `ECMWF` marca `0.0 mm` tanto en `current` como en `hourly[nowHour]` (`isEcmwfDryNow`), o
+       b) El pluviómetro instantáneo de 15 minutos (`rawPrecip < 0.1 mm`) ya marca `0.0 mm` con código seco (`rawCode <= 3`) o con apenas `<= 0.1 mm` residual en ECMWF (`is15MinAndRadarDry`), o
+       c) Existe **claridad solar / resol fuerte** (`direct_normal_irradiance >= 100 W/m²` o `shortwave_radiation >= 200 W/m²` con `< 0.5 mm`, `hasEcmwfSolarDry`):
+     - 👉 **Efecto:** Se anula cualquier código `51-61` residual, fijando **`0.0 mm` y `Nublado • Cubiertu` (`código 3`)** tanto en el estado en vivo (`weather.current`) como en la ficha de la hora actual (`weather.hourly[nowHour]`).
+   - **Preservación del Orbayu Real (`isOrbayuCondition`):**
+     - Cuando cae calabobos/orbayu real bajo «panza de burro» cerrada, **no hay resol** (`radiación directa < 100 W/m²`) y el **pluviómetro instantáneo de 15 minutos registra agua (`rawPrecip >= 0.1 mm`)** respaldado por saturación cantábrica. En ese caso, sigue mostrándose `Lluvia débil • Orbayu` (`0.1 - 0.3 mm`, máx. `0.4 mm` / 1 gota) aunque las microgotas queden por debajo del haz del radar.
+   - **Coherencia en Modelos Individuales (`applyStandalonePhysicalSovereignty`):**
+     - Cuando el usuario selecciona un modelo individual (`AROME` o `ECMWF`), el bloque `0. Sincronización de Nowcasting` tiene prohibido machacar un `weather.current` seco (`0.0 mm`) con la media horaria salvo que el Radar Doppler confirme lluvia (`hasRadarRainStandalone`).
+
+3. **Engranaje 3: Carrusel Horario de 72h y Asesor de Paraguas (`weatherApi.js` y `js/utils/umbrellaAdvisor.js`)**
+   - **Ponderación Horaria por Consenso:** Si en una hora futura `AROME` predice lluvia en solitario mientras `ECMWF` prevé `0.0 mm` seco, se anula (`ePop < 35%`) o se pondera al `35%` (`precip * 0.35`), impidiendo que un pico aislado dispare falsas alarmas rojas de *Bastinazu* (`>= 1.5 mm/h`).
+   - **Limpieza Solar Horaria (`hasHourlySun`):** Si una hora tiene `< 0.5 mm` residuales pero prevé radiación solar alta (`>= 100 W/m²` directa o `>= 170 W/m²` onda corta), se limpia a `0.0 mm` y nube blanca.
+   - **Sincronización del Paraguas (`umbrellaAdvisor.js`):** Si `isCurrentlyRaining` es `false`, el escaneo de las próximas 8 horas arranca en `startIndex + 1` (la siguiente hora en punto), 100% alineado con el carrusel horario.
+
+4. **Engranaje 4: Avisos Oficiales de AEMET (`js/utils/weatherAlerts.js`)**
+   - **Ventana de Proximidad de 12 Horas (`UPCOMING_WINDOW_MS = 12h`):** Evalúa tanto `expires` (fin) como `onset` (inicio) en las 5 zonas oficiales de Asturias (78 concejos).
+   - **Más de 12 h antes del inicio:** Modo 100% silencioso en *Estación en Vivo* para no contradecir el tiempo actual en calma.
+   - **Entre 12 h antes y el inicio:** Muestra `⏳ PRÓXIMO AVISO AEMET (Desde HH:MM)` y el tramo completo `De [día, hora] a [día, hora]`.
+   - **En vigor (`now >= onset`):** Muestra `🚨 AVISOS METEOROLÓGICOS ACTIVOS`.
+
+5. **Engranaje 5: Puente Nativo GPS Android 14/15/16 TWA y Widget de 78 Concejos (`LauncherActivity.java`, `DelegationService.java`, `MeteoWeatherEngine.java` y `js/app.js`)**
+   - **Permiso en Primer Plano + Inyección URL:** `LauncherActivity` solicita `ACCESS_FINE_LOCATION` en primer plano (evitando el bloqueo `BAL_BLOCK` de Android 15/16 en `targetSdk 36`), obtiene la coordenada mediante `FusedLocationProviderClient` / `LocationManager` y la pasa a la TWA en `?nlat=...&nlon=...`.
+   - **Respaldo en 0 ms en `locateUser()` (`js/app.js`):** Si Chrome rechaza `navigator.geolocation` por tener un bloqueo cacheado del dominio (`err.code === 1`), `tryNativeFallback` aplica instantáneamente `this.nativeAndroidCoords` (`meteoastur_native_coords`) y confirma con `✓ Aquí`.
+   - **Widget Completo:** `MeteoWeatherEngine.java` incluye los **78 concejos de Asturias** más sublocalidades clave (`Piedras Blancas`, `Salinas`, `Lugones`, `La Fresneda`, `Candás`, `Luanco`, etc.).
+
 ## ☁️ Blindaje de Escampada en Sensor de 15 Minutos y Coherencia Solar entre Modelos (`v3.0.38.35`) — 2026-11-14
 - **Estado de retorno previo (Ley 2):** Commit `bf709e3` (`v3.0.38.34`).
 - **Diagnóstico en Vivo por Banco de Ventana (Lendo en Piedras Blancas, 14:20 h):**
