@@ -52,7 +52,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.38.32';
+export const CURRENT_APP_VERSION = '3.0.38.33';
 // Control inteligente de Auto-Prompt del Changelog (Doctrina de No-Fatiga al Usuario - Feedback Lendo):
 // Solo se incrementa ante cambios visuales grandes, módulos nuevos o novedades perceptibles.
 // En ajustes finos, calibraciones matemáticas y parches internos se mantiene para no fatigar al usuario con modales.
@@ -63,6 +63,33 @@ class MeteoAsturiasApp {
     this.prefs = getPreferences();
     const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
     const urlConcejo = urlParams ? (urlParams.get('concejo') || urlParams.get('c')) : null;
+    this.nativeAndroidCoords = null;
+    if (urlParams && urlParams.get('nlat') && urlParams.get('nlon')) {
+      const nLat = parseFloat(urlParams.get('nlat'));
+      const nLon = parseFloat(urlParams.get('nlon'));
+      if (!isNaN(nLat) && !isNaN(nLon)) {
+        this.nativeAndroidCoords = { lat: nLat, lon: nLon, ts: Date.now() };
+        try {
+          localStorage.setItem('meteoastur_native_coords', JSON.stringify(this.nativeAndroidCoords));
+        } catch (e) {}
+        if (!urlConcejo && this.prefs.autoLocation !== false) {
+          const closestNative = findClosestConcejo(nLat, nLon);
+          if (closestNative) {
+            this.prefs.lastConcejo = closestNative.id;
+            this.prefs.lastLocalidad = resolveSubLocalidad(closestNative.id, nLat, nLon);
+            this.prefs.lastCoords = { lat: nLat, lon: nLon };
+            savePreferences(this.prefs);
+          }
+        }
+      }
+    } else {
+      try {
+        const savedNative = localStorage.getItem('meteoastur_native_coords');
+        if (savedNative) {
+          this.nativeAndroidCoords = JSON.parse(savedNative);
+        }
+      } catch (e) {}
+    }
     this.currentConcejo = (urlConcejo && getConcejoById(urlConcejo)) || getConcejoById(this.prefs.lastConcejo) || CONCEJOS_ASTURIAS[0];
     this.currentModel = getModelById(this.prefs.model) || getDefaultModel();
     this.weatherData = null;
@@ -3147,11 +3174,6 @@ class MeteoAsturiasApp {
 
   locateUser(options = {}) {
     const { silent = false } = options;
-    if (!navigator.geolocation) {
-      if (!silent) alert('Tu dispositivo o navegador no soporta geolocalización.');
-      return;
-    }
-
     const gpsBtn = document.getElementById('btn-gps');
     const gpsLabel = document.getElementById('gps-btn-label');
     if (gpsBtn && !silent && gpsLabel) {
@@ -3177,37 +3199,61 @@ class MeteoAsturiasApp {
           this.switchConcejo(closest.id);
         } else {
           // Si ya estamos en el concejo detectado, refrescar componentes para reflejar la sublocalidad activa (ej. Salinas o La Fresneda)
+          this.updateSearchTriggerDisplay();
           this.renderAllComponents();
-          if (!silent && gpsLabel) {
-            gpsLabel.textContent = '✓ Aquí';
-            setTimeout(() => {
-              this.updateGpsButtonDisplay();
-            }, 1400);
-          }
+        }
+        if (!silent && gpsLabel) {
+          gpsLabel.textContent = '✓ Aquí';
+          setTimeout(() => {
+            this.updateGpsButtonDisplay();
+          }, 1400);
         }
       }
     };
 
-    const onGeoError = () => {
+    const tryNativeFallback = (err) => {
+      if (this.nativeAndroidCoords && typeof this.nativeAndroidCoords.lat === 'number' && typeof this.nativeAndroidCoords.lon === 'number') {
+        onGeoSuccess({
+          coords: {
+            latitude: this.nativeAndroidCoords.lat,
+            longitude: this.nativeAndroidCoords.lon
+          }
+        });
+        return;
+      }
+      this.updateGpsButtonDisplay();
+      if (!silent) {
+        alert('No pudimos acceder a tu ubicación GPS. Asegúrate de dar permisos de ubicación precisa en tu dispositivo.');
+      } else {
+        console.warn('[MeteoAstur] Auto-ubicación silenciosa no pudo obtener coordenadas:', err);
+      }
+    };
+
+    if (!navigator.geolocation) {
+      tryNativeFallback(null);
+      return;
+    }
+
+    const onGeoError = (firstErr) => {
+      // Si el permiso web está bloqueado en caché (code 1) o ya disponemos de coordenadas nativas Android, usamos el respaldo al instante
+      if ((firstErr && firstErr.code === 1) || (this.nativeAndroidCoords && typeof this.nativeAndroidCoords.lat === 'number')) {
+        tryNativeFallback(firstErr);
+        return;
+      }
       // Intento secundario con menor precisión si el chip satelital tarda en fijar posición
       navigator.geolocation.getCurrentPosition(
         onGeoSuccess,
         (err) => {
-          this.updateGpsButtonDisplay();
-          if (!silent) {
-            alert('No pudimos acceder a tu ubicación GPS. Asegúrate de dar permisos de ubicación precisa en tu dispositivo.');
-          } else {
-            console.warn('[MeteoAstur] Auto-ubicación silenciosa no pudo obtener coordenadas:', err);
-          }
+          tryNativeFallback(err);
         },
-        { enableHighAccuracy: false, timeout: 6000 }
+        { enableHighAccuracy: false, timeout: 4500, maximumAge: 60000 }
       );
     };
 
     navigator.geolocation.getCurrentPosition(
       onGeoSuccess,
       onGeoError,
-      { enableHighAccuracy: true, timeout: 8000, maximumAge: 30000 }
+      { enableHighAccuracy: true, timeout: 5500, maximumAge: 30000 }
     );
   }
 

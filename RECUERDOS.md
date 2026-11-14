@@ -2,6 +2,24 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📍 Puente Nativo de Ubicación GPS Android TWA & Widget (`v3.0.38.33`) — 2026-11-14
+- **Estado de retorno previo (Ley 2):** Commit `fa8f112` (`v3.0.38.32`).
+- **Diagnóstico Técnico (Feedback Lendo en pruebas de Widget + App Android):**
+  - El widget nativo de Android detectaba y actualizaba correctamente la ubicación en Piedras Blancas (`Castrillón`), pero al entrar a la app TWA y pulsar `Auto GPS` saltaba el aviso de Chrome `zeustata.github.io dice: No pudimos acceder a tu ubicación GPS`.
+  - **Causas raíz identificadas:**
+    1. *Bloqueo en segundo plano de Android 14/15/16 (`BAL_BLOCK`, `targetSdk 36`):* La librería estándar `com.google.androidbrowserhelper:locationdelegation:1.1.2` intenta lanzar `PermissionRequestActivity` desde `DelegationService` (un `Service` en segundo plano), lo cual Android 15/16 bloquea silenciosamente y devuelve `PERMISSION_DENIED` a Chrome.
+    2. *Caché persistente de denegación por sitio en Chrome:* Cuando Chrome recibe un rechazo en una TWA, guarda en su base de datos interna del navegador el bloqueo para `https://zeustata.github.io`, rechazando `navigator.geolocation.getCurrentPosition` en 0 ms incluso después de reinstalar la APK y conceder permisos nativos a la app.
+- **Solución Integral Implementada (Web `v3.0.38.33` + Android `versionCode 13`):**
+  1. **Solicitud de Permiso en Primer Plano y Puente URL en `LauncherActivity.java`:**
+     - La actividad principal solicita `ACCESS_FINE_LOCATION` y `ACCESS_COARSE_LOCATION` en primer plano antes de lanzar la TWA, obtiene la coordenada real de alta precisión mediante `FusedLocationProviderClient` / `LocationManager` y la inyecta en la URL de arranque (`?nlat=...&nlon=...`).
+  2. **Interceptor Directo en `DelegationService.java`:**
+     - Añadido un `ExtraCommandHandler` propio delante de la librería de Google que responde a `checkAndroidLocationPermission` y `startLocation` directamente desde el motor GPS nativo sin abrir actividades en segundo plano.
+  3. **Puente Receptor y Respaldo Instantáneo en `js/app.js` (`v3.0.38.33`):**
+     - Lectura automática de `?nlat` y `?nlon` al iniciar la app, persistiendo `meteoastur_native_coords` y resolviendo al instante el concejo y la sublocalidad más cercana (`Piedras Blancas • Castrillón`).
+     - En `locateUser()` (botón `Auto GPS`), si `navigator.geolocation` falla o tiene un bloqueo en caché de Chrome (`err.code === 1`), conmuta en 0 ms a las coordenadas nativas de Android (`tryNativeFallback`) sin mostrar alerta de error.
+  4. **Cobertura Total en Widget (`MeteoWeatherEngine.java`):**
+     - Ampliado el catálogo del widget de 20 a los **78 concejos de Asturias** más localidades clave (`Piedras Blancas`, `Salinas`, `Raíces Nuevo`, `Lugones`, `La Fresneda`, `Candás`, `Luanco`, etc.), e integrado `FusedLocationProviderClient` + `LocationManager` y el filtro estricto de píxel de radar (`alpha >= 180` y saturación `>= 65`).
+
 ## 📡 Blindaje Estricto de Radar en Píxel Único y Erradicación de Falsas Alarmas de Lluvia (`v3.0.38.32`) — 2026-11-14
 - **Estado de retorno previo (Ley 2):** Commit `26fd5f8` (`v3.0.38.31`).
 - **Diagnóstico en Vivo por Banco de Ventana (Lendo en directo):**

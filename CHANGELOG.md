@@ -9,6 +9,14 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.33] - 2026-11-14
+### Puente Nativo de Geolocalización Android TWA (`nlat`/`nlon`) y Respaldo Instantáneo en Auto-GPS
+- **Sincronización Nativa Android -> Web (`js/app.js`)**:
+  - Soporte nativo para recibir coordenadas GPS de alta precisión (`?nlat=...&nlon=...`) inyectadas por `LauncherActivity` de la app Android TWA al arrancar.
+  - Resolución inmediata en arranque del concejo y sublocalidad más cercana (ej. *Piedras Blancas • Castrillón*) y persistencia en `meteoastur_native_coords`.
+  - Respaldo instantáneo (`tryNativeFallback`) en `locateUser()` al pulsar el botón **Auto GPS**: si el motor web de Chrome rechaza la petición por caché de permisos del navegador (`code === 1`), aplica en 0 ms las coordenadas del GPS nativo de Android y confirma con `✓ Aquí`.
+- **Anti-caché**: Versión incrementada a `v3.0.38.33` con caché `meteoasturlode-v303833-native-gps-bridge`.
+
 ## [3.0.38.32] - 2026-11-14
 ### Radar en Directo y Consenso Horario: Soberanía del Píxel Exacto, Filtro Anti-Máscara Gris y Veto 2 de 3
 - **Filtro Cromático y Píxel Central Estricto (`js/services/radarService.js`)**:

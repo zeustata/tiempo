@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303832-radar-seco-pixel';
+const CACHE_NAME = 'meteoasturlode-v303833-gps-bridge';
 const STATIC_ASSETS = [
   './',
   './index.html',
