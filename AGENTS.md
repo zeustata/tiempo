@@ -157,6 +157,10 @@
 - **Contenido Limpio y Sin Fórmulas:** Los avisos deben ser breves, claros, redactados en texto natural y libres de tecnicismos excesivos o sintaxis rota.
 - **Universalidad Ecosistémica:** Esta doctrina aplica a todos los proyectos presentes y futuros del ecosistema zeustata (`Tiempo`, `ConstitucionIA`, `Portal_Policia_Gijon`, `Porras`, `Biweger`, etc.).
 
+### 24. Doctrina de Sincronización Automática con Google Drive en Cada Despliegue (Rescate en la Nube Siempre al Día)
+- **Sincronización Dual Obligatoria (GitHub + Google Drive):** Cada vez que Lendo autorice subir una actualización a la red (git push tras haberla verificado previamente en local), Princesa debe actualizar de forma automática e inmediata la copia maestra de rescate en el Google Drive de Lendo (zeustata@gmail.com), sobrescribiendo el archivo COPIA_SEGURIDAD_METEOASTUR_CLAVES_Y_WIDGETS.zip (ID 1eSiXuuNMoFGqaBZ64eqEsl73F_e2mrOz) mediante el conector oficial gdrive mutate update 1eSiXuuNMoFGqaBZ64eqEsl73F_e2mrOz (además de replicarlo en G:\Anigravity\).
+- **Contenido Íntegro de la Copia en la Nube:** El archivo maestro en Google Drive debe incluir siempre la versión recién actualizada de la Constitución Suprema y Leyes (AGENTS.md), la memoria técnica completa (RECUERDOS.md), la bóveda de llaves de firma (Boveda_Seguridad_Keystore), el proyecto nativo de Android y sus guardianes (MeteoAstur_Android_Widget + erify_pre_aab.py), el sistema de avisos de Telegram (Buzon_Telegram) y el script de restauración (RESTAURAR_TODO_ZEUSTATA.bat), garantizando que ante cualquier cambio o formateo de ordenador el rescate desde la nube contenga hasta el último cambio desplegado.
+
 ## 📑 PARTE II: LEYES ESPECÍFICAS DEL PROYECTO: METEOASTUR LODE (TIEMPO)
 
 1. **Versionado Obligatorio y Salto Incondicional de Changelog:**
