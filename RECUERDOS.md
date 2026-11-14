@@ -2,6 +2,24 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🛡️ Protocolo de Blindaje Pre-AAB: Filtro Obligatorio de 2 Barreras Antes de Subir a Google Play — 2026-11-14
+*Regla innegociable acordada con Lendo tras la incidencia del GPS en `versionCode 10`: lo que está en GitHub (web) se corrige en 2 minutos, pero lo que va en un `.aab` a Google Play tarda horas o días en revisarse. Queda terminantemente prohibido subir un `.aab` a Google Play Console sin superar antes estas 2 barreras:*
+
+1. **Barrera 1 — Auditoría Automática de Integridad Nativa (`verify_pre_aab.py`):**
+   - Antes de dar por válido cualquier paquete compilado en `C:\Users\NUC\Downloads\IA\MeteoAstur_Android_Widget`, es obligatorio ejecutar `python C:\Users\NUC\Downloads\IA\MeteoAstur_Android_Widget\verify_pre_aab.py`, que verifica automáticamente los **6 puntos críticos**:
+     1) `LauncherActivity.java`: Solicitud de permiso `ACCESS_FINE_LOCATION` en primer plano + `ensureLocationAndLaunchTwa` + inyección de `?nlat=&nlon=` + refresco de widgets en `onResume`/`onStop`.
+     2) `DelegationService.java`: Interceptor directo de `checkAndroidLocationPermission` y `startLocation` (sin bloqueo `BAL_BLOCK` en Android 14/15/16) + `LocationDelegationExtraCommandHandler`.
+     3) `MeteoWeatherEngine.java`: Los **78 concejos de Asturias** + localidades clave + motor dual `FusedLocationProviderClient` y `LocationManager` + filtro estricto de píxel de radar (`alpha >= 180` y saturación `>= 65`).
+     4) `AndroidManifest.xml`: Permisos de ubicación (`FINE` y `COARSE`), `DelegationService` y los 3 receptores de Widgets (`Large`, `Medium`, `Small`).
+     5) `app/build.gradle`: Librerías `androidbrowserhelper`, `locationdelegation`, `play-services-location` y firma con `meteoastur-release-key.jks`.
+     6) `assetlinks.json`: Verificación en vivo de `https://zeustata.github.io/.well-known/assetlinks.json` para `com.zeustata.meteoasturlode`.
+2. **Barrera 2 — Prueba Física Obligatoria de la `.apk` Gemela en el Móvil de Lendo Antes de Subir el `.aab`:**
+   - **Prohibido subir un `.aab` a ciegas:** Siempre se enviará primero la `.apk` gemela al Telegram de Lendo y **no se subirá el `.aab` a Google Play Console** hasta que Lendo haya comprobado físicamente en su móvil estos 4 puntos:
+     - `[ ]` 1. La app abre a pantalla completa sin barra de Chrome.
+     - `[ ]` 2. Al pulsar el botón **Auto GPS** dentro de la app (habiendo seleccionado otro concejo antes), actualiza a la ubicación real y muestra `✓ Aquí`.
+     - `[ ]` 3. El **Widget** en el escritorio detecta la localidad exacta y actualiza temperatura y cielo.
+     - `[ ]` 4. Navegación por las pestañas sin ningún cartel de error.
+
 ## ⚙️ Mapa Maestro de Engranajes del Motor Meteorológico y de Ubicación (Guía de Referencia para Mejoras Futuras) — 2026-11-14
 Esta sección documenta cómo interactúan entre sí todos los engranajes críticos de **MeteoAstur Lode** para que cualquier ajuste futuro se realice con bisturí sin descalibrar otros módulos:
 
