@@ -365,15 +365,15 @@ function applyCantabricoConsensus(weather, consensus, radarEcho = null) {
 
     // Consenso Seco en tiempo actual (Banco de Ventana Lendo & Triángulo de Verificación 2 de 3):
     // 1) Si ambos modelos marcan seco y el radar está limpio -> Seco.
-    // 2) Desempate 2 contra 1 (Escampada confirmada por Radar + Europeo): Si el Radar Doppler está limpio (!hasRadarRain)
-    //    y el Centro Europeo (ECMWF) certifica 0.0 mm tanto en current como en la hora actual (ePrecip < 0.1 y curEPrecip < 0.1
-    //    y códigos secos <= 3 o niebla 45/48), cualquier llovizna/lluvia débil rezagada en solitario de AROME (< 1.5 mm)
-    //    queda desmentida por mayoría 2 de 3 (Radar + ECMWF) y pasa a Seco / Nublado.
-    const isEcmwfDryNow = ePrecip < 0.1 && curEPrecip < 0.1 &&
+    // 2) Desempate 2 contra 1 (Escampada confirmada por Radar + Europeo, o Claridad Solar de ECMWF >= 100 W/m²,
+    //    o Pluviómetro instantáneo de 15 min en 0.0 mm + Radar seco):
+    const hasEcmwfSolarDry = (eDirectIrr >= 100 || eSw >= 200) && ePrecip < 0.5 && !hasRadarRain;
+    const isEcmwfDryNow = (ePrecip < 0.1 && curEPrecip < 0.1 &&
       (eCode === null || eCode <= 3 || eCode === 45 || eCode === 48) &&
-      (curECode === null || curECode <= 3 || curECode === 45 || curECode === 48);
+      (curECode === null || curECode <= 3 || curECode === 45 || curECode === 48)) || hasEcmwfSolarDry;
 
-    const isRadarAndEcmwfDryVeto = !hasRadarRain && isEcmwfDryNow && rawPrecip < 1.5;
+    const is15MinAndRadarDry = !hasRadarRain && rawPrecip < 0.1 && (rawCode <= 3 || ePrecip <= 0.1);
+    const isRadarAndEcmwfDryVeto = (!hasRadarRain && isEcmwfDryNow && rawPrecip < 1.5) || is15MinAndRadarDry;
 
     const isBothModelsDryCurrent = ((rawPrecip < 0.1 && ePrecip < 0.1 && curEPrecip < 0.1) &&
       (rawCode <= 3 && (eCode === null || eCode <= 3 || eCode === 45) && (curECode === null || curECode <= 3)) &&
@@ -655,8 +655,11 @@ function applyCantabricoConsensus(weather, consensus, radarEcho = null) {
         }
       }
 
-      // 1. Verificación solar objetiva horaria (solo hay sol real si las nubes de ECMWF <= 50%)
-      const hasTrueSunlightH = (rawDirectIrrH >= 100 || eDirectIrrH >= 150) && ecmwfC <= 50;
+      // 1. Verificación solar objetiva horaria
+      const eSwH = consensus.hourly.shortwave_radiation ? consensus.hourly.shortwave_radiation[i] : 0;
+      const rawSwH = weather.hourly.shortwave_radiation ? weather.hourly.shortwave_radiation[i] : 0;
+      const hasHourlySun = rawDirectIrrH >= 100 || eDirectIrrH >= 100 || rawSwH >= 170 || eSwH >= 170;
+      const hasTrueSunlightH = ((rawDirectIrrH >= 100 || eDirectIrrH >= 150) && ecmwfC <= 50) || (hasHourlySun && precip < 0.5 && ePrecipH < 0.5);
 
       // 1. Rescate de Orbayu Fino Real (0.1 - 0.4 mm):
       const isDrizzleRescue = (precip < 0.1 || (precip < 0.5 && eCodeH >= 50 && eCodeH <= 57)) &&
@@ -723,8 +726,8 @@ function applyCantabricoConsensus(weather, consensus, radarEcho = null) {
         }
       }
 
-      // 3. Filtro Anti-Llovizna Fantasma Horaria de AROME:
-      const isSolarHourlyGhost = hasTrueSunlightH && precip > 0 && precip < 0.5 && ePrecipH < 0.1;
+      // 3. Filtro Anti-Llovizna Fantasma Horaria de AROME / Radiación Solar:
+      const isSolarHourlyGhost = hasTrueSunlightH && (precip < 0.5 && ePrecipH < 0.5);
       const isPhantomHourlyDrizzle = (precip > 0 && precip < 1.5 &&
         (rawHourlyCode <= 3 || (rawHourlyCode >= 50 && rawHourlyCode <= 57)) &&
         ePrecipH < 0.1 &&
@@ -734,17 +737,27 @@ function applyCantabricoConsensus(weather, consensus, radarEcho = null) {
       if (isSolarHourlyGhost) {
         if (weather.hourly.precipitation) weather.hourly.precipitation[i] = 0;
         if (weather.hourly.rain) weather.hourly.rain[i] = 0;
-        if (weather.hourly.weather_code) weather.hourly.weather_code[i] = (eCodeH !== null && eCodeH <= 3) ? eCodeH : 1;
-        if (weather.hourly.precipitation_probability) weather.hourly.precipitation_probability[i] = ePop;
+        const effectiveC = Math.max(rawC, ecmwfC);
+        if (weather.hourly.weather_code) weather.hourly.weather_code[i] = effectiveC >= 80 ? 3 : (effectiveC >= 40 ? 2 : 1);
       }
 
       // C) Armonización Horaria de Lluvia Residual:
-      const isDryHourly = ((weather.hourly.precipitation ? weather.hourly.precipitation[i] : precip) < 0.1 && !(eCodeH && eCodeH >= 50 && Math.max(rawC, ecmwfC) >= 75)) || isSolarHourlyGhost;
+      const isDryHourly = ((weather.hourly.precipitation ? weather.hourly.precipitation[i] : precip) < 0.1 && !(eCodeH && eCodeH >= 50 && Math.max(rawC, ecmwfC) >= 75 && !hasTrueSunlightH)) || isSolarHourlyGhost;
       if (isDryHourly && weather.hourly.weather_code && weather.hourly.weather_code[i] >= 50) {
         if (weather.hourly.precipitation && precip < 0.5) weather.hourly.precipitation[i] = 0;
         if (weather.hourly.rain && precip < 0.5) weather.hourly.rain[i] = 0;
         const effectiveC = Math.max(rawC, ecmwfC);
         weather.hourly.weather_code[i] = effectiveC >= 80 ? 3 : (effectiveC >= 40 ? 2 : 1);
+      }
+    }
+
+    // Sincronización final de la hora en curso con el estado en vivo cuando hay escampada seca confirmada:
+    const nowH = new Date().getHours();
+    if (weather.current && (weather.current.precipitation == null || weather.current.precipitation < 0.1) && weather.current.weather_code <= 3) {
+      if (weather.hourly.precipitation && weather.hourly.precipitation[nowH] != null) weather.hourly.precipitation[nowH] = 0;
+      if (weather.hourly.rain && weather.hourly.rain[nowH] != null) weather.hourly.rain[nowH] = 0;
+      if (weather.hourly.weather_code && weather.hourly.weather_code[nowH] >= 50) {
+        weather.hourly.weather_code[nowH] = weather.current.weather_code;
       }
     }
   }
@@ -813,9 +826,10 @@ function applyStandalonePhysicalSovereignty(weather, radarEcho = null) {
   }
 
   // 0. Sincronización de Nowcasting con la hora en curso:
-  // Si el bloque instantáneo 'current' viene rezagado (p < 0.1 y código <= 3) pero el modelo predice
-  // para la hora en curso lluvia o llovizna activa (código >= 50 y precip >= 0.1 mm) bajo cielo cubierto y sin sol directo:
-  if (weather.current && weather.hourly && weather.hourly.time) {
+  // Solo rescata precipitación de la hora en curso si el Radar Doppler en vivo confirma eco real de lluvia (hasRadarRainStandalone).
+  // Si el bloque instantáneo de 15 min ('current') ya marca seco (0.0 mm) y el Radar está seco, se respeta la escampada real.
+  const hasRadarRainStandalone = Boolean(radarEcho && radarEcho.hasEcho && radarEcho.echo && radarEcho.echo.isRain);
+  if (hasRadarRainStandalone && weather.current && weather.hourly && weather.hourly.time) {
     const nowHour = new Date().getHours();
     const hPrecip = weather.hourly.precipitation ? (weather.hourly.precipitation[nowHour] || 0) : 0;
     const hCode = weather.hourly.weather_code ? weather.hourly.weather_code[nowHour] : null;
@@ -827,6 +841,11 @@ function applyStandalonePhysicalSovereignty(weather, radarEcho = null) {
       weather.current.precipitation = hPrecip;
       if (weather.current.rain != null) weather.current.rain = hPrecip;
     }
+  } else if (!hasRadarRainStandalone && weather.current && (weather.current.precipitation == null || weather.current.precipitation < 0.1) && weather.current.weather_code >= 50) {
+    const curCloud = weather.current.cloud_cover != null ? weather.current.cloud_cover : 100;
+    weather.current.precipitation = 0;
+    if (weather.current.rain != null) weather.current.rain = 0;
+    weather.current.weather_code = curCloud >= 80 ? 3 : (curCloud >= 40 ? 2 : 1);
   }
 
   // 1. En tiempo actual: limpieza de código residual de lluvia sin agua física

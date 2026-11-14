@@ -9,6 +9,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.35] - 2026-11-14
+### Consenso en Vivo y Modelos Individuales: Soberanía de Escampada en 15 min y Limpieza por Radiación Solar
+- **Respeto al Pluviómetro Instantáneo de 15 min y Claridad Solar (`js/services/weatherApi.js`)**:
+  - En `applyCantabricoConsensus` (*Auto Híbrido*), si el Radar Doppler está seco y el sensor instantáneo de 15 minutos marca `0.0 mm` (`rawCode <= 3` o `ePrecip <= 0.1 mm`), o si el modelo europeo presenta radiación solar alta (`>= 100 W/m²` directa o `>= 200 W/m²` onda corta con `< 0.5 mm`), se respeta la escampada (`Nublado • Cubiertu`, `0.0 mm`) sin rescatar falso orbayu residual.
+  - En `applyStandalonePhysicalSovereignty` (*AROME* y modelos individuales), el rescate horario sobre `weather.current` exige ahora confirmación del Radar Doppler en directo (`hasRadarRainStandalone`), evitando que la media de la hora machaque la escampada ya detectada en el corte de 15 minutos.
+- **Anti-caché**: Versión incrementada a `v3.0.38.35` con caché `meteoasturlode-v303835-escampada-15min`.
+
 ## [3.0.38.34] - 2026-11-14
 ### Avisos Oficiales AEMET: Ventana de Proximidad de 12 Horas (`onset`) y Tramo Horario Completo
 - **Control Inteligente de Inicio de Avisos (`js/utils/weatherAlerts.js`)**:

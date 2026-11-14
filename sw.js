@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303834-aemet-onset';
+const CACHE_NAME = 'meteoasturlode-v303835-escampada-15min';
 const STATIC_ASSETS = [
   './',
   './index.html',

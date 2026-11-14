@@ -2,6 +2,20 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## ☁️ Blindaje de Escampada en Sensor de 15 Minutos y Coherencia Solar entre Modelos (`v3.0.38.35`) — 2026-11-14
+- **Estado de retorno previo (Ley 2):** Commit `bf709e3` (`v3.0.38.34`).
+- **Diagnóstico en Vivo por Banco de Ventana (Lendo en Piedras Blancas, 14:20 h):**
+  - El modelo Europeo (`ECMWF`) en solitario mostraba correctamente `Nublado • Cubiertu` (`0 mm`), pero el `Auto Híbrido` y el modelo Francés (`AROME`) seguían mostrando `Lluvia débil • Orbayu` cuando llevaba horas sin caer una gota (confirmado también por el METAR `LEAS 141300Z`).
+  - **Causas raíz identificadas en `js/services/weatherApi.js`:**
+    1. En `applyStandalonePhysicalSovereignty` (línea 825), cuando el bloque instantáneo de 15 min de AROME (`weather.current`) ya marcaba `0.0 mm` y código `3 (Nublado)`, el bloque `0. Sincronización de Nowcasting con la hora en curso` lo machacaba con la media horaria de las 14:00 (`0.4 mm`, código `51`) sin exigir que el Radar Doppler confirmara lluvia (`hasRadarRainStandalone`).
+    2. En `applyCantabricoConsensus` (`Auto Híbrido`), la limpieza por radiación solar del Europeo (`eDirectIrr = 187.5 W/m²` y `eSw = 238 W/m²`) no se aplicaba porque `hasTrueSunlight` exigía `ecmwfCloud <= 50%`. Como resultado, `Auto Híbrido` rescataba el código `51` (`0.1 mm`) que el propio Europeo en solitario había descartado por exceso de radiación solar, e ignoraba que el sensor de 15 min (`rawPrecip = 0.0 mm`) y el Radar Doppler (`!hasRadarRain`) ya certificaban escampada.
+- **Solución Técnica Implementada (`v3.0.38.35`):**
+  1. **Soberanía del Pluviómetro de 15 min + Radar Seco y Claridad Solar en `applyCantabricoConsensus`:**
+     - Añadido `hasEcmwfSolarDry = (eDirectIrr >= 100 || eSw >= 200) && ePrecip < 0.5 && !hasRadarRain` y `is15MinAndRadarDry = !hasRadarRain && rawPrecip < 0.1 && (rawCode <= 3 || ePrecip <= 0.1)` dentro de `isRadarAndEcmwfDryVeto`.
+     - Extendida la limpieza por radiación solar (`hasHourlySun`) al bucle horario cuando ambos modelos tienen `< 0.5 mm`, y sincronizada al final la hora en curso (`nowH`) con el estado seco en vivo.
+  2. **Condición de Radar en Nowcasting Standalone (`applyStandalonePhysicalSovereignty`):**
+     - El bloque de rescate de la hora en curso sobre `weather.current` solo actúa si el Radar Doppler en vivo confirma eco de lluvia (`hasRadarRainStandalone`). Si el radar está seco y `weather.current.precipitation < 0.1`, limpia cualquier código residual `>= 50` a `Nublado (3)`.
+
 ## ⏳ Ventana de Proximidad de 12 Horas y Horario Completo en Avisos Oficiales AEMET (`v3.0.38.34`) — 2026-11-14
 - **Estado de retorno previo (Ley 2):** Commit `9c23998` (`v3.0.38.33`).
 - **Diagnóstico Técnico (Feedback Lendo en Castrillón):**
