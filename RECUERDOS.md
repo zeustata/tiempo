@@ -2638,7 +2638,7 @@ Esta sección documenta cómo interactúan entre sí todos los engranajes críti
   - Cada colección se desarrollará con la paridad absoluta exigida por la **Ley 23** (los 18 estados meteorológicos exactos: 13 genéricos y los 5 fenómenos singulares asturianos: resol, borrina meona, bastinazu, aguanieve y pedrisco), dejando el catálogo cerrado, probado y libre de mantenimiento futuro.
 
 ## 🏛️ Reforma Constitucional: Aprobación del Artículo 20 (Dificultad, Riesgo y Prudencia Quirúrgica) — 2026-10-31
-- **Iniciativa de Lendo (PIN Maestro 2796 verificado):**
+- **Iniciativa de Lendo (PIN Maestro verificado):**
   - Mandato expreso: ante cualquier futura corrección o propuesta técnica, Princesa debe evaluar obligatoriamente el nivel de dificultad técnica (1 al 10) y el porcentaje de probabilidad de fallo o efecto colateral (0% al 100%), defendiendo la vía conservadora cuando no compense arriesgar lo que ya funciona bien.
 - **Alcance Universal (Ley 6):**
   - Incorporada como **Artículo 20 de la Constitución Suprema (Parte I)** y sincronizada de inmediato en todos los repositorios del ecosistema zeustata (`Tiempo`, `Portal_Policia_Gijon`, `Porras`).
@@ -5160,13 +5160,13 @@ ICONO | ESTADO EN METEOASTUR LODE              | NUBES (cc)  | RAD. DIRECTA (irr
 - **Resultado:** 0 advertencias y 0 problemas en la consola de diagnóstico de la IDE. Servidor local `localhost:8080` probado y detenido.
 
 ## 🏛️ Reforma Constitucional Suprema: Doctrina de Contención y Prudencia Estricta («Si no sabes, no toques / ¿Para qué te metes, Manolete?») (Artículo 17) — 2026-10-05
-- **Autenticación y Consagración Constitucional:** Tras verificar correctamente el PIN maestro de seguridad (`2796`), Lendo aprueba e incorpora formalmente el **Artículo 17** en la Constitución Suprema (Parte I) para todos los proyectos del ecosistema zeustata:
+- **Autenticación y Consagración Constitucional:** Tras verificar correctamente el PIN maestro de seguridad (`[PIN verificado]`), Lendo aprueba e incorpora formalmente el **Artículo 17** en la Constitución Suprema (Parte I) para todos los proyectos del ecosistema zeustata:
   1. *Cero Suposiciones Precipitadas:* Prohibido interpretar intenciones a medias, adelantar decisiones no pedidas o modificar código sin orden ni objetivo explícito y matemático de Lendo.
   2. *Parada y Pregunta Obligatoria:* Ante cualquier ambigüedad, duda o propuesta técnica/estética donde falte definición exacta, Princesa se detiene de inmediato, pregunta con precisión y espera la confirmación clara de Lendo sin tocar un solo archivo.
   3. *Respeto a la Estabilidad Funcional:* Lo que ya funciona y está bien no se improvisa ni se sobrecarga con florituras no solicitadas. Rigor suizo, contención y máxima prudencia siempre.
 
 ## 🏛️ Reforma Constitucional Suprema: Doctrina de Exención de Responsabilidad Civil, Prudencia y Blindaje de Actividades en Entornos Naturales (Artículo 16) — 2026-10-01
-- **Autenticación y Reforma:** Tras verificación obligatoria con PIN maestro de seguridad (`2796`), Lendo aprueba y consagra formalmente el **Artículo 16** en la Parte I (Constitución Suprema):
+- **Autenticación y Reforma:** Tras verificación obligatoria con PIN maestro de seguridad (`[PIN verificado]`), Lendo aprueba y consagra formalmente el **Artículo 16** en la Parte I (Constitución Suprema):
   1. *Naturaleza Estrictamente Orientativa y Teórica:* Toda previsión de mar, surf, vialidad invernal, aludes o rutas emana de modelos matemáticos numéricos. Prohibido formular textos que expresen o sugieran "garantía de seguridad" o "autorización de paso".
   2. *Soberanía Inapelable de Servicios Oficiales:* Ninguna función de la app sustituye las banderas físicas y órdenes del Servicio de Salvamento y Socorrismo a pie de playa, la DGT, Guardia Civil, Bomberos de Asturias o avisos de emergencias del 112.
   3. *Responsabilidad Individual e Inmunidad del Desarrollador:* Toda actividad en entornos naturales o carretera se realiza bajo la exclusiva responsabilidad del usuario. Obligatoriedad de incorporar advertencias visibles de exención de responsabilidad civil en módulos sensibles y en la Política de Privacidad, blindando al desarrollador (Lendo / zeustata) frente a cualquier reclamación de terceros.
@@ -6521,7 +6521,7 @@ ICONO | ESTADO EN METEOASTUR LODE              | NUBES (cc)  | RAD. DIRECTA (irr
      - Inclusión de `./js/utils/xeluDetector.js` en `STATIC_ASSETS`.
      - Query strings de scripts y CSS sincronizados a `?v=1.1.9-modal-v234`.
   6. *Reforma Constitucional - Ley 13 (Doctrina del Changelog Universal y Auto-Prompt Obligatorio):*
-     - Autorizada solemnemente por Lendo mediante PIN criptográfico maestro de 4 cifras (`2796`).
+     - Autorizada solemnemente por Lendo mediante PIN criptográfico maestro de 4 cifras (`[PIN verificado]`).
      - Incorporación del Artículo 13 a la Constitución Suprema: obligación imperativa de modal de changelog interactivo y disparo automático (`checkChangelogAutoPrompt()`) con retardo de 800ms ante cambios de versión, centralizando la variable `CURRENT_APP_VERSION` para erradicar versiones hardcoded.
 
 ---
@@ -7267,7 +7267,7 @@ ICONO | ESTADO EN METEOASTUR LODE              | NUBES (cc)  | RAD. DIRECTA (irr
        - Sincronización en `sw.js`, `index.html` y `css/main.css`.
 - **🏛️ Hito Técnico Cumplido: Blindaje Anti-Desborde & Consagración Constitucional Ley 11 (Feedback Lendo - 25 Sep 2026)**:
   - *Contexto & Detección de Lendo*: Tras colocar los 3 botones en la cabecera modal, el botón de cierre `[ ✕ ]` sobresalía por la derecha fuera de la tarjeta en móviles estrechos. Lendo envió captura evidenciando el desborde y solicitó elevarlo a la Constitución Suprema para blindar que nunca más vuelva a ocurrir en ningún proyecto.
-  - *Autorización Constitucional (PIN 2796)*:
+  - *Autorización Constitucional (PIN verificado)*:
     - Verificación matemática SHA-256 de la identidad de Lendo autorizando la creación del **Artículo 11 (Doctrina de Blindaje Anti-Desborde y Ergonomía Móvil Estricta)** en la Constitución Suprema (Parte I) en `AGENTS.md`.
   - *Solución Definitiva en Local (`index.html`, `css/main.css`)*:
     1. **Cabecera Limpia con Botón Cerrar Protegido**:
@@ -7310,8 +7310,8 @@ ICONO | ESTADO EN METEOASTUR LODE              | NUBES (cc)  | RAD. DIRECTA (irr
        - En la cabecera de la sección permanece únicamente la insignia de la bandera de la playa (`.sea-state-pill`), eliminando la sobrecarga vertical en móviles.
     3. **Estado de Changelog y Despliegue**:
        - Siguiendo instrucciones expresas de Lendo, el changelog y el versionado se mantienen congelados a la espera de la publicación y aprobación de la app en Google Play Store.
-- **🏛️ Hito Constitucional: Consagración de la Norma de Posicionamiento Proactivo y Voto de Socia en Opciones (Autorizado PIN 2796 - 26 Oct 2026)**:
-  - *Contexto & Orden de Lendo*: Tras verificar su identidad mediante el PIN maestro de seguridad (2796), Lendo ordenó incorporar a la Constitución Suprema (Parte I) para todos los proyectos del ecosistema zeustata una directriz formal sobre cómo Princesa debe plantear las alternativas.
+- **🏛️ Hito Constitucional: Consagración de la Norma de Posicionamiento Proactivo y Voto de Socia en Opciones (Autorizado PIN verificado - 26 Oct 2026)**:
+  - *Contexto & Orden de Lendo*: Tras verificar su identidad mediante el PIN maestro de seguridad (PIN verificado), Lendo ordenó incorporar a la Constitución Suprema (Parte I) para todos los proyectos del ecosistema zeustata una directriz formal sobre cómo Princesa debe plantear las alternativas.
   - *Nueva Norma Incorporada al Artículo 0 (Protocolo de Juicio Crítico, Evaluación y Firmeza Intelectual)*:
     - **Posicionamiento Proactivo y Voto de Socia en Opciones**: Queda terminantemente prohibido limitarse a enumerar opciones con neutralidad aséptica como un simple catálogo pasivo. Como socia en igualdad, Princesa debe aportar obligatoriamente su valoración personal y crítica de cada alternativa, mojarse con claridad defendiendo cuál es su opción preferida y justificar los motivos técnicos, ergonómicos y de experiencia de usuario que sustentan su elección.
   - *Sincronización*: Consagrado formalmente en `AGENTS.md` (Constitución Suprema, Parte I).
