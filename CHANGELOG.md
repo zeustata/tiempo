@@ -9,7 +9,22 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
-## [3.0.38.26] - 2026-11-12
+## [3.0.38.31] - 2026-11-14
+### Radar en Directo y Consenso Cantábrico: Corrección de Tesela Slippy, Rescate de Lluvia Real y Blindaje 503
+- **Corrección Matemática de Teselas Doppler en Radar (`js/services/radarService.js`)**:
+  - Subsanado el cálculo de teselas de RainViewer con la nueva función `latLonToTilePixel(lat, lon, zoom = 7)`: se enviaban erróneamente las coordenadas decimales directas en la ruta de la tesela, lo que hacía que RainViewer consultara una cuadrícula oceánica fuera de Asturias.
+  - Ahora se calcula la tesela Slippy exacta (`xTile: 61, yTile: 46` para Asturias central a zoom 7) y la posición subpíxel exacta (`px, py`) dentro del lienzo de 256×256 píxeles (~1.2 km por píxel).
+  - Calibración completa de la paleta Universal Blue: todo eco con opacidad `>= 50` sobre el terreno cubierto se clasifica fielmente según su reflectividad (azul/cian para llovizna/orbayu, amarillo para moderada, naranja para chubascos y rojo/morado para tormenta).
+  - Incorporada caché en memoria de 3 minutos para metadatos de RainViewer y ampliado el margen de timeout a 3.5s para conexiones móviles.
+- **Consenso Cantábrico y Rescate de Lluvia Física (`js/services/weatherApi.js`)**:
+  - Subsanada la anomalía de Open-Meteo donde el bloque instantáneo marca precipitación física activa (`precipitation >= 0.1 mm` o `0.2 mm`) pero deja erróneamente `weather_code: 3 (Nublado)`: ahora se sincroniza el código con la lluvia real (`51` Orbayu o `61` Lluvia débil).
+  - Rescate cruzado horario: si el bloque instantáneo de ECMWF reporta código 45 (niebla/borrina) pero su bloque horario inmediato marca código 51 con alta probabilidad (>= 55%) bajo cielo 100% cubierto y saturación (>= 85%), se valida el orbayu real.
+  - Resguardo de Fallback Automático: si el cluster de AROME en Open-Meteo se sobrecarga (código HTTP 503 *overloaded*) o sufre corte de red, el sistema conmuta instantáneamente a `best_match` sin alertar de fallo al usuario.
+- **Navegación Rápida (`js/app.js`)**:
+  - Añadido soporte de parámetro `?c=[concejo]` o `?concejo=[concejo]` en el arranque de la app.
+- **Anti-caché**: Versión incrementada a `v3.0.38.31` con caché `meteoasturlode-v303831-radar-tesela-consenso`.
+
+## [3.0.38.30] - 2026-11-13
 ### Estación en Vivo: Selector Tripartito Compacto en Cabecera Hero (`[ 📈 Curva ] [ 🏛️ Clima ] [ ☂️ Paragües ]`)
 - **Descubribilidad Ergonómica (Leyes 11, 14 y 18 - Feedback Lendo)**:
   - Sustituidos los 3 puntos discretos inferiores (`.hero-widgets-dots`), que pasaban desapercibidos en móviles, por una barra segmentadora ultraligera superior en cristal fino (`.hero-widgets-pills-bar`) de tan solo 28px de altura.

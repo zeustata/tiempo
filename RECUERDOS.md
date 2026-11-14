@@ -7199,6 +7199,19 @@ ICONO | ESTADO EN METEOASTUR LODE              | NUBES (cc)  | RAD. DIRECTA (irr
        - Entrada pedagógica `golden_hour` con botón `💡` en la cabecera, detallando dispersión de Rayleigh, ángulos cenitales (+6° a -8°) y rincones de Asturias.
     5. **Registro en Changelog**:
        - Siguiendo orden estricta de Lendo, se incorpora la documentación en `CHANGELOG.md` e `index.html` bajo la versión `[3.0.23]` sin incrementar el número de versión.
+- **🌧️ Hito Técnico Cumplido: Autopsia y Corrección Integral del Radar Doppler Slippy y Consenso Cantábrico en Vivo (Banco de Ventana Lendo - 14 Nov 2026)**:
+  - *Contexto & Detección en Directo por Lendo*: A las 08:50 del sábado 14 de noviembre de 2026, lloviendo de forma activa y notable sobre Piedras Blancas (Castrillón), la aplicación mostraba erróneamente `Nublado / Cubiertu ☁️` sin lluvia y sin que saltara el radar en tiempo real.
+  - *Diagnóstico y Causa Raíz*:
+    1. **Fallo de Tesela en Radar (`js/services/radarService.js`)**: `fetchLiveRadarEcho()` solicitaba la URL `${host}${latest.path}/256/7/${lat}/${lon}/2/0_0.png` pasando coordenadas decimales directas en vez de coordenadas de tesela Slippy Mercator. RainViewer truncaba las coordenadas a una cuadrícula en el océano Atlántico y el muestreo en `(128, 128)` retornaba siempre píxeles secos/vacíos.
+    2. **Falso Seco en Consenso de Modelos (`js/services/weatherApi.js`)**: Open-Meteo devolvía en el bloque instantáneo `current` de AROME `precipitation: 0.2 mm` pero con `weather_code: 3 (Nublado)`. Como el consenso requería coincidencia de códigos o radar activo (que fallaba por la tesela), el sistema anulaba la lluvia y forzaba el cielo a nublado seco.
+    3. **Desfase en Bloque Instantáneo de ECMWF**: ECMWF marcaba `code: 45 (niebla)` en `current`, pero en su previsión horaria para la hora en curso marcaba `code: 51 (Orbayu)`, `0.1 mm` y PoP del 79% con 98% de humedad.
+  - *Solución Definitiva en Local*:
+    1. **Matemática Slippy en Radar (`radarService.js`)**: Implementada `latLonToTilePixel(lat, lon, zoom = 7)`. Para Castrillón (`lat: 43.5575, lon: -5.9744`), descarga la tesela real `x=61, y=46` y lee el píxel exacto `px: 224, py: 194`. Paleta Universal Blue calibrada para detectar lluvia activa en todo píxel con opacidad `>= 50`. Caching en memoria de 3 min para metadatos de RainViewer.
+    2. **Rescate de Lluvia Física y Sincronización WMO (`weatherApi.js`)**: Si el modelo marca precipitación medible (`precipitation >= 0.1 mm`) bajo cielo encapotado y sin sol abrasador, el código WMO se sincroniza automáticamente con la lluvia (`51` o `61`).
+    3. **Resguardo de Fallback 503**: Si el cluster AROME en Open-Meteo devuelve error 503 (*overloaded*) o error de red, cae automáticamente a `best_match` sin interrumpir la app.
+    4. **Soberanía Absoluta del Radar**: Ante eco Doppler verificado, el radar físico desempata y manda sobre cualquier modelo ciego.
+  - *Verificación*: Auditado en Edge headless móvil a 360px (`captura_castrillon_lluvia_360px.jpg`), confirmando en vivo: `Castrillón (Piedras Blancas / Salinas)`, `code: 61`, `precip: 0.3 mm`, `cloud: 100%`, `is_radar_rescued: true`, `radar_rescue_label: 'Lluvia débil / Orbayu'`.
+  - *Versión*: Incrementada a `v3.0.38.31` con caché `meteoasturlode-v303831-radar-tesela-consenso`.
 
 
 

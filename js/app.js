@@ -1,6 +1,6 @@
 import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo, resolveSubLocalidad, SUB_LOCALIDADES } from './config/concejos.js?v=3.0.25.18';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.38.29';
-import { fetchLiveRadarEcho } from './services/radarService.js?v=3.0.38.24';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.38.31';
+import { fetchLiveRadarEcho } from './services/radarService.js?v=3.0.38.31';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=3.0.23.63';
 import { renderCurrentWeather } from './components/currentCard.js?v=3.0.38.26';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.25.10';
@@ -52,7 +52,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.38.30';
+export const CURRENT_APP_VERSION = '3.0.38.31';
 // Control inteligente de Auto-Prompt del Changelog (Doctrina de No-Fatiga al Usuario - Feedback Lendo):
 // Solo se incrementa ante cambios visuales grandes, módulos nuevos o novedades perceptibles.
 // En ajustes finos, calibraciones matemáticas y parches internos se mantiene para no fatigar al usuario con modales.
@@ -61,7 +61,9 @@ export const CURRENT_CHANGELOG_PROMPT_VERSION = '3.0.38';
 class MeteoAsturiasApp {
   constructor() {
     this.prefs = getPreferences();
-    this.currentConcejo = getConcejoById(this.prefs.lastConcejo) || CONCEJOS_ASTURIAS[0];
+    const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+    const urlConcejo = urlParams ? (urlParams.get('concejo') || urlParams.get('c')) : null;
+    this.currentConcejo = (urlConcejo && getConcejoById(urlConcejo)) || getConcejoById(this.prefs.lastConcejo) || CONCEJOS_ASTURIAS[0];
     this.currentModel = getModelById(this.prefs.model) || getDefaultModel();
     this.weatherData = null;
     this.compareConcejoB = getConcejoById(this.currentConcejo.id === 'gijon' ? 'oviedo' : 'gijon');

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303830-cosmos-selector';
+const CACHE_NAME = 'meteoasturlode-v303831-radar-tesela-consenso';
 const STATIC_ASSETS = [
   './',
   './index.html',
