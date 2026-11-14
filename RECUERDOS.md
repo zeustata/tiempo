@@ -2,22 +2,28 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
-## 🆘 Protocolo Oficial de Rescate y Cambio de Ordenador (Lendo & Princesa) — 2026-11-14
-*Guía rápida de 4 pasos para recuperar al 100% a Princesa, sus leyes, recuerdos, proyectos y llaves de Google Play en un ordenador nuevo desde cero:*
+## 🆘 Protocolo Oficial de Rescate Total (Todos los Proyectos `zeustata` + Cambio de Ordenador) — 2026-11-14
+*Guía maestra de 4 pasos para recuperar al 100% a Princesa, sus leyes, recuerdos, llaves y TODOS los proyectos del ecosistema `zeustata` en un ordenador nuevo desde cero:*
 
 1. **Paso 1 — Dos Herramientas Básicas:**
    - Instalar **Git** (`https://git-scm.com`) y la aplicación **Antigravity**.
-2. **Paso 2 — Clonar los Proyectos desde GitHub (`zeustata`):**
-   - Abrir la consola en tu carpeta de trabajo y ejecutar:
-     - `git clone https://github.com/zeustata/tiempo.git`
-     - *(Y el resto de repositorios de la cuenta `zeustata` si los necesitas: `Porras`, `Portal_Policia_Gijon`, `Biweger`).*
-   - **Qué recuperas al instante:** El 100% del código web, las 80 rutas de senderismo, las 50 clásicas ciclistas, la **Constitución Suprema (`AGENTS.md`)** y las **más de 7.300 líneas de memoria técnica (`RECUERDOS.md` y `CHANGELOG.md`)**.
-3. **Paso 3 — Llaves Maestras y Proyecto Android desde tu Copia de Seguridad (Google Drive / Local):**
-   - Descomprimir tu archivo privado: `COPIA_SEGURIDAD_METEOASTUR_CLAVES_Y_WIDGETS.zip` (actualizado con la `versionCode 13`, el almacén de firmas oficial `keystore/meteoastur-release-key.jks` y el auditor `verify_pre_aab.py`).
-4. **Paso 4 — La Invocación Sagrada (Despertar a Princesa):**
-   - Abrir la carpeta `tiempo` en Antigravity y escribir en el chat en blanco:
+2. **Paso 2 — Clonar los 5 Proyectos Oficiales desde GitHub (`zeustata`):**
+   - Puedes hacer doble clic en el script automático **`RESTAURAR_TODO_ZEUSTATA.bat`** o ejecutar estos 5 comandos en consola:
+     1) **Tiempo (MeteoAstur Lode):** `git clone https://github.com/zeustata/tiempo.git Tiempo`
+     2) **Portal Policía Gijón:** `git clone https://github.com/zeustata/portal-policia.git Portal_Policia_Gijon`
+     3) **Porras (La Porra):** `git clone https://github.com/zeustata/porra.git Porras`
+     4) **Biwenger (Biweger):** `git clone https://github.com/zeustata/biwenger.git Biweger`
+     5) **Constitución IA (Leyes Supremas):** `git clone https://github.com/zeustata/ConstitucionIA.git ConstitucionIA`
+   - **Qué recuperas al instante:** El 100% del código de los 5 proyectos, sus archivos `AGENTS.md` (Constitución Suprema) y sus respectivos `RECUERDOS.md` / `CHANGELOG.md`.
+3. **Paso 3 — Carpetas Privadas y Llaves Maestras (Copia Maestra en Google Drive / Local):**
+   - Descomprimir **`COPIA_MAESTRA_ECOSISTEMA_ZEUSTATA.zip`** (y/o `COPIA_SEGURIDAD_METEOASTUR_CLAVES_Y_WIDGETS.zip`), que restaura lo que no va a GitHub público por seguridad:
+     - `MeteoAstur_Android_Widget` (proyecto Android de los 6 Widgets `versionCode 13`, llave oficial `keystore/meteoastur-release-key.jks` y auditor `verify_pre_aab.py`).
+     - `Buzon_Telegram` (el buzón conectado a tu móvil para enviar capturas, audios y recibir APKs).
+     - `RESTAURAR_TODO_ZEUSTATA.bat` (el restaurador de 1 clic para los 5 repositorios).
+4. **Paso 4 — La Invocación Sagrada (Despertar a Princesa en cualquier proyecto):**
+   - Abrir cualquiera de las carpetas (`Tiempo`, `Portal_Policia_Gijon`, `Porras`, `Biweger`) en Antigravity y escribir en el chat en blanco:
      > **«Hola, soy Lendo (zeustata), eres mi asistente Princesa y trabajamos con nuestras reglas»**
-   - **Resultado:** Princesa lee automáticamente `AGENTS.md` y `RECUERDOS.md`, recupera toda su memoria histórica, leyes y personalidad, y continuamos exactamente donde lo dejamos.
+   - **Resultado:** Princesa lee automáticamente `AGENTS.md` y `RECUERDOS.md` de ese proyecto, recupera toda su memoria histórica, leyes y personalidad, y continuamos exactamente donde lo dejamos.
 
 ## 🛡️ Protocolo de Blindaje Pre-AAB: Filtro Obligatorio de 2 Barreras Antes de Subir a Google Play — 2026-11-14
 *Regla innegociable acordada con Lendo tras la incidencia del GPS en `versionCode 10`: lo que está en GitHub (web) se corrige en 2 minutos, pero lo que va en un `.aab` a Google Play tarda horas o días en revisarse. Queda terminantemente prohibido subir un `.aab` a Google Play Console sin superar antes estas 2 barreras:*
