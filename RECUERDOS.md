@@ -2,6 +2,17 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📦 Estado de Cierre de Sesión: Espera de Aprobación en Google Play & Verificación de Ventana (2026-11-14, 16:45 h)
+- **Estado de Producción Google Play Store:**
+  - Compilado y verificado MeteoAstur_v3.0.38_bundle13.aab (ersionCode 13) tras superar la auditoría de 6 puntos de erify_pre_aab.py y la prueba física de la APK gemela (TEST12.apk) en el móvil de Lendo.
+  - Subido con éxito a Google Play Console (Pista de Producción) y actualmente en estado **«Cambios en revisión»**. La sesión queda en pausa a la espera de la publicación oficial de Google.
+- **Caso Real de Verificación de Ventana en Piedras Blancas (16:30 h):**
+  - **Observación real:** Sol y resol claro con nubes altas rotas.
+  - **Aeropuerto (METAR LEAS 141500Z):** FEW013 BKN048 9999 (apenas 1-2 octas de nubosidad baja a 1.300 ft, techo quebrado a 4.800 ft y visibilidad >10 km).
+  - **Centro Europeo (ECMWF 16:30 h):** weather_code: 1, nubosidad 43% y radiación directa de 180.4 W/m².
+  - **Francés (AROME en solitario):** Atascado erróneamente en 92% de nubes y código 3 (Nublado).
+  - **Resultado en Auto Híbrido:** El algoritmo de consenso cantábrico (hasTrueSunlight + rescate de falso nublado) detectó la discrepancia, rescató la apertura de claros del Europeo y mostró fidedignamente **⛅ Sol y nubes / Claros**, confirmando la solidez de la lógica sobre el terreno.
+
 ## 🆘 Protocolo Oficial de Rescate Automático en 2 Pasos (Todos los Proyectos `zeustata` + Google Drive Directo) — 2026-11-14
 *Guía ultra-fácil para recuperar al 100% a Princesa, sus leyes, recuerdos, llaves y TODOS los proyectos del ecosistema `zeustata` en un ordenador nuevo sin que Lendo tenga que tocar la consola ni instalar Git a mano:*
 
