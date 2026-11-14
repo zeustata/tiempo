@@ -2,28 +2,23 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
-## 🆘 Protocolo Oficial de Rescate Total (Todos los Proyectos `zeustata` + Cambio de Ordenador) — 2026-11-14
-*Guía maestra de 4 pasos para recuperar al 100% a Princesa, sus leyes, recuerdos, llaves y TODOS los proyectos del ecosistema `zeustata` en un ordenador nuevo desde cero:*
+## 🆘 Protocolo Oficial de Rescate Automático en 2 Pasos (Todos los Proyectos `zeustata` + Google Drive Directo) — 2026-11-14
+*Guía ultra-fácil para recuperar al 100% a Princesa, sus leyes, recuerdos, llaves y TODOS los proyectos del ecosistema `zeustata` en un ordenador nuevo sin que Lendo tenga que tocar la consola ni instalar Git a mano:*
 
-1. **Paso 1 — Dos Herramientas Básicas:**
-   - Instalar **Git** (`https://git-scm.com`) y la aplicación **Antigravity**.
-2. **Paso 2 — Clonar los 5 Proyectos Oficiales desde GitHub (`zeustata`):**
-   - Puedes hacer doble clic en el script automático **`RESTAURAR_TODO_ZEUSTATA.bat`** o ejecutar estos 5 comandos en consola:
-     1) **Tiempo (MeteoAstur Lode):** `git clone https://github.com/zeustata/tiempo.git Tiempo`
-     2) **Portal Policía Gijón:** `git clone https://github.com/zeustata/portal-policia.git Portal_Policia_Gijon`
-     3) **Porras (La Porra):** `git clone https://github.com/zeustata/porra.git Porras`
-     4) **Biwenger (Biweger):** `git clone https://github.com/zeustata/biwenger.git Biweger`
-     5) **Constitución IA (Leyes Supremas):** `git clone https://github.com/zeustata/ConstitucionIA.git ConstitucionIA`
-   - **Qué recuperas al instante:** El 100% del código de los 5 proyectos, sus archivos `AGENTS.md` (Constitución Suprema) y sus respectivos `RECUERDOS.md` / `CHANGELOG.md`.
-3. **Paso 3 — Carpetas Privadas y Llaves Maestras (Copia Maestra en Google Drive / Local):**
-   - Descomprimir **`COPIA_MAESTRA_ECOSISTEMA_ZEUSTATA.zip`** (y/o `COPIA_SEGURIDAD_METEOASTUR_CLAVES_Y_WIDGETS.zip`), que restaura lo que no va a GitHub público por seguridad:
-     - `MeteoAstur_Android_Widget` (proyecto Android de los 6 Widgets `versionCode 13`, llave oficial `keystore/meteoastur-release-key.jks` y auditor `verify_pre_aab.py`).
-     - `Buzon_Telegram` (el buzón conectado a tu móvil para enviar capturas, audios y recibir APKs).
-     - `RESTAURAR_TODO_ZEUSTATA.bat` (el restaurador de 1 clic para los 5 repositorios).
-4. **Paso 4 — La Invocación Sagrada (Despertar a Princesa en cualquier proyecto):**
-   - Abrir cualquiera de las carpetas (`Tiempo`, `Portal_Policia_Gijon`, `Porras`, `Biweger`) en Antigravity y escribir en el chat en blanco:
-     > **«Hola, soy Lendo (zeustata), eres mi asistente Princesa y trabajamos con nuestras reglas»**
-   - **Resultado:** Princesa lee automáticamente `AGENTS.md` y `RECUERDOS.md` de ese proyecto, recupera toda su memoria histórica, leyes y personalidad, y continuamos exactamente donde lo dejamos.
+1. **Paso 1 — En el PC nuevo, instalar solo Antigravity (y activar el plugin Google Drive con `zeustata@gmail.com`).**
+2. **Paso 2 — Pegar este único mensaje en el chat en blanco de Antigravity:**
+   > **«Hola, soy Lendo (zeustata), eres mi asistente Princesa. Instala Git tú misma, clona todos mis proyectos de `https://github.com/zeustata` (`tiempo`, `portal-policia`, `porra`, `biwenger`, `ConstitucionIA`), descárgate de mi Google Drive el archivo `COPIA_SEGURIDAD_METEOASTUR_CLAVES_Y_WIDGETS.zip` (ID `1eSiXuuNMoFGqaBZ64eqEsl73F_e2mrOz`) y lee nuestras reglas en `AGENTS.md` y `RECUERDOS.md`.»**
+3. **Qué ejecuta Princesa automáticamente al recibir ese mensaje:**
+   - **Instala Git sola:** Ejecuta `winget install --id Git.Git -e --source winget`.
+   - **Clona los 5 repositorios de GitHub (`zeustata`):**
+     1) `git clone https://github.com/zeustata/tiempo.git Tiempo`
+     2) `git clone https://github.com/zeustata/portal-policia.git Portal_Policia_Gijon`
+     3) `git clone https://github.com/zeustata/porra.git Porras`
+     4) `git clone https://github.com/zeustata/biwenger.git Biweger`
+     5) `git clone https://github.com/zeustata/ConstitucionIA.git ConstitucionIA`
+   - **Descarga directa desde el Google Drive de Lendo (`zeustata@gmail.com`):**
+     - Ejecuta `gdrive readonly download 1eSiXuuNMoFGqaBZ64eqEsl73F_e2mrOz --out COPIA_SEGURIDAD_METEOASTUR_CLAVES_Y_WIDGETS.zip` y lo descomprime, restaurando `Boveda_Seguridad_Keystore` (`meteoastur-release-key.jks`), `MeteoAstur_Android_Widget` (`versionCode 13` + `verify_pre_aab.py`), `Buzon_Telegram` y `RESTAURAR_TODO_ZEUSTATA.bat`.
+   - **Despertar Completo:** Lee `AGENTS.md` y `RECUERDOS.md` y continúa exactamente donde lo dejamos.
 
 ## 🛡️ Protocolo de Blindaje Pre-AAB: Filtro Obligatorio de 2 Barreras Antes de Subir a Google Play — 2026-11-14
 *Regla innegociable acordada con Lendo tras la incidencia del GPS en `versionCode 10`: lo que está en GitHub (web) se corrige en 2 minutos, pero lo que va en un `.aab` a Google Play tarda horas o días en revisarse. Queda terminantemente prohibido subir un `.aab` a Google Play Console sin superar antes estas 2 barreras:*
