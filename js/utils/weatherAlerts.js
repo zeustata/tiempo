@@ -143,11 +143,12 @@ export function getAemetAlertStatus(weatherData, concejo) {
     }
   }
 
-  // 2. Avisos Oficiales (MeteoAlarm) si existen y se han descargado
+  // 2. Avisos Oficiales (MeteoAlarm / AEMET CAP) si existen y se han descargado
   let usingOfficialAemet = false;
   if (weatherData.aemetAlerts && weatherData.aemetAlerts.zones && weatherData.aemetAlerts.zones[aemetZone.aemetCode]) {
     const officialAlerts = weatherData.aemetAlerts.zones[aemetZone.aemetCode].alerts;
-    
+    usingOfficialAemet = true;
+
     if (officialAlerts && officialAlerts.length > 0) {
       const typeIcons = {
         'wind': '💨',
@@ -160,13 +161,13 @@ export function getAemetAlertStatus(weatherData, concejo) {
         'fog': '🌫️',
         'forest-fire': '🔥'
       };
-      
+
       const levelNames = {
         'yellow': 'Aviso Amarillo (Riesgo)',
         'orange': 'Aviso Naranja (Riesgo Importante)',
         'red': 'Aviso Rojo (Riesgo Extremo)'
       };
-      
+
       const levelColors = {
         'yellow': '#eab308',
         'orange': '#f97316',
@@ -174,13 +175,32 @@ export function getAemetAlertStatus(weatherData, concejo) {
       };
 
       const now = new Date();
-      officialAlerts.forEach(a => {
-        // Ignorar avisos cuya vigencia ya haya expirado
-        if (a.expires && new Date(a.expires) <= now) return;
+      const UPCOMING_WINDOW_MS = 6 * 60 * 60 * 1000; // Solo mostrar en "En Vivo" si ya está activo o faltan <= 6 horas para su inicio
 
-        usingOfficialAemet = true;
+      officialAlerts.forEach(a => {
+        const expDate = a.expires ? new Date(a.expires) : null;
+        const onsetDate = a.onset ? new Date(a.onset) : null;
+
+        // 1. Ignorar avisos cuya vigencia ya haya expirado
+        if (expDate && expDate <= now) return;
+
+        // 2. Ignorar en "Estación en Vivo" avisos futuros para los que aún falten más de 6 horas
+        const msUntilOnset = onsetDate ? (onsetDate.getTime() - now.getTime()) : 0;
+        if (msUntilOnset > UPCOMING_WINDOW_MS) return;
+
+        const isUpcoming = msUntilOnset > 0;
+        const onsetStr = onsetDate
+          ? onsetDate.toLocaleString('es-ES', { weekday: 'short', hour: '2-digit', minute: '2-digit' })
+          : '';
+        const expStr = expDate
+          ? expDate.toLocaleString('es-ES', { weekday: 'short', hour: '2-digit', minute: '2-digit' })
+          : '';
+        const validityText = (onsetStr && expStr)
+          ? (isUpcoming ? `De ${onsetStr} a ${expStr}` : `Activo (${onsetStr} a ${expStr})`)
+          : (expStr ? `Hasta ${expStr}` : 'Hoy');
+
         let title = a.headline || `Aviso por ${a.type}`;
-        
+
         alerts.push({
           id: a.id,
           type: a.type,
@@ -190,14 +210,13 @@ export function getAemetAlertStatus(weatherData, concejo) {
           icon: typeIcons[a.type] || (String(a.type).includes('coastal') ? '🌊' : '⚠️'),
           title: title,
           desc: a.description || 'Consulta los detalles en aemet.es',
-          validity: `Hasta ${new Date(a.expires).toLocaleString('es-ES', {weekday: 'short', hour: '2-digit', minute:'2-digit'})}`,
-          probability: 'Oficial',
+          validity: validityText,
+          isUpcoming,
+          onsetShort: onsetDate ? onsetDate.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) : '',
+          probability: 'Oficial AEMET',
           recommendation: a.instruction || 'Siga los consejos de las autoridades.'
         });
       });
-    } else {
-      // MeteoAlarm devolvió explícitamente 0 alertas para esta zona.
-      usingOfficialAemet = true; 
     }
   }
 
@@ -232,7 +251,7 @@ export function getAemetAlertStatus(weatherData, concejo) {
     const windDir = current.wind_direction_10m || 0;
     const rainSum = daily.precipitation_sum ? daily.precipitation_sum[0] || 0 : 0;
     const maxRainProb = daily.precipitation_probability_max ? daily.precipitation_probability_max[0] || 0 : 0;
-    
+
     const currentWaveHeight = marine && typeof marine.wave_height === 'number' ? marine.wave_height : 0;
     let maxWaveToday = currentWaveHeight;
     if (marineHourly && Array.isArray(marineHourly.wave_height)) {
@@ -324,12 +343,17 @@ export function renderAemetAlertCard(alertStatus, concejo) {
     return '';
   }
 
-  // Si hay alertas activas
+  // Si hay alertas activas o próximas (<= 6h)
+  const allUpcoming = alerts.every(a => a.isUpcoming);
+  const headerBadgeText = allUpcoming
+    ? `⏳ PRÓXIMO AVISO AEMET (${alerts[0].onsetShort ? 'Desde ' + alerts[0].onsetShort : alerts.length})`
+    : `🚨 AVISOS METEOROLÓGICOS ACTIVOS (${alerts.length})`;
+
   return `
     <div class="aemet-alert-card aemet-${maxLevel} has-active-alerts collapsed">
       <div class="aemet-card-header" onclick="if (!event.target.closest('button, a')) this.closest('.aemet-alert-card').classList.toggle('collapsed')" title="Toca para ver el desglose o plegar los avisos oficiales">
         <div class="aemet-header-left">
-          <span class="aemet-badge-pill pill-${maxLevel}">🚨 AVISOS METEOROLÓGICOS ACTIVOS (${alerts.length})</span>
+          <span class="aemet-badge-pill pill-${maxLevel}">${headerBadgeText}</span>
           <span class="aemet-zone-label">📍 Zona AEMET: <strong>${zone.name}</strong></span>
         </div>
         <div class="aemet-header-right" style="display: flex; align-items: center; gap: 8px;">

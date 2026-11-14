@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303833-gps-bridge';
+const CACHE_NAME = 'meteoasturlode-v303834-aemet-onset';
 const STATIC_ASSETS = [
   './',
   './index.html',

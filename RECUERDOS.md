@@ -2,6 +2,21 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## ⏳ Ventana de Proximidad de 12 Horas y Horario Completo en Avisos Oficiales AEMET (`v3.0.38.34`) — 2026-11-14
+- **Estado de retorno previo (Ley 2):** Commit `9c23998` (`v3.0.38.33`).
+- **Diagnóstico Técnico (Feedback Lendo en Castrillón):**
+  - En la pestaña *Estación en Vivo* saltaba el cartel de `🚨 AVISOS METEOROLÓGICOS ACTIVOS (1)` (`Hasta dom, 14:59`) por fenómenos costeros el sábado al mediodía cuando el anemómetro marcaba `9.7 km/h` y las olas en Salinas eran de `0.88 m`.
+  - **Causa raíz:** En `js/utils/weatherAlerts.js`, el filtro de avisos oficiales de AEMET (`avisos-asturias.json`) solo comprobaba la fecha de fin (`a.expires <= now`), ignorando por completo la fecha de inicio (`a.onset`, fijada para el domingo de `09:00 a 14:59 h`). Además, mostraba únicamente la hora de finalización sin indicar cuándo comenzaba el aviso.
+- **Solución Técnica y Criterio Acordado con Lendo (Ventana de 12 horas en toda Asturias):**
+  1. **Filtro de Inicio (`onset`) a 12 Horas en `js/utils/weatherAlerts.js`:**
+     - En *Estación en Vivo*, cualquier aviso futuro de AEMET para cuyo inicio (`a.onset`) falten **más de 12 horas** permanece en **modo 100% silencioso** en las 5 zonas de Asturias (78 concejos).
+     - El margen de **12 horas** (propuesto por Lendo) garantiza que durante el día previo en calma no salte una falsa alarma en vivo, pero a partir de la noche anterior (ej. 21:00 h para un aviso que empieza a las 09:00 h de la mañana siguiente) ya sea visible antes de dormir.
+  2. **Distinción Visual entre «Próximo Aviso» y «Aviso Activo»:**
+     - Si faltan `<= 12 horas` para el inicio (`isUpcoming: true`), la cabecera muestra `⏳ PRÓXIMO AVISO AEMET (Desde HH:MM)` y la vigencia detalla el tramo completo (`De dom, 09:00 a dom, 14:59`).
+     - Una vez alcanzada la hora de inicio, pasa a `🚨 AVISOS METEOROLÓGICOS ACTIVOS` con vigencia `Activo (dom, 09:00 a dom, 14:59)`.
+  3. **Simulacro Controlado (Ley 12) y Verificación en 360px (Ley 11):**
+     - Añadido soporte `?test=aemet_proximo` y verificado en viewport móvil de 360px (`captura_castrillon_aemet_360px.jpg`).
+
 ## 📍 Puente Nativo de Ubicación GPS Android TWA & Widget (`v3.0.38.33`) — 2026-11-14
 - **Estado de retorno previo (Ley 2):** Commit `fa8f112` (`v3.0.38.32`).
 - **Diagnóstico Técnico (Feedback Lendo en pruebas de Widget + App Android):**

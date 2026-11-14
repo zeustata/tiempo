@@ -9,6 +9,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.34] - 2026-11-14
+### Avisos Oficiales AEMET: Ventana de Proximidad de 12 Horas (`onset`) y Tramo Horario Completo
+- **Control Inteligente de Inicio de Avisos (`js/utils/weatherAlerts.js`)**:
+  - Incorporada validación de la fecha y hora de inicio (`onset`) en los avisos oficiales de AEMET para las 5 zonas de Asturias: los avisos futuros para los que falten más de **12 horas** permanecen en silencio en *Estación en Vivo*, evitando mostrar alertas activas en días previos de calma.
+  - Cuando faltan 12 horas o menos para el inicio del fenómeno, la tarjeta identifica el aviso como `⏳ PRÓXIMO AVISO AEMET (Desde HH:MM)` y muestra el tramo completo de vigencia (`De [inicio] a [fin]`).
+- **Anti-caché**: Versión incrementada a `v3.0.38.34` con caché `meteoasturlode-v303834-aemet-onset`.
+
 ## [3.0.38.33] - 2026-11-14
 ### Puente Nativo de Geolocalización Android TWA (`nlat`/`nlon`) y Respaldo Instantáneo en Auto-GPS
 - **Sincronización Nativa Android -> Web (`js/app.js`)**:

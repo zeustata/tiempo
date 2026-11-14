@@ -1,5 +1,5 @@
 import { getWeatherInfo, renderWeatherIconHtml, getWindDirection, getUVDescription, getAQIDescription } from '../utils/weatherIcons.js?v=3.0.32';
-import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=3.0.21';
+import { getAemetAlertStatus, renderAemetAlertCard } from '../utils/weatherAlerts.js?v=3.0.38.34';
 import { renderHourlyForecastBlock } from './forecastView.js?v=3.0.32';
 import { detectFoehnEffect, renderFoehnBanner } from '../utils/foehnDetector.js?v=3.0.23.43';
 import { detectGalernaEffect, renderGalernaBanner } from '../utils/galernaDetector.js?v=3.0.23.43';
