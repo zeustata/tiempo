@@ -363,20 +363,28 @@ function applyCantabricoConsensus(weather, consensus, radarEcho = null) {
 
     const hasRadarRain = Boolean(radarEcho && radarEcho.hasEcho && radarEcho.echo && radarEcho.echo.isRain);
 
-    // Consenso Seco en tiempo actual (Banco de Ventana Lendo & Triángulo de Verificación):
-    // Si AROME marca seco (< 0.1 mm y código <= 3), ECMWF marca seco (< 0.1 mm y código <= 3) tanto en current como en hourly,
-    // y el radar táctico no detecta eco de precipitación, MANDA EL CONSENSO SECO (Nublado / Seco)
-    // y se anula cualquier orballo fantasma derivado de probabilidad estadística horaria aislada.
-    const isBothModelsDryCurrent = (rawPrecip < 0.1 && ePrecip < 0.1 && curEPrecip < 0.1) &&
+    // Consenso Seco en tiempo actual (Banco de Ventana Lendo & Triángulo de Verificación 2 de 3):
+    // 1) Si ambos modelos marcan seco y el radar está limpio -> Seco.
+    // 2) Desempate 2 contra 1 (Escampada confirmada por Radar + Europeo): Si el Radar Doppler está limpio (!hasRadarRain)
+    //    y el Centro Europeo (ECMWF) certifica 0.0 mm tanto en current como en la hora actual (ePrecip < 0.1 y curEPrecip < 0.1
+    //    y códigos secos <= 3 o niebla 45/48), cualquier llovizna/lluvia débil rezagada en solitario de AROME (< 1.5 mm)
+    //    queda desmentida por mayoría 2 de 3 (Radar + ECMWF) y pasa a Seco / Nublado.
+    const isEcmwfDryNow = ePrecip < 0.1 && curEPrecip < 0.1 &&
+      (eCode === null || eCode <= 3 || eCode === 45 || eCode === 48) &&
+      (curECode === null || curECode <= 3 || curECode === 45 || curECode === 48);
+
+    const isRadarAndEcmwfDryVeto = !hasRadarRain && isEcmwfDryNow && rawPrecip < 1.5;
+
+    const isBothModelsDryCurrent = ((rawPrecip < 0.1 && ePrecip < 0.1 && curEPrecip < 0.1) &&
       (rawCode <= 3 && (eCode === null || eCode <= 3 || eCode === 45) && (curECode === null || curECode <= 3)) &&
       curEPop < 50 &&
-      !hasRadarRain;
+      !hasRadarRain) || isRadarAndEcmwfDryVeto;
 
     // B) Rescate Soberano de Lluvia / Orbayu Real de ECMWF en tiempo actual:
     // RESGUARDO DE ESCAMPADA INMEDIATA (Feedback de Lendo - Ley 27):
     // Solo se respeta la escampada si ninguno de los modelos prevé lluvia activa (códigos < 50),
-    // no hay orballo en ECMWF (eCode < 50, curECode < 50 y curEPop < 50%) y precipitación residual < 0.2 mm.
-    const isEscampadaActive = isBothModelsDryCurrent || (
+    // o si hay veto 2 de 3 (Radar seco + ECMWF seco).
+    const isEscampadaActive = isBothModelsDryCurrent || isRadarAndEcmwfDryVeto || (
       rawPrecip < 0.1 && rawCode <= 3 &&
       ePrecip < 0.2 && curEPrecip < 0.2 &&
       (eCode === null || eCode <= 3) &&
@@ -390,7 +398,21 @@ function applyCantabricoConsensus(weather, consensus, radarEcho = null) {
       ((ePrecip >= 0.1 || curEPrecip >= 0.1) && (rawCode >= 50 || (eCode && eCode >= 50) || (curECode && curECode >= 50) || curEPop >= 60))
     ) && (hum >= 70 || ecmwfCloud >= 65) && !hasTrueSunlight;
 
-    if (rawPrecip >= 0.1 && ePrecip >= 0.1 && !hasTrueSunlight) {
+    if (isEscampadaActive) {
+      weather.current.precipitation = 0;
+      if (weather.current.rain != null) weather.current.rain = 0;
+      weather.current.weather_code = Math.max(rawCloud, ecmwfCloud) >= 75 ? 3 : 2;
+      // Sincronizar también la hora en curso cuando el Radar y ECMWF confirman que está seco ahora mismo
+      if (weather.hourly && weather.hourly.precipitation && weather.hourly.precipitation[nowHour] != null) {
+        weather.hourly.precipitation[nowHour] = 0;
+        if (weather.hourly.rain && weather.hourly.rain[nowHour] != null) {
+          weather.hourly.rain[nowHour] = 0;
+        }
+        if (weather.hourly.weather_code && weather.hourly.weather_code[nowHour] >= 50) {
+          weather.hourly.weather_code[nowHour] = weather.current.weather_code;
+        }
+      }
+    } else if (rawPrecip >= 0.1 && ePrecip >= 0.1 && !hasTrueSunlight) {
       const meanP = Math.round(((rawPrecip + ePrecip) / 2) * 10) / 10;
       weather.current.precipitation = meanP;
       if (weather.current.rain != null) weather.current.rain = meanP;
@@ -410,16 +432,12 @@ function applyCantabricoConsensus(weather, consensus, radarEcho = null) {
       const targetCode = (curAromeCode && curAromeCode >= 50) ? curAromeCode : ((curECode && curECode >= 50) ? curECode : (rawPrecip >= 0.5 ? 61 : 51));
       weather.current.weather_code = targetCode;
     } else if (isCurrentRainRescue) {
-      const rescuedP = Math.max(ePrecip, curEPrecip, curAromePrecip, 0.1);
+      const rescuedP = Math.max(ePrecip, curEPrecip, 0.1);
       weather.current.precipitation = rescuedP;
       if (weather.current.rain != null) weather.current.rain = rescuedP;
       const targetCode = (eCode && eCode >= 50 && eCode <= 82) ? eCode : ((curECode && curECode >= 50 && curECode <= 82) ? curECode : 51);
       weather.current.weather_code = targetCode;
       if (ecmwfCloud > rawCloud) weather.current.cloud_cover = ecmwfCloud;
-    } else if (isEscampadaActive && (weather.current.weather_code >= 50 || rawCode <= 3)) {
-      weather.current.precipitation = 0;
-      if (weather.current.rain != null) weather.current.rain = 0;
-      weather.current.weather_code = Math.max(rawCloud, ecmwfCloud) >= 75 ? 3 : 2;
     }
 
     // B1.1) Rescate Soberano de Orbayu Cantábrico en tiempo actual (Saturación, AROME, ECMWF y Ensamble):
@@ -454,9 +472,9 @@ function applyCantabricoConsensus(weather, consensus, radarEcho = null) {
     );
 
     if (isOrbayuCondition) {
-      weather.current.weather_code = (curAromeCode && curAromeCode >= 50) ? curAromeCode : ((rawCode >= 50 && rawCode <= 57) ? rawCode : ((eCode && eCode >= 50) ? eCode : ((curECode && curECode >= 50) ? curECode : 51))); // Orbayu / Llovizna activa
+      weather.current.weather_code = (curAromeCode && curAromeCode >= 50 && curAromeCode <= 57) ? curAromeCode : ((rawCode >= 50 && rawCode <= 57) ? rawCode : ((eCode && eCode >= 50) ? eCode : ((curECode && curECode >= 50) ? curECode : 51))); // Orbayu / Llovizna activa
       if (weather.current.precipitation < 0.1) {
-        weather.current.precipitation = Math.max(curEPrecip, curAromePrecip, ePrecip, rawPrecip, 0.1);
+        weather.current.precipitation = Math.min(0.4, Math.max(ePrecip, rawPrecip, 0.1));
         if (weather.current.rain != null) weather.current.rain = weather.current.precipitation;
       }
       if (ecmwfCloud > rawCloud) weather.current.cloud_cover = ecmwfCloud;
@@ -464,16 +482,16 @@ function applyCantabricoConsensus(weather, consensus, radarEcho = null) {
 
     // B2) Filtro Anti-Llovizna Fantasma Solitaria de AROME en tiempo actual (Consenso Bidireccional & Inmunidad Solar):
     const isSolarDrizzleGhost = hasTrueSunlight && rawPrecip > 0 && rawPrecip < 0.5 && ePrecip < 0.1;
-    const isPhantomAromeDrizzle = !isOrbayuCondition && (rawPrecip > 0 && rawPrecip < 1.5 &&
+    const isPhantomAromeDrizzle = (!isOrbayuCondition && (rawPrecip > 0 && rawPrecip < 1.5 &&
       (rawCode <= 3 || (rawCode >= 50 && rawCode <= 57)) &&
       ePrecip < 0.1 &&
-      eCode <= 3 &&
-      (hum < 86 || hasTrueSunlight)) || isSolarDrizzleGhost;
+      (eCode <= 3 || eCode === 45) &&
+      (!hasRadarRain || hum < 86 || hasTrueSunlight))) || isSolarDrizzleGhost || isRadarAndEcmwfDryVeto;
 
-    if (isSolarDrizzleGhost) {
+    if (isPhantomAromeDrizzle) {
       weather.current.precipitation = 0;
       if (weather.current.rain != null) weather.current.rain = 0;
-      weather.current.weather_code = eCode <= 3 ? eCode : 1;
+      weather.current.weather_code = Math.max(rawCloud, ecmwfCloud) >= 75 ? 3 : (eCode <= 3 ? eCode : 1);
       if (ecmwfCloud >= 80 && weather.current.cloud_cover < 80) {
         weather.current.cloud_cover = ecmwfCloud;
       }
@@ -537,20 +555,19 @@ function applyCantabricoConsensus(weather, consensus, radarEcho = null) {
         weather.current.radar_rescue_level = echo.level;
         weather.current.radar_rescue_label = echo.label;
       } else if (echo.level === 'light_rain') {
-        // En lluvia débil / orbayu del radar (azul/cian 10-25 dBZ):
-        // Si hay sol directo abrasador (hasTrueSunlight) y el cielo está poco nuboso (< 60%), es virga en altura
-        if (hasTrueSunlight && Math.max(rawCloud, ecmwfCloud) < 60) {
-          if (rawPrecip < 0.1 && ePrecip < 0.2) {
-            weather.current.precipitation = 0;
-            if (weather.current.rain != null) weather.current.rain = 0;
-            weather.current.weather_code = Math.max(rawCloud, ecmwfCloud) >= 75 ? 3 : 2;
-            weather.current.is_radar_rescued = false;
-          }
+        // COLOR AZUL / VERDE DÉBIL (< 25 dBZ):
+        // Si los modelos ya constatan escampada seca (rawPrecip < 0.1, ePrecip < 0.1, curEPrecip < 0.1 y curEPop < 50)
+        // o hay sol directo (hasTrueSunlight), el eco débil es cola de nube o virga en altura: NO se fuerza lluvia.
+        if ((rawPrecip < 0.1 && ePrecip < 0.1 && curEPrecip < 0.1 && curEPop < 50) || (hasTrueSunlight && Math.max(rawCloud, ecmwfCloud) < 60)) {
+          weather.current.precipitation = 0;
+          if (weather.current.rain != null) weather.current.rain = 0;
+          weather.current.weather_code = Math.max(rawCloud, ecmwfCloud) >= 75 ? 3 : 2;
+          weather.current.is_radar_rescued = false;
         } else {
           // El radar físico constata lluvia/orbayu sobre el terreno bajo manto nuboso:
           weather.current.weather_code = 61; // Lluvia débil
-          weather.current.precipitation = Math.max(weather.current.precipitation || 0, echo.precipEst || 0.3);
-          if (weather.current.rain != null) weather.current.rain = weather.current.precipitation;
+          weather.current.precipitation = 0.2; // 0.2 mm estricto (1 gota) para que eco débil jamás escale a Lluvia moderada
+          if (weather.current.rain != null) weather.current.rain = 0.2;
           weather.current.cloud_cover = Math.max(weather.current.cloud_cover || 0, 80);
           weather.current.is_radar_rescued = true;
           weather.current.radar_rescue_level = echo.level;
@@ -671,6 +688,20 @@ function applyCantabricoConsensus(weather, consensus, radarEcho = null) {
         if (weather.hourly.weather_code && rawHourlyCode <= 3) {
           weather.hourly.weather_code[i] = (eCodeH && eCodeH >= 50) ? eCodeH : (meanH >= 0.5 ? 61 : 51);
         }
+      } else if (precip >= 0.1 && ePrecipH < 0.1 && !hasTrueSunlightH) {
+        // Discrepancia Horaria (AROME prevé lluvia en solitario pero el Centro Europeo ECMWF prevé 0.0 mm seco):
+        // Se pondera el consenso (40% AROME / 60% ECMWF) para que un pico aislado de AROME sin respaldo europeo
+        // no dispare falsas alarmas de "Bastinazu / Lluvia copiosa" (>= 1.5 mm/h).
+        const temperedH = ePop < 35 ? 0 : Math.round((precip * 0.35) * 10) / 10;
+        if (weather.hourly.precipitation) weather.hourly.precipitation[i] = temperedH;
+        if (weather.hourly.rain) weather.hourly.rain[i] = temperedH;
+        if (weather.hourly.weather_code) {
+          if (temperedH < 0.1) {
+            weather.hourly.weather_code[i] = Math.max(rawC, ecmwfC) >= 75 ? 3 : 2;
+          } else if (temperedH < 0.5 && rawHourlyCode >= 60) {
+            weather.hourly.weather_code[i] = 51; // Degradar a llovizna/orbayu débil
+          }
+        }
       } else if (precip < 0.1 && ((ePrecipH >= 0.3 && ecmwfC >= 75) || (ePrecipH >= 0.1 && (eCodeH >= 50 || ePop >= 60) && Math.max(rawC, ecmwfC) >= 75)) && !hasTrueSunlightH) {
         const rescuedH = Math.max(Math.round((ePrecipH * 0.7) * 10) / 10, 0.1);
         if (weather.hourly.precipitation) weather.hourly.precipitation[i] = rescuedH;
@@ -759,16 +790,20 @@ function applyStandalonePhysicalSovereignty(weather, radarEcho = null) {
       weather.current.radar_rescue_level = echo.level;
       weather.current.radar_rescue_label = echo.label;
     } else if (echo.level === 'light_rain') {
+      const rawP = weather.current.precipitation != null ? parseFloat(weather.current.precipitation) : 0;
       const curCloud = weather.current.cloud_cover != null ? weather.current.cloud_cover : 100;
       const curDirectIrr = weather.current.direct_normal_irradiance != null ? parseFloat(weather.current.direct_normal_irradiance) : 0;
       const curSw = weather.current.shortwave_radiation != null ? parseFloat(weather.current.shortwave_radiation) : 0;
       const hasSun = curDirectIrr >= 100 || curSw >= 200;
-      if (hasSun && curCloud < 60) {
-        // Virga en altura con sol
+      if (rawP < 0.1 || (hasSun && curCloud < 60)) {
+        weather.current.precipitation = 0;
+        if (weather.current.rain != null) weather.current.rain = 0;
+        weather.current.weather_code = curCloud >= 75 ? 3 : 2;
+        weather.current.is_radar_rescued = false;
       } else {
         weather.current.weather_code = 61; // Lluvia débil
-        weather.current.precipitation = Math.max(weather.current.precipitation || 0, echo.precipEst || 0.3);
-        if (weather.current.rain != null) weather.current.rain = weather.current.precipitation;
+        weather.current.precipitation = 0.2; // 0.2 mm estricto (1 gota)
+        if (weather.current.rain != null) weather.current.rain = 0.2;
         weather.current.cloud_cover = Math.max(weather.current.cloud_cover || 0, 80);
         weather.current.is_radar_rescued = true;
         weather.current.radar_rescue_level = echo.level;

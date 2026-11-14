@@ -12,7 +12,7 @@ import { detectRoadWindStatus, renderRoadWindBanner, renderRoadWindSensorPill } 
 import { getSeismicStatus, renderSeismicBanner } from '../utils/seismicDetector.js?v=3.0.3';
 import { calculateLaundryDrying, renderLaundryCard } from '../utils/laundryAdvisor.js?v=2.2.12';
 import { getClimatologyContext, renderClimatologyStrip } from '../utils/climatologyData.js?v=3.0.25.22';
-import { calculateUmbrellaStatus, renderUmbrellaCard } from '../utils/umbrellaAdvisor.js?v=1.1.60';
+import { calculateUmbrellaStatus, renderUmbrellaCard } from '../utils/umbrellaAdvisor.js?v=3.0.38.32';
 import { checkConcejoFolixa } from '../utils/festivosData.js?v=1.1.85';
 
 /**

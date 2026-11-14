@@ -2,6 +2,28 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📡 Blindaje Estricto de Radar en Píxel Único y Erradicación de Falsas Alarmas de Lluvia (`v3.0.38.32`) — 2026-11-14
+- **Estado de retorno previo (Ley 2):** Commit `26fd5f8` (`v3.0.38.31`).
+- **Diagnóstico en Vivo por Banco de Ventana (Lendo en directo):**
+  - Lendo reporta tras escampar la lluvia matinal: *«me pones lluvia moderada con el radar y aquí ya no llueve nada. también te mandé la captura de la alarma de lluvia... arregla antes lo del radar de lluvia. no puede saltar si en la ubicación no hay lluvia»*.
+- **Causas Raíz Detectadas:**
+  1. *Máscara gris/beige de RainViewer confundida con lluvia (`radarService.js`):* La paleta Universal Blue (esquema 2) de RainViewer renderiza una máscara gris/parda semitransparente (`RGBA(141, 133, 111, 94)` en Castrillón y `RGBA(206, 192, 134, 150)` en Gijón) sobre nubes estratiformes secas. El clasificador de `v3.0.38.31` tenía un retorno final por defecto a `light_rain` para cualquier píxel con `a >= 50` y además barría una cuadrícula vecina de 3×3 píxeles.
+  2. *Arrastre horario aislado de AROME (`weatherApi.js` y `umbrellaAdvisor.js`):* Mientras el radar real y ECMWF marcaban `0.0 mm` (seco), AROME arrastraba en solitario `1.3 mm` / `2.0 mm` entre las 10:00 y las 11:00 h. Al cruzarse con el falso eco y volcar el acumulado horario en la lluvia instantánea, disparó `Lluvia moderada • 📡 RADAR` y la alarma roja de `PELIGRO DE BASTINAZU`.
+- **Solución Técnica Implementada (Leyes 0, 1, 3, 4, 10, 11 y 13):**
+  1. **Filtro Cromático y Píxel Central Estricto en `radarService.js`:**
+     - Exigida opacidad `a >= 180` y saturación cromática `maxC - minC >= 65` para descartar toda máscara gris, beige o parda de nubosidad seca.
+     - Retorno por defecto final fijado estrictamente en `dry` (`isRain: false, precipEst: 0`).
+     - Suprimido el barrido 3×3 de píxeles vecinos en `fetchLiveRadarEcho`: se evalúa **única y exclusivamente el píxel central exacto (`px, py`)** de las coordenadas de la ubicación.
+  2. **Veto 2 de 3 en Tiempo Real y Templado Horario en `weatherApi.js`:**
+     - Añadido `isRadarAndEcmwfDryVeto`: cuando el Radar Doppler está seco (`!hasRadarRain`) y ECMWF marca `0.0 mm` (`isEcmwfDryNow`), cualquier llovizna o lluvia aislada de AROME (`< 1.5 mm`) queda vetada a `0.0 mm` y código `3 (Nublado • Cubiertu)`.
+     - Limitada la estimación de Orbayu instantáneo a un máximo de `0.4 mm` (1 gota) para no volcar acumulados horarios enteros en el estado instantáneo.
+     - En el bucle horario de 72 h, si AROME predice lluvia en solitario mientras ECMWF marca `0.0 mm`, se anula (`ePop < 35%`) o se pondera al `35%`, impidiendo falsas alarmas de `Bastinazu`.
+  3. **Sincronización de Ventana Futura en `umbrellaAdvisor.js`:**
+     - Cuando `isCurrentlyRaining` es `false`, la búsqueda de próxima lluvia en 8 horas arranca en `startIndex + 1` (la siguiente hora completa), alineada con el carrusel horario.
+  4. **Verificación en 360px (Ley 11) y Anti-Caché (Leyes 4 y 13):**
+     - Verificado en resolución móvil de 360px en `localhost:8080` para Castrillón y Gijón (`Nublado • Cubiertu`, `0 mm`, sin chapita `📡 RADAR` ni falsa alarma roja).
+     - Actualizado a `v3.0.38.32` (`meteoasturlode-v303832-radar-seco-pixel`) manteniendo `CURRENT_CHANGELOG_PROMPT_VERSION = '3.0.38'`.
+
 ## 🔭 Astronomía & Cosmos: Selector Bipartito Ergonómico Hero (`v3.0.38.30`) — 2026-11-13
 - **Estado de retorno previo (Ley 2):** Commit `e5ec209` (`v3.0.38.29` — Triángulo de verificación en vivo y consenso seco soberano).
 - **Diagnóstico y Propuesta de Lendo:**

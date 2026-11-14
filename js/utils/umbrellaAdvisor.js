@@ -48,13 +48,14 @@ export function calculateUmbrellaStatus(current, hourly) {
     };
   }
 
-  // 2. Si no llueve ahora, inspeccionar las próximas 8 horas (nowcasting)
-  const windowLimit = Math.min(hourly.time.length, startIndex + 8);
+  // 2. Si no llueve ahora, inspeccionar las próximas 8 horas futuras (a partir de la siguiente hora en punto)
+  const futureStart = Math.min(hourly.time.length - 1, startIndex + 1);
+  const windowLimit = Math.min(hourly.time.length, futureStart + 8);
   let firstRainIndex = -1;
   let firstHeavyIndex = -1;
   let maxPrecipInWindow = 0;
 
-  for (let i = startIndex; i < windowLimit; i++) {
+  for (let i = futureStart; i < windowLimit; i++) {
     const p = hourly.precipitation ? (parseFloat(hourly.precipitation[i]) || 0) : 0;
     const pop = hourly.precipitation_probability ? (parseFloat(hourly.precipitation_probability[i]) || 0) : 0;
     const c = hourly.weather_code ? parseInt(hourly.weather_code[i], 10) : 0;

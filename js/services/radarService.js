@@ -34,31 +34,44 @@ export async function fetchRainViewerRadar() {
  * Retorna nivel de intensidad, código WMO, estimación de precipitación y si es tormenta
  */
 export function classifyRadarColor(r, g, b, a) {
-  if (a < 50) return { level: 'dry', label: 'Sin precipitación', isRain: false, isStorm: false, precipEst: 0 };
+  // En la paleta oficial de RainViewer (esquema 2), los ecos reales de precipitación tienen opacidad alta (a >= 180).
+  // Las capas semitransparentes grises/beige (a < 180 o baja saturación cromática) son cobertura nubosa seca o virga.
+  if (a < 180) return { level: 'dry', label: 'Sin precipitación', isRain: false, isStorm: false, precipEst: 0 };
+
+  // Filtro anti-máscara gris/arena/beige: si los tres canales están próximos entre sí (baja saturación cromática), no es eco Doppler
+  const maxC = Math.max(r, g, b);
+  const minC = Math.min(r, g, b);
+  if (maxC - minC < 65) {
+    return { level: 'dry', label: 'Sin precipitación', isRain: false, isStorm: false, precipEst: 0 };
+  }
 
   // Magenta / Morado intenso (Tormenta convectiva severa / Granizo / Lluvia torrencial > 50 dBZ)
-  if (r >= 170 && b >= 140 && g <= 180) {
+  if (r >= 180 && b >= 150 && g <= 170) {
     return { level: 'extreme_storm', label: 'Tormenta torrencial / Eléctrica', isRain: true, isStorm: true, wmoCode: 95, precipEst: 20.0 };
   }
   // Rojo intenso / Carmesí (Tormenta / Lluvia torrencial 45-55 dBZ)
-  if (r >= 140 && g <= 70 && b <= 70) {
+  if (r >= 140 && g <= 65 && b <= 65) {
     return { level: 'storm', label: 'Tormenta / Lluvia torrencial', isRain: true, isStorm: true, wmoCode: 95, precipEst: 15.0 };
   }
   // Naranja (Chubascos fuertes / Lluvia convectiva 35-45 dBZ)
-  if (r >= 210 && g >= 80 && g <= 190 && b <= 70) {
+  if (r >= 210 && g >= 85 && g <= 185 && b <= 65) {
     return { level: 'heavy_rain', label: 'Chubascos fuertes', isRain: true, isStorm: false, wmoCode: 81, precipEst: 6.0 };
   }
-  // Amarillo (Lluvia moderada 25-35 dBZ)
-  if (r >= 200 && g >= 180 && b <= 80) {
+  // Amarillo puro (Lluvia moderada 25-35 dBZ)
+  if (r >= 200 && g >= 185 && b <= 70) {
     return { level: 'moderate_rain', label: 'Lluvia moderada', isRain: true, isStorm: false, wmoCode: 63, precipEst: 2.5 };
   }
-  // Verde (Lluvia moderada/débil)
-  if (g >= 140 && r <= 130 && b <= 130) {
-    return { level: 'light_rain', label: 'Lluvia débil', isRain: true, isStorm: false, wmoCode: 61, precipEst: 0.6 };
+  // Verde (Lluvia débil 15-25 dBZ)
+  if (g >= 140 && r <= 120 && b <= 120) {
+    return { level: 'light_rain', label: 'Lluvia débil', isRain: true, isStorm: false, wmoCode: 61, precipEst: 0.2 };
   }
-  // Azul / Cian / Cualquier otro eco de radar de RainViewer:
-  // En teselas de RainViewer TODO píxel con opacidad >= 50 es reflectividad de precipitación (5-25 dBZ)
-  return { level: 'light_rain', label: 'Lluvia débil / Orbayu', isRain: true, isStorm: false, wmoCode: 61, precipEst: 0.3 };
+  // Azul / Cian puro (Lluvia débil / Orbayu 10-20 dBZ)
+  if ((b >= 160 && r <= 100 && b > g) || (r <= 70 && g >= 140 && b >= 190)) {
+    return { level: 'light_rain', label: 'Lluvia débil / Orbayu', isRain: true, isStorm: false, wmoCode: 61, precipEst: 0.2 };
+  }
+
+  // Si no encaja estrictamente en ningún color de precipitación del radar Doppler: ES SECO
+  return { level: 'dry', label: 'Sin precipitación', isRain: false, isStorm: false, precipEst: 0 };
 }
 
 /**
@@ -122,29 +135,10 @@ export async function fetchLiveRadarEcho(lat, lon) {
     const ctx = canvas.getContext('2d', { willReadFrequently: true });
     ctx.drawImage(img, 0, 0);
 
-    // Muestreo del píxel central exacto de las coordenadas:
+    // Prioridad Absoluta del Píxel Central exacto de las coordenadas (Doctrina Lendo):
+    // Si en el punto exacto de la ubicación no hay eco de lluvia, jamás se arrastra lluvia de píxeles vecinos.
     const centerP = ctx.getImageData(px, py, 1, 1).data;
-    let bestEcho = classifyRadarColor(centerP[0], centerP[1], centerP[2], centerP[3]);
-
-    // Si el punto exacto no tiene eco o es débil, inspeccionamos el vecindario inmediato (radio ~1.2 km):
-    if (!bestEcho.isRain) {
-      const neighbors = [];
-      for (let dy = -1; dy <= 1; dy++) {
-        for (let dx = -1; dx <= 1; dx++) {
-          if (dx === 0 && dy === 0) continue;
-          const nx = Math.min(255, Math.max(0, px + dx));
-          const ny = Math.min(255, Math.max(0, py + dy));
-          const np = ctx.getImageData(nx, ny, 1, 1).data;
-          const nEcho = classifyRadarColor(np[0], np[1], np[2], np[3]);
-          if (nEcho.isRain) neighbors.push(nEcho);
-        }
-      }
-      if (neighbors.length >= 2) {
-        const severityOrder = { extreme_storm: 5, storm: 4, heavy_rain: 3, moderate_rain: 2, light_rain: 1 };
-        neighbors.sort((a, b) => (severityOrder[b.level] || 0) - (severityOrder[a.level] || 0));
-        bestEcho = neighbors[0];
-      }
-    }
+    const bestEcho = classifyRadarColor(centerP[0], centerP[1], centerP[2], centerP[3]);
 
     if (!bestEcho.isRain) {
       return {

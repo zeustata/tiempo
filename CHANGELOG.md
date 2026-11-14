@@ -9,6 +9,16 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.32] - 2026-11-14
+### Radar en Directo y Consenso Horario: Soberanía del Píxel Exacto, Filtro Anti-Máscara Gris y Veto 2 de 3
+- **Filtro Cromático y Píxel Central Estricto (`js/services/radarService.js`)**:
+  - Exigida opacidad `>= 180` y saturación cromática `>= 65` en `classifyRadarColor()` para descartar las máscaras grises/beiges semitransparentes de nubosidad seca de RainViewer (`RGBA(141,133,111,94)` / `RGBA(206,192,134,150)`), con retorno por defecto estricto a seco (`dry`).
+  - Eliminado el barrido de píxeles vecinos (3×3): `fetchLiveRadarEcho()` evalúa única y exclusivamente el píxel exacto (`px, py`) de la ubicación activa.
+- **Veto 2 de 3 en Tiempo Real y Templado Horario (`js/services/weatherApi.js` y `js/utils/umbrellaAdvisor.js`)**:
+  - Si el Radar Doppler está seco y el modelo europeo ECMWF marca `0.0 mm`, se veta cualquier lluvia débil/moderada residual que arrastre AROME en solitario, mostrando `Nublado • Cubiertu` (`0.0 mm`).
+  - Templado por consenso en el bucle horario cuando AROME predice lluvia en solitario frente a `0.0 mm` de ECMWF, y ajuste de la ventana futura del asesor de paraguas a `startIndex + 1` cuando no llueve en el instante actual, erradicando falsas alarmas de *Bastinazu*.
+- **Anti-caché**: Versión incrementada a `v3.0.38.32` con caché `meteoasturlode-v303832-radar-seco-pixel`.
+
 ## [3.0.38.31] - 2026-11-14
 ### Radar en Directo y Consenso Cantábrico: Corrección de Tesela Slippy, Rescate de Lluvia Real y Blindaje 503
 - **Corrección Matemática de Teselas Doppler en Radar (`js/services/radarService.js`)**:
