@@ -2,6 +2,14 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📌 Tareas Pendientes para Futura Versión Nativa de Android (Tras Aprobación de Google Play) — 2026-11-15
+*Esta tarea queda formalmente registrada y en pausa a la espera de que Google Play Console apruebe definitivamente el `versionCode 13` (actualmente en revisión):*
+1. **Consenso Cantábrico Híbrido en el Widget Nativo (`MeteoWeatherEngine.java`):**
+   - **Problema actual:** El widget de Android consulta Open-Meteo sin parámetro de modelo y recibe AROME en solitario. Si AROME se queda ciego en la costa marcando `15%` de nubes y `código 0 (Despejado)`, el widget pinta un sol reluciente (`ic_weather_sun`) en el escritorio del móvil, contradiciendo a la app web que muestra fidedignamente `⛅ Sol y nubes • Claros`.
+   - **Mejora futura para `versionCode 14`:**
+     - Integrar en `MeteoWeatherEngine.java` la consulta dual a AROME + ECMWF (`&models=meteofrance_seamless,ecmwf_ifs025`) o aplicar la regla litoral del consenso (`cloudCover < 15%` para `Despejado ☀️`, asignando `Sol y nubes ⛅` entre `15%` y `74%`).
+     - **Regla sagrada:** Prohibido tocar la carpeta `MeteoAstur_Android_Widget` ni recompilar hasta que Google Play libere la versión en revisión.
+
 ## ⛅ Calibración de Peldaño Litoral: Sol y Nubes frente a Falso Mayormente Soleado en Costa (`v3.0.38.36`) — 2026-11-15
 - **Estado de retorno previo (Ley 2):** Commit `d609af6` (`v3.0.38.35`).
 - **Diagnóstico Técnico (Feedback Lendo + Webcam RCN Salinas a las 13:35 h):**
