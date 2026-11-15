@@ -9,6 +9,13 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.36] - 2026-11-15
+### Calibración Litoral y Protección de Sol y Nubes: Ajuste de Peldaño Nuboso en Costa (Feedback Lendo / Webcam Salinas)
+- **Alineación de Sol y Nubes frente a Falsos Cielos Despejados (`js/utils/weatherIcons.js` y `js/services/weatherApi.js`)**:
+  - En `weatherIcons.js`, la condición para `Mayormente soleado / Despejáu (🌤️)` se restringe a nubosidades netamente bajas (`cc <= 28%` con `code <= 1`), evitando que con nubosidades del 30%-40% se degrade un `Sol y nubes / Claros (⛅)` a un sol dominante al 75% con nubecita mínima.
+  - En `weatherApi.js` (`applyCantabricoConsensus`), el suelo para asignar `Sol y nubes (código 2)` se ajusta a `effectiveCloud >= 30%` (anteriormente 40%), garantizando que cuando los modelos europeos y locales detectan estratocúmulos o nubes rotas en la costa cantábrica se preserve fidedignamente `⛅ Sol y nubes / Claros` con resol activo.
+- **Anti-caché**: Versión incrementada a `v3.0.38.36` con caché `meteoasturlode-v303836-sol-nubes-castrillon`.
+
 ## [3.0.38.35] - 2026-11-14
 ### Consenso en Vivo y Modelos Individuales: Soberanía de Escampada en 15 min y Limpieza por Radiación Solar
 - **Respeto al Pluviómetro Instantáneo de 15 min y Claridad Solar (`js/services/weatherApi.js`)**:

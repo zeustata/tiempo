@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303835-escampada-15min';
+const CACHE_NAME = 'meteoasturlode-v303836-sol-nubes-castrillon';
 const STATIC_ASSETS = [
   './',
   './index.html',

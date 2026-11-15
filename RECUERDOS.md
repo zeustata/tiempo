@@ -2,6 +2,18 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## ⛅ Calibración de Peldaño Litoral: Sol y Nubes frente a Falso Mayormente Soleado en Costa (`v3.0.38.36`) — 2026-11-15
+- **Estado de retorno previo (Ley 2):** Commit `d609af6` (`v3.0.38.35`).
+- **Diagnóstico Técnico (Feedback Lendo + Webcam RCN Salinas a las 13:35 h):**
+  - En Castrillón / Salinas, la app en *Auto Híbrido* mostraba `🌤️ Mayormente soleado / Despejáu` cuando en la realidad (confirmada por la webcam del Náutico de Salinas y el METAR `LEAS 151230Z`) predominaban las nubes (estratocúmulos cubriendo el 70%-80% del cielo) con resol y sol asomando de vez en cuando a ratos.
+  - **Causa raíz identificada:**
+    1. Tanto AROME (`15%`) como ECMWF (`35%-38%`) subestimaron la extensión del manto de nubes roto frente al dato real del Aeropuerto (`BKN050`, 5-7 octas, 62%-88% de cobertura).
+    2. En `weatherApi.js` (línea 508), la condición `effectiveCloud >= 40 ? 2 : 1` degradaba el código de consenso a `1` (`Mayormente soleado`) si la nubosidad calculada era `<= 39%`.
+    3. En `weatherIcons.js` (línea 497), la regla litoral `isMostlyClearSky` forzaba `Mayormente soleado` para cualquier nubosidad `<= 40%`, pisando el código `2` (`Sol y nubes / Claros`) y mostrando un sol dominante al 75% con nubecita mínima.
+- **Solución Técnica Implementada (`v3.0.38.36`):**
+  1. **Ajuste de Peldaño en `weatherIcons.js`**: `isMostlyClearSky` se limita estrictamente a nubosidades muy bajas (`cc <= 28%` con `code <= 1`). Si el consenso asigna `code 2` (`Sol y nubes / Claros`) o si `cc > 28%`, se mantiene con total honestidad **`⛅ Sol y nubes / Claros`**.
+  2. **Ajuste en `weatherApi.js`**: el suelo para `código 2` se fija en `effectiveCloud >= 30%` (en vez de 40%), preservando la alternancia real de nubes y claros en la costa cantábrica.
+
 ## 📦 Estado de Cierre de Sesión: Espera de Aprobación en Google Play & Verificación de Ventana (2026-11-14, 16:45 h)
 - **Estado de Producción Google Play Store:**
   - Compilado y verificado MeteoAstur_v3.0.38_bundle13.aab (ersionCode 13) tras superar la auditoría de 6 puntos de erify_pre_aab.py y la prueba física de la APK gemela (TEST12.apk) en el móvil de Lendo.

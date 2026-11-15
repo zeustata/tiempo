@@ -505,7 +505,7 @@ function applyCantabricoConsensus(weather, consensus, radarEcho = null) {
         if (weather.current.rain != null) weather.current.rain = 0;
       }
       const effectiveCloud = Math.max(rawCloud, ecmwfCloud);
-      weather.current.weather_code = effectiveCloud >= 80 ? 3 : (effectiveCloud >= 40 ? 2 : 1);
+      weather.current.weather_code = effectiveCloud >= 80 ? 3 : (effectiveCloud >= 30 ? 2 : 1);
     }
 
     // Falso Nublado en tiempo actual (sincronizado con rescate horario: Ley 27 & Banco de Ventana)

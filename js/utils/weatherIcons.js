@@ -494,7 +494,7 @@ export function getWeatherInfo(code, isDay = 1, precipitation = null, pop = null
       const canBeCompletelyClear = !isCoastZone || (isNordesteOrSur && cc !== null && cc <= 10);
 
       const isClearSky = canBeCompletelyClear && cc !== null && cc <= 15 && (irr >= 150 || code === 0);
-      const isMostlyClearSky = !isClearSky && cc !== null && cc <= 40;
+      const isMostlyClearSky = !isClearSky && cc !== null && cc <= 28 && code <= 1;
       base = {
         label: isClearSky ? 'Despejado / Soleyeru' : (isMostlyClearSky ? 'Mayormente soleado / Despejáu' : 'Sol y nubes / Claros'),
         icon: isClearSky ? '☀️' : (isMostlyClearSky ? '🌤️' : '⛅'),
