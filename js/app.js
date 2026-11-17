@@ -1,5 +1,5 @@
 import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo, resolveSubLocalidad, SUB_LOCALIDADES } from './config/concejos.js?v=3.0.25.18';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.38.37';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.38.40';
 import { fetchLiveRadarEcho } from './services/radarService.js?v=3.0.38.32';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=3.0.23.63';
 import { renderCurrentWeather } from './components/currentCard.js?v=3.0.38.38';
@@ -12,7 +12,7 @@ import { renderTourismCard } from './components/tourismCard.js?v=3.0.25.5';
 import { renderForecast, renderHourlyForecastBlock } from './components/forecastView.js?v=3.0.32';
 import { renderWeatherChart } from './components/chartsView.js?v=3.0.23.58';
 import { renderAstronomyView } from './components/astronomyCard.js?v=3.0.38.30';
-import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter, locateUserGps, toggleRadarFullscreen } from './components/mapRadar.js?v=3.0.38.3';
+import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter, locateUserGps, toggleRadarFullscreen, updateRadarForecastStrip } from './components/mapRadar.js?v=3.0.38.40';
 import { getWeatherInfo } from './utils/weatherIcons.js?v=3.0.38.29';
 import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=2.0.0';
 import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=2.0.0';
@@ -52,7 +52,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.38.39';
+export const CURRENT_APP_VERSION = '3.0.38.40';
 // Control inteligente de Auto-Prompt del Changelog (Doctrina de No-Fatiga al Usuario - Feedback Lendo):
 // Solo se incrementa ante cambios visuales grandes, módulos nuevos o novedades perceptibles.
 // En ajustes finos, calibraciones matemáticas y parches internos se mantiene para no fatigar al usuario con modales.
@@ -3899,6 +3899,7 @@ class MeteoAsturiasApp {
       }
       // Verificación de Alertas Rojas de Emergencia (v2.2.34)
       this.checkEmergencyRedAlerts(this.weatherData, this.currentConcejo);
+      updateRadarForecastStrip(this.weatherData, this.currentConcejo, effectiveTheme);
 
       // Resetear carruseles de Vivo al inicio (Feedback Lendo v3.0.38.6)
       try {

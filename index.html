@@ -33,7 +33,7 @@
 
   <!-- Estilos de la Aplicación con Cache Busting -->
   <link rel="stylesheet" href="css/main.css?v=3.0.25.11">
-  <link rel="stylesheet" href="css/components.css?v=3.0.38.39">
+  <link rel="stylesheet" href="css/components.css?v=3.0.38.40">
   <link rel="stylesheet" href="css/weather-themes.css?v=3.0.25.11">
 </head>
 <body>
@@ -248,6 +248,9 @@
             <button id="btn-radar-play" class="btn-radar-action" title="Iniciar o pausar animación del radar">▶️ Reproducir</button>
             <button id="btn-radar-fullscreen" class="btn-radar-action" title="Ver radar a pantalla completa">⛶ Pantalla Completa</button>
           </div>
+
+          <!-- Franja Minuto a Minuto (Próximos 90 min cada 15 min: qué viene justo después del radar real) -->
+          <div id="radar-next-hours-strip" class="radar-next-hours-strip"></div>
 
           <!-- Termómetro y Ranking de Lluvia por Concejos (Leyes 11 y 14) -->
           <div id="radar-rain-ranking-container" class="radar-rain-ranking-container"></div>
@@ -4923,7 +4926,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.0.38.39').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=3.0.38.40').then(reg => {
           reg.update();
           document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -4953,7 +4956,7 @@
   </script>
 
   <!-- Módulo Principal de la Aplicación -->
-  <script type="module" src="js/app.js?v=3.0.38.39"></script>
+  <script type="module" src="js/app.js?v=3.0.38.40"></script>
 
 
 

@@ -1,9 +1,11 @@
 import { fetchRainViewerRadar } from '../services/radarService.js?v=3.0.38.24';
+import { getWeatherInfo, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=3.0.38.29';
 
 let asturiasMap = null;
 let radarTileLayer = null;
 let baseLayers = {};
 let radarFrames = [];
+let lastRealIndex = 0;
 let currentFrameIndex = 0;
 let animationTimer = null;
 let activeConcejoMarker = null;
@@ -205,10 +207,16 @@ async function loadRadarLayers() {
   if (!radarData || !radarData.radar || !radarData.radar.past) return;
 
   radarHost = radarData.host || 'https://tilecache.rainviewer.com';
-  radarFrames = [...radarData.radar.past, ...(radarData.radar.nowcast || [])];
+  const pastFrames = radarData.radar.past.map(f => ({ ...f, isForecast: false }));
+  const nowcastFrames = Array.isArray(radarData.radar.nowcast)
+    ? radarData.radar.nowcast.map(f => ({ ...f, isForecast: true }))
+    : [];
+
+  radarFrames = [...pastFrames, ...nowcastFrames];
   if (radarFrames.length === 0) return;
 
-  currentFrameIndex = radarData.radar.past.length - 1;
+  lastRealIndex = Math.max(0, pastFrames.length - 1);
+  currentFrameIndex = lastRealIndex;
   initRadarSliderControls();
   showRadarFrame(currentFrameIndex, radarHost);
 }
@@ -222,6 +230,7 @@ function initRadarSliderControls() {
     slider.min = '0';
     slider.max = String(radarFrames.length - 1);
     slider.value = String(currentFrameIndex);
+    slider.style.background = '';
 
     const firstDate = new Date(radarFrames[0].time * 1000);
     const lastDate = new Date(radarFrames[radarFrames.length - 1].time * 1000);
@@ -259,7 +268,7 @@ function initRadarSliderControls() {
     btnNext.onclick = () => stepRadarFrame(currentFrameIndex + 1);
   }
   if (btnLast) {
-    btnLast.onclick = () => stepRadarFrame(radarFrames.length - 1);
+    btnLast.onclick = () => stepRadarFrame(lastRealIndex);
   }
 }
 
@@ -288,6 +297,7 @@ function showRadarFrame(index, host = radarHost) {
   if (!radarFrames[index] || !asturiasMap) return;
 
   const frame = radarFrames[index];
+  const isForecast = Boolean(frame.isForecast) || index > lastRealIndex;
   const url = `${host}${frame.path}/256/{z}/{x}/{y}/${radarPalette}/1_1.png`;
 
   if (radarTileLayer) {
@@ -311,18 +321,20 @@ function showRadarFrame(index, host = radarHost) {
 
   const d = new Date(frame.time * 1000);
   const timeStr = d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
-  const isForecast = index >= (radarFrames.length - (radarFrames.length > 3 ? 3 : 1));
 
   const timeEl = document.getElementById('radar-time-display');
   if (timeEl) {
-    timeEl.innerHTML = `${isForecast ? '🔮 Proyección Inmediata: ' : '📡 Radar en Directo: '} <strong>${timeStr}</strong>`;
+    timeEl.innerHTML = `${isForecast ? '🔮 Proyección Inmediata: ' : '📡 Radar Real: '} <strong>${timeStr}</strong>`;
   }
 
   const badgeEl = document.getElementById('radar-slider-now-badge');
   if (badgeEl) {
-    badgeEl.textContent = `${isForecast ? '🔮 ' : '📡 '}${timeStr}`;
+    badgeEl.textContent = isForecast
+      ? `🔮 ${timeStr}`
+      : (index === lastRealIndex ? `📡 ${timeStr} • EN DIRECTO` : `📡 ${timeStr} • PASADO`);
     badgeEl.style.borderColor = isForecast ? '#d946ef' : '#00ecff';
     badgeEl.style.color = isForecast ? '#f472b6' : '#00ecff';
+    badgeEl.style.background = isForecast ? 'rgba(217, 70, 239, 0.16)' : 'rgba(0, 236, 255, 0.10)';
   }
 }
 
@@ -608,5 +620,106 @@ function initRadarSettingsControls() {
   }
 
   initFullscreenListeners();
+}
+
+/**
+ * Renderiza la franja de lluvia minuto a minuto (cada 15 min) debajo del Radar
+ * usando minutely_15 gratuito de Open-Meteo (con respaldo horario si no está disponible).
+ */
+export function updateRadarForecastStrip(weatherData, concejo, iconTheme = 'astur') {
+  const min15 = weatherData?.weather?.minutely_15;
+  const hourly = weatherData?.weather?.hourly;
+  const stripEl = document.getElementById('radar-next-hours-strip');
+  if (!stripEl) return;
+
+  const isCoast = concejo?.type === 'coast' || Boolean(concejo?.region?.includes('Costa'));
+  const now = new Date();
+  const slots = [];
+  let maxRain = 0;
+  let firstRainTime = null;
+  let firstRainOffsetMin = 0;
+  let is15MinMode = false;
+
+  if (min15 && Array.isArray(min15.time) && min15.time.length > 0) {
+    is15MinMode = true;
+    for (let i = 0; i < min15.time.length && slots.length < 6; i++) {
+      const tStr = min15.time[i];
+      const slotDate = new Date(tStr);
+      const diffMin = Math.round((slotDate.getTime() - now.getTime()) / 60000);
+      if (diffMin < 0) continue;
+
+      const hourLabel = tStr.substring(11, 16);
+      const precip = min15.precipitation?.[i] ?? 0;
+      const code = min15.weather_code?.[i] ?? 3;
+      const hourNum = parseInt(tStr.substring(11, 13), 10);
+      const isDay = hourNum >= 8 && hourNum <= 18 ? 1 : 0;
+
+      if (precip > maxRain) maxRain = precip;
+      if (!firstRainTime && precip >= 0.1) {
+        firstRainTime = hourLabel;
+        firstRainOffsetMin = Math.max(15, Math.round(diffMin / 15) * 15);
+      }
+
+      const info = getWeatherInfo(code, isDay, precip, precip >= 0.1 ? 75 : 15, null, null, null, null, null, null, isCoast);
+      slots.push(`
+        <div class="radar-next-slot ${precip >= 0.1 ? 'has-rain' : ''}">
+          <span class="rns-hour">${hourLabel}</span>
+          <span class="rns-icon">${renderWeatherIconHtml(info, 24, iconTheme)}</span>
+          <span class="rns-rain">${precip >= 0.1 ? `${precip.toFixed(1)} mm` : 'Seco'}</span>
+        </div>
+      `);
+    }
+  }
+
+  // Fallback a horario si el modelo activo no devuelve minutely_15
+  if (slots.length === 0 && hourly && Array.isArray(hourly.time)) {
+    const curHourStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}T${String(now.getHours()).padStart(2, '0')}:00`;
+    let startIdx = hourly.time.findIndex(t => t >= curHourStr);
+    if (startIdx === -1) startIdx = 0;
+
+    for (let i = startIdx + 1; i <= Math.min(hourly.time.length - 1, startIdx + 6); i++) {
+      const tStr = hourly.time[i];
+      const hourLabel = tStr ? tStr.substring(11, 16) : '';
+      const code = hourly.weather_code?.[i] ?? 0;
+      const precip = hourly.precipitation?.[i] ?? 0;
+      const pop = hourly.precipitation_probability?.[i] ?? 0;
+      const hourNum = tStr ? parseInt(tStr.substring(11, 13), 10) : 12;
+      const isDay = hourNum >= 8 && hourNum <= 18 ? 1 : 0;
+
+      if (precip > maxRain) maxRain = precip;
+      if (!firstRainTime && precip >= 0.1) firstRainTime = hourLabel;
+
+      const info = getWeatherInfo(code, isDay, precip, pop, null, null, null, null, null, null, isCoast);
+      slots.push(`
+        <div class="radar-next-slot ${precip >= 0.1 ? 'has-rain' : ''}">
+          <span class="rns-hour">${hourLabel}</span>
+          <span class="rns-icon">${renderWeatherIconHtml(info, 24, iconTheme)}</span>
+          <span class="rns-rain">${precip >= 0.1 ? `${precip.toFixed(1)} mm` : `${pop}%`}</span>
+        </div>
+      `);
+    }
+  }
+
+  if (slots.length === 0) {
+    stripEl.innerHTML = '';
+    return;
+  }
+
+  const badgeTitle = is15MinMode ? '⏱️ PRÓXIMOS 90 MIN (CADA 15 MIN)' : '⏱️ PRÓXIMAS 6 HORAS';
+  const summaryText = firstRainTime
+    ? `🌧️ Lluvia prevista hacia las <strong>${firstRainTime} h</strong>${is15MinMode ? ` (~${firstRainOffsetMin} min)` : ''} • Máx. ${maxRain.toFixed(1)} mm`
+    : (is15MinMode
+      ? `☀️ Sin lluvia prevista en los próximos 90 min en <strong>${concejo?.name || 'tu zona'}</strong>`
+      : `☀️ Sin lluvias significativas en las próximas 6 h en <strong>${concejo?.name || 'tu zona'}</strong>`);
+
+  stripEl.innerHTML = `
+    <div class="rns-header">
+      <span class="rns-badge">${badgeTitle}</span>
+      <span class="rns-summary">${summaryText}</span>
+    </div>
+    <div class="rns-grid">
+      ${slots.join('')}
+    </div>
+  `;
 }
 

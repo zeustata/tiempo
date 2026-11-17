@@ -12,6 +12,12 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
      2. **Ley Anti-Falso Sol y Rescate de Claros:** Calcular `effectiveCloud = Math.max(cloudCoverArome, cloudCoverEcmwf)` y bajar el umbral de sol puro a `< 15%` (si `>= 15%`, mostrar `Sol y nubes ⛅`). Si AROME marca `Nublado (>= 70%)` en seco pero hay radiación solar directa (`>= 100 W/m²`) y ECMWF ve claros (`<= 65%`), rescatar `Sol y nubes ⛅`.
      3. **Ley Anti-Falso Orbayu:** Si el Radar Doppler está seco (`radarEchoLevel == 0`) y ECMWF marca `0,0 mm` (o hay sol directo `>= 100 W/m²`), anular la llovizna residual de AROME y dejar el widget en seco (`0,0 mm`).
 
+## ⏱️ Radar Real + Franja Minuto a Minuto cada 15 min (`v3.0.38.40`) — 2026-11-17
+- **Estado de retorno previo (Ley 2):** Commit `c31dcb8` (`v3.0.38.39`).
+- **Solución implementada (`mapRadar.js`, `weatherApi.js`, `index.html`, `components.css`, `app.js`):**
+  1. **Mapa del Radar 100% Real (`mapRadar.js`):** Se mantiene exclusivamente la observación real de RainViewer (últimas 2 horas) sin desplazamientos ni filtros artificiales, corrigiendo además el bug previo que etiquetaba los últimos 30 minutos reales del pasado como si fueran `🔮 Proyección`.
+  2. **Franja Minuto a Minuto cada 15 min (`minutely_15` de Open-Meteo):** Se añade `&minutely_15=precipitation,weather_code&forecast_minutely_15=12` en `weatherApi.js` (100% gratuito) y se renderiza en `#radar-next-hours-strip` debajo de los botones del radar un resumen + 6 bloques de 15 en 15 minutos (próximos 90 min, con fallback horario si el modelo seleccionado no incluye `minutely_15`).
+
 ## 👆 Blindaje de Scroll Vertical en Carrusel Horario 72h (`v3.0.38.39`) — 2026-11-17
 - **Estado de retorno previo (Ley 2):** Commit `eabe6f4` (`v3.0.38.38`).
 - **Diagnóstico:** En móviles Android, al deslizar el dedo verticalmente sobre una `.hourly-card` para bajar la página, `.hourly-scroll-container` atrapaba el scroll vertical porque `overflow-x: auto` sin `overflow-y: hidden` forzaba `overflow-y: auto`, sumado al salto `:hover { transform: translateY(-4px) }` y a la inyección de `.touch-ripple` sin `position: relative; overflow: hidden;` en `.hourly-card`.

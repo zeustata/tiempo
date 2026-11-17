@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303839-hourly-scroll-fix';
+const CACHE_NAME = 'meteoasturlode-v303840-radar-proyeccion-franja';
 const STATIC_ASSETS = [
   './',
   './index.html',
