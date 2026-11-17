@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303840-radar-proyeccion-franja';
+const CACHE_NAME = 'meteoasturlode-v303841-radar-badge-directo';
 const STATIC_ASSETS = [
   './',
   './index.html',

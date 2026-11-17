@@ -331,7 +331,7 @@ function showRadarFrame(index, host = radarHost) {
   if (badgeEl) {
     badgeEl.textContent = isForecast
       ? `🔮 ${timeStr}`
-      : (index === lastRealIndex ? `📡 ${timeStr} • EN DIRECTO` : `📡 ${timeStr} • PASADO`);
+      : (index === lastRealIndex ? `📡 ${timeStr} • DIRECTO` : `📡 ${timeStr} • PASADO`);
     badgeEl.style.borderColor = isForecast ? '#d946ef' : '#00ecff';
     badgeEl.style.color = isForecast ? '#f472b6' : '#00ecff';
     badgeEl.style.background = isForecast ? 'rgba(217, 70, 239, 0.16)' : 'rgba(0, 236, 255, 0.10)';

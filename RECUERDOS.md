@@ -12,6 +12,10 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
      2. **Ley Anti-Falso Sol y Rescate de Claros:** Calcular `effectiveCloud = Math.max(cloudCoverArome, cloudCoverEcmwf)` y bajar el umbral de sol puro a `< 15%` (si `>= 15%`, mostrar `Sol y nubes ⛅`). Si AROME marca `Nublado (>= 70%)` en seco pero hay radiación solar directa (`>= 100 W/m²`) y ECMWF ve claros (`<= 65%`), rescatar `Sol y nubes ⛅`.
      3. **Ley Anti-Falso Orbayu:** Si el Radar Doppler está seco (`radarEchoLevel == 0`) y ECMWF marca `0,0 mm` (o hay sol directo `>= 100 W/m²`), anular la llovizna residual de AROME y dejar el widget en seco (`0,0 mm`).
 
+## 🏷️ Etiqueta Compacta «DIRECTO» en Línea Temporal del Radar (`v3.0.38.41`) — 2026-11-17
+- **Estado de retorno previo (Ley 2):** Commit `2aac652` (`v3.0.38.40`).
+- **Ajuste (Feedback Lendo):** En móviles estrechos, `📡 HH:MM • EN DIRECTO` saltaba a dos líneas en el badge central del slider del radar. Acortado a `📡 HH:MM • DIRECTO` en `mapRadar.js` para mantener una sola línea limpia igual que `PASADO`.
+
 ## ⏱️ Radar Real + Franja Minuto a Minuto cada 15 min (`v3.0.38.40`) — 2026-11-17
 - **Estado de retorno previo (Ley 2):** Commit `c31dcb8` (`v3.0.38.39`).
 - **Solución implementada (`mapRadar.js`, `weatherApi.js`, `index.html`, `components.css`, `app.js`):**
