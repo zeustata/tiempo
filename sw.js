@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303837-alertas-tiempo-real';
+const CACHE_NAME = 'meteoasturlode-v303838-aemet-banner-compacto';
 const STATIC_ASSETS = [
   './',
   './index.html',

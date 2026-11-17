@@ -8139,12 +8139,16 @@
 .aemet-alert-card {
   width: 100%;
   border-radius: var(--radius-lg);
-  padding: 16px 20px;
-  margin-bottom: 20px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
   background: rgba(15, 23, 42, 0.45);
   border: 1px solid var(--border-glass);
   box-sizing: border-box;
   transition: all 0.3s ease;
+}
+
+.aemet-alert-card.collapsed {
+  padding: 10px 14px;
 }
 
 .aemet-alert-card.aemet-green {
@@ -8208,29 +8212,36 @@
 
 .aemet-card-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  padding-bottom: 12px;
+  flex-direction: column;
+  gap: 7px;
+  padding-bottom: 10px;
   border-bottom: 1px solid var(--border-glass);
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
-.aemet-header-left {
+.aemet-alert-card.collapsed .aemet-card-header {
+  padding-bottom: 0;
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.aemet-header-top,
+.aemet-header-sub {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
+  width: 100%;
 }
 
 .aemet-badge-pill {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 800;
-  letter-spacing: 0.04em;
-  padding: 4px 10px;
+  letter-spacing: 0.03em;
+  padding: 3px 9px;
   border-radius: 20px;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .pill-green {
@@ -8258,8 +8269,10 @@
 }
 
 .aemet-zone-label {
-  font-size: 0.82rem;
+  font-size: 0.78rem;
+  line-height: 1.25;
   color: var(--text-dim);
+  min-width: 0;
 }
 
 .aemet-zone-label strong {
@@ -8267,13 +8280,15 @@
 }
 
 .aemet-logo-tag {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
   color: var(--primary);
   background: rgba(56, 189, 248, 0.1);
   border: 1px solid rgba(56, 189, 248, 0.25);
-  padding: 3px 8px;
+  padding: 2px 8px;
   border-radius: var(--radius-sm);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .aemet-body-calm {

@@ -12,6 +12,13 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
      2. **Ley Anti-Falso Sol y Rescate de Claros:** Calcular `effectiveCloud = Math.max(cloudCoverArome, cloudCoverEcmwf)` y bajar el umbral de sol puro a `< 15%` (si `>= 15%`, mostrar `Sol y nubes ⛅`). Si AROME marca `Nublado (>= 70%)` en seco pero hay radiación solar directa (`>= 100 W/m²`) y ECMWF ve claros (`<= 65%`), rescatar `Sol y nubes ⛅`.
      3. **Ley Anti-Falso Orbayu:** Si el Radar Doppler está seco (`radarEchoLevel == 0`) y ECMWF marca `0,0 mm` (o hay sol directo `>= 100 W/m²`), anular la llovizna residual de AROME y dejar el widget en seco (`0,0 mm`).
 
+## 📱 Compactación Móvil del Banner Oficial AEMET (`v3.0.38.38`) — 2026-11-17
+- **Estado de retorno previo (Ley 2):** Commit `7c7e246` (`v3.0.38.37`).
+- **Problema observado en captura móvil real de Lendo:** Al estar plegada, la tarjeta `.aemet-alert-card` ocupaba casi 180 px de altura por tres motivos: línea divisoria y margen inferior fijos aunque estuviera `.collapsed`, pastilla superior demasiado larga partiendo en dos líneas, y una tercera fila para `aemet.es ↗` y `▼`.
+- **Solución implementada (`weatherAlerts.js` y `components.css`):**
+  1. Cabecera en 2 filas compactas: Fila 1 (`.aemet-header-top`) con etiqueta corta en una sola línea (`⏳ AVISO AEMET • 00:00h` o `🚨 AVISO AEMET ACTIVO`) + flecha `▼` a la derecha; Fila 2 (`.aemet-header-sub`) con `📍 <Zona>` a la izquierda + enlace `aemet.es ↗` a la derecha.
+  2. En estado `.collapsed`, relleno reducido (`10px 14px`) y supresión de `border-bottom`, `padding-bottom` y `margin-bottom` en `.aemet-card-header`, reduciendo la altura en móvil a la mitad sin perder ni el enlace ni el desglose completo al tocar.
+
 ## 🌊 Calibración de Alertas Ocultas Locales: Tiempo Real Físico, Energía Costera (`kJ`) y Simbiosis con AEMET (`v3.0.38.37`) — 2026-11-17
 - **Estado de retorno previo (Ley 2):** Commit `0c55961` (`v3.0.38.36`).
 - **Diagnóstico Técnico y Auditoría de las 9 Alertas Ocultas:**

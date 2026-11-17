@@ -346,19 +346,19 @@ export function renderAemetAlertCard(alertStatus, concejo) {
   // Si hay alertas activas o próximas (<= 6h)
   const allUpcoming = alerts.every(a => a.isUpcoming);
   const headerBadgeText = allUpcoming
-    ? `⏳ PRÓXIMO AVISO AEMET (${alerts[0].onsetShort ? 'Desde ' + alerts[0].onsetShort : alerts.length})`
-    : `🚨 AVISOS METEOROLÓGICOS ACTIVOS (${alerts.length})`;
+    ? `⏳ AVISO AEMET • ${alerts[0].onsetShort ? alerts[0].onsetShort + 'h' : alerts.length}`
+    : `🚨 ${alerts.length === 1 ? 'AVISO AEMET ACTIVO' : `AVISOS AEMET (${alerts.length})`}`;
 
   return `
     <div class="aemet-alert-card aemet-${maxLevel} has-active-alerts collapsed">
       <div class="aemet-card-header" onclick="if (!event.target.closest('button, a')) this.closest('.aemet-alert-card').classList.toggle('collapsed')" title="Toca para ver el desglose o plegar los avisos oficiales">
-        <div class="aemet-header-left">
+        <div class="aemet-header-top">
           <span class="aemet-badge-pill pill-${maxLevel}">${headerBadgeText}</span>
-          <span class="aemet-zone-label">📍 Zona AEMET: <strong>${zone.name}</strong></span>
-        </div>
-        <div class="aemet-header-right" style="display: flex; align-items: center; gap: 8px;">
-          <a href="https://www.aemet.es" target="_blank" rel="noopener noreferrer" class="aemet-logo-tag" style="text-decoration: none;" title="Visitar portal oficial de AEMET">aemet.es ↗</a>
           <span class="aemet-chevron alert-chevron" title="Toca para desglosar o plegar los avisos oficiales">▼</span>
+        </div>
+        <div class="aemet-header-sub">
+          <span class="aemet-zone-label">📍 <strong>${zone.name}</strong></span>
+          <a href="https://www.aemet.es" target="_blank" rel="noopener noreferrer" class="aemet-logo-tag" style="text-decoration: none;" title="Visitar portal oficial de AEMET">aemet.es ↗</a>
         </div>
       </div>
 
