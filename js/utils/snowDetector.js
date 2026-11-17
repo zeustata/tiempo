@@ -87,8 +87,8 @@ export function detectSnowStatus(current, hourly, daily, concejo) {
   let startIndex = hourly.time.findIndex(t => t >= currentHourStr);
   if (startIndex === -1) startIndex = 0;
 
-  // Ventana de escaneo preventivo: próximas 18 horas
-  const scanLimit = Math.min(hourly.time.length, startIndex + 18);
+  // Ventana de escaneo de Tiempo Real / Inminencia: próximas 3 horas (en armonía con thunderstormDetector; los preavisos lejanos corresponden a AEMET)
+  const scanLimit = Math.min(hourly.time.length, startIndex + 3);
   const concejoAlt = concejo?.altitude || 50;
 
   let firstSnowIdx = -1;

@@ -2,13 +2,23 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
-## 📌 Tareas Pendientes para Futura Versión Nativa de Android (Tras Aprobación de Google Play) — 2026-11-15
-*Esta tarea queda formalmente registrada y en pausa a la espera de que Google Play Console apruebe definitivamente el `versionCode 13` (actualmente en revisión):*
+## 📌 Tareas Pendientes para Futura Versión Nativa de Android (`versionCode 14`) — 2026-11-17
+*El `versionCode 13` ya ha sido aprobado y publicado oficialmente en Google Play Store el 2026-11-17. Tarea lista para abordar cuando Lendo lo indique:*
 1. **Consenso Cantábrico Híbrido en el Widget Nativo (`MeteoWeatherEngine.java`):**
    - **Problema actual:** El widget de Android consulta Open-Meteo sin parámetro de modelo y recibe AROME en solitario. Si AROME se queda ciego en la costa marcando `15%` de nubes y `código 0 (Despejado)`, el widget pinta un sol reluciente (`ic_weather_sun`) en el escritorio del móvil, contradiciendo a la app web que muestra fidedignamente `⛅ Sol y nubes • Claros`.
-   - **Mejora futura para `versionCode 14`:**
+   - **Mejora para `versionCode 14`:**
      - Integrar en `MeteoWeatherEngine.java` la consulta dual a AROME + ECMWF (`&models=meteofrance_seamless,ecmwf_ifs025`) o aplicar la regla litoral del consenso (`cloudCover < 15%` para `Despejado ☀️`, asignando `Sol y nubes ⛅` entre `15%` y `74%`).
-     - **Regla sagrada:** Prohibido tocar la carpeta `MeteoAstur_Android_Widget` ni recompilar hasta que Google Play libere la versión en revisión.
+
+## 🌊 Calibración de Alertas Ocultas Locales: Tiempo Real Físico, Energía Costera (`kJ`) y Simbiosis con AEMET (`v3.0.38.37`) — 2026-11-17
+- **Estado de retorno previo (Ley 2):** Commit `0c55961` (`v3.0.38.36`).
+- **Diagnóstico Técnico y Auditoría de las 9 Alertas Ocultas:**
+  1. **Disparo Energético en `marFondoDetector.js`:**
+     - Mantiene su filosofía 100% en tiempo real (`marine.current`), pero elimina el punto ciego por altura pura: ahora dispara **Amarillo (`warning`)** con `h >= 4.0 m` **o** cuando entra mar de fondo energético en costa con `h >= 3.5 m`, período largo `T >= 12 s` y potencia de impacto **`energyKj >= 1.600 kJ`**. Dispara **Severo (`severe`)** con `h >= 5.0 m` **o** `h >= 4.5 m`, `T >= 13 s` y **`energyKj >= 3.000 kJ`**.
+  2. **Unificación de Ventana de Tiempo Real / Inminencia en `snowDetector.js` y `roadWindDetector.js`:**
+     - `snowDetector.js` reduce su escaneo de `18 horas` a **`3 horas`** (igual que `thunderstormDetector.js`), evitando mostrar banners de nieve con medio día de antelación bajo sol.
+     - `roadWindDetector.js` reduce la ventana del banner principal de `6 horas` a **`2 horas`** (en curso o inminente), dejando el preaviso lejano de 6 horas a la tarjeta oficial de AEMET.
+  3. **Sincronización de Avisos AEMET en `localhost` (`weatherApi.js`):**
+     - Tanto en producción como en `localhost:8080`, `weatherApi.js` consulta primero el JSON vivo de la rama `data` (`https://raw.githubusercontent.com/zeustata/tiempo/data/data/avisos-asturias.json`) con fallback al archivo local si no hubiera red.
 
 ## ⛅ Calibración de Peldaño Litoral: Sol y Nubes frente a Falso Mayormente Soleado en Costa (`v3.0.38.36`) — 2026-11-15
 - **Estado de retorno previo (Ley 2):** Commit `d609af6` (`v3.0.38.35`).

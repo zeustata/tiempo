@@ -167,7 +167,7 @@ export function detectRoadWindStatus(current, daily, hourly, concejo) {
   const gusts = current.wind_gusts_10m != null ? Math.round(current.wind_gusts_10m) : speed;
   const windDir = current.wind_direction_10m != null ? Math.round(current.wind_direction_10m) : 0;
 
-  // Analizar pico horario en las próximas 6 horas (ventana operativa inmediata en simbiosis con AEMET)
+  // Analizar pico horario en las próximas 2 horas (ventana de tiempo real e inminencia inmediata; el preaviso lejano de 6h lo cubre AEMET)
   let peakGustHourly = 0;
   let peakHourIndex = -1;
   let peakHourStr = '';
@@ -176,7 +176,7 @@ export function detectRoadWindStatus(current, daily, hourly, concejo) {
     const nowLocalHourStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}T${String(now.getHours()).padStart(2, '0')}`;
     let startIdx = hourly.time.findIndex(t => t.startsWith(nowLocalHourStr));
     if (startIdx === -1) startIdx = 0;
-    const endIdx = Math.min(hourly.wind_gusts_10m.length, startIdx + 6);
+    const endIdx = Math.min(hourly.wind_gusts_10m.length, startIdx + 2);
 
     for (let i = startIdx; i < endIdx; i++) {
       const g = typeof hourly.wind_gusts_10m[i] === 'number' ? Math.round(hourly.wind_gusts_10m[i]) : 0;

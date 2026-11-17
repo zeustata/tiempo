@@ -100,19 +100,19 @@ export function detectMarFondoEffect(marine, concejo) {
     dirText = `${dirText} (${d}°)`;
   }
 
-  // 3. Calibración en Simbiosis 100% con Umbrales Oficiales de AEMET Meteoalerta (Costa de Asturias):
-  // - Menos de 4.0 m: 100% silencioso en portada (armonía con Verde AEMET; 2-3 m es oleaje habitual en el Cantábrico).
-  // - Nivel Amarillo (warning): Mar combinada de 4.0 m a 4.9 m (Umbral Amarillo AEMET en litoral asturiano).
-  // - Nivel Naranja/Rojo (severe): Mar combinada >= 5.0 m (Umbral Naranja/Rojo AEMET de temporal costero severo).
-  const isSevere = h >= 5.0;
-  const isWarning = !isSevere && h >= 4.0;
-
   // Cálculo físico de Potencia de la Ola en kiloJulios (E = 11 * H^2 * T + Swell secundario)
   const h1 = swellHeight || waveHeight || h;
   const t1 = Math.max(1, t || 10);
   const h2 = typeof currentMarine.secondary_swell_wave_height === 'number' ? currentMarine.secondary_swell_wave_height : 0;
   const t2 = typeof currentMarine.secondary_swell_wave_period === 'number' ? Math.max(1, currentMarine.secondary_swell_wave_period) : 1;
   const energyKj = Math.round(11 * (h1 * h1) * t1 + (h2 > 0 ? 11 * (h2 * h2) * t2 : 0));
+
+  // 3. Calibración Física en Tiempo Real (Altura Costera + Potencia Energética de Impacto en kJ):
+  // - Menos de 3.5 m: 100% silencioso en portada (2-3 m es oleaje habitual en el Cantábrico).
+  // - Nivel Amarillo (warning): Mar combinada >= 4.0 m O mar de fondo energético en costa (h >= 3.5 m con período >= 12 s y potencia >= 1.600 kJ).
+  // - Nivel Naranja/Rojo (severe): Mar combinada >= 5.0 m O golpe de mar energético severo (h >= 4.5 m con período >= 13 s y potencia >= 3.000 kJ).
+  const isSevere = h >= 5.0 || (h >= 4.5 && t1 >= 13 && energyKj >= 3000);
+  const isWarning = !isSevere && (h >= 4.0 || (h >= 3.5 && t1 >= 12 && energyKj >= 1600));
 
   let energyColor = '#10b981';
   let energyIcon = '🟢';
@@ -148,12 +148,13 @@ export function detectMarFondoEffect(marine, concejo) {
       direction: dirText,
       title: 'Golpe de Mar Severo • Peligro en Espigones y Paseos',
       badge: '🚨 Peligro en la Costa',
-      description: `Temporal marítimo severo en umbral naranja/rojo AEMET (<strong>${(Math.round(h * 10) / 10).toString().replace('.', ',')} m</strong>, <strong>${Math.round(t)} s</strong> y <strong>${energyKj} kJ</strong>). Alto riesgo de golpes de mar repentinos superando escolleras, rocas y paseos costeros. Extrema la precaución y mantén la distancia de seguridad.`,
+      description: `Temporal marítimo severo en curso (<strong>${(Math.round(h * 10) / 10).toString().replace('.', ',')} m</strong>, <strong>${Math.round(t)} s</strong> y <strong>${energyKj} kJ</strong>). Alto riesgo de golpes de mar repentinos superando escolleras, rocas y paseos costeros. Extrema la precaución y mantén la distancia de seguridad.`,
       phenomenonId: 'mar_fondo'
     };
   }
 
   if (isWarning) {
+    const isEnergyTriggered = h < 4.0;
     return {
       isActive: true,
       level: 'warning',
@@ -165,8 +166,10 @@ export function detectMarFondoEffect(marine, concejo) {
       energyLabel,
       direction: dirText,
       title: 'Mar de Fondo Fuerte • Precaución en el Litoral',
-      badge: '⚠️ Mar Combinada >= 4 m',
-      description: `Mar combinada fuerte en umbral de aviso costero AEMET (<strong>${(Math.round(h * 10) / 10).toString().replace('.', ',')} m</strong>, <strong>${Math.round(t)} s</strong> y <strong>${energyKj} kJ</strong>). Fuerte resaca y rompiente pesada en playas, espigones y pedreros del litoral.`,
+      badge: isEnergyTriggered ? '⚠️ Mar de Fondo Energética (>= 1.600 kJ)' : '⚠️ Mar Combinada >= 4 m',
+      description: isEnergyTriggered
+        ? `Mar de fondo potente en costa (<strong>${(Math.round(h * 10) / 10).toString().replace('.', ',')} m</strong>, período largo de <strong>${Math.round(t)} s</strong> y <strong>${energyKj} kJ</strong>). Aunque la ola cerca de tierra roza los 4 m, su largo período concentra gran potencia de impacto y fuertes corrientes de resaca en espigones, playas y pedreros.`
+        : `Mar combinada fuerte en umbral de aviso costero AEMET (<strong>${(Math.round(h * 10) / 10).toString().replace('.', ',')} m</strong>, <strong>${Math.round(t)} s</strong> y <strong>${energyKj} kJ</strong>). Fuerte resaca y rompiente pesada en playas, espigones y pedreros del litoral.`,
       phenomenonId: 'mar_fondo'
     };
   }

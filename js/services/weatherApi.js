@@ -162,11 +162,8 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
         .catch(() => null)
       : Promise.resolve(null);
 
-    // 5. Avisos Oficiales AEMET (desde JSON estático actualizado por GitHub Actions)
-    const isLocalhost = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
-    const alertsUrl = isLocalhost
-      ? 'data/avisos-asturias.json'
-      : `https://raw.githubusercontent.com/zeustata/tiempo/data/data/avisos-asturias.json?_t=${Math.floor(Date.now() / 60000)}`;
+    // 5. Avisos Oficiales AEMET (desde JSON vivo en rama data actualizado por GitHub Actions, con fallback local)
+    const alertsUrl = `https://raw.githubusercontent.com/zeustata/tiempo/data/data/avisos-asturias.json?_t=${Math.floor(Date.now() / 60000)}`;
 
     const aemetAlertsPromise = fetch(alertsUrl, { cache: 'no-cache' })
       .then(r => {
@@ -177,10 +174,8 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
         return fetch('data/avisos-asturias.json').then(r => r.ok ? r.json() : null).catch(() => null);
       });
 
-    // 6. Parte Oficial de Nieve (desde JSON estático actualizado por GitHub Actions)
-    const snowUrl = isLocalhost
-      ? 'data/partes-nieve.json'
-      : `https://raw.githubusercontent.com/zeustata/tiempo/data/data/partes-nieve.json?_t=${Math.floor(Date.now() / 300000)}`;
+    // 6. Parte Oficial de Nieve (desde JSON vivo en rama data actualizado por GitHub Actions, con fallback local)
+    const snowUrl = `https://raw.githubusercontent.com/zeustata/tiempo/data/data/partes-nieve.json?_t=${Math.floor(Date.now() / 300000)}`;
 
     const snowReportPromise = fetch(snowUrl, { cache: 'no-cache' })
       .then(r => {

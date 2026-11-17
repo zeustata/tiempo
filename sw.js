@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303836-sol-nubes-castrillon';
+const CACHE_NAME = 'meteoasturlode-v303837-alertas-tiempo-real';
 const STATIC_ASSETS = [
   './',
   './index.html',
