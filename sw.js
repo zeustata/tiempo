@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303838-aemet-banner-compacto';
+const CACHE_NAME = 'meteoasturlode-v303839-hourly-scroll-fix';
 const STATIC_ASSETS = [
   './',
   './index.html',
