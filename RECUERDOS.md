@@ -3,11 +3,14 @@
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
 ## 📌 Tareas Pendientes para Futura Versión Nativa de Android (`versionCode 14`) — 2026-11-17
-*El `versionCode 13` ya ha sido aprobado y publicado oficialmente en Google Play Store el 2026-11-17. Tarea lista para abordar cuando Lendo lo indique:*
+*El `versionCode 13` ya ha sido aprobado y publicado oficialmente en Google Play Store el 2026-11-17. Tarea en pausa a valorar por Lendo tras observar el comportamiento en vivo del widget actual:*
 1. **Consenso Cantábrico Híbrido en el Widget Nativo (`MeteoWeatherEngine.java`):**
-   - **Problema actual:** El widget de Android consulta Open-Meteo sin parámetro de modelo y recibe AROME en solitario. Si AROME se queda ciego en la costa marcando `15%` de nubes y `código 0 (Despejado)`, el widget pinta un sol reluciente (`ic_weather_sun`) en el escritorio del móvil, contradiciendo a la app web que muestra fidedignamente `⛅ Sol y nubes • Claros`.
-   - **Mejora para `versionCode 14`:**
-     - Integrar en `MeteoWeatherEngine.java` la consulta dual a AROME + ECMWF (`&models=meteofrance_seamless,ecmwf_ifs025`) o aplicar la regla litoral del consenso (`cloudCover < 15%` para `Despejado ☀️`, asignando `Sol y nubes ⛅` entre `15%` y `74%`).
+   - **Problema actual:** El widget de Android consulta Open-Meteo sin parámetro de modelo (recibe AROME en solitario) y no usa `directSolar` en `applyAsturiasWeatherRules`, por lo que puede discrepar de la app web en 3 escenarios: falso sol en costa (`< 25%` en AROME), falso nublado cerrado con sol directo en ECMWF, y falso orbayu con radar seco.
+   - **Lo que NO se toca:** Permisos, GPS (`LauncherActivity`, `DelegationService`), diseño visual de los widgets ni el lector del Radar de RainViewer.
+   - **Los 3 cambios exactos dentro de `MeteoWeatherEngine.java` cuando se aborde `versionCode 14`:**
+     1. **Consulta ligera de `ecmwf_ifs` (`current`):** Añadir lectura en `try/catch` seguro (fallback a AROME si falla) de `weather_code`, `cloud_cover`, `precipitation` y `direct_normal_irradiance`.
+     2. **Ley Anti-Falso Sol y Rescate de Claros:** Calcular `effectiveCloud = Math.max(cloudCoverArome, cloudCoverEcmwf)` y bajar el umbral de sol puro a `< 15%` (si `>= 15%`, mostrar `Sol y nubes ⛅`). Si AROME marca `Nublado (>= 70%)` en seco pero hay radiación solar directa (`>= 100 W/m²`) y ECMWF ve claros (`<= 65%`), rescatar `Sol y nubes ⛅`.
+     3. **Ley Anti-Falso Orbayu:** Si el Radar Doppler está seco (`radarEchoLevel == 0`) y ECMWF marca `0,0 mm` (o hay sol directo `>= 100 W/m²`), anular la llovizna residual de AROME y dejar el widget en seco (`0,0 mm`).
 
 ## 🌊 Calibración de Alertas Ocultas Locales: Tiempo Real Físico, Energía Costera (`kJ`) y Simbiosis con AEMET (`v3.0.38.37`) — 2026-11-17
 - **Estado de retorno previo (Ley 2):** Commit `0c55961` (`v3.0.38.36`).
