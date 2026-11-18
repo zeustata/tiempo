@@ -2,6 +2,11 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌦️ Coherencia Icono ↔ Etiqueta en Franja 15 min del Radar (`v3.0.38.42`) — 2026-11-18
+- **Estado de retorno previo (Ley 2):** Commit `32ab176` (`v3.0.38.41`).
+- **Problema detectado (Feedback Lendo):** Open-Meteo `minutely_15` devolvía en ocasiones código de lluvia (`weather_code: 63`) con `precipitation: 0.0`, provocando que debajo del icono de lluvia apareciera `"Seco"`.
+- **Solución aplicada (`js/components/mapRadar.js`):** En `updateRadarForecastStrip`, cada tramo de 15 minutos cruza ahora la hora correspondiente con `hourly.precipitation_probability` y muestra debajo del icono su estado coherente (`Tormenta`, `Nieve`, `Lluvia` o `Seco`), alineando también el resumen superior (`🌦️ Posible lluvia débil / orbayu`) cuando el icono indica precipitación sin acumulación de mm.
+
 ## 📌 Tareas Pendientes para Futura Versión Nativa de Android (`versionCode 14`) — 2026-11-17
 *El `versionCode 13` ya ha sido aprobado y publicado oficialmente en Google Play Store el 2026-11-17. Tarea en pausa a valorar por Lendo tras observar el comportamiento en vivo del widget actual:*
 1. **Consenso Cantábrico Híbrido en el Widget Nativo (`MeteoWeatherEngine.java`):**

@@ -638,6 +638,7 @@ export function updateRadarForecastStrip(weatherData, concejo, iconTheme = 'astu
   let maxRain = 0;
   let firstRainTime = null;
   let firstRainOffsetMin = 0;
+  let firstRainIconTime = null;
   let is15MinMode = false;
 
   if (min15 && Array.isArray(min15.time) && min15.time.length > 0) {
@@ -654,18 +655,36 @@ export function updateRadarForecastStrip(weatherData, concejo, iconTheme = 'astu
       const hourNum = parseInt(tStr.substring(11, 13), 10);
       const isDay = hourNum >= 8 && hourNum <= 18 ? 1 : 0;
 
+      // Buscar probabilidad horaria correspondiente para esa misma hora
+      let slotPop = precip >= 0.1 ? 75 : 25;
+      if (hourly && Array.isArray(hourly.time) && Array.isArray(hourly.precipitation_probability)) {
+        const hourPrefix = tStr.substring(0, 13);
+        const hIdx = hourly.time.findIndex(ht => ht.startsWith(hourPrefix));
+        if (hIdx !== -1 && hourly.precipitation_probability[hIdx] != null) {
+          slotPop = hourly.precipitation_probability[hIdx];
+        }
+      }
+
       if (precip > maxRain) maxRain = precip;
       if (!firstRainTime && precip >= 0.1) {
         firstRainTime = hourLabel;
         firstRainOffsetMin = Math.max(15, Math.round(diffMin / 15) * 15);
       }
 
-      const info = getWeatherInfo(code, isDay, precip, precip >= 0.1 ? 75 : 15, null, null, null, null, null, null, isCoast);
+      const info = getWeatherInfo(code, isDay, precip, slotPop, null, null, null, null, null, null, isCoast);
+      if (!firstRainIconTime && (info.isRain || info.isSnow || info.isStorm)) {
+        firstRainIconTime = hourLabel;
+      }
+
+      const slotStateLabel = info.isStorm
+        ? 'Tormenta'
+        : (info.isSnow ? 'Nieve' : (info.isRain ? 'Lluvia' : 'Seco'));
+
       slots.push(`
-        <div class="radar-next-slot ${precip >= 0.1 ? 'has-rain' : ''}">
+        <div class="radar-next-slot ${(precip >= 0.1 || info.isRain || info.isSnow || info.isStorm) ? 'has-rain' : ''}">
           <span class="rns-hour">${hourLabel}</span>
           <span class="rns-icon">${renderWeatherIconHtml(info, 24, iconTheme)}</span>
-          <span class="rns-rain">${precip >= 0.1 ? `${precip.toFixed(1)} mm` : 'Seco'}</span>
+          <span class="rns-rain">${slotStateLabel}</span>
         </div>
       `);
     }
@@ -708,9 +727,11 @@ export function updateRadarForecastStrip(weatherData, concejo, iconTheme = 'astu
   const badgeTitle = is15MinMode ? '⏱️ PRÓXIMOS 90 MIN (CADA 15 MIN)' : '⏱️ PRÓXIMAS 6 HORAS';
   const summaryText = firstRainTime
     ? `🌧️ Lluvia prevista hacia las <strong>${firstRainTime} h</strong>${is15MinMode ? ` (~${firstRainOffsetMin} min)` : ''} • Máx. ${maxRain.toFixed(1)} mm`
-    : (is15MinMode
-      ? `☀️ Sin lluvia prevista en los próximos 90 min en <strong>${concejo?.name || 'tu zona'}</strong>`
-      : `☀️ Sin lluvias significativas en las próximas 6 h en <strong>${concejo?.name || 'tu zona'}</strong>`);
+    : (firstRainIconTime
+      ? `🌦️ Posible lluvia débil / orbayu hacia las <strong>${firstRainIconTime} h</strong> en <strong>${concejo?.name || 'tu zona'}</strong>`
+      : (is15MinMode
+        ? `☀️ Sin lluvia prevista en los próximos 90 min en <strong>${concejo?.name || 'tu zona'}</strong>`
+        : `☀️ Sin lluvias significativas en las próximas 6 h en <strong>${concejo?.name || 'tu zona'}</strong>`));
 
   stripEl.innerHTML = `
     <div class="rns-header">

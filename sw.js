@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303841-radar-badge-directo';
+const CACHE_NAME = 'meteoasturlode-v303842-radar-15min-mm-coherencia';
 const STATIC_ASSETS = [
   './',
   './index.html',
