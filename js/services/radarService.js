@@ -57,16 +57,16 @@ export function classifyRadarColor(r, g, b, a) {
   if (r >= 210 && g >= 85 && g <= 185 && b <= 65) {
     return { level: 'heavy_rain', label: 'Chubascos fuertes', isRain: true, isStorm: false, wmoCode: 81, precipEst: 6.0 };
   }
-  // Amarillo puro (Lluvia moderada 25-35 dBZ)
+  // Amarillo puro (Lluvia moderada 25-35 dBZ; < 2.5 mm para no disparar falso Bastinazu)
   if (r >= 200 && g >= 185 && b <= 70) {
-    return { level: 'moderate_rain', label: 'Lluvia moderada', isRain: true, isStorm: false, wmoCode: 63, precipEst: 2.5 };
+    return { level: 'moderate_rain', label: 'Lluvia moderada', isRain: true, isStorm: false, wmoCode: 63, precipEst: 1.8 };
   }
   // Verde (Lluvia débil 15-25 dBZ)
   if (g >= 140 && r <= 120 && b <= 120) {
     return { level: 'light_rain', label: 'Lluvia débil', isRain: true, isStorm: false, wmoCode: 61, precipEst: 0.2 };
   }
-  // Azul / Cian puro (Lluvia débil / Orbayu 10-20 dBZ)
-  if ((b >= 160 && r <= 100 && b > g) || (r <= 70 && g >= 140 && b >= 190)) {
+  // Azul / Cian puro (Lluvia débil / Orbayu 10-20 dBZ, incluyendo azules oscuros RGB(0,105,156) y cianes claros de RainViewer)
+  if ((b >= 120 && r <= 125 && b > g) || (r <= 120 && g >= 140 && b >= 190)) {
     return { level: 'light_rain', label: 'Lluvia débil / Orbayu', isRain: true, isStorm: false, wmoCode: 61, precipEst: 0.2 };
   }
 

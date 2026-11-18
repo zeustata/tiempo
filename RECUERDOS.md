@@ -2,6 +2,13 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌧️ Calibración de Azul Doppler RainViewer para Lluvia Débil / Orbayu (`v3.0.38.45`) — 2026-11-18
+- **Estado de retorno previo (Ley 2):** Commit `f1afb72` (`v3.0.38.44`).
+- **Problema detectado en vivo (Piedras Blancas, `19:30`):** Con lluvia real cayendo y píxel de RainViewer opaco (`alpha = 255`) en `RGB(0, 105, 156)`, `classifyRadarColor` en `js/services/radarService.js` lo descartaba como seco porque exigía `b >= 160` (por 4 puntos) y excluía también cianes claros (`r <= 100`).
+- **Solución aplicada (`js/services/radarService.js` y `js/services/weatherApi.js`):**
+  - Ampliado el umbral azul/cian de lluvia débil a `b >= 120` y `r <= 125` (con `b > g`, `alpha >= 180` y `maxC - minC >= 65`), capturando correctamente toda la gama azul/cian real de RainViewer sin falsos positivos de nubosidad gris seca.
+  - Ajustada la estimación del amarillo Doppler (`moderate_rain`) de `2.5 mm` a `1.8 mm` (y su fallback en `weatherApi.js`) para mostrar **Lluvia moderada** en lugar de escalar automáticamente al umbral `>= 2.5 mm` de **Bastinazu**, reservando este último para ecos naranjas/rojos.
+
 ## ⏱️ Franja de Próximos 60 Minutos en 4 Columnas Holgadas (`v3.0.38.44`) — 2026-11-18
 - **Estado de retorno previo (Ley 2):** Commit `e076405` (`v3.0.38.43`).
 - **Ajuste (Feedback Lendo):** Reducida la franja `minutely_15` del Radar de 6 tramos (`75 min` bajo etiqueta de `90 min`) a **4 tramos exactos de 15 minutos (`60 min`)** en `js/components/mapRadar.js`, actualizando el título a `⏱️ PRÓXIMOS 60 MIN (CADA 15 MIN)` y el mensaje seco correspondiente.

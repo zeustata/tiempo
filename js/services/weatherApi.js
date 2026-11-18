@@ -1,4 +1,4 @@
-import { fetchLiveRadarEcho } from './radarService.js?v=3.0.38.31';
+import { fetchLiveRadarEcho } from './radarService.js?v=3.0.38.45';
 
 /**
  * Catálogo Oficial de Modelos Meteorológicos de Alta Resolución
@@ -543,7 +543,7 @@ function applyCantabricoConsensus(weather, consensus, radarEcho = null) {
         weather.current.radar_rescue_label = echo.label;
       } else if (echo.level === 'moderate_rain' && (weather.current.weather_code <= 3 || weather.current.precipitation < 1.0)) {
         weather.current.weather_code = echo.wmoCode || 63;
-        weather.current.precipitation = Math.max(weather.current.precipitation || 0, echo.precipEst || 2.5);
+        weather.current.precipitation = Math.max(weather.current.precipitation || 0, echo.precipEst || 1.8);
         if (weather.current.rain != null) weather.current.rain = weather.current.precipitation;
         weather.current.cloud_cover = Math.max(weather.current.cloud_cover || 0, 85);
         weather.current.is_radar_rescued = true;
@@ -795,7 +795,7 @@ function applyStandalonePhysicalSovereignty(weather, radarEcho = null) {
       weather.current.radar_rescue_label = echo.label;
     } else if (echo.level === 'moderate_rain' && (weather.current.weather_code <= 3 || weather.current.precipitation < 1.0)) {
       weather.current.weather_code = echo.wmoCode || 63;
-      weather.current.precipitation = Math.max(weather.current.precipitation || 0, echo.precipEst || 2.5);
+      weather.current.precipitation = Math.max(weather.current.precipitation || 0, echo.precipEst || 1.8);
       if (weather.current.rain != null) weather.current.rain = weather.current.precipitation;
       weather.current.cloud_cover = Math.max(weather.current.cloud_cover || 0, 85);
       weather.current.is_radar_rescued = true;

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303844-radar-60min-4cols';
+const CACHE_NAME = 'meteoasturlode-v303845-radar-azul-120';
 const STATIC_ASSETS = [
   './',
   './index.html',
