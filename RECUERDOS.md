@@ -2,6 +2,11 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## ⏱️ Franja de Próximos 60 Minutos en 4 Columnas Holgadas (`v3.0.38.44`) — 2026-11-18
+- **Estado de retorno previo (Ley 2):** Commit `e076405` (`v3.0.38.43`).
+- **Ajuste (Feedback Lendo):** Reducida la franja `minutely_15` del Radar de 6 tramos (`75 min` bajo etiqueta de `90 min`) a **4 tramos exactos de 15 minutos (`60 min`)** en `js/components/mapRadar.js`, actualizando el título a `⏱️ PRÓXIMOS 60 MIN (CADA 15 MIN)` y el mensaje seco correspondiente.
+- **Ergonomía móvil (`css/components.css`):** Añadida variante `.rns-grid.rns-grid--4` (`repeat(4, minmax(0, 1fr))` con `gap: 8px` y `padding: 8px 6px` por celda) para dar mayor anchura y holgura visual en pantallas móviles estrechas (`360px`).
+
 ## 📡 Blindaje Horario Inmediato con Radar Doppler Real (`v3.0.38.43`) — 2026-11-18
 - **Estado de retorno previo (Ley 2):** Commit `3901084` (`v3.0.38.42`).
 - **Problema detectado (Feedback Lendo):** En ventana inmediata (1-2 horas próximas), ECMWF (`9 km`) podía marcar chubascos inexistentes mientras AROME (`1.3 km`) y el Radar Doppler en directo estaban secos, provocando que el consenso horario pintara lluvia falsa en el carrusel en contradicción con la tarjeta actual y los próximos 90 min.

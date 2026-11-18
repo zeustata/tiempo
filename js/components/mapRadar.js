@@ -643,7 +643,7 @@ export function updateRadarForecastStrip(weatherData, concejo, iconTheme = 'astu
 
   if (min15 && Array.isArray(min15.time) && min15.time.length > 0) {
     is15MinMode = true;
-    for (let i = 0; i < min15.time.length && slots.length < 6; i++) {
+    for (let i = 0; i < min15.time.length && slots.length < 4; i++) {
       const tStr = min15.time[i];
       const slotDate = new Date(tStr);
       const diffMin = Math.round((slotDate.getTime() - now.getTime()) / 60000);
@@ -724,13 +724,13 @@ export function updateRadarForecastStrip(weatherData, concejo, iconTheme = 'astu
     return;
   }
 
-  const badgeTitle = is15MinMode ? '⏱️ PRÓXIMOS 90 MIN (CADA 15 MIN)' : '⏱️ PRÓXIMAS 6 HORAS';
+  const badgeTitle = is15MinMode ? '⏱️ PRÓXIMOS 60 MIN (CADA 15 MIN)' : '⏱️ PRÓXIMAS 6 HORAS';
   const summaryText = firstRainTime
     ? `🌧️ Lluvia prevista hacia las <strong>${firstRainTime} h</strong>${is15MinMode ? ` (~${firstRainOffsetMin} min)` : ''} • Máx. ${maxRain.toFixed(1)} mm`
     : (firstRainIconTime
       ? `🌦️ Posible lluvia débil / orbayu hacia las <strong>${firstRainIconTime} h</strong> en <strong>${concejo?.name || 'tu zona'}</strong>`
       : (is15MinMode
-        ? `☀️ Sin lluvia prevista en los próximos 90 min en <strong>${concejo?.name || 'tu zona'}</strong>`
+        ? `☀️ Sin lluvia prevista en los próximos 60 min en <strong>${concejo?.name || 'tu zona'}</strong>`
         : `☀️ Sin lluvias significativas en las próximas 6 h en <strong>${concejo?.name || 'tu zona'}</strong>`));
 
   stripEl.innerHTML = `
@@ -738,7 +738,7 @@ export function updateRadarForecastStrip(weatherData, concejo, iconTheme = 'astu
       <span class="rns-badge">${badgeTitle}</span>
       <span class="rns-summary">${summaryText}</span>
     </div>
-    <div class="rns-grid">
+    <div class="rns-grid ${is15MinMode ? 'rns-grid--4' : ''}">
       ${slots.join('')}
     </div>
   `;

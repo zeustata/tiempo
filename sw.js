@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303843-radar-seco-bloquea-ecmwf';
+const CACHE_NAME = 'meteoasturlode-v303844-radar-60min-4cols';
 const STATIC_ASSETS = [
   './',
   './index.html',

@@ -4557,6 +4557,15 @@
   gap: 6px;
 }
 
+.rns-grid.rns-grid--4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.rns-grid--4 .radar-next-slot {
+  padding: 8px 6px;
+}
+
 .radar-next-slot {
   display: flex;
   flex-direction: column;
