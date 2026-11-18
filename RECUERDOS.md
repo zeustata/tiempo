@@ -2,6 +2,11 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📡 Blindaje Horario Inmediato con Radar Doppler Real (`v3.0.38.43`) — 2026-11-18
+- **Estado de retorno previo (Ley 2):** Commit `3901084` (`v3.0.38.42`).
+- **Problema detectado (Feedback Lendo):** En ventana inmediata (1-2 horas próximas), ECMWF (`9 km`) podía marcar chubascos inexistentes mientras AROME (`1.3 km`) y el Radar Doppler en directo estaban secos, provocando que el consenso horario pintara lluvia falsa en el carrusel en contradicción con la tarjeta actual y los próximos 90 min.
+- **Solución aplicada (`js/services/weatherApi.js`):** Dentro de `applyCantabricoConsensus`, si el Radar Doppler responde sin ecos de lluvia (`isRadarDry`) y AROME marca seco (`< 0.1 mm`), se bloquea el rescate de lluvia de ECMWF en la ventana inmediata (`isImmediateRadarWindow`, hora en curso y próximas 1,5 horas), manteniendo el consenso AROME + ECMWF intacto para horas posteriores.
+
 ## 🌦️ Coherencia Icono ↔ Etiqueta en Franja 15 min del Radar (`v3.0.38.42`) — 2026-11-18
 - **Estado de retorno previo (Ley 2):** Commit `32ab176` (`v3.0.38.41`).
 - **Problema detectado (Feedback Lendo):** Open-Meteo `minutely_15` devolvía en ocasiones código de lluvia (`weather_code: 63`) con `precipitation: 0.0`, provocando que debajo del icono de lluvia apareciera `"Seco"`.

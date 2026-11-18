@@ -574,8 +574,12 @@ function applyCantabricoConsensus(weather, consensus, radarEcho = null) {
 
   // 2. Verificación de pronóstico horario inmediato (primeras 48 horas)
   if (weather.hourly && weather.hourly.time && consensus.hourly && consensus.hourly.time) {
+    const isRadarDry = Boolean(radarEcho && (!radarEcho.hasEcho || !(radarEcho.echo && radarEcho.echo.isRain)));
+    const nowMs = Date.now();
     const limit = Math.min(weather.hourly.time.length, consensus.hourly.time.length, 48);
     for (let i = 0; i < limit; i++) {
+      const slotMs = new Date(weather.hourly.time[i]).getTime();
+      const isImmediateRadarWindow = slotMs >= (nowMs - 3600000) && slotMs <= (nowMs + 5400000);
       const rawC = weather.hourly.cloud_cover ? weather.hourly.cloud_cover[i] : 100;
       const ecmwfC = consensus.hourly.cloud_cover ? consensus.hourly.cloud_cover[i] : 0;
       const eDirectIrrH = consensus.hourly.direct_normal_irradiance ? consensus.hourly.direct_normal_irradiance[i] : 0;
@@ -700,7 +704,7 @@ function applyCantabricoConsensus(weather, consensus, radarEcho = null) {
             weather.hourly.weather_code[i] = 51; // Degradar a llovizna/orbayu débil
           }
         }
-      } else if (precip < 0.1 && ((ePrecipH >= 0.3 && ecmwfC >= 75) || (ePrecipH >= 0.1 && (eCodeH >= 50 || ePop >= 60) && Math.max(rawC, ecmwfC) >= 75)) && !hasTrueSunlightH) {
+      } else if (precip < 0.1 && !(isRadarDry && isImmediateRadarWindow) && ((ePrecipH >= 0.3 && ecmwfC >= 75) || (ePrecipH >= 0.1 && (eCodeH >= 50 || ePop >= 60) && Math.max(rawC, ecmwfC) >= 75)) && !hasTrueSunlightH) {
         const rescuedH = Math.max(Math.round((ePrecipH * 0.7) * 10) / 10, 0.1);
         if (weather.hourly.precipitation) weather.hourly.precipitation[i] = rescuedH;
         if (weather.hourly.rain) weather.hourly.rain[i] = rescuedH;
@@ -737,7 +741,7 @@ function applyCantabricoConsensus(weather, consensus, radarEcho = null) {
       }
 
       // C) Armonización Horaria de Lluvia Residual:
-      const isDryHourly = ((weather.hourly.precipitation ? weather.hourly.precipitation[i] : precip) < 0.1 && !(eCodeH && eCodeH >= 50 && Math.max(rawC, ecmwfC) >= 75 && !hasTrueSunlightH)) || isSolarHourlyGhost;
+      const isDryHourly = ((weather.hourly.precipitation ? weather.hourly.precipitation[i] : precip) < 0.1 && ((isRadarDry && isImmediateRadarWindow) || !(eCodeH && eCodeH >= 50 && Math.max(rawC, ecmwfC) >= 75 && !hasTrueSunlightH))) || isSolarHourlyGhost;
       if (isDryHourly && weather.hourly.weather_code && weather.hourly.weather_code[i] >= 50) {
         if (weather.hourly.precipitation && precip < 0.5) weather.hourly.precipitation[i] = 0;
         if (weather.hourly.rain && precip < 0.5) weather.hourly.rain[i] = 0;
