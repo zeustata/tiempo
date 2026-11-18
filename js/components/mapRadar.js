@@ -629,6 +629,7 @@ function initRadarSettingsControls() {
 export function updateRadarForecastStrip(weatherData, concejo, iconTheme = 'astur') {
   const min15 = weatherData?.weather?.minutely_15;
   const hourly = weatherData?.weather?.hourly;
+  const current = weatherData?.weather?.current;
   const stripEl = document.getElementById('radar-next-hours-strip');
   if (!stripEl) return;
 
@@ -650,10 +651,20 @@ export function updateRadarForecastStrip(weatherData, concejo, iconTheme = 'astu
       if (diffMin < 0) continue;
 
       const hourLabel = tStr.substring(11, 16);
-      const precip = min15.precipitation?.[i] ?? 0;
-      const code = min15.weather_code?.[i] ?? 3;
+      let precip = min15.precipitation?.[i] ?? 0;
+      let code = min15.weather_code?.[i] ?? 3;
       const hourNum = parseInt(tStr.substring(11, 13), 10);
       const isDay = hourNum >= 8 && hourNum <= 18 ? 1 : 0;
+
+      // Coherencia del primer tramo inmediato (<= 15 min) con el estado en vivo de 'Ahora'
+      if (slots.length === 0 && diffMin <= 15 && current) {
+        const curCode = current.weather_code ?? 3;
+        const curPrecip = current.precipitation ?? 0;
+        if ((curCode >= 50 || curPrecip >= 0.1) && code <= 3 && precip < 0.1) {
+          code = curCode >= 50 ? curCode : 61;
+          precip = Math.max(precip, curPrecip || 0.2);
+        }
+      }
 
       // Buscar probabilidad horaria correspondiente para esa misma hora
       let slotPop = precip >= 0.1 ? 75 : 25;

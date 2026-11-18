@@ -2,6 +2,12 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🔗 Sincronización Bidireccional «Ahora» ↔ Carrusel Horario y Primer Tramo 60 min (`v3.0.38.46`) — 2026-11-18
+- **Estado de retorno previo (Ley 2):** Commit `aacfbfb` (`v3.0.38.45`).
+- **Ajuste fino anti-contradicciones (Feedback Lendo):**
+  - En `js/services/weatherApi.js` (`applyCantabricoConsensus`): Cuando la tarjeta `Ahora` (`weather.current`) confirma lluvia activa (`weather_code >= 50` o `precipitation >= 0.1`), la hora en curso del carrusel horario (`hourly[nowH]`) se sincroniza también en sentido lluvia (igual que ya se hacía en sentido seco), evitando que arriba marque lluvia y la hora actual del carrusel marque nublado.
+  - En `js/components/mapRadar.js` (`updateRadarForecastStrip`): Si `weather.current` está en lluvia activa y el primer botón inmediato (`<= 15 min`) venía seco por retraso de `minutely_15`, ese primer tramo hereda el estado de lluvia en curso para no contradecir al estado actual.
+
 ## 🌧️ Calibración de Azul Doppler RainViewer para Lluvia Débil / Orbayu (`v3.0.38.45`) — 2026-11-18
 - **Estado de retorno previo (Ley 2):** Commit `f1afb72` (`v3.0.38.44`).
 - **Problema detectado en vivo (Piedras Blancas, `19:30`):** Con lluvia real cayendo y píxel de RainViewer opaco (`alpha = 255`) en `RGB(0, 105, 156)`, `classifyRadarColor` en `js/services/radarService.js` lo descartaba como seco porque exigía `b >= 160` (por 4 puntos) y excluía también cianes claros (`r <= 100`).

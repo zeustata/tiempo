@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303845-radar-azul-120';
+const CACHE_NAME = 'meteoasturlode-v303846-sincro-ahora-carrusel-60min';
 const STATIC_ASSETS = [
   './',
   './index.html',

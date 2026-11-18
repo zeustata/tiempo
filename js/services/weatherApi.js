@@ -750,13 +750,20 @@ function applyCantabricoConsensus(weather, consensus, radarEcho = null) {
       }
     }
 
-    // Sincronización final de la hora en curso con el estado en vivo cuando hay escampada seca confirmada:
+    // Sincronización bidireccional de la hora en curso (hourly[nowH]) con el estado real de 'Ahora' (current):
     const nowH = new Date().getHours();
     if (weather.current && (weather.current.precipitation == null || weather.current.precipitation < 0.1) && weather.current.weather_code <= 3) {
       if (weather.hourly.precipitation && weather.hourly.precipitation[nowH] != null) weather.hourly.precipitation[nowH] = 0;
       if (weather.hourly.rain && weather.hourly.rain[nowH] != null) weather.hourly.rain[nowH] = 0;
       if (weather.hourly.weather_code && weather.hourly.weather_code[nowH] >= 50) {
         weather.hourly.weather_code[nowH] = weather.current.weather_code;
+      }
+    } else if (weather.current && (weather.current.weather_code >= 50 || (weather.current.precipitation != null && weather.current.precipitation >= 0.1))) {
+      const curP = Math.max(weather.current.precipitation || 0, 0.2);
+      if (weather.hourly.precipitation && (weather.hourly.precipitation[nowH] || 0) < 0.1) weather.hourly.precipitation[nowH] = curP;
+      if (weather.hourly.rain && (weather.hourly.rain[nowH] || 0) < 0.1) weather.hourly.rain[nowH] = curP;
+      if (weather.hourly.weather_code && (weather.hourly.weather_code[nowH] == null || weather.hourly.weather_code[nowH] <= 3)) {
+        weather.hourly.weather_code[nowH] = weather.current.weather_code >= 50 ? weather.current.weather_code : 61;
       }
     }
   }
