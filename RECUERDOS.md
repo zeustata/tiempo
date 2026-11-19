@@ -2,6 +2,10 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## ✨ Observatorio de Curvas Más Limpio Sin Tarjetas-Aviso Redundantes (`v3.0.38.48`) — 2026-11-19
+- **Estado de retorno previo (Ley 2):** Commit `c3ea4ad` (`v3.0.38.47`).
+- **Ajuste estético y anti-ruido (Feedback Lendo):** Eliminado el carrusel de titulares-aviso `#chart-smart-digest` (`renderSmartDigest`) de la vista de **Curvas** en `js/components/forecastView.js` y `js/components/chartsView.js`, que ocupaba altura útil, mostraba chips cortados lateralmente y redundaba con las 4 pastillas resumen inferiores y avisos generales, dejando una transición directa y más estética entre controles (`Térmico ▾` / `24h 48h 72h`), barra de lectura en vivo y gráfica.
+
 ## 📈 Observatorio de Curvas Horarias: Hora Superior, Flecha SVG, Sin Scroll Vertical y Re-dibujado al Reabrir (`v3.0.38.47`) — 2026-11-19
 - **Estado de retorno previo (Ley 2):** Commit `e5f97ef` (`v3.0.38.46`).
 - **Problemas detectados en móvil (Capturas de Lendo):**

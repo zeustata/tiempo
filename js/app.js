@@ -2,15 +2,15 @@ import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo, resolveSubLocali
 import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.38.46';
 import { fetchLiveRadarEcho } from './services/radarService.js?v=3.0.38.32';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=3.0.23.63';
-import { renderCurrentWeather } from './components/currentCard.js?v=3.0.38.47';
+import { renderCurrentWeather } from './components/currentCard.js?v=3.0.38.48';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.25.10';
 import { renderSurfCard } from './components/surfCard.js?v=3.0.25.2';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.38.21';
 import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.38.23';
 import { renderMountainCard } from './components/mountainCard.js?v=3.0.29';
 import { renderTourismCard } from './components/tourismCard.js?v=3.0.25.5';
-import { renderForecast, renderHourlyForecastBlock } from './components/forecastView.js?v=3.0.38.47';
-import { renderWeatherChart } from './components/chartsView.js?v=3.0.38.47';
+import { renderForecast, renderHourlyForecastBlock } from './components/forecastView.js?v=3.0.38.48';
+import { renderWeatherChart } from './components/chartsView.js?v=3.0.38.48';
 import { renderAstronomyView } from './components/astronomyCard.js?v=3.0.38.30';
 import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter, locateUserGps, toggleRadarFullscreen, updateRadarForecastStrip } from './components/mapRadar.js?v=3.0.38.46';
 import { getWeatherInfo } from './utils/weatherIcons.js?v=3.0.38.29';
@@ -52,7 +52,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.38.47';
+export const CURRENT_APP_VERSION = '3.0.38.48';
 // Control inteligente de Auto-Prompt del Changelog (Doctrina de No-Fatiga al Usuario - Feedback Lendo):
 // Solo se incrementa ante cambios visuales grandes, módulos nuevos o novedades perceptibles.
 // En ajustes finos, calibraciones matemáticas y parches internos se mantiene para no fatigar al usuario con modales.

@@ -398,9 +398,6 @@ export function renderHourlyForecastBlock(data, units = 'metric', iconTheme = 'a
             </div>
           </div>
 
-          <!-- TITULARES INTELIGENTES / HITOS CLAVE HORARIOS (SMART DIGEST) -->
-          <div class="chart-smart-digest" id="chart-smart-digest"></div>
-
           <!-- BARRA DE LECTURA DIRECTA DE DATOS (LIVE INSPECTOR READOUT) -->
           <div class="chart-live-readout" id="chart-live-readout">
             <span class="readout-idle">👆 Toca o desliza la curva para ver el detalle de cada hora</span>

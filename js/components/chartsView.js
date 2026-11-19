@@ -257,9 +257,6 @@ function renderCurrentChart() {
   // Renderizar cinta superior sincronizada de cielo y viento
   renderSkyTimeline(hoursData);
 
-  // Renderizar titulares inteligentes / hitos clave
-  renderSmartDigest(hoursData);
-
   // Renderizar franja de métricas clave compactas
   renderSummaryStrip(activeChartType, hoursData);
 
@@ -441,125 +438,6 @@ function renderSkyTimeline(hoursData) {
   }).join('');
 
   container.innerHTML = html;
-}
-
-/**
- * Renderiza los Titulares Inteligentes (Smart Highlights Digest)
- * Detecta automáticamente momentos clave del tramo analizado
- */
-function renderSmartDigest(hoursData) {
-  const container = document.getElementById('chart-smart-digest');
-  if (!container || !hoursData.length) return;
-
-  const chips = [];
-
-  // 1. Detectar Ventana de Sol / Mejor Momento
-  const sunnyStreak = [];
-  let currentStreak = [];
-  hoursData.forEach(h => {
-    if ((h.cloudCover || 0) <= 30 && (h.pop || 0) <= 20) {
-      currentStreak.push(h);
-    } else {
-      if (currentStreak.length > sunnyStreak.length) {
-        sunnyStreak.length = 0;
-        sunnyStreak.push(...currentStreak);
-      }
-      currentStreak = [];
-    }
-  });
-  if (currentStreak.length > sunnyStreak.length) {
-    sunnyStreak.length = 0;
-    sunnyStreak.push(...currentStreak);
-  }
-
-  if (sunnyStreak.length >= 3) {
-    const startH = sunnyStreak[0].hourStr.replace(':00', 'h');
-    const endH = sunnyStreak[sunnyStreak.length - 1].hourStr.replace(':00', 'h');
-    const startDay = sunnyStreak[0].time.toLocaleDateString('es-ES', { weekday: 'short' });
-    chips.push(`
-      <div class="digest-chip chip-sun">
-        <span class="chip-icon">☀️</span>
-        <div class="chip-content">
-          <span class="chip-title">Ventana sin nubes: ${sunnyStreak.length}h seguidas</span>
-          <span class="chip-desc">${startDay} de ${startH} a ${endH}</span>
-        </div>
-      </div>
-    `);
-  }
-
-  // 2. Detectar Pico o Tramo de Lluvia
-  const totalRain = hoursData.reduce((acc, h) => acc + (h.precip || 0), 0);
-  if (totalRain >= 0.5) {
-    const maxPrecipHour = hoursData.reduce((max, h) => (h.precip > max.precip ? h : max), hoursData[0]);
-    const rainDay = maxPrecipHour.time.toLocaleDateString('es-ES', { weekday: 'short' });
-    chips.push(`
-      <div class="digest-chip chip-rain">
-        <span class="chip-icon">🌧️</span>
-        <div class="chip-content">
-          <span class="chip-title">Pico de lluvia: ${maxPrecipHour.precip.toFixed(1)} mm/h</span>
-          <span class="chip-desc">${rainDay} a las ${maxPrecipHour.hourStr.replace(':00', 'h')} (Acumulado: ${totalRain.toFixed(1)} mm)</span>
-        </div>
-      </div>
-    `);
-  } else {
-    chips.push(`
-      <div class="digest-chip chip-rain">
-        <span class="chip-icon">✨</span>
-        <div class="chip-content">
-          <span class="chip-title">Sin lluvia significativa</span>
-          <span class="chip-desc">Ambiente seco durante todo el rango</span>
-        </div>
-      </div>
-    `);
-  }
-
-  // 3. Detectar Viento Destacado o Calma
-  const maxGustHour = hoursData.reduce((max, h) => (h.windGusts > max.windGusts ? h : max), hoursData[0]);
-  if (maxGustHour.windGusts >= 45) {
-    const gustDay = maxGustHour.time.toLocaleDateString('es-ES', { weekday: 'short' });
-    chips.push(`
-      <div class="digest-chip chip-wind">
-        <span class="chip-icon">💨</span>
-        <div class="chip-content">
-          <span class="chip-title">Racha máxima: ${Math.round(maxGustHour.windGusts)} km/h</span>
-          <span class="chip-desc">${gustDay} a las ${maxGustHour.hourStr.replace(':00', 'h')} (${maxGustHour.windDirShort || ''})</span>
-        </div>
-      </div>
-    `);
-  }
-
-  // 4. Salto Térmico / Amplitud
-  const temps = hoursData.map(h => h.temp);
-  const maxT = Math.max(...temps);
-  const minT = Math.min(...temps);
-  const diffT = Math.round((maxT - minT) * 10) / 10;
-  if (diffT >= 6) {
-    chips.push(`
-      <div class="digest-chip chip-temp">
-        <span class="chip-icon">🌡️</span>
-        <div class="chip-content">
-          <span class="chip-title">Contraste térmico: ${diffT}°C</span>
-          <span class="chip-desc">Mínima de ${Math.round(minT)}°C y máxima de ${Math.round(maxT)}°C</span>
-        </div>
-      </div>
-    `);
-  }
-
-  // 5. Nieve si existe
-  const totalSnow = hoursData.reduce((acc, h) => acc + (h.snowfall || 0), 0);
-  if (totalSnow >= 0.2) {
-    chips.push(`
-      <div class="digest-chip chip-snow">
-        <span class="chip-icon">❄️</span>
-        <div class="chip-content">
-          <span class="chip-title">Nieve prevista: ${totalSnow.toFixed(1)} cm</span>
-          <span class="chip-desc">Cotas medias-altas en la Cordillera</span>
-        </div>
-      </div>
-    `);
-  }
-
-  container.innerHTML = chips.join('');
 }
 
 /**

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303847-curvas-flecha-horas-fix-vacio';
+const CACHE_NAME = 'meteoasturlode-v303848-curvas-sin-avisos-digest';
 const STATIC_ASSETS = [
   './',
   './index.html',
