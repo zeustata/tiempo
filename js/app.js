@@ -2,15 +2,15 @@ import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo, resolveSubLocali
 import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.38.46';
 import { fetchLiveRadarEcho } from './services/radarService.js?v=3.0.38.32';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=3.0.23.63';
-import { renderCurrentWeather } from './components/currentCard.js?v=3.0.38.38';
+import { renderCurrentWeather } from './components/currentCard.js?v=3.0.38.47';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.25.10';
 import { renderSurfCard } from './components/surfCard.js?v=3.0.25.2';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.38.21';
 import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.38.23';
 import { renderMountainCard } from './components/mountainCard.js?v=3.0.29';
 import { renderTourismCard } from './components/tourismCard.js?v=3.0.25.5';
-import { renderForecast, renderHourlyForecastBlock } from './components/forecastView.js?v=3.0.32';
-import { renderWeatherChart } from './components/chartsView.js?v=3.0.23.58';
+import { renderForecast, renderHourlyForecastBlock } from './components/forecastView.js?v=3.0.38.47';
+import { renderWeatherChart } from './components/chartsView.js?v=3.0.38.47';
 import { renderAstronomyView } from './components/astronomyCard.js?v=3.0.38.30';
 import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter, locateUserGps, toggleRadarFullscreen, updateRadarForecastStrip } from './components/mapRadar.js?v=3.0.38.46';
 import { getWeatherInfo } from './utils/weatherIcons.js?v=3.0.38.29';
@@ -52,7 +52,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.38.46';
+export const CURRENT_APP_VERSION = '3.0.38.47';
 // Control inteligente de Auto-Prompt del Changelog (Doctrina de No-Fatiga al Usuario - Feedback Lendo):
 // Solo se incrementa ante cambios visuales grandes, módulos nuevos o novedades perceptibles.
 // En ajustes finos, calibraciones matemáticas y parches internos se mantiene para no fatigar al usuario con modales.
@@ -157,6 +157,10 @@ class MeteoAsturiasApp {
     this.setupModuleChipsNav();
     this.initParticleCanvas();
 
+    this.hourlyViewMode = 'cards';
+    window.__meteoasturHourlyViewMode = 'cards';
+    try { localStorage.removeItem('meteoastur_hourly_view'); } catch (e) {}
+
     // Auto-apertura inmediata del modal de Novedades si hay nueva versión (Doctrina Constitucional 13)
     this.checkChangelogAutoPrompt();
     this.checkAutoLocationPrompt();
@@ -258,18 +262,24 @@ class MeteoAsturiasApp {
             if (reg) reg.update();
           });
         }
+        return true;
       }
+      return false;
     };
 
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible') {
-        refreshIfStale();
+        if (!refreshIfStale()) {
+          requestAnimationFrame(() => this.syncVisibleHourlyChart());
+        }
       }
     });
 
     window.addEventListener('pageshow', (event) => {
       if (event.persisted) {
-        refreshIfStale();
+        if (!refreshIfStale()) {
+          requestAnimationFrame(() => this.syncVisibleHourlyChart());
+        }
       }
     });
 
@@ -2668,6 +2678,16 @@ class MeteoAsturiasApp {
     }
   }
 
+  syncVisibleHourlyChart() {
+    if (this.hourlyViewMode !== 'chart') return;
+    if (!this.weatherData || !this.weatherData.weather || !this.weatherData.weather.hourly) return;
+
+    const chartView = document.getElementById('hourly-chart-view');
+    if (!chartView || chartView.offsetParent === null) return;
+
+    renderWeatherChart('meteo-chart-canvas', this.weatherData.weather.hourly, null, this.getEffectiveIconTheme());
+  }
+
   switchHourlyViewMode(mode) {
     const cardsView = document.getElementById('hourly-cards-view');
     const chartView = document.getElementById('hourly-chart-view');
@@ -2686,13 +2706,12 @@ class MeteoAsturiasApp {
     if (cardsView) cardsView.style.display = isChart ? 'none' : 'flex';
     if (chartView) chartView.style.display = isChart ? 'block' : 'none';
 
-    try {
-      localStorage.setItem('meteoastur_hourly_view', mode);
-    } catch (e) {}
+    this.hourlyViewMode = mode;
+    window.__meteoasturHourlyViewMode = mode;
 
     if (isChart && this.weatherData && this.weatherData.weather && this.weatherData.weather.hourly) {
       setTimeout(() => {
-        renderWeatherChart('meteo-chart-canvas', this.weatherData.weather.hourly, 48, this.getEffectiveIconTheme());
+        renderWeatherChart('meteo-chart-canvas', this.weatherData.weather.hourly, 24, this.getEffectiveIconTheme());
       }, 40);
     }
   }
@@ -3908,6 +3927,10 @@ class MeteoAsturiasApp {
         const heroWidgets = document.getElementById('hero-widgets-carousel');
         if (heroWidgets) heroWidgets.scrollLeft = 0;
       } catch (e) {}
+
+      // Si el usuario estaba en Curvas al abrir/reanudar o recargar datos, re-dibujar de inmediato (v3.0.38.47)
+      requestAnimationFrame(() => this.syncVisibleHourlyChart());
+      setTimeout(() => this.syncVisibleHourlyChart(), 60);
     } catch (e) {
       console.error('[MeteoAstur] Error renderizando Vivo:', e);
     }

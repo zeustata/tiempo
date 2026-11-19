@@ -18,7 +18,7 @@ const CHART_VAR_INFO = {
 
 let meteoChart = null;
 let activeChartType = 'thermal'; // 'thermal' | 'precip' | 'wind' | 'pressure' | 'multi'
-let activeHours = 48; // 24 | 48 | 72
+let activeHours = 24; // 24 | 48 | 72
 let cachedHourlyData = null;
 let canvasTargetId = 'meteo-chart-canvas';
 let eventsInitialized = false;
@@ -153,6 +153,7 @@ export function renderWeatherChart(canvasId = 'meteo-chart-canvas', hourlyData =
 function renderCurrentChart() {
   const canvas = document.getElementById(canvasTargetId);
   if (!canvas || typeof Chart === 'undefined' || !cachedHourlyData) return;
+  if (canvas.offsetParent === null) return;
 
   const hourlyData = cachedHourlyData;
   const hoursCount = activeHours;
@@ -231,6 +232,7 @@ function renderCurrentChart() {
     hoursData.push({
       time: d,
       hourStr,
+      dayShort: formattedDay,
       isStartOfDay,
       temp: hourlyData.temperature_2m ? hourlyData.temperature_2m[i] : 0,
       apparent: hourlyData.apparent_temperature ? hourlyData.apparent_temperature[i] : hourlyData.temperature_2m[i],
@@ -263,6 +265,12 @@ function renderCurrentChart() {
 
   const ctx = canvas.getContext('2d');
   const chartConfig = buildChartConfig(ctx, activeChartType, labels, fullDates, weatherDescriptions, hoursData);
+  const skyTimelineSyncPlugin = {
+    id: 'skyTimelineSync',
+    afterLayout(chart) { syncSkyTimelineAlignment(chart); },
+    afterUpdate(chart) { syncSkyTimelineAlignment(chart); }
+  };
+  chartConfig.plugins = [...(chartConfig.plugins || []), skyTimelineSyncPlugin];
 
   meteoChart = new Chart(ctx, chartConfig);
 }
@@ -377,6 +385,27 @@ function renderSummaryStrip(type, dataSlice) {
 }
 
 /**
+ * Alinea exactamente las columnas de #chart-sky-timeline con los ticks del eje X de Chart.js
+ * compensando el ancho del eje Y izquierdo (y derecho si existe)
+ */
+function syncSkyTimelineAlignment(chart) {
+  const timeline = document.getElementById('chart-sky-timeline');
+  if (!timeline || !chart || !chart.scales || !chart.scales.x) return;
+  const xScale = chart.scales.x;
+  const count = chart.data?.labels?.length || 0;
+  if (count < 2) return;
+  const firstX = xScale.getPixelForValue(0);
+  const lastX = xScale.getPixelForValue(count - 1);
+  const totalW = chart.width || timeline.clientWidth;
+  if (!totalW || lastX <= firstX) return;
+  const step = (lastX - firstX) / (count - 1);
+  const padLeft = Math.max(0, Math.round(firstX - step / 2));
+  const padRight = Math.max(0, Math.round(totalW - lastX - step / 2));
+  timeline.style.paddingLeft = `${padLeft}px`;
+  timeline.style.paddingRight = `${padRight}px`;
+}
+
+/**
  * Renderiza la cinta superior sincronizada de cielo y viento (Estilo Windy / Meteoblue)
  * Se alinea exactamente con cada columna temporal del gráfico
  */
@@ -386,18 +415,26 @@ function renderSkyTimeline(hoursData) {
 
   const currentTheme = getActiveIconTheme();
 
-  const html = hoursData.map(h => {
+  const html = hoursData.map((h, idx) => {
     const isGusty = (h.windGusts || 0) >= 40;
     const popClass = (h.pop && h.pop > 0) ? 'col-pop' : 'col-pop pop-zero';
     const dayStartClass = h.isStartOfDay ? ' day-start' : '';
+    const firstClass = idx === 0 ? ' is-first' : '';
     const iconMarkup = h.weatherInfo ? renderWeatherIconHtml(h.weatherInfo, 20, currentTheme) : (h.weatherIcon || '☀️');
+    const windDeg = h.windDirection || 0;
+    const dayTag = idx === 0 ? 'HOY' : (h.isStartOfDay ? (h.dayShort || '').replace('.', '').toUpperCase() : '');
 
     return `
-      <div class="chart-sky-col${dayStartClass}" title="${h.hourStr}: ${h.weatherLabel || ''} (${h.pop || 0}%, viento ${Math.round(h.windSpeed || 0)} km/h ${h.windDirShort || ''})">
+      <div class="chart-sky-col${dayStartClass}${firstClass}" title="${h.hourStr}: ${h.weatherLabel || ''} (${h.pop || 0}%, viento ${Math.round(h.windSpeed || 0)} km/h ${h.windDirShort || ''})">
+        <span class="col-day">${dayTag || '&nbsp;'}</span>
+        <span class="col-hour">${h.hourStr}</span>
         <span class="col-icon">${iconMarkup}</span>
         <span class="${popClass}">${h.pop != null ? h.pop + '%' : ''}</span>
         <span class="col-wind ${isGusty ? 'wind-gusty' : ''}">
-          <span>${Math.round(h.windSpeed || 0)}</span><small style="font-size:0.55rem;opacity:0.8;">${h.windDirShort || ''}</small>
+          <svg class="col-wind-arrow" style="transform: rotate(${Math.round(windDeg + 180)}deg);" viewBox="0 0 24 24" width="10" height="10" aria-hidden="true">
+            <path d="M12 2L5 13h4.5v9h5v-9H19L12 2z" fill="currentColor"/>
+          </svg>
+          <span>${Math.round(h.windSpeed || 0)}</span>
         </span>
       </div>
     `;
@@ -611,22 +648,10 @@ function buildChartConfig(ctx, type, labels, fullDates, weatherDescriptions, hou
             const label = labels[context.index];
             return Array.isArray(label) ? 1.5 : 1;
           },
-          drawTicks: true
+          drawTicks: false
         },
         ticks: {
-          color: (context) => {
-            const label = labels[context.index];
-            return Array.isArray(label) ? '#38bdf8' : '#94a3b8';
-          },
-          font: (context) => {
-            const label = labels[context.index];
-            return Array.isArray(label)
-              ? { family: 'Outfit, sans-serif', size: 10.5, weight: '700' }
-              : { family: 'Outfit, sans-serif', size: 10.5, weight: '600' };
-          },
-          maxRotation: 0,
-          autoSkip: false,
-          padding: 4
+          display: false
         }
       }
     }

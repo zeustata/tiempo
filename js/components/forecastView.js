@@ -319,10 +319,7 @@ export function renderHourlyForecastBlock(data, units = 'metric', iconTheme = 'a
     `;
   }
 
-  let isChartMode = false;
-  try {
-    isChartMode = typeof localStorage !== 'undefined' && localStorage.getItem('meteoastur_hourly_view') === 'chart';
-  } catch (e) {}
+  const isChartMode = typeof window !== 'undefined' && window.__meteoasturHourlyViewMode === 'chart';
 
   return `
     <div class="forecast-block live-hourly-block" id="live-hourly-container">
@@ -394,8 +391,8 @@ export function renderHourlyForecastBlock(data, units = 'metric', iconTheme = 'a
 
               <!-- SELECTOR DE RANGO DE HORAS -->
               <div class="chart-range-selector" role="group" aria-label="Rango de horas">
-                <button class="chart-range-btn" data-hours="24">24h</button>
-                <button class="chart-range-btn active" data-hours="48">48h</button>
+                <button class="chart-range-btn active" data-hours="24">24h</button>
+                <button class="chart-range-btn" data-hours="48">48h</button>
                 <button class="chart-range-btn" data-hours="72">72h</button>
               </div>
             </div>
@@ -409,12 +406,14 @@ export function renderHourlyForecastBlock(data, units = 'metric', iconTheme = 'a
             <span class="readout-idle">👆 Toca o desliza la curva para ver el detalle de cada hora</span>
           </div>
 
-          <!-- EL GRÁFICO INMEDIATAMENTE VISIBLE (CON PISTA HORARIA SINCRONIZADA DE CIELO Y VIENTO) -->
+          <!-- EL GRÁFICO INMEDIATAMENTE VISIBLE (CON PISTA HORARIA SINCRONIZADA DE HORA, CIELO Y VIENTO) -->
           <div class="chart-scroll-viewport" id="chart-scroll-viewport">
             <div class="chart-canvas-wrapper" id="chart-canvas-wrapper">
-              <!-- CINTA SUPERIOR SINCRONIZADA DE CIELO Y VIENTO -->
+              <!-- CINTA SUPERIOR SINCRONIZADA DE HORA, CIELO Y VIENTO -->
               <div class="chart-sky-timeline" id="chart-sky-timeline"></div>
-              <canvas id="meteo-chart-canvas"></canvas>
+              <div class="chart-canvas-stage">
+                <canvas id="meteo-chart-canvas"></canvas>
+              </div>
             </div>
           </div>
 

@@ -2,6 +2,19 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📈 Observatorio de Curvas Horarias: Hora Superior, Flecha SVG, Sin Scroll Vertical y Re-dibujado al Reabrir (`v3.0.38.47`) — 2026-11-19
+- **Estado de retorno previo (Ley 2):** Commit `e5f97ef` (`v3.0.38.46`).
+- **Problemas detectados en móvil (Capturas de Lendo):**
+  1. Chart.js medía la altura completa de `.chart-canvas-wrapper` sin descontar `.chart-sky-timeline`, generando un scroll vertical interno que ocultaba abajo las horas (`Hoy 19:00`, `20:00`...) mientras dejaba arriba velocidades como `16 SO`, `17 O`, `18 O`, provocando confusión con las horas.
+  2. La cinta superior no compensaba el ancho del eje Y izquierdo de Chart.js y mostraba `SO/O` en lugar de flecha direccional.
+  3. Al cerrar o minimizar la app en modo **Curvas** y volver a abrirla, `renderAllComponents()` recreaba `#hourly-chart-view` visible pero no volvía a llamar a `renderWeatherChart()`, dejando la gráfica completamente vacía.
+- **Solución aplicada (`js/components/forecastView.js`, `css/components.css`, `js/components/chartsView.js`, `js/app.js`):**
+  - Envuelto `<canvas id="meteo-chart-canvas">` en `.chart-canvas-stage` (`flex: 1 1 auto; min-height: 0; position: relative;`) y fijado `overflow-y: hidden` en `.chart-scroll-viewport` (`height: 365px`, `325px` en `<= 380px`).
+  - Rediseñada `.chart-sky-timeline` (Opción 1, `height: 78px`) para mostrar las horas y etiquetas de día (`HOY`, `VIE`, `SÁB`) exclusivamente arriba (**Día → Hora `HH:00` → Icono → `% Lluvia` → Flecha SVG giratoria + velocidad**), ocultando las horas repetidas del eje X inferior (`ticks: { display: false }`) para dar más altura limpia a la curva.
+  - Añadido `syncSkyTimelineAlignment(chart)` vía plugin `skyTimelineSync` para alinear milimétricamente cada columna superior con los puntos de Chart.js compensando los márgenes de ejes.
+  - Elevado `position: relative; z-index: 250;` en `.chart-header-block` (`css/components.css`) tras detectar en verificación móvil `360px` que `.chart-card > * { position: relative; z-index: 1; }` dejaba `.chart-smart-digest` y `#chart-live-readout` por encima de `#chart-var-dropdown-menu`.
+  - Por defecto al abrir o recargar la app arranca siempre en **Tarjetas (72h)** (eliminada la persistencia de `'chart'` en `localStorage`); el añadido de **Curvas** inicia en **`24h`** (con selector `24h / 48h / 72h`) y si el usuario minimiza o se refrescan los datos durante la sesión en vivo estando en Curvas, `syncVisibleHourlyChart()` redibuja automáticamente vía `requestAnimationFrame`, `visibilitychange` y `pageshow` sin quedar nunca vacía.
+
 ## 🔗 Sincronización Bidireccional «Ahora» ↔ Carrusel Horario y Primer Tramo 60 min (`v3.0.38.46`) — 2026-11-18
 - **Estado de retorno previo (Ley 2):** Commit `aacfbfb` (`v3.0.38.45`).
 - **Ajuste fino anti-contradicciones (Feedback Lendo):**

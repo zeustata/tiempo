@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303846-sincro-ahora-carrusel-60min';
+const CACHE_NAME = 'meteoasturlode-v303847-curvas-flecha-horas-fix-vacio';
 const STATIC_ASSETS = [
   './',
   './index.html',
