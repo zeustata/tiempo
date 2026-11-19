@@ -56,6 +56,12 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
      1. **Consulta ligera de `ecmwf_ifs` (`current`):** Añadir lectura en `try/catch` seguro (fallback a AROME si falla) de `weather_code`, `cloud_cover`, `precipitation` y `direct_normal_irradiance`.
      2. **Ley Anti-Falso Sol y Rescate de Claros:** Calcular `effectiveCloud = Math.max(cloudCoverArome, cloudCoverEcmwf)` y bajar el umbral de sol puro a `< 15%` (si `>= 15%`, mostrar `Sol y nubes ⛅`). Si AROME marca `Nublado (>= 70%)` en seco pero hay radiación solar directa (`>= 100 W/m²`) y ECMWF ve claros (`<= 65%`), rescatar `Sol y nubes ⛅`.
      3. **Ley Anti-Falso Orbayu:** Si el Radar Doppler está seco (`radarEchoLevel == 0`) y ECMWF marca `0,0 mm` (o hay sol directo `>= 100 W/m²`), anular la llovizna residual de AROME y dejar el widget en seco (`0,0 mm`).
+2. **Aviso Automático de Nueva Versión en Google Play (`Google Play In-App Updates` + `?appv=14`):**
+   - **Objetivo (Feedback Lendo — 2026-11-19):** Evitar que los usuarios se queden en versiones antiguas de Play Store sin enterarse cuando ya exista una actualización nativa publicada (como ocurrió tras pasar de `v12` a `v13` por la mejora de GPS).
+   - **Implementación oficial (`build.gradle` + `LauncherActivity.java`):**
+     1. Integrar la librería oficial `com.google.android.play:app-update` en modo **Flexible** (`AppUpdateType.FLEXIBLE`) al arrancar `LauncherActivity`: consulta en segundo plano a Google Play Store si existe una versión aprobada superior y ofrece al usuario el diálogo oficial de actualización directa sin salir de la app.
+     2. Inyectar además en la URL de la TWA el parámetro de versión instalada (`?appv=` con `BuildConfig.VERSION_CODE`, p. ej. `?appv=14`) para que la web (`js/app.js`) pueda conocer la versión exacta del APK sin depender de señales indirectas del GPS.
+   - **Protección crítica:** Mantener intacto el puente GPS (`ACCESS_FINE_LOCATION` + `DelegationService.java`) y validar primero la `.apk` gemela en el móvil de Lendo antes de generar ni subir el `.aab` de `versionCode 14` a Google Play Console.
 
 ## 🏷️ Etiqueta Compacta «DIRECTO» en Línea Temporal del Radar (`v3.0.38.41`) — 2026-11-17
 - **Estado de retorno previo (Ley 2):** Commit `2aac652` (`v3.0.38.40`).
