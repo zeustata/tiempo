@@ -1,17 +1,17 @@
 {
-  "updatedAt": "2026-11-14T05:29:33.444Z",
+  "updatedAt": "2026-11-21T10:16:45.868Z",
   "zones": {
     "633301": {
       "name": "Litoral occidental asturiano",
       "alerts": [
         {
-          "id": "2.49.0.0.724.0.ES.261113102808.633301COCO151465688",
+          "id": "2.49.0.0.724.0.ES.261120103409.633301COCO221770849",
           "type": "coastal",
           "level": "yellow",
-          "onset": "2026-11-15T06:00:00+01:00",
-          "expires": "2026-11-15T14:59:59+01:00",
+          "onset": "2026-11-22T00:00:00+01:00",
+          "expires": "2026-11-22T17:59:59+01:00",
           "headline": "Aviso de costeros de nivel amarillo. Costa - Litoral occidental asturiano",
-          "description": "Viento del Oeste o Suroeste de 50 a 61 km/h (fuerza 7).",
+          "description": "Viento del Oeste de 50 a 61 km/h (fuerza 7).",
           "instruction": "Esté atento. Manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños moderados a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
         }
       ]
@@ -20,13 +20,13 @@
       "name": "Litoral oriental asturiano",
       "alerts": [
         {
-          "id": "2.49.0.0.724.0.ES.261113102808.633302COCO151465688",
+          "id": "2.49.0.0.724.0.ES.261120103409.633302COCO221770849",
           "type": "coastal",
           "level": "yellow",
-          "onset": "2026-11-15T09:00:00+01:00",
-          "expires": "2026-11-15T14:59:59+01:00",
+          "onset": "2026-11-22T00:00:00+01:00",
+          "expires": "2026-11-22T17:59:59+01:00",
           "headline": "Aviso de costeros de nivel amarillo. Costa - Litoral oriental asturiano",
-          "description": "Viento del Oeste de 50 a 61 km/h (fuerza 7), ocasionalmente de 62 a 74 km/h (fuerza 8).",
+          "description": "Viento del Oeste de 50 a 61 km/h (fuerza 7).",
           "instruction": "Esté atento. Manténgase informado de la predicción meteorológica más actualizada. Se pueden producir daños moderados a personas y bienes, especialmente a aquellos vulnerables o en zonas expuestas al fenómeno."
         }
       ]
