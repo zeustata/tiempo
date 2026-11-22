@@ -2,6 +2,17 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📦 Compilación Nativa Android `versionCode 14` (`v3.0.38.48`): Consenso en Widgets + In-App Updates + APK/AAB — 2026-11-22
+- **Estado de retorno previo:** Respaldo de `v13` en `backup_v13` (y commits previos de `RECUERDOS.md` en `191f783`).
+- **Motivo (Feedback Lendo en directo):** El widget en `versionCode 13` seguía consultando AROME en solitario, mostrando sol despejado cuando el cielo estaba cubierto (`LEAS METAR: BKN045`, ECMWF `38%`), y varios usuarios en versiones anteriores (`v11`/`v12`) no recibían aviso automático de nueva versión publicada en Google Play.
+- **Cambios aplicados en `C:\Users\NUC\Downloads\IA\MeteoAstur_Android_Widget`:**
+  1. **`MeteoWeatherEngine.java`:** Añadido consenso ligero `AROME + ecmwf_ifs` (con fallback silencioso a AROME), Ley Anti-Falso Sol (`< 15%`), Rescate de Claros (`>= 100 W/m²` y ECMWF `<= 65%`), Ley Anti-Falso Orbayu con radar seco y calibración cromática RainViewer en `/2/0_0.png` (`b >= 120`, `r <= 125`, amarillo en `1,8 mm`), preservando intactos los 78 concejos, GPS dual, los 6 widgets y el acceso a reloj/alarmas (`getUniversalClockPendingIntent`).
+  2. **`app/build.gradle` y `LauncherActivity.java`:** Subido a `versionCode 14` (`versionName "3.0.38.48"`), integrada la librería oficial `com.google.android.play:app-update:2.1.0` (`AppUpdateType.FLEXIBLE`) e inyectado `?appv=14` en la URL TWA, sin alterar `DelegationService.java`, `AndroidManifest.xml` ni el puente GPS (`nlat`/`nlon`).
+- **Verificación y artefactos generados (Protocolo Pre-AAB):**
+  - Auditoría `verify_pre_aab.py` superada al 100% (6/6 controles).
+  - Prueba física real superada en el móvil de Lendo con la APK gemela firmada `MeteoAstur_v3.0.38.48_TEST14.apk` (`6,22 MB`, enviada al buzón Telegram).
+  - Generado y firmado el paquete `.aab` oficial (`6.333.827 bytes`, `6,04 MB`) en `C:\Users\NUC\Downloads\IA\Tiempo\app-release-bundle-v14.aab` y `C:\Users\NUC\Downloads\IA\MeteoAstur_Android_Widget\MeteoAstur_v3.0.38.48_bundle14.aab`, listo para subir a Google Play Console.
+
 ## ✨ Observatorio de Curvas Más Limpio Sin Tarjetas-Aviso Redundantes (`v3.0.38.48`) — 2026-11-19
 - **Estado de retorno previo (Ley 2):** Commit `c3ea4ad` (`v3.0.38.47`).
 - **Ajuste estético y anti-ruido (Feedback Lendo):** Eliminado el carrusel de titulares-aviso `#chart-smart-digest` (`renderSmartDigest`) de la vista de **Curvas** en `js/components/forecastView.js` y `js/components/chartsView.js`, que ocupaba altura útil, mostraba chips cortados lateralmente y redundaba con las 4 pastillas resumen inferiores y avisos generales, dejando una transición directa y más estética entre controles (`Térmico ▾` / `24h 48h 72h`), barra de lectura en vivo y gráfica.
@@ -47,8 +58,8 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
 - **Problema detectado (Feedback Lendo):** Open-Meteo `minutely_15` devolvía en ocasiones código de lluvia (`weather_code: 63`) con `precipitation: 0.0`, provocando que debajo del icono de lluvia apareciera `"Seco"`.
 - **Solución aplicada (`js/components/mapRadar.js`):** En `updateRadarForecastStrip`, cada tramo de 15 minutos cruza ahora la hora correspondiente con `hourly.precipitation_probability` y muestra debajo del icono su estado coherente (`Tormenta`, `Nieve`, `Lluvia` o `Seco`), alineando también el resumen superior (`🌦️ Posible lluvia débil / orbayu`) cuando el icono indica precipitación sin acumulación de mm.
 
-## 📌 Tareas Pendientes para Futura Versión Nativa de Android (`versionCode 14`) — 2026-11-17
-*El `versionCode 13` ya ha sido aprobado y publicado oficialmente en Google Play Store el 2026-11-17. Tarea en pausa a valorar por Lendo tras observar el comportamiento en vivo del widget actual:*
+## ✅ Tareas Completadas en Versión Nativa de Android (`versionCode 14` — `v3.0.38.48`) — 2026-11-22
+*Compilada y verificada en local con `verify_pre_aab.py` (6/6), prueba física de `MeteoAstur_v3.0.38.48_TEST14.apk` superada por Lendo y `.aab` generado (`app-release-bundle-v14.aab`, `6,04 MB`):*
 1. **Consenso Cantábrico Híbrido en el Widget Nativo (`MeteoWeatherEngine.java`):**
    - **Problema actual:** El widget de Android consulta Open-Meteo sin parámetro de modelo (recibe AROME en solitario) y no usa `directSolar` en `applyAsturiasWeatherRules`, por lo que puede discrepar de la app web en 3 escenarios: falso sol en costa (`< 25%` en AROME), falso nublado cerrado con sol directo en ECMWF, y falso orbayu con radar seco.
    - **Lo que NO se toca:** Permisos, GPS (`LauncherActivity`, `DelegationService`), diseño visual de los widgets ni el lector del Radar de RainViewer.
