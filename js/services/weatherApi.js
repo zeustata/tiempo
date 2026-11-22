@@ -1,4 +1,4 @@
-import { fetchLiveRadarEcho } from './radarService.js?v=3.0.38.45';
+import { fetchLiveRadarEcho, fetchLiveSatelliteCloudCover } from './radarService.js?v=3.0.38.49';
 
 /**
  * Catálogo Oficial de Modelos Meteorológicos de Alta Resolución
@@ -114,7 +114,7 @@ export function getDefaultModel() {
 /**
  * Servicio de datos meteorológicos, marinos y de calidad del aire con Open-Meteo
  */
-export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '') {
+export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '', altitude = 0) {
   try {
     // 1. Meteorología Completa de Alta Resolución (con soporte para modelo específico)
     const modelQuery = modelParam ? `&models=${encodeURIComponent(modelParam)}` : '';
@@ -186,24 +186,31 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
         return fetch('data/partes-nieve.json').then(r => r.ok ? r.json() : null).catch(() => null);
       });
 
-    // 7. Radar Táctico en Vivo (Nowcasting Real de RainViewer - Doctrina Tormenta Lendo)
+    // 7. Radar Táctico en Vivo (RainViewer) y Satélite Meteosat de Nubes en Vivo (EUMETSAT)
     const radarEchoPromise = fetchLiveRadarEcho(lat, lon).catch(() => null);
+    const satCloudPromise = isAutoModel
+      ? fetchLiveSatelliteCloudCover(lat, lon).catch(() => null)
+      : Promise.resolve(null);
 
-    const [weather, aqi, marine, consensus, aemetAlerts, snowReport, radarEcho] = await Promise.all([
+    const [weather, aqi, marine, consensus, aemetAlerts, snowReport, radarEcho, satCloud] = await Promise.all([
       weatherPromise,
       aqiPromise,
       marinePromise,
       consensusPromise,
       aemetAlertsPromise,
       snowReportPromise,
-      radarEchoPromise
+      radarEchoPromise,
+      satCloudPromise
     ]);
 
     if (weather) {
       if (consensus) {
-        applyCantabricoConsensus(weather, consensus, radarEcho);
+        applyCantabricoConsensus(weather, consensus, radarEcho, satCloud);
       } else {
         applyStandalonePhysicalSovereignty(weather, radarEcho);
+      }
+      if (isAutoModel) {
+        applySatelliteCloudShield(weather, satCloud, radarEcho, altitude);
       }
       harmonizeWeatherPrecipitation(weather);
       if (weather.current) {
@@ -250,7 +257,7 @@ export async function fetchWeatherData(lat, lon, isCoast = false, modelParam = '
  *    - Si se trata de lluvia frontal mayor (>= 0.5 mm), basta certeza del ensamble (PoP >= 60%) y nubes >= 60%.
  *    - En días secos de panza de burro (humedad < 85% o PoP < 40%), se mantiene el blindaje anti-fantasmas.
  */
-function applyCantabricoConsensus(weather, consensus, radarEcho = null) {
+function applyCantabricoConsensus(weather, consensus, radarEcho = null, satCloud = null) {
   if (!weather || !consensus) return;
 
   // 1. Verificación del tiempo actual en vivo
@@ -550,20 +557,32 @@ function applyCantabricoConsensus(weather, consensus, radarEcho = null) {
         weather.current.radar_rescue_level = echo.level;
         weather.current.radar_rescue_label = echo.label;
       } else if (echo.level === 'light_rain') {
+        const isSatOvercast = Boolean(satCloud && satCloud.cloudPct >= 75 && satCloud.centerCloudPct >= 60);
+        const effectiveSunLight = isSatOvercast ? false : hasTrueSunlight;
         // COLOR AZUL / VERDE DÉBIL (< 25 dBZ):
-        // Si los modelos ya constatan escampada seca (rawPrecip < 0.1, ePrecip < 0.1, curEPrecip < 0.1 y curEPop < 50)
-        // o hay sol directo (hasTrueSunlight), el eco débil es cola de nube o virga en altura: NO se fuerza lluvia.
-        if ((rawPrecip < 0.1 && ePrecip < 0.1 && curEPrecip < 0.1 && curEPop < 50) || (hasTrueSunlight && Math.max(rawCloud, ecmwfCloud) < 60)) {
+        // Si los modelos ya constatan escampada seca y el satélite NO confirma manto nuboso cerrado,
+        // o hay sol directo confirmado sin cielo cubierto por satélite, NO se fuerza lluvia.
+        if (!isSatOvercast && ((rawPrecip < 0.1 && ePrecip < 0.1 && curEPrecip < 0.1 && curEPop < 50) || (effectiveSunLight && Math.max(rawCloud, ecmwfCloud) < 60))) {
           weather.current.precipitation = 0;
           if (weather.current.rain != null) weather.current.rain = 0;
           weather.current.weather_code = Math.max(rawCloud, ecmwfCloud) >= 75 ? 3 : 2;
           weather.current.is_radar_rescued = false;
         } else {
-          // El radar físico constata lluvia/orbayu sobre el terreno bajo manto nuboso:
+          // El radar físico constata lluvia/orbayu sobre el terreno bajo manto nuboso (o satélite cerrado):
           weather.current.weather_code = 61; // Lluvia débil
           weather.current.precipitation = 0.2; // 0.2 mm estricto (1 gota) para que eco débil jamás escale a Lluvia moderada
           if (weather.current.rain != null) weather.current.rain = 0.2;
-          weather.current.cloud_cover = Math.max(weather.current.cloud_cover || 0, 80);
+          weather.current.cloud_cover = Math.max(weather.current.cloud_cover || 0, isSatOvercast ? satCloud.cloudPct : 80);
+          if (isSatOvercast) {
+            if (weather.current.direct_normal_irradiance != null) {
+              weather.current.direct_normal_irradiance = Math.min(weather.current.direct_normal_irradiance, 35);
+            }
+            if (weather.current.shortwave_radiation != null) {
+              weather.current.shortwave_radiation = Math.min(weather.current.shortwave_radiation, 110);
+            }
+            weather.current.is_satellite_calibrated = true;
+            weather.current.satellite_cloud_pct = satCloud.cloudPct;
+          }
           weather.current.is_radar_rescued = true;
           weather.current.radar_rescue_level = echo.level;
           weather.current.radar_rescue_label = 'Lluvia débil / Orbayu';
@@ -765,6 +784,96 @@ function applyCantabricoConsensus(weather, consensus, radarEcho = null) {
       if (weather.hourly.weather_code && (weather.hourly.weather_code[nowH] == null || weather.hourly.weather_code[nowH] <= 3)) {
         weather.hourly.weather_code[nowH] = weather.current.weather_code >= 50 ? weather.current.weather_code : 61;
       }
+    }
+  }
+}
+
+/**
+ * Escudo Unidireccional Anti-Falso Sol con Satélite Meteosat (EUMETSAT msg_fes:clm) + Eco Débil de Radar:
+ * Actúa exclusivamente para evitar falsos "Despejado / Mayormente soleado" cuando la observación real
+ * constata cielo nuboso o cubierto sobre el concejo. Jamás borra nieblas ni nubes si el satélite marca 0%.
+ */
+export function applySatelliteCloudShield(weather, satCloud, radarEcho = null, altitude = 0) {
+  if (!weather || !weather.current) return;
+
+  const cur = weather.current;
+  const nowH = new Date().getHours();
+
+  // Resincronizar hora actual en hourly si ya venía calibrada por satélite desde la rama radar light_rain
+  const syncHourlyCurrent = (syncPrecip = false) => {
+    if (!weather.hourly) return;
+    if (weather.hourly.cloud_cover && weather.hourly.cloud_cover[nowH] != null) {
+      weather.hourly.cloud_cover[nowH] = cur.cloud_cover;
+    }
+    if (weather.hourly.weather_code && weather.hourly.weather_code[nowH] != null) {
+      weather.hourly.weather_code[nowH] = cur.weather_code;
+    }
+    if (weather.hourly.direct_normal_irradiance && weather.hourly.direct_normal_irradiance[nowH] != null && cur.direct_normal_irradiance != null) {
+      weather.hourly.direct_normal_irradiance[nowH] = Math.min(weather.hourly.direct_normal_irradiance[nowH], cur.direct_normal_irradiance);
+    }
+    if (weather.hourly.shortwave_radiation && weather.hourly.shortwave_radiation[nowH] != null && cur.shortwave_radiation != null) {
+      weather.hourly.shortwave_radiation[nowH] = Math.min(weather.hourly.shortwave_radiation[nowH], cur.shortwave_radiation);
+    }
+    if (syncPrecip && weather.hourly.precipitation && weather.hourly.precipitation[nowH] != null) {
+      weather.hourly.precipitation[nowH] = Math.max(weather.hourly.precipitation[nowH] || 0, cur.precipitation || 0);
+      if (weather.hourly.rain && weather.hourly.rain[nowH] != null) {
+        weather.hourly.rain[nowH] = Math.max(weather.hourly.rain[nowH] || 0, cur.precipitation || 0);
+      }
+    }
+  };
+
+  // No rebajar lluvia ni tormenta ya activa (ni pisar rescates radar ya confirmados)
+  if ((cur.weather_code != null && cur.weather_code >= 50) || (cur.precipitation != null && cur.precipitation >= 0.1) || cur.is_radar_rescued) {
+    if (cur.is_satellite_calibrated) {
+      syncHourlyCurrent(true);
+    }
+    return;
+  }
+
+  // Salvaguarda de alta montaña nevada: evita confundir cumbres nevadas soleadas (>= 1000 m) con nubes
+  const curSnowDepth = (weather.hourly && weather.hourly.snow_depth && weather.hourly.snow_depth[nowH] != null) ? weather.hourly.snow_depth[nowH] : 0;
+  const isColdSnowRisk = altitude >= 1000 && ((cur.temperature_2m != null && cur.temperature_2m <= 4) || curSnowDepth > 0);
+  if (isColdSnowRisk && (cur.cloud_cover ?? 0) < 25) {
+    return;
+  }
+
+  const satPct = satCloud && typeof satCloud.cloudPct === 'number' ? satCloud.cloudPct : null;
+  const centerPct = satCloud && typeof satCloud.centerCloudPct === 'number' ? satCloud.centerCloudPct : null;
+  const hasWeakEcho = Boolean(radarEcho && radarEcho.hasWeakCloudEcho);
+
+  // Rama A: Manto cubierto real confirmado por satélite (>= 85% general y >= 75% centro)
+  if (satPct !== null && satPct >= 85 && centerPct >= 75) {
+    if ((cur.cloud_cover ?? 0) < satPct || (cur.weather_code != null && cur.weather_code <= 2)) {
+      cur.cloud_cover = Math.max(cur.cloud_cover || 0, satPct);
+      if (cur.direct_normal_irradiance != null) {
+        cur.direct_normal_irradiance = Math.min(cur.direct_normal_irradiance, 35);
+      }
+      if (cur.shortwave_radiation != null) {
+        cur.shortwave_radiation = Math.min(cur.shortwave_radiation, 110);
+      }
+      cur.weather_code = 3;
+      cur.is_satellite_calibrated = true;
+      cur.satellite_cloud_pct = satPct;
+      syncHourlyCurrent(false);
+    }
+    return;
+  }
+
+  // Rama B: Nubosidad parcial-alta satelital (>= 55% y >= 50% centro) o eco Doppler débil sobre el lugar
+  if ((satPct !== null && satPct >= 55 && centerPct >= 50) || hasWeakEcho) {
+    if ((cur.weather_code != null && cur.weather_code <= 1) || (cur.cloud_cover ?? 0) < 50) {
+      const targetCloud = Math.max(cur.cloud_cover || 0, satPct || 75);
+      cur.cloud_cover = targetCloud;
+      if (cur.direct_normal_irradiance != null) {
+        cur.direct_normal_irradiance = Math.min(cur.direct_normal_irradiance, hasWeakEcho ? 45 : 85);
+      }
+      if (cur.shortwave_radiation != null) {
+        cur.shortwave_radiation = Math.min(cur.shortwave_radiation, hasWeakEcho ? 130 : 160);
+      }
+      cur.weather_code = (hasWeakEcho || targetCloud >= 80) ? 3 : 2;
+      cur.is_satellite_calibrated = true;
+      cur.satellite_cloud_pct = satPct ?? targetCloud;
+      syncHourlyCurrent(false);
     }
   }
 }

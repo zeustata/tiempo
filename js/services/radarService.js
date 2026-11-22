@@ -1,5 +1,7 @@
 let cachedRainViewerData = null;
 let cachedRainViewerTime = 0;
+const satCloudCache = new Map();
+const SAT_CLOUD_CACHE_TTL_MS = 5 * 60 * 1000;
 
 /**
  * Servicio para capas de radar meteorológico en directo de RainViewer
@@ -140,21 +142,114 @@ export async function fetchLiveRadarEcho(lat, lon) {
     const centerP = ctx.getImageData(px, py, 1, 1).data;
     const bestEcho = classifyRadarColor(centerP[0], centerP[1], centerP[2], centerP[3]);
 
+    // Muestreo de ventana 3x3 alrededor del píxel central para detectar ecos débiles (orbayu fino / nube cargada)
+    const xStart = Math.max(0, px - 1);
+    const yStart = Math.max(0, py - 1);
+    const xEnd = Math.min(255, px + 1);
+    const yEnd = Math.min(255, py + 1);
+    const winData = ctx.getImageData(xStart, yStart, xEnd - xStart + 1, yEnd - yStart + 1).data;
+    let weakPixels = 0;
+    for (let i = 0; i < winData.length; i += 4) {
+      if (winData[i + 3] >= 50) {
+        weakPixels++;
+      }
+    }
+    const centerAlpha = centerP[3];
+    const hasWeakCloudEcho = centerAlpha >= 50 && weakPixels >= 5;
+
     if (!bestEcho.isRain) {
       return {
         hasEcho: false,
         echo: bestEcho,
-        timestamp: latest.time
+        timestamp: latest.time,
+        centerAlpha,
+        weakPixels,
+        hasWeakCloudEcho
       };
     }
 
     return {
       hasEcho: true,
       echo: bestEcho,
-      timestamp: latest.time
+      timestamp: latest.time,
+      centerAlpha,
+      weakPixels,
+      hasWeakCloudEcho
     };
   } catch (err) {
     console.warn('Radar echo detection fallback:', err.message);
+    return null;
+  }
+}
+
+/**
+ * Consulta en tiempo real la Máscara Oficial de Nubes de EUMETSAT Meteosat (msg_fes:clm, TIME=current).
+ * Analiza una cuadrícula 15x15 (~16x16 km) centrada en las coordenadas del concejo y calcula
+ * el porcentaje total de cobertura nubosa satelital y el porcentaje del núcleo central 3x3.
+ */
+export async function fetchLiveSatelliteCloudCover(lat, lon) {
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    if (typeof globalThis !== 'undefined' && globalThis.__TEST_SAT_CLOUD__) {
+      return globalThis.__TEST_SAT_CLOUD__;
+    }
+    return null;
+  }
+
+  const cacheKey = `${Number(lat).toFixed(2)},${Number(lon).toFixed(2)}`;
+  const cached = satCloudCache.get(cacheKey);
+  if (cached && (Date.now() - cached.timestamp < SAT_CLOUD_CACHE_TTL_MS)) {
+    return cached;
+  }
+
+  try {
+    const deg = 0.08;
+    const bbox = `${(lon - deg).toFixed(4)},${(lat - deg).toFixed(4)},${(lon + deg).toFixed(4)},${(lat + deg).toFixed(4)}`;
+    const url = `https://view.eumetsat.int/geoserver/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&LAYERS=msg_fes:clm&STYLES=&BBOX=${bbox}&TIME=current&WIDTH=15&HEIGHT=15&FORMAT=image/png&SRS=EPSG:4326`;
+
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.src = url;
+
+    await Promise.race([
+      new Promise((res, rej) => {
+        img.onload = res;
+        img.onerror = rej;
+      }),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('Satellite timeout')), 3000))
+    ]);
+
+    const canvas = document.createElement('canvas');
+    canvas.width = 15;
+    canvas.height = 15;
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    ctx.drawImage(img, 0, 0, 15, 15);
+    const data = ctx.getImageData(0, 0, 15, 15).data;
+
+    let cloud = 0;
+    let centerCloud = 0;
+    for (let y = 0; y < 15; y++) {
+      for (let x = 0; x < 15; x++) {
+        const idx = (y * 15 + x) * 4;
+        const isCloud = data[idx + 3] >= 180 && data[idx] >= 180 && data[idx + 1] >= 180 && data[idx + 2] >= 180;
+        if (isCloud) {
+          cloud++;
+          if (x >= 6 && x <= 8 && y >= 6 && y <= 8) {
+            centerCloud++;
+          }
+        }
+      }
+    }
+
+    const result = {
+      cloudPct: Math.round((100 * cloud) / 225),
+      centerCloudPct: Math.round((100 * centerCloud) / 9),
+      source: 'EUMETSAT Meteosat (msg_fes:clm)',
+      timestamp: Date.now()
+    };
+    satCloudCache.set(cacheKey, result);
+    return result;
+  } catch (err) {
+    console.warn('Satellite cloud detection fallback:', err.message);
     return null;
   }
 }

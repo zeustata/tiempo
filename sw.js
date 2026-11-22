@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303848-curvas-sin-avisos-digest';
+const CACHE_NAME = 'meteoasturlode-v303849-satelite-meteosat-nubes';
 const STATIC_ASSETS = [
   './',
   './index.html',

@@ -1,6 +1,6 @@
 import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo, resolveSubLocalidad, SUB_LOCALIDADES } from './config/concejos.js?v=3.0.25.18';
-import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.38.46';
-import { fetchLiveRadarEcho } from './services/radarService.js?v=3.0.38.32';
+import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.38.49';
+import { fetchLiveRadarEcho } from './services/radarService.js?v=3.0.38.49';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=3.0.23.63';
 import { renderCurrentWeather } from './components/currentCard.js?v=3.0.38.48';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.25.10';
@@ -52,7 +52,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.38.48';
+export const CURRENT_APP_VERSION = '3.0.38.49';
 // Control inteligente de Auto-Prompt del Changelog (Doctrina de No-Fatiga al Usuario - Feedback Lendo):
 // Solo se incrementa ante cambios visuales grandes, módulos nuevos o novedades perceptibles.
 // En ajustes finos, calibraciones matemáticas y parches internos se mantiene para no fatigar al usuario con modales.
@@ -3157,7 +3157,7 @@ class MeteoAsturiasApp {
   async loadCompareData(concejoBId) {
     this.compareConcejoB = getConcejoById(concejoBId) || this.compareConcejoB;
     const isCoast = this.compareConcejoB.type === 'coast' || this.compareConcejoB.region.includes('Costa');
-    const result = await fetchWeatherData(this.compareConcejoB.lat, this.compareConcejoB.lon, isCoast, this.currentModel.apiModel || '');
+    const result = await fetchWeatherData(this.compareConcejoB.lat, this.compareConcejoB.lon, isCoast, this.currentModel.apiModel || '', this.compareConcejoB.altitude || 0);
     if (result.success) {
       this.compareWeatherDataB = result;
       this.renderCompareSection();
@@ -3284,7 +3284,7 @@ class MeteoAsturiasApp {
   _dataSignature(data) {
     if (!data || !data.weather || !data.weather.current) return null;
     const c = data.weather.current;
-    return `${Math.round(c.temperature_2m)}|${c.weather_code}|${Math.round(c.wind_speed_10m || 0)}|${Math.round(c.apparent_temperature || 0)}|${c.is_radar_rescued ? 1 : 0}|${Math.round((c.precipitation || 0) * 10)}`;
+    return `${Math.round(c.temperature_2m)}|${c.weather_code}|${Math.round(c.wind_speed_10m || 0)}|${Math.round(c.apparent_temperature || 0)}|${c.is_radar_rescued ? 1 : 0}|${c.is_satellite_calibrated ? 1 : 0}|${Math.round((c.precipitation || 0) * 10)}`;
   }
 
   async loadWeather(concejoId) {
@@ -3296,7 +3296,7 @@ class MeteoAsturiasApp {
       const isCoast = concejo.type === 'coast' || concejo.region.includes('Costa');
       const fetchLat = this.activeLocalidad?.lat ?? concejo.lat;
       const fetchLon = this.activeLocalidad?.lon ?? concejo.lon;
-      const result = await fetchWeatherData(fetchLat, fetchLon, isCoast, this.currentModel.apiModel || '');
+      const result = await fetchWeatherData(fetchLat, fetchLon, isCoast, this.currentModel.apiModel || '', this.activeLocalidad?.altitude ?? concejo.altitude ?? 0);
 
       if (result && result.success) {
         // Comparar firma antes de re-renderizar: si los datos son idénticos a los pintados,
