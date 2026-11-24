@@ -435,19 +435,29 @@ export function getNeonWeatherSvg(iconKey, size = 32) {
             </filter>
           </defs>
           <path d="M 40,24 H 13 A 7.5,7.5 0 0 1 11.5,9.5 A 10.5,10.5 0 0 1 35.5,10 A 7,7 0 0 1 40,24 Z" stroke="#38bdf8" stroke-width="2.2" fill="none" filter="url(#neon-glow-heavy-snow)" />
-          <!-- 5 Cristales de nieve neón a dos niveles -->
-          <g stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" filter="url(#neon-glow-heavy-snow)">
+          <!-- 5 Cristales estrellados de nieve neón a dos niveles -->
+          <g stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" filter="url(#neon-glow-heavy-snow)">
             <!-- Copo 1 -->
-            <line x1="10" y1="30" x2="10" y2="36" /><line x1="7" y1="33" x2="13" y2="33" />
+            <line x1="10" y1="29.8" x2="10" y2="36.2" /><line x1="6.8" y1="33" x2="13.2" y2="33" />
+            <line x1="7.7" y1="30.7" x2="12.3" y2="35.3" /><line x1="7.7" y1="35.3" x2="12.3" y2="30.7" />
             <!-- Copo 2 -->
             <line x1="17" y1="35" x2="17" y2="43" /><line x1="13" y1="39" x2="21" y2="39" />
+            <line x1="14.2" y1="36.2" x2="19.8" y2="41.8" /><line x1="14.2" y1="41.8" x2="19.8" y2="36.2" />
             <!-- Copo 3 (Central) -->
             <line x1="25" y1="28" x2="25" y2="36" /><line x1="21" y1="32" x2="29" y2="32" />
+            <line x1="22.2" y1="29.2" x2="27.8" y2="34.8" /><line x1="22.2" y1="34.8" x2="27.8" y2="29.2" />
             <!-- Copo 4 -->
             <line x1="33" y1="35" x2="33" y2="43" /><line x1="29" y1="39" x2="37" y2="39" />
+            <line x1="30.2" y1="36.2" x2="35.8" y2="41.8" /><line x1="30.2" y1="41.8" x2="35.8" y2="36.2" />
             <!-- Copo 5 -->
-            <line x1="40" y1="30" x2="40" y2="36" /><line x1="37" y1="33" x2="43" y2="33" />
+            <line x1="40" y1="29.8" x2="40" y2="36.2" /><line x1="36.8" y1="33" x2="43.2" y2="33" />
+            <line x1="37.7" y1="30.7" x2="42.3" y2="35.3" /><line x1="37.7" y1="35.3" x2="42.3" y2="30.7" />
           </g>
+          <circle cx="10" cy="33" r="1.1" fill="#38bdf8" />
+          <circle cx="17" cy="39" r="1.3" fill="#38bdf8" />
+          <circle cx="25" cy="32" r="1.3" fill="#38bdf8" />
+          <circle cx="33" cy="39" r="1.3" fill="#38bdf8" />
+          <circle cx="40" cy="33" r="1.1" fill="#38bdf8" />
         </svg>
       `;
 

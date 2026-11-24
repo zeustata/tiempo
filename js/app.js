@@ -13,16 +13,16 @@ import { renderForecast, renderHourlyForecastBlock } from './components/forecast
 import { renderWeatherChart } from './components/chartsView.js?v=3.0.38.48';
 import { renderAstronomyView } from './components/astronomyCard.js?v=3.0.38.30';
 import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter, locateUserGps, toggleRadarFullscreen, updateRadarForecastStrip } from './components/mapRadar.js?v=3.0.38.46';
-import { getWeatherInfo } from './utils/weatherIcons.js?v=3.0.38.29';
-import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=2.0.0';
+import { getWeatherInfo } from './utils/weatherIcons.js?v=3.0.38.51';
+import { getAsturWeatherSvg } from './utils/weatherAsturIcons.js?v=3.0.38.51';
 import { getPixelWeatherSvg } from './utils/weatherPixelIcons.js?v=2.0.0';
-import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=2.0.0';
-import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=2.0.0';
-import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=2.0.0';
-import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=2.0.0';
-import { getHalloweenWeatherSvg } from './utils/weatherHalloweenIcons.js?v=3.0.23.58';
-import { getPapaNoelWeatherSvg } from './utils/weatherPapaNoelIcons.js?v=3.0.24.52';
-import { getReyesWeatherSvg } from './utils/weatherReyesIcons.js?v=3.0.24.54';
+import { getNeonWeatherSvg } from './utils/weatherNeonIcons.js?v=3.0.38.51';
+import { getSketchWeatherSvg } from './utils/weatherSketchIcons.js?v=3.0.38.51';
+import { getGlassWeatherSvg } from './utils/weatherGlassIcons.js?v=3.0.38.51';
+import { getFuturoWeatherSvg } from './utils/weatherFuturoIcons.js?v=3.0.38.51';
+import { getHalloweenWeatherSvg } from './utils/weatherHalloweenIcons.js?v=3.0.38.51';
+import { getPapaNoelWeatherSvg } from './utils/weatherPapaNoelIcons.js?v=3.0.38.51';
+import { getReyesWeatherSvg } from './utils/weatherReyesIcons.js?v=3.0.38.51';
 import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=3.0.24.40';
 import { getTourismPlanExplanation } from './utils/tourismData.js?v=3.0.24.62';
 import { getRouteExplanation, fetchRoutesBatchWeather } from './utils/routesData.js?v=3.0.38.21';
@@ -52,7 +52,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.38.50';
+export const CURRENT_APP_VERSION = '3.0.38.51';
 // Control inteligente de Auto-Prompt del Changelog (Doctrina de No-Fatiga al Usuario - Feedback Lendo):
 // Solo se incrementa ante cambios visuales grandes, módulos nuevos o novedades perceptibles.
 // En ajustes finos, calibraciones matemáticas y parches internos se mantiene para no fatigar al usuario con modales.

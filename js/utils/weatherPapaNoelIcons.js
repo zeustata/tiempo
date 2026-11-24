@@ -515,12 +515,18 @@ export function getPapaNoelWeatherSvg(iconKey, size = 32) {
             <path d="M 1,5 Q 5,0 11,1 L 13,7 Z" fill="#ef4444" />
             <circle cx="13" cy="2" r="1.8" fill="#ffffff" />
           </g>
-          <!-- Copitos cayendo -->
-          <g stroke="#ffffff" stroke-width="2" stroke-linecap="round">
-            <line x1="16" y1="31" x2="16" y2="37" /><line x1="13" y1="34" x2="19" y2="34" />
+          <!-- Copitos estrellados cayendo -->
+          <g stroke="#ffffff" stroke-width="1.6" stroke-linecap="round">
+            <line x1="16" y1="30.8" x2="16" y2="37.2" /><line x1="12.8" y1="34" x2="19.2" y2="34" />
+            <line x1="13.7" y1="31.7" x2="18.3" y2="36.3" /><line x1="13.7" y1="36.3" x2="18.3" y2="31.7" />
             <line x1="27" y1="33" x2="27" y2="41" /><line x1="23" y1="37" x2="31" y2="37" />
-            <line x1="38" y1="31" x2="38" y2="37" /><line x1="35" y1="34" x2="41" y2="34" />
+            <line x1="24.2" y1="34.2" x2="29.8" y2="39.8" /><line x1="24.2" y1="39.8" x2="29.8" y2="34.2" />
+            <line x1="38" y1="30.8" x2="38" y2="37.2" /><line x1="34.8" y1="34" x2="41.2" y2="34" />
+            <line x1="35.7" y1="31.7" x2="40.3" y2="36.3" /><line x1="35.7" y1="36.3" x2="40.3" y2="31.7" />
           </g>
+          <circle cx="16" cy="34" r="1.1" fill="#bae6fd" />
+          <circle cx="27" cy="37" r="1.2" fill="#bae6fd" />
+          <circle cx="38" cy="34" r="1.1" fill="#bae6fd" />
         </svg>
       `;
 
@@ -545,15 +551,19 @@ export function getPapaNoelWeatherSvg(iconKey, size = 32) {
           </g>
 
           <!-- Copos estrellados de nieve nítidos -->
-          <g stroke="#ffffff" stroke-width="2.2" stroke-linecap="round">
+          <g stroke="#ffffff" stroke-width="1.8" stroke-linecap="round">
             <line x1="14" y1="29" x2="14" y2="37" /><line x1="10" y1="33" x2="18" y2="33" />
-            <line x1="11.5" y1="30.5" x2="16.5" y2="35.5" /><line x1="16.5" y1="30.5" x2="11.5" y2="35.5" />
+            <line x1="11.2" y1="30.2" x2="16.8" y2="35.8" /><line x1="16.8" y1="30.2" x2="11.2" y2="35.8" />
             
             <line x1="36" y1="29" x2="36" y2="37" /><line x1="32" y1="33" x2="40" y2="33" />
-            <line x1="33.5" y1="30.5" x2="38.5" y2="35.5" /><line x1="38.5" y1="30.5" x2="33.5" y2="35.5" />
+            <line x1="33.2" y1="30.2" x2="38.8" y2="35.8" /><line x1="38.8" y1="30.2" x2="33.2" y2="35.8" />
             
             <line x1="25" y1="34" x2="25" y2="43" /><line x1="20.5" y1="38.5" x2="29.5" y2="38.5" />
+            <line x1="21.8" y1="35.3" x2="28.2" y2="41.7" /><line x1="28.2" y1="35.3" x2="21.8" y2="41.7" />
           </g>
+          <circle cx="14" cy="33" r="1.2" fill="#bae6fd" />
+          <circle cx="36" cy="33" r="1.2" fill="#bae6fd" />
+          <circle cx="25" cy="38.5" r="1.3" fill="#bae6fd" />
         </svg>
       `;
 
@@ -568,11 +578,17 @@ export function getPapaNoelWeatherSvg(iconKey, size = 32) {
             <path d="M 1,5 Q 5,0 13,1 L 16,7 Z" fill="#ef4444" />
             <circle cx="16" cy="2" r="2" fill="#ffffff" />
           </g>
-          <g stroke="#ffffff" stroke-width="2.4" stroke-linecap="round">
+          <g stroke="#ffffff" stroke-width="1.8" stroke-linecap="round">
             <line x1="14" y1="26" x2="14" y2="35" /><line x1="9.5" y1="30.5" x2="18.5" y2="30.5" />
+            <line x1="10.8" y1="27.3" x2="17.2" y2="33.7" /><line x1="17.2" y1="27.3" x2="10.8" y2="33.7" />
             <line x1="25" y1="26" x2="25" y2="35" /><line x1="20.5" y1="30.5" x2="29.5" y2="30.5" />
+            <line x1="21.8" y1="27.3" x2="28.2" y2="33.7" /><line x1="28.2" y1="27.3" x2="21.8" y2="33.7" />
             <line x1="36" y1="26" x2="36" y2="35" /><line x1="31.5" y1="30.5" x2="40.5" y2="30.5" />
+            <line x1="32.8" y1="27.3" x2="39.2" y2="33.7" /><line x1="39.2" y1="27.3" x2="32.8" y2="33.7" />
           </g>
+          <circle cx="14" cy="30.5" r="1.2" fill="#bae6fd" />
+          <circle cx="25" cy="30.5" r="1.2" fill="#bae6fd" />
+          <circle cx="36" cy="30.5" r="1.2" fill="#bae6fd" />
           <path d="M 6,43 Q 24,38 42,43" stroke="#ffffff" stroke-width="4" fill="none" stroke-linecap="round" />
         </svg>
       `;

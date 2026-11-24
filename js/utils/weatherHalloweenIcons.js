@@ -368,20 +368,24 @@ export function getHalloweenWeatherSvg(iconKey, size = 32) {
       `;
 
     case 'snow-light':
-      // ❄️ FALISPOS DE SAMHAIN: Nube oscura con cristales helados ligeros
+      // ❄️ FALISPOS DE SAMHAIN: Nube oscura con cristales estrellados helados
       return `
         <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="halloween-svg-icon icon-hw-snow-light" aria-label="Falispos de Nieve">
           <path d="M 40,28 H 13 A 8,8 0 0 1 11.5,14 A 11,11 0 0 1 35.5,14.5 A 7.5,7.5 0 0 1 40,28 Z" fill="#334155" stroke="#64748b" stroke-width="1.8" />
-          <g stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round">
-            <line x1="15" y1="33" x2="15" y2="39" /><line x1="12" y1="36" x2="18" y2="36" />
-            <line x1="33" y1="33" x2="33" y2="39" /><line x1="30" y1="36" x2="36" y2="36" />
+          <g stroke="#38bdf8" stroke-width="1.6" stroke-linecap="round">
+            <line x1="15" y1="32.5" x2="15" y2="39.5" /><line x1="11.5" y1="36" x2="18.5" y2="36" />
+            <line x1="12.5" y1="33.5" x2="17.5" y2="38.5" /><line x1="12.5" y1="38.5" x2="17.5" y2="33.5" />
+            <line x1="33" y1="32.5" x2="33" y2="39.5" /><line x1="29.5" y1="36" x2="36.5" y2="36" />
+            <line x1="30.5" y1="33.5" x2="35.5" y2="38.5" /><line x1="30.5" y1="38.5" x2="35.5" y2="33.5" />
           </g>
+          <circle cx="15" cy="36" r="1.2" fill="#ffffff" />
+          <circle cx="33" cy="36" r="1.2" fill="#ffffff" />
         </svg>
       `;
 
     case 'snow':
     case 'heavy-snow':
-      // ❄️🧙‍♀️ NEVADONA CON SOMBRERO DE BRUJA: Nube con sombrero puntiagudo y copos de hielo
+      // ❄️🧙‍♀️ NEVADONA CON SOMBRERO DE BRUJA: Nube con sombrero puntiagudo y copos estrellados de hielo
       return `
         <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="halloween-svg-icon icon-hw-snow" aria-label="Nevadona de Halloween con Sombrero de Bruja">
           <!-- Sombrero de Bruja inclinado sobre la nube -->
@@ -392,12 +396,18 @@ export function getHalloweenWeatherSvg(iconKey, size = 32) {
           </g>
           <!-- Nube helada blanca-pizarra -->
           <path d="M 40,30 H 13 A 8,8 0 0 1 11.5,16 A 11,11 0 0 1 35.5,16.5 A 7.5,7.5 0 0 1 40,30 Z" fill="#e2e8f0" stroke="#475569" stroke-width="1.8" />
-          <!-- Copos helados cayendo -->
-          <g stroke="#0284c7" stroke-width="1.8" stroke-linecap="round">
+          <!-- Copos estrellados helados cayendo -->
+          <g stroke="#38bdf8" stroke-width="1.6" stroke-linecap="round">
             <line x1="12" y1="35" x2="12" y2="43" /><line x1="8" y1="39" x2="16" y2="39" />
+            <line x1="9.2" y1="36.2" x2="14.8" y2="41.8" /><line x1="9.2" y1="41.8" x2="14.8" y2="36.2" />
             <line x1="24" y1="35" x2="24" y2="43" /><line x1="20" y1="39" x2="28" y2="39" />
+            <line x1="21.2" y1="36.2" x2="26.8" y2="41.8" /><line x1="21.2" y1="41.8" x2="26.8" y2="36.2" />
             <line x1="36" y1="35" x2="36" y2="43" /><line x1="32" y1="39" x2="40" y2="39" />
+            <line x1="33.2" y1="36.2" x2="38.8" y2="41.8" /><line x1="33.2" y1="41.8" x2="38.8" y2="36.2" />
           </g>
+          <circle cx="12" cy="39" r="1.2" fill="#ffffff" />
+          <circle cx="24" cy="39" r="1.2" fill="#ffffff" />
+          <circle cx="36" cy="39" r="1.2" fill="#ffffff" />
         </svg>
       `;
 
@@ -407,9 +417,11 @@ export function getHalloweenWeatherSvg(iconKey, size = 32) {
         <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="halloween-svg-icon icon-hw-sleet" aria-label="Aguanieve de Halloween">
           <path d="M 40,28 H 13 A 8,8 0 0 1 11.5,14 A 11,11 0 0 1 35.5,14.5 A 7.5,7.5 0 0 1 40,28 Z" fill="#1e293b" stroke="#64748b" stroke-width="1.8" />
           <path d="M 14,34 Q 12,38 12,41 A 2.2,2.2 0 0 0 16.4,41 Q 16.4,38 14,34 Z" fill="#38bdf8" />
-          <g stroke="#c084fc" stroke-width="1.8" stroke-linecap="round">
+          <g stroke="#c084fc" stroke-width="1.7" stroke-linecap="round">
             <line x1="27" y1="33" x2="27" y2="41" /><line x1="23" y1="37" x2="31" y2="37" />
+            <line x1="24.2" y1="34.2" x2="29.8" y2="39.8" /><line x1="24.2" y1="39.8" x2="29.8" y2="34.2" />
           </g>
+          <circle cx="27" cy="37" r="1.2" fill="#ffffff" />
         </svg>
       `;
 

@@ -319,14 +319,24 @@ export function getSketchWeatherSvg(iconKey, size = 32) {
       return `
         <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon sketch-icon" aria-label="Nevadona Dibujo a Mano">
           <path d="M 40,24 H 13 C 8,24 7,17 11,12 C 9.5,4 20,1 25,5 C 29.5,0.5 40,4 38,13 C 43,15.5 43,24 40,24 Z" fill="#e2e8f0" stroke="#334155" stroke-width="2.2" />
-          <!-- 5 Copos artesanales a mano -->
-          <g stroke="#0284c7" stroke-width="1.8" stroke-linecap="round">
-            <line x1="9" y1="30" x2="9" y2="36" /><line x1="6" y1="33" x2="12" y2="33" />
+          <!-- 5 Copos estrellados artesanales a mano -->
+          <g stroke="#38bdf8" stroke-width="1.6" stroke-linecap="round">
+            <line x1="9" y1="29.8" x2="9" y2="36.2" /><line x1="5.8" y1="33" x2="12.2" y2="33" />
+            <line x1="6.7" y1="30.7" x2="11.3" y2="35.3" /><line x1="6.7" y1="35.3" x2="11.3" y2="30.7" />
             <line x1="17" y1="35" x2="17" y2="43" /><line x1="13" y1="39" x2="21" y2="39" />
+            <line x1="14.2" y1="36.2" x2="19.8" y2="41.8" /><line x1="14.2" y1="41.8" x2="19.8" y2="36.2" />
             <line x1="25" y1="28" x2="25" y2="36" /><line x1="21" y1="32" x2="29" y2="32" />
+            <line x1="22.2" y1="29.2" x2="27.8" y2="34.8" /><line x1="22.2" y1="34.8" x2="27.8" y2="29.2" />
             <line x1="33" y1="35" x2="33" y2="43" /><line x1="29" y1="39" x2="37" y2="39" />
-            <line x1="41" y1="30" x2="41" y2="36" /><line x1="38" y1="33" x2="44" y2="33" />
+            <line x1="30.2" y1="36.2" x2="35.8" y2="41.8" /><line x1="30.2" y1="41.8" x2="35.8" y2="36.2" />
+            <line x1="41" y1="29.8" x2="41" y2="36.2" /><line x1="37.8" y1="33" x2="44.2" y2="33" />
+            <line x1="38.7" y1="30.7" x2="43.3" y2="35.3" /><line x1="38.7" y1="35.3" x2="43.3" y2="30.7" />
           </g>
+          <circle cx="9" cy="33" r="1.1" fill="#ffffff" />
+          <circle cx="17" cy="39" r="1.2" fill="#ffffff" />
+          <circle cx="25" cy="32" r="1.2" fill="#ffffff" />
+          <circle cx="33" cy="39" r="1.2" fill="#ffffff" />
+          <circle cx="41" cy="33" r="1.1" fill="#ffffff" />
         </svg>
       `;
 

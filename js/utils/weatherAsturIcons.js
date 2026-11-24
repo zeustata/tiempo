@@ -386,7 +386,7 @@ export function getAsturWeatherSvg(iconKey, size = 32) {
       `;
 
     case 'snow-light':
-      // ❄️ FALISPOS / NEVADA DÉBIL: Nube sonriente con gorrito y 1 solo copito
+      // ❄️ FALISPOS / NEVADA DÉBIL: Nube sonriente con gorrito y 1 copo estrellado nítido
       return `
         <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon icon-comic-snow-light" aria-label="Falispos y Nieve Ligera">
           <path d="M 40,34 H 13 A 8,8 0 0 1 11.5,19 A 11,11 0 0 1 35.5,19.5 A 7.5,7.5 0 0 1 40,34 Z" fill="#ffffff" stroke="#94a3b8" stroke-width="1.8" />
@@ -400,16 +400,19 @@ export function getAsturWeatherSvg(iconKey, size = 32) {
           <ellipse cx="16" cy="28" rx="2.2" ry="1.4" fill="#67e8f9" opacity="0.7" />
           <ellipse cx="34" cy="28" rx="2.2" ry="1.4" fill="#67e8f9" opacity="0.7" />
           <path d="M 23,28 Q 25,30.5 27,28" stroke="#1e293b" stroke-width="1.3" fill="none" stroke-linecap="round" />
-          <!-- 1 Copito central tierno -->
-          <g stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round">
-            <line x1="25" y1="38" x2="25" y2="44" />
-            <line x1="22" y1="41" x2="28" y2="41" />
+          <!-- 1 Copo estrellado central nítido -->
+          <g stroke="#38bdf8" stroke-width="1.7" stroke-linecap="round">
+            <line x1="25" y1="36.5" x2="25" y2="45.5" />
+            <line x1="20.5" y1="41" x2="29.5" y2="41" />
+            <line x1="21.8" y1="37.8" x2="28.2" y2="44.2" />
+            <line x1="21.8" y1="44.2" x2="28.2" y2="37.8" />
           </g>
+          <circle cx="25" cy="41" r="1.4" fill="#ffffff" />
         </svg>
       `;
 
     case 'snow':
-      // ❄️ NEVADA MODERADA: Nube con gorrito y 3 copos
+      // ❄️ NEVADA MODERADA: Nube con gorrito y 3 copos estrellados nítidos
       return `
         <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon icon-comic-snow" aria-label="Nevada Moderada">
           <path d="M 40,34 H 13 A 8,8 0 0 1 11.5,19 A 11,11 0 0 1 35.5,19.5 A 7.5,7.5 0 0 1 40,34 Z" fill="#ffffff" stroke="#94a3b8" stroke-width="1.8" />
@@ -423,21 +426,24 @@ export function getAsturWeatherSvg(iconKey, size = 32) {
           <ellipse cx="16" cy="28" rx="2.5" ry="1.5" fill="#67e8f9" opacity="0.8" />
           <ellipse cx="34" cy="28" rx="2.5" ry="1.5" fill="#67e8f9" opacity="0.8" />
           <path d="M 23,28 Q 25,31 27,28" stroke="#1e293b" stroke-width="1.4" fill="none" stroke-linecap="round" />
-          <!-- 3 Copos de nieve -->
-          <g stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round">
-            <line x1="13" y1="38" x2="13" y2="44" />
-            <line x1="10" y1="41" x2="16" y2="41" />
-            <line x1="25" y1="38" x2="25" y2="44" />
-            <line x1="22" y1="41" x2="28" y2="41" />
-            <line x1="37" y1="38" x2="37" y2="44" />
-            <line x1="34" y1="41" x2="40" y2="41" />
+          <!-- 3 Copos estrellados de nieve -->
+          <g stroke="#38bdf8" stroke-width="1.6" stroke-linecap="round">
+            <line x1="12" y1="37.2" x2="12" y2="44.8" /><line x1="8.2" y1="41" x2="15.8" y2="41" />
+            <line x1="9.3" y1="38.3" x2="14.7" y2="43.7" /><line x1="9.3" y1="43.7" x2="14.7" y2="38.3" />
+            <line x1="25" y1="37.2" x2="25" y2="44.8" /><line x1="21.2" y1="41" x2="28.8" y2="41" />
+            <line x1="22.3" y1="38.3" x2="27.7" y2="43.7" /><line x1="22.3" y1="43.7" x2="27.7" y2="38.3" />
+            <line x1="38" y1="37.2" x2="38" y2="44.8" /><line x1="34.2" y1="41" x2="41.8" y2="41" />
+            <line x1="35.3" y1="38.3" x2="40.7" y2="43.7" /><line x1="35.3" y1="43.7" x2="40.7" y2="38.3" />
           </g>
+          <circle cx="12" cy="41" r="1.2" fill="#ffffff" />
+          <circle cx="25" cy="41" r="1.2" fill="#ffffff" />
+          <circle cx="38" cy="41" r="1.2" fill="#ffffff" />
         </svg>
       `;
 
     case 'heavy-snow':
     case 'nevadona':
-      // ❄️🏔️ NEVADONA FUERTE / COPIOSA: Nube con gorro y bufanda roja, tiritando con 5 copos densos
+      // ❄️🏔️ NEVADONA FUERTE / COPIOSA: Nube con gorro y bufanda roja, tiritando con 5 copos estrellados densos
       return `
         <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon icon-comic-heavy-snow" aria-label="Nevadona Fuerte Copiosa">
           <path d="M 40,32 H 13 A 8,8 0 0 1 11.5,17 A 11,11 0 0 1 35.5,17.5 A 7.5,7.5 0 0 1 40,32 Z" fill="#e0f2fe" stroke="#64748b" stroke-width="1.8" />
@@ -455,19 +461,29 @@ export function getAsturWeatherSvg(iconKey, size = 32) {
           <ellipse cx="15" cy="26" rx="2.5" ry="1.5" fill="#38bdf8" opacity="0.8" />
           <ellipse cx="35" cy="26" rx="2.5" ry="1.5" fill="#38bdf8" opacity="0.8" />
           <path d="M 22,26 L 24,28 L 26,26 L 28,28" stroke="#0f172a" stroke-width="1.4" fill="none" stroke-linecap="round" />
-          <!-- 5 Copos Copiosos a Dos Alturas -->
-          <g stroke="#0284c7" stroke-width="1.8" stroke-linecap="round">
-            <line x1="8" y1="36" x2="8" y2="42" /><line x1="5" y1="39" x2="11" y2="39" />
-            <line x1="17" y1="39" x2="17" y2="45" /><line x1="14" y1="42" x2="20" y2="42" />
-            <line x1="25" y1="36" x2="25" y2="42" /><line x1="22" y1="39" x2="28" y2="39" />
-            <line x1="33" y1="39" x2="33" y2="45" /><line x1="30" y1="42" x2="36" y2="42" />
-            <line x1="41" y1="36" x2="41" y2="42" /><line x1="38" y1="39" x2="44" y2="39" />
+          <!-- 5 Copos Copiosos Estrellados a Dos Alturas -->
+          <g stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round">
+            <line x1="8" y1="34.1" x2="8" y2="40.9" /><line x1="4.6" y1="37.5" x2="11.4" y2="37.5" />
+            <line x1="5.6" y1="35.1" x2="10.4" y2="39.9" /><line x1="5.6" y1="39.9" x2="10.4" y2="35.1" />
+            <line x1="16.5" y1="40.1" x2="16.5" y2="46.9" /><line x1="13.1" y1="43.5" x2="19.9" y2="43.5" />
+            <line x1="14.1" y1="41.1" x2="18.9" y2="45.9" /><line x1="14.1" y1="45.9" x2="18.9" y2="41.1" />
+            <line x1="25" y1="35.6" x2="25" y2="42.4" /><line x1="21.6" y1="39" x2="28.4" y2="39" />
+            <line x1="22.6" y1="36.6" x2="27.4" y2="41.4" /><line x1="22.6" y1="41.4" x2="27.4" y2="36.6" />
+            <line x1="33.5" y1="40.1" x2="33.5" y2="46.9" /><line x1="30.1" y1="43.5" x2="36.9" y2="43.5" />
+            <line x1="31.1" y1="41.1" x2="35.9" y2="45.9" /><line x1="31.1" y1="45.9" x2="35.9" y2="41.1" />
+            <line x1="42" y1="34.1" x2="42" y2="40.9" /><line x1="38.6" y1="37.5" x2="45.4" y2="37.5" />
+            <line x1="39.6" y1="35.1" x2="44.4" y2="39.9" /><line x1="39.6" y1="39.9" x2="44.4" y2="35.1" />
           </g>
+          <circle cx="8" cy="37.5" r="1.1" fill="#ffffff" />
+          <circle cx="16.5" cy="43.5" r="1.1" fill="#ffffff" />
+          <circle cx="25" cy="39" r="1.1" fill="#ffffff" />
+          <circle cx="33.5" cy="43.5" r="1.1" fill="#ffffff" />
+          <circle cx="42" cy="37.5" r="1.1" fill="#ffffff" />
         </svg>
       `;
 
     case 'sleet':
-      // 🌧️❄️ AGUANIEVE (LLUVIA CON NIEVE): Nube con gotas líquidas y copos de nieve cayendo juntos
+      // 🌧️❄️ AGUANIEVE (LLUVIA CON NIEVE): Nube con gotas líquidas y copo de nieve cayendo juntos
       return `
         <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon icon-comic-sleet" aria-label="Aguanieve Lluvia y Nieve">
           <path d="M 40,33 H 13 A 8,8 0 0 1 11.5,18 A 11,11 0 0 1 35.5,18.5 A 7.5,7.5 0 0 1 40,33 Z" fill="#f0f9ff" stroke="#64748b" stroke-width="1.8" />
@@ -492,6 +508,7 @@ export function getAsturWeatherSvg(iconKey, size = 32) {
             <line x1="22" y1="37" x2="28" y2="43" />
             <line x1="22" y1="43" x2="28" y2="37" />
           </g>
+          <circle cx="25" cy="40" r="1.3" fill="#ffffff" />
           <!-- Gota Derecha -->
           <path d="M 37,37 Q 35,40 35,42 A 2.2,2.2 0 0 0 39.4,42 Q 39.4,40 37,37 Z" fill="#0284c7" />
         </svg>

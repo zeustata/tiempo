@@ -552,16 +552,24 @@ export function getFuturoWeatherSvg(key, size = 32) {
             </linearGradient>
           </defs>
           <path d="M 42,28 H 12 A 8,8 0 0 1 10.5,12.5 A 12,12 0 0 1 36.5,13.5 A 7.5,7.5 0 0 1 42,28 Z" fill="url(#futuro-arctic-cloud)" stroke="#475569" stroke-width="0.9" />
-          <!-- 5 Copos densos escalonados a dos alturas -->
-          <g stroke="#0284c7" stroke-width="1.6" stroke-linecap="round">
-            <line x1="9" y1="31" x2="9" y2="37" /><line x1="6" y1="34" x2="12" y2="34" />
+          <!-- 5 Copos estrellados densos escalonados a dos alturas -->
+          <g stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round">
+            <line x1="9" y1="30.8" x2="9" y2="37.2" /><line x1="5.8" y1="34" x2="12.2" y2="34" />
+            <line x1="6.7" y1="31.7" x2="11.3" y2="36.3" /><line x1="6.7" y1="36.3" x2="11.3" y2="31.7" />
             <line x1="17" y1="35" x2="17" y2="43" /><line x1="13" y1="39" x2="21" y2="39" />
+            <line x1="14.2" y1="36.2" x2="19.8" y2="41.8" /><line x1="14.2" y1="41.8" x2="19.8" y2="36.2" />
             <line x1="25" y1="30" x2="25" y2="37" /><line x1="21.5" y1="33.5" x2="28.5" y2="33.5" />
+            <line x1="22.5" y1="31" x2="27.5" y2="36" /><line x1="22.5" y1="36" x2="27.5" y2="31" />
             <line x1="33" y1="35" x2="33" y2="43" /><line x1="29" y1="39" x2="37" y2="39" />
-            <line x1="41" y1="31" x2="41" y2="37" /><line x1="38" y1="34" x2="44" y2="34" />
+            <line x1="30.2" y1="36.2" x2="35.8" y2="41.8" /><line x1="30.2" y1="41.8" x2="35.8" y2="36.2" />
+            <line x1="41" y1="30.8" x2="41" y2="37.2" /><line x1="37.8" y1="34" x2="44.2" y2="34" />
+            <line x1="38.7" y1="31.7" x2="43.3" y2="36.3" /><line x1="38.7" y1="36.3" x2="43.3" y2="31.7" />
           </g>
+          <circle cx="9" cy="34" r="1.1" fill="#ffffff" />
           <circle cx="17" cy="39" r="1.3" fill="#ffffff" />
+          <circle cx="25" cy="33.5" r="1.1" fill="#ffffff" />
           <circle cx="33" cy="39" r="1.3" fill="#ffffff" />
+          <circle cx="41" cy="34" r="1.1" fill="#ffffff" />
         </svg>
       `;
 

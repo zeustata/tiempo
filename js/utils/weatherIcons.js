@@ -1,12 +1,12 @@
-import { getAsturWeatherSvg } from './weatherAsturIcons.js?v=2.1.5';
+import { getAsturWeatherSvg } from './weatherAsturIcons.js?v=3.0.38.51';
 import { getPixelWeatherSvg } from './weatherPixelIcons.js?v=2.1.5';
-import { getNeonWeatherSvg } from './weatherNeonIcons.js?v=2.1.5';
-import { getSketchWeatherSvg } from './weatherSketchIcons.js?v=2.1.5';
-import { getGlassWeatherSvg } from './weatherGlassIcons.js?v=2.1.5';
-import { getFuturoWeatherSvg } from './weatherFuturoIcons.js?v=2.1.5';
-import { getHalloweenWeatherSvg } from './weatherHalloweenIcons.js?v=3.0.23.55';
-import { getPapaNoelWeatherSvg } from './weatherPapaNoelIcons.js?v=3.0.24.52';
-import { getReyesWeatherSvg } from './weatherReyesIcons.js?v=3.0.24.54';
+import { getNeonWeatherSvg } from './weatherNeonIcons.js?v=3.0.38.51';
+import { getSketchWeatherSvg } from './weatherSketchIcons.js?v=3.0.38.51';
+import { getGlassWeatherSvg } from './weatherGlassIcons.js?v=3.0.38.51';
+import { getFuturoWeatherSvg } from './weatherFuturoIcons.js?v=3.0.38.51';
+import { getHalloweenWeatherSvg } from './weatherHalloweenIcons.js?v=3.0.38.51';
+import { getPapaNoelWeatherSvg } from './weatherPapaNoelIcons.js?v=3.0.38.51';
+import { getReyesWeatherSvg } from './weatherReyesIcons.js?v=3.0.38.51';
 
 /**
  * Mapeo de códigos meteorológicos WMO a descripciones en asturiano/castellano, iconos y clases

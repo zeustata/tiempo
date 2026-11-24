@@ -2,6 +2,15 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## ❄️ Copos de Nieve Estrellados Nítidos en Toda la App y Todos los Temas (`v3.0.38.51`) — 2026-11-24
+- **Estado / Rollback anterior seguro:** Commit `fbd0e50` (`v3.0.38.50`).
+- **Motivo del cambio:** En tamaños reducidos de tarjeta (`18px` y `24px`, p. ej. bloques *Mañana/Tarde* en `Cordillera & Nieve` y vistas horarias/diarias), los copos SVG dibujados solo con cruces ortogonales (`|` y `-`) parecían signos `+ + +` y generaban confusión visual con *Aguanieve* (`sleet`).
+- **Solución global:**
+  - Actualizados todos los iconos SVG vectoriales de nieve (`snow-light`, `snow`, `heavy-snow` / `nevadona` y `sleet`) en `js/utils/weatherAsturIcons.js` (tema por defecto) y en todos los packs temáticos con cruces (`weatherFuturoIcons.js`, `weatherGlassIcons.js`, `weatherHalloweenIcons.js`, `weatherNeonIcons.js`, `weatherPapaNoelIcons.js`, `weatherReyesIcons.js`, `weatherSketchIcons.js`) sustituyendo las cruces `+` por estrellas de 8 puntas (`|`, `-`, `/`, `\`) con núcleo luminoso de alto contraste y espaciado anti-empaste. Añadido también `gradientUnits="userSpaceOnUse"` en los degradados de `snow-light` y `snow` dentro de `weatherGlassIcons.js` para evitar que SVG oculte los ejes vertical y horizontal.
+  - Al compartir `renderWeatherIconHtml()` (`js/utils/weatherIcons.js`) en *En Vivo*, *10 Días*, *Curvas* y *Montaña*, la mejora aplica automáticamente en toda la app y cualquier concejo asturiano (como Piedras Blancas/Castrillón).
+  - Mantenida distinción clara con `sleet` (*Aguanieve*: 2 gotas azules flanqueando 1 estrella de nieve brillante).
+  - Cache-busting incrementado a `v3.0.38.51` en `sw.js`, `index.html`, `js/app.js`, `js/utils/weatherIcons.js` y `js/components/mountainCard.js`, conservando `CURRENT_CHANGELOG_PROMPT_VERSION = '3.0.38'` para evitar fatiga visual en arranque (Regla 13).
+
 ## 🏔️ Desvinculación Total de «Cordillera & Nieve» con Datos Reales Multi-Estación (`v3.0.38.50`) — 2026-11-24
 - **Estado de retorno previo (Ley 2):** Commit `206c4b6` (`v3.0.38.49`).
 - **Problema detectado (Captura real de Lendo en San Isidro):** El módulo de Montaña proyectaba las temperaturas, códigos horarios (`09-13h`, `13-17h`) y acumulados diarios de nieve desde el concejo costero/valle activo del usuario (Piedras Blancas a `25 m`), provocando contradicciones como mostrar `+1° / -4°` con iconos de lluvia y `0.0 cm` cuando la Cordillera acumula nieve real.

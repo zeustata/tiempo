@@ -408,7 +408,7 @@ export function getGlassWeatherSvg(iconKey, size = 32) {
       return `
         <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon glass-icon" aria-label="Falispos Cristal 3D">
           <defs>
-            <linearGradient id="glass-ice-light-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <linearGradient id="glass-ice-light-grad" gradientUnits="userSpaceOnUse" x1="12" y1="12" x2="36" y2="36">
               <stop offset="0%" stop-color="#ffffff" />
               <stop offset="100%" stop-color="#7dd3fc" />
             </linearGradient>
@@ -428,7 +428,7 @@ export function getGlassWeatherSvg(iconKey, size = 32) {
       return `
         <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="astur-svg-icon glass-icon" aria-label="Nieve Cristal 3D">
           <defs>
-            <linearGradient id="glass-ice-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <linearGradient id="glass-ice-grad" gradientUnits="userSpaceOnUse" x1="5" y1="5" x2="43" y2="43">
               <stop offset="0%" stop-color="#ffffff" />
               <stop offset="50%" stop-color="#bae6fd" />
               <stop offset="100%" stop-color="#38bdf8" />
@@ -461,14 +461,24 @@ export function getGlassWeatherSvg(iconKey, size = 32) {
             </linearGradient>
           </defs>
           <path d="M 41,22 H 12 A 8,8 0 0 1 10.5,6 A 12,12 0 0 1 36,7 A 7.5,7.5 0 0 1 41,22 Z" fill="url(#glass-arctic-cloud)" stroke="rgba(255,255,255,0.7)" stroke-width="1" />
-          <!-- 5 Cristales de nieve perlados 3D -->
-          <g stroke="#ffffff" stroke-width="1.6" stroke-linecap="round">
-            <line x1="9" y1="28" x2="9" y2="34" /><line x1="6" y1="31" x2="12" y2="31" />
+          <!-- 5 Cristales estrellados de nieve perlados 3D -->
+          <g stroke="#ffffff" stroke-width="1.5" stroke-linecap="round">
+            <line x1="9" y1="27.8" x2="9" y2="34.2" /><line x1="5.8" y1="31" x2="12.2" y2="31" />
+            <line x1="6.7" y1="28.7" x2="11.3" y2="33.3" /><line x1="6.7" y1="33.3" x2="11.3" y2="28.7" />
             <line x1="17" y1="33" x2="17" y2="41" /><line x1="13" y1="37" x2="21" y2="37" />
+            <line x1="14.2" y1="34.2" x2="19.8" y2="39.8" /><line x1="14.2" y1="39.8" x2="19.8" y2="34.2" />
             <line x1="25" y1="26" x2="25" y2="34" /><line x1="21" y1="30" x2="29" y2="30" />
+            <line x1="22.2" y1="27.2" x2="27.8" y2="32.8" /><line x1="22.2" y1="32.8" x2="27.8" y2="27.2" />
             <line x1="33" y1="33" x2="33" y2="41" /><line x1="29" y1="37" x2="37" y2="37" />
-            <line x1="41" y1="28" x2="41" y2="34" /><line x1="38" y1="31" x2="44" y2="31" />
+            <line x1="30.2" y1="34.2" x2="35.8" y2="39.8" /><line x1="30.2" y1="39.8" x2="35.8" y2="34.2" />
+            <line x1="41" y1="27.8" x2="41" y2="34.2" /><line x1="37.8" y1="31" x2="44.2" y2="31" />
+            <line x1="38.7" y1="28.7" x2="43.3" y2="33.3" /><line x1="38.7" y1="33.3" x2="43.3" y2="28.7" />
           </g>
+          <circle cx="9" cy="31" r="1.1" fill="#7dd3fc" />
+          <circle cx="17" cy="37" r="1.3" fill="#7dd3fc" />
+          <circle cx="25" cy="30" r="1.2" fill="#7dd3fc" />
+          <circle cx="33" cy="37" r="1.3" fill="#7dd3fc" />
+          <circle cx="41" cy="31" r="1.1" fill="#7dd3fc" />
         </svg>
       `;
 

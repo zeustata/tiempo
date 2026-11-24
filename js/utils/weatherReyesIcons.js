@@ -493,11 +493,17 @@ export function getReyesWeatherSvg(iconKey, size = 32) {
           <g transform="translate(17, 3)">
             <polygon points="1,7 1,3 4,5 7,1 10,5 13,3 13,7" fill="#facc15" />
           </g>
-          <g stroke="#ffffff" stroke-width="2" stroke-linecap="round">
-            <line x1="16" y1="31" x2="16" y2="37" /><line x1="13" y1="34" x2="19" y2="34" />
+          <g stroke="#ffffff" stroke-width="1.6" stroke-linecap="round">
+            <line x1="16" y1="30.8" x2="16" y2="37.2" /><line x1="12.8" y1="34" x2="19.2" y2="34" />
+            <line x1="13.7" y1="31.7" x2="18.3" y2="36.3" /><line x1="13.7" y1="36.3" x2="18.3" y2="31.7" />
             <line x1="27" y1="33" x2="27" y2="41" /><line x1="23" y1="37" x2="31" y2="37" />
-            <line x1="38" y1="31" x2="38" y2="37" /><line x1="35" y1="34" x2="41" y2="34" />
+            <line x1="24.2" y1="34.2" x2="29.8" y2="39.8" /><line x1="24.2" y1="39.8" x2="29.8" y2="34.2" />
+            <line x1="38" y1="30.8" x2="38" y2="37.2" /><line x1="34.8" y1="34" x2="41.2" y2="34" />
+            <line x1="35.7" y1="31.7" x2="40.3" y2="36.3" /><line x1="35.7" y1="36.3" x2="40.3" y2="31.7" />
           </g>
+          <circle cx="16" cy="34" r="1.1" fill="#bae6fd" />
+          <circle cx="27" cy="37" r="1.2" fill="#bae6fd" />
+          <circle cx="38" cy="34" r="1.1" fill="#bae6fd" />
         </svg>
       `;
 
@@ -506,10 +512,14 @@ export function getReyesWeatherSvg(iconKey, size = 32) {
       return `
         <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="reyes-svg-icon icon-rm-snow" aria-label="Nevada Reyes Magos">
           <path d="M 42,21 H 11 A 7.5,7.5 0 0 1 10,8 A 10.5,10.5 0 0 1 34,6 A 7.5,7.5 0 0 1 42,21 Z" fill="#cbd5e1" stroke="#64748b" stroke-width="1.5" />
-          <g stroke="#ffffff" stroke-width="2" stroke-linecap="round">
+          <g stroke="#ffffff" stroke-width="1.6" stroke-linecap="round">
             <line x1="12" y1="25" x2="12" y2="33" /><line x1="8" y1="29" x2="16" y2="29" />
+            <line x1="9.2" y1="26.2" x2="14.8" y2="31.8" /><line x1="9.2" y1="31.8" x2="14.8" y2="26.2" />
             <line x1="40" y1="25" x2="40" y2="33" /><line x1="36" y1="29" x2="44" y2="29" />
+            <line x1="37.2" y1="26.2" x2="42.8" y2="31.8" /><line x1="37.2" y1="31.8" x2="42.8" y2="26.2" />
           </g>
+          <circle cx="12" cy="29" r="1.2" fill="#bae6fd" />
+          <circle cx="40" cy="29" r="1.2" fill="#bae6fd" />
           <!-- Muñeco de nieve con Corona de Rey Mago -->
           <g transform="translate(19, 20)">
             <circle cx="7" cy="16" r="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="0.8" />
@@ -528,11 +538,17 @@ export function getReyesWeatherSvg(iconKey, size = 32) {
       return `
         <svg viewBox="0 0 48 48" width="${sz}" height="${sz}" class="reyes-svg-icon icon-rm-heavy-snow" aria-label="Nevadona Reyes">
           <path d="M 42,20 H 10 A 7,7 0 0 1 9,7 A 10,10 0 0 1 34,5 A 7,7 0 0 1 42,20 Z" fill="#94a3b8" stroke="#475569" stroke-width="1.5" />
-          <g stroke="#ffffff" stroke-width="2.2" stroke-linecap="round">
+          <g stroke="#ffffff" stroke-width="1.8" stroke-linecap="round">
             <line x1="14" y1="25" x2="14" y2="33" /><line x1="10" y1="29" x2="18" y2="29" />
+            <line x1="11.2" y1="26.2" x2="16.8" y2="31.8" /><line x1="11.2" y1="31.8" x2="16.8" y2="26.2" />
             <line x1="25" y1="25" x2="25" y2="33" /><line x1="21" y1="29" x2="29" y2="29" />
+            <line x1="22.2" y1="26.2" x2="27.8" y2="31.8" /><line x1="22.2" y1="31.8" x2="27.8" y2="26.2" />
             <line x1="36" y1="25" x2="36" y2="33" /><line x1="32" y1="29" x2="40" y2="29" />
+            <line x1="33.2" y1="26.2" x2="38.8" y2="31.8" /><line x1="33.2" y1="31.8" x2="38.8" y2="26.2" />
           </g>
+          <circle cx="14" cy="29" r="1.2" fill="#bae6fd" />
+          <circle cx="25" cy="29" r="1.2" fill="#bae6fd" />
+          <circle cx="36" cy="29" r="1.2" fill="#bae6fd" />
           <path d="M 6,42 Q 24,37 42,42" stroke="#ffffff" stroke-width="4" fill="none" stroke-linecap="round" />
         </svg>
       `;
