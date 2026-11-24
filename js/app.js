@@ -7,7 +7,7 @@ import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.
 import { renderSurfCard } from './components/surfCard.js?v=3.0.25.2';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.38.21';
 import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.38.23';
-import { renderMountainCard } from './components/mountainCard.js?v=3.0.29';
+import { renderMountainCard, fetchMountainResortsWeather } from './components/mountainCard.js?v=3.0.38.50';
 import { renderTourismCard } from './components/tourismCard.js?v=3.0.25.5';
 import { renderForecast, renderHourlyForecastBlock } from './components/forecastView.js?v=3.0.38.48';
 import { renderWeatherChart } from './components/chartsView.js?v=3.0.38.48';
@@ -52,7 +52,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.38.49';
+export const CURRENT_APP_VERSION = '3.0.38.50';
 // Control inteligente de Auto-Prompt del Changelog (Doctrina de No-Fatiga al Usuario - Feedback Lendo):
 // Solo se incrementa ante cambios visuales grandes, módulos nuevos o novedades perceptibles.
 // En ajustes finos, calibraciones matemáticas y parches internos se mantiene para no fatigar al usuario con modales.
@@ -109,6 +109,10 @@ class MeteoAsturiasApp {
     this.selectedCyclingHour = null;
     this.selectedCyclingDay = null;
     this.selectedCyclingSpeed = 24;
+    this.mountainResortsWeather = null;
+    this.selectedMountainResortId = 'pajares';
+    this.selectedMountainTab = 'ski';
+    this._mountainFetchInFlight = false;
     this.autoRefreshTimer = null;
     this.deferredInstallPrompt = null;
     this.previewHalloweenMode = false;
@@ -2178,6 +2182,7 @@ class MeteoAsturiasApp {
 
       this.triggerHaptic();
       const targetTab = switchOption.dataset.mountainTab;
+      this.selectedMountainTab = targetTab === 'passes' ? 'passes' : 'ski';
       const segmentedSwitch = document.getElementById('mountain-segmented-switch');
       if (segmentedSwitch) {
         segmentedSwitch.dataset.active = targetTab;
@@ -2206,9 +2211,26 @@ class MeteoAsturiasApp {
 
       this.triggerHaptic();
       const resortId = resortPill.dataset.resortId;
+      this.selectedMountainResortId = resortId;
 
       document.querySelectorAll('.resort-select-pill').forEach(b => b.classList.remove('active'));
       resortPill.classList.add('active');
+
+      if (this.mountainResortsWeather && this.weatherData && this.currentConcejo) {
+        const mountainContainer = document.getElementById('panel-mountain');
+        if (mountainContainer) {
+          mountainContainer.innerHTML = renderMountainCard(
+            this.weatherData,
+            this.currentConcejo,
+            this.getEffectiveIconTheme(),
+            this.mountainResortsWeather,
+            this.selectedMountainResortId,
+            this.selectedMountainTab
+          );
+          this.initSkiCotasCarousels();
+          return;
+        }
+      }
 
       document.querySelectorAll('.resort-forecast-card').forEach(card => {
         const isMatch = card.id === `resort-panel-${resortId}`;
@@ -2631,6 +2653,7 @@ class MeteoAsturiasApp {
     }
 
     if (targetTab === 'mountain') {
+      this.loadMountainResortsWeather();
       const wakeCarousels = () => {
         const carousels = document.querySelectorAll('.ski-7days-carousel, .ski-cotas-carousel');
         carousels.forEach(c => {
@@ -3320,6 +3343,38 @@ class MeteoAsturiasApp {
       }
     } catch (err) {
       console.error('Excepción en loadWeather:', err);
+    }
+  }
+
+  async loadMountainResortsWeather() {
+    if (this._mountainFetchInFlight) return;
+    this._mountainFetchInFlight = true;
+    try {
+      const resortsMap = await fetchMountainResortsWeather();
+      if (resortsMap) {
+        this.mountainResortsWeather = resortsMap;
+        const mountainContainer = document.getElementById('panel-mountain');
+        if (mountainContainer && this.weatherData && this.currentConcejo) {
+          mountainContainer.innerHTML = renderMountainCard(
+            this.weatherData,
+            this.currentConcejo,
+            this.getEffectiveIconTheme(),
+            this.mountainResortsWeather,
+            this.selectedMountainResortId,
+            this.selectedMountainTab
+          );
+          this.initSkiCotasCarousels();
+          requestAnimationFrame(() => {
+            document.querySelectorAll('.ski-7days-carousel, .ski-cotas-carousel').forEach(c => {
+              void c.offsetWidth;
+            });
+          });
+        }
+      }
+    } catch (err) {
+      console.warn('[MeteoAstur] Error cargando estaciones de montaña:', err);
+    } finally {
+      this._mountainFetchInFlight = false;
     }
   }
 
@@ -4026,9 +4081,17 @@ class MeteoAsturiasApp {
       try {
         const mountainContainer = document.getElementById('panel-mountain');
         if (mountainContainer) {
-          mountainContainer.innerHTML = renderMountainCard(data, concejo, effectiveTheme);
+          mountainContainer.innerHTML = renderMountainCard(
+            data,
+            concejo,
+            effectiveTheme,
+            this.mountainResortsWeather,
+            this.selectedMountainResortId,
+            this.selectedMountainTab
+          );
           this.initSkiCotasCarousels();
           if (this.activeTab === 'mountain') {
+            this.loadMountainResortsWeather();
             const wakeCarousels = () => {
               document.querySelectorAll('.ski-7days-carousel, .ski-cotas-carousel').forEach(c => {
                 void c.offsetWidth;

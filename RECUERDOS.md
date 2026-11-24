@@ -2,6 +2,14 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🏔️ Desvinculación Total de «Cordillera & Nieve» con Datos Reales Multi-Estación (`v3.0.38.50`) — 2026-11-24
+- **Estado de retorno previo (Ley 2):** Commit `206c4b6` (`v3.0.38.49`).
+- **Problema detectado (Captura real de Lendo en San Isidro):** El módulo de Montaña proyectaba las temperaturas, códigos horarios (`09-13h`, `13-17h`) y acumulados diarios de nieve desde el concejo costero/valle activo del usuario (Piedras Blancas a `25 m`), provocando contradicciones como mostrar `+1° / -4°` con iconos de lluvia y `0.0 cm` cuando la Cordillera acumula nieve real.
+- **Solución aplicada (`js/components/mountainCard.js` y `js/app.js`):**
+  1. **Consulta batch independiente bajo demanda (`fetchMountainResortsWeather`):** Al abrir la pestaña **Cordillera & Nieve** (sin penalizar el arranque de *En Vivo*), se lanza una única petición multi-coordenada a Open-Meteo (`latitude`, `longitude`, `elevation=midAlt`) con caché de 10 minutos para las 4 estaciones reales (`Valgrande-Pajares`, `Fuentes de Invierno`, `San Isidro`, `Leitariegos`).
+  2. **Coherencia física de fase en pistas (`resolveSkiWeatherCode`):** Cada hora y tramo (`09-13h`, `13-17h`, resumen a 7 días y estado actual) convierte cualquier precipitación fría (`<= 1,0 °C` o cota `<= cota media + 100 m`) a **Nieve** (`71/73/75`, o **Ventisca** con viento `>= 45 km/h`) o **Aguanieve** (`68` hasta `2,2 °C`), calculando los acumulados propios de **3 y 7 días** por estación y alimentando la barra superior y los puertos de montaña por sector (`occidente`, `centro`/`arterias`, `oriente`).
+  3. **Persistencia de estación/pestaña activa y anti-caché:** Al pulsar cada estación o cambiar a *Puertos*, `app.js` conserva la selección tras llegar el batch y actualiza la barra superior; cache-busting a `v3.0.38.50` manteniendo `CURRENT_CHANGELOG_PROMPT_VERSION = '3.0.38'`.
+
 ## 🛰️ Escudo Satelital Meteosat (EUMETSAT) + Radar Débil Anti-Falso Sol (`v3.0.38.49`) — 2026-11-22
 - **Estado de retorno previo (Ley 2):** Commit `8222aa3` (sobre `v3.0.38.48` web).
 - **Causa raíz detectada en directo (16:05–16:25 en Salinas / Piedras Blancas):** Todos los modelos numéricos en Open-Meteo (AROME `0–10%`, ECMWF `13–27%`, ICON, GFS, UKMO) fallaron simultáneamente frente a una lámina fina de estratocúmulos marinos (`METAR LEAS: BKN040`), inventando `435–511 W/m²` de radiación solar directa y marcando *Mayormente soleado* mientras estaba cerrado y orbayando. Además, el eco sólido azul de RainViewer (`light_rain`) en Oviedo era vetado por `weatherApi.js` si AROME y ECMWF marcaban `0.0 mm`, y el eco débil translúcido de orbayu fino (`alpha 50–190`) se descartaba por completo.

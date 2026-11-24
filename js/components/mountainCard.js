@@ -1,4 +1,8 @@
-import { getWeatherInfo, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=2.2.64';
+import { getWeatherInfo, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=3.0.38.50';
+
+let cachedResortsWeather = null;
+let cachedResortsTime = 0;
+const RESORTS_CACHE_TTL_MS = 10 * 60 * 1000;
 
 /**
  * Red de puertos de montaña estratégicos de la Cordillera Cantábrica en Asturias
@@ -40,6 +44,8 @@ export const ESTACIONES_ESQUI = [
     name: 'Valgrande-Pajares',
     shortName: 'Pajares',
     concejo: 'Lena (Asturias)',
+    lat: 42.9928,
+    lon: -5.7633,
     baseAlt: 1480,
     midAlt: 1680,
     topAlt: 1890,
@@ -67,6 +73,8 @@ export const ESTACIONES_ESQUI = [
     name: 'Fuentes de Invierno',
     shortName: 'Fuentes',
     concejo: 'Aller (Asturias)',
+    lat: 43.0642,
+    lon: -5.3942,
     baseAlt: 1500,
     midAlt: 1720,
     topAlt: 1950,
@@ -94,6 +102,8 @@ export const ESTACIONES_ESQUI = [
     name: 'San Isidro (Puebla de Lillo)',
     shortName: 'San Isidro',
     concejo: 'Aller / León (Frontera)',
+    lat: 43.0636,
+    lon: -5.3740,
     baseAlt: 1500,
     midAlt: 1800,
     topAlt: 2100,
@@ -121,6 +131,8 @@ export const ESTACIONES_ESQUI = [
     name: 'Leitariegos (Valle de Laciana)',
     shortName: 'Leitariegos',
     concejo: 'Cangas del Narcea / León',
+    lat: 42.9990,
+    lon: -6.4170,
     baseAlt: 1525,
     midAlt: 1660,
     topAlt: 1800,
@@ -144,6 +156,85 @@ export const ESTACIONES_ESQUI = [
     }
   }
 ];
+
+/**
+ * Consulta meteorológica independiente (bajo demanda al abrir Cordillera & Nieve)
+ * para las 4 estaciones de esquí en una única petición batch multi-coordenada.
+ */
+export async function fetchMountainResortsWeather() {
+  if (cachedResortsWeather && (Date.now() - cachedResortsTime < RESORTS_CACHE_TTL_MS)) {
+    return cachedResortsWeather;
+  }
+
+  try {
+    const lats = ESTACIONES_ESQUI.map(r => r.lat).join(',');
+    const lons = ESTACIONES_ESQUI.map(r => r.lon).join(',');
+    const elevs = ESTACIONES_ESQUI.map(r => r.midAlt).join(',');
+
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lats}&longitude=${lons}&elevation=${elevs}` +
+      `&current=temperature_2m,relative_humidity_2m,is_day,precipitation,snowfall,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m,direct_normal_irradiance,shortwave_radiation` +
+      `&hourly=temperature_2m,precipitation,snowfall,weather_code,wind_speed_10m,freezing_level_height,cloud_cover` +
+      `&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,snowfall_sum,wind_speed_10m_max,wind_gusts_10m_max` +
+      `&forecast_days=7&timezone=Europe%2FMadrid`;
+
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 6000);
+    const res = await fetch(url, { signal: controller.signal });
+    clearTimeout(timer);
+    if (!res.ok) return null;
+
+    const payload = await res.json();
+    const list = Array.isArray(payload) ? payload : [payload];
+    if (list.length < ESTACIONES_ESQUI.length) return null;
+
+    const map = {};
+    ESTACIONES_ESQUI.forEach((resort, idx) => {
+      if (list[idx] && list[idx].current) {
+        map[resort.id] = list[idx];
+      }
+    });
+
+    if (Object.keys(map).length === 0) return null;
+    cachedResortsWeather = map;
+    cachedResortsTime = Date.now();
+    return map;
+  } catch (err) {
+    console.warn('[MeteoAstur] Mountain batch weather fallback:', err.message);
+    return cachedResortsWeather || null;
+  }
+}
+
+/**
+ * Resuelve la fase física real de precipitación en pistas (Nieve / Aguanieve / Lluvia)
+ * evitando contradicciones térmicas (mostrar lluvia bajo cero).
+ */
+export function resolveSkiWeatherCode(rawCode, precip = 0, snowCm = 0, tempAtMid = 5, flH = 2000, midAlt = 1700) {
+  const code = rawCode != null ? rawCode : 3;
+  const p = precip != null ? Math.max(0, parseFloat(precip)) : 0;
+  const s = snowCm != null ? Math.max(0, parseFloat(snowCm)) : 0;
+  const isPrecipCode = (code >= 51 && code <= 86) || code >= 95;
+  const hasPrecip = s > 0.05 || p >= 0.1 || isPrecipCode;
+
+  if (!hasPrecip) {
+    return { code, isSnow: false, isSleet: false, effectiveSnowCm: 0 };
+  }
+
+  const isSnowPhase = s > 0.05 || tempAtMid <= 1.0 || flH <= midAlt + 100;
+  if (isSnowPhase) {
+    const isHeavy = s >= 1.5 || p >= 2.5 || code === 75 || code === 86 || code === 65 || code === 82;
+    const isMod = s >= 0.4 || p >= 0.8 || code === 73 || code === 63 || code === 81;
+    const snowCode = isHeavy ? 75 : (isMod ? 73 : 71);
+    const effectiveSnowCm = s > 0.05 ? s : (p >= 0.1 ? p : (isHeavy ? 1.5 : (isMod ? 0.6 : 0.2)));
+    return { code: snowCode, isSnow: true, isSleet: false, effectiveSnowCm };
+  }
+
+  const isSleetPhase = tempAtMid <= 2.2 || flH <= midAlt + 220;
+  if (isSleetPhase) {
+    return { code: 68, isSnow: false, isSleet: true, effectiveSnowCm: 0 };
+  }
+
+  return { code, isSnow: false, isSleet: false, effectiveSnowCm: 0 };
+}
 
 /**
  * Calcula la Sensación Térmica (Wind Chill) según la fórmula oficial de la NOAA / JAG/TI
@@ -563,64 +654,81 @@ export function evaluatePassStatus(passAlt, freezingLevel, snowAccumToday, preci
  * Renderiza el módulo completo de Cordillera, Esquí & Puertos
  * Arquitectura Dual: Estaciones de Esquí (Snow-Forecast) & Red de Puertos de Montaña
  */
-export function renderMountainCard(data, concejo, iconTheme = 'astur') {
+export function renderMountainCard(data, concejo, iconTheme = 'astur', resortsWeatherMap = null, selectedResortId = null, selectedMountainTab = 'ski') {
   const current = data.weather.current;
   const hourly = data.weather.hourly;
   const daily = data.weather.daily;
 
   const currentHour = new Date().getHours();
-  const freezingLevel = hourly.freezing_level_height ? Math.round(hourly.freezing_level_height[currentHour] || 1900) : 1900;
-  const snowAccumToday = daily.snowfall_sum ? daily.snowfall_sum[0].toFixed(1) : '0.0';
-  const snowAccumTomorrow = daily.snowfall_sum && daily.snowfall_sum.length > 1 ? daily.snowfall_sum[1].toFixed(1) : '0.0';
-  const snowAccumDay3 = daily.snowfall_sum && daily.snowfall_sum.length > 2 ? daily.snowfall_sum[2].toFixed(1) : '0.0';
-  const totalSnow3Days = (parseFloat(snowAccumToday) + parseFloat(snowAccumTomorrow) + parseFloat(snowAccumDay3)).toFixed(1);
-  const totalSnow7Days = (daily.snowfall_sum ? daily.snowfall_sum.slice(0, 7).reduce((acc, val) => acc + (val || 0), 0) : 0).toFixed(1);
+  const fallbackFreezingLevel = hourly.freezing_level_height ? Math.round(hourly.freezing_level_height[currentHour] || 1900) : 1900;
+  const fallbackSnowToday = daily.snowfall_sum && daily.snowfall_sum[0] != null ? daily.snowfall_sum[0].toFixed(1) : '0.0';
 
-  // Viento actual en la estación base
-  const baseWindSpeed = Math.round(current.wind_speed_10m || 0);
-  const windDeg = current.wind_direction_10m !== undefined ? current.wind_direction_10m : 180;
-
-  // Peligro de Aludes (Escala Europea EAWS)
-  const avalanche = evaluateAvalancheRisk(snowAccumToday, baseWindSpeed, freezingLevel);
+  // Viento actual de respaldo (concejo activo si aún no llegó la consulta de Cordillera)
+  const fallbackWindSpeed = Math.round(current.wind_speed_10m || 0);
+  const fallbackWindDeg = current.wind_direction_10m !== undefined ? current.wind_direction_10m : 180;
 
   // Gradiente térmico vertical (~0.65°C cada 100m)
   const lapseRate = 0.0065;
+  const activeTabMode = selectedMountainTab === 'passes' ? 'passes' : 'ski';
+  let activeResortIdx = selectedResortId ? ESTACIONES_ESQUI.findIndex(r => r.id === selectedResortId) : 0;
+  if (activeResortIdx < 0) activeResortIdx = 0;
 
-  // Procesar estado de cada una de las 4 estaciones de esquí
+  // Procesar estado independiente de cada una de las 4 estaciones de esquí
   const resortsData = ESTACIONES_ESQUI.map(resort => {
+    const rW = resortsWeatherMap && resortsWeatherMap[resort.id] ? resortsWeatherMap[resort.id] : null;
+    const rCurrent = rW ? rW.current : current;
+    const rHourly = rW ? rW.hourly : hourly;
+    const rDaily = rW ? rW.daily : daily;
+    const refAlt = rW ? resort.midAlt : (concejo.altitude || 0);
+
+    const rFreezingLevel = (rHourly && rHourly.freezing_level_height && rHourly.freezing_level_height[currentHour] != null)
+      ? Math.round(rHourly.freezing_level_height[currentHour])
+      : fallbackFreezingLevel;
+    const rWindDeg = rCurrent.wind_direction_10m !== undefined ? rCurrent.wind_direction_10m : fallbackWindDeg;
+    const rWindBase = Math.round(rCurrent.wind_speed_10m || fallbackWindSpeed);
+    const rSnowToday = (rDaily && rDaily.snowfall_sum && rDaily.snowfall_sum[0] != null)
+      ? rDaily.snowfall_sum[0].toFixed(1)
+      : fallbackSnowToday;
+
+    const curSnowLive = rCurrent.snowfall != null ? parseFloat(rCurrent.snowfall) : 0;
+    const curPrecipLive = rCurrent.precipitation != null ? parseFloat(rCurrent.precipitation) : 0;
+    const hasCurrentPrecip = curSnowLive > 0 || curPrecipLive >= 0.1;
+
     // 1. COTA CUMBRE (TOP)
-    const topTemp = (current.temperature_2m - (resort.topAlt - concejo.altitude) * lapseRate).toFixed(1);
-    const topWind = Math.round(baseWindSpeed * 1.55);
+    const topTemp = (rCurrent.temperature_2m - (resort.topAlt - refAlt) * lapseRate).toFixed(1);
+    const topWind = rW ? Math.round(rWindBase * 1.25) : Math.round(rWindBase * 1.55);
     const topWindChill = calculateWindChill(topTemp, topWind);
-    const topIsSnowing = (current.precipitation > 0 || parseFloat(snowAccumToday) > 0) && freezingLevel <= resort.topAlt + 80;
-    const topQuality = evaluateSnowQuality(topTemp, topWind, topIsSnowing, freezingLevel, resort.topAlt);
+    const topIsSnowing = hasCurrentPrecip && (rFreezingLevel <= resort.topAlt + 80 || curSnowLive > 0 || parseFloat(topTemp) <= 1.0);
+    const topQuality = evaluateSnowQuality(topTemp, topWind, topIsSnowing, rFreezingLevel, resort.topAlt);
     const liftSafety = evaluateLiftSafety(topWind);
 
     // 2. COTA MEDIA (MID)
-    const midTemp = (current.temperature_2m - (resort.midAlt - concejo.altitude) * lapseRate).toFixed(1);
-    const midWind = Math.round(baseWindSpeed * 1.25);
+    const midTemp = (rCurrent.temperature_2m - (resort.midAlt - refAlt) * lapseRate).toFixed(1);
+    const midWind = rW ? rWindBase : Math.round(rWindBase * 1.25);
     const midWindChill = calculateWindChill(midTemp, midWind);
-    const midIsSnowing = (current.precipitation > 0 || parseFloat(snowAccumToday) > 0) && freezingLevel <= resort.midAlt + 80;
-    const midQuality = evaluateSnowQuality(midTemp, midWind, midIsSnowing, freezingLevel, resort.midAlt);
+    const midIsSnowing = hasCurrentPrecip && (rFreezingLevel <= resort.midAlt + 80 || curSnowLive > 0 || parseFloat(midTemp) <= 1.0);
+    const midQuality = evaluateSnowQuality(midTemp, midWind, midIsSnowing, rFreezingLevel, resort.midAlt);
 
     // 3. COTA BASE (BOTTOM)
-    const baseTemp = (current.temperature_2m - (resort.baseAlt - concejo.altitude) * lapseRate).toFixed(1);
-    const baseWind = Math.round(baseWindSpeed * 1.0);
+    const baseTemp = (rCurrent.temperature_2m - (resort.baseAlt - refAlt) * lapseRate).toFixed(1);
+    const baseWind = rW ? Math.round(rWindBase * 0.85) : Math.round(rWindBase * 1.0);
     const baseWindChill = calculateWindChill(baseTemp, baseWind);
-    const baseIsSnowing = (current.precipitation > 0 || parseFloat(snowAccumToday) > 0) && freezingLevel <= resort.baseAlt + 50;
-    const basePrecipType = baseIsSnowing ? '❄️ Nieve' : (current.precipitation > 0 ? '🌧️ Lluvia en Base' : 'Sin Precip.');
+    const baseIsSnowing = hasCurrentPrecip && (rFreezingLevel <= resort.baseAlt + 50 || curSnowLive > 0 || parseFloat(baseTemp) <= 1.0);
+    const basePrecipType = baseIsSnowing ? '❄️ Nieve' : (curPrecipLive >= 0.1 ? '🌧️ Lluvia en Base' : 'Sin Precip.');
 
     // Nieve prevista para esta estación hoy
-    const resortSnowToday = freezingLevel <= resort.topAlt ? snowAccumToday : '0.0';
+    const resortSnowToday = (rW || rFreezingLevel <= resort.topAlt) ? rSnowToday : '0.0';
 
     // TIEMPO ACTUAL EN PISTAS (Cota Media de la Estación)
     let currentSky = { icon: '⛅', label: 'Variable', weatherInfo: null };
     if (topIsSnowing || midIsSnowing) {
-      currentSky = { icon: '❄️', label: 'Nevando', weatherInfo: getWeatherInfo(73, 1, 1) };
-    } else if (current.precipitation > 0) {
-      currentSky = { icon: '🌧️', label: 'Lluvia', weatherInfo: getWeatherInfo(current.weather_code || 61, 1, 1) };
+      currentSky = { icon: '❄️', label: 'Nevando', weatherInfo: getWeatherInfo(73, rCurrent.is_day ?? 1, 1) };
+    } else if (curPrecipLive >= 0.1) {
+      const curResolved = resolveSkiWeatherCode(rCurrent.weather_code, curPrecipLive, curSnowLive, parseFloat(midTemp), rFreezingLevel, resort.midAlt);
+      const curInfo = getWeatherInfo(curResolved.code, rCurrent.is_day ?? 1, curPrecipLive);
+      currentSky = { icon: curInfo.icon, label: curInfo.label.split('/')[0].trim(), weatherInfo: curInfo };
     } else {
-      const liveInfo = getWeatherInfo(current.weather_code, current.is_day, current.precipitation, null, current.direct_normal_irradiance, current.uv_index, current.shortwave_radiation, current.cloud_cover, current.relative_humidity_2m);
+      const liveInfo = getWeatherInfo(rCurrent.weather_code, rCurrent.is_day ?? 1, rCurrent.precipitation, null, rCurrent.direct_normal_irradiance, rCurrent.uv_index, rCurrent.shortwave_radiation, rCurrent.cloud_cover, rCurrent.relative_humidity_2m);
       currentSky = {
         icon: liveInfo.icon,
         label: liveInfo.label.split('/')[0].trim(),
@@ -628,112 +736,133 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
       };
     }
 
-    // PREVISIÓN A 7 DÍAS EN LA ESTACIÓN (Hoy a 7 días) CON DESGLOSE MAÑANA / TARDE (Feedback Tester Cefe)
+    // PREVISIÓN A 7 DÍAS EN LA ESTACIÓN (Hoy a 7 días) CON DESGLOSE MAÑANA / TARDE
     const today = new Date();
-    const forecastDaysCount = Math.min(7, (daily.time && daily.time.length) || 7);
-    
-    // Función auxiliar para extraer métricas de tramos de esquí (Mañana 09-13h vs Tarde 13-17h)
+    const forecastDaysCount = Math.min(7, (rDaily.time && rDaily.time.length) || 7);
+
+    // Función auxiliar para extraer métricas reales de tramos de esquí (Mañana 09-13h vs Tarde 13-17h) y nieve fría 24h
     const getSkiDaypartMetrics = (dayDateStr) => {
-      if (!hourly || !hourly.time) return null;
-      let morningCodes = [], morningWinds = [], morningSnows = 0;
-      let afternoonCodes = [], afternoonWinds = [], afternoonSnows = 0;
-      
-      for (let i = 0; i < hourly.time.length; i++) {
-        const tStr = hourly.time[i];
+      if (!rHourly || !rHourly.time) return null;
+      const morningItems = [];
+      const afternoonItems = [];
+      let coldSnow24h = 0;
+
+      for (let i = 0; i < rHourly.time.length; i++) {
+        const tStr = rHourly.time[i];
         if (tStr.startsWith(dayDateStr)) {
           const parts = tStr.split('T');
           const h = parts[1] ? parseInt(parts[1].split(':')[0], 10) : new Date(tStr).getHours();
-          const w = (hourly.wind_speed_10m && hourly.wind_speed_10m[i] != null) ? hourly.wind_speed_10m[i] * 1.3 : 15;
-          const s = (hourly.snowfall && hourly.snowfall[i] != null) ? hourly.snowfall[i] : 0;
-          const c = (hourly.weather_code && hourly.weather_code[i] != null) ? hourly.weather_code[i] : 3;
+          const wRaw = (rHourly.wind_speed_10m && rHourly.wind_speed_10m[i] != null) ? rHourly.wind_speed_10m[i] : 15;
+          const w = rW ? wRaw : wRaw * 1.3;
+          const s = (rHourly.snowfall && rHourly.snowfall[i] != null) ? rHourly.snowfall[i] : 0;
+          const p = (rHourly.precipitation && rHourly.precipitation[i] != null) ? rHourly.precipitation[i] : 0;
+          const rawC = (rHourly.weather_code && rHourly.weather_code[i] != null) ? rHourly.weather_code[i] : 3;
+          const rawT = (rHourly.temperature_2m && rHourly.temperature_2m[i] != null) ? rHourly.temperature_2m[i] : rCurrent.temperature_2m;
+          const tMid = rawT - (resort.midAlt - refAlt) * lapseRate;
+          const flH = (rHourly.freezing_level_height && rHourly.freezing_level_height[i] != null) ? rHourly.freezing_level_height[i] : rFreezingLevel;
 
-          // Mañana en pistas: 09h a 13h
+          const resolved = resolveSkiWeatherCode(rawC, p, s, tMid, flH, resort.midAlt);
+          coldSnow24h += resolved.effectiveSnowCm;
+
+          const slot = { ...resolved, wind: w, rawPrecip: p, snowCm: s };
           if (h >= 9 && h < 13) {
-            morningCodes.push(c);
-            morningWinds.push(w);
-            morningSnows += s;
-          }
-          // Tarde en pistas: 13h a 17h
-          else if (h >= 13 && h <= 17) {
-            afternoonCodes.push(c);
-            afternoonWinds.push(w);
-            afternoonSnows += s;
+            morningItems.push(slot);
+          } else if (h >= 13 && h <= 17) {
+            afternoonItems.push(slot);
           }
         }
       }
 
-      if (morningCodes.length === 0 && afternoonCodes.length === 0) return null;
+      if (morningItems.length === 0 && afternoonItems.length === 0) return { morning: null, afternoon: null, isShiftRisk: false, coldSnow24h };
 
-      const calcPart = (codes, winds, snowSum) => {
-        if (codes.length === 0) {
+      const calcPart = (items) => {
+        if (items.length === 0) {
           const defInfo = getWeatherInfo(2, 1, 0);
-          return { icon: '⛅', weatherInfo: defInfo, wind: 15, snow: 0, isGale: false, isBlizzard: false, label: 'Variable' };
+          return { icon: '⛅', weatherInfo: defInfo, wind: 15, snow: '0.0', isSnow: false, isSleet: false, isGale: false, isBlizzard: false, label: 'Variable' };
         }
-        const maxWind = Math.round(Math.max(...winds));
-        const domCode = codes[Math.floor(codes.length / 2)];
-        const info = getWeatherInfo(domCode, 1, snowSum > 0 ? 1 : 0);
-        let icon = info.icon;
-        let weatherInfo = info;
-        if (snowSum > 0) {
-          icon = '🌨️';
-          weatherInfo = getWeatherInfo(73, 1, 1);
+        const maxWind = Math.round(Math.max(...items.map(it => it.wind)));
+        const snowTotal = items.reduce((acc, it) => acc + it.effectiveSnowCm, 0);
+        const hasSnow = items.some(it => it.isSnow) || snowTotal > 0.05;
+        const hasSleet = !hasSnow && items.some(it => it.isSleet);
+
+        let info;
+        if (hasSnow) {
+          const heavySnow = items.some(it => it.code === 75) || snowTotal >= 2.0;
+          info = getWeatherInfo(heavySnow ? 75 : 73, 1, 1);
+        } else if (hasSleet) {
+          info = getWeatherInfo(68, 1, 0.6);
+        } else {
+          const precipSlot = items.find(it => (it.code >= 51 && it.code <= 86) || it.code >= 95 || it.rawPrecip >= 0.1);
+          const midItem = items[Math.floor(items.length / 2)];
+          const chosenCode = precipSlot ? precipSlot.code : midItem.code;
+          const maxP = Math.max(...items.map(it => it.rawPrecip), 0);
+          info = getWeatherInfo(chosenCode, 1, precipSlot ? Math.max(maxP, 0.2) : 0);
         }
+
         const isGale = maxWind >= 50;
-        const isBlizzard = snowSum > 0 && maxWind >= 45;
-        if (isBlizzard) icon = '❄️💨';
+        const isBlizzard = hasSnow && maxWind >= 45;
+        const icon = isBlizzard ? '❄️💨' : (hasSnow ? '🌨️' : info.icon);
         return {
           icon,
-          weatherInfo,
+          weatherInfo: info,
           wind: maxWind,
-          snow: snowSum.toFixed(1),
+          snow: snowTotal.toFixed(1),
+          isSnow: hasSnow,
+          isSleet: hasSleet,
           isGale,
           isBlizzard,
-          label: isBlizzard ? 'Ventisca' : (snowSum > 0 ? 'Nieve' : info.label.split('/')[0].trim())
+          label: isBlizzard ? 'Ventisca' : (hasSnow ? 'Nieve' : (hasSleet ? 'Aguanieve' : info.label.split('/')[0].trim()))
         };
       };
 
-      const morning = calcPart(morningCodes, morningWinds, morningSnows);
-      const afternoon = calcPart(afternoonCodes, afternoonWinds, afternoonSnows);
-      
-      // Detectar cambio brusco de tarde (ej. Mañana tranquila/sol y tarde con ventisca/vendaval)
+      const morning = calcPart(morningItems);
+      const afternoon = calcPart(afternoonItems);
       const isShiftRisk = (!morning.isGale && !morning.isBlizzard) && (afternoon.isGale || afternoon.isBlizzard || afternoon.wind >= morning.wind + 25);
 
-      return { morning, afternoon, isShiftRisk };
+      return { morning, afternoon, isShiftRisk, coldSnow24h };
     };
 
     const forecast7Days = Array.from({ length: forecastDaysCount }, (_, dayIdx) => {
-      const code = daily.weather_code && daily.weather_code[dayIdx] != null ? daily.weather_code[dayIdx] : 3;
-      const rawMax = daily.temperature_2m_max && daily.temperature_2m_max[dayIdx] != null ? daily.temperature_2m_max[dayIdx] : current.temperature_2m;
-      const rawMin = daily.temperature_2m_min && daily.temperature_2m_min[dayIdx] != null ? daily.temperature_2m_min[dayIdx] : current.temperature_2m - 4;
-      
+      const code = rDaily.weather_code && rDaily.weather_code[dayIdx] != null ? rDaily.weather_code[dayIdx] : 3;
+      const rawMax = rDaily.temperature_2m_max && rDaily.temperature_2m_max[dayIdx] != null ? rDaily.temperature_2m_max[dayIdx] : rCurrent.temperature_2m;
+      const rawMin = rDaily.temperature_2m_min && rDaily.temperature_2m_min[dayIdx] != null ? rDaily.temperature_2m_min[dayIdx] : rCurrent.temperature_2m - 4;
+
       // Adaptación de temperaturas a cota media de la estación
-      const tMax = Math.round(rawMax - (resort.midAlt - concejo.altitude) * lapseRate);
-      const tMin = Math.round(rawMin - (resort.midAlt - concejo.altitude) * lapseRate);
+      const tMax = Math.round(rawMax - (resort.midAlt - refAlt) * lapseRate);
+      const tMin = Math.round(rawMin - (resort.midAlt - refAlt) * lapseRate);
 
       // Viento y rachas previstas en la estación
-      const rawWind = daily.wind_speed_10m_max && daily.wind_speed_10m_max[dayIdx] != null ? daily.wind_speed_10m_max[dayIdx] : baseWindSpeed;
-      const rawGust = daily.wind_gusts_10m_max && daily.wind_gusts_10m_max[dayIdx] != null ? daily.wind_gusts_10m_max[dayIdx] : rawWind * 1.4;
-      const windStation = Math.round(rawWind * 1.3);
-      const gustStation = Math.round(rawGust * 1.35);
-      // Nieve fresca prevista para este día
-      const snowDay = daily.snowfall_sum && daily.snowfall_sum[dayIdx] != null ? daily.snowfall_sum[dayIdx].toFixed(1) : '0.0';
+      const rawWind = rDaily.wind_speed_10m_max && rDaily.wind_speed_10m_max[dayIdx] != null ? rDaily.wind_speed_10m_max[dayIdx] : rWindBase;
+      const rawGust = rDaily.wind_gusts_10m_max && rDaily.wind_gusts_10m_max[dayIdx] != null ? rDaily.wind_gusts_10m_max[dayIdx] : rawWind * 1.4;
+      const windStation = rW ? Math.round(rawWind) : Math.round(rawWind * 1.3);
+      const gustStation = rW ? Math.round(rawGust) : Math.round(rawGust * 1.35);
 
-      // Desglose de tramos horarios (Mañana vs Tarde en pistas)
-      const dayDateStr = (daily.time && daily.time[dayIdx]) ? daily.time[dayIdx] : '';
+      const dayDateStr = (rDaily.time && rDaily.time[dayIdx]) ? rDaily.time[dayIdx] : '';
       const dayparts = dayDateStr ? getSkiDaypartMetrics(dayDateStr) : null;
+      const rawDailySnow = (rDaily.snowfall_sum && rDaily.snowfall_sum[dayIdx] != null) ? rDaily.snowfall_sum[dayIdx] : 0;
+      const snowNum = (rW && rawDailySnow > 0.05)
+        ? rawDailySnow
+        : Math.max(rawDailySnow, dayparts ? dayparts.coldSnow24h : 0);
+      const snowDay = snowNum.toFixed(1);
 
-      const rawDayInfo = getWeatherInfo(code, 1, parseFloat(snowDay) > 0 ? 1 : 0);
+      const fallbackResolved = resolveSkiWeatherCode(code, rDaily.precipitation_sum?.[dayIdx] ?? 0, snowNum, (tMax + tMin) / 2, rFreezingLevel, resort.midAlt);
+      const rawDayInfo = getWeatherInfo(fallbackResolved.code, 1, (snowNum > 0 || fallbackResolved.isSnow || fallbackResolved.isSleet) ? 1 : 0);
       let dayInfo = rawDayInfo;
       let dayIcon = rawDayInfo.icon;
       let dayDesc = rawDayInfo.label.split('/')[0].trim();
 
-      // ARMONIZACIÓN DE PISTAS (Feedback Lendo & Cefe):
-      // Si tenemos desglose de pistas (09-17h), el tiempo representativo del día no debe heredar nubes nocturnas
-      if (dayparts) {
-        if (parseFloat(snowDay) > 0 || dayparts.morning.isBlizzard || dayparts.afternoon.isBlizzard) {
-          dayIcon = (dayparts.morning.isBlizzard || dayparts.afternoon.isBlizzard) ? '❄️💨' : '🌨️';
-          dayDesc = (dayparts.morning.isBlizzard || dayparts.afternoon.isBlizzard) ? 'Ventisca' : 'Nieve en Pistas';
-          dayInfo = getWeatherInfo(73, 1, 1);
+      if (dayparts && dayparts.morning && dayparts.afternoon) {
+        const hasAnyBlizzard = dayparts.morning.isBlizzard || dayparts.afternoon.isBlizzard;
+        const hasAnySnow = snowNum > 0.05 || dayparts.morning.isSnow || dayparts.afternoon.isSnow;
+        const hasAnySleet = !hasAnySnow && (dayparts.morning.isSleet || dayparts.afternoon.isSleet);
+        if (hasAnyBlizzard || hasAnySnow) {
+          dayIcon = hasAnyBlizzard ? '❄️💨' : '🌨️';
+          dayDesc = hasAnyBlizzard ? 'Ventisca' : 'Nieve en Pistas';
+          dayInfo = getWeatherInfo(snowNum >= 5 ? 75 : 73, 1, 1);
+        } else if (hasAnySleet) {
+          dayIcon = '🌨️';
+          dayDesc = 'Aguanieve en Pistas';
+          dayInfo = getWeatherInfo(68, 1, 0.8);
         } else if (dayparts.morning.icon === '☀️' && dayparts.afternoon.icon === '☀️') {
           dayIcon = '☀️';
           dayDesc = 'Despejado / Sol';
@@ -750,9 +879,15 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
           dayIcon = '⛅';
           dayDesc = 'Nubes mañana, abre tarde';
           dayInfo = getWeatherInfo(2, 1, 0);
+        } else if (dayparts.morning.weatherInfo?.isRain || dayparts.afternoon.weatherInfo?.isRain) {
+          const rainInfo = dayparts.morning.weatherInfo?.isRain ? dayparts.morning.weatherInfo : dayparts.afternoon.weatherInfo;
+          dayIcon = rainInfo.icon;
+          dayDesc = rainInfo.label.split('/')[0].trim();
+          dayInfo = rainInfo;
         }
-      } else if (parseFloat(snowDay) > 0) {
+      } else if (snowNum > 0.05) {
         dayIcon = '🌨️';
+        dayDesc = 'Nieve en Pistas';
         dayInfo = getWeatherInfo(73, 1, 1);
       }
 
@@ -760,8 +895,8 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
       let dayLabel = '';
       if (dayIdx === 0) dayLabel = 'Hoy';
       else if (dayIdx === 1) dayLabel = 'Mañana';
-      else if (daily.time && daily.time[dayIdx]) {
-        const dObj = new Date(daily.time[dayIdx] + 'T12:00:00');
+      else if (rDaily.time && rDaily.time[dayIdx]) {
+        const dObj = new Date(rDaily.time[dayIdx] + 'T12:00:00');
         const dStr = dObj.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric' });
         dayLabel = dStr.charAt(0).toUpperCase() + dStr.slice(1);
       } else {
@@ -771,7 +906,7 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
         dayLabel = dStr.charAt(0).toUpperCase() + dStr.slice(1);
       }
 
-      const isBlizzardDay = (dayparts && (dayparts.morning.isBlizzard || dayparts.afternoon.isBlizzard));
+      const isBlizzardDay = Boolean(dayparts && ((dayparts.morning && dayparts.morning.isBlizzard) || (dayparts.afternoon && dayparts.afternoon.isBlizzard)));
 
       return {
         label: dayLabel,
@@ -785,12 +920,20 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
         gust: gustStation,
         snow: snowDay,
         isGaleRisk: gustStation >= 65,
-        dayparts
+        dayparts: (dayparts && dayparts.morning && dayparts.afternoon) ? dayparts : null
       };
     });
 
+    const snow3Days = forecast7Days.slice(0, 3).reduce((acc, f) => acc + (parseFloat(f.snow) || 0), 0).toFixed(1);
+    const snow7Days = forecast7Days.reduce((acc, f) => acc + (parseFloat(f.snow) || 0), 0).toFixed(1);
+
     return {
       ...resort,
+      isIndependentData: Boolean(rW),
+      freezingLevel: rFreezingLevel,
+      windDeg: rWindDeg,
+      snow3Days,
+      snow7Days,
       currentSky,
       forecast7Days,
       top: {
@@ -823,9 +966,28 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
     };
   });
 
-  // Procesar puertos de montaña clasificados (Arterias principales y red general)
+  const headlineResort = resortsData[activeResortIdx] || resortsData[0];
+  const freezingLevel = headlineResort.freezingLevel;
+  const snowAccumToday = headlineResort.snowToday;
+  const totalSnow3Days = headlineResort.snow3Days;
+  const avalanche = evaluateAvalancheRisk(snowAccumToday, headlineResort.mid.windSpd, freezingLevel);
+
+  // Procesar puertos de montaña usando datos reales de Cordillera cuando estén disponibles
   const passesWithStatus = PUERTOS_MONTANA_ASTURIAS.map(p => {
-    const statusObj = evaluatePassStatus(p.alt, freezingLevel, snowAccumToday, current.precipitation, p.skiAccess);
+    let refW = null;
+    if (resortsWeatherMap) {
+      if (p.sector === 'occidente') refW = resortsWeatherMap.leitariegos || resortsWeatherMap.pajares;
+      else if (p.id === 'pajares' || p.id === 'huerna' || (p.skiAccess && p.skiAccess.includes('Pajares'))) refW = resortsWeatherMap.pajares || resortsWeatherMap.san_isidro;
+      else refW = resortsWeatherMap.san_isidro || resortsWeatherMap.fuentes || resortsWeatherMap.pajares;
+    }
+    const pFl = (refW && refW.hourly && refW.hourly.freezing_level_height && refW.hourly.freezing_level_height[currentHour] != null)
+      ? Math.round(refW.hourly.freezing_level_height[currentHour])
+      : freezingLevel;
+    const pSnow = (refW && refW.daily && refW.daily.snowfall_sum && refW.daily.snowfall_sum[0] != null)
+      ? refW.daily.snowfall_sum[0].toFixed(1)
+      : snowAccumToday;
+    const pPrecip = refW && refW.current && refW.current.precipitation != null ? refW.current.precipitation : current.precipitation;
+    const statusObj = evaluatePassStatus(p.alt, pFl, pSnow, pPrecip, p.skiAccess);
     return {
       ...p,
       ...statusObj
@@ -851,7 +1013,7 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
           <div class="m-top-col">
             <span class="m-top-label">🏔️ Cota Nieve 0°C</span>
             <div class="m-top-val">${freezingLevel} <span class="unit">m</span></div>
-            <span class="m-top-sub">${concejo.altitude >= freezingLevel ? '❄️ En tu cota' : 'Por encima'}</span>
+            <span class="m-top-sub">${resortsWeatherMap ? `${headlineResort.shortName} · Cordillera` : (concejo.altitude >= freezingLevel ? '❄️ En tu cota' : 'Por encima')}</span>
           </div>
 
           <div class="m-top-v-divider"></div>
@@ -881,13 +1043,13 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
       <div class="mountain-operational-section">
         <!-- INTERRUPTOR DESLIZANTE SEGMENTADO TÁCTIL (ETIQUETAS CORTAS DE 1 PALABRA) -->
         <div class="mountain-toggle-container">
-          <div class="mountain-sliding-segmented-switch" id="mountain-segmented-switch" data-active="ski">
+          <div class="mountain-sliding-segmented-switch" id="mountain-segmented-switch" data-active="${activeTabMode}">
             <div class="mountain-switch-glider"></div>
-            <button class="mountain-switch-option active" data-mountain-tab="ski" id="btn-mountain-tab-ski" aria-label="Ver previsión de esquí estilo Snow-Forecast">
+            <button class="mountain-switch-option ${activeTabMode === 'ski' ? 'active' : ''}" data-mountain-tab="ski" id="btn-mountain-tab-ski" aria-label="Ver previsión de esquí estilo Snow-Forecast">
               <span class="mountain-switch-icon">⛷️</span>
               <span class="mountain-switch-label">Esquí</span>
             </button>
-            <button class="mountain-switch-option" data-mountain-tab="passes" id="btn-mountain-tab-passes" aria-label="Ver estado de puertos de montaña y conexiones a la meseta">
+            <button class="mountain-switch-option ${activeTabMode === 'passes' ? 'active' : ''}" data-mountain-tab="passes" id="btn-mountain-tab-passes" aria-label="Ver estado de puertos de montaña y conexiones a la meseta">
               <span class="mountain-switch-icon">🚗</span>
               <span class="mountain-switch-label">Puertos</span>
             </button>
@@ -904,12 +1066,12 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
       </div>
 
       <!-- VISTA A: ⛷️ ESTACIONES DE ESQUÍ (ESTÁNDAR SNOW-FORECAST COMPACTO) -->
-      <div id="mountain-ski-view" class="mountain-tab-content active">
+      <div id="mountain-ski-view" class="mountain-tab-content ${activeTabMode === 'ski' ? 'active' : ''}" style="${activeTabMode === 'ski' ? 'display: block;' : 'display: none;'}">
         <!-- Selector de Estaciones en Cuadrícula 2x2 Táctil -->
         <div class="resorts-selector-bar">
           <div class="resorts-pills-grid">
             ${resortsData.map((r, i) => `
-              <button class="resort-select-pill ${i === 0 ? 'active' : ''}" data-resort-id="${r.id}">
+              <button class="resort-select-pill ${i === activeResortIdx ? 'active' : ''}" data-resort-id="${r.id}">
                 <span class="pill-icon">⛷️</span>
                 <span class="pill-name">${r.shortName}</span>
               </button>
@@ -920,7 +1082,7 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
         <!-- Paneles de Previsión Desglosada por Estación -->
         <div class="resorts-cards-container">
           ${resortsData.map((r, i) => `
-            <div class="resort-forecast-card ${i === 0 ? 'active' : ''}" id="resort-panel-${r.id}" style="${i === 0 ? 'display: flex;' : 'display: none;'}">
+            <div class="resort-forecast-card ${i === activeResortIdx ? 'active' : ''}" id="resort-panel-${r.id}" style="${i === activeResortIdx ? 'display: flex;' : 'display: none;'}">
               <!-- Encabezado de la Estación -->
               <div class="resort-card-header">
                 <div class="resort-header-title">
@@ -949,7 +1111,7 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
                       <div class="ski-strip-metrics">
                         <span class="cota-temp-val">${r.top.temp}°C</span>
                         <span class="cota-chill-pill" title="Sensación térmica con viento">🥶 Siente ${r.top.windChill}°C</span>
-                        <span class="cota-wind-val">${getMountainWindArrowSvg(windDeg, '#38bdf8', 12)} ${r.top.windSpd} km/h</span>
+                        <span class="cota-wind-val">${getMountainWindArrowSvg(r.windDeg, '#38bdf8', 12)} ${r.top.windSpd} km/h</span>
                         <span class="cota-quality-pill" style="color: ${r.top.quality.color};">${r.top.quality.icon} ${r.top.quality.label}</span>
                       </div>
                     </div>
@@ -965,7 +1127,7 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
                       <div class="ski-strip-metrics">
                         <span class="cota-temp-val">${r.mid.temp}°C</span>
                         <span class="cota-chill-pill" title="Sensación térmica con viento">🥶 Siente ${r.mid.windChill}°C</span>
-                        <span class="cota-wind-val">${getMountainWindArrowSvg(windDeg, '#38bdf8', 12)} ${r.mid.windSpd} km/h</span>
+                        <span class="cota-wind-val">${getMountainWindArrowSvg(r.windDeg, '#38bdf8', 12)} ${r.mid.windSpd} km/h</span>
                         <span class="cota-quality-pill" style="color: ${r.mid.quality.color};">${r.mid.quality.icon} ${r.mid.quality.label}</span>
                       </div>
                     </div>
@@ -981,7 +1143,7 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
                       <div class="ski-strip-metrics">
                         <span class="cota-temp-val">${r.base.temp}°C</span>
                         <span class="cota-chill-pill" title="Sensación térmica">🥶 Siente ${r.base.windChill}°C</span>
-                        <span class="cota-wind-val">${getMountainWindArrowSvg(windDeg, '#38bdf8', 12)} ${r.base.windSpd} km/h</span>
+                        <span class="cota-wind-val">${getMountainWindArrowSvg(r.windDeg, '#38bdf8', 12)} ${r.base.windSpd} km/h</span>
                         <span class="cota-quality-pill" style="color: #38bdf8;">${r.base.precipType}</span>
                       </div>
                     </div>
@@ -1067,11 +1229,11 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
                 <div class="ski-snow-summary-grid">
                   <div class="ski-summary-pill">
                     <span class="ski-pill-label">⏱️ Próx. 3 Días</span>
-                    <span class="ski-pill-val">${totalSnow3Days} <span class="ski-pill-unit">cm</span></span>
+                    <span class="ski-pill-val">${r.snow3Days} <span class="ski-pill-unit">cm</span></span>
                   </div>
                   <div class="ski-summary-pill">
                     <span class="ski-pill-label">❄️ Total 7 Días</span>
-                    <span class="ski-pill-val">${totalSnow7Days} <span class="ski-pill-unit">cm</span></span>
+                    <span class="ski-pill-val">${r.snow7Days} <span class="ski-pill-unit">cm</span></span>
                   </div>
                 </div>
               </div>
@@ -1081,7 +1243,7 @@ export function renderMountainCard(data, concejo, iconTheme = 'astur') {
       </div>
 
       <!-- VISTA B: 🚗 RED INTEGRAL DE PUERTOS Y ACCESOS A LA MESETA -->
-      <div id="mountain-passes-view" class="mountain-tab-content" style="display: none;">
+      <div id="mountain-passes-view" class="mountain-tab-content ${activeTabMode === 'passes' ? 'active' : ''}" style="${activeTabMode === 'passes' ? 'display: block;' : 'display: none;'}">
         <style>
           .passes-sector-filter-bar {
             display: flex;

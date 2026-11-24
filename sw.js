@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303849-satelite-meteosat-nubes';
+const CACHE_NAME = 'meteoasturlode-v303850-nieve-estaciones-reales';
 const STATIC_ASSETS = [
   './',
   './index.html',
