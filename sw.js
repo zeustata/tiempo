@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303851-copos-nieve-nitidos';
+const CACHE_NAME = 'meteoasturlode-v303852-fix-index-doctype';
 const STATIC_ASSETS = [
   './',
   './index.html',

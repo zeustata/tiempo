@@ -2,6 +2,11 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🧹 Limpieza de Línea Accidental en `index.html` (`v3.0.38.52`) — 2026-11-24
+- **Estado / Rollback anterior seguro:** Commit `9b923d0` (`v3.0.38.51`).
+- **Motivo del cambio:** Eliminación de texto accidental introducido en la línea 1 de `index.html` antes de `<!DOCTYPE html>` (detectado por Lendo tras editar en el editor) para garantizar modo estándar estricto (`CSS1Compat`) y vista limpia sin texto residual superior.
+- **Anti-caché:** Incremento silencioso a `v3.0.38.52` en `sw.js`, `index.html` y `js/app.js` (conservando `CURRENT_CHANGELOG_PROMPT_VERSION = '3.0.38'`, Regla 13).
+
 ## ❄️ Copos de Nieve Estrellados Nítidos en Toda la App y Todos los Temas (`v3.0.38.51`) — 2026-11-24
 - **Estado / Rollback anterior seguro:** Commit `fbd0e50` (`v3.0.38.50`).
 - **Motivo del cambio:** En tamaños reducidos de tarjeta (`18px` y `24px`, p. ej. bloques *Mañana/Tarde* en `Cordillera & Nieve` y vistas horarias/diarias), los copos SVG dibujados solo con cruces ortogonales (`|` y `-`) parecían signos `+ + +` y generaban confusión visual con *Aguanieve* (`sleet`).
