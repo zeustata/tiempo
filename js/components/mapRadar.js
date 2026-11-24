@@ -1,4 +1,4 @@
-import { fetchRainViewerRadar } from '../services/radarService.js?v=3.0.38.24';
+import { fetchRainViewerRadar } from '../services/radarService.js?v=3.0.38.53';
 import { getWeatherInfo, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=3.0.38.29';
 
 let asturiasMap = null;

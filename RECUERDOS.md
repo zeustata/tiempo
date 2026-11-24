@@ -2,6 +2,15 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌧️ Calibración Prudente de Radar Universal Blue en Web (`v3.0.38.53`) — 2026-11-24
+- **Estado / Rollback anterior seguro:** Commit `cff5baf` (`v3.0.38.52`).
+- **Motivo del cambio:** Tras contrastar en vivo el radar RainViewer sobre Piedras Blancas (`18:38` vs `18:49`, con retraso físico de ~10 min entre frames), se comprobó que escalar el azul marino oscuro a *Lluvia moderada* provoca falsos avisos moderados cuando el núcleo amarillo/naranja ya ha pasado, mientras que el umbral previo `b >= 120` dejaba fuera como seco al azul marino intenso (`RGB(0,71,104)`).
+- **Solución Web (`v3.0.38.53`):**
+  - Todos los tonos azules y cianes válidos (`b >= 80 && r <= 125 && b > g`) de la paleta Universal Blue (esquema 2) en `js/services/radarService.js` pasan a `light_rain` (`wmoCode: 61`, `0.2 mm`), reservando `moderate_rain` (`1.8 mm`) al amarillo y `heavy_rain` (`6.0 mm`) al naranja ampliado (`g >= 66`).
+  - Añadido techo de prudencia anti-*Bastinazu* fantasma / banda brillante invernal en `js/services/weatherApi.js` (`applyRadarIntensityPrudenceCap`): si el radar arroja pico naranja, amarillo o rojo con modelos secos (`< 0.3 mm`) y sin convección (`CAPE < 40`), el rescate se limita a chubasco débil/moderado (`0.3–1.8 mm`) en vez de disparar *Lluvia fuerte · Bastinazu*.
+  - Corregido en `css/components.css` (`.radar-legend-card` / `.legend-labels`) el solapamiento de etiquetas en la leyenda del mapa radar (`Débil / Orbayu`, `Moderada`, `Torrencial`).
+  - Actualizado cache-busting silencioso (conservando `CURRENT_CHANGELOG_PROMPT_VERSION = '3.0.38'`, Regla 13). El widget Android se deja en espera hasta concluir el ajuste fino de la web.
+
 ## 🧹 Limpieza de Línea Accidental en `index.html` (`v3.0.38.52`) — 2026-11-24
 - **Estado / Rollback anterior seguro:** Commit `9b923d0` (`v3.0.38.51`).
 - **Motivo del cambio:** Eliminación de texto accidental introducido en la línea 1 de `index.html` antes de `<!DOCTYPE html>` (detectado por Lendo tras editar en el editor) para garantizar modo estándar estricto (`CSS1Compat`) y vista limpia sin texto residual superior.

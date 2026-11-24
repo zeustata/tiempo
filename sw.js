@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303852-fix-index-doctype';
+const CACHE_NAME = 'meteoasturlode-v303853-radar-universal-blue';
 const STATIC_ASSETS = [
   './',
   './index.html',

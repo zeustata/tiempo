@@ -1,4 +1,4 @@
-import { fetchLiveRadarEcho, fetchLiveSatelliteCloudCover } from './radarService.js?v=3.0.38.49';
+import { fetchLiveRadarEcho, fetchLiveSatelliteCloudCover } from './radarService.js?v=3.0.38.53';
 
 /**
  * Catálogo Oficial de Modelos Meteorológicos de Alta Resolución
@@ -526,36 +526,14 @@ function applyCantabricoConsensus(weather, consensus, radarEcho = null, satCloud
       }
     }
 
-    // D) SOBERANÍA ABSOLUTA DEL RADAR TÁCTICO EN VIVO (Nowcasting Real - Doctrina Tormenta Lendo):
-    // Si la reflectividad del radar de RainViewer detecta precipitación activa en las coordenadas,
-    // el radar físico desempata por encima de cualquier modelo numérico ciego (AROME / ECMWF):
+    // D) SOBERANÍA PRUDENTE DEL RADAR TÁCTICO EN VIVO (Con techo anti-banda brillante / Bastinazu fantasma):
+    // Si la reflectividad del radar de RainViewer detecta precipitación activa, rescata lluvia;
+    // pero si AROME y ECMWF están secos (< 0.3 mm) y no hay convección (CAPE < 40), evita disparar falsos Bastinazos.
     if (radarEcho && radarEcho.hasEcho && radarEcho.echo && radarEcho.echo.isRain) {
       const echo = radarEcho.echo;
-      const isConvectiveStorm = echo.isStorm || (echo.level === 'heavy_rain' && curCape >= 40);
-      if (isConvectiveStorm) {
-        weather.current.weather_code = 95;
-        weather.current.precipitation = Math.max(weather.current.precipitation || 0, echo.precipEst || 15.0);
-        if (weather.current.rain != null) weather.current.rain = weather.current.precipitation;
-        weather.current.cloud_cover = Math.max(weather.current.cloud_cover || 0, 95);
-        weather.current.is_radar_rescued = true;
-        weather.current.radar_rescue_level = 'storm';
-        weather.current.radar_rescue_label = 'Tormenta / Lluvia torrencial';
-      } else if (echo.level === 'heavy_rain' && (weather.current.weather_code <= 3 || weather.current.precipitation < 2.0)) {
-        weather.current.weather_code = echo.wmoCode || 81;
-        weather.current.precipitation = Math.max(weather.current.precipitation || 0, echo.precipEst || 8.0);
-        if (weather.current.rain != null) weather.current.rain = weather.current.precipitation;
-        weather.current.cloud_cover = Math.max(weather.current.cloud_cover || 0, 90);
-        weather.current.is_radar_rescued = true;
-        weather.current.radar_rescue_level = echo.level;
-        weather.current.radar_rescue_label = echo.label;
-      } else if (echo.level === 'moderate_rain' && (weather.current.weather_code <= 3 || weather.current.precipitation < 1.0)) {
-        weather.current.weather_code = echo.wmoCode || 63;
-        weather.current.precipitation = Math.max(weather.current.precipitation || 0, echo.precipEst || 1.8);
-        if (weather.current.rain != null) weather.current.rain = weather.current.precipitation;
-        weather.current.cloud_cover = Math.max(weather.current.cloud_cover || 0, 85);
-        weather.current.is_radar_rescued = true;
-        weather.current.radar_rescue_level = echo.level;
-        weather.current.radar_rescue_label = echo.label;
+      const maxModelPrecip = Math.max(rawPrecip || 0, ePrecip || 0, curEPrecip || 0);
+      if (applyRadarIntensityPrudenceCap(weather.current, echo, curCape, maxModelPrecip)) {
+        // Rescate de tormenta, chubasco fuerte o moderado calibrado con techo prudente
       } else if (echo.level === 'light_rain') {
         const isSatOvercast = Boolean(satCloud && satCloud.cloudPct >= 75 && satCloud.centerCloudPct >= 60);
         const effectiveSunLight = isSatOvercast ? false : hasTrueSunlight;
@@ -879,6 +857,89 @@ export function applySatelliteCloudShield(weather, satCloud, radarEcho = null, a
 }
 
 /**
+ * Aplica techo de prudencia a los ecos altos del radar (naranja/rojo/amarillo) cuando
+ * los modelos numéricos están secos (< 0.3 mm) y no hay convección (CAPE < 40),
+ * evitando falsos "Bastinazos" por banda brillante invernal o retardo de 8-10 min.
+ */
+function applyRadarIntensityPrudenceCap(current, echo, curCape, maxModelPrecip) {
+  const modelsAreDry = maxModelPrecip < 0.3;
+  const modelsConfirmHeavy = maxModelPrecip >= 1.0;
+  const isConvectiveStorm = (echo.level === 'extreme_storm')
+    || (echo.isStorm && (curCape >= 40 || !modelsAreDry))
+    || (echo.level === 'heavy_rain' && curCape >= 40);
+
+  if (isConvectiveStorm) {
+    current.weather_code = 95;
+    current.precipitation = Math.max(current.precipitation || 0, echo.precipEst || 15.0);
+    if (current.rain != null) current.rain = current.precipitation;
+    current.cloud_cover = Math.max(current.cloud_cover || 0, 95);
+    current.is_radar_rescued = true;
+    current.radar_rescue_level = 'storm';
+    current.radar_rescue_label = 'Tormenta / Lluvia torrencial';
+    return true;
+  }
+  if (echo.isStorm) {
+    current.weather_code = 63;
+    current.precipitation = Math.max(current.precipitation || 0, 1.8);
+    if (current.rain != null) current.rain = current.precipitation;
+    current.cloud_cover = Math.max(current.cloud_cover || 0, 88);
+    current.is_radar_rescued = true;
+    current.radar_rescue_level = 'moderate_rain';
+    current.radar_rescue_label = 'Chubasco detectado por radar';
+    return true;
+  }
+  if (echo.level === 'heavy_rain' && (current.weather_code <= 3 || current.precipitation < 2.0)) {
+    if (modelsAreDry) {
+      current.weather_code = 61;
+      current.precipitation = 0.4;
+      if (current.rain != null) current.rain = 0.4;
+      current.cloud_cover = Math.max(current.cloud_cover || 0, 85);
+      current.is_radar_rescued = true;
+      current.radar_rescue_level = 'light_rain';
+      current.radar_rescue_label = 'Chubasco débil (radar)';
+    } else if (!modelsConfirmHeavy) {
+      current.weather_code = 63;
+      current.precipitation = Math.max(current.precipitation || 0, 1.8);
+      if (current.rain != null) current.rain = current.precipitation;
+      current.cloud_cover = Math.max(current.cloud_cover || 0, 85);
+      current.is_radar_rescued = true;
+      current.radar_rescue_level = 'moderate_rain';
+      current.radar_rescue_label = 'Lluvia moderada';
+    } else {
+      current.weather_code = echo.wmoCode || 81;
+      current.precipitation = Math.max(current.precipitation || 0, echo.precipEst || 6.0);
+      if (current.rain != null) current.rain = current.precipitation;
+      current.cloud_cover = Math.max(current.cloud_cover || 0, 90);
+      current.is_radar_rescued = true;
+      current.radar_rescue_level = echo.level;
+      current.radar_rescue_label = echo.label;
+    }
+    return true;
+  }
+  if (echo.level === 'moderate_rain' && (current.weather_code <= 3 || current.precipitation < 1.0)) {
+    if (modelsAreDry) {
+      current.weather_code = 61;
+      current.precipitation = 0.3;
+      if (current.rain != null) current.rain = 0.3;
+      current.cloud_cover = Math.max(current.cloud_cover || 0, 85);
+      current.is_radar_rescued = true;
+      current.radar_rescue_level = 'light_rain';
+      current.radar_rescue_label = 'Chubasco débil (radar)';
+    } else {
+      current.weather_code = echo.wmoCode || 63;
+      current.precipitation = Math.max(current.precipitation || 0, echo.precipEst || 1.8);
+      if (current.rain != null) current.rain = current.precipitation;
+      current.cloud_cover = Math.max(current.cloud_cover || 0, 85);
+      current.is_radar_rescued = true;
+      current.radar_rescue_level = echo.level;
+      current.radar_rescue_label = echo.label;
+    }
+    return true;
+  }
+  return false;
+}
+
+/**
  * Soberanía Física Inversa Standalone:
  * Garantiza que incluso si el usuario selecciona un modelo numérico individual (sin consenso ECMWF),
  * el sistema nunca muestre cielo 100% cubierto / nublado si los sensores físicos de radiación y UV
@@ -887,36 +948,15 @@ export function applySatelliteCloudShield(weather, satCloud, radarEcho = null, a
 function applyStandalonePhysicalSovereignty(weather, radarEcho = null) {
   if (!weather) return;
 
-  // Radar Táctico Soberano en Modo Standalone
+  // Radar Táctico en Modo Standalone con techo anti-Bastinazu fantasma
   if (radarEcho && radarEcho.hasEcho && radarEcho.echo && radarEcho.echo.isRain && weather.current) {
     const echo = radarEcho.echo;
     const nowHour = new Date().getHours();
     const curCape = (weather.hourly && weather.hourly.cape && weather.hourly.cape[nowHour] != null) ? weather.hourly.cape[nowHour] : 0;
-    const isConvectiveStorm = echo.isStorm || (echo.level === 'heavy_rain' && curCape >= 40);
-    if (isConvectiveStorm) {
-      weather.current.weather_code = 95;
-      weather.current.precipitation = Math.max(weather.current.precipitation || 0, echo.precipEst || 15.0);
-      if (weather.current.rain != null) weather.current.rain = weather.current.precipitation;
-      weather.current.cloud_cover = Math.max(weather.current.cloud_cover || 0, 95);
-      weather.current.is_radar_rescued = true;
-      weather.current.radar_rescue_level = 'storm';
-      weather.current.radar_rescue_label = 'Tormenta / Lluvia torrencial';
-    } else if (echo.level === 'heavy_rain' && (weather.current.weather_code <= 3 || weather.current.precipitation < 2.0)) {
-      weather.current.weather_code = echo.wmoCode || 81;
-      weather.current.precipitation = Math.max(weather.current.precipitation || 0, echo.precipEst || 8.0);
-      if (weather.current.rain != null) weather.current.rain = weather.current.precipitation;
-      weather.current.cloud_cover = Math.max(weather.current.cloud_cover || 0, 90);
-      weather.current.is_radar_rescued = true;
-      weather.current.radar_rescue_level = echo.level;
-      weather.current.radar_rescue_label = echo.label;
-    } else if (echo.level === 'moderate_rain' && (weather.current.weather_code <= 3 || weather.current.precipitation < 1.0)) {
-      weather.current.weather_code = echo.wmoCode || 63;
-      weather.current.precipitation = Math.max(weather.current.precipitation || 0, echo.precipEst || 1.8);
-      if (weather.current.rain != null) weather.current.rain = weather.current.precipitation;
-      weather.current.cloud_cover = Math.max(weather.current.cloud_cover || 0, 85);
-      weather.current.is_radar_rescued = true;
-      weather.current.radar_rescue_level = echo.level;
-      weather.current.radar_rescue_label = echo.label;
+    const hPrecipNow = (weather.hourly && weather.hourly.precipitation && weather.hourly.precipitation[nowHour] != null) ? weather.hourly.precipitation[nowHour] : 0;
+    const maxModelPrecip = Math.max(weather.current.precipitation || 0, hPrecipNow || 0);
+    if (applyRadarIntensityPrudenceCap(weather.current, echo, curCape, maxModelPrecip)) {
+      // Aplicado rescate calibrado con techo prudente
     } else if (echo.level === 'light_rain') {
       const rawP = weather.current.precipitation != null ? parseFloat(weather.current.precipitation) : 0;
       const curCloud = weather.current.cloud_cover != null ? weather.current.cloud_cover : 100;
