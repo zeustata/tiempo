@@ -8,7 +8,7 @@ import { renderSurfCard } from './components/surfCard.js?v=3.0.25.2';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.38.21';
 import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.38.23';
 import { renderMountainCard, fetchMountainResortsWeather } from './components/mountainCard.js?v=3.0.38.50';
-import { renderTourismCard, hydrateTourismAgendaWeather } from './components/tourismCard.js?v=3.0.38.55';
+import { renderTourismCard, hydrateTourismAgendaWeather } from './components/tourismCard.js?v=3.0.38.56';
 import { renderForecast, renderHourlyForecastBlock } from './components/forecastView.js?v=3.0.38.48';
 import { renderWeatherChart } from './components/chartsView.js?v=3.0.38.48';
 import { renderAstronomyView } from './components/astronomyCard.js?v=3.0.38.30';
@@ -24,7 +24,7 @@ import { getHalloweenWeatherSvg } from './utils/weatherHalloweenIcons.js?v=3.0.3
 import { getPapaNoelWeatherSvg } from './utils/weatherPapaNoelIcons.js?v=3.0.38.51';
 import { getReyesWeatherSvg } from './utils/weatherReyesIcons.js?v=3.0.38.51';
 import { getExplanationHtml, WEATHER_EXPLANATIONS } from './utils/weatherExplanations.js?v=3.0.24.40';
-import { getTourismPlanExplanation } from './utils/tourismData.js?v=3.0.24.62';
+import { getTourismPlanExplanation } from './utils/tourismData.js?v=3.0.38.56';
 import { getRouteExplanation, fetchRoutesBatchWeather } from './utils/routesData.js?v=3.0.38.21';
 import { getCyclingRouteExplanation } from './utils/cyclingData.js?v=3.0.38.22';
 import { checkConcejoFolixa } from './utils/festivosData.js?v=2.0.0';
@@ -52,7 +52,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.38.55';
+export const CURRENT_APP_VERSION = '3.0.38.56';
 // Control inteligente de Auto-Prompt del Changelog (Doctrina de No-Fatiga al Usuario - Feedback Lendo):
 // Solo se incrementa ante cambios visuales grandes, módulos nuevos o novedades perceptibles.
 // En ajustes finos, calibraciones matemáticas y parches internos se mantiene para no fatigar al usuario con modales.
@@ -3679,6 +3679,27 @@ class MeteoAsturiasApp {
         }
       });
     });
+
+    // 2b. Botón rápido "🎲 Otro plan" (rotación entre los planes cercanos acordes al tiempo)
+    const btnRandomPlan = document.getElementById('btn-random-tourism-plan');
+    if (btnRandomPlan) {
+      btnRandomPlan.addEventListener('click', () => {
+        try {
+          const poolIds = JSON.parse(decodeURIComponent(btnRandomPlan.dataset.poolIds || '[]'));
+          const currentId = btnRandomPlan.dataset.currentPlanId;
+          if (!Array.isArray(poolIds) || poolIds.length === 0) return;
+          const idx = poolIds.indexOf(currentId);
+          const nextId = poolIds[(idx + 1) % poolIds.length];
+          if (nextId && nextId !== currentId) {
+            this.triggerHaptic();
+            this.selectedTourismPlanId = nextId;
+            this.refreshTourismPanel();
+          }
+        } catch (err) {
+          console.warn('[MeteoAstur] Error rotando plan de ocio:', err);
+        }
+      });
+    }
 
     // 3. Conmutador de subpestañas en Agenda Meteorológica (Mercados / Próximas Folixas)
     const mkList = document.getElementById('tourism-agenda-markets-list');

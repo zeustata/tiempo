@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303855-ocio-mercados-folixas';
+const CACHE_NAME = 'meteoasturlode-v303856-52-planes-ocio-rotacion';
 const STATIC_ASSETS = [
   './',
   './index.html',

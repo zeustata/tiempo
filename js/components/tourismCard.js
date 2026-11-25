@@ -6,7 +6,7 @@
  * Estética Liquid Glass Pura (Ley 14), Ergonomía Móvil (Ley 11) y Blindaje Legal (Leyes 15 y 16).
  */
 
-import { getRecommendedPlans, getTourismPlanExplanation } from '../utils/tourismData.js?v=3.0.24.62';
+import { getRecommendedPlans, getTourismPlanExplanation } from '../utils/tourismData.js?v=3.0.38.56';
 import { getWeatherInfo, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=3.0.38.51';
 import { getMarketsForDay, getUpcomingFolixas, fetchAgendaWeatherBatch } from '../utils/eventsAgendaData.js?v=3.0.38.55';
 
@@ -21,8 +21,12 @@ export function renderTourismCard(weatherData, concejo, selectedPlanId = null, s
   const { weatherVerdict, weatherCategory, weatherIcon, comarca, plans } = getRecommendedPlans(weatherData, concejo, activeDay);
   const cleanConcejoName = (concejo.name || '').replace(/\s*\(.*?\)/, '').trim();
 
-  // Plan sugerido automáticamente según el tiempo de hoy y proximidad
-  const recommendedPlan = plans.find(p => p.weatherType === weatherCategory) || plans[0];
+  // Plan sugerido automáticamente con rotación diaria entre los 6 planes más cercanos del cielo activo
+  const matchingPlans = plans.filter(p => p.weatherType === weatherCategory);
+  const rotationPool = matchingPlans.length > 0 ? matchingPlans.slice(0, Math.min(6, matchingPlans.length)) : plans.slice(0, 6);
+  const daySeed = Math.floor(Date.now() / 86400000) + (activeDay === 'tomorrow' ? 1 : 0);
+  const recommendedPlan = rotationPool[daySeed % rotationPool.length] || plans[0];
+  const cyclePool = matchingPlans.length >= 2 ? matchingPlans.slice(0, 10) : plans.slice(0, 10);
 
   // Plan activo a mostrar en pantalla completa
   let activePlan = recommendedPlan;
@@ -435,10 +439,18 @@ export function renderTourismCard(weatherData, concejo, selectedPlanId = null, s
 
       <!-- 3. SELECTOR TÁCTIL ERGONÓMICO DE PLAN (DISPARADOR DEL BOTTOM SHEET) -->
       <div style="margin-bottom: 12px; display: flex; flex-direction: column; gap: 5px;">
-        <label class="picker-section-label" style="font-size: 0.76rem; font-weight: 800; color: #facc15; text-transform: uppercase; letter-spacing: 0.04em; display: flex; align-items: center; gap: 5px;">
-          <span>🎭</span>
-          <span>Planes y ocio:</span>
-        </label>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+          <label class="picker-section-label" style="font-size: 0.76rem; font-weight: 800; color: #facc15; text-transform: uppercase; letter-spacing: 0.04em; display: flex; align-items: center; gap: 5px;">
+            <span>🎭</span>
+            <span>Planes (${plans.length}):</span>
+          </label>
+          <button type="button" id="btn-random-tourism-plan"
+                  data-pool-ids="${encodeURIComponent(JSON.stringify(cyclePool.map(p => p.id)))}"
+                  data-current-plan-id="${activePlan.id}"
+                  style="padding: 4px 10px; border-radius: 10px; border: 1px solid rgba(56, 189, 248, 0.35); background: rgba(56, 189, 248, 0.14); color: #38bdf8; font-size: 0.74rem; font-weight: 800; cursor: pointer; white-space: nowrap;">
+            🎲 Otro plan
+          </button>
+        </div>
         
         <button type="button" id="btn-open-tourism-picker" class="tourism-plan-trigger" aria-label="Cambiar plan de ocio">
           <div style="display: flex; align-items: center; gap: 6px; overflow: hidden; min-width: 0;">

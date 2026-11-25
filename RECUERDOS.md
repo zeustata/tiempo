@@ -2,6 +2,14 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🎭 Ampliación a 52 Planes de Ocio y Rotación Diaria Inteligente (`v3.0.38.56`) — 2026-11-25
+- **Estado / Rollback anterior seguro:** Commit `26c1aae` (`v3.0.38.55`).
+- **Motivo del cambio:** Enriquecer el catálogo de *Planes & Ocio* (especialmente en las categorías con menos oferta como *Frío / Cuchara* y *Lluvia a cubierto*) y evitar que por pura ordenación geográfica saliese siempre el mismo plan fijo en primer lugar.
+- **Implementación:**
+  - Ampliado `PLANES_ASTURIAS_CATALOGO` en `js/utils/tourismData.js` de **36 a 52 planes** (+16 joyas asturianas: Las Caldas Termal, Funicular de Bulnes, Cueva del Queso Cabrales, Tazones, Santa Eulalia de Oscos, Ecomuseo Minero del Samuño, Visita a Llagar de Sidra, Cueva de Candamo / Palacio Valdés-Bazán, Museo Arqueológico de Oviedo, Muséu del Pueblu d'Asturies, Lastres / San Roque, Cabo Vidio y Silencio, Lagos de Covadonga, Playa de Gulpiyuri, Puerto de Vega / Tapia y Cascadas de Oneta).
+  - Incorporada rotación diaria automática en `js/components/tourismCard.js` entre los 6 planes más cercanos compatibles con la meteorología activa (`Hoy` / `Mañana`) y añadido el botón compacto `#btn-random-tourism-plan` (`🎲 Otro plan`) conectado en `js/app.js` para alternar al instante sin abrir el selector completo.
+  - Actualizado cache-busting silencioso a `v3.0.38.56` (`CURRENT_CHANGELOG_PROMPT_VERSION = '3.0.38'` intacto durante prueba local, Regla 13).
+
 ## 📅 Agenda Meteorológica Viva en «Ocio»: Mercados y Próximas Folixas (`v3.0.38.55`) — 2026-11-25
 - **Estado / Rollback anterior seguro:** Commit `cd3009a` (`v3.0.38.54`).
 - **Motivo del cambio:** Enriquecer la pestaña *Ocio* con acontecimientos locales reales que cambien cada día de la semana y cada semana del calendario asturiano, poniendo el foco en la meteorología específica de cada localidad y franja horaria.

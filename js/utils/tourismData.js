@@ -1217,14 +1217,529 @@ export const PLANES_ASTURIAS_CATALOGO = [
         heading: 'Frente a las Cumbres Nivosas',
         text: 'Cuando el invierno deja nieve en las estaciones de Valgrande-Pajares, no hay mejor plan que ascender a ver el espectáculo blanco y reconfortarse con un menú de cuchara humeante.'
       },
+          {
+            icon: '⛪',
+            heading: 'Santa Cristina de Lena (Prerrománico)',
+            text: 'En la bajada del valle no dejes de visitar Santa Cristina de Lena (Siglo IX, UNESCO), erigida sobre una colina con vistas panorámicas sobre todo el valle minero.'
+          }
+        ]
+      },
+      // ==========================================
+      // ✨ AMPLIACIÓN (+16 JOYAS DE ASTURIAS -> 52 PLANES)
+      // ==========================================
       {
-        icon: '⛪',
-        heading: 'Santa Cristina de Lena (Prerrománico)',
-        text: 'En la bajada del valle no dejes de visitar Santa Cristina de Lena (Siglo IX, UNESCO), erigida sobre una colina con vistas panorámicas sobre todo el valle minero.'
+        id: 'las_caldas_termas',
+        title: 'Balneario & Villa Termal de Las Caldas',
+        type: 'indoor',
+        weatherType: 'snow',
+        icon: '♨️',
+        comarca: 'oviedo_centro',
+        town: 'Oviedo (Las Caldas)',
+        lat: 43.3328,
+        lon: -5.9219,
+        distInfo: '8 km de Oviedo',
+        desc: 'Historico complejo termal minero-medicinal del siglo XVIII en el valle del Nalón, con aguas termales a 40 °C y arquitectura neoclásica.',
+        tip: 'Refugio termal perfecto en días fríos o desapacibles para disfrutar del contraste de aguas calientes a cubierto.',
+        tag: 'Termalismo & Relax',
+        sections: [
+          {
+            icon: '♨️',
+            heading: 'Aguas Termales desde 1776',
+            text: 'Catalogada como Villa Termal histórica, su manantial brota naturalmente entre calizas carboníferas y conserva la monumental Casa de Baños diseñada por Ventura Rodríguez.'
+          },
+          {
+            icon: '❄️',
+            heading: 'Plan Estrella de Frío e Invierno',
+            text: 'Cuando bajan las temperaturas o cae lluvia persistente sobre la región, sus piscinas hidrotermales cubiertas y circuitos de contraste ofrecen el mayor confort térmico de Asturias.'
+          },
+          {
+            icon: '🌿',
+            heading: 'Entorno del Valle del Nalón',
+            text: 'Situado junto a la Senda Verde de Fuso y el castillo de Priorio, permite combinar paseo llano con descanso termal y cocina tradicional ovetense.'
+          }
+        ]
+      },
+      {
+        id: 'bulnes_funicular',
+        title: 'Funicular y Aldea de Bulnes',
+        type: 'mountain',
+        weatherType: 'snow',
+        icon: '🚞',
+        comarca: 'oriente_picos',
+        town: 'Cabrales',
+        lat: 43.2414,
+        lon: -4.8192,
+        distInfo: 'Picos de Europa',
+        desc: 'Viaje subterráneo de 7 minutos excavado bajo la roca caliza desde Poncebos hasta la recóndita aldea sin carreteras de Bulnes, a los pies del Naranjo.',
+        tip: 'Ideal con frío o ambiente invernal gracias al trayecto 100% cubierto y sus tabernas de montaña con chimenea.',
+        tag: 'Corazón de Picos',
+        sections: [
+          {
+            icon: '🚞',
+            heading: 'Túnel Ferroviario bajo Peña Maín',
+            text: 'Inaugurado en 2001, el funicular salva 400 metros de desnivel atravesando 2,2 kilómetros por el interior de la montaña hasta una aldea tradicional de pastores aislada por gargantas verticales.'
+          },
+          {
+            icon: '❄️',
+            heading: 'Vistas al Picu Urriellu',
+            text: 'Desde el mirador de Urriellu, a diez minutos de La Villa, se contempla la cara oeste del Naranjo de Bulnes enmarcada entre crestas nevadas durante los meses fríos.'
+          },
+          {
+            icon: '🍲',
+            heading: 'Fabada, Cabrales y Lumbre',
+            text: 'Las casas tradicionales del barrio del Castillo sirven platos de cuchara, quesos curados en cueva y caldo caliente tras la subida.'
+          }
+        ]
+      },
+      {
+        id: 'cueva_queso_cabrales',
+        title: 'Cueva-Exposición del Queso Cabrales',
+        type: 'indoor',
+        weatherType: 'snow',
+        icon: '🧀',
+        comarca: 'oriente_picos',
+        town: 'Cabrales (Arenas)',
+        lat: 43.3017,
+        lon: -4.8158,
+        distInfo: 'Arenas de Cabrales',
+        desc: 'Cueva natural kárstica visitable donde madura el queso azul más famoso de España gracias a la humedad natural y corrientes subterráneas.',
+        tip: 'Temperatura estable bajo tierra todo el año y degustación artesanal perfecta en jornadas frías.',
+        tag: 'Gastronomía DOP',
+        sections: [
+          {
+            icon: '🧀',
+            heading: 'Maduración en Cueva Natural',
+            text: 'La visita guiada explica el cuajado tradicional de leches de vaca, oveja y cabra de los pastos de Picos y la colonización natural del Penicillium en galerías subterráneas.'
+          },
+          {
+            icon: '❄️',
+            heading: 'Microclima Constante de 10 °C',
+            text: 'La cueva mantiene entre 8 y 12 °C y un 90% de humedad todo el año, ajena al frío exterior o la lluvia de montaña.'
+          },
+          {
+            icon: '🍷',
+            heading: 'Degustación y Pueblo de Arenas',
+            text: 'Finaliza con cata comentada de queso Cabrales D.O.P. maridado con sidra natural o vino dulce en el corazón de Arenas.'
+          }
+        ]
+      },
+      {
+        id: 'tazones_puerto',
+        title: 'Tazones: Puerto Pesquero y Sidrerías',
+        type: 'gastronomy',
+        weatherType: 'snow',
+        icon: '🦀',
+        comarca: 'gijon_maritimo',
+        town: 'Villaviciosa (Tazones)',
+        lat: 43.5453,
+        lon: -5.4003,
+        distInfo: 'Puerto Histórico',
+        desc: 'Casas escalonadas de pescadores en la bocana de la ría de Villaviciosa, primer desembarco de Carlos V y meca del marisco y la cuchara marinera.',
+        tip: 'Con ambiente fresco, resguardado en sus estrechas calles marineras frente al puerto y sus comedores de pescados.',
+        tag: 'Villa Marinera & Marisco',
+        sections: [
+          {
+            icon: '⚓',
+            heading: 'Conjunto Histórico-Artístico Marineru',
+            text: 'Sus dos barrios —San Miguel y San Roque— trepan por la ladera verde formando una estampa pintoresca presidida por redes, barcas y la Casa de las Conchas.'
+          },
+          {
+            icon: '🦀',
+            heading: 'Cuchara de Mar y Centollo del Cantábrico',
+            text: 'Con frío en la costa apetecen fabes con almejas, sopa de pescado y marisco fresco de las lonjas cercanas en las terrazas acristaladas del puerto.'
+          },
+          {
+            icon: '🦕',
+            heading: 'Huellas Jurásicas en El Pedrero',
+            text: 'En el extremo oeste del pedrero, durante la bajamar, pueden verse icnitas originales de dinosaurios grabadas en la roca costera.'
+          }
+        ]
+      },
+      {
+        id: 'oscos_fraguas',
+        title: 'Santa Eulalia de Oscos y Ruta de Fraguas',
+        type: 'mountain',
+        weatherType: 'snow',
+        icon: '🔥',
+        comarca: 'occidente_eonavia',
+        town: 'Santa Eulalia de Oscos',
+        lat: 43.2589,
+        lon: -7.0211,
+        distInfo: 'Reserva Oscos-Eo',
+        desc: 'Aldea artesanal de herreros, fraguas hidráulicas y arquitectura de pizarra en el corazón verde del Occidente interior.',
+        tip: 'Tiempo de brasas, fragua y cocina tradicional de matanza y pote en la comarca de Los Oscos.',
+        tag: 'Artesanía & Tradición',
+        sections: [
+          {
+            icon: '🔨',
+            heading: 'Conjunto Etnográfico de Mazonovo',
+            text: 'Muestra el poder hidráulico del río Agüeira moviendo el gran mazo de la fragua tradicional donde aún se forjan navajas y aperos artesanales.'
+          },
+          {
+            icon: '❄️',
+            heading: 'Arquitectura de Pizarra en Invierno',
+            text: 'Sus tejados negros de lousa, hórreos de madera y chimeneas humeantes convierten cualquier día frío en una postal etnográfica inolvidable.'
+          },
+          {
+            icon: '🍲',
+            heading: 'Pote Asturiano y Queso de Oscos',
+            text: 'Visita queserías locales artesanas y degusta el queso tierno de Los Oscos junto a embutidos curados al humo de roble.'
+          }
+        ]
+      },
+      {
+        id: 'ecomuseo_samuno',
+        title: 'Ecomuseo Minero del Valle de Samuño (Tren Minero)',
+        type: 'indoor',
+        weatherType: 'rain',
+        icon: '🚂',
+        comarca: 'cuencas_mineras',
+        town: 'Langreo (Ciaño)',
+        lat: 43.2797,
+        lon: -5.6836,
+        distInfo: 'Valle del Nalón',
+        desc: 'Viaje en auténtico tren minero que atraviesa bosques y se adentra bajo tierra por la galería Socavón Emilia hasta el interior del Pozo San Luis.',
+        tip: 'Experiencia cubierta casi en su totalidad: vagones cerrados y galerías subterráneas a salvo de la lluvia.',
+        tag: 'Tren & Patrimonio Minero',
+        sections: [
+          {
+            icon: '🚂',
+            heading: 'Recorrido Ferroviario Subterráneo',
+            text: 'El tren de vía estrecha parte de la estación de El Cadavíu, remonta el valle minero y penetra en una galería real de mina de hulla iluminada hasta salir junto al castillete histórico.'
+          },
+          {
+            icon: '🌧️',
+            heading: 'Refugio Bajo Tierra en Días de Agua',
+            text: 'Ideal cuando descarga lluvia sobre las cuencas: tanto el viaje en convoy cubierto como el edificio de la máquina de extracción modernista están protegidos.'
+          },
+          {
+            icon: '⚒️',
+            heading: 'Pozo San Luis de La Nueva',
+            text: 'Permite visitar la sala de máquinas intacta de 1930, lampistería y vestuarios mineros convertidos en museo vivo.'
+          }
+        ]
+      },
+      {
+        id: 'llagar_sidra_visita',
+        title: 'Visita Guiada a Llagar de Sidra (El Gaitero / Trabanco)',
+        type: 'indoor',
+        weatherType: 'rain',
+        icon: '🍾',
+        comarca: 'gijon_maritimo',
+        town: 'Villaviciosa / Gijón',
+        lat: 43.4894,
+        lon: -5.4267,
+        distInfo: 'Cultura Sidrera UNESCO',
+        desc: 'Recorrido entre toneles centenarios de madera de castaño, prensas tradicionales y cata de sidra natural o espumosa bajo techo.',
+        tip: 'Plan 100% a cubierto bajo las naves históricas de fermentación y espicha asturiana cuando llueve fuera.',
+        tag: 'Cultura Sidrera',
+        sections: [
+          {
+            icon: '🍏',
+            heading: 'Patrimonio Inmaterial de la Humanidad',
+            text: 'Conoce todo el ciclo de la manzana asturiana desde la mayadora y los lagares tradicionales hasta las enormes cubas de madera donde fermenta la sidra.'
+          },
+          {
+            icon: '🌧️',
+            heading: 'Plan Invernal y de Lluvia por Excelencia',
+            text: 'Las visitas guiadas se desarrollan íntegramente dentro de las bodegas y museos de llagar (como El Gaitero en Villaviciosa o Cortina/Trabanco), sin depender del cielo.'
+          },
+          {
+            icon: '🥂',
+            heading: 'Escanciado y Maridaje',
+            text: 'Incluye degustación guiada de distintas variedades DOP Sidra de Asturias y aperitivo tradicional con quesos de la tierra.'
+          }
+        ]
+      },
+      {
+        id: 'candamo_arte_rupestre',
+        title: 'Palacio Valdés Bazán y Cueva de Candamo',
+        type: 'indoor',
+        weatherType: 'rain',
+        icon: '🎨',
+        comarca: 'oviedo_centro',
+        town: 'Candamo (San Román)',
+        lat: 43.4572,
+        lon: -6.0714,
+        distInfo: 'Bajo Nalón (15 min Castrillón)',
+        desc: 'Centro de Interpretación de la Caverna de la Peña (Patrimonio UNESCO) con reproducciones fieles del arte paleolítico del Bajo Nalón.',
+        tip: 'A un paso de Piedras Blancas y Avilés: museo cubierto y tranquilo para esquivar chubascos.',
+        tag: 'Arte Rupestre UNESCO',
+        sections: [
+          {
+            icon: '🎨',
+            heading: 'La Capilla Sixtina del Paleolítico Nalón',
+            text: 'El Centro de Interpretación instalado en el Palacio de los Valdés-Bazán (siglo XVII) muestra el célebre Camarín y grabados rupestres de hace más de 18.000 años.'
+          },
+          {
+            icon: '🌧️',
+            heading: 'Escapada Corta Bajo Techo',
+            text: 'Por su cercanía a la comarca de Avilés y Castrillón es una opción rápida e instructiva en jornadas de lluvia intermitente.'
+          },
+          {
+            icon: '🍓',
+            heading: 'Tierra de Fresas del Nalón',
+            text: 'Candamo es famoso en toda Asturias por sus huertas de fresas y miradores sobre los meandros del río Nalón.'
+          }
+        ]
+      },
+      {
+        id: 'museo_arqueologico_oviedo',
+        title: 'Museo Arqueológico de Asturias',
+        type: 'indoor',
+        weatherType: 'rain',
+        icon: '🏺',
+        comarca: 'oviedo_centro',
+        town: 'Oviedo',
+        lat: 43.3614,
+        lon: -5.8425,
+        distInfo: 'Oviedo Antiguo',
+        desc: 'Claustro renacentista de San Vicente en el corazón del casco antiguo ovetense con tesoros prerrománicos, castreños y romanos.',
+        tip: 'Entrada gratuita y recorrido interior climatizado ideal con temporal o lluvia en el centro.',
+        tag: 'Historia & Arqueología',
+        sections: [
+          {
+            icon: '🏺',
+            heading: 'Del Paleolítico al Reino de Asturias',
+            text: 'Alberga estelas romanas, torques áureos castreños, aras de piedra y capiteles originales del arte prerrománico asturiano en torno a un claustro del siglo XVI.'
+          },
+          {
+            icon: '🌧️',
+            heading: 'Visita Gratuita a Cubierto',
+            text: 'Ubicado detrás de la Catedral, permite pasar varias horas secas y entretenidas sin coste de entrada.'
+          },
+          {
+            icon: '☕',
+            heading: 'Casco Histórico y Cafés de Oviedo',
+            text: 'Al salir, la plaza del Paraguas, el Fontán y la calle Gascona quedan a dos minutos a pie.'
+          }
+        ]
+      },
+      {
+        id: 'pueblu_asturies_gijon',
+        title: 'Muséu del Pueblu d’Asturies y de la Gaita',
+        type: 'indoor',
+        weatherType: 'rain',
+        icon: '🎶',
+        comarca: 'gijon_maritimo',
+        town: 'Gijón',
+        lat: 43.5392,
+        lon: -5.6353,
+        distInfo: 'Entorno Piles / Molinón',
+        desc: 'Conjunto etnográfico junto al río Piles con el Pabellón de Asturias de la Expo 92, Museo Internacional de la Gaita, hórreos y paneras.',
+        tip: 'Combinación perfecta de pabellones cubiertos de historia asturiana cuando llueve en Gijón.',
+        tag: 'Etnografía & Folclore',
+        sections: [
+          {
+            icon: '🎶',
+            heading: 'Museo Internacional de la Gaita',
+            text: 'Reúne cornamusas y gaitas de toda Europa, América y África junto a grabaciones sonoras e historia de la música tradicional asturiana.'
+          },
+          {
+            icon: '🌧️',
+            heading: 'Pabellones Interiores y Casa Valdés',
+            text: 'El Pabellón de la Expo 92 y los edificios museísticos cubiertos permiten explorar fotografía histórica, indumentaria tradicional y oficios bajo techo.'
+          },
+          {
+            icon: '🏡',
+            heading: 'Hórreos, Paneras y Bolera',
+            text: 'Si abre un claro entre nubes, el parque exterior reúne ejemplares originales de arquitectura rural asturiana trasladados piedra a piedra.'
+          }
+        ]
+      },
+      {
+        id: 'lastres_mirador_sanroque',
+        title: 'Lastres y Mirador de San Roque',
+        type: 'outdoor',
+        weatherType: 'sun',
+        icon: '⛵',
+        comarca: 'oriente_picos',
+        town: 'Colunga (Lastres)',
+        lat: 43.5139,
+        lon: -5.2697,
+        distInfo: 'Pueblo Más Bonito',
+        desc: 'Villa marinera colgada en anfiteatro sobre el Cantábrico, famosa por sus calles empinadas, su puerto pesquero y las vistas del Sueve.',
+        tip: 'Bajo cielo despejado o resol limpio ofrece una de las panorámicas más espectaculares de mar y Picos nevados.',
+        tag: 'Villa Marinera & Mirador',
+        sections: [
+          {
+            icon: '⛵',
+            heading: 'Anfiteatro Azul Frente al Sueve',
+            text: 'Desde la ermita de San Roque en lo alto se divisa de un solo golpe el caserío de tejados rojos cayendo al puerto, la playa de La Griega y la Sierra del Sueve detrás.'
+          },
+          {
+            icon: '☀️',
+            heading: 'Luz Cristalina del Cantábrico',
+            text: 'Con viento flojo y sol, recorrer sus callejuelas empedradas hasta la Torre del Reloj y el muelle pesquero es una postal continua.'
+          },
+          {
+            icon: '🐟',
+            heading: 'Cocina de Barco de Bajura',
+            text: 'Las sidrerías del muelle trabajan pescados del día, fabes con pantrucu y calderetas marineras.'
+          }
+        ]
+      },
+      {
+        id: 'cabo_vidio_silencio',
+        title: 'Cabo Vidio y Playa del Silencio',
+        type: 'outdoor',
+        weatherType: 'sun',
+        icon: '🪨',
+        comarca: 'occidente_eonavia',
+        town: 'Cudillero (Oviñana)',
+        lat: 43.5919,
+        lon: -6.2450,
+        distInfo: 'Costa Vaquera (25 min)',
+        desc: 'Acantilados verticales de cuarcita de 80 metros rodeando el faro de Oviñana y el espectacular anfiteatro natural de la Playa del Silencio.',
+        tip: 'Espectacular en días claros con brisa suave para ver desde Cabo Peñas hasta Estaca de Bares.',
+        tag: 'Acantilados & Faro',
+        sections: [
+          {
+            icon: '🪨',
+            heading: 'Mirador Panorámico e Iglesiona',
+            text: 'La senda rodea el Faro de Cabo Vidio —uno de los últimos faros levantados en España— pasando sobre la gran cueva marina de La Iglesiona.'
+          },
+          {
+            icon: '☀️',
+            heading: 'Aguas Turquesas en el Silencio',
+            text: 'A cinco minutos en coche, la Playa del Silencio en Castañeras luce islotes dorados y aguas transparentes bajo el sol.'
+          },
+          {
+            icon: '⚠️',
+            heading: 'Prudencia en Bordes de Acantilado',
+            text: 'Mantén siempre distancia con los cortados sin valla y consulta nuestro aviso de viento antes de acercarte al faro.'
+          }
+        ]
+      },
+      {
+        id: 'lagos_covadonga',
+        title: 'Lagos de Covadonga (Enol y Ercina)',
+        type: 'outdoor',
+        weatherType: 'sun',
+        icon: '🏔️',
+        comarca: 'oriente_picos',
+        town: 'Cangas de Onís',
+        lat: 43.2725,
+        lon: -4.9867,
+        distInfo: 'Parque Nacional Picos',
+        desc: 'Lagos glaciares de Enol y Ercina a más de 1.100 metros de altitud rodeados de praderías alpinas, hayedos y picos calizos.',
+        tip: 'Imprescindible en días despejados de visibilidad alta; con niebla o nieve conviene revisar el acceso en la pestaña Montaña.',
+        tag: 'Alta Montaña Glaciar',
+        sections: [
+          {
+            icon: '🏔️',
+            heading: 'Espejos Glaciares del Cornión',
+            text: 'El circuito corto enlaza el Lago Enol, el Centro de Visitantes Pedro Pidal, el Mirador de Entrelagos y el Lago Ercina entre majadas tradicionales de pastores.'
+          },
+          {
+            icon: '☀️',
+            heading: 'Visibilidad de Alta Montaña',
+            text: 'Solo con cielos limpios se aprecia el reflejo del macizo occidental sobre el agua; verifica siempre la cota de nieve y nieblas antes de subir.'
+          },
+          {
+            icon: '🚌',
+            heading: 'Regulación de Acceso y Lanzaderas',
+            text: 'En fechas de alta afluencia el acceso privado se regula desde Cangas de Onís mediante autobuses lanzadera ALSA.'
+          }
+        ]
+      },
+      {
+        id: 'playa_gulpiyuri_llanes',
+        title: 'Playa de Gulpiyuri y Senda Costera',
+        type: 'outdoor',
+        weatherType: 'sun',
+        icon: '🌊',
+        comarca: 'oriente_picos',
+        town: 'Llanes (Naves)',
+        lat: 43.4475,
+        lon: -4.8861,
+        distInfo: 'Monumento Natural',
+        desc: 'La famosa playa interior sin salida directa al mar, alimentada por un túnel subterráneo bajo los prados verdes entre Llanes y Ribadesella.',
+        tip: 'Paseo luminoso entre praderías combinando la bajada con la pleamar para ver entrar el agua en la concha.',
+        tag: 'Monumento Natural',
+        sections: [
+          {
+            icon: '🌊',
+            heading: 'Un Fenómeno Kárstico Único',
+            text: 'El mar Cantábrico se cuela a través de una grieta caliza de 50 metros bajo los prados formando una pequeña media luna de arena dorada tierra adentro.'
+          },
+          {
+            icon: '☀️',
+            heading: 'Sincronía con la Tabla de Mareas',
+            text: 'Consúltala en nuestra pestaña Playas: con marea alta entra el agua viva, mientras que en bajamar la arena queda en seco.'
+          },
+          {
+            icon: '🚶‍♂️',
+            heading: 'Senda hasta San Antolín',
+            text: 'El camino rural une fácilmente Gulpiyuri con la gran playa abierta de San Antolín y los acantilados de Naves.'
+          }
+        ]
+      },
+      {
+        id: 'puerto_vega_tapia',
+        title: 'Puerto de Vega y Tapia de Casariego',
+        type: 'outdoor',
+        weatherType: 'sun',
+        icon: '🧭',
+        comarca: 'occidente_eonavia',
+        town: 'Navia / Tapia',
+        lat: 43.5628,
+        lon: -6.6431,
+        distInfo: 'Costa Occidente',
+        desc: 'Doble parada marinera en la costa occidental: la coqueta dársena de Puerto de Vega y el paseo de la Punta del Faro en Tapia.',
+        tip: 'Día soleado ideal para recorrer miradores sobre el mar occidental, piscinas naturales y lonjas tradicionales.',
+        tag: 'Puertos Occidentales',
+        sections: [
+          {
+            icon: '🧭',
+            heading: 'Puerto de Vega y Casa de Jovellanos',
+            text: 'Premio Pueblo Ejemplar de Asturias, conserva almenas portuarias, un museo etnográfico del mar y paseos tranquilos junto a sus barcas.'
+          },
+          {
+            icon: '🏄‍♂️',
+            heading: 'Tapia, Cuna del Surf Europeo',
+            text: 'El paseo marítimo hasta el Faro de Tapia y la playa de Os Campos combina mar abierto, piscinas de agua salada y ambiente marinero todo el año.'
+          },
+          {
+            icon: '🐟',
+            heading: 'Lonja del Occidente',
+            text: 'Famoso por sus pescados de roca, calamares y gastronomía marinera servida frente a los muelles.'
+          }
+        ]
+      },
+      {
+        id: 'cascadas_oneta',
+        title: 'Cascadas de Oneta y Bosques del Navia',
+        type: 'outdoor',
+        weatherType: 'fog',
+        icon: '💧',
+        comarca: 'occidente_eonavia',
+        town: 'Villayón (Oneta)',
+        lat: 43.4658,
+        lon: -6.6633,
+        distInfo: 'Monumento Natural',
+        desc: 'Tres saltos de agua encadenados en el río Acebo entre alisedas, castaños y antiguos molinos de piedra cubiertos de musgo.',
+        tip: 'Espectacular en días grises o de bruma atlántica, cuando la humedad resalta el verde esmeralda del bosque y el caudal.',
+        tag: 'Cascadas & Bosque Húmedo',
+        sections: [
+          {
+            icon: '💧',
+            heading: 'La Firbia, Ulloa y Maseirúa',
+            text: 'Sendero corto y accesible desde el pueblo de Oneta que conduce primero a la gran caída de La Firbia (15 metros) y se interna río abajo entre molinos antiguos.'
+          },
+          {
+            icon: '🌫️',
+            heading: 'Luz Difusa de Cielos Nublados',
+            text: 'Los bosques ribereños ganan magia fotográfica bajo cielos cubiertos o bruma suave, evitando las sombras duras del sol directo.'
+          },
+          {
+            icon: '🥾',
+            heading: 'Calzado con Agarre en Roca Húmeda',
+            text: 'El tramo hacia la segunda y tercera cascada puede ser resbaladizo tras jornadas de lluvia: lleva suela taqueada y extrema la precaución.'
+          }
+        ]
       }
-    ]
-  }
-];
+    ];
 
 /**
  * Obtiene la ficha didáctica de un plan turístico específico
