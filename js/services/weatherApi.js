@@ -374,7 +374,13 @@ function applyCantabricoConsensus(weather, consensus, radarEcho = null, satCloud
       (eCode === null || eCode <= 3 || eCode === 45 || eCode === 48) &&
       (curECode === null || curECode <= 3 || curECode === 45 || curECode === 48)) || hasEcmwfSolarDry;
 
-    const is15MinAndRadarDry = !hasRadarRain && rawPrecip < 0.1 && (rawCode <= 3 || ePrecip <= 0.1);
+    const isRadarConfirmedClean = Boolean(radarEcho && !hasRadarRain);
+    const isExtremeOrbayuMeon = hum >= 94 && rawDirectIrr < 80;
+    const is15MinAndRadarDry = !hasRadarRain && rawPrecip < 0.1 && (
+      rawCode <= 3 ||
+      ePrecip <= 0.1 ||
+      (isRadarConfirmedClean && ePrecip <= 0.3 && !isExtremeOrbayuMeon)
+    );
     const isRadarAndEcmwfDryVeto = (!hasRadarRain && isEcmwfDryNow && rawPrecip < 1.5) || is15MinAndRadarDry;
 
     const isBothModelsDryCurrent = ((rawPrecip < 0.1 && ePrecip < 0.1 && curEPrecip < 0.1) &&

@@ -2,6 +2,11 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌦️ Veto Seco del Radar Limpio frente a Falso Orbayu (`v3.0.38.54`) — 2026-11-25
+- **Estado / Rollback anterior seguro:** Commit `6efcf51` (`v3.0.38.53`).
+- **Motivo del cambio:** En Castrillón / Piedras Blancas (`11:00`), con radar RainViewer completamente seco (`isRadarConfirmedClean`), AROME `0.00 mm` (con radiación `166,7 W/m²` aunque arrastraba `weather_code: 51`) y ECMWF `0.20 mm` (`code 53`), `is15MinAndRadarDry` fallaba al exigir `rawCode <= 3 || ePrecip <= 0.1`, dejando pasar un falso *Orbayu*.
+- **Solución Web (`v3.0.38.54`):** Reforzado `is15MinAndRadarDry` en `js/services/weatherApi.js` (`applyCantabricoConsensus`) para activar el veto 2-contra-1 a favor de seco cuando el radar está confirmado sin lluvia (`!hasRadarRain`, aunque exista eco beige seco `hasWeakCloudEcho` de ~12 dBZ) y AROME marca `0.0 mm`, incluso si AROME dejó `code 51` residual y ECMWF marca `<= 0.3 mm`, preservando el rescate de *Orbayu meón* real solo bajo saturación extrema (`hum >= 94%` y `direct_normal_irradiance < 80 W/m²`). Actualizado cache-busting silencioso (`CURRENT_CHANGELOG_PROMPT_VERSION = '3.0.38'` intacto, Regla 13).
+
 ## 🌧️ Calibración Prudente de Radar Universal Blue en Web (`v3.0.38.53`) — 2026-11-24
 - **Estado / Rollback anterior seguro:** Commit `cff5baf` (`v3.0.38.52`).
 - **Motivo del cambio:** Tras contrastar en vivo el radar RainViewer sobre Piedras Blancas (`18:38` vs `18:49`, con retraso físico de ~10 min entre frames), se comprobó que escalar el azul marino oscuro a *Lluvia moderada* provoca falsos avisos moderados cuando el núcleo amarillo/naranja ya ha pasado, mientras que el umbral previo `b >= 120` dejaba fuera como seco al azul marino intenso (`RGB(0,71,104)`).
