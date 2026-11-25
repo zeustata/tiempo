@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303854-veto-orbayu-radar-seco';
+const CACHE_NAME = 'meteoasturlode-v303855-ocio-mercados-folixas';
 const STATIC_ASSETS = [
   './',
   './index.html',

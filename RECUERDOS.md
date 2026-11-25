@@ -2,6 +2,14 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📅 Agenda Meteorológica Viva en «Ocio»: Mercados y Próximas Folixas (`v3.0.38.55`) — 2026-11-25
+- **Estado / Rollback anterior seguro:** Commit `cd3009a` (`v3.0.38.54`).
+- **Motivo del cambio:** Enriquecer la pestaña *Ocio* con acontecimientos locales reales que cambien cada día de la semana y cada semana del calendario asturiano, poniendo el foco en la meteorología específica de cada localidad y franja horaria.
+- **Implementación:**
+  - Creado `js/utils/eventsAgendaData.js` con catálogo verificado de 24 mercados semanales de Asturias (`ASTURIAS_WEEKLY_MARKETS`, cobertura lunes a domingo) y folixas/romerías (fusión de `FESTIVOS_ASTURIAS_CATALOGO` + complemento estacional otoño-invierno-primavera), cálculo de distancia real y consulta única Open-Meteo batch (`fetchAgendaWeatherBatch`) con caché en memoria de 15 min: franja `09:00–14:00` en el concejo del mercado y previsión diaria exacta en folixas `< 10 días` (marcando `⏳ Previsión a 10 días` en fechas más lejanas).
+  - Integrada en `js/components/tourismCard.js` la tarjeta compacta **«📅 Mercados y Folixas con Previsión Real»** con conmutador de 2 pastillas (`🧺 Mercados` / `🎉 Próximas Folixas`), veredicto meteorológico (`Ideal para pasear`, `Lleva paraguas`, `Ojo a las rachas`, `Pasado por agua`), enlace directo oficial a `turismoasturias.es/agenda-de-asturias` e hidratación asíncrona (`hydrateTourismAgendaWeather`) enlazada desde `js/app.js`.
+  - Actualizado cache-busting silencioso a `v3.0.38.55` (`CURRENT_CHANGELOG_PROMPT_VERSION = '3.0.38'` intacto durante prueba local, Regla 13).
+
 ## 🌦️ Veto Seco del Radar Limpio frente a Falso Orbayu (`v3.0.38.54`) — 2026-11-25
 - **Estado / Rollback anterior seguro:** Commit `6efcf51` (`v3.0.38.53`).
 - **Motivo del cambio:** En Castrillón / Piedras Blancas (`11:00`), con radar RainViewer completamente seco (`isRadarConfirmedClean`), AROME `0.00 mm` (con radiación `166,7 W/m²` aunque arrastraba `weather_code: 51`) y ECMWF `0.20 mm` (`code 53`), `is15MinAndRadarDry` fallaba al exigir `rawCode <= 3 || ePrecip <= 0.1`, dejando pasar un falso *Orbayu*.

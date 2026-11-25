@@ -8,7 +8,7 @@ import { renderSurfCard } from './components/surfCard.js?v=3.0.25.2';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.38.21';
 import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.38.23';
 import { renderMountainCard, fetchMountainResortsWeather } from './components/mountainCard.js?v=3.0.38.50';
-import { renderTourismCard } from './components/tourismCard.js?v=3.0.25.5';
+import { renderTourismCard, hydrateTourismAgendaWeather } from './components/tourismCard.js?v=3.0.38.55';
 import { renderForecast, renderHourlyForecastBlock } from './components/forecastView.js?v=3.0.38.48';
 import { renderWeatherChart } from './components/chartsView.js?v=3.0.38.48';
 import { renderAstronomyView } from './components/astronomyCard.js?v=3.0.38.30';
@@ -52,7 +52,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.38.54';
+export const CURRENT_APP_VERSION = '3.0.38.55';
 // Control inteligente de Auto-Prompt del Changelog (Doctrina de No-Fatiga al Usuario - Feedback Lendo):
 // Solo se incrementa ante cambios visuales grandes, módulos nuevos o novedades perceptibles.
 // En ajustes finos, calibraciones matemáticas y parches internos se mantiene para no fatigar al usuario con modales.
@@ -3679,6 +3679,24 @@ class MeteoAsturiasApp {
         }
       });
     });
+
+    // 3. Conmutador de subpestañas en Agenda Meteorológica (Mercados / Próximas Folixas)
+    const mkList = document.getElementById('tourism-agenda-markets-list');
+    const fxList = document.getElementById('tourism-agenda-folixas-list');
+    document.querySelectorAll('.btn-agenda-subtab').forEach(tabBtn => {
+      tabBtn.addEventListener('click', (e) => {
+        const target = e.currentTarget.dataset.agendaTab;
+        if (!target) return;
+        this.triggerHaptic();
+        document.querySelectorAll('.btn-agenda-subtab').forEach(b => b.classList.toggle('active', b === e.currentTarget));
+        if (mkList) mkList.style.display = target === 'markets' ? 'block' : 'none';
+        if (fxList) fxList.style.display = target === 'folixas' ? 'block' : 'none';
+      });
+    });
+
+    // 4. Hidratación asíncrona de previsión Open-Meteo por localidad para Mercados y Folixas
+    const activeTourismDay = this.selectedTourismDay || (new Date().getHours() >= 19 ? 'tomorrow' : 'today');
+    hydrateTourismAgendaWeather(this.currentConcejo, activeTourismDay, this.getEffectiveIconTheme());
   }
 
   refreshTourismPanel() {

@@ -7,6 +7,8 @@
  */
 
 import { getRecommendedPlans, getTourismPlanExplanation } from '../utils/tourismData.js?v=3.0.24.62';
+import { getWeatherInfo, renderWeatherIconHtml } from '../utils/weatherIcons.js?v=3.0.38.51';
+import { getMarketsForDay, getUpcomingFolixas, fetchAgendaWeatherBatch } from '../utils/eventsAgendaData.js?v=3.0.38.55';
 
 export function renderTourismCard(weatherData, concejo, selectedPlanId = null, selectedDay = null) {
   if (!concejo) return '';
@@ -38,6 +40,36 @@ export function renderTourismCard(weatherData, concejo, selectedPlanId = null, s
   const weatherLabel = activePlan.weatherType === 'rain' ? '🌧️ Días de lluvia' :
                        activePlan.weatherType === 'sun' ? '☀️ Días de sol' :
                        activePlan.weatherType === 'fog' ? '🌫️ Bruma o nubes' : '❄️ Frío / Cuchara';
+
+  const marketsData = getMarketsForDay(concejo, activeDay, 4);
+  const upcomingFolixas = getUpcomingFolixas(concejo, 21, 4);
+  const cleanUserId = (concejo.id || '').toLowerCase().trim();
+
+  const renderAgendaRowShell = (item) => {
+    const isSameConcejo = item.concejoId === cleanUserId || item.distKm < 2;
+    const distLabel = isSameConcejo ? '📍 En este concejo' : `🚗 ${item.distKm} km (~${item.driveMin}m)`;
+    const subLabel = item.kind === 'market'
+      ? `🗓️ ${item.weekdayLabel} • ${item.hours} • ${item.place}`
+      : `🗓️ ${item.dateLabel} (${item.weekdayName}) • ${item.town} • ${item.tag}`;
+    const initialStrip = (item.kind === 'folixa' && item.daysUntil >= 10)
+      ? `<span class="agenda-weather-metrics" style="color: var(--text-dim); font-weight: 600;">En ${item.daysUntil} días</span>
+         <span class="agenda-verdict-pill pending">⏳ Previsión a 10 días</span>`
+      : `<span class="agenda-weather-metrics" style="color: var(--text-dim); font-weight: 600;">Consultando previsión real…</span>
+         <span class="agenda-verdict-pill pending">📡 Cargando</span>`;
+
+    return `
+      <div class="agenda-event-row" data-agenda-id="${item.id}">
+        <div class="agenda-event-top">
+          <div class="agenda-event-title">${item.kind === 'market' ? '🧺' : (item.icon || '🎉')} ${item.name}</div>
+          <span class="agenda-dist-pill">${distLabel}</span>
+        </div>
+        <div class="agenda-event-meta">${subLabel}</div>
+        <div class="agenda-weather-strip" data-agenda-weather="${item.id}">
+          ${initialStrip}
+        </div>
+      </div>
+    `;
+  };
 
   return `
     <style>
@@ -166,6 +198,137 @@ export function renderTourismCard(weatherData, concejo, selectedPlanId = null, s
         background: rgba(56, 189, 248, 0.15);
         border-color: rgba(56, 189, 248, 0.5);
       }
+      .tourism-agenda-card {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-glass);
+        border-radius: var(--radius-lg);
+        box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.45);
+        backdrop-filter: blur(var(--glass-blur, 24px)) saturate(190%);
+        -webkit-backdrop-filter: blur(var(--glass-blur, 24px)) saturate(190%);
+        margin-bottom: 12px;
+        padding: 14px 12px;
+        box-sizing: border-box;
+        max-width: 100%;
+      }
+      .agenda-tab-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+        margin: 10px 0;
+        box-sizing: border-box;
+      }
+      .btn-agenda-subtab {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 8px 6px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text-dim, #94a3b8);
+        font-size: 0.78rem;
+        font-weight: 800;
+        cursor: pointer;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .btn-agenda-subtab.active {
+        background: linear-gradient(135deg, rgba(56, 189, 248, 0.28) 0%, rgba(14, 165, 233, 0.42) 100%);
+        border-color: var(--primary, #38bdf8);
+        color: #ffffff;
+      }
+      .agenda-event-row {
+        background: rgba(15, 23, 42, 0.52);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        padding: 10px;
+        margin-bottom: 8px;
+        box-sizing: border-box;
+      }
+      .agenda-event-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 8px;
+      }
+      .agenda-event-title {
+        font-size: 0.85rem;
+        font-weight: 800;
+        color: var(--text-main);
+        line-height: 1.25;
+        flex: 1;
+        min-width: 0;
+      }
+      .agenda-dist-pill {
+        flex-shrink: 0;
+        font-size: 0.72rem;
+        font-weight: 800;
+        padding: 2px 7px;
+        border-radius: 8px;
+        background: rgba(250, 204, 21, 0.14);
+        color: #facc15;
+        border: 1px solid rgba(250, 204, 21, 0.3);
+        white-space: nowrap;
+      }
+      .agenda-event-meta {
+        font-size: 0.74rem;
+        color: var(--text-dim);
+        margin-top: 3px;
+        line-height: 1.3;
+      }
+      .agenda-weather-strip {
+        margin-top: 8px;
+        padding-top: 7px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .agenda-weather-metrics {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.76rem;
+        color: var(--text-main);
+        font-weight: 700;
+        flex-wrap: wrap;
+        min-width: 0;
+      }
+      .agenda-verdict-pill {
+        font-size: 0.72rem;
+        font-weight: 800;
+        padding: 3px 8px;
+        border-radius: 8px;
+        white-space: nowrap;
+      }
+      .agenda-verdict-pill.ok {
+        background: rgba(34, 197, 94, 0.16);
+        color: #4ade80;
+        border: 1px solid rgba(34, 197, 94, 0.35);
+      }
+      .agenda-verdict-pill.warn {
+        background: rgba(250, 204, 21, 0.16);
+        color: #facc15;
+        border: 1px solid rgba(250, 204, 21, 0.35);
+      }
+      .agenda-verdict-pill.wind {
+        background: rgba(56, 189, 248, 0.16);
+        color: #38bdf8;
+        border: 1px solid rgba(56, 189, 248, 0.35);
+      }
+      .agenda-verdict-pill.danger {
+        background: rgba(239, 68, 68, 0.18);
+        color: #f87171;
+        border: 1px solid rgba(239, 68, 68, 0.35);
+      }
+      .agenda-verdict-pill.pending {
+        background: rgba(148, 163, 184, 0.14);
+        color: var(--text-dim);
+        border: 1px solid rgba(148, 163, 184, 0.28);
+      }
     </style>
 
     <div class="tourism-module-wrapper">
@@ -231,6 +394,43 @@ export function renderTourismCard(weatherData, concejo, selectedPlanId = null, s
             </p>
           </div>
         </div>
+      </div>
+
+      <!-- 2b. AGENDA METEOROLÓGICA: MERCADOS Y FOLIXAS CON PREVISIÓN REAL -->
+      <div class="tourism-agenda-card" id="tourism-agenda-card">
+        <div style="display: flex; flex-direction: column; gap: 2px;">
+          <h3 style="margin: 0; font-size: 0.96rem; font-weight: 800; color: var(--text-main); line-height: 1.25;">
+            📅 Mercados y Folixas con Previsión Real
+          </h3>
+          <span style="font-size: 0.75rem; color: var(--text-dim); line-height: 1.3;">
+            Tiempo específico en cada localidad para la franja del mercado (09–14h) o día de fiesta
+          </span>
+        </div>
+
+        <div class="agenda-tab-row">
+          <button type="button" class="btn-agenda-subtab active" data-agenda-tab="markets">
+            🧺 Mercados (${marketsData.items.length})
+          </button>
+          <button type="button" class="btn-agenda-subtab" data-agenda-tab="folixas">
+            🎉 Folixas (${upcomingFolixas.length})
+          </button>
+        </div>
+
+        <div id="tourism-agenda-markets-list">
+          ${marketsData.items.map(renderAgendaRowShell).join('')}
+        </div>
+
+        <div id="tourism-agenda-folixas-list" style="display: none;">
+          ${upcomingFolixas.length > 0
+            ? upcomingFolixas.map(renderAgendaRowShell).join('')
+            : '<div style="font-size: 0.78rem; color: var(--text-dim); padding: 8px 4px;">No hay folixas catalogadas en los próximos 21 días.</div>'}
+        </div>
+
+        <a href="https://www.turismoasturias.es/agenda-de-asturias" target="_blank" rel="noopener noreferrer"
+           style="margin-top: 6px; width: 100%; box-sizing: border-box; padding: 8px 10px; border-radius: 10px; background: rgba(56, 189, 248, 0.10); border: 1px solid rgba(56, 189, 248, 0.28); color: #38bdf8; font-size: 0.76rem; font-weight: 700; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px;">
+          <span>🌐 Ver Agenda Oficial de Turismo Asturias</span>
+          <span>↗</span>
+        </a>
       </div>
 
       <!-- 3. SELECTOR TÁCTIL ERGONÓMICO DE PLAN (DISPARADOR DEL BOTTOM SHEET) -->
@@ -367,4 +567,59 @@ export function renderTourismCard(weatherData, concejo, selectedPlanId = null, s
 
     </div>
   `;
+}
+
+/**
+ * Hidrata en segundo plano las previsiones Open-Meteo específicas de cada mercado/folixa
+ */
+export async function hydrateTourismAgendaWeather(concejo, activeDay = 'today', activeTheme = 'astur') {
+  if (!concejo) return;
+  const card = document.getElementById('tourism-agenda-card');
+  if (!card) return;
+
+  const marketsData = getMarketsForDay(concejo, activeDay, 4);
+  const upcomingFolixas = getUpcomingFolixas(concejo, 21, 4);
+  const allItems = [...marketsData.items, ...upcomingFolixas];
+  if (allItems.length === 0) return;
+
+  const weatherMap = await fetchAgendaWeatherBatch(allItems);
+
+  for (const item of allItems) {
+    const slot = card.querySelector(`[data-agenda-weather="${item.id}"]`);
+    if (!slot) continue;
+
+    const summary = weatherMap.get(item.id);
+    if (!summary) {
+      if (item.kind === 'folixa' && item.daysUntil >= 10) continue;
+      slot.innerHTML = `
+        <span class="agenda-weather-metrics" style="color: var(--text-dim); font-weight: 600;">Sin datos horarios ahora</span>
+        <span class="agenda-verdict-pill pending">⚠️ Reintentar</span>
+      `;
+      continue;
+    }
+
+    if (summary.outOfRange) {
+      slot.innerHTML = `
+        <span class="agenda-weather-metrics" style="color: var(--text-dim); font-weight: 600;">En ${item.daysUntil} días</span>
+        <span class="agenda-verdict-pill pending">⏳ Previsión a 10 días</span>
+      `;
+      continue;
+    }
+
+    const wInfo = getWeatherInfo(summary.wmoCode, 1);
+    const iconHtml = renderWeatherIconHtml(wInfo, 24, activeTheme);
+    const tempText = summary.minTemp === summary.maxTemp
+      ? `${summary.maxTemp}°`
+      : `${summary.minTemp}°/${summary.maxTemp}°`;
+
+    slot.innerHTML = `
+      <span class="agenda-weather-metrics">
+        ${iconHtml}
+        <span>${tempText}</span>
+        <span>💧 ${summary.precipMm} mm · ${summary.maxPop}%</span>
+        <span>💨 ${summary.maxGust} km/h</span>
+      </span>
+      <span class="agenda-verdict-pill ${summary.verdictTone}">${summary.verdict}</span>
+    `;
+  }
 }
