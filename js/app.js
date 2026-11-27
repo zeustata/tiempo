@@ -2,14 +2,14 @@ import { CONCEJOS_ASTURIAS, getConcejoById, findClosestConcejo, resolveSubLocali
 import { fetchWeatherData, WEATHER_MODELS, getModelById, getDefaultModel } from './services/weatherApi.js?v=3.0.38.54';
 import { fetchLiveRadarEcho } from './services/radarService.js?v=3.0.38.53';
 import { getPreferences, savePreferences, toggleFavorite, isFavorite, getCachedWeather, saveCachedWeather } from './utils/storage.js?v=3.0.23.63';
-import { renderCurrentWeather } from './components/currentCard.js?v=3.0.38.48';
+import { renderCurrentWeather } from './components/currentCard.js?v=3.0.38.57';
 import { renderMarineCard, scrollTideChartToNow } from './components/marineCard.js?v=3.0.25.10';
 import { renderSurfCard } from './components/surfCard.js?v=3.0.25.2';
 import { renderRoutesCard } from './components/routesCard.js?v=3.0.38.21';
 import { renderCyclingCard } from './components/cyclingCard.js?v=3.0.38.23';
 import { renderMountainCard, fetchMountainResortsWeather } from './components/mountainCard.js?v=3.0.38.50';
 import { renderTourismCard, hydrateTourismAgendaWeather } from './components/tourismCard.js?v=3.0.38.56';
-import { renderForecast, renderHourlyForecastBlock } from './components/forecastView.js?v=3.0.38.48';
+import { renderForecast, renderHourlyForecastBlock } from './components/forecastView.js?v=3.0.38.57';
 import { renderWeatherChart } from './components/chartsView.js?v=3.0.38.48';
 import { renderAstronomyView } from './components/astronomyCard.js?v=3.0.38.30';
 import { initAsturiasMap, playRadarAnimation, focusConcejoOnMap, resizeMap, resetMapCenter, locateUserGps, toggleRadarFullscreen, updateRadarForecastStrip } from './components/mapRadar.js?v=3.0.38.46';
@@ -52,7 +52,7 @@ const APP_MODULES = [
   { id: 'tourism', icon: '🗺️', title: 'Planes & Ocio', desc: 'Asesor meteorológico inteligente: qué hacer según el cielo en tu comarca', key: '0' }
 ];
 
-export const CURRENT_APP_VERSION = '3.0.38.56';
+export const CURRENT_APP_VERSION = '3.0.38.57';
 // Control inteligente de Auto-Prompt del Changelog (Doctrina de No-Fatiga al Usuario - Feedback Lendo):
 // Solo se incrementa ante cambios visuales grandes, módulos nuevos o novedades perceptibles.
 // En ajustes finos, calibraciones matemáticas y parches internos se mantiene para no fatigar al usuario con modales.
@@ -2602,6 +2602,14 @@ class MeteoAsturiasApp {
         this.switchHourlyViewMode('cards');
         const hourlyScroll = document.getElementById('hourly-cards-view');
         if (hourlyScroll) hourlyScroll.scrollLeft = 0;
+        const hourlyDaysBar = document.getElementById('hourly-days-bar');
+        if (hourlyDaysBar) {
+          const dayPills = hourlyDaysBar.querySelectorAll('.hourly-day-pill');
+          dayPills.forEach((p, i) => {
+            p.classList.toggle('active', i === 0);
+            p.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+          });
+        }
         const sensorsCarousel = document.getElementById('sensors-carousel');
         if (sensorsCarousel) sensorsCarousel.scrollLeft = 0;
         const heroWidgets = document.getElementById('hero-widgets-carousel');
@@ -2713,6 +2721,7 @@ class MeteoAsturiasApp {
 
   switchHourlyViewMode(mode) {
     const cardsView = document.getElementById('hourly-cards-view');
+    const daysBar = document.getElementById('hourly-days-bar');
     const chartView = document.getElementById('hourly-chart-view');
     const btnCards = document.getElementById('btn-mode-cards');
     const btnChart = document.getElementById('btn-mode-chart');
@@ -2727,6 +2736,7 @@ class MeteoAsturiasApp {
       btnChart.setAttribute('aria-selected', isChart ? 'true' : 'false');
     }
     if (cardsView) cardsView.style.display = isChart ? 'none' : 'flex';
+    if (daysBar) daysBar.style.display = isChart ? 'none' : 'flex';
     if (chartView) chartView.style.display = isChart ? 'block' : 'none';
 
     this.hourlyViewMode = mode;
@@ -2853,7 +2863,7 @@ class MeteoAsturiasApp {
         '.cosmos-widgets-carousel-wrap, .cosmos-widgets-carousel, .cosmos-widget-slide, .cosmos-widgets-dots, .cosmos-subcard, ' +
         '.astro-year-selector-wrap, .astro-year-pills, .astro-year-pill, .astro-visibility-toolbar, .astro-visibility-toggle, .astro-vis-btn, .astro-year-highlight-card, ' +
         '.sensors-carousel-section, .sensors-nav-toolbar, .sensor-nav-pill, .sensors-carousel, .sensor-card, .sensors-dots-indicator, .carousel-dots-indicator, .sensor-dot, ' +
-        '.hourly-scroll-container, .live-hourly-block, .hourly-card, .hourly-day-divider, ' +
+        '.hourly-scroll-container, .live-hourly-block, .hourly-card, .hourly-day-divider, .hourly-days-bar, .hourly-day-pill, ' +
         '.chart-scroll-viewport, #chart-canvas-wrapper, #meteo-chart-canvas, ' +
         '.chart-smart-digest, .digest-chip, ' +
         '.ski-cotas-carousel-wrapper, .ski-cotas-carousel, .ski-cota-slide, .ski-cotas-pills-bar, .ski-cota-tab-pill, ' +
@@ -3995,6 +4005,81 @@ class MeteoAsturiasApp {
     }
   }
 
+  /**
+   * Sincroniza la barra inferior de días (#hourly-days-bar) con el scroll del carrusel horario de 72h
+   * y permite saltar suavemente al inicio de cada día con un toque.
+   */
+  initHourlyDaysBar() {
+    const scroller = document.getElementById('hourly-cards-view');
+    const bar = document.getElementById('hourly-days-bar');
+    if (!scroller || !bar) return;
+
+    const pills = Array.from(bar.querySelectorAll('.hourly-day-pill'));
+    const cards = Array.from(scroller.querySelectorAll('.hourly-card[data-day-key]'));
+    if (!pills.length || !cards.length) return;
+
+    const setActiveDay = (dayKey) => {
+      if (!dayKey) return;
+      pills.forEach(p => {
+        const isMatch = p.dataset.dayKey === dayKey;
+        p.classList.toggle('active', isMatch);
+        p.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+      });
+    };
+
+    let clickLockUntil = 0;
+    let rafPending = false;
+
+    const syncFromScroll = () => {
+      rafPending = false;
+      if (Date.now() < clickLockUntil) return;
+      if (scroller.scrollLeft <= 6 && pills[0]) {
+        setActiveDay(pills[0].dataset.dayKey);
+        return;
+      }
+      if (scroller.scrollLeft + scroller.clientWidth >= scroller.scrollWidth - 6 && pills[pills.length - 1]) {
+        setActiveDay(pills[pills.length - 1].dataset.dayKey);
+        return;
+      }
+      const refX = scroller.scrollLeft + scroller.clientWidth * 0.45;
+      let closestCard = null;
+      let minDist = Infinity;
+      for (const card of cards) {
+        const center = card.offsetLeft + card.offsetWidth / 2;
+        const dist = Math.abs(center - refX);
+        if (dist < minDist) {
+          minDist = dist;
+          closestCard = card;
+        }
+      }
+      if (closestCard && closestCard.dataset.dayKey) {
+        setActiveDay(closestCard.dataset.dayKey);
+      }
+    };
+
+    scroller.addEventListener('scroll', () => {
+      if (!rafPending) {
+        rafPending = true;
+        requestAnimationFrame(syncFromScroll);
+      }
+    }, { passive: true });
+
+    pills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        this.triggerHaptic();
+        const dayKey = pill.dataset.dayKey;
+        const target = scroller.querySelector(`.hourly-day-divider[data-day-key="${dayKey}"]`)
+          || scroller.querySelector(`.hourly-card[data-day-key="${dayKey}"]`);
+        if (!target) return;
+        setActiveDay(dayKey);
+        clickLockUntil = Date.now() + 480;
+        scroller.scrollTo({ left: Math.max(0, target.offsetLeft - 4), behavior: 'smooth' });
+      });
+    });
+
+    setActiveDay(pills[0].dataset.dayKey);
+  }
+
   renderAllComponents() {
     if (!this.weatherData) return;
     const effectiveTheme = this.getEffectiveIconTheme();
@@ -4009,6 +4094,7 @@ class MeteoAsturiasApp {
         liveContainer.innerHTML = renderCurrentWeather(this.weatherData, this.currentConcejo, this.prefs.units, effectiveTheme, this.activeLocalidad);
         this.initSensorsCarousel();
         this.bindCarouselDots('hero-widgets-carousel', 'hero-widgets-pills-bar', '.hero-widget-slide');
+        this.initHourlyDaysBar();
       }
       // Verificación de Alertas Rojas de Emergencia (v2.2.34)
       this.checkEmergencyRedAlerts(this.weatherData, this.currentConcejo);

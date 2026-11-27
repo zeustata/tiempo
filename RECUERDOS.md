@@ -2,6 +2,15 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 📅 Barra Interactiva de Días bajo el Carrusel Horario 72h (`v3.0.38.57`) — 2026-11-27
+- **Estado / Rollback anterior seguro:** Commit `717fe1a` (`v3.0.38.56`).
+- **Motivo del cambio (Feedback Lendo en vivo con captura):** Al deslizar las tarjetas del carrusel horario de 72 horas, el separador vertical de día quedaba fuera de pantalla a la izquierda y dejaba de saberse si las horas visibles pertenecían a hoy, mañana o pasado.
+- **Implementación (Opción A):**
+  - En `js/components/forecastView.js` (`renderHourlyForecastBlock`), añadidas claves de fecha `data-day-key` a divisores y tarjetas e inyectada debajo de `#hourly-cards-view` la barra fija compacta `#hourly-days-bar` con botones táctiles por cada día del carrusel (`Hoy XX`, `Mañ XX`, `Dom XX`, `Lun XX`).
+  - En `js/app.js` (`initHourlyDaysBar`, `switchHourlyViewMode`, `switchTab` y zona de exclusión swipe), sincronizada en tiempo real con el scroll (`requestAnimationFrame`) iluminando el día visible en el centro del visor y permitiendo salto suave en 1 toque hasta cada día. La barra se oculta al pasar a modo **Curvas** y se restablece al cambiar de pestaña.
+  - En `css/components.css`, estilado en armonía cristal fina con `.hero-widgets-pills-bar` y compactado en `@media (max-width: 380px)` para garantizar una sola fila sin desbordes ni recortes en `360px`.
+  - Anti-caché silencioso a `v3.0.38.57` (`sw.js`, `index.html`, `currentCard.js`, `app.js`), manteniendo `CURRENT_CHANGELOG_PROMPT_VERSION = '3.0.38'` (Regla 13).
+
 ## 🎭 Ampliación a 52 Planes de Ocio y Rotación Diaria Inteligente (`v3.0.38.56`) — 2026-11-25
 - **Estado / Rollback anterior seguro:** Commit `26c1aae` (`v3.0.38.55`).
 - **Motivo del cambio:** Enriquecer el catálogo de *Planes & Ocio* (especialmente en las categorías con menos oferta como *Frío / Cuchara* y *Lluvia a cubierto*) y evitar que por pura ordenación geográfica saliese siempre el mismo plan fijo en primer lugar.

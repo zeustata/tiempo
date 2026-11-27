@@ -3380,10 +3380,97 @@
   overflow-x: auto;
   overflow-y: hidden;
   overscroll-behavior-y: auto;
-  padding: 10px 4px 18px;
+  padding: 10px 4px 12px;
   scrollbar-width: thin;
   -webkit-overflow-scrolling: touch;
   align-items: stretch;
+}
+
+/* Barra interactiva fija de días bajo el carrusel de 72h (Leyes 11 y 14) */
+.hourly-days-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 2px;
+  padding: 3px;
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+}
+
+.hourly-day-pill {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 30px;
+  padding: 4px 5px;
+  border-radius: 7px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: #94a3b8;
+  font-family: inherit;
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  white-space: nowrap;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hourly-day-pill .hdp-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(148, 163, 184, 0.45);
+  flex-shrink: 0;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hourly-day-pill .hdp-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hourly-day-pill:hover {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.hourly-day-pill.active {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: rgba(56, 189, 248, 0.48);
+  color: #38bdf8;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.22);
+}
+
+.hourly-day-pill.active .hdp-dot {
+  background: #38bdf8;
+  box-shadow: 0 0 6px rgba(56, 189, 248, 0.85);
+}
+
+@media (max-width: 380px) {
+  .hourly-days-bar {
+    gap: 3px;
+    padding: 3px;
+  }
+  .hourly-day-pill {
+    font-size: 0.69rem;
+    padding: 4px 3px;
+    gap: 3px;
+  }
+  .hourly-day-pill .hdp-dot {
+    width: 4px;
+    height: 4px;
+  }
 }
 
 .hourly-day-divider {

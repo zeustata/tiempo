@@ -191,12 +191,14 @@ export function renderHourlyForecastBlock(data, units = 'metric', iconTheme = 'a
   }
 
   let hourlyCards = '';
+  const hourlyDays = [];
   let lastDayDateStr = null;
   let prevIsDay = (startIndex > 0 && hourly.is_day && hourly.is_day[startIndex - 1] != null) ? hourly.is_day[startIndex - 1] : null;
 
   for (let i = startIndex; i < startIndex + 72 && i < hourly.time.length; i++) {
     const timeDate = new Date(hourly.time[i]);
     const dayDateStr = timeDate.toDateString();
+    const isoDateKey = (hourly.time && hourly.time[i]) ? hourly.time[i].substring(0, 10) : dayDateStr;
     
     // Si cambia el día o al inicio del listado, insertar separador visual de día
     if (dayDateStr !== lastDayDateStr) {
@@ -208,17 +210,25 @@ export function renderHourlyForecastBlock(data, units = 'metric', iconTheme = 'a
       const isTomorrow = timeDate.getDate() === tomorrow.getDate() && timeDate.getMonth() === tomorrow.getMonth();
       
       let dayBadgeText = '';
+      let shortLabel = '';
+      const dayNum = timeDate.getDate();
       if (isToday) {
         dayBadgeText = 'Hoy (' + timeDate.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric' }) + ')';
+        shortLabel = `Hoy ${dayNum}`;
       } else if (isTomorrow) {
         dayBadgeText = 'Mañana (' + timeDate.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric' }) + ')';
+        shortLabel = `Mañ ${dayNum}`;
       } else {
         const dName = timeDate.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' });
         dayBadgeText = dName.charAt(0).toUpperCase() + dName.slice(1);
+        const rawShort = timeDate.toLocaleDateString('es-ES', { weekday: 'short' }).replace(/\./g, '').trim();
+        const shortWeekday = rawShort.charAt(0).toUpperCase() + rawShort.slice(1, 3);
+        shortLabel = `${shortWeekday} ${dayNum}`;
       }
+      hourlyDays.push({ key: isoDateKey, shortLabel, fullLabel: dayBadgeText });
 
       hourlyCards += `
-        <div class="hourly-day-divider">
+        <div class="hourly-day-divider" data-day-key="${isoDateKey}">
           <div class="day-divider-badge">
             <span class="day-divider-icon">📅</span>
             <span class="day-divider-text">${dayBadgeText}</span>
@@ -232,7 +242,6 @@ export function renderHourlyForecastBlock(data, units = 'metric', iconTheme = 'a
 
     // Detección de transición solar entre horas (Ocaso o Amanecer)
     if (prevIsDay !== null && prevIsDay !== isDay) {
-      const isoDateKey = (hourly.time && hourly.time[i]) ? hourly.time[i].substring(0, 10) : '';
       const sunEvents = sunEventsByDay[isoDateKey] || {};
 
       if (prevIsDay === 1 && isDay === 0) {
@@ -297,7 +306,7 @@ export function renderHourlyForecastBlock(data, units = 'metric', iconTheme = 'a
     const windSpeed = units === 'knots' ? (hourly.wind_speed_10m[i] * 0.539957).toFixed(0) : Math.round(hourly.wind_speed_10m[i]);
 
     hourlyCards += `
-      <div class="hourly-card ${dayNightClass}">
+      <div class="hourly-card ${dayNightClass}" data-day-key="${isoDateKey}">
         <span class="h-time">${hourLabel}</span>
         <span class="h-icon" title="${weather.label}${precipMm >= 0.1 ? ` (${precipMm.toFixed(1)} mm)` : ''}">${renderWeatherIconHtml(weather, 28, iconTheme)}</span>
         <span class="h-temp">${temp}°C</span>
@@ -344,6 +353,16 @@ export function renderHourlyForecastBlock(data, units = 'metric', iconTheme = 'a
       <!-- VISTA 1: CARRUSEL DE TARJETAS HORARIAS -->
       <div class="hourly-scroll-container" id="hourly-cards-view" style="${isChartMode ? 'display: none;' : ''}">
         ${hourlyCards}
+      </div>
+
+      <!-- BARRA INTERACTIVA DE DÍAS BAJO EL CARRUSEL (OPCIÓN A) -->
+      <div class="hourly-days-bar" id="hourly-days-bar" role="tablist" aria-label="Día visible en el carrusel horario" style="${isChartMode ? 'display: none;' : ''}">
+        ${hourlyDays.map((d, idx) => `
+          <button type="button" class="hourly-day-pill ${idx === 0 ? 'active' : ''}" data-day-key="${d.key}" aria-selected="${idx === 0 ? 'true' : 'false'}" title="${d.fullLabel}">
+            <span class="hdp-dot" aria-hidden="true"></span>
+            <span class="hdp-text">${d.shortLabel}</span>
+          </button>
+        `).join('')}
       </div>
 
       <!-- VISTA 2: OBSERVATORIO DE CURVAS MULTIVARIABLE (METEOROLOGÍA GRÁFICA) -->
