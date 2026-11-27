@@ -9,6 +9,11 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.58] - 2026-11-27
+### Satélite EUMETSAT: veto suavizado cuando los modelos confirman sol (Feedback Lendo)
+- **`js/services/weatherApi.js` (`applySatelliteCloudShield`)**: la máscara binaria `msg_fes:clm` ya no puede forzar `Nublado` ni recortar la radiación si el consenso AROME + ECMWF certifica sol directo (código `<= 2` y DNI `>= 150 W/m²`). En ese caso solo rebaja `Despejado / Mayormente soleado` a `Sol y nubes`. Corrige el falso `Nublado` del 27-11-2026 en Piedras Blancas con velo fino de cirros y sol pleno.
+- **Anti-caché**: `v3.0.38.58`, caché `meteoasturlode-v303858-satelite-veto-suavizado`.
+
 ## [3.0.38.36] - 2026-11-15
 ### Calibración Litoral y Protección de Sol y Nubes: Ajuste de Peldaño Nuboso en Costa (Feedback Lendo / Webcam Salinas)
 - **Alineación de Sol y Nubes frente a Falsos Cielos Despejados (`js/utils/weatherIcons.js` y `js/services/weatherApi.js`)**:

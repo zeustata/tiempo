@@ -2,6 +2,15 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🛰️ Veto Suavizado del Satélite EUMETSAT con Sol Respaldado por Modelos (`v3.0.38.58`) — 2026-11-27
+- **Estado / Rollback anterior seguro:** Commit `fc6f939` (`v3.0.38.57`, Barra de días del carrusel 72h).
+- **Motivo del cambio (Feedback Lendo en vivo, 12:15, Piedras Blancas):** Hacía sol, el widget acertaba, ECMWF daba sol y nubes y AROME sol radiante, pero el Auto Híbrido mostraba `Nublado / Cubiertu`.
+- **Datos reales verificados:** AROME `code 0`, nubes 6 %, DNI 626 W/m². ECMWF `code 1`, nubes 34 % (45 % horario), DNI 217 W/m². Radar RainViewer seco. Máscara EUMETSAT `msg_fes:clm` 100 % (núcleo 100 %) sobre toda la costa central (sobre Sevilla 0 %, sobre Asturias amplio 47 %: la capa funciona, detecta un velo real).
+- **Causa raíz:** El consenso AROME + ECMWF dejaba correctamente `código 2 (Sol y nubes)`, pero `applySatelliteCloudShield` (Rama A) lo sobrescribía a `código 3`, nubes 100 % y recortaba DNI a 35 W/m². La máscara `clm` es binaria y cuenta como nube cerrada un velo fino de cirros a través del cual luce el sol.
+- **Implementación (Opción A, `js/services/weatherApi.js`):** Nuevo `isModelSunBacked` (código consensuado `<= 2` y DNI `>= 150 W/m²`). Si se cumple y no hay eco débil de radar, en Rama A y Rama B el satélite solo puede rebajar `0/1` a `2 (Sol y nubes)` con nubes acotadas a 50-70 %, sin recortar radiación ni forzar `Nublado`; marca `is_satellite_softened`. Sin respaldo solar de modelos, el escudo actúa exactamente igual que antes (panza de burro real sigue protegida).
+- **Simulación con los datos reales:** antes `código 3 / nubes 100 % / DNI 35` → ahora `código 2 / nubes 45 % / DNI 217` → etiqueta `Sol y nubes / Claros`.
+- Anti-caché silencioso a `v3.0.38.58` (`sw.js`, `index.html`, `app.js`, import `weatherApi.js`), manteniendo `CURRENT_CHANGELOG_PROMPT_VERSION = '3.0.38'` (Regla 13: corrección interna de calibración).
+
 ## 📅 Barra Interactiva de Días bajo el Carrusel Horario 72h (`v3.0.38.57`) — 2026-11-27
 - **Estado / Rollback anterior seguro:** Commit `717fe1a` (`v3.0.38.56`).
 - **Motivo del cambio (Feedback Lendo en vivo con captura):** Al deslizar las tarjetas del carrusel horario de 72 horas, el separador vertical de día quedaba fuera de pantalla a la izquierda y dejaba de saberse si las horas visibles pertenecían a hoy, mañana o pasado.

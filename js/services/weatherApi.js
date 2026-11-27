@@ -825,8 +825,29 @@ export function applySatelliteCloudShield(weather, satCloud, radarEcho = null, a
   const centerPct = satCloud && typeof satCloud.centerCloudPct === 'number' ? satCloud.centerCloudPct : null;
   const hasWeakEcho = Boolean(radarEcho && radarEcho.hasWeakCloudEcho);
 
+  // Veto suavizado por sol respaldado por modelos (Feedback Lendo 27-11-2026, v3.0.38.58):
+  // La máscara msg_fes:clm es BINARIA (nube sí / no) y marca como 100% un velo fino de cirros
+  // a través del cual el sol luce de pleno. Si el consenso AROME + ECMWF ya validó un cielo
+  // con sol (código <= 2) y haz solar directo real (>= 150 W/m²), el satélite solo puede rebajar
+  // un "Despejado / Mayormente soleado" a "Sol y nubes", jamás forzar "Nublado" ni recortar la radiación.
+  const curDni = cur.direct_normal_irradiance != null ? parseFloat(cur.direct_normal_irradiance) : 0;
+  const isModelSunBacked = cur.weather_code != null && cur.weather_code <= 2 && curDni >= 150;
+  const softenToSunAndClouds = () => {
+    if (cur.weather_code != null && cur.weather_code <= 1) {
+      cur.weather_code = 2;
+      cur.cloud_cover = Math.min(Math.max(cur.cloud_cover || 0, 50), 70);
+      cur.satellite_cloud_pct = satPct;
+      cur.is_satellite_softened = true;
+      syncHourlyCurrent(false);
+    }
+  };
+
   // Rama A: Manto cubierto real confirmado por satélite (>= 85% general y >= 75% centro)
   if (satPct !== null && satPct >= 85 && centerPct >= 75) {
+    if (isModelSunBacked && !hasWeakEcho) {
+      softenToSunAndClouds();
+      return;
+    }
     if ((cur.cloud_cover ?? 0) < satPct || (cur.weather_code != null && cur.weather_code <= 2)) {
       cur.cloud_cover = Math.max(cur.cloud_cover || 0, satPct);
       if (cur.direct_normal_irradiance != null) {
@@ -845,6 +866,10 @@ export function applySatelliteCloudShield(weather, satCloud, radarEcho = null, a
 
   // Rama B: Nubosidad parcial-alta satelital (>= 55% y >= 50% centro) o eco Doppler débil sobre el lugar
   if ((satPct !== null && satPct >= 55 && centerPct >= 50) || hasWeakEcho) {
+    if (isModelSunBacked && !hasWeakEcho) {
+      softenToSunAndClouds();
+      return;
+    }
     if ((cur.weather_code != null && cur.weather_code <= 1) || (cur.cloud_cover ?? 0) < 50) {
       const targetCloud = Math.max(cur.cloud_cover || 0, satPct || 75);
       cur.cloud_cover = targetCloud;

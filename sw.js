@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303857-barra-dias-carrusel-72h';
+const CACHE_NAME = 'meteoasturlode-v303858-satelite-veto-suavizado';
 const STATIC_ASSETS = [
   './',
   './index.html',
