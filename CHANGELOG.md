@@ -9,6 +9,12 @@ Todas las novedades, mejoras y correcciones notables de **MeteoAstur Lode** se d
 - **Minor (0.X.0)**: Nuevas funcionalidades, nuevos módulos climáticos o integraciones.
 - **Patch (0.0.X)**: Corrección de errores (*bugfixes*), ajustes de diseño y optimizaciones.
 
+## [3.0.38.59] - 2026-11-28
+### Satélite EUMETSAT nocturno y unanimidad solar AROME + ECMWF (Feedback Lendo)
+- **`js/services/weatherApi.js` (`applySatelliteCloudShield`)**: ampliada la salvaguarda a horario nocturno (`is_day === 0`). Cuando el consenso AROME + ECMWF certifica cielo abierto (`código <= 2` y `cloud_cover <= 50 %`) y no hay eco de radar, la máscara binaria nocturna de EUMETSAT solo puede suavizar a `código 2` (*Parcialmente nublado / nubes con luna*), nunca forzar `código 3` (*Nublado de noche*).
+- **`js/services/weatherApi.js` (`applyCantabricoConsensus`)**: cuando **ambos** modelos coinciden en sol (`rawCode <= 1` y `eCode <= 1`) con radiación directa real (`>= 150 W/m²` en ambos) y nubes `< 50 %`, se promedia la nubosidad de ambos en lugar de tomar el máximo, preservando `Mayormente soleado (🌤️)` sin alterar el corte costero de Salinas (`v3.0.38.36`) para casos mixtos.
+- **Anti-caché**: `v3.0.38.59`, caché `meteoasturlode-v303859-satelite-veto-suavizado-noche`.
+
 ## [3.0.38.58] - 2026-11-27
 ### Satélite EUMETSAT: veto suavizado cuando los modelos confirman sol (Feedback Lendo)
 - **`js/services/weatherApi.js` (`applySatelliteCloudShield`)**: la máscara binaria `msg_fes:clm` ya no puede forzar `Nublado` ni recortar la radiación si el consenso AROME + ECMWF certifica sol directo (código `<= 2` y DNI `>= 150 W/m²`). En ese caso solo rebaja `Despejado / Mayormente soleado` a `Sol y nubes`. Corrige el falso `Nublado` del 27-11-2026 en Piedras Blancas con velo fino de cirros y sol pleno.

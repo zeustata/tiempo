@@ -512,8 +512,17 @@ function applyCantabricoConsensus(weather, consensus, radarEcho = null, satCloud
         weather.current.precipitation = 0;
         if (weather.current.rain != null) weather.current.rain = 0;
       }
-      const effectiveCloud = Math.max(rawCloud, ecmwfCloud);
-      weather.current.weather_code = effectiveCloud >= 80 ? 3 : (effectiveCloud >= 30 ? 2 : 1);
+      const isUnanimousSun = rawCode <= 1 && (eCode === null || eCode <= 1)
+        && rawDirectIrr >= 150 && eDirectIrr >= 150
+        && Math.max(rawCloud, ecmwfCloud) < 50;
+      if (isUnanimousSun) {
+        const avgCloud = Math.round((rawCloud + ecmwfCloud) / 2);
+        weather.current.cloud_cover = avgCloud;
+        weather.current.weather_code = avgCloud >= 30 ? 2 : 1;
+      } else {
+        const effectiveCloud = Math.max(rawCloud, ecmwfCloud);
+        weather.current.weather_code = effectiveCloud >= 80 ? 3 : (effectiveCloud >= 30 ? 2 : 1);
+      }
     }
 
     // Falso Nublado en tiempo actual (sincronizado con rescate horario: Ley 27 & Banco de Ventana)
@@ -825,13 +834,18 @@ export function applySatelliteCloudShield(weather, satCloud, radarEcho = null, a
   const centerPct = satCloud && typeof satCloud.centerCloudPct === 'number' ? satCloud.centerCloudPct : null;
   const hasWeakEcho = Boolean(radarEcho && radarEcho.hasWeakCloudEcho);
 
-  // Veto suavizado por sol respaldado por modelos (Feedback Lendo 27-11-2026, v3.0.38.58):
+  // Veto suavizado por cielo abierto respaldado por modelos (día y noche, v3.0.38.58 -> v3.0.38.59):
   // La máscara msg_fes:clm es BINARIA (nube sí / no) y marca como 100% un velo fino de cirros
-  // a través del cual el sol luce de pleno. Si el consenso AROME + ECMWF ya validó un cielo
-  // con sol (código <= 2) y haz solar directo real (>= 150 W/m²), el satélite solo puede rebajar
-  // un "Despejado / Mayormente soleado" a "Sol y nubes", jamás forzar "Nublado" ni recortar la radiación.
+  // tanto de día (sol directo) como de noche (infrarrojo). Si el consenso AROME + ECMWF certifica
+  // cielo abierto (de día: código <= 2 y DNI >= 150 W/m²; de noche: código <= 2 y nubes <= 50 %),
+  // el satélite solo puede suavizar 0/1 a 2 (Sol y nubes / Parcialmente nublado con luna),
+  // jamás forzar 3 (Nublado cerrado) ni recortar la radiación.
   const curDni = cur.direct_normal_irradiance != null ? parseFloat(cur.direct_normal_irradiance) : 0;
   const isModelSunBacked = cur.weather_code != null && cur.weather_code <= 2 && curDni >= 150;
+  const isModelClearNightBacked = cur.is_day === 0
+    && cur.weather_code != null && cur.weather_code <= 2
+    && (cur.cloud_cover != null ? cur.cloud_cover : 100) <= 50;
+  const isModelSkyBacked = isModelSunBacked || isModelClearNightBacked;
   const softenToSunAndClouds = () => {
     if (cur.weather_code != null && cur.weather_code <= 1) {
       cur.weather_code = 2;
@@ -844,7 +858,7 @@ export function applySatelliteCloudShield(weather, satCloud, radarEcho = null, a
 
   // Rama A: Manto cubierto real confirmado por satélite (>= 85% general y >= 75% centro)
   if (satPct !== null && satPct >= 85 && centerPct >= 75) {
-    if (isModelSunBacked && !hasWeakEcho) {
+    if (isModelSkyBacked && !hasWeakEcho) {
       softenToSunAndClouds();
       return;
     }
@@ -866,7 +880,7 @@ export function applySatelliteCloudShield(weather, satCloud, radarEcho = null, a
 
   // Rama B: Nubosidad parcial-alta satelital (>= 55% y >= 50% centro) o eco Doppler débil sobre el lugar
   if ((satPct !== null && satPct >= 55 && centerPct >= 50) || hasWeakEcho) {
-    if (isModelSunBacked && !hasWeakEcho) {
+    if (isModelSkyBacked && !hasWeakEcho) {
       softenToSunAndClouds();
       return;
     }

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'meteoasturlode-v303858-satelite-veto-suavizado';
+const CACHE_NAME = 'meteoasturlode-v303859-satelite-veto-suavizado-noche';
 const STATIC_ASSETS = [
   './',
   './index.html',

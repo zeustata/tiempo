@@ -2,6 +2,14 @@
 
 Este documento contiene la memoria permanente del proyecto, sus acuerdos de desarrollo, diseño y evolución histórica.
 
+## 🌙 Simetría Nocturna del Veto Suavizado EUMETSAT (`v3.0.38.59`) — 2026-11-28
+- **Estado / Rollback anterior seguro:** Commit `a444b61` (`v3.0.38.58`).
+- **Motivo del cambio (Banco de Ventana Lendo en vivo, 01:21, Piedras Blancas):** Con nubes sueltas y luna visible, AROME (`0 %`) y ECMWF (`17 %`) marcaban `código 0`, pero al ser de noche `direct_normal_irradiance = 0`, por lo que `isModelSunBacked` daba `false` y el satélite forzaba `código 3 (Nublado de noche)`.
+- **Implementación (`js/services/weatherApi.js`):**
+  1. Añadido `isModelClearNightBacked` (`is_day === 0 && weather_code <= 2 && cloud_cover <= 50`) dentro de `isModelSkyBacked`. En noches abiertas sin eco radar, el satélite solo suaviza a `código 2 (Parcialmente nublado con luna)` en vez de cerrar a `3`.
+  2. Añadida `isUnanimousSun` en el bloque seco: si ambos modelos coinciden en `code <= 1` con radiación directa `>= 150 W/m²` y `Math.max(rawCloud, ecmwfCloud) < 50`, usa la media de nubes (`(rawCloud + ecmwfCloud)/2`) en vez del máximo, preservando `Mayormente soleado` sin tocar `weatherIcons.js` ni pisar la calibración de Salinas (`v3.0.38.36`).
+- **Anti-caché silencioso:** `v3.0.38.59`, caché `meteoasturlode-v303859-satelite-veto-suavizado-noche` (`CURRENT_CHANGELOG_PROMPT_VERSION = '3.0.38'` intacto, Ley 13).
+
 ## 🛰️ Veto Suavizado del Satélite EUMETSAT con Sol Respaldado por Modelos (`v3.0.38.58`) — 2026-11-27
 - **Estado / Rollback anterior seguro:** Commit `fc6f939` (`v3.0.38.57`, Barra de días del carrusel 72h).
 - **Motivo del cambio (Feedback Lendo en vivo, 12:15, Piedras Blancas):** Hacía sol, el widget acertaba, ECMWF daba sol y nubes y AROME sol radiante, pero el Auto Híbrido mostraba `Nublado / Cubiertu`.
@@ -46,7 +54,7 @@ Este documento contiene la memoria permanente del proyecto, sus acuerdos de desa
     1. Bajar el azul marino oscuro de *Universal Blue* (`b >= 80 && r <= 125 && b > g`) de `nivel 2` (*Lluvia moderada*) a `nivel 1` (*Lluvia débil / Orbayu*, `0.2 mm`), reservando `nivel 2` al amarillo (`v3.0.38.53`).
     2. Añadir el techo de prudencia anti-*Bastinazu* fantasma / banda brillante invernal cuando los modelos están secos (`< 0.3 mm`, `v3.0.38.53`).
     3. Añadir el veto seco 2-contra-1 cuando el radar está seco (`level == 0`) y AROME marca `0.0 mm` aunque AROME arrastre `code 51-53` residual y ECMWF dé `<= 0.3 mm`, respetando el *orbayu meón* real solo con saturación extrema (`hum >= 94%` y `direct_normal_irradiance < 80 W/m²`, `v3.0.38.54`).
-    4. **Veto suavizado del satélite EUMETSAT (`v3.0.38.58`, caso real 27-11-2026 12:15 Piedras Blancas: sol pleno, widget acertaba y la web marcaba falso `Nublado`):** si el motor nativo usa (o llega a usar) la máscara de nubes `msg_fes:clm`, NUNCA debe actuar como veto duro. La máscara es binaria y marca 100 % un velo fino de cirros con el sol luciendo. Regla exacta a portar: si el consenso deja código `<= 2` y `direct_normal_irradiance >= 150 W/m²` sin eco débil de radar, el satélite solo puede rebajar `0/1` a `2 (Sol y nubes)` con nubes acotadas a 50-70 %, sin forzar `3 (Nublado)` ni recortar la radiación. Sin ese respaldo solar de modelos, el escudo actúa como siempre (nubes satélite, DNI máx. 35 W/m², código 3). Verificar antes en `MeteoWeatherEngine.java` si el widget consulta EUMETSAT; si no lo hace, no añadirlo sin esta salvaguarda.
+    4. **Veto suavizado del satélite EUMETSAT día y noche (`v3.0.38.58` + `v3.0.38.59`):** si el motor nativo usa (o llega a usar) la máscara de nubes `msg_fes:clm`, NUNCA debe actuar como veto duro. La máscara es binaria y marca 100 % un velo fino de cirros. Regla exacta a portar: si no hay eco débil de radar y el consenso confirma cielo abierto —de día: `código <= 2` y `direct_normal_irradiance >= 150 W/m²`; de noche (`is_day === 0`): `código <= 2` y `cloud_cover <= 50 %`—, el satélite solo puede suavizar `0/1` a `2 (Sol y nubes / Parcialmente nublado con luna)` con nubes acotadas a 50-70 %, sin forzar `3 (Nublado)` ni recortar radiación. Verificar antes en `MeteoWeatherEngine.java` si el widget consulta EUMETSAT.
   - **Nota estacional futura (web):** Observar y recalibrar por estaciones el umbral de resol invernal (`isSolarRescue` en `weatherApi.js`, actualmente `250 W/m²`) tras pasar las 4 estaciones.
 
 ## 🌧️ Calibración Prudente de Radar Universal Blue en Web (`v3.0.38.53`) — 2026-11-24
